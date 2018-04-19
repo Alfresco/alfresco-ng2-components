@@ -30,6 +30,7 @@ Activates a file upload.
 | uploadFolders | `boolean` | `false` | Allows/disallows upload folders (only for Chrome).  |
 | multipleFiles | `boolean` | `false` | Allows/disallows multiple files  |
 | versioning | `boolean` | `false` | Toggles versioning.  |
+| majorVersion | `boolean` | `false` | majorVersion boolean field to true to indicate a major version should be created.  |
 | maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
 | staticTitle | `string` |  | Defines the text of the upload button.  |
 | tooltip | `string` | `null` | Custom tooltip text.  |

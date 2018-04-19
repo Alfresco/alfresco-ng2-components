@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
-import { ContentService, EXTENDIBLE_COMPONENT, FileModel, FileUtils,
-    LogService, NodePermissionSubject, TranslationService, UploadService
+import {
+    ContentService, EXTENDIBLE_COMPONENT, FileModel, FileUtils,
+    LogService, NodePermissionSubject, TranslationService, UploadService, PermissionsEnum
 } from '@alfresco/adf-core';
-import { Component, EventEmitter, forwardRef, Input,
-    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    Component, EventEmitter, forwardRef, Input,
+    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation
+} from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 import 'rxjs/add/observable/throw';
@@ -36,9 +39,6 @@ import { UploadBase } from './base-upload/upload-base';
 })
 export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges, NodePermissionSubject {
 
-    /** Toggles component disabled state (if there is no node permission checking). */
-    @Input()
-    disabled: boolean = false;
 
     /** Allows/disallows upload folders (only for Chrome). */
     @Input()
@@ -48,16 +48,6 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     @Input()
     multipleFiles: boolean = false;
 
-    /** Toggles versioning. */
-    @Input()
-    versioning: boolean = false;
-
-    /** Sets a limit on the maximum size (in bytes) of a file to be uploaded.
-     * Has no effect if undefined.
-     */
-    @Input()
-    maxFilesSize: number;
-
     /** Defines the text of the upload button. */
     @Input()
     staticTitle: string;
@@ -66,25 +56,11 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     @Input()
     tooltip: string = null;
 
-    /** The ID of the root. Use the nodeId for
-     * Content Services or the taskId/processId for Process Services.
-     */
-    @Input()
-    rootFolderId: string = '-root-';
-
-    /** Emitted when the file is uploaded successfully. */
-    @Output()
-    success = new EventEmitter();
-
-    /** Emitted when an error occurs. */
-    @Output()
-    error = new EventEmitter();
-
     /** Emitted when a folder is created. */
     @Output()
     createFolder = new EventEmitter();
 
-    /** Emitted when delete permission is missing. */
+    /** Emitted when create permission is missing. */
     @Output()
     permissionEvent: EventEmitter<PermissionModel> = new EventEmitter<PermissionModel>();
 
@@ -95,9 +71,8 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     constructor(private uploadService: UploadService,
                 private contentService: ContentService,
                 protected translateService: TranslationService,
-                protected logService: LogService
-            ) {
-                super();
+                protected logService: LogService) {
+        super();
     }
 
     ngOnInit() {
@@ -123,7 +98,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
         if (this.hasPermission) {
             this.uploadFiles(files);
         } else {
-            this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
+            this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
         }
         // reset the value of the input file
         $event.target.value = '';
@@ -134,40 +109,10 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
             let files: File[] = FileUtils.toFileArray($event.currentTarget.files);
             this.uploadFiles(files);
         } else {
-            this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
+            this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
         }
         // reset the value of the input file
         $event.target.value = '';
-    }
-
-    /**
-     * Upload a list of file in the specified path
-     * @param files
-     * @param path
-     */
-    uploadFiles(files: File[]): void {
-        const latestFilesAdded: FileModel[] = files
-            .map<FileModel>(this.createFileModel.bind(this))
-            .filter(this.isFileAcceptable.bind(this))
-            .filter(this.isFileSizeAcceptable.bind(this));
-
-        if (latestFilesAdded.length > 0) {
-            this.uploadService.addToQueue(...latestFilesAdded);
-            this.uploadService.uploadFilesInTheQueue(this.success);
-        }
-    }
-
-    /**
-     * Creates FileModel from File
-     *
-     * @param file
-     */
-    protected createFileModel(file: File): FileModel {
-        return new FileModel(file, {
-            newVersion: this.versioning,
-            parentId: this.rootFolderId,
-            path: (file.webkitRelativePath || '').replace(/\/[^\/]*$/, '')
-        });
     }
 
     /**
@@ -181,24 +126,12 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
         if (this.isFileSizeAllowed(file)) {
             acceptableSize = false;
 
-            this.translateService.get('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', {fileName: file.name}).subscribe((message: string) => {
+            this.translateService.get('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', { fileName: file.name }).subscribe((message: string) => {
                 this.error.emit(message);
             });
         }
 
         return acceptableSize;
-    }
-
-    private isFileSizeAllowed(file: FileModel) {
-        return this.isMaxFileSizeDefined() && this.isFileSizeCorrect(file);
-    }
-
-    private isMaxFileSizeDefined() {
-        return this.maxFilesSize !== undefined && this.maxFilesSize !== null;
-    }
-
-    private isFileSizeCorrect(file: FileModel) {
-        return this.maxFilesSize < 0 || file.size > this.maxFilesSize;
     }
 
     checkPermission() {
@@ -209,16 +142,9 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
             };
 
             this.contentService.getNode(this.rootFolderId, opts).subscribe(
-                res => this.permissionValue.next(this.hasCreatePermission(res.entry)),
+                res => this.permissionValue.next(this.contentService.hasPermission(res.entry, PermissionsEnum.CREATE)),
                 error => this.error.emit(error)
             );
         }
-    }
-
-    private hasCreatePermission(node: any): boolean {
-        if (node && node.allowableOperations) {
-            return node.allowableOperations.find(permission => permission === 'create') ? true : false;
-        }
-        return false;
     }
 }

@@ -39,6 +39,7 @@ export class AppComponent {
 | disabled | `boolean` | false | Toggle component disabled state. |
 | parentId | `string` |  | ID of parent folder node. |
 | versioning | `boolean` | false | When false, renames the file using an integer suffix if there is a name clash. Set to true to indicate that a major version should be created instead. |
+| majorVersion | `boolean` | `false` | majorVersion boolean field to true to indicate a major version should be created.  |
 
 ### Events
 

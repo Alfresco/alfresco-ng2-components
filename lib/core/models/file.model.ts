@@ -23,6 +23,7 @@ export interface FileUploadProgress {
 
 export interface FileUploadOptions {
     newVersion?: boolean;
+    majorVersion?: boolean;
     newVersionBaseName?: string;
     parentId?: string;
     path?: string;

@@ -46,7 +46,8 @@ export class UploadVersionButtonComponent extends UploadButtonComponent implemen
     }
 
     protected createFileModel(file: File): FileModel {
-        const fileModel = super.createFileModel(file);
+        const fileModel = super.createFileModel(file, this.rootFolderId, (file.webkitRelativePath || '').replace(/\/[^\/]*$/, ''));
+
         fileModel.options.newVersionBaseName = this.node.name;
 
         if (!this.isFileAcceptable(fileModel)) {
