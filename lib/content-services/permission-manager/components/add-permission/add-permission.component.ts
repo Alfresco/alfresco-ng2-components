@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, ViewEncapsulation, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { SearchPermissionConfigurationService } from './search-config-permission.service';
 import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
+import { SearchComponent } from '../../../search/components/search.component';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 // import { NodesApiService } from '@alfresco/adf-core';
 // import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
 // import { PermissionDisplayModel } from '../../models/permission.model';
@@ -33,30 +37,53 @@ import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
         SearchService
     ]
 })
-export class AddPermissionComponent implements OnInit {
+export class AddPermissionComponent {
 
+    @ViewChild('search')
+    search: SearchComponent;
+
+    @Input()
+    nodeId: string;
 
     @Output()
-    success: EventEmitter<any> = new EventEmitter();
+    select: EventEmitter<any> = new EventEmitter();
 
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
-
+    searchInput: FormControl = new FormControl();
     searchedWord = '';
+    debounceSearch: number = 200;
 
-    // constructor(private nodeService: NodesApiService,
-    //             private nodePermissionService: NodePermissionService) {
+    selectedItems: MinimalNodeEntity[] = [];
 
-    // }
-
-    ngOnInit() {
-        // this.fetchNodePermissions();
+    constructor() {
+        this.searchInput.valueChanges
+        .pipe(
+            debounceTime(this.debounceSearch)
+        )
+        .subscribe((searchValue) => {
+            this.searchedWord = searchValue;
+        });
     }
 
-    elementClicked(event: Event) {
-        event.preventDefault();
+    elementClicked(item: MinimalNodeEntity) {
+        if(this.isAlreadySelected(item)){
+            this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
+        }else{
+            this.selectedItems.push(item);
+        }
+        this.select.emit(this.selectedItems);
     }
 
+    private isAlreadySelected(item: MinimalNodeEntity): boolean {
+        return this.selectedItems.indexOf(item) >= 0;
+    }
+
+    clearSearch() {
+        this.searchedWord = '';
+        this.selectedItems.splice(0, this.selectedItems.length);
+        this.search.resetResults();
+    }
 
 }

@@ -21,5 +21,7 @@ export * from './components/inherited-button.directive';
 export * from './services/node-permission.service';
 export * from './models/permission.model';
 export * from './components/add-permission/add-permission.component';
+export * from './components/add-permission/add-permission.service';
+export * from './components/add-permission/add-permission-dialog-data.interface';
 
 export * from './permission-manager.module';
