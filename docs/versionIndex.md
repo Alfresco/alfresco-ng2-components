@@ -13,9 +13,9 @@ of components organized by ADF libraries.
 
 ## v2.3.0
 
-**Released:** 2018-04-17 ([Release notes](<>))<br/>
-**APS compatible version:** xxx minimum, xxx recommended<br/>
-**ACS compatible version:** xxx minimum, xxx recommended<br/>
+**Released:** 2018-04-17 ([Release notes](https://community.alfresco.com/docs/DOC-7347-adf-230-release-note))<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.3<br/>
 
 ### Components added
 
@@ -39,8 +39,8 @@ of components organized by ADF libraries.
 ## v2.2.0
 
 **Released:** 2018-03-05 ([Release notes](https://community.alfresco.com/docs/DOC-7318-adf-220-release-note))<br/>
-**APS compatible version:** xxx minimum, xxx recommended<br/>
-**ACS compatible version:** xxx minimum, xxx recommended<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.2<br/>
 
 ### Components added
 
@@ -56,8 +56,8 @@ of components organized by ADF libraries.
 ## v2.1.0
 
 **Released:** 2018-01-29 ([Release notes](https://community.alfresco.com/docs/DOC-7292-adf-210-release-note))<br/>
-**APS compatible version:** xxx minimum, xxx recommended<br/>
-**ACS compatible version:** xxx minimum, xxx recommended<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.2<br/>
 
 ### Components added
 
@@ -76,8 +76,8 @@ of components organized by ADF libraries.
 ## v2.0.0
 
 **Released:** 2017-12-04 ([Release notes](https://community.alfresco.com/docs/DOC-7244-adf-200-release-note))<br/>
-**APS compatible version:** xxx minimum, xxx recommended<br/>
-**ACS compatible version:** xxx minimum, xxx recommended<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.2<br/>
 
 ### Components added
 
