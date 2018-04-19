@@ -7,44 +7,31 @@
     $mat-menu-border-radius: 2px !default;
 
     .adf {
-        &-role-card-menu {
-            @include mat-menu-base(2);
-            transform-origin: top left;
-            transform:translateX(-40px);
-            position: absolute;
-            overflow: hidden;
-            max-width: 450px;
-            max-height: 400px;
-            margin-left: 45px;
-            margin-top: -22px;
-            font-size: 15px;
-            z-index: 50;
-            color: mat-color($foreground, text);
-            background-color: mat-color($background, card);
-            border-radius: $mat-menu-border-radius;
-
-            @media screen and ($mat-small) {
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
+        &-permission-result-list {
+            height: 300px;
+            overflow: auto;
+            border: 2px solid mat-color($foreground, base, 0.07);
         }
 
-        &-selection-role-list {
-            max-width: 100%;
-            max-height: 300px;
-            overflow-y: auto;
-        }
+        &-permission-search {
+            &-input {
+                width: 100%;
 
-        &-input-form-field-divider {
-            .mat-form-field-underline {
-                background-color: mat-color($primary, 50);
-                .mat-form-field-ripple {
-                    background-color: mat-color($primary, 50);
+                &-icon {
+                    color: mat-color($foreground, disabled-button);
+                    cursor: pointer;
+
+                    &:hover {
+                        color: mat-color($foreground, base);
+                    }
                 }
             }
-            font-size: 16px;
         }
 
+        &-list-option-item .mat-list-text {
+            display: flex;
+            flex-direction: row !important;
+            align-items: center;
+        }
     }
 }

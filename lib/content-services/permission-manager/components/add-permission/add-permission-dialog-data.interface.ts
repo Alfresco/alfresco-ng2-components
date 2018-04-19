@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-export * from './components/permission-list/permission-list.component';
-export * from './components/permission-list/no-permission.component';
-export * from './components/inherited-button.directive';
-export * from './services/node-permission.service';
-export * from './models/permission.model';
-export * from './components/add-permission/add-permission.component';
-export * from './components/add-permission/add-permission.service';
-export * from './components/add-permission/add-permission-dialog-data.interface';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { Subject } from 'rxjs/Subject';
 
-export * from './permission-manager.module';
+export interface AddPermissionDialogData {
+    title: string;
+    actionName?: string;
+    currentNodeId: string;
+    success: Subject<MinimalNodeEntryEntity[]>;
+}

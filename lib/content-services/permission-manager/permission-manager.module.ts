@@ -22,11 +22,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
 import { AddPermissionComponent } from './components/add-permission/add-permission.component';
+import { AddPermissionDialogComponent } from './components/add-permission/add-permission-dialog.component';
 import { DataTableModule, DataColumnModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
 import { NodePermissionService } from './services/node-permission.service';
 import { NoPermissionTemplateComponent } from './components/permission-list/no-permission.component';
 import { SearchModule } from '..';
+import { AddNodePermissionDialogService } from './components/add-permission/add-permission.service';
 
 @NgModule({
     imports: [
@@ -43,16 +45,20 @@ import { SearchModule } from '..';
         PermissionListComponent,
         NoPermissionTemplateComponent,
         InheritPermissionDirective,
-        AddPermissionComponent
+        AddPermissionComponent,
+        AddPermissionDialogComponent
     ],
     providers: [
-        NodePermissionService
+        NodePermissionService,
+        AddNodePermissionDialogService
     ],
+    entryComponents: [ AddPermissionComponent, AddPermissionDialogComponent ],
     exports: [
         PermissionListComponent,
         NoPermissionTemplateComponent,
         InheritPermissionDirective,
-        AddPermissionComponent
+        AddPermissionComponent,
+        AddPermissionDialogComponent
     ]
 })
 export class PermissionManagerModule {}
