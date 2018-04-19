@@ -47,6 +47,7 @@ export class FolderDialogComponent implements OnInit {
 
     editTitle = 'CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE';
     createTitle = 'CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE';
+    nodeType = 'cm:folder';
 
     constructor(
         private formBuilder: FormBuilder,
@@ -60,6 +61,7 @@ export class FolderDialogComponent implements OnInit {
         if (data) {
             this.editTitle = data.editTitle || this.editTitle;
             this.createTitle = data.createTitle || this.createTitle;
+            this.nodeType = data.nodeType || this.nodeType;
         }
     }
 
@@ -116,8 +118,8 @@ export class FolderDialogComponent implements OnInit {
     }
 
     private create(): Observable<MinimalNodeEntryEntity> {
-        const { name, properties, nodesApi, data: { parentNodeId} } = this;
-        return nodesApi.createFolder(parentNodeId, { name, properties });
+        const { name, properties, nodeType, nodesApi, data: { parentNodeId} } = this;
+        return nodesApi.createFolder(parentNodeId, { name, properties, nodeType });
     }
 
     private edit(): Observable<MinimalNodeEntryEntity> {

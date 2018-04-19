@@ -299,7 +299,30 @@ describe('FolderDialogComponent', () => {
                         properties: {
                             'cm:title': 'folder-name-update',
                             'cm:description': 'folder-description-update'
-                        }
+                        },
+                        nodeType: 'cm:folder'
+                    }
+                );
+            });
+
+            it('should submit updated values if form is valid (with custom nodeType)', () => {
+                spyOn(nodesApi, 'createFolder').and.returnValue(Observable.of({}));
+
+                component.form.controls['name'].setValue('folder-name-update');
+                component.form.controls['description'].setValue('folder-description-update');
+                component.nodeType = 'cm:sushi';
+
+                component.submit();
+
+                expect(nodesApi.createFolder).toHaveBeenCalledWith(
+                    'parentNodeId',
+                    {
+                        name: 'folder-name-update',
+                        properties: {
+                            'cm:title': 'folder-name-update',
+                            'cm:description': 'folder-description-update'
+                        },
+                        nodeType: 'cm:sushi'
                     }
                 );
             });

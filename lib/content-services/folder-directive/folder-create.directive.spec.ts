@@ -31,9 +31,15 @@ import { Subject } from 'rxjs/Subject';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
-    template: '<div [adf-create-folder]="parentNode" (success)="success($event)" title="create-title"></div>'
+    template: `
+        <div
+            [adf-create-folder]="parentNode"
+            (success)="success($event)"
+            title="create-title"
+            [nodeType]="'cm:my-litte-pony'">
+        </div>`
 })
-class TestComponent {
+class Test1Component {
     parentNode = '';
     public successParameter: MinimalNodeEntryEntity = null;
 
@@ -42,20 +48,25 @@ class TestComponent {
     }
 }
 
+@Component({
+    template: `<div [adf-create-folder]="parentNode"></div>`
+})
+class Test2Component {
+    parentNode = '';
+    public successParameter: MinimalNodeEntryEntity = null;
+}
+
 describe('FolderCreateDirective', () => {
-    let fixture: ComponentFixture<TestComponent>;
+    let fixture: ComponentFixture<Test1Component | Test2Component>;
     let element;
     let node: any;
     let dialog: MatDialog;
     let contentService: ContentService;
     let dialogRefMock;
 
-    const event = {
-        type: 'click',
-        preventDefault: () => null
-    };
+    const event = { type: 'click', preventDefault: () => null };
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientModule,
@@ -71,22 +82,16 @@ describe('FolderCreateDirective', () => {
                 })
             ],
             declarations: [
-                TestComponent,
+                Test1Component,
+                Test2Component,
                 FolderDialogComponent,
                 FolderCreateDirective
             ],
             providers: [
                 ContentService
             ]
-        });
-
-        TestBed.compileComponents();
-
-        fixture = TestBed.createComponent(TestComponent);
-        element = fixture.debugElement.query(By.directive(FolderCreateDirective));
-        dialog = TestBed.get(MatDialog);
-        contentService = TestBed.get(ContentService);
-    });
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
         node = { entry: { id: 'nodeId' } };
@@ -98,60 +103,95 @@ describe('FolderCreateDirective', () => {
                 success: new Subject<MinimalNodeEntryEntity>()
             }
         };
-
-        spyOn(dialog, 'open').and.returnValue(dialogRefMock);
     });
 
-    xit('should emit folderCreate event when input value is not undefined', (done) => {
-        spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(node));
-        spyOn(contentService.folderCreate, 'next');
+    describe('With overrides', () => {
 
-        contentService.folderCreate.subscribe((val) => {
-            expect(val).toBe(node);
-            done();
+        beforeEach(() => {
+            fixture = TestBed.createComponent(Test1Component);
+            element = fixture.debugElement.query(By.directive(FolderCreateDirective));
+            dialog = TestBed.get(MatDialog);
+            contentService = TestBed.get(ContentService);
+            spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         });
 
-        fixture.detectChanges();
+        xit('should emit folderCreate event when input value is not undefined', (done) => {
+            spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(node));
+            spyOn(contentService.folderCreate, 'next');
 
-        fixture.whenStable().then(() => {
-            element.nativeElement.click();
+            contentService.folderCreate.subscribe((val) => {
+                expect(val).toBe(node);
+                done();
+            });
+
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                element.nativeElement.click();
+            });
         });
+
+        it('should not emit folderCreate event when input value is undefined', () => {
+            spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(null));
+            spyOn(contentService.folderCreate, 'next');
+
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                element.nativeElement.click();
+                expect(contentService.folderCreate.next).not.toHaveBeenCalled();
+            });
+        });
+
+        it('should emit success event with node if the folder creation was successful', async(() => {
+            const testNode = <MinimalNodeEntryEntity> {};
+            fixture.detectChanges();
+
+            element.triggerEventHandler('click', event);
+            dialogRefMock.componentInstance.success.next(testNode);
+
+            fixture.whenStable().then(() => {
+                expect(fixture.componentInstance.successParameter).toBe(testNode);
+            });
+        }));
+
+        it('should open the dialog with the proper title and nodeType', async(() => {
+            fixture.detectChanges();
+            element.triggerEventHandler('click', event);
+
+            expect(dialog.open).toHaveBeenCalledWith(jasmine.any(Function), {
+                data: {
+                    parentNodeId: jasmine.any(String),
+                    createTitle: 'create-title',
+                    nodeType: 'cm:my-litte-pony'
+                },
+                width: jasmine.any(String)
+            });
+        }));
     });
 
-    it('should not emit folderCreate event when input value is undefined', () => {
-        spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(null));
-        spyOn(contentService.folderCreate, 'next');
+    describe('Without overrides', () => {
 
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            element.nativeElement.click();
-            expect(contentService.folderCreate.next).not.toHaveBeenCalled();
+        beforeEach(() => {
+            fixture = TestBed.createComponent(Test2Component);
+            element = fixture.debugElement.query(By.directive(FolderCreateDirective));
+            dialog = TestBed.get(MatDialog);
+            contentService = TestBed.get(ContentService);
+            spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         });
+
+        it('should open the dialog with the default title and nodeType', async(() => {
+            fixture.detectChanges();
+            element.triggerEventHandler('click', event);
+
+            expect(dialog.open).toHaveBeenCalledWith(jasmine.any(Function), {
+                data: {
+                    parentNodeId: jasmine.any(String),
+                    createTitle: null,
+                    nodeType: 'cm:folder'
+                },
+                width: jasmine.any(String)
+            });
+        }));
     });
-
-    it('should emit success event with node if the folder creation was successful', async(() => {
-        const testNode = <MinimalNodeEntryEntity> {};
-        fixture.detectChanges();
-
-        element.triggerEventHandler('click', event);
-        dialogRefMock.componentInstance.success.next(testNode);
-
-        fixture.whenStable().then(() => {
-            expect(fixture.componentInstance.successParameter).toBe(testNode);
-        });
-    }));
-
-    it('should open the dialog with the proper title', async(() => {
-        fixture.detectChanges();
-        element.triggerEventHandler('click', event);
-
-        expect(dialog.open).toHaveBeenCalledWith(jasmine.any(Function), {
-            data: {
-                parentNodeId: jasmine.any(String),
-                createTitle: 'create-title'
-            },
-            width: jasmine.any(String)
-        });
-    }));
 });
