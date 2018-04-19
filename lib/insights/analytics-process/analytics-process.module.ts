@@ -24,7 +24,7 @@ import { MaterialModule } from '../material.module';
 
 import { ChartsModule } from 'ng2-charts';
 
-import { ToolbarModule } from '@alfresco/adf-core';
+import { ToolbarModule, ButtonsMenuModule } from '@alfresco/adf-core';
 import { AnalyticsGeneratorComponent } from './components/analytics-generator.component';
 import { AnalyticsReportHeatMapComponent } from './components/analytics-report-heat-map.component';
 import { AnalyticsReportListComponent } from './components/analytics-report-list.component';
@@ -40,7 +40,6 @@ import { NumberWidgetAanlyticsComponent } from './components/widgets/number/numb
 
 import { AnalyticsService } from './services/analytics.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ButtonsMenuModule } from '../../core/buttons-menu/buttons-menu.module';
 
 @NgModule({
     imports: [
