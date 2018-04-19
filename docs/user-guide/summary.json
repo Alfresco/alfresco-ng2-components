@@ -10,7 +10,8 @@
             { "title": "Preparing the development environment", "file": "preparing-environment.md"},
             { "title": "Adding a new component", "file": "new-component.md"},
             { "title": "Adding a new view", "file": "new-view.md"},
-            { "title": "Using components", "file": "using-components.md"}
+            { "title": "Using components", "file": "using-components.md"},
+            { "title": "Working with a DataTable", "file": "working-with-data-table.md"}
         ]
     }
 ]

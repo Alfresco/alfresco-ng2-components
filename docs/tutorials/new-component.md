@@ -1,7 +1,7 @@
 # Adding a new component
 
 By definition a *component* controls a patch of screen called a view. As an example, individual components define and control menus, tabs, forms, buttons and every simple or complex portion of layout of an application. In this tutorial you will learn how to create a component using [Angular CLI](https://cli.angular.io/). After the creation you will learn how to add it to an existing application.
-
+v
 ## Creating a component
 Starting from the root of your project, run the following command into a terminal.
 
@@ -32,4 +32,4 @@ To make the component usable, one or more modules should declare it (or import i
             MyFirstComponentComponent
         ],
 
-These are the very basic information you should be know about your brand new component. All you have read here is standard Angular, not customised or valid for ADF applications only.
+These are the very basic information you should know about your brand new component. All you have read here is standard Angular, not customised or valid for ADF applications only.
