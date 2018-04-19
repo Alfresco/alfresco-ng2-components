@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Inject, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
-import { AddPermissionComponent } from '../add-permission/add-permission.component';
 
 @Component({
     selector: 'adf-add-permission-dialog',
@@ -29,20 +28,16 @@ import { AddPermissionComponent } from '../add-permission/add-permission.compone
 })
 export class AddPermissionDialogComponent {
 
-    @ViewChild('addPermission')
-    addPermissionComponent: AddPermissionComponent;
+    private currentSelection : MinimalNodeEntity[] = [];
 
-    private currentSelection: MinimalNodeEntity[] = [];
+    nodeId: string
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: AddPermissionDialogData) {
+        this.nodeId = data.currentNodeId;
     }
 
     onSelect(items: MinimalNodeEntity[]) {
         this.currentSelection = items;
     }
 
-    onAddClicked() {
-        this.data.confirm.next(this.currentSelection);
-        this.data.confirm.complete();
-    }
 }
