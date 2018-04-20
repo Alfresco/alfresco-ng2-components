@@ -20,7 +20,8 @@
                 (keyup.arrowdown)="selectFirstResult()"
                 (ngModelChange)="inputChange($event)"
                 [searchAutocomplete]="auto"
-                (keyup.enter)="searchSubmit($event)">
+                (keyup.enter)="searchSubmit($event)"
+                (touchend)="elementClicked(item)">
         </mat-form-field>
     </div>
 </div>
@@ -43,7 +44,8 @@
                 (keyup.arrowup)="onRowArrowUp($event)"
                 class="adf-search-autocomplete-item"
                 (click)="elementClicked(item)"
-                (keyup.enter)="elementClicked(item)">
+                (keyup.enter)="elementClicked(item)"
+                (touchend)="elementClicked(item)">
                 <mat-icon mat-list-icon>
                     <img [src]="getMimeTypeIcon(item)" />
                 </mat-icon>

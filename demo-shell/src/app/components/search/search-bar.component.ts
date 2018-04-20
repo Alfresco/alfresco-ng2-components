@@ -18,6 +18,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
+import { PreviewService } from 'app/services/preview.service';
 
 @Component({
     selector: 'app-search-bar',
@@ -26,7 +27,9 @@ import { MinimalNodeEntity } from 'alfresco-js-api';
 })
 export class SearchBarComponent {
 
-    constructor(public router: Router) {
+    constructor(
+        public router: Router, 
+        private preview: PreviewService) {
     }
 
     /**
@@ -43,7 +46,8 @@ export class SearchBarComponent {
 
     onItemClicked(event: MinimalNodeEntity) {
         if (event.entry.isFile) {
-            this.router.navigate(['/files', event.entry.id, 'view']);
+            //this.router.navigate(['/files', event.entry.id, 'view']);
+            this.preview.showResource(event.entry.id);
         } else if (event.entry.isFolder) {
             this.router.navigate(['/files', event.entry.id]);
         }
