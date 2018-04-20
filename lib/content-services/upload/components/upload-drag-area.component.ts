@@ -19,7 +19,7 @@ import {
     EXTENDIBLE_COMPONENT, FileInfo, FileModel, FileUtils, NodePermissionSubject,
     NotificationService, TranslationService, UploadService, ContentService, PermissionsEnum
 } from '@alfresco/adf-core';
-import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, forwardRef, Input, ViewEncapsulation } from '@angular/core';
 import { UploadBase } from './base-upload/upload-base';
 
 @Component({
@@ -40,11 +40,11 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
         this.rootFolderId = nodeId;
     }
 
-    constructor(private uploadService: UploadService,
-                private translateService: TranslationService,
+    constructor(protected uploadService: UploadService,
+                protected translationService: TranslationService,
                 private notificationService: NotificationService,
                 private contentService: ContentService) {
-        super();
+        super(uploadService, translationService);
     }
 
     /**
@@ -58,7 +58,6 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
         }
     }
 
-
     /**
      * Called when the file are dropped in the drag area
      *
@@ -67,8 +66,9 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
     onFilesEntityDropped(item: any): void {
         if (!this.disabled) {
             item.file((file: File) => {
-                const fileModel = this.createFileModel(file, this.rootFolderId, item.fullPath.replace(item.name, ''));
-                this.uploadFiles([fileModel]);
+                // const fileModel = this.createFileModel(file, this.rootFolderId, item.fullPath.replace(item.name, ''));
+
+                this.uploadFiles([file]);
             });
         }
     }
@@ -80,21 +80,8 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
      */
     onFolderEntityDropped(folder: any): void {
         if (!this.disabled && folder.isDirectory) {
-            FileUtils.flattern(folder).then(entries => {
-                let files = entries.map(entry => {
-                    return this.createFileModel(entry.file, this.rootFolderId, entry.relativeFolder);
-                }).filter(this.isFileAcceptable.bind(this));
-                this.addNodeInUploadQueue(files);
-            });
-        }
-    }
-
-    private addNodeInUploadQueue(files: FileModel[]) {
-        if (files.length) {
-            this.uploadService.addToQueue(...files);
-            this.uploadService.uploadFilesInTheQueue(this.success);
-            this.uploadService.fileUploadError.subscribe((error) => {
-                this.error.emit(error);
+            FileUtils.flattern(folder).then(filesInfo => {
+                this.uploadFilesInfo(filesInfo);
             });
         }
     }
@@ -106,8 +93,8 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
      */
     showUndoNotificationBar(latestFilesAdded: FileModel[]) {
         let messageTranslate: any, actionTranslate: any;
-        messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
-        actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
+        messageTranslate = this.translationService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
+        actionTranslate = this.translationService.get('FILE_UPLOAD.ACTION.UNDO');
 
         this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
             this.uploadService.cancelUpload(...latestFilesAdded);
@@ -129,17 +116,14 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
         event.preventDefault();
         let isAllowed: boolean = this.contentService.hasPermission(event.detail.data.obj.entry, PermissionsEnum.CREATE);
         if (isAllowed) {
-            let files: FileInfo[] = event.detail.files;
-            if (files && files.length > 0) {
+            let fileInfo: FileInfo[] = event.detail.files;
+            if (fileInfo && fileInfo.length > 0) {
                 let parentId = this.rootFolderId;
                 if (event.detail.data && event.detail.data.obj.entry.isFolder) {
                     parentId = event.detail.data.obj.entry.id || this.rootFolderId;
                 }
-                const fileModels = files.map((fileInfo) => {
-                    return this.createFileModel(fileInfo.file, this.rootFolderId, fileInfo.relativeFolder);
-                });
 
-                this.uploadFiles(fileModels);
+                this.uploadFilesInfo(fileInfo);
             }
         }
     }

@@ -16,7 +16,7 @@
  */
 
 import {
-    ContentService, EXTENDIBLE_COMPONENT, FileModel, FileUtils,
+    ContentService, EXTENDIBLE_COMPONENT, FileUtils,
     LogService, NodePermissionSubject, TranslationService, UploadService, PermissionsEnum
 } from '@alfresco/adf-core';
 import {
@@ -68,11 +68,11 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     private permissionValue: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private uploadService: UploadService,
+    constructor(protected uploadService: UploadService,
                 private contentService: ContentService,
-                protected translateService: TranslationService,
+                protected translationService: TranslationService,
                 protected logService: LogService) {
-        super();
+        super(uploadService, translationService);
     }
 
     ngOnInit() {
@@ -113,25 +113,6 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
         }
         // reset the value of the input file
         $event.target.value = '';
-    }
-
-    /**
-     * Checks if the given file is an acceptable size
-     *
-     * @param file FileModel
-     */
-    private isFileSizeAcceptable(file: FileModel): boolean {
-        let acceptableSize = true;
-
-        if (this.isFileSizeAllowed(file)) {
-            acceptableSize = false;
-
-            this.translateService.get('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', { fileName: file.name }).subscribe((message: string) => {
-                this.error.emit(message);
-            });
-        }
-
-        return acceptableSize;
     }
 
     checkPermission() {

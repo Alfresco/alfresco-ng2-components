@@ -15,13 +15,9 @@
  * limitations under the License.
  */
 
-import { FileModel } from '@alfresco/adf-core';
-import { Input } from '@angular/core';
-
-import {
-    Component, EventEmitter, forwardRef, Input,
-    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation
-} from '@angular/core';
+import { FileModel, FileInfo } from '@alfresco/adf-core';
+import { EventEmitter, Input, Output } from '@angular/core';
+import { UploadService, TranslationService } from '@alfresco/adf-core';
 
 export abstract class UploadBase {
 
@@ -61,7 +57,8 @@ export abstract class UploadBase {
     @Output()
     error = new EventEmitter();
 
-    constructor() {
+    constructor(protected uploadService: UploadService,
+                protected translationService: TranslationService) {
     }
 
     /**
@@ -70,16 +67,33 @@ export abstract class UploadBase {
      * @param path
      */
     uploadFiles(files: File[]): void {
-        const latestFilesAdded: FileModel[] = files
+        const filteredFiles: FileModel[] = files
             .map<FileModel>((file: File) => {
                 return this.createFileModel(file, this.rootFolderId, (file.webkitRelativePath || '').replace(/\/[^\/]*$/, ''));
-            })
-            .filter(this.isFileAcceptable.bind(this))
+            });
+
+        this.uploadQueue(filteredFiles);
+    }
+
+    uploadFilesInfo(files: FileInfo[]): void {
+        const filteredFiles: FileModel[] = files
+            .map<FileModel>((fileInfo: FileInfo) => {
+                return this.createFileModel(fileInfo.file, this.rootFolderId, fileInfo.relativeFolder);
+            });
+
+        this.uploadQueue(filteredFiles);
+    }
+
+    private uploadQueue(filteredFiles: FileModel[]) {
+        filteredFiles.filter(this.isFileAcceptable.bind(this))
             .filter(this.isFileSizeAcceptable.bind(this));
 
-        if (latestFilesAdded.length > 0) {
-            this.uploadService.addToQueue(...latestFilesAdded);
+        if (filteredFiles.length > 0) {
+            this.uploadService.addToQueue(...filteredFiles);
             this.uploadService.uploadFilesInTheQueue(this.success);
+            this.uploadService.fileUploadError.subscribe((error) => {
+                this.error.emit(error);
+            });
         }
     }
 
@@ -128,6 +142,25 @@ export abstract class UploadBase {
 
     protected isFileSizeCorrect(file: FileModel) {
         return this.maxFilesSize < 0 || file.size > this.maxFilesSize;
+    }
+
+    /**
+     * Checks if the given file is an acceptable size
+     *
+     * @param file FileModel
+     */
+    private isFileSizeAcceptable(file: FileModel): boolean {
+        let acceptableSize = true;
+
+        if (this.isFileSizeAllowed(file)) {
+            acceptableSize = false;
+
+            this.translationService.get('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', { fileName: file.name }).subscribe((message: string) => {
+                this.error.emit(message);
+            });
+        }
+
+        return acceptableSize;
     }
 
 }
