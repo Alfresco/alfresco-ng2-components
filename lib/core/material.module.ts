@@ -24,7 +24,7 @@ import {
     MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
     MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
     MatMenuModule, MatProgressBarModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule,
-    MatTooltipModule
+    MatTooltipModule, MatExpansionModule
 } from '@angular/material';
 
 export function modules() {
@@ -34,7 +34,7 @@ export function modules() {
         MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
         MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
         MatMenuModule, MatProgressBarModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule,
-        MatTooltipModule, MatDatetimepickerModule, MatNativeDatetimeModule
+        MatTooltipModule, MatDatetimepickerModule, MatNativeDatetimeModule, MatExpansionModule
     ];
 }
 

@@ -18,12 +18,8 @@
         color: mat-color($primary);
     }
 
-    .adf-panel-heading-icon {
-        float: left;
-    }
-
-    .adf-panel-body {
-        display: inline-block;
+    .adf-panel-heading-icon {	
+         float: left;	
     }
 
     .adf-panel-heading-text {
@@ -32,12 +28,25 @@
         padding-top: 4px;
     }
 
-    .adf-panel-heading-toggle {
-        float: right;
-        cursor: pointer;
+    .mat-expansion-panel {
+        transition: none !important;
+        box-shadow: none !important;
+        background: none !important;
     }
 
-    .adf-panel-heading-toggle:hover {
-        opacity: 0.4;
+    .mat-expansion-panel-body {
+        padding: 1px !important;
+    }
+
+    .mat-expansion-panel-header {
+        padding: 0px !important;
+    }
+
+    .mat-expansion-panel-header-title {
+        margin-right: 0px !important;
+    }
+
+    .mat-expansion-indicator {
+            margin-right: 25px !important;
     }
 }
