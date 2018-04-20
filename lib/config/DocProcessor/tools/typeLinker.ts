@@ -20,6 +20,8 @@ import { CommentTag } from "typedoc/dist/lib/models";
 
 import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
+import { ChildableComponent } from "typedoc/dist/lib/utils";
+import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from "constants";
 
 
 const includedNodeTypes = [
@@ -69,20 +71,10 @@ export function updatePhase(tree, pathname, aggData) {
         }
     
         if (node.type === "inlineCode") {
-            let possClassName = cleanClassName(node.value);
-            let ref: DeclarationReflection = aggData.projData.findReflectionByName(possClassName);
+            let link = resolveTypeLink(aggData, node.value);
 
-            if (ref && isLinkable(ref.kind)) {
-                let kebabName = ngHelpers.kebabifyClassName(possClassName);
-                console.log(kebabName);
-                let possDocFile = aggData.docFiles[kebabName];
-                let url = "../../lib/" + ref.sources[0].fileName;
-                
-                if (possDocFile) {
-                    url = "../" + possDocFile;
-                }
-
-                convertNodeToTypeLink(node, node.value, url);
+            if (link) {
+                convertNodeToTypeLink(node, node.value, link);
             }
             
         } else if (node.type === "link") {
@@ -90,27 +82,105 @@ export function updatePhase(tree, pathname, aggData) {
                 (node.children[0].type === "inlineCode") ||
                 (node.children[0].type === "text")
             )) {
-                let possClassName = cleanClassName(node.children[0].value);
-                let ref: DeclarationReflection = aggData.projData.findReflectionByName(possClassName);
+                let link = resolveTypeLink(aggData, node.children[0].value);
 
-                if (ref && isLinkable(ref.kind)) {
-                    let kebabName = ngHelpers.kebabifyClassName(possClassName);
-                    console.log(kebabName);
-                    let possDocFile = aggData.docFiles[kebabName];
-                    let url = "../../lib/" + ref.sources[0].fileName;
-                    
-                    if (possDocFile) {
-                        url = "../" + possDocFile;
-                    }
-
-                    convertNodeToTypeLink(node, node.children[0].value, url);
+                if (link) {
+                    convertNodeToTypeLink(node, node.children[0].value, link);
                 }
             }
+        } else if (node.type === "paragraph") {
+            node.children.forEach((child, index) => {
+                if (child.type === "text") {
+                    let newNodes = handleLinksInBodyText(aggData, child.value);
+                    node.children = [...node.children.slice(0, index), ...newNodes, ...node.children.slice(index + 1)];
+                } else {
+                    traverseMDTree(child);
+                }
+            });
         } else if (node.children) {
-            node.children.forEach(element => {
-                traverseMDTree(element);
+            node.children.forEach(child => {
+                traverseMDTree(child);
             });
         }
+    }
+}
+
+
+class WordScanner {
+    index: number;
+    nextIndex: number;
+    current: string;
+
+    constructor(public text: string) {
+        this.index = -1;
+        this.nextIndex = 0;
+        this.next();
+    }
+    
+    finished() {
+        return this.index >= this.text.length;
+    }
+
+    next(): void {
+        this.index = this.nextIndex + 1;
+        this.nextIndex = this.text.indexOf(" ", this.index);
+
+        if (this.nextIndex === -1) {
+            this.nextIndex = this.text.length;
+        }
+
+        this.current = this.text.substring(this.index, this.nextIndex);
+    }
+}
+
+
+function handleLinksInBodyText(aggData, text: string): Node[] {
+    let result = [];
+    let currTextStart = 0;
+
+    for (let scanner = new WordScanner(text); !scanner.finished(); scanner.next()) {
+        let word = scanner.current
+        .replace(/'s$/, "")
+        .replace(/^[;:,\."']+/g, "")
+        .replace(/[;:,\."']+$/g, "");
+
+        let link = resolveTypeLink(aggData, word);
+
+        if (link) {
+            let linkNode = unist.makeLink(unist.makeText(scanner.current), link);
+            let prevText = text.substring(currTextStart, scanner.index);
+            result.push(unist.makeText(prevText));
+            result.push(linkNode);
+            currTextStart = scanner.nextIndex;
+        }
+    }
+    
+    let remainingText = text.substring(currTextStart, text.length);
+
+    if (remainingText) {
+        result.push(unist.makeText(remainingText));
+    }
+
+    return result;
+}
+
+
+function resolveTypeLink(aggData, text): string {
+    let possClassName = cleanClassName(text);
+    let ref: Reflection = aggData.projData.findReflectionByName(possClassName);
+
+    if (ref && isLinkable(ref.kind)) {
+        let kebabName = ngHelpers.kebabifyClassName(possClassName);
+        let possDocFile = aggData.docFiles[kebabName];
+        let url = "../../lib/" + ref.sources[0].fileName;
+        
+        if (possDocFile) {
+            url = "../" + possDocFile;
+        }
+
+        return url;
+    } else {
+        return "";
     }
 }
 
