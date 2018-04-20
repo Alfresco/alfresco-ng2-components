@@ -450,7 +450,7 @@ describe('SearchControlComponent', () => {
             discardPeriodicTasks();
         }));
 
-        xit('click on the search button should apply focus on input', fakeAsync(() => {
+        it('click on the search button should apply focus on input', fakeAsync(() => {
             fixture.detectChanges();
             tick(100);
 

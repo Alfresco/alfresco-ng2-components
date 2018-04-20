@@ -119,7 +119,7 @@ describe('TabsWidgetComponent', () => {
                 });
         });
 
-        xit('should show tab when it became visible', async(() => {
+        it('should show tab when it became visible', async(() => {
             fixture.detectChanges();
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[1].isVisible = true;
@@ -132,7 +132,7 @@ describe('TabsWidgetComponent', () => {
             tabWidgetComponent.tabChanged(null);
         }));
 
-        xit('should hide tab when it became not visible', async(() => {
+        it('should hide tab when it became not visible', async(() => {
             fixture.detectChanges();
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[0].isVisible = false;

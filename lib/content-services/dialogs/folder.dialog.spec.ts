@@ -21,6 +21,7 @@ import { MatDialogRef } from '@angular/material';
 import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { FolderDialogComponent } from './folder.dialog';
 import { Observable } from 'rxjs/Observable';
+import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 
 describe('FolderDialogComponent', () => {
@@ -70,12 +71,11 @@ describe('FolderDialogComponent', () => {
             expect(component.description).toBe('folder-description');
         });
 
-                    it('should have the proper title', () => {
+        it('should have the proper title', () => {
                 const title = fixture.debugElement.query(By.css('[mat-dialog-title]'));
                 expect(title === null).toBe(false);
                 expect(title.nativeElement.innerText.trim()).toBe('CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE');
             });
-
 
         it('should update form input', () => {
             component.form.controls['name'].setValue('folder-name-update');
@@ -117,7 +117,7 @@ describe('FolderDialogComponent', () => {
             expect(dialogRef.close).toHaveBeenCalledWith(folder);
         });
 
-            it('should emit success output event with folder when submit is succesfull', async(() => {
+        it('should emit success output event with folder when submit is succesfull', async(() => {
                 const folder = { data: 'folder-data' };
                 let expectedNode = null;
 

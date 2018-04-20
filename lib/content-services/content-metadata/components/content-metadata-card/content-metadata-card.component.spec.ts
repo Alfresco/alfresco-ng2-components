@@ -22,7 +22,7 @@ import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, PermissionsEnum } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataCardComponent', () => {

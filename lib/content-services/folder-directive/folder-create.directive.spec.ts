@@ -36,7 +36,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
             [nodeType]="'cm:my-litte-pony'">
         </div>`
 })
-class Test1Component {
+class TestTypeComponent {
     parentNode = '';
     public successParameter: MinimalNodeEntryEntity = null;
 
@@ -48,13 +48,13 @@ class Test1Component {
 @Component({
     template: `<div [adf-create-folder]="parentNode"></div>`
 })
-class Test2Component {
+class TestComponent {
     parentNode = '';
     public successParameter: MinimalNodeEntryEntity = null;
 }
 
 describe('FolderCreateDirective', () => {
-    let fixture: ComponentFixture<Test1Component | Test2Component>;
+    let fixture: ComponentFixture<TestTypeComponent | TestComponent>;
     let element;
     let node: any;
     let dialog: MatDialog;
@@ -66,6 +66,7 @@ describe('FolderCreateDirective', () => {
             CoreModule.forRoot()
         ],
         declarations: [
+            TestTypeComponent,
             TestComponent,
             FolderDialogComponent,
             FolderCreateDirective
@@ -97,7 +98,7 @@ describe('FolderCreateDirective', () => {
     describe('With overrides', () => {
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(Test1Component);
+            fixture = TestBed.createComponent(TestTypeComponent);
             element = fixture.debugElement.query(By.directive(FolderCreateDirective));
             dialog = TestBed.get(MatDialog);
             contentService = TestBed.get(ContentService);
@@ -162,7 +163,7 @@ describe('FolderCreateDirective', () => {
     describe('Without overrides', () => {
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(Test2Component);
+            fixture = TestBed.createComponent(TestComponent);
             element = fixture.debugElement.query(By.directive(FolderCreateDirective));
             dialog = TestBed.get(MatDialog);
             contentService = TestBed.get(ContentService);

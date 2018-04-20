@@ -169,7 +169,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ECM] should return ticket undefined when the credentials are wrong', (done) => {
+        it('[ECM] should return ticket undefined when the credentials are wrong', (done) => {
             authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
                 },
@@ -330,7 +330,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[BPM] should return ticket undefined when the credentials are wrong', (done) => {
+        it('[BPM] should return ticket undefined when the credentials are wrong', (done) => {
             authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
                 },
@@ -494,7 +494,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
+        it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
