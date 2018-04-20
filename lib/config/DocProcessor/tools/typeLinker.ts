@@ -22,6 +22,7 @@ import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
 import { ChildableComponent } from "typedoc/dist/lib/utils";
 import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from "constants";
+import { match } from "minimatch";
 
 
 const includedNodeTypes = [
@@ -36,6 +37,7 @@ const adfLibNames = ["core", "content-services", "insights", "process-services"]
 
 export function initPhase(aggData) {
     aggData.docFiles = {};
+    aggData.nameLookup = new SplitNameLookup();
 
     adfLibNames.forEach(libName => {
         let libFolderPath = path.resolve(docFolder, libName);
@@ -50,6 +52,16 @@ export function initPhase(aggData) {
             }
         });
     });
+
+    let classes = aggData.projData.getReflectionsByKind(ReflectionKind.Class);
+
+    classes.forEach(currClass => {
+        if (currClass.name.match(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/)) {
+            aggData.nameLookup.addName(currClass.name);
+        }
+    });
+
+    console.log(JSON.stringify(aggData.nameLookup));
 }
 
 export function readPhase(tree, pathname, aggData) {}
@@ -106,6 +118,98 @@ export function updatePhase(tree, pathname, aggData) {
 }
 
 
+class SplitNameNode {
+    children: {};
+
+    constructor(public key: string = "", public value: string = "") {
+        this.children = {};
+    }
+
+    addChild(child: SplitNameNode) {
+        this.children[child.key] = child;
+    }
+}
+
+
+class SplitNameMatcher {
+    matches: SplitNameNode[];
+
+    constructor(public root: SplitNameNode) {
+        this.reset();
+    }
+
+    /* Returns all names that match when this word is added. */
+    nextWord(word: string): string[] {
+        let result = [];
+
+        this.matches.push(this.root);
+
+        for (let i = this.matches.length - 1; i >= 0; i--) {
+            let child = this.matches[i].children[word];
+
+            if (child) {
+                if (child.value) {
+                    /* Using unshift to add the match to the array means that
+                     * the longest matches will appear first in the array.
+                     * User can then just use the first array element if only
+                     * the longest match is needed.
+                     */
+                    result.unshift(child.value);
+                    this.matches.splice(i, 1);
+                } else {
+                    this.matches[i] = child;
+                }
+            } else {
+                this.matches.splice(i, 1);
+            }
+        }
+
+        if (result = []) {
+            return null;
+        } else {
+            return result;
+        }
+    }
+
+    reset() {
+        this.matches = [];
+    }
+}
+
+
+class SplitNameLookup {
+    root: SplitNameNode;
+
+    constructor() {
+        this.root = new SplitNameNode();
+    }
+
+    addName(name: string) {
+        let spacedName = name.replace(/([A-Z])/g, " $1");
+        let segments = spacedName.trim().toLowerCase().split(" ");
+
+        let currNode = this.root;
+
+        segments.forEach((segment, index) => {
+            let value = "";
+
+            if (index < (segments.length - 1)) {
+                value = name;
+            }
+
+            let childNode = currNode.children[segment];
+
+            if (!childNode) {
+                childNode = new SplitNameNode(segment, value);
+                currNode.addChild(childNode);
+            }
+
+            currNode = childNode;
+        });
+    }
+}
+
+
 class WordScanner {
     index: number;
     nextIndex: number;
@@ -137,6 +241,7 @@ class WordScanner {
 function handleLinksInBodyText(aggData, text: string): Node[] {
     let result = [];
     let currTextStart = 0;
+    let matcher = new SplitNameMatcher(aggData.nameLookup);
 
     for (let scanner = new WordScanner(text); !scanner.finished(); scanner.next()) {
         let word = scanner.current
@@ -146,12 +251,22 @@ function handleLinksInBodyText(aggData, text: string): Node[] {
 
         let link = resolveTypeLink(aggData, word);
 
+        if (!link) {
+            let match = matcher.nextWord(word.toLowerCase());
+
+            if (match) {
+                link = resolveTypeLink(aggData, match[0]);
+            }
+        }
+
         if (link) {
+            console.log("Found word link:" + link);
             let linkNode = unist.makeLink(unist.makeText(scanner.current), link);
             let prevText = text.substring(currTextStart, scanner.index);
             result.push(unist.makeText(prevText));
             result.push(linkNode);
             currTextStart = scanner.nextIndex;
+            matcher.reset();
         }
     }
     
@@ -166,11 +281,11 @@ function handleLinksInBodyText(aggData, text: string): Node[] {
 
 
 function resolveTypeLink(aggData, text): string {
-    let possClassName = cleanClassName(text);
-    let ref: Reflection = aggData.projData.findReflectionByName(possClassName);
+    let possTypeName = cleanTypeName(text);
+    let ref: Reflection = aggData.projData.findReflectionByName(possTypeName);
 
     if (ref && isLinkable(ref.kind)) {
-        let kebabName = ngHelpers.kebabifyClassName(possClassName);
+        let kebabName = ngHelpers.kebabifyClassName(possTypeName);
         let possDocFile = aggData.docFiles[kebabName];
         let url = "../../lib/" + ref.sources[0].fileName;
         
@@ -185,7 +300,7 @@ function resolveTypeLink(aggData, text): string {
 }
 
 
-function cleanClassName(text) {
+function cleanTypeName(text) {
     let matches = text.match(/[a-zA-Z0-9_]+<([a-zA-Z0-9_]+)>/);
 
     if (matches) {
