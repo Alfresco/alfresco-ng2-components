@@ -9,7 +9,7 @@ Displays the version history of a node in a Version Manager component
 ### Basic Usage
 
 ```html
-<adf-version-list [id]="nodeId"></adf-version-list>
+<adf-version-list [node]="myNode"></adf-version-list>
 ```
 
 ### Properties
