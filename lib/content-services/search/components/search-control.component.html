@@ -20,8 +20,7 @@
                 (keyup.arrowdown)="selectFirstResult()"
                 (ngModelChange)="inputChange($event)"
                 [searchAutocomplete]="auto"
-                (keyup.enter)="searchSubmit($event)"
-                (touchend)="elementClicked(item)">
+                (keyup.enter)="searchSubmit($event)">
         </mat-form-field>
     </div>
 </div>
@@ -46,6 +45,7 @@
                 (click)="elementClicked(item)"
                 (keyup.enter)="elementClicked(item)"
                 (touchend)="elementClicked(item)">
+                <!-- This is a comment -->
                 <mat-icon mat-list-icon>
                     <img [src]="getMimeTypeIcon(item)" />
                 </mat-icon>

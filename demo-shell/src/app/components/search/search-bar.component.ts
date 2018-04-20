@@ -27,9 +27,7 @@ import { PreviewService } from 'app/services/preview.service';
 })
 export class SearchBarComponent {
 
-    constructor(
-        public router: Router, 
-        private preview: PreviewService) {
+    constructor(public router: Router, private preview: PreviewService) {
     }
 
     /**
@@ -46,7 +44,6 @@ export class SearchBarComponent {
 
     onItemClicked(event: MinimalNodeEntity) {
         if (event.entry.isFile) {
-            //this.router.navigate(['/files', event.entry.id, 'view']);
             this.preview.showResource(event.entry.id);
         } else if (event.entry.isFolder) {
             this.router.navigate(['/files', event.entry.id]);
