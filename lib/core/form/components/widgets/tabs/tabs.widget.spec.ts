@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { tick, fakeAsync, async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { fakeFormJson, TranslationMock } from '../../../../mock';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
@@ -119,10 +119,13 @@ describe('TabsWidgetComponent', () => {
                 });
         });
 
-        it('should show tab when it became visible', async(() => {
+        it('should show tab when it became visible', fakeAsync(() => {
             fixture.detectChanges();
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[1].isVisible = true;
+
+                tick(500);
+
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -132,10 +135,13 @@ describe('TabsWidgetComponent', () => {
             tabWidgetComponent.tabChanged(null);
         }));
 
-        it('should hide tab when it became not visible', async(() => {
+        it('should hide tab when it became not visible', fakeAsync(() => {
             fixture.detectChanges();
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[0].isVisible = false;
+
+                tick(500);
+
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {

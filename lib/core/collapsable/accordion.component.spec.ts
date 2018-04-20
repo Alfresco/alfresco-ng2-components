@@ -34,7 +34,6 @@ describe('AccordionComponent', () => {
         component = fixture.componentInstance;
     });
 
-
     it('should create the component', () => {
         expect(component).toBeTruthy();
     });
