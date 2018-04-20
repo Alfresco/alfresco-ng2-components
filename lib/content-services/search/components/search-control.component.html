@@ -43,7 +43,9 @@
                 (keyup.arrowup)="onRowArrowUp($event)"
                 class="adf-search-autocomplete-item"
                 (click)="elementClicked(item)"
-                (keyup.enter)="elementClicked(item)">
+                (keyup.enter)="elementClicked(item)"
+                (touchend)="elementClicked(item)">
+                <!-- This is a comment -->
                 <mat-icon mat-list-icon>
                     <img [src]="getMimeTypeIcon(item)" />
                 </mat-icon>
