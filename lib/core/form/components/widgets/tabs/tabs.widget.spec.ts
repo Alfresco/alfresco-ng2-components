@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { tick, fakeAsync, async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { tick, fakeAsync, async, ComponentFixture, TestBed, flush } from '@angular/core/testing';
 import { fakeFormJson, TranslationMock } from '../../../../mock';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
@@ -65,7 +65,7 @@ describe('TabsWidgetComponent', () => {
     });
 
     it('should remove invisible tabs', () => {
-        let fakeTab = new TabModel(null, {id: 'fake-tab-id', title: 'fake-tab-title'});
+        let fakeTab = new TabModel(null, { id: 'fake-tab-id', title: 'fake-tab-title' });
         fakeTab.isVisible = false;
         widget.tabs.push(fakeTab);
         widget.ngAfterContentChecked();
@@ -74,7 +74,7 @@ describe('TabsWidgetComponent', () => {
     });
 
     it('should leave visible tabs', () => {
-        let fakeTab = new TabModel(null, {id: 'fake-tab-id', title: 'fake-tab-title'});
+        let fakeTab = new TabModel(null, { id: 'fake-tab-id', title: 'fake-tab-title' });
         fakeTab.isVisible = true;
         widget.tabs.push(fakeTab);
         widget.ngAfterContentChecked();
@@ -111,42 +111,48 @@ describe('TabsWidgetComponent', () => {
             tabWidgetComponent.tabs.push(fakeTabInvisible);
         }));
 
-        it('should show only visible tabs', () => {
+        it('should show only visible tabs', fakeAsync(() => {
             fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    expect(element.innerText).toContain('tab-title-visible');
-                });
-        });
+
+            tick(500);
+
+            expect(element.innerText).toContain('tab-title-visible');
+        }));
 
         it('should show tab when it became visible', fakeAsync(() => {
+            fakeTabInvisible.isVisible = false;
+
             fixture.detectChanges();
+
+            tick(500);
+
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[1].isVisible = true;
 
                 tick(500);
 
+                flush();
+
                 fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.innerText).toContain('tab-title-invisible');
-                    });
+                expect(element.innerText).toContain('tab-title-invisible');
             });
             tabWidgetComponent.tabChanged(null);
         }));
 
         it('should hide tab when it became not visible', fakeAsync(() => {
             fixture.detectChanges();
+
+            tick(500);
+
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[0].isVisible = false;
 
                 tick(500);
 
+                flush();
+
                 fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('innerText')).not.toContain('tab-title-visible');
-                    });
+                expect(element.querySelector('innerText')).not.toContain('tab-title-visible');
             });
             tabWidgetComponent.tabChanged(null);
         }));
