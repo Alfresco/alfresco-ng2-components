@@ -254,6 +254,8 @@ describe('DropdownSitesComponent', () => {
                 responseText: sitesList
             });
 
+            fixture.detectChanges();
+
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
@@ -271,6 +273,8 @@ describe('DropdownSitesComponent', () => {
                 contentType: 'json',
                 responseText: sitesList
             });
+
+            fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();

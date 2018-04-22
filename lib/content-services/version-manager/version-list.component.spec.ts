@@ -103,25 +103,6 @@ describe('VersionListComponent', () => {
         expect(alfrescoApiService.versionsApi.deleteVersion).not.toHaveBeenCalled();
     });
 
-    it('should reload list once a version is deleted', fakeAsync(() => {
-        spyOn(component, 'loadVersionHistory').and.stub();
-
-        spyOn(dialog, 'open').and.returnValue({
-            afterClosed() {
-                return Observable.of(true);
-            }
-        });
-
-        spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
-
-        component.deleteVersion(versionId);
-
-        tick(200);
-
-        expect(dialog.open).toHaveBeenCalled();
-        expect(component.loadVersionHistory).toHaveBeenCalled();
-    }));
-
     it('should reload and raise version-deleted DOM event', (done) => {
         spyOn(component, 'loadVersionHistory').and.stub();
         fixture.nativeElement.addEventListener('version-deleted', () => {
