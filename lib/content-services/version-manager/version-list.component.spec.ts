@@ -116,8 +116,9 @@ describe('VersionListComponent', () => {
 
         component.deleteVersion(versionId);
 
-        tick();
+        tick(200);
 
+        expect(dialog.open).toHaveBeenCalled();
         expect(component.loadVersionHistory).toHaveBeenCalled();
     }));
 
