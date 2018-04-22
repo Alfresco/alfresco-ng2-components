@@ -144,7 +144,8 @@ describe('DocumentList', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
         action.handler = () => deleteObservable;
-        action.execute = () => {};
+        action.execute = () => {
+        };
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -922,7 +923,7 @@ describe('DocumentList', () => {
         expect(documentList.noPermission).toBeFalsy();
     });
 
-    it('should noPermission be true if navigate to a folder with no  permission', (done) => {
+    it('should noPermission be true if navigate to a folder with no  permission', () => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
 
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
@@ -935,12 +936,8 @@ describe('DocumentList', () => {
         documentList.loadFolder();
         let clickedFolderNode = new FolderNode('fake-folder-node');
         documentList.onNodeDblClick(clickedFolderNode);
-        fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            expect(documentList.noPermission).toBeTruthy();
-            done();
-        });
+        expect(documentList.noPermission).toBeTruthy();
     });
 
     it('should not perform navigation for virtual sources', () => {
@@ -953,7 +950,6 @@ describe('DocumentList', () => {
         sources.forEach(source => {
             documentList.currentFolderId = source;
             expect(documentList.canNavigateFolder(node)).toBeFalsy();
-
         });
     });
 
