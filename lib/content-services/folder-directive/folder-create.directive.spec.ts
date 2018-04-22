@@ -61,6 +61,8 @@ describe('FolderCreateDirective', () => {
     let contentService: ContentService;
     let dialogRefMock;
 
+    const event = { type: 'click', preventDefault: () => null };
+
     setupTestBed({
         imports: [
             CoreModule.forRoot()

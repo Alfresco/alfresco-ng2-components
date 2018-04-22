@@ -943,7 +943,7 @@ describe('DocumentList', () => {
         });
     });
 
-    it('should not perform navigation for virtual sources', () => {
+    it('should not perform navigation for virtual sources', (done) => {
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
         const node = new FolderNode('folder');
 
@@ -953,6 +953,7 @@ describe('DocumentList', () => {
         sources.forEach(source => {
             documentList.currentFolderId = source;
             expect(documentList.canNavigateFolder(node)).toBeFalsy();
+            done();
         });
     });
 

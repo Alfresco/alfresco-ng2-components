@@ -45,6 +45,11 @@ describe('VersionListComponent', () => {
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
     beforeEach(() => {
         fixture = TestBed.createComponent(VersionListComponent);
         alfrescoApiService = TestBed.get(AlfrescoApiService);
@@ -54,10 +59,6 @@ describe('VersionListComponent', () => {
         component.node = { id: nodeId, allowableOperations: [ 'update' ] };
 
         spyOn(component, 'downloadContent').and.stub();
-    });
-
-    afterEach(() => {
-        fixture.destroy();
     });
 
     it('should raise confirmation dialog on delete', () => {

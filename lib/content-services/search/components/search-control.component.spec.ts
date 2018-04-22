@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement, ViewChild } from '@angular/core';
 import { async, discardPeriodicTasks, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuthenticationService, SearchService, setupTestBed, CoreModule } from '@alfresco/adf-core';
@@ -25,10 +25,34 @@ import { SearchControlComponent } from './search-control.component';
 import { SearchTriggerDirective } from './search-trigger.directive';
 import { SearchComponent } from './search.component';
 import { EmptySearchResultComponent } from './empty-search-result.component';
-import { SimpleSearchTestCustomEmptyComponent } from '../../mock';
-import { SearchModule } from '../../index';
 import { Observable } from 'rxjs/Observable';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+@Component({
+    template: `
+        <adf-search-control [highlight]="true" #search>
+            <adf-empty-search-result>
+                <span id="custom-no-result">{{customMessage}}</span>
+            </adf-empty-search-result>
+        </adf-search-control>
+    `
+})
+
+export class SimpleSearchTestCustomEmptyComponent {
+
+    customMessage: string = '';
+
+    @ViewChild(SearchControlComponent)
+    searchComponent: SearchControlComponent;
+
+    constructor() {
+    }
+
+    setCustomMessageForNoResult(message: string) {
+        this.customMessage = message;
+    }
+
+}
 
 describe('SearchControlComponent', () => {
 
@@ -38,6 +62,9 @@ describe('SearchControlComponent', () => {
     let debugElement: DebugElement;
     let searchService: SearchService;
     let authService: AuthenticationService;
+    let fixtureCustom: ComponentFixture<SimpleSearchTestCustomEmptyComponent>;
+    let elementCustom: HTMLElement;
+    let componentCustom: SimpleSearchTestCustomEmptyComponent;
 
     setupTestBed({
         imports: [
@@ -48,7 +75,8 @@ describe('SearchControlComponent', () => {
             SearchControlComponent,
             SearchComponent,
             SearchTriggerDirective,
-            EmptySearchResultComponent
+            EmptySearchResultComponent,
+            SimpleSearchTestCustomEmptyComponent
         ],
         providers: [
             ThumbnailService,
@@ -373,7 +401,7 @@ describe('SearchControlComponent', () => {
                 expect(document.activeElement.id).toBe('result_option_0');
 
                 let firstElement = debugElement.query(By.css('#result_option_0'));
-                firstElement.triggerEventHandler('keyup.arrowdown', { target : firstElement.nativeElement});
+                firstElement.triggerEventHandler('keyup.arrowdown', { target: firstElement.nativeElement });
                 fixture.detectChanges();
                 expect(document.activeElement.id).toBe('result_option_1');
             });
@@ -394,7 +422,7 @@ describe('SearchControlComponent', () => {
                 expect(document.activeElement.id).toBe('result_option_0');
 
                 let firstElement = debugElement.query(By.css('#result_option_0'));
-                firstElement.triggerEventHandler('keyup.arrowup', { target : firstElement.nativeElement});
+                firstElement.triggerEventHandler('keyup.arrowup', { target: firstElement.nativeElement });
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -577,55 +605,33 @@ describe('SearchControlComponent', () => {
             });
         }));
     });
-});
 
-describe('SearchControlComponent - No result custom', () => {
+    describe('SearchControlComponent - No result custom', () => {
 
-    let fixtureCustom: ComponentFixture<SimpleSearchTestCustomEmptyComponent>;
-    let elementCustom: HTMLElement;
-    let componentCustom: SimpleSearchTestCustomEmptyComponent;
-    let authServiceCustom: AuthenticationService;
-    let searchServiceCustom: SearchService;
-
-    setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot(),
-            SearchModule
-        ],
-        declarations: [
-            SimpleSearchTestCustomEmptyComponent
-        ]
-    });
-
-    beforeEach(() => {
-        fixtureCustom = TestBed.createComponent(SimpleSearchTestCustomEmptyComponent);
-        componentCustom = fixtureCustom.componentInstance;
-        elementCustom = fixtureCustom.nativeElement;
-        authServiceCustom = TestBed.get(AuthenticationService);
-        searchServiceCustom = TestBed.get(SearchService);
-
-        spyOn(authServiceCustom, 'isEcmLoggedIn').and.returnValue(true);
-    });
-
-    afterEach(async(() => {
-        fixtureCustom.destroy();
-    }));
-
-    it('should display the custom no results when it is configured', async(() => {
-        const noResultCustomMessage = 'BANDI IS NOTHING';
-        componentCustom.setCustomMessageForNoResult(noResultCustomMessage);
-        spyOn(searchServiceCustom, 'search').and.returnValue(Observable.of(noResult));
-        fixtureCustom.detectChanges();
-
-        let inputDebugElement = fixtureCustom.debugElement.query(By.css('#adf-control-input'));
-        inputDebugElement.nativeElement.value = 'BANDY NOTHING';
-        inputDebugElement.nativeElement.focus();
-        inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
-        fixtureCustom.whenStable().then(() => {
-            fixtureCustom.detectChanges();
-            expect(elementCustom.querySelector('#custom-no-result').textContent).toBe(noResultCustomMessage);
+        beforeEach(() => {
+            fixtureCustom = TestBed.createComponent(SimpleSearchTestCustomEmptyComponent);
+            componentCustom = fixtureCustom.componentInstance;
+            elementCustom = fixtureCustom.nativeElement;
         });
-    }));
+
+        it('should display the custom no results when it is configured', async(() => {
+            const noResultCustomMessage = 'BANDI IS NOTHING';
+            spyOn(componentCustom.searchComponent, 'isSearchBarActive').and.returnValue(true);
+            componentCustom.setCustomMessageForNoResult(noResultCustomMessage);
+            spyOn(searchService, 'search').and.returnValue(Observable.of(noResult));
+            fixtureCustom.detectChanges();
+
+            let inputDebugElement = fixtureCustom.debugElement.query(By.css('#adf-control-input'));
+            inputDebugElement.nativeElement.value = 'SOMETHING';
+            inputDebugElement.nativeElement.focus();
+            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+
+            fixtureCustom.detectChanges();
+            fixtureCustom.whenStable().then(() => {
+                fixtureCustom.detectChanges();
+                expect(elementCustom.querySelector('#custom-no-result').textContent).toBe(noResultCustomMessage);
+            });
+        }));
+    });
 
 });
