@@ -18,8 +18,9 @@
 import { TestBed, async } from '@angular/core/testing';
 import { ButtonsMenuComponent } from './buttons-menu.component';
 import { MenuButton } from './menu-button.model';
-
-describe('ButtonsMenuComponent', () => {
+import { MaterialModule } from '../material.module';
+/*tslint:disable:ban*/
+fdescribe('ButtonsMenuComponent', () => {
 
     let fixture;
     let buttonsMenuComponent: ButtonsMenuComponent;
@@ -27,6 +28,9 @@ describe('ButtonsMenuComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [
+                MaterialModule
+            ],
             declarations: [
                 ButtonsMenuComponent
             ]
@@ -44,11 +48,7 @@ describe('ButtonsMenuComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should create buttons menu component', async(() => {
-        expect(buttonsMenuComponent).toBeDefined();
-    }));
-
-    it('should hide buttons menu div when array is empty', async(() => {
+    it('should hide buttons menu div if buttons input is empty', async(() => {
         buttonsMenuComponent.buttons = [];
         fixture.detectChanges();
         fixture.whenStable().then(() => {

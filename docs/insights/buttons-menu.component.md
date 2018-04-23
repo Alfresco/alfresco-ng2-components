@@ -50,17 +50,29 @@ buttons: MenuButton[] = [];
         ];
 ```
 
-### Properties
+## Properties
+
+####Buttons Menu Component
 
 | Name | Type | Description |
 | --- | --- | -- |
 | buttons | `MenuButton []` | The array that contains all the buttons for the menu |
 
+####Button Model
+
+| Name | Type | Description |
+| --- | --- | -- |
+| label | `string` | Label to display for the button. |
+| icon | `string` | Icon to display for the button. |
+| handler | `function` | Callback for the event handler once the button is clicked. |
+| styles | `string` | Classes to apply to the button. |
+| id | `string` | Id of the button. |
+| isVisible | `function` | Variable to define if button is visible or hidden. This function must return a boolean parameter. For instance, if it returns true the button will be visible. If it returns false the button will be hiden. |
+
+
 ## Details
 
 This component uses [Angular Material](https://material.angular.io/) to style the menu.
-
-Notice the usage of `isVisible` in the Export and Save buttons. You can automatically show/hide a button using the the `isVisible` property in the MenuButton model. In this case, these buttons are using a function in the parent component to decide when our buttons must be visible/hiden.
 
 Desktop view of the menu
 ![adf-buttons-menu-desktop](../docassets/images/adf-buttons-menu-desktop.png)
@@ -68,6 +80,11 @@ Desktop view of the menu
 Mobile view of the menu
 ![adf-buttons-menu-mobile](../docassets/images/adf-buttons-menu-mobile.png)
 
+Menu Button Model
+
 ## See also
 
--   [MenuButton Model](./menu-button.model.md)
+-   [Menu Button Model](./menu-button.model.md)
+
+
+
