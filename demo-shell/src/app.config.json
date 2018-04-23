@@ -87,7 +87,7 @@
           "enabled": false,
           "expanded": false,
           "component": {
-            "selector": "adf-search-text",
+            "selector": "text",
             "settings": {
               "field": "fieldname"
             }
@@ -99,7 +99,7 @@
           "enabled": true,
           "expanded": true,
           "component": {
-            "selector": "adf-search-text",
+            "selector": "text",
             "settings": {
               "pattern": "cm:name:'(.*?)'",
               "field": "cm:name",
@@ -113,7 +113,7 @@
           "enabled": true,
           "expanded": false,
           "component": {
-            "selector": "adf-search-fields",
+            "selector": "fields",
             "settings": {
               "field": null,
               "options": [
@@ -131,7 +131,7 @@
           "enabled": true,
           "expanded": false,
           "component": {
-            "selector": "adf-search-radio",
+            "selector": "radio",
             "settings": {
               "field": null,
               "options": [
@@ -149,7 +149,7 @@
           "enabled": true,
           "expanded": false,
           "component": {
-            "selector": "adf-search-scope-locations",
+            "selector": "scope-locations",
             "settings": {
               "field": null,
               "options": [

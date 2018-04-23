@@ -31,6 +31,10 @@ import { EmptySearchResultComponent } from './components/empty-search-result.com
 import { SearchWidgetContainerComponent } from './components/search-widget-container/search-widget-container.component';
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { SearchChipListComponent } from './components/search-chip-list/search-chip-list.component';
+import { SearchTextComponent } from './components/search-text/search-text.component';
+import { SearchRadioComponent } from './components/search-radio/search-radio.component';
+import { SearchFieldsComponent } from './components/search-fields/search-fields.component';
+import { SearchScopeLocationsComponent } from './components/search-scope-locations/search-scope-locations.component';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     SearchComponent,
@@ -52,14 +56,26 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     ],
     declarations: [
         ...ALFRESCO_SEARCH_DIRECTIVES,
-        SearchWidgetContainerComponent
+        SearchWidgetContainerComponent,
+        SearchTextComponent,
+        SearchRadioComponent,
+        SearchFieldsComponent,
+        SearchScopeLocationsComponent
     ],
     exports: [
         ...ALFRESCO_SEARCH_DIRECTIVES,
-        SearchWidgetContainerComponent
+        SearchWidgetContainerComponent,
+        SearchTextComponent,
+        SearchRadioComponent,
+        SearchFieldsComponent,
+        SearchScopeLocationsComponent
     ],
     entryComponents: [
-        SearchWidgetContainerComponent
+        SearchWidgetContainerComponent,
+        SearchTextComponent,
+        SearchRadioComponent,
+        SearchFieldsComponent,
+        SearchScopeLocationsComponent
     ]
 })
 export class SearchModule {}
