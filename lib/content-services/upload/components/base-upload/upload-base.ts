@@ -84,8 +84,9 @@ export abstract class UploadBase {
         this.uploadQueue(filteredFiles);
     }
 
-    private uploadQueue(filteredFiles: FileModel[]) {
-        filteredFiles.filter(this.isFileAcceptable.bind(this))
+    private uploadQueue(files: FileModel[]) {
+        let filteredFiles = files
+            .filter(this.isFileAcceptable.bind(this))
             .filter(this.isFileSizeAcceptable.bind(this));
 
         if (filteredFiles.length > 0) {
@@ -133,7 +134,12 @@ export abstract class UploadBase {
     }
 
     protected isFileSizeAllowed(file: FileModel) {
-        return this.isMaxFileSizeDefined() && this.isFileSizeCorrect(file);
+        let isFileSizeAllowed = true;
+        if (this.isMaxFileSizeDefined()) {
+            isFileSizeAllowed = this.isFileSizeCorrect(file);
+        }
+
+        return isFileSizeAllowed;
     }
 
     protected isMaxFileSizeDefined() {
@@ -141,7 +147,7 @@ export abstract class UploadBase {
     }
 
     protected isFileSizeCorrect(file: FileModel) {
-        return this.maxFilesSize < 0 || file.size > this.maxFilesSize;
+        return this.maxFilesSize >= 0 && file.size <= this.maxFilesSize;
     }
 
     /**
@@ -152,7 +158,7 @@ export abstract class UploadBase {
     private isFileSizeAcceptable(file: FileModel): boolean {
         let acceptableSize = true;
 
-        if (this.isFileSizeAllowed(file)) {
+        if (!this.isFileSizeAllowed(file)) {
             acceptableSize = false;
 
             this.translationService.get('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', { fileName: file.name }).subscribe((message: string) => {

@@ -39,7 +39,6 @@ import { UploadBase } from './base-upload/upload-base';
 })
 export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges, NodePermissionSubject {
 
-
     /** Allows/disallows upload folders (only for Chrome). */
     @Input()
     uploadFolders: boolean = false;

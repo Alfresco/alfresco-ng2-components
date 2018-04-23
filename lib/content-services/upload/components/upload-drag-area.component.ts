@@ -118,11 +118,6 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
         if (isAllowed) {
             let fileInfo: FileInfo[] = event.detail.files;
             if (fileInfo && fileInfo.length > 0) {
-                let parentId = this.rootFolderId;
-                if (event.detail.data && event.detail.data.obj.entry.isFolder) {
-                    parentId = event.detail.data.obj.entry.id || this.rootFolderId;
-                }
-
                 this.uploadFilesInfo(fileInfo);
             }
         }
