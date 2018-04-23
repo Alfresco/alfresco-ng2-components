@@ -19,8 +19,8 @@ import { TestBed, async } from '@angular/core/testing';
 import { ButtonsMenuComponent } from './buttons-menu.component';
 import { MenuButton } from './menu-button.model';
 import { MaterialModule } from '../material.module';
-/*tslint:disable:ban*/
-fdescribe('ButtonsMenuComponent', () => {
+
+describe('ButtonsMenuComponent', () => {
 
     let fixture;
     let buttonsMenuComponent: ButtonsMenuComponent;
