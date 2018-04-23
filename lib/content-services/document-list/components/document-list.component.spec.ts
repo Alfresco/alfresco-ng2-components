@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, TemplateRef } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, TemplateRef, QueryList } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { AlfrescoApiService, DataColumnListComponent, DataColumnComponent } from '@alfresco/adf-core';
 import { DataColumn, DataTableComponent } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -73,6 +73,24 @@ describe('DocumentList', () => {
     afterEach(() => {
         fixture.destroy();
     });
+
+    it('should update schema if columns change', fakeAsync(() => {
+
+        documentList.ngOnInit();
+
+        documentList.columnList = new DataColumnListComponent();
+        documentList.columnList.columns = new QueryList<DataColumnComponent>();
+
+        spyOn(documentList.data, 'setColumns').and.callThrough();
+
+        documentList.ngAfterContentInit();
+        documentList.columnList.columns.reset([new DataColumnComponent()]);
+        documentList.columnList.columns.notifyOnChanges();
+
+        tick(100);
+
+        expect(documentList.data.setColumns).toHaveBeenCalled();
+    }));
 
     it('should setup default columns', () => {
         fixture.detectChanges();

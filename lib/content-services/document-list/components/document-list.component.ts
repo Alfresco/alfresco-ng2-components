@@ -352,14 +352,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.columnList) {
             this.subscriptions.push(
                 this.columnList.columns.changes.subscribe(() => {
-                    this.setupColumns();
+                    this.setTableSchema();
                 })
             );
         }
-        this.setupColumns();
+        this.setTableSchema();
     }
 
-    private setupColumns() {
+    private setTableSchema() {
         let schema: DataColumn[] = [];
 
         if (this.hasCustomLayout) {
