@@ -50,12 +50,6 @@ export class NodePermissionService {
             });
     }
 
-    /**
-     * Updates the permission for a node.
-     * @param node Target node
-     * @param updatedPermissionRole Permission role to update or add
-     * @returns Node with updated permission
-     */
     updatePermissionRole(node: MinimalNodeEntryEntity, updatedPermissionRole: PermissionElement): Observable<MinimalNodeEntryEntity> {
         let permissionBody = { permissions: { locallySet: []} };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
@@ -144,12 +138,6 @@ export class NodePermissionService {
             });
     }
 
-    /**
-     * Gets all members related to a group name.
-     * @param groupName Name of group to look for members
-     * @param opts Extra options supported by JSAPI
-     * @returns List of members
-     */
     getGroupMemeberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging> {
         return Observable.fromPromise(this.apiService.groupsApi.getGroupMembers(groupName, opts));
     }

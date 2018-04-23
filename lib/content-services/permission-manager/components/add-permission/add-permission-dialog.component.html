@@ -1,12 +1,15 @@
 <h2 mat-dialog-title>Search for user or groups to add..</h2>
 <mat-dialog-content>
     <adf-add-permission
+        #addPermission
         [nodeId]="nodeId"
         (select)="onSelect($event)">
     </adf-add-permission>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>CLOSE</button>
-    <button mat-button [mat-dialog-close]="true" [disabled]="currentSelection?.length === 0">ADD</button>
+    <button mat-button [mat-dialog-close]="true"
+            [disabled]="currentSelection?.length === 0"
+            (click)="onAddClicked()">ADD</button>
 </mat-dialog-actions>
 

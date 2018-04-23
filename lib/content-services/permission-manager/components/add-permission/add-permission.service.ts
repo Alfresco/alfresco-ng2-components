@@ -20,6 +20,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { AddPermissionDialogComponent } from './add-permission-dialog.component';
+import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 
 @Injectable()
 export class AddNodePermissionDialogService {
@@ -31,21 +32,24 @@ export class AddNodePermissionDialogService {
     }
 
     /** @param action Name of the action to show in the title */
-    /** @param contentEntry Item to upload */
-    openAddPermissionDialog(action: string, contentEntry: any): Observable<any[]> {
-        const select = new Subject<any[]>();
-        select.subscribe({
+    openAddPermissionDialog(nodeId: string, title?: string): Observable<any[]> {
+        const success = new Subject<any[]>();
+        success.subscribe({
             complete: this.close.bind(this)
         });
 
-        const data: any = {
+        const data: AddPermissionDialogData = {
+            nodeId: nodeId,
+            title: 'AMMACCABANANE',
+            success: success,
+            error: null
         };
 
-        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
-        return select;
+        this.openDialog(data, 'adf-content-node-selector-dialog', '630px');
+        return success;
     }
 
-    private openContentNodeDialog(data: any, currentPanelClass: string, chosenWidth: string) {
+    private openDialog(data: any, currentPanelClass: string, chosenWidth: string) {
         this.dialog.open(AddPermissionDialogComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
     }
 

@@ -13,6 +13,14 @@
             border: 2px solid mat-color($foreground, base, 0.07);
         }
 
+        &-permission-start-message {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border: 2px solid mat-color($foreground, base, 0.07);
+        }
+
         &-permission-search {
             &-input {
                 width: 100%;
