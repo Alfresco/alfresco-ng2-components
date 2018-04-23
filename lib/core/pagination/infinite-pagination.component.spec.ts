@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Pagination } from 'alfresco-js-api';
-import { MaterialModule } from '../material.module';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('InfinitePaginationComponent', () => {
 
@@ -30,17 +30,9 @@ describe('InfinitePaginationComponent', () => {
     let component: InfinitePaginationComponent;
     let pagination: Pagination;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                MaterialModule
-            ],
-            declarations: [
-                InfinitePaginationComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(InfinitePaginationComponent);
@@ -54,7 +46,6 @@ describe('InfinitePaginationComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('Standalone', () => {

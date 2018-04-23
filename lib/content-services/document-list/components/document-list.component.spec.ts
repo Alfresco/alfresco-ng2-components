@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, NgZone, SimpleChange, TemplateRef } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, TemplateRef } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { DataColumn, DataTableComponent } from '@alfresco/adf-core';
-import { DataTableModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { FileNode, FolderNode } from '../../mock';
@@ -38,8 +37,8 @@ import { RowFilter } from './../data/row-filter.model';
 import { DocumentListService } from './../services/document-list.service';
 import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
-
-declare let jasmine: any;
+import { setupTestBed } from '@alfresco/adf-core';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('DocumentList', () => {
 
@@ -51,24 +50,10 @@ describe('DocumentList', () => {
     let element: HTMLElement;
     let eventMock: any;
 
-    beforeEach(async(() => {
-        let zone = new NgZone({ enableLongStackTrace: false });
-
-        TestBed.configureTestingModule({
-            imports: [
-                DataTableModule
-            ],
-            declarations: [
-                DocumentListComponent
-            ],
-            providers: [
-                DocumentListService,
-                CustomResourcesService,
-                { provide: NgZone, useValue: zone }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
     beforeEach(() => {
         eventMock = {
@@ -78,35 +63,27 @@ describe('DocumentList', () => {
 
         fixture = TestBed.createComponent(DocumentListComponent);
 
-        let translateService = TestBed.get(TranslationService);
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
-
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
         documentListService = TestBed.get(DocumentListService);
         apiService = TestBed.get(AlfrescoApiService);
         customResourcesService = TestBed.get(CustomResourcesService);
-
-        fixture.detectChanges();
-    });
-
-    beforeEach(() => {
-        jasmine.Ajax.install();
     });
 
     afterEach(() => {
-        jasmine.Ajax.uninstall();
+        fixture.destroy();
     });
 
     it('should setup default columns', () => {
+        fixture.detectChanges();
         documentList.ngAfterContentInit();
 
         expect(documentList.data.getColumns().length).not.toBe(0);
     });
 
     it('should add the custom columns', () => {
+        fixture.detectChanges();
+
         let column = <DataColumn> {
             title: 'title',
             key: 'source',
@@ -178,41 +155,29 @@ describe('DocumentList', () => {
         expect(action.execute).toHaveBeenCalledWith(node);
     });
 
-    it('should show the loading state during the loading of new elements', (done) => {
+    it('should show the loading state during the loading of new elements', () => {
+        documentList.ngOnInit();
         documentList.ngAfterContentInit();
         documentList.node = new NodePaging();
 
         fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-document-list-loading')).toBeDefined();
-            done();
-        });
+        expect(element.querySelector('.adf-document-list-loading')).toBeDefined();
     });
 
-    it('should hide the header if showHeader is false', (done) => {
+    it('should hide the header if showHeader is false', () => {
         documentList.showHeader = false;
 
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-datatable-header')).toBe(null);
-            done();
-        });
+        expect(element.querySelector('.adf-datatable-header')).toBe(null);
     });
 
-    it('should show the header if showHeader is true', (done) => {
+    it('should show the header if showHeader is true', () => {
         documentList.showHeader = true;
 
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-datatable-header')).toBeDefined();
-            done();
-        });
+        expect(element.querySelector('.adf-datatable-header')).toBeDefined();
     });
 
     it('should reset selection upon reload', () => {
@@ -224,29 +189,21 @@ describe('DocumentList', () => {
         expect(documentList.resetSelection).toHaveBeenCalled();
     });
 
-    it('should use the cardview style if cardview is true', (done) => {
+    it('should use the cardview style if cardview is true', () => {
         documentList.display = 'gallery';
 
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-data-table-card')).toBeDefined();
-            done();
-        });
+        expect(element.querySelector('.adf-data-table-card')).toBeDefined();
     });
 
-    it('should use the base document list style if cardview is false', (done) => {
+    it('should use the base document list style if cardview is false', () => {
         documentList.display = 'list';
 
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-data-table-card')).toBe(null);
-            expect(element.querySelector('.adf-data-table')).toBeDefined();
-            done();
-        });
+        expect(element.querySelector('.adf-data-table-card')).toBe(null);
+        expect(element.querySelector('.adf-data-table')).toBeDefined();
     });
 
     it('should reset selection upon reload', () => {
@@ -258,7 +215,7 @@ describe('DocumentList', () => {
         expect(documentList.resetSelection).toHaveBeenCalled();
     });
 
-    it('should reset when a prameter changes', () => {
+    it('should reset when a parameter changes', () => {
         spyOn(documentList.dataTable, 'resetSelection').and.callThrough();
 
         documentList.ngOnChanges({});
@@ -266,25 +223,18 @@ describe('DocumentList', () => {
     });
 
     it('should empty template be present when no element are present', (done) => {
-        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        fixture.detectChanges();
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
-        documentList.reload();
-
-        fixture.detectChanges();
+        spyOn(documentListService, 'getFolder').and.returnValue(Observable.of(fakeNodeAnswerWithNOEntries));
 
         documentList.ready.subscribe(() => {
-            fixture.detectChanges();
             expect(element.querySelector('#adf-document-list-empty')).toBeDefined();
             done();
         });
 
-        jasmine.Ajax.requests.at(0).respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeNodeAnswerWithNOEntries)
-        });
+        documentList.reload();
     });
 
     it('should not execute action without node provided', () => {
@@ -674,6 +624,8 @@ describe('DocumentList', () => {
         let folder = new FolderNode();
         let file = new FileNode();
 
+        spyOn(documentList, 'loadFolder').and.stub();
+
         expect(documentList.performNavigation(folder)).toBeTruthy();
         expect(documentList.performNavigation(file)).toBeFalsy();
         expect(documentList.performNavigation(null)).toBeFalsy();
@@ -719,7 +671,7 @@ describe('DocumentList', () => {
 
     it('should display folder content from loadFolderByNodeId on reload if currentFolderId defined', () => {
         documentList.currentFolderId = 'id-folder';
-        spyOn(documentList, 'loadFolderByNodeId').and.callThrough();
+        spyOn(documentList, 'loadFolderByNodeId').and.stub();
         documentList.reload();
         expect(documentList.loadFolderByNodeId).toHaveBeenCalled();
     });
@@ -833,6 +785,7 @@ describe('DocumentList', () => {
     });
 
     it('should set row filter and reload contents if currentFolderId is set when setting rowFilter', () => {
+        fixture.detectChanges();
         let filter = <RowFilter> {};
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
@@ -854,6 +807,7 @@ describe('DocumentList', () => {
     });
 
     it('should set image resolver for underlying adapter', () => {
+        fixture.detectChanges();
         let resolver = <ImageResolver> {};
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
 
@@ -933,7 +887,7 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('123');
     });
 
-    it('should set no permision when getFolderNode fails with 403', (done) => {
+    it('should set no permission when getFolderNode fails with 403', (done) => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
         spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.throw(error));
 
@@ -957,6 +911,7 @@ describe('DocumentList', () => {
     });
 
     it('should reload contents if node data changes after previously got noPermission error', () => {
+        fixture.detectChanges();
         spyOn(documentList.data, 'loadPage').and.callThrough();
 
         documentList.noPermission = true;
@@ -968,7 +923,7 @@ describe('DocumentList', () => {
         expect(documentList.noPermission).toBeFalsy();
     });
 
-    it('should noPermission be true if navigate to a folder with no  permission', (done) => {
+    it('should noPermission be true if navigate to a folder with no  permission', () => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
 
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
@@ -981,12 +936,8 @@ describe('DocumentList', () => {
         documentList.loadFolder();
         let clickedFolderNode = new FolderNode('fake-folder-node');
         documentList.onNodeDblClick(clickedFolderNode);
-        fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            expect(documentList.noPermission).toBeTruthy();
-            done();
-        });
+        expect(documentList.noPermission).toBeTruthy();
     });
 
     it('should not perform navigation for virtual sources', () => {
@@ -1061,6 +1012,7 @@ describe('DocumentList', () => {
     });
 
     it('should assure that sites have name property set', (done) => {
+        fixture.detectChanges();
         const sitesApi = apiService.getInstance().core.sitesApi;
         spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
 
@@ -1075,6 +1027,7 @@ describe('DocumentList', () => {
     });
 
     it('should assure that sites have name property set correctly', (done) => {
+        fixture.detectChanges();
         const sitesApi = apiService.getInstance().core.sitesApi;
         spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
 
@@ -1109,6 +1062,7 @@ describe('DocumentList', () => {
     });
 
     it('should assure that user membership sites have name property set', (done) => {
+        fixture.detectChanges();
         const peopleApi = apiService.getInstance().core.peopleApi;
         spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
@@ -1123,6 +1077,7 @@ describe('DocumentList', () => {
     });
 
     it('should assure that user membership sites have name property set correctly', (done) => {
+        fixture.detectChanges();
         const peopleApi = apiService.getInstance().core.peopleApi;
         spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
@@ -1267,9 +1222,10 @@ describe('DocumentList', () => {
     });
 
     it('should add includeFields in the server request when present', () => {
+        fixture.detectChanges();
         documentList.currentFolderId = 'fake-id';
         documentList.includeFields = ['test-include'];
-        spyOn(documentListService, 'getFolder');
+        spyOn(documentListService, 'getFolder').and.stub();
 
         documentList.ngOnChanges({ rowFilter: new SimpleChange(null, <RowFilter> {}, true) });
 

@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CookieServiceMock } from './../mock/cookie.service.mock';
+import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { StorageService } from './storage.service';
-import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -35,31 +33,18 @@ describe('AuthenticationService', () => {
     let storage: StorageService;
     let cookie: CookieService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                AuthenticationService,
-                StorageService,
-                UserPreferencesService,
-                { provide: CookieService, useClass: CookieServiceMock }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         apiService = TestBed.get(AlfrescoApiService);
         authService = TestBed.get(AuthenticationService);
         preferences = TestBed.get(UserPreferencesService);
+
         cookie = TestBed.get(CookieService);
+        cookie.clear();
+
         storage = TestBed.get(StorageService);
         storage.clear();
 
@@ -67,6 +52,8 @@ describe('AuthenticationService', () => {
     });
 
     afterEach(() => {
+        cookie.clear();
+        storage.clear();
         jasmine.Ajax.uninstall();
     });
 
@@ -182,7 +169,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ECM] should return ticket undefined when the credentials are wrong', (done) => {
+        it('[ECM] should return ticket undefined when the credentials are wrong', (done) => {
             authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
                 },
@@ -343,7 +330,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[BPM] should return ticket undefined when the credentials are wrong', (done) => {
+        it('[BPM] should return ticket undefined when the credentials are wrong', (done) => {
             authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
                 },
@@ -507,7 +494,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
+        it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },

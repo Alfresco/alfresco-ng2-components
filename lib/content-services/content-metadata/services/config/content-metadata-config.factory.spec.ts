@@ -15,29 +15,31 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { AppConfigService, LogService } from '@alfresco/adf-core';
+import { TestBed } from '@angular/core/testing';
+import { AppConfigService, LogService, setupTestBed } from '@alfresco/adf-core';
 import { IndifferentConfigService } from './indifferent-config.service';
 import { AspectOrientedConfigService } from './aspect-oriented-config.service';
 import { LayoutOrientedConfigService } from './layout-oriented-config.service';
 import { ContentMetadataConfigFactory } from './content-metadata-config.factory';
 import { ContentMetadataConfig } from '../../interfaces/content-metadata.interfaces';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ContentMetadataConfigFactory', () => {
 
-    let factory: ContentMetadataConfigFactory,
-        appConfig: AppConfigService,
-        config: ContentMetadataConfig;
+    let factory: ContentMetadataConfigFactory;
+    let appConfig: AppConfigService;
+    let config: ContentMetadataConfig;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                ContentMetadataConfigFactory,
-                AppConfigService,
-                { provide: LogService, useValue: { error: () => {} }}
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            HttpClientModule
+        ],
+        providers: [
+            ContentMetadataConfigFactory,
+            AppConfigService,
+            { provide: LogService, useValue: { error: () => {} }}
+        ]
+    });
 
     beforeEach(() => {
         factory = TestBed.get(ContentMetadataConfigFactory);
@@ -51,10 +53,6 @@ describe('ContentMetadataConfigFactory', () => {
             }
         };
     }
-
-    afterEach(() => {
-        TestBed.resetTestingModule();
-    });
 
     describe('get', () => {
 

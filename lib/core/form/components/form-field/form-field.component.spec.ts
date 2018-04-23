@@ -15,18 +15,14 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../../../material.module';
-import { ErrorWidgetComponent } from '../widgets/error/error.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRenderingService } from './../../services/form-rendering.service';
-import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../widgets/core/index';
-import { InputMaskDirective } from './../widgets/text/text-mask.component';
-import { TextWidgetComponent, CheckboxWidgetComponent, WidgetComponent } from '../widgets/index';
+import { TextWidgetComponent, CheckboxWidgetComponent } from '../widgets/index';
 import { FormFieldComponent } from './form-field.component';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { FormService } from '../../services/form.service';
-import { EcmModelService } from '../../services/ecm-model.service';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreModule } from '../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('FormFieldComponent', () => {
 
@@ -36,35 +32,12 @@ describe('FormFieldComponent', () => {
 
     let formRenderingService: FormRenderingService;
 
-    beforeEach(async(() => {
-
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                FormFieldComponent,
-                WidgetComponent,
-                TextWidgetComponent,
-                CheckboxWidgetComponent,
-                InputMaskDirective,
-                ErrorWidgetComponent],
-            providers: [
-                FormRenderingService,
-                WidgetVisibilityService,
-                FormService,
-                EcmModelService
-            ]
-        });
-
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [WidgetComponent, TextWidgetComponent, CheckboxWidgetComponent]
-            }
-        });
-
-        TestBed.compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(FormFieldComponent);

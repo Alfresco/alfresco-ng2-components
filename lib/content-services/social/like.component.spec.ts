@@ -17,7 +17,8 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LikeComponent } from './like.component';
-import { RatingService } from './services/rating.service';
+import { setupTestBed } from '../../core/testing';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 declare let jasmine: any;
 
@@ -27,12 +28,9 @@ describe('Like component', () => {
     let fixture: ComponentFixture<LikeComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ LikeComponent ],
-            providers: [ RatingService ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule]
+    });
 
     beforeEach(() => {
         jasmine.Ajax.install();
@@ -45,6 +43,7 @@ describe('Like component', () => {
     });
 
     afterEach(() => {
+        fixture.destroy();
         jasmine.Ajax.uninstall();
     });
 

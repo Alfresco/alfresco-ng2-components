@@ -19,7 +19,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { Component, DebugElement } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 
 import { DialogModule } from '../dialogs/dialog.module';
 import { NodeDownloadDirective } from './node-download.directive';
@@ -40,17 +40,22 @@ describe('NodeDownloadDirective', () => {
     let contentService;
     let dialogSpy;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DialogModule
-            ],
-            declarations: [
-                TestComponent,
-                NodeDownloadDirective
-            ]
-        });
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            DialogModule
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            // { provide: AppConfigService, useValue: AppConfigServiceMock },
+        ],
+        declarations: [
+            TestComponent,
+            NodeDownloadDirective
+        ]
+    });
 
+    beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.query(By.directive(NodeDownloadDirective));

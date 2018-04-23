@@ -16,11 +16,12 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 declare let jasmine: any;
 
@@ -121,17 +122,11 @@ describe('TaskListComponent', () => {
     let fixture: ComponentFixture<TaskListComponent>;
     let appConfig: AppConfigService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TaskListComponent
-            ],
-            providers: [
-                TaskListService
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
 
     beforeEach(() => {
         appConfig = TestBed.get(AppConfigService);
@@ -625,17 +620,11 @@ describe('CustomTaskListComponent', () => {
     let fixture: ComponentFixture<CustomTaskListComponent>;
     let component: CustomTaskListComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TaskListComponent,
-                CustomTaskListComponent
-            ],
-            providers: [
-                TaskListService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreModule.forRoot()],
+        declarations: [TaskListComponent, CustomTaskListComponent],
+        providers: [TaskListService]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomTaskListComponent);

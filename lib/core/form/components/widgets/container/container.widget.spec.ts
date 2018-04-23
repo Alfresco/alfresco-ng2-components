@@ -15,41 +15,29 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MaterialModule } from '../../../../material.module';
-import { WIDGET_DIRECTIVES } from '../index';
-import { MASK_DIRECTIVE } from '../index';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
-import { FormFieldComponent } from './../../form-field/form-field.component';
-import { ContentWidgetComponent } from './../content/content.widget';
 import { ContainerColumnModel } from './../core/container-column.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { ContainerWidgetComponent } from './container.widget';
 import { ContainerWidgetComponentModel } from './container.widget.model';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ContainerWidgetComponent', () => {
 
     let widget: ContainerWidgetComponent;
     let fixture: ComponentFixture<ContainerWidgetComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
-            providers: [
-                FormService,
-                EcmModelService,
-                ActivitiContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContainerWidgetComponent);

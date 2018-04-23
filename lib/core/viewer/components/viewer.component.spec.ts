@@ -21,27 +21,15 @@ import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
-import { MaterialModule } from './../../material.module';
-import { ToolbarModule } from '../../toolbar/toolbar.module';
+import { CoreModule } from '../../core.module';
 
 import { Observable } from 'rxjs/Observable';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { ImgViewerComponent } from './imgViewer.component';
-import { MediaPlayerComponent } from './mediaPlayer.component';
-import { PdfViewerComponent } from './pdfViewer.component';
-import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
-import { PdfThumbComponent } from './pdfViewer-thumb.component';
-import { TxtViewerComponent } from './txtViewer.component';
-import { UnknownFormatComponent } from './unknown-format/unknown-format.component';
-import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
-import { ViewerOpenWithComponent } from './viewer-open-with.component';
-import { ViewerSidebarComponent } from './viewer-sidebar.component';
-import { ViewerToolbarComponent } from './viewer-toolbar.component';
-import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.component';
 import { ViewerComponent } from './viewer.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import 'rxjs/add/observable/throw';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -134,44 +122,28 @@ describe('ViewerComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                ToolbarModule,
-                MaterialModule,
-                FlexLayoutModule
-            ],
-            declarations: [
-                ViewerComponent,
-                PdfViewerComponent,
-                PdfThumbListComponent,
-                PdfThumbComponent,
-                TxtViewerComponent,
-                MediaPlayerComponent,
-                ImgViewerComponent,
-                UnknownFormatComponent,
-                ViewerSidebarComponent,
-                ViewerToolbarComponent,
-                ViewerOpenWithComponent,
-                ViewerMoreActionsComponent,
-                ViewerToolbarActionsComponent,
-                ViewerWithCustomToolbarComponent,
-                ViewerWithCustomSidebarComponent,
-                ViewerWithCustomOpenWithComponent,
-                ViewerWithCustomMoreActionsComponent,
-                ViewerWithCustomToolbarActionsComponent
-            ],
-            providers: [
-                {provide: RenditionsService, useValue: {
-                    getRendition: () => {
-                        return Observable.throw('throwed');
-                    }
-                }},
-                RenderingQueueServices,
-                { provide: Location, useClass: SpyLocation }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            ViewerWithCustomToolbarComponent,
+            ViewerWithCustomSidebarComponent,
+            ViewerWithCustomOpenWithComponent,
+            ViewerWithCustomMoreActionsComponent,
+            ViewerWithCustomToolbarActionsComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            {provide: RenditionsService, useValue: {
+                getRendition: () => {
+                    return Observable.throw('throwed');
+                }
+            }},
+            RenderingQueueServices,
+            { provide: Location, useClass: SpyLocation }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ViewerComponent);

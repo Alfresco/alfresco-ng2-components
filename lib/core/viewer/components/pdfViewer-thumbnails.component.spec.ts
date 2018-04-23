@@ -19,7 +19,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
-import { PdfThumbComponent } from './pdfViewer-thumb.component';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
 
 declare let PDFJS: any;
 
@@ -54,30 +55,25 @@ describe('PdfThumbListComponent', () => {
         eventBus: new PDFJS.EventBus()
     };
 
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule
-            ],
-            declarations: [
-                PdfThumbListComponent,
-                PdfThumbComponent
-            ]
-        })
-        .compileComponents()
-        .then(() => {
-            fixture = TestBed.createComponent(PdfThumbListComponent);
-            component = fixture.componentInstance;
+        fixture = TestBed.createComponent(PdfThumbListComponent);
+        component = fixture.componentInstance;
 
-            component.pdfViewer = viewerMock;
+        component.pdfViewer = viewerMock;
 
-            // provide scrollable container
-            fixture.nativeElement.style.display = 'block';
-            fixture.nativeElement.style.height = '700px';
-            fixture.nativeElement.style.overflow = 'scroll';
-            fixture.debugElement.query(By.css('.pdf-thumbnails__content'))
-                .nativeElement.style.height = '2000px';
-        });
+        // provide scrollable container
+        fixture.nativeElement.style.display = 'block';
+        fixture.nativeElement.style.height = '700px';
+        fixture.nativeElement.style.overflow = 'scroll';
+        fixture.debugElement.query(By.css('.pdf-thumbnails__content'))
+            .nativeElement.style.height = '2000px';
     }));
 
     it('should render initial rage of items', () => {

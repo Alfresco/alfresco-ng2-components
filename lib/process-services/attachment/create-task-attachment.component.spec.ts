@@ -16,31 +16,23 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 
-import { ProcessContentService } from '@alfresco/adf-core';
+import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
 import { AttachmentComponent } from './create-task-attachment.component';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
-describe('Activiti Task Create Attachment', () => {
+describe('AttachmentComponent', () => {
 
     let service: ProcessContentService;
     let component: AttachmentComponent;
     let fixture: ComponentFixture<AttachmentComponent>;
     let createTaskRelatedContentSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-            ],
-            declarations: [
-                AttachmentComponent
-            ],
-            providers: [
-                ProcessContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
     beforeEach(() => {
 

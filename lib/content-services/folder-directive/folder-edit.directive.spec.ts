@@ -15,17 +15,13 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { MatDialog, MatDialogModule } from '@angular/material';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material';
 import { By } from '@angular/platform-browser';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
 
-import { ContentService, TranslateLoaderService, DirectiveModule } from '@alfresco/adf-core';
+import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { FolderEditDirective } from './folder-edit.directive';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
@@ -55,33 +51,17 @@ describe('FolderEditDirective', () => {
         preventDefault: () => null
     };
 
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            TestComponent,
+            FolderEditDirective
+        ]
+    });
+
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                MatDialogModule,
-                FormsModule,
-                ReactiveFormsModule,
-                DirectiveModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                TestComponent,
-                FolderEditDirective
-            ]
-            ,
-            providers: [
-                ContentService
-            ]
-        });
-
-        TestBed.compileComponents();
-
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderEditDirective));
         dialog = TestBed.get(MatDialog);

@@ -19,15 +19,17 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SimpleChange } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { FormModule } from '../../index';
 import { formDefinitionDropdownField, formDefinitionTwoTextFields } from '../../mock';
 import { formReadonlyTwoTextFields } from '../../mock';
 import { formDefVisibilitiFieldDependsOnNextOne, formDefVisibilitiFieldDependsOnPreviousOne } from '../../mock';
 import { FormService } from './../services/form.service';
 import { FormComponent } from './form.component';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 /** Duration of the select opening animation. */
 const SELECT_OPEN_ANIMATION = 200;
@@ -35,7 +37,7 @@ const SELECT_OPEN_ANIMATION = 200;
 /** Duration of the select closing animation and the timeout interval for the backdrop. */
 const SELECT_CLOSE_ANIMATION = 500;
 
-describe('FormComponent UI and visibiltiy', () => {
+describe('FormComponent UI and visibility', () => {
     let component: FormComponent;
     let service: FormService;
     let fixture: ComponentFixture<FormComponent>;
@@ -47,19 +49,18 @@ describe('FormComponent UI and visibiltiy', () => {
         fixture.detectChanges();
     }
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                FormModule
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(FormComponent);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(FormService);
+        service = TestBed.get(FormService);
     });
 
     afterEach(() => {

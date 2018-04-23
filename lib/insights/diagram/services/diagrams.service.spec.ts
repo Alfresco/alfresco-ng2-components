@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/adf-core';
+import { TestBed } from '@angular/core/testing';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { DiagramsService } from './diagrams.service';
+import { InsightsTestingModule } from '../../testing/insights.testing.module';
 
 declare let jasmine: any;
 
@@ -25,13 +26,9 @@ describe('DiagramsService', () => {
 
     let service: DiagramsService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                DiagramsService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [InsightsTestingModule]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);

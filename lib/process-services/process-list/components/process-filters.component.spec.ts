@@ -22,40 +22,38 @@ import { FilterProcessRepresentationModel } from '../models/filter-process.model
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 
-describe('ActivitiFilters', () => {
+describe('ProcessFiltersComponent', () => {
 
     let filterList: ProcessFiltersComponent;
     let processFilterService: ProcessFilterService;
     let appsProcessService: AppsProcessService;
-
-    let fakeGlobalFilter = [];
-    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
-        name: 'FakeInvolvedTasks',
-        filter: { state: 'open', assignment: 'fake-involved' }
-    }));
-    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
-        name: 'FakeMyTasks',
-        filter: { state: 'open', assignment: 'fake-assignee' }
-    }));
-
-    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
-        name: 'Running',
-        filter: { state: 'open', assignment: 'fake-running' }
-    }));
-
-    let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
-        resolve(fakeGlobalFilter);
-    });
-
-    let mockErrorFilterList = {
-        error: 'wrong request'
-    };
-
-    let mockErrorFilterPromise = new Promise(function (resolve, reject) {
-        reject(mockErrorFilterList);
-    });
+    let fakeGlobalFilterPromise;
+    let mockErrorFilterPromise;
 
     beforeEach(() => {
+        fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
+            resolve([
+                new FilterProcessRepresentationModel({
+                    name: 'FakeInvolvedTasks',
+                    filter: { state: 'open', assignment: 'fake-involved' }
+                }),
+                new FilterProcessRepresentationModel({
+                    name: 'FakeMyTasks',
+                    filter: { state: 'open', assignment: 'fake-assignee' }
+                }),
+                new FilterProcessRepresentationModel({
+                    name: 'Running',
+                    filter: { state: 'open', assignment: 'fake-running' }
+                })
+            ]);
+        });
+
+        mockErrorFilterPromise = new Promise(function (resolve, reject) {
+            reject({
+                error: 'wrong request'
+            });
+        });
+
         processFilterService = new ProcessFilterService(null);
         appsProcessService = new AppsProcessService(null, null);
         filterList = new ProcessFiltersComponent(processFilterService, appsProcessService);

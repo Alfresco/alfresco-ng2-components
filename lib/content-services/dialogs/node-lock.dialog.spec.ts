@@ -17,57 +17,38 @@
 
 import moment from 'moment-es6';
 
-import { async, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { Observable } from 'rxjs/Observable';
-
-import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { NodeLockDialogComponent } from './node-lock.dialog';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('NodeLockDialogComponent', () => {
 
     let fixture: ComponentFixture<NodeLockDialogComponent>;
     let component: NodeLockDialogComponent;
-    let translationService: TranslationService;
     let alfrescoApi: AlfrescoApiService;
     let expiryDate;
     const dialogRef = {
         close: jasmine.createSpy('close')
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                FormsModule,
-                ReactiveFormsModule,
-                BrowserDynamicTestingModule
-            ],
-            declarations: [
-                NodeLockDialogComponent
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: dialogRef }
-            ]
-        });
-
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [NodeLockDialogComponent] }
-        });
-
-        TestBed.compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        providers: [
+            { provide: MatDialogRef, useValue: dialogRef }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(NodeLockDialogComponent);
         component = fixture.componentInstance;
-
         alfrescoApi = TestBed.get(AlfrescoApiService);
+    });
 
-        translationService = TestBed.get(TranslationService);
-        spyOn(translationService, 'get').and.returnValue(Observable.of('message'));
+    afterEach(() => {
+        fixture.destroy();
     });
 
     describe('Node lock dialog component', () => {

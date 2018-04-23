@@ -20,7 +20,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
-import { AnalyticsProcessModule } from '../analytics-process.module';
+import { setupTestBed } from '@alfresco/adf-core';
+import { InsightsTestingModule } from '../../testing/insights.testing.module';
 
 declare let jasmine: any;
 
@@ -30,13 +31,9 @@ describe('AnalyticsReportParametersComponent', () => {
     let fixture: ComponentFixture<AnalyticsReportParametersComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AnalyticsProcessModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [InsightsTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsReportParametersComponent);

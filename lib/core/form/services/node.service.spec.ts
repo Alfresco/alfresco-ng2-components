@@ -19,6 +19,11 @@ import { TestBed } from '@angular/core/testing';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { EcmModelService } from './ecm-model.service';
 import { NodeService } from './node.service';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
@@ -26,13 +31,17 @@ describe('NodeService', () => {
 
     let service: NodeService;
 
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
+
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                NodeService,
-                EcmModelService
-            ]
-        });
         service = TestBed.get(NodeService);
     });
 

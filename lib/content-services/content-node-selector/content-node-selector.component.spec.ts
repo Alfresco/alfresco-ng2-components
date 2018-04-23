@@ -18,74 +18,50 @@
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import { ContentNodeSelectorService } from './content-node-selector.service';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { By } from '@angular/platform-browser';
-import {
-        EmptyFolderContentDirective,
-        DocumentListComponent,
-        DocumentListService,
-        CustomResourcesService
-    } from '../document-list';
-import { ContentService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { Observable } from 'rxjs/Observable';
+import { ContentTestingModule } from '../testing/content.testing.module';
+import { DocumentListService } from '../document-list/services/document-list.service';
+import { DocumentListComponent } from '../document-list/components/document-list.component';
 
 describe('ContentNodeSelectorDialogComponent', () => {
 
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
-    let data: any;
+    let data: any = {
+        title: 'Move along citizen...',
+        actionName: 'move',
+        select: new EventEmitter<MinimalNodeEntryEntity>(),
+        rowFilter: () => {},
+        imageResolver: () => 'piccolo',
+        currentFolderId: 'cat-girl-nuku-nuku'
+    };
 
-    function setupTestbed(plusProviders) {
-        TestBed.configureTestingModule({
-            imports: [
-            ],
-            declarations: [
-                ContentNodeSelectorComponent,
-                ContentNodeSelectorPanelComponent,
-                DocumentListComponent,
-                EmptyFolderContentDirective
-            ],
-            providers: [
-                CustomResourcesService,
-                ContentNodeSelectorService,
-                ContentNodeSelectorPanelComponent,
-                DocumentListService,
-                ContentService,
-                DocumentListService,
-                ContentNodeSelectorService,
-                ...plusProviders
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        });
-    }
+    setupTestBed({
+        imports: [ContentTestingModule],
+        providers: [
+            { provide: MAT_DIALOG_DATA, useValue: data }
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
+
+    beforeEach(() => {
+        const documentListService: DocumentListService = TestBed.get(DocumentListService);
+        spyOn(documentListService, 'getFolder').and.returnValue(Observable.of({ list: [] }));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of({}));
+
+        fixture = TestBed.createComponent(ContentNodeSelectorComponent);
+        component = fixture.componentInstance;
+
+        fixture.detectChanges();
+    });
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
-    });
-
-    beforeEach(async(() => {
-        data = {
-            title: 'Move along citizen...',
-            actionName: 'move',
-            select: new EventEmitter<MinimalNodeEntryEntity>(),
-            rowFilter: () => {
-            },
-            imageResolver: () => 'piccolo',
-            currentFolderId: 'cat-girl-nuku-nuku'
-        };
-
-        setupTestbed([{ provide: MAT_DIALOG_DATA, useValue: data }]);
-        TestBed.compileComponents();
-    }));
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(ContentNodeSelectorComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     describe('Data injecting with the "Material dialog way"', () => {
@@ -98,6 +74,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
 
         it('should have the INJECTED actionName on the name of the choose button', () => {
             const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+            expect(component.buttonActionName).toBe('NODE_SELECTOR.MOVE');
             expect(actionButton).not.toBeNull();
             expect(actionButton.nativeElement.innerText).toBe('NODE_SELECTOR.MOVE');
         });
@@ -108,10 +85,14 @@ describe('ContentNodeSelectorDialogComponent', () => {
             expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
         });
 
-        it('should pass through the injected rowFilter to the documentlist', () => {
-            let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-            expect(documentList).not.toBeNull('Document list should be shown');
-            expect(documentList.componentInstance.rowFilter).toBe(data.rowFilter);
+        it('should pass through the injected rowFilter to the documentlist', (done) => {
+            fixture.whenStable().then(() => {
+                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList.componentInstance.rowFilter).toBe(data.rowFilter);
+                done();
+            });
+
         });
 
         it('should pass through the injected imageResolver to the documentlist', () => {

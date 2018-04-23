@@ -25,7 +25,9 @@ import { TranslationService } from '../services';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
 import { NodeRestoreDirective } from './node-restore.directive';
-
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 @Component({
     template: `
         <div [adf-restore]="selection"
@@ -50,29 +52,31 @@ describe('NodeRestoreDirective', () => {
     let coreApi;
     let directiveInstance;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
-        })
-        .compileComponents()
-        .then(() => {
-            fixture = TestBed.createComponent(TestComponent);
-            component = fixture.componentInstance;
-            element = fixture.debugElement.query(By.directive(NodeRestoreDirective));
-            directiveInstance = element.injector.get(NodeRestoreDirective);
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            RouterTestingModule
+        ],
+        declarations: [
+            TestComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
 
-            alfrescoService = TestBed.get(AlfrescoApiService);
-            nodesService = alfrescoService.getInstance().nodes;
-            coreApi = alfrescoService.getInstance().core;
-            translation = TestBed.get(TranslationService);
-            notification = TestBed.get(NotificationService);
-            router = TestBed.get(Router);
-        });
+    beforeEach(async(() => {
+        fixture = TestBed.createComponent(TestComponent);
+        component = fixture.componentInstance;
+        element = fixture.debugElement.query(By.directive(NodeRestoreDirective));
+        directiveInstance = element.injector.get(NodeRestoreDirective);
+
+        alfrescoService = TestBed.get(AlfrescoApiService);
+        nodesService = alfrescoService.getInstance().nodes;
+        coreApi = alfrescoService.getInstance().core;
+        translation = TestBed.get(TranslationService);
+        notification = TestBed.get(NotificationService);
+        router = TestBed.get(Router);
     }));
 
     beforeEach(() => {

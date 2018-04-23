@@ -16,12 +16,13 @@
  */
 
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
-
 import { AuthenticationService } from '../services';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
 
 describe('LogoutDirective', () => {
 
@@ -35,16 +36,15 @@ describe('LogoutDirective', () => {
     let router: Router;
     let authService: AuthenticationService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            RouterTestingModule
+        ],
+        declarations: [
+            TestComponent
+        ]
+    });
 
     beforeEach(() => {
         router = TestBed.get(Router);

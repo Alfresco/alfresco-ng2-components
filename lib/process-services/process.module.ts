@@ -28,6 +28,8 @@ import { AppsListModule } from './app-list/apps-list.module';
 import { ProcessCommentsModule } from './process-comments/process-comments.module';
 import { AttachmentModule } from './attachment/attachment.module';
 import { PeopleModule } from './people/people.module';
+import { ProcessService } from './process-list/services/process.service';
+import { ProcessFilterService } from './process-list/services/process-filter.service';
 
 @NgModule({
     imports: [
@@ -52,7 +54,9 @@ import { PeopleModule } from './people/people.module';
                 name: 'adf-process-services',
                 source: 'assets/adf-process-services'
             }
-        }
+        },
+        ProcessService,
+        ProcessFilterService
     ],
     exports: [
         CommonModule,

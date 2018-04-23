@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-import { MatButtonModule, MatInputModule } from '@angular/material';
-import { TranslationService, TranslationMock } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { PeopleSearchFieldComponent } from './people-search-field.component';
-import { PeopleListComponent } from '../people-list/people-list.component';
 import { By } from '@angular/platform-browser';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 describe('PeopleSearchFieldComponent', () => {
 
@@ -29,21 +28,9 @@ describe('PeopleSearchFieldComponent', () => {
     let fixture: ComponentFixture<PeopleSearchFieldComponent>;
     let debug: DebugElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatButtonModule,
-                MatInputModule
-            ],
-            declarations: [
-                PeopleListComponent,
-                PeopleSearchFieldComponent
-            ],
-            providers: [
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleSearchFieldComponent);

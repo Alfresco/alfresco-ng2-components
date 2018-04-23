@@ -17,48 +17,24 @@
 
 /*tslint:disable: ban*/
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
-import { MatExpansionModule, MatCardModule, MatButtonModule, MatIconModule } from '@angular/material';
-import { ContentMetadataService } from '../../services/content-metadata.service';
-import { BasicPropertiesService } from '../../services/basic-properties.service';
-import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
-import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
-import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
+import { setupTestBed, PermissionsEnum } from '@alfresco/adf-core';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataCardComponent', () => {
 
-    let component: ContentMetadataCardComponent,
-        fixture: ComponentFixture<ContentMetadataCardComponent>,
-        node: MinimalNodeEntryEntity,
-        preset = 'custom-preset';
+    let component: ContentMetadataCardComponent;
+    let fixture: ComponentFixture<ContentMetadataCardComponent>;
+    let node: MinimalNodeEntryEntity;
+    let preset = 'custom-preset';
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatExpansionModule,
-                MatCardModule,
-                MatButtonModule,
-                MatIconModule
-            ],
-            declarations: [
-                ContentMetadataCardComponent,
-                ContentMetadataComponent
-            ],
-            providers: [
-                ContentMetadataService,
-                BasicPropertiesService,
-                PropertyGroupTranslatorService,
-                ContentMetadataConfigFactory,
-                PropertyDescriptorsService,
-                ContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataCardComponent);

@@ -16,10 +16,10 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { VersionListComponent } from './version-list.component';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
@@ -32,14 +32,18 @@ describe('VersionListComponent', () => {
     const nodeId = 'test-id';
     const versionId = '1.0';
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                VersionListComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            VersionListComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
     afterEach(() => {
         fixture.destroy();
@@ -98,24 +102,6 @@ describe('VersionListComponent', () => {
         expect(dialog.open).toHaveBeenCalled();
         expect(alfrescoApiService.versionsApi.deleteVersion).not.toHaveBeenCalled();
     });
-
-    it('should reload list once a version is deleted', fakeAsync(() => {
-        spyOn(component, 'loadVersionHistory').and.stub();
-
-        spyOn(dialog, 'open').and.returnValue({
-            afterClosed() {
-                return Observable.of(true);
-            }
-        });
-
-        spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
-
-        component.deleteVersion(versionId);
-
-        tick();
-
-        expect(component.loadVersionHistory).toHaveBeenCalled();
-    }));
 
     it('should reload and raise version-deleted DOM event', (done) => {
         spyOn(component, 'loadVersionHistory').and.stub();

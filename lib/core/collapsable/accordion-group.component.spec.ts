@@ -17,8 +17,8 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccordionGroupComponent } from './accordion-group.component';
-import { AccordionComponent } from './accordion.component';
-import { MaterialModule } from '../material.module';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('AccordionGroupComponent', () => {
 
@@ -26,24 +26,19 @@ describe('AccordionGroupComponent', () => {
     let component: AccordionGroupComponent;
     let element: any;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                AccordionGroupComponent
-            ],
-            providers: [AccordionComponent]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AccordionGroupComponent);
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+    });
 
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should define mat-accordion ', async(() => {

@@ -16,30 +16,25 @@
  */
 
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabChangeEvent } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { MaterialModule } from '../material.module';
-import { InfoDrawerLayoutComponent } from './info-drawer-layout.component';
 import { InfoDrawerComponent } from './info-drawer.component';
-import { InfoDrawerTabComponent } from './info-drawer.component';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('InfoDrawerComponent', () => {
     let element: HTMLElement;
     let component: InfoDrawerComponent;
     let fixture: ComponentFixture<InfoDrawerComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                InfoDrawerComponent,
-                InfoDrawerLayoutComponent
-            ],
-            imports: [
-                MaterialModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(InfoDrawerComponent);
@@ -91,19 +86,15 @@ describe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
     let component: CustomInfoDrawerComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                InfoDrawerComponent,
-                InfoDrawerTabComponent,
-                InfoDrawerLayoutComponent,
-                CustomInfoDrawerComponent
-            ],
-            imports: [
-                MaterialModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            CustomInfoDrawerComponent
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);

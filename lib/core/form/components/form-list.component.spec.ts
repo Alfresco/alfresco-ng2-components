@@ -16,14 +16,13 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService } from '../../index';
-import { DataTableModule } from '../../datatable/datatable.module';
-import { DataColumnModule } from '../../data-column/data-column.module';
+import { TranslationService, TranslationMock } from '../../index';
 import { Observable } from 'rxjs/Observable';
-import { EcmModelService } from '../services/ecm-model.service';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';
-import { MaterialModule } from '../../material.module';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TaskAttachmentList', () => {
 
@@ -32,28 +31,15 @@ describe('TaskAttachmentList', () => {
     let service: FormService;
     let element: any;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DataColumnModule,
-                DataTableModule,
-                MaterialModule
-            ],
-            declarations: [
-                FormListComponent
-            ],
-            providers: [
-                FormService,
-                EcmModelService
-            ]
-        }).compileComponents();
-
-        let translateService = TestBed.get(TranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(async(() => {
 

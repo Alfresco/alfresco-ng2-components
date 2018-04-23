@@ -22,51 +22,33 @@ import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
-import { MatExpansionModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { BasicPropertiesService } from '../../services/basic-properties.service';
-import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
-import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import {
     CardViewBaseItemModel,
     CardViewComponent,
     CardViewUpdateService,
     NodesApiService,
-    LogService
-} from '@alfresco/adf-core';
+    LogService,
+    setupTestBed
+    } from '@alfresco/adf-core';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
-import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataComponent', () => {
 
-    let component: ContentMetadataComponent,
-        fixture: ComponentFixture<ContentMetadataComponent>,
-        node: MinimalNodeEntryEntity,
-        folderNode: MinimalNodeEntryEntity,
-        preset = 'custom-preset';
+    let component: ContentMetadataComponent;
+    let fixture: ComponentFixture<ContentMetadataComponent>;
+    let node: MinimalNodeEntryEntity;
+    let folderNode: MinimalNodeEntryEntity;
+    let preset = 'custom-preset';
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatExpansionModule,
-                MatButtonModule,
-                MatIconModule
-            ],
-            declarations: [
-                ContentMetadataComponent
-            ],
-            providers: [
-                ContentMetadataService,
-                BasicPropertiesService,
-                PropertyGroupTranslatorService,
-                PropertyDescriptorsService,
-                ContentMetadataConfigFactory,
-                NodesApiService,
-                { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        providers: [
+            { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataComponent);
@@ -96,7 +78,6 @@ describe('ContentMetadataComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('Default input param values', () => {

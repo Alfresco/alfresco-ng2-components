@@ -18,15 +18,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
-import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { MaterialModule } from '../../../../material.module';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { DropdownWidgetComponent } from './dropdown.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DropdownWidgetComponent', () => {
 
@@ -47,21 +47,20 @@ describe('DropdownWidgetComponent', () => {
         { id: 'opt_2', name: 'option_2' },
         { id: 'opt_3', name: 'option_3' }];
 
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [DropdownWidgetComponent, ErrorWidgetComponent],
-            providers: [FormService, EcmModelService, WidgetVisibilityService]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(DropdownWidgetComponent);
-            widget = fixture.componentInstance;
-            element = fixture.nativeElement;
-            formService = TestBed.get(FormService);
-            visibilityService = TestBed.get(WidgetVisibilityService);
-            widget.field = new FormFieldModel(new FormModel());
-        });
+        fixture = TestBed.createComponent(DropdownWidgetComponent);
+        widget = fixture.componentInstance;
+        element = fixture.nativeElement;
+        formService = TestBed.get(FormService);
+        visibilityService = TestBed.get(WidgetVisibilityService);
+        widget.field = new FormFieldModel(new FormModel());
     }));
 
     it('should require field with restUrl', () => {

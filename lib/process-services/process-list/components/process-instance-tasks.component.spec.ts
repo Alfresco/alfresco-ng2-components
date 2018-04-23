@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
@@ -26,35 +26,35 @@ import { taskDetailsMock } from '../../mock';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
+import { setupTestBed } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('ProcessInstanceTasksComponent', () => {
 
     let component: ProcessInstanceTasksComponent;
     let fixture: ComponentFixture<ProcessInstanceTasksComponent>;
     let service: ProcessService;
-    let getProcessTasksSpy: jasmine.Spy;
+    // let getProcessTasksSpy: jasmine.Spy;
 
     let exampleProcessInstance = new ProcessInstance({ id: '123' });
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                ProcessInstanceTasksComponent
-            ],
-            providers: [
-                ProcessService
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
 
     beforeEach(() => {
 
         fixture = TestBed.createComponent(ProcessInstanceTasksComponent);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(ProcessService);
-        getProcessTasksSpy = spyOn(service, 'getProcessTasks').and.returnValue(Observable.of([new TaskDetailsModel(taskDetailsMock)]));
+        service = TestBed.get(ProcessService);
 
+        spyOn(service, 'getProcessTasks').and.returnValue(Observable.of([new TaskDetailsModel(taskDetailsMock)]));
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should initially render message about no active tasks if no process instance ID provided', async(() => {
@@ -89,7 +89,7 @@ describe('ProcessInstanceTasksComponent', () => {
         expect(listEl).toBeNull();
     });
 
-    it('should display active tasks', () => {
+    it('should display active tasks', async(() => {
         let change = new SimpleChange(null, exampleProcessInstance, true);
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceDetails': change });
@@ -100,9 +100,9 @@ describe('ProcessInstanceTasksComponent', () => {
             expect(listEl).not.toBeNull();
             expect(listEl.queryAll(By.css('mat-list-item')).length).toBe(1);
         });
-    });
+    }));
 
-    it('should display completed tasks', () => {
+    it('should display completed tasks', async(() => {
         let change = new SimpleChange(null, exampleProcessInstance, true);
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceDetails': change });
@@ -112,36 +112,43 @@ describe('ProcessInstanceTasksComponent', () => {
             expect(listEl).not.toBeNull();
             expect(listEl.queryAll(By.css('mat-list-item')).length).toBe(1);
         });
-    });
+    }));
 
     describe('task reloading', () => {
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             component.processInstanceDetails = exampleProcessInstance;
+        });
+
+        it('should render a refresh button by default', async(() => {
             fixture.detectChanges();
-            fixture.whenStable();
+            fixture.whenStable().then(() => {
+                expect(fixture.debugElement.query(By.css('.process-tasks-refresh'))).not.toBeNull();
+            });
         }));
 
-        it('should render a refresh button by default', () => {
-            expect(fixture.debugElement.query(By.css('.process-tasks-refresh'))).not.toBeNull();
-        });
-
-        it('should render a refresh button if configured to', () => {
+        it('should render a refresh button if configured to', async(() => {
             component.showRefreshButton = true;
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('.process-tasks-refresh'))).not.toBeNull();
-        });
+            fixture.whenStable().then(() => {
+                expect(fixture.debugElement.query(By.css('.process-tasks-refresh'))).not.toBeNull();
+            });
+        }));
 
-        it('should NOT render a refresh button if configured not to', () => {
+        it('should NOT render a refresh button if configured not to', async(() => {
             component.showRefreshButton = false;
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('.process-tasks-refresh'))).toBeNull();
-        });
+            fixture.whenStable().then(() => {
+                expect(fixture.debugElement.query(By.css('.process-tasks-refresh'))).toBeNull();
+            });
+        }));
 
-        it('should call service to get tasks when reload button clicked', () => {
-            getProcessTasksSpy.calls.reset();
-            component.onRefreshClicked();
-            expect(getProcessTasksSpy).toHaveBeenCalled();
-        });
+        it('should call service to get tasks when reload button clicked', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.onRefreshClicked();
+                expect(service.getProcessTasks).toHaveBeenCalled();
+            });
+        }));
     });
 });

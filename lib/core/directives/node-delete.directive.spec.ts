@@ -20,6 +20,11 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDeleteDirective } from './node-delete.directive';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { TranslationService } from '../services/translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
 
 @Component({
     template: `
@@ -31,9 +36,9 @@ class TestComponent {
     selection = [];
 
     @ViewChild(NodeDeleteDirective)
-    deleteDirective;
+    deleteDirective: NodeDeleteDirective;
 
-    onDelete = jasmine.createSpy('onDelete');
+    onDelete(event) {}
 }
 
 @Component({
@@ -47,7 +52,7 @@ class TestWithPermissionsComponent {
     selection = [];
 
     @ViewChild(NodeDeleteDirective)
-    deleteDirective;
+    deleteDirective: NodeDeleteDirective;
 
     onDelete = jasmine.createSpy('onDelete');
 }
@@ -65,14 +70,14 @@ class TestDeletePermanentComponent {
     selection = [];
 
     @ViewChild(NodeDeleteDirective)
-    deleteDirective;
+    deleteDirective: NodeDeleteDirective;
 
     permanent = true;
 
     onDelete = jasmine.createSpy('onDelete');
 }
 
-describe('NodeleteDirective', () => {
+describe('NodeDeleteDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let fixtureWithPermissions: ComponentFixture<TestWithPermissionsComponent>;
     let fixtureWithPermanentComponent: ComponentFixture<TestDeletePermanentComponent>;
@@ -85,32 +90,41 @@ describe('NodeleteDirective', () => {
     let alfrescoApi: AlfrescoApiService;
     let nodeApi;
 
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            TestComponent,
+            TestWithPermissionsComponent,
+            TestDeletePermanentComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TestComponent,
-                TestWithPermissionsComponent,
-                TestDeletePermanentComponent
-            ]
-        })
-            .compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(TestComponent);
-                fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
-                fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);
+        fixture = TestBed.createComponent(TestComponent);
+        fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
+        fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);
 
-                component = fixture.componentInstance;
-                componentWithPermissions = fixtureWithPermissions.componentInstance;
-                componentWithPermanentDelete = fixtureWithPermanentComponent.componentInstance;
+        component = fixture.componentInstance;
+        componentWithPermissions = fixtureWithPermissions.componentInstance;
+        componentWithPermanentDelete = fixtureWithPermanentComponent.componentInstance;
 
-                element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
-                elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
-                elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
+        element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
+        elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
+        elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
 
-                alfrescoApi = TestBed.get(AlfrescoApiService);
-                nodeApi = alfrescoApi.getInstance().nodes;
-            });
+        alfrescoApi = TestBed.get(AlfrescoApiService);
+        nodeApi = alfrescoApi.getInstance().nodes;
     }));
+
+    afterEach(() => {
+        fixture.destroy();
+    });
 
     describe('Delete', () => {
 
@@ -269,18 +283,19 @@ describe('NodeleteDirective', () => {
             });
         });
 
-        it('should emit event when delete is done', fakeAsync(() => {
-            component.onDelete.calls.reset();
-            spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
+        it('should emit event when delete is done', (done) => {
+            spyOn(alfrescoApi.nodesApi, 'deleteNode').and.returnValue(Promise.resolve());
 
             component.selection = <any> [{ entry: { id: '1', name: 'name1' } }];
-
             fixture.detectChanges();
-            element.nativeElement.click();
-            tick();
 
-            expect(component.onDelete).toHaveBeenCalled();
-        }));
+            element.nativeElement.click();
+            fixture.detectChanges();
+
+            component.deleteDirective.delete.subscribe(() => {
+                done();
+            });
+        });
 
         it('should disable the button if no node are selected', fakeAsync(() => {
             component.selection = [];
@@ -329,13 +344,13 @@ describe('NodeleteDirective', () => {
 
         describe('Permanent', () => {
 
-            it('should call the api with permamnet delete option if permanent directive input is true', fakeAsync(() => {
+            it('should call the api with permanent delete option if permanent directive input is true', fakeAsync(() => {
                 let deleteApi = spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
 
                 fixtureWithPermanentComponent.detectChanges();
 
                 componentWithPermanentDelete.selection = [
-                    { entry: { id: '1', name: 'name1' }
+                    { entry: { id: '1', name: 'name1' } }
                 ];
 
                 fixtureWithPermanentComponent.detectChanges();
@@ -346,7 +361,7 @@ describe('NodeleteDirective', () => {
                 expect(deleteApi).toHaveBeenCalledWith('1', { permanent: true });
             }));
 
-            it('should call the traschan api if permanent directive input is true and the file is already in the trashcan ', fakeAsync(() => {
+            it('should call the trashcan api if permanent directive input is true and the file is already in the trashcan ', fakeAsync(() => {
                 let deleteApi = spyOn(nodeApi, 'purgeDeletedNode').and.returnValue(Promise.resolve());
 
                 fixtureWithPermanentComponent.detectChanges();

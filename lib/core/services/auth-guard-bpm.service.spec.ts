@@ -16,16 +16,12 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CookieServiceMock } from './../mock/cookie.service.mock';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { TranslateLoaderService } from './translate-loader.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('AuthGuardService BPM', () => {
 
@@ -34,24 +30,9 @@ describe('AuthGuardService BPM', () => {
     let routerService: Router;
     let appConfigService: AppConfigService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                RouterTestingModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                AuthGuardBpm,
-                { provide: CookieService, useClass: CookieServiceMock }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         authService = TestBed.get(AuthenticationService);

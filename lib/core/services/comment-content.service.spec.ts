@@ -19,23 +19,18 @@ import { TestBed } from '@angular/core/testing';
 import { CommentModel } from '../models/comment.model';
 import { fakeContentComment, fakeContentComments } from '../mock/comment-content-service.mock';
 import { CommentContentService } from './comment-content.service';
-import { LogService } from './log.service';
-import { StorageService } from './storage.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
+
 describe('Comment Content Service', () => {
 
     let service: CommentContentService;
 
-    beforeEach((() => {
-        TestBed.configureTestingModule({
-            providers: [
-                CommentContentService,
-                StorageService,
-                LogService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         service = TestBed.get(CommentContentService);
