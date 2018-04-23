@@ -58,7 +58,7 @@ export class DemoPermissionComponent implements OnInit {
     }
 
     openAddPermissionDialog(event: Event) {
-        this.addPermissionDialogService.openAddPermissionDialog('', '');
+        this.addPermissionDialogService.openAddPermissionDialog(this.nodeId);
     }
 
 }
