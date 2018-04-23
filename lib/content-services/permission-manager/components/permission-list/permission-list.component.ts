@@ -96,4 +96,10 @@ export class PermissionListComponent implements OnInit {
         return permissionRole;
     }
 
+    removePermission(permissionRow: PermissionDisplayModel) {
+        this.nodePermissionService.removePermission(this.actualNode, permissionRow).subscribe((node) => {
+            this.update.emit(node);
+        });
+    }
+
 }

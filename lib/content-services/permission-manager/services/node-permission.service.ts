@@ -54,6 +54,22 @@ export class NodePermissionService {
         return this.nodeService.updateNode(node.id, permissionBody);
     }
 
+    updateLocallySetPermissions(node: MinimalNodeEntryEntity, permissionList: any[]): Observable<MinimalNodeEntryEntity> {
+        let permissionBody = { permissions: { locallySet: []} };
+        permissionBody.permissions.locallySet = node.permissions.locallySet ? node.permissions.locallySet.concat(permissionList) : permissionList;
+        return this.nodeService.updateNode(node.id, permissionBody);
+    }
+
+    removePermission(node: MinimalNodeEntryEntity, permissionToRemove: PermissionElement): Observable<MinimalNodeEntryEntity>{
+        let permissionBody = { permissions: { locallySet: [] } };
+        const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(permissionToRemove.authorityId);
+        if (index !== -1) {
+            node.permissions.locallySet.splice(index, 1);
+            permissionBody.permissions.locallySet = node.permissions.locallySet;
+            return this.nodeService.updateNode(node.id, permissionBody);
+        }
+    }
+
     private getGroupMembersBySiteName(siteName: string): Observable<string[]> {
         const groupName = 'GROUP_site_' + siteName;
         return this.getGroupMemeberByGroupName(groupName)
