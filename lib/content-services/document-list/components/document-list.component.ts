@@ -231,8 +231,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private _pagination: BehaviorSubject<PaginationModel>;
     private layoutPresets = {};
-
-    private contextActionHandlerSubscription: Subscription;
+    private subscriptions: Subscription[] = [];
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -342,12 +341,25 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.data.setImageResolver(this.imageResolver);
         }
 
-        this.contextActionHandlerSubscription = this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
+        this.subscriptions.push(
+            this.contextActionHandler.subscribe(val => this.contextActionCallback(val))
+        );
 
         this.enforceSingleClickNavigationForMobile();
     }
 
     ngAfterContentInit() {
+        if (this.columnList) {
+            this.subscriptions.push(
+                this.columnList.columns.changes.subscribe(() => {
+                    this.setupColumns();
+                })
+            );
+        }
+        this.setupColumns();
+    }
+
+    private setupColumns() {
         let schema: DataColumn[] = [];
 
         if (this.hasCustomLayout) {
@@ -770,10 +782,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnDestroy() {
-        if (this.contextActionHandlerSubscription) {
-            this.contextActionHandlerSubscription.unsubscribe();
-            this.contextActionHandlerSubscription = null;
-        }
+        this.subscriptions.forEach(s => s.unsubscribe());
+        this.subscriptions = [];
     }
 
     private handleError(err: any) {
