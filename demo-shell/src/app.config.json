@@ -53,10 +53,6 @@
         }
     ],
     "search": {
-      "limits": {
-        "permissionEvaluationTime": null,
-        "permissionEvaluationCount": null
-      },
       "filterQueries": [
         { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
         { "query": "NOT cm:creator:System" }
