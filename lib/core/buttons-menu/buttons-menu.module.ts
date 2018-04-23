@@ -27,7 +27,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         CommonModule,
         MaterialModule,
         TranslateModule,
-        FlexLayoutModule,
+        FlexLayoutModule
     ],
     declarations: [
         ButtonsMenuComponent

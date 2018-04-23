@@ -18,4 +18,3 @@
 export * from './buttons-menu.component';
 export * from './menu-button.model';
 export * from './buttons-menu.module';
-
