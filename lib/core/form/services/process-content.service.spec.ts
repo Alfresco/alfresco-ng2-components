@@ -18,6 +18,11 @@
 import { TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { ProcessContentService } from './process-content.service';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
@@ -64,12 +69,17 @@ describe('ProcessContentService', () => {
 
     let service: ProcessContentService;
 
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
+
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                ProcessContentService
-            ]
-        });
         service = TestBed.get(ProcessContentService);
     });
 

@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { DirectiveModule } from '../directives/directive.module';
-import { MaterialModule } from '../material.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
-import { TranslateLoaderService } from '../services/translate-loader.service';
-
 import { LanguageMenuComponent } from './language-menu.component';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('LanguageMenuComponent', () => {
 
@@ -31,32 +27,18 @@ describe('LanguageMenuComponent', () => {
     let component: LanguageMenuComponent;
     let appConfig: AppConfigService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                HttpClientModule,
-                DirectiveModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                LanguageMenuComponent
-            ],
-            providers: [
-                AppConfigService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(LanguageMenuComponent);
         component = fixture.componentInstance;
         appConfig = TestBed.get(AppConfigService);
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should have the default language', () => {

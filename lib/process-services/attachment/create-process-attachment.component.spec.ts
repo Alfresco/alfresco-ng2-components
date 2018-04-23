@@ -17,12 +17,13 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProcessContentService, CoreModule } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 declare let jasmine: any;
 
-describe('Activiti Process Create Attachment', () => {
+describe('CreateProcessAttachmentComponent', () => {
 
     let component: CreateProcessAttachmentComponent;
     let fixture: ComponentFixture<CreateProcessAttachmentComponent>;
@@ -46,19 +47,11 @@ describe('Activiti Process Create Attachment', () => {
         thumbnailStatus: 'queued'
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot()
-            ],
-            declarations: [
-                CreateProcessAttachmentComponent
-            ],
-            providers: [
-                ProcessContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CreateProcessAttachmentComponent);

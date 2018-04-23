@@ -18,22 +18,17 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
-import { EntryComponentMockModule } from '../../mock/form/entry-module.mock';
 import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../../mock';
 import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from '../../mock';
-import { EcmModelService } from './../services/ecm-model.service';
-import { FormRenderingService } from './../services/form-rendering.service';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { FormFieldComponent } from './form-field/form-field.component';
-import { MaterialModule } from '../../material.module';
 import { StartFormComponent } from './start-form.component';
-import { ContentWidgetComponent } from './widgets/content/content.widget';
-import { MASK_DIRECTIVE } from './widgets/index';
-import { WIDGET_DIRECTIVES } from './widgets/index';
 import { FormModel, FormOutcomeModel } from './widgets/index';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('ActivitiStartForm', () => {
+describe('StartFormComponent', () => {
 
     let formService: FormService;
     let component: StartFormComponent;
@@ -44,34 +39,19 @@ describe('ActivitiStartForm', () => {
     const exampleId1 = 'my:process1';
     const exampleId2 = 'my:process2';
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                EntryComponentMockModule
-            ],
-            declarations: [
-                StartFormComponent,
-                FormFieldComponent,
-                ContentWidgetComponent,
-                ...WIDGET_DIRECTIVES,
-                ...MASK_DIRECTIVE
-            ],
-            providers: [
-                EcmModelService,
-                FormService,
-                FormRenderingService,
-                WidgetVisibilityService
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
     beforeEach(() => {
 
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
-        formService = fixture.debugElement.injector.get(FormService);
+        formService = TestBed.get(FormService);
         visibilityService = TestBed.get(WidgetVisibilityService);
 
         getStartFormSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(Observable.of({

@@ -15,19 +15,17 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SimpleChange, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material';
-import { RouterTestingModule } from '@angular/router/testing';
-import { DataTableModule } from '../../datatable.module';
-import { MaterialModule } from '../../../material.module';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
-
 import { DataTableComponent } from './datatable.component';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('DataTable', () => {
 
@@ -35,20 +33,21 @@ describe('DataTable', () => {
     let dataTable: DataTableComponent;
     let element: any;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                DataTableModule,
-                MaterialModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreTestingModule
+        ],
+        schemas: [ NO_ERRORS_SCHEMA ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should use the cardview style if cardview is true', () => {

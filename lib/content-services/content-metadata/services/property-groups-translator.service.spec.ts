@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
 import { Property, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import {
@@ -25,25 +25,25 @@ import {
     CardViewFloatItemModel,
     LogService,
     CardViewBoolItemModel,
-    CardViewDatetimeItemModel
+    CardViewDatetimeItemModel,
+    setupTestBed
 } from '@alfresco/adf-core';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('PropertyGroupTranslatorService', () => {
 
-    let service: PropertyGroupTranslatorService,
-        propertyGroups: OrganisedPropertyGroup[],
-        propertyGroup: OrganisedPropertyGroup,
-        property: Property,
-        propertyValues: { [key: string]: any };
+    let service: PropertyGroupTranslatorService;
+    let propertyGroups: OrganisedPropertyGroup[];
+    let propertyGroup: OrganisedPropertyGroup;
+    let property: Property;
+    let propertyValues: { [key: string]: any };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                PropertyGroupTranslatorService,
-                { provide: LogService, useValue: { error: () => {} }}
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        providers: [
+            { provide: LogService, useValue: { error: () => {} }}
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(PropertyGroupTranslatorService);
@@ -61,10 +61,6 @@ describe('PropertyGroupTranslatorService', () => {
             properties: [property]
         };
         propertyGroups = [];
-    });
-
-    afterEach(() => {
-        TestBed.resetTestingModule();
     });
 
     describe('General transformation', () => {

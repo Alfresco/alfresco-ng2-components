@@ -15,40 +15,26 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DiagramsModule } from '../../diagram/diagram.module';
-import { ChartsModule } from 'ng2-charts';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AnalyticsComponent } from '../components/analytics.component';
-
-declare let jasmine: any;
+import { setupTestBed } from '@alfresco/adf-core';
+import { InsightsTestingModule } from '../../testing/insights.testing.module';
 
 describe('AnalyticsComponent', () => {
 
     let fixture: ComponentFixture<AnalyticsComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                ChartsModule,
-                DiagramsModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [InsightsTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsComponent);
         fixture.detectChanges();
     });
 
-    describe('Rendering tests', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
+    it('should create component', () => {
+        expect(fixture.componentInstance).toBeDefined();
     });
 });

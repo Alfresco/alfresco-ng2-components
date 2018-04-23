@@ -16,33 +16,29 @@
  */
 
 import { Component } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { MatDialog } from '@angular/material';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { AppsProcessService } from '@alfresco/adf-core';
+import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { deployedApps } from '../mock/apps-list.mock';
 import { Observable } from 'rxjs/Observable';
 
 import { SelectAppsDialogComponent } from './select-apps-dialog-component';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 @Component({
     selector: 'adf-dialog-test',
     template: ''
 })
 export class DialogSelectAppTestComponent {
-
     processId: any;
-
     dialogRef: any;
 
-    constructor(private dialog: MatDialog) {
-    }
+    constructor(private dialog: MatDialog) {}
 
-    startProcesAction() {
+    startProcessAction() {
         this.dialogRef = this.dialog.open(SelectAppsDialogComponent, {
             width: '630px'
         });
@@ -51,57 +47,41 @@ export class DialogSelectAppTestComponent {
             this.processId = selectedProcess.id;
         });
     }
-
 }
 
 describe('Select app dialog', () => {
-
     let fixture: ComponentFixture<DialogSelectAppTestComponent>;
     let component: DialogSelectAppTestComponent;
-    let dialogRef;
+    let dialogRef = {
+        close: jasmine.createSpy('close')
+    };
     let overlayContainerElement: HTMLElement;
     let service: AppsProcessService;
 
-    beforeEach(async(() => {
-        dialogRef = {
-            close: jasmine.createSpy('close')
-        };
-
-        TestBed.configureTestingModule({
-            imports: [
-                FormsModule,
-                ReactiveFormsModule,
-                BrowserDynamicTestingModule
-            ],
-            declarations: [
-                SelectAppsDialogComponent,
-                DialogSelectAppTestComponent
-            ],
-            providers: [
-                AppsProcessService,
-                {
-                    provide: OverlayContainer,
-                    useFactory: () => {
-                        overlayContainerElement = document.createElement('div');
-                        return { getContainerElement: () => overlayContainerElement };
-                    }
+    setupTestBed({
+        imports: [ProcessTestingModule],
+        declarations: [DialogSelectAppTestComponent],
+        providers: [
+            AppsProcessService,
+            {
+                provide: OverlayContainer,
+                useFactory: () => {
+                    overlayContainerElement = document.createElement('div');
+                    return {
+                        getContainerElement: () => overlayContainerElement
+                    };
                 }
-                {
-                    provide: MatDialogRef, useValue: dialogRef
-                },
-                {
-                    provide: MAT_DIALOG_DATA,
-                    useValue: {}
-                }
-            ]
-        });
-
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [SelectAppsDialogComponent] }
-        });
-
-        TestBed.compileComponents();
-    }));
+            },
+            {
+                provide: MatDialogRef,
+                useValue: dialogRef
+            },
+            {
+                provide: MAT_DIALOG_DATA,
+                useValue: {}
+            }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DialogSelectAppTestComponent);
@@ -109,21 +89,29 @@ describe('Select app dialog', () => {
 
         service = TestBed.get(AppsProcessService);
 
-        spyOn(service, 'getDeployedApplications').and.returnValue(Observable.of(deployedApps));
+        spyOn(service, 'getDeployedApplications').and.returnValue(
+            Observable.of(deployedApps)
+        );
     });
 
     describe('Dialog', () => {
-
         beforeEach(() => {
             fixture.detectChanges();
-        };
+        });
 
         it('should init title and dropdown', () => {
-            component.startProcesAction();
+            component.startProcessAction();
 
-            expect(overlayContainerElement.querySelector('.adf-selet-app-dialog-title')).toBeDefined();
-            expect(overlayContainerElement.querySelector('.adf-selet-app-dialog-dropdown')).toBeDefined();
+            expect(
+                overlayContainerElement.querySelector(
+                    '.adf-selet-app-dialog-title'
+                )
+            ).toBeDefined();
+            expect(
+                overlayContainerElement.querySelector(
+                    '.adf-selet-app-dialog-dropdown'
+                )
+            ).toBeDefined();
         });
     });
-
 });

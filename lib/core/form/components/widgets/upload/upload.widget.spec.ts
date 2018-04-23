@@ -19,16 +19,15 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
-
-import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { ProcessContentService } from '../../../services/process-content.service';
-import { MaterialModule } from '../../../../material.module';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { FormFieldModel } from './../core/form-field.model';
 import { UploadWidgetComponent } from './upload.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 let fakePngAnswer = {
     'id': 1155,
@@ -67,6 +66,13 @@ describe('UploadWidgetComponent', () => {
     let filePngFake = new File(['fakePng'], 'file-fake.png', {type: 'image/png'});
     let filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', {type: 'image/jpg'});
 
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
+
     describe('when template is ready', () => {
         let uploadWidgetComponent: UploadWidgetComponent;
         let fixture: ComponentFixture<UploadWidgetComponent>;
@@ -76,17 +82,11 @@ describe('UploadWidgetComponent', () => {
         let formServiceInstance: FormService;
 
         beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [ MaterialModule],
-                declarations: [UploadWidgetComponent, ErrorWidgetComponent],
-                providers: [FormService, EcmModelService, ProcessContentService]
-            }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(UploadWidgetComponent);
-                uploadWidgetComponent = fixture.componentInstance;
-                element = fixture.nativeElement;
-                debugElement = fixture.debugElement;
-                contentService = TestBed.get(ProcessContentService);
-            });
+            fixture = TestBed.createComponent(UploadWidgetComponent);
+            uploadWidgetComponent = fixture.componentInstance;
+            element = fixture.nativeElement;
+            debugElement = fixture.debugElement;
+            contentService = TestBed.get(ProcessContentService);
         }));
 
         beforeEach(() => {
@@ -96,7 +96,6 @@ describe('UploadWidgetComponent', () => {
 
         afterEach(() => {
             fixture.destroy();
-            TestBed.resetTestingModule();
             jasmine.Ajax.uninstall();
         });
 

@@ -20,4 +20,3 @@ export * from './document-list.component.mock';
 export * from './document-list.service.mock';
 export * from './search.component.mock';
 export * from './search.service.mock';
-export * from './search-control.component.mock';

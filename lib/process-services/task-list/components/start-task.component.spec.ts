@@ -16,14 +16,14 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, TranslationMock } from '@alfresco/adf-core';
-import { PeopleSelectorComponent, PeopleSearchFieldComponent, PeopleListComponent } from '../../people';
+import { setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { startTaskMock } from '../../mock';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskListService } from '../services/tasklist.service';
 import {  } from './../assets/start-task.mock';
 import { StartTaskComponent } from './start-task.component';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('StartTaskComponent', () => {
 
@@ -44,29 +44,37 @@ describe('StartTaskComponent', () => {
         }
     ];
     let testUser = {id: 1001, firstName: 'fakeName', email: 'fake@app.activiti.com'};
+
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
+
+    // beforeEach(async(() => {
+    //     TestBed.configureTestingModule({
+    //         declarations: [
+    //             StartTaskComponent,
+    //             PeopleSearchFieldComponent,
+    //             PeopleListComponent,
+    //             PeopleSelectorComponent
+    //         ],
+    //         providers: [
+    //             TaskListService,
+    //             { provide: TranslationService, useClass: TranslationMock }
+    //         ]
+    //     }).compileComponents().then(() => {
+
+    //     });
+    // }));
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                StartTaskComponent,
-                PeopleSearchFieldComponent,
-                PeopleListComponent,
-                PeopleSelectorComponent
-            ],
-            providers: [
-                TaskListService,
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
-        }).compileComponents().then(() => {
+        fixture = TestBed.createComponent(StartTaskComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
 
-            fixture = TestBed.createComponent(StartTaskComponent);
-            component = fixture.componentInstance;
-            element = fixture.nativeElement;
+        service = TestBed.get(TaskListService);
+        getFormlistSpy = spyOn(service, 'getFormList').and.returnValue(Observable.of(fakeForms));
 
-            service = fixture.debugElement.injector.get(TaskListService);
-            getFormlistSpy = spyOn(service, 'getFormList').and.returnValue(Observable.of(fakeForms));
-
-            fixture.detectChanges();
-        });
+        fixture.detectChanges();
     }));
 
     it('should create instance of StartTaskComponent', () => {

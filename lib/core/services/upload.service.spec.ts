@@ -21,6 +21,9 @@ import { FileModel, FileUploadOptions, FileUploadStatus } from '../models/file.m
 import { AppConfigModule } from '../app-config/app-config.module';
 import { UploadService } from './upload.service';
 import { AppConfigService } from '../app-config/app-config.service';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { StorageService } from './storage.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
@@ -33,6 +36,8 @@ describe('UploadService', () => {
                 AppConfigModule
             ],
             providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                StorageService,
                 UploadService
             ]
         }).compileComponents();

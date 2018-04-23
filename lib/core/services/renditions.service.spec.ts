@@ -15,26 +15,27 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { fakeRedition, fakeReditionCreated, fakeReditionsList } from '../mock/renditionsService.mock';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { RenditionsService } from './renditions.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
 describe('RenditionsService', () => {
     let service: RenditionsService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule
-            ],
-            providers: [
-                RenditionsService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         jasmine.Ajax.install();
@@ -45,7 +46,7 @@ describe('RenditionsService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    it('Get redition list service should return the list', (done) => {
+    it('Get rendition list service should return the list', (done) => {
         service.getRenditionsListByNodeId('fake-node-id').subscribe((res) => {
             expect(res.list.entries[0].entry.id).toBe('avatar');
             done();
@@ -58,7 +59,7 @@ describe('RenditionsService', () => {
         });
     });
 
-    it('Create redition service should call the server with the ID passed and the asked encoding', (done) => {
+    it('Create rendition service should call the server with the ID passed and the asked encoding', (done) => {
         service.createRendition('fake-node-id', 'pdf').subscribe((res) => {
             expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
             expect(jasmine.Ajax.requests.mostRecent().url).toContain('/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
@@ -83,7 +84,7 @@ describe('RenditionsService', () => {
         });
     });
 
-    it('Get redition service should catch the error', (done) => {
+    it('Get rendition service should catch the error', (done) => {
         service.getRenditionsListByNodeId('fake-node-id').subscribe((res) => {
             }, (res) => {
                 done();

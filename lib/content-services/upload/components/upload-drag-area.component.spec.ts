@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, UploadService } from '@alfresco/adf-core';
+import { FileModel, UploadService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
@@ -61,17 +61,18 @@ describe('UploadDragAreaComponent', () => {
     let fixture: ComponentFixture<UploadDragAreaComponent>;
     let uploadService: UploadService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                FileDraggableDirective,
-                UploadDragAreaComponent
-            ],
-            providers: [
-                UploadService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            FileDraggableDirective,
+            UploadDragAreaComponent
+        ],
+        providers: [
+            UploadService
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(UploadDragAreaComponent);
@@ -83,7 +84,6 @@ describe('UploadDragAreaComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('When disabled', () => {
@@ -185,7 +185,7 @@ describe('UploadDragAreaComponent', () => {
 
         it('should upload the list of files dropped', async(() => {
             component.success = null;
-            uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+            spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
             const file = <File> { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
             let filesList = [file];

@@ -24,11 +24,37 @@ import {
 } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { TaskListService } from './../services/tasklist.service';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { TaskAuditDirective } from './task-audit.directive';
 
 declare let jasmine: any;
 
 describe('TaskAuditDirective', () => {
+
+    @Component({
+        selector: 'adf-basic-button',
+        template: `
+        <button id="auditButton"
+            adf-task-audit
+            [task-id]="currentTaskId"
+            [download]="download"
+            [fileName]="fileName"
+            [format]="format"
+            (clicked)="onAuditClick($event)">My button
+        </button>`
+    })
+    class BasicButtonComponent {
+
+        download: boolean = false;
+        fileName: string;
+        format: string;
+        constructor() {
+
+        }
+
+        onAuditClick(event: any) {
+        }
+    }
 
     let fixture: ComponentFixture<BasicButtonComponent>;
     let component: BasicButtonComponent;
@@ -52,14 +78,13 @@ describe('TaskAuditDirective', () => {
         return new Blob([pdfData], {type: 'application/pdf'});
     }
 
+    setupTestBed({
+        imports: [CoreModule.forRoot()],
+        declarations: [BasicButtonComponent, TaskAuditDirective],
+        providers: [TaskListService]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [BasicButtonComponent, TaskAuditDirective],
-            providers: [TaskListService]
-        });
-
-        TestBed.compileComponents();
-
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
         service = TestBed.get(TaskListService);
@@ -133,28 +158,3 @@ describe('TaskAuditDirective', () => {
     }));
 
 });
-
-@Component({
-    selector: 'adf-basic-button',
-    template: `
-    <button id="auditButton"
-        adf-task-audit
-        [task-id]="currentTaskId"
-        [download]="download"
-        [fileName]="fileName"
-        [format]="format"
-        (clicked)="onAuditClick($event)">My button
-    </button>`
-})
-class BasicButtonComponent {
-
-    download: boolean = false;
-    fileName: string;
-    format: string;
-    constructor() {
-
-    }
-
-    onAuditClick(event: any) {
-    }
-}

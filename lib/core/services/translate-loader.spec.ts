@@ -15,48 +15,28 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
-import { Injector } from '@angular/core';
-import { getTestBed, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-
+import { TestBed } from '@angular/core/testing';
 import { TranslateLoaderService } from './translate-loader.service';
-import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
+import { TranslationService } from './translation.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
 
 let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
 
 declare let jasmine: any;
 
 describe('TranslateLoader', () => {
-    let injector: Injector;
     let translationService: TranslationService;
     let customLoader: TranslateLoaderService;
 
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
+
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                TranslationService,
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: '@alfresco/adf-core',
-                        source: 'assets/ng2-alfresco-core'
-                    }
-                }
-            ]
-        });
-        injector = getTestBed();
-        translationService = injector.get(TranslationService);
+        translationService = TestBed.get(TranslationService);
         customLoader = <TranslateLoaderService> translationService.translate.currentLoader;
 
         jasmine.Ajax.install();

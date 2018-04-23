@@ -40,6 +40,14 @@ export class AlfrescoApiService {
         return this.alfrescoApi;
     }
 
+    get taskApi(): alfrescoApi.TaskApi {
+        return this.getInstance().activiti.taskApi;
+    }
+
+    get modelsApi(): alfrescoApi.ModelsApi {
+        return this.getInstance().activiti.modelsApi;
+    }
+
     get contentApi(): ContentApi {
         return this.getInstance().content;
     }

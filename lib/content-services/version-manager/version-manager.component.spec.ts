@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
@@ -42,14 +42,19 @@ describe('VersionManagerComponent', () => {
        }
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                VersionManagerComponent, VersionListComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            VersionManagerComponent,
+            VersionListComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(VersionManagerComponent);

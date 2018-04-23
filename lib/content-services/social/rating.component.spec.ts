@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RatingComponent } from './rating.component';
-import { RatingService } from './services/rating.service';
+import { setupTestBed } from '../../core/testing';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 declare let jasmine: any;
 
@@ -27,16 +28,9 @@ describe('Rating component', () => {
     let fixture: ComponentFixture<RatingComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                RatingComponent
-            ],
-            providers: [
-                RatingService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(RatingComponent);
@@ -46,6 +40,10 @@ describe('Rating component', () => {
         component.nodeId = 'test-id';
 
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     describe('Rendering tests', () => {

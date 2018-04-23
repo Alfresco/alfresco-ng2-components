@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component } from '@angular/core';
+import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
-import { ProcessContentService } from '@alfresco/adf-core';
+import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 describe('TaskAttachmentList', () => {
 
@@ -32,17 +33,10 @@ describe('TaskAttachmentList', () => {
     let deleteContentSpy: jasmine.Spy;
     let getFileRawContentSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TaskAttachmentListComponent
-            ],
-            providers: [
-                ProcessContentService
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule],
+        schemas: [NO_ERRORS_SCHEMA]
+    });
 
     beforeEach(() => {
 
@@ -257,8 +251,13 @@ describe('TaskAttachmentList', () => {
 
     describe('change detection', () => {
 
-        let change = new SimpleChange('123', '456', true);
-        let nullChange = new SimpleChange('123', null, true);
+        let change;
+        let nullChange;
+
+        beforeEach(() => {
+            change = new SimpleChange('123', '456', true);
+            nullChange = new SimpleChange('123', null, true);
+        });
 
         beforeEach(async(() => {
             component.taskId = '123';
@@ -267,10 +266,13 @@ describe('TaskAttachmentList', () => {
             });
         }));
 
-        it('should fetch new attachments when taskId changed', () => {
-            component.ngOnChanges({ 'taskId': change });
-            expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456');
-        });
+        it('should fetch new attachments when taskId changed', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.ngOnChanges({ 'taskId': change });
+                expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456');
+            });
+        }));
 
         it('should NOT fetch new attachments when empty change set made', () => {
             component.ngOnChanges({});
@@ -318,14 +320,11 @@ class CustomEmptyTemplateComponent {
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TaskAttachmentListComponent,
-                CustomEmptyTemplateComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule],
+        declarations: [CustomEmptyTemplateComponent],
+        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomEmptyTemplateComponent);

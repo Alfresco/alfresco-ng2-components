@@ -15,26 +15,17 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DataColumnModule, DataTableModule, FormModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 
 import { AttachFileWidgetComponent } from './attach-file-widget.component';
 import { AttachFolderWidgetComponent } from './attach-folder-widget.component';
 
 @NgModule({
     imports: [
-        DataColumnModule,
-        DataTableModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        CommonModule,
-        TranslateModule,
-        FormModule
+        CoreModule,
+        MaterialModule
     ],
     entryComponents: [
         AttachFileWidgetComponent,

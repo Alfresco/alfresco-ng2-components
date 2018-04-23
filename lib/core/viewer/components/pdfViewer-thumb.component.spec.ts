@@ -18,6 +18,8 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbComponent } from './pdfViewer-thumb.component';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
 
 describe('PdfThumbComponent', () => {
 
@@ -34,19 +36,18 @@ describe('PdfThumbComponent', () => {
         }))
     };
 
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: DomSanitizer, useValue: domSanitizer }
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                PdfThumbComponent
-            ],
-            providers: [
-                { provide: DomSanitizer, useValue: domSanitizer }
-            ]
-        }).compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(PdfThumbComponent);
-                component = fixture.componentInstance;
-            });
+        fixture = TestBed.createComponent(PdfThumbComponent);
+        component = fixture.componentInstance;
     }));
 
     it('should have resolve image data', (done) => {

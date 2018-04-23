@@ -36,9 +36,6 @@ import { ProcessInstanceTasksComponent } from './components/process-instance-tas
 import { ProcessInstanceListComponent } from './components/process-list.component';
 import { StartProcessInstanceComponent } from './components/start-process.component';
 
-import { ProcessService } from './services/process.service';
-import { ProcessFilterService } from './services/process-filter.service';
-
 @NgModule({
     imports: [
         CommonModule,
@@ -67,10 +64,6 @@ import { ProcessFilterService } from './services/process-filter.service';
         ProcessInstanceHeaderComponent,
         ProcessInstanceTasksComponent,
         StartProcessInstanceComponent
-    ],
-    providers: [
-        ProcessService,
-        ProcessFilterService
     ],
     exports: [
         ProcessInstanceListComponent,

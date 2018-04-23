@@ -17,13 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatSelectModule
-} from '@angular/material';
-import { ActivitiContentService, AppConfigService, FormModule, FormService } from '@alfresco/adf-core';
+import { ActivitiContentService, AppConfigService, FormService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -37,6 +31,7 @@ import {
     testProcessDefinitions
 } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('StartFormComponent', () => {
 
@@ -50,33 +45,19 @@ describe('StartFormComponent', () => {
     let getStartFormDefinitionSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                FormModule,
-                MatButtonModule,
-                MatCardModule,
-                MatInputModule,
-                MatSelectModule
-            ],
-            declarations: [
-                StartProcessInstanceComponent
-            ],
-            providers: [
-                ActivitiContentService,
-                ProcessService,
-                FormService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
 
     beforeEach(() => {
         appConfig = TestBed.get(AppConfigService);
         activitiContentService = TestBed.get(ActivitiContentService);
         fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
-        processService = fixture.debugElement.injector.get(ProcessService);
-        formService = fixture.debugElement.injector.get(FormService);
+        processService = TestBed.get(ProcessService);
+        formService = TestBed.get(FormService);
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(Observable.of(testMultipleProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(Observable.of(newProcess));

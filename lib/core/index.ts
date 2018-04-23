@@ -43,5 +43,6 @@ export * from './interface/index';
 export * from './models/index';
 export * from './events/index';
 export * from './mock/index';
+export * from './testing';
 
 export * from './core.module';

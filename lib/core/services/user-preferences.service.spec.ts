@@ -16,15 +16,13 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { DirectiveModule } from '../directives/directive.module';
-
+import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { StorageService } from './storage.service';
-import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { UserPreferenceValues } from './user-preferences.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('UserPreferencesService', () => {
 
@@ -35,23 +33,9 @@ describe('UserPreferencesService', () => {
     let appConfig: AppConfigService;
     let translate: TranslateService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                DirectiveModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                UserPreferencesService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         appConfig = TestBed.get(AppConfigService);

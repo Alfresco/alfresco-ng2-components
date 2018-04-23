@@ -17,24 +17,25 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { NodePermissionService } from './node-permission.service';
-import { SearchService, NodesApiService } from '@alfresco/adf-core';
+import { SearchService, NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse } from '../../mock/permission-list.component.mock';
 
 describe('NodePermissionService', () => {
 
-    let service: NodePermissionService,
-        nodeService: NodesApiService,
-        searchApiService: SearchService;
+    let service: NodePermissionService;
+    let nodeService: NodesApiService;
+    let searchApiService: SearchService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                NodePermissionService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            NodePermissionService
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(NodePermissionService);

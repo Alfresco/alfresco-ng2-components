@@ -15,29 +15,19 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HostSettingsModule } from './host-settings.module';
-import { MaterialModule } from '../material.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HostSettingsComponent } from './host-settings.component';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('HostSettingsComponent', () => {
 
     let fixture: ComponentFixture<HostSettingsComponent>;
     let component: HostSettingsComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                FormsModule,
-                ReactiveFormsModule,
-                MaterialModule,
-                HttpClientModule,
-                HostSettingsModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(HostSettingsComponent);

@@ -15,38 +15,21 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule, MatInputModule } from '@angular/material';
-import { LogService, TranslationService, TranslationMock, PeopleProcessService } from '@alfresco/adf-core';
-import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
-import { PeopleListComponent } from '../people-list/people-list.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LogService, PeopleProcessService, setupTestBed } from '@alfresco/adf-core';
 import { PeopleSelectorComponent } from './people-selector.component';
 import { Observable } from 'rxjs/Observable';
 import { By } from '@angular/platform-browser';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 describe('PeopleSelectorComponent', () => {
 
     let component: PeopleSelectorComponent;
     let fixture: ComponentFixture<PeopleSelectorComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatButtonModule,
-                MatInputModule
-            ],
-            declarations: [
-                PeopleListComponent,
-                PeopleSearchFieldComponent,
-                PeopleSelectorComponent
-            ],
-            providers: [
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: LogService, useValue: {error: () => {} }},
-                PeopleProcessService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleSelectorComponent);

@@ -20,6 +20,8 @@ import { Router } from '@angular/router';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
 import { AuthenticationService } from './authentication.service';
+import { AppConfigService } from '../app-config/app-config.service';
+import { HttpClientModule } from '@angular/common/http';
 
 class RouterProvider {
     navigate: Function = jasmine.createSpy('RouterProviderNavigate');
@@ -79,7 +81,11 @@ class TestConfig {
         Object.assign(this.settings, settings);
 
         TestBed.configureTestingModule({
+            imports: [
+                HttpClientModule
+            ],
             providers: [
+                AppConfigService,
                 this.routerProvider,
                 this.alfrescoApiServiceProvider,
                 this.authenticationProvider,

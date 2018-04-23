@@ -19,15 +19,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { UserPreferencesService } from '../../services/user-preferences.service';
 import { AuthenticationService } from '../../services/authentication.service';
-
-import { MaterialModule } from '../../material.module';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
 import { Observable } from 'rxjs/Observable';
+
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -54,20 +54,9 @@ describe('LoginComponent', () => {
         return errorMessage;
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                MaterialModule
-            ],
-            declarations: [
-                LoginComponent
-            ],
-            providers: [
-                AuthenticationService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(LoginComponent);
@@ -87,6 +76,10 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     function loginWithCredentials(username, password, providers: string = 'ECM') {
         component.providers = providers;
         usernameInput.value = username;
@@ -100,7 +93,7 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
     }
 
-    it('should be autocompelte off', () => {
+    it('should be autocompelete off', () => {
         expect(element.querySelector('#adf-login-form').getAttribute('autocomplete')).toBe('off');
     });
 
@@ -394,8 +387,9 @@ describe('LoginComponent', () => {
 
         component.success.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(false);
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(false);
+            });
         });
 
         loginWithCredentials('fake-username', 'fake-password');
@@ -407,9 +401,10 @@ describe('LoginComponent', () => {
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            fixture.whenStable().then(() => {
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            });
         });
 
         loginWithCredentials('fake-wrong-username', 'fake-password');
@@ -420,10 +415,11 @@ describe('LoginComponent', () => {
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            });
         });
 
         loginWithCredentials('fake-username', 'fake-wrong-password');
@@ -434,10 +430,11 @@ describe('LoginComponent', () => {
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            });
         });
 
         loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
@@ -454,10 +451,11 @@ describe('LoginComponent', () => {
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+            });
         });
 
         loginWithCredentials('fake-username-CORS-error', 'fake-password');

@@ -16,10 +16,13 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, FileUploadStatus, NodesApiService, UploadService } from '@alfresco/adf-core';
+import { TranslationService, FileUploadStatus, NodesApiService, UploadService,
+    setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock
+} from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { UploadModule } from '../upload.module';
 import { FileUploadingListComponent } from './file-uploading-list.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('FileUploadingListComponent', () => {
     let fixture: ComponentFixture<FileUploadingListComponent>;
@@ -33,17 +36,23 @@ describe('FileUploadingListComponent', () => {
         file = { data: { entry: { id: 'x' } } };
     });
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                UploadModule
-            ]
-        }).compileComponents();
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
+            UploadModule
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
     });
 
     beforeEach(() => {
         nodesApiService = TestBed.get(NodesApiService);
+
         uploadService = TestBed.get(UploadService);
+        uploadService.clearQueue();
+
         translateService = TestBed.get(TranslationService);
         fixture = TestBed.createComponent(FileUploadingListComponent);
         component = fixture.componentInstance;

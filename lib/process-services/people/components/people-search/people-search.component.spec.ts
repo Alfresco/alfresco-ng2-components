@@ -16,12 +16,10 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule, MatInputModule } from '@angular/material';
-import { UserProcessModel, TranslationService, TranslationMock } from '@alfresco/adf-core';
+import { UserProcessModel, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { PeopleListComponent } from '../people-list/people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
-import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: '1',
@@ -45,28 +43,16 @@ describe('PeopleSearchComponent', () => {
     let userArray = [fakeUser, fakeSecondUser];
     let searchInput: any;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatButtonModule,
-                MatInputModule
-            ],
-            declarations: [
-                PeopleSearchComponent,
-                PeopleSearchFieldComponent,
-                PeopleListComponent
-            ],
-            providers: [
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
-        }).compileComponents().then(() => {
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
-            fixture = TestBed.createComponent(PeopleSearchComponent);
-            peopleSearchComponent = fixture.componentInstance;
-            element = fixture.nativeElement;
-            peopleSearchComponent.results = Observable.of([]);
-            fixture.detectChanges();
-        });
+    beforeEach(async(() => {
+        fixture = TestBed.createComponent(PeopleSearchComponent);
+        peopleSearchComponent = fixture.componentInstance;
+        element = fixture.nativeElement;
+        peopleSearchComponent.results = Observable.of([]);
+        fixture.detectChanges();
     }));
 
     it('should show input search text', () => {

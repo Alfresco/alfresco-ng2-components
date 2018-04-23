@@ -18,10 +18,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DataTableModule } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
-import { CustomResourcesService, DocumentListComponent, DocumentListService } from '../document-list';
+import { DocumentListComponent } from '../document-list';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('DropdownBreadcrumb', () => {
 
@@ -29,30 +30,19 @@ describe('DropdownBreadcrumb', () => {
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DataTableModule
-            ],
-            declarations: [
-                DocumentListComponent,
-                DropdownBreadcrumbComponent
-            ],
-            providers: [
-                DocumentListService,
-                CustomResourcesService
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
         component = fixture.componentInstance;
-
         documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     function openSelect() {

@@ -15,48 +15,23 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
-import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { By } from '@angular/platform-browser';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { setupTestBed } from '../../../testing/setupTestBed';
 import moment from 'moment-es6';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { TranslateLoaderService } from '../../../services/translate-loader.service';
-
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('CardViewDateItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewDateItemComponent>;
     let component: CardViewDateItemComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                MatDatepickerModule,
-                MatInputModule,
-                MatNativeDateModule,
-                MatNativeDatetimeModule,
-                MatDatetimepickerModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                CardViewDateItemComponent
-            ],
-            providers: [
-                CardViewUpdateService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewDateItemComponent);
@@ -73,7 +48,6 @@ describe('CardViewDateItemComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     it('should render the label and value', () => {

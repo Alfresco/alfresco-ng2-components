@@ -16,11 +16,12 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ObjectDataTableAdapter } from './../../data/object-datatable-adapter';
 import { ObjectDataColumn } from './../../data/object-datacolumn.model';
 
 import { LocationCellComponent } from './location-cell.component';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('LocationCellComponent', () => {
     let component: LocationCellComponent;
@@ -29,16 +30,11 @@ describe('LocationCellComponent', () => {
     let rowData;
     let columnData;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule
-            ],
-            declarations: [
-                LocationCellComponent
-            ]
-        }).compileComponents();
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
+    beforeEach(async(() => {
         fixture = TestBed.createComponent(LocationCellComponent);
         component = fixture.componentInstance;
     }));
@@ -67,6 +63,10 @@ describe('LocationCellComponent', () => {
         component.column = dataTableAdapter.getColumns()[0];
         component.data = dataTableAdapter;
         component.row = dataTableAdapter.getRows()[0];
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should set displayText', () => {

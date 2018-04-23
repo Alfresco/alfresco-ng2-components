@@ -16,12 +16,12 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentService } from '../../services/content.service';
-import { MaterialModule } from '../../material.module';
-import { ToolbarModule } from '../../toolbar/toolbar.module';
 
 import { ImgViewerComponent } from './imgViewer.component';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
 
 describe('Test Img viewer component ', () => {
 
@@ -35,18 +35,14 @@ describe('Test Img viewer component ', () => {
         return new Blob([data], {type: 'image/png'});
     }
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                ToolbarModule
-            ],
-            declarations: [ImgViewerComponent]
-        }).compileComponents();
-        service = TestBed.get(ContentService);
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
+        service = TestBed.get(ContentService);
         fixture = TestBed.createComponent(ImgViewerComponent);
 
         element = fixture.nativeElement;

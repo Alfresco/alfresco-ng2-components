@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SearchService } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SearchService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { QueryBody } from 'alfresco-js-api';
-import { SearchModule } from '../../index';
 import { differentResult, folderResult, result, SimpleSearchTestComponent } from '../../mock';
 import { Observable } from 'rxjs/Observable';
+import { SearchModule } from '../search.module';
 
 function fakeNodeResultSearch(searchNode: QueryBody): Observable<any> {
     if (searchNode && searchNode.query.query === 'FAKE_SEARCH_EXMPL') {
@@ -39,25 +39,22 @@ describe('SearchComponent', () => {
     let component: SimpleSearchTestComponent;
     let searchService: SearchService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                SearchModule
-            ],
-            declarations: [SimpleSearchTestComponent]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(SimpleSearchTestComponent);
-            component = fixture.componentInstance;
-            element = fixture.nativeElement;
-            searchService = TestBed.get(SearchService);
-        });
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            SearchModule
+        ],
+        declarations: [SimpleSearchTestComponent]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(SimpleSearchTestComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+        searchService = TestBed.get(SearchService);
+    });
 
     describe('search results', () => {
-
-        afterEach(() => {
-            fixture.destroy();
-        });
 
         it('should clear results straight away when a new search term is entered', (done) => {
             spyOn(searchService, 'search').and.returnValues(
@@ -134,10 +131,6 @@ describe('SearchComponent', () => {
     });
 
     describe('search node', () => {
-
-        afterEach(() => {
-            fixture.destroy();
-        });
 
         it('should perform a search based on the query node given', (done) => {
             spyOn(searchService, 'searchByQueryBody')

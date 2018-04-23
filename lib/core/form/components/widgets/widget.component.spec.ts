@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivitiContentService } from '../../services/activiti-alfresco.service';
-import { EcmModelService } from './../../services/ecm-model.service';
-import { FormService } from './../../services/form.service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from './core/form-field.model';
 import { FormModel } from './core/form.model';
 import { WidgetComponent } from './widget.component';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreModule } from '../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('WidgetComponent', () => {
 
@@ -29,16 +29,12 @@ describe('WidgetComponent', () => {
     let fixture: ComponentFixture<WidgetComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [WidgetComponent],
-            providers: [
-                FormService,
-                EcmModelService,
-                ActivitiContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(WidgetComponent);

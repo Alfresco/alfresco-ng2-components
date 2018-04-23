@@ -16,9 +16,9 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DiagramsModule } from '../../diagram/diagram.module';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
-import { AnalyticsProcessModule } from '../analytics-process.module';
+import { setupTestBed } from '@alfresco/adf-core';
+import { InsightsTestingModule } from '../../testing/insights.testing.module';
 
 declare let jasmine: any;
 
@@ -36,15 +36,9 @@ describe('AnalyticsReportHeatMapComponent', () => {
     let totalTimeValues: any = { 'sid-fake-id': 1, 'fake-start-event': 4 };
     let avgTimeValues: any = { 'sid-fake-id': 4, 'fake-start-event': 5 };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DiagramsModule,
-                AnalyticsProcessModule
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [InsightsTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsReportHeatMapComponent);

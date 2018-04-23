@@ -189,7 +189,7 @@ export class TaskListService {
      * @param formId ID of the form to add
      */
     attachFormToATask(taskId: string, formId: number): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.attachForm(taskId, {'formId': formId})).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.apiService.taskApi.attachForm(taskId, {'formId': formId})).catch(err => this.handleError(err));
     }
 
     /**
@@ -218,7 +218,7 @@ export class TaskListService {
      * @param taskId ID of the target task
      */
     completeTask(taskId: string) {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.completeTask(taskId))
+        return Observable.fromPromise(this.apiService.taskApi.completeTask(taskId))
             .map(res => res)
             .catch(err => this.handleError(err));
     }
@@ -280,7 +280,7 @@ export class TaskListService {
      * @param taskId ID of the task to claim
      */
     claimTask(taskId: string): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.claimTask(taskId))
+        return Observable.fromPromise(this.apiService.taskApi.claimTask(taskId))
             .catch(err => this.handleError(err));
     }
 
@@ -289,7 +289,7 @@ export class TaskListService {
      * @param taskId ID of the task to unclaim
      */
     unclaimTask(taskId: string): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.unclaimTask(taskId))
+        return Observable.fromPromise(this.apiService.taskApi.unclaimTask(taskId))
             .catch(err => this.handleError(err));
     }
 
@@ -299,7 +299,7 @@ export class TaskListService {
      * @param updated Data to update the task (as a `TaskUpdateRepresentation` instance).
      */
     updateTask(taskId: any, updated): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.updateTask(taskId, updated))
+        return Observable.fromPromise(this.apiService.taskApi.updateTask(taskId, updated))
             .catch(err => this.handleError(err));
     }
 
@@ -308,7 +308,7 @@ export class TaskListService {
      * @param taskId ID of the target task
      */
     fetchTaskAuditPdfById(taskId: string): Observable<Blob> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskAuditPdf(taskId))
+        return Observable.fromPromise(this.apiService.taskApi.getTaskAuditPdf(taskId))
             .catch(err => this.handleError(err));
     }
 
@@ -317,36 +317,36 @@ export class TaskListService {
      * @param taskId ID of the target task
      */
     fetchTaskAuditJsonById(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskAuditJson(taskId))
+        return Observable.fromPromise(this.apiService.taskApi.getTaskAuditJson(taskId))
             .catch(err => this.handleError(err));
     }
 
     private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
-        return this.apiService.getInstance().activiti.taskApi.listTasks(requestNode);
+        return this.apiService.taskApi.listTasks(requestNode);
     }
 
     private callApiTaskDetails(taskId: string) {
-        return this.apiService.getInstance().activiti.taskApi.getTask(taskId);
+        return this.apiService.taskApi.getTask(taskId);
     }
 
     private callApiAddTask(task: TaskDetailsModel) {
-        return this.apiService.getInstance().activiti.taskApi.addSubtask(task.parentTaskId, task);
+        return this.apiService.taskApi.addSubtask(task.parentTaskId, task);
     }
 
     private callApiDeleteTask(taskId: string) {
-        return this.apiService.getInstance().activiti.taskApi.deleteTask(taskId);
+        return this.apiService.taskApi.deleteTask(taskId);
     }
 
     private callApiTaskChecklist(taskId: string) {
-        return this.apiService.getInstance().activiti.taskApi.getChecklist(taskId);
+        return this.apiService.taskApi.getChecklist(taskId);
     }
 
     private callApiCreateTask(task: TaskDetailsModel) {
-        return this.apiService.getInstance().activiti.taskApi.createNewTask(task);
+        return this.apiService.taskApi.createNewTask(task);
     }
 
     private callApiAssignTask(taskId: string, requestNode: any) {
-        return this.apiService.getInstance().activiti.taskApi.assignTask(taskId, requestNode);
+        return this.apiService.taskApi.assignTask(taskId, requestNode);
     }
 
     private handleError(error: any) {

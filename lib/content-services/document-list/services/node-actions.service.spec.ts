@@ -17,14 +17,13 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { Observable } from 'rxjs/Observable';
 import { MatDialogRef } from '@angular/material';
-import { NodeLockDialogComponent } from '../../dialogs/node-lock.dialog';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { DialogModule } from '../../dialogs/dialog.module';
 
 const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
     id: 'fake'
@@ -39,24 +38,18 @@ describe('NodeActionsService', () => {
         open: jasmine.createSpy('open')
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                NodeLockDialogComponent
-            ],
-            providers: [
-                NodeActionsService,
-                DocumentListService,
-                ContentNodeDialogService,
-                { provide: MatDialogRef, useValue: dialogRef }
-            ]
-        });
-
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [ NodeLockDialogComponent ] }
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            DialogModule
+        ],
+        providers: [
+            NodeActionsService,
+            DocumentListService,
+            ContentNodeDialogService,
+            { provide: MatDialogRef, useValue: dialogRef }
+        ]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);

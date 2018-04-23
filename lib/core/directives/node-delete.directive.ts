@@ -96,8 +96,9 @@ export class NodeDeleteDirective implements OnChanges {
             Observable.forkJoin(...batch)
                 .subscribe((data: ProcessedNodeData[]) => {
                     const processedItems: ProcessStatus = this.processStatus(data);
+                    const message = this.getMessage(processedItems);
 
-                    this.delete.emit(this.getMessage(processedItems));
+                    this.delete.emit(message);
                 });
         }
     }
@@ -112,9 +113,9 @@ export class NodeDeleteDirective implements OnChanges {
         let promise;
 
         if (node.entry.hasOwnProperty('archivedAt')) {
-            promise = this.alfrescoApiService.getInstance().nodes.purgeDeletedNode(id);
+            promise = this.alfrescoApiService.nodesApi.purgeDeletedNode(id);
         } else {
-            promise = this.alfrescoApiService.getInstance().nodes.deleteNode(id, { permanent: this.permanent });
+            promise = this.alfrescoApiService.nodesApi.deleteNode(id, { permanent: this.permanent });
         }
 
         return Observable.fromPromise(promise)

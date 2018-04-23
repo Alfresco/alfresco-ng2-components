@@ -18,9 +18,9 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { TaskListService } from '../services/tasklist.service';
 import { ChecklistComponent } from './checklist.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 declare let jasmine: any;
 
@@ -36,24 +36,16 @@ describe('ChecklistComponent', () => {
     let element: HTMLElement;
     let showChecklistDialog;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                TranslateModule
-            ],
-            declarations: [
-                ChecklistComponent
-            ],
-            providers: [
-                TaskListService
-            ]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(ChecklistComponent);
-            checklistComponent = fixture.componentInstance;
-            element = fixture.nativeElement;
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
-            fixture.detectChanges();
-        });
+    beforeEach(async(() => {
+        fixture = TestBed.createComponent(ChecklistComponent);
+        checklistComponent = fixture.componentInstance;
+        element = fixture.nativeElement;
+
+        fixture.detectChanges();
     }));
 
     it('should show checklist component title', () => {

@@ -19,15 +19,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { UserProcessModel } from '../../../../models';
 import { Observable } from 'rxjs/Observable';
-import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
-import { MaterialModule } from '../../../../material.module';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { EcmModelService } from './../../../services/ecm-model.service';
 import { PeopleWidgetComponent } from './people.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PeopleWidgetComponent', () => {
 
@@ -36,22 +35,12 @@ describe('PeopleWidgetComponent', () => {
     let element: HTMLElement;
     let formService: FormService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                PeopleWidgetComponent,
-                ErrorWidgetComponent
-            ],
-            providers: [
-                FormService,
-                EcmModelService,
-                ActivitiContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleWidgetComponent);

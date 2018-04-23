@@ -17,17 +17,18 @@
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
+import { RedirectionModel } from '../models/redirection.model';
 
 // TODO: should be extending AuthenticationService
 export class AuthenticationMock /*extends AuthenticationService*/ {
-    private redirectUrl: string = '';
+    private redirectUrl: RedirectionModel = null;
 
-    setRedirectUrl(url: string) {
+    setRedirectUrl(url: RedirectionModel) {
         this.redirectUrl = url;
     }
 
     getRedirectUrl(): string {
-        return this.redirectUrl;
+        return this.redirectUrl ? this.redirectUrl.url : null;
     }
 
     // TODO: real auth service returns Observable<string>

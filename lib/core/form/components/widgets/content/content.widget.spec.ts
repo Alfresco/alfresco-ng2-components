@@ -17,16 +17,17 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../../../../material.module';
 import { By } from '@angular/platform-browser';
 import { TranslationService, ContentService } from '../../../../services';
 import { Observable } from 'rxjs/Observable';
 
-import { EcmModelService } from '../../../services/ecm-model.service';
-import { FormService } from '../../../services/form.service';
 import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../index';
 import { ContentWidgetComponent } from './content.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslationMock } from '../../../../mock/translation.service.mock';
 
 declare let jasmine: any;
 
@@ -62,30 +63,19 @@ describe('ContentWidgetComponent', () => {
         return new Blob([pdfData], {type: 'application/pdf'});
     }
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                ContentWidgetComponent
-            ],
-            providers: [
-                FormService,
-                EcmModelService,
-                ContentService,
-                ProcessContentService
-            ]
-        }).compileComponents();
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
+    beforeEach(async(() => {
         serviceContent = TestBed.get(ContentService);
         processContentService = TestBed.get(ProcessContentService);
-
-        let translateService = TestBed.get(TranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
     }));
 
     beforeEach(() => {
