@@ -22,6 +22,7 @@ export interface FileUploadProgress {
 }
 
 export interface FileUploadOptions {
+    comment?: string;
     newVersion?: boolean;
     majorVersion?: boolean;
     newVersionBaseName?: string;

@@ -49,9 +49,18 @@ export abstract class UploadBase {
     @Input()
     majorVersion: boolean = false;
 
+    /** When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history*/
+    @Input()
+    comment: string;
+
     /** Emitted when the file is uploaded successfully. */
     @Output()
     success = new EventEmitter();
+
+    /** @deprecated 2.4.0 */
+    /** Emitted when a folder is created. */
+    @Output()
+    createFolder = new EventEmitter();
 
     /** Emitted when an error occurs. */
     @Output()
@@ -126,6 +135,7 @@ export abstract class UploadBase {
      */
     protected createFileModel(file: File, parentId: string, path: string): FileModel {
         return new FileModel(file, {
+            comment: this.comment,
             majorVersion: this.majorVersion,
             newVersion: this.versioning,
             parentId: parentId,

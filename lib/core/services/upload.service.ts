@@ -80,7 +80,7 @@ export class UploadService {
      * @returns Array of files that were not blocked from upload by the ignore list
      */
     addToQueue(...files: FileModel[]): FileModel[] {
-        const allowedFiles = files.filter(f => this.filterElement(f));
+        const allowedFiles = files.filter(currentFile => this.filterElement(currentFile));
         this.queue = this.queue.concat(allowedFiles);
         this.queueChanged.next(this.queue);
         return allowedFiles;
@@ -101,7 +101,7 @@ export class UploadService {
      */
     uploadFilesInTheQueue(emitter: EventEmitter<any>): void {
         if (!this.activeTask) {
-            let file = this.queue.find(f => f.status === FileUploadStatus.Pending);
+            let file = this.queue.find(currentFile => currentFile.status === FileUploadStatus.Pending);
             if (file) {
                 this.onUploadStarting(file);
 
@@ -162,7 +162,8 @@ export class UploadService {
 
         if (file.options.newVersion === true) {
             opts.overwrite = true;
-            opts.majorVersion = true;
+            opts.majorVersion = file.options.majorVersion;
+            opts.comment = file.options.comment;
         } else {
             opts.autoRename = true;
         }

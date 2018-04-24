@@ -6,7 +6,12 @@
       "DOWNLOAD": "Download",
       "UPLOAD": {
         "TITLE": "Upload new version",
-        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it"
+        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it",
+        "MAJOR": "major changes (2.0)",
+        "MINOR": "minor changes (1.1)",
+        "COMMENT": "Leave a comment",
+        "ADD": "Add New Version",
+        "CANCEL": "Cancel"
       }
     },
     "CONFIRM_DELETE": {
@@ -231,12 +236,12 @@
     }
   },
   "PERMISSION_MANAGER": {
-      "PERMISSION_DISPLAY": {
-         "INHERITED" : "Inherited",
-         "AUTHORITY_ID" : "Authority ID",
-         "ROLE": "Role",
-         "LOCALLY_SET" : "Locally set",
-         "NO_PERMISSIONS" : "No permissions"
-      }
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Inherited",
+      "AUTHORITY_ID": "Authority ID",
+      "ROLE": "Role",
+      "LOCALLY_SET": "Locally set",
+      "NO_PERMISSIONS": "No permissions"
+    }
   }
 }

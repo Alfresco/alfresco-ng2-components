@@ -55,10 +55,6 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     @Input()
     tooltip: string = null;
 
-    /** Emitted when a folder is created. */
-    @Output()
-    createFolder = new EventEmitter();
-
     /** Emitted when create permission is missing. */
     @Output()
     permissionEvent: EventEmitter<PermissionModel> = new EventEmitter<PermissionModel>();

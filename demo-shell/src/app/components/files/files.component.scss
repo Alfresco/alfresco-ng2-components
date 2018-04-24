@@ -63,7 +63,7 @@
     }
 
     .adf-manage-versions-sidebar {
-        width: 300px !important;
+        width: 360px !important;
         color: rgba(0, 0, 0, 0.87);
 
         .adf-manage-versions-empty,
@@ -79,11 +79,11 @@
             }
         }
 
-        & ::ng-deep .adf-info-drawer-layout-header {
-            display: none;
+        & .adf-info-drawer-layout-header {
+            display: none !important;
         }
 
-        & ::ng-deep .adf-info-drawer-layout-content {
+        & .adf-info-drawer-layout-content {
             padding: 0;
 
             .adf-version-upload,
@@ -143,13 +143,13 @@
             .adf-datatable-table-cell-header {
                 display: none;
             }
-    
+
             .adf-data-table-cell:first-child,
             .adf-datatable-table-cell-header:first-child,
             .adf-data-table-cell:nth-child(2),
             .adf-datatable-table-cell-header:nth-child(2) {
                 display: table-cell;
-            }                 
+            }
         }
 
         .adf-site-container-style {
@@ -172,11 +172,11 @@
 
     @media (max-device-width: 1024px) {
         adf-document-list .adf-data-table {
-    
+
             .adf-data-table-cell:nth-child(4),
             .adf-datatable-table-cell-header:nth-child(4) {
                 display: none;
-            }                 
+            }
         }
-    }    
+    }
 }
