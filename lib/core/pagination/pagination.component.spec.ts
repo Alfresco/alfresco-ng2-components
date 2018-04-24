@@ -330,5 +330,30 @@ describe('PaginationComponent', () => {
             expect(component.current).toBe(2);
         });
 
+        it('should go to previous page if current page has 0 items', () => {
+            const customComponent = <PaginatedComponent> {
+                updatePagination() {},
+                pagination: new BehaviorSubject<Pagination>({})
+            };
+
+            component.target = customComponent;
+            component.ngOnInit();
+
+            customComponent.pagination.next({
+                count: 2,
+                skipCount: 5,
+                maxItems: 5
+            });
+
+            expect(component.current).toBe(2);
+
+            customComponent.pagination.next({
+                count: 0,
+                totalItems: 5,
+                maxItems: 5
+            });
+
+            expect(component.current).toBe(1);
+        });
     });
 });
