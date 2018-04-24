@@ -55,5 +55,14 @@
             flex-direction: row !important;
             align-items: center;
         }
+
+        &-permission-action {
+            &[disabled] {
+                opacity: 0.6;
+            }
+            &:enabled {
+                color: mat-color($primary);
+            }
+        }
     }
 }

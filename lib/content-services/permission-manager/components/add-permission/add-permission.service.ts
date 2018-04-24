@@ -21,6 +21,7 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { AddPermissionDialogComponent } from './add-permission-dialog.component';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Injectable()
 export class AddNodePermissionDialogService {
@@ -32,8 +33,8 @@ export class AddNodePermissionDialogService {
     }
 
     /** @param action Name of the action to show in the title */
-    openAddPermissionDialog(nodeId: string, title?: string): Observable<any[]> {
-        const success = new Subject<any[]>();
+    openAddPermissionDialog(nodeId: string, title?: string): Observable<MinimalNodeEntryEntity> {
+        const success = new Subject<MinimalNodeEntryEntity>();
         success.subscribe({
             complete: this.close.bind(this)
         });

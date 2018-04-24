@@ -50,10 +50,16 @@ export class AddPermissionDialogComponent {
 
     onSuccess(node: MinimalNodeEntryEntity) {
         this.data.success.next(node);
+        this.data.success.complete();
     }
 
     onAddClicked() {
         this.addPermissionComponent.applySelection();
+    }
+
+    onError(error: any) {
+        this.data.error.next(error);
+        this.data.error.complete();
     }
 
 }
