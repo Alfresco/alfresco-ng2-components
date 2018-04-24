@@ -17,8 +17,7 @@
 
 import { SearchNumberRangeComponent } from './search-number-range.component';
 
-/* tslint:disable */
-fdescribe('SearchNumberRangeComponent', () => {
+describe('SearchNumberRangeComponent', () => {
 
     let component: SearchNumberRangeComponent;
 
