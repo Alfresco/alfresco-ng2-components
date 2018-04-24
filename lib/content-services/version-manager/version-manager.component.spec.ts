@@ -24,7 +24,7 @@ import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('VersionManagerComponent', () => {
+describe('VersionManagerComponent', () => {
     let component: VersionManagerComponent;
     let fixture: ComponentFixture<VersionManagerComponent>;
     let spyOnListVersionHistory: jasmine.Spy;
