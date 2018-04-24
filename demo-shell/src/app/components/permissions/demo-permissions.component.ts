@@ -57,8 +57,14 @@ export class DemoPermissionComponent implements OnInit {
         this.displayPermissionComponent.reload();
     }
 
+    reloadList() {
+        this.displayPermissionComponent.reload();
+    }
+
     openAddPermissionDialog(event: Event) {
-        this.addPermissionDialogService.openAddPermissionDialog(this.nodeId);
+        this.addPermissionDialogService.openAddPermissionDialog(this.nodeId).subscribe(() => {
+            this.displayPermissionComponent.reload();
+        });
     }
 
 }

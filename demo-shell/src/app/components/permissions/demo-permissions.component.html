@@ -7,7 +7,7 @@
 </div>
 <button mat-button (click)="openAddPermissionDialog($event)">Click me!</button>
 <div>
-	<adf-permission-list #permissionList [nodeId]="nodeId">
+	<adf-permission-list #permissionList [nodeId]="nodeId" (update)="reloadList()">
 	</adf-permission-list>
 </div>
 

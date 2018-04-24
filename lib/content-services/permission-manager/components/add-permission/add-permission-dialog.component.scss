@@ -1,0 +1,55 @@
+@mixin adf-add-permission-dialog-theme($theme) {
+
+    $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    .adf-add-permission-dialog {
+
+        .mat-dialog-title {
+            margin-left: 24px;
+            margin-right: 24px;
+            font-size: 20px;
+            font-weight: 600;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.6;
+            letter-spacing: -0.5px;
+            color: mat-color($foreground, text, 0.87);
+        }
+
+        .mat-dialog-container {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .mat-dialog-content {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .mat-dialog-actions {
+            padding: 8px;
+            background-color: mat-color($background, background);
+            display: flex;
+            justify-content: flex-end;
+            color: mat-color($foreground, secondary-text);
+
+            button {
+                text-transform: uppercase;
+                font-weight: normal;
+            }
+
+            .choose-action {
+
+                &[disabled] {
+                    opacity: 0.6;
+                }
+
+                &:enabled {
+                    color: mat-color($primary);
+                }
+            }
+        }
+    }
+}
