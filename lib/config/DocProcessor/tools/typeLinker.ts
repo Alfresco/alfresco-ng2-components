@@ -20,9 +20,6 @@ import { CommentTag } from "typedoc/dist/lib/models";
 
 import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
-import { ChildableComponent } from "typedoc/dist/lib/utils";
-import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from "constants";
-import { match } from "minimatch";
 
 
 const includedNodeTypes = [
@@ -61,7 +58,7 @@ export function initPhase(aggData) {
         }
     });
 
-    console.log(JSON.stringify(aggData.nameLookup));
+    //console.log(JSON.stringify(aggData.nameLookup));
 }
 
 export function readPhase(tree, pathname, aggData) {}
@@ -104,7 +101,7 @@ export function updatePhase(tree, pathname, aggData) {
             node.children.forEach((child, index) => {
                 if (child.type === "text") {
                     let newNodes = handleLinksInBodyText(aggData, child.value);
-                    node.children = [...node.children.slice(0, index), ...newNodes, ...node.children.slice(index + 1)];
+                    node.children.splice(index, 1, ...newNodes);
                 } else {
                     traverseMDTree(child);
                 }
@@ -131,40 +128,54 @@ class SplitNameNode {
 }
 
 
+class SplitNameMatchElement {
+    constructor(public node: SplitNameNode, public textPos: number) {}
+}
+
+
+class SplitNameMatchResult {
+    constructor(public value: string, public startPos: number) {}
+}
+
+
 class SplitNameMatcher {
-    matches: SplitNameNode[];
+    matches: SplitNameMatchElement[];
 
     constructor(public root: SplitNameNode) {
         this.reset();
     }
 
     /* Returns all names that match when this word is added. */
-    nextWord(word: string): string[] {
+    nextWord(word: string, textPos: number): SplitNameMatchResult[] {
         let result = [];
 
-        this.matches.push(this.root);
+        this.matches.push(new SplitNameMatchElement(this.root, textPos));
 
         for (let i = this.matches.length - 1; i >= 0; i--) {
-            let child = this.matches[i].children[word];
+            if (this.matches[i].node.children) {
+                let child = this.matches[i].node.children[word];
 
-            if (child) {
-                if (child.value) {
-                    /* Using unshift to add the match to the array means that
-                     * the longest matches will appear first in the array.
-                     * User can then just use the first array element if only
-                     * the longest match is needed.
-                     */
-                    result.unshift(child.value);
-                    this.matches.splice(i, 1);
+                if (child) {
+                    if (child.value) {
+                        /* Using unshift to add the match to the array means that
+                        * the longest matches will appear first in the array.
+                        * User can then just use the first array element if only
+                        * the longest match is needed.
+                        */
+                        result.unshift(new SplitNameMatchResult(child.value, this.matches[i].textPos));
+                        this.matches.splice(i, 1);
+                    } else {
+                        this.matches[i] = new SplitNameMatchElement(child, this.matches[i].textPos);
+                    }
                 } else {
-                    this.matches[i] = child;
+                    this.matches.splice(i, 1);
                 }
             } else {
                 this.matches.splice(i, 1);
             }
         }
 
-        if (result = []) {
+        if (result === []) {
             return null;
         } else {
             return result;
@@ -193,7 +204,7 @@ class SplitNameLookup {
         segments.forEach((segment, index) => {
             let value = "";
 
-            if (index < (segments.length - 1)) {
+            if (index == (segments.length - 1)) {
                 value = name;
             }
 
@@ -211,13 +222,15 @@ class SplitNameLookup {
 
 
 class WordScanner {
+    separators: string;
     index: number;
-    nextIndex: number;
+    nextSeparator: number;
     current: string;
 
     constructor(public text: string) {
-        this.index = -1;
-        this.nextIndex = 0;
+        this.separators = " \n\r\t.;:";
+        this.index = 0;
+        this.nextSeparator = 0;
         this.next();
     }
     
@@ -226,14 +239,31 @@ class WordScanner {
     }
 
     next(): void {
-        this.index = this.nextIndex + 1;
-        this.nextIndex = this.text.indexOf(" ", this.index);
+        this.advanceIndex();
+        this.advanceNextSeparator();
+        this.current = this.text.substring(this.index, this.nextSeparator);
+    }
 
-        if (this.nextIndex === -1) {
-            this.nextIndex = this.text.length;
+    advanceNextSeparator() {
+        for (let i = this.index; i < this.text.length; i++) {
+            if (this.separators.indexOf(this.text[i]) !== -1) {
+                this.nextSeparator = i;
+                return;
+            }
         }
 
-        this.current = this.text.substring(this.index, this.nextIndex);
+        this.nextSeparator = this.text.length;
+    }
+
+    advanceIndex() {
+        for (let i = this.nextSeparator; i < this.text.length; i++) {
+            if (this.separators.indexOf(this.text[i]) === -1) {
+                this.index = i;
+                return;
+            }
+        }
+
+        this.index = this.text.length;
     }
 }
 
@@ -241,7 +271,7 @@ class WordScanner {
 function handleLinksInBodyText(aggData, text: string): Node[] {
     let result = [];
     let currTextStart = 0;
-    let matcher = new SplitNameMatcher(aggData.nameLookup);
+    let matcher = new SplitNameMatcher(aggData.nameLookup.root);
 
     for (let scanner = new WordScanner(text); !scanner.finished(); scanner.next()) {
         let word = scanner.current
@@ -250,22 +280,26 @@ function handleLinksInBodyText(aggData, text: string): Node[] {
         .replace(/[;:,\."']+$/g, "");
 
         let link = resolveTypeLink(aggData, word);
+        let matchStart;
 
         if (!link) {
-            let match = matcher.nextWord(word.toLowerCase());
+            let match = matcher.nextWord(word.toLowerCase(), scanner.index);
 
-            if (match) {
-                link = resolveTypeLink(aggData, match[0]);
+            if (match && match[0]) {
+                link = resolveTypeLink(aggData, match[0].value);
+                matchStart = match[0].startPos;
             }
+        } else {
+            matchStart = scanner.index
         }
 
         if (link) {
-            console.log("Found word link:" + link);
-            let linkNode = unist.makeLink(unist.makeText(scanner.current), link);
-            let prevText = text.substring(currTextStart, scanner.index);
+            let linkText = text.substring(matchStart, scanner.nextSeparator);
+            let linkNode = unist.makeLink(unist.makeText(linkText), link);
+            let prevText = text.substring(currTextStart, matchStart);
             result.push(unist.makeText(prevText));
             result.push(linkNode);
-            currTextStart = scanner.nextIndex;
+            currTextStart = scanner.nextSeparator;
             matcher.reset();
         }
     }
