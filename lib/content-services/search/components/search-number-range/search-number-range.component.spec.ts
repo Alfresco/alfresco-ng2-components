@@ -78,7 +78,7 @@ describe('SearchNumberRangeComponent', () => {
         component.apply({
             from: '10',
             to: '20'
-        }, true)
+        }, true);
 
         const expectedQuery = 'cm:content.size:[10 TO 20]';
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);

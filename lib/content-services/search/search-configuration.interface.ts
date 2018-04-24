@@ -24,10 +24,6 @@ export interface SearchConfiguration {
     query?: {
         categories: Array<SearchCategory>
     };
-    limits?: {
-        permissionEvaluationTime?: number;
-        permissionEvaluationCount?: number;
-    };
     filterQueries?: Array<FilterQuery>;
     facetQueries?: Array<FacetQuery>;
     facetFields?: {

@@ -150,23 +150,6 @@
                 ]
               }
             }
-          },
-          {
-            "id": "queryLocations",
-            "name": "Locations",
-            "enabled": true,
-            "component": {
-              "selector": "scope-locations",
-              "settings": {
-                "field": null,
-                "options": [
-                  { "name": "Default", "value": "nodes", "default": true },
-                  { "name": "Nodes", "value": "nodes" },
-                  { "name": "Deleted Nodes", "value": "deleted-nodes" },
-                  { "name": "Versions", "value": "versions" }
-                ]
-              }
-            }
           }
         ]
       }

@@ -19,7 +19,6 @@ import { Injectable, Type } from '@angular/core';
 import { SearchTextComponent } from '../search-text/search-text.component';
 import { SearchRadioComponent } from '../search-radio/search-radio.component';
 import { SearchFieldsComponent } from '../search-fields/search-fields.component';
-import { SearchScopeLocationsComponent } from '../search-scope-locations/search-scope-locations.component';
 import { SearchSliderComponent } from '../search-slider/search-slider.component';
 import { SearchNumberRangeComponent } from '../search-number-range/search-number-range.component';
 
@@ -33,7 +32,6 @@ export class SearchFilterService {
         'text': SearchTextComponent,
         'radio': SearchRadioComponent,
         'fields': SearchFieldsComponent,
-        'scope-locations': SearchScopeLocationsComponent,
         'slider': SearchSliderComponent,
         'number-range': SearchNumberRangeComponent
     };

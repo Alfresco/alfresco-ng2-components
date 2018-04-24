@@ -34,7 +34,6 @@ export class SearchQueryBuilderService {
     categories: Array<SearchCategory> = [];
     queryFragments: { [id: string]: string } = {};
     fields: { [id: string]: string[] } = {};
-    scope: { locations?: string };
     filterQueries: FilterQuery[] = [];
     ranges: { [id: string]: SearchRange } = {};
     paging: { maxItems?: number; skipCount?: number } = null;
@@ -52,9 +51,6 @@ export class SearchQueryBuilderService {
         }
 
         this.filterQueries = this.config.filterQueries || [];
-        this.scope = {
-            locations: null
-        };
     }
 
     addFilterQuery(query: string): void {
@@ -126,9 +122,7 @@ export class SearchQueryBuilderService {
                 paging: this.paging,
                 filterQueries: this.filterQueries,
                 facetQueries: this.config.facetQueries,
-                facetFields: this.config.facetFields,
-                limits: this.config.limits,
-                scope: this.scope
+                facetFields: this.config.facetFields
             };
 
             return result;
