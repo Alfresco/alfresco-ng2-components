@@ -750,6 +750,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updatePagination(pagination: PaginationModel) {
+        this.pagination.next(pagination);
         this.reload();
     }
 
