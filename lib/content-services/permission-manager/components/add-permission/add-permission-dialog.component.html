@@ -3,12 +3,14 @@
     <adf-add-permission
         #addPermission
         [nodeId]="nodeId"
-        (select)="onSelect($event)">
+        (select)="onSelect($event)"
+        (success)="onSuccess($event)">
     </adf-add-permission>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>CLOSE</button>
     <button mat-button [mat-dialog-close]="true"
+            class="choose-action"
             [disabled]="currentSelection?.length === 0"
             (click)="onAddClicked()">ADD</button>
 </mat-dialog-actions>
