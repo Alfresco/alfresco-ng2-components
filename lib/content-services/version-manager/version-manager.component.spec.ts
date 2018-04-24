@@ -22,8 +22,9 @@ import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } 
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('VersionManagerComponent', () => {
+fdescribe('VersionManagerComponent', () => {
     let component: VersionManagerComponent;
     let fixture: ComponentFixture<VersionManagerComponent>;
     let spyOnListVersionHistory: jasmine.Spy;
@@ -44,7 +45,8 @@ describe('VersionManagerComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreModule.forRoot(),
+            NoopAnimationsModule
         ],
         declarations: [
             VersionManagerComponent,
@@ -102,5 +104,25 @@ describe('VersionManagerComponent', () => {
             expect(event).toBe(emittedData);
         });
         component.onUploadSuccess(emittedData);
+    });
+
+    describe('Animation', () => {
+
+        it('should upload button be hide by default', () => {
+            fixture.detectChanges();
+
+            expect(component.uploadState).toEqual('close');
+        });
+
+        it('should upload button be visible after click on add new version button', () => {
+            fixture.detectChanges();
+
+            let showUploadButton = fixture.debugElement.query(By.css('#adf-show-version-upload-button'));
+
+            showUploadButton.nativeElement.click();
+
+            expect(component.uploadState).toEqual('open');
+        });
+
     });
 });

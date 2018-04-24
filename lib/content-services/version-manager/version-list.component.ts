@@ -43,6 +43,7 @@ export class VersionListComponent implements OnChanges {
     @Input()
     node: MinimalNodeEntryEntity;
 
+    /** show/hide comments */
     @Input()
     showComments = true;
 

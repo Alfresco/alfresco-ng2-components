@@ -49,7 +49,7 @@ export abstract class UploadBase {
     @Input()
     majorVersion: boolean = false;
 
-    /** When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history*/
+    /** When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history */
     @Input()
     comment: string;
 
