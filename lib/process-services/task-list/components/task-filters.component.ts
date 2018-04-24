@@ -56,6 +56,12 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     @Input()
     appName: string;
 
+    /** Define which filter id should be selected after reloading. If the filter id doesn't
+     * exist or nothing is passed then the first filter will be selected.
+     */
+    @Input()
+    landingFilterId: number;
+
     /** Toggles display of the filter's icon. */
     @Input()
     hasIcon: boolean = true;
@@ -74,6 +80,10 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     ngOnInit() {
         this.filter$.subscribe((filter: FilterRepresentationModel) => {
             this.filters.push(filter);
+            if (filter.id === this.landingFilterId) {
+                console.log(filter);
+                this.currentFilter = filter;
+            }
         });
     }
 
@@ -132,8 +142,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                     res.forEach((filter) => {
                         this.filterObserver.next(filter);
                     });
-
-                    this.selectTaskFilter(this.filterParam, this.filters);
+                    if (!this.currentFilter) {
+                        this.selectTaskFilter(this.filterParam, this.filters);
+                    }
                     this.success.emit(res);
                 }
             },
@@ -210,7 +221,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      */
     public selectDefaultTaskFilter(filteredFilterList: FilterRepresentationModel[]) {
         if (!this.isFilterListEmpty()) {
-            this.currentFilter = this.filters[0];
+            this.currentFilter = this.filters.find((filter) => filter.id === this.landingFilterId );
         }
     }
 
