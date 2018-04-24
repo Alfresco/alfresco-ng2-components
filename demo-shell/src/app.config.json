@@ -107,6 +107,17 @@
             }
           },
           {
+            "id": "contentSizeRange",
+            "name": "Content Size (range)",
+            "enabled": true,
+            "component": {
+              "selector": "number-range",
+              "settings": {
+                "field": "cm:content.size"
+              }
+            }
+          },
+          {
             "id": "queryFields",
             "name": "Fields",
             "enabled": true,
