@@ -20,13 +20,15 @@
         </mat-icon>
 </mat-form-field>
 
-<div *ngIf="searchedWord.length === 0 else search_results">
+<div *ngIf="searchedWord.length === 0">
         <span class="adf-permission-start-message"> TYPE SOMETHING</span>
 </div>
 
-<adf-search #search [searchTerm]="searchedWord" class="adf-permission-result-list">
-    <ng-template let-data #search_results>
-        <mat-selection-list>
+<adf-search #search [searchTerm]="searchedWord"
+            class="adf-permission-result-list"
+            *ngIf="searchedWord.length !== 0">
+    <ng-template let-data>
+        <mat-selection-list [class.adf-permission-result-list-elements]="data?.list?.entries.length !== 0">
             <mat-list-option *ngFor="let item of data?.list?.entries; let idx = index"
                                 (click)="elementClicked(item)"
                                 class="adf-list-option-item"
@@ -41,7 +43,7 @@
                                         item.entry?.properties['cm:firstName']}}</p>
             </mat-list-option>
         </mat-selection-list>
-        <div *ngIf="data?.list?.entries.length === 0">
+        <div *ngIf="data?.list?.entries.length === 0" class="adf-permission-no-result">
             <span> NO RESULT YeT</span>
         </div>
     </ng-template>
