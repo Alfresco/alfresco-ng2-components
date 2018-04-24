@@ -209,6 +209,7 @@
                         class="image-table-cell">
                     </data-column>
                     <data-column
+                        *ngIf="showNameColumn"
                         key="name"
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip"
@@ -404,6 +405,12 @@
     </div>
 
     <div class="container">
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="showNameColumn">
+                Show Name Column
+            </mat-slide-toggle>
+        </section>
+
         <section>
             <mat-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">{{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' |
                 translate}}
