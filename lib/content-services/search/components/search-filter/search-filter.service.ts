@@ -20,6 +20,7 @@ import { SearchTextComponent } from '../search-text/search-text.component';
 import { SearchRadioComponent } from '../search-radio/search-radio.component';
 import { SearchFieldsComponent } from '../search-fields/search-fields.component';
 import { SearchScopeLocationsComponent } from '../search-scope-locations/search-scope-locations.component';
+import { SearchSliderComponent } from '../search-slider/search-slider.component';
 
 @Injectable()
 export class SearchFilterService {
@@ -31,7 +32,8 @@ export class SearchFilterService {
         'text': SearchTextComponent,
         'radio': SearchRadioComponent,
         'fields': SearchFieldsComponent,
-        'scope-locations': SearchScopeLocationsComponent
+        'scope-locations': SearchScopeLocationsComponent,
+        'slider': SearchSliderComponent
     };
 
 }
