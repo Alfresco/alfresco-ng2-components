@@ -3,7 +3,9 @@
     <adf-add-permission
         #addPermission
         [nodeId]="nodeId"
+        [showAction]="false"
         (select)="onSelect($event)"
+        (error)="onError($event)"
         (success)="onSuccess($event)">
     </adf-add-permission>
 </mat-dialog-content>
