@@ -119,6 +119,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     disableDragArea = false;
 
+    @Input()
+    showNameColumn = true;
+
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
 

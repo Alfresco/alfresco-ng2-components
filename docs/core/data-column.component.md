@@ -55,6 +55,18 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 ## Details
 
+### Conditional visibility
+
+You can use `ngIf` directives to provide conditional visibility support for the columns:
+
+```html
+<data-column
+    *nfIg="showNameColumn"
+    key="name"
+    title="MY.RESOURCE.KEY">
+</data-column>
+```
+
 ### Automatic column header translation
 
 You can use i18n resource keys with DataColumn `title` property.

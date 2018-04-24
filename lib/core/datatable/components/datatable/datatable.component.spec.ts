@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { SimpleChange, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SimpleChange, NO_ERRORS_SCHEMA, QueryList } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
@@ -26,6 +26,8 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataTableComponent } from './datatable.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
+import { DataColumnComponent } from '../../../data-column/data-column.component';
 
 describe('DataTable', () => {
 
@@ -49,6 +51,23 @@ describe('DataTable', () => {
     afterEach(() => {
         fixture.destroy();
     });
+
+    it('should update schema if columns change', fakeAsync(() => {
+
+        dataTable.columnList = new DataColumnListComponent();
+        dataTable.columnList.columns = new QueryList<DataColumnComponent>();
+        dataTable.data = new ObjectDataTableAdapter([], []);
+
+        spyOn(dataTable.data, 'setColumns').and.callThrough();
+
+        dataTable.ngAfterContentInit();
+        dataTable.columnList.columns.reset([new DataColumnComponent()]);
+        dataTable.columnList.columns.notifyOnChanges();
+
+        tick(100);
+
+        expect(dataTable.data.setColumns).toHaveBeenCalled();
+    }));
 
     it('should use the cardview style if cardview is true', () => {
         let newData = new ObjectDataTableAdapter(
