@@ -6,6 +6,22 @@
     width: 100%;
 }
 
+.adf-lock-file-name {
+    .mat-checkbox-layout{
+        width: 100%;
+    }
+
+    .mat-checkbox-label{
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .mat-checkbox-inner-container{
+        margin: auto 0;
+        margin-right: 8px;
+    }
+}
+
 @mixin adf-dialog-theme($theme) {
 
     $primary: map-get($theme, primary);
