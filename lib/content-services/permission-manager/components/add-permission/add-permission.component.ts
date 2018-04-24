@@ -42,6 +42,9 @@ export class AddPermissionComponent implements OnInit {
     @Input()
     nodeId: string;
 
+    @Input()
+    showAction = true;
+
     @Output()
     select: EventEmitter<any> = new EventEmitter();
 
@@ -104,9 +107,13 @@ export class AddPermissionComponent implements OnInit {
     applySelection() {
         const permissionElementList = this.transformNodeToPermissionElement(this.selectedItems);
         this.nodePermissionService.updateLocallySetPermissions(this.currentNode, permissionElementList)
-            .subscribe((node) => {
-                this.success.emit(node);
-            });
+            .subscribe(
+                (node) => {
+                    this.success.emit(node);
+                },
+                (error) => {
+                    this.error.emit(error);
+                });
     }
 
     private transformNodeToPermissionElement(nodes: MinimalNodeEntity[]): PermissionElement[] {
