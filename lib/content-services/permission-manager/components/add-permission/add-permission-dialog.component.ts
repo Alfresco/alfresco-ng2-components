@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 import { AddPermissionComponent } from '../add-permission/add-permission.component';
 
@@ -39,6 +39,10 @@ export class AddPermissionDialogComponent {
 
     onSelect(items: MinimalNodeEntity[]) {
         this.currentSelection = items;
+    }
+
+    onSuccess(node: MinimalNodeEntryEntity) {
+        this.data.success.next(node);
     }
 
     onAddClicked() {
