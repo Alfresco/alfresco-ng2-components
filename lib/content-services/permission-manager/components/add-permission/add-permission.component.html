@@ -48,4 +48,8 @@
         </div>
     </ng-template>
 </adf-search>
+<div id="add-permission-actions" *ngIf="showAction">
+   <button mat-button class="adf-permission-action" [disabled]="selectedItems?.length === 0" (click)="applySelection()">ADD</button>
+</div>
+
 

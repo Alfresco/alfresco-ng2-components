@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
 
 export interface AddPermissionDialogData {
     title?: string;
     nodeId: string;
     actionName?: string;
-    success: Subject<MinimalNodeEntity[]>;
+    success: Subject<MinimalNodeEntryEntity>;
     select?: Subject<MinimalNodeEntity[]>;
     error: Subject<string>;
 }
