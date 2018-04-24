@@ -57,7 +57,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     }
 
     apply(model: { from: string, to: string }, isValid: boolean) {
-        if (isValid) {
+        if (isValid && this.id && this.context && this.settings && this.settings.field) {
             this.context.queryFragments[this.id] = `${this.settings.field}:[${model.from} TO ${model.to}]`;
             this.context.update();
         }
@@ -69,7 +69,9 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             to: ''
         });
 
-        this.context.queryFragments[this.id] = '';
-        this.context.update();
+        if (this.id && this.context) {
+            this.context.queryFragments[this.id] = '';
+            this.context.update();
+        }
     }
 }

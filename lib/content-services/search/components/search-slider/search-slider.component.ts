@@ -40,7 +40,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     value: number;
 
     ngOnInit() {
-        if (this.context && this.settings) {
+        if (this.settings) {
             if (this.settings.hasOwnProperty('min')) {
                 this.min = this.settings['min'];
             }
@@ -59,8 +59,11 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
 
     onChangedHandler(event: MatSliderChange) {
         this.value = event.value;
-        this.context.queryFragments[this.id] = `${this.settings.field}:[0 TO ${this.value}]`;
-        this.context.update();
+
+        if (this.id && this.context && this.settings && this.settings.field) {
+            this.context.queryFragments[this.id] = `${this.settings.field}:[0 TO ${this.value}]`;
+            this.context.update();
+        }
     }
 
 }
