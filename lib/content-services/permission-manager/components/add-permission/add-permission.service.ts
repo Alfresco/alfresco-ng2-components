@@ -45,7 +45,7 @@ export class AddNodePermissionDialogService {
             error: null
         };
 
-        this.openDialog(data, 'adf-content-node-selector-dialog', '630px');
+        this.openDialog(data, 'adf-add-permission-dialog', '630px');
         return success;
     }
 
