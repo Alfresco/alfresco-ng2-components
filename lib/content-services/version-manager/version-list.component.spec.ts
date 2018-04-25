@@ -285,6 +285,53 @@ describe('VersionListComponent', () => {
 
     describe('Actions buttons', () => {
 
+        describe('showActions', () => {
+
+            beforeEach(() => {
+                fixture.detectChanges();
+                component.node = { id: nodeId };
+                spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
+                    return Promise.resolve({
+                        list: {
+                            entries: [
+                                {
+                                    entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+                                }
+                            ]
+                        }
+                    });
+                });
+
+                component.ngOnChanges();
+            });
+
+            it('should show Actions if showActions is true', (done) => {
+                component.showActions = true;
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
+
+                    expect(menuButton).not.toBeNull();
+                    done();
+                });
+            });
+
+            it('should hide Actions if showActions is false', (done) => {
+                component.showActions = false;
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
+
+                    expect(menuButton).toBeNull();
+                    done();
+                });
+            });
+        });
+
         describe('disabled', () => {
 
             beforeEach(() => {

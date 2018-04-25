@@ -51,6 +51,10 @@ export class VersionListComponent implements OnChanges {
     @Input()
     allowDownload = true;
 
+    /** show/hide version actions */
+    @Input()
+    showActions = true;
+
     constructor(private alfrescoApi: AlfrescoApiService,
                 private contentService: ContentService,
                 private dialog: MatDialog,
