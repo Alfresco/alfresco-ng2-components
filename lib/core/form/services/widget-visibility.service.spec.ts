@@ -651,6 +651,76 @@ describe('WidgetVisibilityService', () => {
             expect(fakeFormWithField.tabs[0].isVisible).toBeFalsy();
         });
 
+        it('should use the form value to evaluate the visibility condition if the form value is defined', (done) => {
+            service.getTaskProcessVariable('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                    expect(res).toBeDefined();
+                    let varValue = service.getVariableValue(formTest, 'FIELD_TEST', res);
+                    expect(varValue).not.toBeUndefined();
+                    expect(varValue).toBe('process_variable_value');
+
+                    visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+                    visibilityObjTest.operator = '==';
+                    visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_VALUE';
+
+                    const fieldWithoutVisibility = <FormFieldModel> fakeFormWithField.getFieldById('FIELD_WITH_CONDITION');
+                    fieldWithoutVisibility.isVisible = false;
+                    fieldWithoutVisibility.visibilityCondition = visibilityObjTest;
+
+                    let contModel = new ContainerModel(new FormFieldModel(fakeFormWithField));
+
+                    fakeFormWithField.fields.push(contModel);
+                    service.refreshVisibility(fakeFormWithField);
+
+                    const fieldWithVisibilityAttached = contModel.form.getFieldById('FIELD_WITH_CONDITION');
+                    expect(fieldWithVisibilityAttached.isVisible).toBeTruthy();
+                    done();
+                }
+            );
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: [{id: 'FIELD_TEST', type: 'string', value: 'process_variable_value'}]
+            });
+        });
+
+        it('should use the process value to evaluate the visibility condition if the form value is not defined', (done) => {
+
+            service.getTaskProcessVariable('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                    expect(res).toBeDefined();
+                    let varValue = service.getVariableValue(formTest, 'FIELD_TEST', res);
+                    expect(varValue).not.toBeUndefined();
+                    expect(varValue).toBe('process_variable_value');
+
+                    visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+                    visibilityObjTest.operator = '==';
+                    visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_VALUE';
+
+                    const fieldRelatedToCondition = <FormFieldModel> fakeFormWithField.getFieldById('FIELD_TEST');
+                    fieldRelatedToCondition.value = '';
+
+                    const fieldWithoutVisibility = <FormFieldModel> fakeFormWithField.getFieldById('FIELD_WITH_CONDITION');
+                    fieldWithoutVisibility.isVisible = false;
+                    fieldWithoutVisibility.visibilityCondition = visibilityObjTest;
+
+                    let contModel = new ContainerModel(new FormFieldModel(fakeFormWithField));
+
+                    fakeFormWithField.fields.push(contModel);
+                    service.refreshVisibility(fakeFormWithField);
+
+                    const fieldWithVisibilityAttached = contModel.form.getFieldById('FIELD_WITH_CONDITION');
+                    expect(fieldWithVisibilityAttached.isVisible).toBeFalsy();
+                    done();
+                }
+            );
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: [{id: 'FIELD_TEST', type: 'string', value: 'process_variable_value'}]
+            });
+        });
+
         it('should refresh the visibility for single tab', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
