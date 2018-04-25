@@ -1,55 +1,12 @@
-
-<mat-form-field floatPlaceholder="never" class="adf-permission-search-input">
-        <input matInput
-            id="searchInput"
-            [formControl]="searchInput"
-            type="text"
-            placeholder="{{'NODE_SELECTOR.SEARCH' | translate}}"
-            [value]="searchedWord">
-
-        <mat-icon *ngIf="searchedWord.length > 0"
-            class="adf-permission-search-icon"
-            data-automation-id="adf-permission-clear-input"
-            matSuffix (click)="clearSearch()">clear
-        </mat-icon>
-
-        <mat-icon *ngIf="searchedWord.length === 0"
-            class="adf-permission-search-icon"
-            data-automation-id="adf-permission-search-icon"
-            matSuffix>search
-        </mat-icon>
-</mat-form-field>
-
-<div *ngIf="searchedWord.length === 0">
-        <span class="adf-permission-start-message"> TYPE SOMETHING</span>
-</div>
-
-<adf-search #search [searchTerm]="searchedWord"
-            class="adf-permission-result-list"
-            *ngIf="searchedWord.length !== 0">
-    <ng-template let-data>
-        <mat-selection-list [class.adf-permission-result-list-elements]="data?.list?.entries.length !== 0">
-            <mat-list-option *ngFor="let item of data?.list?.entries; let idx = index"
-                                (click)="elementClicked(item)"
-                                class="adf-list-option-item"
-                                id="result_option_{{idx}}">
-                <mat-icon mat-list-icon *ngIf="item?.entry?.nodeType === 'cm:authorityContainer' else show_person_icon">group_add</mat-icon>
-                <ng-template #show_person_icon>
-                    <mat-icon mat-list-icon>person_add</mat-icon>
-                </ng-template>
-                <p>
-                 {{item.entry?.properties['cm:authorityName']?
-                                        item.entry?.properties['cm:authorityName'] :
-                                        item.entry?.properties['cm:firstName']}}</p>
-            </mat-list-option>
-        </mat-selection-list>
-        <div *ngIf="data?.list?.entries.length === 0" class="adf-permission-no-result">
-            <span> NO RESULT YeT</span>
-        </div>
-    </ng-template>
-</adf-search>
+<adf-add-permission-panel
+    (select)="onSelect($event)">
+</adf-add-permission-panel>
 <div id="add-permission-actions" *ngIf="showAction">
-   <button mat-button class="adf-permission-action" [disabled]="selectedItems?.length === 0" (click)="applySelection()">ADD</button>
+   <button mat-button class="adf-permission-action"
+          [disabled]="selectedItems?.length === 0"
+          (click)="applySelection()">
+     {{'PERMISSION_MANAGER.ADD-PERMISSION.ADD-ACTION' | translate}}
+    </button>
 </div>
 
 
