@@ -1,60 +1,8 @@
 @mixin adf-add-permission-theme($theme) {
 
-    $background: map-get($theme, background);
-    $foreground: map-get($theme, foreground);
     $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $mat-menu-border-radius: 2px !default;
 
     .adf {
-
-        &-permission-result-list {
-            display: flex;
-            height: 300px;
-            overflow: auto;
-            border: 2px solid mat-color($foreground, base, 0.07);
-
-            &-elements {
-                width: 100%;
-            }
-        }
-
-        &-permission-start-message {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            height: 300px;
-            overflow: auto;
-            border: 2px solid mat-color($foreground, base, 0.07);
-        }
-
-        &-permission-no-result{
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            width: 100%;
-        }
-
-        &-permission-search {
-            &-input {
-                width: 100%;
-
-                &-icon {
-                    color: mat-color($foreground, disabled-button);
-                    cursor: pointer;
-
-                    &:hover {
-                        color: mat-color($foreground, base);
-                    }
-                }
-            }
-        }
-
-        &-list-option-item .mat-list-text {
-            display: flex;
-            flex-direction: row !important;
-            align-items: center;
-        }
 
         &-permission-action {
             &[disabled] {
