@@ -481,12 +481,16 @@
           "description": "Search configuration parameters",
           "type": "object",
           "properties": {
-            "limits": {
-              "description": "The limits element limits the time and resources used for query execution. Limits applied to the query go to the database.",
-              "type": "object",
-              "properties": {
-                "permissionEvaluationTime": { "type": "integer" },
-                "permissionEvaluationCount": { "type": "integer" }
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "string"
               }
             },
             "filterQueries": {

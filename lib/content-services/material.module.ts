@@ -34,7 +34,8 @@ import {
     MatCheckboxModule,
     MatDatepickerModule,
     MatSlideToggleModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSliderModule
 } from '@angular/material';
 
 export function modules() {
@@ -56,7 +57,8 @@ export function modules() {
         MatCheckboxModule,
         MatDatepickerModule,
         MatSlideToggleModule,
-        MatRadioModule
+        MatRadioModule,
+        MatSliderModule
     ];
 }
 
