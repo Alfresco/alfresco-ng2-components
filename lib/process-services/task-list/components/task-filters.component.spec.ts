@@ -297,7 +297,7 @@ describe('TaskFiltersComponent', () => {
         expect(component.getFiltersByAppId).toHaveBeenCalled();
     });
 
-    fit('should select the current task filter comes from @Input', () => {
+    it('should select the current task filter comes from @Input', () => {
         component.landingFilterId = fakeLandingFilterId;
         component.filters = fakeGlobalFilter;
         component.selectDefaultTaskFilter();
