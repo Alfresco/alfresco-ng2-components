@@ -15,38 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, EventEmitter, Input, Output, ViewChild, OnInit } from '@angular/core';
-import { SearchPermissionConfigurationService } from './search-config-permission.service';
-import { SearchService, SearchConfigurationService, NodesApiService } from '@alfresco/adf-core';
-import { SearchComponent } from '../../../search/components/search.component';
-import { FormControl } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
-import { MinimalNodeEntity, PermissionElement, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
 
 @Component({
     selector: 'adf-add-permission',
     templateUrl: './add-permission.component.html',
     styleUrls: ['./add-permission.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    providers: [
-        { provide: SearchConfigurationService, useClass: SearchPermissionConfigurationService },
-        SearchService
-    ]
+    encapsulation: ViewEncapsulation.None
 })
-export class AddPermissionComponent implements OnInit {
-
-    @ViewChild('search')
-    search: SearchComponent;
+export class AddPermissionComponent {
 
     @Input()
     nodeId: string;
-
-    @Input()
-    showAction = true;
-
-    @Output()
-    select: EventEmitter<any> = new EventEmitter();
 
     @Output()
     success: EventEmitter<any> = new EventEmitter();
@@ -54,59 +36,19 @@ export class AddPermissionComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
-    searchInput: FormControl = new FormControl();
-    searchedWord = '';
-    debounceSearch: number = 200;
-
     selectedItems: MinimalNodeEntity[] = [];
     currentNode: MinimalNodeEntryEntity;
     currentNodeRoles: string[];
 
-    constructor(private nodeService: NodesApiService,
-                private nodePermissionService: NodePermissionService) {
-        this.searchInput.valueChanges
-        .pipe(
-            debounceTime(this.debounceSearch)
-        )
-        .subscribe((searchValue) => {
-            this.searchedWord = searchValue;
-            if (!searchValue) {
-                this.search.resetResults();
-            }
-        });
+    constructor(private nodePermissionService: NodePermissionService) {
     }
 
-    ngOnInit() {
-        this.nodeService.getNode(this.nodeId).subscribe(( node: MinimalNodeEntryEntity) => {
-            this.currentNode = node;
-            this.nodePermissionService.getNodeRoles(node).subscribe((nodeRoles: string[]) => {
-                this.currentNodeRoles = nodeRoles;
-             });
-        });
-    }
-
-    elementClicked(item: MinimalNodeEntity) {
-        if (this.isAlreadySelected(item)) {
-            this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
-        } else {
-            this.selectedItems.push(item);
-        }
-        this.select.emit(this.selectedItems);
-    }
-
-    private isAlreadySelected(item: MinimalNodeEntity): boolean {
-        return this.selectedItems.indexOf(item) >= 0;
-    }
-
-    clearSearch() {
-        this.searchedWord = '';
-        this.selectedItems.splice(0, this.selectedItems.length);
-        this.search.resetResults();
+    onSelect(selection: MinimalNodeEntity[]) {
+        this.selectedItems = selection;
     }
 
     applySelection() {
-        const permissionElementList = this.transformNodeToPermissionElement(this.selectedItems);
-        this.nodePermissionService.updateLocallySetPermissions(this.currentNode, permissionElementList)
+        this.nodePermissionService.updateNodePermission(this.nodeId, this.selectedItems)
             .subscribe(
                 (node) => {
                     this.success.emit(node);
@@ -114,19 +56,6 @@ export class AddPermissionComponent implements OnInit {
                 (error) => {
                     this.error.emit(error);
                 });
-    }
-
-    private transformNodeToPermissionElement(nodes: MinimalNodeEntity[]): PermissionElement[] {
-        return nodes.map((node) => {
-            let newPermissionElement: PermissionElement = <PermissionElement> {
-                'authorityId': node.entry.properties['cm:authorityName'] ?
-                    node.entry.properties['cm:authorityName'] :
-                    node.entry.properties['cm:userName'],
-                'name': this.currentNodeRoles[0],
-                'accessStatus': 'ALLOWED'
-            };
-            return newPermissionElement;
-        });
     }
 
 }

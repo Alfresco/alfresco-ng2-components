@@ -16,38 +16,43 @@
  */
 
 import { MatDialog } from '@angular/material';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { AddPermissionDialogComponent } from './add-permission-dialog.component';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, MinimalNodeEntity } from 'alfresco-js-api';
+import { NodePermissionService } from '../../services/node-permission.service';
 
 @Injectable()
 export class AddNodePermissionDialogService {
 
-    @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
-
-    constructor(private dialog: MatDialog) {
+    constructor(private dialog: MatDialog,
+                private nodePermissionService: NodePermissionService) {
     }
 
-    /** @param action Name of the action to show in the title */
     openAddPermissionDialog(nodeId: string, title?: string): Observable<MinimalNodeEntryEntity> {
-        const success = new Subject<MinimalNodeEntryEntity>();
-        success.subscribe({
+        const result$ = new Subject<MinimalNodeEntryEntity>();
+        const confirm = new Subject<MinimalNodeEntity[]>();
+
+        confirm.subscribe({
+            next: (selection) => {
+                this.nodePermissionService.updateNodePermission(nodeId, selection).subscribe({
+                    next: result$.next.bind(result$),
+                    error: result$.error.bind(result$)
+                });
+            },
             complete: this.close.bind(this)
         });
 
         const data: AddPermissionDialogData = {
             nodeId: nodeId,
             title: 'AMMACCABANANE',
-            success: success,
-            error: null
+            confirm : confirm
         };
 
         this.openDialog(data, 'adf-add-permission-dialog', '630px');
-        return success;
+        return result$;
     }
 
     private openDialog(data: any, currentPanelClass: string, chosenWidth: string) {
@@ -58,5 +63,4 @@ export class AddNodePermissionDialogService {
     close() {
         this.dialog.closeAll();
     }
-
 }
