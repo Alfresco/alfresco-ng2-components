@@ -221,7 +221,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     extension: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
 
-    private CacheBusterNumber;
+    private cacheBusterNumber;
 
     private subscriptions: Subscription[] = [];
 
@@ -338,7 +338,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.displayName = data.name;
 
         this.urlFileContent = this.apiService.contentApi.getContentUrl(data.id);
-        this.urlFileContent = this.CacheBusterNumber ? this.urlFileContent + '&' + this.CacheBusterNumber : this.urlFileContent;
+        this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + this.cacheBusterNumber : this.urlFileContent;
 
         this.extension = this.getFileExtension(data.name);
 
@@ -707,7 +707,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private generateCacheBusterNumber() {
-        this.CacheBusterNumber = Math.random();
+        this.cacheBusterNumber = Math.random();
     }
 
 }
