@@ -36,14 +36,18 @@ export class AppComponent {
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
-| disabled | `boolean` | false | Toggle component disabled state. |
-| parentId | `string` |  | ID of parent folder node. |
-| versioning | `boolean` | false | When false, renames the file using an integer suffix if there is a name clash. Set to true to indicate that a major version should be created instead. |
-| majorVersion | `boolean` | `false` | majorVersion boolean field to true to indicate a major version should be created.  |
+| comment | `string` |  | When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history |
+| disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
+| majorVersion | `boolean` | false | majorVersion boolean field to true to indicate a major version should be created. |
+| maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
+| rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
+| versioning | `boolean` | false | Toggles versioning. |
+| parentId | `` |  |  |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<Object>` | Raised when the file upload goes in error. |
-| success | `EventEmitter<Object>` | Emitted when the file is uploaded. |
+| createFolder | `EventEmitter<Object>` | Emitted when a folder is created. |
+| error | `EventEmitter<Object>` | Emitted when an error occurs. |
+| success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
