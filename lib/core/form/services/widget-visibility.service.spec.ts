@@ -348,6 +348,10 @@ describe('WidgetVisibilityService', () => {
             jsonFieldFake.visibilityCondition = visibilityObjTest;
         });
 
+        afterEach( () => {
+            service.cleanProcessVariable();
+        });
+
         it('should be able to retrieve a field value searching in the form', () => {
             let formValue = service.searchValueInForm(stubFormWithFields, 'FIELD_WITH_CONDITION');
 
@@ -639,6 +643,206 @@ describe('WidgetVisibilityService', () => {
             service.refreshVisibility(fakeFormWithField);
 
             expect(fakeFormWithField.tabs[0].isVisible).toBeFalsy();
+        });
+
+        it('should use the form value to evaluate the visibility condition if the form value is defined', (done) => {
+            service.getTaskProcessVariable('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                    expect(res).toBeDefined();
+                    let varValue = service.getVariableValue(formTest, 'FIELD_FORM_EMPTY', res);
+                    expect(varValue).not.toBeUndefined();
+                    expect(varValue).toBe('PROCESS_RIGHT_FORM_FIELD_VALUE');
+
+                    visibilityObjTest.leftFormFieldId = 'FIELD_FORM_EMPTY';
+                    visibilityObjTest.operator = '==';
+                    visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_VALUE';
+
+                    let myForm = new FormModel({
+                        id: '9999',
+                        name: 'FORM_PROCESS_VARIABLE_VISIBILITY',
+                        processDefinitionId: 'PROCESS_TEST:9:9999',
+                        processDefinitionName: 'PROCESS_TEST',
+                        processDefinitionKey: 'PROCESS_TEST',
+                        taskId: '999',
+                        taskName: 'TEST',
+                        fields: [
+                            {
+                                fieldType: 'ContainerRepresentation',
+                                id: '000000000000000000',
+                                name: 'Label',
+                                type: 'container',
+                                value: null,
+                                numberOfColumns: 2,
+                                fields: {
+                                    1: [
+                                        {
+                                            fieldType: 'FormFieldRepresentation',
+                                            id: 'FIELD_FORM_EMPTY',
+                                            name: 'FIELD_FORM_EMPTY',
+                                            type: 'text',
+                                            value: 'RIGHT_FORM_FIELD_VALUE',
+                                            visibilityCondition: null,
+                                            isVisible: true
+                                        },
+                                        {
+                                            fieldType: 'FormFieldRepresentation',
+                                            id: 'FIELD_FORM_WITH_CONDITION',
+                                            name: 'FIELD_FORM_WITH_CONDITION',
+                                            type: 'text',
+                                            value: 'field_form_with_condition_value',
+                                            visibilityCondition: visibilityObjTest,
+                                            isVisible: false
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    });
+
+                    service.refreshVisibility(myForm);
+
+                    const fieldWithVisibilityAttached = myForm.getFieldById('FIELD_FORM_WITH_CONDITION');
+                    expect(fieldWithVisibilityAttached.isVisible).toBeTruthy();
+                    done();
+                }
+            );
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: [{id: 'FIELD_FORM_EMPTY', type: 'string', value: 'PROCESS_RIGHT_FORM_FIELD_VALUE'}]
+            });
+        });
+
+        it('should use the process value to evaluate the True visibility condition if the form value is empty', (done) => {
+
+            service.getTaskProcessVariable('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                    expect(res).toBeDefined();
+
+                    visibilityObjTest.leftFormFieldId = 'FIELD_FORM_EMPTY';
+                    visibilityObjTest.operator = '==';
+                    visibilityObjTest.rightValue = 'PROCESS_RIGHT_FORM_FIELD_VALUE';
+
+                    let myForm = new FormModel({
+                        id: '9999',
+                        name: 'FORM_PROCESS_VARIABLE_VISIBILITY',
+                        processDefinitionId: 'PROCESS_TEST:9:9999',
+                        processDefinitionName: 'PROCESS_TEST',
+                        processDefinitionKey: 'PROCESS_TEST',
+                        taskId: '999',
+                        taskName: 'TEST',
+                        fields: [
+                            {
+                                fieldType: 'ContainerRepresentation',
+                                id: '000000000000000000',
+                                name: 'Label',
+                                type: 'container',
+                                value: null,
+                                numberOfColumns: 2,
+                                fields: {
+                                    1: [
+                                        {
+                                            fieldType: 'FormFieldRepresentation',
+                                            id: 'FIELD_FORM_EMPTY',
+                                            name: 'FIELD_FORM_EMPTY',
+                                            type: 'text',
+                                            value: '',
+                                            visibilityCondition: null,
+                                            isVisible: true
+                                        },
+                                        {
+                                            fieldType: 'FormFieldRepresentation',
+                                            id: 'FIELD_FORM_WITH_CONDITION',
+                                            name: 'FIELD_FORM_WITH_CONDITION',
+                                            type: 'text',
+                                            value: 'field_form_with_condition_value',
+                                            visibilityCondition: visibilityObjTest,
+                                            isVisible: false
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    });
+
+                    service.refreshVisibility(myForm);
+
+                    const fieldWithVisibilityAttached = myForm.getFieldById('FIELD_FORM_WITH_CONDITION');
+                    expect(fieldWithVisibilityAttached.isVisible).toBeTruthy();
+                    done();
+                }
+            );
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: [{id: 'FIELD_FORM_EMPTY', type: 'string', value: 'PROCESS_RIGHT_FORM_FIELD_VALUE'}]
+            });
+        });
+
+        it('should use the process value to evaluate the False visibility condition if the form value is empty', (done) => {
+
+            service.getTaskProcessVariable('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                    expect(res).toBeDefined();
+
+                    visibilityObjTest.leftFormFieldId = 'FIELD_FORM_EMPTY';
+                    visibilityObjTest.operator = '==';
+                    visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_VALUE';
+
+                    let myForm = new FormModel({
+                        id: '9999',
+                        name: 'FORM_PROCESS_VARIABLE_VISIBILITY',
+                        processDefinitionId: 'PROCESS_TEST:9:9999',
+                        processDefinitionName: 'PROCESS_TEST',
+                        processDefinitionKey: 'PROCESS_TEST',
+                        taskId: '999',
+                        taskName: 'TEST',
+                        fields: [
+                            {
+                                fieldType: 'ContainerRepresentation',
+                                id: '000000000000000000',
+                                name: 'Label',
+                                type: 'container',
+                                value: null,
+                                numberOfColumns: 2,
+                                fields: {
+                                    1: [
+                                        {
+                                            fieldType: 'FormFieldRepresentation',
+                                            id: 'FIELD_FORM_EMPTY',
+                                            name: 'FIELD_FORM_EMPTY',
+                                            type: 'text',
+                                            value: '',
+                                            visibilityCondition: null,
+                                            isVisible: true
+                                        },
+                                        {
+                                            fieldType: 'FormFieldRepresentation',
+                                            id: 'FIELD_FORM_WITH_CONDITION',
+                                            name: 'FIELD_FORM_WITH_CONDITION',
+                                            type: 'text',
+                                            value: 'field_form_with_condition_value',
+                                            visibilityCondition: visibilityObjTest,
+                                            isVisible: true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    });
+
+                    service.refreshVisibility(myForm);
+
+                    const fieldWithVisibilityAttached = myForm.getFieldById('FIELD_FORM_WITH_CONDITION');
+                    expect(fieldWithVisibilityAttached.isVisible).toBeFalsy();
+                    done();
+                }
+            );
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: [{id: 'FIELD_FORM_EMPTY', type: 'string', value: 'PROCESS_RIGHT_FORM_FIELD_VALUE'}]
+            });
         });
 
         it('should refresh the visibility for single tab', () => {
