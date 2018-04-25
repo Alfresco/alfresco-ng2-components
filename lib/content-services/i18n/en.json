@@ -174,8 +174,7 @@
       "ACTIONS": {
         "CLEAR": "Clear",
         "APPLY": "Apply",
-        "CLEAR-ALL": "Clear all",
-        "SHOW-MORE": "Show more"
+        "CLEAR-ALL": "Clear all"
       },
       "RANGE": {
         "FROM": "From",
@@ -263,12 +262,10 @@
       "NO_PERMISSIONS": "No permissions"
       },
       "ADD-PERMISSION": {
-        "SEARCH" : "Search",
         "TYPE-MESSAGE" : "Type something to start searching groups or people",
         "NO-RESULT": "No result found for this search",
         "ADD-ACTION" : "ADD",
-        "CLOSE-ACTION" : "CLOSE",
-        "BASE-DIALOG-TITLE" : "Search a group or people to add..."
-      }
+        "CLOSE-ACTION" : "CLOSE"
+    }
   }
 }
