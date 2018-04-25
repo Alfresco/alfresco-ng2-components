@@ -707,7 +707,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private generateCacheBusterNumber() {
-        this.cacheBusterNumber = Math.random();
+        this.cacheBusterNumber = Date.now();
     }
 
 }
