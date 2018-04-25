@@ -28,6 +28,7 @@ describe('VersionManagerComponent', () => {
     let component: VersionManagerComponent;
     let fixture: ComponentFixture<VersionManagerComponent>;
     let spyOnListVersionHistory: jasmine.Spy;
+    let alfrescoApiService: AlfrescoApiService;
 
     const expectedComment = 'test-version-comment';
     const  node: MinimalNodeEntryEntity = {
@@ -63,7 +64,7 @@ describe('VersionManagerComponent', () => {
         component = fixture.componentInstance;
         component.node = node;
 
-        const alfrescoApiService = TestBed.get(AlfrescoApiService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
         spyOnListVersionHistory = spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
             .callFake(() => Promise.resolve({ list: { entries: [ versionEntry ] }}));
     });
@@ -107,7 +108,7 @@ describe('VersionManagerComponent', () => {
         component.onUploadSuccess(emittedData);
     }));
 
-    it('should emit nodeUpdated event upon successful upload of a new version', async(() => {
+    it('should emit nodeUpdated event upon successful upload of a new version', (done) => {
         fixture.detectChanges();
         alfrescoApiService.nodeUpdated.subscribe(() => {
             done();
@@ -115,7 +116,7 @@ describe('VersionManagerComponent', () => {
 
         const emittedData = { value: { entry: node }};
         component.onUploadSuccess(emittedData);
-    }));
+    });
 
     describe('Animation', () => {
 

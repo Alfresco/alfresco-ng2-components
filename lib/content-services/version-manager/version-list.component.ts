@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, ViewEncapsulation, ElementRef } from '@angular/core';
-import { VersionsApi, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { VersionsApi, MinimalNodeEntryEntity, VersionEntry } from 'alfresco-js-api';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 
@@ -33,7 +33,7 @@ import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 export class VersionListComponent implements OnChanges {
 
     private versionsApi: VersionsApi;
-    versions: any = [];
+    versions: VersionEntry[] = [];
     isLoading = true;
 
     /** @deprecated in 2.3.0 */
@@ -51,11 +51,10 @@ export class VersionListComponent implements OnChanges {
     @Input()
     allowDownload = true;
 
-    constructor(
-        private alfrescoApi: AlfrescoApiService,
-        private contentService: ContentService,
-        private dialog: MatDialog,
-        private el: ElementRef) {
+    constructor(private alfrescoApi: AlfrescoApiService,
+                private contentService: ContentService,
+                private dialog: MatDialog,
+                private el: ElementRef) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }
 
@@ -67,10 +66,14 @@ export class VersionListComponent implements OnChanges {
         return this.contentService.hasPermission(this.node, 'update');
     }
 
+    canDelete(): boolean {
+        return this.contentService.hasPermission(this.node, 'delete');
+    }
+
     restore(versionId) {
         if (this.canUpdate()) {
             this.versionsApi
-                .revertVersion(this.node.id, versionId, { majorVersion: true, comment: ''})
+                .revertVersion(this.node.id, versionId, { majorVersion: true, comment: '' })
                 .then(() => this.onVersionRestored());
         }
     }
