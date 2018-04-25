@@ -69,13 +69,6 @@ describe('SearchQueryBuilder', () => {
         expect(builder.filterQueries[1].query).toBe('query2');
     });
 
-    it('should setup default location scope', () => {
-        const builder = new SearchQueryBuilderService(buildConfig({}), null);
-
-        expect(builder.scope).toBeDefined();
-        expect(builder.scope.locations).toBeNull();
-    });
-
     it('should add new filter query', () => {
         const builder = new SearchQueryBuilderService(buildConfig({}), null);
 
@@ -328,41 +321,6 @@ describe('SearchQueryBuilder', () => {
 
         const compiled = builder.buildQuery();
         expect(compiled.facetFields).toEqual(config.facetFields);
-    });
-
-    it('should build query with custom limits', () => {
-        const config: SearchConfiguration = {
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true }
-                ]
-            },
-            limits: {
-                permissionEvaluationCount: 100,
-                permissionEvaluationTime: 100
-            }
-        };
-        const builder = new SearchQueryBuilderService(buildConfig(config), null);
-        builder.queryFragments['cat1'] = 'cm:name:test';
-
-        const compiled = builder.buildQuery();
-        expect(compiled.limits).toEqual(config.limits);
-    });
-
-    it('should build query with custom scope', () => {
-        const config: SearchConfiguration = {
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true }
-                ]
-            }
-        };
-        const builder = new SearchQueryBuilderService(buildConfig(config), null);
-        builder.queryFragments['cat1'] = 'cm:name:test';
-        builder.scope.locations = 'custom';
-
-        const compiled = builder.buildQuery();
-        expect(compiled.scope.locations).toEqual('custom');
     });
 
     it('should use pagination settings', () => {
