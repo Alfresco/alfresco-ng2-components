@@ -18,8 +18,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService, SearchService, NodesApiService } from '@alfresco/adf-core';
-import { QueryBody, MinimalNodeEntryEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
+import { QueryBody, MinimalNodeEntryEntity, MinimalNodeEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
 import 'rxjs/add/operator/switchMap';
+import { of } from 'rxjs/observable/of';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class NodePermissionService {
@@ -54,10 +56,35 @@ export class NodePermissionService {
         return this.nodeService.updateNode(node.id, permissionBody);
     }
 
-    updateLocallySetPermissions(node: MinimalNodeEntryEntity, permissionList: any[]): Observable<MinimalNodeEntryEntity> {
+    updateNodePermission(nodeId: string, permissionList: MinimalNodeEntity[]): Observable<MinimalNodeEntryEntity> {
+       return this.nodeService.getNode(nodeId).pipe(
+           switchMap(node => {
+                return this.getNodeRoles(node).pipe(
+                    switchMap((nodeRoles) => of({node, nodeRoles}) )
+                );
+            }),
+            switchMap(({node, nodeRoles}) => this.updateLocallySetPermissions(node, permissionList, nodeRoles))
+        );
+    }
+
+    updateLocallySetPermissions(node: MinimalNodeEntryEntity, nodes: MinimalNodeEntity[], nodeRole: string[]): Observable<MinimalNodeEntryEntity> {
         let permissionBody = { permissions: { locallySet: []} };
+        const permissionList = this.transformNodeToPermissionElement(nodes, nodeRole[0]);
         permissionBody.permissions.locallySet = node.permissions.locallySet ? node.permissions.locallySet.concat(permissionList) : permissionList;
         return this.nodeService.updateNode(node.id, permissionBody);
+    }
+
+    private transformNodeToPermissionElement(nodes: MinimalNodeEntity[], nodeRole: any): PermissionElement[] {
+        return nodes.map((node) => {
+            let newPermissionElement: PermissionElement = <PermissionElement> {
+                'authorityId': node.entry.properties['cm:authorityName'] ?
+                    node.entry.properties['cm:authorityName'] :
+                    node.entry.properties['cm:userName'],
+                'name': nodeRole,
+                'accessStatus': 'ALLOWED'
+            };
+            return newPermissionElement;
+        });
     }
 
     removePermission(node: MinimalNodeEntryEntity, permissionToRemove: PermissionElement): Observable<MinimalNodeEntryEntity>{
