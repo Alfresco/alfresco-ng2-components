@@ -22,17 +22,18 @@ import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-file-view',
-    templateUrl: 'file-view.component.html'
+    templateUrl: 'file-view.component.html',
+    styleUrls: ['file-view.component.scss']
 })
 export class FileViewComponent implements OnInit {
 
     nodeId: string = null;
 
-    constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private snackBar: MatSnackBar,
-        private apiService: AlfrescoApiService) {}
+    constructor(private router: Router,
+                private route: ActivatedRoute,
+                private snackBar: MatSnackBar,
+                private apiService: AlfrescoApiService) {
+    }
 
     ngOnInit() {
 
@@ -53,7 +54,7 @@ export class FileViewComponent implements OnInit {
         });
     }
 
-    uploadError(errorMessage: string) {
+    onUploadError(errorMessage: string) {
         this.snackBar.open(errorMessage, '', { duration: 4000 });
     }
 }

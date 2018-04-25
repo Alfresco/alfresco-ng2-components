@@ -68,9 +68,16 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     blobFile: Blob;
 
+    /** @deprecated 2.4.0 use nodeId */
     /** Node Id of the file to load. */
     @Input()
-    fileNodeId: string = null;
+    set fileNodeId(nodeId: string) {
+        this.nodeId = nodeId;
+    }
+
+    /** Node Id of the file to load. */
+    @Input()
+    nodeId: string = null;
 
     /** Shared link id (to display shared file). */
     @Input()
@@ -214,6 +221,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     extension: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
 
+    private CacheBusterNumber;
+
     private subscriptions: Subscription[] = [];
 
     // Extensions that are supported by the Viewer without conversion
@@ -239,7 +248,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     isSourceDefined(): boolean {
-        return (this.urlFile || this.blobFile || this.fileNodeId || this.sharedLinkId) ? true : false;
+        return (this.urlFile || this.blobFile || this.nodeId || this.sharedLinkId) ? true : false;
     }
 
     ngOnInit() {
@@ -254,7 +263,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private onNodeUpdated(node: MinimalNodeEntryEntity) {
-        if (node && node.id === this.fileNodeId) {
+        if (node && node.id === this.nodeId) {
+            this.generateCacheBusterNumber();
             this.setUpNodeFile(node);
         }
     }
@@ -268,9 +278,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.setUpBlobData();
             } else if (this.urlFile) {
                 this.setUpUrlFile();
-            } else if (this.fileNodeId) {
+            } else if (this.nodeId) {
                 this.isLoading = true;
-                this.apiService.nodesApi.getNodeInfo(this.fileNodeId).then(
+                this.apiService.nodesApi.getNodeInfo(this.nodeId).then(
                     (data: MinimalNodeEntryEntity) => {
                         this.setUpNodeFile(data);
                     },
@@ -326,7 +336,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private setUpNodeFile(data: MinimalNodeEntryEntity) {
         this.mimeType = data.content.mimeType;
         this.displayName = data.name;
+
         this.urlFileContent = this.apiService.contentApi.getContentUrl(data.id);
+        this.urlFileContent = this.CacheBusterNumber ? this.urlFileContent + '&' + this.CacheBusterNumber : this.urlFileContent;
+
         this.extension = this.getFileExtension(data.name);
 
         this.fileName = data.name;
@@ -373,8 +386,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     toggleSidebar() {
         this.showSidebar = !this.showSidebar;
-        if (this.showSidebar && this.fileNodeId) {
-            this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId, {include: ['allowableOperations']})
+        if (this.showSidebar && this.nodeId) {
+            this.apiService.getInstance().nodes.getNodeInfo(this.nodeId, { include: ['allowableOperations'] })
                 .then((data: MinimalNodeEntryEntity) => {
                     this.sidebarTemplateContext.node = data;
                 });
@@ -658,7 +671,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             return rendition;
         } else if (status === 'NOT_CREATED') {
             try {
-                await this.apiService.renditionsApi.createRendition(nodeId, {id: renditionId});
+                await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId });
                 return await this.waitRendition(nodeId, renditionId, 0);
             } catch (err) {
                 this.logService.error(err);
@@ -691,6 +704,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     getSideBarStyle(): string {
         return this.sidebarPosition === 'left' ? 'adf-viewer__sidebar__left' : 'adf-viewer__sidebar__right';
+    }
+
+    private generateCacheBusterNumber() {
+        this.CacheBusterNumber = Math.random();
     }
 
 }

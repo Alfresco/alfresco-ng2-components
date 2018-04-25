@@ -96,15 +96,26 @@ describe('VersionManagerComponent', () => {
         });
     }));
 
-    it('should emit success event upon successful upload of a new version', () => {
+    it('should emit success event upon successful upload of a new version', async((done) => {
         fixture.detectChanges();
 
         const emittedData = { value: { entry: node }};
         component.uploadSuccess.subscribe(event => {
             expect(event).toBe(emittedData);
+            done();
         });
         component.onUploadSuccess(emittedData);
-    });
+    }));
+
+    it('should emit nodeUpdated event upon successful upload of a new version', async(() => {
+        fixture.detectChanges();
+        alfrescoApiService.nodeUpdated.subscribe(() => {
+            done();
+        });
+
+        const emittedData = { value: { entry: node }};
+        component.onUploadSuccess(emittedData);
+    }));
 
     describe('Animation', () => {
 

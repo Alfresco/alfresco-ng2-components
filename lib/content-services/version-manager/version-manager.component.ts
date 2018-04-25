@@ -18,7 +18,7 @@
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { VersionListComponent } from './version-list.component';
-import { AppConfigService, ContentService } from '@alfresco/adf-core';
+import { AppConfigService, ContentService, AlfrescoApiService } from '@alfresco/adf-core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -64,12 +64,14 @@ export class VersionManagerComponent {
     uploadState: string = 'close';
 
     constructor(config: AppConfigService,
-                private contentService: ContentService) {
+                private contentService: ContentService,
+                private alfrescoApiService: AlfrescoApiService) {
         this.showComments = config.get('adf-version-manager.allowComments', true);
         this.allowDownload = config.get('adf-version-manager.allowDownload', true);
     }
 
     onUploadSuccess(event) {
+        this.alfrescoApiService.nodeUpdated.next(event.value.entry);
         this.versionListComponent.loadVersionHistory();
         this.uploadSuccess.emit(event);
         this.uploadState = 'close';

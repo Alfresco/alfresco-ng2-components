@@ -84,20 +84,7 @@
         }
 
         & .adf-info-drawer-layout-content {
-            padding: 0;
-
-            .adf-version-upload,
-            .adf-new-version-file-upload {
-                width: 100%;
-
-                & .mat-raised-button {
-                    width: 100%;
-                }
-            }
-
-            .adf-new-version-uploader-container {
-                padding: 8px 24px 16px 24px;
-            }
+            padding: 10px !important;
         }
     }
 
