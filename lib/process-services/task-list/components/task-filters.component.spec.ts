@@ -48,6 +48,8 @@ describe('TaskFiltersComponent', () => {
         filter: { state: 'open', assignment: 'fake-assignee' }
     }));
 
+    let fakeLandingFilterId = 11;
+
     let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalFilter);
     });
@@ -293,6 +295,14 @@ describe('TaskFiltersComponent', () => {
         component.ngOnChanges({ 'appName': change });
 
         expect(component.getFiltersByAppId).toHaveBeenCalled();
+    });
+
+    fit('should select the current task filter comes from @Input', () => {
+        component.landingFilterId = fakeLandingFilterId;
+        component.filters = fakeGlobalFilter;
+        component.selectDefaultTaskFilter();
+
+        expect(component.getCurrentFilter()).toBe(fakeGlobalFilter[1]);
     });
 
     it('should not change the current filter if no filter with taskid is found', async(() => {

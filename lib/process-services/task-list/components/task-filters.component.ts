@@ -81,7 +81,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
         this.filter$.subscribe((filter: FilterRepresentationModel) => {
             this.filters.push(filter);
             if (filter.id === this.landingFilterId) {
-                console.log(filter);
                 this.currentFilter = filter;
             }
         });
@@ -212,16 +211,16 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
         if (findTaskFilter) {
             this.currentFilter = findTaskFilter;
         } else {
-             this.selectDefaultTaskFilter(filteredFilterList);
+             this.selectDefaultTaskFilter();
         }
     }
 
     /**
      * Select as default task filter the first in the list
      */
-    public selectDefaultTaskFilter(filteredFilterList: FilterRepresentationModel[]) {
+    public selectDefaultTaskFilter() {
         if (!this.isFilterListEmpty()) {
-            this.currentFilter = this.filters.find((filter) => filter.id === this.landingFilterId );
+            this.currentFilter = this.landingFilterId ? this.filters.find((filter) => filter.id === this.landingFilterId ) : this.filters[0];
         }
     }
 
