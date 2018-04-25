@@ -15,20 +15,14 @@
  * limitations under the License.
  */
 
-import { FilterQuery } from './filter-query.interface';
-import { FacetQuery } from './facet-query.interface';
-import { FacetField } from './facet-field.interface';
-import { SearchCategory } from './search-category.interface';
+import { ErrorStateMatcher } from '@angular/material';
+import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 
-export interface SearchConfiguration {
-    include?: Array<string>;
-    fields?: Array<string>;
-    query?: {
-        categories: Array<SearchCategory>
-    };
-    filterQueries?: Array<FilterQuery>;
-    facetQueries?: Array<FacetQuery>;
-    facetFields?: {
-        facets: Array<FacetField>
-    };
+export class LiveErrorStateMatcher implements ErrorStateMatcher {
+
+    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+        const isSubmitted = form && form.submitted;
+        return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    }
+
 }

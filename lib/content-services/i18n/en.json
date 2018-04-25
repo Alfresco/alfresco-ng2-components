@@ -165,6 +165,16 @@
         "MODIFIED_AT": "Modified at"
       }
     },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "Clear",
+        "APPLY": "Apply"
+      },
+      "RANGE": {
+        "FROM": "From",
+        "TO": "To"
+      }
+    },
     "ICONS": {
       "ft_ic_raster_image": "Image file",
       "ft_ic_pdf": "PDF document",
