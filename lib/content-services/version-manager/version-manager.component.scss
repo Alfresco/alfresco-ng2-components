@@ -10,13 +10,16 @@
     border-bottom: 1px solid #d8d8d8;
     padding: 16px 0;
     width: 100%;
-    height: 100%;
+    height: 0%;
+
     float: left;
     position: relative;
+    visibility: hidden;
 }
 
 .adf-new-version-container {
     height: 800px;
+    overflow: hidden;
 }
 
 .adf-version-list-table {

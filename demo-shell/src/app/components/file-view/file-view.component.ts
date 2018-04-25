@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { MatSnackBar } from '@angular/material';
@@ -23,7 +23,8 @@ import { MatSnackBar } from '@angular/material';
 @Component({
     selector: 'app-file-view',
     templateUrl: 'file-view.component.html',
-    styleUrls: ['file-view.component.scss']
+    styleUrls: ['file-view.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class FileViewComponent implements OnInit {
 
