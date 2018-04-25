@@ -20,6 +20,7 @@ Shows all available filters.
 | appId | `number` |  | Display filters available to the current user for the application with the specified ID.  |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name.  |
 | hasIcon | `boolean` | `true` | Toggles display of the filter's icon.  |
+| landingFilterId | `number` | | Define which filter id should be selected after reloading. If the filter id doesn't exist or nothing is passed then the first filter will be selected.  |
 
 ### Events
 
