@@ -77,7 +77,7 @@ export class WidgetVisibilityService {
         let leftValue = '';
         if (visibilityObj.leftRestResponseId && visibilityObj.leftRestResponseId !== 'null') {
             leftValue = this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList);
-        } else {
+        } else if (visibilityObj.leftFormFieldId) {
             leftValue = this.getFormValue(form, visibilityObj.leftFormFieldId);
             leftValue = leftValue ? leftValue : this.getVariableValue(form, visibilityObj.leftFormFieldId, this.processVarList);
         }
