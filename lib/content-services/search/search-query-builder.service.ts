@@ -33,7 +33,6 @@ export class SearchQueryBuilderService {
 
     categories: Array<SearchCategory> = [];
     queryFragments: { [id: string]: string } = {};
-    fields: { [id: string]: string[] } = {};
     filterQueries: FilterQuery[] = [];
     ranges: { [id: string]: SearchRange } = {};
     paging: { maxItems?: number; skipCount?: number } = null;
@@ -89,7 +88,6 @@ export class SearchQueryBuilderService {
 
     buildQuery(): QueryBody {
         let query = '';
-        const fields: string[] = [];
 
         this.categories.forEach(facet => {
             const customQuery = this.queryFragments[facet.id];
@@ -99,16 +97,12 @@ export class SearchQueryBuilderService {
                 }
                 query += `(${customQuery})`;
             }
-
-            const customFields = this.fields[facet.id];
-            if (customFields && customFields.length > 0) {
-                for (const field of customFields) {
-                    if (!fields.includes(field)) {
-                        fields.push(field);
-                    }
-                }
-            }
         });
+
+        const include = this.config.include || [];
+        if (include.length === 0) {
+            include.push('path', 'allowableOperations');
+        }
 
         if (query) {
 
@@ -117,9 +111,9 @@ export class SearchQueryBuilderService {
                     query: query,
                     language: 'afts'
                 },
-                include: ['path', 'allowableOperations'],
-                fields: fields,
+                include: include,
                 paging: this.paging,
+                fields: this.config.fields,
                 filterQueries: this.filterQueries,
                 facetQueries: this.config.facetQueries,
                 facetFields: this.config.facetFields

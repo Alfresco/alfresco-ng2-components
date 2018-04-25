@@ -230,6 +230,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with custom fields', () => {
         const config: SearchConfiguration = {
+            fields: ['field1', 'field2'],
             query: {
                 categories: [
                     <any> { id: 'cat1', enabled: true },
@@ -240,15 +241,14 @@ describe('SearchQueryBuilder', () => {
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
         builder.queryFragments['cat1'] = 'cm:name:test';
-        builder.fields['cat1'] = ['field1', 'field3'];
-        builder.fields['cat2'] = ['field2', 'field3'];
 
         const compiled = builder.buildQuery();
-        expect(compiled.fields).toEqual(['field1', 'field3', 'field2']);
+        expect(compiled.fields).toEqual(['field1', 'field2']);
     });
 
     it('should build query with empty custom fields', () => {
         const config: SearchConfiguration = {
+            fields: [],
             query: {
                 categories: [
                     <any> { id: 'cat1', enabled: true },
@@ -259,8 +259,6 @@ describe('SearchQueryBuilder', () => {
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
         builder.queryFragments['cat1'] = 'cm:name:test';
-        builder.fields['cat1'] = [];
-        builder.fields['cat2'] = null;
 
         const compiled = builder.buildQuery();
         expect(compiled.fields).toEqual([]);

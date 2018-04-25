@@ -53,6 +53,8 @@
         }
     ],
     "search": {
+      "include": ["path", "allowableOperations"],
+      "fields": [],
       "filterQueries": [
         { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
         { "query": "NOT cm:creator:System" }
@@ -114,23 +116,6 @@
               "selector": "number-range",
               "settings": {
                 "field": "cm:content.size"
-              }
-            }
-          },
-          {
-            "id": "queryFields",
-            "name": "Fields",
-            "enabled": true,
-            "component": {
-              "selector": "fields",
-              "settings": {
-                "field": null,
-                "options": [
-                  { "name": "Name", "value": "name", "fields": ["name"], "default": true },
-                  { "name": "File Size", "value": "content.sizeInBytes", "fields": ["content"], "default": true },
-                  { "name": "Modified On", "value": "modifiedAt", "fields": ["modifiedAt"], "default": true },
-                  { "name": "Modified By", "value": "modifiedByUser.displayName", "fields": ["modifiedByUser"], "default": true }
-                ]
               }
             }
           },

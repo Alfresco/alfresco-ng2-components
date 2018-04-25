@@ -33,7 +33,6 @@ import { SearchFilterComponent } from './components/search-filter/search-filter.
 import { SearchChipListComponent } from './components/search-chip-list/search-chip-list.component';
 import { SearchTextComponent } from './components/search-text/search-text.component';
 import { SearchRadioComponent } from './components/search-radio/search-radio.component';
-import { SearchFieldsComponent } from './components/search-fields/search-fields.component';
 import { SearchSliderComponent } from './components/search-slider/search-slider.component';
 import { SearchNumberRangeComponent } from './components/search-number-range/search-number-range.component';
 
@@ -60,7 +59,6 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         SearchWidgetContainerComponent,
         SearchTextComponent,
         SearchRadioComponent,
-        SearchFieldsComponent,
         SearchSliderComponent,
         SearchNumberRangeComponent
     ],
@@ -69,7 +67,6 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         SearchWidgetContainerComponent,
         SearchTextComponent,
         SearchRadioComponent,
-        SearchFieldsComponent,
         SearchSliderComponent,
         SearchNumberRangeComponent
     ],
@@ -77,7 +74,6 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         SearchWidgetContainerComponent,
         SearchTextComponent,
         SearchRadioComponent,
-        SearchFieldsComponent,
         SearchSliderComponent,
         SearchNumberRangeComponent
     ]

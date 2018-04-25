@@ -481,6 +481,18 @@
           "description": "Search configuration parameters",
           "type": "object",
           "properties": {
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
             "filterQueries": {
               "type": "array",
               "items": {

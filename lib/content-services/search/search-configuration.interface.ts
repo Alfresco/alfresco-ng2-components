@@ -21,6 +21,8 @@ import { FacetField } from './facet-field.interface';
 import { SearchCategory } from './search-category.interface';
 
 export interface SearchConfiguration {
+    include?: Array<string>;
+    fields?: Array<string>;
     query?: {
         categories: Array<SearchCategory>
     };
