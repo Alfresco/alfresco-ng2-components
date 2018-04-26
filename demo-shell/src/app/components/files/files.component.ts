@@ -28,7 +28,7 @@ import {
     AuthenticationService, AppConfigService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues
+    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues, InfinitePaginationComponent
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
@@ -148,6 +148,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('standardPagination')
     standardPagination: PaginationComponent;
+
+    @ViewChild(InfinitePaginationComponent)
+    infinitePaginationComponent: InfinitePaginationComponent;
+
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
@@ -349,9 +353,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private reloadForInfiniteScrolling() {
-        if (this.infiniteScrolling) {
-            this.documentList.skipCount = 0;
-        }
         this.documentList.reload();
     }
 
@@ -462,7 +463,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.turnedNextPage.emit(event);
     }
 
-    loadNextBatch(event: Pagination) {
+    loadNextBatch(event: Pagination): void {
         this.loadNext.emit(event);
     }
 
@@ -483,5 +484,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             this.displayMode = DisplayMode.List;
             this.location.go(url);
         }
+    }
+
+    onInfiniteScrolling(): void {
+        this.infiniteScrolling = !this.infiniteScrolling;
+        this.infinitePaginationComponent.reset();
+        this.reloadForInfiniteScrolling();
     }
 }
