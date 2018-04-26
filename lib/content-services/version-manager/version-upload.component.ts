@@ -22,10 +22,15 @@ import { ContentService } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-version-upload',
     templateUrl: './version-upload.component.html',
+    styleUrls: ['./version-upload.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-version-upload' }
 })
 export class VersionUploadComponent {
+
+    semanticVersion: string = 'minor';
+    comment: string;
+    uploadVersion: boolean = false;
 
     @Input()
     node: MinimalNodeEntryEntity;
@@ -36,11 +41,22 @@ export class VersionUploadComponent {
     @Output()
     error = new EventEmitter();
 
+    @Output()
+    cancel = new EventEmitter();
+
     constructor(private contentService: ContentService) {
     }
 
     canUpload(): boolean {
         return this.contentService.hasPermission(this.node, 'update');
+    }
+
+    isMajorVersion(): boolean {
+        return this.semanticVersion === 'minor' ? false : true;
+    }
+
+    cancelUpload() {
+        this.cancel.emit();
     }
 
 }

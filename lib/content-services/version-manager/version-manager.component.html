@@ -1,15 +1,39 @@
-<div class="adf-new-version-uploader-container" fxLayout="row" fxLayoutAlign="end center">
-    <adf-version-upload
-        [node]="node"
-        (success)="onUploadSuccess($event)"
-        (error)="uploadError.emit($event)">
-    </adf-version-upload>
-</div>
-<div class="adf-version-list-container">
-    <adf-version-list
-        #versionList
-        [node]="node"
-        [allowDownload]="allowDownload"
-        [showComments]="showComments">
-    </adf-version-list>
+<div class="adf-new-version-container">
+    <div class="adf-new-version-uploader-container" fxLayout="row" fxLayoutAlign="end center" [@uploadToggle]="uploadState">
+        <table class="adf-version-upload">
+            <tr>
+                <td>
+                    <adf-version-upload
+                        id="adf-version-upload-button"
+                        [node]="node"
+                        (success)="onUploadSuccess($event)"
+                        (cancel)="onUploadCancel()"
+                        (error)="uploadError.emit($event)">
+                    </adf-version-upload>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="adf-version-list-container">
+        <div class="adf-version-list-table">
+            <div>
+                <button mat-raised-button
+                        id="adf-show-version-upload-button"
+                        (click)="toggleNewVersion()" color="primary"
+                        *ngIf="uploadState ==='close'">{{
+                    'ADF_VERSION_LIST.ACTIONS.UPLOAD.ADD'|
+                    translate }}
+                </button>
+            </div>
+            <div>
+                <adf-version-list
+                    #versionList
+                    [node]="node"
+                    [allowDownload]="allowDownload"
+                    [showComments]="showComments">
+                </adf-version-list>
+            </div>
+        </div>
+    </div>
 </div>

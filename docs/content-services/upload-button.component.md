@@ -29,7 +29,9 @@ Activates a file upload.
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
+| comment | `string` |  | When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history |
 | disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
+| majorVersion | `boolean` | false | majorVersion boolean field to true to indicate a major version should be created. |
 | maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
 | multipleFiles | `boolean` | false | Allows/disallows multiple files |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
@@ -44,7 +46,7 @@ Activates a file upload.
 | -- | -- | -- |
 | createFolder | `EventEmitter<Object>` | Emitted when a folder is created. |
 | error | `EventEmitter<Object>` | Emitted when an error occurs. |
-| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when delete permission is missing. |
+| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when create permission is missing. |
 | success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details
