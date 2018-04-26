@@ -18,7 +18,6 @@
 import { AppsProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
@@ -61,7 +60,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     @Input()
     hasIcon: boolean = true;
 
-    private filterObserver: Observer<FilterRepresentationModel>;
     filter$: Observable<FilterRepresentationModel>;
 
     currentFilter: FilterRepresentationModel;
@@ -72,14 +70,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                 private taskListService: TaskListService,
                 private appsProcessService: AppsProcessService,
                 private router: Router) {
-        this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
     }
 
-    ngOnInit() {
-        this.filter$.subscribe((filter: FilterRepresentationModel) => {
-            this.filters.push(filter);
-        });
-    }
+    ngOnInit() { }
 
     ngOnChanges(changes: SimpleChanges) {
         let appId = changes['appId'];
@@ -117,7 +110,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                 } else {
                     this.resetFilter();
                     res.forEach((filter) => {
-                        this.filterObserver.next(filter);
+                        this.filters.push(filter);
                     });
 
                     this.selectTaskFilter(this.filterParam, this.filters);
@@ -153,7 +146,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
             (resDefault: FilterRepresentationModel[]) => {
                 this.resetFilter();
                 resDefault.forEach((filter) => {
-                    this.filterObserver.next(filter);
+                    this.filters.push(filter);
                 });
 
                 this.selectTaskFilter(this.filterParam, this.filters);
@@ -176,7 +169,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Pass the selected filter as next
+     * Select filter with task
      * @param taskId
      */
     public selectFilterWithTask(taskId: string) {
