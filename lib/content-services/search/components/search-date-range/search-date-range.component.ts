@@ -23,7 +23,6 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import moment from 'moment-es6';
 
-
 @Component({
     selector: 'adf-search-date-range',
     templateUrl: './search-date-range.component.html',
@@ -61,7 +60,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     }
 
     apply(model: { from: string, to: string }, isValid: boolean) {
-        if (isValid) {
+        if (isValid && this.id && this.context && this.settings && this.settings.field) {
             const start = moment(model.from).startOf('day').format();
             const end = moment(model.to).endOf('day').format();
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
@@ -74,9 +73,10 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
             from: '',
             to: ''
         });
-
-        this.context.queryFragments[this.id] = '';
-        this.context.update();
+        if (this.id && this.context) {
+            this.context.queryFragments[this.id] = '';
+            this.context.update();
+        }
     }
 
     hasSelectedDays(from: string, to: string) {
@@ -89,4 +89,3 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         return true;
     }
 }
-
