@@ -381,7 +381,9 @@ describe('LoginComponent', () => {
         expect(element.querySelector('input[type="password"]').value).toEqual('fake-change-password');
     });
 
-    it('should return success event after the login have succeeded', async(() => {
+    it('should return success event after the login have succeeded', (done) => {
+        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket'}));
+
         component.providers = 'ECM';
         expect(component.isError).toBe(false);
 
@@ -389,14 +391,15 @@ describe('LoginComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.isError).toBe(false);
+                done();
             });
         });
 
         loginWithCredentials('fake-username', 'fake-password');
 
-    }));
+    });
 
-    it('should return error with a wrong username', async(() => {
+    it('should return error with a wrong username', (done) => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
@@ -404,13 +407,14 @@ describe('LoginComponent', () => {
             fixture.whenStable().then(() => {
                 expect(getLoginErrorElement()).toBeDefined();
                 expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+                done();
             });
         });
 
         loginWithCredentials('fake-wrong-username', 'fake-password');
-    }));
+    });
 
-    it('should return error with a wrong password', async(() => {
+    it('should return error with a wrong password', (done) => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
@@ -419,13 +423,14 @@ describe('LoginComponent', () => {
                 expect(component.isError).toBe(true);
                 expect(getLoginErrorElement()).toBeDefined();
                 expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+                done();
             });
         });
 
         loginWithCredentials('fake-username', 'fake-wrong-password');
-    }));
+    });
 
-    it('should return error with a wrong username and password', async(() => {
+    it('should return error with a wrong username and password', (done) => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
@@ -434,13 +439,14 @@ describe('LoginComponent', () => {
                 expect(component.isError).toBe(true);
                 expect(getLoginErrorElement()).toBeDefined();
                 expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+                done();
             });
         });
 
         loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
-    }));
+    });
 
-    it('should return CORS error when server CORS error occurs', async(() => {
+    it('should return CORS error when server CORS error occurs', (done) => {
         spyOn(authService, 'login').and.returnValue(Observable.throw({
             error: {
                 crossDomain: true,
@@ -455,11 +461,12 @@ describe('LoginComponent', () => {
                 expect(component.isError).toBe(true);
                 expect(getLoginErrorElement()).toBeDefined();
                 expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+                done();
             });
         });
 
         loginWithCredentials('fake-username-CORS-error', 'fake-password');
-    }));
+    });
 
     it('should return CSRF error when server CSRF error occurs', async(() => {
         spyOn(authService, 'login')
