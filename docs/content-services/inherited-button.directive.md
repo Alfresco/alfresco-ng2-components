@@ -15,6 +15,8 @@ Update the current node by adding/removing the inherited permissions.
             (updated)="onUpdatedPermissions($node)">PERMISSION</button>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

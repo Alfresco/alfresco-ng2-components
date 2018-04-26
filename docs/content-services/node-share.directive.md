@@ -26,6 +26,8 @@ Creates and manages public shared links for files.
 </adf-document-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

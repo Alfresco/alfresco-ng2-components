@@ -52,6 +52,8 @@ Displays the documents from a repository.
 </adf-document-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

@@ -22,6 +22,8 @@ Activates a file upload.
 <adf-file-uploading-dialog></adf-file-uploading-dialog>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

@@ -19,6 +19,8 @@ Indicates the current position within a navigation hierarchy.
 </adf-breadcrumb>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

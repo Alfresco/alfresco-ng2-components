@@ -29,6 +29,8 @@ properties and events are the same except for the `node` property that specifies
 to be versioned (this is a _required_ input parameter). However, some properties don't make
 sense when applied to the Upload Version Button component, so they are simply ignored.
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

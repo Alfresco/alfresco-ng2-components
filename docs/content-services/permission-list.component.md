@@ -28,6 +28,7 @@ or custom template can be added:
 </adf-permission-list>
 ```
 
+## Class members
 
 ### Properties
 

@@ -6,6 +6,8 @@ Status: Active
 
 Sets custom CSS styles for rows of a Document List according to the item's permissions.
 
+## Class members
+
 ## Properties
 
 | Property | Type | Description |

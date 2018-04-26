@@ -12,6 +12,8 @@ Displays the version history of a node in a Version Manager component
 <adf-version-list [node]="myNode"></adf-version-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

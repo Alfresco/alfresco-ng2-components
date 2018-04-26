@@ -16,6 +16,8 @@ Shows tags for a node.
 </adf-tag-node-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

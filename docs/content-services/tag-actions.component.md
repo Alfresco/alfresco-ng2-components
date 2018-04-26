@@ -16,6 +16,8 @@ Shows available actions for tags.
 </adf-tag-node-actions-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

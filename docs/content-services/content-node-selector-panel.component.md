@@ -23,6 +23,8 @@ Opens a Content Node Selector in its own dialog window.
     </adf-content-node-selector-panel>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

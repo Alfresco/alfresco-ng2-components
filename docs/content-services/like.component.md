@@ -14,6 +14,8 @@ Allows a user to add "likes" to an item.
 <adf-like [nodeId]="nodeId"></adf-like>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

@@ -12,6 +12,8 @@ Shows a dialog listing all the files uploaded with the Upload Button or Drag Are
 <adf-file-uploading-dialog></adf-file-uploading-dialog>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

@@ -76,6 +76,8 @@ export class MyView {
 }
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

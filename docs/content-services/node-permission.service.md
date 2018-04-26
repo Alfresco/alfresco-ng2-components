@@ -6,6 +6,8 @@ Status: Active
 
 Manages the role permissions for the content nodes
 
+## Class members
+
 ## Methods
 
 -   `getNodeRoles(node: MinimalNodeEntryEntity): Observable<string[]>`  

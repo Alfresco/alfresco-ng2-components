@@ -17,6 +17,8 @@ Indicates the current position within a navigation hierarchy using a dropdown me
 </adf-dropdown-breadcrumb>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

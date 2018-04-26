@@ -8,6 +8,8 @@ Last reviewed: 2018-03-13
 
 Displays and manages dialogs for selecting content to open, copy or upload.
 
+## Class members
+
 ## Methods
 
 -   `openLockNodeDialog(nodeEntry: MinimalNodeEntryEntity): Observable<string>`

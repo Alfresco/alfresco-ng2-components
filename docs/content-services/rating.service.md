@@ -6,6 +6,8 @@ Status: Active
 
 Manages ratings for items in Content Services.
 
+## Class members
+
 ## Methods
 
 -   `getRating(nodeId: string, ratingType: any): any`  

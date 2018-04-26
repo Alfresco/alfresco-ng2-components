@@ -22,6 +22,8 @@ Displays the version history of a node with the ability to upload a new version.
 </adf-version-manager>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

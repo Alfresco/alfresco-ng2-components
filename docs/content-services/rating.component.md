@@ -16,6 +16,8 @@ Allows a user to add ratings to an item.
 </adf-rating>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
