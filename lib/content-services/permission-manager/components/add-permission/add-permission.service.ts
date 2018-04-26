@@ -47,7 +47,7 @@ export class AddNodePermissionDialogService {
 
         const data: AddPermissionDialogData = {
             nodeId: nodeId,
-            title: 'AMMACCABANANE',
+            title: title,
             confirm : confirm
         };
 
