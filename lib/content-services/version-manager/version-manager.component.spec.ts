@@ -97,13 +97,12 @@ describe('VersionManagerComponent', () => {
         });
     }));
 
-    it('should emit success event upon successful upload of a new version', async((done) => {
+    it('should emit success event upon successful upload of a new version', async(() => {
         fixture.detectChanges();
 
         const emittedData = { value: { entry: node }};
         component.uploadSuccess.subscribe(event => {
             expect(event).toBe(emittedData);
-            done();
         });
         component.onUploadSuccess(emittedData);
     }));

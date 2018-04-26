@@ -68,7 +68,7 @@ export class FileModel {
 
         this.options = Object.assign({}, {
             newVersion: false
-        },                           options);
+        }, options);
     }
 
     generateId(): string {

@@ -158,7 +158,7 @@ describe('UploadService', () => {
         service.uploadFilesInTheQueue(emitter);
 
         expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(false);
-        expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(true);
+        expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(false);
     });
 
     it('If newVersionBaseName is set, name should be a param', () => {
