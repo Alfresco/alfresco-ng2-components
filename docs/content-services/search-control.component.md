@@ -25,7 +25,7 @@ Displays a input text which shows find-as-you-type suggestions.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
+| -- | -- | -- | -- |
 | autocomplete | `boolean` | false | Toggles auto-completion of the search input field. |
 | customQueryBody | `QueryBody` |  | **Deprecated:** in 2.1.0 |
 | expandable | `boolean` | true | Toggles whether to use an expanding search control. If false then a regular input is used. |
@@ -37,7 +37,7 @@ Displays a input text which shows find-as-you-type suggestions.
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
+| -- | -- | -- |
 | optionClicked | `EventEmitter<any>` | Emitted when a file item from the list of "find-as-you-type" results is selected. |
 | searchChange | `EventEmitter<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then the term is truncated to an empty string. |
 | submit | `EventEmitter<any>` | Emitted when the search is submitted pressing ENTER button. The search term is provided as value of the event. |

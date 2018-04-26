@@ -8,6 +8,23 @@ Last reviewed: 2018-04-13
 
 Searches items for supplied search terms. 
 
+## Contents
+
+-   [Basic usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+    -   [Events](#events)
+
+-   [Details](#details)
+
+    -   [Customise Search Results](#customise-search-results)
+    -   [Attach an input field to the search](#attach-an-input-field-to-the-search)
+    -   [Custom search configuration](#custom-search-configuration)
+
+-   [See Also](#see-also)
+
 ## Basic usage
 
 ```html
