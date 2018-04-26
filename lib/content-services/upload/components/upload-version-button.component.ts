@@ -39,18 +39,19 @@ export class UploadVersionButtonComponent extends UploadButtonComponent implemen
         super.ngOnChanges(changes);
 
         if (changes['acceptedFilesType']) {
-            const message = this.translateService.instant('FILE_UPLOAD.VERSION.MESSAGES.NO_ACCEPTED_FILE_TYPES');
+            const message = this.translationService.instant('FILE_UPLOAD.VERSION.MESSAGES.NO_ACCEPTED_FILE_TYPES');
             this.logService.error(message);
         }
         this.acceptedFilesType = '.' + this.node.name.split('.').pop();
     }
 
     protected createFileModel(file: File): FileModel {
-        const fileModel = super.createFileModel(file);
+        const fileModel = super.createFileModel(file, this.rootFolderId, (file.webkitRelativePath || '').replace(/\/[^\/]*$/, ''));
+
         fileModel.options.newVersionBaseName = this.node.name;
 
         if (!this.isFileAcceptable(fileModel)) {
-            const message = this.translateService.instant('FILE_UPLOAD.VERSION.MESSAGES.INCOMPATIBLE_VERSION');
+            const message = this.translationService.instant('FILE_UPLOAD.VERSION.MESSAGES.INCOMPATIBLE_VERSION');
             this.error.emit(message);
         }
 

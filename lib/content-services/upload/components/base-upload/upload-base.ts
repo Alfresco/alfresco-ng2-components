@@ -15,16 +15,98 @@
  * limitations under the License.
  */
 
-import { FileModel } from '@alfresco/adf-core';
-import { Input } from '@angular/core';
+import { FileModel, FileInfo } from '@alfresco/adf-core';
+import { EventEmitter, Input, Output } from '@angular/core';
+import { UploadService, TranslationService } from '@alfresco/adf-core';
 
 export abstract class UploadBase {
+
+    /** Sets a limit on the maximum size (in bytes) of a file to be uploaded.
+     * Has no effect if undefined.
+     */
+    @Input()
+    maxFilesSize: number;
+
+    /** The ID of the root. Use the nodeId for
+     * Content Services or the taskId/processId for Process Services.
+     */
+    @Input()
+    rootFolderId: string = '-root-';
+
+    /** Toggles component disabled state (if there is no node permission checking). */
+    @Input()
+    disabled: boolean = false;
 
     /** Filter for accepted file types. */
     @Input()
     acceptedFilesType: string = '*';
 
-    constructor() {}
+    /** Toggles versioning. */
+    @Input()
+    versioning: boolean = false;
+
+    /** majorVersion boolean field to true to indicate a major version should be created. */
+    @Input()
+    majorVersion: boolean = false;
+
+    /** When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history */
+    @Input()
+    comment: string;
+
+    /** Emitted when the file is uploaded successfully. */
+    @Output()
+    success = new EventEmitter();
+
+    /** @deprecated 2.4.0 */
+    /** Emitted when a folder is created. */
+    @Output()
+    createFolder = new EventEmitter();
+
+    /** Emitted when an error occurs. */
+    @Output()
+    error = new EventEmitter();
+
+    constructor(protected uploadService: UploadService,
+                protected translationService: TranslationService) {
+    }
+
+    /**
+     * Upload a list of file in the specified path
+     * @param files
+     * @param path
+     */
+    uploadFiles(files: File[]): void {
+        const filteredFiles: FileModel[] = files
+            .map<FileModel>((file: File) => {
+                return this.createFileModel(file, this.rootFolderId, (file.webkitRelativePath || '').replace(/\/[^\/]*$/, ''));
+            });
+
+        this.uploadQueue(filteredFiles);
+    }
+
+    uploadFilesInfo(files: FileInfo[]): void {
+        const filteredFiles: FileModel[] = files
+            .map<FileModel>((fileInfo: FileInfo) => {
+                return this.createFileModel(fileInfo.file, this.rootFolderId, fileInfo.relativeFolder);
+            });
+
+        this.uploadQueue(filteredFiles);
+    }
+
+    private uploadQueue(files: FileModel[]) {
+        let filteredFiles = files
+            .filter(this.isFileAcceptable.bind(this))
+            .filter(this.isFileSizeAcceptable.bind(this));
+
+        if (filteredFiles.length > 0) {
+            this.uploadService.addToQueue(...filteredFiles);
+            this.uploadService.uploadFilesInTheQueue(this.success);
+            this.uploadService.fileUploadError.subscribe((error) => {
+                this.error.emit(error);
+            });
+        }
+    }
+
     /**
      * Checks if the given file is allowed by the extension filters
      *
@@ -45,4 +127,56 @@ export abstract class UploadBase {
 
         return false;
     }
+
+    /**
+     * Creates FileModel from File
+     *
+     * @param file
+     */
+    protected createFileModel(file: File, parentId: string, path: string): FileModel {
+        return new FileModel(file, {
+            comment: this.comment,
+            majorVersion: this.majorVersion,
+            newVersion: this.versioning,
+            parentId: parentId,
+            path: path
+        });
+    }
+
+    protected isFileSizeAllowed(file: FileModel) {
+        let isFileSizeAllowed = true;
+        if (this.isMaxFileSizeDefined()) {
+            isFileSizeAllowed = this.isFileSizeCorrect(file);
+        }
+
+        return isFileSizeAllowed;
+    }
+
+    protected isMaxFileSizeDefined() {
+        return this.maxFilesSize !== undefined && this.maxFilesSize !== null;
+    }
+
+    protected isFileSizeCorrect(file: FileModel) {
+        return this.maxFilesSize >= 0 && file.size <= this.maxFilesSize;
+    }
+
+    /**
+     * Checks if the given file is an acceptable size
+     *
+     * @param file FileModel
+     */
+    private isFileSizeAcceptable(file: FileModel): boolean {
+        let acceptableSize = true;
+
+        if (!this.isFileSizeAllowed(file)) {
+            acceptableSize = false;
+
+            this.translationService.get('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', { fileName: file.name }).subscribe((message: string) => {
+                this.error.emit(message);
+            });
+        }
+
+        return acceptableSize;
+    }
+
 }

@@ -16,23 +16,17 @@
  */
 
 import {
-    EXTENDIBLE_COMPONENT,
-    FileInfo,
-    FileModel,
-    FileUtils,
-    NodePermissionSubject,
-    NotificationService,
-    TranslationService,
-    UploadService
+    EXTENDIBLE_COMPONENT, FileInfo, FileModel, FileUtils, NodePermissionSubject,
+    NotificationService, TranslationService, UploadService, ContentService, PermissionsEnum
 } from '@alfresco/adf-core';
-import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, forwardRef, Input, ViewEncapsulation } from '@angular/core';
 import { UploadBase } from './base-upload/upload-base';
 
 @Component({
     selector: 'adf-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css'],
-    host: {'class': 'adf-upload-drag-area'},
+    host: { 'class': 'adf-upload-drag-area' },
     viewProviders: [
         { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent) }
     ],
@@ -40,32 +34,17 @@ import { UploadBase } from './base-upload/upload-base';
 })
 export class UploadDragAreaComponent extends UploadBase implements NodePermissionSubject {
 
-    /** Toggle component disabled state. */
+    /** @deprecaretd 2.4.0  use rootFolderId ID of parent folder node. */
     @Input()
-    disabled: boolean = false;
+    set parentId(nodeId: string) {
+        this.rootFolderId = nodeId;
+    }
 
-    /** When false, renames the file using an integer suffix if there is a name clash.
-     * Set to true to indicate that a major version should be created instead.
-     */
-    @Input()
-    versioning: boolean = false;
-
-    /** ID of parent folder node. */
-    @Input()
-    parentId: string;
-
-    /** Emitted when the file is uploaded. */
-    @Output()
-    success = new EventEmitter();
-
-    /** Raised when the file upload goes in error. */
-    @Output()
-    error = new EventEmitter();
-
-    constructor(private uploadService: UploadService,
-                private translateService: TranslationService,
-                private notificationService: NotificationService) {
-                    super();
+    constructor(protected uploadService: UploadService,
+                protected translationService: TranslationService,
+                private notificationService: NotificationService,
+                private contentService: ContentService) {
+        super(uploadService, translationService);
     }
 
     /**
@@ -75,12 +54,7 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
      */
     onFilesDropped(files: File[]): void {
         if (!this.disabled && files.length) {
-            const fileModels = files.map(file => new FileModel(file, {
-                newVersion: this.versioning,
-                path: '/',
-                parentId: this.parentId
-            })).filter(this.isFileAcceptable.bind(this));
-            this.addNodeInUploadQueue(fileModels);
+            this.uploadFiles(files);
         }
     }
 
@@ -92,14 +66,9 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
     onFilesEntityDropped(item: any): void {
         if (!this.disabled) {
             item.file((file: File) => {
-                const fileModel = new FileModel(file, {
-                    newVersion: this.versioning,
-                    parentId: this.parentId,
-                    path: item.fullPath.replace(item.name, '')
-                });
-                if (this.isFileAcceptable(fileModel)) {
-                    this.addNodeInUploadQueue([fileModel]);
-                }
+                // const fileModel = this.createFileModel(file, this.rootFolderId, item.fullPath.replace(item.name, ''));
+
+                this.uploadFiles([file]);
             });
         }
     }
@@ -111,26 +80,9 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
      */
     onFolderEntityDropped(folder: any): void {
         if (!this.disabled && folder.isDirectory) {
-            FileUtils.flattern(folder).then(entries => {
-                let files = entries.map(entry => {
-                    return new FileModel(entry.file, {
-                        newVersion: this.versioning,
-                        parentId: this.parentId,
-                        path: entry.relativeFolder
-                    });
-                }).filter(this.isFileAcceptable.bind(this));
-                this.addNodeInUploadQueue(files);
+            FileUtils.flattern(folder).then(filesInfo => {
+                this.uploadFilesInfo(filesInfo);
             });
-        }
-    }
-
-    private addNodeInUploadQueue(files: FileModel[]) {
-        if (files.length) {
-            this.uploadService.addToQueue(...files);
-            this.uploadService.uploadFilesInTheQueue(this.success);
-            this.uploadService.fileUploadError.subscribe((error) => {
-                this.error.emit(error);
-                });
         }
     }
 
@@ -141,8 +93,8 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
      */
     showUndoNotificationBar(latestFilesAdded: FileModel[]) {
         let messageTranslate: any, actionTranslate: any;
-        messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
-        actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
+        messageTranslate = this.translationService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
+        actionTranslate = this.translationService.get('FILE_UPLOAD.ACTION.UNDO');
 
         this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
             this.uploadService.cancelUpload(...latestFilesAdded);
@@ -162,35 +114,13 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
     onUploadFiles(event: CustomEvent) {
         event.stopPropagation();
         event.preventDefault();
-        let isAllowed: boolean = this.hasCreatePermission(event.detail.data.obj.entry);
+        let isAllowed: boolean = this.contentService.hasPermission(event.detail.data.obj.entry, PermissionsEnum.CREATE);
         if (isAllowed) {
-            let files: FileInfo[] = event.detail.files;
-            if (files && files.length > 0) {
-                let parentId = this.parentId;
-                if (event.detail.data && event.detail.data.obj.entry.isFolder) {
-                    parentId = event.detail.data.obj.entry.id || this.parentId;
-                }
-                const fileModels = files.map(fileInfo => new FileModel(fileInfo.file, {
-                    newVersion: this.versioning,
-                    path: fileInfo.relativeFolder,
-                    parentId: parentId
-                })).filter(this.isFileAcceptable.bind(this));
-                this.addNodeInUploadQueue(fileModels);
+            let fileInfo: FileInfo[] = event.detail.files;
+            if (fileInfo && fileInfo.length > 0) {
+                this.uploadFilesInfo(fileInfo);
             }
         }
     }
 
-    /**
-     * Check if "create" permission is present on the given node
-     *
-     * @param node
-     */
-    private hasCreatePermission(node: any): boolean {
-        let isPermitted = false;
-        if (node && node['allowableOperations']) {
-            let permFound = node['allowableOperations'].find(element => element === 'create');
-            isPermitted = permFound ? true : false;
-        }
-        return isPermitted;
-    }
 }

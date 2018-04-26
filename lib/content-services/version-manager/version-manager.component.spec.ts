@@ -22,11 +22,13 @@ import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } 
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('VersionManagerComponent', () => {
     let component: VersionManagerComponent;
     let fixture: ComponentFixture<VersionManagerComponent>;
     let spyOnListVersionHistory: jasmine.Spy;
+    let alfrescoApiService: AlfrescoApiService;
 
     const expectedComment = 'test-version-comment';
     const  node: MinimalNodeEntryEntity = {
@@ -44,7 +46,8 @@ describe('VersionManagerComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreModule.forRoot(),
+            NoopAnimationsModule
         ],
         declarations: [
             VersionManagerComponent,
@@ -61,7 +64,7 @@ describe('VersionManagerComponent', () => {
         component = fixture.componentInstance;
         component.node = node;
 
-        const alfrescoApiService = TestBed.get(AlfrescoApiService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
         spyOnListVersionHistory = spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
             .callFake(() => Promise.resolve({ list: { entries: [ versionEntry ] }}));
     });
@@ -94,7 +97,7 @@ describe('VersionManagerComponent', () => {
         });
     }));
 
-    it('should emit success event upon successful upload of a new version', () => {
+    it('should emit success event upon successful upload of a new version', async(() => {
         fixture.detectChanges();
 
         const emittedData = { value: { entry: node }};
@@ -102,5 +105,35 @@ describe('VersionManagerComponent', () => {
             expect(event).toBe(emittedData);
         });
         component.onUploadSuccess(emittedData);
+    }));
+
+    it('should emit nodeUpdated event upon successful upload of a new version', (done) => {
+        fixture.detectChanges();
+        alfrescoApiService.nodeUpdated.subscribe(() => {
+            done();
+        });
+
+        const emittedData = { value: { entry: node }};
+        component.onUploadSuccess(emittedData);
+    });
+
+    describe('Animation', () => {
+
+        it('should upload button be hide by default', () => {
+            fixture.detectChanges();
+
+            expect(component.uploadState).toEqual('close');
+        });
+
+        it('should upload button be visible after click on add new version button', () => {
+            fixture.detectChanges();
+
+            let showUploadButton = fixture.debugElement.query(By.css('#adf-show-version-upload-button'));
+
+            showUploadButton.nativeElement.click();
+
+            expect(component.uploadState).toEqual('open');
+        });
+
     });
 });

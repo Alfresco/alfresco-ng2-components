@@ -22,6 +22,7 @@ import { VersionListComponent } from './version-list.component';
 import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
@@ -34,7 +35,8 @@ describe('VersionListComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreModule.forRoot(),
+            NoopAnimationsModule
         ],
         declarations: [
             VersionListComponent
@@ -56,7 +58,7 @@ describe('VersionListComponent', () => {
         dialog = TestBed.get(MatDialog);
 
         component = fixture.componentInstance;
-        component.node = { id: nodeId, allowableOperations: [ 'update' ] };
+        component.node = { id: nodeId, allowableOperations: ['update'] };
 
         spyOn(component, 'downloadContent').and.stub();
     });
@@ -117,7 +119,7 @@ describe('VersionListComponent', () => {
 
         it('should use loading bar', () => {
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: []}}));
+                .callFake(() => Promise.resolve({ list: { entries: [] } }));
 
             let loadingProgressBar = fixture.debugElement.query(By.css('[data-automation-id="version-history-loading-bar"]'));
             expect(loadingProgressBar).toBeNull();
@@ -131,7 +133,7 @@ describe('VersionListComponent', () => {
 
         it('should load the versions for a given id', () => {
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: []}}));
+                .callFake(() => Promise.resolve({ list: { entries: [] } }));
 
             component.ngOnChanges();
             fixture.detectChanges();
@@ -142,11 +144,15 @@ describe('VersionListComponent', () => {
         it('should show the versions after loading', (done) => {
             fixture.detectChanges();
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
-                return Promise.resolve({ list: { entries: [
-                    {
-                        entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+                return Promise.resolve({
+                    list: {
+                        entries: [
+                            {
+                                entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+                            }
+                        ]
                     }
-                ]}});
+                });
             });
 
             component.ngOnChanges();
@@ -193,8 +199,14 @@ describe('VersionListComponent', () => {
         });
 
         it('should be able to download a version', () => {
-            const versionEntry =  { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }};
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({ list: { entries: [ versionEntry ] }}));
+            const versionEntry = {
+                entry: {
+                    name: 'test-file-name',
+                    id: '1.0',
+                    versionComment: 'test-version-comment'
+                }
+            };
+            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({ list: { entries: [versionEntry] } }));
             spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValue('the/download/url');
 
             fixture.detectChanges();
@@ -204,9 +216,15 @@ describe('VersionListComponent', () => {
         });
 
         it('should NOT be able to download a version if configured so', () => {
-            const versionEntry =  { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }};
+            const versionEntry = {
+                entry: {
+                    name: 'test-file-name',
+                    id: '1.0',
+                    versionComment: 'test-version-comment'
+                }
+            };
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: [ versionEntry ] }}));
+                .callFake(() => Promise.resolve({ list: { entries: [versionEntry] } }));
             const spyOnDownload = spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.stub();
 
             component.allowDownload = false;
@@ -240,20 +258,20 @@ describe('VersionListComponent', () => {
         it('should load the versions for a given id', () => {
             fixture.detectChanges();
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: []}}));
+                .callFake(() => Promise.resolve({ list: { entries: [] } }));
             const spyOnRevertVersion = spyOn(alfrescoApiService.versionsApi, 'revertVersion').and
                 .callFake(() => Promise.resolve(
-                    { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }}));
+                    { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } }));
 
             component.restore(versionId);
 
-            expect(spyOnRevertVersion).toHaveBeenCalledWith(nodeId, versionId, { majorVersion: true, comment: ''});
+            expect(spyOnRevertVersion).toHaveBeenCalledWith(nodeId, versionId, { majorVersion: true, comment: '' });
         });
 
         it('should reload the version list after a version restore', (done) => {
             fixture.detectChanges();
             const spyOnListVersionHistory = spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: []}}));
+                .callFake(() => Promise.resolve({ list: { entries: [] } }));
             spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve());
 
             component.restore(versionId);
@@ -264,4 +282,149 @@ describe('VersionListComponent', () => {
             });
         });
     });
+
+    describe('Actions buttons', () => {
+
+        describe('showActions', () => {
+
+            beforeEach(() => {
+                fixture.detectChanges();
+                component.node = { id: nodeId };
+                spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
+                    return Promise.resolve({
+                        list: {
+                            entries: [
+                                {
+                                    entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+                                }
+                            ]
+                        }
+                    });
+                });
+
+                component.ngOnChanges();
+            });
+
+            it('should show Actions if showActions is true', (done) => {
+                component.showActions = true;
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
+
+                    expect(menuButton).not.toBeNull();
+                    done();
+                });
+            });
+
+            it('should hide Actions if showActions is false', (done) => {
+                component.showActions = false;
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
+
+                    expect(menuButton).toBeNull();
+                    done();
+                });
+            });
+        });
+
+        describe('disabled', () => {
+
+            beforeEach(() => {
+                fixture.detectChanges();
+                component.node = { id: nodeId };
+                spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
+                    return Promise.resolve({
+                        list: {
+                            entries: [
+                                {
+                                    entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+                                }
+                            ]
+                        }
+                    });
+                });
+
+                component.ngOnChanges();
+            });
+
+            it('should disable delete action if is not allowed', (done) => {
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
+                    menuButton.nativeElement.click();
+
+                    let deleteButton = fixture.debugElement.query(By.css('#adf-version-list-action-delete-0'));
+
+                    expect(deleteButton.nativeElement.disabled).toBe(true);
+                    done();
+                });
+            });
+
+            it('should disable restore action if is not allowed', (done) => {
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
+                    menuButton.nativeElement.click();
+
+                    let restoreButton = fixture.debugElement.query(By.css('#adf-version-list-action-restore-0'));
+
+                    expect(restoreButton.nativeElement.disabled).toBe(true);
+                    done();
+                });
+            });
+        });
+
+        describe('enabled', () => {
+
+            beforeEach(() => {
+                fixture.detectChanges();
+                component.node = { id: nodeId, allowableOperations: ['update', 'delete'] };
+                spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
+                    return Promise.resolve({
+                        list: {
+                            entries: [
+                                {
+                                    entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+                                }
+                            ]
+                        }
+                    });
+                });
+
+                component.ngOnChanges();
+            });
+
+            it('should enable delete action if is allowed', (done) => {
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
+                    menuButton.nativeElement.click();
+
+                    let deleteButton = fixture.debugElement.query(By.css('#adf-version-list-action-delete-0'));
+
+                    expect(deleteButton.nativeElement.disabled).toBe(false);
+                    done();
+                });
+            });
+
+            it('should enable restore action if is allowed', (done) => {
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
+                    menuButton.nativeElement.click();
+
+                    let restoreButton = fixture.debugElement.query(By.css('#adf-version-list-action-restore-0'));
+
+                    expect(restoreButton.nativeElement.disabled).toBe(false);
+                    done();
+                });
+            });
+        });
+    });
+
 });

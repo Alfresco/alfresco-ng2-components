@@ -136,10 +136,10 @@
             &__right {
                 border-left: 1px solid mat-color($foreground, text, 0.07);
             }
-    
+
             &__left {
                 border-right: 1px solid mat-color($foreground, text, 0.07);
-            }                
+            }
         }
 
         &__thumbnails {
@@ -163,6 +163,7 @@
             .adf-info-drawer-layout-content {
                 padding: 0;
                 height: 100%;
+                overflow: hidden;
             }
 
             .info-drawer-content {

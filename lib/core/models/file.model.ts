@@ -22,7 +22,9 @@ export interface FileUploadProgress {
 }
 
 export interface FileUploadOptions {
+    comment?: string;
     newVersion?: boolean;
+    majorVersion?: boolean;
     newVersionBaseName?: string;
     parentId?: string;
     path?: string;
@@ -66,10 +68,10 @@ export class FileModel {
 
         this.options = Object.assign({}, {
             newVersion: false
-        },                           options);
+        }, options);
     }
 
-    private generateId(): string {
+    generateId(): string {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);

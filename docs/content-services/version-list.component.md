@@ -22,7 +22,8 @@ Displays the version history of a node in a Version Manager component
 | allowDownload | `boolean` | true | Enable/disable possibility to download a version of the current node. |
 | id | `string` |  | **Deprecated:** in 2.3.0 |
 | node | `MinimalNodeEntryEntity` |  |  |
-| showComments | `boolean` | true |  |
+| showActions | `boolean` | true | show/hide version actions |
+| showComments | `boolean` | true | show/hide comments |
 
 ## Details
 
