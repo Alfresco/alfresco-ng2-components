@@ -24,27 +24,10 @@
                             <mat-icon class="adf-report-icon" >mode_edit</mat-icon>
                             <h4>{{reportParameters.name}}</h4>
                         </div>
-                    </adf-toolbar-title>
-                    <div *ngIf="!isEditable">
-                        <button mat-button matTooltip="{{'ANALYTICS.MESSAGES.ICON-SETTING' | translate}}"
-                                (click)="toggleParameters()">
-                            <mat-icon>settings</mat-icon>
-                        </button>
-                        <button mat-button id="delete-button" (click)="deleteReport(reportId)"
-                                matTooltip="{{'ANALYTICS.MESSAGES.ICON-DELETE' | translate}}">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                        <span *ngIf="isFormValid()">
-                            <button mat-button id="export-button" (click)="showDialog('Export')"
-                                    matTooltip="{{'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate}}">
-                                <mat-icon>file_download</mat-icon>
-                            </button>
-                            <button mat-button id="save-button" (click)="showDialog('Save')"
-                                    matTooltip="{{'ANALYTICS.MESSAGES.ICON-SAVE' | translate}}">
-                                <mat-icon>save</mat-icon>
-                            </button>
-                        </span>
-                    </div>
+                    </adf-toolbar-title> 
+                    <adf-buttons-action-menu *ngIf="!isEditable"
+                        [buttons]="buttons">
+                    </adf-buttons-action-menu>   
                 </adf-toolbar>
                 <div *ngFor="let field of reportParameters.definition.parameters"
                         [class.is-hide]="isParametersHide()">
