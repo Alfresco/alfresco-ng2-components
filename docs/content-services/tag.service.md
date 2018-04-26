@@ -17,9 +17,9 @@ Manages tags in Content Services.
     -   `nodeId: string = null` -  ID of the target node
     -   `tagName: string = null` -  Name of the tag to add
     -   **Returns** `any` - TagEntry object (defined in JSAPI) with details of the new tag
--   `getAllTheTags(): any`<br/>
+-   `getAllTheTags(): Observable<any>`<br/>
     Gets a list of all the tags already defined in the repository.
-    -   **Returns** `any` - TagPaging object (defined in JSAPI) containing the tags
+    -   **Returns** `Observable<any>` - TagPaging object (defined in JSAPI) containing the tags
 -   `getTagsByNodeId(nodeId: string = null): any`<br/>
     Gets a list of tags added to a node.
     -   `nodeId: string = null` -  ID of the target node

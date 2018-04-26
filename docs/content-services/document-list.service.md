@@ -12,11 +12,11 @@ Implements node operations used by the Document List component.
 
 ### Methods
 
--   `copyNode(nodeId: string = null, targetParentId: string = null): any`<br/>
+-   `copyNode(nodeId: string = null, targetParentId: string = null): Observable<any>`<br/>
     Copy a node to destination node
     -   `nodeId: string = null` -  The id of the node to be copied
     -   `targetParentId: string = null` -  The id of the folder where the node will be copied
-    -   **Returns** `any` - NodeEntry for the copied node
+    -   **Returns** `Observable<any>` - NodeEntry for the copied node
 -   `createFolder(name: string = null, parentId: string = null): Observable<MinimalNodeEntity>`<br/>
     Create a new folder in the path.
     -   `name: string = null` -  Folder name
@@ -39,25 +39,32 @@ Implements node operations used by the Document List component.
     -   `opts?: any = null` - (Optional) Options.
     -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** `Observable<NodePaging>` - Details of the folder
--   `getFolderNode(nodeId: string = null, includeFields: string[] =  []): Promise<MinimalNodeEntryEntity>`<br/>
-    Gets a folder node via its node ID.
+-   `getFolderNode(nodeId: string = null, includeFields: string[] =  []): Observable<MinimalNodeEntryEntity>`<br/>
+
     -   `nodeId: string = null` -  ID of the folder node
     -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** `Promise<MinimalNodeEntryEntity>` - Details of the folder
+    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the folder
+
 -   `getMimeTypeIcon(mimeType: string = null): string`<br/>
     Gets the icon that represents a MIME type.
     -   `mimeType: string = null` -  MIME type to get the icon for
     -   **Returns** `string` - Path to the icon file
+-   `getNode(nodeId: string = null, includeFields: string[] =  []): Observable<NodeEntry>`<br/>
+    Gets a node via its node ID.
+    -   `nodeId: string = null` -  
+    -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
+    -   **Returns** `Observable<NodeEntry>` - Details of the folder
 -   `hasPermission(node: any = null, permission: PermissionsEnum | string = null): boolean`<br/>
-    Checks if a node has the specified permission.
+
     -   `node: any = null` -  Target node
     -   `permission: PermissionsEnum | string = null` -  Permission level to query
     -   **Returns** `boolean` - True if the node has the permission, false otherwise
--   `moveNode(nodeId: string = null, targetParentId: string = null): any`<br/>
+
+-   `moveNode(nodeId: string = null, targetParentId: string = null): Observable<any>`<br/>
     Move a node to destination node
     -   `nodeId: string = null` -  The id of the node to be moved
     -   `targetParentId: string = null` -  The id of the folder where the node will be moved
-    -   **Returns** `any` - NodeEntry for the moved node
+    -   **Returns** `Observable<any>` - NodeEntry for the moved node
 
 ## Details
 

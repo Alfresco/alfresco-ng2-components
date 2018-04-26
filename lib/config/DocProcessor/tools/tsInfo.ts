@@ -242,6 +242,12 @@ export function aggPhase(aggData) {
 export function updatePhase(tree, pathname, aggData) {
     let compName = angNameToClassName(path.basename(pathname, ".md"));
     let classRef = aggData.projData.findReflectionByName(compName);
+
+    if (!classRef) {
+        // A doc file with no corresponding class (eg, Document Library Model).
+        return false;
+    }
+
     let compData = new ComponentInfo(classRef);
     let classType = compName.match(/component|directive|service/i);
 

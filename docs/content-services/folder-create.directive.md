@@ -31,16 +31,16 @@ Creates folders.
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
+| nodeType | `string` | "cm:folder" |  |
 | adf-create-folder | `string` |  DEFAULT_FOLDER_PARENT_ID | Parent folder where the new folder will be located after creation. |
-| title | `string` |  null | The title of the opened dialog. |
-| nodeType | `string` |  'cm:folder' | The type of the node to be created. |
+| title | `string` |  null |  |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs (for example a folder with same name already exists) |
-| success | `EventEmitter<MinimalNodeEntryEntity>` | Emitted when the creation successfully happened |
+| error | `EventEmitter<any>` | Emitted when the create folder give error for example a folder with same name already exist |
+| success | `EventEmitter<MinimalNodeEntryEntity>` |  |
 
 ## Details
 
