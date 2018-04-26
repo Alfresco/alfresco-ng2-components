@@ -88,11 +88,9 @@
                 height: 40px;
 
                 &-icon {
-                    // color: #e9f1f3;
                     color: mat-color($primary, 50);
 
                     &:hover {
-                        // color: #b7dfea;
                         color: mat-color($primary, 100);
                     }
                 }

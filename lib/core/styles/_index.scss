@@ -26,8 +26,6 @@
 @import '../comments/comment-list.component';
 @import '../comments/comments.component';
 
-@import '../../insights/analytics-process/components/analytics-report-list.component';
-
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
     @include adf-default-class-theme($theme);
@@ -54,7 +52,6 @@
     @include adf-sidebar-action-menu-theme($theme);
     @include adf-task-list-comment-list-theme($theme);
     @include adf-task-list-comment-theme($theme);
-    @include adf-analytics-report-list-theme($theme);
 }
 
 
