@@ -1,4 +1,6 @@
-<h2 mat-dialog-title>{{data?.title}}</h2>
+<h2 mat-dialog-title>
+    {{(data?.title ? data?.title : 'PERMISSION_MANAGER.ADD-PERMISSION.BASE-DIALOG-TITLE') | translate}}
+</h2>
 <mat-dialog-content>
     <adf-add-permission-panel
         (select)="onSelect($event)">
