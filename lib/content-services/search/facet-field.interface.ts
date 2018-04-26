@@ -19,6 +19,9 @@ export interface FacetField {
     field: string;
     label: string;
     mincount?: number;
+    limit?: number;
+    offset?: number;
+    prefix?: string;
 
     $checked?: boolean;
 }

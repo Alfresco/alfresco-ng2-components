@@ -37,13 +37,11 @@ describe('SearchQueryBuilder', () => {
 
     it('should use only enabled categories', () => {
         const config: SearchConfiguration = {
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true },
-                    <any> { id: 'cat2', enabled: false },
-                    <any> { id: 'cat3', enabled: true }
-                ]
-            }
+            categories: [
+                <any> { id: 'cat1', enabled: true },
+                <any> { id: 'cat2', enabled: false },
+                <any> { id: 'cat3', enabled: true }
+            ]
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
@@ -54,9 +52,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should fetch filter queries from config', () => {
         const config: SearchConfiguration = {
-            query: {
-                categories: []
-            },
+            categories: [],
             filterQueries: [
                 { query: 'query1' },
                 { query: 'query2' }
@@ -123,6 +119,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should fetch facet query from config', () => {
         const config: SearchConfiguration = {
+            categories: [],
             facetQueries: [
                 { query: 'q1', label: 'query1' },
                 { query: 'q2', label: 'query2' }
@@ -137,6 +134,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should not fetch empty facet query from the config', () => {
         const config: SearchConfiguration = {
+            categories: [],
             facetQueries: [
                 { query: 'q1', label: 'query1' }
             ]
@@ -179,11 +177,9 @@ describe('SearchQueryBuilder', () => {
 
     it('should require a query fragment to build query', () => {
         const config: SearchConfiguration = {
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true }
-                ]
-            }
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ]
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = null;
@@ -194,11 +190,9 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with single fragment', () => {
         const config: SearchConfiguration = {
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true }
-                ]
-            }
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ]
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
@@ -210,12 +204,10 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with multiple fragments', () => {
         const config: SearchConfiguration = {
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true },
-                    <any> { id: 'cat2', enabled: true }
-                ]
-            }
+            categories: [
+                <any> { id: 'cat1', enabled: true },
+                <any> { id: 'cat2', enabled: true }
+            ]
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
@@ -231,12 +223,10 @@ describe('SearchQueryBuilder', () => {
     it('should build query with custom fields', () => {
         const config: SearchConfiguration = {
             fields: ['field1', 'field2'],
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true },
-                    <any> { id: 'cat2', enabled: true }
-                ]
-            }
+            categories: [
+                <any> { id: 'cat1', enabled: true },
+                <any> { id: 'cat2', enabled: true }
+            ]
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
@@ -249,12 +239,10 @@ describe('SearchQueryBuilder', () => {
     it('should build query with empty custom fields', () => {
         const config: SearchConfiguration = {
             fields: [],
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true },
-                    <any> { id: 'cat2', enabled: true }
-                ]
-            }
+            categories: [
+                <any> { id: 'cat1', enabled: true },
+                <any> { id: 'cat2', enabled: true }
+            ]
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
@@ -266,11 +254,9 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with custom filter queries', () => {
         const config: SearchConfiguration = {
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true }
-                ]
-            }
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ]
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
@@ -284,11 +270,9 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with custom facet queries', () => {
         const config: SearchConfiguration = {
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true }
-                ]
-            },
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ],
             facetQueries: [
                 { query: 'q1', label: 'q2' }
             ]
@@ -302,32 +286,26 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with custom facet fields', () => {
         const config: SearchConfiguration = {
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true }
-                ]
-            },
-            facetFields: {
-                facets: [
-                    { field: 'field1', label: 'field1' },
-                    { field: 'field2', label: 'field2' }
-                ]
-            }
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ],
+            facetFields: [
+                { field: 'field1', label: 'field1' },
+                { field: 'field2', label: 'field2' }
+            ]
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
-        expect(compiled.facetFields).toEqual(config.facetFields);
+        expect(compiled.facetFields.facets).toEqual(config.facetFields);
     });
 
     it('should use pagination settings', () => {
         const config: SearchConfiguration = {
-            query: {
-                categories: [
-                    <any> { id: 'cat1', enabled: true }
-                ]
-            }
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ]
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
