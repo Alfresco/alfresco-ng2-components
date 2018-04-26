@@ -1,4 +1,10 @@
 @mixin adf-analytics-report-parameters-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
     .dropdown-widget {
         width: 100%;
     }
@@ -8,15 +14,15 @@
     }
 
     .dropdown-widget__invalid .dropdown-widget__select {
-        border-color: #d50000;
+        border-color: mat-color($warn);
     }
 
     .dropdown-widget__invalid .dropdown-widget__label {
-        color: #d50000;
+        color: mat-color($warn);
     }
 
     .dropdown-widget__invalid .dropdown-widget__label:after {
-        background-color: #d50000;
+        background-color: mat-color($warn);
     }
 
     .adf-edit-report-title {
@@ -37,10 +43,9 @@
         margin-bottom: 12px;
 
         :hover .adf-report-icon {
-            color: rgb(68, 138, 255);
+            color: mat-color($primary);
             visibility: visible;
         }
-
     }
 
     .adf-report-title {
@@ -58,7 +63,7 @@
     }
 
     .adf-report-report-container {
-        border-bottom: solid 1px rgb(212, 212, 212);
+        border-bottom: solid 1px mat-color($foreground, divider);
         padding-top: 10px;
 
         .mat-toolbar {
@@ -76,7 +81,8 @@
     }
 
     .export-message {
-        background-color: lightgray;
+        //background-color: lightgray;
+        background-color: mat-color($background, background);
     }
 
     .save-export-input {
