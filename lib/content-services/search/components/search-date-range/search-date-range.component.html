@@ -2,33 +2,26 @@
 
     <mat-form-field>
         <input matInput [formControl]="from" [errorStateMatcher]="matcher"
-               placeholder="{{ 'SEARCH.FILTER.RANGE.FROM' | translate }}"
+               placeholder="{{ 'SEARCH.FILTER.RANGE.FROM_DATE' | translate }}"
                [matDatepicker]="fromDatepicker"
-               [disabled]="true"
-               [value]="value">
+               [max]="maxFrom">
         <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
-        <mat-datepicker #fromDatepicker
-                        [disabled]="false"
-                        [opened]="false"></mat-datepicker>
+        <mat-datepicker #fromDatepicker></mat-datepicker>
         <mat-error *ngIf="from.hasError('required')">Required value</mat-error>
     </mat-form-field>
 
     <mat-form-field>
         <input matInput [formControl]="to" [errorStateMatcher]="matcher"
-               placeholder="{{ 'SEARCH.FILTER.RANGE.TO' | translate }}"
+               placeholder="{{ 'SEARCH.FILTER.RANGE.TO_DATE' | translate }}"
                [matDatepicker]="toDatepicker"
-               [disabled]="true"
-               [value]="value">
+               [min]="from.value">
         <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
-        <mat-datepicker #toDatepicker
-                        [disabled]="false"
-                        [opened]="false"></mat-datepicker>
+        <mat-datepicker #toDatepicker></mat-datepicker>
+        <mat-error *ngIf="!hasSelectedDays(from.value, to.value)">No days selected.</mat-error>
     </mat-form-field>
 
-
     <div>
-        <mat-error *ngIf="!isSelectionValid(form.value, form.valid)">Invalid selection</mat-error>
-        <button mat-button color="primary" (click)="reset()">
+        <button mat-button color="primary" type="button" (click)="reset()">
             {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
         </button>
         <button mat-button color="primary" type="submit" [disabled]="!form.valid">

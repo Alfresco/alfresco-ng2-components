@@ -27,6 +27,7 @@ import moment from 'moment-es6';
 @Component({
     selector: 'adf-search-date-range',
     templateUrl: './search-date-range.component.html',
+    styleUrls: ['./search-date-range.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
@@ -41,6 +42,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
+    maxFrom: any;
 
     ngOnInit(): void {
         const validators = Validators.compose([
@@ -54,13 +56,15 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
             from: this.from,
             to: this.to
         });
+
+        this.maxFrom = moment().startOf('day');
     }
 
     apply(model: { from: string, to: string }, isValid: boolean) {
-        if (isValid && this.isSelectionValid(model, isValid)) {
-            const from = moment(model.from).startOf('day').format();
-            const to = moment(model.to).endOf('day').format();
-            this.context.queryFragments[this.id] = `${this.settings.field}:['${from}' TO '${to}']`;
+        if (isValid) {
+            const start = moment(model.from).startOf('day').format();
+            const end = moment(model.to).endOf('day').format();
+            this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
             this.context.update();
         }
     }
@@ -75,12 +79,12 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         this.context.update();
     }
 
-    isSelectionValid(model: { from: string, to: string }, isValid: boolean) {
-        if (isValid) {
-            const from = moment(model.from).startOf('day');
-            const to = moment(model.to).endOf('day');
+    hasSelectedDays(from: string, to: string) {
+        if (from && to) {
+            const start = moment(from).startOf('day');
+            const end = moment(to).endOf('day');
 
-            return from.isBefore(to);
+            return start.isBefore(end);
         }
         return true;
     }
