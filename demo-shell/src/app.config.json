@@ -64,7 +64,8 @@
           { "field": "content.mimetype", "mincount": 1, "label": "Type" },
           { "field": "content.size", "mincount": 1, "label": "Size" },
           { "field": "creator", "mincount": 1, "label": "Creator" },
-          { "field": "modifier", "mincount": 1, "label": "Modifier" }
+          { "field": "modifier", "mincount": 1, "label": "Modifier" },
+          { "field": "created", "mincount": 1, "label": "Created" }
         ]
       },
       "facetQueries": [
@@ -116,6 +117,17 @@
               "selector": "number-range",
               "settings": {
                 "field": "cm:content.size"
+              }
+            }
+          },
+          {
+            "id": "createdDateRange",
+            "name": "Created Date (range)",
+            "enabled": true,
+            "component": {
+              "selector": "date-range",
+              "settings": {
+                "field": "cm:created"
               }
             }
           },

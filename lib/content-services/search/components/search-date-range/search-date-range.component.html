@@ -1,0 +1,39 @@
+<form [formGroup]="form" novalidate (ngSubmit)="apply(form.value, form.valid)">
+
+    <mat-form-field>
+        <input matInput [formControl]="from" [errorStateMatcher]="matcher"
+               placeholder="{{ 'SEARCH.FILTER.RANGE.FROM' | translate }}"
+               [matDatepicker]="fromDatepicker"
+               [disabled]="true"
+               [value]="value">
+        <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromDatepicker
+                        [disabled]="false"
+                        [opened]="false"></mat-datepicker>
+        <mat-error *ngIf="from.hasError('required')">Required value</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [formControl]="to" [errorStateMatcher]="matcher"
+               placeholder="{{ 'SEARCH.FILTER.RANGE.TO' | translate }}"
+               [matDatepicker]="toDatepicker"
+               [disabled]="true"
+               [value]="value">
+        <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #toDatepicker
+                        [disabled]="false"
+                        [opened]="false"></mat-datepicker>
+    </mat-form-field>
+
+
+    <div>
+        <mat-error *ngIf="!isSelectionValid(form.value, form.valid)">Invalid selection</mat-error>
+        <button mat-button color="primary" (click)="reset()">
+            {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
+        </button>
+        <button mat-button color="primary" type="submit" [disabled]="!form.valid">
+            {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
+        </button>
+    </div>
+</form>
+
