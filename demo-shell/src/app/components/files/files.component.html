@@ -346,7 +346,7 @@
                 (prevPage)="onPrevPage($event)">
             </adf-pagination>
             <adf-infinite-pagination
-                *ngIf="infiniteScrolling"
+                [hidden]="!infiniteScrolling"
                 [target]="documentList"
                 [loading]="documentList.infiniteLoading">
                 {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
@@ -448,7 +448,7 @@
         </section>
 
         <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="infiniteScrolling">
+            <mat-slide-toggle color="primary" (click)="onInfiniteScrolling()">
                 {{'DOCUMENT_LIST.ENABLE_INFINITE_SCROLL' | translate}}
             </mat-slide-toggle>
         </section>
