@@ -20,6 +20,7 @@ Simple container for headers, titles, actions and breadcrumbs.
     </button>
 </adf-toolbar>
 ```
+## Class members
 
 ### Properties
 

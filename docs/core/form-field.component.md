@@ -18,6 +18,8 @@ that takes an instance of a `FormFieldModel`:
 This component depends on the `FormRenderingService` to map the `FormFieldModel` to a Form Field UI component
 based on the field type or the metadata information.
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

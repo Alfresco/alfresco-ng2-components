@@ -12,6 +12,8 @@ Shows user information.
 <adf-userinfo></adf-userinfo>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

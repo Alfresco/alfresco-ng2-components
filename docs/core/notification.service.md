@@ -8,7 +8,9 @@ Shows a notification message with optional feedback.
 
 ![Notification Service screenshot](docassets/images/NotiService.png)
 
-## Methods
+## Class members
+
+### Methods
 
 -   `openSnackMessage(message: string, millisecondsDuration?: number): MatSnackBarRef<any>`  
     Opens a snackbar notification to show a message.  
