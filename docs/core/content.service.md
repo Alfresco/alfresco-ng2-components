@@ -8,7 +8,9 @@ Last reviewed: 2018-04-13
 
 Accesses app-generated data objects via URLs and file downloads.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `downloadBlob(blob: Blob, fileName: string)`  
     Invokes content download for a Blob with a file name.  

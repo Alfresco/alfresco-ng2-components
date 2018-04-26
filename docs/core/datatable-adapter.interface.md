@@ -146,10 +146,7 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
 
 ```
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
 - [Datatable component](datatable.component.md)
 - [Task list component](../process-services/task-list.component.md)
-<!-- seealso end -->

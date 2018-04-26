@@ -6,7 +6,9 @@ Status: Active
 
 Finds shared links to Content Services items.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `getSharedLinks(options: any = {}): Observable<NodePaging>`  
     Gets shared links available to the current user.  

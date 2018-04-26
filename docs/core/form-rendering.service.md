@@ -6,7 +6,9 @@ Status: Active
 
 Maps an APS form field type string onto the corresponding form widget component type.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `getComponentTypeResolver(type: string, defaultValue: Type<{}> = this.defaultValue): DynamicComponentResolveFunction`  
     Gets the currently active ComponentTypeResolver function for a field type.  

@@ -6,7 +6,9 @@ Status: Active
 
 Gets URLs and access info and creates folders in Content Services.
 
-## Methods
+## Class members
+
+### Methods
 
 `getDocumentThumbnailUrl(nodeId: any, attachment?: boolean, ticket?: string): string`<br/>
 Gets a thumbnail URL for a node.
@@ -47,11 +49,3 @@ enum contains the values `DELETE`, `UPDATE`, `CREATE`, `UPDATEPERMISSIONS`, `NOT
 See the
 [Alfresco JS API](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-core-rest-api)
 for more information about the low-level REST API that these methods are based on.
-
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
-
-<!-- seealso end -->
-
-
-

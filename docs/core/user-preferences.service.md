@@ -8,7 +8,9 @@ Last reviewed: 2018-04-16
 
 Stores preferences for components.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `get(property: string, defaultValue?: string): string`  
     Gets a preference property.  

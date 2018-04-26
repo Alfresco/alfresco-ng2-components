@@ -6,7 +6,9 @@ Status: Deprecated
 
 Manages prearranged conversions of content to different formats.
 
-## Methods
+## Class members
+
+### Methods
 
 `isRenditionAvailable(nodeId: string, encoding: string): Observable<boolean>`<br/>
 Has the specified rendition been set up for this item?

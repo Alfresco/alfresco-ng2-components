@@ -6,7 +6,9 @@ Status: Active
 
 Provides fine control of parameters to a search.
 
-## Methods
+## Class members
+
+### Methods
 
 `generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): QueryBody`<br/>
 Generates a QueryBody object with custom search parameters.
