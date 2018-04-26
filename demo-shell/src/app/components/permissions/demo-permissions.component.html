@@ -4,8 +4,9 @@
             adf-inherit-permission [nodeId]="nodeId"
             (updated)="onUpdatedPermissions($event)">
             {{ (toggleStatus?'DEMO_PERMISSION.INHERITED_PERMISSIONS_BUTTON':'DEMO_PERMISSION.INHERIT_PERMISSION_BUTTON') | translate}}</button>
+    <button mat-button color="primary" (click)="openAddPermissionDialog($event)">Add User or Group</button>
 </div>
-<button mat-button (click)="openAddPermissionDialog($event)">Click me!</button>
+
 <div>
 	<adf-permission-list #permissionList [nodeId]="nodeId" (update)="reloadList()">
 	</adf-permission-list>
