@@ -29,8 +29,8 @@ import { fakeNodeWithPermissions,
          fakeNodeWithoutPermissions,
          fakeEmptyResponse } from '../../../mock/permission-list.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-
-describe('PermissionDisplayComponent', () => {
+/*tslint:disable:ban*/
+fdescribe('PermissionDisplayComponent', () => {
 
     let fixture: ComponentFixture<PermissionListComponent>;
     let component: PermissionListComponent;

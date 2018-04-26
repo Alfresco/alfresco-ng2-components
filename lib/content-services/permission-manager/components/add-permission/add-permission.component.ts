@@ -48,7 +48,7 @@ export class AddPermissionComponent {
     }
 
     applySelection() {
-        this.nodePermissionService.updateNodePermission(this.nodeId, this.selectedItems)
+        this.nodePermissionService.updateNodePermissions(this.nodeId, this.selectedItems)
             .subscribe(
                 (node) => {
                     this.success.emit(node);
