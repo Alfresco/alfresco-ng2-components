@@ -104,6 +104,11 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         }
     }
 
+    reset() {
+        this.pagination.skipCount = 0;
+        this.target.updatePagination(this.pagination);
+    }
+
     ngOnDestroy() {
         if (this.paginationSubscription) {
             this.paginationSubscription.unsubscribe();
