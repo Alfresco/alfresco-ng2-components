@@ -58,30 +58,30 @@ export class AboutComponent implements OnInit {
                 this.ecmVersion = ecmVers;
 
                 this.modules = new ObjectDataTableAdapter(this.ecmVersion.modules, [
-                    {type: 'text', key: 'id', title: 'ID', sortable: true},
-                    {type: 'text', key: 'title', title: 'Title', sortable: true},
-                    {type: 'text', key: 'version', title: 'Description', sortable: true},
-                    {type: 'text', key: 'installDate', title: 'Install Date', sortable: true},
-                    {type: 'text', key: 'installState', title: 'Install State', sortable: true},
-                    {type: 'text', key: 'versionMin', title: 'Version Minor', sortable: true},
-                    {type: 'text', key: 'versionMax', title: 'Version Max', sortable: true}
+                    { type: 'text', key: 'id', title: 'ID', sortable: true },
+                    { type: 'text', key: 'title', title: 'Title', sortable: true },
+                    { type: 'text', key: 'version', title: 'Description', sortable: true },
+                    { type: 'text', key: 'installDate', title: 'Install Date', sortable: true },
+                    { type: 'text', key: 'installState', title: 'Install State', sortable: true },
+                    { type: 'text', key: 'versionMin', title: 'Version Minor', sortable: true },
+                    { type: 'text', key: 'versionMax', title: 'Version Max', sortable: true }
                 ]);
 
                 this.status = new ObjectDataTableAdapter([this.ecmVersion.status], [
-                    {type: 'text', key: 'isReadOnly', title: 'ReadOnly', sortable: true},
-                    {type: 'text', key: 'isAuditEnabled', title: 'Is Audit Enable', sortable: true},
-                    {type: 'text', key: 'isQuickShareEnabled', title: 'Is quick shared enable', sortable: true},
-                    {type: 'text', key: 'isThumbnailGenerationEnabled', title: 'Thumbnail Generation', sortable: true}
+                    { type: 'text', key: 'isReadOnly', title: 'ReadOnly', sortable: true },
+                    { type: 'text', key: 'isAuditEnabled', title: 'Is Audit Enable', sortable: true },
+                    { type: 'text', key: 'isQuickShareEnabled', title: 'Is quick shared enable', sortable: true },
+                    { type: 'text', key: 'isThumbnailGenerationEnabled', title: 'Thumbnail Generation', sortable: true }
                 ]);
 
                 this.license = new ObjectDataTableAdapter([this.ecmVersion.license], [
-                    {type: 'text', key: 'issuedAt', title: 'Issued At', sortable: true},
-                    {type: 'text', key: 'expiresAt', title: 'Expires At', sortable: true},
-                    {type: 'text', key: 'remainingDays', title: 'Remaining Days', sortable: true},
-                    {type: 'text', key: 'holder', title: 'Holder', sortable: true},
-                    {type: 'text', key: 'mode', title: 'Mode', sortable: true},
-                    {type: 'text', key: 'isClusterEnabled', title: 'Is Cluster Enabled', sortable: true},
-                    {type: 'text', key: 'isCryptodocEnabled', title: 'Is Cryptodoc Enable', sortable: true}
+                    { type: 'text', key: 'issuedAt', title: 'Issued At', sortable: true },
+                    { type: 'text', key: 'expiresAt', title: 'Expires At', sortable: true },
+                    { type: 'text', key: 'remainingDays', title: 'Remaining Days', sortable: true },
+                    { type: 'text', key: 'holder', title: 'Holder', sortable: true },
+                    { type: 'text', key: 'mode', title: 'Mode', sortable: true },
+                    { type: 'text', key: 'isClusterEnabled', title: 'Is Cluster Enabled', sortable: true },
+                    { type: 'text', key: 'isCryptodocEnabled', title: 'Is Cryptodoc Enable', sortable: true }
                 ]);
             });
         }
@@ -92,7 +92,7 @@ export class AboutComponent implements OnInit {
             });
         }
 
-        this.http.get('/versions.json').subscribe(response => {
+        this.http.get('/versions.json?' + new Date()).subscribe(response => {
             const regexp = new RegExp('^(@alfresco)');
 
             const alfrescoPackages = Object.keys(response.json().dependencies).filter((val) => {
@@ -110,8 +110,8 @@ export class AboutComponent implements OnInit {
             this.gitHubLinkCreation(alfrescoPackagesTableRepresentation);
 
             this.data = new ObjectDataTableAdapter(alfrescoPackagesTableRepresentation, [
-                {type: 'text', key: 'name', title: 'Name', sortable: true},
-                {type: 'text', key: 'version', title: 'Version', sortable: true}
+                { type: 'text', key: 'name', title: 'Name', sortable: true },
+                { type: 'text', key: 'version', title: 'Version', sortable: true }
             ]);
 
         });

@@ -8,6 +8,10 @@
         "enhance": [
             "tsInfo",
             "toc"
+        ],
+        "dev": [
+            "tsInfo",
+            "typeLinker"
         ]
     }
 }

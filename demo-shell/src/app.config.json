@@ -53,10 +53,8 @@
         }
     ],
     "search": {
-      "limits": {
-        "permissionEvaluationTime": null,
-        "permissionEvaluationCount": null
-      },
+      "include": ["path", "allowableOperations"],
+      "fields": [],
       "filterQueries": [
         { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
         { "query": "NOT cm:creator:System" }
@@ -82,85 +80,62 @@
       "query": {
         "categories": [
           {
-          "id": "broken",
-          "name": "Broken Facet",
-          "enabled": false,
-          "expanded": false,
-          "component": {
-            "selector": "adf-search-text",
-            "settings": {
-              "field": "fieldname"
+            "id": "queryName",
+            "name": "Name",
+            "enabled": true,
+            "expanded": true,
+            "component": {
+              "selector": "text",
+              "settings": {
+                "pattern": "cm:name:'(.*?)'",
+                "field": "cm:name",
+                "placeholder": "Enter the name"
+              }
+            }
+          },
+          {
+            "id": "contentSize",
+            "name": "Content Size",
+            "enabled": true,
+            "component": {
+              "selector": "slider",
+              "settings": {
+                "field": "cm:content.size",
+                "min": 0,
+                "max": 18,
+                "step": 1,
+                "thumbLabel": true
+              }
+            }
+          },
+          {
+            "id": "contentSizeRange",
+            "name": "Content Size (range)",
+            "enabled": true,
+            "component": {
+              "selector": "number-range",
+              "settings": {
+                "field": "cm:content.size"
+              }
+            }
+          },
+          {
+            "id": "queryType",
+            "name": "Type",
+            "enabled": true,
+            "component": {
+              "selector": "radio",
+              "settings": {
+                "field": null,
+                "options": [
+                  { "name": "None", "value": "", "default": true },
+                  { "name": "All", "value": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+                  { "name": "Folder", "value": "TYPE:'cm:folder'" },
+                  { "name": "Document", "value": "TYPE:'cm:content'" }
+                ]
+              }
             }
           }
-        },
-        {
-          "id": "queryName",
-          "name": "Name",
-          "enabled": true,
-          "expanded": true,
-          "component": {
-            "selector": "adf-search-text",
-            "settings": {
-              "pattern": "cm:name:'(.*?)'",
-              "field": "cm:name",
-              "placeholder": "Enter the name"
-            }
-          }
-        },
-        {
-          "id": "queryFields",
-          "name": "Fields",
-          "enabled": true,
-          "expanded": false,
-          "component": {
-            "selector": "adf-search-fields",
-            "settings": {
-              "field": null,
-              "options": [
-                { "name": "Name", "value": "name", "fields": ["name"], "default": true },
-                { "name": "File Size", "value": "content.sizeInBytes", "fields": ["content"], "default": true },
-                { "name": "Modified On", "value": "modifiedAt", "fields": ["modifiedAt"], "default": true },
-                { "name": "Modified By", "value": "modifiedByUser.displayName", "fields": ["modifiedByUser"], "default": true }
-              ]
-            }
-          }
-        },
-        {
-          "id": "queryType",
-          "name": "Type",
-          "enabled": true,
-          "expanded": false,
-          "component": {
-            "selector": "adf-search-radio",
-            "settings": {
-              "field": null,
-              "options": [
-                { "name": "None", "value": "", "default": true },
-                { "name": "All", "value": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
-                { "name": "Folder", "value": "TYPE:'cm:folder'" },
-                { "name": "Document", "value": "TYPE:'cm:content'" }
-              ]
-            }
-          }
-        },
-        {
-          "id": "queryLocations",
-          "name": "Locations",
-          "enabled": true,
-          "expanded": false,
-          "component": {
-            "selector": "adf-search-scope-locations",
-            "settings": {
-              "field": null,
-              "options": [
-                { "name": "Default", "value": "nodes", "default": true },
-                { "name": "Nodes", "value": "nodes" },
-                { "name": "Deleted Nodes", "value": "deleted-nodes" },
-                { "name": "Versions", "value": "versions" }
-              ]
-            }
-          }
-        }
         ]
       }
     },

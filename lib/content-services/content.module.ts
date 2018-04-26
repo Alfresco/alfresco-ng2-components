@@ -44,6 +44,7 @@ import { ContentMetadataConfigFactory } from './content-metadata/services/config
 import { BasicPropertiesService } from './content-metadata/services/basic-properties.service';
 import { PropertyGroupTranslatorService } from './content-metadata/services/property-groups-translator.service';
 import { SearchQueryBuilderService } from './search/search-query-builder.service';
+import { SearchFilterService } from './search/components/search-filter/search-filter.service';
 
 @NgModule({
     imports: [
@@ -83,7 +84,8 @@ import { SearchQueryBuilderService } from './search/search-query-builder.service
         ContentMetadataConfigFactory,
         BasicPropertiesService,
         PropertyGroupTranslatorService,
-        SearchQueryBuilderService
+        SearchQueryBuilderService,
+        SearchFilterService
     ],
     exports: [
         CoreModule,

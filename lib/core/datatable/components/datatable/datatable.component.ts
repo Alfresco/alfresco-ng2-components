@@ -17,7 +17,7 @@
 
 import {
     AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
-    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation
+    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
@@ -50,7 +50,7 @@ export enum DisplayMode {
     templateUrl: './datatable.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck {
+export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck, OnDestroy {
 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
@@ -159,6 +159,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private differ: any;
     private rowMenuCache: object = {};
 
+    private subscriptions: Subscription[] = [];
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
 
@@ -172,6 +173,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     }
 
     ngAfterContentInit() {
+        if (this.columnList) {
+            this.subscriptions.push(
+                this.columnList.columns.changes.subscribe(() => {
+                    this.setTableSchema();
+                })
+            );
+        }
         this.setTableSchema();
     }
 
@@ -258,9 +266,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private unsubscribeClickStream() {
         if (this.singleClickStreamSub) {
             this.singleClickStreamSub.unsubscribe();
+            this.singleClickStreamSub = null;
         }
         if (this.multiClickStreamSub) {
             this.multiClickStreamSub.unsubscribe();
+            this.multiClickStreamSub = null;
         }
     }
 
@@ -589,5 +599,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             bubbles: true
         });
         this.elementRef.nativeElement.dispatchEvent(domEvent);
+    }
+
+    ngOnDestroy() {
+        this.unsubscribeClickStream();
+        this.subscriptions.forEach(s => s.unsubscribe());
+        this.subscriptions = [];
     }
 }
