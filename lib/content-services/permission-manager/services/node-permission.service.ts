@@ -44,7 +44,7 @@ export class NodePermissionService {
             });
     }
 
-    updatePermissionRoles(node: MinimalNodeEntryEntity, updatedPermissionRole: PermissionElement): Observable<MinimalNodeEntryEntity> {
+    updatePermissionRole(node: MinimalNodeEntryEntity, updatedPermissionRole: PermissionElement): Observable<MinimalNodeEntryEntity> {
         let permissionBody = { permissions: { locallySet: []} };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
         permissionBody.permissions.locallySet = permissionBody.permissions.locallySet.concat(node.permissions.locallySet);
@@ -56,7 +56,7 @@ export class NodePermissionService {
         return this.nodeService.updateNode(node.id, permissionBody);
     }
 
-    updateNodePermission(nodeId: string, permissionList: MinimalNodeEntity[]): Observable<MinimalNodeEntryEntity> {
+    updateNodePermissions(nodeId: string, permissionList: MinimalNodeEntity[]): Observable<MinimalNodeEntryEntity> {
        return this.nodeService.getNode(nodeId).pipe(
            switchMap(node => {
                 return this.getNodeRoles(node).pipe(
@@ -87,7 +87,7 @@ export class NodePermissionService {
         });
     }
 
-    removePermission(node: MinimalNodeEntryEntity, permissionToRemove: PermissionElement): Observable<MinimalNodeEntryEntity>{
+    removePermission(node: MinimalNodeEntryEntity, permissionToRemove: PermissionElement): Observable<MinimalNodeEntryEntity> {
         let permissionBody = { permissions: { locallySet: [] } };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(permissionToRemove.authorityId);
         if (index !== -1) {
