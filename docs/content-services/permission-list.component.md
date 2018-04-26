@@ -28,18 +28,19 @@ or custom template can be added:
 </adf-permission-list>
 ```
 
+## Class members
 
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| nodeId | `string` | `null` | ID of the node whose permissions you want to show.  |
+| -- | -- | -- | -- |
+| nodeId | `string` | "" |  |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| update | `PermissionElement` | Emitted when the permission is updated. |
+| -- | -- | -- |
+| update | `EventEmitter<PermissionElement>` |  |
 
 ## Details
 

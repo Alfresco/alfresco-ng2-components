@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # File Uploading Dialog Component
 
 Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components.
@@ -12,17 +13,19 @@ Shows a dialog listing all the files uploaded with the Upload Button or Drag Are
 <adf-file-uploading-dialog></adf-file-uploading-dialog>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| position | `string` | `'right'` | Dialog position. Can be 'left' or 'right'.  |
+| -- | -- | -- | -- |
+| position | `string` | "right" | Dialog position. Can be 'left' or 'right'. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | `EventEmitter<any>` | Emitted when a file upload goes in error  |
+| -- | -- | -- |
+| error | `EventEmitter<any>` | Emitted when a file in the list has an error. |
 
 ## Details
 

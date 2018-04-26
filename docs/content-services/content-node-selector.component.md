@@ -10,19 +10,34 @@ Allows a user to select items from a Content Services repository.
 
 ![Content Node Selector screenshot](../docassets/images/ContentNodeSelector.png)
 
+## Contents
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+
+-   [Details](#details)
+
+    -   [Showing the dialog](#showing-the-dialog)
+    -   [Usage example](#usage-example)
+    -   [RowFilter and ImageResolver](#rowfilter-and-imageresolver)
+    -   [Using the breadcrumbTransform function](#using-the-breadcrumbtransform-function)
+
+-   [See also](#see-also)
+
 ## Class members
 
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| currentFolderId | `string` | null | Deprecated: in 2.1.0 |
-| dropdownHideMyFiles | `boolean` | false | Deprecated: in 2.1.0 |
-| dropdownSiteList | `SitePaging` | null | Deprecated: in 2.1.0 |
-| imageResolver | `ImageResolver` | null | Deprecated: in 2.1.0 |
-| pageSize | `number` |  | Deprecated: in 2.1.0 |
-| rowFilter | `RowFilter` | null | Deprecated: in 2.1.0 |
-| title | `string` | null | Deprecated: in 2.1.0 |
+| -- | -- | -- | -- |
+| currentFolderId | `string` |  null | **Deprecated:** in 2.1.0 |
+| dropdownHideMyFiles | `boolean` | false | **Deprecated:** in 2.1.0 |
+| dropdownSiteList | `SitePaging` |  null | **Deprecated:** in 2.1.0 |
+| imageResolver | `ImageResolver` |  null | **Deprecated:** in 2.1.0 |
+| pageSize | `number` |  | **Deprecated:** in 2.1.0 |
+| rowFilter | `RowFilter` |  null | **Deprecated:** in 2.1.0 |
+| title | `string` |  null | **Deprecated:** in 2.1.0 |
 
 ## Details
 
@@ -61,17 +76,17 @@ The properties are described in the table below:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| title | `string`| "" | Dialog title |
+| title | `string` | "" | Dialog title |
 | actionName | `string` | "" | Text to appear on the dialog's main action button ("Move", "Copy", etc) |
-| currentFolderId | `string` | `null` | Node ID of the folder currently listed.  |
+| currentFolderId | `string` | `null` | Node ID of the folder currently listed. |
 | dropdownHideMyFiles | `boolean` | `false` | Hide the "My Files" option added to the site list by default. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | dropdownSiteList | `SitePaging` | `null` | Custom site for site dropdown same as siteList. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | rowFilter | `RowFilter` | `null` | Custom row filter function. See the [Document List component](document-list.component.md#custom-row-filter) for more information. |
-| imageResolver | `ImageResolver` | `null` | Custom image resolver function. See the [Document List component](document-list.component.md#custom-row-filter) for more information.  |
-| pageSize | `number` |  | Number of items shown per page in the list.  |
+| imageResolver | `ImageResolver` | `null` | Custom image resolver function. See the [Document List component](document-list.component.md#custom-row-filter) for more information. |
+| pageSize | `number` |  | Number of items shown per page in the list. |
 | isSelectionValid | `ValidationFunction` | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | breadcrumbTransform | `(node: any) => any` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
-| select | `EventEmitter<MinimalNodeEntryEntity[]>` | | Event emitted with the current node selection when the dialog closes |
+| select | `EventEmitter<MinimalNodeEntryEntity[]>` |  | Event emitted with the current node selection when the dialog closes |
 
 If you don't want to manage the dialog yourself then it is easier to use the
 [Content Node Selector Panel component](content-node-selector-panel.component.md), or the

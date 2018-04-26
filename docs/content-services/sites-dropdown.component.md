@@ -18,6 +18,8 @@ Displays a dropdown menu to show and interact with the sites of the current user
  </adf-sites-dropdown>
 ```
 
+## Class members
+
 ### Properties
 
 | Attribute | Type | Default | Description |

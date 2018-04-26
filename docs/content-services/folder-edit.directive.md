@@ -32,14 +32,14 @@ Allows folders to be edited.
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | adf-edit-folder | `MinimalNodeEntryEntity` |  | Folder node to edit. |
-| title | `string` |  null | The title of the opened dialog. |
+| title | `string` |  null |  |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs (for example a folder with same name already exists) |
-| success | `EventEmitter<MinimalNodeEntryEntity>` | Emitted when the edition successfully happened |
+| error | `EventEmitter<any>` | Emitted when the edit/create folder give error for example a folder with same name already exist |
+| success | `EventEmitter<MinimalNodeEntryEntity>` |  |
 
 ## Details
 

@@ -29,29 +29,31 @@ properties and events are the same except for the `node` property that specifies
 to be versioned (this is a _required_ input parameter). However, some properties don't make
 sense when applied to the Upload Version Button component, so they are simply ignored.
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| node | `MinimalNodeEntryEntity` |  | (**Required**) The node to be versioned.  |
-| disabled | `boolean` | `false` | Toggles component disabled state (if there is no node permission checking).  |
-| uploadFolders | `boolean` | `false` | Allows/disallows upload folders (only for Chrome).  |
-| multipleFiles | `boolean` | `false` | Allows/disallows multiple files  |
-| versioning | `boolean` | `false` | Toggles versioning.  |
+| -- | -- | -- | -- |
+| acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
+| disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
 | maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
-| staticTitle | `string` |  | Defines the text of the upload button.  |
-| tooltip | `string` | `null` | Custom tooltip text.  |
-| rootFolderId | `string` | `'-root-'` | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
-| acceptedFilesType | `string` | `'*'` | Filter for accepted file types.  |
+| multipleFiles | `boolean` | false | Allows/disallows multiple files |
+| node | `MinimalNodeEntryEntity` |  | (**Required**) The node to be versioned. |
+| rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
+| staticTitle | `string` |  | Defines the text of the upload button. |
+| tooltip | `string` |  null | Custom tooltip text. |
+| uploadFolders | `boolean` | false | Allows/disallows upload folders (only for Chrome). |
+| versioning | `boolean` | false | Toggles versioning. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| success | `EventEmitter<{}>` | Emitted when the file is uploaded successfully.  |
-| error | `EventEmitter<{}>` | Emitted when an error occurs.  |
-| createFolder | `EventEmitter<{}>` | Emitted when a folder is created.  |
-| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when delete permission is missing.  |
+| -- | -- | -- |
+| createFolder | `EventEmitter<Object>` | Emitted when a folder is created. |
+| error | `EventEmitter<Object>` | Emitted when an error occurs. |
+| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when delete permission is missing. |
+| success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details
 
@@ -71,4 +73,4 @@ So, to sum up, this component:
 
 ## See also
 
-- [Upload Button component](upload-button.component.md)
+-   [Upload Button component](upload-button.component.md)
