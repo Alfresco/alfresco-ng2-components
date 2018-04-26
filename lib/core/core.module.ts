@@ -40,6 +40,7 @@ import { FormModule } from './form/form.module';
 import { SidenavLayoutModule } from './sidenav-layout/sidenav-layout.module';
 import { SideBarActionModule } from './sidebar/sidebar-action.module';
 import { CommentsModule } from './comments/comments.module';
+import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
 
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
@@ -151,6 +152,7 @@ export function providers() {
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
+        ButtonsMenuModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -185,7 +187,8 @@ export function providers() {
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
-        TranslateModule
+        TranslateModule,
+        ButtonsMenuModule
     ]
 })
 export class CoreModuleLazy {
@@ -218,6 +221,7 @@ export class CoreModuleLazy {
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
+        ButtonsMenuModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -252,7 +256,8 @@ export class CoreModuleLazy {
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
-        TranslateModule
+        TranslateModule,
+        ButtonsMenuModule
     ],
     providers: [
         ...providers(),

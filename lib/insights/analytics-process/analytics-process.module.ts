@@ -24,7 +24,7 @@ import { MaterialModule } from '../material.module';
 
 import { ChartsModule } from 'ng2-charts';
 
-import { ToolbarModule } from '@alfresco/adf-core';
+import { ToolbarModule, ButtonsMenuModule } from '@alfresco/adf-core';
 import { AnalyticsGeneratorComponent } from './components/analytics-generator.component';
 import { AnalyticsReportHeatMapComponent } from './components/analytics-report-heat-map.component';
 import { AnalyticsReportListComponent } from './components/analytics-report-list.component';
@@ -37,7 +37,10 @@ import { DropdownWidgetAanalyticsComponent } from './components/widgets/dropdown
 import { DurationWidgetComponent } from './components/widgets/duration/duration.widget';
 import { NumberWidgetAanlyticsComponent } from './components/widgets/number/number.widget';
 
+
 import { AnalyticsService } from './services/analytics.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 @NgModule({
     imports: [
@@ -48,7 +51,9 @@ import { AnalyticsService } from './services/analytics.service';
         DiagramsModule,
         MaterialModule,
         TranslateModule,
-        ToolbarModule
+        ToolbarModule,
+        FlexLayoutModule,
+        ButtonsMenuModule
     ],
     declarations: [
         AnalyticsComponent,
