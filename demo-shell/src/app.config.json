@@ -90,6 +90,21 @@
           }
         },
         {
+          "id": "checkList",
+          "name": "Check List",
+          "enabled": true,
+          "component": {
+            "selector": "check-list",
+            "settings": {
+              "operator": "OR",
+              "options": [
+                { "name": "Folder", "value": "TYPE:'cm:folder'" },
+                { "name": "Document", "value": "TYPE:'cm:content'" }
+              ]
+            }
+          }
+        },
+        {
           "id": "contentSize",
           "name": "Content Size",
           "enabled": true,

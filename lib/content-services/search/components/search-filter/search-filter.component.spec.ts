@@ -118,6 +118,7 @@ describe('SearchSettingsComponent', () => {
 
     it('should unselect facet query and update builder', () => {
         const config: SearchConfiguration = {
+            categories: [],
             facetQueries: [
                 { label: 'q1', query: 'query1' }
             ]
