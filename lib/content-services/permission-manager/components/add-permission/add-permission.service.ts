@@ -37,7 +37,7 @@ export class AddNodePermissionDialogService {
 
         confirm.subscribe({
             next: (selection) => {
-                this.nodePermissionService.updateNodePermission(nodeId, selection).subscribe({
+                this.nodePermissionService.updateNodePermissions(nodeId, selection).subscribe({
                     next: result$.next.bind(result$),
                     error: result$.error.bind(result$)
                 });
