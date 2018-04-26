@@ -22,6 +22,7 @@ import { Observer } from 'rxjs/Observer';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'adf-filters, taskListService-filters',
@@ -67,7 +68,10 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     filters: FilterRepresentationModel [] = [];
 
-    constructor(private taskFilterService: TaskFilterService, private taskListService: TaskListService, private appsProcessService: AppsProcessService) {
+    constructor(private taskFilterService: TaskFilterService,
+                private taskListService: TaskListService,
+                private appsProcessService: AppsProcessService,
+                private router: Router) {
         this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
     }
 
@@ -98,11 +102,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * @param appName
      */
     getFilters(appId?: number, appName?: string) {
-        if (appName) {
-            this.getFiltersByAppName(appName);
-        } else {
-            this.getFiltersByAppId(appId);
-        }
+        appName ? this.getFiltersByAppName(appName) : this.getFiltersByAppId(appId);
     }
 
     /**
@@ -113,20 +113,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
         this.taskFilterService.getTaskListFilters(appId).subscribe(
             (res: FilterRepresentationModel[]) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
-                    this.taskFilterService.createDefaultFilters(appId).subscribe(
-                        (resDefault: FilterRepresentationModel[]) => {
-                            this.resetFilter();
-                            resDefault.forEach((filter) => {
-                                this.filterObserver.next(filter);
-                            });
-
-                            this.selectTaskFilter(this.filterParam, this.filters);
-                            this.success.emit(resDefault);
-                        },
-                        (errDefault: any) => {
-                            this.error.emit(errDefault);
-                        }
-                    );
+                    this.getDefaultFilters(appId);
                 } else {
                     this.resetFilter();
                     res.forEach((filter) => {
@@ -151,11 +138,31 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
         this.appsProcessService.getDeployedApplicationsByName(appName).subscribe(
             application => {
                 this.getFiltersByAppId(application.id);
-                this.selectTaskFilter(this.filterParam, this.filters);
             },
             (err) => {
                 this.error.emit(err);
             });
+    }
+
+    /**
+     * Create default filters by appId
+     * @param appId
+     */
+    getDefaultFilters(appId?: number) {
+        this.taskFilterService.createDefaultFilters(appId).subscribe(
+            (resDefault: FilterRepresentationModel[]) => {
+                this.resetFilter();
+                resDefault.forEach((filter) => {
+                    this.filterObserver.next(filter);
+                });
+
+                this.selectTaskFilter(this.filterParam, this.filters);
+                this.success.emit(resDefault);
+            },
+            (errDefault: any) => {
+                this.error.emit(errDefault);
+            }
+        );
     }
 
     /**
@@ -165,8 +172,13 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     public selectFilter(filter: FilterRepresentationModel) {
         this.currentFilter = filter;
         this.filterClick.emit(filter);
+        this.router.navigate(['/activiti/apps', this.appId || 0, 'tasks', filter.id]);
     }
 
+    /**
+     * Pass the selected filter as next
+     * @param taskId
+     */
     public selectFilterWithTask(taskId: string) {
         let filteredFilterList: FilterRepresentationModel[] = [];
         this.taskListService.getFilterForTaskById(taskId, this.filters).subscribe(
@@ -186,27 +198,26 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Select the first filter of a list if present
+     * @param filterParam
+     * @param filteredFilterList
      */
     public selectTaskFilter(filterParam: FilterParamsModel, filteredFilterList: FilterRepresentationModel[]) {
         let findTaskFilter;
         if (filterParam) {
             filteredFilterList.filter((taskFilter: FilterRepresentationModel, index) => {
                 if (filterParam.name && filterParam.name.toLowerCase() === taskFilter.name.toLowerCase() ||
-                    filterParam.id === taskFilter.id.toString()
-                    || filterParam.index === index) {
+                    filterParam.id === taskFilter.id.toString() ||
+                    filterParam.index === index) {
                     findTaskFilter = taskFilter;
                 }
             });
         }
-        if (findTaskFilter) {
-            this.currentFilter = findTaskFilter;
-        } else {
-             this.selectDefaultTaskFilter(filteredFilterList);
-        }
+        findTaskFilter ? this.currentFilter = findTaskFilter : this.selectDefaultTaskFilter(filteredFilterList);
     }
 
     /**
      * Select as default task filter the first in the list
+     * @param filteredFilterList
      */
     public selectDefaultTaskFilter(filteredFilterList: FilterRepresentationModel[]) {
         if (!this.isFilterListEmpty()) {

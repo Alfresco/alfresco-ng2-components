@@ -24,6 +24,7 @@ import { TaskListService } from '../services/tasklist.service';
 import { TaskFilterService } from '../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TaskFiltersComponent', () => {
 
@@ -65,7 +66,8 @@ describe('TaskFiltersComponent', () => {
 
     setupTestBed({
         imports: [
-            ProcessTestingModule
+            ProcessTestingModule,
+            RouterTestingModule
         ]
     });
 
@@ -152,6 +154,16 @@ describe('TaskFiltersComponent', () => {
             done();
         });
 
+    });
+
+    it('should load', () => {
+        spyOn(component, 'getDefaultFilters').and.stub();
+        const appId = '1';
+
+        let change = new SimpleChange(null, appId, true);
+        component.ngOnChanges({ 'appId': change });
+
+        expect(component.getDefaultFilters).not.toHaveBeenCalled();
     });
 
     it('should select the task filter based on the input by name param', (done) => {

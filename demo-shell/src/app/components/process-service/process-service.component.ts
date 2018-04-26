@@ -109,6 +109,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Input()
     appId: number = null;
 
+    @Input()
+    filterObj: object = null;
+
     @Output()
     changePageSize: EventEmitter<Pagination> = new EventEmitter();
 
@@ -213,6 +216,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         }
         this.sub = this.route.params.subscribe(params => {
             const applicationId = params['appId'];
+
+            this.filterObj = params['filterId'] ? { id: params['filterId'] } : { name: 'MY tasks' };
+
             if (applicationId && applicationId !== '0') {
                 this.appId = params['appId'];
             }
