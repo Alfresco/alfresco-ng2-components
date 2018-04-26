@@ -8,8 +8,6 @@ Last reviewed: 2018-04-10
 
 Provides drag-and-drop features for an element such as a `div`.
 
-## Class members
-
 ## Basic Usage
 
 ```html

@@ -27,25 +27,25 @@ Activates a file upload.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| disabled | `boolean` | `false` | Toggles component disabled state (if there is no node permission checking).  |
-| uploadFolders | `boolean` | `false` | Allows/disallows upload folders (only for Chrome).  |
-| multipleFiles | `boolean` | `false` | Allows/disallows multiple files  |
-| versioning | `boolean` | `false` | Toggles versioning.  |
+| -- | -- | -- | -- |
+| acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
+| disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
 | maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
-| staticTitle | `string` |  | Defines the text of the upload button.  |
-| tooltip | `string` | `null` | Custom tooltip text.  |
-| rootFolderId | `string` | `'-root-'` | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
-| acceptedFilesType | `string` | `'*'` | Filter for accepted file types.  |
+| multipleFiles | `boolean` | false | Allows/disallows multiple files |
+| rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
+| staticTitle | `string` |  | Defines the text of the upload button. |
+| tooltip | `string` |  null | Custom tooltip text. |
+| uploadFolders | `boolean` | false | Allows/disallows upload folders (only for Chrome). |
+| versioning | `boolean` | false | Toggles versioning. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| success | `EventEmitter<{}>` | Emitted when the file is uploaded successfully.  |
-| error | `EventEmitter<{}>` | Emitted when an error occurs.  |
-| createFolder | `EventEmitter<{}>` | Emitted when a folder is created.  |
-| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when delete permission is missing.  |
+| -- | -- | -- |
+| createFolder | `EventEmitter<Object>` | Emitted when a folder is created. |
+| error | `EventEmitter<Object>` | Emitted when an error occurs. |
+| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when delete permission is missing. |
+| success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details
 
@@ -79,4 +79,4 @@ export class MyComponent {
 
 ## See also
 
-- [Upload Version Button component](upload-version-button.component.md)
+-   [Upload Version Button component](upload-version-button.component.md)

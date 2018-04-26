@@ -14,12 +14,15 @@ Displays the documents from a repository.
 
 -   [Basic Usage](#basic-usage)
 
+-   [Class members](#class-members)
+
     -   [Properties](#properties)
     -   [Events](#events)
 
 -   [Details](#details)
 
     -   [DOM Events](#dom-events)
+    -   [Conditional visibility](#conditional-visibility)
     -   [Card view](#card-view)
     -   [Pagination strategy](#pagination-strategy)
     -   [Data Sources](#data-sources)
@@ -57,45 +60,45 @@ Displays the documents from a repository.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| display | `string` | `DisplayMode.List` | Change the display mode of the table. Can be "list" or "gallery".  |
-| permissionsStyle | `PermissionStyleModel[]` | `[]` | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the Permission Style model page for further details and examples. |
-| locationFormat | `string` | `'/'` | The default route for all the location-based columns (if declared).  |
-| navigate | `boolean` | `true` | Toggles navigation to folder content or file preview  |
-| showHeader | `boolean` | `true` | Toggles the header  |
-| navigationMode | `string` | See description | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
-| thumbnails | `boolean` | `false` | Show document thumbnails rather than icons  |
-| selectionMode | `string` | `'single'` | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| multiselect | `boolean` | `false` | Toggles multiselect mode  |
-| contentActions | `boolean` | `false` | Toggles content actions for each row  |
-| contentActionsPosition | `string` | `'right'` | Position of the content actions dropdown menu. Can be set to "left" or "right".  |
-| contextMenuActions | `boolean` | `false` | Toggles context menus for each row  |
-| emptyFolderImageUrl | `string` | See description | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg'  |
-| allowDropFiles | `boolean` | `false` | Toggle file drop support for rows (see Upload Directive for further details  |
-| sorting | `string[]` |  | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
+| -- | -- | -- | -- |
+| allowDropFiles | `boolean` | false | Toggle file drop support for rows (see Upload Directive for further details |
+| contentActions | `boolean` | false | Toggles content actions for each row |
+| contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
+| contextMenuActions | `boolean` | false | Toggles context menus for each row |
+| currentFolderId | `string` |  null | The ID of the folder node to display or a reserved string alias for special sources |
+| display | `string` |  DisplayMode.List | Change the display mode of the table. Can be "list" or "gallery". |
+| emptyFolderImageUrl | `string` | "./assets/images/empty_doc_lib.svg" | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
+| enableInfiniteScrolling | `boolean` | false | Set document list to work in infinite scrolling mode |
+| folderNode | `MinimalNodeEntryEntity` |  null | Currently displayed folder node |
+| imageResolver | `any | null` |  null | Custom image resolver |
+| includeFields | `string[]` |  | Include additional information about the node in the server request.for example: association, isLink, isLocked and others. |
+| loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
+| locationFormat | `string` | "/" | The default route for all the location-based columns (if declared). |
+| maxItems | `number` |  | Default value is stored into user preference settings use it only if you are not using the pagination |
+| multiselect | `boolean` | false | Toggles multiselect mode |
+| navigate | `boolean` | true | Toggles navigation to folder content or file preview |
+| navigationMode | `string` |  DocumentListComponent.DOUBLE_CLICK_NAVIGATION | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
+| node | `NodePaging` |  null | The Document list will show all the nodes contained in the NodePaging entity |
+| permissionsStyle | `PermissionStyleModel[]` |  \[] | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the Permission Style model page for further details and examples. |
+| rowFilter | `any | null` |  null | Custom row filter |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
-| rowStyleClass | `string` |  | The CSS class to apply to every row  |
-| loading | `boolean` | `false` | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
-| rowFilter | `any` | `null` | Custom row filter  |
-| imageResolver | `any` | `null` | Custom image resolver  |
-| currentFolderId | `string` | `null` | The ID of the folder node to display or a reserved string alias for special sources  |
-| folderNode | `MinimalNodeEntryEntity` | `null` | Currently displayed folder node  |
-| node | `NodePaging` | `null` | The Document list will show all the nodes contained in the NodePaging entity  |
-| maxItems | `number` |  | Default value is stored into user preference settings  |
-| skipCount | `number` | `0` | Number of elements to skip over for pagination purposes  |
-| enableInfiniteScrolling | `boolean` | `false` | Set document list to work in infinite scrolling mode  |
-| includeFields | `string[]` | `[]` | Include additional information about the node in the server request.for example: association, isLink, isLocked and others. |
+| rowStyleClass | `string` |  | The CSS class to apply to every row |
+| selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showHeader | `boolean` | true | Toggles the header |
+| skipCount | `number` | 0 | Number of elements to skip over for pagination purposes |
+| sorting | `string[]` |  | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
+| thumbnails | `boolean` | false | Show document thumbnails rather than icons |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| nodeClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user clicks a list node  |
-| nodeDblClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user double-clicks a list node  |
-| folderChange | `EventEmitter<NodeEntryEvent>` | Emitted when the current display folder changes  |
+| -- | -- | -- |
+| error | `EventEmitter<any>` | Emitted when the API fails to get the Document List data |
+| folderChange | `EventEmitter<NodeEntryEvent>` | Emitted when the current display folder changes |
+| nodeClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user clicks a list node |
+| nodeDblClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user double-clicks a list node |
 | preview | `EventEmitter<NodeEntityEvent>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the Viewer component. |
-| ready | `EventEmitter<NodePaging>` | Emitted when the Document List has loaded all items and is ready for use  |
-| error | `EventEmitter<any>` | Emitted when the API fails to get the Document List data  |
+| ready | `EventEmitter<NodePaging>` | Emitted when the Document List has loaded all items and is ready for use |
 
 ## Details
 
@@ -106,7 +109,7 @@ best.
 ### DOM Events
 
 Below are the DOM events the DocumentList component emits.
-All of them are *bubbling*, meaning you can handle them in any component up the parent hierarchy, even if the DocumentList is wrapped by one or more other components.
+All of them are _bubbling_, meaning you can handle them in any component up the parent hierarchy, even if the DocumentList is wrapped by one or more other components.
 
 | Name | Description |
 | ---- | ----------- |
@@ -171,16 +174,14 @@ Set the `[display]` property to "gallery" to enable card view mode:
 </adf-document-list>
 ```
 
-
-
 ### Pagination strategy
 
 The Document List by default supports 2 types of pagination: **finite** and **infinite**: 
 
 -   With **finite** pagination, the Document List needs 2 parameters: `maxItems` and `skipCount`. These set the maximum number of items shown in a single page and the start
-offset of the first item in the page (ie, the number of items you need to skip to get there).
+    offset of the first item in the page (ie, the number of items you need to skip to get there).
 -   You can enable **infinite** pagination by setting the same parameters plus an extra third
-parameter: `enableInfiniteScrolling`.
+    parameter: `enableInfiniteScrolling`.
 
 ### Data Sources
 
@@ -455,7 +456,7 @@ documentation for a full explanation of the component lifecycle.
 ### Underlying node object
 
 The Document List component assigns an instance of 
-[MinimalNode](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/MinimalNode.md]
+[MinimalNode]\(<https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/MinimalNode.md>]
 (defined in the [Alfresco JS API](https://github.com/Alfresco/alfresco-js-api)) as the data context
 for each row. You can make use of the properties of this object when defining custom columns:
 

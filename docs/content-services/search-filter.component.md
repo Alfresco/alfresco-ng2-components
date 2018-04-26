@@ -14,25 +14,10 @@ Represents a main container component for custom search and faceted search setti
 <adf-search-filter #settings></adf-search-filter>
 ```
 
-## Class members
-
-### Properties
-
-For the property types please refer to the [Search Category interface](#categories).
-
-| Property | Description |
-| --- | --- |
-| id | Unique identifier of the category. Also used to access QueryBuilder customizations for a particular widget. |
-| name | Public display name for the category.  |
-| enabled | Toggles category availability. Set to `false` if you want to exclude a category from processing. |
-| expanded | Toggles the expanded state of the category  |
-| component.selector | The id of the Angular component selector to render the Category |
-| component.settings | An object containing component specific settings. Put any properties needed for the target component here. |
-
 ## Details
 
 The component is based on dynamically created widgets to modify the resulting query and options,
-and the [Search Query Builder service](search-query-builder.service.md)` to build and execute the search queries.
+and the [Search Query Builder service](search-query-builder.service.md)\` to build and execute the search queries.
 
 ### Configuration
 
@@ -132,4 +117,4 @@ export interface SearchWidgetSettings {
 
 ## See also
 
-- [Search Query Builder service](search-query-builder.service.md)
+-   [Search Query Builder service](search-query-builder.service.md)

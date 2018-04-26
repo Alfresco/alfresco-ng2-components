@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Tag Node List component
 
 Shows tags for a node.
@@ -21,11 +22,11 @@ Shows tags for a node.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | The identifier of a node.  |
+| -- | -- | -- | -- |
+| nodeId | `string` |  | The identifier of a node. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| results | `EventEmitter<{}>` | Emitted when a tag is selected. |
+| -- | -- | -- |
+| results | `EventEmitter<Object>` | Emitted when a tag is selected. |

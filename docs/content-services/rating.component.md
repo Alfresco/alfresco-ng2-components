@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Rating component
 
 Allows a user to add ratings to an item.
@@ -21,14 +22,14 @@ Allows a user to add ratings to an item.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | Identifier of the node to apply the rating to.  |
+| -- | -- | -- | -- |
+| nodeId | `string` |  | Identifier of the node to apply the rating to. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| changeVote | `EventEmitter<{}>` | Emitted when the "vote" gets changed. |
+| -- | -- | -- |
+| changeVote | `EventEmitter<Object>` | Emitted when the "vote" gets changed. |
 
 ## See also
 

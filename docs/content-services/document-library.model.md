@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Document Library model
 
 Defines classes for use with the Content Services node API.
@@ -109,9 +110,11 @@ class PathElementEntity {
 ```
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+
 <!-- seealso start -->
+
 ## See also
 
-- [Document list component](document-list.component.md)
-- [Nodes api service](../core/nodes-api.service.md)
-<!-- seealso end -->
+-   [Document list component](document-list.component.md)
+-   [Nodes api service](../core/nodes-api.service.md)
+    <!-- seealso end -->

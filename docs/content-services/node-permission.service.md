@@ -2,27 +2,31 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Node Permission service
 
 Manages the role permissions for the content nodes
 
 ## Class members
 
-## Methods
+### Methods
 
--   `getNodeRoles(node: MinimalNodeEntryEntity): Observable<string[]>`  
-    Gets a list of roles for the current node.  
-    -   `node` - the target node
--   `updatePermissionRoles(node: MinimalNodeEntryEntity, updatedPermissionRole: PermissionElement): Observable<MinimalNodeEntryEntity>`  
-    Update the given permission for the related node
-    - `node` - the target node
-    - `updatedPermissionRole` the permission role to update/add
+-   `getGroupMemeberByGroupName(groupName: string = null, opts?: any = null): Observable<GroupMemberPaging>`<br/>
 
--   `getGroupMemeberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging>`  
-    Perform a call to the groups api to retrieve all the members related to that group name.
-    - `groupName` the members group name
-    - `opts` additional parameters to perform the call
+    -   `groupName: string = null` -  
+    -   `opts?: any = null` - (Optional) 
+    -   **Returns** `Observable<GroupMemberPaging>` - 
 
+-   `getNodeRoles(node: MinimalNodeEntryEntity = null): Observable<string[]>`<br/>
+
+    -   `node: MinimalNodeEntryEntity = null` -  
+    -   **Returns** `Observable<string[]>` - 
+
+-   `updatePermissionRoles(node: MinimalNodeEntryEntity = null, updatedPermissionRole: PermissionElement = null): Observable<MinimalNodeEntryEntity>`<br/>
+
+    -   `node: MinimalNodeEntryEntity = null` -  
+    -   `updatedPermissionRole: PermissionElement = null` -  
+    -   **Returns** `Observable<MinimalNodeEntryEntity>` -
 
 ## Details
 

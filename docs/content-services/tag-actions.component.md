@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Tag Node Actions List component
 
 Shows available actions for tags.
@@ -21,13 +22,13 @@ Shows available actions for tags.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | The identifier of a node.  |
+| -- | -- | -- | -- |
+| nodeId | `string` |  | The identifier of a node. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| successAdd | `EventEmitter<any>` | Emitted when a tag is added successfully. |
+| -- | -- | -- |
 | error | `EventEmitter<any>` | Emitted when an error occurs. |
-| result | `EventEmitter<{}>` | Emitted when an action is chosen. |
+| result | `EventEmitter<Object>` | Emitted when an action is chosen. |
+| successAdd | `EventEmitter<any>` | Emitted when a tag is added successfully. |

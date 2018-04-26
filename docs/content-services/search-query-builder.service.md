@@ -11,21 +11,27 @@ Stores information from all the custom search and faceted search widgets, compil
 
 ### Methods
 
--   `addFilterQuery(query: string): void`  
-    Adds a filter query to the search.  
-    -   `query` - Query text
--   `removeFilterQuery(query: string): void`  
-    Removes a previously added filter query from the search.  
-    -   `query` - Query text
--   `getFacetQuery(label: string): FacetQuery`  
-    Gets a facet query.  
-    -   `label` - Identifier of the target query
--   `update(): void`  
-    Rebuilds the query and triggers the `updated` event.  
--   `async execute()`  
-    Executes the query.  
--   `buildQuery(): QueryBody`  
-    Builds the query.  
+-   `addFilterQuery(query: string = null)`<br/>
+
+    -   `query: string = null` -  
+    -   `buildQuery(): QueryBody`<br/>
+
+        -   **Returns** `QueryBody` - 
+
+-   `execute(): Promise<void>`<br/>
+
+    -   **Returns** `Promise<void>` - 
+
+-   `getFacetQuery(label: string = null): FacetQuery`<br/>
+
+    -   `label: string = null` -  
+    -   **Returns** `FacetQuery` - 
+
+-   `removeFilterQuery(query: string = null)`<br/>
+
+    -   `query: string = null` -  
+
+-   `update()`<br/>
 
 ## Details
 
@@ -34,13 +40,13 @@ You can reuse it with multiple component implementations.
 
 You can use custom widgets to populate and edit the following parts of the resulting query:
 
-- categories
-- query fragments that form query expression
-- include fields
-- scope settings
-- filter queries
-- facet fields
-- range queries
+-   categories
+-   query fragments that form query expression
+-   include fields
+-   scope settings
+-   filter queries
+-   facet fields
+-   range queries
 
 ```ts
 constructor(queryBuilder: SearchQueryBuilderService) {

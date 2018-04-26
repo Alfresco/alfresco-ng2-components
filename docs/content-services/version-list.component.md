@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Experimental
 ---
+
 # Version List component
 
 Displays the version history of a node in a Version Manager component
@@ -17,19 +18,11 @@ Displays the version history of a node in a Version Manager component
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| node | `MinimalNodeEntryEntity` |  | Node whose version history you want to display.  |
-| showComments | `boolean` | true |  Set this to false if version comments should not be displayed.  |
-| allowDownload | `boolean` | true |  Toggles downloads of previous versions. Set this to false to not show the menu item for version download.  |
-
-### DOM events
-
-All DOM events are bubbling and can be handled in the parent components up to the root application component.
-
-| Name | Description |
-| --- | --- |
-| version-deleted | Raised after a version is deleted. |
-| version-restored | Raised after a version is restored. |
+| -- | -- | -- | -- |
+| allowDownload | `boolean` | true | Enable/disable possibility to download a version of the current node. |
+| id | `string` |  | **Deprecated:** in 2.3.0 |
+| node | `MinimalNodeEntryEntity` |  |  |
+| showComments | `boolean` | true |  |
 
 ## Details
 

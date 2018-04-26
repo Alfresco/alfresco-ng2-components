@@ -10,43 +10,55 @@ Displays and manages dialogs for selecting content to open, copy or upload.
 
 ## Class members
 
-## Methods
+### Methods
 
--   `openLockNodeDialog(nodeEntry: MinimalNodeEntryEntity): Observable<string>`
-    Opens a dialog to lock or unlock file
-    -   `nodeEntry` - Item to lock or unlock.
--   `openFileBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]>`  
-    Opens a file browser at a chosen folder location.   
-    -   `folderNodeId` - ID of the folder to use 
--   `openFileBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]>`  
-    Opens a file browser at a chosen site location.   
+-   `close()`<br/>
+    Closes the currently open dialog.
 
--   `openFolderBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]>`  
-    Opens a folder browser at a chosen site location.   
+    -   `getTitleTranslation(action: string = null, name: string = null): string`<br/>
 
--   `openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]>`  
-    Opens a folder browser at a chosen folder location.   
-    -   `folderNodeId` - ID of the folder to use 
--   `openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]>`  
-    Opens a dialog to copy or move an item to a new location.   
-    -   `action` - Name of the action (eg, "Copy" or "Move") to show in the title 
-    -   `contentEntry` - Item to be copied or moved 
-    -   `permission` - (Optional) Permission for the operation 
--   `getTitleTranslation(action: string, name: string): string`  
-    Gets the translation of the dialog title.   
-    -   `action` - Name of the action to display in the dialog title 
-    -   `name` - Name of the item on which the action is being performed 
--   `openUploadFolderDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]>`  
-    Opens a dialog to choose a folder to upload.   
-    -   `action` - Name of the action to show in the title 
-    -   `contentEntry` - Item to upload 
--   `openUploadFileDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]>`  
-    Opens a dialog to choose a file to upload.   
-    -   `action` - Name of the action to show in the title 
-    -   `contentEntry` - Item to upload 
--   `close()`  
-    Closes the currently open dialog.   
+    -   `action: string = null` -  
+    -   `name: string = null` -  Name of the item on which the action is being performed
+    -   **Returns** `string` - 
 
+-   `openCopyMoveDialog(action: string = null, contentEntry: MinimalNodeEntryEntity = null, permission?: string = null): Observable<MinimalNodeEntryEntity[]>`<br/>
+
+    -   `action: string = null` -  
+    -   `contentEntry: MinimalNodeEntryEntity = null` -  
+    -   `permission?: string = null` - (Optional) Permission for the operation
+    -   **Returns** `Observable<MinimalNodeEntryEntity[]>` - 
+
+-   `openFileBrowseDialogByFolderId(folderNodeId: string = null): Observable<MinimalNodeEntryEntity[]>`<br/>
+
+    -   `folderNodeId: string = null` -  ID of the folder to use
+    -   **Returns** `Observable<MinimalNodeEntryEntity[]>` - 
+
+-   `openFileBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]>`<br/>
+    Opens a file browser at a chosen site location.
+    -   **Returns** `Observable<MinimalNodeEntryEntity[]>` - 
+-   `openFolderBrowseDialogByFolderId(folderNodeId: string = null): Observable<MinimalNodeEntryEntity[]>`<br/>
+
+    -   `folderNodeId: string = null` -  ID of the folder to use
+    -   **Returns** `Observable<MinimalNodeEntryEntity[]>` - 
+
+-   `openFolderBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]>`<br/>
+    Opens a folder browser at a chosen site location.
+    -   **Returns** `Observable<MinimalNodeEntryEntity[]>` - 
+-   `openLockNodeDialog(contentEntry: MinimalNodeEntryEntity = null): Subject<string>`<br/>
+    Opens a lock node dialog
+    -   `contentEntry: MinimalNodeEntryEntity = null` -  Node to lock
+    -   **Returns** `Subject<string>` - 
+-   `openUploadFileDialog(action: string = null, contentEntry: MinimalNodeEntryEntity = null): Observable<MinimalNodeEntryEntity[]>`<br/>
+
+    -   `action: string = null` -  
+    -   `contentEntry: MinimalNodeEntryEntity = null` -  Item to upload
+    -   **Returns** `Observable<MinimalNodeEntryEntity[]>` - 
+
+-   `openUploadFolderDialog(action: string = null, contentEntry: MinimalNodeEntryEntity = null): Observable<MinimalNodeEntryEntity[]>`<br/>
+
+    -   `action: string = null` -  
+    -   `contentEntry: MinimalNodeEntryEntity = null` -  Item to upload
+    -   **Returns** `Observable<MinimalNodeEntryEntity[]>` - 
 
 ## Details
 

@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Content Action component
 
 Adds options to a Document List actions menu for a particular content type.
@@ -11,6 +12,8 @@ Adds options to a Document List actions menu for a particular content type.
 ## Contents
 
 -   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
 
     -   [Properties](#properties)
     -   [Events](#events)
@@ -81,23 +84,23 @@ export class MyView {
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| title | `string` | `'Action'` | The title of the action as shown in the menu. If the title is a translation key the translation will be automatically showed.  |
-| icon | `string` |  | The name of the icon to display next to the menu command (can be left blank).  |
-| handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move".  |
-| target | `string` | [ContentActionTarget.All](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/content-services/document-list/models/content-action.model.ts) | Type of item that the action applies to. Can be one of the values provided by the enum : **All**, **Folder**, **Document**  |
-| permission | `string` |  | The permission type.  |
-| disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it?  |
-| disabled | `boolean` | `false` | Is the menu item disabled?  |
+| -- | -- | -- | -- |
+| disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it? |
+| disabled | `boolean` | false | Is the menu item disabled? |
+| handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move". |
+| icon | `string` |  | The name of the icon to display next to the menu command (can be left blank). |
+| permission | `string` |  | The permission type. |
+| target | `string` |  ContentActionTarget.All | Type of item that the action appies to. Can be "document" or "folder" |
+| title | `string` | "Action" | The title of the action as shown in the menu. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| execute | `EventEmitter<{}>` | Emitted when the user selects the action from the menu. |
-| permissionEvent | `EventEmitter<{}>` | Emitted when a permission error occurs |
-| error | `EventEmitter<{}>` | Emitted when an error occurs during the action. Applies to copy and move actions. |
-| success | `EventEmitter<{}>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
+| -- | -- | -- |
+| error | `EventEmitter<Object>` | Emitted when an error occurs during the action. Applies to copy and move actions. |
+| execute | `EventEmitter<Object>` | Emitted when the user selects the action from the menu. |
+| permissionEvent | `EventEmitter<Object>` | Emitted when a permission error occurs |
+| success | `EventEmitter<Object>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
 
 ## Details
 
@@ -158,29 +161,28 @@ type and other details of the item just deleted:
 ### Examples
 
 #### System handler
-   
+
 This action simply execute one of the built-in actions described above:
 
-   ```html
-   <adf-document-list [contentActions]="true"...>
-       <content-actions>
-   
-           <content-action
-               target="document"
-               title="Download"
-               handler="download">
-           </content-action>
-   
-       </content-actions>
-   </adf-document-list>
-   ```
+```html
+<adf-document-list [contentActions]="true"...>
+    <content-actions>
+
+        <content-action
+            target="document"
+            title="Download"
+            handler="download">
+        </content-action>
+
+    </content-actions>
+</adf-document-list>
+```
 
 ![Download document action](../docassets/images/document-action-download.png)
 
 #### Custom handler
 
 If you specify a custom handler it will be executed at any click of the action:
-
 
 ```html
 <adf-document-list [contentActions]="true"...>
@@ -194,7 +196,6 @@ If you specify a custom handler it will be executed at any click of the action:
    </content-actions>
 </adf-document-list>
 ```
-
 
 ```ts
 export class MyComponent {
@@ -277,7 +278,6 @@ export class MyComponent {
 ```
 
 ![Delete show notification message](../docassets/images/content-action-notification-message.png)
-
 
 #### Copy and move
 

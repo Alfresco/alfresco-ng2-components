@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Like component
 
 Allows a user to add "likes" to an item.
@@ -19,14 +20,14 @@ Allows a user to add "likes" to an item.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | Identifier of a node to apply likes to.  |
+| -- | -- | -- | -- |
+| nodeId | `string` |  | Identifier of a node to apply likes to. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| changeVote | `EventEmitter<{}>` | Emitted when the "vote" gets changed. |
+| -- | -- | -- |
+| changeVote | `EventEmitter<Object>` | Emitted when the "vote" gets changed. |
 
 ## See also
 

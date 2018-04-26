@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Permission Style model
 
 Sets custom CSS styles for rows of a Document List according to the item's permissions.

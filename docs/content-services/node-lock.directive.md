@@ -21,8 +21,8 @@ Locks a node.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| adf-node-lock | `MinimalNodeEntryEntity` |  | Node to lock.  |
+| -- | -- | -- | -- |
+| adf-node-lock | `MinimalNodeEntryEntity` |  |  |
 
 ## Details
 

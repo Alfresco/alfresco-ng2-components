@@ -2,27 +2,31 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Rating service
 
 Manages ratings for items in Content Services.
 
 ## Class members
 
-## Methods
+### Methods
 
--   `getRating(nodeId: string, ratingType: any): any`  
-    Gets the current user's rating for a node.  
-    -   `nodeId` - Node to get the rating from
-    -   `ratingType` - Type of rating (can be "likes" or "fiveStar")
--   `postRating(nodeId: string, ratingType: any, vote: any): any`  
-    Adds the current user's rating for a node.  
-    -   `nodeId` - Target node for the rating
-    -   `ratingType` - Type of rating (can be "likes" or "fiveStar")
-    -   `vote` - Rating value (boolean for "likes", numeric 0..5 for "fiveStar")
--   `deleteRating(nodeId: string, ratingType: any): any`  
-    Removes the current user's rating for a node.  
-    -   `nodeId` - Target node
-    -   `ratingType` - Type of rating to remove (can be "likes" or "fiveStar")
+-   `deleteRating(nodeId: string = null, ratingType: any = null): any`<br/>
+    Removes the current user's rating for a node.
+    -   `nodeId: string = null` -  Target node
+    -   `ratingType: any = null` -  Type of rating to remove (can be "likes" or "fiveStar")
+    -   **Returns** `any` - 
+-   `getRating(nodeId: string = null, ratingType: any = null): any`<br/>
+    Gets the current user's rating for a node.
+    -   `nodeId: string = null` -  Node to get the rating from
+    -   `ratingType: any = null` -  Type of rating (can be "likes" or "fiveStar")
+    -   **Returns** `any` - 
+-   `postRating(nodeId: string = null, ratingType: any = null, vote: any = null): any`<br/>
+    Adds the current user's rating for a node.
+    -   `nodeId: string = null` -  Target node for the rating
+    -   `ratingType: any = null` -  Type of rating (can be "likes" or "fiveStar")
+    -   `vote: any = null` -  Rating value (boolean for "likes", numeric 0..5 for "fiveStar")
+    -   **Returns** `any` -
 
 ## Details
 

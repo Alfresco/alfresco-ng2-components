@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Tag List component
 
 Shows tags for an item.
@@ -13,8 +14,8 @@ Shows tags for an item.
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| result | `EventEmitter<{}>` | Emitted when a tag is selected. |
+| -- | -- | -- |
+| result | `EventEmitter<Object>` | Emitted when a tag is selected. |
 
 ## See Also
 
