@@ -173,7 +173,8 @@
     "FILTER": {
       "ACTIONS": {
         "CLEAR": "Clear",
-        "APPLY": "Apply"
+        "APPLY": "Apply",
+        "CLEAR-ALL": "Clear all"
       },
       "RANGE": {
         "FROM": "From",

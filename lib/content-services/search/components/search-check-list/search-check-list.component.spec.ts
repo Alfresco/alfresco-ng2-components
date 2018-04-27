@@ -56,7 +56,7 @@ describe('SearchCheckListComponent', () => {
 
         component.id = 'checklist';
         component.context = <any> {
-            queryFragments: [],
+            queryFragments: {},
             update() {}
         };
 
@@ -79,6 +79,40 @@ describe('SearchCheckListComponent', () => {
         expect(component.context.queryFragments[component.id]).toEqual(
             `TYPE:'cm:folder' OR TYPE:'cm:content'`
         );
+    });
+
+    it('should reset selected boxes', () => {
+        component.options = [
+            { name: 'Folder', value: "TYPE:'cm:folder'", checked: true },
+            { name: 'Document', value: "TYPE:'cm:content'", checked: true }
+        ];
+
+        component.reset();
+
+        expect(component.options[0].checked).toBeFalsy();
+        expect(component.options[1].checked).toBeFalsy();
+    });
+
+    it('should update query builder on reset', () => {
+        component.id = 'checklist';
+        component.context = <any> {
+            queryFragments: {
+                'checklist': 'query'
+            },
+            update() {}
+        };
+        spyOn(component.context, 'update').and.stub();
+
+        component.ngOnInit();
+        component.options = [
+            { name: 'Folder', value: "TYPE:'cm:folder'", checked: true },
+            { name: 'Document', value: "TYPE:'cm:content'", checked: true }
+        ];
+
+        component.reset();
+
+        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.queryFragments[component.id]).toBe('');
     });
 
 });

@@ -46,6 +46,17 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         }
     }
 
+    reset() {
+        this.options.forEach(opt => {
+            opt.checked = false;
+        });
+
+        if (this.id && this.context) {
+            this.context.queryFragments[this.id] = '';
+            this.context.update();
+        }
+    }
+
     changeHandler(event: MatCheckboxChange, option: any) {
         option.checked = event.checked;
         this.flush();

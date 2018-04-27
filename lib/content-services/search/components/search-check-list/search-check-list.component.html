@@ -4,3 +4,9 @@
     (change)="changeHandler($event, option)">
     {{ option.name | translate }}
 </mat-checkbox>
+
+<div>
+    <button mat-button color="primary" (click)="reset()">
+        {{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}
+    </button>
+</div>
