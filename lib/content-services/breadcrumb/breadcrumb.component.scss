@@ -41,6 +41,7 @@ $breadcrumb-chevron-spacer: 2px;
             &:hover,
             &.active {
                 opacity: 1;
+                width: 100%;
             }
 
             &.active {
@@ -76,6 +77,11 @@ $breadcrumb-chevron-spacer: 2px;
 
             &.active {
                 display: block;
+            }
+
+            &-current {
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
         }
     }

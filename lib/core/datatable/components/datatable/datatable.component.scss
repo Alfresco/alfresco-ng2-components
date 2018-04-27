@@ -390,7 +390,8 @@
         .ellipsis-cell {
             .cell-container {
                 height: 100%;
-             }
+                display: inline-grid;
+            }
 
             .cell-container > * {
                 display: block;
