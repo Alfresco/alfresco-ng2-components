@@ -1,5 +1,6 @@
 <mat-sidenav-container>
     <mat-sidenav
+        [disableClose]="true"
         [ngClass]="{ 'sidenav--hidden': hideSidenav }"
         [@sidenavAnimation]="sidenavAnimationState"
         [opened]="!isMobileScreenSize"
