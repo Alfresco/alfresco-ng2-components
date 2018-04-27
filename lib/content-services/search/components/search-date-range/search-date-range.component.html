@@ -2,7 +2,7 @@
 
     <mat-form-field>
         <input matInput [formControl]="from" [errorStateMatcher]="matcher"
-               placeholder="{{ 'SEARCH.FILTER.RANGE.FROM_DATE' | translate }}"
+               placeholder="{{ 'SEARCH.FILTER.RANGE.FROM-DATE' | translate }}"
                [matDatepicker]="fromDatepicker"
                [max]="maxFrom">
         <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
@@ -12,7 +12,7 @@
 
     <mat-form-field>
         <input matInput [formControl]="to" [errorStateMatcher]="matcher"
-               placeholder="{{ 'SEARCH.FILTER.RANGE.TO_DATE' | translate }}"
+               placeholder="{{ 'SEARCH.FILTER.RANGE.TO-DATE' | translate }}"
                [matDatepicker]="toDatepicker"
                [min]="from.value">
         <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
