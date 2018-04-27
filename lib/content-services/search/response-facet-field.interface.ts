@@ -20,6 +20,11 @@ import { FacetFieldBucket } from './facet-field-bucket.interface';
 export interface ResponseFacetField {
     label: string;
     buckets: Array<FacetFieldBucket>;
+    pageSize?: number;
+    currentPageSize?: number;
+    expanded?: boolean;
 
-    $expanded?: boolean;
+    hasMoreItems(): boolean;
+    showMoreItems(): void;
+    getVisibleBuckets(): Array<FacetFieldBucket>;
 }

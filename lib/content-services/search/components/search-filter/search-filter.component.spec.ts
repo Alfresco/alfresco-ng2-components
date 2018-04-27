@@ -259,7 +259,7 @@ describe('SearchSettingsComponent', () => {
     it('should restore expanded state for new response facet fields', () => {
         component.responseFacetFields = [
             { label: 'f1', buckets: [] },
-            { label: 'f2', buckets: [], $expanded: true }
+            { label: 'f2', buckets: [], expanded: true }
         ];
 
         const fields = [
@@ -277,8 +277,8 @@ describe('SearchSettingsComponent', () => {
         component.onDataLoaded(data);
 
         expect(component.responseFacetFields.length).toBe(2);
-        expect(component.responseFacetFields[0].$expanded).toBeFalsy();
-        expect(component.responseFacetFields[1].$expanded).toBeTruthy();
+        expect(component.responseFacetFields[0].expanded).toBeFalsy();
+        expect(component.responseFacetFields[1].expanded).toBeTruthy();
     });
 
     it('should restore checked buckets for new response facet fields', () => {
