@@ -18,13 +18,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
-import { SearchService, setupTestBed, SearchConfigurationService } from '@alfresco/adf-core';
+import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { fakeAuthorityListResult } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { DebugElement } from '@angular/core';
 
-describe('AddPermissionPanelComponent', () => {
+/*tslint:disable:ban*/
+fdescribe('AddPermissionPanelComponent', () => {
 
     let fixture: ComponentFixture<AddPermissionPanelComponent>;
     let component: AddPermissionPanelComponent;
@@ -33,8 +34,7 @@ describe('AddPermissionPanelComponent', () => {
     let debugElement: DebugElement;
 
     setupTestBed({
-        imports: [ContentTestingModule],
-        providers: [SearchService, SearchConfigurationService]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {
