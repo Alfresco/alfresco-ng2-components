@@ -176,13 +176,6 @@ describe('DropdownEditorComponent', () => {
     });
 
     describe('when template is ready', () => {
-
-        function openSelect() {
-            const dropdown = fixture.debugElement.query(By.css('[class="mat-select-trigger"]'));
-            dropdown.triggerEventHandler('click', null);
-            fixture.detectChanges();
-        }
-
         let dropDownEditorComponent: DropdownEditorComponent;
         let fixture: ComponentFixture<DropdownEditorComponent>;
         let element: HTMLElement;
@@ -195,6 +188,12 @@ describe('DropdownEditorComponent', () => {
             name: 'option_2'
         }, {id: 'opt_3', name: 'option_3'}];
         let dynamicTable: DynamicTableModel;
+
+        function openSelect() {
+            const dropdown = fixture.debugElement.query(By.css('[class="mat-select-trigger"]'));
+            dropdown.triggerEventHandler('click', null);
+            fixture.detectChanges();
+        }
 
         beforeEach(async(() => {
             fixture = TestBed.createComponent(DropdownEditorComponent);

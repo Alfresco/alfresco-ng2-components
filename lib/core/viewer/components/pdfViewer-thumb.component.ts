@@ -24,7 +24,9 @@ import { DomSanitizer } from '@angular/platform-browser';
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbComponent implements OnInit {
-    @Input('page') page: any = null;
+
+    @Input()
+    page: any = null;
 
     image$: Promise<string>;
 

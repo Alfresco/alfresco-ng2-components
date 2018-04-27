@@ -23,6 +23,8 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
+/* tslint:disable:adf-file-name */
+
 describe('AppsProcessService', () => {
 
     let service: AppsProcessService;

@@ -26,6 +26,8 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs/Subject';
 
+/* tslint:disable:adf-file-name */
+
 @Injectable()
 export class AlfrescoApiService {
 
