@@ -28,7 +28,7 @@ describe('SearchDateRangeComponent', () => {
         component = new SearchDateRangeComponent();
     });
 
-    xit('should setup form elements on init', () => {
+    it('should setup form elements on init', () => {
         component.ngOnInit();
         expect(component.form).toBeDefined();
         expect(component.to).toBeDefined();
