@@ -67,11 +67,15 @@ export class DemoPermissionComponent implements OnInit {
             this.displayPermissionComponent.reload();
         },
             (error) => {
-                this.notificationService.openSnackMessage(
-                    JSON.parse(error.response.text).error.errorKey,
-                    4000
-                );
+                this.showErrorMessage(error);
             });
+    }
+
+    showErrorMessage(error) {
+        this.notificationService.openSnackMessage(
+            JSON.parse(error.response.text).error.errorKey,
+            4000
+        );
     }
 
 }

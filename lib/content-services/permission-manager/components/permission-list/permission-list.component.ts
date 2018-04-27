@@ -37,6 +37,9 @@ export class PermissionListComponent implements OnInit {
     @Output()
     update: EventEmitter<PermissionElement> = new EventEmitter();
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter();
+
     permissionList: PermissionDisplayModel[];
     settableRoles: any[];
     actualNode: MinimalNodeEntryEntity;
@@ -101,7 +104,7 @@ export class PermissionListComponent implements OnInit {
     removePermission(permissionRow: PermissionDisplayModel) {
         this.nodePermissionService.removePermission(this.actualNode, permissionRow).subscribe((node) => {
             this.update.emit(node);
-        });
+        }, (error) => this.error.emit(error));
     }
 
 }
