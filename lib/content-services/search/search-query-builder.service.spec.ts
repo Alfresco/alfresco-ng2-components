@@ -290,15 +290,15 @@ describe('SearchQueryBuilder', () => {
                 <any> { id: 'cat1', enabled: true }
             ],
             facetFields: [
-                { field: 'field1', label: 'field1' },
-                { field: 'field2', label: 'field2' }
+                { field: 'field1', label: 'field1', mincount: 1, limit: null, offset: 0, prefix: null },
+                { field: 'field2', label: 'field2', mincount: 1, limit: null, offset: 0, prefix: null }
             ]
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
-        expect(compiled.facetFields.facets).toEqual(config.facetFields);
+        expect(compiled.facetFields.facets).toEqual(jasmine.objectContaining(config.facetFields));
     });
 
     it('should use pagination settings', () => {

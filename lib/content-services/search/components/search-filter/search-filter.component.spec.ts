@@ -64,19 +64,19 @@ describe('SearchSettingsComponent', () => {
     });
 
     it('should update facet field model on expand', () => {
-        const field: any = { $expanded: false };
+        const field: any = { expanded: false };
 
         component.onFacetFieldExpanded(field);
 
-        expect(field.$expanded).toBeTruthy();
+        expect(field.expanded).toBeTruthy();
     });
 
     it('should update facet field model on collapse', () => {
-        const field: any = { $expanded: true };
+        const field: any = { expanded: true };
 
         component.onFacetFieldCollapsed(field);
 
-        expect(field.$expanded).toBeFalsy();
+        expect(field.expanded).toBeFalsy();
     });
 
     it('should update bucket model and query builder on facet toggle', () => {
