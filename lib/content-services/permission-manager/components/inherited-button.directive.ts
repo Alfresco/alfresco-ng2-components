@@ -35,15 +35,18 @@ export class InheritPermissionDirective {
     @Output()
     updated: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
     constructor(private nodeService: NodesApiService) {
     }
 
     onInheritPermissionClicked() {
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
-            const nodeBody = { permissions : {isInheritanceEnabled : !node.permissions.isInheritanceEnabled} };
-            this.nodeService.updateNode(this.nodeId, nodeBody, {include: ['permissions'] }).subscribe((nodeUpdated: MinimalNodeEntryEntity) => {
+            const nodeBody = { permissions: { isInheritanceEnabled: !node.permissions.isInheritanceEnabled } };
+            this.nodeService.updateNode(this.nodeId, nodeBody, { include: ['permissions'] }).subscribe((nodeUpdated: MinimalNodeEntryEntity) => {
                 this.updated.emit(nodeUpdated);
-            });
+            }, (error) => this.error.emit(error));
         });
     }
 

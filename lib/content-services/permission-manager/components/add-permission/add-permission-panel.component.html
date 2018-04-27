@@ -3,12 +3,13 @@
         id="searchInput"
         [formControl]="searchInput"
         type="text"
-        placeholder="{{'NODE_SELECTOR.SEARCH' | translate}}"
+        placeholder="{{'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate}}"
         [value]="searchedWord">
 
     <mat-icon *ngIf="searchedWord?.length > 0"
         class="adf-permission-search-icon"
         data-automation-id="adf-permission-clear-input"
+        id="adf-permission-clear-input"
         matSuffix (click)="clearSearch()">clear
     </mat-icon>
 
@@ -19,11 +20,12 @@
     </mat-icon>
 </mat-form-field>
 
-<div *ngIf="searchedWord?.length === 0">
+<div *ngIf="searchedWord?.length === 0" id="adf-add-permission-type-search">
     <span class="adf-permission-start-message">{{'PERMISSION_MANAGER.ADD-PERMISSION.TYPE-MESSAGE' | translate}}</span>
 </div>
 
 <adf-search #search [searchTerm]="searchedWord"
+        id="adf-add-permission-authority-results"
         class="adf-permission-result-list"
         *ngIf="searchedWord.length !== 0">
 <ng-template let-data>
@@ -32,9 +34,12 @@
                             (click)="elementClicked(item)"
                             class="adf-list-option-item"
                             id="result_option_{{idx}}">
-            <mat-icon mat-list-icon *ngIf="item?.entry?.nodeType === 'cm:authorityContainer' else show_person_icon">group_add</mat-icon>
+            <mat-icon mat-list-icon id="add-group-icon"
+                      *ngIf="item?.entry?.nodeType === 'cm:authorityContainer' else show_person_icon">
+                      group_add
+            </mat-icon>
             <ng-template #show_person_icon>
-                <mat-icon mat-list-icon>person_add</mat-icon>
+                <mat-icon id="add-person-icon" mat-list-icon>person_add</mat-icon>
             </ng-template>
             <p>
              {{item.entry?.properties['cm:authorityName']?
@@ -42,7 +47,7 @@
                                     item.entry?.properties['cm:firstName']}}</p>
         </mat-list-option>
     </mat-selection-list>
-    <div *ngIf="data?.list?.entries.length === 0" class="adf-permission-no-result">
+    <div *ngIf="data?.list?.entries.length === 0" class="adf-permission-no-result" id="adf-add-permission-no-results">
         <span>{{'PERMISSION_MANAGER.ADD-PERMISSION.NO-RESULT' | translate}}</span>
     </div>
 </ng-template>
