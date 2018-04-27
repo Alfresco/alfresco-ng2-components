@@ -52,13 +52,13 @@ buttons: MenuButton[] = [];
 
 ## Properties
 
-####Buttons Menu Component
+### Buttons Menu Component
 
 | Name | Type | Description |
 | --- | --- | -- |
 | buttons | `MenuButton []` | The array that contains all the buttons for the menu |
 
-####Button Model
+### Button Model
 
 | Name | Type | Description |
 | --- | --- | -- |
