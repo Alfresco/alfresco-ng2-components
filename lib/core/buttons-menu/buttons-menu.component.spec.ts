@@ -21,9 +21,7 @@ import { MenuButton } from './menu-button.model';
 import { MaterialModule } from '../material.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
-/*tslint:disable:ban*/
-
-fdescribe('ButtonsMenuComponent', () => {
+describe('ButtonsMenuComponent', () => {
 
     let fixture;
     let buttonsMenuComponent: ButtonsMenuComponent;
