@@ -17,6 +17,8 @@
 
 import { AlfrescoApiService } from './alfresco-api.service';
 
+/* tslint:disable:adf-file-name */
+
 describe('AlfrescoApiService', () => {
 
     let service: AlfrescoApiService;
