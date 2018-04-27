@@ -116,7 +116,7 @@ while [[ $1 == -* ]]; do
     esac
 done
 
-cd "$DIR/../lib/"
+cd "$DIR/../"
 
 if $EXEC_CLEAN == true; then
   echo "====== Clean components ====="
@@ -141,6 +141,8 @@ if $EXEC_VERSION_JSAPI == true; then
   echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
   npm install alfresco-js-api@${JSAPI_VERSION} --no-save
 fi
+
+cd "$DIR/../lib/"
 
 if $EXEC_BUILD == true; then
     echo "====== Build components ====="
