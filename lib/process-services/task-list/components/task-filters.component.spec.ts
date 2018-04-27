@@ -246,7 +246,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should emit an event when a filter is selected', (done) => {
-        let currentFilter = new FilterRepresentationModel({ filter: { state: 'open', assignment: 'fake-involved' } });
+        let currentFilter = fakeGlobalFilter[0];
 
         component.filterClick.subscribe((filter: FilterRepresentationModel) => {
             expect(filter).toBeDefined();
@@ -289,10 +289,8 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should return the current filter after one is selected', () => {
-        let filter = new FilterRepresentationModel({
-            name: 'FakeMyTasks',
-            filter: { state: 'open', assignment: 'fake-assignee' }
-        });
+        let filter = fakeGlobalFilter[1];
+
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(filter);
         expect(component.getCurrentFilter()).toBe(filter);
