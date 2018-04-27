@@ -110,7 +110,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     appId: number = null;
 
     @Input()
-    filterObj: object = null;
+    filterSelected: object = null;
 
     @Output()
     changePageSize: EventEmitter<Pagination> = new EventEmitter();
@@ -217,7 +217,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.sub = this.route.params.subscribe(params => {
             const applicationId = params['appId'];
 
-            this.filterObj = params['filterId'] ? { id: params['filterId'] } : { name: 'MY tasks' };
+            this.filterSelected = params['filterId'] ? { id: params['filterId'] } : { index: 0 };
 
             if (applicationId && applicationId !== '0') {
                 this.appId = params['appId'];
@@ -240,6 +240,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onTaskFilterClick(filter: FilterRepresentationModel): void {
         this.applyTaskFilter(filter);
         this.resetTaskPaginationPage();
+        this.router.navigate(['/activiti/apps', this.appId || 0, 'tasks', filter.id]);
     }
 
     resetTaskPaginationPage() {

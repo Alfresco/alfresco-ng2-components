@@ -17,7 +17,7 @@
                         <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true"
                                              [headingIcon]="'assignment'">
                             <adf-filters
-                                [filterParam]="filterObj"
+                                [filterParam]="filterSelected"
                                 [appId]="appId"
                                 [hasIcon]="false"
                                 (filterClick)="onTaskFilterClick($event)"

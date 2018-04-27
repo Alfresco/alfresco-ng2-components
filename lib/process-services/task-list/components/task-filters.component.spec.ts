@@ -24,7 +24,6 @@ import { TaskListService } from '../services/tasklist.service';
 import { TaskFilterService } from '../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TaskFiltersComponent', () => {
 
@@ -53,6 +52,14 @@ describe('TaskFiltersComponent', () => {
         resolve(fakeGlobalFilter);
     });
 
+    let fakeGlobalEmptyFilter = {
+        message: 'invalid data'
+    };
+
+    let fakeGlobalEmptyFilterPromise = new Promise(function (resolve, reject) {
+        resolve(fakeGlobalEmptyFilter);
+    });
+
     let mockErrorFilterList = {
         error: 'wrong request'
     };
@@ -66,8 +73,7 @@ describe('TaskFiltersComponent', () => {
 
     setupTestBed({
         imports: [
-            ProcessTestingModule,
-            RouterTestingModule
+            ProcessTestingModule
         ]
     });
 
@@ -156,14 +162,19 @@ describe('TaskFiltersComponent', () => {
 
     });
 
-    it('should load', () => {
-        spyOn(component, 'getDefaultFilters').and.stub();
-        const appId = '1';
+    it('should be able to fetch and select the default if the input filter is not valid', (done) => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalEmptyFilterPromise));
+        spyOn(component, 'createFiltersByAppId').and.stub();
 
+        const appId = '1';
         let change = new SimpleChange(null, appId, true);
         component.ngOnChanges({ 'appId': change });
 
-        expect(component.getDefaultFilters).not.toHaveBeenCalled();
+        component.success.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.createFiltersByAppId).not.toHaveBeenCalled();
+            done();
+        });
     });
 
     it('should select the task filter based on the input by name param', (done) => {
