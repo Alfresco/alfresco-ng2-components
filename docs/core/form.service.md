@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Form service
 
 Implements Process Services form methods
@@ -66,7 +67,6 @@ class MyComponent {
     -   `formId` - ID of the form to save 
     -   `formModel` - Model data for the form
 -   `addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any>`  
-      
     -   `formId` - ID of the form
     -   `formModel` - Form definition
 -   `searchFrom(name: string): Observable<any>`  

@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Translation service
 
 Supports localisation.
@@ -10,21 +11,28 @@ Supports localisation.
 
 ### Methods
 
--   `addTranslationFolder(name: string = '', path: string = '')`  
-    Adds a new folder of translation source files.  
-    -   `name` - Name for the translation provider
-    -   `path` - Path to the folder
--   `use(lang: string): Observable<any>`  
-    Sets the target language for translations.  
-    -   `lang` - Code name for the language
--   `get(key: string|Array<string>, interpolateParams?: Object): Observable<any>`  
-    Gets the translation for the supplied key.  
-    -   `key` - Key to translate
-    -   `interpolateParams` - (Optional) String(s) to be interpolated into the main message
--   `instant(key: string | Array<string>, interpolateParams?: Object): any`  
-    Directly returns the translation for the supplied key.  
-    -   `key` - Key to translate
-    -   `interpolateParams` - (Optional) String(s) to be interpolated into the main message
+-   `addTranslationFolder(name: string = "", path: string = "")`<br/>
+    Adds a new folder of translation source files.
+    -   `name: string = ""` -  Name for the translation provider
+    -   `path: string = ""` -  Path to the folder
+    -   `get(key: string | Array<string> = null, interpolateParams?: Object = null): Observable<string | any>`<br/>
+        Gets the translation for the supplied key.
+    -   `key: string | Array<string> = null` -  Key to translate
+    -   `interpolateParams?: Object = null` - (Optional) String(s) to be interpolated into the main message
+    -   **Returns** `Observable<string | any>` - 
+-   `instant(key: string | Array<string> = null, interpolateParams?: Object = null): string | any`<br/>
+    Directly returns the translation for the supplied key.
+    -   `key: string | Array<string> = null` -  Key to translate
+    -   `interpolateParams?: Object = null` - (Optional) String(s) to be interpolated into the main message
+    -   **Returns** `string | any` - 
+-   `onTranslationChanged(lang: string = null)`<br/>
+
+    -   `lang: string = null` -  
+
+-   `use(lang: string = null): Observable<any>`<br/>
+    Sets the target language for translations.
+-   `lang: string = null` -  Code name for the language
+    -   **Returns** `Observable<any>` -
 
 ## Details
 

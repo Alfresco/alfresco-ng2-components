@@ -10,6 +10,22 @@ Adds pagination to the component it is used with.
 
 ![](../docassets/images/basic.png)
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+    -   [Events](#events)
+
+-   [Details](#details)
+
+    -   [Integrating with the Document List component](#integrating-with-the-document-list-component)
+    -   [Custom pagination](#custom-pagination)
+
+-   [See also](#see-also)
+
 ## Basic Usage
 
 ```html
@@ -29,20 +45,20 @@ Adds pagination to the component it is used with.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| target | `PaginatedComponent` |  | Component that provides custom pagination support.  |
-| supportedPageSizes | `number[]` | `[5, 25, 50, 100]` | An array of page sizes.  |
-| pagination | `Pagination` |  | Pagination object.  |
+| -- | -- | -- | -- |
+| pagination | `PaginationModel` |  PaginationComponent.DEFAULT_PAGINATION | Pagination object. |
+| supportedPageSizes | `number[]` |  [5, 25, 50, 100] | An array of page sizes. |
+| target | `PaginatedComponent` |  | Component that provides custom pagination support. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| change | `EventEmitter<PaginationQueryParams>` | Emitted when pagination changes in any way.  |
-| changePageNumber | `EventEmitter<Pagination>` | Emitted when the page number changes.  |
-| changePageSize | `EventEmitter<Pagination>` | Emitted when the page size changes.  |
-| nextPage | `EventEmitter<Pagination>` | Emitted when the next page is requested.  |
-| prevPage | `EventEmitter<Pagination>` | Emitted when the previous page is requested.  |
+| -- | -- | -- |
+| change | `EventEmitter<PaginationModel>` | Emitted when pagination changes in any way. |
+| changePageNumber | `EventEmitter<PaginationModel>` | Emitted when the page number changes. |
+| changePageSize | `EventEmitter<PaginationModel>` | Emitted when the page size changes. |
+| nextPage | `EventEmitter<PaginationModel>` | Emitted when the next page is requested. |
+| prevPage | `EventEmitter<PaginationModel>` | Emitted when the previous page is requested. |
 
 ## Details
 

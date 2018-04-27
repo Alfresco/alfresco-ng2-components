@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Auth Guard Ecm service
 
 Adds authentication with Content Services to a route within the app.

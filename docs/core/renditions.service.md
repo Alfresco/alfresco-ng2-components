@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Deprecated
 ---
+
 # Renditions service
 
 Manages prearranged conversions of content to different formats.
@@ -10,20 +11,48 @@ Manages prearranged conversions of content to different formats.
 
 ### Methods
 
-`isRenditionAvailable(nodeId: string, encoding: string): Observable<boolean>`<br/>
-Has the specified rendition been set up for this item?
+-   `convert(nodeId: string = null, encoding: string = null, pollingInterval: number = 1000, retries: number = 5): Observable<any>`<br/>
 
-`isConversionPossible(nodeId: string, encoding: string): Observable<boolean>`<br/>
-Is it possible to convert this item to the specified format?
+    -   `nodeId: string = null` -  
+    -   `encoding: string = null` -  
+    -   `pollingInterval: number = 1000` -  
+    -   `retries: number = 5` -  
+    -   **Returns** `Observable<any>` - 
 
-`getRenditionUrl(nodeId: string, encoding: string): string`<br/>
-Gets a URL linking to a rendition.
+-   `createRendition(nodeId: string = null, encoding: string = null): Observable<__type>`<br/>
 
-`getRenditionsListByNodeId(nodeId: string): Observable<RenditionPaging>`<br/>
-Gets all available renditions for an item.
+    -   `nodeId: string = null` -  
+    -   `encoding: string = null` -  
+    -   **Returns** `Observable<__type>` - 
 
-`convert(nodeId: string, encoding: string, pollingInterval: number = 1000)`<br/>
-Performs a format conversion on an item directly.
+-   `getRendition(nodeId: string = null, encoding: string = null): Observable<RenditionEntry>`<br/>
+
+    -   `nodeId: string = null` -  
+    -   `encoding: string = null` -  
+    -   **Returns** `Observable<RenditionEntry>` - 
+
+-   `getRenditionUrl(nodeId: string = null, encoding: string = null): string`<br/>
+
+    -   `nodeId: string = null` -  
+    -   `encoding: string = null` -  
+    -   **Returns** `string` - 
+
+-   `getRenditionsListByNodeId(nodeId: string = null): Observable<RenditionPaging>`<br/>
+
+    -   `nodeId: string = null` -  
+    -   **Returns** `Observable<RenditionPaging>` - 
+
+-   `isConversionPossible(nodeId: string = null, encoding: string = null): Observable<boolean>`<br/>
+
+    -   `nodeId: string = null` -  
+    -   `encoding: string = null` -  
+    -   **Returns** `Observable<boolean>` - 
+
+-   `isRenditionAvailable(nodeId: string = null, encoding: string = null): Observable<boolean>`<br/>
+
+    -   `nodeId: string = null` -  
+    -   `encoding: string = null` -  
+    -   **Returns** `Observable<boolean>` -
 
 ## Details
 
@@ -33,7 +62,7 @@ version of ADF.
 ACS allows content items to be converted to other formats for display or delivery.
 For example, a raw text file might be converted to HTML to enable better formatting
 in a web browser or a PDF might be converted to an equivalent bitmap image. A
-*rendition* is a prearranged conversion that is set up for an item for convenient
+_rendition_ is a prearranged conversion that is set up for an item for convenient
 repeated use. More information about renditions is available in the
 [Content Services documentation](https://docs.alfresco.com/5.2/references/dev-extension-points-content-transformer.html).
 

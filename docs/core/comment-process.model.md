@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Comment Process model
 
 Represents a comment added to a Process Services task or process instance.

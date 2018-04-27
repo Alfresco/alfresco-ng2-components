@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Log Service
 
 Provide a log functionality for your ADF application.
@@ -30,20 +31,20 @@ export class AppComponent {
 }
 ```
 
-### Log levels 
+### Log levels
 
 The log service provide 6 level of logs:
 
-Name | Level
--|-
-TRACE |5
-DEBUG |4
-INFO |3
-WARN |2
-ERROR |1
-SILENT |0
+| Name | Level |
+| ---- | ----- |
+| TRACE | 5 |
+| DEBUG | 4 |
+| INFO | 3 |
+| WARN | 2 |
+| ERROR | 1 |
+| SILENT | 0 |
 
-You can configure the log level setting the ***logLevel*** properties in the **app.config.json**. By default the level is TRACE.
+You can configure the log level setting the **_logLevel_** properties in the **app.config.json**. By default the level is TRACE.
 
 If you want set for example the log to warning:
 
@@ -57,7 +58,7 @@ If you want set for example the log to warning:
 
 ### Log message bus
 
-The logservice provide also an Observable ***onMessage***  where you can subscribe and recive all the logs: 
+The logservice provide also an Observable **_onMessage_**  where you can subscribe and recive all the logs: 
 
 The messagge object recived form the bus is composed:
 
@@ -67,7 +68,7 @@ The messagge object recived form the bus is composed:
     type: "ERROR|DEBUG|INFO|LOG|TRACE|WARN|ASSERT"
 }
 ```
- 
+
 ## Usage
 
 ```ts

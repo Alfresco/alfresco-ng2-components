@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # DataTableAdapter interface
 
 Defines how table data is supplied to [DataTable](datatable.component.md)
@@ -10,7 +11,7 @@ and [Tasklist](../process-services/task-list.component.md) components.
 ## Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | selectedRow | DataRow | The data for the currently selected row. |
 
 ## Methods
@@ -32,7 +33,6 @@ Get/set the sorting key and direction (ascending or descending).
 
 `sort(key?: string, direction?: string): void;`
 Sort the table with a specified key and direction (ascending or descending).
-
 
 ## Details
 
@@ -143,10 +143,9 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
     }
 ] 
 */
-
 ```
 
 ## See also
 
-- [Datatable component](datatable.component.md)
-- [Task list component](../process-services/task-list.component.md)
+-   [Datatable component](datatable.component.md)
+-   [Task list component](../process-services/task-list.component.md)

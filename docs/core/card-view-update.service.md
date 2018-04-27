@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Card View Update service
 
 Reports edits and clicks within fields of a Card View component.

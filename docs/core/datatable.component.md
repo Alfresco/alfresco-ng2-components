@@ -16,6 +16,8 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 
 -   [Basic usage](#basic-usage)
 
+-   [Class members](#class-members)
+
     -   [Properties](#properties)
     -   [Events](#events)
 
@@ -128,32 +130,32 @@ export class DataTableDemo {
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| data | `DataTableAdapter` |  | Data source for the table  |
-| display | `string` | `DisplayMode.List` | Selects the display mode of the table. Can be "list" or "gallery".  |
-| rows | `any[]` | `[]` | The rows that the datatable will show.  |
-| selectionMode | `string` | `'single'` | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| multiselect | `boolean` | `false` | Toggles multiple row selection, which renders checkboxes at the beginning of each row.  |
-| actions | `boolean` | `false` | Toggles the data actions column.  |
-| actionsPosition | `string` | `'right'` | Position of the actions dropdown menu. Can be "left" or "right".  |
-| fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing.  |
-| contextMenu | `boolean` | `false` | Toggles custom context menu for the component.  |
-| allowDropFiles | `boolean` | `false` | Toggles file drop support for rows (see  [Upload directive](upload.directive.md) for further details). |
+| -- | -- | -- | -- |
+| actions | `boolean` | false | Toggles the data actions column. |
+| actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
+| allowDropFiles | `boolean` | false | Toggles file drop support for rows (see [Upload directive](upload.directive.md) for further details). |
+| contextMenu | `boolean` | false | Toggles custom context menu for the component. |
+| data | `DataTableAdapter` |  | Data source for the table |
+| display | `string` |  DisplayMode.List | Selects the display mode of the table. Can be "list" or "gallery". |
+| fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing. |
+| loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
+| multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row. |
+| noPermission | `boolean` | false | Flag that indicates if the datatable should show the "no permission" template. |
 | rowStyle | `string` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
-| rowStyleClass | `string` | `''` | The CSS class to apply to every row.  |
-| showHeader | `boolean` | `true` | Toggles the header.  |
-| loading | `boolean` | `false` | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
-| noPermission | `boolean` | `false` | Flag that indicates if the datatable should show the "no permission" template.  |
+| rowStyleClass | `string` | "" | The CSS class to apply to every row. |
+| rows | `any[]` |  \[] | The rows that the datatable will show. |
+| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showHeader | `boolean` | true | Toggles the header. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| rowClick | `EventEmitter<DataRowEvent>` | Emitted when the user clicks a row.  |
-| rowDblClick | `EventEmitter<DataRowEvent>` | Emitted when the user double-clicks a row.  |
-| showRowContextMenu | `EventEmitter<DataCellEvent>` | Emitted before the context menu is displayed for a row.  |
-| showRowActionsMenu | `EventEmitter<DataCellEvent>` | Emitted before the actions menu is displayed for a row.  |
-| executeRowAction | `EventEmitter<DataRowActionEvent>` | Emitted when the user executes a row action.  |
+| -- | -- | -- |
+| executeRowAction | `EventEmitter<DataRowActionEvent>` | Emitted when the user executes a row action. |
+| rowClick | `EventEmitter<DataRowEvent>` | Emitted when the user clicks a row. |
+| rowDblClick | `EventEmitter<DataRowEvent>` | Emitted when the user double-clicks a row. |
+| showRowActionsMenu | `EventEmitter<DataCellEvent>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | `EventEmitter<DataCellEvent>` | Emitted before the context menu is displayed for a row. |
 
 ## Details
 

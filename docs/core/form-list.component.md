@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Form List Component
 
 Shows APS forms as a list.
@@ -19,5 +20,5 @@ Shows APS forms as a list.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| forms | `any[]` | `[]` | The array that contains the information to show inside the list.  |
+| -- | -- | -- | -- |
+| forms | `any[]` |  \[] | The array that contains the information to show inside the list. |

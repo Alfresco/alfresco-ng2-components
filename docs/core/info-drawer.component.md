@@ -47,7 +47,8 @@ Displays a sidebar-style information panel with tabs.
 
 ## Details
 
-This is a variant of the [Info Drawer Layout component](info-drawer-layout.component.md) that displays information in tabs. You can use the `adf-info-drawer-tab` subcomponent to add tabs (as shown in the example) and the `currentTab` output property to select the currently active tab.
+This is a variant of the [Info Drawer Layout component](info-drawer-layout.component.md) that displays information in tabs. You can use the `adf-info-drawer-tab` subcomponent to add tabs (as shown in the example
+and the `currentTab` output property to select the currently active tab.
 
 You can also customize the three regions (title, buttons and content) as with the Info Drawer Layout component.
 

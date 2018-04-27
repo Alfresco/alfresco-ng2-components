@@ -2,6 +2,7 @@
 Added: v2.1.0
 Status: Active
 ---
+
 # Search Configuration service
 
 Provides fine control of parameters to a search.
@@ -10,8 +11,12 @@ Provides fine control of parameters to a search.
 
 ### Methods
 
-`generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): QueryBody`<br/>
-Generates a QueryBody object with custom search parameters.
+-   `generateQueryBody(searchTerm: string = null, maxResults: number = null, skipCount: number = null): QueryBody`<br/>
+
+    -   `searchTerm: string = null` -  
+    -   `maxResults: number = null` -  
+    -   `skipCount: number = null` -  
+    -   **Returns** `QueryBody` -
 
 ## Details
 

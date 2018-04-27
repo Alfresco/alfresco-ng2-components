@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Product Version model
 
 Contains version and license information classes for Alfresco products.

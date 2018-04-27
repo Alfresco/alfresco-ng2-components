@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Shared Links Api service
 
 Finds shared links to Content Services items.
@@ -10,9 +11,19 @@ Finds shared links to Content Services items.
 
 ### Methods
 
--   `getSharedLinks(options: any = {}): Observable<NodePaging>`  
-    Gets shared links available to the current user.  
-    -   `options` - Options supported by JSAPI
+-   `createSharedLinks(nodeId: string = null, options: any =  {}): Observable<SharedLinkEntry>`<br/>
+    Create a shared links available to the current user.
+    -   `nodeId: string = null` -  
+    -   `options: any =  {}` -  Options supported by JSAPI
+    -   **Returns** `Observable<SharedLinkEntry>` - 
+-   `deleteSharedLink(sharedId: string = null): Observable<SharedLinkEntry>`<br/>
+    delete shared links
+    -   `sharedId: string = null` -  to delete
+    -   **Returns** `Observable<SharedLinkEntry>` - 
+-   `getSharedLinks(options: any =  {}): Observable<NodePaging>`<br/>
+    Gets shared links available to the current user.
+    -   `options: any =  {}` -  Options supported by JSAPI
+    -   **Returns** `Observable<NodePaging>` -
 
 ## Details
 

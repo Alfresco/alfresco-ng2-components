@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # App Config service
 
 Supports app configuration settings, stored server side.
@@ -100,10 +101,10 @@ The supported variables are:
 | port | `location.port` |
 
 ## App Config onLoad Stream
+
 When the app config is loaded correctly an onChange event is sent with the whole set app config properties. This comes in handy when a component wants to react to some property change or interact with the app config when it's correctly loaded.
 
 ```ts
-
     appConfig.onLoad.subscribe((appConfig) => {
         console.log(appConfig); //this is the representation of the app-config
     });
