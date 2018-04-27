@@ -12,10 +12,13 @@ Stores key-value data items as browser cookies.
 
 ### Methods
 
--   `getItem(key: string = null): string | null`<br/>
-    Retrieves a cookie by its key.
+-   `clear()`<br/>
+
+    -   `getItem(key: string = null): string | null`<br/>
+        Retrieves a cookie by its key.
     -   `key: string = null` -  Key to identify the cookie
     -   **Returns** `string | null` - The cookie data or null if it is not found
+
 -   `isEnabled(): boolean`<br/>
     Checks if cookies are enabled.
     -   **Returns** `boolean` - True if enabled, false otherwise

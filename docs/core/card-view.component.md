@@ -2,11 +2,28 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Card View component
 
 Displays a configurable property list renderer.
 
 ![adf-custom-view](../docassets/images/adf-custom-view.png)
+
+## Contents
+
+-   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+
+-   [Details](#details)
+
+    -   [Editing](#editing)
+    -   [Defining properties](#defining-properties)
+    -   [Defining your custom card Item](#defining-your-custom-card-item)
+
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -21,11 +38,11 @@ Displays a configurable property list renderer.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| properties | [CardViewItem](#defining-properties)\[] | - | (**required**) The custom view to render |
-| editable | boolean | - | If the component editable or not |
-| displayEmpty | boolean | true | Whether to show empty properties in non-editable mode |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| displayEmpty | `boolean` | true |  |
+| editable | `boolean` |  |  |
+| properties | `CardViewItem[]` |  |  |
 
 ## Details
 
@@ -145,7 +162,7 @@ const textItemProperty = new CardViewTextItemModel(options);
 | displayValue\* | string | --- | The value to render |
 | editable | boolean | false | Whether the property editable or not |
 | clickable | boolean | false | Whether the property clickable or not |
-| icon | string | The material icon to show against the clickable property |
+| icon | string | The material icon to show against the clickable property |  |
 | multiline | string | false | Single or multiline text |
 | pipes | CardViewTextItemPipeProperty\[] | \[] | Pipes to be applied on the displayValue |
 

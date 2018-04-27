@@ -13,7 +13,7 @@ Shows how to document a method.
 ## Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------- | ----------- |
 | prop1 | string | 'hello' | Many services don't need a properties table. Delete this section if you don't need it. |
 | prop2 | boolean | true | Prop tables should have name, type, default and description, in that order. Leave default blank if appropriate. |
 
@@ -27,7 +27,7 @@ as necessary. Usually, the title should be derived from the Angular name with th
 if it looks wrong to you.
 
 The main difference between service and component docs is that services usually have methods. Replace
-the method signature and description with your own text but keep the &lt;br&gt; at the end of the
+the method signature and description with your own text but keep the &lt;br> at the end of the
 signature line.
 
 ### Subsection
@@ -37,6 +37,7 @@ explanation. Add them as level 3 headings in the Details part only - to keep the
 of the docs, you shouldn't normally add any new level 1 or 2 sections to the Markdown.
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+
 <!-- seealso start -->
 
 <!-- seealso end -->

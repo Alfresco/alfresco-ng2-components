@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Accordion Component
 
 Creates a collapsible accordion menu.

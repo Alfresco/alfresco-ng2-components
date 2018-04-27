@@ -48,13 +48,13 @@ Displays the standard three-region ADF application layout.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| sidenavMin | `number` |  | (**required**) Width in pixels when compacted |
-| sidenavMax | `number` |  | (**required**) Width in pixels when expanded |
-| stepOver | `number` |  | (**required**) "Breakpoint" size (ie, number of pixels for selecting between mobile and desktop layouts) |
-| hideSidenav | `boolean` | false | Toggles showing/hiding the navigation region |
-| expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| expandedSidenav | `boolean` | true |  |
+| hideSidenav | `boolean` | false |  |
+| sidenavMax | `number` |  |  |
+| sidenavMin | `number` |  |  |
+| stepOver | `number` |  |  |
 
 ## Details
 
@@ -85,8 +85,8 @@ Mobile layout (screen width less than the `stepOver` value):
 ### Public attributes
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| menuOpenState$ | Observable&lt;boolean&gt; | true | Another way to listen to menu open/closed state |
+| ---- | ---- | ------- | ----------- |
+| menuOpenState$ | Observable&lt;boolean> | true | Another way to listen to menu open/closed state |
 
 ### Template context
 
@@ -104,5 +104,5 @@ Beside the template context's **isMenuMinimized** variable, another way to liste
 
 Every time the menu state is changed, the following values are emitted:
 
-- true, if the menu got into opened state
-- false, if the menu git into closed state
+-   true, if the menu got into opened state
+-   false, if the menu git into closed state

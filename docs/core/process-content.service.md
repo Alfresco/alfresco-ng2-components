@@ -17,12 +17,12 @@ Manipulates content related to a Process Instance or Task Instance in APS.
     -   `content: any = null` -  File to associate
     -   `opts?: any = null` - (Optional) Options supported by JSAPI
     -   **Returns** `Observable<any>` - Details of created content
--   `createTaskRelatedContent(taskId: string = null, file: any = null, opts?: any = null): any`<br/>
+-   `createTaskRelatedContent(taskId: string = null, file: any = null, opts?: any = null): Observable<any>`<br/>
     Associates an uploaded file with a task instance.
     -   `taskId: string = null` -  ID of the target task
     -   `file: any = null` -  File to associate
     -   `opts?: any = null` - (Optional) Options supported by JSAPI
-    -   **Returns** `any` - Details of created content
+    -   **Returns** `Observable<any>` - Details of created content
 -   `createTemporaryRawRelatedContent(file: any = null): Observable<RelatedContentRepresentation>`<br/>
     Create temporary related content from an uploaded file.
     -   `file: any = null` -  File to use for content

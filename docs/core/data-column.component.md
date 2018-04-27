@@ -17,6 +17,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 -   [Details](#details)
 
+    -   [Conditional visibility](#conditional-visibility)
     -   [Automatic column header translation](#automatic-column-header-translation)
     -   [Custom tooltips](#custom-tooltips)
     -   [Column Template](#column-template)

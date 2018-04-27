@@ -12,15 +12,16 @@ Adds and retrieves comments for nodes in Content Services.
 
 ### Methods
 
--   `addNodeComment(nodeId: string, message: string): Observable<CommentModel>`<br/>
-    Adds a comment to a node.
-    -   `nodeId: string` -  ID of the target node
-    -   `message: string` -  Text for the comment
-    -   **Returns** `Observable<CommentModel>` - Details of the comment added
--   `getNodeComments(nodeId: string): Observable<CommentModel[]>`<br/>
-    Gets all comments that have been added to a node.
-    -   `nodeId: string = null` -  ID of the target node
-    -   **Returns** `Observable<CommentModel[]>` - Details for each comment
+-   `addNodeComment(nodeId: string = null, message: string = null): Observable<CommentModel>`<br/>
+
+    -   `nodeId: string = null` -  
+    -   `message: string = null` -  
+    -   **Returns** `Observable<CommentModel>` - 
+
+-   `getNodeComments(nodeId: string = null): Observable<CommentModel[]>`<br/>
+
+    -   `nodeId: string = null` -  
+    -   **Returns** `Observable<CommentModel[]>` -
 
 ## Details
 

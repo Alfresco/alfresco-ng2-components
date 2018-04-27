@@ -8,6 +8,21 @@ Last reviewed: 2018-04-10
 
 Selectively disables an HTML element or Angular component
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+
+-   [Details](#details)
+
+    -   [HTML element example](#html-element-example)
+    -   [Angular component example](#angular-component-example)
+    -   [Implementing the NodePermissionSubject interface](#implementing-the-nodepermissionsubject-interface)
+    -   [Defining your component as an EXTENDIBLE_COMPONENT parent component](#defining-your-component-as-an-extendible_component-parent-component)
+
 ## Basic Usage
 
 ```html

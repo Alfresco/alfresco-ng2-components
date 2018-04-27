@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Favorites Api service
 
 Gets a list of items a user has marked as their favorites.
@@ -10,8 +11,26 @@ Gets a list of items a user has marked as their favorites.
 
 ### Methods
 
-`getFavorites(personId: string, options?: any): Observable<NodePaging>`<br/>
-Gets the favorites for a user.
+-   `getFavorites(personId: string = null, options?: any = null): Observable<NodePaging>`<br/>
+
+    -   `personId: string = null` -  
+    -   `options?: any = null` - (Optional) 
+    -   **Returns** `Observable<NodePaging>` - 
+
+-   `remapFavoriteEntries(entries: any[] = null): any[]`<br/>
+
+    -   `entries: any[] = null` -  
+    -   **Returns** `any[]` - 
+
+-   `remapFavoritesData(data: any =  {}): NodePaging`<br/>
+
+    -   `data: any =  {}` -  
+    -   **Returns** `NodePaging` - 
+
+-   `remapEntry(__namedParameters: object = null): any`<br/>
+
+    -   `__namedParameters: object = null` -  
+    -   **Returns** `any` -
 
 ## Details
 

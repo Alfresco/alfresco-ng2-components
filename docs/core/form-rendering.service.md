@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Form Rendering service
 
 Maps an APS form field type string onto the corresponding form widget component type.
@@ -10,19 +11,21 @@ Maps an APS form field type string onto the corresponding form widget component 
 
 ### Methods
 
--   `getComponentTypeResolver(type: string, defaultValue: Type<{}> = this.defaultValue): DynamicComponentResolveFunction`  
-    Gets the currently active ComponentTypeResolver function for a field type.  
-    -   `type` - The type whose resolver you want
-    -   `defaultValue` - Default type returned for types that are not yet mapped
--   `setComponentTypeResolver(type: string, resolver: DynamicComponentResolveFunction, override: boolean = false)`  
-    Sets or optionally replaces a ComponentTypeResolver function for a field type.  
-    -   `type` - The type whose resolver you want to set
-    -   `resolver` - The new resolver function
-    -   `override` - The new resolver will only replace an existing one if this parameter is true
--   `resolveComponentType(model: DynamicComponentModel, defaultValue: Type<{}> = this.defaultValue): Type<{}>`  
-    Finds the component type that is needed to render a form field.  
-    -   `model` - [Form field model](form-field.model.md) for the field to render
-    -   `defaultValue` - Default type returned for field types that are not yet mapped.
+-   `getComponentTypeResolver(type: string = null, defaultValue: Type<__type> =  this.defaultValue): DynamicComponentResolveFunction`<br/>
+    Gets the currently active ComponentTypeResolver function for a field type.
+    -   `type: string = null` -  The type whose resolver you want
+    -   `defaultValue: Type<__type> =  this.defaultValue` -  Default type returned for types that are not yet mapped
+    -   **Returns** `DynamicComponentResolveFunction` - 
+-   `resolveComponentType(model: DynamicComponentModel = null, defaultValue: Type<__type> =  this.defaultValue): Type<__type>`<br/>
+    Finds the component type that is needed to render a form field.
+    -   `model: DynamicComponentModel = null` -  (form-field.model.md) for the field to render
+    -   `defaultValue: Type<__type> =  this.defaultValue` -  Default type returned for field types that are not yet mapped.
+    -   **Returns** `Type<__type>` - 
+-   `setComponentTypeResolver(type: string = null, resolver: DynamicComponentResolveFunction = null, override: boolean = false)`<br/>
+    Sets or optionally replaces a ComponentTypeResolver function for a field type.
+    -   `type: string = null` -  The type whose resolver you want to set
+    -   `resolver: DynamicComponentResolveFunction = null` -  The new resolver function
+    -   `override: boolean = false` -  The new resolver will only replace an existing one if this parameter is true
 
 ## Details
 

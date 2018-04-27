@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Alfresco Content service
 
 Gets URLs and access info and creates folders in Content Services.
@@ -25,7 +26,7 @@ Creates a folder.
 `hasPermission(node: any, permission: PermissionsEnum|string): boolean`<br/>
 Checks if the user has the specified permissions for `node`.
 
-`hasAllowableOperations(node: any): boolean `<br/>
+`hasAllowableOperations(node: any): boolean`<br/>
 Checks if the the node has the `allowableOperations` property.
 
 ## Details

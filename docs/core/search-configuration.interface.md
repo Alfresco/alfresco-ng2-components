@@ -2,6 +2,7 @@
 Added: v2.1.0
 Status: Active
 ---
+
 # Search Configuration interface
 
 Provides fine control of parameters to a search.
