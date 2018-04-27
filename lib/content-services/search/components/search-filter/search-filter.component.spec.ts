@@ -239,7 +239,7 @@ describe('SearchSettingsComponent', () => {
     it('should fetch facet fields from response payload', () => {
         component.responseFacetFields = [];
 
-        const fields = [
+        const fields: any = [
             { label: 'f1', buckets: [] },
             { label: 'f2', buckets: [] }
         ];
@@ -257,7 +257,7 @@ describe('SearchSettingsComponent', () => {
     });
 
     it('should restore expanded state for new response facet fields', () => {
-        component.responseFacetFields = [
+        component.responseFacetFields = <any> [
             { label: 'f1', buckets: [] },
             { label: 'f2', buckets: [], expanded: true }
         ];
@@ -286,7 +286,7 @@ describe('SearchSettingsComponent', () => {
         const bucket2 = { label: 'b2', $field: 'f2', count: 1, filterQuery: 'q2' };
 
         component.selectedBuckets = [ bucket2 ];
-        component.responseFacetFields = [
+        component.responseFacetFields = <any> [
             { label: 'f2', buckets: [] }
         ];
 
