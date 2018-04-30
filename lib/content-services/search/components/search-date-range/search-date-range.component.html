@@ -1,0 +1,32 @@
+<form [formGroup]="form" novalidate (ngSubmit)="apply(form.value, form.valid)">
+
+        <mat-form-field>
+            <input matInput [formControl]="from" [errorStateMatcher]="matcher"
+                   placeholder="{{ 'SEARCH.FILTER.RANGE.FROM-DATE' | translate }}"
+                   [matDatepicker]="fromDatepicker"
+                   [max]="maxFrom">
+            <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromDatepicker></mat-datepicker>
+            <mat-error *ngIf="from.hasError('required')">Required value</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [formControl]="to" [errorStateMatcher]="matcher"
+                   placeholder="{{ 'SEARCH.FILTER.RANGE.TO-DATE' | translate }}"
+                   [matDatepicker]="toDatepicker"
+                   [min]="from.value">
+            <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #toDatepicker></mat-datepicker>
+            <mat-error *ngIf="!hasSelectedDays(from.value, to.value)">No days selected.</mat-error>
+        </mat-form-field>
+
+        <div>
+            <button mat-button color="primary" type="button" (click)="reset()">
+                {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
+            </button>
+            <button mat-button color="primary" type="submit" [disabled]="!form.valid">
+                {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
+            </button>
+        </div>
+    </form>
+

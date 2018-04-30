@@ -21,6 +21,7 @@ import { SearchRadioComponent } from '../search-radio/search-radio.component';
 import { SearchSliderComponent } from '../search-slider/search-slider.component';
 import { SearchNumberRangeComponent } from '../search-number-range/search-number-range.component';
 import { SearchCheckListComponent } from '../search-check-list/search-check-list.component';
+import { SearchDateRangeComponent } from '../search-date-range/search-date-range.component';
 
 @Injectable()
 export class SearchFilterService {
@@ -33,7 +34,8 @@ export class SearchFilterService {
         'radio': SearchRadioComponent,
         'slider': SearchSliderComponent,
         'number-range': SearchNumberRangeComponent,
-        'check-list': SearchCheckListComponent
+        'check-list': SearchCheckListComponent,
+        'date-range': SearchDateRangeComponent
     };
 
 }

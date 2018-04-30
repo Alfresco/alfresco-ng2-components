@@ -178,7 +178,9 @@
       },
       "RANGE": {
         "FROM": "From",
-        "TO": "To"
+        "TO": "To",
+        "FROM-DATE": "Choose a date",
+        "TO-DATE": "Choose a date"
       }
     },
     "ICONS": {
