@@ -1,8 +1,10 @@
 <adf-add-permission-panel
     (select)="onSelect($event)">
 </adf-add-permission-panel>
-<div id="add-permission-actions" *ngIf="showAction">
-   <button mat-button class="adf-permission-action"
+<div id="add-permission-actions">
+   <button mat-button
+          id="add-permission-action-button"
+          class="adf-permission-action"
           [disabled]="selectedItems?.length === 0"
           (click)="applySelection()">
      {{'PERMISSION_MANAGER.ADD-PERMISSION.ADD-ACTION' | translate}}
