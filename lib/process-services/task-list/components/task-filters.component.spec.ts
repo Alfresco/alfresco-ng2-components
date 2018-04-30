@@ -52,6 +52,14 @@ describe('TaskFiltersComponent', () => {
         resolve(fakeGlobalFilter);
     });
 
+    let fakeGlobalEmptyFilter = {
+        message: 'invalid data'
+    };
+
+    let fakeGlobalEmptyFilterPromise = new Promise(function (resolve, reject) {
+        resolve(fakeGlobalEmptyFilter);
+    });
+
     let mockErrorFilterList = {
         error: 'wrong request'
     };
@@ -154,6 +162,21 @@ describe('TaskFiltersComponent', () => {
 
     });
 
+    it('should be able to fetch and select the default if the input filter is not valid', (done) => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalEmptyFilterPromise));
+        spyOn(component, 'createFiltersByAppId').and.stub();
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        component.ngOnChanges({ 'appId': change });
+
+        component.success.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.createFiltersByAppId).not.toHaveBeenCalled();
+            done();
+        });
+    });
+
     it('should select the task filter based on the input by name param', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
@@ -234,7 +257,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should emit an event when a filter is selected', (done) => {
-        let currentFilter = new FilterRepresentationModel({ filter: { state: 'open', assignment: 'fake-involved' } });
+        let currentFilter = fakeGlobalFilter[0];
 
         component.filterClick.subscribe((filter: FilterRepresentationModel) => {
             expect(filter).toBeDefined();
@@ -277,10 +300,8 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should return the current filter after one is selected', () => {
-        let filter = new FilterRepresentationModel({
-            name: 'FakeMyTasks',
-            filter: { state: 'open', assignment: 'fake-assignee' }
-        });
+        let filter = fakeGlobalFilter[1];
+
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(filter);
         expect(component.getCurrentFilter()).toBe(filter);
