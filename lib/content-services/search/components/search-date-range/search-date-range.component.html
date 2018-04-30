@@ -7,7 +7,9 @@
                    [max]="maxFrom">
             <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
             <mat-datepicker #fromDatepicker></mat-datepicker>
-            <mat-error *ngIf="from.hasError('required')">Required value</mat-error>
+            <mat-error *ngIf="from.hasError('required')">
+                {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -17,7 +19,9 @@
                    [min]="from.value">
             <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
             <mat-datepicker #toDatepicker></mat-datepicker>
-            <mat-error *ngIf="!hasSelectedDays(from.value, to.value)">No days selected.</mat-error>
+            <mat-error *ngIf="!hasSelectedDays(from.value, to.value)">
+                    {{ 'SEARCH.FILTER.VALIDATION.NO-DAYS' | translate }}
+            </mat-error>
         </mat-form-field>
 
         <div>

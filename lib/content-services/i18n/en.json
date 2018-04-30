@@ -181,6 +181,11 @@
         "TO": "To",
         "FROM-DATE": "Choose a date",
         "TO-DATE": "Choose a date"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Required value",
+        "NO-DAYS": "No days selected.",
+        "INVALID-FORMAT": "Invalid Format"
       }
     },
     "ICONS": {
