@@ -34,17 +34,14 @@ export class SearchResultComponent implements OnInit {
     queryParamName = 'q';
     searchedWord = '';
     resultNodePageList: NodePaging;
-    maxItems: number;
-    skipCount = 0;
     pagination: Pagination;
 
     constructor(public router: Router,
                 private preferences: UserPreferencesService,
                 private queryBuilder: SearchQueryBuilderService,
                 @Optional() private route: ActivatedRoute) {
-        this.maxItems = this.preferences.paginationSize;
         queryBuilder.paging = {
-            maxItems: this.maxItems,
+            maxItems: this.preferences.paginationSize,
             skipCount: 0
         };
     }
@@ -57,18 +54,14 @@ export class SearchResultComponent implements OnInit {
                 this.queryBuilder.update();
             });
         }
-        this.maxItems = this.preferences.paginationSize;
     }
 
     onSearchResultLoaded(nodePaging: NodePaging) {
         this.resultNodePageList = nodePaging;
-        this.pagination = nodePaging.list.pagination;
+        this.pagination = {...nodePaging.list.pagination };
     }
 
     onRefreshPagination(pagination: Pagination) {
-        this.maxItems = pagination.maxItems;
-        this.skipCount = pagination.skipCount;
-
         this.queryBuilder.paging = {
             maxItems: pagination.maxItems,
             skipCount: pagination.skipCount
