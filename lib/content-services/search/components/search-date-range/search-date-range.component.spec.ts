@@ -1,0 +1,98 @@
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { SearchDateRangeComponent } from './search-date-range.component';
+import moment from 'moment-es6';
+
+describe('SearchDateRangeComponent', () => {
+
+    let component: SearchDateRangeComponent;
+    let fromDate = '2016-10-16';
+    let toDate = '2017-10-16';
+
+    beforeEach(() => {
+        component = new SearchDateRangeComponent();
+    });
+
+    it('should setup form elements on init', () => {
+        component.ngOnInit();
+        expect(component.form).toBeDefined();
+        expect(component.to).toBeDefined();
+        expect(component.form).toBeDefined();
+    });
+
+    it('should reset form', () => {
+        component.ngOnInit();
+        component.form.setValue({ from: fromDate, to: toDate });
+
+        expect(component.from.value).toEqual(fromDate);
+        expect(component.to.value).toEqual(toDate);
+
+        component.reset();
+
+        expect(component.from.value).toEqual('');
+        expect(component.to.value).toEqual('');
+        expect(component.form.value).toEqual({ from: '', to: '' });
+    });
+
+    it('should update query builder on reset', () => {
+        const context: any = {
+            queryFragments: {
+                createdDateRange: 'query'
+            },
+            update() {}
+        };
+
+        component.id = 'createdDateRange';
+        component.context = context;
+
+        spyOn(context, 'update').and.stub();
+
+        component.ngOnInit();
+        component.reset();
+
+        expect(context.queryFragments.createdDateRange).toEqual('');
+        expect(context.update).toHaveBeenCalled();
+    });
+
+    it('should update query builder on value changes', () => {
+        const context: any = {
+            queryFragments: {},
+            update() {}
+        };
+
+        component.id = 'createdDateRange';
+        component.context = context;
+        component.settings = { field: 'cm:created' };
+
+        spyOn(context, 'update').and.stub();
+
+        component.ngOnInit();
+        component.apply({
+            from: fromDate,
+            to: toDate
+        }, true);
+
+        const startDate = moment(fromDate).startOf('day').format();
+        const endDate = moment(toDate).endOf('day').format();
+
+        const expectedQuery = `cm:created:['${startDate}' TO '${endDate}']`;
+        expect(context.queryFragments[component.id]).toEqual(expectedQuery);
+        expect(context.update).toHaveBeenCalled();
+    });
+
+});
