@@ -21,6 +21,5 @@ import { Subject } from 'rxjs/Subject';
 export interface AddPermissionDialogData {
     title?: string;
     nodeId: string;
-    actionName?: string;
     confirm: Subject<MinimalNodeEntity[]>;
 }
