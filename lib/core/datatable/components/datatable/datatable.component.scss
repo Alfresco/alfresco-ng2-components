@@ -1,7 +1,6 @@
 @mixin adf-datatable-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
-    //$custom-background: map-get($theme, custom-background);
     $primary: map-get($theme, primary);
 
     $data-table-font-size: 14px !default;
