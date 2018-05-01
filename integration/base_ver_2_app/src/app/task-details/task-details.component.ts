@@ -14,7 +14,7 @@ export class TaskDetailsComponent implements OnInit {
   taskId: string = null;
   fileShowed: any = null;
   content: any = null;
-  contentName: any= null;
+  contentName: any = null;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -25,7 +25,7 @@ export class TaskDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       if (params.appId && params.appId !== '0') {
-          this.appId = params.appId;
+        this.appId = params.appId;
       }
       if (params.taskId) {
         this.taskId = params.taskId;

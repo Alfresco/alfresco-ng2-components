@@ -1,39 +1,11 @@
 {
   "name": "alfresco-components",
   "description": "Alfresco Angular components",
-  "version": "2.4.0-beta1",
+  "version": "2.4.0-beta2",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "clean": "rimraf node_modules",
-    "clean-lock": "rimraf package-lock.json",
-    "rimraf": "rimraf",
-    "build-webpack": "npm run webpack -- --config config/webpack.build.js --progress --profile --bail",
-    "test": "node node_modules/karma/bin/karma start --reporters mocha,coverage --single-run --component .",
-    "build-style": "npm run bundle-scss && npm run webpack -- --config config/webpack.style.js --progress --profile --bail",
-    "bundle-scss": "node ./config/bundle-scss.js",
-    "test-browser": "node node_modules/karma/bin/karma start karma.conf.js --reporters kjhtml",
-    "coverage": "",
-    "prepublishOnly": "npm run build",
-    "bundlesize-map": "npm run webpack -- --config config/webpack.bundle-check.js --progress --profile --bail",
-    "bundlesize-check": "bundlesize",
-    "markdownlint": "markdownlint ../docs",
-    "lint": "./node_modules/.bin/tslint -p tsconfig.json -c tslint.json",
-    "docindex": "node config/DocProcessor/docProcessor.js ../docs",
-    "copy-i18n": "mkdir -p dist/core/bundles/assets/adf-core/i18n && cp -R core/i18n/* dist/core/bundles/assets/adf-core/i18n && mkdir -p dist/content-services/bundles/assets/adf-content-services/i18n && cp -R content-services/i18n/* dist/content-services/bundles/assets/adf-content-services/i18n && mkdir -p dist/process-services/bundles/assets/adf-process-services/i18n && cp -R process-services/i18n/* dist/process-services/bundles/assets/adf-process-services/i18n && mkdir -p dist/insights/bundles/assets/adf-insights/i18n && cp -R insights/i18n/* dist/insights/bundles/assets/adf-insights/i18n",
-    "copy-assets": "cp -R core/assets/* dist/core/bundles/assets && cp -R content-services/assets/* dist/content-services/bundles/assets && cp -R process-services/assets/* dist/process-services/bundles/assets",
-    "copy-app-schema": "cp core/app-config/schema.json dist/core/app.config.schema.json",
-    "build": "npm run lint && rm -rf node_modules/@alfresco && npm run build-bundles && npm run build-style && npm run copy-i18n && npm run copy-assets && npm run copy-app-schema && npm run bundlesize-check",
-    "build-bundles": "npm run build-core && npm run link-core && npm run build-content && npm run link-content && npm run build-process && npm run build-insights",
-    "link-core": "mkdir -p ./node_modules/@alfresco/adf-core/ && cp -R ./dist/core/* ./node_modules/@alfresco/adf-core/",
-    "link-content": "mkdir -p ./node_modules/@alfresco/adf-content-services/ && cp -R ./dist/content-services/* ./node_modules/@alfresco/adf-content-services/",
-    "build-core": "ng-packagr -p ./core/package.json",
-    "build-content": "ng-packagr -p ./content-services/package.json",
-    "build-process": "ng-packagr -p ./process-services/package.json",
-    "build-insights": "ng-packagr -p ./insights/package.json",
-    "build-export-check": "tsc ./config/export-check/exportCheck.ts",
-    "export-check": "node ./config/export-check/exportCheck.js ./core/public-api.ts ./process-services/public-api.ts ./content-services/public-api.ts ./insights/public-api.ts",
-    "test-export": "npm run build-export-check && npm run export-check",
-    "webpack": "node node_modules/webpack/bin/webpack.js"
+    "test": "node ../node_modules/karma/bin/karma start --reporters mocha,coverage --single-run --component .",
+    "test-browser": "node ./node_modules/karma/bin/karma start karma.conf.js --reporters kjhtml"
   },
   "main": "./index.js",
   "repository": {
@@ -53,24 +25,6 @@
     "process services"
   ],
   "license": "Apache-2.0",
-  "bundlesize": [
-    {
-      "path": "./dist/content-services/bundles/adf-content-services.umd.js",
-      "maxSize": "60 kb"
-    },
-    {
-      "path": "./dist/process-services/bundles/adf-process-services.umd.js",
-      "maxSize": "50 kb"
-    },
-    {
-      "path": "./dist/insights/bundles/adf-insights.umd.js",
-      "maxSize": "50 kb"
-    },
-    {
-      "path": "./dist/core/bundles/adf-core.umd.js",
-      "maxSize": "150 kb"
-    }
-  ],
   "engines": {
     "node": ">=6.0.0"
   },

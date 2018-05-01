@@ -1,5 +1,4 @@
-# http://editorconfig.org
-
+# Editor configuration, see http://editorconfig.org
 root = true
 
 [*]
@@ -15,5 +14,10 @@ indent_style = space
 indent_size = 2
 
 [*.md]
-insert_final_newline = false
+max_line_length = off
+trim_trailing_whitespace = false
+
+[resources/*.json]
+indent_size = 2
+max_line_length = off
 trim_trailing_whitespace = false

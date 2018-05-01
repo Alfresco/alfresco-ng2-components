@@ -2,14 +2,9 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-echo "====== Install demo-shell ===== "
-
-cd $DIR/../demo-shell
-npm install
-
 echo "====== Install lib ===== "
 
-cd $DIR/../lib
+cd $DIR/../
 npm install
 
 echo "====== Install JS-API alpha ===== "
@@ -18,7 +13,7 @@ npm install alfresco-js-api@alpha
 
 echo "====== Build ADF ===== "
 
-npm run build
+npm run build-lib
 
 echo "====== COPY new build in demo shell node_modules ===== "
 
@@ -36,7 +31,6 @@ cp -R $DIR/../lib/dist/insights/* $DIR/../demo-shell/node_modules/@alfresco/adf-
 
 echo "====== Build dist demo shell ===== "
 
-cd $DIR/../demo-shell
 npm run build:dist
 
 echo "====== e2e test ===== "

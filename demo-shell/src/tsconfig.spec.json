@@ -12,13 +12,13 @@
     ],
     "paths": {
       "alfresco-js-api": [
-        "../node_modules/alfresco-js-api/dist/alfresco-js-api.js"
+        "../../node_modules/alfresco-js-api/dist/alfresco-js-api.js"
       ],
       "rxjs/*": [
-        "../node_modules/rxjs/*"
+        "../../node_modules/rxjs/*"
       ],
       "@angular/*": [
-        "../node_modules/@angular/*"
+        "../../node_modules/@angular/*"
       ],
       "@alfresco/adf-core": [
         "../../lib/core"
@@ -34,9 +34,11 @@
       ]
     }
   },
-  "exclude": [
-  ],
+  "exclude": [],
   "angularCompilerOptions": {
     "skipTemplateCodegen": false
-  }
+  },
+  "files": [
+    "polyfills.ts"
+  ]
 }

@@ -142,11 +142,9 @@ if $EXEC_VERSION_JSAPI == true; then
   npm install alfresco-js-api@${JSAPI_VERSION} --no-save
 fi
 
-cd "$DIR/../lib/"
-
 if $EXEC_BUILD == true; then
     echo "====== Build components ====="
-    npm run build || exit 1
+    npm run build-lib || exit 1
 fi
 
 if $EXEC_FAST_TEST == true; then
