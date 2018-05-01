@@ -152,6 +152,11 @@ export interface SearchWidgetSettings {
 }
 ```
 
+Every field declared within the `facetFields` group is presented by a separate collapsible category at runtime. 
+
+By default, users see only top 5 entries. 
+If there are more than 5 entries, the "Show more" button is displayed to allow displaying next block of results.
+
 ![Facet Fields](../docassets/images/search-facet-fields.png)
 
 ### Facet Queries
@@ -172,6 +177,8 @@ export interface SearchWidgetSettings {
     }
 }
 ```
+
+The queries declared in the `facetQueries` are collected into a single collapsible category.
 
 ![Facet Queries](../docassets/images/search-facet-queries.png)
 
