@@ -19,29 +19,22 @@ import { MatDialog } from '@angular/material';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { AddPermissionDialogComponent } from './add-permission-dialog.component';
-import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
-import { MinimalNodeEntryEntity, MinimalNodeEntity } from 'alfresco-js-api';
-import { NodePermissionService } from '../../services/node-permission.service';
+import { AddPermissionDialogComponent } from '../components/add-permission/add-permission-dialog.component';
+import { AddPermissionDialogData } from '../components/add-permission/add-permission-dialog-data.interface';
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { NodePermissionService } from './node-permission.service';
 
 @Injectable()
-export class AddNodePermissionDialogService {
+export class NodePermissionDialogService {
 
     constructor(private dialog: MatDialog,
                 private nodePermissionService: NodePermissionService) {
     }
 
-    openAddPermissionDialog(nodeId: string, title?: string): Observable<MinimalNodeEntryEntity> {
-        const result$ = new Subject<MinimalNodeEntryEntity>();
+    openAddPermissionDialog(nodeId: string, title?: string): Observable<MinimalNodeEntity[]> {
         const confirm = new Subject<MinimalNodeEntity[]>();
 
         confirm.subscribe({
-            next: (selection) => {
-                this.nodePermissionService.updateNodePermissions(nodeId, selection).subscribe({
-                    next: result$.next.bind(result$),
-                    error: result$.error.bind(result$)
-                });
-            },
             complete: this.close.bind(this)
         });
 
@@ -52,7 +45,7 @@ export class AddNodePermissionDialogService {
         };
 
         this.openDialog(data, 'adf-add-permission-dialog', '630px');
-        return result$;
+        return confirm;
     }
 
     private openDialog(data: any, currentPanelClass: string, chosenWidth: string) {
@@ -62,5 +55,11 @@ export class AddNodePermissionDialogService {
     /** Closes the currently open dialog. */
     close() {
         this.dialog.closeAll();
+    }
+
+    updateNodePermissionByDialog(nodeId?: string, title?: string): Observable<MinimalNodeEntryEntity> {
+        return this.openAddPermissionDialog(nodeId, title).switchMap((selection) => {
+            return this.nodePermissionService.updateNodePermissions(nodeId, selection);
+        });
     }
 }

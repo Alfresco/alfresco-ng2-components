@@ -17,14 +17,14 @@
 
 import { SimpleInheritedPermissionTestComponent } from '../../mock/inherited-permission.component.mock';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { PermissionManagerModule } from '../../index';
+import { InheritPermissionDirective } from './inherited-button.directive';
 import { NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 const fakeNodeWithInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}};
 const fakeNodeNoInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : false}};
-/*tslint:disable:ban*/
-fdescribe('InheritPermissionDirective', () => {
+
+describe('InheritPermissionDirective', () => {
 
     let fixture: ComponentFixture<SimpleInheritedPermissionTestComponent>;
     let element: HTMLElement;
@@ -33,26 +33,27 @@ fdescribe('InheritPermissionDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            PermissionManagerModule
+            CoreModule.forRoot()
         ],
         declarations: [
+            InheritPermissionDirective,
             SimpleInheritedPermissionTestComponent
         ]
     });
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         nodeService = TestBed.get(NodesApiService);
-    });
+    }));
 
     it('should be able to render the simple component', async(() => {
         fixture.detectChanges();
         expect(element.querySelector('#sample-button-permission')).not.toBeNull();
         expect(element.querySelector('#update-notification')).toBeNull();
     }));
+
     it('should be able to add inherited permission', async(() => {
         spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeNoInherit));
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, nodeBody) => {

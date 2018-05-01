@@ -17,7 +17,6 @@
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-// import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
@@ -29,8 +28,7 @@ import { AddPermissionDialogData } from './add-permission-dialog-data.interface'
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 
-/*tslint:disable:ban*/
-fdescribe('AddPermissionDialog', () => {
+describe('AddPermissionDialog', () => {
 
     let fixture: ComponentFixture<AddPermissionDialogComponent>;
     let element: HTMLElement;
@@ -101,26 +99,6 @@ fdescribe('AddPermissionDialog', () => {
             expect(selection[0]).not.toBeNull();
             expect(selection[0].entry.id).not.toBeNull();
             expect(fakeAuthorityResults[0].entry.id).toBe(selection[0].entry.id);
-        });
-
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const confirmButton = <HTMLButtonElement> element.querySelector('#add-permission-dialog-confirm-button');
-            confirmButton.click();
-        });
-    }));
-
-    it('should complete the confirm subject when selection is confirmed', async(() => {
-        const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
-        addPermissionPanelComponent.select.emit(fakeAuthorityResults);
-        let selected = false;
-        data.confirm.subscribe((selection) => {
-            selected = true;
-        }, () => {
-
-        }, () => {
-            expect(selected).toBeTruthy();
         });
 
         fixture.detectChanges();
