@@ -24,7 +24,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include adf-login-component-theme($theme);
 @include adf-process-service-component-theme($theme);
 
-
 @include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);
 @include adf-insights-theme($theme);
