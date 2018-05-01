@@ -53,9 +53,9 @@ Provides authentication to ACS and APS.
     -   `password: string = null` -  Password for the login
     -   `rememberMe: boolean = false` -  Stores the user's login details if true
     -   **Returns** `Observable<object>` - Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
--   `logout(): any`<br/>
+-   `logout(): Observable<any>`<br/>
     Logs the user out.
-    -   **Returns** `any` - Response event called when logout is complete
+    -   **Returns** `Observable<any>` - Response event called when logout is complete
 -   `removeTicket()`<br/>
     Removes the login ticket from Storage.
 -   `saveTicketAuth()`<br/>
