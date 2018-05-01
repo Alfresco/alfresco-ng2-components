@@ -52,6 +52,7 @@ export class NodePermissionDialogService {
         this.dialog.open(AddPermissionDialogComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
     }
 
+    /** Closes the currently open dialog. */
     close() {
         this.dialog.closeAll();
     }
