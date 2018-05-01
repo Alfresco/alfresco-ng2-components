@@ -70,6 +70,33 @@ Below is an example configuration:
 
 Please refer to the [schema.json](https://github.com/Alfresco/alfresco-ng2-components/blob/master/lib/core/app-config/schema.json) to get more details on available settings, values and formats.
 
+### Extra fields and filter queries
+
+You can explicitly define the `include` section for the query from within the application configuration file. 
+
+```json
+{
+    "search": {
+        "include": ["path", "allowableOperations"]
+    }
+}
+```
+
+In addition, it is also possible to provide a set of queries that are always executed alongside user-defined settings:
+
+```json
+{
+    "search": {
+        "filterQueries": [
+            { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+            { "query": "NOT cm:creator:System" }
+        ]
+    }
+}
+```
+
+Note that the entries of the `filterQueries` array are joined using the `AND` operator. 
+
 ### Categories
 
 The Search Settings component and Query Builder require a `categories` section provided within the configuration.
@@ -108,6 +135,45 @@ export interface SearchWidgetSettings {
     [indexer: string]: any;
 }
 ```
+
+### Facet Fields
+
+```json
+{
+    "search": {
+        "facetFields": [
+            { "field": "content.mimetype", "mincount": 1, "label": "Type" },
+            { "field": "content.size", "mincount": 1, "label": "Size" },
+            { "field": "creator", "mincount": 1, "label": "Creator" },
+            { "field": "modifier", "mincount": 1, "label": "Modifier" },
+            { "field": "created", "mincount": 1, "label": "Created" }
+        ]
+    }
+}
+```
+
+![Facet Fields](../docassets/images/search-facet-fields.png)
+
+### Facet Queries
+
+```json
+{
+    "search": {
+        "facetQueries": [
+            { "query": "created:2018", "label": "Created This Year" },
+            { "query": "content.mimetype", "label": "Type" },
+            { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
+            { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
+            { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
+            { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large" },
+            { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large" },
+            { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large" }
+        ]
+    }
+}
+```
+
+![Facet Queries](../docassets/images/search-facet-queries.png)
 
 ## Widgets
 
@@ -154,6 +220,8 @@ You can choose a `label` (or i18n resources key) and a `value`, alongside the co
 }
 ```
 
+![Check List Widget](../docassets/images/search-check-list.png)
+
 If user checks both boxes, the underlying query will get the following fragment:
 
 ```text
@@ -183,6 +251,8 @@ Provides ability to select a range between two Dates based on the particular `fi
     }
 }
 ```
+
+![Date Range Widget](../docassets/images/search-date-range.png)
 
 ### Number Range Widget
 
