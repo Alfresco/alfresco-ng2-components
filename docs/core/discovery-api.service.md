@@ -12,12 +12,12 @@ Gets version and license information for Process Services and Content Services.
 
 ### Methods
 
--   `getBpmProductInfo(): any`<br/>
+-   `getBpmProductInfo(): Observable<any>`<br/>
     Gets product information for Process Services.
-    -   **Returns** `any` - ProductVersionModel containing product details
--   `getEcmProductInfo(): any`<br/>
+    -   **Returns** `Observable<any>` - ProductVersionModel containing product details
+-   `getEcmProductInfo(): Observable<any>`<br/>
     Gets product information for Content Services.
-    -   **Returns** `any` - ProductVersionModel containing product details
+    -   **Returns** `Observable<any>` - ProductVersionModel containing product details
 
 ## Details
 

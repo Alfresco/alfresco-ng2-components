@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Comment list component
 
 Shows a list of comments.
@@ -56,14 +57,16 @@ In the component template use the comment list component:
 </adf-comment-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| comments | `any[]` |  | The comments data used to populate the list.  |
+| -- | -- | -- | -- |
+| comments | `CommentModel[]` |  | The comments data used to populate the list. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| clickRow | `EventEmitter<any>` | Emitted when the user clicks on one of the comment rows. |
+| -- | -- | -- |
+| clickRow | `EventEmitter<CommentModel>` | Emitted when the user clicks on one of the comment rows. |
