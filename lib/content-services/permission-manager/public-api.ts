@@ -18,10 +18,12 @@
 export * from './components/permission-list/permission-list.component';
 export * from './components/permission-list/no-permission.component';
 export * from './components/inherited-button.directive';
-export * from './services/node-permission.service';
 export * from './models/permission.model';
-export * from './components/add-permission/add-permission.component';
-export * from './components/add-permission/add-permission.service';
+export * from './services/node-permission-dialog.service';
+export * from './services/node-permission.service';
 export * from './components/add-permission/add-permission-dialog-data.interface';
+export * from './components/add-permission/add-permission-panel.component';
+export * from './components/add-permission/add-permission.component';
+export * from './components/add-permission/add-permission-dialog.component';
 
 export * from './permission-manager.module';
