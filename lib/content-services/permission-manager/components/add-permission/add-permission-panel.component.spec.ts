@@ -24,8 +24,7 @@ import { fakeAuthorityListResult } from '../../../mock/add-permission.component.
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { DebugElement } from '@angular/core';
 
-/*tslint:disable:ban*/
-fdescribe('AddPermissionPanelComponent', () => {
+describe('AddPermissionPanelComponent', () => {
 
     let fixture: ComponentFixture<AddPermissionPanelComponent>;
     let component: AddPermissionPanelComponent;

@@ -23,8 +23,9 @@ import { Observable } from 'rxjs/Observable';
 import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,
          fakeNodeToRemovePermission } from '../../mock/permission-list.component.mock';
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
-/*tslint:disable:ban*/
-fdescribe('NodePermissionService', () => {
+import { NodePermissionDialogService } from './node-permission-dialog.service';
+
+describe('NodePermissionService', () => {
 
     let service: NodePermissionService;
     let nodeService: NodesApiService;
@@ -35,6 +36,7 @@ fdescribe('NodePermissionService', () => {
             CoreModule.forRoot()
         ],
         providers: [
+            NodePermissionDialogService,
             NodePermissionService
         ]
     });

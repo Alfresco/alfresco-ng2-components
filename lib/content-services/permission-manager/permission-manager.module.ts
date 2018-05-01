@@ -28,7 +28,7 @@ import { InheritPermissionDirective } from './components/inherited-button.direct
 import { NodePermissionService } from './services/node-permission.service';
 import { NoPermissionTemplateComponent } from './components/permission-list/no-permission.component';
 import { SearchModule } from '..';
-import { AddNodePermissionDialogService } from './components/add-permission/add-permission.service';
+import { NodePermissionDialogService } from './services/node-permission-dialog.service';
 import { AddPermissionPanelComponent } from './components/add-permission/add-permission-panel.component';
 
 @NgModule({
@@ -45,23 +45,23 @@ import { AddPermissionPanelComponent } from './components/add-permission/add-per
     declarations: [
         PermissionListComponent,
         NoPermissionTemplateComponent,
+        AddPermissionPanelComponent,
         InheritPermissionDirective,
         AddPermissionComponent,
-        AddPermissionDialogComponent,
-        AddPermissionPanelComponent
+        AddPermissionDialogComponent
     ],
     providers: [
-        NodePermissionService,
-        AddNodePermissionDialogService
+        NodePermissionDialogService,
+        NodePermissionService
     ],
-    entryComponents: [ AddPermissionComponent, AddPermissionDialogComponent, AddPermissionPanelComponent ],
+    entryComponents: [ AddPermissionPanelComponent, AddPermissionComponent, AddPermissionDialogComponent ],
     exports: [
         PermissionListComponent,
         NoPermissionTemplateComponent,
+        AddPermissionPanelComponent,
         InheritPermissionDirective,
         AddPermissionComponent,
-        AddPermissionDialogComponent,
-        AddPermissionPanelComponent
+        AddPermissionDialogComponent
     ]
 })
 export class PermissionManagerModule {}

@@ -25,16 +25,16 @@ import { fakeAuthorityResults } from '../../../mock/add-permission.component.moc
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { NodePermissionService } from '../../services/node-permission.service';
 
-/*tslint:disable:ban*/
-fdescribe('AddPermissionComponent', () => {
+describe('AddPermissionComponent', () => {
 
     let fixture: ComponentFixture<AddPermissionComponent>;
     let element: HTMLElement;
     let nodePermissionService: NodePermissionService;
 
     setupTestBed({
-        imports: [ContentTestingModule],
-        providers: [NodePermissionService]
+        imports: [
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {
