@@ -8,7 +8,7 @@ Last reviewed: 2018-03-23
 
 Allow user to search people or group that could be added to the current node permissions.
 
-![Permission List](../docassets/images/adf-permission-list.png)
+![Add Permission Component](../docassets/images/add-permission-component.png)
 
 ## Basic Usage
 
