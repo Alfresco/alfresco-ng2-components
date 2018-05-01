@@ -2,28 +2,32 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Storage service
 
 Stores items in the form of key-value pairs.
 
-## Methods
+## Class members
 
--   `getItem(key: string): string`  
-    Gets an item.  
-    -   `key` - Key to identify the item
--   `setItem(key: string, data: string)`  
-    Stores an item  
-    -   `key` - Key to identify the item
-    -   `data` - Data to store
--   `clear()`  
-    Removes all currently stored items.   
+### Methods
 
--   `removeItem(key: string)`  
-    Removes a single item.  
-    -   `key` - Key to identify the item
--   `hasItem(key: string): boolean`  
-    Is any item currently stored under `key`?  
-    -   `key` - Key identifying item to check
+-   `clear()`<br/>
+    Removes all currently stored items.
+    -   `getItem(key: string = null): string | null`<br/>
+        Gets an item.
+    -   `key: string = null` -  Key to identify the item
+    -   **Returns** `string | null` - 
+-   `hasItem(key: string = null): boolean`<br/>
+    Is any item currently stored under \`key\`?
+    -   `key: string = null` -  Key identifying item to check
+    -   **Returns** `boolean` - 
+-   `removeItem(key: string = null)`<br/>
+    Removes a single item.
+    -   `key: string = null` -  Key to identify the item
+-   `setItem(key: string = null, data: string = null)`<br/>
+    Stores an item
+-   `key: string = null` -  Key to identify the item
+-   `data: string = null` -  Data to store
 
 ## Details
 

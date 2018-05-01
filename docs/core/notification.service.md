@@ -2,23 +2,28 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Notification Service
 
 Shows a notification message with optional feedback.
 
 ![Notification Service screenshot](docassets/images/NotiService.png)
 
-## Methods
+## Class members
 
--   `openSnackMessage(message: string, millisecondsDuration?: number): MatSnackBarRef<any>`  
-    Opens a snackbar notification to show a message.  
-    -   `message` - The message to show
-    -   `millisecondsDuration` - (Optional) Time before notification disappears after being shown
--   `openSnackMessageAction(message: string, action: string, millisecondsDuration?: number): MatSnackBarRef<any>`  
-    Opens a snackbar notification with a message and a response button.  
-    -   `message` - The message to show
-    -   `action` - Caption for the response button
-    -   `millisecondsDuration` - (Optional) Time before the notification disappears (unless the button is clicked)
+### Methods
+
+-   `openSnackMessage(message: string = null, millisecondsDuration?: number = null): MatSnackBarRef<any>`<br/>
+    Opens a snackbar notification to show a message.
+    -   `message: string = null` -  The message to show
+    -   `millisecondsDuration?: number = null` - (Optional) Time before notification disappears after being shown
+    -   **Returns** `MatSnackBarRef<any>` - 
+-   `openSnackMessageAction(message: string = null, action: string = null, millisecondsDuration?: number = null): MatSnackBarRef<any>`<br/>
+    Opens a snackbar notification with a message and a response button.
+    -   `message: string = null` -  The message to show
+    -   `action: string = null` -  Caption for the response button
+    -   `millisecondsDuration?: number = null` - (Optional) Time before the notification disappears (unless the button is clicked)
+    -   **Returns** `MatSnackBarRef<any>` -
 
 ## Details
 

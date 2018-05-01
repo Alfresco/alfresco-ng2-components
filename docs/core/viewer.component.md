@@ -111,14 +111,14 @@ URL with `urlFile`.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| download | `any` | Emitted when user clicks the 'Download' button. |
-| extensionChange | `any` | Emitted when the filename extension changes. |
-| goBack | `any` | Emitted when user clicks the 'Back' button. |
-| navigateBefore | `any` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
-| navigateNext | `any` | Emitted when user clicks 'Navigate Next' (">") button. |
-| print | `any` | Emitted when user clicks the 'Print' button. |
-| share | `any` | Emitted when user clicks the 'Share' button. |
-| showViewerChange | `any` | Emitted when the viewer is shown or hidden. |
+| download | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Download' button. |
+| extensionChange | `EventEmitter<string>` | Emitted when the filename extension changes. |
+| goBack | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Back' button. |
+| navigateBefore | `EventEmitter<Object>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
+| navigateNext | `EventEmitter<Object>` | Emitted when user clicks 'Navigate Next' (">") button. |
+| print | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Print' button. |
+| share | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Share' button. |
+| showViewerChange | `EventEmitter<boolean>` | Emitted when the viewer is shown or hidden. |
 
 ## Keyboard shortcuts
 

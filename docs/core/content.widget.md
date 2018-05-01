@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # APS Content Component
 
 Shows the content preview.

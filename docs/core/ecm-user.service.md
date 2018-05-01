@@ -12,9 +12,9 @@ Gets information about a Content Services user.
 
 ### Methods
 
--   `getCurrentUserInfo(): any`<br/>
+-   `getCurrentUserInfo(): Observable<EcmUserModel>`<br/>
     Gets information about the user who is currently logged-in.
-    -   **Returns** `any` - User information as for getUserInfo
+    -   **Returns** `Observable<EcmUserModel>` - User information as for getUserInfo
 -   `getUserInfo(userName: string = null): Observable<EcmUserModel>`<br/>
     Gets information about a user identified by their username.
     -   `userName: string = null` -  Target username

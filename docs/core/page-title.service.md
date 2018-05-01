@@ -2,15 +2,18 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Page Title service
 
 Sets the page title.
 
-## Methods
+## Class members
 
--   `setTitle(value: string = '')`  
-    Sets the page title.  
-    -   `value` - The new title
+### Methods
+
+-   `setTitle(value: string = "")`<br/>
+    Sets the page title.
+    -   `value: string = ""` -  The new title
 
 ## Details
 

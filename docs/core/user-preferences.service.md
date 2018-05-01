@@ -8,35 +8,40 @@ Last reviewed: 2018-04-16
 
 Stores preferences for components.
 
-## Methods
+## Class members
 
--   `get(property: string, defaultValue?: string): string`  
-    Gets a preference property.  
-    -   `property` - Name of the property
-    -   `defaultValue` - (Optional) Default to return if the property is not found
--   `set(property: string, value: any)`  
-    Sets a preference property.  
-    -   `property` - Name of the property
-    -   `value` - New value for the property
--   `getStoragePrefix(): string`  
-    Gets the active storage prefix for preferences.   
+### Methods
 
--   `setStoragePrefix(value: string)`  
-    Sets the active storage prefix for preferences.  
-    -   `value` - Name of the prefix
--   `getPropertyKey(property: string): string`  
-    Gets the full property key with prefix.  
-    -   `property` - The property name
--   `getDefaultPageSizes(): number[]`  
-    Gets an array containing the available page sizes.   
+-   `get(property: string = null, defaultValue?: string = null): string`<br/>
+    Gets a preference property.
+    -   `property: string = null` -  Name of the property
+    -   `defaultValue?: string = null` - (Optional) Default to return if the property is not found
+    -   **Returns** `string` - 
+-   `getDefaultLocale(): string`<br/>
+    Gets the default locale.
+    -   **Returns** `string` - 
+-   `getDefaultPageSizes(): number[]`<br/>
+    Gets an array containing the available page sizes.
+    -   **Returns** `number[]` - 
+-   `getPropertyKey(property: string = null): string`<br/>
+    Gets the full property key with prefix.
+    -   `property: string = null` -  The property name
+    -   **Returns** `string` - 
+-   `getStoragePrefix(): string`<br/>
+    Gets the active storage prefix for preferences.
+    -   **Returns** `string` - 
+-   `select(property: string = null): Observable<any>`<br/>
 
--   `getDefaultLocale(): string`  
-    Gets the default locale.   
+    -   `property: string = null` -  
+    -   **Returns** `Observable<any>` - 
 
--   `select(property: string) : Observable`
-    Return the value for the user status property changed
-    -   `property` - The property name to query
-
+-   `set(property: string = null, value: any = null)`<br/>
+    Sets a preference property.
+    -   `property: string = null` -  Name of the property
+    -   `value: any = null` -  New value for the property
+-   `setStoragePrefix(value: string = null)`<br/>
+    Sets the active storage prefix for preferences.
+-   `value: string = null` -  Name of the prefix
 
 ## Details
 
@@ -110,4 +115,3 @@ A set of basic properties is added into the enumeration `UserPreferenceValues` w
         console.log(CSRFflag); //this will be true;
     });
 ```
-
