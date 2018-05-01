@@ -35,7 +35,7 @@
 
     <mat-expansion-panel
         *ngFor="let field of responseFacetFields"
-        [expanded]="field.$expanded"
+        [expanded]="field.expanded"
         (opened)="onFacetFieldExpanded(field)"
         (closed)="onFacetFieldCollapsed(field)">
         <mat-expansion-panel-header>
@@ -43,12 +43,19 @@
         </mat-expansion-panel-header>
         <div class="checklist">
             <mat-checkbox
-                *ngFor="let bucket of field.buckets"
+                *ngFor="let bucket of field.getVisibleBuckets()"
                 [checked]="bucket.$checked"
                 (change)="onFacetToggle($event, field, bucket)">
                 {{ bucket.display || bucket.label }} ({{ bucket.count }})
             </mat-checkbox>
         </div>
+
+        <button mat-button
+            *ngIf="field.hasMoreItems()"
+            (click)="field.showMoreItems()">
+            Show more
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
     </mat-expansion-panel>
 
 </mat-accordion>

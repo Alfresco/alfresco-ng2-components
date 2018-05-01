@@ -23,12 +23,8 @@ import { SearchCategory } from './search-category.interface';
 export interface SearchConfiguration {
     include?: Array<string>;
     fields?: Array<string>;
-    query?: {
-        categories: Array<SearchCategory>
-    };
+    categories: Array<SearchCategory>;
     filterQueries?: Array<FilterQuery>;
     facetQueries?: Array<FacetQuery>;
-    facetFields?: {
-        facets: Array<FacetField>
-    };
+    facetFields?: Array<FacetField>;
 }

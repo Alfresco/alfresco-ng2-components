@@ -64,19 +64,19 @@ describe('SearchSettingsComponent', () => {
     });
 
     it('should update facet field model on expand', () => {
-        const field: any = { $expanded: false };
+        const field: any = { expanded: false };
 
         component.onFacetFieldExpanded(field);
 
-        expect(field.$expanded).toBeTruthy();
+        expect(field.expanded).toBeTruthy();
     });
 
     it('should update facet field model on collapse', () => {
-        const field: any = { $expanded: true };
+        const field: any = { expanded: true };
 
         component.onFacetFieldCollapsed(field);
 
-        expect(field.$expanded).toBeFalsy();
+        expect(field.expanded).toBeFalsy();
     });
 
     it('should update bucket model and query builder on facet toggle', () => {
@@ -118,6 +118,7 @@ describe('SearchSettingsComponent', () => {
 
     it('should unselect facet query and update builder', () => {
         const config: SearchConfiguration = {
+            categories: [],
             facetQueries: [
                 { label: 'q1', query: 'query1' }
             ]
@@ -238,7 +239,7 @@ describe('SearchSettingsComponent', () => {
     it('should fetch facet fields from response payload', () => {
         component.responseFacetFields = [];
 
-        const fields = [
+        const fields: any = [
             { label: 'f1', buckets: [] },
             { label: 'f2', buckets: [] }
         ];
@@ -256,9 +257,9 @@ describe('SearchSettingsComponent', () => {
     });
 
     it('should restore expanded state for new response facet fields', () => {
-        component.responseFacetFields = [
+        component.responseFacetFields = <any> [
             { label: 'f1', buckets: [] },
-            { label: 'f2', buckets: [], $expanded: true }
+            { label: 'f2', buckets: [], expanded: true }
         ];
 
         const fields = [
@@ -276,8 +277,8 @@ describe('SearchSettingsComponent', () => {
         component.onDataLoaded(data);
 
         expect(component.responseFacetFields.length).toBe(2);
-        expect(component.responseFacetFields[0].$expanded).toBeFalsy();
-        expect(component.responseFacetFields[1].$expanded).toBeTruthy();
+        expect(component.responseFacetFields[0].expanded).toBeFalsy();
+        expect(component.responseFacetFields[1].expanded).toBeTruthy();
     });
 
     it('should restore checked buckets for new response facet fields', () => {
@@ -285,7 +286,7 @@ describe('SearchSettingsComponent', () => {
         const bucket2 = { label: 'b2', $field: 'f2', count: 1, filterQuery: 'q2' };
 
         component.selectedBuckets = [ bucket2 ];
-        component.responseFacetFields = [
+        component.responseFacetFields = <any> [
             { label: 'f2', buckets: [] }
         ];
 
