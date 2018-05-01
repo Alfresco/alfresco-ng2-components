@@ -1,14 +1,14 @@
 ---
-Added: v2.4.0
+Added: v2.3.0
 Status: Active
-Last reviewed: 2018-05-03
+Last reviewed: 2018-03-23
 ---
 
 # Add Permission Component
 
 Allow user to search people or group that could be added to the current node permissions.
 
-![Add Permission Component](../docassets/images/add-permission-component.png)
+![Permission List](../docassets/images/adf-permission-list.png)
 
 ## Basic Usage
 

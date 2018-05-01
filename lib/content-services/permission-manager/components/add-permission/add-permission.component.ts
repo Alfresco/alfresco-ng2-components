@@ -31,7 +31,7 @@ export class AddPermissionComponent {
     nodeId: string;
 
     @Output()
-    success: EventEmitter<any> = new EventEmitter();
+    success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter();
 
     @Output()
     error: EventEmitter<any> = new EventEmitter();
