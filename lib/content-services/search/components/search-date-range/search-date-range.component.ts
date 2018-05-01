@@ -43,7 +43,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     context?: SearchQueryBuilderService;
     maxFrom: any;
 
-    ngOnInit(): void {
+    ngOnInit() {
         const validators = Validators.compose([
             Validators.required
         ]);
@@ -63,6 +63,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         if (isValid && this.id && this.context && this.settings && this.settings.field) {
             const start = moment(model.from).startOf('day').format();
             const end = moment(model.to).endOf('day').format();
+
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
             this.context.update();
         }
@@ -79,7 +80,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         }
     }
 
-    hasSelectedDays(from: string, to: string) {
+    hasSelectedDays(from: string, to: string): boolean {
         if (from && to) {
             const start = moment(from).startOf('day');
             const end = moment(to).endOf('day');
