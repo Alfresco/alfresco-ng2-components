@@ -480,21 +480,25 @@
         "search": {
           "description": "Search configuration parameters",
           "type": "object",
+          "required": [ "categories" ],
           "properties": {
             "include": {
               "type": "array",
+              "minItems": 1,
               "items": {
                 "type": "string"
               }
             },
             "fields": {
               "type": "array",
+              "minItems": 1,
               "items": {
                 "type": "string"
               }
             },
             "filterQueries": {
               "type": "array",
+              "minItems": 1,
               "items": {
                 "type": "object",
                 "required": [ "query" ],
@@ -504,20 +508,33 @@
               }
             },
             "facetFields": {
-              "type": "object",
-              "required": [ "facets" ],
-              "properties": {
-                "facets": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [ "field", "mincount", "label" ],
-                    "properties": {
-                      "field": { "type": "string" },
-                      "mincount": { "type": "integer" },
-                      "label": { "type": "string" }
-                    }
-                  }
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [ "field", "mincount", "label" ],
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "This specifies the facet field."
+                  },
+                  "mincount": {
+                    "type": "integer",
+                    "description": "This specifies the minimum count required for a facet field to be included in the response. The default value is 1."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "This specifies the label to include in place of the facet field."
+                  },
+                  "prefix": {
+                    "type": "string",
+                    "description": "This restricts the possible constraints to only indexed values with a specified prefix."
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Maximum number of results"
+                  },
+                  "offset": { "type": "integer" }
                 }
               }
             },
@@ -532,36 +549,29 @@
                 }
               }
             },
-            "query": {
-              "type": "object",
-              "required": [ "categories" ],
-              "properties": {
-                "categories": {
-                  "type": "array",
-                  "minItems": 1,
-                  "items": {
+            "categories": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [ "id", "name" ],
+                "properties": {
+                  "id": { "type": "string" },
+                  "name": { "type": "string" },
+                  "enabled": { "type": "boolean" },
+                  "expanded": { "type": "boolean" },
+                  "component": {
                     "type": "object",
-                    "required": [ "id", "name" ],
+                    "required": [ "selector", "settings" ],
                     "properties": {
-                      "id": { "type": "string" },
-                      "name": { "type": "string" },
-                      "enabled": { "type": "boolean" },
-                      "expanded": { "type": "boolean" },
-                      "component": {
-                        "type": "object",
-                        "required": [ "selector", "settings" ],
-                        "properties": {
-                          "selector": { "type": "string" },
-                          "settings": { "type": "object" }
-                        }
-                      }
+                      "selector": { "type": "string" },
+                      "settings": { "type": "object" }
                     }
                   }
                 }
               }
             }
           }
-
         }
     }
 }

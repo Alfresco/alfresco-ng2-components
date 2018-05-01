@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { QueryBody } from 'alfresco-js-api';
+import { QueryBody, RequestFacetFields, RequestFacetField } from 'alfresco-js-api';
 import { SearchCategory } from './search-category.interface';
 import { FilterQuery } from './filter-query.interface';
 import { SearchRange } from './search-range.interface';
@@ -45,8 +45,8 @@ export class SearchQueryBuilderService {
             throw new Error('Search configuration not found.');
         }
 
-        if (this.config.query && this.config.query.categories) {
-            this.categories = this.config.query.categories.filter(f => f.enabled);
+        if (this.config.categories) {
+            this.categories = this.config.categories.filter(f => f.enabled);
         }
 
         this.filterQueries = this.config.filterQueries || [];
@@ -116,10 +116,29 @@ export class SearchQueryBuilderService {
                 fields: this.config.fields,
                 filterQueries: this.filterQueries,
                 facetQueries: this.config.facetQueries,
-                facetFields: this.config.facetFields
+                facetFields: this.facetFields
             };
 
             return result;
+        }
+
+        return null;
+    }
+
+    private get facetFields(): RequestFacetFields {
+        const facetFields = this.config.facetFields;
+
+        if (facetFields && facetFields.length > 0) {
+            return {
+                facets: facetFields.map(facet => <RequestFacetField> {
+                    field: facet.field,
+                    mincount: facet.mincount,
+                    label: facet.label,
+                    limit: facet.limit,
+                    offset: facet.offset,
+                    prefix: facet.prefix
+                })
+            };
         }
 
         return null;

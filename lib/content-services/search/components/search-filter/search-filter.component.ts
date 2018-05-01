@@ -63,11 +63,11 @@ export class SearchFilterComponent implements OnInit {
     }
 
     onFacetFieldExpanded(field: ResponseFacetField) {
-        field.$expanded = true;
+        field.expanded = true;
     }
 
     onFacetFieldCollapsed(field: ResponseFacetField) {
-        field.$expanded = false;
+        field.expanded = false;
     }
 
     onFacetQueryToggle(event: MatCheckboxChange, query: ResponseFacetQuery) {
@@ -143,11 +143,13 @@ export class SearchFilterComponent implements OnInit {
                 return q;
             });
 
-            const expandedFields = this.responseFacetFields.filter(f => f.$expanded).map(f => f.label);
+            const expandedFields = this.responseFacetFields.filter(f => f.expanded).map(f => f.label);
 
             this.responseFacetFields = (context.facetsFields || []).map(
                 (field: ResponseFacetField) => {
-                    field.$expanded = expandedFields.includes(field.label);
+                    field.pageSize = field.pageSize || 5;
+                    field.currentPageSize = field.pageSize;
+                    field.expanded = expandedFields.includes(field.label);
 
                     (field.buckets || []).forEach(bucket => {
                         bucket.$field = field.label;
@@ -160,6 +162,20 @@ export class SearchFilterComponent implements OnInit {
                            bucket.$checked = true;
                         }
                     });
+
+                    field.hasMoreItems = (): boolean => {
+                        return field.buckets && field.buckets.length > 0 && field.buckets.length > field.currentPageSize;
+                    };
+
+                    field.showMoreItems = () => {
+                        field.currentPageSize += field.pageSize;
+                    };
+
+                    field.getVisibleBuckets = (): FacetFieldBucket[] => {
+                        const buckets = field.buckets || [];
+                        return buckets.slice(0, field.currentPageSize);
+                    };
+
                     return field;
                 }
             );
@@ -168,5 +184,4 @@ export class SearchFilterComponent implements OnInit {
             this.responseFacetFields = [];
         }
     }
-
 }

@@ -35,6 +35,8 @@ import { SearchTextComponent } from './components/search-text/search-text.compon
 import { SearchRadioComponent } from './components/search-radio/search-radio.component';
 import { SearchSliderComponent } from './components/search-slider/search-slider.component';
 import { SearchNumberRangeComponent } from './components/search-number-range/search-number-range.component';
+import { SearchCheckListComponent } from './components/search-check-list/search-check-list.component';
+import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     SearchComponent,
@@ -60,7 +62,9 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         SearchTextComponent,
         SearchRadioComponent,
         SearchSliderComponent,
-        SearchNumberRangeComponent
+        SearchNumberRangeComponent,
+        SearchCheckListComponent,
+        SearchDateRangeComponent
     ],
     exports: [
         ...ALFRESCO_SEARCH_DIRECTIVES,
@@ -68,14 +72,18 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         SearchTextComponent,
         SearchRadioComponent,
         SearchSliderComponent,
-        SearchNumberRangeComponent
+        SearchNumberRangeComponent,
+        SearchCheckListComponent,
+        SearchDateRangeComponent
     ],
     entryComponents: [
         SearchWidgetContainerComponent,
         SearchTextComponent,
         SearchRadioComponent,
         SearchSliderComponent,
-        SearchNumberRangeComponent
+        SearchNumberRangeComponent,
+        SearchCheckListComponent,
+        SearchDateRangeComponent
     ]
 })
 export class SearchModule {}
