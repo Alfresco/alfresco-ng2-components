@@ -8,7 +8,7 @@ Last reviewed: 2018-03-23
 
 Searches for people or groups to add to the current node permissions.
 
-![Permission List](../docassets/images/adf-permission-list.png)
+![Add Permission Component](../docassets/images/add-permission-component.png)
 
 ## Basic Usage
 
