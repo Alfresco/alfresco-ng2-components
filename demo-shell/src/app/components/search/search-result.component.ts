@@ -35,11 +35,14 @@ export class SearchResultComponent implements OnInit {
     searchedWord = '';
     resultNodePageList: NodePaging;
     pagination: Pagination;
+    maxItems: number;
+    skipCount = 0;
 
     constructor(public router: Router,
                 private preferences: UserPreferencesService,
                 private queryBuilder: SearchQueryBuilderService,
                 @Optional() private route: ActivatedRoute) {
+        this.maxItems = this.preferences.paginationSize;
         queryBuilder.paging = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0
@@ -62,6 +65,9 @@ export class SearchResultComponent implements OnInit {
     }
 
     onRefreshPagination(pagination: Pagination) {
+        this.maxItems = pagination.maxItems;
+        this.skipCount = pagination.skipCount;
+
         this.queryBuilder.paging = {
             maxItems: pagination.maxItems,
             skipCount: pagination.skipCount
