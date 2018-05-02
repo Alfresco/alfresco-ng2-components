@@ -17,6 +17,8 @@ Displays a configurable property list renderer.
 </adf-card-view>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default | Description |

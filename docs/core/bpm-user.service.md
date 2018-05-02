@@ -6,7 +6,9 @@ Status: Active
 
 Gets information about the current Process Services user.
 
-## Methods
+## Class members
+
+### Methods
 
 `getCurrentUserInfo(): Observable<BpmUserModel>`<br/>
 Gets information about the current user.
