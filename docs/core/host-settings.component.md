@@ -15,6 +15,8 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 </adf-breadcrumb>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

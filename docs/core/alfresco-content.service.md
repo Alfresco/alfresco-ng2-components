@@ -6,7 +6,9 @@ Status: Active
 
 Gets URLs and access info and creates folders in Content Services.
 
-## Methods
+## Class members
+
+### Methods
 
 `getDocumentThumbnailUrl(nodeId: any, attachment?: boolean, ticket?: string): string`<br/>
 Gets a thumbnail URL for a node.

@@ -33,6 +33,8 @@ export class MyComponent implements OnInit {
 }
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

@@ -26,6 +26,8 @@ Displays comments from users involved in a specified task or content and allows 
 </adf-comments>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

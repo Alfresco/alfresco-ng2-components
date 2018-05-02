@@ -56,6 +56,8 @@ In the component template use the comment list component:
 </adf-comment-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

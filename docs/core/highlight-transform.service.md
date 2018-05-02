@@ -6,7 +6,9 @@ Status: Active
 
 Adds HTML to a string to highlight chosen sections.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `highlight(text: string, search: string, wrapperClass: string = 'highlight'): HightlightTransformResult`  
     Searches for `search` string(s) within `text` and highlights all occurrences.  

@@ -35,6 +35,8 @@ Shows a Form from APS
 </adf-form>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
