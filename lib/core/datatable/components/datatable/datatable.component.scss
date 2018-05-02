@@ -170,6 +170,7 @@
         border-collapse: collapse;
         white-space: nowrap;
         font-size: $data-table-font-size;
+        background-color: mat-color($background, card);
 
         /* Firefox fixes */
         border-collapse: unset;
