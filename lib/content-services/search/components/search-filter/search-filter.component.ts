@@ -39,14 +39,16 @@ export class SearchFilterComponent implements OnInit {
     responseFacetQueries: ResponseFacetQueryList;
     responseFacetFields: ResponseFacetField[] = [];
 
-    facetQueriesLabel: string;
-    facetQueriesPageSize: number;
-    facetQueriesExpanded: boolean;
+    facetQueriesLabel: string = 'Facet Queries';
+    facetQueriesPageSize = 5;
+    facetQueriesExpanded = false;
 
     constructor(public queryBuilder: SearchQueryBuilderService, private search: SearchService) {
-        this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
-        this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || 5;
-        this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
+        if (queryBuilder.config && queryBuilder.config.facetQueries) {
+            this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
+            this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || 5;
+            this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
+        }
 
         this.queryBuilder.updated.subscribe(query => {
             this.queryBuilder.execute();

@@ -19,12 +19,16 @@ import { ResponseFacetQuery } from '../../../facet-query.interface';
 
 export class ResponseFacetQueryList {
 
-    items: ResponseFacetQuery[];
-    pageSize: number;
-    currentPageSize: number;
+    items: ResponseFacetQuery[] = [];
+    pageSize: number = 5;
+    currentPageSize: number = 5;
 
     get visibleItems(): ResponseFacetQuery[] {
         return this.items.slice(0, this.currentPageSize);
+    }
+
+    get length(): number {
+        return this.items.length;
     }
 
     constructor(items: ResponseFacetQuery[] = [], pageSize: number = 5) {
