@@ -2,6 +2,9 @@
     <input
         matInput
         [placeholder]="settings?.placeholder"
-        [value]="value"
+        [(ngModel)]="value"
         (change)="onChangedHandler($event)">
+    <button mat-button *ngIf="value" matSuffix mat-icon-button (click)="reset()">
+        <mat-icon>close</mat-icon>
+    </button>
 </mat-form-field>

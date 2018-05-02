@@ -127,6 +127,9 @@ The interface above also describes entries in the `search.query.categories` sect
 
 ![Search Categories](../docassets/images/search-categories-01.png)
 
+Important note: you need at least one category field to be provided in order to execute the query,
+so that filters and selected facets are applied.
+
 ### Settings
 
 Every use case will have a different set of settings.
@@ -367,6 +370,13 @@ Provides ability to select a numeric range based on `min` and `max` values in th
 
 ![Slider Widget](../docassets/images/search-slider.png)
 
+### Resetting slider value
+
+Slider widget comes with a `Clear` button that allows users to reset selected value to the initial state.
+
+This helps to undo changes for scenarios where minimal value (like 0 or predefined number) still should not be used in a query.
+Upon clicking the `Clear` button slider will be reset to the `min` value or `0`, and underlying fragment is removed from the resulting query.
+
 ### Text Widget
 
 ```json
@@ -393,6 +403,9 @@ Provides ability to select a numeric range based on `min` and `max` values in th
 ```
 
 ![Text Widget](../docassets/images/search-text.png)
+
+Important note: you need at least one category field to be provided in order to execute the query,
+so that filters and selected facets are applied.
 
 ## Custom Widgets
 
