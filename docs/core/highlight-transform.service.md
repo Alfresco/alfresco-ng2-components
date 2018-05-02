@@ -2,17 +2,21 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Highlight Transform service
 
 Adds HTML to a string to highlight chosen sections.
 
-## Methods
+## Class members
 
--   `highlight(text: string, search: string, wrapperClass: string = 'highlight'): HightlightTransformResult`  
-    Searches for `search` string(s) within `text` and highlights all occurrences.  
-    -   `text` - Text to search within
-    -   `search` - Text pattern to search for
-    -   `wrapperClass` - CSS class used to provide highlighting style
+### Methods
+
+-   `highlight(text: string = null, search: string = null, wrapperClass: string = "highlight"): HightlightTransformResult`<br/>
+    Searches for \`search\` string(s) within \`text\` and highlights all occurrences.
+    -   `text: string = null` -  Text to search within
+    -   `search: string = null` -  Text pattern to search for
+    -   `wrapperClass: string = "highlight"` -  CSS class used to provide highlighting style
+    -   **Returns** `HightlightTransformResult` -
 
 ## Details
 

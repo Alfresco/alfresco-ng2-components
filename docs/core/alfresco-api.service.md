@@ -28,27 +28,19 @@ export class MyComponent implements OnInit {
 
 ## Class members
 
-### Properties
+### Methods
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| contentApi | `ContentApi` |  | (Read only) Accesses the Content API |
-| nodesApi | `NodesApi` |  | (Read only) Accesses the Nodes API |
-| renditionsApi | `RenditionsApi` |  | (Read only) Accesses the Renditions API |
-| sharedLinksApi | `SharedLinksApi` |  | (Read only) Accesses the Shared Links API |
-| sitesApi | `SitesApi` |  | (Read only) Accesses the Sites API |
-| favoritesApi | `FavoritesApi` |  | (Read only) Accesses the Favorites API |
-| peopleApi | `PeopleApi` |  | (Read only) Accesses the People API |
-| searchApi | `SearchApi` |  | (Read only) Accesses the Search API |
-| versionsApi | `VersionsApi` |  | (Read only) Accesses the Versions API |
-| classesApi | `ClassesApi` |  | (Read only) Accesses the Classes API |
-| groupsApi | `GroupsApi` |  | (Read only) Accesses the Groups API |
+-   `getInstance(): AlfrescoApi`<br/>
 
-### Events
+    -   **Returns** `AlfrescoApi` - 
 
-| Name | Type | Description |
-| --- | --- | --- |
-| nodeUpdated | `Subject<MinimalNodeEntryEntity>` | Emitted when a node updates. |
+-   `load(): Promise<void>`<br/>
+
+    -   **Returns** `Promise<void>` - 
+
+-   `reset(): Promise<void>`<br/>
+
+    -   **Returns** `Promise<void>` -
 
 ## Details
 

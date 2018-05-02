@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Form field component
 
 A form field in an APS form.
@@ -18,11 +19,13 @@ that takes an instance of a `FormFieldModel`:
 This component depends on the `FormRenderingService` to map the `FormFieldModel` to a Form Field UI component
 based on the field type or the metadata information.
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| field | `FormFieldModel` | `null` | Contains all the necessary data needed to determine what UI Widget to use when rendering the field in the form. You would typically not create this data manually but instead create the form in APS and export it to get to all the `FormFieldModel` definitions. |
+| -- | -- | -- | -- |
+| field | `FormFieldModel` |  null | Contains all the necessary data needed to determine what UI Widget to use when rendering the field in the form. You would typically not create this data manually but instead create the form in APS and export it to get to all the `FormFieldModel` definitions. |
 
 ## Details
 
