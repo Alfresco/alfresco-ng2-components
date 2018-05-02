@@ -1,54 +1,67 @@
 ---
 Level: Beginner
 ---
+
 # Adding a new view
 
-Every application developed in Angular is a single page application where the concepts of *view* and *routing* play a key role in the user experience. Being a single page application, the navigation between the different layouts (called *views*) is enabled through the *routing*. In this tutorial you will learn how to create a new view into your application and how to have access to it using a defined endpoint.
+Every application developed in Angular is a single page application where the concepts of *view* and *routing* play a key role in the user experience. Being a single page application, the navigation between the different layouts (called *views*) is enabled through the *routing*. In this tutorial you will learn how to create a new view in your application and how to access it using a defined endpoint.
 
 ## Creating a view
-Into an Angular application, a view is implemented by a regular  component. A view can use other views (so other components), but a view can be used to implement the full layout of your application. This is the reason why creating a view is the task than creating a component.
 
-To create a view, run the following command into a terminal, starting from the root of your project.
+In an Angular application, a view is implemented by a regular component. A view can use other views
+(ie, other components) but a view can also be used to implement the full layout of your application.
+This is the reason why creating a view is not necessarily the same task as creating a component.
+
+To create a view, run the following command in a terminal from the root of your project:
 
     ng generate component my-first-view
 
-For further details about creating a component, you can refer to the tutorial here (link to "Adding a new component").
+For further details about creating a component, refer to the tutorial [here](new-component.md).
 
 ## Routing the view
-An Angular application has one singleton instance of the `Router`  service that is used to match the browser's URL with the corresponding component to display. The `Router`  service must be configured in a typescript file (usually in the , in with a syntax similar to the following source code.
 
-    const appRoutes: Routes = [
-      { path: 'path-in-the-app', component: ExistingComponent },
-      { path: '**', component: PageNotFoundComponent }
-    ];
-    
-    @NgModule({
-      imports: [
-        RouterModule.forRoot(
-          appRoutes,
-          { enableTracing: true } // <-- debugging purposes only.
-        )
-        // other imports here
-      ],
-      ...
-    })
+An Angular application has one singleton instance of the `Router` service that is used to match the browser's URL with the corresponding component to display. The `Router` service must be configured in a Typescript file with a syntax similar to the following source code.
 
-To add the new view to the routing, change the `appRoutes` constant as follow.
+```ts
+const appRoutes: Routes = [
+  { path: 'path-in-the-app', component: ExistingComponent },
+  { path: '**', component: PageNotFoundComponent }
+];
 
-    const appRoutes: Routes = [
-      { path: 'path-in-the-app', component: ExistingComponent },
-      { path: 'my-first-view', component: MyFirstViewComponent }, // <-- Add this!
-      { path: '**', component: PageNotFoundComponent }
-    ];
+@NgModule({
+  imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only.
+    )
+    // other imports here
+  ],
+  ...
+})
+```
+
+To add the new view to the routing, change the `appRoutes` constant as follows:
+
+```ts
+const appRoutes: Routes = [
+  { path: 'path-in-the-app', component: ExistingComponent },
+  { path: 'my-first-view', component: MyFirstViewComponent }, // <-- Add this!
+  { path: '**', component: PageNotFoundComponent }
+];
+```
 
 And remember to import the component in the same file with the following syntax.
 
-    import { MyFirstViewComponent } from './my-first-view/my-first-view.component';
+```ts
+import { MyFirstViewComponent } from './my-first-view/my-first-view.component';
+```
 
-Be aware that the `Router`  service can be declared in a file that can be stored in different places in the application's structure. Usually the place where the `Router`  service is declared is closed to the file containing the root module.
+Be aware that the `Router` service can be declared in a file that can be stored in different places in the application's structure. Usually, the `Router` service is declared in a location close to the file containing
+the root module.
 
 ## Testing the view
-To render the new view through the application and check the user experience, restart the application and open a browser to the following URL.
+
+To render the new view through the application and check the user experience, restart the application and open a browser at the following URL:
 
     http://<ip_address>:<port>/my-first-view
 
@@ -58,55 +71,63 @@ The result should be a very simple page with the following content.
 
 ## View parameters (optional)
 
-In most of the use cases, you might want to add parameters to the view's endpoint. To develop this, change the `appRoutes` constant as follow.
+In most use cases, you will want to add parameters to the view's endpoint. To enable this, change the `appRoutes` constant as follows:
 
-    const appRoutes: Routes = [
-      { path: 'path-in-the-app', component: ExistingComponent },
-      { path: 'my-first-view/:name', component: MyFirstViewComponent }, // <-- Add this!
-      { path: '**', component: PageNotFoundComponent }
-    ];
+```ts
+const appRoutes: Routes = [
+  { path: 'path-in-the-app', component: ExistingComponent },
+  { path: 'my-first-view/:name', component: MyFirstViewComponent }, // <-- Change this!
+  { path: '**', component: PageNotFoundComponent }
+];
+```
 
-Then open the typescript controller for the `MyFirstViewComponent` stored into `src/app/my-first-view` (`my-first-view.component.ts`) where few things need to happen:
+Then open the Typescript controller for the `MyFirstViewComponent` stored in `src/app/my-first-view` (`my-first-view.component.ts`). You need to add a few things here:
 
 1. We need to `import` and `inject` the router into the class.
 2. Subscribe to the router parameters and fetch the value.
 3. Unsubscribe to the router parameters.
 
-While #3 isn't strictly required, it would eventually cause a memory leak in your application: please remember to unsubscribe!
+While #3 isn't strictly required, it would eventually cause a memory leak in your application, so
+please remember to unsubscribe!
 
 Modify the typescript controller `my-first-view.component.ts` to look like this:
 
-	import { Component, OnInit } from '@angular/core';
-	import { ActivatedRoute } from '@angular/router';
-	
-	@Component({
-	  selector: 'app-my-first-view',
-	  templateUrl: './my-first-view.component.html',
-	  styleUrls: ['./my-first-view.component.scss']
-	})
-	export class MyFirstViewComponent implements OnInit {
-	
-	  private params: any;
-	  name: String;
-	
-	  constructor(private route: ActivatedRoute) { }
-	
-	  ngOnInit() {
-	    this.params = this.route.params.subscribe(params => {
-	      this.name = params['name'];
-	    });
-	  }
-	
-	  ngOnDestroy() {
-	    this.params.unsubscribe();
-	  }
-	}
+```ts
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-Next open the template `my-first-view.component.html` in the same folder and print out the greeting like the following source code.
+@Component({
+  selector: 'app-my-first-view',
+  templateUrl: './my-first-view.component.html',
+  styleUrls: ['./my-first-view.component.scss']
+})
+export class MyFirstViewComponent implements OnInit {
 
+  private params: any;
+  name: String;
+
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.params = this.route.params.subscribe(params => {
+      this.name = params['name'];
+    });
+  }
+
+  ngOnDestroy() {
+    this.params.unsubscribe();
+  }
+}
+```
+
+Next open the template `my-first-view.component.html` in the same folder and add the greeting as in
+the following source code.
+
+```html
 	<p>
 	  Hello {{ name }}
 	</p>
+```
 
 You can now navigate to `http://<ip_address>:<port>/my-first-view/sir` and see the nice message "Hello sir".
 
