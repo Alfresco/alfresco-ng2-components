@@ -6,7 +6,9 @@ Status: Active
 
 Gets a list of items a user has marked as their favorites.
 
-## Methods
+## Class members
+
+### Methods
 
 `getFavorites(personId: string, options?: any): Observable<NodePaging>`<br/>
 Gets the favorites for a user.

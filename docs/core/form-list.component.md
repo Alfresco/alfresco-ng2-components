@@ -14,6 +14,8 @@ Shows APS forms as a list.
 </adf-form-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
