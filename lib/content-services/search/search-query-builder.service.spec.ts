@@ -120,10 +120,12 @@ describe('SearchQueryBuilder', () => {
     it('should fetch facet query from config', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetQueries: [
-                { query: 'q1', label: 'query1' },
-                { query: 'q2', label: 'query2' }
-            ]
+            facetQueries: {
+                queries: [
+                    { query: 'q1', label: 'query1' },
+                    { query: 'q2', label: 'query2' }
+                ]
+            }
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const query = builder.getFacetQuery('query2');
@@ -135,9 +137,11 @@ describe('SearchQueryBuilder', () => {
     it('should not fetch empty facet query from the config', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetQueries: [
-                { query: 'q1', label: 'query1' }
-            ]
+            facetQueries: {
+                queries: [
+                    { query: 'q1', label: 'query1' }
+                ]
+            }
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
@@ -273,15 +277,17 @@ describe('SearchQueryBuilder', () => {
             categories: [
                 <any> { id: 'cat1', enabled: true }
             ],
-            facetQueries: [
-                { query: 'q1', label: 'q2' }
-            ]
+            facetQueries: {
+                queries: [
+                    { query: 'q1', label: 'q2' }
+                ]
+            }
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
-        expect(compiled.facetQueries).toEqual(config.facetQueries);
+        expect(compiled.facetQueries).toEqual(config.facetQueries.queries);
     });
 
     it('should build query with custom facet fields', () => {

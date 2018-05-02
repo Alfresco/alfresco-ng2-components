@@ -174,7 +174,8 @@
       "ACTIONS": {
         "CLEAR": "Clear",
         "APPLY": "Apply",
-        "CLEAR-ALL": "Clear all"
+        "CLEAR-ALL": "Clear all",
+        "SHOW-MORE": "Show more"
       },
       "RANGE": {
         "FROM": "From",

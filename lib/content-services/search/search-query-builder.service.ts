@@ -69,7 +69,7 @@ export class SearchQueryBuilderService {
 
     getFacetQuery(label: string): FacetQuery {
         if (label) {
-            const queries = this.config.facetQueries || [];
+            const queries = this.config.facetQueries.queries || [];
             return queries.find(q => q.label === label);
         }
         return null;
@@ -115,7 +115,7 @@ export class SearchQueryBuilderService {
                 paging: this.paging,
                 fields: this.config.fields,
                 filterQueries: this.filterQueries,
-                facetQueries: this.config.facetQueries,
+                facetQueries: this.config.facetQueries.queries,
                 facetFields: this.facetFields
             };
 
