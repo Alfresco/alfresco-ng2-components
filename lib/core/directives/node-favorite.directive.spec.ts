@@ -19,7 +19,8 @@ import { SimpleChange } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
-import { AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AppConfigService } from '../app-config/app-config.service';
+import { StorageService } from '../services/storage.service';
 
 describe('NodeFavoriteDirective', () => {
 

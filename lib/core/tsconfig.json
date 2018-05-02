@@ -25,21 +25,6 @@
       ],
       "@alfresco/adf-content-services": [
         "../content-services"
-      ],
-      "@angular/*": [
-        "../../node_modules/@angular/*"
-      ],
-      "alfresco-js-api": [
-        "../../node_modules/alfresco-js-api/"
-      ],
-      "@angular/*": [
-        "../../node_modules/@angular/*"
-      ],
-      "@mat-datetimepicker/*": [
-        "../../node_modules/@mat-datetimepicker/*"
-      ],
-      "rxjs/*": [
-        "../../node_modules/rxjs/*"
       ]
     },
     "lib": [
