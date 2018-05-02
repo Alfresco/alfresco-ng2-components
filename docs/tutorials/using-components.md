@@ -1,107 +1,148 @@
 ---
 Level: Beginner
 ---
+
 # Using components
 
-There are three different ways to use, extend and configure an ADF component: configuration properties, event listeners, content projection / HTML extensions. In this tutorial you are going to see a practical example for each approach. As an example, the Login component will be used.
+There are three different ways to use, extend and configure an ADF component: configuration properties, event listeners, and content projection / HTML extensions. In this tutorial you will see a practical example of each approach using the Login component.
 
-The best option you should consider when you plan to use an ADF component and want to learn the details of its usage, is always to check the documentation for the component you are looking to use. More in general, there are three different ways to use, extend and configure an ADF component:
+The ADF documentation is always a good starting point when you plan to use a component. In general,
+there are three different ways to use, extend and configure an ADF component:
+
 1. Configuration properties.
 2. Event listeners.
 3. Content projection / HTML extensions.
 
 ## Configuration properties
-Angular components can easily be configured via properties in the HTML template. In this example we will act on the "Remember me" check and "Need Help?" + "Register" links in the footer of the Login component.
 
-To prepare the task, be sure you have and ADF application up and running by executing `npm start` in a terminal, from the root folder of the project. Access to the login page using your browser and edit the `login.component.html` file stored into the `src/app/.../login` folder. The content of the `login.component.html` file should look like the following source code.
+Angular components can easily be configured via properties in the HTML template. In this example we will
+work with the "Remember me" checkbox and "Need Help?" and "Register" links in the footer of the Login component.
 
-	<adf-login
-	  copyrightText="&#169; 2017 - 2018 Alfresco Software, Inc. All rights reserved."
-      providers="ECM"
-	  ...
-	  >
-	</adf-login>
-	
-When reviewing the documentation you can see that the `<adf-login/>` component has a lot of different properties. As an example we will toggle `showRememberMe` and `showLoginActions` (all set to `true` by default). If not already specified, add both the properties both with the false value, suing the syntax described below in the example. If the properties are defined in the HTML template, toggle the value according to what you see in the source code (set them to `true` if they have the `false` value and viceversa).
+To prepare for the task, make sure you have your ADF application up and running by executing `npm start`
+in a terminal from the root folder of the project. Access the login page using your browser and edit the `login.component.html` file stored in the `src/app/.../login` folder. The content of the `login.component.html` file should look like the following:
 
-	<adf-login
-	  copyrightText="&#169; 2017 - 2018 Alfresco Software, Inc. All rights reserved."
-      providers="ECM"
-	  [showRememberMe]="..."
-	  [showLoginActions]="..."
-	  ...
-	  >
-	</adf-login>
+```html
+<adf-login
+	copyrightText="&#169; 2017 - 2018 Alfresco Software, Inc. All rights reserved."
+		providers="ECM"
+	...
+	>
+</adf-login>
+```
 
-Once saved the HTML template you will see the login page updated with a different layout accordingly with the property values.
+Looking at the documentation, you can see that the `<adf-login/>` component has a lot of different
+properties. As an example we will toggle `showRememberMe` and `showLoginActions` (all set to `true`
+by default). If you haven't specified any values for these properties in the source code then set them both
+to `false` using the syntax shown in the example below. If you have specified values in the source code then
+set them to the opposite value in the HTML template (set them to `true` if they are `false` in the source
+and vice versa).
 
-**Notice:** The two new properties are specified with `[]` around them. There are three ways to configure a component.
+```html
+<adf-login
+	copyrightText="&#169; 2017 - 2018 Alfresco Software, Inc. All rights reserved."
+		providers="ECM"
+	[showRememberMe]="..."
+	[showLoginActions]="..."
+	...
+	>
+</adf-login>
+```
 
-1. `[property]=""` This will be an expression or property from the typescript controller. Use this for boolean expressions or variables.
-2. `property=""` This will be passed in as raw text.
+After saving the HTML template, you will see the login page updated with a different layout matching the
+new property values.
+
+**Note:** The two new properties are specified with `[]` around them. There are three ways to configure a
+property:
+
+1. `[property]=""` This sets the property using an expression or another property from the Typescript
+controller. Use this syntax for boolean expressions or variables.
+2. `property=""` This value will be passed as raw text.
 3. `[(property)]` This is called *banana in a box* and is used for two way binding.
 
 ## Event listeners
 
-Now that you've successfully configured properties on the `<adf-login/>` component, it's time to look at the events.
+Now that you've successfully configured properties on the `<adf-login/>` component, it's time to look at events.
 
-As we did for the previous task, looking at the [Login component documentation](https://alfresco.github.io/adf-component-catalog/components/LoginComponent.html) we can see that it emits three events `success`, `error` and `executeSubmit`.
+Looking now at the events section of the 
+[Login component documentation](https://alfresco.github.io/adf-component-catalog/components/LoginComponent.html)
+we can see that it emits three events: `success`, `error` and `executeSubmit`.
 
-We can subscribe to these events and have our custom code executed once these events are emitted. Let's hook into the `executeSubmit` and do a simple `alert()` once the form is submitted.
+We can subscribe to these events and have our custom code executed when they are emitted. We will
+hook into the `executeSubmit` event and show a simple `alert()` when the form is submitted.
 
-Continue to edit the  `login.component.html` file and add `(success)="mySuccessMethod($event)"` to the `<adf-login/>` component (the position is not relevant).
+Back in the `login.component.html` file,  add `(success)="mySuccessMethod($event)"` to the `<adf-login/>` component (the position is not relevant).
 
-	<adf-login
-	  ...
-	  (executeSubmit)="myExecuteSubmitMethod($event)"
-	  >
-	</adf-login>
+```html
+<adf-login
+	...
+	(executeSubmit)="myExecuteSubmitMethod($event)"
+	>
+</adf-login>
+```
 
-Next you need to implement `myExecuteSubmitMethod` in the typescript class implementing the component. Edit the  `login.component.ts` file stored in the same `src/app/.../login` folder and add the implementation of `myExecuteSubmitMethod` as follows.
+Next, implement `myExecuteSubmitMethod` in the Typescript class that defines the component. Edit
+the `login.component.ts` file stored in the same `src/app/.../login` folder and add the implementation
+of `myExecuteSubmitMethod` as follows:
 
-	@Component({
-	  ...
-	})
-	export class LoginComponent {
-	
-	  ...
+```ts
+@Component({
+	...
+})
+export class LoginComponent {
 
-	  // Add this!
-	  myExecuteSubmitMethod(event: any) {
-	    alert('Form was submitted!');
-	    console.log(event);
-	  }
+	...
+
+	// Add this!
+	myExecuteSubmitMethod(event: any) {
+		alert('Form was submitted!');
+		console.log(event);
 	}
+}
+```
 
-Save both the files and the login component will be refreshed in your browser. Enter random values for username and password and you should see the alert after pressing the submit button. Looking in the console of the browser, you'll see the `event` data containing all the details of the form. 
+After saving both files, the login component will be refreshed in your browser. Enter random values for
+the username and password and you should see the alert after pressing the submit button. Looking in the
+console of the browser, you'll see the `event` data containing all the details of the form. 
 
-**Bonus objective:** Add a custom logo and background to the login view.
+**Bonus objective:** Add a custom logo and background to the login view using the relevant properties
+described in the documentation.
 
 ## Content projection / HTML extensions
-The last way a component can be configured or extended is through an approach called *Content projection*. This allows components to put placeholders in their template, allowing developers to "project" their own code or components into pre-defined locations within the component.
 
-In regular HTML, elements can be nested, for example:
+The final way to configure or extend a component is through an approach called *Content projection*. This
+involves adding placeholders to a component template, allowing developers to "project" their own code or
+components into pre-defined locations within the component.
 
-	<div>
-	  <p>
-	    <b>Here we have some bold text</b>
-	  </p>
-	</div>
+In regular HTML, elements can be nested. For example:
 
-We can use the same approach with ADF components to inject custom code or entire components into the ADF component. Going to the documentation you can find more details about which targets are in place. 
+```html
+<div>
+ <p>
+  <b>Here we have some bold text</b>
+ </p>
+</div>
+```
 
-The `<adf-login/>` component supports two targets: `login-header` and `login-footer`.  Let's add a simple "Hello World" message in the footer. Edit the template `login.component.html` and add a new tag *inside* the `<adf-login/>` tag.
+We can use the same approach with ADF components to inject custom code or entire components into another
+component. The documentation shows which targets are available. For example, the `<adf-login/>` component
+supports two targets: `login-header` and `login-footer`. Let's add a simple "Hello World" message in the
+footer. Edit the template `login.component.html` and add a new tag *inside* the `<adf-login/>` tag:
 
-	<adf-login
-	  ...
-	  >
-	    <login-footer>
-	      <ng-template>
-	        Hello World!
-	      </ng-template>
-	    </login-footer>
-	</adf-login>
+```html
+<adf-login
+ ...
+ >
+  <login-footer>
+   <ng-template>
+    Hello World!
+   </ng-template>
+  </login-footer>
+</adf-login>
+```
 
-Watch carefully that you place the `<login-footer/>` tag *inside* the `<adf-login/>` tag. Inside the `<login-footer/>` or `<login-header/>` tags you can put anything you want, as long as you wrap it inside an `<ng-template/>` tag. You can also source in custom or 3rd party components.
+Make sure that you place the `<login-footer/>` tag *inside* the `<adf-login/>` tag. Inside the
+`<login-footer/>` or `<login-header/>` tags you can put anything you want, as long as you wrap it inside
+an `<ng-template/>` tag. You can also add custom or 3rd party components.
 
-Once done, save the template and you should see a "Hello World!" message in the footer of your login page through your browser.
+When you are done, save the template and you should see a "Hello World!" message in the footer of your
+login page when the browser refreshes.
