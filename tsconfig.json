@@ -22,6 +22,9 @@
   },
   "exclude": [
     "lib/config",
+    "integration",
+    "scripts",
+    "assets",
     "node_modules"
   ]
 }
