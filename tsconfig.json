@@ -21,6 +21,7 @@
     ]
   },
   "exclude": [
+    "lib/config",
     "node_modules"
   ]
 }

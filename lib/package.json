@@ -3,10 +3,6 @@
   "description": "Alfresco Angular components",
   "version": "2.4.0-beta2",
   "author": "Alfresco Software, Ltd.",
-  "scripts": {
-    "test": "node ../node_modules/karma/bin/karma start --reporters mocha,coverage --single-run --component .",
-    "test-browser": "node ./node_modules/karma/bin/karma start karma.conf.js --reporters kjhtml"
-  },
   "main": "./index.js",
   "repository": {
     "type": "git",

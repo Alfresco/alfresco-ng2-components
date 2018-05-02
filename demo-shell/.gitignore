@@ -57,3 +57,4 @@ app/**/*.d.ts
 
 dist/
 coverage/
+!/e2e/protractor.conf.js

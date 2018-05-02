@@ -2,7 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
-    "module": "es2015",
+    "module": "commonjs",
+    "target": "es5",
     "rootDir": "..",
     "baseUrl": ".",
     "skipLibCheck": false,
@@ -34,11 +35,21 @@
       ]
     }
   },
-  "exclude": [],
+  "exclude": [
+    "**/e2e/*.ts",
+    "**/*.e2e-spec.ts",
+    "**/*.po.ts",
+    "node_modules",
+    "tmp"
+  ],
+  "include": [
+    "**/*.ts"
+  ],
   "angularCompilerOptions": {
     "skipTemplateCodegen": false
   },
   "files": [
+    "test.ts",
     "polyfills.ts"
   ]
 }
