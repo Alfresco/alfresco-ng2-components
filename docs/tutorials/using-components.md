@@ -4,9 +4,7 @@ Level: Beginner
 
 # Using components
 
-There are three different ways to use, extend and configure an ADF component: configuration properties,
-event listeners, and content projection / HTML extensions. In this tutorial you will see a practical
-example of each approach using the Login component.
+There are three different ways to use, extend and configure an ADF component: configuration properties, event listeners, and content projection / HTML extensions. In this tutorial you will see a practical example of each approach using the Login component.
 
 The ADF documentation is always a good starting point when you plan to use a component. In general,
 there are three different ways to use, extend and configure an ADF component:

@@ -4,8 +4,7 @@ Level: Beginner
 
 # Preparing the development environment
 
-This tutorial explains how to get set up to use ADF so you can tackle the other tutorials. It covers the
-basic development environment with suggested versions for each tool, library and module.
+This tutorial explains how to get set up to use ADF so you can tackle the other tutorials. It covers the basic development environment with suggested versions for each tool, library and module.
 
 ## Node.js
 

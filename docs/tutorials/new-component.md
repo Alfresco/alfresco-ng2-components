@@ -4,10 +4,7 @@ Level: Basic
 
 # Adding a new component
 
-By definition, a *component* controls a patch of screen called a *view*. For example, individual
-components define and control menus, tabs, forms, buttons and every simple or complex portion of
-an application's layout. In this tutorial, you will learn how to create a component using
-[Angular CLI](https://cli.angular.io/) within an existing application.
+By definition, a *component* controls a patch of screen called a *view*. For example, individual components define and control menus, tabs, forms, buttons and every simple or complex portion ofan application's layout. In this tutorial, you will learn how to create a component using [Angular CLI](https://cli.angular.io/) within an existing application.
 
 ## Creating a component
 

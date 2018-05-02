@@ -4,10 +4,7 @@ Level: Intermediate
 
 # Customizing the Login component
 
-In this tutorial you will learn how to customize the
-[`Login` component](https://alfresco.github.io/adf-component-catalog/components/LoginComponent.html) following the [technical documentation](https://alfresco.github.io/adf-component-catalog/components/LoginComponent.html).
-The task will be very simple. See the documentation for further details about customizing
-this component, along with examples.
+In this tutorial you will learn how to customize the [`Login` component](https://alfresco.github.io/adf-component-catalog/components/LoginComponent.html) following the [technical documentation](https://alfresco.github.io/adf-component-catalog/components/LoginComponent.html). The task will be very simple. See the documentation for further details about customizing this component, along with examples.
 
 ## Locating the component into your application
 

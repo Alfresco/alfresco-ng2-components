@@ -4,10 +4,7 @@ Level: Intermediate
 
 # Working with a Data Table
 
-In this tutorial you will learn how to populate a [`DataTable` component](https://alfresco.github.io/adf-component-catalog/components/DataTableComponent.html)
-with custom data from a generic back-end service or third party API. As an example we are going to use
-data from one of the available services on Alfresco Content Services. However, the procedure is much the
-same if want to use an Alfresco Process Services endpoint or a third party API.
+In this tutorial you will learn how to populate a [`DataTable` component](https://alfresco.github.io/adf-component-catalog/components/DataTableComponent.html) with custom data from a generic back-end service or third party API. As an example we are going to use data from one of the available services on Alfresco Content Services. However, the procedure is much the same if want to use an Alfresco Process Services endpoint or a third party API.
 
 ## Prerequisites and data source
 
