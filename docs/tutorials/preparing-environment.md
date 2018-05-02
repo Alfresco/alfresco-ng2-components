@@ -55,10 +55,10 @@ If you have installed an earlier version of the generator then you should uninst
 the latest one. In ADF 2.0 we renamed the generator packages, so updating is especially recommended from
 pre-2.0 versions.
 
-Uninstall previous versions before 2.0 with:
+Uninstall versions before 2.0 with:
 
 	sudo npm uninstall generator-ng2-alfresco-app
 
-...and version since 2.0 with:
+...and versions since 2.0 with:
 
 	sudo npm uninstall generator-alfresco-adf-app
