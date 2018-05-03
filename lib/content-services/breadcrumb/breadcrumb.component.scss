@@ -4,14 +4,17 @@ $breadcrumb-chevron-spacer: 2px;
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
 
     .adf-breadcrumb {
-         display: flex;
+        display: flex;
 	    flex: 1;
 	    line-height: 24px;
 	    font-size: 14px;
 	    font-weight: 600;
-	    letter-spacing: -0.2px;
+        letter-spacing: -0.2px;
+        color: mat-color($foreground, text, 0.54);
+        width: 0;
 
         &-container {
             margin: 0;
@@ -41,8 +44,9 @@ $breadcrumb-chevron-spacer: 2px;
             }
 
             &.active {
-             flex: 1 0 auto;
-		   }
+                flex: 1 0 auto;
+                color: mat-color($foreground, text, 0.87);
+		    }
 
             &-chevron {
                 opacity: 1;
