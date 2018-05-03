@@ -17,7 +17,7 @@
 
 import { SimpleInheritedPermissionTestComponent } from '../../mock/inherited-permission.component.mock';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { PermissionManagerModule } from '../../index';
+import { InheritPermissionDirective } from './inherited-button.directive';
 import { NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
@@ -33,20 +33,20 @@ describe('InheritPermissionDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            PermissionManagerModule
+            CoreModule.forRoot()
         ],
         declarations: [
+            InheritPermissionDirective,
             SimpleInheritedPermissionTestComponent
         ]
     });
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         nodeService = TestBed.get(NodesApiService);
-    });
+    }));
 
     it('should be able to render the simple component', async(() => {
         fixture.detectChanges();

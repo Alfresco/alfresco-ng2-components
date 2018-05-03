@@ -20,7 +20,10 @@ import { NodePermissionService } from './node-permission.service';
 import { SearchService, NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
-import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse } from '../../mock/permission-list.component.mock';
+import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,
+         fakeNodeToRemovePermission } from '../../mock/permission-list.component.mock';
+import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
+import { NodePermissionDialogService } from './node-permission-dialog.service';
 
 describe('NodePermissionService', () => {
 
@@ -33,6 +36,7 @@ describe('NodePermissionService', () => {
             CoreModule.forRoot()
         ],
         providers: [
+            NodePermissionDialogService,
             NodePermissionService
         ]
     });
@@ -85,13 +89,62 @@ describe('NodePermissionService', () => {
 
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
 
-        service.updatePermissionRoles(fakeNodeWithOnlyLocally, fakePermission).subscribe((node: MinimalNodeEntryEntity) => {
+        service.updatePermissionRole(fakeNodeWithOnlyLocally, fakePermission).subscribe((node: MinimalNodeEntryEntity) => {
             expect(node).not.toBeNull();
             expect(node.id).toBe('fake-updated-node');
             expect(node.permissions.locallySet.length).toBe(1);
             expect(node.permissions.locallySet[0].authorityId).toBe(fakePermission.authorityId);
             expect(node.permissions.locallySet[0].name).toBe(fakePermission.name);
             expect(node.permissions.locallySet[0].accessStatus).toBe(fakePermission.accessStatus);
+        });
+    }));
+
+    it('should be able to remove a locally set permission', async(() => {
+        const fakePermission: PermissionElement = <PermissionElement> {
+            'authorityId': 'FAKE_PERSON_1',
+            'name': 'Contributor',
+            'accessStatus' : 'ALLOWED'
+        };
+        spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
+        const fakeNodeCopy = Object.assign(fakeNodeToRemovePermission);
+
+        service.removePermission(fakeNodeCopy, fakePermission).subscribe((node: MinimalNodeEntryEntity) => {
+            expect(node).not.toBeNull();
+            expect(node.id).toBe('fake-updated-node');
+            expect(node.permissions.locallySet.length).toBe(2);
+            expect(node.permissions.locallySet[0].authorityId).not.toBe(fakePermission.authorityId);
+            expect(node.permissions.locallySet[1].authorityId).not.toBe(fakePermission.authorityId);
+        });
+    }));
+
+    it('should be able to update locally set permissions on the node by node id', async(() => {
+        const fakeNodeCopy = Object.assign(fakeNodeWithOnlyLocally);
+        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeCopy));
+        spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeSiteNodeResponse));
+        spyOn(service, 'getGroupMemeberByGroupName').and.returnValue(Observable.of(fakeSiteRoles));
+
+        service.updateNodePermissions('fake-node-id', fakeAuthorityResults).subscribe((node: MinimalNodeEntryEntity) => {
+            expect(node).not.toBeNull();
+            expect(node.id).toBe('fake-updated-node');
+            expect(node.permissions.locallySet.length).toBe(4);
+            expect(node.permissions.locallySet[3].authorityId).not.toBe(fakeAuthorityResults[0].entry['cm:userName']);
+            expect(node.permissions.locallySet[2].authorityId).not.toBe(fakeAuthorityResults[1].entry['cm:userName']);
+            expect(node.permissions.locallySet[1].authorityId).not.toBe(fakeAuthorityResults[2].entry['cm:userName']);
+        });
+    }));
+
+    it('should be able to update locally permissions on the node', async(() => {
+        const fakeNodeCopy = Object.assign(fakeNodeWithOnlyLocally);
+        spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
+
+        service.updateLocallySetPermissions(fakeNodeCopy, fakeAuthorityResults, fakeSiteRoles).subscribe((node: MinimalNodeEntryEntity) => {
+            expect(node).not.toBeNull();
+            expect(node.id).toBe('fake-updated-node');
+            expect(node.permissions.locallySet.length).toBe(4);
+            expect(node.permissions.locallySet[3].authorityId).not.toBe(fakeAuthorityResults[0].entry['cm:userName']);
+            expect(node.permissions.locallySet[2].authorityId).not.toBe(fakeAuthorityResults[1].entry['cm:userName']);
+            expect(node.permissions.locallySet[1].authorityId).not.toBe(fakeAuthorityResults[2].entry['cm:userName']);
         });
     }));
 
