@@ -14,6 +14,8 @@ Shows a list of all available reports
 </analytics-report-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

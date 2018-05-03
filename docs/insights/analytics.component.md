@@ -17,6 +17,8 @@ Shows the charts related to the reportId passed as input
 </adf-analytics>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

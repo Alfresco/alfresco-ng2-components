@@ -20,6 +20,9 @@ This component can be used when there is no form attached to a task.
     [taskName]= "taskname">
 </adf-task-standalone>
 ```
+
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

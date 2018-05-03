@@ -36,6 +36,8 @@ export class MyCustomProcessAttachmentComponent {
 }
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

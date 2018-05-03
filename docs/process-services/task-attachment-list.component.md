@@ -18,6 +18,8 @@ Displays attached documents on a specified task.
 </adf-task-attachment-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

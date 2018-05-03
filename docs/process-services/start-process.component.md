@@ -18,6 +18,8 @@ Starts a process.
 </adf-start-process>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Description |

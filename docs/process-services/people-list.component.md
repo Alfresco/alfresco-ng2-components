@@ -71,6 +71,8 @@ In the component template use the people list component:
 Note that the people list component is based on the
 [Datatable component](../core/datatable.component.md).
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
