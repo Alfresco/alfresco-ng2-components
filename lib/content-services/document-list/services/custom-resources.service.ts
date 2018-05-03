@@ -26,7 +26,7 @@ import {
     PersonEntry,
     SitePaging,
     DeletedNodesPaging,
-    SortDefinitionType
+    SearchRequest
 } from 'alfresco-js-api';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -45,7 +45,7 @@ export class CustomResourcesService {
             this.apiService.peopleApi.getPerson(personId)
                 .then((person: PersonEntry) => {
                         const username = person.entry.id;
-                        const query = {
+                        const query: SearchRequest = {
                             query: {
                                 query: '*',
                                 language: 'afts'
@@ -57,7 +57,7 @@ export class CustomResourcesService {
                             ],
                             include: ['path', 'properties', 'allowableOperations'],
                             sort: [{
-                                type: SortDefinitionType.FIELD,
+                                type: 'FIELD',
                                 field: 'cm:modified',
                                 ascending: false
                             }],
