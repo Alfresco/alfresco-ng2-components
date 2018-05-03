@@ -46,6 +46,17 @@
                                     item.entry?.properties['cm:authorityName'] :
                                     item.entry?.properties['cm:firstName']}}</p>
         </mat-list-option>
+        <mat-list-option *ngIf="data?.list?.entries.length !== 0"
+                    id="adf-add-permission-group-everyone"
+                    class="adf-list-option-item"
+                    (click)="elementClicked(EVERYONE)">
+            <mat-icon mat-list-icon id="add-group-icon">
+                group_add
+            </mat-icon>
+            <p>
+                {{'PERMISSION_MANAGER.ADD-PERMISSION.EVERYONE' | translate}}
+            </p>
+        </mat-list-option>
     </mat-selection-list>
     <div *ngIf="data?.list?.entries.length === 0" class="adf-permission-no-result" id="adf-add-permission-no-results">
         <span>{{'PERMISSION_MANAGER.ADD-PERMISSION.NO-RESULT' | translate}}</span>
