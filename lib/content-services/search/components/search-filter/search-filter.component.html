@@ -17,20 +17,25 @@
         </adf-search-widget-container>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="facetQueriesExpanded">
         <mat-expansion-panel-header>
-            <mat-panel-title>Facet Queries</mat-panel-title>
+            <mat-panel-title>{{ facetQueriesLabel | translate }}</mat-panel-title>
         </mat-expansion-panel-header>
         <div class="checklist">
-            <ng-container *ngFor="let query of responseFacetQueries">
+            <ng-container *ngFor="let query of responseFacetQueries.visibleItems">
                 <mat-checkbox
-                    *ngIf="query.count > 0"
                     [checked]="query.$checked"
                     (change)="onFacetQueryToggle($event, query)">
                     {{ query.label }} ({{ query.count }})
                 </mat-checkbox>
             </ng-container>
         </div>
+        <button mat-button
+            *ngIf="responseFacetQueries.hasMoreItems()"
+            (click)="responseFacetQueries.showMoreItems()">
+            {{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
     </mat-expansion-panel>
 
     <mat-expansion-panel
@@ -53,7 +58,7 @@
         <button mat-button
             *ngIf="field.hasMoreItems()"
             (click)="field.showMoreItems()">
-            Show more
+            {{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}
             <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
     </mat-expansion-panel>

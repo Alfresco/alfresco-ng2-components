@@ -19,11 +19,11 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
 import { SearchService } from '@alfresco/adf-core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
-import { FacetQuery } from '../../facet-query.interface';
 import { ResponseFacetField } from '../../response-facet-field.interface';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 import { SearchCategory } from '../../search-category.interface';
 import { ResponseFacetQuery } from '../../response-facet-query.interface';
+import { ResponseFacetQueryList } from './models/response-facet-query-list.model';
 
 @Component({
     selector: 'adf-search-filter',
@@ -36,10 +36,20 @@ export class SearchFilterComponent implements OnInit {
 
     selectedFacetQueries: string[] = [];
     selectedBuckets: FacetFieldBucket[] = [];
-    responseFacetQueries: FacetQuery[] = [];
+    responseFacetQueries: ResponseFacetQueryList;
     responseFacetFields: ResponseFacetField[] = [];
 
+    facetQueriesLabel: string = 'Facet Queries';
+    facetQueriesPageSize = 5;
+    facetQueriesExpanded = false;
+
     constructor(public queryBuilder: SearchQueryBuilderService, private search: SearchService) {
+        if (queryBuilder.config && queryBuilder.config.facetQueries) {
+            this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
+            this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || 5;
+            this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
+        }
+
         this.queryBuilder.updated.subscribe(query => {
             this.queryBuilder.execute();
         });
@@ -138,10 +148,12 @@ export class SearchFilterComponent implements OnInit {
         const context = data.list.context;
 
         if (context) {
-            this.responseFacetQueries = (context.facetQueries || []).map(q => {
+            const facetQueries = (context.facetQueries || []).map(q => {
                 q.$checked = this.selectedFacetQueries.includes(q.label);
                 return q;
             });
+
+            this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.facetQueriesPageSize);
 
             const expandedFields = this.responseFacetFields.filter(f => f.expanded).map(f => f.label);
 
@@ -180,7 +192,7 @@ export class SearchFilterComponent implements OnInit {
                 }
             );
         } else {
-            this.responseFacetQueries = [];
+            this.responseFacetQueries = new ResponseFacetQueryList([], this.facetQueriesPageSize);
             this.responseFacetFields = [];
         }
     }

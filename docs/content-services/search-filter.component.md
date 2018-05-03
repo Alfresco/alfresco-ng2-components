@@ -19,6 +19,12 @@ Represents a main container component for custom search and faceted search setti
 The component is based on dynamically created widgets to modify the resulting query and options,
 and the [Search Query Builder service](search-query-builder.service.md)\` to build and execute the search queries.
 
+Before you begin with customizations, check also the following articles:
+
+- [Search API](https://docs.alfresco.com/5.2/concepts/search-api.html)
+- [Alfresco Full Text Search Reference](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-intro.html)
+- [ACS API Explorer](https://api-explorer.alfresco.com/api-explorer/#!/search/search)
+
 ### Configuration
 
 The configuration should be provided via the `search` entry in the `app.config.json` file.
@@ -121,6 +127,9 @@ The interface above also describes entries in the `search.query.categories` sect
 
 ![Search Categories](../docassets/images/search-categories-01.png)
 
+Important note: you need at least one category field to be provided in order to execute the query,
+so that filters and selected facets are applied.
+
 ### Settings
 
 Every use case will have a different set of settings.
@@ -161,24 +170,35 @@ If there are more than 5 entries, the "Show more" button is displayed to allow d
 
 ### Facet Queries
 
+Provides a custom category based on admin-defined facet queries.
+
 ```json
 {
     "search": {
-        "facetQueries": [
-            { "query": "created:2018", "label": "Created This Year" },
-            { "query": "content.mimetype", "label": "Type" },
-            { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
-            { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
-            { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
-            { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large" },
-            { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large" },
-            { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large" }
-        ]
+        "facetQueries": {
+            "label": "Facet queries",
+            "pageSize": 5,
+            "expanded": true,
+            "queries": [
+                { "query": "created:2018", "label": "Created This Year" },
+                { "query": "content.mimetype", "label": "Type" },
+                { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
+                { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
+                { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
+                { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large" },
+                { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large" },
+                { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large" }
+            ]
+        }
     }
 }
 ```
 
 The queries declared in the `facetQueries` are collected into a single collapsible category.
+Only the queries that have 1 or more response entries are displayed at runtime.
+Based on the `pageSize` value, the component provides a `Show more` button to display more items.
+
+You can also provide a custom `label` (or i18n resource key) for the resulting collapsible category.
 
 ![Facet Queries](../docassets/images/search-facet-queries.png)
 
@@ -350,6 +370,13 @@ Provides ability to select a numeric range based on `min` and `max` values in th
 
 ![Slider Widget](../docassets/images/search-slider.png)
 
+### Resetting slider value
+
+Slider widget comes with a `Clear` button that allows users to reset selected value to the initial state.
+
+This helps to undo changes for scenarios where minimal value (like 0 or predefined number) still should not be used in a query.
+Upon clicking the `Clear` button slider will be reset to the `min` value or `0`, and underlying fragment is removed from the resulting query.
+
 ### Text Widget
 
 ```json
@@ -376,6 +403,9 @@ Provides ability to select a numeric range based on `min` and `max` values in th
 ```
 
 ![Text Widget](../docassets/images/search-text.png)
+
+Important note: you need at least one category field to be provided in order to execute the query,
+so that filters and selected facets are applied.
 
 ## Custom Widgets
 
