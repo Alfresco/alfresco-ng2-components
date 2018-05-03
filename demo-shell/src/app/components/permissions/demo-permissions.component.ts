@@ -73,7 +73,7 @@ export class DemoPermissionComponent implements OnInit {
 
     showErrorMessage(error) {
         this.notificationService.openSnackMessage(
-            JSON.parse(error.response.text).error.errorKey,
+            error,
             4000
         );
     }
