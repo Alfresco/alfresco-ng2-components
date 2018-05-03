@@ -51,8 +51,8 @@ describe('AddPermissionComponent', () => {
     it('should be able to render the component', () => {
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
         expect(element.querySelector('#searchInput')).not.toBeNull();
-        expect(element.querySelector('#add-permission-actions')).not.toBeNull();
-        const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#add-permission-action-button');
+        expect(element.querySelector('#adf-add-permission-actions')).not.toBeNull();
+        const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
         expect(addButton.disabled).toBeTruthy();
     });
 
@@ -62,7 +62,7 @@ describe('AddPermissionComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#add-permission-action-button');
+            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
             expect(addButton.disabled).toBeFalsy();
         });
     }));
@@ -78,7 +78,7 @@ describe('AddPermissionComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#add-permission-action-button');
+            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
             addButton.click();
         });
     }));
@@ -94,7 +94,7 @@ describe('AddPermissionComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#add-permission-action-button');
+            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
             addButton.click();
         });
     }));
