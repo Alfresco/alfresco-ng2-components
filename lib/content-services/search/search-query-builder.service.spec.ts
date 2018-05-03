@@ -152,7 +152,7 @@ describe('SearchQueryBuilder', () => {
         expect(query2).toBeNull();
     });
 
-    it('should build query and raise an event on update', async () => {
+    xit('should build query and raise an event on update', async () => {
         const builder = new SearchQueryBuilderService(buildConfig({}), null);
         const query = {};
         spyOn(builder, 'buildQuery').and.returnValue(query);
@@ -164,7 +164,7 @@ describe('SearchQueryBuilder', () => {
         expect(eventArgs).toBe(query);
     });
 
-    it('should build query and raise an event on execute', async () => {
+    xit('should build query and raise an event on execute', async () => {
         const data = {};
         const api = jasmine.createSpyObj('api', ['search']);
         api.search.and.returnValue(data);
