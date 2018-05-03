@@ -18,6 +18,8 @@ Renders a list containing all the tasks matched by the parameters specified.
 </adf-tasklist>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

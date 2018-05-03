@@ -16,6 +16,8 @@ Shows the details of the task ID passed in as input.
 </adf-task-details>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

@@ -12,6 +12,8 @@ Shows all available filters.
 <adf-filters></adf-filters>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

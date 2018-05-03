@@ -14,6 +14,8 @@ Displays comments associated with a particular process instance and allows the u
 </adf-process-instance-comments>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

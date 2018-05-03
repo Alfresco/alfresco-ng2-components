@@ -19,6 +19,8 @@ Renders a list containing all the process instances matched by the parameters sp
 </adf-process-instance-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default | Description |

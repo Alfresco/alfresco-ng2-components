@@ -16,6 +16,8 @@ Sub-component of the process details component, which renders some general infor
 </adf-process-instance-details>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

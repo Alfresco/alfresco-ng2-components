@@ -15,6 +15,8 @@ Generates and shows charts
 </adf-analytics>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

@@ -18,6 +18,8 @@ Displays Upload Component (Drag and Click) to upload the attachment to a specifi
 </adf-create-task-attachment>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Description |

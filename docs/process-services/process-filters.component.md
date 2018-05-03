@@ -14,6 +14,8 @@ Collection of criteria used to filter process instances, which may be customized
 </adf-process-instance-filters>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
