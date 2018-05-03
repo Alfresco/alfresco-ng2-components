@@ -26,12 +26,12 @@ Displays and edits metadata related to a node.
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| displayEmpty | `boolean` | false |  |
-| editable | `boolean` | false |  |
-| expanded | `boolean` | false |  |
-| multi | `boolean` | false |  |
-| node | `MinimalNodeEntryEntity` |  |  |
-| preset | `string` |  |  |
+| displayEmpty | `boolean` | false | Toggles whether to display empty values in the card view |
+| editable | `boolean` | false | Toggles whether the edit button should be shown |
+| expanded | `boolean` | false | Toggles between expanded (ie, full information) and collapsed (ie, reduced information) in the display |
+| multi | `boolean` | false | The multi parameter of the underlying material expansion panel |
+| node | `MinimalNodeEntryEntity` |  | (required) The node entity to fetch metadata about |
+| preset | `string` |  | Name of the metadata preset, which defines aspects and their properties |
 
 ## Details
 

@@ -40,6 +40,12 @@ export class CustomResourcesService {
                 private logService: LogService) {
     }
 
+    /**
+     * Gets files recently accessed by a user.
+     * @param personId ID of the user
+     * @param pagination Specifies how to paginate the results
+     * @returns List of nodes for the recently used files
+     */
     getRecentFiles(personId: string, pagination: PaginationModel): Observable<NodePaging> {
         return new Observable(observer => {
             this.apiService.peopleApi.getPerson(personId)
@@ -83,6 +89,12 @@ export class CustomResourcesService {
         }).catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets favorite files for the current user.
+     * @param pagination Specifies how to paginate the results
+     * @param includeFields List of data field names to include in the results
+     * @returns List of favorite files
+     */
     loadFavorites(pagination: PaginationModel, includeFields: string[] = []): Observable<NodePaging> {
         let includeFieldsRequest = this.getIncludesFields(includeFields);
 
@@ -123,6 +135,11 @@ export class CustomResourcesService {
         }).catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets sites that the current user is a member of.
+     * @param pagination Specifies how to paginate the results
+     * @returns List of sites
+     */
     loadMemberSites(pagination: PaginationModel): Observable<NodePaging> {
         const options = {
             include: ['properties'],
@@ -157,6 +174,11 @@ export class CustomResourcesService {
         }).catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets all sites in the respository.
+     * @param pagination Specifies how to paginate the results
+     * @returns List of sites
+     */
     loadSites(pagination: PaginationModel): Observable<NodePaging> {
         const options = {
             include: ['properties'],
@@ -183,6 +205,12 @@ export class CustomResourcesService {
         }).catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets all items currently in the trash.
+     * @param pagination Specifies how to paginate the results
+     * @param includeFields List of data field names to include in the results
+     * @returns List of deleted items
+     */
     loadTrashcan(pagination: PaginationModel, includeFields: string[] = []): Observable<DeletedNodesPaging> {
         let includeFieldsRequest = this.getIncludesFields(includeFields);
 
@@ -196,6 +224,12 @@ export class CustomResourcesService {
 
     }
 
+    /**
+     * Gets shared links for the current user.
+     * @param pagination Specifies how to paginate the results
+     * @param includeFields List of data field names to include in the results
+     * @returns List of shared links
+     */
     loadSharedLinks(pagination: PaginationModel, includeFields: string[] = []): Observable<NodePaging> {
         let includeFieldsRequest = this.getIncludesFields(includeFields);
 
@@ -208,6 +242,11 @@ export class CustomResourcesService {
         return Observable.fromPromise(this.apiService.sharedLinksApi.findSharedLinks(options)).catch(err => this.handleError(err));
     }
 
+    /**
+     * Is the folder ID one of the well-known aliases?
+     * @param folderId Folder ID name to check
+     * @returns True if the ID is a well-known name, false otherwise
+     */
     isCustomSource(folderId: string): boolean {
         let isCustomSources = false;
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
@@ -219,6 +258,13 @@ export class CustomResourcesService {
         return isCustomSources;
     }
 
+    /**
+     * Gets a folder's contents.
+     * @param nodeId ID of the target folder node
+     * @param pagination Specifies how to paginate the results
+     * @param includeFields List of data field names to include in the results
+     * @returns List of items contained in the folder
+     */
     loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[]): Observable<NodePaging> {
         if (nodeId === '-trashcan-') {
             return this.loadTrashcan(pagination, includeFields);
@@ -236,6 +282,13 @@ export class CustomResourcesService {
     }
 
     // TODO: remove it from here
+
+    /**
+     * Gets the contents of one of the well-known aliases in the form of node ID strings.
+     * @param nodeId ID of the target folder node
+     * @param pagination Specifies how to paginate the results
+     * @returns List of node IDs
+     */
     getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel): Observable<string[]> {
         if (nodeId === '-trashcan-') {
             return Observable.fromPromise(this.apiService.nodesApi.getDeletedNodes()

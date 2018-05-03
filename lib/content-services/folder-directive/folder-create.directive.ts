@@ -35,16 +35,19 @@ export class FolderCreateDirective {
     @Input('adf-create-folder')
     parentNodeId: string = DEFAULT_FOLDER_PARENT_ID;
 
+    /** Title of folder creation dialog. */
     @Input()
     title: string = null;
 
+    /** Type of node to create. */
     @Input()
     nodeType = 'cm:folder';
 
-    /** Emitted when the create folder give error for example a folder with same name already exist */
+    /** Emitted when an error occurs (eg, a folder with same name already exists). */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the folder is created successfully. */
     @Output()
     success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
