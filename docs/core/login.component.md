@@ -37,6 +37,8 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 </adf-login>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

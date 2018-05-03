@@ -24,6 +24,8 @@ Adds pagination to the component it is used with.
 </adf-pagination>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

@@ -2,7 +2,9 @@
 
 Accesses the Content Services Search API.
 
-## Methods
+## Class members
+
+### Methods
 
 `search(query: any): Observable<NodePaging>`<br/>
 Searches the repository.

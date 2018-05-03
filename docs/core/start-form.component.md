@@ -17,6 +17,8 @@ Displays the Start Form for a process.
 </adf-start-form>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
