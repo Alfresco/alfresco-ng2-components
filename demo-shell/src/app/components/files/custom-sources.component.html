@@ -8,6 +8,13 @@
             </mat-select>
         </mat-form-field>
     </adf-toolbar-title>
+    <adf-toolbar-divider fxFlex="0 0 auto"></adf-toolbar-divider>
+    <button mat-icon-button
+            [disabled]="!hasSelection(customSourcesDocumentList.selection)"
+            title="{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}"
+            [adfNodeDownload]="customSourcesDocumentList.selection">
+        <mat-icon>get_app</mat-icon>
+    </button>
 </adf-toolbar>
 <adf-document-list
     #customSourcesDocumentList
