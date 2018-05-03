@@ -1,7 +1,7 @@
 ---
-Added: v2.3.0
+Added: v2.4.0
 Status: Active
-Last reviewed: 2018-03-23
+Last reviewed: 2018-05-03
 ---
 
 # Add Permission Dialog Component
