@@ -8,7 +8,9 @@ Last reviewed: 2018-03-21
 
 Manage Process Filters, which are pre-configured Process Instance queries. 
 
-## Methods
+## Class members
+
+### Methods
 
 -   `getProcessFilters(appId: number): Observable<FilterProcessRepresentationModel[]>`  
     Gets all filters defined for a Process App.  

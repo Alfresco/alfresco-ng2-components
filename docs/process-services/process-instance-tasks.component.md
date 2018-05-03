@@ -15,6 +15,8 @@ Lists both the active and completed tasks associated with a particular process i
 </adf-process-instance-tasks>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

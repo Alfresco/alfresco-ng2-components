@@ -8,7 +8,9 @@ Last reviewed: 2018-03-22
 
 Manages Task Instances.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `getFilterForTaskById(taskId: string, filterList: FilterRepresentationModel[]): Observable<FilterRepresentationModel>`  
     Gets all the filters in the list that belong to a task.  

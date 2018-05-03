@@ -18,6 +18,8 @@ Shows all the information related to a task.
 </adf-task-header>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

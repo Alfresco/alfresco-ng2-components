@@ -16,6 +16,8 @@ Shows the checklist task functionality.
 </adf-checklist>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

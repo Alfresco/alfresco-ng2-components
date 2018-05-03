@@ -7,7 +7,9 @@ Status: Active
 
 Manage Task Filters, which are pre-configured Task Instance queries. 
 
-## Methods
+## Class members
+
+### Methods
 
 -   `createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]>`  
     Creates and returns the default filters for a process app.  

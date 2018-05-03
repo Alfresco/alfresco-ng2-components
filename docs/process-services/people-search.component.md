@@ -12,6 +12,8 @@ Searches users/people.
 <adf-people-search></adf-people-search>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
