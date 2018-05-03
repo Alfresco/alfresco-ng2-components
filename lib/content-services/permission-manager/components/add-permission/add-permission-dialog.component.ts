@@ -32,7 +32,7 @@ export class AddPermissionDialogComponent {
     @ViewChild('addPermission')
     addPermissionComponent: AddPermissionComponent;
 
-    private currentSelection: MinimalNodeEntity[] = [];
+    currentSelection: MinimalNodeEntity[] = [];
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: AddPermissionDialogData) {
     }
