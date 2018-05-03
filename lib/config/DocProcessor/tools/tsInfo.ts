@@ -37,6 +37,11 @@ let nameExceptions = {
 }
 
 
+let undocMethodNames = {
+    "ngOnChanges": 1
+};
+
+
 class PropInfo {
     name: string;
     type: string;
@@ -47,7 +52,10 @@ class PropInfo {
     isOutput: boolean;
     isDeprecated: boolean;
 
+    errorMessages: string[];
+
     constructor(rawProp: DeclarationReflection) {
+        this.errorMessages = [];
         this.name = rawProp.name;
         this.docText = rawProp.comment ? rawProp.comment.shortText : "";
         this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
@@ -69,24 +77,29 @@ class PropInfo {
                     
                     if (dec.arguments) {
                         let bindingName = dec.arguments["bindingPropertyName"];
-                        //console.log(JSON.stringify(dec.arguments));
                         
                         if (bindingName && (bindingName !== ""))
                             this.name = bindingName.replace(/['"]/g, "");
                     }
                     
-                    if (!this.docText && !this.isDeprecated)
-                        console.log(`Warning: Input "${rawProp.getFullName()}" has no doc text.`);
+                    if (!this.docText && !this.isDeprecated) {
+                        this.errorMessages.push(`Warning: Input "${rawProp.name}" has no doc text.`);
+                    }
                 }
 
                 if (dec.name === "Output") {
                     this.isOutput = true;
 
-                    if (!this.docText && !this.isDeprecated)
-                        console.log(`Warning: Output "${rawProp.getFullName()}" has no doc text.`);
+                    if (!this.docText && !this.isDeprecated) {
+                        this.errorMessages.push(`Warning: Output "${rawProp.name}" has no doc text.`);
+                    }
                 }
             });
         }
+    }
+
+    get errors() {
+        return this.errorMessages;
     }
 };
 
@@ -130,7 +143,11 @@ class MethodSigInfo {
     params: ParamInfo[];
     isDeprecated: boolean;
 
+    errorMessages: string[];
+
+
     constructor(rawSig: SignatureReflection) {
+        this.errorMessages = [];
         this.name = rawSig.name;
         this.returnType = rawSig.type ? rawSig.type.toString() : "";
         this.returnsSomething = this.returnType != "void";
@@ -139,18 +156,21 @@ class MethodSigInfo {
             this.docText = rawSig.comment.shortText + rawSig.comment.text;
             this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
             
-            if (!this.docText)
-                console.log(`Warning: method "${rawSig.name}" has no doc text.`);
+            if (!this.docText) {
+                this.errorMessages.push(`Warning: method "${rawSig.name}" has no doc text.`);
+            }
 
             this.returnDocText = rawSig.comment.returns;
             this.returnDocText = this.returnDocText ? this.returnDocText.replace(/[\n\r]+/g, " ").trim() : "";
             
-            if (this.returnDocText.toLowerCase() === "nothing")
+            if (this.returnDocText.toLowerCase() === "nothing") {
                 this.returnsSomething = false;
+            }
 
-            if (this.returnsSomething && !this.returnDocText)
-                console.log(`Warning: Return value of method "${rawSig.name}" has no doc text.`);
-            
+            if (this.returnsSomething && !this.returnDocText) {
+                this.errorMessages.push(`Warning: Return value of method "${rawSig.name}" has no doc text.`);
+            }
+
             this.isDeprecated = rawSig.comment.hasTag("deprecated");
         }
 
@@ -159,8 +179,10 @@ class MethodSigInfo {
 
         if (rawSig.parameters) {
             rawSig.parameters.forEach(rawParam => {
-                if (!rawParam.comment || !rawParam.comment.text)
-                console.log(`Warning: parameter "${rawParam.name}" of method "${rawSig.name}" has no doc text.`);
+                if (!rawParam.comment || !rawParam.comment.text) {
+                    this.errorMessages.push(`Warning: parameter "${rawParam.name}" of method "${rawSig.name}" has no doc text.`);
+                }
+
                 let param = new ParamInfo(rawParam);
                 this.params.push(param);
                 paramStrings.push(param.combined);
@@ -168,6 +190,10 @@ class MethodSigInfo {
         }
 
         this.signature = "(" + paramStrings.join(", ") + ")";
+    }
+
+    get errors() {
+        return this.errorMessages;
     }
 }
 
@@ -192,7 +218,7 @@ class ComponentInfo {
         this.methods = [];
 
         methods.forEach(method =>{
-            if (!(method.flags.isPrivate || method.flags.isProtected)) {
+            if (!(method.flags.isPrivate || method.flags.isProtected || undocMethodNames[method.name])) {
                 method.signatures.forEach(sig => {
                     this.methods.push(new MethodSigInfo(sig));
                 });
@@ -208,6 +234,24 @@ class ComponentInfo {
         });
 
         this.hasMethods = methods.length > 0;
+    }
+
+    get errors() {
+        let combinedErrors = [];
+
+        this.methods.forEach(method => {
+            method.errors.forEach(err => {
+                combinedErrors.push(err);
+            })
+        });
+
+        this.properties.forEach(prop => {
+            prop.errors.forEach(err => {
+                combinedErrors.push(err);
+            });
+        });
+
+        return combinedErrors;
     }
 }
 
@@ -239,7 +283,7 @@ export function aggPhase(aggData) {
 }
 
 
-export function updatePhase(tree, pathname, aggData) {
+export function updatePhase(tree, pathname, aggData, errorMessages) {
     let compName = angNameToClassName(path.basename(pathname, ".md"));
     let classRef = aggData.projData.findReflectionByName(compName);
 
@@ -266,6 +310,11 @@ export function updatePhase(tree, pathname, aggData) {
             newSection.push(after);
             return newSection;
         });
+
+        compData.errors.forEach(err => {
+            errorMessages.push(err);
+        })
+
         /*
         let templateName = classType[0] + ".liquid";
 
