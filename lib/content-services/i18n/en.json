@@ -261,6 +261,14 @@
       "ROLE": "Role",
       "LOCALLY_SET": "Locally set",
       "NO_PERMISSIONS": "No permissions"
-    }
+      },
+      "ADD-PERMISSION": {
+        "SEARCH" : "Search",
+        "TYPE-MESSAGE" : "Type something to start searching groups or people",
+        "NO-RESULT": "No result found for this search",
+        "ADD-ACTION" : "ADD",
+        "CLOSE-ACTION" : "CLOSE",
+        "BASE-DIALOG-TITLE" : "Search a group or people to add..."
+      }
   }
 }

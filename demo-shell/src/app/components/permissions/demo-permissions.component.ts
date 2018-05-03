@@ -17,9 +17,9 @@
 
 import { Component, Optional, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params} from '@angular/router';
-import { PermissionListComponent } from '@alfresco/adf-content-services';
+import { PermissionListComponent, NodePermissionDialogService } from '@alfresco/adf-content-services';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { NodesApiService } from '@alfresco/adf-core';
+import { NodesApiService, NotificationService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-permissions',
@@ -35,7 +35,9 @@ export class DemoPermissionComponent implements OnInit {
     toggleStatus = false;
 
     constructor(@Optional() private route: ActivatedRoute,
-                private nodeService: NodesApiService) {
+                private nodeService: NodesApiService,
+                private nodePermissionDialogService: NodePermissionDialogService,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit() {
@@ -54,6 +56,26 @@ export class DemoPermissionComponent implements OnInit {
     onUpdatedPermissions(node: MinimalNodeEntryEntity) {
         this.toggleStatus = node.permissions.isInheritanceEnabled;
         this.displayPermissionComponent.reload();
+    }
+
+    reloadList() {
+        this.displayPermissionComponent.reload();
+    }
+
+    openAddPermissionDialog(event: Event) {
+        this.nodePermissionDialogService.updateNodePermissionByDialog(this.nodeId).subscribe(() => {
+            this.displayPermissionComponent.reload();
+        },
+            (error) => {
+                this.showErrorMessage(error);
+            });
+    }
+
+    showErrorMessage(error) {
+        this.notificationService.openSnackMessage(
+            JSON.parse(error.response.text).error.errorKey,
+            4000
+        );
     }
 
 }

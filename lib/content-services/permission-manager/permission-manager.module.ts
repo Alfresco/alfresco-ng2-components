@@ -21,10 +21,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
+import { AddPermissionComponent } from './components/add-permission/add-permission.component';
+import { AddPermissionDialogComponent } from './components/add-permission/add-permission-dialog.component';
 import { DataTableModule, DataColumnModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
 import { NodePermissionService } from './services/node-permission.service';
 import { NoPermissionTemplateComponent } from './components/permission-list/no-permission.component';
+import { SearchModule } from '..';
+import { NodePermissionDialogService } from './services/node-permission-dialog.service';
+import { AddPermissionPanelComponent } from './components/add-permission/add-permission-panel.component';
 
 @NgModule({
     imports: [
@@ -34,20 +39,29 @@ import { NoPermissionTemplateComponent } from './components/permission-list/no-p
         MaterialModule,
         TranslateModule,
         DataTableModule,
-        DataColumnModule
+        DataColumnModule,
+        SearchModule
     ],
     declarations: [
         PermissionListComponent,
         NoPermissionTemplateComponent,
-        InheritPermissionDirective
+        AddPermissionPanelComponent,
+        InheritPermissionDirective,
+        AddPermissionComponent,
+        AddPermissionDialogComponent
     ],
     providers: [
+        NodePermissionDialogService,
         NodePermissionService
     ],
+    entryComponents: [ AddPermissionPanelComponent, AddPermissionComponent, AddPermissionDialogComponent ],
     exports: [
         PermissionListComponent,
         NoPermissionTemplateComponent,
-        InheritPermissionDirective
+        AddPermissionPanelComponent,
+        InheritPermissionDirective,
+        AddPermissionComponent,
+        AddPermissionDialogComponent
     ]
 })
 export class PermissionManagerModule {}
