@@ -41,4 +41,8 @@ export class CustomSourcesComponent {
         { title: 'My', value: '-my-' },
         { title: 'Shared', value: '-shared-' }
     ];
+
+    hasSelection(selection: any[]): boolean {
+        return selection && selection.length > 0;
+    }
 }
