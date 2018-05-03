@@ -88,7 +88,7 @@
     "rxjs": "5.5.2",
     "systemjs": "0.19.27",
     "web-animations-js": "2.3.1",
-    "zone.js": "0.8.26"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular/cli": "1.7.4",
@@ -119,14 +119,14 @@
     "jasmine-ajax": "3.2.0",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "0.13.22",
-    "karma-chrome-launcher": "2.2.0",
+    "karma": "~2.0.0",
+    "karma-chrome-launcher": "~2.2.0",
     "karma-cli": "~1.0.1",
-    "karma-coverage": "1.1.1",
     "karma-coverage-istanbul-reporter": "^1.2.1",
-    "karma-jasmine": "1.1.0",
+    "karma-jasmine": "~1.1.0",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-coverage": "1.1.1",
     "karma-jasmine-ajax": "0.1.13",
-    "karma-jasmine-html-reporter": "0.2.2",
     "karma-mocha-reporter": "2.2.2",
     "karma-remap-istanbul": "0.6.0",
     "karma-sourcemap-loader": "0.3.7",

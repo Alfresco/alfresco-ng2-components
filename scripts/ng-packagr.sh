@@ -22,8 +22,12 @@ mkdir -p ./node_modules/@alfresco/adf-content-services/
 cp -R ./lib/dist/content-services/* ./node_modules/@alfresco/adf-content-services/
 
 ng-packagr -p ./lib/process-services/package.json
+mkdir -p ./node_modules/@alfresco/adf-process-services/
+cp -R ./lib/dist/process-services/* ./node_modules/@alfresco/adf-process-services/
 
 ng-packagr -p ./lib/insights/package.json
+mkdir -p ./node_modules/@alfresco/adf-insights/
+cp -R ./lib/dist/insights/* ./node_modules/@alfresco/adf-insights/
 
 echo "====== Build style ====="
 
