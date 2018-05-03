@@ -6,7 +6,9 @@ Status: Active
 
 Stores items in the form of key-value pairs.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `getItem(key: string): string`  
     Gets an item.  

@@ -8,7 +8,9 @@ Last reviewed: 2018-03-21
 
 Retrieves an SVG thumbnail image to represent a document type.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `getDocumentThumbnailUrl(node: any): string`  
     Gets a thumbnail URL for the given document node.  

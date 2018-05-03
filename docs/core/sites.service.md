@@ -8,7 +8,9 @@ Last reviewed: 2018-03-21
 
 Accesses and manipulates sites from a Content Services repository.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `getSites(opts: any = {}): Observable<SitePaging>`  
     Gets a list of all sites in the repository.  

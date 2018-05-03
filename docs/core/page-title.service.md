@@ -6,7 +6,9 @@ Status: Active
 
 Sets the page title.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `setTitle(value: string = '')`  
     Sets the page title.  
