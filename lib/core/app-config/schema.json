@@ -539,13 +539,32 @@
               }
             },
             "facetQueries": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "required": [ "query", "label" ],
-                "properties": {
-                  "query": { "type": "string" },
-                  "label": { "type": "string" }
+              "type": "object",
+              "required": ["label", "queries"],
+              "properties": {
+                "label": {
+                  "description": "Category label text",
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "Default page size of the category",
+                  "type": "number"
+                },
+                "expanded": {
+                  "description": "Toggles expanded state of the category",
+                  "type": "boolean"
+                },
+                "queries": {
+                  "description": "List of custom facet queries",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [ "query", "label" ],
+                    "properties": {
+                      "query": { "type": "string" },
+                      "label": { "type": "string" }
+                    }
+                  }
                 }
               }
             },

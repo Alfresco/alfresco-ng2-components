@@ -23,6 +23,7 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 @Component({
     selector: 'adf-search-text',
     templateUrl: './search-text.component.html',
+    styleUrls: ['./search-text.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-text' }
 })
@@ -36,7 +37,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     context: SearchQueryBuilderService;
 
     ngOnInit() {
-        if (this.context && this.settings) {
+        if (this.context && this.settings && this.settings.pattern) {
             const pattern = new RegExp(this.settings.pattern, 'g');
             const match = pattern.exec(this.context.queryFragments[this.id] || '');
 
@@ -46,10 +47,19 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         }
     }
 
+    reset() {
+        this.value = '';
+        this.updateQuery(null);
+    }
+
     onChangedHandler(event) {
         this.value = event.target.value;
-        if (this.value) {
-            this.context.queryFragments[this.id] = `${this.settings.field}:'${this.value}'`;
+        this.updateQuery(this.value);
+    }
+
+    private updateQuery(value: string) {
+        if (this.context && this.settings && this.settings.field) {
+            this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${value}'` : '';
             this.context.update();
         }
     }

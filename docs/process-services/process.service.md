@@ -8,7 +8,9 @@ Last reviewed: 2018-03-20
 
 Manages Process Instances, Process Variables, and Process Audit Log. 
 
-## Methods
+## Class members
+
+### Methods
 
 -   `getProcessInstances(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel>`  
     Get process instances for a filter and optionally a process definition.  

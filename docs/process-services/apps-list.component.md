@@ -29,6 +29,8 @@ If we intend to show a custom template if there are no apps present
 </adf-apps>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

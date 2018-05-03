@@ -16,6 +16,8 @@ Creates/Starts new task for the specified app
 </adf-start-task>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

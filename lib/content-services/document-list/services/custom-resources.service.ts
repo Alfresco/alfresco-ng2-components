@@ -25,7 +25,8 @@ import {
     NodePaging,
     PersonEntry,
     SitePaging,
-    DeletedNodesPaging
+    DeletedNodesPaging,
+    SortDefinitionType
 } from 'alfresco-js-api';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -62,7 +63,7 @@ export class CustomResourcesService {
                             ],
                             include: ['path', 'properties', 'allowableOperations'],
                             sort: [{
-                                type: 'FIELD',
+                                type: SortDefinitionType.FIELD,
                                 field: 'cm:modified',
                                 ascending: false
                             }],
@@ -72,8 +73,8 @@ export class CustomResourcesService {
                             }
                         };
                         return this.apiService.searchApi.search(query)
-                            .then((serachResult) => {
-                                    observer.next(serachResult);
+                            .then((searchResult) => {
+                                    observer.next(searchResult);
                                     observer.complete();
                                 },
                                 (err) => {

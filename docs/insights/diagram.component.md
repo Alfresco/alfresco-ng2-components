@@ -24,6 +24,8 @@ The below component shows the diagram of a running process instance with the act
 </adf-diagram>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Description |

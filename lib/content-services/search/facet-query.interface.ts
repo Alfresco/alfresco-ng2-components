@@ -19,3 +19,9 @@ export interface FacetQuery {
     query: string;
     label: string;
 }
+
+export interface ResponseFacetQuery {
+    label?: string;
+    filterQuery?: string;
+    count?: number;
+}

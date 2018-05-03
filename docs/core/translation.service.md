@@ -6,7 +6,9 @@ Status: Active
 
 Supports localisation.
 
-## Methods
+## Class members
+
+### Methods
 
 -   `addTranslationFolder(name: string = '', path: string = '')`  
     Adds a new folder of translation source files.  

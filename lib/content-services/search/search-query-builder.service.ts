@@ -69,7 +69,7 @@ export class SearchQueryBuilderService {
 
     getFacetQuery(label: string): FacetQuery {
         if (label) {
-            const queries = this.config.facetQueries || [];
+            const queries = this.config.facetQueries.queries || [];
             return queries.find(q => q.label === label);
         }
         return null;
@@ -115,11 +115,23 @@ export class SearchQueryBuilderService {
                 paging: this.paging,
                 fields: this.config.fields,
                 filterQueries: this.filterQueries,
-                facetQueries: this.config.facetQueries,
+                facetQueries: this.facetQueries,
                 facetFields: this.facetFields
             };
 
             return result;
+        }
+
+        return null;
+    }
+
+    private get facetQueries(): FacetQuery[] {
+        const config = this.config.facetQueries;
+
+        if (config && config.queries && config.queries.length > 0) {
+            return config.queries.map(query => {
+                return <FacetQuery> { ...query };
+            });
         }
 
         return null;

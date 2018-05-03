@@ -31,7 +31,7 @@ export class PermissionDisplayModel implements PermissionElement {
             this.name = obj.name;
             this.accessStatus = obj.accessStatus;
             this.isInherited = obj.isInherited !== null && obj.isInherited !== undefined ? obj.isInherited : false;
-            this.icon = obj.icon ? obj.icon : 'lock_open';
+            this.icon = obj.icon ? obj.icon : 'vpn_key';
         }
     }
 }

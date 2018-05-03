@@ -18,8 +18,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService, SearchService, NodesApiService } from '@alfresco/adf-core';
-import { QueryBody, MinimalNodeEntryEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
+import { QueryBody, MinimalNodeEntryEntity, MinimalNodeEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
 import 'rxjs/add/operator/switchMap';
+import { of } from 'rxjs/observable/of';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class NodePermissionService {
@@ -47,13 +49,15 @@ export class NodePermissionService {
             });
     }
 
+
     /**
      * Updates the permission for a node.
      * @param node Target node
      * @param updatedPermissionRole Permission role to update or add
      * @returns Node with updated permission
      */
-    updatePermissionRoles(node: MinimalNodeEntryEntity, updatedPermissionRole: PermissionElement): Observable<MinimalNodeEntryEntity> {
+    updatePermissionRole(node: MinimalNodeEntryEntity, updatedPermissionRole: PermissionElement): Observable<MinimalNodeEntryEntity> {
+
         let permissionBody = { permissions: { locallySet: []} };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
         permissionBody.permissions.locallySet = permissionBody.permissions.locallySet.concat(node.permissions.locallySet);
@@ -63,6 +67,47 @@ export class NodePermissionService {
             permissionBody.permissions.locallySet.push(updatedPermissionRole);
         }
         return this.nodeService.updateNode(node.id, permissionBody);
+    }
+
+    updateNodePermissions(nodeId: string, permissionList: MinimalNodeEntity[]): Observable<MinimalNodeEntryEntity> {
+       return this.nodeService.getNode(nodeId).pipe(
+           switchMap(node => {
+                return this.getNodeRoles(node).pipe(
+                    switchMap((nodeRoles) => of({node, nodeRoles}) )
+                );
+            }),
+            switchMap(({node, nodeRoles}) => this.updateLocallySetPermissions(node, permissionList, nodeRoles))
+        );
+    }
+
+    updateLocallySetPermissions(node: MinimalNodeEntryEntity, nodes: MinimalNodeEntity[], nodeRole: string[]): Observable<MinimalNodeEntryEntity> {
+        let permissionBody = { permissions: { locallySet: []} };
+        const permissionList = this.transformNodeToPermissionElement(nodes, nodeRole[0]);
+        permissionBody.permissions.locallySet = node.permissions.locallySet ? node.permissions.locallySet.concat(permissionList) : permissionList;
+        return this.nodeService.updateNode(node.id, permissionBody);
+    }
+
+    private transformNodeToPermissionElement(nodes: MinimalNodeEntity[], nodeRole: any): PermissionElement[] {
+        return nodes.map((node) => {
+            let newPermissionElement: PermissionElement = <PermissionElement> {
+                'authorityId': node.entry.properties['cm:authorityName'] ?
+                    node.entry.properties['cm:authorityName'] :
+                    node.entry.properties['cm:userName'],
+                'name': nodeRole,
+                'accessStatus': 'ALLOWED'
+            };
+            return newPermissionElement;
+        });
+    }
+
+    removePermission(node: MinimalNodeEntryEntity, permissionToRemove: PermissionElement): Observable<MinimalNodeEntryEntity> {
+        let permissionBody = { permissions: { locallySet: [] } };
+        const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(permissionToRemove.authorityId);
+        if (index !== -1) {
+            node.permissions.locallySet.splice(index, 1);
+            permissionBody.permissions.locallySet = node.permissions.locallySet;
+            return this.nodeService.updateNode(node.id, permissionBody);
+        }
     }
 
     private getGroupMembersBySiteName(siteName: string): Observable<string[]> {

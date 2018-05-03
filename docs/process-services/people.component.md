@@ -6,6 +6,8 @@ Status: Active
 
 Displays users involved with a specified task
 
+![activiti-people](../docassets/images/activiti_people.png)
+
 ## Contents
 
 -   [Basic Usage](#basic-usage)
@@ -30,7 +32,7 @@ Displays users involved with a specified task
 </adf-people>
 ```
 
-![activiti-people](../docassets/images/activiti_people.png)
+## Class members
 
 ### Properties
 

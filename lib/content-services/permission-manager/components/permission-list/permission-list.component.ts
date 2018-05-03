@@ -37,6 +37,9 @@ export class PermissionListComponent implements OnInit {
     @Output()
     update: EventEmitter<PermissionElement> = new EventEmitter();
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter();
+
     permissionList: PermissionDisplayModel[];
     settableRoles: any[];
     actualNode: MinimalNodeEntryEntity;
@@ -84,7 +87,7 @@ export class PermissionListComponent implements OnInit {
 
     saveNewRole(event: any, permissionRow: PermissionDisplayModel) {
         let updatedPermissionRole: PermissionElement = this.buildUpdatedPermission(event.value, permissionRow);
-        this.nodePermissionService.updatePermissionRoles(this.actualNode, updatedPermissionRole)
+        this.nodePermissionService.updatePermissionRole(this.actualNode, updatedPermissionRole)
             .subscribe((node: MinimalNodeEntryEntity) => {
                 this.update.emit(updatedPermissionRole);
             });
@@ -96,6 +99,12 @@ export class PermissionListComponent implements OnInit {
         permissionRole.name = newRole;
         permissionRole.authorityId = permissionRow.authorityId;
         return permissionRole;
+    }
+
+    removePermission(permissionRow: PermissionDisplayModel) {
+        this.nodePermissionService.removePermission(this.actualNode, permissionRow).subscribe((node) => {
+            this.update.emit(node);
+        }, (error) => this.error.emit(error));
     }
 
 }

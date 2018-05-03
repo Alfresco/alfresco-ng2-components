@@ -14,6 +14,8 @@ Displays detailed information on a specified process instance
 </adf-process-instance-details>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

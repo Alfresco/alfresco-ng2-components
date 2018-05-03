@@ -20,6 +20,7 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { SearchConfiguration } from '../../search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs/Subject';
+import { ResponseFacetQueryList } from './models/response-facet-query-list.model';
 
 describe('SearchSettingsComponent', () => {
 
@@ -119,9 +120,11 @@ describe('SearchSettingsComponent', () => {
     it('should unselect facet query and update builder', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetQueries: [
-                { label: 'q1', query: 'query1' }
-            ]
+            facetQueries: {
+                queries: [
+                    { label: 'q1', query: 'query1' }
+                ]
+            }
         };
         appConfig.config.search = config;
         queryBuilder = new SearchQueryBuilderService(appConfig, null);
@@ -155,10 +158,10 @@ describe('SearchSettingsComponent', () => {
     });
 
     it('should fetch facet queries from response payload', () => {
-        component.responseFacetQueries = [];
+        component.responseFacetQueries = new ResponseFacetQueryList();
         const queries = [
-            { label: 'q1', query: 'query1' },
-            { label: 'q2', query: 'query2' }
+            { label: 'q1', query: 'query1', count: 1 },
+            { label: 'q2', query: 'query2', count: 1 }
         ];
         const data = {
             list: {
@@ -171,11 +174,11 @@ describe('SearchSettingsComponent', () => {
         component.onDataLoaded(data);
 
         expect(component.responseFacetQueries.length).toBe(2);
-        expect(component.responseFacetQueries).toEqual(queries);
+        expect(component.responseFacetQueries.items).toEqual(queries);
     });
 
     it('should not fetch facet queries from response payload', () => {
-        component.responseFacetQueries = [];
+        component.responseFacetQueries = new ResponseFacetQueryList();
 
         const data = {
             list: {
@@ -192,11 +195,11 @@ describe('SearchSettingsComponent', () => {
 
     it('should restore checked state for new response facet queries', () => {
         component.selectedFacetQueries = ['q3'];
-        component.responseFacetQueries = [];
+        component.responseFacetQueries = new ResponseFacetQueryList();
 
         const queries = [
-            { label: 'q1', query: 'query1' },
-            { label: 'q2', query: 'query2' }
+            { label: 'q1', query: 'query1', count: 1 },
+            { label: 'q2', query: 'query2', count: 1 }
         ];
         const data = {
             list: {
@@ -209,17 +212,17 @@ describe('SearchSettingsComponent', () => {
         component.onDataLoaded(data);
 
         expect(component.responseFacetQueries.length).toBe(2);
-        expect((<any> component.responseFacetQueries[0]).$checked).toBeFalsy();
-        expect((<any> component.responseFacetQueries[1]).$checked).toBeFalsy();
+        expect((<any> component.responseFacetQueries.items[0]).$checked).toBeFalsy();
+        expect((<any> component.responseFacetQueries.items[1]).$checked).toBeFalsy();
     });
 
     it('should not restore checked state for new response facet queries', () => {
         component.selectedFacetQueries = ['q2'];
-        component.responseFacetQueries = [];
+        component.responseFacetQueries = new ResponseFacetQueryList();
 
         const queries = [
-            { label: 'q1', query: 'query1' },
-            { label: 'q2', query: 'query2' }
+            { label: 'q1', query: 'query1', count: 1 },
+            { label: 'q2', query: 'query2', count: 1 }
         ];
         const data = {
             list: {
@@ -232,8 +235,8 @@ describe('SearchSettingsComponent', () => {
         component.onDataLoaded(data);
 
         expect(component.responseFacetQueries.length).toBe(2);
-        expect((<any> component.responseFacetQueries[0]).$checked).toBeFalsy();
-        expect((<any> component.responseFacetQueries[1]).$checked).toBeTruthy();
+        expect((<any> component.responseFacetQueries.items[0]).$checked).toBeFalsy();
+        expect((<any> component.responseFacetQueries.items[1]).$checked).toBeTruthy();
     });
 
     it('should fetch facet fields from response payload', () => {
@@ -309,7 +312,7 @@ describe('SearchSettingsComponent', () => {
     });
 
     it('should reset queries and fields on empty response payload', () => {
-        component.responseFacetQueries = [<any> {}, <any> {}];
+        component.responseFacetQueries = new ResponseFacetQueryList([<any> {}, <any> {}]);
         component.responseFacetFields = [<any> {}, <any> {}];
 
         const data = {

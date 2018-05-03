@@ -25,6 +25,11 @@ export interface SearchConfiguration {
     fields?: Array<string>;
     categories: Array<SearchCategory>;
     filterQueries?: Array<FilterQuery>;
-    facetQueries?: Array<FacetQuery>;
+    facetQueries?: {
+        label?: string;
+        pageSize?: number;
+        expanded?: boolean;
+        queries: Array<FacetQuery>;
+    };
     facetFields?: Array<FacetField>;
 }
