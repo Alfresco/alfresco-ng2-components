@@ -166,7 +166,10 @@
             }
           }
         }
-      ]
+      ],
+      "datePicker": {
+        "dateFormat": "DD-MMM-YY"
+      }
     },
     "pagination": {
         "size": 25,
