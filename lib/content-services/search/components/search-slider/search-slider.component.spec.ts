@@ -70,4 +70,62 @@ describe('SearchSliderComponent', () => {
         expect(context.update).toHaveBeenCalled();
     });
 
+    it('should reset the value for query builder', () => {
+        const settings: any = {
+            field: 'field1',
+            min: 10,
+            max: 100,
+            step: 2,
+            thumbLabel: true
+        };
+
+        const context: any = {
+            queryFragments: {},
+            update() {}
+        };
+
+        component.settings = settings;
+        component.context = context;
+        component.value = 20;
+        component.id = 'slider';
+        component.ngOnInit();
+
+        spyOn(context, 'update').and.stub();
+
+        component.reset();
+
+        expect(component.value).toBe(settings.min);
+        expect(context.queryFragments['slider']).toBe('');
+        expect(context.update).toHaveBeenCalled();
+    });
+
+    it('should reset to 0 if min not provided', () => {
+        const settings: any = {
+            field: 'field1',
+            min: null,
+            max: 100,
+            step: 2,
+            thumbLabel: true
+        };
+
+        const context: any = {
+            queryFragments: {},
+            update() {}
+        };
+
+        component.settings = settings;
+        component.context = context;
+        component.value = 20;
+        component.id = 'slider';
+        component.ngOnInit();
+
+        spyOn(context, 'update').and.stub();
+
+        component.reset();
+
+        expect(component.value).toBe(0);
+        expect(context.queryFragments['slider']).toBe('');
+        expect(context.update).toHaveBeenCalled();
+    });
+
 });

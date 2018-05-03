@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { SearchWidget } from '../../search-widget.interface';
 import { SearchWidgetSettings } from '../../search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
@@ -37,7 +37,9 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     min: number;
     max: number;
     thumbLabel = false;
-    value: number;
+
+    @Input()
+    value: number | null;
 
     ngOnInit() {
         if (this.settings) {
@@ -57,11 +59,23 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
         }
     }
 
+    reset() {
+        this.value = this.min || 0;
+        this.updateQuery(null);
+    }
+
     onChangedHandler(event: MatSliderChange) {
         this.value = event.value;
+        this.updateQuery(this.value);
+    }
 
+    private updateQuery(value: number | null) {
         if (this.id && this.context && this.settings && this.settings.field) {
-            this.context.queryFragments[this.id] = `${this.settings.field}:[0 TO ${this.value}]`;
+            if (value === null) {
+                this.context.queryFragments[this.id] = '';
+            } else {
+                this.context.queryFragments[this.id] = `${this.settings.field}:[0 TO ${value}]`;
+            }
             this.context.update();
         }
     }
