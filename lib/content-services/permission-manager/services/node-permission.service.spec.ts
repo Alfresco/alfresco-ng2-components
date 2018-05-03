@@ -24,8 +24,8 @@ import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNode
          fakeNodeToRemovePermission } from '../../mock/permission-list.component.mock';
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
 import { NodePermissionDialogService } from './node-permission-dialog.service';
-
-describe('NodePermissionService', () => {
+/*tslint:disable:ban*/
+fdescribe('NodePermissionService', () => {
 
     let service: NodePermissionService;
     let nodeService: NodesApiService;
@@ -146,6 +146,37 @@ describe('NodePermissionService', () => {
             expect(node.permissions.locallySet[2].authorityId).not.toBe(fakeAuthorityResults[1].entry['cm:userName']);
             expect(node.permissions.locallySet[1].authorityId).not.toBe(fakeAuthorityResults[2].entry['cm:userName']);
         });
+    }));
+
+    it('should be fail when user select the same authority and role to add', async(() => {
+        const fakeNodeCopy = Object.assign(fakeNodeWithOnlyLocally);
+
+        const fakeDuplicateAuthority: any = [{
+            'entry': {
+                'isFolder': false,
+                'search': {
+                    'score': 0.3541112
+                },
+                'isFile': false,
+                'name': 'GROUP_EVERYONE',
+                'location': 'nodes',
+                'id': 'GROUP_EVERYONE',
+                'nodeType': 'cm:authorityContainer',
+                'properties': {
+                    'cm:authorityName': 'GROUP_EVERYONE'
+                },
+                'parentId': '030d833e-da8e-4f5c-8ef9-d809638bd04b'
+            }
+        }];
+
+        service.updateLocallySetPermissions(fakeNodeCopy, fakeDuplicateAuthority, ['Contributor'])
+            .subscribe((node: MinimalNodeEntryEntity) => {
+
+            }, (errorMessage) => {
+                expect(errorMessage).not.toBeNull();
+                expect(errorMessage).toBeDefined();
+                expect(errorMessage).toBe('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION');
+            });
     }));
 
 });
