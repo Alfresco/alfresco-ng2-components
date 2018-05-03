@@ -39,6 +39,8 @@
     "**/e2e/*.ts",
     "**/*.e2e-spec.ts",
     "**/*.po.ts",
+    "**/integration/*.*",
+    "**/lib/*.*",
     "node_modules",
     "tmp"
   ],
