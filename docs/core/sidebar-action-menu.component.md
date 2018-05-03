@@ -26,6 +26,8 @@ Displays a sidebar-action menu information panel.
 </adf-sidebar-action-menu>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

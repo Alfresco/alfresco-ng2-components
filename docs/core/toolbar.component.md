@@ -21,6 +21,8 @@ Simple container for headers, titles, actions and breadcrumbs.
 </adf-toolbar>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |

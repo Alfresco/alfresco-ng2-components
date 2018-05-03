@@ -14,6 +14,8 @@ Implements text field input masks.
 <input [textMask]="{mask: mask, isReversed: isMaskReversed}">
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default | Description |
