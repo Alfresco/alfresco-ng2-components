@@ -31,6 +31,14 @@ export class ResponseFacetQueryList {
         return this.items.length;
     }
 
+    get canShowMoreItems(): boolean {
+        return this.items.length > this.currentPageSize;
+    }
+
+    get canShowLessItems(): boolean {
+        return this.currentPageSize > this.pageSize;
+    }
+
     constructor(items: ResponseFacetQuery[] = [], pageSize: number = 5) {
         this.items = items
             .filter(item => {
@@ -43,12 +51,16 @@ export class ResponseFacetQueryList {
         this.currentPageSize = pageSize;
     }
 
-    hasMoreItems(): boolean {
-        return this.items.length > this.currentPageSize;
+    showMoreItems() {
+        if (this.canShowMoreItems) {
+            this.currentPageSize += this.pageSize;
+        }
     }
 
-    showMoreItems() {
-        this.currentPageSize += this.pageSize;
+    showLessItems() {
+        if (this.canShowLessItems) {
+            this.currentPageSize -= this.pageSize;
+        }
     }
 
     clear() {

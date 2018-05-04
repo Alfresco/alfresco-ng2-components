@@ -30,12 +30,20 @@
                 </mat-checkbox>
             </ng-container>
         </div>
-        <button mat-button
-            *ngIf="responseFacetQueries.hasMoreItems()"
-            (click)="responseFacetQueries.showMoreItems()">
-            {{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}
-            <mat-icon>keyboard_arrow_down</mat-icon>
-        </button>
+        <div class="facet-buttons">
+            <button mat-button
+                *ngIf="responseFacetQueries.canShowLessItems"
+                (click)="responseFacetQueries.showLessItems()">
+                {{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}
+                <mat-icon>keyboard_arrow_up</mat-icon>
+            </button>
+            <button mat-button
+                *ngIf="responseFacetQueries.canShowMoreItems"
+                (click)="responseFacetQueries.showMoreItems()">
+                {{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+        </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel
