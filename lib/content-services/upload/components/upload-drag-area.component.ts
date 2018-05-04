@@ -34,7 +34,7 @@ import { UploadBase } from './base-upload/upload-base';
 })
 export class UploadDragAreaComponent extends UploadBase implements NodePermissionSubject {
 
-    /** @deprecaretd 2.4.0  use rootFolderId ID of parent folder node. */
+    /** @deprecated 2.4.0  use rootFolderId ID of parent folder node. */
     @Input()
     set parentId(nodeId: string) {
         this.rootFolderId = nodeId;

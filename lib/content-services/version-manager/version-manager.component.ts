@@ -43,18 +43,23 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class VersionManagerComponent {
 
+    /** Target node to manage version history. */
     @Input()
     node: MinimalNodeEntryEntity;
 
+    /** Toggles showing/hiding of comments. */
     @Input()
     showComments = true;
 
+    /** Enable/disable downloading a version of the current node. */
     @Input()
     allowDownload = true;
 
+    /** Emitted when a file is uploaded successfully. */
     @Output()
     uploadSuccess = new EventEmitter();
 
+    /** Emitted when an error occurs during upload. */
     @Output()
     uploadError = new EventEmitter();
 

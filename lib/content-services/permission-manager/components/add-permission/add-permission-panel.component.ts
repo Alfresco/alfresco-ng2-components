@@ -38,6 +38,7 @@ export class AddPermissionPanelComponent {
     @ViewChild('search')
     search: SearchComponent;
 
+    /** Emitted when a permission list item is selected. */
     @Output()
     select: EventEmitter<any> = new EventEmitter();
 
