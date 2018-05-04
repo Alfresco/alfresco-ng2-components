@@ -307,8 +307,8 @@ describe('SearchSettingsComponent', () => {
         component.onDataLoaded(data);
 
         expect(component.responseFacetFields.length).toBe(2);
-        expect(component.responseFacetFields[0].buckets[0].$checked).toBeFalsy();
-        expect(component.responseFacetFields[1].buckets[0].$checked).toBeTruthy();
+        expect(component.responseFacetFields[0].buckets.items[0].$checked).toBeFalsy();
+        expect(component.responseFacetFields[1].buckets.items[0].$checked).toBeTruthy();
     });
 
     it('should reset queries and fields on empty response payload', () => {

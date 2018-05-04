@@ -34,7 +34,7 @@ describe('SearchCheckListComponent', () => {
         component.settings = <any> { options: options };
         component.ngOnInit();
 
-        expect(component.options).toEqual(options);
+        expect(component.options.items).toEqual(options);
     });
 
     it('should setup operator from the settings', () => {
@@ -67,14 +67,14 @@ describe('SearchCheckListComponent', () => {
 
         component.changeHandler(
             <any> { checked: true },
-            component.options[0]
+            component.options.items[0]
         );
 
         expect(component.context.queryFragments[component.id]).toEqual(`TYPE:'cm:folder'`);
 
         component.changeHandler(
             <any> { checked: true },
-            component.options[1]
+            component.options.items[1]
         );
 
         expect(component.context.queryFragments[component.id]).toEqual(
@@ -90,8 +90,8 @@ describe('SearchCheckListComponent', () => {
 
         component.reset();
 
-        expect(component.options[0].checked).toBeFalsy();
-        expect(component.options[1].checked).toBeFalsy();
+        expect(component.options.items[0].checked).toBeFalsy();
+        expect(component.options.items[1].checked).toBeFalsy();
     });
 
     it('should update query builder on reset', () => {
