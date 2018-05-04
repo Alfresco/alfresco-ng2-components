@@ -51,7 +51,6 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     ngOnInit(): void {
         if (this.settings) {
             this.operator = this.settings.operator || 'OR';
-
             this.pageSize = this.settings.pageSize || 5;
 
             if (this.settings.options && this.settings.options.length > 0) {

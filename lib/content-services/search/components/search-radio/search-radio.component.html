@@ -1,6 +1,24 @@
-<mat-radio-group [(ngModel)]="value" (change)="changeHandler($event)">
+<mat-radio-group
+    [(ngModel)]="value"
+    (change)="changeHandler($event)">
     <mat-radio-button
-        *ngFor="let option of settings.options" [value]="option.value">
+        *ngFor="let option of options"
+        [value]="option.value">
         {{ option.name | translate }}
     </mat-radio-button>
 </mat-radio-group>
+
+<div class="facet-buttons" *ngIf="!options.fitsPage">
+    <button mat-icon-button
+        [disabled]="!options.canShowLessItems"
+        title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}"
+        (click)="options.showLessItems()">
+        <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+    <button mat-icon-button
+        [disabled]="!options.canShowMoreItems"
+        title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}"
+        (click)="options.showMoreItems()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+</div>

@@ -5,7 +5,13 @@
     {{ option.name | translate }}
 </mat-checkbox>
 
-<div class="facet-buttons">
+<div class="facet-buttons" *ngIf="options.fitsPage">
+    <button mat-button color="primary" (click)="reset()">
+        {{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}
+    </button>
+</div>
+
+<div class="facet-buttons" *ngIf="!options.fitsPage">
     <button mat-icon-button
         title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
         (click)="reset()">

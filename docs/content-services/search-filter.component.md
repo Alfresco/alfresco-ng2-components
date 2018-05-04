@@ -264,6 +264,15 @@ If user checks both boxes, the underlying query will get the following fragment:
 ... (TYPE:'cm:folder' OR TYPE:'cm:content') ...
 ```
 
+It is possible to set the size of the page to display items. The default size is 5.
+If all items fit a single page, then a "Clear all" action button is displayed at the bottom of the widget.
+
+In case there are more than one page three icon buttons will be displayed to allow:
+
+- clear all values
+- show more items (if applicable)
+- show less items (if applicable)
+
 ### Date Range Widget
 
 Provides ability to select a range between two Dates based on the particular `field`.
@@ -333,6 +342,7 @@ The behaviour is very similar to those of the `check-list` except `radio` allows
                     "selector": "radio",
                     "settings": {
                         "field": null,
+                        "pageSize": 5,
                         "options": [
                             { "name": "None", "value": "", "default": true },
                             { "name": "All", "value": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
@@ -348,6 +358,12 @@ The behaviour is very similar to those of the `check-list` except `radio` allows
 ```
 
 ![Radio Widget](../docassets/images/search-radio.png)
+
+It is possible to set the size of the page to display items. The default size is 5.
+In case there are more than one page three icon buttons will be displayed to allow:
+
+- show more items (if applicable)
+- show less items (if applicable)
 
 ### Slider Widget
 

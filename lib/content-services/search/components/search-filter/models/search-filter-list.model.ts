@@ -36,6 +36,10 @@ export class SearchFilterList<T> implements Iterable<T> {
         return this.currentPageSize > this.pageSize;
     }
 
+    get fitsPage(): boolean {
+        return this.pageSize > this.items.length;
+    }
+
     constructor(items: T[] = [], pageSize: number = 5) {
         this.items = items;
         this.pageSize = pageSize;
