@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-05-04
 ---
+
 # Bpm User service
 
 Gets information about the current Process Services user.
@@ -10,11 +12,12 @@ Gets information about the current Process Services user.
 
 ### Methods
 
-`getCurrentUserInfo(): Observable<BpmUserModel>`<br/>
-Gets information about the current user.
-
-`getCurrentUserProfileImage(): string`<br/>
-Returns the current user's profile image as a URL.
+-   `getCurrentUserInfo(): Observable<BpmUserModel>`<br/>
+    Gets information about the current user.
+    -   **Returns** `Observable<BpmUserModel>` - User information object
+-   `getCurrentUserProfileImage(): string`<br/>
+    Gets the current user's profile image as a URL.
+    -   **Returns** `string` - URL string
 
 ## Details
 

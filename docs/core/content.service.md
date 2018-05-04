@@ -12,46 +12,58 @@ Accesses app-generated data objects via URLs and file downloads.
 
 ### Methods
 
--   `downloadBlob(blob: Blob, fileName: string)`  
-    Invokes content download for a Blob with a file name.  
-    -   `blob` - Content to download.
-    -   `fileName` - Name of the resulting file.
--   `downloadData(data: any, fileName: string)`  
-    Invokes content download for a data array with a file name.  
-    -   `data` - Data to download.
-    -   `fileName` - Name of the resulting file.
--   `downloadJSON(json: any, fileName)`  
-    Invokes content download for a JSON object with a file name.  
-    -   `json` - JSON object to download.
-    -   `fileName` - Name of the resulting file.
--   `createTrustedUrl(blob: Blob): string`  
-    Creates a trusted object URL from the Blob. WARNING: calling this method with untrusted user data exposes your application to XSS security risks!  
-    -   `blob` - Data to wrap into object URL
--   `getDocumentThumbnailUrl(node: any, attachment?: boolean, ticket?: string): string`  
-    Get thumbnail URL for the given document node.  
-    -   `node` - Node to get URL for.
-    -   `attachment` - (Optional) Retrieve content as an attachment for download
-    -   `ticket` - (Optional) Custom ticket to use for authentication
--   `getContentUrl(node: any, attachment?: boolean, ticket?: string): string`  
-    Get content URL for the given node.  
-    -   `node` - nodeId or node to get URL for.
-    -   `attachment` - (Optional) Retrieve content as an attachment for download
-    -   `ticket` - (Optional) Custom ticket to use for authentication
--   `getNodeContent(nodeId: string): Observable<any>`  
-    Get content for the given node.  
-    -   `nodeId` - ID of the target node
--   `createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent>`  
-    Create a folder  
-    -   `relativePath` - Location to create the folder
-    -   `name` - Folder name
-    -   `parentId` - (Optional) Node ID of parent folder
--   `hasPermission(node: any, permission: PermissionsEnum | string): boolean`  
-    Check if the user has permissions on that node  
-    -   `node` - Node to check allowableOperations
-    -   `permission` - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
--   `hasAllowableOperations(node: any): boolean`  
-    Check if the node has the properties allowableOperations  
-    -   `node` - Node to check allowableOperations
+-   `createFolder(relativePath: string = null, name: string = null, parentId?: string = null): Observable<FolderCreatedEvent>`<br/>
+    Creates a folder.
+    -   `relativePath: string = null` -  Location to create the folder
+    -   `name: string = null` -  Folder name
+    -   `parentId?: string = null` - (Optional) Node ID of parent folder
+    -   **Returns** `Observable<FolderCreatedEvent>` - Information about the new folder
+-   `createTrustedUrl(blob: Blob = null): string`<br/>
+    Creates a trusted object URL from the Blob. WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
+    -   `blob: Blob = null` -  Data to wrap into object URL
+    -   **Returns** `string` - URL string
+-   `downloadBlob(blob: Blob = null, fileName: string = null)`<br/>
+    Invokes content download for a Blob with a file name.
+    -   `blob: Blob = null` -  Content to download.
+    -   `fileName: string = null` -  Name of the resulting file.
+-   `downloadData(data: any = null, fileName: string = null)`<br/>
+    Invokes content download for a data array with a file name.
+    -   `data: any = null` -  Data to download.
+    -   `fileName: string = null` -  Name of the resulting file.
+-   `downloadJSON(json: any = null, fileName: string = null)`<br/>
+    Invokes content download for a JSON object with a file name.
+    -   `json: any = null` -  JSON object to download.
+    -   `fileName: string = null` -  Name of the resulting file.
+-   `getContentUrl(node: any = null, attachment?: boolean = null, ticket?: string = null): string`<br/>
+    Gets a content URL for the given node.
+    -   `node: any = null` -  Node to get URL for.
+    -   `attachment?: boolean = null` - (Optional) Toggles whether to retrieve content as an attachment for download
+    -   `ticket?: string = null` - (Optional) Custom ticket to use for authentication
+    -   **Returns** `string` - URL string
+-   `getDocumentThumbnailUrl(node: any = null, attachment?: boolean = null, ticket?: string = null): string`<br/>
+    Gets a thumbnail URL for the given document node.
+    -   `node: any = null` -  Node to get URL for.
+    -   `attachment?: boolean = null` - (Optional) Toggles whether to retrieve content as an attachment for download
+    -   `ticket?: string = null` - (Optional) Custom ticket to use for authentication
+    -   **Returns** `string` - URL string
+-   `getNode(nodeId: string = null, opts?: any = null): Observable<NodeEntry>`<br/>
+    Gets a Node via its node ID.
+    -   `nodeId: string = null` -  ID of the target node
+    -   `opts?: any = null` - (Optional) Options supported by JSAPI
+    -   **Returns** `Observable<NodeEntry>` - Details of the folder
+-   `getNodeContent(nodeId: string = null): Observable<any>`<br/>
+    Gets content for the given node.
+    -   `nodeId: string = null` -  ID of the target node
+    -   **Returns** `Observable<any>` - Content data
+-   `hasAllowableOperations(node: any = null): boolean`<br/>
+    Checks if the node has the properties allowableOperations
+    -   `node: any = null` -  Node to check allowableOperations
+    -   **Returns** `boolean` - True if the node has the property, false otherwise
+-   `hasPermission(node: Node = null, permission: PermissionsEnum | string = null): boolean`<br/>
+    Checks if the user has permissions on that node
+    -   `node: Node = null` -  Node to check allowableOperations
+    -   `permission: PermissionsEnum | string = null` -  Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+    -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 
 ## Details
 

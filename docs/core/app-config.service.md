@@ -2,9 +2,34 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # App Config service
 
 Supports app configuration settings, stored server side.
+
+## Class members
+
+### Methods
+
+-   `get(key: string = null, defaultValue?: T = null): T`<br/>
+    Gets the value of a named property.
+    -   `key: string = null` -  Name of the property
+    -   `defaultValue?: T = null` - (Optional) Value to return if the key is not found
+    -   **Returns** `T` - Value of the property
+-   `getLocationHostname(): string`<br/>
+    Gets the location.hostname property.
+    -   **Returns** `string` - Value of the property
+-   `getLocationPort(prefix: string = ""): string`<br/>
+    Gets the location.port property.
+    -   `prefix: string = ""` -  Text added before port value
+    -   **Returns** `string` - Port with prefix
+-   `load(): Promise<any>`<br/>
+    Loads the config file.
+    -   **Returns** `Promise<any>` - Notification when loading is complete
+-   `select(property: string = null): Observable<any>`<br/>
+    Requests notification of a property value when it is loaded.
+    -   `property: string = null` -  The desired property value
+    -   **Returns** `Observable<any>` - Property value, when loaded
 
 ## Details
 
@@ -100,10 +125,10 @@ The supported variables are:
 | port | `location.port` |
 
 ## App Config onLoad Stream
+
 When the app config is loaded correctly an onChange event is sent with the whole set app config properties. This comes in handy when a component wants to react to some property change or interact with the app config when it's correctly loaded.
 
 ```ts
-
     appConfig.onLoad.subscribe((appConfig) => {
         console.log(appConfig); //this is the representation of the app-config
     });
