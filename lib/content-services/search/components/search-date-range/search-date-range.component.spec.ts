@@ -15,8 +15,12 @@
  * limitations under the License.
  */
 
-import { SearchDateRangeComponent } from './search-date-range.component';
+import { CustomMomentDateAdapter, SearchDateRangeComponent } from './search-date-range.component';
 import moment from 'moment-es6';
+import { AppConfigService } from '@alfresco/adf-core';
+import { DateAdapter } from '@angular/material/core';
+import { Moment } from 'moment';
+import { Observable } from 'rxjs/Observable';
 
 describe('SearchDateRangeComponent', () => {
 
@@ -24,8 +28,37 @@ describe('SearchDateRangeComponent', () => {
     let fromDate = '2016-10-16';
     let toDate = '2017-10-16';
 
+    const buildConfig = (searchSettings): AppConfigService => {
+        const config = new AppConfigService(null);
+        config.config.search = searchSettings;
+        return config;
+    };
+
+    const buildAdapter = (): DateAdapter<Moment> => {
+      const dateAdapter = new CustomMomentDateAdapter(null);
+      dateAdapter.customDateFormat = 'MMM YYYY';
+      return dateAdapter;
+    };
+
+    const buildUserPreferences = (): any => {
+        const userPreferences = {
+            userPreferenceStatus: { LOCALE: 'en' },
+            select: (property) => {
+                return Observable.of(userPreferences.userPreferenceStatus[property]);
+            }
+        };
+        return userPreferences;
+    };
+
     beforeEach(() => {
-        component = new SearchDateRangeComponent();
+        const config = {
+            'search': {
+                'datePicker': {
+                    'dateFormat': 'DD-MMM-YY'
+                }
+            }
+        };
+        component = new SearchDateRangeComponent(buildConfig(config), buildAdapter(), buildUserPreferences());
     });
 
     it('should setup form elements on init', () => {

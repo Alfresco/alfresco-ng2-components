@@ -26,14 +26,11 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
-
-
-
+import { AppConfigService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
 
-class CustomMomentDateAdapter extends MomentDateAdapter {
+export class CustomMomentDateAdapter extends MomentDateAdapter {
     customDateFormat: string;
 
     parse(value: any, parseFormat: any): any {
@@ -49,14 +46,13 @@ class CustomMomentDateAdapter extends MomentDateAdapter {
     }
 }
 
-
 @Component({
     selector: 'adf-search-date-range',
     templateUrl: './search-date-range.component.html',
     styleUrls: ['./search-date-range.component.scss'],
     providers: [
         {provide: DateAdapter, useClass: CustomMomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
     ],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
@@ -75,18 +71,18 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     maxFrom: any;
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
 
-    constructor(private appConfig: AppConfigService,
+    constructor(private appConfigService: AppConfigService,
                 private dateAdapter: DateAdapter<Moment>,
-                private preferences: UserPreferencesService) {
+                private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.datePickerDateFormat = this.appConfig.get('search.datePicker.dateFormat', DEFAULT_FORMAT_DATE);
+        this.datePickerDateFormat = this.appConfigService.get('search.datePicker.dateFormat', DEFAULT_FORMAT_DATE);
 
         const theCustomDateAdapter = <CustomMomentDateAdapter> this.dateAdapter;
         theCustomDateAdapter.customDateFormat = this.datePickerDateFormat;
 
-        this.preferences.locale$.subscribe((locale) => {
+        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
 
@@ -138,7 +134,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
 
     onChangedHandler(event: any, formControl) {
         const formatDate = moment(event.srcElement.value, this.datePickerDateFormat);
-        if(formatDate.isValid()) {
+        if (formatDate.isValid()) {
             formControl.setValue(formatDate);
         }
     }
