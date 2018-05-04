@@ -3,13 +3,13 @@ import * as fs from "fs";
 import chalk from "chalk";
 
 var nconf = require('nconf');
-var baseParh = "./config/export-check/";
+var basePath = "./tools/export-check/";
 
-nconf.add('config', { type: 'file', file: `${baseParh}export-check-config.json` });
+nconf.add('config', { type: 'file', file: `${basePath}export-check-config.json` });
 
-var newLibExports = baseParh + nconf.get('export-last-version');
+var newLibExports = basePath + nconf.get('export-last-version');
 var exportFilesVersions = nconf.get('export-versions').map((currentFile) => {
-    return baseParh + currentFile;
+    return basePath + currentFile;
 });
 
 interface DocEntry {

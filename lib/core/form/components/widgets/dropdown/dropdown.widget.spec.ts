@@ -30,17 +30,17 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DropdownWidgetComponent', () => {
 
-    function openSelect() {
-        const dropdown = fixture.debugElement.query(By.css('[class="mat-select-trigger"]'));
-        dropdown.triggerEventHandler('click', null);
-        fixture.detectChanges();
-    }
-
     let formService: FormService;
     let widget: DropdownWidgetComponent;
     let visibilityService: WidgetVisibilityService;
     let fixture: ComponentFixture<DropdownWidgetComponent>;
     let element: HTMLElement;
+
+    function openSelect() {
+        const dropdown = fixture.debugElement.query(By.css('[class="mat-select-trigger"]'));
+        dropdown.triggerEventHandler('click', null);
+        fixture.detectChanges();
+    }
 
     let fakeOptionList: FormFieldOption[] = [
         { id: 'opt_1', name: 'option_1' },

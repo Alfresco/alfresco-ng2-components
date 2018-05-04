@@ -16,7 +16,6 @@
  */
 
 import { async } from '@angular/core/testing';
-import { AlfrescoApi } from 'alfresco-js-api';
 import { exampleProcess, fakeProcessInstances } from '../../mock';
 import { mockError, fakeProcessDef, fakeTasksList } from '../../mock';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
@@ -30,7 +29,7 @@ describe('ProcessService', () => {
 
     let service: ProcessService;
     let apiService: AlfrescoApiService;
-    let alfrescoApi: AlfrescoApi;
+    let alfrescoApi: any;
 
     beforeEach(() => {
         apiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService() );

@@ -24,6 +24,27 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationService } from './notification.service';
 
+@Component({
+    template: '',
+    providers: [NotificationService]
+})
+class ProvidesNotificationServiceComponent {
+    constructor(public notificationService: NotificationService) {
+
+    }
+
+    sendMessage() {
+        let promise = this.notificationService.openSnackMessage('Test notification', 5000);
+        return promise;
+    }
+
+    sendMessageAction() {
+        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 5000);
+        return promise;
+    }
+
+}
+
 describe('NotificationService', () => {
     let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
 
@@ -74,24 +95,3 @@ describe('NotificationService', () => {
     });
 
 });
-
-@Component({
-    template: '',
-    providers: [NotificationService]
-})
-class ProvidesNotificationServiceComponent {
-    constructor(public notificationService: NotificationService) {
-
-    }
-
-    sendMessage() {
-        let promise = this.notificationService.openSnackMessage('Test notification', 5000);
-        return promise;
-    }
-
-    sendMessageAction() {
-        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 5000);
-        return promise;
-    }
-
-}

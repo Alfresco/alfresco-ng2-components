@@ -37,10 +37,8 @@ import { DropdownWidgetAanalyticsComponent } from './components/widgets/dropdown
 import { DurationWidgetComponent } from './components/widgets/duration/duration.widget';
 import { NumberWidgetAanlyticsComponent } from './components/widgets/number/number.widget';
 
-
 import { AnalyticsService } from './services/analytics.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
 
 @NgModule({
     imports: [
