@@ -29,9 +29,11 @@ import { NodePermissionService } from '../../services/node-permission.service';
 })
 export class PermissionListComponent implements OnInit {
 
+    /** ID of the node whose permissions you want to show. */
     @Input()
     nodeId: string = '';
 
+    /** Emitted when the permission is updated. */
     @Output()
     update: EventEmitter<PermissionElement> = new EventEmitter();
 

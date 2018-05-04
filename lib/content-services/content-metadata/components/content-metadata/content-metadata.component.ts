@@ -31,21 +31,29 @@ import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
 
+    /** (required) The node entity to fetch metadata about */
     @Input()
     node: MinimalNodeEntryEntity;
 
+    /** Toggles whether the edit button should be shown */
     @Input()
     editable: boolean = false;
 
+    /** Toggles whether to display empty values in the card view */
     @Input()
     displayEmpty: boolean = false;
 
+    /** Toggles between expanded (ie, full information) and collapsed
+     * (ie, reduced information) in the display
+     */
     @Input()
     expanded: boolean = false;
 
+    /** The multi parameter of the underlying material expansion panel */
     @Input()
     multi = false;
 
+    /** Name of the metadata preset, which defines aspects and their properties */
     @Input()
     preset: string;
 

@@ -1,7 +1,7 @@
 ---
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-03-23
+Last reviewed: 2018-05-03
 ---
 
 # Permission List Component
@@ -34,17 +34,17 @@ or custom template can be added:
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| nodeId | `string` | "" |  |
+| nodeId | `string` | "" | ID of the node whose permissions you want to show. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| update | `EventEmitter<PermissionElement>` |  |
+| update | `EventEmitter<PermissionElement>` | Emitted when the permission is updated. |
 
 ## Details
 
 This component uses a [Datatable component](../core/datatable.component.md) to show the
 permissions retrieved from the [Node service](../core/node.service.md).
-For the locallyset permissions a role dropdown will be showed allowing the user to change it.
-When user select a new value, the permission role is automatically updated and the `update` event is thrown.
+For the locally set permissions a role dropdown will be shown to let the user select a new role.
+When the user selects a new value, the permission role is automatically updated and the `update` event is emitted.
