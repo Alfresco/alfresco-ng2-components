@@ -35,6 +35,7 @@ export abstract class DynamicComponentMapper {
      * Gets the currently active ComponentTypeResolver function for a field type.
      * @param type The type whose resolver you want
      * @param defaultValue Default type returned for types that are not yet mapped
+     * @returns Resolver function
      */
     getComponentTypeResolver(type: string, defaultValue: Type<{}> = this.defaultValue): DynamicComponentResolveFunction {
         if (type) {
@@ -70,6 +71,7 @@ export abstract class DynamicComponentMapper {
      * Finds the component type that is needed to render a form field.
      * @param model [Form field model](form-field.model.md) for the field to render
      * @param defaultValue Default type returned for field types that are not yet mapped.
+     * @returns Component type
      */
     resolveComponentType(model: DynamicComponentModel, defaultValue: Type<{}> = this.defaultValue): Type<{}> {
         if (model) {

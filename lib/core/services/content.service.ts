@@ -79,11 +79,8 @@ export class ContentService {
 
     /**
      * Invokes content download for a Blob with a file name.
-     *
      * @param blob Content to download.
      * @param fileName Name of the resulting file.
-     *
-     * @memberOf ContentService
      */
     downloadBlob(blob: Blob, fileName: string): void {
         this.saveData(blob, 'blob', fileName);
@@ -91,11 +88,8 @@ export class ContentService {
 
     /**
      * Invokes content download for a data array with a file name.
-     *
      * @param data Data to download.
      * @param fileName Name of the resulting file.
-     *
-     * @memberOf ContentService
      */
     downloadData(data: any, fileName: string): void {
         this.saveData(data, 'data', fileName);
@@ -103,11 +97,8 @@ export class ContentService {
 
     /**
      * Invokes content download for a JSON object with a file name.
-     *
      * @param json JSON object to download.
      * @param fileName Name of the resulting file.
-     *
-     * @memberOf ContentService
      */
     downloadJSON(json: any, fileName: string): void {
         this.saveData(json, 'json', fileName);
@@ -117,8 +108,7 @@ export class ContentService {
      * Creates a trusted object URL from the Blob.
      * WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
      * @param  blob Data to wrap into object URL
-     *
-     * @memberOf ContentService
+     * @returns URL string
      */
     createTrustedUrl(blob: Blob): string {
         let url = window.URL.createObjectURL(blob);
@@ -130,11 +120,11 @@ export class ContentService {
     }
 
     /**
-     * Get thumbnail URL for the given document node.
-     *
+     * Gets a thumbnail URL for the given document node.
      * @param node Node to get URL for.
-     * @param [attachment] Retrieve content as an attachment for download
-     * @param [ticket] Custom ticket to use for authentication
+     * @param attachment Toggles whether to retrieve content as an attachment for download
+     * @param ticket Custom ticket to use for authentication
+     * @returns URL string
      */
     getDocumentThumbnailUrl(node: any, attachment?: boolean, ticket?: string): string {
 
@@ -146,11 +136,11 @@ export class ContentService {
     }
 
     /**
-     * Get content URL for the given node.
-     *
-     * @param nodeId or node to get URL for.
-     * @param [attachment] Retrieve content as an attachment for download
-     * @param [ticket] Custom ticket to use for authentication
+     * Gets a content URL for the given node.
+     * @param node Node to get URL for.
+     * @param attachment Toggles whether to retrieve content as an attachment for download
+     * @param ticket Custom ticket to use for authentication
+     * @returns URL string
      */
     getContentUrl(node: any, attachment?: boolean, ticket?: string): string {
 
@@ -162,9 +152,9 @@ export class ContentService {
     }
 
     /**
-     * Get content for the given node.
+     * Gets content for the given node.
      * @param nodeId ID of the target node
-     *
+     * @returns Content data
      */
     getNodeContent(nodeId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId).then((dataContent) => {
@@ -173,10 +163,11 @@ export class ContentService {
     }
 
     /**
-     * Create a folder
+     * Creates a folder.
      * @param relativePath Location to create the folder
      * @param name Folder name
      * @param parentId Node ID of parent folder
+     * @returns Information about the new folder
      */
     createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent> {
         return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
@@ -193,8 +184,8 @@ export class ContentService {
 
     /**
      * Gets a Node via its node ID.
-     * @param nodeId
-     * @param opts
+     * @param nodeId ID of the target node
+     * @param opts Options supported by JSAPI
      * @returns Details of the folder
      */
     getNode(nodeId: string, opts?: any): Observable<NodeEntry> {
@@ -202,10 +193,10 @@ export class ContentService {
     }
 
     /**
-     * Check if the user has permissions on that node
+     * Checks if the user has permissions on that node
      * @param node Node to check allowableOperations
      * @param permission Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
-     *
+     * @returns True if the user has the required permissions, false otherwise
      */
     hasPermission(node: Node, permission: PermissionsEnum | string): boolean {
         let hasPermission = false;
@@ -239,9 +230,9 @@ export class ContentService {
     }
 
     /**
-     * Check if the node has the properties allowableOperations
+     * Checks if the node has the properties allowableOperations
      * @param node Node to check allowableOperations
-     *
+     * @returns True if the node has the property, false otherwise
      */
     hasAllowableOperations(node: any): boolean {
         return node && node.allowableOperations ? true : false;
