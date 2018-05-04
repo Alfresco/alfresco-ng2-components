@@ -28,16 +28,16 @@ Displays the version history of a node with the ability to upload a new version.
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| allowDownload | `boolean` | true |  |
-| node | `MinimalNodeEntryEntity` |  |  |
-| showComments | `boolean` | true |  |
+| allowDownload | `boolean` | true | Enable/disable downloading a version of the current node. |
+| node | `MinimalNodeEntryEntity` |  | Target node to manage version history. |
+| showComments | `boolean` | true | Toggles showing/hiding of comments. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| uploadError | `EventEmitter<Object>` |  |
-| uploadSuccess | `EventEmitter<Object>` |  |
+| uploadError | `EventEmitter<Object>` | Emitted when an error occurs during upload. |
+| uploadSuccess | `EventEmitter<Object>` | Emitted when a file is uploaded successfully. |
 
 ## Details
 
