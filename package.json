@@ -13,7 +13,7 @@
     "bundlesize-check": "bundlesize",
     "bundlesize-map": "npm run webpack -- --config ./lib/config/webpack.bundle-check.js --progress --profile --bail",
     "lint-lib": "./node_modules/.bin/tslint -p ./lib/tsconfig.json -c ./lib/tslint.json",
-    "test-export": "node ./lib/config/export-check/exportCheck.js ./lib/core/public-api.ts ./lib/process-services/public-api.ts ./lib/content-services/public-api.ts ./lib/insights/public-api.ts",
+    "test-export": "ts-node ./tools/export-check/exportCheck.ts ./lib/core/public-api.ts ./lib/process-services/public-api.ts ./lib/content-services/public-api.ts ./lib/insights/public-api.ts",
     "test-lib": "node ./node_modules/karma/bin/karma start ./lib/karma.conf.js --reporters mocha,coverage --single-run --component .",
     "test-lib-browser": "node ./node_modules/karma/bin/karma start ./lib/karma.conf.js --reporters kjhtml",
     "ng": "ng",
