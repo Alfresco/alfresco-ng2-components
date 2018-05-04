@@ -63,12 +63,14 @@
             </mat-checkbox>
         </div>
 
-        <button mat-button
-            *ngIf="field.hasMoreItems()"
-            (click)="field.showMoreItems()">
-            {{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}
-            <mat-icon>keyboard_arrow_down</mat-icon>
-        </button>
+        <div class="facet-buttons">
+            <button mat-button
+                *ngIf="field.hasMoreItems()"
+                (click)="field.showMoreItems()">
+                {{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+        </div>
     </mat-expansion-panel>
 
 </mat-accordion>
