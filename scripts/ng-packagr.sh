@@ -13,19 +13,19 @@ rm -rf node_modules/@alfresco
 
 echo "====== Build lib ====="
 
-ng-packagr -p ./lib/core/package.json
+npm run ng-packagr -- -p ./lib/core/package.json
 mkdir -p ./node_modules/@alfresco/adf-core/
 cp -R ./lib/dist/core/* ./node_modules/@alfresco/adf-core/
 
-ng-packagr -p ./lib/content-services/package.json
+npm run ng-packagr -- -p ./lib/content-services/package.json
 mkdir -p ./node_modules/@alfresco/adf-content-services/
 cp -R ./lib/dist/content-services/* ./node_modules/@alfresco/adf-content-services/
 
-ng-packagr -p ./lib/process-services/package.json
+npm run ng-packagr -- -p ./lib/process-services/package.json
 mkdir -p ./node_modules/@alfresco/adf-process-services/
 cp -R ./lib/dist/process-services/* ./node_modules/@alfresco/adf-process-services/
 
-ng-packagr -p ./lib/insights/package.json
+npm run ng-packagr -- -p ./lib/insights/package.json
 mkdir -p ./node_modules/@alfresco/adf-insights/
 cp -R ./lib/dist/insights/* ./node_modules/@alfresco/adf-insights/
 
