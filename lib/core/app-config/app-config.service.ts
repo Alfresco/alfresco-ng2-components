@@ -44,10 +44,21 @@ export class AppConfigService {
         this.onLoad = this.onLoadSubject.asObservable();
     }
 
+    /**
+     * Requests notification of a property value when it is loaded.
+     * @param property The desired property value
+     * @returns Property value, when loaded
+     */
     select(property: string): Observable<any> {
         return this.onLoadSubject.map((config) => config[property]).distinctUntilChanged();
     }
 
+    /**
+     * Gets the value of a named property.
+     * @param key Name of the property
+     * @param defaultValue Value to return if the key is not found
+     * @returns Value of the property
+     */
     get<T>(key: string, defaultValue?: T): T {
         let result: any = ObjectUtils.getValue(this.config, key);
         if (typeof result === 'string') {
@@ -63,14 +74,27 @@ export class AppConfigService {
         return <T> result;
     }
 
+    /**
+     * Gets the location.hostname property.
+     * @returns Value of the property
+     */
     getLocationHostname(): string {
         return location.hostname;
     }
 
+    /**
+     * Gets the location.port property.
+     * @param prefix Text added before port value
+     * @returns Port with prefix
+     */
     getLocationPort(prefix: string = ''): string {
         return location.port ? prefix + location.port : '';
     }
 
+    /**
+     * Loads the config file.
+     * @returns Notification when loading is complete
+     */
     load(): Promise<any> {
         return new Promise(resolve => {
             this.http.get('app.config.json').subscribe(
