@@ -29,6 +29,6 @@ export * from './content-node-selector/index';
 export * from './dialogs/index';
 export * from './folder-directive/index';
 export * from './content-metadata/index';
-export * from './permission-manager';
+export * from './permission-manager/index';
 
 export * from './content.module';
