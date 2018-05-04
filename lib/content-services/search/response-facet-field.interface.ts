@@ -16,15 +16,12 @@
  */
 
 import { FacetFieldBucket } from './facet-field-bucket.interface';
+import { SearchFilterList } from './components/search-filter/models/search-filter-list.model';
 
 export interface ResponseFacetField {
     label: string;
-    buckets: Array<FacetFieldBucket>;
+    buckets: SearchFilterList<FacetFieldBucket>;
     pageSize?: number;
     currentPageSize?: number;
     expanded?: boolean;
-
-    hasMoreItems(): boolean;
-    showMoreItems(): void;
-    getVisibleBuckets(): Array<FacetFieldBucket>;
 }

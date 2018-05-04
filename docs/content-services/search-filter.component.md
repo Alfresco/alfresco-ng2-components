@@ -172,6 +172,18 @@ If there are more than 5 entries, the "Show more" button is displayed to allow d
 
 ![Facet Fields](../docassets/images/search-facet-fields.png)
 
+#### FacetField Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| field | string | | This specifies the facet field. |
+| mincount | number | 1 | This specifies the minimum count required for a facet field to be included in the response. The default value is 1. |
+| label | string | | This specifies the label to include in place of the facet field. |
+| prefix | string | | This restricts the possible constraints to only indexed values with a specified prefix. |
+| limit | number | | Maximum number of results |
+| pageSize | number | 5 | Display page size |
+| offset | number | | Offset position |
+
 ### Facet Queries
 
 Provides a custom category based on admin-defined facet queries.

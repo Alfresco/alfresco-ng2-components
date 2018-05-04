@@ -56,17 +56,23 @@
         </mat-expansion-panel-header>
         <div class="checklist">
             <mat-checkbox
-                *ngFor="let bucket of field.getVisibleBuckets()"
+                *ngFor="let bucket of field.buckets"
                 [checked]="bucket.$checked"
                 (change)="onFacetToggle($event, field, bucket)">
                 {{ (bucket.display || bucket.label) | translate }} ({{ bucket.count }})
             </mat-checkbox>
         </div>
 
-        <div class="facet-buttons">
+        <div class="facet-buttons" *ngIf="!field.buckets.fitsPage">
             <button mat-button
-                *ngIf="field.hasMoreItems()"
-                (click)="field.showMoreItems()">
+                *ngIf="field.buckets.canShowLessItems"
+                (click)="field.buckets.showLessItems()">
+                {{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}
+                <mat-icon>keyboard_arrow_up</mat-icon>
+            </button>
+            <button mat-button
+                *ngIf="field.buckets.canShowMoreItems"
+                (click)="field.buckets.showMoreItems()">
                 {{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}
                 <mat-icon>keyboard_arrow_down</mat-icon>
             </button>
