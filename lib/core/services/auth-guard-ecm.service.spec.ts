@@ -16,16 +16,13 @@
  */
 
 import { async, inject, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
 import { AuthenticationService } from './authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { HttpClientModule } from '@angular/common/http';
-
-class RouterProvider {
-    navigate: Function = jasmine.createSpy('RouterProviderNavigate');
-}
 
 class AlfrescoApiServiceProvider {
     private settings: any = {
@@ -64,7 +61,7 @@ class AlfrescoApiServiceProvider {
 }
 
 class AuthenticationServiceProvider {
-    setRedirectUrl: Function = jasmine.createSpy('setRedirectUrl');
+    setRedirect: Function = jasmine.createSpy('setRedirect');
 }
 
 class TestConfig {
@@ -82,29 +79,21 @@ class TestConfig {
 
         TestBed.configureTestingModule({
             imports: [
-                HttpClientModule
+                HttpClientModule,
+                RouterTestingModule
             ],
             providers: [
                 AppConfigService,
-                this.routerProvider,
                 this.alfrescoApiServiceProvider,
                 this.authenticationProvider,
                 AuthGuardEcm
             ]
         });
 
-        inject([ AuthGuardEcm, Router, AuthenticationService ], (guard: AuthGuardEcm, router: Router, auth: AuthenticationService) => {
-            this.guard = guard;
-            this.router = router;
-            this.auth = auth;
-        })();
-    }
+        this.guard = TestBed.get(AuthGuardEcm);
+        this.router = TestBed.get(Router);
+        this.auth = TestBed.get(AuthenticationService);
 
-    private get routerProvider() {
-        return {
-            provide: Router,
-            useValue: new RouterProvider()
-        };
     }
 
     private get authenticationProvider() {
@@ -125,10 +114,6 @@ class TestConfig {
             })
         };
     }
-
-    get navigateSpy() {
-        return this.router.navigate;
-    }
 }
 
 describe('AuthGuardService ECM', () => {
@@ -140,10 +125,11 @@ describe('AuthGuardService ECM', () => {
 
             const { guard, router } = this.test;
 
-            guard.canActivate(null, { url: '' }).then((activate) => {
+            guard.canActivate(null, { url: 'some-url' }).then((activate) => {
                 this.activate = activate;
-                this.navigateSpy = router.navigate;
             });
+
+            this.navigateSpy = spyOn(router, 'navigate');
         }));
 
         it('does not allow route to activate', () => {
@@ -164,10 +150,11 @@ describe('AuthGuardService ECM', () => {
 
             const { guard, router } = this.test;
 
-            guard.canActivate(null, { url: '' }).then((activate) => {
+            guard.canActivate(null, { url: 'some-url' }).then((activate) => {
                 this.activate = activate;
-                this.navigateSpy = router.navigate;
             });
+
+            this.navigateSpy = spyOn(router, 'navigate');
         }));
 
         it('does not allow route to activate', () => {
@@ -188,10 +175,11 @@ describe('AuthGuardService ECM', () => {
 
             const { guard, router } = this.test;
 
-            guard.canActivate(null, { url: '' }).then((activate) => {
+            guard.canActivate(null, { url: 'some-url' }).then((activate) => {
                 this.activate = activate;
-                this.navigateSpy = router.navigate;
             });
+
+            this.navigateSpy = spyOn(router, 'navigate');
         }));
 
         it('allows route to activate', () => {
@@ -203,21 +191,49 @@ describe('AuthGuardService ECM', () => {
         });
     });
 
-    describe('redirect url', () => {
-        beforeEach(async(() => {
-            this.test = new TestConfig({
-                isLoggedIn: false
+    describe('redirect', () => {
+        describe('path', () => {
+            beforeEach(async(() => {
+                this.test = new TestConfig({
+                    isLoggedIn: false
+                });
+
+                const { guard, auth, router } = this.test;
+
+                guard.canActivate(null, { url: 'some-url/123' }).then((activate) => {
+                    this.auth = auth;
+                });
+
+                this.navigateSpy = spyOn(router, 'navigate');
+            }));
+
+            it('should set redirect navigation commands', () => {
+                expect(this.auth.setRedirect).toHaveBeenCalledWith({
+                    provider: 'ECM', navigation: ['some-url', {}, '123', {}]
+                });
             });
+        });
 
-            const { guard, auth } = this.test;
+        describe('with query params', () => {
+            beforeEach(async(() => {
+                this.test = new TestConfig({
+                    isLoggedIn: false
+                });
 
-            guard.canActivate(null, { url: 'some-url' }).then((activate) => {
-                this.auth = auth;
+                const { guard, auth, router } = this.test;
+
+                guard.canActivate(null, { url: 'some-url;q=123' }).then((activate) => {
+                    this.auth = auth;
+                });
+
+                this.navigateSpy = spyOn(router, 'navigate');
+            }));
+
+            it('should set redirect navigation commands with query params', () => {
+                expect(this.auth.setRedirect).toHaveBeenCalledWith({
+                    provider: 'ECM', navigation: ['some-url', { q: '123' }]
+                 });
             });
-        }));
-
-        it('should set redirect url', () => {
-            expect(this.auth.setRedirectUrl).toHaveBeenCalledWith({ provider: 'ECM', url: 'some-url' });
         });
     });
 
@@ -228,11 +244,13 @@ describe('AuthGuardService ECM', () => {
                     isLoggedIn: false
                 });
 
-                const { guard } = this.test;
+                const { guard, router } = this.test;
 
-                guard.canActivateChild(null, { url: '' }).then((activate) => {
+                guard.canActivateChild(null, { url: 'some-url' }).then((activate) => {
                     this.activate = activate;
                 });
+
+                this.navigateSpy = spyOn(router, 'navigate');
             }));
 
             it('should not allow route to activate', () => {
@@ -247,11 +265,13 @@ describe('AuthGuardService ECM', () => {
                     validateTicket: false
                 });
 
-                const { guard } = this.test;
+                const { guard, router } = this.test;
 
-                guard.canActivateChild(null, { url: '' }).then((activate) => {
+                guard.canActivateChild(null, { url: 'some-url' }).then((activate) => {
                     this.activate = activate;
                 });
+
+                this.navigateSpy = spyOn(router, 'navigate');
             }));
 
             it('should not allow route to activate', () => {
@@ -266,11 +286,13 @@ describe('AuthGuardService ECM', () => {
                     validateTicket: true
                 });
 
-                const { guard } = this.test;
+                const { guard, router } = this.test;
 
                 guard.canActivateChild(null, { url: '' }).then((activate) => {
                     this.activate = activate;
                 });
+
+                this.navigateSpy = spyOn(router, 'navigate');
             }));
 
             it('should allow route to activate', () => {

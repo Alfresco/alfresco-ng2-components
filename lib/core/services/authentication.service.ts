@@ -33,7 +33,7 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
 
 @Injectable()
 export class AuthenticationService {
-    private redirectUrl: RedirectionModel = null;
+    private redirect: RedirectionModel = null;
 
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
@@ -246,24 +246,24 @@ export class AuthenticationService {
     /** Sets the URL to redirect to after login.
      * @param url URL to redirect to
      */
-    setRedirectUrl(url: RedirectionModel) {
-        this.redirectUrl = url;
+    setRedirect(url: RedirectionModel) {
+        this.redirect = url;
     }
 
     /** Gets the URL to redirect to after login.
      * @param provider Service provider. Can be "ECM", "BPM" or "ALL".
      * @returns The redirect URL
      */
-    getRedirectUrl(provider: string): string {
-        return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
+    getRedirect(provider: string): any[] {
+        return this.hasValidRedirection(provider) ? this.redirect.navigation : null;
     }
 
     private hasValidRedirection(provider: string): boolean {
-        return this.redirectUrl && (this.redirectUrl.provider === provider || this.hasSelectedProviderAll(provider));
+        return this.redirect && (this.redirect.provider === provider || this.hasSelectedProviderAll(provider));
     }
 
     private hasSelectedProviderAll(provider: string): boolean {
-        return this.redirectUrl && (this.redirectUrl.provider === 'ALL' || provider === 'ALL');
+        return this.redirect && (this.redirect.provider === 'ALL' || provider === 'ALL');
     }
 
     /**
