@@ -35,13 +35,15 @@ export class FolderEditDirective {
     @Input('adf-edit-folder')
     folder: MinimalNodeEntryEntity;
 
-    /** Emitted when the edit/create folder give error for example a folder with same name already exist */
+    /** Emitted when an error occurs (eg, a folder with same name already exists). */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Title of folder edit dialog. */
     @Input()
     title: string = null;
 
+    /** Emitted when the folder has been edited successfully. */
     @Output()
     success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
