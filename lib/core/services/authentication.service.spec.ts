@@ -525,7 +525,7 @@ describe('AuthenticationService', () => {
         it('[ALL] should set/get redirectUrl when provider is BPM', () => {
             authService.setRedirect({provider: 'BPM', navigation: ['some-url'] } );
 
-            expect(authService.getRedirect(preferences.authType)).toEqual('some-url');
+            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
         });
 
         it('[ALL] should set/get redirectUrl when provider is ECM', () => {
