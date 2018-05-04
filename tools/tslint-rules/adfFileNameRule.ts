@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         typescriptOnly: true,
     };
 
-    public static FAILURE_STRING =  'The name of the File should not start with ADF Alfresco or Activiti prefix ';
+    public static FAILURE_STRING = 'The name of the File should not start with ADF Alfresco or Activiti prefix ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new AdfFileName(sourceFile, this.getOptions()));
@@ -24,15 +24,15 @@ export class Rule extends Lint.Rules.AbstractRule {
 // The walker takes care of all the work.
 class AdfFileName extends Lint.RuleWalker {
     public visitSourceFile(node: ts.SourceFile) {
-        var whiteList = ['activiti-alfresco.service.ts','activiti-alfresco.service.spec.ts',
-            'alfresco-api.service.ts','alfresco-api.service.spects'];
+        var whiteList = ['activiti-alfresco.service.ts', 'activiti-alfresco.service.spec.ts',
+            'alfresco-api.service.ts', 'alfresco-api.service.spects'];
 
         var fileName = this.getFilename();
 
         var fileNameReg = /^(alfresco|activiti|adf|activity)/ig;
         var filenameMatch = fileNameReg.exec(fileName);
 
-        var isWhiteListName = whiteList.find((currentWhiteListName)=>{
+        var isWhiteListName = whiteList.find((currentWhiteListName) => {
             return currentWhiteListName === fileName;
         });
 

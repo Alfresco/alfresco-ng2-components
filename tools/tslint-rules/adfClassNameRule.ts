@@ -1,12 +1,12 @@
 import * as Lint from 'tslint';
 import * as ts from 'typescript';
-import {sprintf} from 'sprintf-js';
-import {ComponentMetadata} from 'codelyzer/angular/metadata';
-import {Failure} from 'codelyzer/walkerFactory/walkerFactory';
-import {all, validateComponent} from 'codelyzer/walkerFactory/walkerFn';
-import {Maybe, F2} from 'codelyzer/util/function';
-import {IOptions} from 'tslint';
-import {NgWalker} from 'codelyzer/angular/ngWalker';
+import { sprintf } from 'sprintf-js';
+import { ComponentMetadata } from 'codelyzer/angular/metadata';
+import { Failure } from 'codelyzer/walkerFactory/walkerFactory';
+import { all, validateComponent } from 'codelyzer/walkerFactory/walkerFn';
+import { Maybe, F2 } from 'codelyzer/util/function';
+import { IOptions } from 'tslint';
+import { NgWalker } from 'codelyzer/angular/ngWalker';
 
 export class Rule extends Lint.Rules.AbstractRule {
 
@@ -31,7 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
                     .fmap(name => {
                         const className = name.text;
                         if (Rule.invalidName(className)) {
-                            return [new Failure(name, sprintf(Rule.FAILURE_STRING + className , className, suffixList))];
+                            return [new Failure(name, sprintf(Rule.FAILURE_STRING + className, className, suffixList))];
                         }
                     })
             ));
@@ -42,7 +42,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         var classNameReg = /^(alfresco|activiti|adf|activity)/ig;
         var classNameMatch = classNameReg.exec(className);
 
-        var isWhiteListName = whiteList.find((currentWhiteListName)=>{
+        var isWhiteListName = whiteList.find((currentWhiteListName) => {
             return currentWhiteListName === className;
         });
 
