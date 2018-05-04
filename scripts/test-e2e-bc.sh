@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-rm -rf "$DIR/../lib/node_modules/@angular"
+rm -rf "$DIR/../node_modules/@angular"
 cd "$DIR/../integration/base_ver_2_app"
 
 ADF_VERSION=$(npm view @alfresco/adf-core version)

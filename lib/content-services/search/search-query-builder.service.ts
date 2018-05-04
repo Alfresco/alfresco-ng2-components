@@ -39,7 +39,7 @@ export class SearchQueryBuilderService {
 
     config: SearchConfiguration;
 
-    constructor(appConfig: AppConfigService,  private api: AlfrescoApiService) {
+    constructor(appConfig: AppConfigService,  private alfrescoApiService: AlfrescoApiService) {
         this.config = appConfig.get<SearchConfiguration>('search');
         if (!this.config) {
             throw new Error('Search configuration not found.');
@@ -82,7 +82,7 @@ export class SearchQueryBuilderService {
 
     async execute() {
         const query = this.buildQuery();
-        const data = await this.api.searchApi.search(query);
+        const data = await this.alfrescoApiService.searchApi.search(query);
         this.executed.next(data);
     }
 

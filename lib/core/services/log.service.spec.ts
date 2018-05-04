@@ -21,6 +21,41 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LogService } from './log.service';
 
+@Component({
+    template: '',
+    providers: [LogService]
+})
+class ProvidesLogComponent {
+    constructor(public logService: LogService) {
+
+    }
+
+    error() {
+        this.logService.error('Test message');
+    }
+
+    info() {
+        this.logService.info('Test message');
+    }
+
+    warn() {
+        this.logService.warn('Test message');
+    }
+
+    log() {
+        this.logService.log('Test message');
+    }
+
+    debug() {
+        this.logService.debug('Test message');
+    }
+
+    trace() {
+        this.logService.trace('Test message');
+    }
+
+}
+
 describe('Log Service', () => {
 
     let providesLogComponent: ComponentFixture<ProvidesLogComponent>;
@@ -156,38 +191,3 @@ describe('Log Service', () => {
     });
 
 });
-
-@Component({
-    template: '',
-    providers: [LogService]
-})
-class ProvidesLogComponent {
-    constructor(public logService: LogService) {
-
-    }
-
-    error() {
-        this.logService.error('Test message');
-    }
-
-    info() {
-        this.logService.info('Test message');
-    }
-
-    warn() {
-        this.logService.warn('Test message');
-    }
-
-    log() {
-        this.logService.log('Test message');
-    }
-
-    debug() {
-        this.logService.debug('Test message');
-    }
-
-    trace() {
-        this.logService.trace('Test message');
-    }
-
-}

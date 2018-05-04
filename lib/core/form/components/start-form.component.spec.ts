@@ -200,10 +200,8 @@ describe('StartFormComponent', () => {
                 const formFields = component.form.getFormFields();
                 const labelField = formFields.find(field => field.id === 'number');
                 const numberWidget = fixture.debugElement.nativeElement.querySelector('number-widget');
-                const numberWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-input');
-                expect(labelField.type).toBe('text');
+                expect(labelField.type).toBe('integer');
                 expect(numberWidget).toBeDefined();
-                expect(numberWidgetLabel.innerText).toBe('number');
             });
         });
 

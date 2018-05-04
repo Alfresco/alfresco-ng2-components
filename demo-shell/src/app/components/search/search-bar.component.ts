@@ -18,7 +18,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { PreviewService } from 'app/services/preview.service';
+import { PreviewService } from '../../services/preview.service';
 
 @Component({
     selector: 'app-search-bar',

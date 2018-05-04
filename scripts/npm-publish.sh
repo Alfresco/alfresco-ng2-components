@@ -22,7 +22,7 @@ eval projects=(
     "content-services"
     "process-services" )
 
-cd "$DIR/../lib"
+cd "$DIR/../"
 
 show_help() {
     echo "Usage: npm-publish.sh"
