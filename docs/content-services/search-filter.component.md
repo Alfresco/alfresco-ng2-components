@@ -204,6 +204,10 @@ Based on the `pageSize` value, the component provides a `Show more` button to di
 
 You can also provide a custom `label` (or i18n resource key) for the resulting collapsible category.
 
+The `pageSize` property allows you to define the amount of results to display.
+Users will see `Show more` or `Show less` buttons depending on the result set.
+The default page size is `5`, it is going to be used in case you set the value to `0` or omit the value entirely.
+
 ![Facet Queries](../docassets/images/search-facet-queries.png)
 
 ## Widgets
@@ -237,6 +241,7 @@ You can choose a `label` (or i18n resources key) and a `value`, alongside the co
                 "enabled": true,
                 "component": {
                     "selector": "check-list",
+                    "pageSize": 5,
                     "settings": {
                         "operator": "OR",
                         "options": [

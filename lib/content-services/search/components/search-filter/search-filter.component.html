@@ -22,7 +22,7 @@
             <mat-panel-title>{{ facetQueriesLabel | translate }}</mat-panel-title>
         </mat-expansion-panel-header>
         <div class="checklist">
-            <ng-container *ngFor="let query of responseFacetQueries.visibleItems">
+            <ng-container *ngFor="let query of responseFacetQueries">
                 <mat-checkbox
                     [checked]="query.$checked"
                     (change)="onFacetQueryToggle($event, query)">

@@ -44,6 +44,8 @@ export class SearchFilterComponent implements OnInit {
     facetQueriesExpanded = false;
 
     constructor(public queryBuilder: SearchQueryBuilderService, private search: SearchService) {
+        this.responseFacetQueries = new ResponseFacetQueryList();
+
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || 5;
