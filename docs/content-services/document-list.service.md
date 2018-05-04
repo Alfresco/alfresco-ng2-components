@@ -18,7 +18,7 @@ Implements node operations used by the Document List component.
     -   `targetParentId: string = null` -  The id of the folder where the node will be copied
     -   **Returns** `Observable<any>` - NodeEntry for the copied node
 -   `createFolder(name: string = null, parentId: string = null): Observable<MinimalNodeEntity>`<br/>
-    Create a new folder in the path.
+    Creates a new folder in the path.
     -   `name: string = null` -  Folder name
     -   `parentId: string = null` -  Parent folder ID
     -   **Returns** `Observable<MinimalNodeEntity>` - Details of the created folder node
@@ -51,7 +51,7 @@ Implements node operations used by the Document List component.
     -   **Returns** `string` - Path to the icon file
 -   `getNode(nodeId: string = null, includeFields: string[] =  []): Observable<NodeEntry>`<br/>
     Gets a node via its node ID.
-    -   `nodeId: string = null` -  
+    -   `nodeId: string = null` -  ID of the target node
     -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** `Observable<NodeEntry>` - Details of the folder
 -   `hasPermission(node: any = null, permission: PermissionsEnum | string = null): boolean`<br/>
@@ -61,7 +61,7 @@ Implements node operations used by the Document List component.
     -   **Returns** `boolean` - True if the node has the permission, false otherwise
 
 -   `moveNode(nodeId: string = null, targetParentId: string = null): Observable<any>`<br/>
-    Move a node to destination node
+    Moves a node to destination node.
     -   `nodeId: string = null` -  The id of the node to be moved
     -   `targetParentId: string = null` -  The id of the folder where the node will be moved
     -   **Returns** `Observable<any>` - NodeEntry for the moved node

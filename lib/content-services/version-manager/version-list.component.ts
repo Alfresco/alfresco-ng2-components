@@ -40,18 +40,19 @@ export class VersionListComponent implements OnChanges {
     @Input()
     id: string;
 
+    /** The target node. */
     @Input()
     node: MinimalNodeEntryEntity;
 
-    /** show/hide comments */
+    /** Toggles showing/hiding of comments */
     @Input()
     showComments = true;
 
-    /** Enable/disable possibility to download a version of the current node. */
+    /** Enable/disable downloading a version of the current node. */
     @Input()
     allowDownload = true;
 
-    /** show/hide version actions */
+    /** Toggles showing/hiding of version actions */
     @Input()
     showActions = true;
 

@@ -32,6 +32,7 @@ export class RatingService {
      * Gets the current user's rating for a node.
      * @param nodeId Node to get the rating from
      * @param ratingType Type of rating (can be "likes" or "fiveStar")
+     * @returns The rating value
      */
     getRating(nodeId: string, ratingType: any): any {
         return Observable.fromPromise(this.apiService.getInstance().core.ratingsApi.getRating(nodeId, ratingType))
@@ -44,6 +45,7 @@ export class RatingService {
      * @param nodeId Target node for the rating
      * @param ratingType Type of rating (can be "likes" or "fiveStar")
      * @param vote Rating value (boolean for "likes", numeric 0..5 for "fiveStar")
+     * @returns Details about the rating, including the new value
      */
     postRating(nodeId: string, ratingType: any, vote: any): any {
         let ratingBody: RatingBody = {
@@ -59,6 +61,7 @@ export class RatingService {
      * Removes the current user's rating for a node.
      * @param nodeId Target node
      * @param ratingType Type of rating to remove (can be "likes" or "fiveStar")
+     * @returns Null response indicating that the operation is complete
      */
     deleteRating(nodeId: string, ratingType: any): any {
         return Observable.fromPromise(this.apiService.getInstance().core.ratingsApi.removeRating(nodeId, ratingType))

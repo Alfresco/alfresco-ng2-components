@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-16
+Last reviewed: 2018-05-04
 ---
 
 # Upload Drag Area Component
@@ -42,7 +42,7 @@ export class AppComponent {
 | maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 | versioning | `boolean` | false | Toggles versioning. |
-| parentId | `` |  |  |
+| parentId | `` |  | **Deprecated:** 2.4.0  use rootFolderId ID of parent folder node. |
 
 ### Events
 
