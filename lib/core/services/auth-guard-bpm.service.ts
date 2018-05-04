@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot
+  ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot,
   Router, PRIMARY_OUTLET, UrlTree, UrlSegmentGroup, UrlSegment
 } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
