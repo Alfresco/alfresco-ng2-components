@@ -84,6 +84,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
 
         this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
+            moment.locale(locale);
         });
 
         const validators = Validators.compose([
@@ -122,20 +123,15 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         }
     }
 
-    hasSelectedDays(from: string, to: string): boolean {
-        if (from && to) {
-            const start = moment(from).startOf('day');
-            const end = moment(to).endOf('day');
-
-            return start.isBefore(end);
-        }
-        return true;
-    }
-
     onChangedHandler(event: any, formControl) {
-        const formatDate = moment(event.srcElement.value, this.datePickerDateFormat);
-        if (formatDate.isValid()) {
-            formControl.setValue(formatDate);
+        const inputValue = event.srcElement.value;
+
+        if (inputValue) {
+            const formatDate = moment(inputValue, this.datePickerDateFormat);
+
+            if (formatDate.isValid()) {
+                formControl.setValue(formatDate);
+            }
         }
     }
 }
