@@ -31,6 +31,20 @@ To globally install `Angular CLI` version globally 1.6.6 run:
 
 We recommend [Visual Studio Code](http://code.visualstudio.com) - it's a free, lightweight and *very* powerful tool from Microsoft that works great with Angular development.
 
+## Alfresco Content Services (optional)
+
+If you want to develop on top of the [Alfresco Content Services](https://www.alfresco.com/platform/content-services-ecm), you might want to install it using the [Alfresco Content Services Community Deployment](https://github.com/Alfresco/acs-community-deployment.git) project on GitHub.
+
+We suggest to follow the instructions related to the Docker deployment, considering that you are working on a development environment.
+
+Please note that you might want to deploy and use Alfresco Content Services Enterprise Edition instead. In this case you can use the [Alfresco Content Services Deployment](https://github.com/Alfresco/acs-deployment.git) project on GitHub.
+
+## Alfresco Process Services (optional)
+
+If you want to develop on top of the [Alfresco Process Services](https://www.alfresco.com/platform/process-services-bpm), you might want to install it as described in the [official documentation](https://docs.alfresco.com/process-services1.8/topics/installing_process_services.html).
+
+Please note that ADF applications are compliant with [Alfresco Process Services powered by Activiti](https://www.alfresco.com/platform/process-services-bpm) and not with [Activiti](https://www.activiti.org/) yet.
+
 ## ADF Yeoman generator (optional)
 
 You might want to ensure that you have `Yeoman` installed by running `yo --version`. If this is not in your system make sure you run:
@@ -48,3 +62,23 @@ Install the latest version of the `generator-alfresco-adf-app` using the followi
 
 	sudo npm install -g generator-alfresco-adf-app
 
+## Alfresco Example Content Application (optional)
+
+In some tutorials your might be required to use the [Alfresco Example Content Application](https://github.com/Alfresco/alfresco-content-app) available into a public repository on GitHub named [`alfresco-content-app`](https://github.com/Alfresco/alfresco-content-app). The Alfresco Example Content Application is an example application and it is used in the tutorial as a starting point to customise the behaviour and show the development, avoiding to loose time in building apps from scratch.
+
+The Alfresco Example Content Application requires an instance of Alfresco Content Services up and running, to work properly. If you don't have it already, follow the instructions above in the `Alfresco Content Services (optional)` paragraph.
+
+To make the Alfresco Example Content Application works into your development environment, clone the [`alfresco-content-app` GitHub repository](https://github.com/Alfresco/alfresco-content-app) using the following command into a terminal.
+
+    git clone https://github.com/Alfresco/alfresco-content-app
+
+Once completed, edit the `proxy.conf.js` file into the root of the project and change the `target` property according to the Alfresco Content Services instance. Below the setup if you are using the [Alfresco Content Services Community Deployment](https://github.com/Alfresco/acs-community-deployment.git) project on GitHub.
+
+    module.exports = {
+        "/alfresco": {
+            "target": "http://0.0.0.0:8082",
+            ...
+        }
+    };
+
+Once done, open a terminal and move into the `alfresco-content-app` folder and run `npm install`. Then run `npm start` and the application will be served on port `4200`, at the url `http://localhost:4200`.
