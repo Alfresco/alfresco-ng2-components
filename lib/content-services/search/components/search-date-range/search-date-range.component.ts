@@ -83,8 +83,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         theCustomDateAdapter.customDateFormat = this.datePickerDateFormat;
 
         this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-            moment.locale(locale);
+            this.setLocale(locale);
         });
 
         const validators = Validators.compose([
@@ -133,5 +132,10 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
                 formControl.setValue(formatDate);
             }
         }
+    }
+
+    setLocale(locale) {
+        this.dateAdapter.setLocale(locale);
+        moment.locale(locale);
     }
 }

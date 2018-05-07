@@ -27,6 +27,8 @@ describe('SearchDateRangeComponent', () => {
     let component: SearchDateRangeComponent;
     let fromDate = '2016-10-16';
     let toDate = '2017-10-16';
+    const localeFixture = 'it';
+    const dateFormatFixture = 'DD-MMM-YY';
 
     const buildConfig = (searchSettings): AppConfigService => {
         const config = new AppConfigService(null);
@@ -36,13 +38,13 @@ describe('SearchDateRangeComponent', () => {
 
     const buildAdapter = (): DateAdapter<Moment> => {
       const dateAdapter = new CustomMomentDateAdapter(null);
-      dateAdapter.customDateFormat = 'MMM YYYY';
+      dateAdapter.customDateFormat = null;
       return dateAdapter;
     };
 
     const buildUserPreferences = (): any => {
         const userPreferences = {
-            userPreferenceStatus: { LOCALE: 'en' },
+            userPreferenceStatus: { LOCALE: localeFixture },
             select: (property) => {
                 return Observable.of(userPreferences.userPreferenceStatus[property]);
             }
@@ -50,22 +52,55 @@ describe('SearchDateRangeComponent', () => {
         return userPreferences;
     };
 
+    const theDateAdapter = <any> buildAdapter();
+
     beforeEach(() => {
-        const config = {
-            'search': {
-                'datePicker': {
-                    'dateFormat': 'DD-MMM-YY'
-                }
+        const searchConfig = {
+            'datePicker': {
+                'dateFormat': dateFormatFixture
             }
         };
-        component = new SearchDateRangeComponent(buildConfig(config), buildAdapter(), buildUserPreferences());
+        component = new SearchDateRangeComponent(buildConfig(searchConfig), theDateAdapter, buildUserPreferences());
     });
 
     it('should setup form elements on init', () => {
         component.ngOnInit();
-        expect(component.form).toBeDefined();
+        expect(component.from).toBeDefined();
         expect(component.to).toBeDefined();
         expect(component.form).toBeDefined();
+    });
+
+    it('should setup locale from userPreferencesService', () => {
+        spyOn(component, 'setLocale').and.stub();
+        component.ngOnInit();
+        expect(component.setLocale).toHaveBeenCalledWith(localeFixture);
+    });
+
+    it('should setup the format of the date from configuration', () => {
+        component.ngOnInit();
+        expect(theDateAdapter.customDateFormat).toBe(dateFormatFixture);
+    });
+
+    it('should setup form control with formatted valid date on change', () => {
+        component.ngOnInit();
+
+        const inputString = '20.feb.18';
+        const momentFromInput = moment(inputString, dateFormatFixture);
+        expect(momentFromInput.isValid()).toBeTruthy();
+
+        component.onChangedHandler({ srcElement: { value: inputString }}, component.from);
+        expect(component.from.value).toEqual(momentFromInput);
+    });
+
+    it('should NOT setup form control with invalid date on change', () => {
+        component.ngOnInit();
+
+        const inputString = '20.f.18';
+        const momentFromInput = moment(inputString, dateFormatFixture);
+        expect(momentFromInput.isValid()).toBeFalsy();
+
+        component.onChangedHandler({ srcElement: { value: inputString }}, component.from);
+        expect(component.from.value).not.toEqual(momentFromInput);
     });
 
     it('should reset form', () => {
