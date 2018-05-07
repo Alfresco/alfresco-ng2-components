@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { StorageService, AppConfigService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: 'app-layout.component.html',
@@ -25,6 +26,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
     },
     encapsulation: ViewEncapsulation.None
 })
+
 export class AppLayoutComponent {
 
     links: Array<any> = [
@@ -48,6 +50,18 @@ export class AppLayoutComponent {
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
     ];
 
-    constructor() {
+    @Input() expandedSidenav = false;
+
+    constructor(private storage: StorageService, private config: AppConfigService) {
+        const preserved = this.storage.getItem('openedSidenav');
+        if (preserved !== null) {
+            if (preserved === 'false') {
+                this.expandedSidenav = false;
+            } else {
+                this.expandedSidenav = true;
+            }
+        } else {
+            this.expandedSidenav = this.config.get('sideNav.openedSidenav');
+        }
     }
 }

@@ -22,6 +22,9 @@ import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-he
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { AppConfigService } from './../../../app-config/app-config.service';
+import { StorageService } from './../../../services/storage.service';
+
 
 @Component({
     selector: 'adf-sidenav-layout',
@@ -56,7 +59,9 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         isMenuMinimized: () => this.isMenuMinimized
     };
 
-    constructor(private mediaMatcher: MediaMatcher) {
+    constructor(private mediaMatcher: MediaMatcher,  private config: AppConfigService, private storage: StorageService) {
+
+
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
 
@@ -82,6 +87,8 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     }
 
     toggleMenu() {
+        const preserve = this.config.get<string>('sideNav.preserveState');
+
         if (!this.mediaQueryList.matches) {
             this.isMenuMinimized = !this.isMenuMinimized;
         } else {
@@ -89,6 +96,10 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         }
 
         this.container.toggleMenu();
+
+        if (preserve) {
+            this.storage.setItem('openedSidenav', <any> !this.isMenuMinimized);
+        }
     }
 
     get isMenuMinimized() {

@@ -106,3 +106,23 @@ Every time the menu state is changed, the following values are emitted:
 
 - true, if the menu got into opened state
 - false, if the menu git into closed state
+
+### Preserving the menu state
+
+It is possible to preserve the state of the menu between sessions. This require to first set a property in the appConfig.json file. 
+
+```
+    "sideNav" : {
+        "preserveState" : true
+    }
+```
+If this property is set, the collapsed/expanded state will be stored in the local storage, and it will be restored with page reload or the next time the user visits the app. 
+Beside this, it is also possible to set the default value in the appConfig.json file: 
+
+```
+    "sideNav" : {
+        "openedSidenav" : true
+    }
+```
+
+By default the collapsed/exapnded state should be read from the application configuration file, but only if there is no value for the collapsed/expanded state in the local storage.
