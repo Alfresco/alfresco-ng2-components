@@ -13,7 +13,8 @@
             { "title": "Adding a new view", "file": "new-view.md"},
             { "title": "Using components", "file": "using-components.md"},
             { "title": "Customising the Login component", "file": "customising-login.md"},
-            { "title": "Working with a DataTable", "file": "working-with-data-table.md"}
+            { "title": "Working with a DataTable", "file": "working-with-data-table.md"},
+            { "title": "Working with the Nodes API Service", "file": "working-with-nodes-api-service.md"}
         ]
     }
 ]
