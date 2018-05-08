@@ -75,6 +75,11 @@ export class UserPreferencesService {
         this.userPreferenceStatus[UserPreferenceValues.DisableCSRF] = this.disableCSRF;
     }
 
+    /**
+     * Sets up a callback to notify when a property has changed.
+     * @param property The property to watch
+     * @returns Notification callback
+     */
     select(property: string): Observable<any> {
         return this.onChange.map((userPreferenceStatus) => userPreferenceStatus[property]).distinctUntilChanged();
     }
