@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 
 @Component({
