@@ -491,7 +491,7 @@
     },
 
     "sideNav": {
-      "openedSidenav": true,
+      "expandedSidenav": true,
       "preserveState": true
     }
 }

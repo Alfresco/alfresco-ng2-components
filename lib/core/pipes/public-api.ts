@@ -24,4 +24,3 @@ export * from './user-initial.pipe';
 export * from './app-config.pipe';
 
 export * from './pipe.module';
-

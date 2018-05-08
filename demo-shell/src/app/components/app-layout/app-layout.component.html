@@ -1,4 +1,4 @@
-<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="false"[expandedSidenav]= "expandedSidenav">
+<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="false"[expandedSidenav]= "expandedSidenav" (notify)='setState($event)'>
 
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu="toggleMenu">

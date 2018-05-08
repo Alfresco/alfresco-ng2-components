@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input } from '@angular/core';
-import { StorageService, AppConfigService } from '@alfresco/adf-core';
+import { Component, ViewEncapsulation, OnInit from '@angular/core';
+import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: 'app-layout.component.html',
@@ -27,7 +27,7 @@ import { StorageService, AppConfigService } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 
-export class AppLayoutComponent {
+export class AppLayoutComponent implements OnInit {
 
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'APP_LAYOUT.HOME' },
@@ -50,18 +50,25 @@ export class AppLayoutComponent {
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
     ];
 
-    @Input() expandedSidenav = false;
+    expandedSidenav: Boolean = false;
 
-    constructor(private storage: StorageService, private config: AppConfigService) {
-        const preserved = this.storage.getItem('openedSidenav');
-        if (preserved !== null) {
-            if (preserved === 'false') {
-                this.expandedSidenav = false;
-            } else {
-                this.expandedSidenav = true;
-            }
-        } else {
-            this.expandedSidenav = this.config.get('sideNav.openedSidenav');
+
+    ngOnInit() {
+        const expand = this.config.get<boolean>('sideNav.expandedSidenav');
+        const preserveState = this.config.get('sideNav.preserveState');
+
+        if (preserveState && expand)  {
+            this.expandedSidenav = (this.userpreference.get('expandedSidenav', String(expand)) === 'true');
+        } else if (expand) {
+            this.expandedSidenav = expand;
+        }
+    }
+    constructor( private userpreference: UserPreferencesService, private config: AppConfigService) {
+    }
+
+    setState(state) {
+        if (this.config.get('sideNav.preserveState')) {
+            this.userpreference.set('expendedSidenav', state);
         }
     }
 }

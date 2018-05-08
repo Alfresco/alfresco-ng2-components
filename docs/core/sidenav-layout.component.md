@@ -121,7 +121,7 @@ Beside this, it is also possible to set the default value in the appConfig.json 
 
 ```
     "sideNav" : {
-        "openedSidenav" : true
+        "expandedSidenav" : true
     }
 ```
 

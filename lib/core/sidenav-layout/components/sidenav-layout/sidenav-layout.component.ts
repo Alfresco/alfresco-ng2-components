@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ContentChild, Input, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, ContentChild, Input, Output, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef, EventEmitter } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { AppConfigService } from './../../../app-config/app-config.service';
-import { StorageService } from './../../../services/storage.service';
-
 
 @Component({
     selector: 'adf-sidenav-layout',
@@ -40,6 +37,8 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @Input() stepOver: number;
     @Input() hideSidenav = false;
     @Input() expandedSidenav = true;
+
+    @Output() notify = new EventEmitter();
 
     @ContentChild(SidenavLayoutHeaderDirective) headerDirective: SidenavLayoutHeaderDirective;
     @ContentChild(SidenavLayoutNavigationDirective) navigationDirective: SidenavLayoutNavigationDirective;
@@ -59,8 +58,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         isMenuMinimized: () => this.isMenuMinimized
     };
 
-    constructor(private mediaMatcher: MediaMatcher,  private config: AppConfigService, private storage: StorageService) {
-
+    constructor(private mediaMatcher: MediaMatcher) {
 
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
@@ -86,9 +84,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         this.mediaQueryList.removeListener(this.onMediaQueryChange);
     }
 
-    toggleMenu() {
-        const preserve = this.config.get<string>('sideNav.preserveState');
-
+    toggleMenu(expandedSidenav) {
         if (!this.mediaQueryList.matches) {
             this.isMenuMinimized = !this.isMenuMinimized;
         } else {
@@ -96,10 +92,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         }
 
         this.container.toggleMenu();
-
-        if (preserve) {
-            this.storage.setItem('openedSidenav', <any> !this.isMenuMinimized);
-        }
+        this.notify.emit((!this.isMenuMinimized).toString());
     }
 
     get isMenuMinimized() {
