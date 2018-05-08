@@ -30,6 +30,7 @@ export class NotificationService {
      * Opens a snackbar notification to show a message.
      * @param message The message to show
      * @param millisecondsDuration Time before notification disappears after being shown
+     * @returns Information/control object for the snackbar
      */
     public openSnackMessage(message: string, millisecondsDuration?: number): MatSnackBarRef<any> {
         return this.snackbar.open(message, null, {
@@ -42,6 +43,7 @@ export class NotificationService {
      * @param message The message to show
      * @param action Caption for the response button
      * @param millisecondsDuration Time before the notification disappears (unless the button is clicked)
+     * @returns Information/control object for the snackbar
      */
     public openSnackMessageAction(message: string, action: string, millisecondsDuration?: number): MatSnackBarRef<any> {
         return this.snackbar.open(message, action, {

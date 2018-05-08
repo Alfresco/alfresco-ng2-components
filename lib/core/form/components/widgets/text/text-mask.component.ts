@@ -41,6 +41,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class InputMaskDirective implements OnChanges, ControlValueAccessor {
 
+    /** Object defining mask and "reversed" status. */
     @Input('textMask') inputMask: {
         mask: '',
         isReversed: false

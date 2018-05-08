@@ -36,6 +36,7 @@ export class SharedLinksApiService {
     /**
      * Gets shared links available to the current user.
      * @param options Options supported by JSAPI
+     * @returns List of shared links
      */
     getSharedLinks(options: any = {}): Observable<NodePaging> {
         const { sharedLinksApi, handleError } = this;
@@ -54,9 +55,10 @@ export class SharedLinksApiService {
     }
 
     /**
-     * Create a shared links available to the current user.
-     * @param nodeId
+     * Creates a shared link available to the current user.
+     * @param nodeId ID of the node to link to
      * @param options Options supported by JSAPI
+     * @returns The shared link just created
      */
     createSharedLinks(nodeId: string, options: any = {}): Observable<SharedLinkEntry> {
         const { sharedLinksApi, handleError } = this;
@@ -69,8 +71,9 @@ export class SharedLinksApiService {
     }
 
     /**
-     * delete shared links
-     * @param sharedId to delete
+     * Deletes a shared link.
+     * @param sharedId ID of the link to delete
+     * @returns Null response notifying when the operation is complete
      */
     deleteSharedLink(sharedId: string): Observable<SharedLinkEntry> {
         const { sharedLinksApi, handleError } = this;
