@@ -30,6 +30,7 @@ export class StorageService {
     /**
      * Gets an item.
      * @param key Key to identify the item
+     * @returns The item (if any) retrieved by the key
      */
     getItem(key: string): string | null {
         if (this.useLocalStorage) {
@@ -76,6 +77,7 @@ export class StorageService {
     /**
      * Is any item currently stored under `key`?
      * @param key Key identifying item to check
+     * @returns True if key retrieves an item, false otherwise
      */
     hasItem(key: string): boolean {
         if (this.useLocalStorage) {

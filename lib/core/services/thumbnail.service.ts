@@ -158,6 +158,7 @@ export class ThumbnailService {
     /**
      * Gets a thumbnail URL for the given document node.
      * @param node Node to get URL for.
+     * @returns URL string
      */
     public getDocumentThumbnailUrl(node: any): string {
         let thumbnail = this.contentService.getDocumentThumbnailUrl(node);
@@ -167,6 +168,7 @@ export class ThumbnailService {
     /**
      * Gets a thumbnail URL for a MIME type.
      * @param mimeType MIME type for the thumbnail
+     * @returns URL string
      */
     public getMimeTypeIcon(mimeType: string): string {
         let icon = this.mimeTypeIcons[mimeType];
@@ -175,6 +177,7 @@ export class ThumbnailService {
 
     /**
      * Gets a "miscellaneous" thumbnail URL for types with no other icon defined.
+     * @returns URL string
      */
     public getDefaultMimeTypeIcon(): string {
         return this.DEFAULT_ICON;
