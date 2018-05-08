@@ -5,7 +5,7 @@ eval JS_API=true
 eval GNU=false
 eval DIFFERENT_JS_API=false
 eval AUTO=false
-eval ONLY_COMPONENT=false;
+eval TOTAL_BUILD=true;
 
 eval projects=( "core"
     "content-services"
@@ -100,8 +100,8 @@ version_js_change() {
 }
 
 only_components() {
-    echo "====== UPDATE Only the demo shell versions ====="
-    ONLY_COMPONENT=true
+    echo "====== UPDATE Only the components ====="
+    TOTAL_BUILD=false
 }
 
 
@@ -211,8 +211,7 @@ do
    fi
 done
 
-
-if $ONLY_COMPONENT == false; then
+if $TOTAL_BUILD; then
 
     echo "====== UPDATE TOTAL BUILD======"
 
