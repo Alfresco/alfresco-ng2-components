@@ -260,21 +260,21 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should set/get redirectUrl when provider is ECM', () => {
-            authService.setRedirectUrl({provider: 'ECM', url: 'some-url' } );
+            authService.setRedirect({provider: 'ECM', navigation: ['some-url'] } );
 
-            expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
         });
 
         it('[ECM] should set/get redirectUrl when provider is BPM', () => {
-            authService.setRedirectUrl({provider: 'BPM', url: 'some-url' } );
+            authService.setRedirect({provider: 'BPM', navigation: ['some-url'] } );
 
-            expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
+            expect(authService.getRedirect(preferences.authType)).toBeNull();
         });
 
         it('[ECM] should return null as redirectUrl when redirectUrl field is not set', () => {
-            authService.setRedirectUrl( null );
+            authService.setRedirect( null );
 
-            expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
+            expect(authService.getRedirect(preferences.authType)).toBeNull();
         });
     });
 
@@ -405,21 +405,21 @@ describe('AuthenticationService', () => {
         });
 
         it('[BPM] should set/get redirectUrl when provider is BPM', () => {
-            authService.setRedirectUrl({provider: 'BPM', url: 'some-url' } );
+            authService.setRedirect({provider: 'BPM', navigation: ['some-url'] } );
 
-            expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
         });
 
         it('[BPM] should set/get redirectUrl when provider is ECM', () => {
-            authService.setRedirectUrl({provider: 'ECM', url: 'some-url' } );
+            authService.setRedirect({provider: 'ECM', navigation: ['some-url'] } );
 
-            expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
+            expect(authService.getRedirect(preferences.authType)).toBeNull();
         });
 
         it('[BPM] should return null as redirectUrl when redirectUrl field is not set', () => {
-            authService.setRedirectUrl( null );
+            authService.setRedirect( null );
 
-            expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
+            expect(authService.getRedirect(preferences.authType)).toBeNull();
         });
     });
 
@@ -517,27 +517,27 @@ describe('AuthenticationService', () => {
         });
 
         it('[ALL] should set/get redirectUrl when provider is ALL', () => {
-            authService.setRedirectUrl({provider: 'ALL', url: 'some-url' } );
+            authService.setRedirect({provider: 'ALL', navigation: ['some-url'] } );
 
-            expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
         });
 
         it('[ALL] should set/get redirectUrl when provider is BPM', () => {
-            authService.setRedirectUrl({provider: 'BPM', url: 'some-url' } );
+            authService.setRedirect({provider: 'BPM', navigation: ['some-url'] } );
 
-            expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
         });
 
         it('[ALL] should set/get redirectUrl when provider is ECM', () => {
-            authService.setRedirectUrl({provider: 'ECM', url: 'some-url' } );
+            authService.setRedirect({provider: 'ECM', navigation: ['some-url'] } );
 
-            expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
         });
 
         it('[ALL] should return null as redirectUrl when redirectUrl field is not set', () => {
-            authService.setRedirectUrl( null );
+            authService.setRedirect( null );
 
-            expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
+            expect(authService.getRedirect(preferences.authType)).toBeNull();
         });
     });
 

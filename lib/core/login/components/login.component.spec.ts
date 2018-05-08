@@ -110,12 +110,12 @@ describe('LoginComponent', () => {
         spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket'}));
         const redirect = '/home';
         component.successRoute = redirect;
-        authService.setRedirectUrl({ provider: 'ECM', url: 'redirect-url' } );
+        authService.setRedirect({ provider: 'ECM', navigation: ['some-route'] } );
 
         spyOn(router, 'navigate');
 
         loginWithCredentials('fake-username', 'fake-password');
-        expect(router.navigate).toHaveBeenCalledWith(['redirect-url']);
+        expect(router.navigate).toHaveBeenCalledWith(['some-route']);
     });
 
     it('should update user preferences upon login', async(() => {

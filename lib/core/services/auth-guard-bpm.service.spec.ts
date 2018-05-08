@@ -43,7 +43,7 @@ describe('AuthGuardService BPM', () => {
 
     it('if the alfresco js api is logged in should canActivate be true', async(() => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
-        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : ''};
+        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(authGuard.canActivate(null, router)).toBeTruthy();
     }));
@@ -51,7 +51,7 @@ describe('AuthGuardService BPM', () => {
     it('if the alfresco js api is NOT logged in should canActivate be false', async(() => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         spyOn(routerService, 'navigate').and.stub();
-        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: '' };
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
         expect(authGuard.canActivate(null, router)).toBeFalsy();
     }));
@@ -59,32 +59,49 @@ describe('AuthGuardService BPM', () => {
     it('if the alfresco js api is NOT logged in should trigger a redirect event', async(() => {
         spyOn(routerService, 'navigate');
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
-        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : ''};
+        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(authGuard.canActivate(null, router)).toBeFalsy();
         expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
     }));
 
-    it('should set redirect url', async(() => {
-        spyOn(authService, 'setRedirectUrl').and.callThrough();
+    it('should set redirect navigation commands', async(() => {
+        spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(routerService, 'navigate').and.stub();
         const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
         authGuard.canActivate(null, router);
 
-        expect(authService.setRedirectUrl).toHaveBeenCalledWith({provider: 'BPM', url: 'some-url' } );
-        expect(authService.getRedirectUrl('BPM')).toBe('some-url');
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'BPM', navigation: ['some-url', {}]
+        });
+        expect(authService.getRedirect('BPM')).toEqual(['some-url', {}]);
+    }));
+
+    it('should set redirect navigation commands with query params', async(() => {
+        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(routerService, 'navigate').and.stub();
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url;q=123' };
+
+        authGuard.canActivate(null, router);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'BPM', navigation: ['some-url', {q: '123'}]
+        });
+        expect(authService.getRedirect('BPM')).toEqual(['some-url', { q: '123' }]);
     }));
 
     it('should get redirect url from config if there is one configured', async(() => {
         appConfigService.config.loginRoute = 'fakeLoginRoute';
-        spyOn(authService, 'setRedirectUrl').and.callThrough();
+        spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(routerService, 'navigate').and.stub();
         const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
         authGuard.canActivate(null, router);
 
-        expect(authService.setRedirectUrl).toHaveBeenCalledWith({provider: 'BPM', url: 'some-url' } );
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'BPM', navigation: ['some-url', {}]
+        });
         expect(routerService.navigate).toHaveBeenCalledWith(['/fakeLoginRoute']);
     }));
 
