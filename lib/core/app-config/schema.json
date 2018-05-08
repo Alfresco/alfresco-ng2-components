@@ -519,7 +519,7 @@
                     "description": "This specifies the facet field."
                   },
                   "mincount": {
-                    "type": "integer",
+                    "type": "number",
                     "description": "This specifies the minimum count required for a facet field to be included in the response. The default value is 1."
                   },
                   "label": {
@@ -531,8 +531,12 @@
                     "description": "This restricts the possible constraints to only indexed values with a specified prefix."
                   },
                   "limit": {
-                    "type": "integer",
+                    "type": "number",
                     "description": "Maximum number of results"
+                  },
+                  "pageSize": {
+                    "type": "number",
+                    "description": "Display page size"
                   },
                   "offset": { "type": "integer" }
                 }
@@ -583,8 +587,14 @@
                     "type": "object",
                     "required": [ "selector", "settings" ],
                     "properties": {
-                      "selector": { "type": "string" },
-                      "settings": { "type": "object" }
+                      "selector": {
+                        "description": "Unique component runtime identifier",
+                        "type": "string"
+                      },
+                      "settings": {
+                        "description": "Component-specific settings",
+                        "type": "object"
+                      }
                     }
                   }
                 }

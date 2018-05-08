@@ -50,10 +50,10 @@
     "process services"
   ],
   "dependencies": {
-    "@alfresco/adf-content-services": "2.4.0-beta2",
-    "@alfresco/adf-core": "2.4.0-beta2",
-    "@alfresco/adf-insights": "2.4.0-beta2",
-    "@alfresco/adf-process-services": "2.4.0-beta2",
+    "@alfresco/adf-content-services": "2.4.0-beta3",
+    "@alfresco/adf-core": "2.4.0-beta3",
+    "@alfresco/adf-insights": "2.4.0-beta3",
+    "@alfresco/adf-process-services": "2.4.0-beta3",
     "@angular/animations": "5.1.1",
     "@angular/cdk": "5.0.1",
     "@angular/common": "5.1.1",
@@ -71,7 +71,7 @@
     "@mat-datetimepicker/moment": "1.0.4",
     "@ngx-translate/core": "9.1.1",
     "@nrwl/schematics": "^1.0.3",
-    "alfresco-js-api": "^2.4.0-31a7fc6e5d58dc8bf202ef9a80bc993c9f48fe18",
+    "alfresco-js-api": "2.4.0-31a7fc6e5d58dc8bf202ef9a80bc993c9f48fe18",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
     "core-js": "2.4.1",

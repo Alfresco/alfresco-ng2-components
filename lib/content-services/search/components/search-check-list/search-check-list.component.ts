@@ -20,6 +20,13 @@ import { MatCheckboxChange } from '@angular/material';
 import { SearchWidget } from '../../search-widget.interface';
 import { SearchWidgetSettings } from '../../search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchFilterList } from '../search-filter/models/search-filter-list.model';
+
+export interface SearchListOption {
+    name: string;
+    value: string;
+    checked: boolean;
+}
 
 @Component({
     selector: 'adf-search-check-list',
@@ -33,21 +40,27 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
-    options: { name: string, value: string, checked: boolean }[] = [];
+    options: SearchFilterList<SearchListOption>;
     operator: string = 'OR';
+    pageSize = 5;
+
+    constructor() {
+        this.options = new SearchFilterList<SearchListOption>();
+    }
 
     ngOnInit(): void {
         if (this.settings) {
             this.operator = this.settings.operator || 'OR';
+            this.pageSize = this.settings.pageSize || 5;
 
             if (this.settings.options && this.settings.options.length > 0) {
-                this.options = [...this.settings.options];
+                this.options = new SearchFilterList(this.settings.options, this.pageSize);
             }
         }
     }
 
     reset() {
-        this.options.forEach(opt => {
+        this.options.items.forEach(opt => {
             opt.checked = false;
         });
 
@@ -63,7 +76,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     }
 
     flush() {
-        const checkedValues = this.options
+        const checkedValues = this.options.items
             .filter(option => option.checked)
             .map(option => option.value);
 

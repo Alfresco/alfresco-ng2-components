@@ -16,43 +16,20 @@
  */
 
 import { ResponseFacetQuery } from '../../../facet-query.interface';
+import { SearchFilterList } from './search-filter-list.model';
 
-export class ResponseFacetQueryList {
-
-    items: ResponseFacetQuery[] = [];
-    pageSize: number = 5;
-    currentPageSize: number = 5;
-
-    get visibleItems(): ResponseFacetQuery[] {
-        return this.items.slice(0, this.currentPageSize);
-    }
-
-    get length(): number {
-        return this.items.length;
-    }
+export class ResponseFacetQueryList extends SearchFilterList<ResponseFacetQuery> {
 
     constructor(items: ResponseFacetQuery[] = [], pageSize: number = 5) {
-        this.items = items
+        const filtered = items
             .filter(item => {
                 return item.count > 0;
             })
             .map(item => {
                 return <ResponseFacetQuery> { ...item };
             });
-        this.pageSize = pageSize;
-        this.currentPageSize = pageSize;
+
+        super(filtered, pageSize);
     }
 
-    hasMoreItems(): boolean {
-        return this.items.length > this.currentPageSize;
-    }
-
-    showMoreItems() {
-        this.currentPageSize += this.pageSize;
-    }
-
-    clear() {
-        this.currentPageSize = this.pageSize;
-        this.items = [];
-    }
 }

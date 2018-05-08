@@ -21,6 +21,12 @@ import { MatRadioChange } from '@angular/material';
 import { SearchWidget } from '../../search-widget.interface';
 import { SearchWidgetSettings } from '../../search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchFilterList } from '../search-filter/models/search-filter-list.model';
+
+export interface SearchRadioOption {
+    name: string;
+    value: string;
+}
 
 @Component({
     selector: 'adf-search-radio',
@@ -37,8 +43,24 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     id: string;
     settings: SearchWidgetSettings;
     context: SearchQueryBuilderService;
+    options: SearchFilterList<SearchRadioOption>;
+    pageSize = 5;
+
+    constructor() {
+        this.options = new SearchFilterList<SearchRadioOption>();
+    }
 
     ngOnInit() {
+        if (this.settings) {
+            this.pageSize = this.settings.pageSize || 5;
+
+            if (this.settings.options && this.settings.options.length > 0) {
+                this.options = new SearchFilterList<SearchRadioOption>(
+                    this.settings.options, this.pageSize
+                );
+            }
+        }
+
         this.setValue(
             this.getSelectedValue()
         );

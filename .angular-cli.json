@@ -107,7 +107,7 @@
         },
         {
           "glob": "**/*",
-          "input": "./resources",
+          "input": "../resources",
           "output": "./resources"
         },
         {

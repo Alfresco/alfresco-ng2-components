@@ -5,8 +5,28 @@
     {{ option.name | translate }}
 </mat-checkbox>
 
-<div>
+<div class="facet-buttons" *ngIf="options.fitsPage">
     <button mat-button color="primary" (click)="reset()">
         {{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}
+    </button>
+</div>
+
+<div class="facet-buttons" *ngIf="!options.fitsPage">
+    <button mat-icon-button
+        title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
+        (click)="reset()">
+        <mat-icon>clear</mat-icon>
+    </button>
+    <button mat-icon-button
+        [disabled]="!options.canShowLessItems"
+        title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}"
+        (click)="options.showLessItems()">
+        <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+    <button mat-icon-button
+        [disabled]="!options.canShowMoreItems"
+        title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}"
+        (click)="options.showMoreItems()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
 </div>
