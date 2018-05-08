@@ -178,7 +178,7 @@
   "bundlesize": [
     {
       "path": "./lib/dist/content-services/bundles/adf-content-services.umd.js",
-      "maxSize": "60 kb"
+      "maxSize": "70 kb"
     },
     {
       "path": "./lib/dist/process-services/bundles/adf-process-services.umd.js",
