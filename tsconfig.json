@@ -25,6 +25,7 @@
     "integration",
     "scripts",
     "assets",
+    "tools",
     "node_modules"
   ]
 }

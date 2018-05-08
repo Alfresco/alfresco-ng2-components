@@ -3,9 +3,9 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval JS_API=true
 eval GNU=false
-eval EXEC_COMPONENT=true
 eval DIFFERENT_JS_API=false
 eval AUTO=false
+eval ONLY_COMPONENT=false;
 
 eval projects=( "core"
     "content-services"
@@ -21,7 +21,7 @@ show_help() {
     echo ""
     echo "-sj or -sjsapi  don't update js-api version"
     echo "-vj or -versionjsapi  to use a different version of js-api"
-    echo "-demoshell execute the change version only in the demo shell "
+    echo "-components execute the change version only in the components "
     echo "-v or -version  version to update"
     echo "-nextalpha update next alpha version of js-api and lib automatically"
     echo "-nextbeta update next beta version of js-api and lib automatically"
@@ -99,22 +99,16 @@ version_js_change() {
     DIFFERENT_JS_API=true
 }
 
-only_demoshell() {
+only_components() {
     echo "====== UPDATE Only the demo shell versions ====="
-    EXEC_COMPONENT=false
+    ONLY_COMPONENT=true
 }
 
 
 update_component_version() {
    echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
-   DESTDIR="$DIR/../${1}"
-   sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
-}
-
-clean_lock() {
-   echo "====== clean lock file ${1} ======"
    DESTDIR="$DIR/../lib/${1}"
-   rm ${DESTDIR}/package-lock.json
+   sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
 }
 
 update_component_dependency_version(){
@@ -165,35 +159,6 @@ update_component_js_version(){
 
 }
 
-update_demo_shell_dependency_version(){
-
-   for (( k=0; k<${projectslength}; k++ ));
-   do
-    echo "====== UPDATE VERSION OF DEMO-SHELL to ${projects[$k]} version ${VERSION} ======"
-    DESTDIR="$DIR/../demo-shell/"
-
-       sed "${sedi[@]}" "s/\"${prefix}${projects[$k]}\": \".*\"/\"${prefix}${projects[$k]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
-       sed "${sedi[@]}" "s/\"${prefix}${projects[$k]}\": \"~.*\"/\"${prefix}${projects[$k]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
-       sed "${sedi[@]}" "s/\"${prefix}${projects[$k]}\": \"^.*\"/\"${prefix}${projects[$k]}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
-   done
-}
-
-update_demo_shell_js_version(){
-    echo "====== UPDATE VERSION OF DEMO-SHELL to  alfresco-js-api version ${1} ======"
-    DESTDIR="$DIR/../demo-shell/"
-    PACKAGETOCHANGE="alfresco-js-api"
-
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-}
-
-clean_lock_demo_shell(){
-   echo "====== clean lock file demo-shell ======"
-    DESTDIR="$DIR/../demo-shell/"
-    rm ${DESTDIR}/package-lock.json
-}
-
 while [[ $1  == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
@@ -205,7 +170,7 @@ while [[ $1  == -* ]]; do
       -nextalpha) next_alpha_mode; shift;;
       -beta) last_beta_mode; shift;;
       -nextbeta) next_beta_mode; shift;;
-      -demoshell) only_demoshell; shift;;
+      -components) only_components; shift;;
       -*) shift;;
     esac
 done
@@ -226,27 +191,28 @@ cd "$DIR/../"
 
 projectslength=${#projects[@]}
 
-if $EXEC_COMPONENT == true; then
-    echo "====== UPDATE COMPONENTS ======"
+echo "====== UPDATE COMPONENTS ======"
 
-    # use for loop to read all values and indexes
-    for (( i=0; i<${projectslength}; i++ ));
-    do
-       clean_lock ${projects[$i]}
-       echo "====== UPDATE COMPONENT ${projects[$i]} ======"
-       update_component_version ${projects[$i]}
-       update_component_dependency_version ${projects[$i]}
+# use for loop to read all values and indexes
+for (( i=0; i<${projectslength}; i++ ));
+do
+   echo "====== UPDATE COMPONENT ${projects[$i]} ======"
+   update_component_version ${projects[$i]}
+   update_component_dependency_version ${projects[$i]}
 
-       if $JS_API == true; then
+   if $JS_API == true; then
 
-        if $DIFFERENT_JS_API == true; then
-            update_component_js_version ${projects[$i]} ${VERSION_JS_API}
-        else
-            update_component_js_version ${projects[$i]} ${VERSION}
-        fi
+    if $DIFFERENT_JS_API == true; then
+        update_component_js_version ${projects[$i]} ${VERSION_JS_API}
+    else
+        update_component_js_version ${projects[$i]} ${VERSION}
+    fi
 
-       fi
-    done
+   fi
+done
+
+
+if $ONLY_COMPONENT == false; then
 
     echo "====== UPDATE TOTAL BUILD======"
 
@@ -259,25 +225,12 @@ if $EXEC_COMPONENT == true; then
             update_total_build_dependency_js_version ${VERSION}
         fi
     fi
+
 fi
+
 
 echo "====== UPDATE DEMO SHELL ======"
 
-clean_lock_demo_shell
-
-update_demo_shell_dependency_version
-
-if $JS_API == true; then
-    if $DIFFERENT_JS_API == true; then
-        update_demo_shell_js_version ${VERSION_JS_API}
-    else
-        update_demo_shell_js_version ${VERSION}
-    fi
-fi
-
 DESTDIR="$DIR/../demo-shell/"
 sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../demo-shell/package.json
-
-if $EXEC_COMPONENT == true; then
-    sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../package.json
-fi
+sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../package.json
