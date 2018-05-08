@@ -212,21 +212,18 @@ do
 done
 
 if $TOTAL_BUILD; then
-
     echo "====== UPDATE TOTAL BUILD======"
 
     update_total_build_dependency_version
-
-    if $JS_API == true; then
-        if $DIFFERENT_JS_API == true; then
-            update_total_build_dependency_js_version ${VERSION_JS_API}
-        else
-            update_total_build_dependency_js_version ${VERSION}
-        fi
-    fi
-
 fi
 
+if $JS_API == true; then
+    if $DIFFERENT_JS_API == true; then
+        update_total_build_dependency_js_version ${VERSION_JS_API}
+    else
+        update_total_build_dependency_js_version ${VERSION}
+    fi
+fi
 
 echo "====== UPDATE DEMO SHELL ======"
 
