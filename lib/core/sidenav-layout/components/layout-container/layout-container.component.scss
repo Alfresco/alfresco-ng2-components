@@ -1,12 +1,12 @@
+:host {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
 @mixin adf-layout-container-theme($theme) {
     $foreground: map-get($theme, foreground);
-
-  adf-layout-container {
-      display: block;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-  }
 
   ng-content {
     display: block;
