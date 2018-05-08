@@ -16,7 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
+import {
+    ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router,
+    PRIMARY_OUTLET, UrlTree, UrlSegmentGroup, UrlSegment
+} from '@angular/router';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
@@ -50,10 +53,11 @@ export class AuthGuardEcm implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-
         return this.isLoggedIn().then(isLoggedIn => {
             if (!isLoggedIn) {
-                this.authService.setRedirectUrl({ provider: 'ECM', url: state.url });
+                const navigation = this.getNavigationCommands(state.url);
+
+                this.authService.setRedirect({ provider: 'ECM', navigation });
                 const pathToLogin = this.getRouteDestinationForLogin();
                 this.router.navigate(['/' + pathToLogin]);
             }
@@ -66,5 +70,16 @@ export class AuthGuardEcm implements CanActivate {
         return this.appConfig &&
                this.appConfig.get<string>('loginRoute') ?
                         this.appConfig.get<string>('loginRoute') : 'login';
+    }
+
+    private getNavigationCommands(redirectUrl: string): any[] {
+        const urlTree: UrlTree = this.router.parseUrl(redirectUrl);
+        const urlSegmentGroup: UrlSegmentGroup = urlTree.root.children[PRIMARY_OUTLET];
+        const urlSegments: UrlSegment[] = urlSegmentGroup.segments;
+
+        return urlSegments.reduce(function(acc, item) {
+            acc.push(item.path, item.parameters);
+            return acc;
+        }, []);
     }
 }
