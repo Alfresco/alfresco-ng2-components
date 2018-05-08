@@ -101,4 +101,17 @@ describe('AuthGuardService', () => {
         });
         expect(router.navigate).toHaveBeenCalledWith(['/fakeLoginRoute']);
     }));
+
+    it('should pass actual redirect when no state segments exists', async(() => {
+        state.url = '/';
+
+        spyOn(router, 'navigate');
+        spyOn(authService, 'setRedirect');
+
+        service.canActivate(null, state);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'ALL', navigation: ['/']
+        });
+    }));
 });

@@ -235,6 +235,28 @@ describe('AuthGuardService ECM', () => {
                  });
             });
         });
+
+        describe('with no route state', () => {
+            beforeEach(async(() => {
+                this.test = new TestConfig({
+                    isLoggedIn: false
+                });
+
+                const { guard, auth, router } = this.test;
+
+                guard.canActivate(null, { url: '/' }).then((activate) => {
+                    this.auth = auth;
+                });
+
+                this.navigateSpy = spyOn(router, 'navigate');
+            }));
+
+            it('should set redirect navigation commands with query params', () => {
+                expect(this.auth.setRedirect).toHaveBeenCalledWith({
+                    provider: 'ECM', navigation: ['/']
+                 });
+            });
+        });
     });
 
     describe('canActivateChild', () => {
