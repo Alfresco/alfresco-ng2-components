@@ -175,7 +175,8 @@
         "CLEAR": "Clear",
         "APPLY": "Apply",
         "CLEAR-ALL": "Clear all",
-        "SHOW-MORE": "Show more"
+        "SHOW-MORE": "Show more",
+        "SHOW-LESS": "Show less"
       },
       "RANGE": {
         "FROM": "From",

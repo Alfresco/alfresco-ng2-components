@@ -3,7 +3,8 @@
     <mat-form-field>
         <input
             matInput [formControl]="from" [errorStateMatcher]="matcher"
-            placeholder="{{ 'SEARCH.FILTER.RANGE.FROM' | translate }}">
+            placeholder="{{ 'SEARCH.FILTER.RANGE.FROM' | translate }}"
+            autocomplete="off">
         <mat-error *ngIf="from.hasError('pattern')">
             {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
         </mat-error>
@@ -12,17 +13,18 @@
         </mat-error>
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
         <input
             matInput [formControl]="to" [errorStateMatcher]="matcher"
-            placeholder="{{ 'SEARCH.FILTER.RANGE.TO' | translate }}">
+            placeholder="{{ 'SEARCH.FILTER.RANGE.TO' | translate }}"
+            autocomplete="off">
         <mat-error *ngIf="to.invalid">
             {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
         </mat-error>
     </mat-form-field>
 
 
-    <div>
+    <div class="facet-buttons">
         <button mat-button color="primary" (click)="reset()">
             {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
         </button>

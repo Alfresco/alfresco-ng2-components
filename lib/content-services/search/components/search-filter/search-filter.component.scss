@@ -6,3 +6,11 @@
         margin: 5px;
     }
 }
+
+.facet-buttons {
+    text-align: right;
+
+    .mat-button {
+        text-transform: uppercase;
+    }
+}

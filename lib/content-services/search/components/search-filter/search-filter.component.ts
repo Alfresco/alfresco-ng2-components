@@ -24,6 +24,7 @@ import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 import { SearchCategory } from '../../search-category.interface';
 import { ResponseFacetQuery } from '../../response-facet-query.interface';
 import { ResponseFacetQueryList } from './models/response-facet-query-list.model';
+import { SearchFilterList } from './models/search-filter-list.model';
 
 @Component({
     selector: 'adf-search-filter',
@@ -44,6 +45,8 @@ export class SearchFilterComponent implements OnInit {
     facetQueriesExpanded = false;
 
     constructor(public queryBuilder: SearchQueryBuilderService, private search: SearchService) {
+        this.responseFacetQueries = new ResponseFacetQueryList();
+
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || 5;
@@ -158,12 +161,12 @@ export class SearchFilterComponent implements OnInit {
             const expandedFields = this.responseFacetFields.filter(f => f.expanded).map(f => f.label);
 
             this.responseFacetFields = (context.facetsFields || []).map(
-                (field: ResponseFacetField) => {
+                field => {
                     field.pageSize = field.pageSize || 5;
                     field.currentPageSize = field.pageSize;
                     field.expanded = expandedFields.includes(field.label);
 
-                    (field.buckets || []).forEach(bucket => {
+                    const buckets = (field.buckets || []).map(bucket => {
                         bucket.$field = field.label;
                         bucket.$checked = false;
 
@@ -173,21 +176,9 @@ export class SearchFilterComponent implements OnInit {
                         if (previousBucket) {
                            bucket.$checked = true;
                         }
+                        return bucket;
                     });
-
-                    field.hasMoreItems = (): boolean => {
-                        return field.buckets && field.buckets.length > 0 && field.buckets.length > field.currentPageSize;
-                    };
-
-                    field.showMoreItems = () => {
-                        field.currentPageSize += field.pageSize;
-                    };
-
-                    field.getVisibleBuckets = (): FacetFieldBucket[] => {
-                        const buckets = field.buckets || [];
-                        return buckets.slice(0, field.currentPageSize);
-                    };
-
+                    field.buckets = new SearchFilterList<FacetFieldBucket>(buckets, field.pageSize);
                     return field;
                 }
             );

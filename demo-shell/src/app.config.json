@@ -67,6 +67,7 @@
       ],
       "facetQueries": {
         "label": "My facet queries",
+        "pageSize": 5,
         "queries": [
           { "query": "created:2018", "label": "Created This Year" },
           { "query": "content.mimetype", "label": "Type" },
@@ -100,6 +101,7 @@
           "component": {
             "selector": "check-list",
             "settings": {
+              "pageSize": 5,
               "operator": "OR",
               "options": [
                 { "name": "Folder", "value": "TYPE:'cm:folder'" },
@@ -153,6 +155,7 @@
             "selector": "radio",
             "settings": {
               "field": null,
+              "pageSize": 5,
               "options": [
                 { "name": "None", "value": "", "default": true },
                 { "name": "All", "value": "TYPE:'cm:folder' OR TYPE:'cm:content'" },

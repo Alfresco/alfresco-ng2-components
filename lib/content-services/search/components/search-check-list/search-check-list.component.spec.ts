@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { SearchCheckListComponent } from './search-check-list.component';
+import { SearchCheckListComponent, SearchListOption } from './search-check-list.component';
+import { SearchFilterList } from '../search-filter/models/search-filter-list.model';
 
 describe('SearchCheckListComponent', () => {
 
@@ -33,7 +34,7 @@ describe('SearchCheckListComponent', () => {
         component.settings = <any> { options: options };
         component.ngOnInit();
 
-        expect(component.options).toEqual(options);
+        expect(component.options.items).toEqual(options);
     });
 
     it('should setup operator from the settings', () => {
@@ -49,10 +50,10 @@ describe('SearchCheckListComponent', () => {
     });
 
     it('should update query builder on checkbox change', () => {
-        component.options = [
+        component.options = new SearchFilterList<SearchListOption>([
             { name: 'Folder', value: "TYPE:'cm:folder'", checked: false },
             { name: 'Document', value: "TYPE:'cm:content'", checked: false }
-        ];
+        ]);
 
         component.id = 'checklist';
         component.context = <any> {
@@ -66,14 +67,14 @@ describe('SearchCheckListComponent', () => {
 
         component.changeHandler(
             <any> { checked: true },
-            component.options[0]
+            component.options.items[0]
         );
 
         expect(component.context.queryFragments[component.id]).toEqual(`TYPE:'cm:folder'`);
 
         component.changeHandler(
             <any> { checked: true },
-            component.options[1]
+            component.options.items[1]
         );
 
         expect(component.context.queryFragments[component.id]).toEqual(
@@ -82,15 +83,15 @@ describe('SearchCheckListComponent', () => {
     });
 
     it('should reset selected boxes', () => {
-        component.options = [
+        component.options = new SearchFilterList<SearchListOption>([
             { name: 'Folder', value: "TYPE:'cm:folder'", checked: true },
             { name: 'Document', value: "TYPE:'cm:content'", checked: true }
-        ];
+        ]);
 
         component.reset();
 
-        expect(component.options[0].checked).toBeFalsy();
-        expect(component.options[1].checked).toBeFalsy();
+        expect(component.options.items[0].checked).toBeFalsy();
+        expect(component.options.items[1].checked).toBeFalsy();
     });
 
     it('should update query builder on reset', () => {
@@ -104,10 +105,10 @@ describe('SearchCheckListComponent', () => {
         spyOn(component.context, 'update').and.stub();
 
         component.ngOnInit();
-        component.options = [
+        component.options = new SearchFilterList<SearchListOption>([
             { name: 'Folder', value: "TYPE:'cm:folder'", checked: true },
             { name: 'Document', value: "TYPE:'cm:content'", checked: true }
-        ];
+        ]);
 
         component.reset();
 

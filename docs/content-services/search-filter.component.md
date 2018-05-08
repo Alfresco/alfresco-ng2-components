@@ -44,16 +44,20 @@ Below is an example configuration:
             { "field": "creator", "mincount": 1, "label": "Creator" },
             { "field": "modifier", "mincount": 1, "label": "Modifier" }
         ],
-        "facetQueries": [
-            { "query": "created:2018", "label": "Created This Year" },
-            { "query": "content.mimetype", "label": "Type" },
-            { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
-            { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
-            { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
-            { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large" },
-            { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large" },
-            { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large" }
-        ],
+        "facetQueries": {
+            "label": "My facet queries",
+            "pageSize": 4,
+            "queries": [
+                { "query": "created:2018", "label": "Created This Year" },
+                { "query": "content.mimetype", "label": "Type" },
+                { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
+                { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
+                { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
+                { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large" },
+                { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large" },
+                { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large" }
+            ]
+        },
         "categories": [
             {
                 "id": "queryName",
@@ -168,6 +172,18 @@ If there are more than 5 entries, the "Show more" button is displayed to allow d
 
 ![Facet Fields](../docassets/images/search-facet-fields.png)
 
+#### FacetField Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| field | string | | This specifies the facet field. |
+| mincount | number | 1 | This specifies the minimum count required for a facet field to be included in the response. The default value is 1. |
+| label | string | | This specifies the label to include in place of the facet field. |
+| prefix | string | | This restricts the possible constraints to only indexed values with a specified prefix. |
+| limit | number | | Maximum number of results |
+| pageSize | number | 5 | Display page size |
+| offset | number | | Offset position |
+
 ### Facet Queries
 
 Provides a custom category based on admin-defined facet queries.
@@ -199,6 +215,10 @@ Only the queries that have 1 or more response entries are displayed at runtime.
 Based on the `pageSize` value, the component provides a `Show more` button to display more items.
 
 You can also provide a custom `label` (or i18n resource key) for the resulting collapsible category.
+
+The `pageSize` property allows you to define the amount of results to display.
+Users will see `Show more` or `Show less` buttons depending on the result set.
+The default page size is `5`, it is going to be used in case you set the value to `0` or omit the value entirely.
 
 ![Facet Queries](../docassets/images/search-facet-queries.png)
 
@@ -233,6 +253,7 @@ You can choose a `label` (or i18n resources key) and a `value`, alongside the co
                 "enabled": true,
                 "component": {
                     "selector": "check-list",
+                    "pageSize": 5,
                     "settings": {
                         "operator": "OR",
                         "options": [
@@ -254,6 +275,15 @@ If user checks both boxes, the underlying query will get the following fragment:
 ```text
 ... (TYPE:'cm:folder' OR TYPE:'cm:content') ...
 ```
+
+It is possible to set the size of the page to display items. The default size is 5.
+If all items fit a single page, then a "Clear all" action button is displayed at the bottom of the widget.
+
+In case there are more than one page three icon buttons will be displayed to allow:
+
+- clear all values
+- show more items (if applicable)
+- show less items (if applicable)
 
 ### Date Range Widget
 
@@ -324,6 +354,7 @@ The behaviour is very similar to those of the `check-list` except `radio` allows
                     "selector": "radio",
                     "settings": {
                         "field": null,
+                        "pageSize": 5,
                         "options": [
                             { "name": "None", "value": "", "default": true },
                             { "name": "All", "value": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
@@ -339,6 +370,12 @@ The behaviour is very similar to those of the `check-list` except `radio` allows
 ```
 
 ![Radio Widget](../docassets/images/search-radio.png)
+
+It is possible to set the size of the page to display items. The default size is 5.
+In case there are more than one page three icon buttons will be displayed to allow:
+
+- show more items (if applicable)
+- show less items (if applicable)
 
 ### Slider Widget
 
