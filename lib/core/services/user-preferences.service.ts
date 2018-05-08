@@ -75,6 +75,11 @@ export class UserPreferencesService {
         this.userPreferenceStatus[UserPreferenceValues.DisableCSRF] = this.disableCSRF;
     }
 
+    /**
+     * Sets up a callback to notify when a property has changed.
+     * @param property The property to watch
+     * @returns Notification callback
+     */
     select(property: string): Observable<any> {
         return this.onChange.map((userPreferenceStatus) => userPreferenceStatus[property]).distinctUntilChanged();
     }
@@ -83,6 +88,7 @@ export class UserPreferencesService {
      * Gets a preference property.
      * @param property Name of the property
      * @param defaultValue Default to return if the property is not found
+     * @returns Preference property
      */
     get(property: string, defaultValue?: string): string {
         const key = this.getPropertyKey(property);
@@ -108,7 +114,10 @@ export class UserPreferencesService {
         this.onChangeSubject.next(this.userPreferenceStatus);
     }
 
-    /** Gets the active storage prefix for preferences. */
+    /**
+     * Gets the active storage prefix for preferences.
+     * @returns Storage prefix
+     */
     getStoragePrefix(): string {
         return this.storage.getItem('USER_PROFILE') || 'GUEST';
     }
@@ -124,12 +133,16 @@ export class UserPreferencesService {
     /**
      * Gets the full property key with prefix.
      * @param property The property name
+     * @returns Property key
      */
     getPropertyKey(property: string): string {
         return `${this.getStoragePrefix()}__${property}`;
     }
 
-    /** Gets an array containing the available page sizes. */
+    /**
+     * Gets an array containing the available page sizes.
+     * @returns Array of page size values
+     */
     getDefaultPageSizes(): number[] {
         return this.defaults.supportedPageSizes;
     }
@@ -174,7 +187,10 @@ export class UserPreferencesService {
         this.set('LOCALE', value);
     }
 
-    /** Gets the default locale. */
+    /**
+     * Gets the default locale.
+     * @returns Default locale language code
+     */
     public getDefaultLocale(): string {
         return this.appConfig.get<string>('locale') || this.translate.getBrowserLang() || 'en';
     }

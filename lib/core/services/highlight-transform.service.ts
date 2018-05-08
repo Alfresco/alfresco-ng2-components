@@ -26,6 +26,7 @@ export class HighlightTransformService {
      * @param text Text to search within
      * @param search Text pattern to search for
      * @param wrapperClass CSS class used to provide highlighting style
+     * @returns New text along with boolean value to indicate whether anything was highlighted 
      */
     public highlight(text: string, search: string, wrapperClass: string = 'highlight'): HightlightTransformResult {
         let isMatching = false,
