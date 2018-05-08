@@ -7,7 +7,7 @@
     {
       "name": "dist",
       "root": "demo-shell/src",
-      "outDir": "dist",
+      "outDir": "demo-shell/dist",
       "assets": [
         "assets",
         "favicon.ico",
@@ -85,7 +85,7 @@
     {
       "name": "dev",
       "root": "demo-shell/src",
-      "outDir": "dist",
+      "outDir": "demo-shell/dist",
       "assets": [
         "assets",
         "app.config.json",
