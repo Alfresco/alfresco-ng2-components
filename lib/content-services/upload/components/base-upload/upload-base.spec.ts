@@ -24,7 +24,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'adf-upload-button-test',
-    template: 'test componente';
+    template: 'test componente'
 })
 
 export class UploadTestComponent extends UploadBase {
@@ -214,7 +214,7 @@ describe('UploadBase', () => {
             component.uploadFiles(files);
 
             expect(addToQueueSpy).toHaveBeenCalledWith(new FileModel(files[0], {
-                comment: 'example-comment'
+                comment: 'example-comment',
                 newVersion: false,
                 majorVersion: false,
                 parentId: '-root-',
