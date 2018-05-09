@@ -44,6 +44,7 @@ export class TaskListService {
      * Gets all the filters in the list that belong to a task.
      * @param taskId ID of the target task
      * @param filterList List of filters to search through
+     * @returns Filters belonging to the task
      */
     getFilterForTaskById(taskId: string, filterList: FilterRepresentationModel[]): Observable<FilterRepresentationModel> {
         return Observable.from(filterList)
@@ -54,6 +55,7 @@ export class TaskListService {
     /**
      * Gets the search query for a task based on the supplied filter.
      * @param filter The filter to use
+     * @returns The search query
      */
     private generateTaskRequestNodeFromFilter(filter: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
         let requestNode = {
@@ -69,6 +71,7 @@ export class TaskListService {
      * Checks if a taskId is filtered with the given filter.
      * @param taskId ID of the target task
      * @param filter The filter you want to check
+     * @returns The filter if it is related or null otherwise
      */
      isTaskRelatedToFilter(taskId: string, filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
         let requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filter);
@@ -81,6 +84,7 @@ export class TaskListService {
     /**
      * Gets all the tasks matching the supplied query.
      * @param requestNode Query to search for tasks
+     * @returns List of tasks
      */
     getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
         return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
@@ -94,6 +98,7 @@ export class TaskListService {
      * Gets tasks matching a query and state value.
      * @param requestNode Query to search for tasks
      * @param state Task state. Can be "open" or "completed".
+     * @returns List of tasks
      */
     findTasksByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
         if (state) {
@@ -106,6 +111,7 @@ export class TaskListService {
      * Gets all tasks matching a query and state value.
      * @param requestNode Query to search for tasks.
      * @param state Task state. Can be "open" or "completed".
+     * @returns List of tasks
      */
     findAllTaskByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
         if (state) {
@@ -118,8 +124,9 @@ export class TaskListService {
     }
 
     /**
-     * Get all tasks matching the supplied query but ignoring the task state.
+     * Gets all tasks matching the supplied query but ignoring the task state.
      * @param requestNode Query to search for tasks
+     * @returns List of tasks
      */
     findAllTasksWithoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
         return Observable.forkJoin(
@@ -138,6 +145,7 @@ export class TaskListService {
     /**
      * Gets details for a task.
      * @param taskId ID of the target task.
+     * @returns Task details
      */
     getTaskDetails(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiTaskDetails(taskId))
@@ -150,6 +158,7 @@ export class TaskListService {
     /**
      * Gets the checklist for a task.
      * @param id ID of the target task
+     * @returns Array of checklist task details
      */
     getTaskChecklist(id: string): Observable<TaskDetailsModel[]> {
         return Observable.fromPromise(this.callApiTaskChecklist(id))
@@ -165,6 +174,7 @@ export class TaskListService {
 
     /**
      * Gets all available reusable forms.
+     * @returns Array of form details
      */
     getFormList(): Observable<Form []> {
         let opts = {
@@ -187,6 +197,7 @@ export class TaskListService {
      * Attaches a form to a task.
      * @param taskId ID of the target task
      * @param formId ID of the form to add
+     * @returns Null response notifying when the operation is complete
      */
     attachFormToATask(taskId: string, formId: number): Observable<any> {
         return Observable.fromPromise(this.apiService.taskApi.attachForm(taskId, {'formId': formId})).catch(err => this.handleError(err));
@@ -195,6 +206,7 @@ export class TaskListService {
     /**
      * Adds a subtask (ie, a checklist task) to a parent task.
      * @param task The task to add
+     * @returns The subtask that was added
      */
     addTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiAddTask(task))
@@ -207,6 +219,7 @@ export class TaskListService {
     /**
      * Deletes a subtask (ie, a checklist task) from a parent task.
      * @param taskId The task to delete
+     * @returns Null response notifying when the operation is complete
      */
     deleteTask(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiDeleteTask(taskId))
@@ -216,6 +229,7 @@ export class TaskListService {
     /**
      * Gives completed status to a task.
      * @param taskId ID of the target task
+     * @returns Null response notifying when the operation is complete
      */
     completeTask(taskId: string) {
         return Observable.fromPromise(this.apiService.taskApi.completeTask(taskId))
@@ -226,6 +240,7 @@ export class TaskListService {
     /**
      * Gets the total number of the tasks found by a query.
      * @param requestNode Query to search for tasks
+     * @returns Number of tasks
      */
     public getTotalTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<any> {
         requestNode.size = 0;
@@ -238,6 +253,7 @@ export class TaskListService {
     /**
      * Creates a new standalone task.
      * @param task Details of the new task
+     * @returns Details of the newly created task
      */
     createNewTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiCreateTask(task))
@@ -251,6 +267,7 @@ export class TaskListService {
      * Assigns a task to a user or group.
      * @param taskId The task to assign
      * @param requestNode User or group to assign the task to
+     * @returns Details of the assigned task
      */
     assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
         let assignee = {assignee: requestNode.id};
@@ -265,6 +282,7 @@ export class TaskListService {
      * Assigns a task to a user.
      * @param taskId ID of the task to assign
      * @param userId ID of the user to assign the task to
+     * @returns Details of the assigned task
      */
     assignTaskByUserId(taskId: string, userId: number): Observable<TaskDetailsModel> {
         let assignee = {assignee: userId};
@@ -278,6 +296,7 @@ export class TaskListService {
     /**
      * Claims a task for the current user.
      * @param taskId ID of the task to claim
+     * @returns Details of the claimed task
      */
     claimTask(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.apiService.taskApi.claimTask(taskId))
@@ -287,6 +306,7 @@ export class TaskListService {
     /**
      * Unclaims a task for the current user.
      * @param taskId ID of the task to unclaim
+     * @returns Null response notifying when the operation is complete
      */
     unclaimTask(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.apiService.taskApi.unclaimTask(taskId))
@@ -297,6 +317,7 @@ export class TaskListService {
      * Updates the details (name, description, due date) for a task.
      * @param taskId ID of the task to update
      * @param updated Data to update the task (as a `TaskUpdateRepresentation` instance).
+     * @returns Updated task details
      */
     updateTask(taskId: any, updated): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.apiService.taskApi.updateTask(taskId, updated))
@@ -315,6 +336,7 @@ export class TaskListService {
     /**
      * Fetch the Task Audit information in JSON format
      * @param taskId ID of the target task
+     * @returns JSON data
      */
     fetchTaskAuditJsonById(taskId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.taskApi.getTaskAuditJson(taskId))

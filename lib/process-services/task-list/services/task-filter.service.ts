@@ -37,6 +37,7 @@ export class TaskFilterService {
     /**
      * Creates and returns the default filters for a process app.
      * @param appId ID of the target app
+     * @returns Array of default filters just created
      */
     public createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
         let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
@@ -87,6 +88,7 @@ export class TaskFilterService {
     /**
      * Gets all task filters for a process app.
      * @param appId Optional ID for a specific app
+     * @returns Array of task filter details
      */
     getTaskListFilters(appId?: number): Observable<FilterRepresentationModel[]> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
@@ -104,6 +106,7 @@ export class TaskFilterService {
      * Gets a task filter by ID.
      * @param filterId ID of the filter
      * @param appId ID of the app for the filter
+     * @returns Details of task filter
      */
     getTaskFilterById(filterId: number, appId?: number): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
@@ -116,6 +119,7 @@ export class TaskFilterService {
      * Gets a task filter by name.
      * @param taskName Name of the filter
      * @param appId ID of the app for the filter
+     * @returns Details of task filter
      */
     getTaskFilterByName(taskName: string, appId?: number): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
@@ -127,6 +131,7 @@ export class TaskFilterService {
     /**
      * Adds a new task filter
      * @param filter The new filter to add
+     * @returns Details of task filter just added
      */
     addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(filter))
@@ -139,6 +144,7 @@ export class TaskFilterService {
     /**
      * Calls `getUserTaskFilters` from the Alfresco JS API.
      * @param appId ID of the target app
+     * @returns List of task filters
      */
     callApiTaskFilters(appId?: number) {
         if (appId) {
@@ -151,6 +157,7 @@ export class TaskFilterService {
     /**
      * Creates and returns a filter for "Involved" task instances.
      * @param appId ID of the target app
+     * @returns The newly created filter
      */
     getInvolvedTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
@@ -165,6 +172,7 @@ export class TaskFilterService {
     /**
      * Creates and returns a filter for "My Tasks" task instances.
      * @param appId ID of the target app
+     * @returns The newly created filter
      */
     getMyTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
@@ -179,6 +187,7 @@ export class TaskFilterService {
     /**
      * Creates and returns a filter for "Queued Tasks" task instances.
      * @param appId ID of the target app
+     * @returns The newly created filter
      */
     getQueuedTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
@@ -193,6 +202,7 @@ export class TaskFilterService {
     /**
      * Creates and returns a filter for "Completed" task instances.
      * @param appId ID of the target app
+     * @returns The newly created filter
      */
     getCompletedTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
