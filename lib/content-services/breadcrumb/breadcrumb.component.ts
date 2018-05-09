@@ -94,21 +94,25 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             this.route = this.parseRoute(node);
         }
         this.recalculateNodes();
+        console.log('Route:', this.route );
+        
     }
 
     recalculateNodes(): void {
-        this.lastNodes = this.route.slice(this.route.length - 3);
+        
 
         if (this.route.length > 3) {
+            this.lastNodes = this.route.slice(this.route.length - 3);
             this.previousNodes = this.route.slice(0, this.route.length - 3);
             this.previousNodes.reverse();
         }
         else {
+            this.lastNodes = this.route;
             this.previousNodes = null;
         }
 
-        console.log(this.previousNodes);
-        console.log(this.lastNodes);
+        console.log('Previous',this.previousNodes);
+        console.log('Last Nodes:',this.lastNodes);
     }
 
     open(): void {
