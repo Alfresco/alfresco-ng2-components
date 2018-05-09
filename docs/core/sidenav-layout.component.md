@@ -18,7 +18,8 @@ Displays the standard three-region ADF application layout.
     [sidenavMax]="220"
     [stepOver]="600"
     [hideSidenav]="false"
-    [expandedSidenav]="true">
+    [expandedSidenav]="true"
+    (expanded)="setState($event)">
 
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu="toggleMenu">
@@ -54,7 +55,7 @@ Displays the standard three-region ADF application layout.
 | sidenavMax | `number` |  | (**required**) Width in pixels when expanded |
 | stepOver | `number` |  | (**required**) "Breakpoint" size (ie, number of pixels for selecting between mobile and desktop layouts) |
 | hideSidenav | `boolean` | false | Toggles showing/hiding the navigation region |
-| expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? |
+| expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? | 
 
 ## Details
 
@@ -87,6 +88,11 @@ Mobile layout (screen width less than the `stepOver` value):
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | menuOpenState$ | Observable&lt;boolean&gt; | true | Another way to listen to menu open/closed state |
+
+### Events
+
+| Name | Type | Description |
+| expanded | `EventEmitter<boolean>` | Emmitted when the menu toggle and the collapsed/expanded state of the sideNav changes
 
 ### Template context
 
