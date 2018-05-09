@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-05-09
 ---
 
 # Card View component
@@ -9,23 +10,9 @@ Displays a configurable property list renderer.
 
 ![adf-custom-view](../docassets/images/adf-custom-view.png)
 
-## Contents
-
--   [Basic Usage](#basic-usage)
-
--   [Class members](#class-members)
-
-    -   [Properties](#properties)
-
--   [Details](#details)
-
-    -   [Editing](#editing)
-    -   [Defining properties](#defining-properties)
-    -   [Defining your custom card Item](#defining-your-custom-card-item)
-
--   [See also](#see-also)
-
 ## Basic Usage
+
+Defining properties from HTML:
 
 ```html
 <adf-card-view
@@ -34,63 +21,9 @@ Displays a configurable property list renderer.
 </adf-card-view>
 ```
 
-## Class members
+Defining properties from Typescript:
 
-### Properties
-
-| Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
-| editable | `boolean` |  | Toggles whether or not the items can be edited. |
-| properties | `CardViewItem[]` |  | (**required**) Items to show in the card view. |
-
-## Details
-
-You define the property list, the CardViewComponent does the rest. Each property represents a card view item (a row) in the card view component. At the time of writing three a few kind of card view item (property type) is supported out of the box (e.g: [text](#card-text-item) item and [date](#card-date-item) item) but you can define your own custom types as well.
-
-### Editing
-
-The card view can optionally allow its properties to be edited. You can control the editing of the properties in two level.
-
--   **global level** - _via the editable parameter of the card-view.component_
--   **property level** -  _in each property via the editable attribute_
-
-If you set the global editable parameter to false, no properties can be edited regardless of what is set inside the property.
-
-See the [Card View Update service](card-view-update.service.md) page for details on how to use the service
-to respond to clicks and edits in a card view. You can use this, for example, to save the edits within your
-application or to highlight a clicked item.
-
-### Defining properties
-
-Properties is an array of models which one by one implements the CardViewItem interface.
-
-```js
-export interface CardViewItem {
-    label: string;
-    value: any;
-    key: string;
-    default?: any;
-    type: string;
-    displayValue: string;
-    editable?: boolean;
-    icon?: string;
-}
-```
-
-At the moment these are the models supported:
-
--   **CardViewTextItemModel** - _for text items_
--   **CardViewMapItemModel** - _for map items_
--   **CardViewDateItemModel** - _for date items_
--   **CardViewDatetimeItemModel** - _for datetime items_
--   **CardViewBoolItemModel** - _for bool items (checkbox)_
--   **CardViewIntItemModel** - _for integers items_
--   **CardViewFloatItemModel** - _for float items_
-
-Each of them extends the abstract CardViewBaseItemModel class to add some custom functionality to the basic behaviour.
-
-```js
+```ts
  this.properties = [
     new CardViewTextItemModel({
         label: 'Name',
@@ -145,32 +78,97 @@ Each of them extends the abstract CardViewBaseItemModel class to add some custom
 ]
 ```
 
+## Class members
+
+### Properties
+
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
+| editable | `boolean` |  | Toggles whether or not the items can be edited. |
+| properties | `CardViewItem[]` |  | (**required**) Items to show in the card view. |
+
+## Details
+
+You define the property list, the CardViewComponent does the rest. Each property represents a card view item (a row) in the card view component. The following item types are available by default:
+
+-   [**CardViewTextItemModel**](#card-text-item) - _for text items_
+-   [**CardViewMapItemModel**](#card-map-item) - _for map items_
+-   [**CardViewDateItemModel**](#card-date-item) - _for date items_
+-   [**CardViewDatetimeItemModel**](#card-datetime-item) - _for datetime items_
+-   [**CardViewBoolItemModel**](#card-bool-item) - _for bool items (checkbox)_
+-   [**CardViewIntItemModel**](#card-int-item) - _for integer items_
+-   [**CardViewFloatItemModel**](#card-float-item) - _for float items_
+
+Each of these types implements the [Card View Item interface](card-view-item.interface.md):
+
+```ts
+export interface CardViewItem {
+    label: string;
+    value: any;
+    key: string;
+    default?: any;
+    type: string;
+    displayValue: string;
+    editable?: boolean;
+    icon?: string;
+}
+```
+
+You can also define your own item types. See the
+[Card View Item interface](card-view-item.interface.md) page for details of how to do
+this.
+
+### Editing
+
+You can optionally set up the card view so that its properties can be edited. You can control
+the editing of properties at two levels:
+
+-   **Global level** - _via the editable parameter of the card-view.component_
+-   **Property level** -  _in each property via the editable attribute_
+
+If you set the global editable parameter to false, no properties can be edited regardless of their
+individual `editable` settings.
+
+See the [Card View Update service](card-view-update.service.md)
+page for details of how to use the service to respond to clicks and edits in a card view.
+You can use this, for example, to save the edits within your application or to highlight a
+clicked item.
+
+### Defining properties
+
+The `properties` array contains instances of models that represent the layout of the Card View.
+The ordering of the models in the array matches the ordering of items in the view. Each of the
+models extends the abstract `CardViewBaseItemModel` class to add functionality for
+specific data types, as described below.
+
 #### Card Text Item
 
-CardViewTextItemModel is a property type for text properties.
+`CardViewTextItemModel` is a property type for text properties.
 
-```js
+```ts
 const textItemProperty = new CardViewTextItemModel(options);
 ```
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| label\* | string | --- | The label to render |
-| value\* | any | --- | The original value |
-| key\* | string | --- | the key of the property. Have an important role when editing the property. |
-| default | any | --- | The default value to render in case the value is empty |
-| displayValue\* | string | --- | The value to render |
-| editable | boolean | false | Whether the property editable or not |
-| clickable | boolean | false | Whether the property clickable or not |
-| icon | string | The material icon to show against the clickable property |  |
-| multiline | string | false | Single or multiline text |
-| pipes | CardViewTextItemPipeProperty\[] | \[] | Pipes to be applied on the displayValue |
+| label\* | string |  | Item label |
+| value\* | any |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | any |  | The default value to display if the value is empty |
+| displayValue\* | string |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
+| clickable | boolean | false | Toggles whether the property responds to clicks |
+| icon | string |  | The material icon to show beside the item if it is clickable |
+| multiline | boolean | false | Single or multiline text |
+| pipes | CardViewTextItemPipeProperty\[] | \[] | Pipes to be applied to the text before display |
 
-##### Using pipes in Card Text Item
+##### Using pipes with a Card Text Item
 
-You can use pipes for text items almost the same way as you would do it in your template. You can provide an array of pipes with additional pipeParameters like this:
+You can use pipes for text items in almost the same way as you would do it in an HTML template.
+You can provide an array of pipes with additional pipe parameters using the `pipes` property:
 
-```js
+```ts
 const myWonderfulPipe1: PipeTransform = <whatever PipeTransform implmentation>;
 const myWonderfulPipe2: PipeTransform = <whatever PipeTransform implmentation>;
 
@@ -187,205 +185,109 @@ new CardViewTextItemModel({
 
 #### Card Map Item
 
-CardViewMapItemModel is a property type for map properties.
+`CardViewMapItemModel` is a property type for map properties.
 
-```js
+```ts
 const mapItemProperty = new CardViewMapItemModel(options);
 ```
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| label\* | string | --- | The label to render |
-| value\* | Map | --- | A map that contains the key value pairs |
-| key\* | string | --- | the key of the property. |
-| default | any | --- | The default value to render in case the value is empty |
-| displayValue\* | string | --- | The value to render |
-| clickable | boolean | false | Whether the property clickable or not |
+| label\* | string |  | Item label |
+| value\* | Map |  | A map that contains the key value pairs |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | any |  | The default value to display if the value is empty |
+| displayValue\* | string |  | The value to display |
+| clickable | boolean | false | Toggles whether the property responds to clicks |
 
 #### Card Date Item
 
-CardViewDateItemModel is a property type for date properties.
+`CardViewDateItemModel` is a property type for date properties.
 
-```js
+```ts
 const dateItemProperty = new CardViewDateItemModel(options);
 ```
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| label\* | string | --- | The label to render |
-| value\* | any | --- | The original value |
-| key\* | string | --- | the key of the property. |
-| default | any | --- | The default value to render in case the value is empty |
-| displayValue\* | any | --- | The value to render |
-| editable | boolean | false | Whether the property editable or not |
-| format | boolean | "MMM DD YYYY" | any format that momentjs accepts |
+| label\* | string |  | Item label |
+| value\* | any |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | any |  | The default value to display if the value is empty |
+| displayValue\* | any |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
+| format | boolean | "MMM DD YYYY" | Any date format that momentjs accepts |
 
 #### Card Datetime Item
 
-CardViewDatetimeItemModel is a property type for datetime properties.
+`CardViewDatetimeItemModel` is a property type for datetime properties.
 
-```js
+```ts
 const datetimeItemProperty = new CardViewDatetimeItemModel(options);
 ```
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| label\* | string | --- | The label to render |
-| value\* | any | --- | The original value |
-| key\* | string | --- | the key of the property. |
-| default | any | any | The default value to render in case the value is empty |
-| displayValue\* | string | --- | The value to render |
-| editable | boolean | false | Whether the property editable or not |
-| format | boolean | "MMM DD YYYY HH:mm" | any format that momentjs accepts |
+| label\* | string |  | Item label |
+| value\* | any |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | any | any | The default value to display if the value is empty |
+| displayValue\* | string |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
+| format | boolean | "MMM DD YYYY HH:mm" | Any datetime format that momentjs accepts |
 
 #### Card Bool Item
 
-CardViewBoolItemModel is a property type for boolean properties.
+`CardViewBoolItemModel` is a property type for boolean properties.
 
-```js
+```ts
 const boolItemProperty = new CardViewBoolItemModel(options);
 ```
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| label\* | string | --- | The label to render |
-| value\* | boolean | --- | The original value |
-| key\* | string | --- | the key of the property. |
-| default | boolean | false | The default value to render in case the value is empty |
-| displayValue\* | boolean | --- | The value to render |
-| editable | boolean | false | Whether the property editable or not |
+| label\* | string |  | Item label |
+| value\* | boolean |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | boolean | false | The default value to display if the value is empty |
+| displayValue\* | boolean |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
 
 #### Card Int Item
 
-CardViewIntItemModel is a property type for integer properties.
+`CardViewIntItemModel` is a property type for integer properties.
 
-```js
+```ts
 const intItemProperty = new CardViewIntItemModel(options);
 ```
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| label\* | string | --- | The label to render |
-| value\* | integer | --- | The original value |
-| key\* | string | --- | the key of the property. |
-| default | integer | --- | The default value to render in case the value is empty |
-| displayValue\* | integer | --- | The value to render |
-| editable | boolean | false | Whether the property editable or not |
+| label\* | string |  | Item label |
+| value\* | integer |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | integer |  | The default value to display if the value is empty |
+| displayValue\* | integer |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
 
 #### Card Float Item
 
-CardViewFloatItemModel is a property type for float properties.
+`CardViewFloatItemModel` is a property type for float properties.
 
-```js
+```ts
 const floatItemProperty = new CardViewFloatItemModel(options);
 ```
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| label\* | string | --- | The label to render |
-| value\* | float | --- | The original value |
-| key\* | string | --- | the key of the property. |
-| default | float | --- | The default value to render in case the value is empty |
-| displayValue\* | float | --- | The value to render |
-| editable | boolean | false | Whether the property editable or not |
-
-### Defining your custom card Item
-
-Card item components are loaded dynamically, which makes you able to define your own custom component for the custom card item type.
-
-Let's consider you want to have a **stardate** type to display Captain Picard's birthday (47457.1). For this, you need to do the following steps.
-
-#### 1. Define the Model for the custom type
-
-Your model has to extend the **CardViewBaseItemModel** and implement the **CardViewItem** and **DynamicComponentModel** interface.
-_(You can check how the CardViewTextItemModel is implemented for further guidance.)_
-
-```js
-import { CardViewBaseItemModel, CardViewItem, DynamicComponentModel } from '@alfresco/adf-core';
-
-export class CardViewStarDateItemModel extends CardViewBaseItemModel implements
-CardViewItem, DynamicComponentModel {
-    type: string = 'star-date';
-
-    get displayValue() {
-        return this.convertToStarDate(this.value) || this.default;
-    }
-
-    private convertToStarDate(starTimeStamp: number): string {
-        // Do the magic
-    }
-}
-```
-
-#### 2. Define the Component for the custom type
-
-Create your custom card view item component. Defining the selector is not important, being it a dinamically loaded component, so you can give any selector name to it, but it makes sense to follow the angular standards.
-
-```js
-@Component({
-    selector: 'card-view-stardateitem' // For example
-    ...
-})
-export class CardViewStarDateItemComponent {
-    @Input()
-    property: CardViewStarDateItemModel;
-
-    @Input()
-    editable: boolean;
-
-    constructor(private cardViewUpdateService: CardViewUpdateService) {}
-
-    isEditable() {
-        return this.editable && this.property.editable;
-    }
-
-    showStarDatePicker() {
-        ...
-    }
-}
-```
-
-To make your component editable, you can have a look on either the CardViewTextItemComponent' or on the CardViewDateItemComponent's source.
-
-#### 3. Add you custom component to your module's entryComponents list
-
-For Angular to be able to load your custom component dynamically, you have to register your component in your modules entryComponents.
-
-```js
-@NgModule({
-    imports: [...],
-    declarations: [
-        CardViewStarDateItemComponent
-    ],
-    entryComponents: [
-        CardViewStarDateItemComponent
-    ],
-    exports: [...]
-})
-export class MyModule {}
-```
-
-#### 4. Bind your custom component to the custom model type, enabling Angular's dynamic component loader to find it.
-
-For mapping each type to their Component, there is the **CardItemTypeService**. This service extends the **DynamicComponentMapper** abstract class.
-This CardItemTypeService is responible for the type resolution, it contains all the default components (e.g.: text, date, etc...) also. In order to make your component available, you need to extend the list of possible components.
-
-You can extend this list the following way:
-
-```js
-@Component({
-    ...
-    providers: [ CardItemTypeService ] // If you don't want to pollute the main instance of the CardItemTypeService service
-    ...
-})
-export class SomeParentComponent {
-
-    constructor(private cardItemTypeService: CardItemTypeService) {
-        cardItemTypeService.setComponentTypeResolver('star-date', () => CardViewStarDateItemComponent);
-    }
-}
-```
+| label\* | string |  | Item label |
+| value\* | float |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | float |  | The default value to display if the value is empty |
+| displayValue\* | float |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
 
 ## See also
 
--   [Card view update service](card-view-update.service.md)
+-   [Card View Update service](card-view-update.service.md)
+-   [Card View Item interface](card-view-item.interface.md)
