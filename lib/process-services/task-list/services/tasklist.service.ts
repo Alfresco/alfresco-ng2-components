@@ -327,6 +327,7 @@ export class TaskListService {
     /**
      * Fetches the Task Audit information in PDF format.
      * @param taskId ID of the target task
+     * @returns Binary PDF data
      */
     fetchTaskAuditPdfById(taskId: string): Observable<Blob> {
         return Observable.fromPromise(this.apiService.taskApi.getTaskAuditPdf(taskId))
