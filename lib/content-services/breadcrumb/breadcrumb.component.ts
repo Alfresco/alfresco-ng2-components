@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation,
-    OnInit
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatSelect } from '@angular/material';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list';
 
@@ -70,7 +62,13 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     transform: (node) => any;
 
+    @ViewChild('select') selectbox: MatSelect;
+
+    previousNodes: PathElementEntity[];
+    lastNodes: PathElementEntity[];
+
     route: PathElementEntity[] = [];
+
 
     get hasRoot(): boolean {
         return !!this.root;
@@ -95,13 +93,39 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             let node = this.transform ? this.transform(this.folderNode) : this.folderNode;
             this.route = this.parseRoute(node);
         }
+        this.recalculateNodes();
+    }
+
+    recalculateNodes(): void {
+        this.lastNodes = this.route.slice(this.route.length - 3);
+
+        if (this.route.length > 3) {
+            this.previousNodes = this.route.slice(0, this.route.length - 3);
+            this.previousNodes.reverse();
+        }
+        else {
+            this.previousNodes = null;
+        }
+
+        console.log(this.previousNodes);
+        console.log(this.lastNodes);
+    }
+
+    open(): void {
+        if (this.selectbox) {
+            this.selectbox.open();
+        }
+    }
+
+    hasPreviousNodes(): boolean {
+        return this.previousNodes ? true : false;
     }
 
     parseRoute(node: MinimalNodeEntryEntity): PathElementEntity[] {
         if (node && node.path) {
-            const route = <PathElementEntity[]> (node.path.elements || []).slice();
+            const route = <PathElementEntity[]>(node.path.elements || []).slice();
 
-            route.push(<PathElementEntity> {
+            route.push(<PathElementEntity>{
                 id: node.id,
                 name: node.name
             });

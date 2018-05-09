@@ -39,13 +39,13 @@ export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements 
 
     ngOnChanges(changes: SimpleChanges): void {
         super.ngOnChanges(changes);
-        this.recalculateNodes();
+        this.recalculateNode();
     }
 
     /**
      * Calculate the current and previous nodes from the route array
      */
-    private recalculateNodes(): void {
+    private recalculateNode(): void {
         this.currentNode = this.route[this.route.length - 1];
         this.previousNodes = this.route.slice(0, this.route.length - 1).reverse();
     }
