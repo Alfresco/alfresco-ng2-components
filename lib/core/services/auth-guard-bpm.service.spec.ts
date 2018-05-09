@@ -91,6 +91,19 @@ describe('AuthGuardService BPM', () => {
         expect(authService.getRedirect('BPM')).toEqual(['some-url', { q: '123' }]);
     }));
 
+    it('should set redirect navigation commands with query params', async(() => {
+        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(routerService, 'navigate').and.stub();
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: '/' };
+
+        authGuard.canActivate(null, router);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'BPM', navigation: ['/']
+        });
+        expect(authService.getRedirect('BPM')).toEqual(['/']);
+    }));
+
     it('should get redirect url from config if there is one configured', async(() => {
         appConfigService.config.loginRoute = 'fakeLoginRoute';
         spyOn(authService, 'setRedirect').and.callThrough();

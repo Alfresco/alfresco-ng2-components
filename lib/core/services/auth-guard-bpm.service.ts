@@ -60,6 +60,11 @@ export class AuthGuardBpm implements CanActivate, CanActivateChild {
     private getNavigationCommands(redirectUrl: string): any[] {
         const urlTree: UrlTree = this.router.parseUrl(redirectUrl);
         const urlSegmentGroup: UrlSegmentGroup = urlTree.root.children[PRIMARY_OUTLET];
+
+        if (!urlSegmentGroup) {
+            return [redirectUrl];
+        }
+
         const urlSegments: UrlSegment[] = urlSegmentGroup.segments;
 
         return urlSegments.reduce(function(acc, item) {
