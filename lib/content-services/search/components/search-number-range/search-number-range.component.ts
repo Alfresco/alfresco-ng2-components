@@ -41,7 +41,16 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
 
+    field: string;
+    format = '[{FROM} TO {TO}]';
+
     ngOnInit(): void {
+
+        if (this.settings) {
+            this.field = this.settings.field;
+            this.format = this.settings.format || '[{FROM} TO {TO}]';
+        }
+
         const validators = Validators.compose([
             Validators.required,
             Validators.pattern(/^-?(0|[1-9]\d*)?$/)
@@ -57,10 +66,28 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     }
 
     apply(model: { from: string, to: string }, isValid: boolean) {
-        if (isValid && this.id && this.context && this.settings && this.settings.field) {
-            this.context.queryFragments[this.id] = `${this.settings.field}:[${model.from} TO ${model.to}]`;
+        if (isValid && this.id && this.context && this.field) {
+            const map = new Map<string, string>();
+            map.set('FROM', model.from);
+            map.set('TO', model.to);
+
+            const value = this.formatString(this.format, map);
+            const query = `${this.field}:${value}`;
+
+            this.context.queryFragments[this.id] = query;
             this.context.update();
         }
+    }
+
+    private formatString(str: string, map: Map<string, string>): string {
+        let result = str;
+
+        map.forEach((value, key) => {
+            const expr = new RegExp('{' + key + '}', 'gm');
+            result = result.replace(expr, value);
+        });
+
+        return result;
     }
 
     reset() {

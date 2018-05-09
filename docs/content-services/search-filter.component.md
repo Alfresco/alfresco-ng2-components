@@ -326,7 +326,8 @@ Provides ability to select a range between two Numbers based on the particular `
                 "component": {
                     "selector": "number-range",
                     "settings": {
-                        "field": "cm:content.size"
+                        "field": "cm:content.size",
+                        "format": "[{FROM} TO {TO}]"
                     }
                 }
             }
@@ -336,6 +337,42 @@ Provides ability to select a range between two Numbers based on the particular `
 ```
 
 ![Number Range Widget](../docassets/images/search-number-range.png)
+
+#### Widget Settings
+
+| Name | Type | Description |
+| --- | --- | --- |
+| field | string | Field to to use |
+| format | string | Value format. Uses string substitution to allow all sorts of [range queries](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-ranges.html). |
+
+#### Range query format
+
+For more details on the range search format please refer to the "[Search for ranges](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-ranges.html)" article.
+
+The widget uses `{FROM}` and `{TO}` values together with the required target format of the query.
+You can use any type of the query pattern, the widget automatically substitutes the values, for example:
+
+```json
+"settings": {
+    "field": "cm:content.size",
+    "format": "[{FROM} TO {TO}]"
+}
+```
+
+The format above may result in the following query at runtime:
+
+```text
+cm:content.size:[0 TO 100]
+```
+
+Other format examples:
+
+| Format | Example |
+| --- | --- |
+| `[{FROM} TO {TO}]` | `[0 TO 5]` |
+| `<{FROM} TO {TO}]` | `<0 TO 5]` |
+| `[{FROM} TO {TO}>` | `[0 TO 5>` |
+| `<{FROM} TO {TO}>` | `<0 TO 5>` |
 
 ### Radio List Widget
 
