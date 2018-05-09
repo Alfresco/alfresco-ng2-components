@@ -1,12 +1,10 @@
+@mixin adf-breadcrumb-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
 
-
-$breadcrumb-chevron-spacer: 2px;
-
-// @mixin adf-breadcrumb-theme($theme) {
-    // $primary: map-get($theme, primary);
-    // $accent: map-get($theme, accent);
-    // $warn: map-get($theme, warn);
-    // $foreground: map-get($theme, foreground);
+    $breadcrumb-chevron-spacer: 2px;
 
     .adf-breadcrumb {
         display: flex;
@@ -15,11 +13,10 @@ $breadcrumb-chevron-spacer: 2px;
 	    font-size: 14px;
 	    font-weight: 600;
         letter-spacing: -0.2px;
-        // color: mat-color($foreground, text, 0.54);
+        color: mat-color($foreground, text, 0.54);
         width: 0;
 
         &-container {
-            // background-color: greenyellow;
             margin: 0;
             padding: 0;
             list-style-type: none;
@@ -35,6 +32,7 @@ $breadcrumb-chevron-spacer: 2px;
                 height: 0;
                 overflow: hidden;
                 margin-top: 35px;
+                
                 &.mat-select {
                     width: 0;
                 }
@@ -46,77 +44,71 @@ $breadcrumb-chevron-spacer: 2px;
                 border: none;
                 background: transparent;
                 width: 30px;
-                // background-color: red;
 
                 &:focus {
-                        // color: mat-color($primary);
-                        outline: none;
-                    }
-        
-                    &-arrow {
-                        font-size: 17px;
-                        position: relative;
-                        left: -28px;
-                        top: -2px;
-                        color: white;
-                        z-index: 2;
-                    }
-        
-                    &-arrow.isRoot {
-                        visibility: hidden;
-                    }
-        
-                    &-arrow.focus {
-                        border: none;
-                    }
+                    color: mat-color($primary);
+                    outline: none;
+                }
+    
+                &-arrow {
+                    font-size: 17px;
+                    position: relative;
+                    left: -28px;
+                    top: -2px;
+                    color: white;
+                    z-index: 2;
+                }
+    
+                &-arrow.isRoot {
+                    visibility: hidden;
+                }
+    
+                &-arrow.focus {
+                    border: none;
+                }
             }
 
             &-trigger.isRoot {
                 cursor: not-allowed;
             }
         }
-        
-
 
         &-item {
-            // background-color: fuchsia;
-            // padding-right: $breadcrumb-chevron-spacer;
-            // overflow: hidden;
-            // display: flex;
-            // line-height: 24px;
+            padding-right: $breadcrumb-chevron-spacer;
+            overflow: hidden;
+            display: flex;
+            line-height: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            text-align: left;
+            opacity: 0.6;
 
-            // font-size: 14px;
-            // font-weight: 600;
-            // letter-spacing: -0.2px;
-            // text-align: left;
-            // opacity: 0.6;
+            &:hover,
+            &.active {
+                opacity: 1;
+            }
 
-            // &:hover,
-            // &.active {
-            //     opacity: 1;
-            //     width: 100%;
-            // }
-
-            // &.active {
-            //     flex: 1 0 auto;
-            //     // color: mat-color($foreground, text, 0.87);
-		    // }
+            &.active {
+                flex: 1 0 auto;
+                color: mat-color($foreground, text, 0.87);
+		    }
 
             &-chevron {
                 opacity: 1;
             }
 
-            // // &.mat-primary {
-            // //     color: mat-color($primary);
-            // // }
+            &.mat-primary {
+                color: mat-color($primary);
+            }
 
-            // // &.mat-accent {
-            // //     color: mat-color($accent);
-            // // }
+            &.mat-accent {
+                color: mat-color($accent);
+            }
 
-            // // &.mat-warn {
-            // //     color: mat-color($warn);
-            // // }
+            &.mat-warn {
+                color: mat-color($warn);
+            }
 
             &-anchor {
                 color: inherit;
@@ -133,186 +125,10 @@ $breadcrumb-chevron-spacer: 2px;
             }
 
             &-current {
-                // text-overflow: ellipsis;
-                // overflow: hidden;
-                // background-color: blue;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 300px;
             }
         }
-
-        // &-dropdown {
-        //     display: flex;
-        //     justify-content: flex-start;
-        //     width: 100%;
-        // }
-
-        // &-dropdown-trigger {
-        //     cursor: pointer;
-        //     padding: 0;
-        //     border: none;
-        //     background: transparent;
-        //     width: 25px;
-        //     background-color: red;
-        // }
-
-        // &-dropdown-path {
-        //     width: 0;
-        //     height: 0;
-        //     overflow: hidden;
-        //     margin-top: 35px;
-        //     // margin-left: -$dropdownHorizontalOffset;
-        //     left: 80px;
-
-        //     &.mat-select {
-        //         width: 0;
-        //     }
-        // }
-
-        // &-dropdown-trigger.isRoot {
-        //     cursor: not-allowed;
-        // }
-
-        // &-dropdown-trigger{
-        //     border-width: 0;
-        //     background: transparent;
-
-        //     &:focus {
-        //         // color: mat-color($primary);
-        //         outline: none;
-        //     }
-
-        //     &-arrow {
-        //         font-size: 17px;
-        //         position: relative;
-        //         left: -28px;
-        //         top: -2px;
-        //         color: white;
-        //         z-index: 2;
-        //     }
-
-        //     &-arrow.isRoot {
-        //         visibility: hidden;
-        //     }
-
-        //     &-arrow.focus {
-        //         border: none;
-        //     }
-        // }
     }
-// }
-
-
-// // @mixin adf-breadcrumb-dropdown-theme($theme) {
-// //     $primary: map-get($theme, primary);
-// //     $dropdownHorizontalOffset: 30px;
-
-// //     .adf {
-// //         &-dropdown-breadcrumb {
-// //             display: flex;
-// //             justify-content: flex-start;
-// //             width: 100%;
-// //         }
-
-// //         &-dropdown-breadcumb-trigger {
-// //             cursor: pointer;
-// //             padding: 0;
-// //             border: none;
-// //             background: transparent;
-// //             width: 25px;
-// //         }
-       
-// //         &-dropdown-breadcrumb-item-chevron {
-// //             margin-top: 5px;
-// //             font-size: 14px;
-// //             font-weight: 600;
-// //             line-height: 23px;
-
-// //             &:nth-child(2) {
-// //                 // margin-right:  $dropdownHorizontalOffset;
-// //             }
-// //         }
-
-// //         &-dropdown-breadcumb-trigger.isRoot {
-// //             cursor: not-allowed;
-// //         }
-
-// //         &-dropdown-breadcumb-trigger{
-
-            
-// //             &:focus {
-// //                 color: mat-color($primary);
-// //                 outline: none;
-// //             }
-
-// //             &-arrow {
-// //                 font-size: 17px;
-// //                 position: relative;
-// //                 left: -28px;
-// //                 top: -2px;
-// //                 color: white;
-// //                 z-index: 2;
-// //             }
-
-// //             &-arrow.isRoot {
-// //                 visibility: hidden;
-// //             }
-
-// //             &-arrow.focus {
-// //                 border: none;
-// //             }
-// //         }
-
-// //         &-dropdown-breadcrumb-path {
-// //             width: 0;
-// //             height: 0;
-// //             overflow: hidden;
-// //             margin-top: 35px;
-// //             // margin-left: -$dropdownHorizontalOffset;
-// //             left: 80px;
-
-// //             &.mat-select {
-// //                 width: 0;
-// //             }
-// //         }
-
-// //         &-current-folder {
-// //             text-align: left;
-// //             line-height: 33px;
-// //             // margin-left: $dropdownHorizontalOffset;
-// //             white-space: nowrap;
-// //             overflow: hidden;
-// //             text-overflow: ellipsis;
-// //             display: inline-block;
-// //             max-width: 175px;
-// //             // width: 75%;
-// //             cursor: pointer;
-// //             font-size: 14px;
-// //             font-weight: 600;
-// //             letter-spacing: -0.2px;
-// //             text-align: left;
-// //             opacity: 0.6;
-
-// //             &:nth-last-child(1) {
-// //                 cursor: default;
-// //                 opacity: 1;
-// //             }
-// //         }
-
-// //         &-current-folder.isRoot {
-// //             margin-left: 0;
-// //         }
-
-// //         &-dropdown-breadcrumb-path-option.mat-option {
-// //             height: 28px;
-// //             line-height: 28px;
-// //             padding: 0 12px;
-// //             font-size: 14px !important;
-// //         }
-
-// //         &-dropdown-breadcrumb-path-option.mat-option:first-child {
-// //             padding-top: 4px;
-// //         }
-
-// //         &-dropdown-breadcrumb-path-option.mat-option:last-child {
-// // //             padding-bottom: 4px;
-// //     }
-// // }
+}
