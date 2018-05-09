@@ -85,4 +85,43 @@ describe('SearchNumberRangeComponent', () => {
         expect(context.update).toHaveBeenCalled();
     });
 
+    it('should fetch format from the settings', () => {
+        component.settings = {
+            field: 'cm:content.size',
+            format: '<{FROM} TO {TO}>'
+        };
+        component.ngOnInit();
+
+        expect(component.field).toEqual('cm:content.size');
+        expect(component.format).toEqual('<{FROM} TO {TO}>');
+    });
+
+    it('should use default format if not provided', () => {
+        component.settings = {
+            field: 'cm:content.size'
+        };
+        component.ngOnInit();
+
+        expect(component.field).toEqual('cm:content.size');
+        expect(component.format).toEqual('[{FROM} TO {TO}]');
+    });
+
+    it('should format value based on the current pattern', () => {
+        const context: any = {
+            queryFragments: {},
+            update() {}
+        };
+
+        component.id = 'range1';
+        component.settings = {
+            field: 'cm:content.size',
+            format: '<{FROM} TO {TO}>'
+        };
+        component.context = context;
+        component.ngOnInit();
+
+        component.apply({ from: '0', to: '100' }, true);
+        expect(context.queryFragments['range1']).toEqual('cm:content.size:<0 TO 100>');
+    });
+
 });

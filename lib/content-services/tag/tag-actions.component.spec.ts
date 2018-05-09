@@ -192,13 +192,14 @@ describe('TagActionsComponent', () => {
             });
         });
 
-        it('Add tag should be disabled by default', (done) => {
+        it('Add tag should be disabled by default', () => {
             component.nodeId = 'fake-node-id';
             component.newTagName = 'fake-tag-name';
 
+            fixture.detectChanges();
+
             let addButton: any = element.querySelector('#add-tag');
             expect(addButton.disabled).toEqual(true);
-            done();
         });
 
         it('Add tag should return an error if the tag is already present', (done) => {

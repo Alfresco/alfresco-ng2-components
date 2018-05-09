@@ -132,7 +132,8 @@
           "component": {
             "selector": "number-range",
             "settings": {
-              "field": "cm:content.size"
+              "field": "cm:content.size",
+              "format": "[{FROM} TO {TO}]"
             }
           }
         },

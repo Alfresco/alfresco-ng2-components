@@ -16,8 +16,9 @@
  */
 
 import { TranslationService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation, OnDestroy, OnInit } from '@angular/core';
 import { TagService } from './services/tag.service';
+import { Subscription } from 'rxjs/Subscription';
 
 /**
  *
@@ -30,7 +31,7 @@ import { TagService } from './services/tag.service';
     styleUrls: ['./tag-actions.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TagActionsComponent implements OnChanges {
+export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     /** The identifier of a node. */
     @Input()
@@ -49,21 +50,29 @@ export class TagActionsComponent implements OnChanges {
     result = new EventEmitter();
 
     newTagName: string;
-
     tagsEntries: any;
-
     errorMsg: string;
-
     disableAddTag: boolean = true;
 
-    constructor(private tagService: TagService, private translateService: TranslationService) {
-        this.tagService.refresh.subscribe(() => {
-            this.refreshTag();
-        });
+    private subscriptions: Subscription[] = [];
+
+    constructor(private tagService: TagService, private translateService: TranslationService) {}
+
+    ngOnInit() {
+        this.subscriptions.push(
+            this.tagService.refresh.subscribe(() => {
+                this.refreshTag();
+            })
+        );
     }
 
     ngOnChanges() {
         return this.refreshTag();
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     refreshTag() {
