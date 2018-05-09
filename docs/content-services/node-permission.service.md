@@ -1,11 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-05-08
 ---
 
 # Node Permission service
 
-Manages the role permissions for the content nodes
+Manages role permissions for content nodes.
 
 ## Class members
 
@@ -28,12 +29,12 @@ Manages the role permissions for the content nodes
 
 ## Details
 
-This service needs the support for the groups api fo content services that is available from version 5.2.1
+This service requires the Content Services Groups API, which is available from version 5.2.1.
 
 See the
-[Groups API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/GroupssApi.md)
-in the Alfresco JS API for more information about the types returned by Tag
-service methods and for the implementation of the REST API the service is
+[Groups API docs](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/GroupssApi.md)
+in the Alfresco JS API for more information about the types returned by
+the methods and for the implementation of the REST API the service is
 based on.
 
 ## See also

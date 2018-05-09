@@ -33,7 +33,8 @@ let excludePatterns = [
 let nameExceptions = {
     "datatable.component": "DataTableComponent",
     "tasklist.service": "TaskListService",
-    "text-mask.component": "InputMaskDirective"
+    "text-mask.component": "InputMaskDirective",
+    "card-item-types.service": "CardItemTypeService"
 }
 
 

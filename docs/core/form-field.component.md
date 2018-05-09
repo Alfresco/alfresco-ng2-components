@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-05-08
 ---
+
 # Form field component
 
 A form field in an APS form.
@@ -29,8 +31,7 @@ based on the field type or the metadata information.
 ## Details
 
 You would typically not use this component directly but instead use the `<adf-form>` component, which under the hood
-uses `<adf-form-field>` components to render the form fields. See next section for how each field in a form definition
-is mapped to a form field component (i.e. UI widget) implementation.
+uses `<adf-form-field>` components to render the form fields.
 
 ### Field Type -> Form Field Component mappings
 
