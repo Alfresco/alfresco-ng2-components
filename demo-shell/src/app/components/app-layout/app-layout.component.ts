@@ -50,7 +50,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
     ];
 
-    expandedSidenav: Boolean = false;
+    expandedSidenav = false;
 
 
     ngOnInit() {
@@ -68,7 +68,7 @@ export class AppLayoutComponent implements OnInit {
 
     setState(state) {
         if (this.config.get('sideNav.preserveState')) {
-            this.userpreference.set('expendedSidenav', state);
+            this.userpreference.set('expandedSidenav', state);
         }
     }
 }

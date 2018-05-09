@@ -38,7 +38,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @Input() hideSidenav = false;
     @Input() expandedSidenav = true;
 
-    @Output() notify = new EventEmitter();
+    @Output() expanded = new EventEmitter<boolean>();
 
     @ContentChild(SidenavLayoutHeaderDirective) headerDirective: SidenavLayoutHeaderDirective;
     @ContentChild(SidenavLayoutNavigationDirective) navigationDirective: SidenavLayoutNavigationDirective;
@@ -84,7 +84,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         this.mediaQueryList.removeListener(this.onMediaQueryChange);
     }
 
-    toggleMenu(expandedSidenav) {
+    toggleMenu() {
         if (!this.mediaQueryList.matches) {
             this.isMenuMinimized = !this.isMenuMinimized;
         } else {
@@ -92,7 +92,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         }
 
         this.container.toggleMenu();
-        this.notify.emit((!this.isMenuMinimized).toString());
+        this.expanded.emit(!this.isMenuMinimized);
     }
 
     get isMenuMinimized() {
