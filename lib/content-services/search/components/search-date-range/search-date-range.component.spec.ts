@@ -16,11 +16,10 @@
  */
 
 import { CustomMomentDateAdapter, SearchDateRangeComponent } from './search-date-range.component';
-import moment from 'moment-es6';
 import { AppConfigService } from '@alfresco/adf-core';
-import { DateAdapter } from '@angular/material/core';
-import { Moment } from 'moment';
 import { Observable } from 'rxjs/Observable';
+
+declare let moment: any;
 
 describe('SearchDateRangeComponent', () => {
 
@@ -36,7 +35,7 @@ describe('SearchDateRangeComponent', () => {
         return config;
     };
 
-    const buildAdapter = (): DateAdapter<Moment> => {
+    const buildAdapter = (): CustomMomentDateAdapter => {
       const dateAdapter = new CustomMomentDateAdapter(null);
       dateAdapter.customDateFormat = null;
       return dateAdapter;
