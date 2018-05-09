@@ -117,8 +117,8 @@
         },
         {
           "glob": "**/*",
-          "input": "../../lib/core/prebuilt-themes",
-          "output": "./"
+          "input": "../../lib/dist/core/prebuilt-themes",
+          "output": "./assets/prebuilt-themes"
         },
         {
           "glob": "**/*",
@@ -170,7 +170,7 @@
       "prefix": "app-dev",
       "styles": [
         "styles.scss",
-        "custom-style.scss"
+        "custom-style-dev.scss"
       ],
       "stylePreprocessorOptions": {
         "includePaths": [
