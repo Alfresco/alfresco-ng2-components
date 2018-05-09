@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-05-08
 ---
+
 # Auth Guard service
 
 Adds authentication to a route within the app.
