@@ -117,7 +117,7 @@
         },
         {
           "glob": "**/*",
-          "input": "../../lib/core/prebuilt-themes",
+          "input": "../../lib/dist/core/prebuilt-themes",
           "output": "./assets/prebuilt-themes"
         },
         {
