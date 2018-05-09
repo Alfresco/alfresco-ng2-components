@@ -144,7 +144,8 @@
           "component": {
             "selector": "date-range",
             "settings": {
-              "field": "cm:created"
+              "field": "cm:created",
+              "dateFormat": "DD-MMM-YY"
             }
           }
         },
@@ -166,10 +167,7 @@
             }
           }
         }
-      ],
-      "datePicker": {
-        "dateFormat": "DD-MMM-YY"
-      }
+      ]
     },
     "pagination": {
         "size": 25,

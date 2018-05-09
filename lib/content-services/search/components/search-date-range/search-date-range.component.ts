@@ -25,7 +25,7 @@ import { SearchWidgetSettings } from '../../search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Moment } from 'moment';
-import { AppConfigService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 declare let moment: any;
 
@@ -72,14 +72,14 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     maxFrom: any;
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
 
-    constructor(private appConfigService: AppConfigService,
-                private dateAdapter: DateAdapter<Moment>,
+    constructor(private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.datePickerDateFormat = this.appConfigService.get('search.datePicker.dateFormat', DEFAULT_FORMAT_DATE);
-
+        if (this.settings) {
+            this.datePickerDateFormat = this.settings.dateFormat || DEFAULT_FORMAT_DATE;
+        }
         const theCustomDateAdapter = <CustomMomentDateAdapter> <any> this.dateAdapter;
         theCustomDateAdapter.customDateFormat = this.datePickerDateFormat;
 

@@ -16,7 +16,6 @@
  */
 
 import { CustomMomentDateAdapter, SearchDateRangeComponent } from './search-date-range.component';
-import { AppConfigService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 declare let moment: any;
@@ -28,12 +27,6 @@ describe('SearchDateRangeComponent', () => {
     let toDate = '2017-10-16';
     const localeFixture = 'it';
     const dateFormatFixture = 'DD-MMM-YY';
-
-    const buildConfig = (searchSettings): AppConfigService => {
-        const config = new AppConfigService(null);
-        config.config.search = searchSettings;
-        return config;
-    };
 
     const buildAdapter = (): CustomMomentDateAdapter => {
       const dateAdapter = new CustomMomentDateAdapter(null);
@@ -54,12 +47,7 @@ describe('SearchDateRangeComponent', () => {
     const theDateAdapter = <any> buildAdapter();
 
     beforeEach(() => {
-        const searchConfig = {
-            'datePicker': {
-                'dateFormat': dateFormatFixture
-            }
-        };
-        component = new SearchDateRangeComponent(buildConfig(searchConfig), theDateAdapter, buildUserPreferences());
+        component = new SearchDateRangeComponent(theDateAdapter, buildUserPreferences());
     });
 
     it('should setup form elements on init', () => {
@@ -76,11 +64,13 @@ describe('SearchDateRangeComponent', () => {
     });
 
     it('should setup the format of the date from configuration', () => {
+        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
         component.ngOnInit();
         expect(theDateAdapter.customDateFormat).toBe(dateFormatFixture);
     });
 
     it('should setup form control with formatted valid date on change', () => {
+        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
         component.ngOnInit();
 
         const inputString = '20.feb.18';
@@ -92,6 +82,7 @@ describe('SearchDateRangeComponent', () => {
     });
 
     it('should NOT setup form control with invalid date on change', () => {
+        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
         component.ngOnInit();
 
         const inputString = '20.f.18';
