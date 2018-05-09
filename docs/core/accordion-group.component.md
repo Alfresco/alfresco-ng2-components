@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-05-08
 ---
+
 # Accordion Group component
 
 Adds a collapsible panel to an accordion menu.

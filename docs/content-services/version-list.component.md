@@ -1,11 +1,12 @@
 ---
 Added: v2.0.0
 Status: Experimental
+Last reviewed: 2018-05-08
 ---
 
 # Version List component
 
-Displays the version history of a node in a Version Manager component
+Displays the version history of a node in a Version Manager component.
 
 ### Basic Usage
 
@@ -27,8 +28,8 @@ Displays the version history of a node in a Version Manager component
 
 ## Details
 
-Inside the version manager component, there is the underlying VersionListComponent.
-The VersionListComponent loads and displays the version history of a node.
+This component is used by the Version Manager component to
+load and displays the version history of a node.
 
 ## See also
 
