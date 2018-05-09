@@ -58,7 +58,7 @@ export class AppLayoutComponent implements OnInit {
         const preserveState = this.config.get('sideNav.preserveState');
 
         if (preserveState && expand)  {
-            this.expandedSidenav = (this.userpreference.get('expandedSidenav', String(expand)) === 'true');
+            this.expandedSidenav = (this.userpreference.get('expandedSidenav', expand.toString()) === 'true');
         } else if (expand) {
             this.expandedSidenav = expand;
         }
