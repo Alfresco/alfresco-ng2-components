@@ -65,8 +65,8 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         }, this.formValidator);
     }
 
-    formValidator(g: FormGroup) {
-        return parseInt(g.get('from').value) < parseInt(g.get('to').value) ? null : {'mismatch': true};
+    formValidator(formGroup: FormGroup) {
+        return parseInt(formGroup.get('from').value, 10) < parseInt(formGroup.get('to').value, 10) ? null : {'mismatch': true};
     }
 
     apply(model: { from: string, to: string }, isValid: boolean) {
