@@ -21,12 +21,23 @@
         <mat-expansion-panel-header>
             <mat-panel-title>{{ facetQueriesLabel | translate }}</mat-panel-title>
         </mat-expansion-panel-header>
+        <mat-form-field class="facet-result-filter">
+            <input
+                matInput
+                placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
+                [(ngModel)]="responseFacetQueries.filterText">
+            <button *ngIf="responseFacetQueries.filterText"
+                mat-button matSuffix mat-icon-button
+                (click)="responseFacetQueries.filterText = ''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
         <div class="checklist">
             <ng-container *ngFor="let query of responseFacetQueries">
                 <mat-checkbox
                     [checked]="query.$checked"
                     (change)="onFacetQueryToggle($event, query)">
-                    {{ query.label | translate }} ({{ query.count }})
+                    {{ query.label }} ({{ query.count }})
                 </mat-checkbox>
             </ng-container>
         </div>
@@ -52,14 +63,27 @@
         (opened)="onFacetFieldExpanded(field)"
         (closed)="onFacetFieldCollapsed(field)">
         <mat-expansion-panel-header>
-            <mat-panel-title>{{ field.label | translate }}</mat-panel-title>
+            <mat-panel-title>{{ field.label }}</mat-panel-title>
         </mat-expansion-panel-header>
+
+        <mat-form-field class="facet-result-filter">
+            <input
+                matInput
+                placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
+                [(ngModel)]="field.buckets.filterText">
+            <button *ngIf="field.buckets.filterText"
+                mat-button matSuffix mat-icon-button
+                (click)="field.buckets.filterText = ''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
         <div class="checklist">
             <mat-checkbox
                 *ngFor="let bucket of field.buckets"
                 [checked]="bucket.$checked"
                 (change)="onFacetToggle($event, field, bucket)">
-                {{ (bucket.display || bucket.label) | translate }} ({{ bucket.count }})
+                {{ bucket.display || bucket.label }} ({{ bucket.count }})
             </mat-checkbox>
         </div>
 

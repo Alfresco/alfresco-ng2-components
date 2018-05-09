@@ -105,4 +105,10 @@ describe('TranslationService', () => {
         });
     });
 
+    it('should return empty string for missing key', () => {
+        expect(translationService.get(null)).toEqual('');
+        expect(translationService.get('')).toEqual('');
+        expect(translationService.get(undefined)).toEqual('');
+    });
+
 });

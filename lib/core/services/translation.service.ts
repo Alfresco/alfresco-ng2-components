@@ -128,6 +128,6 @@ export class TranslationService {
      * @returns Translated text
      */
     instant(key: string | Array<string>, interpolateParams?: Object): string | any {
-        return this.translate.instant(key, interpolateParams);
+        return key ? this.translate.instant(key, interpolateParams) : '';
     }
 }

@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
-import { SearchService } from '@alfresco/adf-core';
+import { SearchService, TranslationService } from '@alfresco/adf-core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { ResponseFacetField } from '../../response-facet-field.interface';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
@@ -44,7 +44,9 @@ export class SearchFilterComponent implements OnInit {
     facetQueriesPageSize = 5;
     facetQueriesExpanded = false;
 
-    constructor(public queryBuilder: SearchQueryBuilderService, private search: SearchService) {
+    constructor(public queryBuilder: SearchQueryBuilderService,
+                private searchService: SearchService,
+                private translationService: TranslationService) {
         this.responseFacetQueries = new ResponseFacetQueryList();
 
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
@@ -62,7 +64,7 @@ export class SearchFilterComponent implements OnInit {
         if (this.queryBuilder) {
             this.queryBuilder.executed.subscribe(data => {
                 this.onDataLoaded(data);
-                this.search.dataLoaded.next(data);
+                this.searchService.dataLoaded.next(data);
             });
         }
     }
@@ -152,6 +154,7 @@ export class SearchFilterComponent implements OnInit {
 
         if (context) {
             const facetQueries = (context.facetQueries || []).map(q => {
+                q.label = this.translationService.instant(q.label);
                 q.$checked = this.selectedFacetQueries.includes(q.label);
                 return q;
             });
@@ -162,6 +165,7 @@ export class SearchFilterComponent implements OnInit {
 
             this.responseFacetFields = (context.facetsFields || []).map(
                 field => {
+                    field.label = this.translationService.instant(field.label);
                     field.pageSize = field.pageSize || 5;
                     field.currentPageSize = field.pageSize;
                     field.expanded = expandedFields.includes(field.label);
@@ -169,6 +173,8 @@ export class SearchFilterComponent implements OnInit {
                     const buckets = (field.buckets || []).map(bucket => {
                         bucket.$field = field.label;
                         bucket.$checked = false;
+                        bucket.display = this.translationService.instant(bucket.display);
+                        bucket.label = this.translationService.instant(bucket.label);
 
                         const previousBucket = this.selectedBuckets.find(
                             b => b.$field === bucket.$field && b.label === bucket.label
@@ -178,7 +184,18 @@ export class SearchFilterComponent implements OnInit {
                         }
                         return bucket;
                     });
-                    field.buckets = new SearchFilterList<FacetFieldBucket>(buckets, field.pageSize);
+
+                    const bucketList = new SearchFilterList<FacetFieldBucket>(buckets, field.pageSize);
+                    bucketList.filter = (bucket: FacetFieldBucket): boolean => {
+                        if (bucket && bucketList.filterText) {
+                            const pattern = (bucketList.filterText || '').toLowerCase();
+                            const label = (bucket.display || bucket.label || '').toLowerCase();
+                            return label.startsWith(pattern);
+                        }
+                        return true;
+                    };
+
+                    field.buckets = bucketList;
                     return field;
                 }
             );
