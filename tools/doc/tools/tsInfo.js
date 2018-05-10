@@ -7,7 +7,7 @@ var remark = require("remark");
 var combyne = require("combyne");
 var typedoc_1 = require("typedoc");
 var libFolders = ["core", "content-services", "process-services", "insights"];
-var templateFolder = path.resolve(".", "config", "DocProcessor", "templates");
+var templateFolder = path.resolve("..", "tools", "doc", "templates");
 var excludePatterns = [
     "**/*.spec.ts"
 ];
