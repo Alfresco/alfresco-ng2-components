@@ -59,7 +59,6 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     };
 
     constructor(private mediaMatcher: MediaMatcher) {
-
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
 
@@ -122,5 +121,6 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     onMediaQueryChange() {
         this.isMenuMinimized = false;
+        this.expanded.emit(!this.isMenuMinimized);
     }
 }
