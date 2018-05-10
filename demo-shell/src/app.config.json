@@ -492,5 +492,10 @@
     "adf-version-manager": {
       "allowComments": true,
       "allowDownload": true
+    },
+
+    "sideNav": {
+      "expandedSidenav": true,
+      "preserveState": true
     }
 }
