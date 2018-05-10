@@ -53,6 +53,10 @@ export abstract class UploadBase {
     @Input()
     comment: string;
 
+    /** Custom node type for uploaded file */
+    @Input()
+    nodeType: string = 'cm:content';
+
     /** Emitted when the file is uploaded successfully. */
     @Output()
     success = new EventEmitter();
@@ -139,7 +143,8 @@ export abstract class UploadBase {
             majorVersion: this.majorVersion,
             newVersion: this.versioning,
             parentId: parentId,
-            path: path
+            path: path,
+            nodeType: this.nodeType
         });
     }
 
