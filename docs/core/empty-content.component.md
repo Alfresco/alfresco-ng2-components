@@ -22,7 +22,7 @@ Provides a generic "Empty Content" UI and can used as a placeholder for componen
 <adf-document-list>
     <empty-folder-content>
         <ng-template>
-            <adf-empty-folder
+            <adf-empty-content
                 icon="star_rate"
                 title="APP.BROWSE.FAVORITES.EMPTY_STATE.TITLE"
                 subtitle="APP.BROWSE.FAVORITES.EMPTY_STATE.TEXT">
@@ -40,12 +40,12 @@ You can also use multiple lines instead of the subtitle section:
 <adf-document-list>
     <empty-folder-content>
         <ng-template>
-            <adf-empty-folder
+            <adf-empty-content
                 icon="delete"
                 title="APP.BROWSE.TRASHCAN.EMPTY_STATE.TITLE">
                 <p class="adf-empty-folder__text">{{ 'APP.BROWSE.TRASHCAN.EMPTY_STATE.FIRST_TEXT' | translate }}</p>
                 <p class="adf-empty-folder__text">{{ 'APP.BROWSE.TRASHCAN.EMPTY_STATE.SECOND_TEXT' | translate }}</p>
-            </adf-empty-folder>
+            </adf-empty-content>
         </ng-template>
     </empty-folder-content>
 </adf-document-list>
