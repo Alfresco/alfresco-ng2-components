@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: 'app-layout.component.html',
@@ -25,7 +26,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class AppLayoutComponent {
+
+export class AppLayoutComponent implements OnInit {
 
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'APP_LAYOUT.HOME' },
@@ -48,6 +50,25 @@ export class AppLayoutComponent {
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
     ];
 
-    constructor() {
+    expandedSidenav = false;
+
+
+    ngOnInit() {
+        const expand = this.config.get<boolean>('sideNav.expandedSidenav');
+        const preserveState = this.config.get('sideNav.preserveState');
+
+        if (preserveState && expand)  {
+            this.expandedSidenav = (this.userpreference.get('expandedSidenav', expand.toString()) === 'true');
+        } else if (expand) {
+            this.expandedSidenav = expand;
+        }
+    }
+    constructor( private userpreference: UserPreferencesService, private config: AppConfigService) {
+    }
+
+    setState(state) {
+        if (this.config.get('sideNav.preserveState')) {
+            this.userpreference.set('expandedSidenav', state);
+        }
     }
 }
