@@ -4,7 +4,8 @@
     "bpmHost": "http://{hostname}:{port}",
     "contextRootBpm": "activiti-app",
     "application": {
-        "name": "Alfresco ADF Application"
+        "name": "Alfresco ADF Application",
+        "copyright": "© 2016 - 2018 Alfresco Software, Inc. All Rights Reserved."
     },
     "languages": [
         {
