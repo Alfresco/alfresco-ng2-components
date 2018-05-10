@@ -24,17 +24,20 @@ async function main() {
         .option('-e, --env [type]', 'Name to give at the service in rancher')
         .option('-i, --image [type]', 'Docker image to load')
         .option('-s, --server [type]', 'Server RANCHER_SERVER URL')
-        .option('-t, --token [type]', 'token token RANCHER')
+        .option('-p, --password [type]', 'password RANCHER')
+        .option('-u, --username [type]', 'username RANCHER')
         .parse(process.argv);
+
+    auth = 'Basic ' + new Buffer(program.username + ':' + program.password).toString('base64')
 
     var project = await asyncRequest({
         url: program.server + `/v1/project?name=${program.env}`,
         method: 'GET',
         json: true,
         headers: {
-            "cookie": ";token='" + program.token + "';",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
+            "Authorization": auth
         },
         body: ""
     }).catch((error) => {
@@ -157,9 +160,9 @@ async function main() {
         method: 'POST',
         json: true,
         headers: {
-            "cookie": ";token='" + program.token + "';",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
+            "Authorization": auth
         },
         body: postData,
     }).catch((error) => {
@@ -177,9 +180,9 @@ async function main() {
         method: 'GET',
         json: true,
         headers: {
-            "cookie": ";token='" + program.token + "';",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
+            "Authorization": auth
         },
         body: postData,
     }).catch((error) => {
@@ -198,9 +201,9 @@ async function main() {
         method: 'GET',
         json: true,
         headers: {
-            "cookie": ";token='" + program.token + "';",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
+            "Authorization": auth
         }
     }).catch((error) => {
         console.log(error)
@@ -226,9 +229,9 @@ async function main() {
         method: 'PUT',
         json: true,
         headers: {
-            "cookie": ";token='" + program.token + "';",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
+            "Authorization": auth
         },
         body: loadBalancerGet
     }).catch((error) => {
