@@ -18,7 +18,7 @@
 import { SearchFilterComponent } from './search-filter.component';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { SearchConfiguration } from '../../search-configuration.interface';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, TranslationMock } from '@alfresco/adf-core';
 import { Subject } from 'rxjs/Subject';
 import { ResponseFacetQueryList } from './models/response-facet-query-list.model';
 
@@ -36,7 +36,8 @@ describe('SearchSettingsComponent', () => {
         const searchMock: any = {
             dataLoaded: new Subject()
         };
-        component = new SearchFilterComponent(queryBuilder, searchMock);
+        const translationMock = new TranslationMock();
+        component = new SearchFilterComponent(queryBuilder, searchMock, translationMock);
         component.ngOnInit();
     });
 
@@ -118,6 +119,7 @@ describe('SearchSettingsComponent', () => {
     });
 
     it('should unselect facet query and update builder', () => {
+        const translationMock = new TranslationMock();
         const config: SearchConfiguration = {
             categories: [],
             facetQueries: {
@@ -128,7 +130,7 @@ describe('SearchSettingsComponent', () => {
         };
         appConfig.config.search = config;
         queryBuilder = new SearchQueryBuilderService(appConfig, null);
-        component = new SearchFilterComponent(queryBuilder, null);
+        component = new SearchFilterComponent(queryBuilder, null, translationMock);
 
         spyOn(queryBuilder, 'update').and.stub();
         queryBuilder.filterQueries = [{ query: 'query1' }];

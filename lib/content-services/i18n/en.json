@@ -176,7 +176,8 @@
         "APPLY": "Apply",
         "CLEAR-ALL": "Clear all",
         "SHOW-MORE": "Show more",
-        "SHOW-LESS": "Show less"
+        "SHOW-LESS": "Show less",
+        "FILTER-CATEGORY": "Filter category"
       },
       "RANGE": {
         "FROM": "From",

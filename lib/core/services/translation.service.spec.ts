@@ -105,4 +105,10 @@ describe('TranslationService', () => {
         });
     });
 
+    it('should return empty string for missing key when getting instant translations', () => {
+        expect(translationService.instant(null)).toEqual('');
+        expect(translationService.instant('')).toEqual('');
+        expect(translationService.instant(undefined)).toEqual('');
+    });
+
 });
