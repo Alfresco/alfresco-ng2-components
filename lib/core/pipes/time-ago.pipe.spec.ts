@@ -16,14 +16,15 @@
  */
 
 import { TimeAgoPipe } from './time-ago.pipe';
+import { async } from '@angular/core/testing';
 
 describe('TimeAgoPipe', () => {
 
     let pipe: TimeAgoPipe;
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         pipe = new TimeAgoPipe();
-    });
+    }));
 
     it('should return time difference for a given date', () => {
         let date = new Date();
@@ -38,5 +39,14 @@ describe('TimeAgoPipe', () => {
     it('should return empty string if given date is empty', () => {
         expect(pipe.transform(null)).toBe('');
         expect(pipe.transform(undefined)).toBe('');
+    });
+
+    describe('When a locale is given', () => {
+
+        it('should return a localised message', async(() => {
+            let date = new Date();
+            const transformedDate  = pipe.transform(date, 'de');
+            expect(transformedDate).toBe('vor ein paar Sekunden');
+        }));
     });
 });
