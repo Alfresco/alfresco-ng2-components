@@ -15,18 +15,38 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from './datatable-cell.component';
+import { UserPreferencesService, UserPreferenceValues } from '../../../services';
 
 @Component({
     selector: 'adf-date-cell',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+
     template: `
         <ng-container>
-            <span [title]="tooltip">{{value}}</span>
+            <span title="{{ tooltip | date:'medium' }}" *ngIf="column?.format === 'timeAgo' else standard_date">
+                {{ value | adfTimeAgo: currentLocale }}
+            </span>
         </ng-container>
+        <ng-template #standard_date>
+            <span title="{{ tooltip | date:'medium' }}">
+                {{ value | date:'medium' }}
+            </span>
+        </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-date-cell' }
 })
-export class DateCellComponent extends DataTableCellComponent {}
+export class DateCellComponent extends DataTableCellComponent {
+
+    currentLocale = 'en-US';
+
+    constructor(userPreferenceService: UserPreferencesService) {
+        super();
+
+        userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
+            this.currentLocale = locale;
+         });
+    }
+
+}

@@ -17,26 +17,20 @@
 
 import moment from 'moment-es6';
 import { Pipe, PipeTransform } from '@angular/core';
-import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 
 @Pipe({
     name: 'adfTimeAgo'
 })
 export class TimeAgoPipe implements PipeTransform {
 
-    currentLocale = '';
+    defaultLocale = 'en-US';
 
-    constructor(private userPreference: UserPreferencesService) {
-        this.userPreference.select(UserPreferenceValues.Locale).subscribe((locale) => {
-           this.currentLocale = locale;
-        });
-    }
-
-    transform(value: Date) {
+    transform(value: Date, locale?: string) {
         if (value !== null && value !== undefined ) {
+            const actualLocale = locale ? locale : this.defaultLocale;
             const then = moment(value);
-            const diff = moment().lang(this.currentLocale).diff(then, 'days');
-            return diff > 7 ? then.lang(this.currentLocale).format('DD/MM/YYYY HH:mm') : then.lang(this.currentLocale).fromNow();
+            const diff = moment().locale(actualLocale).diff(then, 'days');
+            return diff > 7 ? then.locale(actualLocale).format('DD/MM/YYYY HH:mm') : then.locale(actualLocale).fromNow();
         }
         return '';
     }

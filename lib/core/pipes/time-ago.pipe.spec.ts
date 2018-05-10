@@ -16,20 +16,14 @@
  */
 
 import { TimeAgoPipe } from './time-ago.pipe';
-import { UserPreferencesService, StorageService, AppConfigService } from '..';
 import { async } from '@angular/core/testing';
 
 describe('TimeAgoPipe', () => {
 
     let pipe: TimeAgoPipe;
-    let userService: UserPreferencesService;
-    let storageService: StorageService;
 
     beforeEach(async(() => {
-        storageService = new StorageService();
-        let fakeTranslate = jasmine.createSpyObj('TranslateService', ['getBrowserLang']);
-        userService = new UserPreferencesService(fakeTranslate, new AppConfigService(null), storageService, null);
-        pipe = new TimeAgoPipe(userService);
+        pipe = new TimeAgoPipe();
     }));
 
     it('should return time difference for a given date', () => {
@@ -47,17 +41,11 @@ describe('TimeAgoPipe', () => {
         expect(pipe.transform(undefined)).toBe('');
     });
 
-    describe('When changing locale', () => {
-
-        beforeEach(async(() => {
-            spyOn(storageService, 'setItem').and.stub();
-            userService.locale = 'de';
-
-        }));
+    describe('When a locale is given', () => {
 
         it('should return a localised message', async(() => {
             let date = new Date();
-            const transformedDate  = pipe.transform(date);
+            const transformedDate  = pipe.transform(date, 'de');
             expect(transformedDate).toBe('vor ein paar Sekunden');
         }));
     });

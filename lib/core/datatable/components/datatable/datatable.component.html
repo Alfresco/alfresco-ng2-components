@@ -106,7 +106,7 @@
                                 <mat-icon>{{ data.getValue(row, col) }}</mat-icon>
                             </div>
                             <div *ngSwitchCase="'date'" class="cell-value"
-                                 [attr.data-automation-id]="'date_' + data.getValue(row, col)">
+                                 [attr.data-automation-id]="'date_' + (data.getValue(row, col) | date: 'medium') ">
                                 <adf-date-cell
                                     [data]="data"
                                     [column]="col"
