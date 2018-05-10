@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from './datatable-cell.component';
-import { UserPreferencesService, UserPreferenceValues } from '../../../services';
+import { UserPreferencesService, UserPreferenceValues } from '../../../services/user-preferences.service';
 
 @Component({
     selector: 'adf-date-cell',
