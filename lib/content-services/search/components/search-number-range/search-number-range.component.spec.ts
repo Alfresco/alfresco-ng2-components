@@ -16,7 +16,7 @@
  */
 
 import { SearchNumberRangeComponent } from './search-number-range.component';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 describe('SearchNumberRangeComponent', () => {
 
@@ -135,5 +135,24 @@ describe('SearchNumberRangeComponent', () => {
         }, component.formValidator);
 
         expect(component.formValidator).toBeTruthy();
+    });
+
+    it('should throw the right formControl error if exists', () => {
+        const validators = Validators.compose([
+            Validators.required,
+            Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+        ]);
+
+        component.from = new FormControl('abc', validators);
+        expect(component.from.hasError('pattern')).toBe(true);
+
+        component.from = new FormControl(123, validators);
+        expect(component.from.hasError('pattern')).toBe(false);
+
+        component.from = new FormControl('', validators);
+        expect(component.from.hasError('required')).toBe(true);
+
+        component.from = new FormControl(123, validators);
+        expect(component.from.hasError('required')).toBe(false);
     });
 });

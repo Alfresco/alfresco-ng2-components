@@ -18,8 +18,11 @@
             matInput [formControl]="to" [errorStateMatcher]="matcher"
             placeholder="{{ 'SEARCH.FILTER.RANGE.TO' | translate }}"
             autocomplete="off">
-        <mat-error *ngIf="to.invalid">
+        <mat-error *ngIf="to.hasError('pattern')">
             {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
+        </mat-error>
+        <mat-error *ngIf="to.hasError('required')">
+            {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
         </mat-error>
     </mat-form-field>
 
