@@ -142,9 +142,9 @@ export abstract class UploadBase {
             comment: this.comment,
             majorVersion: this.majorVersion,
             newVersion: this.versioning,
-            nodeType: this.nodeType,
             parentId: parentId,
-            path: path
+            path: path,
+            nodeType: this.nodeType
         });
     }
 

@@ -218,7 +218,8 @@ describe('UploadBase', () => {
                 newVersion: false,
                 majorVersion: false,
                 parentId: '-root-',
-                path: ''
+                path: '',
+                nodeType: 'cm:content'
             }));
         });
     });
@@ -246,7 +247,8 @@ describe('UploadBase', () => {
                 newVersion: true,
                 majorVersion: true,
                 parentId: '-root-',
-                path: ''
+                path: '',
+                nodeType: 'cm:content'
             }));
         });
 
@@ -261,7 +263,49 @@ describe('UploadBase', () => {
                 newVersion: true,
                 majorVersion: false,
                 parentId: '-root-',
-                path: ''
+                path: '',
+                nodeType: 'cm:content'
+            }));
+        });
+    });
+
+    describe('Node Type', () => {
+
+        let addToQueueSpy;
+
+        const files: File[] = [
+            <File> { name: 'process.pbmn' }
+        ];
+
+        beforeEach(() => {
+            addToQueueSpy = spyOn(uploadService, 'addToQueue');
+        });
+
+        it('should have custom nodeType if it is set', () => {
+            component.nodeType = 'ama:process';
+
+            component.uploadFiles(files);
+
+            expect(addToQueueSpy).toHaveBeenCalledWith(new FileModel(files[0], {
+                comment: undefined,
+                newVersion: false,
+                majorVersion: false,
+                parentId: '-root-',
+                path: '',
+                nodeType: 'ama:process'
+            }));
+        });
+
+        it('should have default nodeType if it is not set', () => {
+            component.uploadFiles(files);
+
+            expect(addToQueueSpy).toHaveBeenCalledWith(new FileModel(files[0], {
+                comment: undefined,
+                newVersion: false,
+                majorVersion: false,
+                parentId: '-root-',
+                path: '',
+                nodeType: 'cm:content'
             }));
         });
     });
