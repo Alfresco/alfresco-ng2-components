@@ -97,7 +97,12 @@
            "NEW_FOLDER":"New folder",
            "EDIT_FOLDER":"Edit folder",
            "DOWNLOAD":"Download",
-           "DELETE":"Delete"
+           "DELETE":"Delete",
+           "FAVORITES": "Add to favorites",
+           "SHARE": "Share",
+           "THEME": "Select a theme!",
+           "SHOW_VERSION": "Show version",
+           "HIDE_VERSION": "Hide version"
          },
         "ACTIONS": {
             "VERSIONS": "Manage versions",
