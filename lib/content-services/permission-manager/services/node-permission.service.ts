@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { AlfrescoApiService, SearchService, NodesApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, SearchService, NodesApiService, TranslationService } from '@alfresco/adf-core';
 import { QueryBody, MinimalNodeEntryEntity, MinimalNodeEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
 import 'rxjs/add/operator/switchMap';
 import { of } from 'rxjs/observable/of';
@@ -28,7 +28,8 @@ export class NodePermissionService {
 
     constructor(private apiService: AlfrescoApiService,
                 private searchApiService: SearchService,
-                private nodeService: NodesApiService) {
+                private nodeService: NodesApiService,
+                private translation: TranslationService) {
     }
 
     /**
@@ -56,7 +57,6 @@ export class NodePermissionService {
      * @returns Node with updated permission
      */
     updatePermissionRole(node: MinimalNodeEntryEntity, updatedPermissionRole: PermissionElement): Observable<MinimalNodeEntryEntity> {
-
         let permissionBody = { permissions: { locallySet: []} };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
         permissionBody.permissions.locallySet = permissionBody.permissions.locallySet.concat(node.permissions.locallySet);
@@ -82,8 +82,31 @@ export class NodePermissionService {
     updateLocallySetPermissions(node: MinimalNodeEntryEntity, nodes: MinimalNodeEntity[], nodeRole: string[]): Observable<MinimalNodeEntryEntity> {
         let permissionBody = { permissions: { locallySet: []} };
         const permissionList = this.transformNodeToPermissionElement(nodes, nodeRole[0]);
+        const duplicatedPermissions = this.getDuplicatedPermissions(node.permissions.locallySet, permissionList);
+        if (duplicatedPermissions.length > 0) {
+            const list = duplicatedPermissions.map((permission) => 'authority -> ' + permission.authorityId + ' / role -> ' + permission.name).join(', ');
+            const duplicatePermissionMessage: string = this.translation.instant('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION',  {list});
+            return Observable.throw(duplicatePermissionMessage);
+        }
         permissionBody.permissions.locallySet = node.permissions.locallySet ? node.permissions.locallySet.concat(permissionList) : permissionList;
         return this.nodeService.updateNode(node.id, permissionBody);
+    }
+
+    private getDuplicatedPermissions(nodeLocallySet: PermissionElement[], permissionListAdded: PermissionElement[]): PermissionElement[] {
+        let duplicatePermissions: PermissionElement[] = [];
+        permissionListAdded.forEach((permission: PermissionElement) => {
+            const duplicate = nodeLocallySet.find((localPermission) => this.isEqualPermission(localPermission, permission));
+            if (duplicate) {
+                duplicatePermissions.push(duplicate);
+            }
+        });
+        return duplicatePermissions;
+    }
+
+    private isEqualPermission(oldPermission: PermissionElement, newPermission: PermissionElement): boolean {
+        return oldPermission.accessStatus === newPermission.accessStatus &&
+               oldPermission.authorityId === newPermission.authorityId &&
+               oldPermission.name === newPermission.name;
     }
 
     private transformNodeToPermissionElement(nodes: MinimalNodeEntity[], nodeRole: any): PermissionElement[] {
