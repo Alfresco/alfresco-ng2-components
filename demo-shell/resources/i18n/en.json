@@ -102,7 +102,8 @@
            "SHARE": "Share",
            "THEME": "Select a theme!",
            "SHOW_VERSION": "Show version",
-           "HIDE_VERSION": "Hide version"
+           "HIDE_VERSION": "Hide version",
+           "LISTVIEW": "List view mode"
          },
         "ACTIONS": {
             "VERSIONS": "Manage versions",
