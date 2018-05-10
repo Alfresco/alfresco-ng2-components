@@ -172,11 +172,15 @@ export class UploadService {
             opts.name = file.options.newVersionBaseName;
         }
 
+        if (file.options.nodeType) {
+            opts.nodeType = file.options.nodeType;
+        }
+
         return this.apiService.getInstance().upload.uploadFile(
             file.file,
             file.options.path,
             file.options.parentId,
-            file.options.nodeType ? { nodeType: file.options.nodeType } : null,
+            null,
             opts
         );
     }
