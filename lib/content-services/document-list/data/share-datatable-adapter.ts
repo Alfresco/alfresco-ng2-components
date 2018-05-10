@@ -16,8 +16,6 @@
  */
 
 import { DataColumn, DataRow, DataSorting, DataTableAdapter } from '@alfresco/adf-core';
-// import { TimeAgoPipe } from '@alfresco/adf-core';
-// import { DatePipe } from '@angular/common';
 import { NodePaging } from 'alfresco-js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
@@ -78,16 +76,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             return dataRow.cache[col.key];
         }
 
-        // if (col.type === 'date') {
-        //     try {
-        //         const result = this.formatDate(col, value);
-        //         return dataRow.cacheValue(col.key, result);
-        //     } catch (err) {
-        //         console.error(`Error parsing date ${value} to format ${col.format}`);
-        //         return 'Error';
-        //     }
-        // }
-
         if (col.key === '$thumbnail') {
 
             if (this.imageResolver) {
@@ -131,21 +119,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
         return dataRow.cacheValue(col.key, value);
     }
-
-    // formatDate(col: DataColumn, value: any): string {
-    //     if (col.type === 'date') {
-    //         const format = col.format || 'medium';
-    //         if (format === 'timeAgo') {
-    //             const timeAgoPipe = new TimeAgoPipe();
-    //             return timeAgoPipe.transform(value);
-    //         } else {
-    //             const datePipe = new DatePipe('en-US');
-    //             return datePipe.transform(value, format);
-    //         }
-    //     }
-
-    //     return value;
-    // }
 
     getSorting(): DataSorting {
         return this.sorting;
