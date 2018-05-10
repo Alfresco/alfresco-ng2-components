@@ -13,8 +13,8 @@
             padding: 10px;
 
             .panel-group {
-                adf-accordion-group {
-                    mat-expansion-panel-header {
+                .adf-panel {
+                    .mat-expansion-panel-header {
                         height: auto!important;
                     }
                 }
