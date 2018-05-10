@@ -14,14 +14,9 @@
     $data-table-selection-color: mat-color($background, 'selected-button') !default;
     $data-table-dividers: 1px solid $data-table-divider-color !default;
     $data-table-row-height: 56px !default;
-    // $data-table-last-row-height: 56px !default;
-    // $data-table-header-height: 56px !default;
     $data-table-column-spacing: 36px !default;
     $data-table-column-padding: $data-table-column-spacing / 2;
-    // $data-table-card-header-height: 64px !default;
-    // $data-table-card-title-top: 20px !default;
     $data-table-card-padding: 24px !default;
-    // $data-table-button-padding-right: 16px !default;
     $data-table-cell-top: $data-table-card-padding / 2;
     $data-table-drag-border: 1px dashed rgb(68, 138, 255);
 
@@ -469,6 +464,23 @@
 
             &:last-child {
                 border-right: $data-table-drag-border;
+            }
+        }
+    }
+
+    .adf-data-table--empty {
+        @include flex-column;
+        justify-content: center;
+        align-items: center;
+
+        .adf-datatable-body {
+            .adf-datatable-row {
+                background-color: mat-color($background, card);
+
+                &:hover, &:focus {
+                    background-color: unset;
+                    cursor: default;
+                }
             }
         }
     }

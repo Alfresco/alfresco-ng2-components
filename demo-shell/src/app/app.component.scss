@@ -1,39 +1,3 @@
-.empty-list {
-    .adf-data-table {
-        height: 100%;
-
-        tr:hover, tr:focus {
-            cursor: default;
-        }
-    }
-
-    &__block {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        p {
-            line-height: 0;
-        }
-    }
-
-    &__title {
-        font-size: 18px;
-        font-weight: 600;
-    }
-
-    &__subtitle {
-        font-size: 14px;
-        font-weight: 300;
-    }
-
-    &__block > mat-icon {
-        font-size: 52px;
-        height: 52px;
-        width: 52px;
-    }
-}
-
 router-outlet[name="overlay"] + * {
     width: 100%;
     height: 100%;
@@ -53,7 +17,7 @@ router-outlet[name="overlay"] + * {
             .adf-data-table-cell:first-child,
             .adf-data-table-cell:nth-child(2) {
                 display: table-cell;
-            }            
+            }
         }
     }
 }
