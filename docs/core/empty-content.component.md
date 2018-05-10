@@ -43,8 +43,8 @@ You can also use multiple lines instead of the subtitle section:
             <adf-empty-content
                 icon="delete"
                 title="APP.BROWSE.TRASHCAN.EMPTY_STATE.TITLE">
-                <p class="adf-empty-folder__text">{{ 'APP.BROWSE.TRASHCAN.EMPTY_STATE.FIRST_TEXT' | translate }}</p>
-                <p class="adf-empty-folder__text">{{ 'APP.BROWSE.TRASHCAN.EMPTY_STATE.SECOND_TEXT' | translate }}</p>
+                <p class="adf-empty-content__text">{{ 'APP.BROWSE.TRASHCAN.EMPTY_STATE.FIRST_TEXT' | translate }}</p>
+                <p class="adf-empty-content__text">{{ 'APP.BROWSE.TRASHCAN.EMPTY_STATE.SECOND_TEXT' | translate }}</p>
             </adf-empty-content>
         </ng-template>
     </empty-folder-content>
