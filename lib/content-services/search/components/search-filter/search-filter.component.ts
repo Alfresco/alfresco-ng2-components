@@ -97,7 +97,7 @@ export class SearchFilterComponent implements OnInit {
             }
         } else {
             query.$checked = false;
-            this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q !== query.label);
+            this.selectedFacetQueries = this.selectedFacetQueries.filter(selectedQuery => selectedQuery !== query.label);
 
             if (facetQuery) {
                 this.queryBuilder.removeFilterQuery(facetQuery.query);
@@ -129,7 +129,7 @@ export class SearchFilterComponent implements OnInit {
 
     unselectFacetQuery(label: string) {
         const facetQuery = this.queryBuilder.getFacetQuery(label);
-        this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q !== label);
+        this.selectedFacetQueries = this.selectedFacetQueries.filter(selectedQuery => selectedQuery !== label);
 
         this.queryBuilder.removeFilterQuery(facetQuery.query);
         this.queryBuilder.update();
@@ -138,7 +138,7 @@ export class SearchFilterComponent implements OnInit {
     unselectFacetBucket(bucket: FacetFieldBucket) {
         if (bucket) {
             const idx = this.selectedBuckets.findIndex(
-                b => b.$field === bucket.$field && b.label === bucket.label
+                selectedBucket => selectedBucket.$field === bucket.$field && selectedBucket.label === bucket.label
             );
 
             if (idx >= 0) {
@@ -153,15 +153,15 @@ export class SearchFilterComponent implements OnInit {
         const context = data.list.context;
 
         if (context) {
-            const facetQueries = (context.facetQueries || []).map(q => {
-                q.label = this.translationService.instant(q.label);
-                q.$checked = this.selectedFacetQueries.includes(q.label);
-                return q;
+            const facetQueries = (context.facetQueries || []).map(query => {
+                query.label = this.translationService.instant(query.label);
+                query.$checked = this.selectedFacetQueries.includes(query.label);
+                return query;
             });
 
             this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.facetQueriesPageSize);
 
-            const expandedFields = this.responseFacetFields.filter(f => f.expanded).map(f => f.label);
+            const expandedFields = this.responseFacetFields.filter(field => field.expanded).map(field => field.label);
 
             this.responseFacetFields = (context.facetsFields || []).map(
                 field => {
@@ -177,7 +177,7 @@ export class SearchFilterComponent implements OnInit {
                         bucket.label = this.translationService.instant(bucket.label);
 
                         const previousBucket = this.selectedBuckets.find(
-                            b => b.$field === bucket.$field && b.label === bucket.label
+                            selectedBucket => selectedBucket.$field === bucket.$field && selectedBucket.label === bucket.label
                         );
                         if (previousBucket) {
                            bucket.$checked = true;
