@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-export * from './app-config.service';
-export * from './app-config.pipe';
+import { Pipe, PipeTransform } from '@angular/core';
+import { AppConfigService } from './app-config.service';
 
-export * from './app-config.module';
+@Pipe({
+    name: 'adfAppConfig'
+})
+export class AppConfigPipe implements PipeTransform {
+    constructor(private config: AppConfigService) {}
+
+    transform(value: string, fallback: any): any {
+        return this.config.get(value, fallback);
+    }
+}
