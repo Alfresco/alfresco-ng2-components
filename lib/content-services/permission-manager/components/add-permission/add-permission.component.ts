@@ -27,12 +27,15 @@ import { NodePermissionService } from '../../services/node-permission.service';
 })
 export class AddPermissionComponent {
 
+    /** ID of the target node. */
     @Input()
     nodeId: string;
 
+    /** Emitted when the node is updated successfully. */
     @Output()
     success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter();
 
+    /** Emitted when an error occurs during the update. */
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
