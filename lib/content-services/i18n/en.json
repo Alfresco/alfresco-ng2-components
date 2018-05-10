@@ -188,7 +188,8 @@
       "VALIDATION": {
         "REQUIRED-VALUE": "Required value",
         "NO-DAYS": "No days selected.",
-        "INVALID-FORMAT": "Invalid Format"
+        "INVALID-FORMAT": "Invalid Format",
+        "BEYOND-MAX-DATE": "Date is too late."
       }
     },
     "ICONS": {
