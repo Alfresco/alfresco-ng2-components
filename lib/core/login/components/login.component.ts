@@ -48,8 +48,11 @@ enum LoginSteps {
     selector: 'adf-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    host: { '(blur)': 'onBlur($event)' },
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        'class': 'adf-login',
+        '(blur)': 'onBlur($event)'
+    }
 })
 export class LoginComponent implements OnInit {
 
