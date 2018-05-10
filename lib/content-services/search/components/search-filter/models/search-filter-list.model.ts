@@ -16,51 +16,95 @@
  */
 
 export class SearchFilterList<T> implements Iterable<T> {
+
+    private filteredItems: T[] = [];
+    private _filterText: string = '';
+
     items: T[] = [];
     pageSize: number = 5;
     currentPageSize: number = 5;
 
-    get visibleItems(): T[] {
-        return this.items.slice(0, this.currentPageSize);
+    get filterText(): string {
+        return this._filterText;
     }
 
+    set filterText(value: string) {
+        this._filterText = value;
+        this.applyFilter();
+    }
+
+    private _filter: (item: T) => boolean = () => true;
+
+    get filter(): (item: T) => boolean {
+        return this._filter;
+    }
+
+    set filter(value: (item: T) => boolean ) {
+        this._filter = value;
+        this.applyFilter();
+    }
+
+    private applyFilter() {
+        if (this.filter) {
+            this.filteredItems = this.items.filter(this.filter);
+        } else {
+            this.filteredItems = this.items;
+        }
+        this.currentPageSize = this.pageSize;
+    }
+
+    /** Returns visible portion of the items.  */
+    get visibleItems(): T[] {
+        return this.filteredItems.slice(0, this.currentPageSize);
+    }
+
+    /** Returns entire collection length including items not displayed on the page. */
     get length(): number {
         return this.items.length;
     }
 
+    /** Detects whether more items can be displayed. */
     get canShowMoreItems(): boolean {
-        return this.items.length > this.currentPageSize;
+        return this.filteredItems.length > this.currentPageSize;
     }
 
+    /** Detects whether less items can be displayed. */
     get canShowLessItems(): boolean {
         return this.currentPageSize > this.pageSize;
     }
 
+    /** Detects whether content fits single page. */
     get fitsPage(): boolean {
-        return this.pageSize > this.items.length;
+        return this.pageSize >= this.filteredItems.length;
     }
 
     constructor(items: T[] = [], pageSize: number = 5) {
         this.items = items;
+        this.filteredItems = items;
         this.pageSize = pageSize;
         this.currentPageSize = pageSize;
     }
 
+    /** Display more items. */
     showMoreItems() {
         if (this.canShowMoreItems) {
             this.currentPageSize += this.pageSize;
         }
     }
 
+    /** Display less items. */
     showLessItems() {
         if (this.canShowLessItems) {
             this.currentPageSize -= this.pageSize;
         }
     }
 
+    /** Reset entire collection and page settings. */
     clear() {
         this.currentPageSize = this.pageSize;
         this.items = [];
+        this.filteredItems = [];
+        this.filterText = '';
     }
 
     [Symbol.iterator](): Iterator<T> {
