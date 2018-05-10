@@ -23,7 +23,7 @@ import { CommentTag } from "typedoc/dist/lib/models";
 
 
 let libFolders = ["core", "content-services", "process-services", "insights"];
-let templateFolder = path.resolve(".", "config", "DocProcessor", "templates");
+let templateFolder = path.resolve("..", "tools", "doc", "templates");
 
 let excludePatterns = [
     "**/*.spec.ts"

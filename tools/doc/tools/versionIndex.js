@@ -28,7 +28,7 @@ var histFilePath = path.resolve(docsFolderPath, "versionIndex.md");
 var histSectionName = "history";
 var initialVersion = "v2.0.0";
 
-var templateFolder = path.resolve(".", "config", "DocProcessor", "templates");
+var templateFolder = path.resolve("..", "tools", "doc", "templates");
 
 function initPhase(aggData) {
     aggData.versions = { "v2.0.0":[] };

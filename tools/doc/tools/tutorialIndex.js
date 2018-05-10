@@ -9,7 +9,7 @@ var yaml = require("js-yaml");
 var combyne = require("combyne");
 var unist = require("../unistHelpers");
 var tutFolder = path.resolve("..", "docs", "tutorials");
-var templateFolder = path.resolve(".", "config", "DocProcessor", "templates");
+var templateFolder = path.resolve("..", "tools", "doc", "templates");
 var userGuideFolder = path.resolve("..", "docs", "user-guide");
 function initPhase(aggData) { }
 exports.initPhase = initPhase;
