@@ -86,7 +86,6 @@ jobs:
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
         - stage: Deploy PR
-          if: tag =~ .*beta.*
           script:
             -./scripts/pr-build.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER
             - node ./scripts/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -t $RANCHER_TOKEN -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL
