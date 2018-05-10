@@ -20,8 +20,8 @@ import { FileNode, FolderNode } from './../../mock';
 import { DocumentListService } from './../services/document-list.service';
 import { ShareDataRow } from './share-data-row.model';
 import { ShareDataTableAdapter } from './share-datatable-adapter';
-/*tslint:disable:ban*/
-fdescribe('ShareDataTableAdapter', () => {
+
+describe('ShareDataTableAdapter', () => {
 
     let documentListService: DocumentListService;
 
