@@ -8,9 +8,9 @@ var frontMatter = require("remark-frontmatter");
 var yaml = require("js-yaml");
 var combyne = require("combyne");
 var unist = require("../unistHelpers");
-var tutFolder = path.resolve("..", "docs", "tutorials");
-var templateFolder = path.resolve("..", "tools", "doc", "templates");
-var userGuideFolder = path.resolve("..", "docs", "user-guide");
+var tutFolder = path.resolve("docs", "tutorials");
+var templateFolder = path.resolve("tools", "doc", "templates");
+var userGuideFolder = path.resolve("docs", "user-guide");
 function initPhase(aggData) { }
 exports.initPhase = initPhase;
 function readPhase(tree, pathname, aggData) { }
