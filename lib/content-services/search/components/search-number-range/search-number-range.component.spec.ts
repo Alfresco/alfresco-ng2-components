@@ -16,6 +16,7 @@
  */
 
 import { SearchNumberRangeComponent } from './search-number-range.component';
+import { FormControl, FormGroup } from '@angular/forms';
 
 describe('SearchNumberRangeComponent', () => {
 
@@ -124,4 +125,15 @@ describe('SearchNumberRangeComponent', () => {
         expect(context.queryFragments['range1']).toEqual('cm:content.size:<0 TO 100>');
     });
 
+    it('should return true if TO value is bigger than FROM value', () => {
+        component.ngOnInit();
+        component.from = new FormControl('10');
+        component.to = new FormControl('20');
+        component.form = new FormGroup({
+            from: component.from,
+            to: component.to
+        }, component.formValidator);
+
+        expect(component.formValidator).toBeTruthy();
+    });
 });
