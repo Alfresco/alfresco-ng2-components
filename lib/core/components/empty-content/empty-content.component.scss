@@ -2,7 +2,7 @@
 
     $foreground: map-get($theme, foreground);
 
-    .app-empty-content {
+    .adf-empty-content {
         color: mat-color($foreground, text, 0.54);
         display: flex;
         flex-direction: column;

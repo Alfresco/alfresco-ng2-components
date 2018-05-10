@@ -23,7 +23,7 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@a
     styleUrls: ['./empty-content.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'app-empty-content' }
+    host: { class: 'adf-empty-content' }
 })
 export class EmptyContentComponent {
 
