@@ -16,6 +16,7 @@
  */
 
 import { SearchNumberRangeComponent } from './search-number-range.component';
+import { FormControl } from '@angular/forms';
 
 describe('SearchNumberRangeComponent', () => {
 
@@ -124,4 +125,11 @@ describe('SearchNumberRangeComponent', () => {
         expect(context.queryFragments['range1']).toEqual('cm:content.size:<0 TO 100>');
     });
 
+    it('should throw "pattern" error if FROM value is formed by letters', () => {
+        component.from = new FormControl(123);
+
+        component.ngOnInit();
+
+        expect(component.from.hasError('pattern'));
+    });
 });
