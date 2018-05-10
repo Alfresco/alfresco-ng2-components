@@ -1,5 +1,6 @@
 @mixin adf-empty-content-theme($theme) {
 
+    $config: mat-typography-config();
     $foreground: map-get($theme, foreground);
 
     .adf-empty-content {
@@ -9,9 +10,9 @@
         align-items: center;
 
         &__icon {
-            font-size: 52px;
-            height: 52px !important;
-            width: 52px !important;
+            font-size: mat-font-size($config, display-3);
+            height: mat-font-size($config, display-3) !important;
+            width: mat-font-size($config, display-3) !important;
         }
 
         p {
