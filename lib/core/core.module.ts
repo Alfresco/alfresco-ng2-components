@@ -162,9 +162,6 @@ export function providers() {
             }
         })
     ],
-    declarations: [
-        EmptyContentComponent
-    ],
     exports: [
         ViewerModule,
         SideBarActionModule,
@@ -192,8 +189,7 @@ export function providers() {
         DataColumnModule,
         DataTableModule,
         TranslateModule,
-        ButtonsMenuModule,
-        EmptyContentComponent
+        ButtonsMenuModule
     ]
 })
 export class CoreModuleLazy {
