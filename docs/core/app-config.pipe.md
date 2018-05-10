@@ -15,6 +15,18 @@ Retrieves values from the application configuration file directly.
 </adf-login>
 ```
 
+## Fallback values
+
+You can use pipe parameters to pass fallback value:
+
+```html
+<adf-login
+    copyrightText="{{ 'application.copyright' | adfAppConfig:'Fallback Text' }}">
+</adf-login>
+```
+
+## Chaining with other pipes
+
 You can also chain values with other pipes, for example `translation` one:
 
 ```html
