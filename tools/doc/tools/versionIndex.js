@@ -22,13 +22,13 @@ module.exports = {
 
 var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
 
-var docsFolderPath = path.resolve("..", "docs");
+var docsFolderPath = path.resolve("docs");
 var histFilePath = path.resolve(docsFolderPath, "versionIndex.md");
 
 var histSectionName = "history";
 var initialVersion = "v2.0.0";
 
-var templateFolder = path.resolve("..", "tools", "doc", "templates");
+var templateFolder = path.resolve("tools", "doc", "templates");
 
 function initPhase(aggData) {
     aggData.versions = { "v2.0.0":[] };

@@ -7,7 +7,7 @@ var remark = require("remark");
 var combyne = require("combyne");
 var typedoc_1 = require("typedoc");
 var libFolders = ["core", "content-services", "process-services", "insights"];
-var templateFolder = path.resolve("..", "tools", "doc", "templates");
+var templateFolder = path.resolve("tools", "doc", "templates");
 var excludePatterns = [
     "**/*.spec.ts"
 ];
@@ -182,7 +182,9 @@ function initPhase(aggData) {
         experimentalDecorators: true,
         tsconfig: "tsconfig.json"
     });
-    var sources = app.expandInputFiles(libFolders);
+    var sources = app.expandInputFiles(libFolders.map(function (folder) {
+        return path.resolve("lib", folder);
+    }));
     aggData.projData = app.convert(sources);
     /*
     aggData.liq = liquid({
