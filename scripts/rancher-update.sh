@@ -53,7 +53,7 @@ ENVIRONMENTID=$($docker run --rm -e CATTLE_ACCESS_KEY=$ACCESSKEY \
                     -e CATTLE_URL=$RANCHERURL  \
                     etlweather/gaucho:alpine id_of $ENVIRONMENTNAME)
 
-echo "id retrieved! is ${environment_id}"
+echo "id retrieved! is $ENVIRONMENTID"
 
 $docker run --rm -e CATTLE_ACCESS_KEY=$ACCESSKEY \
                  -e CATTLE_SECRET_KEY=$SECRETKEY \
