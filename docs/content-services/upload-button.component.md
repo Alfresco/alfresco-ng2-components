@@ -39,6 +39,7 @@ Activates a file upload.
 | tooltip | `string` |  null | Custom tooltip text. |
 | uploadFolders | `boolean` | false | Allows/disallows upload folders (only for Chrome). |
 | versioning | `boolean` | false | Toggles versioning. |
+| nodeType | `string` | "cm:content" | Custom node type for uploaded file. |
 
 ### Events
 
