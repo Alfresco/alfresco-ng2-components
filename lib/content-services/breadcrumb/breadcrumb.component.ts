@@ -67,8 +67,12 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     previousNodes: PathElementEntity[];
     lastNodes: PathElementEntity[];
 
-    route: PathElementEntity[] = [];
+    /** Number of successive nodes that are going to be shown inside the
+     * breadcrumb
+     */
+    SUCCESSIVE_NODES = 3;
 
+    route: PathElementEntity[] = [];
 
     get hasRoot(): boolean {
         return !!this.root;
@@ -93,13 +97,14 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             let node = this.transform ? this.transform(this.folderNode) : this.folderNode;
             this.route = this.parseRoute(node);
         }
+        
         this.recalculateNodes();
     }
 
     recalculateNodes(): void {
-        if (this.route.length > 3) {
-            this.lastNodes = this.route.slice(this.route.length - 3);
-            this.previousNodes = this.route.slice(0, this.route.length - 3);
+        if (this.route.length > this.SUCCESSIVE_NODES) {
+            this.lastNodes = this.route.slice(this.route.length - this.SUCCESSIVE_NODES);
+            this.previousNodes = this.route.slice(0, this.route.length - this.SUCCESSIVE_NODES);
             this.previousNodes.reverse();
         }
         else {
@@ -120,9 +125,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     parseRoute(node: MinimalNodeEntryEntity): PathElementEntity[] {
         if (node && node.path) {
-            const route = <PathElementEntity[]>(node.path.elements || []).slice();
+            const route = <PathElementEntity[]> (node.path.elements || []).slice();
 
-            route.push(<PathElementEntity>{
+            route.push(<PathElementEntity> {
                 id: node.id,
                 name: node.name
             });
