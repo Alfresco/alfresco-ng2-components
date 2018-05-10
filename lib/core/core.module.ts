@@ -80,6 +80,7 @@ import { UploadService } from './services/upload.service';
 import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
 import { startupServiceFactory } from './services/startup-service-factory';
+import { EmptyContentComponent } from './components/empty-content/empty-content.component';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -161,6 +162,9 @@ export function providers() {
             }
         })
     ],
+    declarations: [
+        EmptyContentComponent
+    ],
     exports: [
         ViewerModule,
         SideBarActionModule,
@@ -188,7 +192,8 @@ export function providers() {
         DataColumnModule,
         DataTableModule,
         TranslateModule,
-        ButtonsMenuModule
+        ButtonsMenuModule,
+        EmptyContentComponent
     ]
 })
 export class CoreModuleLazy {
@@ -230,6 +235,9 @@ export class CoreModuleLazy {
             }
         })
     ],
+    declarations: [
+        EmptyContentComponent
+    ],
     exports: [
         ViewerModule,
         SideBarActionModule,
@@ -257,7 +265,8 @@ export class CoreModuleLazy {
         DataColumnModule,
         DataTableModule,
         TranslateModule,
-        ButtonsMenuModule
+        ButtonsMenuModule,
+        EmptyContentComponent
     ],
     providers: [
         ...providers(),

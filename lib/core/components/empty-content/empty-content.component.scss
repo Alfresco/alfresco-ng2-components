@@ -1,0 +1,33 @@
+@mixin adf-empty-content-theme($theme) {
+
+    $config: mat-typography-config();
+    $foreground: map-get($theme, foreground);
+
+    .adf-empty-content {
+        color: mat-color($foreground, text, 0.54);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &__icon {
+            font-size: mat-font-size($config, display-3);
+            height: mat-font-size($config, display-3) !important;
+            width: mat-font-size($config, display-3) !important;
+        }
+
+        p {
+            line-height: 0;
+        }
+
+        &__title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        &__subtitle,
+        &__text {
+            font-size: 14px;
+            font-weight: 300;
+        }
+    }
+}

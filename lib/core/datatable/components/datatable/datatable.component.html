@@ -1,7 +1,8 @@
 <div
     *ngIf="data" class="full-width"
     [class.adf-data-table-card]="display === 'gallery'"
-    [class.adf-data-table]="display === 'list'">
+    [class.adf-data-table]="display === 'list'"
+    [class.adf-data-table--empty]="isEmpty()">
     <div *ngIf="isHeaderVisible()" class="adf-datatable-header">
         <div class="adf-datatable-row" *ngIf="display === 'list'">
             <!-- Actions (left) -->
