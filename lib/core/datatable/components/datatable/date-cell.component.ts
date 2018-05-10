@@ -39,7 +39,7 @@ import { UserPreferencesService, UserPreferenceValues } from '../../../services'
 })
 export class DateCellComponent extends DataTableCellComponent {
 
-    currentLocale = 'en-US';
+    currentLocale;
 
     constructor(userPreferenceService: UserPreferencesService) {
         super();

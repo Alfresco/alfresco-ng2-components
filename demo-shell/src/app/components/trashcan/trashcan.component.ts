@@ -37,7 +37,7 @@ export class TrashcanComponent {
     documentList: DocumentListComponent;
 
     supportedPages = [];
-    currentLocale = 'en-US';
+    currentLocale;
 
     constructor(private preference: UserPreferencesService) {
         this.preference.select(UserPreferenceValues.SupportedPageSizes)
