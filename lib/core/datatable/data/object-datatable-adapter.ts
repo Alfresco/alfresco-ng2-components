@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-import { DatePipe } from '@angular/common';
-
-import { TimeAgoPipe } from '../../pipes';
 import { DataColumn } from './data-column.model';
 import { DataRow } from './data-row.model';
 import { ObjectDataRow } from './object-datarow.model';
@@ -107,32 +104,9 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
 
         let value = row.getValue(col.key);
 
-        if (col.type === 'date') {
-            try {
-                return this.formatDate(col, value);
-            } catch (err) {
-                console.error(`Error parsing date ${value} to format ${col.format}`);
-            }
-        }
-
         if (col.type === 'icon') {
             const icon = row.getValue(col.key);
             return icon;
-        }
-
-        return value;
-    }
-
-    formatDate(col: DataColumn, value: any): string {
-        if (col.type === 'date') {
-            const format = col.format || 'medium';
-            if (format === 'timeAgo') {
-                const timeAgoPipe = new TimeAgoPipe();
-                return timeAgoPipe.transform(value);
-            } else {
-                const datePipe = new DatePipe('en-US');
-                return datePipe.transform(value, format);
-            }
         }
 
         return value;
