@@ -4,7 +4,6 @@
     $foreground: map-get($theme, foreground);
 
     $adf-sidebar-action-menu-button-height: 37.5px;
-    $adf-sidebar-action-menu-panel-width: 202px;
     $adf-sidebar-action-menu-button-border-radius: 4px;
     $adf-sidebar-action-menu-opacity: 0.54;
     $adf-sidebar-action-menu-item-opacity: 0.87;
@@ -59,7 +58,6 @@
             margin-top: 7.5px;
             border-radius: 2px;
             box-shadow: #{map-get($_umbra-elevation-map, 2)}, #{map-get($_penumbra-elevation-map, 2)},#{map-get($_ambient-elevation-map, 2)};
-            min-width: $adf-sidebar-action-menu-panel-width !important;
         }
     }
 }

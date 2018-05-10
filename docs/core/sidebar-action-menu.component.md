@@ -34,6 +34,7 @@ Displays a sidebar-action menu information panel.
 | ---- | ---- | ------------- | ----------- |
 | title | `string` |  | The title of the sidebar action.  |
 | expanded | `boolean` |  | Toggle the sidebar action menu on expand.  |
+| width | `number` |  | Width in pixels for sidebar action menu options  |
 
 ## Details
 

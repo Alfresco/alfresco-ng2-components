@@ -36,6 +36,9 @@ export class SidebarActionMenuComponent {
     @Input()
     expanded: boolean;
 
+    @Input()
+    width: number;
+
     isExpanded(): boolean {
         return this.expanded;
     }
