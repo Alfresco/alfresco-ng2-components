@@ -32,6 +32,11 @@ export class NodePermissionService {
                 private translation: TranslationService) {
     }
 
+    /**
+     * Gets a list of roles for the current node.
+     * @param node The target node
+     * @returns Array of strings representing the roles
+     */
     getNodeRoles(node: MinimalNodeEntryEntity): Observable<string[]> {
         const retrieveSiteQueryBody: QueryBody = this.buildRetrieveSiteQueryBody(node.path.elements);
         return this.searchApiService.searchByQueryBody(retrieveSiteQueryBody)
@@ -45,6 +50,12 @@ export class NodePermissionService {
             });
     }
 
+    /**
+     * Updates the permission for a node.
+     * @param node Target node
+     * @param updatedPermissionRole Permission role to update or add
+     * @returns Node with updated permission
+     */
     updatePermissionRole(node: MinimalNodeEntryEntity, updatedPermissionRole: PermissionElement): Observable<MinimalNodeEntryEntity> {
         let permissionBody = { permissions: { locallySet: []} };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
@@ -74,7 +85,7 @@ export class NodePermissionService {
         const duplicatedPermissions = this.getDuplicatedPermissions(node.permissions.locallySet, permissionList);
         if (duplicatedPermissions.length > 0) {
             const list = duplicatedPermissions.map((permission) => 'authority -> ' + permission.authorityId + ' / role -> ' + permission.name).join(', ');
-            const duplicatePermissionMessage = this.translation.instant('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION',  {list});
+            const duplicatePermissionMessage: string = this.translation.instant('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION',  {list});
             return Observable.throw(duplicatePermissionMessage);
         }
         permissionBody.permissions.locallySet = node.permissions.locallySet ? node.permissions.locallySet.concat(permissionList) : permissionList;
@@ -133,6 +144,12 @@ export class NodePermissionService {
             });
     }
 
+    /**
+     * Gets all members related to a group name.
+     * @param groupName Name of group to look for members
+     * @param opts Extra options supported by JSAPI
+     * @returns List of members
+     */
     getGroupMemeberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging> {
         return Observable.fromPromise(this.apiService.groupsApi.getGroupMembers(groupName, opts));
     }
