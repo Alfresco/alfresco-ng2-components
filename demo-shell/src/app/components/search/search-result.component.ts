@@ -19,17 +19,18 @@ import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 import { SearchComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { UserPreferencesService, SearchService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-search-result-component',
     templateUrl: './search-result.component.html',
-    styleUrls: ['./search-result.component.scss']
+    styleUrls: ['./search-result.component.scss'],
+    providers: [SearchService]
 })
 export class SearchResultComponent implements OnInit {
 
-    @ViewChild('search')
-    search: SearchComponent;
+    @ViewChild('searchResult')
+    searchResult: SearchComponent;
 
     queryParamName = 'q';
     searchedWord = '';
@@ -76,6 +77,6 @@ export class SearchResultComponent implements OnInit {
     }
 
     onDeleteElementSuccess(element: any) {
-        this.search.reload();
+        this.searchResult.reload();
     }
 }
