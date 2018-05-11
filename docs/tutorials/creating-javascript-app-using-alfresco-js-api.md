@@ -97,4 +97,4 @@ To see the JavaScript application in action, open a browser at `http://localhost
 
 ![javascript_app_launch](../docassets/images/javascript_app_launch.png)
 
-Of course this is a very basic example, used to show in practice how to develop from scratch a JavaScript application (not necessarily and Angular application) interacting with Alfresco Back-end Services using the [`alfresco-js-api`](https://github.com/Alfresco/alfresco-js-api) library.
+Of course this is a very basic example, used to show in practice how to develop from scratch a JavaScript application (not necessarily an Angular application) interacting with Alfresco Back-end Services using the [`alfresco-js-api`](https://github.com/Alfresco/alfresco-js-api) library.
