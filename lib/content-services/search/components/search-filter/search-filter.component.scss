@@ -10,9 +10,10 @@
     }
 
     .facet-result-filter {
-        width: 100%;
+        display: flex;
+        flex-direction: column;
 
-        input > {
+        & > * {
             width: 100%;
         }
     }
