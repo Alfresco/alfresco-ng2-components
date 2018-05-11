@@ -9,7 +9,6 @@
     "prepublishOnly": "npm run build-lib",
     "markdownlint": "markdownlint ./docs",
     "build-lib": "./scripts/ng-packagr.sh",
-    "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js",
     "bundlesize-check": "bundlesize",
     "bundlesize-map": "npm run webpack -- --config ./lib/config/webpack.bundle-check.js --progress --profile --bail",
     "lint-lib": "./node_modules/.bin/tslint -p ./lib/tsconfig.json -c ./lib/tslint.json",
@@ -31,7 +30,8 @@
     "server-versions": "rimraf ./demo-shell/src/versions.json && npm list --depth=0 --json=true --prod=true > ./demo-shell/src/versions.json  || exit 0",
     "clean": "rimraf dist ./node_modules typings",
     "clean-lock": "rimraf package-lock.json",
-    "webpack": "node ./node_modules/webpack/bin/webpack.js"
+    "webpack": "node ./node_modules/webpack/bin/webpack.js",
+    "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js"
   },
   "repository": {
     "type": "git",

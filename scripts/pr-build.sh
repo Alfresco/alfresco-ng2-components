@@ -47,7 +47,7 @@ docker build -t $DOCKER_REPO/adf/demo-shell:$NAME_PR .
 
 echo "====== LOGIN  ====="
 docker login http://$DOCKER_REPO -p $PASSWORD_DOCKER -u $USERNAME_DOCKER
-docker push "$DOCKER_REPO/adf/demo-shell"
+docker push "$DOCKER_REPO/adf/demo-shell:$NAME_PR"
 
 
 

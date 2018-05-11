@@ -214,7 +214,7 @@ async function main() {
     var newRule = {
         "type": "portRule",
         "hostname": program.remote,
-        "path": `/${program.name}/index.html`,
+        "path": `/${program.name}`,
         "priority": 1,
         "protocol": "http",
         "serviceId": createService.id,
