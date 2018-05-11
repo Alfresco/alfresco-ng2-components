@@ -9,7 +9,7 @@ In this tutorial you are going to learn how to develop on top of Alfresco Conten
 
 **Note:** The development on top of Alfresco Content Services AND Alfresco Process Services has the only limitation of the [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). In this case you might need to proxy your application first.
 
-## Prerequites
+## Prerequisites
 
 The only prerequisite of this tutorial is the availability of an instance of Alfresco Content Services in a [Docker](https://www.docker.com/) container. Docker is not the only option you might have for the deployment, but it is the faster we found to focus on the development instead of the environment setup.
 
