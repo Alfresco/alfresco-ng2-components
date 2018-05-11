@@ -8,6 +8,7 @@
     $adf-sidebar-action-menu-opacity: 0.54;
     $adf-sidebar-action-menu-item-opacity: 0.87;
     $adf-sidebar-action-menu-item-line-spacing: -0.4px;
+    $adf-sidebar-action-menu-item-font-size: 14px;
 
     .adf {
         &-sidebar-action-menu {
@@ -44,6 +45,7 @@
             text-align: left;
             letter-spacing: $adf-sidebar-action-menu-item-line-spacing;
             .mat-menu-item {
+                font-size: $adf-sidebar-action-menu-item-font-size;
                 color: mat-color($foreground, text, $adf-sidebar-action-menu-item-opacity);
                 text-align: left;
                 line-height: 1.5;
