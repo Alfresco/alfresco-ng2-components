@@ -97,7 +97,6 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             let node = this.transform ? this.transform(this.folderNode) : this.folderNode;
             this.route = this.parseRoute(node);
         }
-        
         this.recalculateNodes();
     }
 
@@ -106,8 +105,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             this.lastNodes = this.route.slice(this.route.length - this.SUCCESSIVE_NODES);
             this.previousNodes = this.route.slice(0, this.route.length - this.SUCCESSIVE_NODES);
             this.previousNodes.reverse();
-        }
-        else {
+        } else {
             this.lastNodes = this.route;
             this.previousNodes = null;
         }
