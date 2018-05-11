@@ -94,12 +94,14 @@ export class NodePermissionService {
 
     private getDuplicatedPermissions(nodeLocallySet: PermissionElement[], permissionListAdded: PermissionElement[]): PermissionElement[] {
         let duplicatePermissions: PermissionElement[] = [];
-        permissionListAdded.forEach((permission: PermissionElement) => {
-            const duplicate = nodeLocallySet.find((localPermission) => this.isEqualPermission(localPermission, permission));
-            if (duplicate) {
-                duplicatePermissions.push(duplicate);
-            }
-        });
+        if (nodeLocallySet) {
+            permissionListAdded.forEach((permission: PermissionElement) => {
+                const duplicate = nodeLocallySet.find((localPermission) => this.isEqualPermission(localPermission, permission));
+                if (duplicate) {
+                    duplicatePermissions.push(duplicate);
+                }
+            });
+        }
         return duplicatePermissions;
     }
 
