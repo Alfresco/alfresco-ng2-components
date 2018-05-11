@@ -13,7 +13,7 @@ npm install alfresco-js-api@alpha
 
 echo "====== Build ADF ===== "
 
-npm run build-lib
+npm run build-lib || exit 1
 
 echo "====== COPY new build in node_modules ===== "
 
@@ -31,8 +31,8 @@ cp -R $DIR/../lib/dist/insights/* $DIR/../node_modules/@alfresco/adf-insights
 
 echo "====== Build dist demo shell ===== "
 
-npm run build:dist
+npm run build:dist || exit 1
 
 echo "====== e2e test ===== "
 
-npm run e2e
+npm run e2e || exit 1
