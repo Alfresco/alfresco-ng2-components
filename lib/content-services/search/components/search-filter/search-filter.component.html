@@ -21,17 +21,19 @@
         <mat-expansion-panel-header>
             <mat-panel-title>{{ facetQueriesLabel | translate }}</mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-form-field class="facet-result-filter">
-            <input
-                matInput
-                placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
-                [(ngModel)]="responseFacetQueries.filterText">
-            <button *ngIf="responseFacetQueries.filterText"
-                mat-button matSuffix mat-icon-button
-                (click)="responseFacetQueries.filterText = ''">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-form-field>
+        <div class="facet-result-filter">
+            <mat-form-field>
+                <input
+                    matInput
+                    placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
+                    [(ngModel)]="responseFacetQueries.filterText">
+                <button *ngIf="responseFacetQueries.filterText"
+                    mat-button matSuffix mat-icon-button
+                    (click)="responseFacetQueries.filterText = ''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
         <div class="checklist">
             <ng-container *ngFor="let query of responseFacetQueries">
                 <mat-checkbox
@@ -66,17 +68,19 @@
             <mat-panel-title>{{ field.label }}</mat-panel-title>
         </mat-expansion-panel-header>
 
-        <mat-form-field class="facet-result-filter">
-            <input
-                matInput
-                placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
-                [(ngModel)]="field.buckets.filterText">
-            <button *ngIf="field.buckets.filterText"
-                mat-button matSuffix mat-icon-button
-                (click)="field.buckets.filterText = ''">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-form-field>
+        <div class="facet-result-filter">
+            <mat-form-field>
+                <input
+                    matInput
+                    placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
+                    [(ngModel)]="field.buckets.filterText">
+                <button *ngIf="field.buckets.filterText"
+                    mat-button matSuffix mat-icon-button
+                    (click)="field.buckets.filterText = ''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
 
         <div class="checklist">
             <mat-checkbox
