@@ -67,8 +67,8 @@
                         mat-icon-button
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}"
                         (click)="toogleGalleryView()">
-                        <mat-icon *ngIf="displayMode === 'list'" >view_comfy</mat-icon>
-                        <mat-icon *ngIf="displayMode === 'gallery'">list</mat-icon>
+                        <mat-icon *ngIf="displayMode === 'list'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}">view_comfy</mat-icon>
+                        <mat-icon *ngIf="displayMode === 'gallery'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.LISTVIEW' | translate }}">list</mat-icon>
                     </button>
                     <button
                         mat-icon-button
@@ -90,7 +90,8 @@
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}"
-                            [adfNodeDownload]="documentList.selection">
+                            [adfNodeDownload]="documentList.selection"
+                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}">
                         <mat-icon>get_app</mat-icon>
                     </button>
                     <button mat-icon-button
@@ -98,13 +99,15 @@
                             [adf-nodes]="documentList.selection"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}"
                             (delete)="onDeleteActionSuccess($event)"
-                            [adf-delete]="documentList.selection">
+                            [adf-delete]="documentList.selection"
+                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}">
                         <mat-icon>delete</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!documentList.selection.length"
                             #favorite="adfFavorite"
-                            [adf-node-favorite]="documentList.selection">
+                            [adf-node-favorite]="documentList.selection"
+                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.FAVORITES' | translate }}">
                         <mat-icon>
                             {{ favorite.hasFavorites() ? 'star' :'star_border' }}
                         </mat-icon>
@@ -112,14 +115,15 @@
                     <button mat-icon-button
                             [disabled]="!documentList.selection.length"
                             [baseShareUrl]="baseShareUrl"
-                            [adf-share]="documentList.selection[0]">
+                            [adf-share]="documentList.selection[0]"
+                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHARE' | translate }}">
                         <mat-icon>
                             share
                         </mat-icon>
                     </button>
                 </div>
 
-                <button fxFlex="1 0 auto" mat-icon-button [matMenuTriggerFor]="themePicker">
+                <button fxFlex="1 0 auto" mat-icon-button [matMenuTriggerFor]="themePicker" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.THEME' | translate }}">
                     <mat-icon>format_color_fill</mat-icon>
                 </button>
 
@@ -131,8 +135,8 @@
                 </mat-menu>
 
                 <button mat-icon-button (click)="showVersions = !showVersions" class="adf-show-versions-button">
-                    <mat-icon *ngIf="!showVersions">chevron_left</mat-icon>
-                    <mat-icon *ngIf="showVersions">chevron_right</mat-icon>
+                    <mat-icon *ngIf="!showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHOW_VERSION' | translate }}">chevron_left</mat-icon>
+                    <mat-icon *ngIf="showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.HIDE_VERSION' | translate }}">chevron_right</mat-icon>
                 </button>
 
                 <adf-toolbar-divider fxFlex="0 0 auto" fxHide fxShow.lt-sm="true"></adf-toolbar-divider>
