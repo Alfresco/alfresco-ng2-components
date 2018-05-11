@@ -23,7 +23,7 @@ import { CommentTag } from "typedoc/dist/lib/models";
 
 
 let libFolders = ["core", "content-services", "process-services", "insights"];
-let templateFolder = path.resolve(".", "config", "DocProcessor", "templates");
+let templateFolder = path.resolve("tools", "doc", "templates");
 
 let excludePatterns = [
     "**/*.spec.ts"
@@ -265,7 +265,10 @@ export function initPhase(aggData) {
         tsconfig: "tsconfig.json"
     });
 
-    let sources = app.expandInputFiles(libFolders);    
+    let sources = app.expandInputFiles(libFolders.map(folder => {
+        return path.resolve("lib", folder);
+    }));    
+    
     aggData.projData = app.convert(sources);
 
     /*
