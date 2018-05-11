@@ -48,6 +48,8 @@ export class AddPermissionPanelComponent {
 
     selectedItems: MinimalNodeEntity[] = [];
 
+    EVERYONE: MinimalNodeEntity = { entry: { properties: {'cm:authorityName': 'GROUP_EVERYONE'}}};
+
     constructor() {
         this.searchInput.valueChanges
         .pipe(

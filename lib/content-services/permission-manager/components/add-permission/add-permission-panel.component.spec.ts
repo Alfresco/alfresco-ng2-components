@@ -153,4 +153,23 @@ describe('AddPermissionPanelComponent', () => {
         });
     }));
 
+    it('should always show as extra result the everyone group', async(() => {
+        searchApiService = fixture.componentRef.injector.get(SearchService);
+        spyOn(searchApiService, 'search').and.returnValue(Observable.of(fakeAuthorityListResult));
+        component.selectedItems.push(fakeAuthorityListResult.list.entries[0]);
+
+        typeWordIntoSearchInput('a');
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
+            expect(element.querySelector('#result_option_0 #add-person-icon')).toBeDefined();
+            expect(element.querySelector('#result_option_0 #add-person-icon')).not.toBeNull();
+            expect(element.querySelector('#result_option_2 #add-group-icon')).toBeDefined();
+            expect(element.querySelector('#result_option_2 #add-group-icon')).not.toBeNull();
+            expect(element.querySelector('#adf-add-permission-group-everyone')).toBeDefined();
+            expect(element.querySelector('#adf-add-permission-group-everyone')).not.toBeNull();
+        });
+    }));
+
 });
