@@ -64,7 +64,7 @@ script:
 
 jobs:
     include:
-        - stage: Check build demo shell in production mode AND e2e
+        - stage: Demo shell prod && Demo shell e2e && Check ADF exports
           before_install:
             - "export DISPLAY=:99.0"
             - "sh -e /etc/init.d/xvfb start"
