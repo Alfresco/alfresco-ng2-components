@@ -19,7 +19,7 @@ Only to download the requested libraries, you will need the `npm` client. Also i
 
 ## Creating the JavaScript application
 
-Assuming that you have your Alfresco Content Services instance up and running at `http://localhost:8082/alfresco`, let's see here how to develop a JavaScript application from scratch. The JavaScript application will be able to interact with Alfresco back-end services using the [`alfresco-js-api`](https://github.com/Alfresco/alfresco-js-api) library. This library does not necessarily require to be used into an Angular application but it is "framework agnostic".
+Assuming that you have your Alfresco Content Services instance up and running at `http://localhost:8082/alfresco`, let's see here how to develop a JavaScript application from scratch. The JavaScript application will be able to interact with Alfresco back-end services using the [`alfresco-js-api`](https://github.com/Alfresco/alfresco-js-api) library. This library does not necessarily require to be used into Angular applications, but it is "framework agnostic".
 
 Before starting with the development of the source code, let's create locally the `my-js-app` folder that will contain the entire JavaScript application.
 
