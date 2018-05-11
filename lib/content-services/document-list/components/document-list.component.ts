@@ -136,7 +136,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * override the default sorting detected by the component based on columns.
      */
     @Input()
-    sorting: string[];
+    sorting = ['name', 'asc'];
 
     /** The inline style to apply to every row. See
      * the Angular NgStyle
