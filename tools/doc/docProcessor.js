@@ -13,7 +13,7 @@ var aggData = {};
 
 var toolsFolderName = "tools";
 var configFileName = "doctool.config.json";
-var defaultFolder = path.resolve("..", "docs");
+var defaultFolder = path.resolve("docs");
 
 
 function initPhase(aggData) {
@@ -127,13 +127,13 @@ function getAllDocFilePaths(docFolder, files) {
 
 program
 .usage("[options] <source>")
-.option("-p, --profile [profileName]", "Select named config profile", "index")
+.option("-p, --profile [profileName]", "Select named config profile", "default")
 .parse(process.argv);
 
 var sourcePath;
 
 if (program.args.length === 0) {
-    sourcePath = path.resolve("..", "docs");
+    sourcePath = defaultFolder;
 } else {
     sourcePath = path.resolve(program.args[0]);
 }
