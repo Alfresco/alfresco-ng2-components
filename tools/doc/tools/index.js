@@ -20,9 +20,9 @@ module.exports = {
 var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
 var searchFolderOmitRegex = /(config)|(mock)|(i18n)|(assets)|(styles)/;
 
-var docsFolderPath = path.resolve("..", "docs");
+var docsFolderPath = path.resolve("docs");
 var undocStoplistFileName = path.resolve(docsFolderPath, "undocStoplist.json");
-var rootFolder = ".";
+var rootFolder = "lib";
 var indexMdFilePath = path.resolve(docsFolderPath, "README.md");
 
 var guideFolderName = "user-guide";
@@ -132,7 +132,7 @@ function aggPhase(aggData) {
         ]
     });
 
-    fs.writeFileSync(path.resolve("..", "docs", "README.md"), remark().data("settings", {paddedTable: false}).stringify(indexFileTree));
+    fs.writeFileSync(path.resolve("docs", "README.md"), remark().data("settings", {paddedTable: false}).stringify(indexFileTree));
 
     guideSection = buildGuideSection(guideSummaryFileName, true);
 
