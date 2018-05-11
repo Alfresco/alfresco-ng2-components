@@ -10,7 +10,7 @@ var includedNodeTypes = [
     "table", "tableRow", "tableCell", "emphasis", "strong",
     "link", "text"
 ];
-var docFolder = path.resolve("..", "docs");
+var docFolder = path.resolve("docs");
 var adfLibNames = ["core", "content-services", "insights", "process-services"];
 function initPhase(aggData) {
     aggData.docFiles = {};

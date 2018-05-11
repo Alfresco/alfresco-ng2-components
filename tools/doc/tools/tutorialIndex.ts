@@ -10,9 +10,9 @@ import * as combyne from "combyne";
 
 import * as unist from "../unistHelpers";
 
-const tutFolder = path.resolve("..", "docs", "tutorials");
-const templateFolder = path.resolve(".", "config", "DocProcessor", "templates");
-const userGuideFolder = path.resolve("..", "docs", "user-guide");
+const tutFolder = path.resolve("docs", "tutorials");
+const templateFolder = path.resolve("tools", "doc", "templates");
+const userGuideFolder = path.resolve("docs", "user-guide");
 
 
 export function initPhase(aggData) {}
