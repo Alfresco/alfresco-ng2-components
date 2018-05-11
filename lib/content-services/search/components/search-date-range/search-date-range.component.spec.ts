@@ -78,7 +78,7 @@ describe('SearchDateRangeComponent', () => {
         expect(momentFromInput.isValid()).toBeTruthy();
 
         component.onChangedHandler({ srcElement: { value: inputString }}, component.from);
-        expect(component.from.value).toEqual(momentFromInput);
+        expect(component.from.value.toString()).toEqual(momentFromInput.toString());
     });
 
     it('should NOT setup form control with invalid date on change', () => {
@@ -90,7 +90,7 @@ describe('SearchDateRangeComponent', () => {
         expect(momentFromInput.isValid()).toBeFalsy();
 
         component.onChangedHandler({ srcElement: { value: inputString }}, component.from);
-        expect(component.from.value).not.toEqual(momentFromInput);
+        expect(component.from.value.toString()).not.toEqual(momentFromInput.toString());
     });
 
     it('should reset form', () => {
