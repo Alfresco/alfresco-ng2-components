@@ -5,7 +5,7 @@ cd $DIR/..
 
 echo "====== lint ====="
 
-npm run lint-lib
+npm run lint-lib || exit 1
 
 echo "====== clean ====="
 

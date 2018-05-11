@@ -15,24 +15,82 @@
  * limitations under the License.
  */
 
-import { SearchDateRangeComponent } from './search-date-range.component';
-import moment from 'moment-es6';
+import { CustomMomentDateAdapter, SearchDateRangeComponent } from './search-date-range.component';
+import { Observable } from 'rxjs/Observable';
+
+declare let moment: any;
 
 describe('SearchDateRangeComponent', () => {
 
     let component: SearchDateRangeComponent;
     let fromDate = '2016-10-16';
     let toDate = '2017-10-16';
+    const localeFixture = 'it';
+    const dateFormatFixture = 'DD-MMM-YY';
+
+    const buildAdapter = (): CustomMomentDateAdapter => {
+      const dateAdapter = new CustomMomentDateAdapter(null);
+      dateAdapter.customDateFormat = null;
+      return dateAdapter;
+    };
+
+    const buildUserPreferences = (): any => {
+        const userPreferences = {
+            userPreferenceStatus: { LOCALE: localeFixture },
+            select: (property) => {
+                return Observable.of(userPreferences.userPreferenceStatus[property]);
+            }
+        };
+        return userPreferences;
+    };
+
+    const theDateAdapter = <any> buildAdapter();
 
     beforeEach(() => {
-        component = new SearchDateRangeComponent();
+        component = new SearchDateRangeComponent(theDateAdapter, buildUserPreferences());
     });
 
     it('should setup form elements on init', () => {
         component.ngOnInit();
-        expect(component.form).toBeDefined();
+        expect(component.from).toBeDefined();
         expect(component.to).toBeDefined();
         expect(component.form).toBeDefined();
+    });
+
+    it('should setup locale from userPreferencesService', () => {
+        spyOn(component, 'setLocale').and.stub();
+        component.ngOnInit();
+        expect(component.setLocale).toHaveBeenCalledWith(localeFixture);
+    });
+
+    it('should setup the format of the date from configuration', () => {
+        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
+        component.ngOnInit();
+        expect(theDateAdapter.customDateFormat).toBe(dateFormatFixture);
+    });
+
+    it('should setup form control with formatted valid date on change', () => {
+        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
+        component.ngOnInit();
+
+        const inputString = '20.feb.18';
+        const momentFromInput = moment(inputString, dateFormatFixture);
+        expect(momentFromInput.isValid()).toBeTruthy();
+
+        component.onChangedHandler({ srcElement: { value: inputString }}, component.from);
+        expect(component.from.value).toEqual(momentFromInput);
+    });
+
+    it('should NOT setup form control with invalid date on change', () => {
+        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
+        component.ngOnInit();
+
+        const inputString = '20.f.18';
+        const momentFromInput = moment(inputString, dateFormatFixture);
+        expect(momentFromInput.isValid()).toBeFalsy();
+
+        component.onChangedHandler({ srcElement: { value: inputString }}, component.from);
+        expect(component.from.value).not.toEqual(momentFromInput);
     });
 
     it('should reset form', () => {

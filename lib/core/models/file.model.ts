@@ -28,6 +28,7 @@ export interface FileUploadOptions {
     newVersionBaseName?: string;
     parentId?: string;
     path?: string;
+    nodeType?: string;
 }
 
 export enum FileUploadStatus {
