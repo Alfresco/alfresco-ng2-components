@@ -271,7 +271,8 @@
       "NO-RESULT": "No result found for this search",
       "ADD-ACTION": "ADD",
       "CLOSE-ACTION": "CLOSE",
-      "BASE-DIALOG-TITLE": "Search a group or people to add..."
+      "BASE-DIALOG-TITLE": "Search a group or people to add...",
+      "EVERYONE" : "EVERYONE"
     },
     "ERROR": {
       "DUPLICATE-PERMISSION": "One or more of the permission you set is already present : {{list}}"
