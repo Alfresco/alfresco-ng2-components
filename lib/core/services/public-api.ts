@@ -16,11 +16,14 @@
  */
 
 export * from './authentication.service';
+export * from './authentication-sso.service';
+export * from './auth-sso.interceptor';
 export * from './alfresco-api.service';
 export * from './settings.service';
 export * from './content.service';
 export * from './auth-guard.service';
 export * from './auth-guard-ecm.service';
+export * from './auth-guard-sso.service';
 export * from './auth-guard-bpm.service';
 export * from './apps-process.service';
 export * from './page-title.service';
