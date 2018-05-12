@@ -18,7 +18,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LogService, StorageService } from '@alfresco/adf-core';
+import { LogService, StorageService, AuthenticationSSOService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-login',
@@ -36,10 +36,12 @@ export class LoginComponent implements OnInit {
     disableCsrf = false;
     isECM = true;
     isBPM = false;
+    isSSO = false;
     showFooter = true;
     customMinLength = 2;
 
     constructor(private router: Router,
+                private authSSO: AuthenticationSSOService,
                 private storage: StorageService,
                 private logService: LogService) {
         this.customValidation = {
@@ -64,16 +66,25 @@ export class LoginComponent implements OnInit {
         if (this.providers === 'BPM') {
             this.isECM = false;
             this.isBPM = true;
+            this.isSSO = false;
         } else if (this.providers === 'ECM') {
             this.isECM = true;
             this.isBPM = false;
+            this.isSSO = false;
         } else if (this.providers === 'ALL') {
             this.isECM = true;
             this.isBPM = true;
+            this.isSSO = false;
+        } else if (this.providers === 'OAUTH') {
+            this.isECM = false;
+            this.isBPM = false;
+            this.isSSO = true;
         }
     }
 
     onLogin($event) {
+        this.authSSO.setToken($event.token.ticket);
+
         this.router.navigate(['/home']);
     }
 
@@ -83,6 +94,11 @@ export class LoginComponent implements OnInit {
 
     toggleECM() {
         this.isECM = !this.isECM;
+        this.storage.setItem('providers', this.updateProvider());
+    }
+
+    toggleSSO() {
+        this.isSSO = !this.isSSO;
         this.storage.setItem('providers', this.updateProvider());
     }
 
@@ -112,6 +128,11 @@ export class LoginComponent implements OnInit {
 
         if (this.isBPM) {
             this.providers = 'BPM';
+            return this.providers;
+        }
+
+        if (this.isSSO) {
+            this.providers = 'OAUTH';
             return this.providers;
         }
 

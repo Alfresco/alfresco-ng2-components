@@ -2,6 +2,12 @@
     "$schema": "../../lib/core/app-config/schema.json",
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
+    "oauth2": {
+      "host": "http://localhost:9191",
+      "authPath": "/auth/realms/springboot/protocol/openid-connect/token",
+      "clientId": "activiti",
+      "secret": ""
+    },
     "contextRootBpm": "activiti-app",
     "application": {
         "name": "Alfresco ADF Application",

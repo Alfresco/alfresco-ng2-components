@@ -17,7 +17,7 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardBpm, AuthGuardEcm, ErrorContentComponent } from '@alfresco/adf-core';
+import { AuthGuard, AuthGuardBpm, AuthGuardEcm, AuthGuardSSO, ErrorContentComponent } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -48,12 +48,13 @@ import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
+import { AppsCloudViewComponent } from './components/process-cloud/apps-cloud-view.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'settings', component: SettingsComponent },
-    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [AuthGuardEcm], outlet: 'overlay' },
+    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ], outlet: 'overlay' },
     { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
@@ -131,6 +132,11 @@ export const appRoutes: Routes = [
                 path: 'activiti',
                 component: AppsViewComponent,
                 canActivate: [AuthGuardBpm]
+            },
+            {
+                path: 'process-cloud',
+                component: AppsCloudViewComponent,
+                canActivate: [AuthGuardSSO]
             },
             {
                 path: 'activiti/apps',

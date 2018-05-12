@@ -23,6 +23,15 @@
         <mat-slide-toggle
             id="switch3"
             [color]="'primary'"
+            (change)="toggleSSO()"
+            [checked]="isSSO">
+            {{ 'LOGIN.SSO'| translate }}
+        </mat-slide-toggle>
+    </p>
+    <p class="toggle">
+        <mat-slide-toggle
+            id="switch3"
+            [color]="'primary'"
             (change)="toggleCSRF()"
             [checked]="!disableCsrf">
             CSRF
