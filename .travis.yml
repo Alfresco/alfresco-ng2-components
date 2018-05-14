@@ -65,15 +65,14 @@ script:
 jobs:
     include:
         - stage: Demo shell prod && Demo shell e2e && Check ADF exports
-          before_install:
-            - "export DISPLAY=:99.0"
-            - "sh -e /etc/init.d/xvfb start"
-        - script: ./scripts/test-dist.sh
+          script: ./scripts/test-dist.sh
+        - # stage name not required
           script: ./scripts/test-e2e-bc.sh
+        - # stage name not required
           script: npm run test-export
         - stage: Update Apps dependencies
           if: tag =~ .*beta.*
-        - script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-content-app
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n adf-app-manager-ui
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
