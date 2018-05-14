@@ -1,7 +1,19 @@
 @mixin adf-analytics-date-range-widget-theme($theme) {
     $warn: map-get($theme, warn);
 
-    .adf-date-range-analytics-text-danger {
-        color: mat-color($warn);
-    }
+    .adf{
+        
+        &-date-range-analytics-text-danger {
+            color: mat-color($warn);
+        }
+
+        &-date-input {
+            text-align: left; 
+            padding-left: 10px;  
+        }
+
+        &-form-field {
+            width: 180px;
+        }
+    }   
 }
