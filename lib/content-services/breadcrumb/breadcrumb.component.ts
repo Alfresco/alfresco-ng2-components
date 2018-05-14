@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation,
-    OnInit
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatSelect } from '@angular/material';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list';
 
@@ -70,6 +62,16 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     transform: (node) => any;
 
+    @ViewChild('select') selectbox: MatSelect;
+
+    previousNodes: PathElementEntity[];
+    lastNodes: PathElementEntity[];
+
+    /** Number of successive nodes that are going to be shown inside the
+     * breadcrumb
+     */
+    SUCCESSIVE_NODES = 3;
+
     route: PathElementEntity[] = [];
 
     get hasRoot(): boolean {
@@ -95,6 +97,28 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             let node = this.transform ? this.transform(this.folderNode) : this.folderNode;
             this.route = this.parseRoute(node);
         }
+        this.recalculateNodes();
+    }
+
+    protected recalculateNodes(): void {
+        if (this.route.length > this.SUCCESSIVE_NODES) {
+            this.lastNodes = this.route.slice(this.route.length - this.SUCCESSIVE_NODES);
+            this.previousNodes = this.route.slice(0, this.route.length - this.SUCCESSIVE_NODES);
+            this.previousNodes.reverse();
+        } else {
+            this.lastNodes = this.route;
+            this.previousNodes = null;
+        }
+    }
+
+    open(): void {
+        if (this.selectbox) {
+            this.selectbox.open();
+        }
+    }
+
+    hasPreviousNodes(): boolean {
+        return this.previousNodes ? true : false;
     }
 
     parseRoute(node: MinimalNodeEntryEntity): PathElementEntity[] {
