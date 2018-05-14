@@ -154,6 +154,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         new DemoFieldValidator()
     ];
 
+    // savedTaskId = '';
+    // savedProcessId = '';
+
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
                 private router: Router,
@@ -342,14 +345,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     navigateStartProcess(): void {
-        this.resetProcessFilters();
-        this.reloadProcessFilters();
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
     navigateStartTask(): void {
-        this.resetTaskFilters();
-        this.reloadTaskFilters();
         this.currentTaskId = currentTaskIdNew;
     }
 
