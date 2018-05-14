@@ -446,14 +446,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.currentTaskId = taskId;
     }
 
-    private resetProcessFilters(): void {
-        this.processFilter = null;
-    }
-
-    private resetTaskFilters(): void {
-        this.taskFilter = null;
-    }
-
     private reloadProcessFilters(): void {
         this.activitiprocessfilter.selectFilter(this.activitiprocessfilter.getCurrentFilter());
     }
