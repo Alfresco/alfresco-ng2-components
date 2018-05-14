@@ -1,4 +1,3 @@
-
 @mixin adf-breadcrumb-dropdown-theme($theme) {
     $primary: map-get($theme, primary);
     $dropdownHorizontalOffset: 30px;
@@ -15,6 +14,11 @@
             padding: 0;
             border: none;
             background: transparent;
+            
+            &:focus {
+                color: mat-color($primary);
+                outline: none;
+            }
         }
 
         &-dropdown-breadcrumb-item-chevron {
@@ -39,7 +43,7 @@
 
         &-current-folder {
             text-align: left;
-            line-height: 33px;
+            line-height: 25px;
             margin-left: $dropdownHorizontalOffset;
             white-space: nowrap;
             overflow: hidden;
