@@ -3,7 +3,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 
 show_help() {
-    echo "Usage: pr-build.sh"
+    echo "Usage: pr-publish.sh"
     echo ""
     echo "-n or --name pr name"
     echo "-r or --repo docker repository url"
@@ -37,31 +37,6 @@ while [[ $1 == -* ]]; do
 done
 
 cd $DIR/..
-
-echo "====== Install JS-API alpha ===== "
-
-npm install alfresco-js-api@alpha
-
-echo "====== Build ADF ===== "
-
-npm run build-lib || exit 1
-
-echo "====== COPY new build in node_modules ===== "
-
-rm -rf ../node_modules/@alfresco
-
-mkdir -p $DIR/../node_modules/@alfresco/adf-core
-mkdir -p $DIR/../node_modules/@alfresco/adf-content-services
-mkdir -p $DIR/../node_modules/@alfresco/adf-process-services
-mkdir -p $DIR/../node_modules/@alfresco/adf-insights
-
-cp -R $DIR/../lib/dist/core/* $DIR/..//node_modules/@alfresco/adf-core
-cp -R $DIR/../lib/dist/content-services/* $DIR/../node_modules/@alfresco/adf-content-services
-cp -R $DIR/../lib/dist/process-services/* $DIR/../node_modules/@alfresco/adf-process-services
-cp -R $DIR/../lib/dist/insights/* $DIR/../node_modules/@alfresco/adf-insights
-
-npm run server-versions
-ng build --prod --app dist --base-href=/$NAME_PR/ -op demo-shell/dist/$NAME_PR
 
 echo "====== PUBLISH DOCKER IMAGE TAG pr $NAME_PR ====="
 

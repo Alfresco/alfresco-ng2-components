@@ -65,10 +65,10 @@ script:
 jobs:
     include:
         - stage: Demo shell prod && Demo shell e2e && Check ADF exports
-          script: ./scripts/test-dist.sh
-        - # stage name not required
+          script: ./scripts/test-dist.sh -n $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
+        - # Test Update version 2.0.0
           script: ./scripts/test-e2e-bc.sh
-        - # stage name not required
+        - # Test expors
           script: npm run test-export
         - stage: Update Apps dependencies
           if: tag =~ .*beta.*
@@ -76,8 +76,6 @@ jobs:
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-content-app
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n adf-app-manager-ui
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
-        - stage: Build PR
-          script: ./scripts/pr-build.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1
         - stage: Deploy PR
           script: node ./scripts/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1
 
