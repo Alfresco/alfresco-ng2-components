@@ -35,6 +35,7 @@ export * from './components/datatable/date-cell.component';
 export * from './components/datatable/empty-list.component';
 export * from './components/datatable/filesize-cell.component';
 export * from './components/datatable/location-cell.component';
+export * from './data/data-column.schema-assembler';
 
 export * from './directives/loading-template.directive';
 export * from './directives/no-content-template.directive';
