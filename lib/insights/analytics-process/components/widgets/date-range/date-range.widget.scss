@@ -7,9 +7,9 @@
             color: mat-color($warn);
         }
 
-        &-date-input {
+        &-date-input.mat-input-element{
             text-align: left; 
-            padding-left: 10px;  
+            padding-left: 15px;  
         }
 
         &-form-field {
