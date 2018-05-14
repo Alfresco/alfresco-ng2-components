@@ -20,8 +20,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
-import { SidebarActionMenuComponent, SidebarMenuDirective, SidebarMenuExpandIconDirective, SidebarMenuTitleIconDirective } from './sidebar-action-menu.component';
+import { SidebarActionMenuComponent, SidebarMenuDirective,
+    SidebarMenuExpandIconDirective, SidebarMenuTitleIconDirective } from '../sidenav-layout/components/sidebar-action/sidebar-action-menu.component';
 
+// @deprecated 2.4.0 now exported in sidenav-layout
 export function declarations() {
     return [
         SidebarActionMenuComponent,

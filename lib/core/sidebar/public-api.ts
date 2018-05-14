@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export * from './sidebar-action-menu.component';
+export * from '../sidenav-layout/components/sidebar-action/sidebar-action-menu.component';
