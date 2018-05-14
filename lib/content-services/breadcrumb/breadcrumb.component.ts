@@ -100,7 +100,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         this.recalculateNodes();
     }
 
-    recalculateNodes(): void {
+    protected recalculateNodes(): void {
         if (this.route.length > this.SUCCESSIVE_NODES) {
             this.lastNodes = this.route.slice(this.route.length - this.SUCCESSIVE_NODES);
             this.previousNodes = this.route.slice(0, this.route.length - this.SUCCESSIVE_NODES);
