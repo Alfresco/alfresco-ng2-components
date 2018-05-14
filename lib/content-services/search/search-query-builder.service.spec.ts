@@ -27,14 +27,6 @@ describe('SearchQueryBuilder', () => {
         return config;
     };
 
-    it('should throw error if configuration not provided', () => {
-        expect(() => {
-            const appConfig = new AppConfigService(null);
-            // tslint:disable-next-line:no-unused-expression
-            new SearchQueryBuilderService(appConfig, null);
-        }).toThrowError('Search configuration not found.');
-    });
-
     it('should use only enabled categories', () => {
         const config: SearchConfiguration = {
             categories: [
