@@ -9,9 +9,10 @@
 
             <mat-grid-list cols="2" rowHeight="80px">
                 <mat-grid-tile>
-                    <mat-form-field>
+                    <mat-form-field class="adf-form-field">
                         <input
                             matInput
+                            class="adf-date-input"
                             [min]="minDate"
                             [max]="maxDate"
                             formControlName="startDate"
@@ -30,9 +31,10 @@
                     </mat-datepicker>
                 </mat-grid-tile>
                 <mat-grid-tile>
-                    <mat-form-field>
+                    <mat-form-field class="adf-form-field">
                         <input
                             matInput
+                            class="adf-date-input"
                             [min]="minDate"
                             [max]="maxDate"
                             formControlName="endDate"

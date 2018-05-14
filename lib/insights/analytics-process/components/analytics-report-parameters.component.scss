@@ -26,15 +26,15 @@
     }
 
     .adf-edit-report-title {
-        float: left;
-        font-size: 20px!important;
+        font-size: 20px !important;
         padding-top: 19px;
+        display: flex;
     }
 
     .adf-report-icon {
-        float: left;
         padding: 5px 5px 0 0;
         visibility: hidden;
+        display: flex;
     }
 
     .adf-report-title-container {
@@ -50,6 +50,12 @@
 
     .adf-report-title {
         padding-top: 10px;
+        display: flex;
+        
+        &-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     .adf-full-width-input {
