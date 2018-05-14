@@ -154,9 +154,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         new DemoFieldValidator()
     ];
 
-    // savedTaskId = '';
-    // savedProcessId = '';
-
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
                 private router: Router,
