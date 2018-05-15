@@ -15,21 +15,30 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { AuthenticationSSOService } from '../services/authentication-sso.service';
 
-import { AuthenticationSSOService } from './authentication-sso.service';
-
-@Injectable()
-export class AuthGuardSSO implements CanActivate {
-
+@Directive({
+    selector: '[adf-logout-sso]'
+})
+export class LogoutSSODirective implements OnInit {
     constructor(
+        private elementRef: ElementRef,
+        private renderer: Renderer2,
         private authSSOService: AuthenticationSSOService) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
-        return this.authSSOService.checkLogin(state.url, route.data);
+    ngOnInit() {
+        if (this.elementRef.nativeElement) {
+            this.renderer.listen(this.elementRef.nativeElement, 'click', (evt) => {
+                evt.preventDefault();
+                this.logout();
+            });
+        }
+    }
+
+    logout() {
+        this.authSSOService.logOut();
     }
 
 }

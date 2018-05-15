@@ -461,12 +461,16 @@
         "oauth2": {
           "description": "AUTH configuration parameters",
           "type": "object",
-          "required": [ "host", "clientId", "secret" ],
+          "required": [ "host", "clientId", "secret", "scope" ],
           "properties": {
               "host": { "type": "string" },
+              "requireHttps": { "type": "boolean" },
               "authPath": { "type": "string" },
               "clientId": { "type": "string" },
-              "secret": { "type": "string" }
+              "secret": { "type": "string" },
+              "redirectUri": { "type": "string" },
+              "silentRefreshRedirectUri": { "type": "string" },
+              "scope": { "type": "string" }
           }
         },
         "adf-version-manager": {

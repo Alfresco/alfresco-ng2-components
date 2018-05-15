@@ -22,16 +22,17 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthenticationSSOService } from './authentication-sso.service';
+import { TokenResponse } from 'angular-oauth2-oidc';
 
 @Injectable()
 export class AuthSSOInterceptor implements HttpInterceptor {
   private excludedUrlsRegex: RegExp[];
-  private authService: AuthenticationSSOService;
+  private authSSOService: AuthenticationSSOService;
 
   constructor(private injector: Injector) { }
 
   private loadExcludedUrlsRegex(): void {
-    const excludedUrls: string[] = this.authService.getBearerExcludedUrls();
+    const excludedUrls: string[] = this.authSSOService.getBearerExcludedUrls();
     this.excludedUrlsRegex = excludedUrls.map(urlPattern => new RegExp(urlPattern, 'gi')) || [];
 
   }
@@ -39,9 +40,9 @@ export class AuthSSOInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
-    this.authService = this.injector.get(AuthenticationSSOService);
+    this.authSSOService = this.injector.get(AuthenticationSSOService);
 
-    if (!this.authService || !this.authService.getBearerExcludedUrls()) {
+    if (!this.authSSOService || !this.authSSOService.getBearerExcludedUrls()) {
       return next.handle(req);
     }
 
@@ -57,7 +58,7 @@ export class AuthSSOInterceptor implements HttpInterceptor {
       });
     }
 
-    return this.authService.addTokenToHeader(req.headers).mergeMap(headersWithBearer => {
+    return this.authSSOService.addTokenToHeader(req.headers).mergeMap(headersWithBearer => {
       const kcReq = req.clone({ headers: headersWithBearer });
       return next.handle(kcReq).catch( error => {
         if (error instanceof HttpErrorResponse) {
@@ -75,16 +76,16 @@ export class AuthSSOInterceptor implements HttpInterceptor {
   }
 
   handle401Error(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    return this.authService.refreshToken()
-      .switchMap((newToken: string) => {
-        if (newToken) {
-          return this.authService.addTokenToHeader(req.headers).mergeMap(headersWithBearer => {
+    return this.authSSOService.refreshToken()
+      .switchMap((response: TokenResponse) => {
+        if (response.access_token) {
+          return this.authSSOService.addTokenToHeader(req.headers).mergeMap(headersWithBearer => {
             const kcReq = req.clone({ headers: headersWithBearer });
             return next.handle(kcReq);
           });
         }
       }).catch((e) => {
-        this.authService.logout();
+        this.authSSOService.logOut();
         return next.handle(req);
       });
   }

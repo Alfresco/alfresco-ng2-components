@@ -18,7 +18,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LogService, StorageService, AuthenticationSSOService } from '@alfresco/adf-core';
+import { LogService, StorageService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-login',
@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
     customMinLength = 2;
 
     constructor(private router: Router,
-                private authSSO: AuthenticationSSOService,
                 private storage: StorageService,
                 private logService: LogService) {
         this.customValidation = {
@@ -83,7 +82,6 @@ export class LoginComponent implements OnInit {
     }
 
     onLogin($event) {
-        this.authSSO.setToken($event.token.ticket);
 
         this.router.navigate(['/home']);
     }

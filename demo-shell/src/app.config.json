@@ -3,9 +3,10 @@
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
     "oauth2": {
-      "host": "http://localhost:9191",
-      "authPath": "/auth/realms/springboot/protocol/openid-connect/token",
+      "host": "http://a5e2f93de10af11e8a0560a1bea5b7c8-236709433.us-east-1.elb.amazonaws.com:30081/auth/realms/springboot",
+      "requireHttps": false,
       "clientId": "activiti",
+      "scope": "openid",
       "secret": ""
     },
     "contextRootBpm": "activiti-app",

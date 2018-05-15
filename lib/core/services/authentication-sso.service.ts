@@ -16,94 +16,105 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import moment from 'moment-es6';
 import { AppConfigService } from '../app-config/app-config.service';
+import { AuthConfig, OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
+import { AuthTokenProcessorService } from './auth-token-processor.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthenticationSSOService {
 
-  constructor(private http: HttpClient, private appConfig: AppConfigService) { }
+    private bearerExcludedUrls: string[];
 
-  private bearerExcludedUrls: string[] =  ['app.config.json', 'assets/', 'assets/adf-core/i18n/',
-  'auth/', 'resources/', 'assets/adf-process-services/i18n/', 'assets/adf-content-services/i18n/'];
+    constructor(
+        private router: Router,
+        private tokenService: AuthTokenProcessorService,
+        private appConfig: AppConfigService, private oauthService: OAuthService) {
+    }
 
-  token: string;
+    token: string;
 
-  setToken(authResult) {
-    const expiresAt = moment().add(authResult.expires_in, 'seconds');
-    localStorage.setItem('id_token', authResult.access_token);
-    localStorage.setItem('refresh_token', authResult.refresh_token);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
-  }
+    checkLogin(redirectUrl: string, data: any): Observable<boolean> {
+        if (this.bearerExcludedUrls === undefined) {
+            this.bearerExcludedUrls = this.appConfig.get('oauth2.bearerExcludedUrls', []);
+        }
+        return Observable.of(this.oauthService.hasValidAccessToken())
+            .map(loggedIn => {
+                if (!loggedIn && data && data.role) {
+                    loggedIn = this.tokenService.hasRole(data.role);
+                }
 
-  refreshToken(): Observable<string> {
-    const authHost = this.appConfig.get('oauth2.host');
-    const authPath = this.appConfig.get('oauth2.authPath');
+                if (!loggedIn) {
+                    this.logOut();
+                }
+                return loggedIn;
+            });
+    }
 
-    const body = new HttpParams()
-      .set('grant_type', 'refresh_token')
-      .set('refresh_token', this.getRefreshToken())
-      .set('client_id', 'activiti');
+    getToken(): string {
+        return this.oauthService.getIdToken();
+    }
 
-    return this.http.post(`${authHost}${authPath}`,
-      body,
-      {
-        headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-      }).do( (response: any) => {
-        this.setToken(response);
-      });
-  }
+    logOut() {
+        this.oauthService.logOut();
+    }
 
-  getToken(): string {
-    return localStorage.getItem('id_token');
-  }
+    getBearerExcludedUrls(): string[] {
+        return this.bearerExcludedUrls;
+    }
 
-  getRefreshToken(): string {
-    return localStorage.getItem('refresh_token');
-  }
+    refreshToken(): Observable<any> {
+        return Observable.fromPromise(this.oauthService.refreshToken());
+    }
 
-   getExpiration() {
-    const expiration = localStorage.getItem('expires_at');
-    const expiresAt = JSON.parse(expiration);
-    return moment(expiresAt);
-  }
+    addTokenToHeader(headersArg?: HttpHeaders): Observable<HttpHeaders> {
+        return Observable.create(async (observer: Observer<any>) => {
+            let headers = headersArg;
+            if (!headers) {
+                headers = new HttpHeaders();
+            }
+            try {
+                const token: string = this.getToken();
+                headers = headers.set('Authorization', 'bearer ' + token);
+                observer.next(headers);
+                observer.complete();
+            } catch (error) {
+                observer.error(error);
+            }
+        });
+    }
 
-  public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
-  }
+    async loadDiscoveryDocumentAndLogin() {
+        await this.configureWithNewConfigApi();
+        if (this.oauthService.hasValidAccessToken()) {
+            const redirectUri = this.appConfig.get('oauth2.redirectUri', '');
+            this.router.navigate([redirectUri]);
+        } else {
+            await this.oauthService.loadDiscoveryDocumentAndLogin();
+        }
+    }
 
-  isLoggedOut() {
-    return !this.isLoggedIn();
-  }
+    async configureWithNewConfigApi() {
+        const authConfig: AuthConfig = this.createAuthConfigFromJSON();
+        this.oauthService.configure(authConfig);
+        this.oauthService.setStorage(localStorage);
+        this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+    }
 
-  logout() {
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
-    localStorage.removeItem('refresh_token');
-  }
-
-  getBearerExcludedUrls(): string[] {
-    return this.bearerExcludedUrls;
-  }
-
-  addTokenToHeader(headersArg?: HttpHeaders): Observable<HttpHeaders> {
-    return Observable.create(async (observer: Observer<any>) => {
-      let headers = headersArg;
-      if (!headers) {
-        headers = new HttpHeaders();
-      }
-      try {
-        const token: string = this.getToken();
-        headers = headers.set('Authorization', 'bearer ' + token);
-        observer.next(headers);
-        observer.complete();
-      } catch (error) {
-        observer.error(error);
-      }
-    });
-  }
+    private createAuthConfigFromJSON(): AuthConfig {
+        return {
+            issuer: this.appConfig.get('oauth2.host'),
+            redirectUri: window.location.origin + this.appConfig.get('oauth2.redirectUri', ''),
+            requireHttps: this.appConfig.get('oauth2.requireHttps', true),
+            silentRefreshRedirectUri: window.location.origin + this.appConfig.get('oauth2.silentRefreshRedirectUri', ''),
+            clientId: this.appConfig.get('oauth2.clientId'),
+            scope: this.appConfig.get('oauth2.scope'),
+            showDebugInformation: this.appConfig.get('oauth2.showDebugInformation', false),
+            sessionChecksEnabled: this.appConfig.get('oauth2.sessionChecksEnabled', false)
+        };
+    }
 
 }

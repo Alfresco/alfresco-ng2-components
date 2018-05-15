@@ -18,6 +18,7 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { AlfrescoApiService, SettingsService, PageTitleService, StorageService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
+import { AuthenticationSSOService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-root',
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
                 private storage: StorageService,
                 private pageTitleService: PageTitleService,
                 private alfrescoApiService: AlfrescoApiService,
+                private authSSOService: AuthenticationSSOService,
                 private router: Router) {
     }
 
@@ -45,6 +47,7 @@ export class AppComponent implements OnInit {
                 this.router.navigate(['/error', error.status]);
             }
         });
+        this.authSSOService.loadDiscoveryDocumentAndLogin();
     }
 
     private setProvider() {

@@ -73,6 +73,7 @@
     "@angular/platform-browser-dynamic": "5.1.1",
     "@angular/router": "5.1.1",
     "@auth0/angular-jwt": "^1.1.0",
+    "angular-oauth2-oidc": "^3.1.4",
     "@mat-datetimepicker/core": "1.0.4",
     "@mat-datetimepicker/moment": "1.0.4",
     "@ngx-translate/core": "9.1.1",
