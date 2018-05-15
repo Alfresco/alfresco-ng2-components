@@ -1,16 +1,29 @@
-.checklist {
-    display: flex;
-    flex-direction: column;
+.adf-search-filter {
 
-    .mat-checkbox {
-        margin: 5px;
+    .checklist {
+        display: flex;
+        flex-direction: column;
+
+        .mat-checkbox {
+            margin: 5px;
+        }
     }
-}
 
-.facet-buttons {
-    text-align: right;
+    .facet-result-filter {
+        display: flex;
+        flex-direction: column;
 
-    .mat-button {
-        text-transform: uppercase;
+        & > * {
+            width: 100%;
+        }
     }
+
+    .facet-buttons {
+        text-align: right;
+
+        .mat-button {
+            text-transform: uppercase;
+        }
+    }
+
 }

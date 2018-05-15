@@ -19,17 +19,25 @@ import { ResponseFacetQuery } from '../../../facet-query.interface';
 import { SearchFilterList } from './search-filter-list.model';
 
 export class ResponseFacetQueryList extends SearchFilterList<ResponseFacetQuery> {
-
     constructor(items: ResponseFacetQuery[] = [], pageSize: number = 5) {
-        const filtered = items
-            .filter(item => {
-                return item.count > 0;
-            })
-            .map(item => {
-                return <ResponseFacetQuery> { ...item };
-            });
+        super(
+            items
+                .filter(item => {
+                    return item.count > 0;
+                })
+                .map(item => {
+                    return <ResponseFacetQuery> { ...item };
+                }),
+            pageSize
+        );
 
-        super(filtered, pageSize);
+        this.filter = (query: ResponseFacetQuery) => {
+            if (this.filterText && query.label) {
+                const pattern = (this.filterText || '').toLowerCase();
+                const label = query.label.toLowerCase();
+                return label.startsWith(pattern);
+            }
+            return true;
+        };
     }
-
 }

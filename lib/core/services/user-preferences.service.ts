@@ -70,7 +70,8 @@ export class UserPreferencesService {
 
     private initUserPreferenceStatus() {
         this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
-        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.appConfig.get('pagination.size', this.defaults.paginationSize);
+        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.paginationSize ?
+            this.paginationSize : this.appConfig.get('pagination.size', this.defaults.paginationSize);
         this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
         this.userPreferenceStatus[UserPreferenceValues.DisableCSRF] = this.disableCSRF;
     }

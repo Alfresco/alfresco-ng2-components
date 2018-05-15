@@ -37,12 +37,17 @@ export class TrashcanComponent {
     documentList: DocumentListComponent;
 
     supportedPages = [];
+    currentLocale;
 
     constructor(private preference: UserPreferencesService) {
         this.preference.select(UserPreferenceValues.SupportedPageSizes)
         .subscribe((pages) => {
             this.supportedPages = pages;
         });
+
+        this.preference.select(UserPreferenceValues.Locale).subscribe((locale) => {
+            this.currentLocale = locale;
+         });
     }
 
     refresh() {

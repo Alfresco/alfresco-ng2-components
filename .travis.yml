@@ -64,27 +64,20 @@ script:
 
 jobs:
     include:
-        - stage: Check build demo shell in production mode AND e2e
-          before_install:
-            - "export DISPLAY=:99.0"
-            - "sh -e /etc/init.d/xvfb start"
-          script: travis_wait 30 ./scripts/test-dist.sh
-        - stage: Check 2.0.0 Project Update
+        - stage: Demo shell prod && Demo shell e2e && Check ADF exports
+          script: ./scripts/test-dist.sh -n $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
+        - # Test Update version 2.0.0
           script: ./scripts/test-e2e-bc.sh
-        - stage: Check ADF exports
+        - # Test expors
           script: npm run test-export
-        - stage: Update Generator
+        - stage: Update Apps dependencies
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
-        - stage: Update Content app
-          if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-content-app
-        - stage: Update DW
-          if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n adf-app-manager-ui
-        - stage: Update ng2-components
-          if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
+        - stage: Deploy PR
+          script: node ./scripts/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1
 
 # jobs:
 #   include:

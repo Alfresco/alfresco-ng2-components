@@ -41,15 +41,11 @@ export class SearchQueryBuilderService {
 
     constructor(appConfig: AppConfigService,  private alfrescoApiService: AlfrescoApiService) {
         this.config = appConfig.get<SearchConfiguration>('search');
-        if (!this.config) {
-            throw new Error('Search configuration not found.');
-        }
 
-        if (this.config.categories) {
-            this.categories = this.config.categories.filter(f => f.enabled);
+        if (this.config) {
+            this.categories = (this.config.categories || []).filter(f => f.enabled);
+            this.filterQueries = this.config.filterQueries || [];
         }
-
-        this.filterQueries = this.config.filterQueries || [];
     }
 
     addFilterQuery(query: string): void {

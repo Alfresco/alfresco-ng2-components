@@ -1,10 +1,11 @@
-$breadcrumb-chevron-spacer: 2px;
-
 @mixin adf-breadcrumb-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
     $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    $breadcrumb-chevron-spacer: 2px;
 
     .adf-breadcrumb {
         display: flex;
@@ -23,15 +24,62 @@ $breadcrumb-chevron-spacer: 2px;
             cursor: default;
             display: flex;
             overflow: hidden;
-            height: 25px;
+        }
+
+        &-dropdown {
+            &-path {
+                width: 0;
+                height: 0;
+                overflow: hidden;
+                margin-top: 35px;
+                
+                &.mat-select {
+                    width: 0;
+                }
+            }
+
+            &-trigger {
+                cursor: pointer;
+                padding: 0;
+                border: none;
+                background: transparent;
+                width: 30px;
+                margin-top: 2px;
+                margin-right: 5px;
+
+                &:focus {
+                    color: mat-color($primary);
+                    outline: none;
+                }
+    
+                &-arrow {
+                    font-size: 17px;
+                    position: relative;
+                    left: -28px;
+                    top: -2px;
+                    color: white;
+                    z-index: 2;
+                }
+    
+                &-arrow.isRoot {
+                    visibility: hidden;
+                }
+    
+                &-arrow.focus {
+                    border: none;
+                }
+            }
+
+            &-trigger.isRoot {
+                cursor: not-allowed;
+            }
         }
 
         &-item {
             padding-right: $breadcrumb-chevron-spacer;
             overflow: hidden;
             display: flex;
-            line-height: 24px;
-
+            line-height: 33px;
             font-size: 14px;
             font-weight: 600;
             letter-spacing: -0.2px;
@@ -50,6 +98,8 @@ $breadcrumb-chevron-spacer: 2px;
 
             &-chevron {
                 opacity: 1;
+                margin-top: 9px;
+                font-size: 17px;
             }
 
             &.mat-primary {
@@ -76,6 +126,18 @@ $breadcrumb-chevron-spacer: 2px;
 
             &.active {
                 display: block;
+            }
+
+            &-current {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 300px;
+            }
+        }
+
+        &-path-option {
+            &.mat-option {
+                background-color: mat-color($background, card);
             }
         }
     }

@@ -1,5 +1,12 @@
 {
     "profiles": {
+        "default": [
+            "index",
+            "versionIndex",
+            "tutorialIndex",
+            "tsInfo",
+            "toc"
+        ],
         "index": [
             "index",
             "versionIndex",

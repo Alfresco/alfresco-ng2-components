@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ContentChild, Input, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, ContentChild, Input, Output, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef, EventEmitter } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
@@ -37,6 +37,8 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @Input() stepOver: number;
     @Input() hideSidenav = false;
     @Input() expandedSidenav = true;
+
+    @Output() expanded = new EventEmitter<boolean>();
 
     @ContentChild(SidenavLayoutHeaderDirective) headerDirective: SidenavLayoutHeaderDirective;
     @ContentChild(SidenavLayoutNavigationDirective) navigationDirective: SidenavLayoutNavigationDirective;
@@ -89,6 +91,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         }
 
         this.container.toggleMenu();
+        this.expanded.emit(!this.isMenuMinimized);
     }
 
     get isMenuMinimized() {
@@ -118,5 +121,6 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     onMediaQueryChange() {
         this.isMenuMinimized = false;
+        this.expanded.emit(!this.isMenuMinimized);
     }
 }

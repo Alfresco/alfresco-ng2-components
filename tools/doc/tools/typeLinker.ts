@@ -28,7 +28,7 @@ const includedNodeTypes = [
     "link", "text"
 ];
 
-const docFolder = path.resolve("..", "docs");
+const docFolder = path.resolve("docs");
 const adfLibNames = ["core", "content-services", "insights", "process-services"];
 
 

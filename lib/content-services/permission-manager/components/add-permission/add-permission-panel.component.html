@@ -29,7 +29,19 @@
         class="adf-permission-result-list"
         *ngIf="searchedWord.length !== 0">
 <ng-template let-data>
-    <mat-selection-list [class.adf-permission-result-list-elements]="data?.list?.entries.length !== 0">
+    <mat-selection-list class="adf-permission-result-list-elements">
+        <mat-list-option
+            id="adf-add-permission-group-everyone"
+            class="adf-list-option-item"
+            (click)="elementClicked(EVERYONE)">
+            <mat-icon mat-list-icon id="add-group-icon">
+                group_add
+            </mat-icon>
+            <p>
+                {{'PERMISSION_MANAGER.ADD-PERMISSION.EVERYONE' | translate}}
+            </p>
+        </mat-list-option>
+
         <mat-list-option *ngFor="let item of data?.list?.entries; let idx = index"
                             (click)="elementClicked(item)"
                             class="adf-list-option-item"
@@ -47,8 +59,5 @@
                                     item.entry?.properties['cm:firstName']}}</p>
         </mat-list-option>
     </mat-selection-list>
-    <div *ngIf="data?.list?.entries.length === 0" class="adf-permission-no-result" id="adf-add-permission-no-results">
-        <span>{{'PERMISSION_MANAGER.ADD-PERMISSION.NO-RESULT' | translate}}</span>
-    </div>
 </ng-template>
 </adf-search>

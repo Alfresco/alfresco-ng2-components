@@ -20,7 +20,7 @@ const commitWeight = 0.1;
 const scoreTimeBase = 60;
 
 const rootFolder = ".";
-const stoplistFilePath = path.resolve("config", "DocProcessor", "commitStoplist.json");
+const stoplistFilePath = path.resolve("..", "tools", "doc", "commitStoplist.json");
 
 const angFilePattern = /(component)|(directive)|(model)|(pipe)|(service)|(widget)/;
 

@@ -176,7 +176,8 @@
         "APPLY": "Apply",
         "CLEAR-ALL": "Clear all",
         "SHOW-MORE": "Show more",
-        "SHOW-LESS": "Show less"
+        "SHOW-LESS": "Show less",
+        "FILTER-CATEGORY": "Filter category"
       },
       "RANGE": {
         "FROM": "From",
@@ -187,7 +188,8 @@
       "VALIDATION": {
         "REQUIRED-VALUE": "Required value",
         "NO-DAYS": "No days selected.",
-        "INVALID-FORMAT": "Invalid Format"
+        "INVALID-FORMAT": "Invalid Format",
+        "BEYOND-MAX-DATE": "Date is too late."
       }
     },
     "ICONS": {
@@ -262,14 +264,18 @@
       "ROLE": "Role",
       "LOCALLY_SET": "Locally set",
       "NO_PERMISSIONS": "No permissions"
-      },
-      "ADD-PERMISSION": {
-        "SEARCH" : "Search",
-        "TYPE-MESSAGE" : "Type something to start searching groups or people",
-        "NO-RESULT": "No result found for this search",
-        "ADD-ACTION" : "ADD",
-        "CLOSE-ACTION" : "CLOSE",
-        "BASE-DIALOG-TITLE" : "Search a group or people to add..."
-      }
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Search",
+      "TYPE-MESSAGE": "Type something to start searching groups or people",
+      "NO-RESULT": "No result found for this search",
+      "ADD-ACTION": "ADD",
+      "CLOSE-ACTION": "CLOSE",
+      "BASE-DIALOG-TITLE": "Search a group or people to add...",
+      "EVERYONE" : "EVERYONE"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "One or more of the permission you set is already present : {{list}}"
+    }
   }
 }
