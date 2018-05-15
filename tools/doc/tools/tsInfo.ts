@@ -21,6 +21,9 @@ import {
  } from "typedoc";
 import { CommentTag } from "typedoc/dist/lib/models";
 
+import { MDNav } from "../mdNav";
+import * as unist from "../unistHelpers";
+
 
 let libFolders = ["core", "content-services", "process-services", "insights"];
 let templateFolder = path.resolve("tools", "doc", "templates");
@@ -270,12 +273,6 @@ export function initPhase(aggData) {
     }));    
     
     aggData.projData = app.convert(sources);
-
-    /*
-    aggData.liq = liquid({
-        root: templateFolder
-    });
-    */
 }
 
 
@@ -288,6 +285,9 @@ export function aggPhase(aggData) {
 
 
 export function updatePhase(tree, pathname, aggData, errorMessages) {
+    let inputMD = getPropDocsFromMD(tree, "Properties", 3);
+    let outputMD = getPropDocsFromMD(tree, "Events", 2);
+
     let compName = angNameToClassName(path.basename(pathname, ".md"));
     let classRef = aggData.projData.findReflectionByName(compName);
 
@@ -300,6 +300,9 @@ export function updatePhase(tree, pathname, aggData, errorMessages) {
     let classType = compName.match(/component|directive|service/i);
 
     if (classType) {
+        // Copy docs back from the .md file when the JSDocs are empty.
+        updatePropDocsFromMD(compData, inputMD, outputMD, errorMessages);
+
         let templateName = path.resolve(templateFolder, classType + ".combyne");
         let templateSource = fs.readFileSync(templateName, "utf8");
         let template = combyne(templateSource);
@@ -318,40 +321,11 @@ export function updatePhase(tree, pathname, aggData, errorMessages) {
         compData.errors.forEach(err => {
             errorMessages.push(err);
         })
-
-        /*
-        let templateName = classType[0] + ".liquid";
-
-        aggData.liq
-        .renderFile(templateName, compData)
-        .then(mdText => {
-            let newSection = remark().parse(mdText).children;
-            replaceSection(tree, "Class members", (before, section, after) => {
-                newSection.unshift(before);
-                newSection.push(after);
-                return newSection;
-            });
-
-            fs.writeFileSync(pathname, remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false}).stringify(tree));
-        
-        });
-        */
     }
 
     return true;
 }
 
-/*
-function renderInputs(comp: ComponentInfo): string {
-    var result = "";
-
-    comp.properties.forEach(prop => {
-        result += `| ${prop.name} | \`${prop.type}\` | ${prop.defaultValue} | ${prop.docText} |\n`;
-    });
-
-    return result;
-}
-*/
 
 function initialCap(str: string) {
     return str[0].toUpperCase() + str.substr(1);
@@ -382,4 +356,79 @@ function angNameToClassName(rawName: string) {
     var finalName = outCompName + itemTypeIndicator;
 	
     return finalName;
+}
+
+
+function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
+    let result = {}
+
+    let nav = new MDNav(tree);
+
+    let classMemHeading = nav
+    .heading(h => {
+        return (h.children[0].type === "text") && (h.children[0].value === "Class members");
+    });
+
+    let propsTable = classMemHeading
+    .heading(h => {
+        return (h.children[0].type === "text") && (h.children[0].value === sectionHeading);
+    }).table();
+
+    let propTableRow = propsTable.childNav
+    .tableRow(()=>true, 1).childNav;
+
+    let i = 1;
+
+    while (!propTableRow.empty) {
+        let propName = propTableRow
+        .tableCell().childNav
+        .text().item.value;
+
+        let propDocText = propTableRow
+        .tableCell(()=>true, docsColumn).childNav
+        .text().item.value;
+
+        result[propName] = propDocText;
+
+        i++;
+        propTableRow = propsTable.childNav
+        .tableRow(()=>true, i).childNav;
+    }
+    
+/*
+    let row = tableNav.tableRow(() => true, 1);
+    console.log(JSON.stringify(row.item));
+    
+    for (let i = 1; !row.empty; row = propsTable.tableRow(() => true, i++)) {
+        let cellText = row.tableCell(()=>true, 3)
+        .text();
+        console.log(`${i}. ` + 
+            remark()
+            .use(frontMatter, {type: 'yaml', fence: '---'})
+            .data("settings", {paddedTable: false, gfm: false})
+            .stringify(cellText.item)
+        );
+    }
+    */
+    
+    return result;
+}
+
+
+function updatePropDocsFromMD(comp: ComponentInfo, inputDocs, outputDocs, errorMessages) {
+    comp.properties.forEach(prop => {
+        let propMDDoc: string;
+
+        if (prop.isInput) {
+            propMDDoc = inputDocs[prop.name];
+        } else if (prop.isOutput) {
+            propMDDoc = outputDocs[prop.name];
+        }
+
+        // If JSDocs are empty but MD docs aren't then the Markdown is presumably more up-to-date.
+        if (!prop.docText && propMDDoc) {
+            prop.docText = propMDDoc;
+            errorMessages.push(`Warning: empty JSDocs for property "${prop.name}" may need sync with the .md file.`);
+        }
+    });
 }
