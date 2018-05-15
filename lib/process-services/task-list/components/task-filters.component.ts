@@ -83,7 +83,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
         const filterParam = changes['filterParam'];
         if (filterParam && filterParam.currentValue) {
-            this.selectTaskFilter(filterParam.currentValue, this.filters);
+            this.selectFilter(filterParam.currentValue);
         }
     }
 
@@ -155,8 +155,14 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * @param filter
      */
     public selectFilter(filter: FilterRepresentationModel) {
-        this.currentFilter = filter;
-        this.filterClick.emit(filter);
+        if (filter) {
+            this.currentFilter = this.filters.find(obj =>
+                filter.id === obj.id ||
+                (filter.name && obj.name &&
+                    (filter.name.toLocaleLowerCase() === obj.name.toLocaleLowerCase())
+                ));
+            this.filterClick.emit(this.currentFilter);
+        }
     }
 
     /**
@@ -197,7 +203,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
             });
         }
         findTaskFilter ? this.currentFilter = findTaskFilter : this.selectDefaultTaskFilter(filteredFilterList);
-        this.filterClick.emit(this.currentFilter);
     }
 
     /**
