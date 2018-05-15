@@ -12,45 +12,45 @@ Manages Document List information that is specific to a user.
 
 ### Methods
 
--   **getCorrespondingNodeIds**(nodeId: string = null, pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = null): `Observable<string[]>` <br/>
+-   **getCorrespondingNodeIds**(nodeId: `string` = `null`, pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`): `Observable<string[]>` <br/>
     Gets the contents of one of the well-known aliases in the form of node ID strings.
     -   _nodeId:_ `string`  -  ID of the target folder node
     -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  -  Specifies how to paginate the results
     -   **Returns** `Observable<string[]>` - List of node IDs
--   **getRecentFiles**(personId: string = null, pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = null): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
+-   **getRecentFiles**(personId: `string` = `null`, pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
     Gets files recently accessed by a user.
     -   _personId:_ `string`  -  ID of the user
     -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  -  Specifies how to paginate the results
     -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - List of nodes for the recently used files
--   **isCustomSource**(folderId: string = null): `boolean` <br/>
+-   **isCustomSource**(folderId: `string` = `null`): `boolean` <br/>
     Is the folder ID one of the well-known aliases?
     -   _folderId:_ `string`  -  Folder ID name to check
     -   **Returns** `boolean` - True if the ID is a well-known name, false otherwise
--   **loadFavorites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = null, includeFields: string\[] =  \[]): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
+-   **loadFavorites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`, includeFields: `string[]` = `[]`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
     Gets favorite files for the current user.
     -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  -  Specifies how to paginate the results
     -   _includeFields:_ `string[]`  -  List of data field names to include in the results
     -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - List of favorite files
--   **loadFolderByNodeId**(nodeId: string = null, pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = null, includeFields: string\[] = null): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
+-   **loadFolderByNodeId**(nodeId: `string` = `null`, pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`, includeFields: `string[]` = `null`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
     Gets a folder's contents.
     -   _nodeId:_ `string`  -  ID of the target folder node
     -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  -  Specifies how to paginate the results
     -   _includeFields:_ `string[]`  -  List of data field names to include in the results
     -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - List of items contained in the folder
--   **loadMemberSites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = null): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
+-   **loadMemberSites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
     Gets sites that the current user is a member of.
     -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  -  Specifies how to paginate the results
     -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - List of sites
--   **loadSharedLinks**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = null, includeFields: string\[] =  \[]): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
+-   **loadSharedLinks**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`, includeFields: `string[]` = `[]`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
     Gets shared links for the current user.
     -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  -  Specifies how to paginate the results
     -   _includeFields:_ `string[]`  -  List of data field names to include in the results
     -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - List of shared links
--   **loadSites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = null): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
+-   **loadSites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
     Gets all sites in the respository.
     -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  -  Specifies how to paginate the results
     -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - List of sites
--   **loadTrashcan**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = null, includeFields: string\[] =  \[]): `Observable<DeletedNodesPaging>` <br/>
+-   **loadTrashcan**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`, includeFields: `string[]` = `[]`): `Observable<DeletedNodesPaging>` <br/>
     Gets all items currently in the trash.
     -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  -  Specifies how to paginate the results
     -   _includeFields:_ `string[]`  -  List of data field names to include in the results

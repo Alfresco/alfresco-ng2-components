@@ -12,55 +12,55 @@ Implements node operations used by the [Document List component](../content-serv
 
 ### Methods
 
--   **copyNode**(nodeId: string = null, targetParentId: string = null): `Observable<any>` <br/>
+-   **copyNode**(nodeId: `string` = `null`, targetParentId: `string` = `null`): `Observable<any>` <br/>
     Copy a node to destination node
     -   _nodeId:_ `string`  -  The id of the node to be copied
     -   _targetParentId:_ `string`  -  The id of the folder where the node will be copied
     -   **Returns** `Observable<any>` - NodeEntry for the copied node
--   **createFolder**(name: string = null, parentId: string = null): `Observable<MinimalNodeEntity>` <br/>
+-   **createFolder**(name: `string` = `null`, parentId: `string` = `null`): `Observable<MinimalNodeEntity>` <br/>
     Creates a new folder in the path.
     -   _name:_ `string`  -  Folder name
     -   _parentId:_ `string`  -  Parent folder ID
     -   **Returns** `Observable<MinimalNodeEntity>` - Details of the created folder node
--   **deleteNode**(nodeId: string = null): `Observable<any>` <br/>
+-   **deleteNode**(nodeId: `string` = `null`): `Observable<any>` <br/>
     Deletes a node.
     -   _nodeId:_ `string`  -  ID of the node to delete
     -   **Returns** `Observable<any>` - Empty response when the operation is complete
 -   **getDefaultMimeTypeIcon**(): `string` <br/>
     Gets a default icon for MIME types with no specific icon.
     -   **Returns** `string` - Path to the icon file
--   **getDocumentThumbnailUrl**(node: MinimalNodeEntity = null): `string` <br/>
+-   **getDocumentThumbnailUrl**(node: `MinimalNodeEntity` = `null`): `string` <br/>
     Get thumbnail URL for the given document node.
     -   _node:_ `MinimalNodeEntity`  -  Node to get URL for.
     -   **Returns** `string` - Thumbnail URL string
--   **getFolder**(folder: string = null, opts?: any = null, includeFields: string\[] =  \[]): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
+-   **getFolder**(folder: `string` = `null`, opts?: `any` = `null`, includeFields: `string[]` = `[]`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) <br/>
     Gets the folder node with the specified relative name path below the root node.
     -   _folder:_ `string`  -  Path to folder.
     -   _opts:_ `any`  - (Optional) Options.
     -   _includeFields:_ `string[]`  -  Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - Details of the folder
--   **getFolderNode**(nodeId: string = null, includeFields: string\[] =  \[]): `Observable<MinimalNodeEntryEntity>` <br/>
+-   **getFolderNode**(nodeId: `string` = `null`, includeFields: `string[]` = `[]`): `Observable<MinimalNodeEntryEntity>` <br/>
 
     -   _nodeId:_ `string`  -  ID of the folder node
     -   _includeFields:_ `string[]`  -  Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the folder
 
--   **getMimeTypeIcon**(mimeType: string = null): `string` <br/>
+-   **getMimeTypeIcon**(mimeType: `string` = `null`): `string` <br/>
     Gets the icon that represents a MIME type.
     -   _mimeType:_ `string`  -  MIME type to get the icon for
     -   **Returns** `string` - Path to the icon file
--   **getNode**(nodeId: string = null, includeFields: string\[] =  \[]): `Observable<NodeEntry>` <br/>
+-   **getNode**(nodeId: `string` = `null`, includeFields: `string[]` = `[]`): `Observable<NodeEntry>` <br/>
     Gets a node via its node ID.
     -   _nodeId:_ `string`  -  ID of the target node
     -   _includeFields:_ `string[]`  -  Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** `Observable<NodeEntry>` - Details of the folder
--   **hasPermission**(node: any = null, permission: [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts) | string = null): `boolean` <br/>
+-   **hasPermission**(node: `any` = `null`, permission: `PermissionsEnum | string` = `null`): `boolean` <br/>
 
     -   _node:_ `any`  -  Target node
     -   _permission:_ `PermissionsEnum | string`  -  Permission level to query
     -   **Returns** `boolean` - True if the node has the permission, false otherwise
 
--   **moveNode**(nodeId: string = null, targetParentId: string = null): `Observable<any>` <br/>
+-   **moveNode**(nodeId: `string` = `null`, targetParentId: `string` = `null`): `Observable<any>` <br/>
     Moves a node to destination node.
     -   _nodeId:_ `string`  -  The id of the node to be moved
     -   _targetParentId:_ `string`  -  The id of the folder where the node will be moved

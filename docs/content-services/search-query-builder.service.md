@@ -11,7 +11,7 @@ Stores information from all the custom search and faceted search widgets, compil
 
 ### Methods
 
--   **addFilterQuery**(query: string = null) <br/>
+-   **addFilterQuery**(query: `string` = `null`) <br/>
 
     -   _query:_ `string`  -  
     -   **buildQuery**(): `QueryBody` <br/>
@@ -22,12 +22,12 @@ Stores information from all the custom search and faceted search widgets, compil
 
     -   **Returns** `Promise<void>` - 
 
--   **getFacetQuery**(label: string = null): [`FacetQuery`](../../lib/content-services/search/facet-query.interface.ts) <br/>
+-   **getFacetQuery**(label: `string` = `null`): [`FacetQuery`](../../lib/content-services/search/facet-query.interface.ts) <br/>
 
     -   _label:_ `string`  -  
     -   **Returns** [`FacetQuery`](../../lib/content-services/search/facet-query.interface.ts) - 
 
--   **removeFilterQuery**(query: string = null) <br/>
+-   **removeFilterQuery**(query: `string` = `null`) <br/>
 
     -   _query:_ `string`  -  
 

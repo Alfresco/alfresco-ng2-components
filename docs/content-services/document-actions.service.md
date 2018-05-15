@@ -12,15 +12,15 @@ Implements the document menu actions for the [Document List component](../conten
 
 ### Methods
 
--   **canExecuteAction**(obj: any = null): `boolean` <br/>
+-   **canExecuteAction**(obj: `any` = `null`): `boolean` <br/>
     Checks if actions can be executed for an item.
     -   _obj:_ `any`  -  Item to receive an action
     -   **Returns** `boolean` - True if the action can be executed on this item, false otherwise
--   **getHandler**(key: string = null): `ContentActionHandler` <br/>
+-   **getHandler**(key: `string` = `null`): `ContentActionHandler` <br/>
     Gets the handler for an action.
     -   _key:_ `string`  -  Identifier of the action
     -   **Returns** `ContentActionHandler` - The handler for the action
--   **setHandler**(key: string = null, handler: ContentActionHandler = null): `boolean` <br/>
+-   **setHandler**(key: `string` = `null`, handler: `ContentActionHandler` = `null`): `boolean` <br/>
     Sets a new handler for an action.
     -   _key:_ `string`  -  Identifier of the action
     -   _handler:_ `ContentActionHandler`  -  Handler for the action
