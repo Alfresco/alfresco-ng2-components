@@ -23,7 +23,6 @@ export * from './pagination/index';
 export * from './login/index';
 export * from './language-menu/index';
 export * from './info-drawer/index';
-export * from './sidebar/index';
 export * from './data-column/index';
 export * from './datatable/index';
 export * from './context-menu/index';

@@ -47,7 +47,11 @@ import { SidebarActionMenuComponent, SidebarMenuDirective,
         SidenavLayoutContentDirective,
         SidenavLayoutNavigationDirective,
         SidenavLayoutComponent,
-        LayoutContainerComponent
+        LayoutContainerComponent,
+        SidebarActionMenuComponent,
+        SidebarMenuDirective,
+        SidebarMenuExpandIconDirective,
+        SidebarMenuTitleIconDirective
     ]
 })
 export class SidenavLayoutModule {}
