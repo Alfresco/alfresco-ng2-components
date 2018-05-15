@@ -75,6 +75,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     processId;
 
     @Input()
+    sorting = ['name', 'asc'];
+
+    @Input()
     selectionMode = 'multiple';
 
     @Input()

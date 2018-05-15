@@ -39,6 +39,8 @@ export class SearchResultComponent implements OnInit {
     maxItems: number;
     skipCount = 0;
 
+    sorting = ['name', 'asc'];
+
     constructor(public router: Router,
                 private preferences: UserPreferencesService,
                 private queryBuilder: SearchQueryBuilderService,
@@ -51,6 +53,9 @@ export class SearchResultComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        this.sorting = this.getSorting();
+
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
@@ -78,5 +83,15 @@ export class SearchResultComponent implements OnInit {
 
     onDeleteElementSuccess(element: any) {
         this.searchResult.reload();
+    }
+
+    private getSorting() {
+        const primary = this.queryBuilder.getPrimarySorting();
+
+        if (primary) {
+            return [primary.key, primary.ascending ? 'asc' : 'desc'];
+        }
+
+        return ['name', 'asc'];
     }
 }

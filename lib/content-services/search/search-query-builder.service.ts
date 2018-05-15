@@ -130,6 +130,13 @@ export class SearchQueryBuilderService {
         return null;
     }
 
+    getPrimarySorting(): SearchSortingDefinition {
+        if (this.sorting && this.sorting.length > 0) {
+            return this.sorting[0];
+        }
+        return null;
+    }
+
     private get facetQueries(): FacetQuery[] {
         const config = this.config.facetQueries;
 

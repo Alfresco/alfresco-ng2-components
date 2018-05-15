@@ -16,6 +16,7 @@
  */
 
 export interface SearchSortingDefinition {
+    key: string;
     type: string;
     field: string;
     ascending: boolean;

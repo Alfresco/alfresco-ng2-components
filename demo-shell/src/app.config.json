@@ -57,11 +57,11 @@
       "include": ["path", "allowableOperations"],
       "sorting": {
         "options": [
-          { "type": "FIELD", "field": "cm:name", "ascending": true },
-          { "type": "FIELD", "field": "cm:description", "ascending": true }
+          { "key": "name",  "type": "FIELD", "field": "cm:name", "ascending": true },
+          { "key": "description", "type": "FIELD", "field": "cm:description", "ascending": true }
         ],
         "defaults": [
-          { "type": "FIELD", "field": "cm:name", "ascending": true }
+          { "key": "name", "type": "FIELD", "field": "cm:name", "ascending": true }
         ]
       },
       "filterQueries": [
