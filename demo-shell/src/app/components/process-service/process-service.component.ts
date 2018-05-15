@@ -342,14 +342,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     navigateStartProcess(): void {
-        this.resetProcessFilters();
-        this.reloadProcessFilters();
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
     navigateStartTask(): void {
-        this.resetTaskFilters();
-        this.reloadTaskFilters();
         this.currentTaskId = currentTaskIdNew;
     }
 
@@ -448,14 +444,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.taskList.selectTask(taskId);
         }
         this.currentTaskId = taskId;
-    }
-
-    private resetProcessFilters(): void {
-        this.processFilter = null;
-    }
-
-    private resetTaskFilters(): void {
-        this.taskFilter = null;
     }
 
     private reloadProcessFilters(): void {
