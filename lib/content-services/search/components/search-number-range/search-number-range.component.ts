@@ -44,6 +44,8 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     field: string;
     format = '[{FROM} TO {TO}]';
 
+    validators: Validators;
+
     ngOnInit(): void {
 
         if (this.settings) {
@@ -51,13 +53,13 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             this.format = this.settings.format || '[{FROM} TO {TO}]';
         }
 
-        const validators = Validators.compose([
+        this.validators = Validators.compose([
             Validators.required,
             Validators.pattern(/^-?(0|[1-9]\d*)?$/)
         ]);
 
-        this.from = new FormControl('', validators);
-        this.to = new FormControl('', validators);
+        this.from = new FormControl('', this.validators);
+        this.to = new FormControl('', this.validators);
 
         this.form = new FormGroup({
             from: this.from,

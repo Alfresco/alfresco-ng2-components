@@ -16,7 +16,7 @@
  */
 
 import { SearchNumberRangeComponent } from './search-number-range.component';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 describe('SearchNumberRangeComponent', () => {
 
@@ -137,22 +137,27 @@ describe('SearchNumberRangeComponent', () => {
         expect(component.formValidator).toBeTruthy();
     });
 
-    it('should throw the right formControl error if exists', () => {
-        const validators = Validators.compose([
-            Validators.required,
-            Validators.pattern(/^-?(0|[1-9]\d*)?$/)
-        ]);
-
-        component.from = new FormControl('abc', validators);
+    it('should throw pattern error if "from" value is formed by letters', () => {
+        component.ngOnInit();
+        component.from = new FormControl('abc', component.validators);
         expect(component.from.hasError('pattern')).toBe(true);
+    });
 
-        component.from = new FormControl(123, validators);
+    it('should not throw pattern error if "from" value is formed by digits', () => {
+        component.ngOnInit();
+        component.from = new FormControl(123, component.validators);
         expect(component.from.hasError('pattern')).toBe(false);
+    });
 
-        component.from = new FormControl('', validators);
+    it('should throw required error if "from" value is empty', () => {
+        component.ngOnInit();
+        component.from = new FormControl('', component.validators);
         expect(component.from.hasError('required')).toBe(true);
+    });
 
-        component.from = new FormControl(123, validators);
+    it('should not throw required error if "from" value is not empty', () => {
+        component.ngOnInit();
+        component.from = new FormControl(123, component.validators);
         expect(component.from.hasError('required')).toBe(false);
     });
 });
