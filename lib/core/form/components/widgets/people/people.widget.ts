@@ -24,6 +24,16 @@ import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@an
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
 import { baseHost, WidgetComponent } from './../widget.component';
+import { FormControl } from "@angular/forms";
+import { Observable } from 'rxjs/Observable';
+import {
+    catchError,
+    distinctUntilChanged,
+    map,
+    switchMap,
+    tap
+} from 'rxjs/operators';
+import 'rxjs/add/observable/empty'
 
 @Component({
     selector: 'people-widget',
@@ -41,6 +51,23 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     oldValue: string;
     users: UserProcessModel[] = [];
     groupId: string;
+
+    searchTerm = new FormControl();
+    errorMsg = '';
+    searchTerms$: Observable<string> = this.searchTerm.valueChanges;
+
+    items$ = this.searchTerms$.pipe(
+        tap(() => this.errorMsg = ''),
+        distinctUntilChanged(),
+        switchMap(searchTerm => this.formService.getWorkflowUsers(searchTerm)
+            .pipe(
+                catchError(err => {
+                    this.errorMsg = err.message;
+                    return Observable.empty<Response>();
+                })
+            )),
+        map(this.checkList)
+    );
 
     constructor(public formService: FormService, public peopleProcessService: PeopleProcessService) {
         super(formService);
@@ -68,6 +95,10 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         } else {
             this.validateValue(value);
         }
+    }
+
+    checkList(list) {
+        return list.length = 0 ? [] : list;
     }
 
     searchUsers(userName: string) {
