@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 
 import { ContentActionHandler } from '../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
@@ -33,7 +33,7 @@ import { ContentActionListComponent } from './content-action-list.component';
         FolderActionsService
     ]
 })
-export class ContentActionComponent implements OnInit {
+export class ContentActionComponent implements OnInit, OnChanges {
 
     /** The title of the action as shown in the menu. */
     @Input()
@@ -42,6 +42,9 @@ export class ContentActionComponent implements OnInit {
     /** The name of the icon to display next to the menu command (can be left blank). */
     @Input()
     icon: string;
+
+    @Input()
+    visible: boolean | Function = true;
 
     /** System actions. Can be "delete", "download", "copy" or "move". */
     @Input()
@@ -83,6 +86,8 @@ export class ContentActionComponent implements OnInit {
     @Output()
     success = new EventEmitter();
 
+    model: ContentActionModel;
+
     constructor(
         private list: ContentActionListComponent,
         private documentActions: DocumentActionsService,
@@ -98,6 +103,12 @@ export class ContentActionComponent implements OnInit {
         }
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.model && changes.visible && !changes.visible.firstChange) {
+            this.model.visible = changes.visible.currentValue;
+        }
+    }
+
     register(model: ContentActionModel): boolean {
         if (this.list) {
             return this.list.registerAction(model);
@@ -106,25 +117,26 @@ export class ContentActionComponent implements OnInit {
     }
 
     private generateAction(target: string) {
-        let model = new ContentActionModel({
+        this.model = new ContentActionModel({
             title: this.title,
             icon: this.icon,
             permission: this.permission,
             disableWithNoPermission: this.disableWithNoPermission,
             target: target,
-            disabled: this.disabled
+            disabled: this.disabled,
+            visible: this.visible
         });
         if (this.handler) {
-            model.handler = this.getSystemHandler(target, this.handler);
+            this.model.handler = this.getSystemHandler(target, this.handler);
         }
 
         if (this.execute) {
-            model.execute = (value: any): void => {
+            this.model.execute = (value: any): void => {
                 this.execute.emit({ value });
             };
         }
 
-        this.register(model);
+        this.register(this.model);
     }
 
     getSystemHandler(target: string, name: string): ContentActionHandler {

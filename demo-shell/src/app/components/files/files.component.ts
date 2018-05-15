@@ -152,6 +152,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild(InfinitePaginationComponent)
     infinitePaginationComponent: InfinitePaginationComponent;
 
+    @Input()
+    showCustomDownloadAction = false;
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
@@ -490,5 +492,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.infiniteScrolling = !this.infiniteScrolling;
         this.infinitePaginationComponent.reset();
         this.reloadForInfiniteScrolling();
+    }
+
+    canDownloadNode = (node: MinimalNodeEntity): boolean => {
+        if (node && node.entry && node.entry.name === 'For Sale.docx') {
+            return true;
+        }
+        return false;
     }
 }
