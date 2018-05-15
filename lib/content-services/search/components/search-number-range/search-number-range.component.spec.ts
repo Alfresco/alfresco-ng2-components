@@ -137,7 +137,7 @@ describe('SearchNumberRangeComponent', () => {
         expect(component.formValidator).toBeTruthy();
     });
 
-    it('should throw expected error for "from" formControl validator', () => {
+    it('should throw pattern error if "from" value is formed by letters', () => {
         const validators = Validators.compose([
            Validators.required,
            Validators.pattern(/^-?(0|[1-9]\d*)?$/)
@@ -145,13 +145,34 @@ describe('SearchNumberRangeComponent', () => {
 
         component.from = new FormControl('abc', validators);
         expect(component.from.hasError('pattern')).toBe(true);
-
+    });
+    
+    it('should not throw pattern error if "from" value is formed by digits', () => {
+        const validators = Validators.compose([
+           Validators.required,
+           Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+        ]);
+        
         component.from = new FormControl(123, validators);
         expect(component.from.hasError('pattern')).toBe(false);
+    });
+    
+    it('should throw required error if "from" value is empty', () => {
+        const validators = Validators.compose([
+           Validators.required,
+           Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+        ]);
 
         component.from = new FormControl('', validators);
         expect(component.from.hasError('required')).toBe(true);
-
+    });
+    
+    it('should not throw required error if "from" value is not empty', () => {
+        const validators = Validators.compose([
+           Validators.required,
+           Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+        ]);
+        
         component.from = new FormControl(123, validators);
         expect(component.from.hasError('required')).toBe(false);
     });
