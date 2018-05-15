@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 
 import { ContentActionHandler } from '../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
@@ -33,7 +33,7 @@ import { ContentActionListComponent } from './content-action-list.component';
         FolderActionsService
     ]
 })
-export class ContentActionComponent implements OnInit {
+export class ContentActionComponent implements OnInit, OnChanges {
 
     /** The title of the action as shown in the menu. */
     @Input()
@@ -42,6 +42,9 @@ export class ContentActionComponent implements OnInit {
     /** The name of the icon to display next to the menu command (can be left blank). */
     @Input()
     icon: string;
+
+    @Input()
+    visible: boolean | Function = true;
 
     /** System actions. Can be "delete", "download", "copy" or "move". */
     @Input()
@@ -83,6 +86,9 @@ export class ContentActionComponent implements OnInit {
     @Output()
     success = new EventEmitter();
 
+    documentActionModel: ContentActionModel;
+    folderActionModel: ContentActionModel;
+
     constructor(
         private list: ContentActionListComponent,
         private documentActions: DocumentActionsService,
@@ -91,10 +97,21 @@ export class ContentActionComponent implements OnInit {
 
     ngOnInit() {
         if (this.target === ContentActionTarget.All) {
-            this.generateAction(ContentActionTarget.Folder);
-            this.generateAction(ContentActionTarget.Document);
+            this.folderActionModel = this.generateAction(ContentActionTarget.Folder);
+            this.documentActionModel = this.generateAction(ContentActionTarget.Document);
         } else {
-            this.generateAction(this.target);
+            this.documentActionModel = this.generateAction(this.target);
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.visible && !changes.visible.firstChange) {
+            if (this.documentActionModel) {
+                this.documentActionModel.visible = changes.visible.currentValue;
+            }
+            if (this.folderActionModel) {
+                this.folderActionModel.visible = changes.visible.currentValue;
+            }
         }
     }
 
@@ -105,14 +122,15 @@ export class ContentActionComponent implements OnInit {
         return false;
     }
 
-    private generateAction(target: string) {
-        let model = new ContentActionModel({
+    private generateAction(target: string): ContentActionModel {
+        const model = new ContentActionModel({
             title: this.title,
             icon: this.icon,
             permission: this.permission,
             disableWithNoPermission: this.disableWithNoPermission,
             target: target,
-            disabled: this.disabled
+            disabled: this.disabled,
+            visible: this.visible
         });
         if (this.handler) {
             model.handler = this.getSystemHandler(target, this.handler);
@@ -125,6 +143,7 @@ export class ContentActionComponent implements OnInit {
         }
 
         this.register(model);
+        return model;
     }
 
     getSystemHandler(target: string, name: string): ContentActionHandler {

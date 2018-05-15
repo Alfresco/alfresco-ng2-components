@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { ContentService, setupTestBed } from '@alfresco/adf-core';
@@ -79,6 +79,24 @@ describe('ContentAction', () => {
         expect(model.target).toBe(action.target);
         expect(model.title).toBe(action.title);
         expect(model.icon).toBe(action.icon);
+    });
+
+    it('should update visibility binding', () => {
+        let action = new ContentActionComponent(actionList, null, null);
+        action.target = 'document';
+        action.title = '<title>';
+        action.icon = '<icon>';
+
+        action.visible = true;
+        action.ngOnInit();
+        expect(action.documentActionModel.visible).toBeTruthy();
+
+        action.visible = false;
+        action.ngOnChanges({
+            'visible': new SimpleChange(true, false, false)
+        });
+
+        expect(action.documentActionModel.visible).toBeFalsy();
     });
 
     it('should get action handler from document actions service', () => {

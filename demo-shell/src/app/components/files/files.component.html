@@ -273,6 +273,25 @@
                 </data-columns>
 
                 <content-actions>
+                    <!-- Conditional actions demo -->
+                    <content-action
+                        icon="get_app"
+                        title="Download this file now!"
+                        handler="download"
+                        [visible]="canDownloadNode">
+                    </content-action>
+                    <content-action
+                        icon="get_app"
+                        title="Never see this action again"
+                        handler="download"
+                        [visible]="false">
+                    </content-action>
+                    <content-action
+                        icon="get_app"
+                        title="This can be toggled"
+                        handler="download"
+                        [visible]="showCustomDownloadAction">
+                    </content-action>
                     <!-- common actions -->
                     <content-action
                         icon="get_app"
@@ -414,6 +433,12 @@
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="showNameColumn">
                 Show Name Column
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="showCustomDownloadAction">
+                Toggle custom download action
             </mat-slide-toggle>
         </section>
 
