@@ -126,33 +126,33 @@ describe('SearchNumberRangeComponent', () => {
     });
 
     it('should return true if TO value is bigger than FROM value', () => {
-      component.ngOnInit();
-      component.from = new FormControl('10');
-      component.to = new FormControl('20');
-      component.form = new FormGroup({
-          from: component.from,
-          to: component.to
-      }, component.formValidator);
+        component.ngOnInit();
+        component.from = new FormControl('10');
+        component.to = new FormControl('20');
+        component.form = new FormGroup({
+            from: component.from,
+            to: component.to
+        }, component.formValidator);
 
-      expect(component.formValidator).toBeTruthy();
+        expect(component.formValidator).toBeTruthy();
     });
 
-  it('should throw "pattern" error if FROM value is formed by letters', () => {
-      const validators = Validators.compose([
-          Validators.required,
-          Validators.pattern(/^-?(0|[1-9]\d*)?$/)
-      ]);
+    it('should throw "pattern" error if FROM value is formed by letters', () => {
+        const validators = Validators.compose([
+           Validators.required,
+           Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+        ]);
 
-      component.from = new FormControl('abc', validators);
-      expect(component.from.hasError('pattern')).toBe(true);
+        component.from = new FormControl('abc', validators);
+        expect(component.from.hasError('pattern')).toBe(true);
 
-      component.from = new FormControl(123, validators);
-      expect(component.from.hasError('pattern')).toBe(false);
+        component.from = new FormControl(123, validators);
+        expect(component.from.hasError('pattern')).toBe(false);
 
-      component.from = new FormControl('', validators);
-      expect(component.from.hasError('required')).toBe(true);
+        component.from = new FormControl('', validators);
+        expect(component.from.hasError('required')).toBe(true);
 
-      component.from = new FormControl(123, validators);
-      expect(component.from.hasError('required')).toBe(false);
-  });
+        component.from = new FormControl(123, validators);
+        expect(component.from.hasError('required')).toBe(false);
+    });
 });
