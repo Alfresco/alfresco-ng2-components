@@ -10,8 +10,8 @@
         </mat-radio-button>
     </mat-radio-group>
     <mat-form-field class="adf-new-version-max-width">
-                    <input matInput [(ngModel)]="comment"
-                              placeholder="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.COMMENT' | translate }}">
+                    <textarea matInput [(ngModel)]="comment" class="adf-new-version-text-area"
+                              placeholder="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.COMMENT' | translate }}"></textarea>
     </mat-form-field>
 
 </div>
