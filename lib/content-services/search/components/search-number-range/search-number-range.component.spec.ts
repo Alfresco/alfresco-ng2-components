@@ -136,4 +136,28 @@ describe('SearchNumberRangeComponent', () => {
 
         expect(component.formValidator).toBeTruthy();
     });
+
+    it('should throw pattern error if "from" value is formed by letters', () => {
+        component.ngOnInit();
+        component.from = new FormControl('abc', component.validators);
+        expect(component.from.hasError('pattern')).toBe(true);
+    });
+
+    it('should not throw pattern error if "from" value is formed by digits', () => {
+        component.ngOnInit();
+        component.from = new FormControl(123, component.validators);
+        expect(component.from.hasError('pattern')).toBe(false);
+    });
+
+    it('should throw required error if "from" value is empty', () => {
+        component.ngOnInit();
+        component.from = new FormControl('', component.validators);
+        expect(component.from.hasError('required')).toBe(true);
+    });
+
+    it('should not throw required error if "from" value is not empty', () => {
+        component.ngOnInit();
+        component.from = new FormControl(123, component.validators);
+        expect(component.from.hasError('required')).toBe(false);
+    });
 });
