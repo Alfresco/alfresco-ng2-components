@@ -9,6 +9,9 @@ var MDNav = /** @class */ (function () {
     MDNav.prototype.find = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
+        if (!this.root || !this.root.children) {
+            return new MDNav(null);
+        }
         var currIndex = 0;
         for (var i = this.pos; i < this.root.children.length; i++) {
             var child = this.root.children[i];
@@ -60,7 +63,12 @@ var MDNav = /** @class */ (function () {
     };
     Object.defineProperty(MDNav.prototype, "item", {
         get: function () {
-            return this.root.children[this.pos];
+            if (!this.root || !this.root.children) {
+                return undefined;
+            }
+            else {
+                return this.root.children[this.pos];
+            }
         },
         enumerable: true,
         configurable: true

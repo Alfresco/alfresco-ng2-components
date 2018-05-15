@@ -4,6 +4,10 @@ export class MDNav {
     constructor(public root: any, public pos: number = 0) {}
 
     find(test: (element: any) => boolean = () => true, index: number = 0): MDNav {
+        if (!this.root || !this.root.children) {
+            return new MDNav(null);
+        }
+
         let currIndex = 0;
 
         for (let i = this.pos; i < this.root.children.length; i++) {
@@ -57,7 +61,11 @@ export class MDNav {
     }
 
     get item(): any {
-        return this.root.children[this.pos];
+        if (!this.root || !this.root.children) {
+            return undefined;
+        } else {
+            return this.root.children[this.pos];
+        }
     }
 
     get empty(): boolean {

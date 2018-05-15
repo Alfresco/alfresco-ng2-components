@@ -267,27 +267,14 @@ function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
             .text().item.value;
         var propDocText = propTableRow
             .tableCell(function () { return true; }, docsColumn).childNav
-            .text().item.value;
-        result[propName] = propDocText;
+            .text().item;
+        if (propDocText) {
+            result[propName] = propDocText.value;
+        }
         i++;
         propTableRow = propsTable.childNav
             .tableRow(function () { return true; }, i).childNav;
     }
-    /*
-        let row = tableNav.tableRow(() => true, 1);
-        console.log(JSON.stringify(row.item));
-        
-        for (let i = 1; !row.empty; row = propsTable.tableRow(() => true, i++)) {
-            let cellText = row.tableCell(()=>true, 3)
-            .text();
-            console.log(`${i}. ` +
-                remark()
-                .use(frontMatter, {type: 'yaml', fence: '---'})
-                .data("settings", {paddedTable: false, gfm: false})
-                .stringify(cellText.item)
-            );
-        }
-        */
     return result;
 }
 function updatePropDocsFromMD(comp, inputDocs, outputDocs, errorMessages) {

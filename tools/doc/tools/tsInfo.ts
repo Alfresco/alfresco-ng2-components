@@ -386,30 +386,16 @@ function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
 
         let propDocText = propTableRow
         .tableCell(()=>true, docsColumn).childNav
-        .text().item.value;
+        .text().item;
 
-        result[propName] = propDocText;
+        if (propDocText) {
+            result[propName] = propDocText.value;
+        }
 
         i++;
         propTableRow = propsTable.childNav
         .tableRow(()=>true, i).childNav;
     }
-    
-/*
-    let row = tableNav.tableRow(() => true, 1);
-    console.log(JSON.stringify(row.item));
-    
-    for (let i = 1; !row.empty; row = propsTable.tableRow(() => true, i++)) {
-        let cellText = row.tableCell(()=>true, 3)
-        .text();
-        console.log(`${i}. ` + 
-            remark()
-            .use(frontMatter, {type: 'yaml', fence: '---'})
-            .data("settings", {paddedTable: false, gfm: false})
-            .stringify(cellText.item)
-        );
-    }
-    */
     
     return result;
 }
