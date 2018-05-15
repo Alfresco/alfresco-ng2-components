@@ -23,6 +23,8 @@ import { SidenavLayoutHeaderDirective } from './directives/sidenav-layout-header
 import { SidenavLayoutNavigationDirective } from './directives/sidenav-layout-navigation.directive';
 import { SidenavLayoutComponent } from './components/sidenav-layout/sidenav-layout.component';
 import { LayoutContainerComponent } from './components/layout-container/layout-container.component';
+import { SidebarActionMenuComponent, SidebarMenuDirective,
+    SidebarMenuExpandIconDirective, SidebarMenuTitleIconDirective } from './components/sidebar-action/sidebar-action-menu.component';
 
 @NgModule({
     imports: [
@@ -34,14 +36,22 @@ import { LayoutContainerComponent } from './components/layout-container/layout-c
         SidenavLayoutContentDirective,
         SidenavLayoutNavigationDirective,
         SidenavLayoutComponent,
-        LayoutContainerComponent
+        LayoutContainerComponent,
+        SidebarActionMenuComponent,
+        SidebarMenuDirective,
+        SidebarMenuExpandIconDirective,
+        SidebarMenuTitleIconDirective
     ],
     declarations: [
         SidenavLayoutHeaderDirective,
         SidenavLayoutContentDirective,
         SidenavLayoutNavigationDirective,
         SidenavLayoutComponent,
-        LayoutContainerComponent
+        LayoutContainerComponent,
+        SidebarActionMenuComponent,
+        SidebarMenuDirective,
+        SidebarMenuExpandIconDirective,
+        SidebarMenuTitleIconDirective
     ]
 })
 export class SidenavLayoutModule {}

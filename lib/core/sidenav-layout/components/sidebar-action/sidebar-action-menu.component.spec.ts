@@ -17,10 +17,10 @@
 
 import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../material.module';
+import { MaterialModule } from '../../../material.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
-import { setupTestBed } from '../testing/setupTestBed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('SidebarActionMenuComponent', () => {
     let element: HTMLElement;
