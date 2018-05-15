@@ -17,7 +17,7 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardBpm, AuthGuardEcm } from '@alfresco/adf-core';
+import { AuthGuard, AuthGuardBpm, AuthGuardEcm, ErrorContentComponent} from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -190,6 +190,11 @@ export const appRoutes: Routes = [
             {
                 path: 'datatable-lazy',
                 loadChildren: 'app/components/lazy-loading/lazy-loading.module#LazyLoadingModule'
+            },
+            {
+                path: 'error/:id',
+                component: ErrorContentComponent,
+                canActivate: [AuthGuardEcm]
             }
         ]
     }

@@ -262,5 +262,24 @@
       "PLACEHOLDER": "Password",
       "ERROR": "Password is wrong"
     }
+  },
+  "ERROR_CONTENT": {
+    "HOME_BUTTON": "Back to home",
+    "403": {
+      "TITLE": "Error 403 forbidden!",
+      "DESCRIPTION": "Sorry, access to this resource on the server is denied. Either check URL or feel free to",
+      "LINK": {
+        "TEXT": "report this issue.",
+        "URL": ""
+      }
+    },
+    "404": {
+      "TITLE": "Whoops!",
+      "DESCRIPTION": "We couldn’t find the page you were looking for.",
+      "LINK": {
+        "TEXT": "",
+        "URL": ""
+      }
+    }
   }
 }
