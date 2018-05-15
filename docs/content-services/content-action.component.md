@@ -361,7 +361,7 @@ export class MyComponent {
 }
 ```
 
-#### Using a property or the Function type
+#### Using a property of the Function type
 
 ```html
  <content-action
