@@ -22,6 +22,9 @@ import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.m
 import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
 
+/**
+ * @deprecated: 'adf-filters' and 'taskListService-filters' selectors are deprecated, use adf-task-filters instead.
+ */
 @Component({
     selector: 'adf-task-filters, adf-filters, taskListService-filters',
     templateUrl: './task-filters.component.html',

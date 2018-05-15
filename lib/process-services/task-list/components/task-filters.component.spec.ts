@@ -260,7 +260,7 @@ describe('TaskFiltersComponent', () => {
         let currentFilter = fakeGlobalFilter[0];
         component.filters = fakeGlobalFilter;
         component.filterClick.subscribe((filter: FilterRepresentationModel) => {
-            expect(filter).toBeDefined(currentFilter);
+            expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
             expect(component.currentFilter).toEqual(currentFilter);
             done();
