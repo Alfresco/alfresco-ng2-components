@@ -137,7 +137,7 @@ describe('SearchNumberRangeComponent', () => {
         expect(component.formValidator).toBeTruthy();
     });
 
-    it('should throw "pattern" error if FROM value is formed by letters', () => {
+    it('should throw expected error for "from" formControl validator', () => {
         const validators = Validators.compose([
            Validators.required,
            Validators.pattern(/^-?(0|[1-9]\d*)?$/)
