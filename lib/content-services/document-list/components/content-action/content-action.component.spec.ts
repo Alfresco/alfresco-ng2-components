@@ -89,14 +89,14 @@ describe('ContentAction', () => {
 
         action.visible = true;
         action.ngOnInit();
-        expect(action.model.visible).toBeTruthy();
+        expect(action.documentActionModel.visible).toBeTruthy();
 
         action.visible = false;
         action.ngOnChanges({
             'visible': new SimpleChange(true, false, false)
         });
 
-        expect(action.model.visible).toBeFalsy();
+        expect(action.documentActionModel.visible).toBeFalsy();
     });
 
     it('should get action handler from document actions service', () => {

@@ -86,7 +86,8 @@ export class ContentActionComponent implements OnInit, OnChanges {
     @Output()
     success = new EventEmitter();
 
-    model: ContentActionModel;
+    documentActionModel: ContentActionModel;
+    folderActionModel: ContentActionModel;
 
     constructor(
         private list: ContentActionListComponent,
@@ -96,16 +97,21 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         if (this.target === ContentActionTarget.All) {
-            this.generateAction(ContentActionTarget.Folder);
-            this.generateAction(ContentActionTarget.Document);
+            this.folderActionModel = this.generateAction(ContentActionTarget.Folder);
+            this.documentActionModel = this.generateAction(ContentActionTarget.Document);
         } else {
-            this.generateAction(this.target);
+            this.documentActionModel = this.generateAction(this.target);
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.model && changes.visible && !changes.visible.firstChange) {
-            this.model.visible = changes.visible.currentValue;
+        if (changes.visible && !changes.visible.firstChange) {
+            if (this.documentActionModel) {
+                this.documentActionModel.visible = changes.visible.currentValue;
+            }
+            if (this.folderActionModel) {
+                this.folderActionModel.visible = changes.visible.currentValue;
+            }
         }
     }
 
@@ -116,8 +122,8 @@ export class ContentActionComponent implements OnInit, OnChanges {
         return false;
     }
 
-    private generateAction(target: string) {
-        this.model = new ContentActionModel({
+    private generateAction(target: string): ContentActionModel {
+        const model = new ContentActionModel({
             title: this.title,
             icon: this.icon,
             permission: this.permission,
@@ -127,16 +133,17 @@ export class ContentActionComponent implements OnInit, OnChanges {
             visible: this.visible
         });
         if (this.handler) {
-            this.model.handler = this.getSystemHandler(target, this.handler);
+            model.handler = this.getSystemHandler(target, this.handler);
         }
 
         if (this.execute) {
-            this.model.execute = (value: any): void => {
+            model.execute = (value: any): void => {
                 this.execute.emit({ value });
             };
         }
 
-        this.register(this.model);
+        this.register(model);
+        return model;
     }
 
     getSystemHandler(target: string, name: string): ContentActionHandler {
