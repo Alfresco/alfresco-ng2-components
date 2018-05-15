@@ -48,7 +48,7 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 ```html
 <adf-process-instance-filters 
    [filterParam]="{index: 0}">
-</adf-filters>
+</adf-process-instance-filters>
 ```
 
 You can use inside the filterParam one of the properties defined by [FilterParamsModel](#filterparamsmodel) (see below).

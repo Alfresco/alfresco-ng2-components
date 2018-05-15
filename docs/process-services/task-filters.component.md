@@ -9,7 +9,7 @@ Shows all available filters.
 ## Basic Usage
 
 ```html
-<adf-filters></adf-filters>
+<adf-task-filters></adf-task-filters>
 ```
 
 ## Class members
@@ -36,9 +36,9 @@ Shows all available filters.
 ### How filter the activiti task filters
 
 ```html
-<adf-filters 
+<adf-task-filters 
    [filterParam]="{name:'My tasks'}">
-</adf-filters>
+</adf-task-filters>
 ```
 
 You can use inside the filterParam one of the properties from [FilterParamsModel](#filterparamsmodel) (see below).
