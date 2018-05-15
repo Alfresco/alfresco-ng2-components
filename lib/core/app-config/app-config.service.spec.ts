@@ -114,6 +114,8 @@ describe('AppConfigService', () => {
     });
 
     it('should use protocol value', () => {
+        spyOn(appConfigService, 'getLocationPort').and.returnValue('9090');
+        
         const protocolSpy = spyOn(appConfigService, 'getLocationProtocol');
         appConfigService.config.testUrl = '{protocol}//{hostname}:{port}';
 
