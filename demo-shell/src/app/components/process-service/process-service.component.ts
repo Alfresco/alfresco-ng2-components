@@ -162,7 +162,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private location: Location,
                 private preferenceService: UserPreferencesService) {
 
-
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
 

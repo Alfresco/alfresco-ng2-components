@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataColumn,
-    ObjectDataRow, ObjectDataTableAdapter, EmptyCustomContentDirective } from '@alfresco/adf-core';
+import { DataTableComponent, DataRowEvent, DataColumnSchemaAssembler } from '@alfresco/adf-core';
 import {
     AppConfigService, DataColumnListComponent, PaginationComponent, PaginatedComponent,
     UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
 import {
-    AfterContentInit, Component, ContentChild, EventEmitter,
-    Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+    AfterContentInit, Component, ContentChild, AfterViewInit, EventEmitter,
+    Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -36,12 +35,15 @@ import { TaskListService } from './../services/tasklist.service';
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.css']
 })
-export class TaskListComponent extends DataColumnSchemaAssembler implements OnChanges, AfterContentInit, PaginatedComponent {
+export class TaskListComponent extends DataColumnSchemaAssembler implements OnChanges, AfterContentInit,  AfterViewInit, PaginatedComponent {
 
     requestNode: TaskQueryRequestRepresentationModel;
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
     @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
+
+    @ViewChild(DataTableComponent)
+    datatable: DataTableComponent;
 
     /** The id of the app. */
     @Input()
@@ -84,12 +86,6 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
      */
     @Input()
     landingTaskId: string;
-
-    /** Data source object that represents the number and the type of the columns that
-     * you want to show.
-     */
-    @Input()
-    data: DataTableAdapter;
 
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
@@ -135,6 +131,7 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
+    rows: any[] = [];
     isLoading: boolean = true;
     sorting: any[] = ['created', 'desc'];
 
@@ -148,9 +145,9 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
     hasCustomDataSource: boolean = false;
 
     constructor(private taskListService: TaskListService,
-                private appConfigService: AppConfigService,
+                appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
-        super();
+        super(appConfigService);
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;
         });
@@ -163,11 +160,14 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
     }
 
     ngAfterContentInit() {
-        this.loadLayoutPresets(this.taskListPresetKey);
-        this.setupSchema();
+        this.loadLayoutPresets(this.taskListPresetKey, taskPresetsDefaultModel);
         if (this.appId) {
             this.reload();
         }
+    }
+
+    ngAfterViewInit() {
+        this.setupSchema();
     }
 
     /**
@@ -175,24 +175,20 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
      * If component is assigned with an empty data adater the default schema settings applied.
      */
     setupSchema(): void {
-        let schema = this.getSchema();
-        if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema);
-        } else if (this.data.getColumns().length === 0) {
-            this.data.setColumns(schema);
+        let schema = this.mergeJsonAndHtmlSchema(this.presetColumn, this.columnList);
+        this.datatable.data.setColumns(schema);
+    }
+
+    setCustomDataSource(rows: any[]): void {
+        if (this.datatable) {
+            this.datatable.data.setRows(rows);
+            this.hasCustomDataSource = true;
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
             this.reload();
-        }
-    }
-
-    setCustomDataSource(rows: ObjectDataRow[]): void {
-        if (this.data) {
-            this.data.setRows(rows);
-            this.hasCustomDataSource = true;
         }
     }
 
@@ -251,10 +247,10 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
      * Create an array of ObjectDataRow
      * @param instances
      */
-    private createDataRow(instances: any[]): ObjectDataRow[] {
-        let instancesRows: ObjectDataRow[] = [];
+    private createDataRow(instances: any[]): any[] {
+        const instancesRows: any[] = [];
         instances.forEach((row) => {
-            instancesRows.push(new ObjectDataRow(row));
+            instancesRows.push(row);
         });
         return instancesRows;
     }
@@ -265,8 +261,7 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
      * @param instances
      */
     private renderInstances(instances: any[]) {
-        instances = this.optimizeNames(instances);
-        this.data.setRows(instances);
+        this.rows = this.optimizeNames(instances);
     }
 
     /**
@@ -274,7 +269,8 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
      */
     selectTask(taskIdSelected: string): void {
         if (!this.isListEmpty()) {
-            let rows = this.data.getRows();
+
+            let rows = this.datatable.data.getRows();
             if (rows.length > 0) {
                 let dataRow;
                 if (taskIdSelected) {
@@ -288,14 +284,13 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
                 } else {
                     dataRow = rows[0];
                 }
-
-                this.data.selectedRow = dataRow;
                 dataRow.isSelected = true;
+                this.datatable.data.selectedRow = dataRow;
                 this.currentInstanceId = dataRow.getValue('id');
             }
         } else {
-            if (this.data) {
-                this.data.selectedRow = null;
+            if (this.datatable) {
+                this.datatable.data.selectedRow = null;
             }
 
             this.currentInstanceId = null;
@@ -329,8 +324,8 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
      * Check if the list is empty
      */
     isListEmpty(): boolean {
-        return this.data === undefined ||
-            (this.data && this.data.getRows() && this.data.getRows().length === 0);
+        return this.rows === undefined ||
+            (this.rows && this.rows.length === 0);
     }
 
     onRowClick(item: DataRowEvent) {
@@ -360,12 +355,12 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
      * Optimize name field
      * @param istances
      */
-    private optimizeNames(istances: any[]): any[] {
-        istances = istances.map(t => {
-            t.obj.name = t.obj.name || 'No name';
+    private optimizeNames(instances: any[]): any[] {
+        instances = instances.map(t => {
+            t.name = t.name ? t.name : 'No name';
             return t;
         });
-        return istances;
+        return instances;
     }
 
     private createRequestNode() {
@@ -384,22 +379,6 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
             start: 0
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
-    }
-
-    getAppConfigService(): AppConfigService {
-        return this.appConfigService;
-    }
-
-    getColumnList(): DataColumnListComponent {
-        return this.columnList;
-    }
-
-    getPresetColoumn(): string {
-        return this.presetColumn;
-    }
-
-    getPresetsModel() {
-        return taskPresetsDefaultModel;
     }
 
     updatePagination(params: PaginationModel) {
