@@ -24,6 +24,7 @@ import { FilterQuery } from './filter-query.interface';
 import { SearchRange } from './search-range.interface';
 import { SearchConfiguration } from './search-configuration.interface';
 import { FacetQuery } from './facet-query.interface';
+import { SearchSortingDefinition } from './search-sorting-definition.interface';
 
 @Injectable()
 export class SearchQueryBuilderService {
@@ -34,10 +35,13 @@ export class SearchQueryBuilderService {
     categories: Array<SearchCategory> = [];
     queryFragments: { [id: string]: string } = {};
     filterQueries: FilterQuery[] = [];
-    ranges: { [id: string]: SearchRange } = {};
     paging: { maxItems?: number; skipCount?: number } = null;
+    sorting: Array<SearchSortingDefinition> = [];
 
     config: SearchConfiguration;
+
+    // TODO: to be supported in future iterations
+    ranges: { [id: string]: SearchRange } = {};
 
     constructor(appConfig: AppConfigService,  private alfrescoApiService: AlfrescoApiService) {
         this.config = appConfig.get<SearchConfiguration>('search');
@@ -45,6 +49,10 @@ export class SearchQueryBuilderService {
         if (this.config) {
             this.categories = (this.config.categories || []).filter(f => f.enabled);
             this.filterQueries = this.config.filterQueries || [];
+
+            if (this.config.sorting) {
+                this.sorting = this.config.sorting.defaults || [];
+            }
         }
     }
 
@@ -112,7 +120,8 @@ export class SearchQueryBuilderService {
                 fields: this.config.fields,
                 filterQueries: this.filterQueries,
                 facetQueries: this.facetQueries,
-                facetFields: this.facetFields
+                facetFields: this.facetFields,
+                sort: this.sorting
             };
 
             return result;

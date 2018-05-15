@@ -55,6 +55,15 @@
     ],
     "search": {
       "include": ["path", "allowableOperations"],
+      "sorting": {
+        "options": [
+          { "type": "FIELD", "field": "cm:name", "ascending": true },
+          { "type": "FIELD", "field": "cm:description", "ascending": true }
+        ],
+        "defaults": [
+          { "type": "FIELD", "field": "cm:name", "ascending": true }
+        ]
+      },
       "filterQueries": [
         { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
         { "query": "NOT cm:creator:System" }

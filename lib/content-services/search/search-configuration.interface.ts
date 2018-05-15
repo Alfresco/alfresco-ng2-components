@@ -19,6 +19,7 @@ import { FilterQuery } from './filter-query.interface';
 import { FacetQuery } from './facet-query.interface';
 import { FacetField } from './facet-field.interface';
 import { SearchCategory } from './search-category.interface';
+import { SearchSortingDefinition } from './search-sorting-definition.interface';
 
 export interface SearchConfiguration {
     include?: Array<string>;
@@ -32,4 +33,8 @@ export interface SearchConfiguration {
         queries: Array<FacetQuery>;
     };
     facetFields?: Array<FacetField>;
+    sorting?: {
+        options: Array<SearchSortingDefinition>;
+        defaults: Array<SearchSortingDefinition>;
+    };
 }
