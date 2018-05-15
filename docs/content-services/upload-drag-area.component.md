@@ -40,6 +40,7 @@ export class AppComponent {
 | disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
 | majorVersion | `boolean` | false | majorVersion boolean field to true to indicate a major version should be created. |
 | maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
+| nodeType | `string` | "cm:content" | Custom node type for uploaded file |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 | versioning | `boolean` | false | Toggles versioning. |
 | parentId | `` |  | **Deprecated:** 2.4.0  use rootFolderId ID of parent folder node. |

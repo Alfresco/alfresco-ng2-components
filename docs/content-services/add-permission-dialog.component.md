@@ -28,19 +28,6 @@ import { NodePermissionDialogService } from '@alfresco/adf-content-services';
 
 ## Class members
 
-### Properties
-
-| Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| nodeId | `string` | "" |  |
-
-### Events
-
-| Name | Type | Description |
-| -- | -- | -- |
-| success | `EventEmitter<MinimalNodeEntryEntity>` |  |
-| error | `EventEmitter<any>` |  |
-
 ## Details
 
 This component extends the [Add permission panel component](../add-permission-panel.component.md) 

@@ -12,22 +12,22 @@ Manages tags in Content Services.
 
 ### Methods
 
--   `addTag(nodeId: string = null, tagName: string = null): any`<br/>
+-   **addTag**(nodeId: string = null, tagName: string = null): `any` <br/>
     Adds a tag to a node.
-    -   `nodeId: string = null` -  ID of the target node
-    -   `tagName: string = null` -  Name of the tag to add
+    -   _nodeId:_ `string`  -  ID of the target node
+    -   _tagName:_ `string`  -  Name of the tag to add
     -   **Returns** `any` - TagEntry object (defined in JSAPI) with details of the new tag
--   `getAllTheTags(): Observable<any>`<br/>
+-   **getAllTheTags**(): `Observable<any>` <br/>
     Gets a list of all the tags already defined in the repository.
     -   **Returns** `Observable<any>` - TagPaging object (defined in JSAPI) containing the tags
--   `getTagsByNodeId(nodeId: string = null): any`<br/>
+-   **getTagsByNodeId**(nodeId: string = null): `any` <br/>
     Gets a list of tags added to a node.
-    -   `nodeId: string = null` -  ID of the target node
+    -   _nodeId:_ `string`  -  ID of the target node
     -   **Returns** `any` - TagPaging object (defined in JSAPI) containing the tags
--   `removeTag(nodeId: string = null, tag: string = null): any`<br/>
+-   **removeTag**(nodeId: string = null, tag: string = null): `any` <br/>
     Removes a tag from a node.
-    -   `nodeId: string = null` -  ID of the target node
-    -   `tag: string = null` -  Name of the tag to remove
+    -   _nodeId:_ `string`  -  ID of the target node
+    -   _tag:_ `string`  -  Name of the tag to remove
     -   **Returns** `any` - Null object when the operation completes
 
 ## Details
@@ -45,8 +45,8 @@ construct a list like this.
 
 See the
 [Tags API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagsApi.md)
-in the Alfresco JS API for more information about the types returned by Tag
-service methods and for the implementation of the REST API the service is
+in the Alfresco JS API for more information about the types returned by [Tag
+service](../content-services/tag.service.md) methods and for the implementation of the REST API the service is
 based on.
 
 ## See also

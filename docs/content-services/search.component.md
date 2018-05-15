@@ -52,7 +52,7 @@ Searches items for supplied search terms.
 | Name | Type | Description |
 | -- | -- | -- |
 | error | `EventEmitter<any>` | Emitted when an error occurs. |
-| resultLoaded | `EventEmitter<NodePaging>` | Emitted when search results have fully loaded. |
+| resultLoaded | [`EventEmitter<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) | Emitted when search results have fully loaded. |
 
 ## Details
 
@@ -130,7 +130,7 @@ However, you can use a more complex template if necessary:
 
 ### Attach an input field to the search
 
-You can also attach an input field to the search component via the `searchAutocomplete` property.
+You can also attach an input field to the [search component](../content-services/search.component.md) via the `searchAutocomplete` property.
 Export the search panel instance into a local template variable and bind that variable to the
 input's `searchAutocomplete` property. The example below demonstrates this with an
 instance called "search":
@@ -159,7 +159,7 @@ You can get finer control over the parameters of a search by defining them in a 
 [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
 object. The recommended way to do this is with a custom implementation of the
 [Search Configuration interface](../core/search-configuration.interface.md) (the `queryBody` parameter of the `Search component` is now deprecated). The ADF source provides a standard implementation of this
-interface, `SearchConfigurationService` that you can use as a base to adapt to your needs. See the
+interface, [`SearchConfigurationService`](../core/search-configuration.service.md) that you can use as a base to adapt to your needs. See the
 [Search Configuration interface](../core/search-configuration.interface.md) page for full details of how to
 customize your search.
 

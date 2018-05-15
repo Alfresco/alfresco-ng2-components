@@ -2,10 +2,10 @@
 {% if hasMethods %}
 ### Methods
 
-{% each methods as meth %}- `{{meth.name}}{{{meth.signature}}{% if meth.returnsSomething %}: {{{meth.returnType}}}{% endif %}`<br/>
+{% each methods as meth %}- **{{meth.name}}**{{{meth.signature}}}{% if meth.returnsSomething %}: `{{{meth.returnType}}}`{% endif %}<br/>
   {{meth.docText}}
 {% each meth.params as param %}
-   - `{{{param.combined}}}` - {% if param.isOptional %}(Optional){% endif %}{{{param.docText}}}
+   - *{{{param.name}}}:* `{{{param.type}}}`  - {% if param.isOptional %}(Optional){% endif %}{{{param.docText}}}
 {% endeach %}
 {% if meth.returnsSomething %}
    - **Returns** `{{{meth.returnType}}}` - {{{meth.returnDocText}}}

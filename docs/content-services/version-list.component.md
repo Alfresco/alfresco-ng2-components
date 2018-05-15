@@ -6,7 +6,7 @@ Last reviewed: 2018-05-08
 
 # Version List component
 
-Displays the version history of a node in a Version Manager component.
+Displays the version history of a node in a [Version Manager component](../content-services/version-manager.component.md).
 
 ### Basic Usage
 
@@ -20,7 +20,7 @@ Displays the version history of a node in a Version Manager component.
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| allowDownload | `boolean` | true | Enable/disable possibility to download a version of the current node. |
+| allowDownload | `boolean` | true | Enable/disable downloading a version of the current node. |
 | id | `string` |  | **Deprecated:** in 2.3.0 |
 | node | `MinimalNodeEntryEntity` |  | The target node. |
 | showActions | `boolean` | true | Toggles showing/hiding of version actions |
@@ -28,7 +28,7 @@ Displays the version history of a node in a Version Manager component.
 
 ## Details
 
-This component is used by the Version Manager component to
+This component is used by the [Version Manager component](../content-services/version-manager.component.md) to
 load and displays the version history of a node.
 
 ## See also
