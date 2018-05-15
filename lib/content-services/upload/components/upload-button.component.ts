@@ -23,6 +23,7 @@ import {
     Component, EventEmitter, forwardRef, Input,
     OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation
 } from '@angular/core';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 import 'rxjs/add/observable/throw';
@@ -61,7 +62,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     private hasPermission: boolean = false;
 
-    private permissionValue: Subject<boolean> = new Subject<boolean>();
+    protected permissionValue: Subject<boolean> = new Subject<boolean>();
 
     constructor(protected uploadService: UploadService,
                 private contentService: ContentService,
@@ -118,9 +119,13 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
             };
 
             this.contentService.getNode(this.rootFolderId, opts).subscribe(
-                res => this.permissionValue.next(this.contentService.hasPermission(res.entry, PermissionsEnum.CREATE)),
+                res => this.permissionValue.next(this.nodeHasPermission(res.entry, PermissionsEnum.CREATE)),
                 error => this.error.emit(error)
             );
         }
+    }
+
+    nodeHasPermission(node: MinimalNodeEntryEntity, permission: PermissionsEnum | string): boolean {
+        return this.contentService.hasPermission(node, permission);
     }
 }

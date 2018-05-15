@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, forwardRef, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { PermissionsEnum  } from '@alfresco/adf-core';
+import { Component, forwardRef, Input, OnChanges, SimpleChanges, ViewEncapsulation, OnInit } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { UploadButtonComponent } from './upload-button.component';
 import { FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
@@ -29,7 +30,7 @@ import { FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class UploadVersionButtonComponent extends UploadButtonComponent implements OnChanges {
+export class UploadVersionButtonComponent extends UploadButtonComponent implements OnChanges, OnInit {
 
     /** (**Required**) The node to be versioned. */
     @Input()
@@ -56,5 +57,14 @@ export class UploadVersionButtonComponent extends UploadButtonComponent implemen
         }
 
         return fileModel;
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        this.checkPermission();
+    }
+
+    checkPermission() {
+        this.permissionValue.next(this.nodeHasPermission(this.node, PermissionsEnum.UPDATE));
     }
 }

@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentService, UploadService, TranslationService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { UploadButtonComponent } from './upload-button.component';
-import { TranslationMock } from '@alfresco/adf-core';
+import { TranslationMock, PermissionsEnum } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('UploadButtonComponent', () => {
@@ -310,6 +310,71 @@ describe('UploadButtonComponent', () => {
             component.uploadFiles(files);
 
             expect(addToQueueSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('checkPermission()', () => {
+        it('should not check permission when bode id is not set', () => {
+            component.rootFolderId = null;
+
+            spyOn(contentService, 'getNode');
+            component.checkPermission();
+
+            expect(contentService.getNode).not.toHaveBeenCalled();
+        });
+
+        it('should check permission for node id', () => {
+            component.rootFolderId = '123';
+            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+            spyOn(component, 'nodeHasPermission');
+
+            component.checkPermission();
+            fixture.detectChanges();
+
+            expect(component.nodeHasPermission).toHaveBeenCalled();
+        });
+
+        it('should emit error when contentService.getNode fails', () => {
+            component.rootFolderId = '123';
+            spyOn(contentService, 'getNode').and.returnValue(Observable.throw('error'));
+            spyOn(component.error, 'emit');
+
+            component.checkPermission();
+            fixture.detectChanges();
+
+            expect(component.error.emit).toHaveBeenCalledWith('error');
+        });
+    });
+
+    describe('nodeHasPermission()', () => {
+        it('should return true when node has permission', () => {
+            const fakeNodeEntry = {
+                allowableOperations: [
+                    'create'
+                ]
+            };
+
+            const permission = component.nodeHasPermission(fakeNodeEntry, PermissionsEnum.CREATE);
+
+            expect(permission).toBe(true);
+        });
+
+        it('should return false when node has no permission', () => {
+            const fakeNodeEntry = {};
+            const permission = component.nodeHasPermission(fakeNodeEntry, PermissionsEnum.CREATE);
+
+            expect(permission).toBe(false);
+        });
+
+        it('should return false when node has different permission', () => {
+            const fakeNodeEntry = {
+                allowableOperations: [
+                    'update'
+                ]
+            };
+            const permission = component.nodeHasPermission(fakeNodeEntry, PermissionsEnum.CREATE);
+
+            expect(permission).toBe(false);
         });
     });
 });
