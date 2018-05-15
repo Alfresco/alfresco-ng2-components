@@ -109,8 +109,8 @@ The `AppConfigService` also supports a limited set of variable substitutions to 
 
 ```json
 {
-    "ecmHost": "http://{hostname}:{port}/ecm",
-    "bpmHost": "http://{hostname}:{port}/bpm",
+    "ecmHost": "{protocol}//{hostname}:{port}/ecm",
+    "bpmHost": "{protocol}//{hostname}:{port}/bpm",
     "application": {
         "name": "Alfresco"
     }
@@ -121,6 +121,7 @@ The supported variables are:
 
 | Variable name | Runtime value |
 | ------------- | ------------- |
+| protocol | `location.protocol` |
 | hostname | `location.hostname` |
 | port | `location.port` |
 

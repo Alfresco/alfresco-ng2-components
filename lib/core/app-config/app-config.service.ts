@@ -66,12 +66,20 @@ export class AppConfigService {
             map.set('hostname', this.getLocationHostname());
             map.set(':port', this.getLocationPort(':'));
             map.set('port', this.getLocationPort());
+            map.set('protocol', this.getLocationProtocol());
             result = this.formatString(result, map);
         }
         if (result === undefined) {
             return defaultValue;
         }
         return <T> result;
+    }
+
+    /**
+     * Gets the location.protocol value.
+     */
+    getLocationProtocol(): string {
+        return location.protocol;
     }
 
     /**

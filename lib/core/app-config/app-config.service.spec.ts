@@ -113,6 +113,18 @@ describe('AppConfigService', () => {
         expect(appConfigService.get('testUrl')).toBe('http://localhost:9090');
     });
 
+    it('should use protocol value', () => {
+        spyOn(appConfigService, 'getLocationPort').and.returnValue('9090');
+        const protocolSpy = spyOn(appConfigService, 'getLocationProtocol');
+        appConfigService.config.testUrl = '{protocol}//{hostname}:{port}';
+
+        protocolSpy.and.returnValue('https:');
+        expect(appConfigService.get('testUrl')).toBe('https://localhost:9090');
+
+        protocolSpy.and.returnValue('ftp:');
+        expect(appConfigService.get('testUrl')).toBe('ftp://localhost:9090');
+    });
+
     it('should load external settings', () => {
         appConfigService.load().then(config => {
             expect(config).toEqual(mockResponse);
