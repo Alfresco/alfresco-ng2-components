@@ -22,49 +22,41 @@ import { ObjectDataColumn } from './object-datacolumn.model';
 
 export abstract class DataColumnSchemaAssembler {
 
-    layoutPresets = {};
+    private layoutPresets = {};
 
-    constructor() {}
+    constructor(private appConfigService: AppConfigService) {}
 
-    abstract getAppConfigService(): AppConfigService;
-
-    abstract getColumnList(): DataColumnListComponent;
-
-    abstract getPresetColoumn(): string;
-
-    abstract getPresetsModel(): any;
-
-    loadLayoutPresets(presetKey: any): void {
-        const externalSettings = this.getAppConfigService().get(presetKey, null);
+    public loadLayoutPresets(presetKey: any, presetsModel: any): void {
+        const externalSettings = this.appConfigService.get(presetKey, null);
         if (externalSettings) {
-            this.layoutPresets = Object.assign({}, this.getPresetsModel(), externalSettings);
+            this.layoutPresets = Object.assign({}, presetsModel, externalSettings);
         } else {
-            this.layoutPresets = this.getPresetsModel();
+            this.layoutPresets = presetsModel;
         }
     }
 
-    getSchema(): any {
+    public mergeJsonAndHtmlSchema(presetColoumn: string, columnList: DataColumnListComponent): any {
         let customSchemaColumns = [];
-        customSchemaColumns = this.getSchemaFromConfig(this.getPresetColoumn()).concat(this.getSchemaFromHtml());
+        customSchemaColumns = this.getSchemaFromConfig(presetColoumn).concat(this.getSchemaFromHtml(columnList));
         if (customSchemaColumns.length === 0) {
             customSchemaColumns = this.getDefaultLayoutPreset();
         }
         return customSchemaColumns;
     }
 
-    getSchemaFromHtml(): any {
+    public getSchemaFromHtml(columnList: DataColumnListComponent): any {
         let schema = [];
-        if (this.getColumnList() && this.getColumnList().columns && this.getColumnList().columns.length > 0) {
-            schema = this.getColumnList().columns.map(c => <DataColumn> c);
+        if (columnList && columnList.columns && columnList.columns.length > 0) {
+            schema = columnList.columns.map(c => <DataColumn> c);
         }
         return schema;
     }
 
-    getSchemaFromConfig(name: string): DataColumn[] {
-        return name ? (this.layoutPresets[name]).map(col => new ObjectDataColumn(col)) : [];
+   public getSchemaFromConfig(presetColoumn: string): DataColumn[] {
+        return presetColoumn ? (this.layoutPresets[presetColoumn]).map(col => new ObjectDataColumn(col)) : [];
     }
 
-    getDefaultLayoutPreset(): DataColumn[] {
+    private getDefaultLayoutPreset(): DataColumn[] {
         return (this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 }

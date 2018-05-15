@@ -1,8 +1,8 @@
 <div *ngIf="!requestNode">{{ 'ADF_TASK_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
 <div *ngIf="requestNode">
     <div>
-        <adf-datatable
-            [data]="data"
+        <adf-datatable #datatable
+            [rows]="rows"
             [loading]="isLoading"
             [multiselect]="multiselect"
             [selectionMode]="selectionMode"

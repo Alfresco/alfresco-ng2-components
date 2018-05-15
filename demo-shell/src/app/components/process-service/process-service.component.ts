@@ -55,7 +55,6 @@ import {
 import { LogService } from '@alfresco/adf-core';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import {
-    DataSorting,
     ObjectDataRow,
     ObjectDataTableAdapter
 } from '@alfresco/adf-core';
@@ -167,9 +166,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 formService: FormService,
                 private location: Location,
                 private preferenceService: UserPreferencesService) {
-        this.dataTasks = new ObjectDataTableAdapter();
-        this.dataTasks.setSorting(new DataSorting('created', 'desc'));
-
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
