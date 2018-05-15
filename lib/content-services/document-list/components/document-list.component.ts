@@ -434,9 +434,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
 
             if (target) {
-                let actionsByTarget = this.actions.filter(entry => {
-                    return entry.target.toLowerCase() === target;
-                }).map(action => new ContentActionModel(action));
+                let actionsByTarget = this.actions
+                    .filter(entry => {
+                        const isVisible = (typeof entry.visible === 'function')
+                            ? entry.visible(node)
+                            : entry.visible;
+
+                        return isVisible && entry.target.toLowerCase() === target;
+                    })
+                    .map(action => new ContentActionModel(action));
 
                 actionsByTarget.forEach((action) => {
                     this.disableActionsWithNoPermissions(node, action);

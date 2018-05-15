@@ -312,6 +312,48 @@ describe('DocumentList', () => {
 
     });
 
+    it('should not display hidden content actions', () => {
+        documentList.actions = [
+            new ContentActionModel({
+                target: 'document',
+                title: 'Action1',
+                visible: false
+            }),
+            new ContentActionModel({
+                target: 'document',
+                title: 'Action2',
+                visible: true
+            })
+        ];
+
+        const nodeFile = { entry: { isFile: true, name: 'xyz' } };
+        const actions = documentList.getNodeActions(nodeFile);
+
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toBe('Action2');
+    });
+
+    it('should evaluate conditional visibility for content actions', () => {
+        documentList.actions = [
+            new ContentActionModel({
+                target: 'document',
+                title: 'Action1',
+                visible: (): boolean => true
+            }),
+            new ContentActionModel({
+                target: 'document',
+                title: 'Action2',
+                visible: (): boolean => false
+            })
+        ];
+
+        const nodeFile = { entry: { isFile: true, name: 'xyz' } };
+        const actions = documentList.getNodeActions(nodeFile);
+
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toBe('Action1');
+    });
+
     it('should not disable the action if there is copy permission', () => {
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
