@@ -16,7 +16,7 @@
  */
 
 import { SearchNumberRangeComponent } from './search-number-range.component';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 describe('SearchNumberRangeComponent', () => {
 
@@ -126,10 +126,21 @@ describe('SearchNumberRangeComponent', () => {
     });
 
     it('should throw "pattern" error if FROM value is formed by letters', () => {
-        component.from = new FormControl(123);
+        const validators = Validators.compose([
+            Validators.required,
+            Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+        ]);
 
-        component.ngOnInit();
+        component.from = new FormControl('abc', validators);
+        expect(component.from.hasError('pattern')).toBe(true);
 
-        expect(component.from.hasError('pattern'));
+        component.from = new FormControl(123, validators);
+        expect(component.from.hasError('pattern')).toBe(false);
+
+        component.from = new FormControl('', validators);
+        expect(component.from.hasError('required')).toBe(true);
+
+        component.from = new FormControl(123, validators);
+        expect(component.from.hasError('required')).toBe(false);
     });
 });
