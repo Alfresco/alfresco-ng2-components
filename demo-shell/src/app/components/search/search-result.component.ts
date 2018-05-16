@@ -56,6 +56,10 @@ export class SearchResultComponent implements OnInit {
 
         this.sorting = this.getSorting();
 
+        this.queryBuilder.updated.subscribe(() => {
+            this.sorting = this.getSorting();
+        });
+
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;

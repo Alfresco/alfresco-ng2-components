@@ -14,8 +14,15 @@
     <adf-search-filter #searchFilter></adf-search-filter>
 
     <div class="adf-search-results__content">
+        <div class="adf-search-results__sorting">
+            <adf-search-sorting-picker></adf-search-sorting-picker>
+        </div>
         <app-files-component
+            [showHeader]="false"
             [sorting]="sorting"
+            [showRecentFiles]="false"
+            [showSitePicker]="false"
+            [showSettingsPanel]="false"
             [currentFolderId]="null"
             [nodeResult]="resultNodePageList"
             [disableDragArea]="true"

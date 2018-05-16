@@ -57,8 +57,9 @@
       "include": ["path", "allowableOperations"],
       "sorting": {
         "options": [
-          { "key": "name",  "type": "FIELD", "field": "cm:name", "ascending": true },
-          { "key": "description", "type": "FIELD", "field": "cm:description", "ascending": true }
+          { "key": "name", "label": "Name", "type": "FIELD", "field": "cm:name", "ascending": true },
+          { "key": "content.sizeInBytes", "label": "Size", "type": "FIELD", "field": "content.size", "ascending": true },
+          { "key": "description", "label": "Description", "type": "FIELD", "field": "cm:description", "ascending": true }
         ],
         "defaults": [
           { "key": "name", "type": "FIELD", "field": "cm:name", "ascending": true }

@@ -610,9 +610,10 @@
                   "items": {
                       "description": "Sorting options available for users to choose from",
                       "type": "object",
-                      "required": ["key", "type", "field", "ascending"],
+                      "required": ["key", "label", "type", "field", "ascending"],
                       "properties": {
                         "key": { "type": "string" },
+                        "label": { "type": "string" },
                         "type": { "type": "string" },
                         "field": { "type": "string" },
                         "ascending": { "type": "boolean" }
@@ -626,9 +627,10 @@
                     "minItems": 1,
                     "items": {
                       "type": "object",
-                      "required": ["key", "type", "field", "ascending"],
+                      "required": ["key", "label", "type", "field", "ascending"],
                       "properties": {
                         "key": { "type": "string" },
+                        "label": { "type": "string" },
                         "type": { "type": "string" },
                         "field": { "type": "string" },
                         "ascending": { "type": "boolean" }

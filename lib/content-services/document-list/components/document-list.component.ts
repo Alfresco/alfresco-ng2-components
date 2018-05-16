@@ -381,6 +381,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     ngOnChanges(changes: SimpleChanges) {
         this.resetSelection();
 
+        if (changes.sorting && !changes.sorting.firstChange && this.data) {
+            const newValue = changes.sorting.currentValue;
+            if (newValue && newValue.length > 0) {
+                const [key, direction] = newValue;
+                this.data.setSorting(new DataSorting(key, direction));
+            }
+        }
+
         if (changes.folderNode && changes.folderNode.currentValue) {
             this.currentFolderId = changes.folderNode.currentValue.id;
             this.resetNewFolderPagination();
