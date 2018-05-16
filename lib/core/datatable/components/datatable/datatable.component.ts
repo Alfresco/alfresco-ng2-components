@@ -69,7 +69,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     /** The columns that the datatable will show. */
     @Input()
-    columns: any[] = [];
+    private schemaColumns: DataColumn[] = [];
 
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
@@ -157,8 +157,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
-
-    private schema: DataColumn[] = [];
 
     private differ: any;
     private rowMenuCache: object = {};
@@ -280,7 +278,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     private initTable() {
-        this.data = new ObjectDataTableAdapter(this.rows, this.schema);
+        this.data = new ObjectDataTableAdapter(this.rows, this.schemaColumns);
         this.rowMenuCache = {};
     }
 
@@ -296,14 +294,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     private setTableSchema() {
         if (this.columnList && this.columnList.columns) {
-            this.schema = this.columnList.columns.map(c => <DataColumn> c);
+            this.schemaColumns = this.columnList.columns.map(c => <DataColumn> c);
         }
 
-        if (this.data && this.schema && this.schema.length > 0) {
-            this.data.setColumns(this.schema);
-        }
-        if (this.data && this.columns && this.columns.length > 0) {
-            this.data.setColumns(this.columns);
+        if (this.data && this.schemaColumns && this.schemaColumns.length > 0) {
+            this.data.setColumns(this.schemaColumns);
         }
     }
 
