@@ -31,7 +31,7 @@ export abstract class DataTableSchema {
 
     /** The columns that the datatable will show. */
     @Input()
-    schema: string;
+    schemaColumns: string;
 
     private layoutPresets = {};
 
@@ -41,7 +41,7 @@ export abstract class DataTableSchema {
 
     public createDatatableSchema(): void {
         this.loadLayoutPresets();
-        this.schema = this.mergeJsonAndHtmlSchema();
+        this.schemaColumns = this.mergeJsonAndHtmlSchema();
     }
 
     public loadLayoutPresets(): void {
