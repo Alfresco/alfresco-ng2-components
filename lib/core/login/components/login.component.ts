@@ -174,8 +174,7 @@ export class LoginComponent implements OnInit {
         this.settingsService.csrfDisabled = this.disableCsrf;
 
         this.disableError();
-
-        const args = new LoginSubmitEvent(this.form);
+        const args = new LoginSubmitEvent({controls : { username : this.form.controls.username} });
         this.executeSubmit.emit(args);
 
         if (args.defaultPrevented) {
