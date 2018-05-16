@@ -75,7 +75,7 @@ describe('SearchSortingPickerComponent', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
         component.ngOnInit();
-        component.onChanged(<any>{ value: 'two' });
+        component.onChanged(<any> { value: 'two' });
 
         expect(queryBuilder.sorting.length).toBe(1);
         expect(queryBuilder.sorting[0].key).toEqual('two');
