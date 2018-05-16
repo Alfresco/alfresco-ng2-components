@@ -21,7 +21,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../material.module';
 import { ErrorContentComponent } from './error-content.component';
 
-
 @NgModule({
     imports: [
         CommonModule,
