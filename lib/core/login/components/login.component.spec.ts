@@ -571,4 +571,16 @@ describe('LoginComponent', () => {
 
         loginWithCredentials('fake-username', 'fake-password', null);
     }));
+
+    it('should emit only the username and not the password as part of the executeSubmit', async(() => {
+        component.executeSubmit.subscribe((res) => {
+            fixture.detectChanges();
+
+            expect(res.values.controls.username).toBeDefined('username mandatory');
+            expect(res.values.controls.username.value).toEqual('fake-username');
+            expect(res.values.controls.password).toBeUndefined('The password not not be part of the emitted values');
+        });
+
+        loginWithCredentials('fake-username', 'fake-password');
+    }));
 });
