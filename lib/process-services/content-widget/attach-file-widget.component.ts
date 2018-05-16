@@ -32,6 +32,8 @@ import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
+import { zip } from 'rxjs/observable/zip';
+import { of } from 'rxjs/observable/of';
 
 @Component({
     selector: 'attach-widget',
@@ -121,7 +123,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     isTemporaryFile(file): boolean {
-        return this.tempFilesList.indexOf(file) !== -1 ? true : false;
+        return this.tempFilesList.findIndex((elem) => elem.name === file.name) >= 0;
     }
 
     openSelectDialogFromFileSource() {
@@ -129,6 +131,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         if (this.isDefinedSourceFolder()) {
             this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe(
                 (selections: MinimalNodeEntryEntity[]) => {
+                    this.tempFilesList.push(...selections);
                     this.uploadFileFromCS(selections,
                         this.field.params.fileSource.selectedFolder.accountId,
                         this.field.params.fileSource.selectedFolder.siteId);
@@ -142,14 +145,14 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     onRemoveAttachFile(file: any) {
-        if (this.isTemporaryFile(file.contentBlob)) {
+        if (this.isTemporaryFile(file)) {
             this.tempFilesList.splice(this.tempFilesList.indexOf(file.contentBlob), 1);
         }
         this.removeFile(file);
     }
 
     onAttachFileClicked(file: any) {
-        if (this.isTemporaryFile(file.contentBlob)) {
+        if (this.isTemporaryFile(file)) {
             this.formService.formContentClicked.next(file);
         } else {
             this.fileClicked(file);
@@ -157,8 +160,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     downloadContent(file: any): void {
-        if (this.isTemporaryFile(file.contentBlob)) {
-            this.contentService.downloadBlob(file.contentBlob, file.name);
+        if (this.isTemporaryFile(file)) {
+            this.contentService.downloadBlob(file, file.name);
         } else {
             this.processContentService.getFileRawContent(file.id).subscribe(
                 (blob: Blob) => {
@@ -175,6 +178,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         const accountIdentifier = 'alfresco-' + repoId + repoName;
         this.contentDialog.openFileBrowseDialogBySite().subscribe(
             (selections: MinimalNodeEntryEntity[]) => {
+                this.tempFilesList.push(...selections);
                 this.uploadFileFromCS(selections, accountIdentifier);
             });
     }
@@ -182,11 +186,12 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     private uploadFileFromCS(fileNodeList: MinimalNodeEntryEntity[], accountId: string, siteId?: string) {
         let filesSaved = [];
         Observable.from(fileNodeList)
-            .mergeMap(node =>
-                this.activitiContentService.applyAlfrescoNode(node,
+            .flatMap(node =>
+                zip(of(node.content.mimeType), this.activitiContentService.applyAlfrescoNode(node,
                     siteId,
-                    accountId)
-            ).subscribe((res) => {
+                    accountId))
+            ).subscribe(([mymeType, res]) => {
+                res.mimeType = mymeType;
                 filesSaved.push(res);
             },
             (error) => {
@@ -195,8 +200,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             () => {
                 this.field.value = filesSaved;
                 this.field.json.value = filesSaved;
+                this.hasFile = true;
             });
-        this.hasFile = true;
     }
 
 }

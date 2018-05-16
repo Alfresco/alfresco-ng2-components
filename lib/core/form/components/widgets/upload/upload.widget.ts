@@ -84,9 +84,8 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
                 () => {
                     this.field.value = filesSaved;
                     this.field.json.value = filesSaved;
+                    this.hasFile = true;
                 });
-
-            this.hasFile = true;
         }
     }
 
