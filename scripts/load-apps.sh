@@ -2,7 +2,8 @@
 
 base_url="$1"
 
-test -z "$base_url" && base_url="http://adfdev.envalfresco.com"
+#test -z "$base_url" && base_url="http://adfdev.envalfresco.com"
+test -z "$base_url" && base_url="http://adf230.envalfresco.com"
 
 bpm_url="$base_url/activiti-app"
 
@@ -12,13 +13,13 @@ test -z "$bpm_user" && bpm_user="admin@app.activiti.com"
 bpm_pass="$3"
 test -z "$bpm_pass" && bpm_pass="admin"
 
-bpm_user1_email="dev@app.activiti.com"
-bpm_user2_email="mike_rotch@app.activiti.com"
-bpm_user3_email="mike_hunt@app.activiti.com"
-bpm_user4_email="ivana_tinkle@app.activiti.com"
-bpm_user5_email="anita_bath@app.activiti.com"
-bpm_user6_email="qa@app.activiti.com"
-bpm_user7_email="jenni_joy@activiti.com"
+user_1=("dev@app.activiti.com" "dev" "user")
+user_2=("mike_rotch@app.activiti.com" "mike" "rotch")
+user_3=("mike_hunt@app.activiti.com" "mike" "hunt")
+user_4=("ivana_tinkle@app.activiti.com" "ivana" "tinkle")
+user_5=("anita_bath@app.activiti.com" "anita" "bath")
+user_6=("jenni_joy@activiti.com" "jenni" "joy")
+user_7=("qa@app.activiti.com" "qa" "user")
 
 bpm_user_password="adfUser"
 
@@ -52,32 +53,6 @@ function log_in {
     -d "j_username=$userName&j_password=$password&_spring_security_remember_me=true&submit=Login" \
     "$bpm_url/app/authentication" )
    echo $( extract_remeber_me_cookie "$resp" )
-}
-
-function get_share_app_req() {
-  echo "{\"added\":[
-          {\"userId\":$1,\"permission\":\"read\"},
-          {\"userId\":$2,\"permission\":\"read\"},
-          {\"userId\":$3,\"permission\":\"read\"},
-          {\"userId\":$4,\"permission\":\"read\"},
-          {\"userId\":$5,\"permission\":\"read\"},
-          {\"userId\":$6,\"permission\":\"read\"}
-        ],\"updated\":[],\"removed\":[]}"
-}
-
-function share_app() {
-  appId="$1"
-  remeber_me="$2"
-  req=$( get_share_app_req $3 $4 $5 $6 $7 $8)
-  local resp=$( curl --write-out %{http_code} --silent --output /dev/null \
-    -X PUT \
-    -A "$agent" \
-    -H "Cookie: $remeber_me CSRF-TOKEN=$csrf_token" \
-    -H "X-CSRF-TOKEN: $csrf_token" \
-    -H 'Content-Type: application/json' \
-    -d "$req" \
-    "$bpm_url/app/rest/models/$appId/share-info" )
-  echo "$resp"
 }
 
 function bpm_create_tenant() {
@@ -123,34 +98,34 @@ function bpm_create_user_single_tenant() {
 
 function bpm_import_app() {
   local resp=$( curl -s \
-    -u "$bpm_user1_email:$bpm_user_password" \
+    -u "$1:$bpm_user_password" \
     -A "$agent" \
     -H "Cookie: CSRF-TOKEN=$csrf_token" \
     -H "X-CSRF-TOKEN: $csrf_token" \
-    -F file=@$1 \
+    -F file=@$2 \
     "$bpm_url/api/enterprise/app-definitions/import?renewIdmEntries=true" )
   echo $( extract_id_from_json "$resp" )
 }
 
 function bpm_publish_app() {
-  curl \
-    -u "$bpm_user1_email:$bpm_user_password" \
+  curl -s\
+    -u "$1:$bpm_user_password" \
     -A "$agent" \
     -H "Cookie: CSRF-TOKEN=$csrf_token" \
     -H "X-CSRF-TOKEN: $csrf_token" \
     -H 'Content-Type: application/json' \
     -d "{ \"comment\": \"\", \"force\": false }" \
-    "$bpm_url/api/enterprise/app-definitions/$1/publish"
+    "$bpm_url/api/enterprise/app-definitions/$2/publish"
 }
 
 function bpm_deploy_app() {
-  curl \
-    -u "$bpm_user1_email:$bpm_user_password" \
+  curl -s\
+    -u "$1:$bpm_user_password" \
     -A "$agent" \
     -H "Cookie: CSRF-TOKEN=$csrf_token" \
     -H "X-CSRF-TOKEN: $csrf_token" \
     -H 'Content-Type: application/json' \
-    -d "{ \"appDefinitions\": [{\"id\":$1}] }" \
+    -d "{ \"appDefinitions\": [{\"id\":$2}] }" \
     "$bpm_url/api/enterprise/runtime-app-definitions"
 }
 
@@ -221,54 +196,53 @@ function assign_to_user() {
   echo "$app_id"
 }
 
-remember_me=$( log_in $bpm_user $bpm_pass)
-test -z "$remember_me" && echo "Dev Environment:- Error while logging into the environment" && exit 1
+function get_share_app_req() {
+  echo "{\"added\":[
+          {\"userId\":$1,\"permission\":\"read\"},
+          {\"userId\":$2,\"permission\":\"read\"},
+          {\"userId\":$3,\"permission\":\"read\"},
+          {\"userId\":$4,\"permission\":\"read\"},
+          {\"userId\":$5,\"permission\":\"read\"},
+          {\"userId\":$6,\"permission\":\"read\"}
+        ],\"updated\":[],\"removed\":[]}"
+}
 
-: <<'comment_one'
-tenantId=$( bpm_create_tenant "bonjour" )
-test -z "$tenantId" && echo "Dev Environment:- created a tenant $tenantId" && exit 1
-echo "Dev Environment:- created a tenant $tenantId"
-
-id1=$(bpm_create_user_multi_tenant "dev" "user" $bpm_user1_email $bpm_user_password $tenantId)
-test -z "$id1" && echo "Dev Environment:- Either Could not find user id or User already registered $id7" && exit 1
-id2=$(bpm_create_user_multi_tenant "Mike" "Rotch" $bpm_user2_email $bpm_user_password $tenantId)
-test -z "$id2" && echo "Dev Environment:- Either Could not find user id or User already registered $id2" && exit 1
-id3=$(bpm_create_user_multi_tenant "Mike" "Hunt" $bpm_user3_email $bpm_user_password $tenantId)
-test -z "$id3" && echo "Dev Environment:- Either Could not find user id or User already registered $id3" && exit 1
-id4=$(bpm_create_user_multi_tenant "Ivana" "Tinkle" $bpm_user4_email $bpm_user_password $tenantId)
-test -z "$id4" && echo "Dev Environment:- Either Could not find user id or User already registered $id4" && exit 1
-id5=$(bpm_create_user_multi_tenant "Anita" "Bath" $bpm_user5_email $bpm_user_password $tenantId)
-test -z "$id5" && echo "Dev Environment Either Could not find user id or User already registered $id5" && exit 1
-id6=$(bpm_create_user_multi_tenant "qa" "user" $bpm_user6_email $bpm_user_password $tenantId)
-test -z "$id6" && echo "Dev Environment:- Either Could not find user id or User already registered $id6" && exit 1
-id7=$(bpm_create_user_multi_tenant "Jenni" "joy" $bpm_user7_email $bpm_user_password $tenantId)
-test -z "$id7" && echo "Dev Environment:- Either Could not find user id or User already registered $id1" && exit 1
-comment_one
-
-#remeber_me2=$( log_in "qa@app.activiti.com" "adfUser")
-#test -z "$remeber_me2" && echo "Dev Environment:- Error while logging into the environment" && exit 1
-
+function share_app() {
+  appId="$1"
+  remember_me="$2"
+  req=$( get_share_app_req $3 $4 $5 $6 $7 $8)
+  local resp=$( curl --write-out %{http_code} --silent --output /dev/null --verbose\
+    -X PUT \
+    -A "$agent" \
+    -H "Cookie: $remember_me CSRF-TOKEN=$csrf_token" \
+    -H "X-CSRF-TOKEN: $csrf_token" \
+    -H 'Content-Type: application/json' \
+    -d "$req" \
+    "$bpm_url/app/rest/models/$appId/share-info" )
+  echo "$resp"
+}
 
 for f in apps/*.zip
 do
-	echo "> App Found: - $f"
-        app_id=$( bpm_import_app "$f" )
-        test -z "$app_id" && echo "Could not find app ID" && exit 1
-        bpm_publish_app "$app_id"
-        bpm_deploy_app "$app_id"
-        assign_to_user "$app_id"
-        echo "> App $f Published and Deployed."
+  i=1
+  while [ $i -le 7 ]
+  do
+    echo "> App Found: - $f"
+          tenant="tenant_$i"
+          eval user_email="\${user_$i[0]}"
+          eval user_first_name="\${user_$i[1]}"
+          eval user_second_name="\${user_$i[2]}"
+    
+          tenantId=$( bpm_create_tenant $tenant )
+          echo "Dev Environment:- created tenant: $tenant"
+          id1=$(bpm_create_user_multi_tenant $user_first_name $user_second_name $user_email $bpm_user_password $tenantId)
+          test -z "$id1" && echo "Dev Environment:- Either Could not find user id or User already registered $id1" && exit 1
 
-        share_resp=$( share_app $app_id $remember_me $id1 $id2 $id3 $id4 $id5 $id6 $id7)
-        #test "$share_resp" != "200" && echo "Error while sharing app with the users" && exit 1
+          app_id=$( bpm_import_app "$user_email" "$f" )
+          test -z "$app_id" && echo "Could not find app ID" && exit 1
+          bpm_publish_app "$user_email" "$app_id"
+          bpm_deploy_app "$user_email" "$app_id"
+          echo "> App ($app_id) Published and Deployed for user: $user_email."
+          ((i++))
+  done
 done
-
-: <<'comment_two'
-echo "> Dev Environment:- Users created with these ids ( $id1, $id2, $id3, $id4, $id5, $id6 $id7 )."
-
-process_def_id=$(get_process_definition_id)
-test -z "$process_def_id" && echo "Could not find process definition ID" && exit 1
-process_instance_ids=$(create_process "$process_def_id")
-test -z "$process_instance_ids" && echo "Could not find process instance ID" && exit 1
-echo "> Initiated two process instances with ids ( $process_instance_ids )"
-comment_two
