@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { DataTableComponent, DataRowEvent, DataColumnSchemaAssembler } from '@alfresco/adf-core';
+import { DataTableComponent, DataRowEvent, EmptyCustomContentDirective, DataTableSchema } from '@alfresco/adf-core';
 import {
-    AppConfigService, DataColumnListComponent, PaginationComponent, PaginatedComponent,
+    AppConfigService, PaginationComponent, PaginatedComponent,
     UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
 import {
-    AfterContentInit, Component, ContentChild, AfterViewInit, EventEmitter,
+    AfterContentInit, Component, ContentChild, EventEmitter,
     Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
@@ -35,12 +35,13 @@ import { TaskListService } from './../services/tasklist.service';
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.css']
 })
-export class TaskListComponent extends DataColumnSchemaAssembler implements OnChanges, AfterContentInit,  AfterViewInit, PaginatedComponent {
+export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
+
+    static PRESET_KEY = 'adf-task-list.presets';
+
+    @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
 
     requestNode: TaskQueryRequestRepresentationModel;
-
-    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
-    @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
 
     @ViewChild(DataTableComponent)
     datatable: DataTableComponent;
@@ -94,10 +95,6 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
-    /** Custom preset column schema in JSON format. */
-    @Input()
-    presetColumn: string;
-
     /** Toggles multiple row selection, renders checkboxes at the beginning of each row */
     @Input()
     multiselect: boolean = false;
@@ -120,7 +117,6 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
 
     currentInstanceId: string;
     selectedInstances: any[];
-    taskListPresetKey = 'adf-task-list.presets';
     pagination: BehaviorSubject<PaginationModel>;
 
     /** The page number of the tasks to fetch. */
@@ -146,7 +142,7 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
     constructor(private taskListService: TaskListService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
-        super(appConfigService);
+        super(appConfigService, TaskListComponent.PRESET_KEY, taskPresetsDefaultModel);
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;
         });
@@ -159,23 +155,10 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
     }
 
     ngAfterContentInit() {
-        this.loadLayoutPresets(this.taskListPresetKey, taskPresetsDefaultModel);
+        this.createDatatableSchema();
         if (this.appId) {
             this.reload();
         }
-    }
-
-    ngAfterViewInit() {
-        this.setupSchema();
-    }
-
-    /**
-     * Setup html-based (html definitions) or code behind (data adapter) schema.
-     * If component is assigned with an empty data adater the default schema settings applied.
-     */
-    setupSchema(): void {
-        let schema = this.mergeJsonAndHtmlSchema(this.presetColumn, this.columnList);
-        this.datatable.data.setColumns(schema);
     }
 
     setCustomDataSource(rows: any[]): void {
@@ -268,31 +251,23 @@ export class TaskListComponent extends DataColumnSchemaAssembler implements OnCh
      */
     selectTask(taskIdSelected: string): void {
         if (!this.isListEmpty()) {
-
-            let rows = this.datatable.data.getRows();
-            if (rows.length > 0) {
-                let dataRow;
+            let dataRow;
+            if (this.rows.length > 0) {
                 if (taskIdSelected) {
-                    dataRow = rows.find((currentRow: any) => {
-                        return currentRow.getValue('id') === taskIdSelected;
+                    dataRow = this.rows.find((currentRow: any) => {
+                        return currentRow['id'] === taskIdSelected;
                     });
 
                     if (!dataRow) {
-                        dataRow = rows[0];
+                        dataRow = this.rows[0];
                     }
                 } else {
-                    dataRow = rows[0];
+                    dataRow = this.rows[0];
                 }
-                dataRow.isSelected = true;
-                this.datatable.data.selectedRow = dataRow;
-                this.currentInstanceId = dataRow.getValue('id');
+                dataRow['isSelected'] = true;
+                this.rows[0] = dataRow;
+                this.currentInstanceId = dataRow['id'];
             }
-        } else {
-            if (this.datatable) {
-                this.datatable.data.selectedRow = null;
-            }
-
-            this.currentInstanceId = null;
         }
     }
 

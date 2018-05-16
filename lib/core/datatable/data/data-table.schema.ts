@@ -15,29 +15,47 @@
  * limitations under the License.
  */
 
+import { ContentChild, Input } from '@angular/core';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumn } from './data-column.model';
 import { ObjectDataColumn } from './object-datacolumn.model';
 
-export abstract class DataColumnSchemaAssembler {
+export abstract class DataTableSchema {
+
+    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+
+    /** Custom preset column schema in JSON format. */
+    @Input()
+    presetColumn: string;
+
+    /** The columns that the datatable will show. */
+    @Input()
+    schema: string;
 
     private layoutPresets = {};
 
-    constructor(private appConfigService: AppConfigService) {}
+    constructor(private appConfigService: AppConfigService,
+                protected presetKey: string,
+                protected presetsModel: any) { }
 
-    public loadLayoutPresets(presetKey: any, presetsModel: any): void {
-        const externalSettings = this.appConfigService.get(presetKey, null);
+    public createDatatableSchema(): void {
+        this.loadLayoutPresets();
+        this.schema = this.mergeJsonAndHtmlSchema();
+    }
+
+    public loadLayoutPresets(): void {
+        const externalSettings = this.appConfigService.get(this.presetKey, null);
         if (externalSettings) {
-            this.layoutPresets = Object.assign({}, presetsModel, externalSettings);
+            this.layoutPresets = Object.assign({}, this.presetsModel, externalSettings);
         } else {
-            this.layoutPresets = presetsModel;
+            this.layoutPresets = this.presetsModel;
         }
     }
 
-    public mergeJsonAndHtmlSchema(presetColoumn: string, columnList: DataColumnListComponent): any {
+    public mergeJsonAndHtmlSchema(): any {
         let customSchemaColumns = [];
-        customSchemaColumns = this.getSchemaFromConfig(presetColoumn).concat(this.getSchemaFromHtml(columnList));
+        customSchemaColumns = this.getSchemaFromConfig(this.presetColumn).concat(this.getSchemaFromHtml(this.columnList));
         if (customSchemaColumns.length === 0) {
             customSchemaColumns = this.getDefaultLayoutPreset();
         }

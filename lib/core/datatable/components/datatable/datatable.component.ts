@@ -67,6 +67,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     rows: any[] = [];
 
+    /** The columns that the datatable will show. */
+    @Input()
+    columns: any[] = [];
+
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
      */
@@ -297,6 +301,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
         if (this.data && this.schema && this.schema.length > 0) {
             this.data.setColumns(this.schema);
+        }
+        if (this.data && this.columns && this.columns.length > 0) {
+            this.data.setColumns(this.columns);
         }
     }
 
