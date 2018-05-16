@@ -36,7 +36,7 @@ export class ErrorContentComponent implements OnInit {
     errorLinkText: string;
     errorLinkUrl: string;
 
-    homeButton : string;
+    homeButton: string;
 
     constructor(private route: ActivatedRoute,
                 private translateService: TranslationService) {
@@ -47,17 +47,21 @@ export class ErrorContentComponent implements OnInit {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
                     this.errorCode = params['id'];
-                    console.log(this.errorCode);
                 }
             });
         }
 
-        this.errorTitle = this.translateService.instant("ERROR_CONTENT." + this.errorCode + ".TITLE");
-        this.errorDescription = this.translateService.instant("ERROR_CONTENT." + this.errorCode + ".DESCRIPTION");
-        this.errorLinkText = this.translateService.instant("ERROR_CONTENT." + this.errorCode + ".LINK.TEXT");
-        this.errorLinkUrl = this.translateService.instant("ERROR_CONTENT." + this.errorCode + ".LINK.URL");
+        this.errorTitle = this.translateService.instant(
+            'ERROR_CONTENT.' + this.errorCode + '.TITLE');
+        this.errorDescription = this.translateService.instant(
+            'ERROR_CONTENT.' + this.errorCode + '.DESCRIPTION');
+        this.errorLinkText = this.translateService.instant(
+            'ERROR_CONTENT.' + this.errorCode + '.LINK.TEXT');
+        this.errorLinkUrl = this.translateService.instant(
+            'ERROR_CONTENT.' + this.errorCode + '.LINK.URL');
 
-        this.homeButton = this.translateService.instant("ERROR_CONTENT.HOME_BUTTON").toUpperCase();
+        this.homeButton = this.translateService.instant(
+            'ERROR_CONTENT.HOME_BUTTON').toUpperCase();
 
     }
 }

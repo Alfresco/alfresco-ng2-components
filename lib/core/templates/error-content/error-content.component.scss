@@ -35,13 +35,35 @@
             font-weight: normal;
             text-align: center;
             width: 50%;
-            min-width: 300px;
+            min-width: 250px;
             margin-bottom: 60px;
             line-height: 30px;
 
             &-link{
                 color: mat-color($primary);
                 text-decoration: none;
+            }
+        }
+    }
+
+    @media screen and ($mat-small) {
+        .adf-error-content {
+
+            &-code {
+                font-size: 100px;
+                margin-bottom: 35px;
+            }
+    
+            &-shadow {
+                width: 130px;
+            }        
+    
+            &-title {
+                font-size: 24px;
+            }
+    
+            &-description {
+                font-size: 17px;
             }
         }
     }
