@@ -30,7 +30,8 @@ import {
     AppConfigService,
     StartFormComponent,
     FormRenderingService,
-    FormValues
+    FormValues,
+    ContentLinkModel
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
@@ -86,6 +87,10 @@ export class StartProcessInstanceComponent implements OnChanges {
     @Output()
     error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
+    /** Emitted when the form field content is clicked. */
+    @Output()
+    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
+
     @ViewChild('startForm')
     startForm: StartFormComponent;
 
@@ -135,6 +140,10 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     hasSingleProcessDefinition(): boolean {
         return this.processDefinitions.length === 1;
+    }
+
+    onFormContentClick(content: ContentLinkModel): void {
+        this.formContentClicked.emit(content);
     }
 
     getAlfrescoRepositoryName(): string {

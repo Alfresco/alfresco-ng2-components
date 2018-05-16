@@ -175,7 +175,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     openSelectDialog(repoId: string, repoName: string) {
-        const accountIdentifier = 'alfresco-' + repoId + '-' + repoName;
+        const accountIdentifier = 'alfresco-' + repoId + repoName;
         this.contentDialog.openFileBrowseDialogBySite().subscribe(
             (selections: MinimalNodeEntryEntity[]) => {
                 this.tempFilesList.push(...selections);
@@ -186,7 +186,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     private uploadFileFromCS(fileNodeList: MinimalNodeEntryEntity[], accountId: string, siteId?: string) {
         let filesSaved = [];
         Observable.from(fileNodeList)
-            .mergeMap(node =>
+            .flatMap(node =>
                 zip(of(node.content.mimeType), this.activitiContentService.applyAlfrescoNode(node,
                     siteId,
                     accountId))
