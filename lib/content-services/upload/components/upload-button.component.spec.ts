@@ -100,6 +100,22 @@ describe('UploadButtonComponent', () => {
         expect(compiled.querySelector('#uploadFolder')).toBeDefined();
     });
 
+    it('should disable uploadFolder button if disabled is true', () => {
+        component.disabled = true;
+        component.uploadFolders = true;
+        let compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#uploadFolder').getAttribute('disabled')).toBe('true');
+    });
+
+    it('should disable upload-single-file button if disabled is true', () => {
+        component.disabled = true;
+        component.multipleFiles = false;
+        let compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#upload-single-file').getAttribute('disabled')).toBe('true');
+    });
+
     it('should call uploadFile with the default root folder', () => {
         component.rootFolderId = '-root-';
         component.success = null;
@@ -128,6 +144,18 @@ describe('UploadButtonComponent', () => {
 
         component.onFilesAdded(fakeEvent);
         expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
+    });
+
+    it('should not call uploadFiles if rootFolderId is null', () => {
+        component.rootFolderId = null;
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, null, true) });
+
+        uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
+        fixture.detectChanges();
+
+        component.onFilesAdded(fakeEvent);
+        expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
     });
 
     it('should create a folder and emit an File uploaded event', (done) => {
@@ -313,68 +341,87 @@ describe('UploadButtonComponent', () => {
         });
     });
 
-    describe('checkPermission()', () => {
-        it('should not check permission when bode id is not set', () => {
-            component.rootFolderId = null;
+    describe('uploadFiles permission', () => {
+        let fakeNodeWithNoPermission;
 
-            spyOn(contentService, 'getNode');
-            component.checkPermission();
-
-            expect(contentService.getNode).not.toHaveBeenCalled();
+        beforeEach(() => {
+            fakeNodeWithNoPermission = {
+                entry: {}
+            };
         });
 
-        it('should check permission for node id', () => {
-            component.rootFolderId = '123';
-            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
-            spyOn(component, 'nodeHasPermission');
+        it('should not call uploadFiles for node without permission', () => {
+            component.rootFolderId = 'nodeId';
 
-            component.checkPermission();
+            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeNodeWithNoPermission));
+            component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+
+            uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
             fixture.detectChanges();
 
-            expect(component.nodeHasPermission).toHaveBeenCalled();
+            component.onFilesAdded(fakeEvent);
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
         });
 
-        it('should emit error when contentService.getNode fails', () => {
-            component.rootFolderId = '123';
+        it('should not call uploadFiles when getNode fails', () => {
+            component.rootFolderId = 'nodeId';
+
             spyOn(contentService, 'getNode').and.returnValue(Observable.throw('error'));
-            spyOn(component.error, 'emit');
+            component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
-            component.checkPermission();
+            uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
             fixture.detectChanges();
 
-            expect(component.error.emit).toHaveBeenCalledWith('error');
-        });
-    });
-
-    describe('nodeHasPermission()', () => {
-        it('should return true when node has permission', () => {
-            const fakeNodeEntry = {
-                allowableOperations: [
-                    'create'
-                ]
-            };
-
-            const permission = component.nodeHasPermission(fakeNodeEntry, PermissionsEnum.CREATE);
-
-            expect(permission).toBe(true);
+            component.onFilesAdded(fakeEvent);
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
         });
 
-        it('should return false when node has no permission', () => {
-            const fakeNodeEntry = {};
-            const permission = component.nodeHasPermission(fakeNodeEntry, PermissionsEnum.CREATE);
+        it('should emit an error message when getNode fails', (done) => {
+            component.rootFolderId = 'nodeId';
 
-            expect(permission).toBe(false);
+            spyOn(contentService, 'getNode').and.returnValue(Observable.throw('error'));
+
+            component.error.subscribe((value) => {
+                expect(value).toBe('error');
+                done();
+            });
+
+            component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+            fixture.detectChanges();
+
+            component.onFilesAdded(fakeEvent);
         });
 
-        it('should return false when node has different permission', () => {
-            const fakeNodeEntry = {
-                allowableOperations: [
-                    'update'
-                ]
-            };
-            const permission = component.nodeHasPermission(fakeNodeEntry, PermissionsEnum.CREATE);
+        it('should not call uploadFiles for node with other permissions', () => {
+            component.rootFolderId = 'nodeId';
 
-            expect(permission).toBe(false);
+            fakeNodeWithNoPermission.entry.allowableOperations = ['other'];
+
+            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeNodeWithNoPermission));
+            component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+
+            uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
+            fixture.detectChanges();
+
+            component.onFilesAdded(fakeEvent);
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
+        });
+
+        it('should call uploadFiles when node has CREATE', () => {
+            component.rootFolderId = 'nodeId';
+
+            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+            component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+
+            uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
+            fixture.detectChanges();
+
+            component.onFilesAdded(fakeEvent);
+            expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalled();
         });
     });
 });
