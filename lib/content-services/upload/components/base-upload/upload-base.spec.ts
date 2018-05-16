@@ -59,8 +59,6 @@ describe('UploadBase', () => {
         fixture = TestBed.createComponent(UploadTestComponent);
         uploadService = TestBed.get(UploadService);
 
-        spyOn(FileModel.prototype, 'generateId').and.returnValue('test');
-
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

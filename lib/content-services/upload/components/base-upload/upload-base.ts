@@ -144,7 +144,7 @@ export abstract class UploadBase {
             newVersion: this.versioning,
             parentId: parentId,
             path: path,
-            nodeType: this.nodeType,
+            nodeType: this.nodeType
         }, id);
     }
 
