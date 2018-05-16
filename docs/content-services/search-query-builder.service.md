@@ -11,27 +11,27 @@ Stores information from all the custom search and faceted search widgets, compil
 
 ### Methods
 
--   `addFilterQuery(query: string = null)`<br/>
+-   **addFilterQuery**(query: `string` = `null`) <br/>
 
-    -   `query: string = null` -  
-    -   `buildQuery(): QueryBody`<br/>
+    -   _query:_ `string`  -  
+    -   **buildQuery**(): `QueryBody` <br/>
 
         -   **Returns** `QueryBody` - 
 
--   `execute(): Promise<void>`<br/>
+-   **execute**(): `Promise<void>` <br/>
 
     -   **Returns** `Promise<void>` - 
 
--   `getFacetQuery(label: string = null): FacetQuery`<br/>
+-   **getFacetQuery**(label: `string` = `null`): [`FacetQuery`](../../lib/content-services/search/facet-query.interface.ts) <br/>
 
-    -   `label: string = null` -  
-    -   **Returns** `FacetQuery` - 
+    -   _label:_ `string`  -  
+    -   **Returns** [`FacetQuery`](../../lib/content-services/search/facet-query.interface.ts) - 
 
--   `removeFilterQuery(query: string = null)`<br/>
+-   **removeFilterQuery**(query: `string` = `null`) <br/>
 
-    -   `query: string = null` -  
+    -   _query:_ `string`  -  
 
--   `update()`<br/>
+-   **update**() <br/>
 
 ## Details
 

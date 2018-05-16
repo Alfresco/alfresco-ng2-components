@@ -79,9 +79,9 @@ var ParamInfo = /** @class */ (function () {
         this.combined = this.name;
         if (this.isOptional)
             this.combined += "?";
-        this.combined += ": " + this.type;
+        this.combined += ": `" + this.type + "`";
         if (this.defaultValue !== "")
-            this.combined += " = " + this.defaultValue;
+            this.combined += " = `" + this.defaultValue + "`";
     }
     return ParamInfo;
 }());

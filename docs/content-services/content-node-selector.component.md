@@ -41,7 +41,7 @@ Allows a user to select items from a Content Services repository.
 
 ## Details
 
-The Content Node Selector component works a lot like the standard File Open/Save
+The [Content Node Selector component](../content-services/content-node-selector.component.md) works a lot like the standard File Open/Save
 dialog used by desktop applications except that it chooses items from a Content Services
 repository rather than the filesystem. For example, the
 [Document List component](document-list.component.md) uses a selector to choose the targets
@@ -53,7 +53,7 @@ more information).
 Unlike most components, the Content Node Selector is typically shown in a dialog box
 rather than the main page and you are responsible for opening the dialog yourself. You can use the
 [Angular Material Dialog](https://material.angular.io/components/dialog/overview) for this,
-as shown in the usage example. ADF provides the `ContentNodeSelectorComponentData` interface
+as shown in the usage example. ADF provides the [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) interface
 to work with the Dialog's
 [data option](https://material.angular.io/components/dialog/overview#sharing-data-with-the-dialog-component-):
 
@@ -132,7 +132,7 @@ openSelectorDialog() {
 }
 ```
 
-All the results will be streamed to the select [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present in the `ContentNodeSelectorComponentData` object passed to the dialog.
+All the results will be streamed to the select [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present in the [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) object passed to the dialog.
 When the dialog action is selected by clicking, the `data.select` stream will be completed.
 
 ### RowFilter and ImageResolver
@@ -147,7 +147,7 @@ section of the Document List page to learn how these functions are implemented.
 
 ### Using the breadcrumbTransform function
 
-The `breadcrumbTransform` property of `ContentNodeSelectorComponentData` lets you modify
+The `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) lets you modify
 the Node object that is used to generate the
 list of breadcrumbs. You can use this, for example, to remove path elements that are not
 relevant to the use case. See the [Breadcrumb component](breadcrumb.component.md) page for an

@@ -22,7 +22,7 @@ for more information about installing and using the source code.
 | [Search chip list component](search-chip-list.component.md) | Displays search criteria as a set of "chips". | [Source](../../lib/content-services/search/components/search-chip-list/search-chip-list.component.ts) |
 | [Search control component](search-control.component.md) | Displays a input text which shows find-as-you-type suggestions. | [Source](../../lib/content-services/search/components/search-control.component.ts) |
 | [Search filter component](search-filter.component.md) | Represents a main container component for custom search and faceted search settings. | [Source](../../lib/content-services/search/components/search-filter/search-filter.component.ts) |
-| [Search component](search.component.md) | Searches items for supplied search terms.  | [Source](../../lib/content-services/search/components/search.component.ts) |
+| [Search component](search.component.md) | Searches items for supplied search terms. | [Source](../../lib/content-services/search/components/search.component.ts) |
 | [Sites dropdown component](sites-dropdown.component.md) | Displays a dropdown menu to show and interact with the sites of the current user. | [Source](../../lib/content-services/site-dropdown/sites-dropdown.component.ts) |
 | [Like component](like.component.md) | Allows a user to add "likes" to an item. | [Source](../../lib/content-services/social/like.component.ts) |
 | [Rating component](rating.component.md) | Allows a user to add ratings to an item. | [Source](../../lib/content-services/social/rating.component.ts) |

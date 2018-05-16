@@ -20,18 +20,14 @@ Allow user to search people or group that could be added to the current node per
 
 ## Class members
 
-### Properties
-
-| Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| select | `EventEmitter<MinimalNodeEntryEntity>` |  |
+| select | `EventEmitter<any>` | Emitted when a permission list item is selected. |
 
 ## Details
+
 This component uses a [Search component](../search.component.md) to retrieve the
 groups and people that could be added to the permission list of the current node.
 The `select` event will be emitted when a result is clicked from the list.

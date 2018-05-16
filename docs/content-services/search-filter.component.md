@@ -21,9 +21,9 @@ and the [Search Query Builder service](search-query-builder.service.md)\` to bui
 
 Before you begin with customizations, check also the following articles:
 
-- [Search API](https://docs.alfresco.com/5.2/concepts/search-api.html)
-- [Alfresco Full Text Search Reference](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-intro.html)
-- [ACS API Explorer](https://api-explorer.alfresco.com/api-explorer/#!/search/search)
+-   [Search API](https://docs.alfresco.com/5.2/concepts/search-api.html)
+-   [Alfresco Full Text Search Reference](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-intro.html)
+-   [ACS API Explorer](https://api-explorer.alfresco.com/api-explorer/#!/search/search)
 
 ### Configuration
 
@@ -140,7 +140,7 @@ Every use case will have a different set of settings.
 For example Number editors may parse minimum and maximum values, while Text editors can support value formats or length constraints.
 
 You can use `component.settings` to pass any information to your custom widget using the 
-`SearchWidgetSettings` interface:
+[`SearchWidgetSettings`](../../lib/content-services/search/search-widget-settings.interface.ts) interface:
 
 ```ts
 export interface SearchWidgetSettings {
@@ -175,14 +175,14 @@ If there are more than 5 entries, the "Show more" button is displayed to allow d
 #### FacetField Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| field | string | | This specifies the facet field. |
+| ---- | ---- | ------- | ----------- |
+| field | string |  | This specifies the facet field. |
 | mincount | number | 1 | This specifies the minimum count required for a facet field to be included in the response. The default value is 1. |
-| label | string | | This specifies the label to include in place of the facet field. |
-| prefix | string | | This restricts the possible constraints to only indexed values with a specified prefix. |
-| limit | number | | Maximum number of results |
+| label | string |  | This specifies the label to include in place of the facet field. |
+| prefix | string |  | This restricts the possible constraints to only indexed values with a specified prefix. |
+| limit | number |  | Maximum number of results |
 | pageSize | number | 5 | Display page size |
-| offset | number | | Offset position |
+| offset | number |  | Offset position |
 
 ### Facet Queries
 
@@ -225,16 +225,16 @@ The default page size is `5`, it is going to be used in case you set the value t
 ## Widgets
 
 You can use external application configuration to define a set of Angular components (aka Search Filter Widgets)
-that provide extra features and/or behaviour for the Search Filter component.
+that provide extra features and/or behaviour for the [Search Filter component](../content-services/search-filter.component.md).
 
 The Search Filter supports the following widgets out of the box:
 
-- Check List (`check-list`)
-- Date Range (`date-range`)
-- Number Range (`number-range`)
-- Radio List (`radio`)
-- Slider (`slider`)
-- Text (`text`)
+-   Check List (`check-list`)
+-   Date Range (`date-range`)
+-   Number Range (`number-range`)
+-   Radio List (`radio`)
+-   Slider (`slider`)
+-   Text (`text`)
 
 At runtime, ADF uses `selector` attribute values to map and create corresponding Angular element.
 
@@ -281,9 +281,9 @@ If all items fit a single page, then a "Clear all" action button is displayed at
 
 In case there are more than one page three icon buttons will be displayed to allow:
 
-- clear all values
-- show more items (if applicable)
-- show less items (if applicable)
+-   clear all values
+-   show more items (if applicable)
+-   show less items (if applicable)
 
 ### Date Range Widget
 
@@ -341,7 +341,7 @@ Provides ability to select a range between two Numbers based on the particular `
 #### Widget Settings
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | field | string | Field to to use |
 | format | string | Value format. Uses string substitution to allow all sorts of [range queries](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-ranges.html). |
 
@@ -368,7 +368,7 @@ cm:content.size:[0 TO 100]
 Other format examples:
 
 | Format | Example |
-| --- | --- |
+| ------ | ------- |
 | `[{FROM} TO {TO}]` | `[0 TO 5]` |
 | `<{FROM} TO {TO}]` | `<0 TO 5]` |
 | `[{FROM} TO {TO}>` | `[0 TO 5>` |
@@ -411,8 +411,8 @@ The behaviour is very similar to those of the `check-list` except `radio` allows
 It is possible to set the size of the page to display items. The default size is 5.
 In case there are more than one page three icon buttons will be displayed to allow:
 
-- show more items (if applicable)
-- show less items (if applicable)
+-   show more items (if applicable)
+-   show less items (if applicable)
 
 ### Slider Widget
 
@@ -487,7 +487,7 @@ so that filters and selected facets are applied.
 
 It is possible to create custom Angular components that display and/or modify resulting search query.
 
-You start creating a Search Filter widget by generating a blank Angular component that implements `SearchWidget` interface:
+You start creating a Search Filter widget by generating a blank Angular component that implements [`SearchWidget`](../../lib/content-services/search/search-widget.interface.ts) interface:
 
 ```ts
 export interface SearchWidget {
@@ -498,7 +498,7 @@ export interface SearchWidget {
 ```
 
 Every widget implementation must have an `id`, and may also support external `settings`.
-At runtime, every time a new instance of the widget is created, it also receives a reference to the `SearchQueryBuilderService`
+At runtime, every time a new instance of the widget is created, it also receives a reference to the [`SearchQueryBuilderService`](../content-services/search-query-builder.service.md)
 so that you component can access query related information, events and methods.
 
 ```ts
@@ -544,7 +544,7 @@ export class MyComponent implements SearchWidget, OnInit {
 
 ### Updating final query
 
-The `SearchQueryBuilderService` keeps track on all query fragments populated by widgets
+The [`SearchQueryBuilderService`](../content-services/search-query-builder.service.md) keeps track on all query fragments populated by widgets
 and composes them together alongside other settings when performing a final query.
 
 Every query fragment is stored/retrieved using widget `id`.
@@ -574,7 +574,7 @@ When executed, your fragment will be injected into the resulting query based on 
 
 ### Registering custom widget
 
-You can register your own Widgets by utilizing the `SearchFilterService` service:
+You can register your own Widgets by utilizing the [`SearchFilterService`](../../lib/content-services/search/components/search-filter/search-filter.service.ts) service:
 
 ```ts
 import { MyComponent } from './my-component.ts'
