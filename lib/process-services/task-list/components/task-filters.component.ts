@@ -23,7 +23,7 @@ import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
 
 /**
- * @deprecated: 'adf-filters' and 'taskListService-filters' selectors are deprecated, use adf-task-filters instead.
+ * @deprecated: in 2.4.0 'adf-filters' and 'taskListService-filters' selectors were deprecated, use adf-task-filters instead.
  */
 @Component({
     selector: 'adf-task-filters, adf-filters, taskListService-filters',
@@ -157,12 +157,12 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * Pass the selected filter as next
      * @param filter
      */
-    public selectFilter(filter: FilterRepresentationModel) {
-        if (filter) {
-            this.currentFilter = this.filters.find(obj =>
-                filter.id === obj.id ||
-                (filter.name && obj.name &&
-                    (filter.name.toLocaleLowerCase() === obj.name.toLocaleLowerCase())
+    public selectFilter(newFilter: FilterRepresentationModel) {
+        if (newFilter) {
+            this.currentFilter = this.filters.find(filter =>
+                newFilter.id === filter.id ||
+                (newFilter.name && filter.name &&
+                    (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
                 ));
             this.filterClick.emit(this.currentFilter);
         }
