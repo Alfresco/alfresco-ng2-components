@@ -20,10 +20,9 @@
                                 />
                             </mat-form-field>
                         </div>
-                        <div class="adf-report-title" *ngIf="!isEditable" (click)="editEnable()" 
-                            fxFlex="600px" fxFlex.xs="300px" fxFlex.sm="350px" fxFlex.md="400px">
+                        <div class="adf-report-title" *ngIf="!isEditable" (click)="editEnable()">
                             <mat-icon class="adf-report-icon" >mode_edit</mat-icon>
-                            <h4 class="adf-report-title-name">{{reportParameters.name}}</h4>
+                            <h4>{{reportParameters.name}}</h4>
                         </div>
                     </adf-toolbar-title> 
                     <adf-buttons-action-menu *ngIf="!isEditable"
