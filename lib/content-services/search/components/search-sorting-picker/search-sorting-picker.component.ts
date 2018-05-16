@@ -39,11 +39,8 @@ export class SearchSortingPickerComponent implements OnInit {
 
         const primary = this.queryBuilder.getPrimarySorting();
         if (primary) {
-            const option = this.findOptionByKey(primary.key);
-            if (option) {
-                this.value = option.key;
-                this.ascending = option.ascending;
-            }
+            this.value = primary.key;
+            this.ascending = primary.ascending;
         }
     }
 
