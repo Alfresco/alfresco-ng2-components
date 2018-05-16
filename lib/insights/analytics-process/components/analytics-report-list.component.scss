@@ -8,8 +8,6 @@
 
         .activiti-filters__entry {
             cursor: pointer;
-            width: inherit;
-            display: grid !important;
         }
 
         .activiti-filters__entry-icon {
@@ -24,7 +22,6 @@
 
         .mat-nav-list .mat-list-item .mat-list-item-content {
             line-height: 48px;
-            overflow: hidden;
         }
 
         .activiti-filters__entry.active {

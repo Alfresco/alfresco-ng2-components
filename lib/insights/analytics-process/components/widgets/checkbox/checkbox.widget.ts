@@ -24,7 +24,6 @@
  @Component({
     selector: 'analytics-checkbox-widget',
     templateUrl: './checkbox.widget.html',
-    styleUrls: ['./checkbox.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class CheckboxWidgetAanalyticsComponent extends WidgetComponent {
