@@ -1,7 +1,18 @@
 <header mat-dialog-title>{{'VERSION.DIALOG.TITLE' | translate}}</header>
-<section mat-dialog-content>
+
+<section>
+    <mat-slide-toggle color="primary" [(ngModel)]="readOnly">
+        {{'APP.ADF_VERSION_MANAGER.READ_ONLY' | translate}}
+    </mat-slide-toggle>
+</section>
+
+<section mat-dialog-content *ngIf="!readOnly">
     <adf-version-manager [node]="contentEntry" [allowDownload]="allowDownload" [showComments]="showComments" (uploadError)="uploadError($event)"></adf-version-manager>
 </section>
+<section mat-dialog-content *ngIf="readOnly">
+    <adf-version-list [node]="contentEntry" [showActions]="false" ></adf-version-list>
+</section>
+
 <footer mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
     <button mat-button (click)="close()">{{'VERSION.DIALOG.CLOSE' | translate}}</button>
 </footer>

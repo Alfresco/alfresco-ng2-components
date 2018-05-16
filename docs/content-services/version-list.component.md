@@ -31,6 +31,13 @@ Displays the version history of a node in a Version Manager component.
 This component is used by the Version Manager component to
 load and displays the version history of a node.
 
+If you want show readonly version list you set this component with showActions false:
+
+```html
+<adf-version-list [node]="myNode" [showActions]="false" ></adf-version-list>
+```
+
+
 ## See also
 
 -   [Version manager component](version-manager.component.md)
