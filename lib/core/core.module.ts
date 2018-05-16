@@ -38,7 +38,6 @@ import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormModule } from './form/form.module';
 import { SidenavLayoutModule } from './sidenav-layout/sidenav-layout.module';
-import { SideBarActionModule } from './sidebar/sidebar-action.module';
 import { CommentsModule } from './comments/comments.module';
 import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
 
@@ -130,7 +129,6 @@ export function providers() {
     imports: [
         ViewerModule,
         SidenavLayoutModule,
-        SideBarActionModule,
         PipeModule,
         CommonModule,
         DirectiveModule,
@@ -164,7 +162,6 @@ export function providers() {
     ],
     exports: [
         ViewerModule,
-        SideBarActionModule,
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
@@ -198,7 +195,6 @@ export class CoreModuleLazy {
 @NgModule({
     imports: [
         ViewerModule,
-        SideBarActionModule,
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
@@ -236,7 +232,6 @@ export class CoreModuleLazy {
     ],
     exports: [
         ViewerModule,
-        SideBarActionModule,
         SidenavLayoutModule,
         PipeModule,
         CommonModule,

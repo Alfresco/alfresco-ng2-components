@@ -4829,7 +4829,8 @@
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
-        "name": "SideBarActionModule"
+        "name": "SideBarActionModule",
+        "skipError": true
     },
     {
         "position": {
@@ -4837,7 +4838,8 @@
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
-        "name": "SideBarActionModule"
+        "name": "SideBarActionModule",
+      "skipError": true
     },
     {
         "position": {

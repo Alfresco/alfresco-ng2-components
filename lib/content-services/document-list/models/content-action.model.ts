@@ -24,6 +24,7 @@ export class ContentActionModel {
     permission: string;
     disableWithNoPermission: boolean = false;
     disabled: boolean = false;
+    visible: boolean | Function = true;
 
     constructor(obj?: any) {
         if (obj) {
@@ -35,6 +36,10 @@ export class ContentActionModel {
             this.permission = obj.permission;
             this.disableWithNoPermission = obj.disableWithNoPermission;
             this.disabled = obj.disabled;
+
+            if (obj.hasOwnProperty('visible')) {
+                this.visible = obj.visible;
+            }
         }
     }
 }

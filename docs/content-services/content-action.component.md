@@ -92,6 +92,7 @@ export class MyView {
 | permission | `string` |  | The permission type. |
 | target | `string` |  [`ContentActionTarget`](../../lib/content-services/document-list/models/content-action.model.ts).All | Type of item that the action appies to. Can be "document" or "folder" |
 | title | `string` | "Action" | The title of the action as shown in the menu. |
+| visible | `boolean` or `Function` | Visibility state (see examples further in the document) |
 
 ### Events
 
@@ -317,6 +318,84 @@ allow the item being copied/moved to be the destination if it is itself a folder
 
     </content-actions>
 </adf-document-list>
+```
+
+### Conditional visibility
+
+The `<content-action>` component allows you to control visibility with the help of the `visible` property and supports three major scenarios:
+
+* direct value of `boolean` type
+* binding to a property of the `boolean` type
+* binding to a property of the `Function` type that evaluates condition and returns `boolean` value
+
+#### Using direct value of boolean type
+
+```html
+<content-action
+    icon="get_app"
+    title="Never see this action again"
+    handler="download"
+    [visible]="false">
+</content-action>
+```
+
+#### Using a property of the boolean type
+
+```html
+<content-action
+    icon="get_app"
+    title="This can be toggled"
+    handler="download"
+    [visible]="showCustomDownloadAction">
+</content-action>
+```
+
+The markup above relies on the `showCustomDownloadAction` property declared at your component class level:
+
+```ts
+export class MyComponent {
+
+    @Input()
+    showCustomDownloadAction = true;
+
+}
+```
+
+#### Using a property of the Function type
+
+```html
+ <content-action
+    icon="get_app"
+    title="Download this file now!"
+    handler="download"
+    [visible]="canDownloadNode">
+</content-action>
+```
+
+The code above relies on the `canDownloadNode` property of a `Function` type declared at your component class level:
+
+```ts
+export class MyComponent {
+
+    canDownloadNode = (node: MinimalNodeEntity): boolean => {
+        if (node && node.entry && node.entry.name === 'For Sale.docx') {
+            return true;
+        }
+        return false;
+    }
+}
+```
+
+Code above checks the node name, and evaluates to `true` only if corresponding node is called "For Sale.docx". 
+
+Please note that if you want to preserve `this` context within the evaluator function,
+its property should be declared as a lambda one:
+
+```ts
+functionName = (parameters): boolean => {
+    // implementation
+    return true;
+}
 ```
 
 ### Customizing built-in actions

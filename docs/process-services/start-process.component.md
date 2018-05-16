@@ -111,13 +111,38 @@ to _alfresco-1002_ as follows:
 You then need to pass the node as the input `values` object with the other properties:
 
 ```ts
-let node: MinimalNodeEntryEntity = this.nodesApiService.getNode(NODE_ID);
+let node: MinimalNodeEntryEntity = null;
+
+ this.nodesApiService.getNode(NODE_ID).subscribe((minimalNode) => this.node = minimalNode);
 
 const formValues: FormValues  = {
     'file' : node
     'field_one': 'example text'
 };
 ```
+
+You could pass multiple nodes too:
+
+```ts
+const nodes: string[] = [NODE_ID_1, NODE_ID_2];
+
+const values: FormValues = {
+        'files': []
+      };
+
+      Observable.from(nodes)
+        .flatMap((nodeId) => this.nodesApiService.getNode(nodeId))
+        .subscribe(
+              (node) => {
+                values.files.push(node);
+              },
+              (error) => console.log(error) ,
+              () => {
+                this.formValues = values;
+              });
+    });
+```
+
 
 Note that in the object above, the key `file` is the name of the attach file field in the start form of the process. The value of the `file` property must be a
 [MinimalNodeEntryEntity](../content-services/document-library.model.md):
