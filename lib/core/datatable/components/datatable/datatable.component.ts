@@ -71,6 +71,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     private schemaColumns: DataColumn[] = [];
 
+    /* Toggles default selection of the first row */
+    @Input()
+    selectFirstRow: boolean = true;
+
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
      */
@@ -289,6 +293,17 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private setTableRows(rows) {
         if (this.data) {
             this.data.setRows(this.convertToRowsData(rows));
+            this.selectFirst();
+        }
+    }
+
+    private selectFirst() {
+        if (this.selectFirstRow) {
+            if (this.data && this.data.getRows().length > 0) {
+                let row = this.data.getRows()[0];
+                row.isSelected = true;
+                this.data.selectedRow = row;
+            }
         }
     }
 

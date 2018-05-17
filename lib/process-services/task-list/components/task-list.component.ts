@@ -200,7 +200,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.loadTasksByState().subscribe(
             (tasks) => {
                 this.rows = this.optimizeNames(tasks.data);
-                this.selectTask(this.landingTaskId);
                 this.success.emit(tasks);
                 this.isLoading = false;
                 this.pagination.next({
@@ -219,31 +218,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         return this.requestNode.state === 'all'
             ? this.taskListService.findAllTasksWithoutState(this.requestNode)
             : this.taskListService.findTasksByState(this.requestNode);
-    }
-
-    /**
-     * Select the task given in input if present
-     */
-    selectTask(taskIdSelected: string): void {
-        if (!this.isListEmpty()) {
-            let dataRow;
-            if (this.rows.length > 0) {
-                if (taskIdSelected) {
-                    dataRow = this.rows.find((currentRow: any) => {
-                        return currentRow['id'] === taskIdSelected;
-                    });
-
-                    if (!dataRow) {
-                        dataRow = this.rows[0];
-                    }
-                } else {
-                    dataRow = this.rows[0];
-                }
-                dataRow['isSelected'] = true;
-                this.rows[0] = dataRow;
-                this.currentInstanceId = dataRow['id'];
-            }
-        }
     }
 
     /**
