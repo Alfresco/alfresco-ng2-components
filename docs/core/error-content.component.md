@@ -8,7 +8,7 @@ Displays info about a specific error.
 
 ## Basic Usage
 
-Once you have catched the error in your server you will need to redirect to ```/error/errorCode``` to display information about that error
+Once you have catched the error in your server you will need to redirect to ```/error/errorCode``` to display information about that error. 
 
 ```ts
 this.router.navigate(['/error', errorCode]);

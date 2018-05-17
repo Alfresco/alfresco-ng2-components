@@ -51,8 +51,20 @@ export class ErrorContentComponent implements OnInit {
             });
         }
 
+        this.getData();
+
+    }
+
+    getData() {
         this.errorTitle = this.translateService.instant(
             'ERROR_CONTENT.' + this.errorCode + '.TITLE');
+
+        if (this.errorTitle === 'ERROR_CONTENT.' + this.errorCode + '.TITLE') {
+            this.errorCode = 'UNKNOWN';
+            this.errorTitle = this.translateService.instant(
+                'ERROR_CONTENT.' + this.errorCode + '.TITLE');
+        }
+
         this.errorDescription = this.translateService.instant(
             'ERROR_CONTENT.' + this.errorCode + '.DESCRIPTION');
         this.errorLinkText = this.translateService.instant(

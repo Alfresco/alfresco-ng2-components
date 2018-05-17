@@ -265,6 +265,14 @@
   },
   "ERROR_CONTENT": {
     "HOME_BUTTON": "Back to home",
+    "UNKNOWN": {
+      "TITLE": "Oops!",
+      "DESCRIPTION": "Looks like something went wrong.",
+      "LINK": {
+        "TEXT": "",
+        "URL": ""
+      }
+    },
     "403": {
       "TITLE": "Error 403 forbidden!",
       "DESCRIPTION": "Sorry, access to this resource on the server is denied. Either check URL or feel free to",
