@@ -117,7 +117,7 @@ describe('AppTitle service', () => {
         appTitleService.setTitle('key');
         expect(titleService.setTitle).toHaveBeenCalledWith('hello - My application');
 
-        (<any>titleService).setTitle.calls.reset();
+        (<any> titleService).setTitle.calls.reset();
 
         translationService.translate.onLangChange.next(<any> {});
         expect(titleService.setTitle).toHaveBeenCalledWith('привет - My application');
