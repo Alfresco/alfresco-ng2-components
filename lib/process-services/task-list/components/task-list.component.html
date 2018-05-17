@@ -21,11 +21,13 @@
                 </ng-template>
             </loading-content-template>
             <no-content-template>
-                <!--Add your custom empty template here-->
                 <ng-template>
-                    <div class="no-content-message">
-                        {{ 'ADF_TASK_LIST.LIST.MESSAGES.NONE' | translate }}
-                    </div>
+                    <adf-empty-content *ngIf="ref.children.length == 0"
+                        [icon]="icon"
+                        [title]="title">
+                        <p class="adf-empty-content__text">{{description}}</p>
+                    </adf-empty-content>
+                    <div #ref><ng-content></ng-content></div>
                 </ng-template>
             </no-content-template>
         </adf-datatable>

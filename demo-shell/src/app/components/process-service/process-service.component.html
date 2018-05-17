@@ -42,11 +42,19 @@
                         [sort]="taskFilter?.filter?.sort"
                         [data]="dataTasks"
                         [landingTaskId]="currentTaskId"
+                        icon="delete"
+                        [title]="'TASK.EMPTY_STATE.TITLE'|translate"
+                        [description]="'TASK.EMPTY_STATE.FIRST_TEXT'|translate"
                         (rowClick)="onTaskRowClick($event)"
                         (success)="onSuccessTaskList($event)"
                         (row-click)="onRowClick($event)"
                         (row-dblclick)="onTaskRowDblClick($event)"
                         #taskList>
+                        <adf-empty-content
+                            icon="assessment"
+                            [title]="'Title'">
+                            <p class="adf-empty-content__text">Description</p>
+                        </adf-empty-content>
                         <!-- Custom column definition demo -->
 
                         <!-- <data-columns>

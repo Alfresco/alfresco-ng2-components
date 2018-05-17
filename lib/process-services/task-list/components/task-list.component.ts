@@ -16,7 +16,7 @@
  */
 
 import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataColumn,
-    ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
+    ObjectDataRow, ObjectDataTableAdapter, EmptyContentComponent } from '@alfresco/adf-core';
 import {
     AppConfigService, DataColumnListComponent, PaginationComponent, PaginatedComponent,
     UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
@@ -42,6 +42,14 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
+    @Input()
+    icon: string;
+
+    @Input()
+    title: string;
+
+    @Input()
+    description: string;
     /** The id of the app. */
     @Input()
     appId: number;
