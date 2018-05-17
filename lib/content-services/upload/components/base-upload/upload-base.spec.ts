@@ -26,7 +26,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     selector: 'adf-upload-button-test',
     template: 'test componente'
 })
-
 export class UploadTestComponent extends UploadBase {
 
     constructor(protected uploadService: UploadService,
@@ -234,7 +233,7 @@ describe('UploadBase', () => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
         });
 
-        it('should be a mahor version upload if majorVersion is true', () => {
+        it('should be a major version upload if majorVersion is true', () => {
             component.majorVersion = true;
             component.versioning = true;
 
@@ -250,7 +249,7 @@ describe('UploadBase', () => {
             }));
         });
 
-        it('should not  be a mahor version upload if majorVersion is false', () => {
+        it('should not  be a major version upload if majorVersion is false', () => {
             component.majorVersion = false;
             component.versioning = true;
 

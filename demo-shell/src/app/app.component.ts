@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { SettingsService, PageTitleService, StorageService, TranslationService } from '@alfresco/adf-core';
+import { SettingsService, PageTitleService, StorageService } from '@alfresco/adf-core';
 
 @Component({
   selector: 'app-root',
