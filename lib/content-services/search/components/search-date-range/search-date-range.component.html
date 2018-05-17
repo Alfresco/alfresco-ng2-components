@@ -3,7 +3,7 @@
         <input matInput [formControl]="from" [errorStateMatcher]="matcher"
                 placeholder="{{ 'SEARCH.FILTER.RANGE.FROM-DATE' | translate }}"
                 [matDatepicker]="fromDatepicker"
-                [max]="maxFrom"
+                [max]="maxDate"
                 (focusout)="onChangedHandler($event, from)">
         <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #fromDatepicker></mat-datepicker>
@@ -20,6 +20,7 @@
                 placeholder="{{ 'SEARCH.FILTER.RANGE.TO-DATE' | translate }}"
                 [matDatepicker]="toDatepicker"
                 [min]="from.value"
+                [max]="maxDate"
                 (focusout)="onChangedHandler($event, to)">
         <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #toDatepicker></mat-datepicker>
@@ -28,6 +29,9 @@
         </mat-error>
         <mat-error *ngIf="to.hasError('matDatepickerMin')">
                 {{ 'SEARCH.FILTER.VALIDATION.NO-DAYS' | translate }}
+        </mat-error>
+        <mat-error *ngIf="to.hasError('matDatepickerMax')">
+            {{ 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE' | translate }}
         </mat-error>
     </mat-form-field>
 
