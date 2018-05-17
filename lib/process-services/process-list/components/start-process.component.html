@@ -26,7 +26,6 @@
                         [data]="values"
             [disableStartProcessButton]="!hasProcessName()"
             [processDefinitionId]="selectedProcessDef.id"
-            (formContentClicked)="onFormContentClick($event)"
 			(outcomeClick)="onOutcomeClick($event)"
 		    [showRefreshButton]="false">
 		<button form-custom-button mat-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>

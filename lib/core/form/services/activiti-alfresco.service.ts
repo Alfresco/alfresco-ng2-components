@@ -86,7 +86,7 @@ export class ActivitiContentService {
     applyAlfrescoNode(node: MinimalNodeEntryEntity, siteId: string, accountId: string) {
         let apiService: AlfrescoApi = this.apiService.getInstance();
         const currentSideId = siteId ? siteId : this.getSiteNameFromNodePath(node);
-        const params: RelatedContentRepresentation = {
+        let params: RelatedContentRepresentation = {
             source: accountId,
             mimeType: node.content.mimeType,
             sourceId: node.id + ';' + node.properties['cm:versionLabel'] + '@' + currentSideId,
