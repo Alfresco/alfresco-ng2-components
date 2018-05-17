@@ -5,6 +5,5 @@
     <p class="adf-error-content-description">{{ errorDescription | translate }}
         <a href="{{errorLinkUrl}}" *ngIf="errorLinkText" 
         class="adf-error-content-description-link" > {{ errorLinkText | translate }}</a></p>
-    <button mat-raised-button color="primary">{{ homeButton | translate}}</button>
-    <ng-content></ng-content>
+    <button mat-raised-button color="primary" routerLink="/home">{{ homeButton | translate}}</button>
 </div>
