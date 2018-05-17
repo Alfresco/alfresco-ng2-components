@@ -1,25 +1,7 @@
 @mixin adf-analytics-date-range-widget-theme($theme) {
     $warn: map-get($theme, warn);
 
-<<<<<<< HEAD
-    .adf{
-        
-        &-date-range-analytics-text-danger {
-            color: mat-color($warn);
-        }
-
-        &-date-input {
-            text-align: left; 
-            padding-left: 10px;  
-        }
-
-        &-form-field {
-            width: 180px;
-        }
-    }   
-=======
     .adf-date-range-analytics-text-danger {
         color: mat-color($warn);
     }
->>>>>>> parent of 247b9520b... [ADF-1938] Long names in report section now fit
 }
