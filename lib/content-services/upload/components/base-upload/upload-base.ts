@@ -137,7 +137,7 @@ export abstract class UploadBase {
      *
      * @param file
      */
-    protected createFileModel(file: File, parentId: string, path: string): FileModel {
+    protected createFileModel(file: File, parentId: string, path: string, id?: string): FileModel {
         return new FileModel(file, {
             comment: this.comment,
             majorVersion: this.majorVersion,
@@ -145,7 +145,7 @@ export abstract class UploadBase {
             parentId: parentId,
             path: path,
             nodeType: this.nodeType
-        });
+        }, id);
     }
 
     protected isFileSizeAllowed(file: FileModel) {

@@ -9,7 +9,8 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Allow delete",
       "SHOW_COMMENTS" : "Show comments on versions",
-      "ALLOW_DOWNLOAD" :"Enable version download"
+      "ALLOW_DOWNLOAD" :"Enable version download",
+      "READ_ONLY" : "Read only"
     }
   },
     "title": "Welcome",

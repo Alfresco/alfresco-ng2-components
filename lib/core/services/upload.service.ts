@@ -52,9 +52,8 @@ export class UploadService {
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
 
-    constructor(
-        protected apiService: AlfrescoApiService,
-        appConfigService: AppConfigService) {
+    constructor(protected apiService: AlfrescoApiService,
+                appConfigService: AppConfigService) {
         this.excludedFileList = <String[]> appConfigService.get('files.excluded');
     }
 
@@ -164,25 +163,32 @@ export class UploadService {
             opts.overwrite = true;
             opts.majorVersion = file.options.majorVersion;
             opts.comment = file.options.comment;
+            opts.name = file.name;
         } else {
             opts.autoRename = true;
-        }
-
-        if (file.options.newVersionBaseName) {
-            opts.name = file.options.newVersionBaseName;
         }
 
         if (file.options.nodeType) {
             opts.nodeType = file.options.nodeType;
         }
 
-        return this.apiService.getInstance().upload.uploadFile(
-            file.file,
-            file.options.path,
-            file.options.parentId,
-            null,
-            opts
-        );
+        if (file.id) {
+            return this.apiService.getInstance().upload.updateFile(
+                file.file,
+                file.options.path,
+                file.id,
+                file.file,
+                opts
+            );
+        } else {
+            return this.apiService.getInstance().upload.uploadFile(
+                file.file,
+                file.options.path,
+                file.options.parentId,
+                null,
+                opts
+            );
+        }
     }
 
     private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
