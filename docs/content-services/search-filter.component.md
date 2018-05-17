@@ -131,8 +131,8 @@ The interface above also describes entries in the `search.query.categories` sect
 
 ![Search Categories](../docassets/images/search-categories-01.png)
 
-Important note: you need at least one category field to be provided in order to execute the query,
-so that filters and selected facets are applied.
+> **Important note: you need at least one category field to be provided in order to execute the query,
+so that filters and selected facets are applied.**
 
 ### Settings
 
@@ -311,6 +311,37 @@ Provides ability to select a range between two Dates based on the particular `fi
 
 ![Date Range Widget](../docassets/images/search-date-range.png)
 
+#### Widget Settings
+
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| field | string | `undefined` | Field to to use. Required value |
+| dateFormat | string | 'DD/MM/YYYY' | Date format. Dates used by the datepicker are Moment.js instances, so please check the documentation on [Moment](https://momentjs.com/docs/#/parsing/string-format/) so you can set your required date format. |
+
+#### Custom date format
+
+You can set the date range picker to work with any date format your app requires. Just set the wanted value for the 'dateFormat' like this: 
+```json
+{
+    "search": {
+        "categories": [
+            {
+                "id": "createdDateRange",
+                "name": "Created Date (range)",
+                "enabled": true,
+                "component": {
+                    "selector": "date-range",
+                    "settings": {
+                        "field": "cm:created",
+                        "dateFormat": "DD-MMM-YY"
+                    }
+                }
+            }
+        ]
+    }
+}
+```
+
 ### Number Range Widget
 
 Provides ability to select a range between two Numbers based on the particular `field`.
@@ -478,8 +509,8 @@ Upon clicking the `Clear` button slider will be reset to the `min` value or `0`,
 
 ![Text Widget](../docassets/images/search-text.png)
 
-Important note: you need at least one category field to be provided in order to execute the query,
-so that filters and selected facets are applied.
+> **Important note: you need at least one category field to be provided in order to execute the query,
+so that filters and selected facets are applied.**
 
 ## Custom Widgets
 
