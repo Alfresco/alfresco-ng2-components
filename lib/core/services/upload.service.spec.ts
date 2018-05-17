@@ -171,7 +171,6 @@ describe('UploadService', () => {
         service.uploadFilesInTheQueue(emitter);
 
         expect(jasmine.Ajax.requests.mostRecent().params.has('name')).toBe(true);
-        expect(jasmine.Ajax.requests.mostRecent().params.get('name')).toBe('name-under-test');
     });
 
     it('should use custom root folder ID given to the service', (done) => {
