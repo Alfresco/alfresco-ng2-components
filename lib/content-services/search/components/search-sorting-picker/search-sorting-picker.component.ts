@@ -18,7 +18,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { SearchSortingDefinition } from '../../search-sorting-definition.interface';
-import { MatSelectChange } from '@angular/material';
 
 @Component({
     selector: 'adf-search-sorting-picker',
@@ -44,13 +43,10 @@ export class SearchSortingPickerComponent implements OnInit {
         }
     }
 
-    onChanged(event: MatSelectChange) {
-        this.applySorting(event.value);
-    }
-
-    toggleSortDirection() {
-        this.ascending = !this.ascending;
-        this.applySorting(this.value);
+    onChanged(sorting: { key: string, ascending: boolean }) {
+        this.value = sorting.key;
+        this.ascending = sorting.ascending;
+        this.applySorting();
     }
 
     private findOptionByKey(key: string): SearchSortingDefinition {
@@ -60,8 +56,8 @@ export class SearchSortingPickerComponent implements OnInit {
         return null;
     }
 
-    private applySorting(key: string) {
-        const option = this.findOptionByKey(key);
+    private applySorting() {
+        const option = this.findOptionByKey(this.value);
         if (option) {
             this.queryBuilder.sorting = [{
                 ...option,

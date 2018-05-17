@@ -1,12 +1,6 @@
-<mat-form-field>
-    <mat-select [(value)]="value" (selectionChange)="onChanged($event)">
-        <mat-option *ngFor="let option of options" [value]="option.key">
-            {{ option.label | translate }}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
-
-<button *ngIf="value" mat-icon-button (click)="toggleSortDirection()">
-    <mat-icon *ngIf="ascending">arrow_upward</mat-icon>
-    <mat-icon *ngIf="!ascending">arrow_downward</mat-icon>
-</button>
+<adf-sorting-picker
+    [options]="options"
+    [selected]="value"
+    [ascending]="ascending"
+    (change)="onChanged($event)">
+</adf-sorting-picker>

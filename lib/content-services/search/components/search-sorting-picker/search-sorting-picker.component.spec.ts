@@ -18,87 +18,64 @@
 import { SearchSortingPickerComponent } from './search-sorting-picker.component';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { AppConfigService } from '@alfresco/adf-core';
+import { SearchConfiguration } from '../../search-configuration.interface';
 
 describe('SearchSortingPickerComponent', () => {
 
-    let appConfig: AppConfigService;
     let queryBuilder: SearchQueryBuilderService;
     let component: SearchSortingPickerComponent;
 
-    beforeEach(() => {
-        appConfig = new AppConfigService(null);
-        appConfig.config.search = {};
+    const buildConfig = (searchSettings): AppConfigService => {
+        const config = new AppConfigService(null);
+        config.config.search = searchSettings;
+        return config;
+    };
 
-        queryBuilder = new SearchQueryBuilderService(appConfig, null);
+    beforeEach(() => {
+        const config: SearchConfiguration = {
+            sorting: {
+                options: [
+                    <any> { 'key': 'name', 'label': 'Name', 'type': 'FIELD', 'field': 'cm:name', 'ascending': true },
+                    <any> { 'key': 'content.sizeInBytes', 'label': 'Size', 'type': 'FIELD', 'field': 'content.size', 'ascending': true },
+                    <any> { 'key': 'description', 'label': 'Description', 'type': 'FIELD', 'field': 'cm:description', 'ascending': true }
+                ],
+                defaults: [
+                    <any> { 'key': 'name', 'type': 'FIELD', 'field': 'cm:name', 'ascending': true }
+                ]
+            },
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ]
+        };
+        queryBuilder = new SearchQueryBuilderService(buildConfig(config), null);
         component = new SearchSortingPickerComponent(queryBuilder);
     });
 
     it('should load options from query builder', () => {
-        const options = [
-            <any> { key: 'one' },
-            <any> { key: 'two' }
-        ];
-        spyOn(queryBuilder, 'getSortingOptions').and.returnValue(options);
-
         component.ngOnInit();
 
-        expect(component.options.length).toBe(2);
-        expect(component.options[0].key).toEqual('one');
-        expect(component.options[1].key).toEqual('two');
+        expect(component.options.length).toBe(3);
+        expect(component.options[0].key).toEqual('name');
+        expect(component.options[1].key).toEqual('content.sizeInBytes');
+        expect(component.options[2].key).toEqual('description');
     });
 
     it('should pre-select the primary sorting definition', () => {
-        const options = [
-            <any> { key: 'one' },
-            <any> { key: 'two' }
-        ];
-        const sortingDefinition: any = { key: 'one', ascending: true };
-
-        spyOn(queryBuilder, 'getSortingOptions').and.returnValue(options);
-        spyOn(queryBuilder, 'getPrimarySorting').and.returnValue(sortingDefinition);
-
         component.ngOnInit();
 
-        expect(component.value).toEqual(sortingDefinition.key);
-        expect(component.ascending).toEqual(sortingDefinition.ascending);
+        expect(component.value).toEqual('name');
+        expect(component.ascending).toBeTruthy();
     });
 
-    it('should update query builder each time selected value is changed', () => {
-        const options = [
-            <any> { key: 'one' },
-            <any> { key: 'two' }
-        ];
-        const sortingDefinition: any = { key: 'one', ascending: true };
-
-        spyOn(queryBuilder, 'getPrimarySorting').and.returnValue(sortingDefinition);
-        spyOn(queryBuilder, 'getSortingOptions').and.returnValue(options);
+    it('should update query builder each time selection is changed', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
         component.ngOnInit();
-        component.onChanged(<any> { value: 'two' });
+        component.onChanged({ key: 'description', ascending: false });
 
+        expect(queryBuilder.update).toHaveBeenCalled();
         expect(queryBuilder.sorting.length).toBe(1);
-        expect(queryBuilder.sorting[0].key).toEqual('two');
-        expect(queryBuilder.sorting[0].ascending).toBeTruthy();
-    });
-
-    it('should update query builder each time sorting order is changed', () => {
-        const options = [
-            <any> { key: 'one' },
-            <any> { key: 'two' }
-        ];
-        const sortingDefinition: any = { key: 'one', ascending: true };
-
-        spyOn(queryBuilder, 'getPrimarySorting').and.returnValue(sortingDefinition);
-        spyOn(queryBuilder, 'getSortingOptions').and.returnValue(options);
-        spyOn(queryBuilder, 'update').and.stub();
-
-        component.ngOnInit();
-        component.toggleSortDirection();
-
-        expect(queryBuilder.sorting.length).toBe(1);
-        expect(queryBuilder.sorting[0].key).toEqual('one');
+        expect(queryBuilder.sorting[0].key).toEqual('description');
         expect(queryBuilder.sorting[0].ascending).toBeFalsy();
     });
-
 });
