@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+export * from './about.component';
 
-@Component({
-    selector: 'app-about-page',
-    templateUrl: './about.component.html'
-})
-export class AboutComponent  {
-
-}
+export * from './about.module';

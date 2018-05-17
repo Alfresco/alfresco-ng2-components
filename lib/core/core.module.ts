@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { MaterialModule } from './material.module';
+import { AboutModule } from './about/about.module';
 import { AppConfigModule } from './app-config/app-config.module';
 import { CardViewModule } from './card-view/card-view.module';
 import { CollapsableModule } from './collapsable/collapsable.module';
@@ -127,6 +128,7 @@ export function providers() {
 
 @NgModule({
     imports: [
+        AboutModule,
         ViewerModule,
         SidenavLayoutModule,
         PipeModule,
@@ -161,6 +163,7 @@ export function providers() {
         })
     ],
     exports: [
+        AboutModule,
         ViewerModule,
         SidenavLayoutModule,
         PipeModule,
@@ -194,6 +197,7 @@ export class CoreModuleLazy {
 
 @NgModule({
     imports: [
+        AboutModule,
         ViewerModule,
         SidenavLayoutModule,
         PipeModule,
@@ -231,6 +235,7 @@ export class CoreModuleLazy {
         EmptyContentComponent
     ],
     exports: [
+        AboutModule,
         ViewerModule,
         SidenavLayoutModule,
         PipeModule,
