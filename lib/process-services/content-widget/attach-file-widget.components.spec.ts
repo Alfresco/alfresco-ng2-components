@@ -29,7 +29,7 @@ import {
     ContentService,
     setupTestBed
 } from '@alfresco/adf-core';
-import { ContentNodeDialogService  } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService, ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 import { Observable } from 'rxjs/Observable';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ProcessTestingModule } from '../testing/process.testing.module';
@@ -72,7 +72,10 @@ const definedSourceParams = {
 
 const fakeMinimalNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
     id: 'fake',
-    name: 'fake-name'
+    name: 'fake-name',
+    content: {
+        mimeType: 'application/pdf'
+    }
 };
 
 const fakePngAnswer = {
@@ -89,9 +92,8 @@ const fakePngAnswer = {
     'thumbnailStatus': 'queued'
 };
 
-/* tslint:disable */
-// TODO: crashes because of LogService problem
-xdescribe('AttachFileWidgetComponent', () => {
+/* tslint:disable:ban */
+fdescribe('AttachFileWidgetComponent', () => {
 
     let widget: AttachFileWidgetComponent;
     let fixture: ComponentFixture<AttachFileWidgetComponent>;
@@ -103,7 +105,7 @@ xdescribe('AttachFileWidgetComponent', () => {
     let formService: FormService;
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [ProcessTestingModule, ContentNodeSelectorModule]
     });
 
     beforeEach(async(() => {
@@ -165,15 +167,15 @@ xdescribe('AttachFileWidgetComponent', () => {
     }));
 
     it('should be able to upload files coming from content node selector', async(() => {
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(fakeRepositoryListAnswer));
+        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of(fakePngAnswer));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(Observable.of([fakeMinimalNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
         });
         widget.field.id = 'attach-file-attach';
         widget.field.params = <FormFieldMetadata> allSourceParams;
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(fakeRepositoryListAnswer));
-        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of(fakePngAnswer));
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(Observable.of([fakeMinimalNode]));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
@@ -182,8 +184,9 @@ xdescribe('AttachFileWidgetComponent', () => {
             fixture.detectChanges();
             fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
             fixture.detectChanges();
-
-            expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+            });
         });
     }));
 
