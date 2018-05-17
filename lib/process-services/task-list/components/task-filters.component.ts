@@ -161,7 +161,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
         if (newFilter) {
             this.currentFilter = this.filters.find(filter =>
                 newFilter.id === filter.id ||
-                (newFilter.name && filter.name &&
+                (newFilter.name &&
                     (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
                 ));
             this.filterClick.emit(this.currentFilter);
