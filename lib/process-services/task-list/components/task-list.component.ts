@@ -201,7 +201,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.loadTasksByState().subscribe(
             (tasks) => {
                 this.rows = this.optimizeNames(tasks.data);
-                this.selectTask(this.landingTaskId);
                 this.success.emit(tasks);
                 this.isLoading = false;
                 this.pagination.next({
