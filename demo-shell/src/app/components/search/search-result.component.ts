@@ -89,7 +89,7 @@ export class SearchResultComponent implements OnInit {
         this.searchResult.reload();
     }
 
-    private getSorting() {
+    private getSorting(): string[] {
         const primary = this.queryBuilder.getPrimarySorting();
 
         if (primary) {
