@@ -20,6 +20,9 @@ import { Title } from '@angular/platform-browser';
 
 import { AppConfigService } from '../app-config/app-config.service';
 import { PageTitleService } from './page-title.service';
+import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslationService } from './translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
 
 class TestConfig {
     private setup: any = {
@@ -28,6 +31,7 @@ class TestConfig {
 
     titleService: Title = null;
     appTitleService: PageTitleService = null;
+    translationService: TranslationService;
 
     constructor(setup: any = {}) {
         Object.assign(this.setup, setup);
@@ -53,48 +57,69 @@ class TestConfig {
         };
 
         TestBed.configureTestingModule({
+            imports: [
+                CoreTestingModule
+            ],
             providers: [
                 titleServiceProvider,
                 appConfigProvider,
-                PageTitleService
+                PageTitleService,
+                {
+                    provide: TranslationService,
+                    useClass: TranslationMock
+                }
             ]
         });
 
-        inject([ Title, PageTitleService ], (titleService, appTitleService) => {
+        inject([ Title, PageTitleService, TranslationService ], (titleService, appTitleService, translationService) => {
             this.titleService = titleService;
             this.appTitleService = appTitleService;
+            this.translationService = translationService;
         })();
     }
 }
 
 describe('AppTitle service', () => {
-    it('sets default application name', () => {
+    it('should set default application name', () => {
         const { appTitleService, titleService } = new TestConfig({
             applicationName: undefined
         });
 
         appTitleService.setTitle();
-        expect(titleService.setTitle)
-            .toHaveBeenCalledWith('Alfresco ADF Application');
+        expect(titleService.setTitle).toHaveBeenCalledWith('Alfresco ADF Application');
     });
 
-    it('sets only the application name', () => {
+    it('should set only the application name', () => {
         const { appTitleService, titleService } = new TestConfig({
             applicationName: 'My application'
         });
 
         appTitleService.setTitle();
-        expect(titleService.setTitle)
-            .toHaveBeenCalledWith('My application');
+        expect(titleService.setTitle).toHaveBeenCalledWith('My application');
     });
 
-    it('appends application name to the title', () => {
+    it('should append application name to the title', () => {
         const { appTitleService, titleService } = new TestConfig({
             applicationName: 'My application'
         });
 
         appTitleService.setTitle('My page');
-        expect(titleService.setTitle)
-            .toHaveBeenCalledWith('My page - My application');
+        expect(titleService.setTitle).toHaveBeenCalledWith('My page - My application');
+    });
+
+    it('should update title on language change', () => {
+        const { appTitleService, titleService, translationService } = new TestConfig({
+            applicationName: 'My application'
+        });
+
+        spyOn(translationService, 'instant').and.returnValues('hello', 'привет');
+
+        appTitleService.setTitle('key');
+        expect(titleService.setTitle).toHaveBeenCalledWith('hello - My application');
+
+        (<any>titleService).setTitle.calls.reset();
+
+        translationService.translate.onLangChange.next(<any> {});
+        expect(titleService.setTitle).toHaveBeenCalledWith('привет - My application');
     });
 });

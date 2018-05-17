@@ -28,9 +28,9 @@ export class TranslationMock {
     defaultLang: string = 'en';
     userLang: string;
     customLoader: any;
-    translate: any;
-
-    onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
+    translate = {
+        onLangChange: new EventEmitter<LangChangeEvent>()
+    };
 
     addTranslationFolder() {
 

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { SettingsService, PageTitleService, StorageService, TranslationService } from '@alfresco/adf-core';
 
 @Component({
@@ -25,15 +24,17 @@ import { SettingsService, PageTitleService, StorageService, TranslationService }
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor(private settingsService: SettingsService,
-              private storage: StorageService,
-              translationService: TranslationService,
-              pageTitleService: PageTitleService,
-              route: ActivatedRoute) {
+    constructor(private settingsService: SettingsService,
+                private storage: StorageService,
+                private pageTitleService: PageTitleService) {
+    }
+
+  ngOnInit() {
     this.setProvider();
-    pageTitleService.setTitle();
+
+    this.pageTitleService.setTitle('title');
   }
 
   private setProvider() {
