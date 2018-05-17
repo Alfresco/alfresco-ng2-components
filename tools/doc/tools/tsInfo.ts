@@ -285,9 +285,6 @@ export function aggPhase(aggData) {
 
 
 export function updatePhase(tree, pathname, aggData, errorMessages) {
-    let inputMD = getPropDocsFromMD(tree, "Properties", 3);
-    let outputMD = getPropDocsFromMD(tree, "Events", 2);
-
     let compName = angNameToClassName(path.basename(pathname, ".md"));
     let classRef = aggData.projData.findReflectionByName(compName);
 
@@ -301,6 +298,9 @@ export function updatePhase(tree, pathname, aggData, errorMessages) {
 
     if (classType) {
         // Copy docs back from the .md file when the JSDocs are empty.
+        let inputMD = getPropDocsFromMD(tree, "Properties", 3);
+        let outputMD = getPropDocsFromMD(tree, "Events", 2);
+        let methodMD = getMethodDocsFromMD(tree);
         updatePropDocsFromMD(compData, inputMD, outputMD, errorMessages);
 
         let templateName = path.resolve(templateFolder, classType + ".combyne");
@@ -398,6 +398,82 @@ function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
     }
     
     return result;
+}
+
+
+function getMethodDocsFromMD(tree) {
+    let result = {}
+
+    let nav = new MDNav(tree);
+
+    let classMemHeading = nav
+    .heading(h => {
+        return (h.children[0].type === "text") && (h.children[0].value === "Class members");
+    });
+
+    let methListItems = classMemHeading
+    .heading(h => {
+        return (h.children[0].type === "text") && (h.children[0].value === "Methods");
+    }).list().childNav;
+
+    let methItem = methListItems
+    .listItem();
+
+    let i = 0;
+
+    while (!methItem.empty) {
+        let methName = methItem.childNav
+        .paragraph().childNav
+        .strong().childNav
+        .text().item.value;
+
+        let methDoc = methItem.childNav
+        .paragraph().childNav
+        .html()
+        .text().item.value;
+
+        console.log(`${methName}: ${methDoc}`);
+        //getMDMethodParams(methItem);
+
+        i++;
+
+        methItem = methListItems
+        .listItem(l=>true, i);
+    }
+    /*
+    let newRoot = unist.makeRoot([methList.item]);
+    console.log(remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false, gfm: false}).stringify(tree));
+    */
+
+    return result;
+}
+
+
+function getMDMethodParams(methItem: MDNav) {
+    let paramList = methItem.childNav.list().childNav;
+
+    let paramListItem = paramList
+    .listItem(l=>true, 1);
+
+    let i = 0;
+
+    while (!paramListItem.empty) {
+        let paramName = paramListItem.childNav
+        .paragraph().childNav
+        .emphasis().childNav
+        .text().item.value;
+
+        let paramDoc = paramListItem.childNav
+        .paragraph().childNav
+        .text(t=>true, 1).item.value;
+
+        console.log(`${paramName}: ${paramDoc}`);
+
+        i++;
+
+        paramListItem = paramList.childNav
+        .listItem(l=>true, i);
+    }
 }
 
 

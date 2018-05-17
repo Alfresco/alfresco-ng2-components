@@ -196,8 +196,6 @@ function aggPhase(aggData) {
 }
 exports.aggPhase = aggPhase;
 function updatePhase(tree, pathname, aggData, errorMessages) {
-    var inputMD = getPropDocsFromMD(tree, "Properties", 3);
-    var outputMD = getPropDocsFromMD(tree, "Events", 2);
     var compName = angNameToClassName(path.basename(pathname, ".md"));
     var classRef = aggData.projData.findReflectionByName(compName);
     if (!classRef) {
@@ -208,6 +206,9 @@ function updatePhase(tree, pathname, aggData, errorMessages) {
     var classType = compName.match(/component|directive|service/i);
     if (classType) {
         // Copy docs back from the .md file when the JSDocs are empty.
+        var inputMD = getPropDocsFromMD(tree, "Properties", 3);
+        var outputMD = getPropDocsFromMD(tree, "Events", 2);
+        var methodMD = getMethodDocsFromMD(tree);
         updatePropDocsFromMD(compData, inputMD, outputMD, errorMessages);
         var templateName = path.resolve(templateFolder, classType + ".combyne");
         var templateSource = fs.readFileSync(templateName, "utf8");
@@ -276,6 +277,60 @@ function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
             .tableRow(function () { return true; }, i).childNav;
     }
     return result;
+}
+function getMethodDocsFromMD(tree) {
+    var result = {};
+    var nav = new mdNav_1.MDNav(tree);
+    var classMemHeading = nav
+        .heading(function (h) {
+        return (h.children[0].type === "text") && (h.children[0].value === "Class members");
+    });
+    var methListItems = classMemHeading
+        .heading(function (h) {
+        return (h.children[0].type === "text") && (h.children[0].value === "Methods");
+    }).list().childNav;
+    var methItem = methListItems
+        .listItem();
+    var i = 0;
+    while (!methItem.empty) {
+        var methName = methItem.childNav
+            .paragraph().childNav
+            .strong().childNav
+            .text().item.value;
+        var methDoc = methItem.childNav
+            .paragraph().childNav
+            .html()
+            .text().item.value;
+        console.log(methName + ": " + methDoc);
+        //getMDMethodParams(methItem);
+        i++;
+        methItem = methListItems
+            .listItem(function (l) { return true; }, i);
+    }
+    /*
+    let newRoot = unist.makeRoot([methList.item]);
+    console.log(remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false, gfm: false}).stringify(tree));
+    */
+    return result;
+}
+function getMDMethodParams(methItem) {
+    var paramList = methItem.childNav.list().childNav;
+    var paramListItem = paramList
+        .listItem(function (l) { return true; }, 1);
+    var i = 0;
+    while (!paramListItem.empty) {
+        var paramName = paramListItem.childNav
+            .paragraph().childNav
+            .emphasis().childNav
+            .text().item.value;
+        var paramDoc = paramListItem.childNav
+            .paragraph().childNav
+            .text(function (t) { return true; }, 1).item.value;
+        console.log(paramName + ": " + paramDoc);
+        i++;
+        paramListItem = paramList.childNav
+            .listItem(function (l) { return true; }, i);
+    }
 }
 function updatePropDocsFromMD(comp, inputDocs, outputDocs, errorMessages) {
     comp.properties.forEach(function (prop) {

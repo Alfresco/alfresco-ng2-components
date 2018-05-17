@@ -26,6 +26,13 @@ var MDNav = /** @class */ (function () {
         }
         return new MDNav(this.root, this.root.children.length);
     };
+    MDNav.prototype.emphasis = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.find(function (h) {
+            return h.type === "emphasis" && test(h);
+        }, index);
+    };
     MDNav.prototype.heading = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
@@ -33,18 +40,46 @@ var MDNav = /** @class */ (function () {
             return h.type === "heading" && test(h);
         }, index);
     };
+    MDNav.prototype.html = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.find(function (h) {
+            return h.type === "html" && test(h);
+        }, index);
+    };
+    MDNav.prototype.list = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.find(function (h) {
+            return h.type === "list" && test(h);
+        }, index);
+    };
+    MDNav.prototype.listItem = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.find(function (h) {
+            return h.type === "listItem" && test(h);
+        }, index);
+    };
+    MDNav.prototype.paragraph = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.find(function (h) {
+            return h.type === "paragraph" && test(h);
+        }, index);
+    };
+    MDNav.prototype.strong = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.find(function (h) {
+            return h.type === "strong" && test(h);
+        }, index);
+    };
     MDNav.prototype.table = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
             return h.type === "table" && test(h);
-        }, index);
-    };
-    MDNav.prototype.text = function (test, index) {
-        if (test === void 0) { test = function () { return true; }; }
-        if (index === void 0) { index = 0; }
-        return this.find(function (h) {
-            return h.type === "text" && test(h);
         }, index);
     };
     MDNav.prototype.tableRow = function (test, index) {
@@ -59,6 +94,13 @@ var MDNav = /** @class */ (function () {
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
             return h.type === "tableCell" && test(h);
+        }, index);
+    };
+    MDNav.prototype.text = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.find(function (h) {
+            return h.type === "text" && test(h);
         }, index);
     };
     Object.defineProperty(MDNav.prototype, "item", {
@@ -85,6 +127,18 @@ var MDNav = /** @class */ (function () {
     Object.defineProperty(MDNav.prototype, "childNav", {
         get: function () {
             return new MDNav(this.item);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDNav.prototype, "value", {
+        get: function () {
+            if (this.item && this.item["value"]) {
+                return this.item.value;
+            }
+            else {
+                return undefined;
+            }
         },
         enumerable: true,
         configurable: true
