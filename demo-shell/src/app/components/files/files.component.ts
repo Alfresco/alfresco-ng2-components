@@ -78,6 +78,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     sorting = ['name', 'asc'];
 
     @Input()
+    sortingMode = 'client';
+
+    @Input()
     showRecentFiles = true;
 
     @Input()

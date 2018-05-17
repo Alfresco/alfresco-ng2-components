@@ -26,6 +26,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     ERR_ROW_NOT_FOUND: string = 'Row not found';
     ERR_COL_NOT_FOUND: string = 'Column not found';
 
+    private _sortingMode: string;
     private sorting: DataSorting;
     private rows: DataRow[];
     private columns: DataColumn[];
@@ -37,12 +38,26 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
 
+    set sortingMode(value: string) {
+        let newValue = (value || 'client').toLowerCase();
+        if (newValue !== 'client' && newValue !== 'server') {
+            newValue = 'client';
+        }
+        this._sortingMode = newValue;
+    }
+
+    get sortingMode(): string {
+        return this._sortingMode;
+    }
+
     constructor(private documentListService: DocumentListService,
                 schema: DataColumn[] = [],
-                sorting?: DataSorting) {
+                sorting?: DataSorting,
+                sortingMode: string = 'client') {
         this.rows = [];
         this.columns = schema || [];
         this.sorting = sorting;
+        this.sortingMode = sortingMode;
     }
 
     getRows(): Array<DataRow> {
@@ -148,6 +163,10 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     private sortRows(rows: DataRow[], sorting: DataSorting) {
+        if (this.sortingMode === 'server') {
+            return;
+        }
+
         const options: Intl.CollatorOptions = {};
 
         if (sorting && sorting.key && rows && rows.length > 0) {
@@ -194,17 +213,19 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                     rows = rows.filter(this.filter);
                 }
 
-                // Sort by first sortable or just first column
-                if (this.columns && this.columns.length > 0) {
-                    let sorting = this.getSorting();
-                    if (sorting) {
-                        this.sortRows(rows, sorting);
-                    } else {
-                        let sortable = this.columns.filter(c => c.sortable);
-                        if (sortable.length > 0) {
-                            this.sort(sortable[0].key, 'asc');
+                if (this.sortingMode !== 'server') {
+                    // Sort by first sortable or just first column
+                    if (this.columns && this.columns.length > 0) {
+                        let sorting = this.getSorting();
+                        if (sorting) {
+                            this.sortRows(rows, sorting);
                         } else {
-                            this.sort(this.columns[0].key, 'asc');
+                            let sortable = this.columns.filter(c => c.sortable);
+                            if (sortable.length > 0) {
+                                this.sort(sortable[0].key, 'asc');
+                            } else {
+                                this.sort(this.columns[0].key, 'asc');
+                            }
                         }
                     }
                 }
