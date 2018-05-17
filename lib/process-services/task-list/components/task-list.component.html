@@ -22,12 +22,11 @@
             </loading-content-template>
             <no-content-template>
                 <ng-template>
-                    <adf-empty-content *ngIf="ref.children.length == 0"
-                        [icon]="icon"
-                        [title]="title">
-                        <p class="adf-empty-content__text">{{description}}</p>
+                    <adf-empty-content *ngIf="!emptyContentHolder"
+                        icon="assessment"
+                        [title]="'ADF_TASK_LIST.LIST.MESSAGES.NONE' | translate">
                     </adf-empty-content>
-                    <div #ref><ng-content></ng-content></div>
+                    <ng-content select="adf-empty-content-holder"></ng-content>
                 </ng-template>
             </no-content-template>
         </adf-datatable>
