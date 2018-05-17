@@ -182,8 +182,8 @@
       "RANGE": {
         "FROM": "From",
         "TO": "To",
-        "FROM-DATE": "Choose a date",
-        "TO-DATE": "Choose a date"
+        "FROM-DATE": "From",
+        "TO-DATE": "To"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Required value",

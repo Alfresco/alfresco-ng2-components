@@ -69,7 +69,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
-    maxFrom: any;
+    maxDate: any;
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
 
     constructor(private dateAdapter: DateAdapter<Moment>,
@@ -99,7 +99,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
             to: this.to
         });
 
-        this.maxFrom = moment().startOf('day');
+        this.maxDate = moment().startOf('day');
     }
 
     apply(model: { from: string, to: string }, isValid: boolean) {
