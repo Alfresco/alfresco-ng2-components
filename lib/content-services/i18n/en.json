@@ -189,6 +189,7 @@
         "REQUIRED-VALUE": "Required value",
         "NO-DAYS": "No days selected.",
         "INVALID-FORMAT": "Invalid Format",
+        "INVALID-DATE": "Invalid date. Please enter the date in the format '{{ requiredFormat }}'",
         "BEYOND-MAX-DATE": "Date is too late."
       }
     },
