@@ -17,6 +17,7 @@
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { AlfrescoApiService, SettingsService, PageTitleService, StorageService } from '@alfresco/adf-core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -28,7 +29,9 @@ export class AppComponent implements OnInit {
 
     constructor(private settingsService: SettingsService,
                 private storage: StorageService,
-                private pageTitleService: PageTitleService) {
+                private pageTitleService: PageTitleService,
+                private alfrescoApiService: AlfrescoApiService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -36,7 +39,7 @@ export class AppComponent implements OnInit {
 
         this.pageTitleService.setTitle('title');
 
-        this.apiService.getInstance().on('error', (error) => {
+        this.alfrescoApiService.getInstance().oAlfrescoApiServicen('error', (error) => {
             this.router.navigate(['/error', error.status]);
         });
     }
