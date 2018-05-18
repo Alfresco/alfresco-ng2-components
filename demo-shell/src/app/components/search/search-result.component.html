@@ -14,17 +14,26 @@
     <adf-search-filter #searchFilter></adf-search-filter>
 
     <div class="adf-search-results__content">
+        <div class="adf-search-results__sorting">
+            <adf-search-sorting-picker></adf-search-sorting-picker>
+        </div>
         <app-files-component
-                [currentFolderId]="null"
-                [nodeResult]="resultNodePageList"
-                [disableDragArea]="true"
-                [pagination]="pagination"
-                (changedPageSize)="onRefreshPagination($event)"
-                (changedPageNumber)="onRefreshPagination($event)"
-                (turnedNextPage)="onRefreshPagination($event)"
-                (loadNext)="onRefreshPagination($event)"
-                (turnedPreviousPage)="onRefreshPagination($event)"
-                (deleteElementSuccess)="onDeleteElementSuccess($event)">
+            [showHeader]="false"
+            [sorting]="sorting"
+            [sortingMode]="'server'"
+            [showRecentFiles]="false"
+            [showSitePicker]="false"
+            [showSettingsPanel]="false"
+            [currentFolderId]="null"
+            [nodeResult]="resultNodePageList"
+            [disableDragArea]="true"
+            [pagination]="pagination"
+            (changedPageSize)="onRefreshPagination($event)"
+            (changedPageNumber)="onRefreshPagination($event)"
+            (turnedNextPage)="onRefreshPagination($event)"
+            (loadNext)="onRefreshPagination($event)"
+            (turnedPreviousPage)="onRefreshPagination($event)"
+            (deleteElementSuccess)="onDeleteElementSuccess($event)">
         </app-files-component>
     </div>
 </div>

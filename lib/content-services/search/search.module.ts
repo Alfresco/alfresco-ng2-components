@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 
-import { PipeModule } from '@alfresco/adf-core';
+import { PipeModule, CoreModule } from '@alfresco/adf-core';
 
 import { SearchTriggerDirective } from './components/search-trigger.directive';
 
@@ -37,6 +37,7 @@ import { SearchSliderComponent } from './components/search-slider/search-slider.
 import { SearchNumberRangeComponent } from './components/search-number-range/search-number-range.component';
 import { SearchCheckListComponent } from './components/search-check-list/search-check-list.component';
 import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
+import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     SearchComponent,
@@ -49,6 +50,7 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
 
 @NgModule({
     imports: [
+        CoreModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -64,7 +66,8 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         SearchSliderComponent,
         SearchNumberRangeComponent,
         SearchCheckListComponent,
-        SearchDateRangeComponent
+        SearchDateRangeComponent,
+        SearchSortingPickerComponent
     ],
     exports: [
         ...ALFRESCO_SEARCH_DIRECTIVES,
@@ -74,7 +77,8 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         SearchSliderComponent,
         SearchNumberRangeComponent,
         SearchCheckListComponent,
-        SearchDateRangeComponent
+        SearchDateRangeComponent,
+        SearchSortingPickerComponent
     ],
     entryComponents: [
         SearchWidgetContainerComponent,

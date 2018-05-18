@@ -32,6 +32,31 @@ describe('ShareDataTableAdapter', () => {
         spyOn(documentListService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
     });
 
+    it('should use client sorting by default', () => {
+        const adapter = new ShareDataTableAdapter(documentListService, []);
+        expect(adapter.sortingMode).toBe('client');
+    });
+
+    it('should not be case sensitive for sorting mode value', () => {
+        const adapter = new ShareDataTableAdapter(documentListService, []);
+
+        adapter.sortingMode = 'CLIENT';
+        expect(adapter.sortingMode).toBe('client');
+
+        adapter.sortingMode = 'SeRvEr';
+        expect(adapter.sortingMode).toBe('server');
+    });
+
+    it('should fallback to client sorting for unknown values', () => {
+        const adapter = new ShareDataTableAdapter(documentListService, []);
+
+        adapter.sortingMode = 'SeRvEr';
+        expect(adapter.sortingMode).toBe('server');
+
+        adapter.sortingMode = 'quantum';
+        expect(adapter.sortingMode).toBe('client');
+    });
+
     it('should setup rows and columns with constructor', () => {
         let schema = [<DataColumn> {}];
         let adapter = new ShareDataTableAdapter(documentListService, schema);

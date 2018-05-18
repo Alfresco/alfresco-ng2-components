@@ -34,6 +34,16 @@ Below is an example configuration:
 ```json
 {
     "search": {
+        "sorting": {
+            "options": [
+                { "key": "name", "label": "Name", "type": "FIELD", "field": "cm:name", "ascending": true },
+                { "key": "content.sizeInBytes", "label": "Size", "type": "FIELD", "field": "content.size", "ascending": true },
+                { "key": "description", "label": "Description", "type": "FIELD", "field": "cm:description", "ascending": true }
+            ],
+            "defaults": [
+                { "key": "name", "type": "FIELD", "field": "cm:name", "ascending": true }
+            ]
+        },
         "filterQueries": [
             { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
             { "query": "NOT cm:creator:System" }
@@ -106,6 +116,42 @@ In addition, it is also possible to provide a set of queries that are always exe
 ```
 
 Note that the entries of the `filterQueries` array are joined using the `AND` operator. 
+
+### Sorting
+
+The Sorting configuration section consists of two blocks: 
+`options` that holds a list of items that users can select from,
+and `defaults` that contains predefined sorting to use by default.
+
+```json
+{
+    "search": {
+        "sorting": {
+            "options": [
+                { "key": "name", "label": "Name", "type": "FIELD", "field": "cm:name", "ascending": true },
+                { "key": "content.sizeInBytes", "label": "Size", "type": "FIELD", "field": "content.size", "ascending": true },
+                { "key": "description", "label": "Description", "type": "FIELD", "field": "cm:description", "ascending": true }
+            ],
+            "defaults": [
+                { "key": "name", "type": "FIELD", "field": "cm:name", "ascending": true }
+            ]
+        }
+    }
+}
+```
+
+#### Sorting Definition Attributes
+
+| Name | Type | Description |
+| --- | --- | --- |
+| key | string | Unique key to identify the entry, can also be used to map DataColumn instances. |
+| label | string | Display text, can also be an i18n resource key. |
+| type | string | This specifies how to order - either by using a field or based on the position of the document in the index, or by score/relevance.  |
+| field | string | The name of the field. |
+| ascending | boolean | The sorting order. |
+
+See also:
+* Alfresco Content Services API Reference  / Search Api / [Sort](https://docs.alfresco.com/5.2/concepts/search-api-sort.html)
 
 ### Categories
 
@@ -647,4 +693,6 @@ and pass custom attributes in case your component supports them:
 
 ## See also
 
--   [Search Query Builder service](search-query-builder.service.md)
+- [Search Query Builder service](search-query-builder.service.md)
+- [Search Chip List Component](search-chip-list.component.md)
+- [Search Sorting Picker Component](search-sorting-picker.component.md)

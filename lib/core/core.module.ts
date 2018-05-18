@@ -81,6 +81,7 @@ import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
 import { startupServiceFactory } from './services/startup-service-factory';
 import { EmptyContentComponent } from './components/empty-content/empty-content.component';
+import { SortingPickerComponent } from './components/sorting-picker/sorting-picker.component';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -232,7 +233,8 @@ export class CoreModuleLazy {
         })
     ],
     declarations: [
-        EmptyContentComponent
+        EmptyContentComponent,
+        SortingPickerComponent
     ],
     exports: [
         AboutModule,
@@ -262,7 +264,8 @@ export class CoreModuleLazy {
         DataTableModule,
         TranslateModule,
         ButtonsMenuModule,
-        EmptyContentComponent
+        EmptyContentComponent,
+        SortingPickerComponent
     ],
     providers: [
         ...providers(),

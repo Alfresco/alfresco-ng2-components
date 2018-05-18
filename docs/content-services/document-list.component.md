@@ -88,6 +88,7 @@ Displays the documents from a repository.
 | skipCount | `number` | 0 | Number of elements to skip over for pagination purposes |
 | sorting | `string[]` |  | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
+| sortingMode | `string` | `client` | Defines sorting mode. Can be either `client` or `server`. |
 
 ### Events
 

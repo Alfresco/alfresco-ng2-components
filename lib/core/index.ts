@@ -36,6 +36,7 @@ export * from './comments/index';
 export * from './buttons-menu/index';
 
 export * from './components/empty-content/empty-content.component';
+export * from './components/sorting-picker/sorting-picker.component';
 
 export * from './pipes/index';
 export * from './services/index';

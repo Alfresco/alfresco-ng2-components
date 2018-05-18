@@ -1,6 +1,6 @@
 <div class="container">
 
-    <mat-accordion class="adf-container-recent">
+    <mat-accordion *ngIf="showRecentFiles" class="adf-container-recent">
         <mat-expansion-panel  hideToggle="true">
             <mat-expansion-panel-header >
                 <mat-panel-title>
@@ -28,7 +28,7 @@
         </mat-expansion-panel>
     </mat-accordion>
 
-    <div class="adf-site-container-style" id="site-container">
+    <div *ngIf="showSitePicker" class="adf-site-container-style" id="site-container">
         <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" [relations]="'members'">
         </adf-sites-dropdown>
     </div>
@@ -194,6 +194,9 @@
                 [display]="displayMode"
                 [node]="nodeResult"
                 [includeFields]="includeFields"
+                [sorting]="sorting"
+                [sortingMode]="sortingMode"
+                [showHeader]="showHeader"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (ready)="emitReadyEvent($event)"
@@ -416,7 +419,7 @@
     </adf-start-process>
 </div>
 
-<div class="adf-content-service-settings">
+<div *ngIf="showSettingsPanel" class="adf-content-service-settings">
 
     <p>Current folder ID: {{ documentList.currentFolderId }}</p>
 
