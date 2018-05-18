@@ -75,6 +75,24 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     processId;
 
     @Input()
+    sorting = ['name', 'asc'];
+
+    @Input()
+    sortingMode = 'client';
+
+    @Input()
+    showRecentFiles = true;
+
+    @Input()
+    showSitePicker = true;
+
+    @Input()
+    showSettingsPanel = true;
+
+    @Input()
+    showHeader = true;
+
+    @Input()
     selectionMode = 'multiple';
 
     @Input()

@@ -299,6 +299,24 @@ describe('SearchQueryBuilder', () => {
         expect(compiled.facetFields.facets).toEqual(jasmine.objectContaining(config.facetFields));
     });
 
+    it('should build query with sorting', () => {
+        const config: SearchConfiguration = {
+            fields: [],
+            categories: [
+                <any> { id: 'cat1', enabled: true },
+                <any> { id: 'cat2', enabled: true }
+            ]
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        const sorting: any = { type: 'FIELD', field: 'cm:name', ascending: true };
+        builder.sorting = [sorting];
+
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.sort[0]).toEqual(jasmine.objectContaining(sorting));
+    });
+
     it('should use pagination settings', () => {
         const config: SearchConfiguration = {
             categories: [

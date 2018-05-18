@@ -138,6 +138,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     sorting = ['name', 'asc'];
 
+    /** Defines sorting mode. Can be either `client` or `server`. */
+    @Input()
+    sortingMode = 'client';
+
     /** The inline style to apply to every row. See
      * the Angular NgStyle
      * docs for more details and usage examples.
@@ -329,7 +333,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     ngOnInit() {
         this.loadLayoutPresets();
-        this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
+        this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting(), this.sortingMode);
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
@@ -367,7 +371,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.documentListService, schema, this.getDefaultSorting());
+            this.data = new ShareDataTableAdapter(this.documentListService, schema, this.getDefaultSorting(), this.sortingMode);
         } else if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }
@@ -380,6 +384,18 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     ngOnChanges(changes: SimpleChanges) {
         this.resetSelection();
+
+        if (changes.sortingMode && !changes.sortingMode.firstChange && this.data) {
+            this.data.sortingMode = changes.sortingMode.currentValue;
+        }
+
+        if (changes.sorting && !changes.sorting.firstChange && this.data) {
+            const newValue = changes.sorting.currentValue;
+            if (newValue && newValue.length > 0) {
+                const [key, direction] = newValue;
+                this.data.setSorting(new DataSorting(key, direction));
+            }
+        }
 
         if (changes.folderNode && changes.folderNode.currentValue) {
             this.currentFolderId = changes.folderNode.currentValue.id;
