@@ -82,7 +82,6 @@ import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
 import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerComponent } from './components/sorting-picker/sorting-picker.component';
-import { EmptyContentComponent } from './templates/empty-content/empty-content.component';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
