@@ -17,14 +17,14 @@
                     <adf-accordion>
                         <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true"
                                              [headingIcon]="'assignment'">
-                            <adf-filters
+                            <adf-task-filters
                                 [filterParam]="filterSelected"
                                 [appId]="appId"
                                 [hasIcon]="false"
                                 (filterClick)="onTaskFilterClick($event)"
                                 (success)="onSuccessTaskFilterList($event)"
                                 #activitifilter>
-                            </adf-filters>
+                            </adf-task-filters>
                         </adf-accordion-group>
                     </adf-accordion>
                 </div>

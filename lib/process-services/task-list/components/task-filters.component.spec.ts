@@ -258,7 +258,7 @@ describe('TaskFiltersComponent', () => {
 
     it('should emit an event when a filter is selected', (done) => {
         let currentFilter = fakeGlobalFilter[0];
-
+        component.filters = fakeGlobalFilter;
         component.filterClick.subscribe((filter: FilterRepresentationModel) => {
             expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
@@ -289,6 +289,32 @@ describe('TaskFiltersComponent', () => {
         expect(component.getFiltersByAppId).toHaveBeenCalledWith(appId);
     });
 
+    it('should change current filter when filterParam (id) changes', (done) => {
+        component.filters = fakeGlobalFilter;
+        component.currentFilter = null;
+
+        component.filterClick.subscribe((filter: FilterRepresentationModel) => {
+            expect(filter).toEqual(fakeGlobalFilter[0]);
+            expect(component.currentFilter).toEqual(filter);
+            done();
+        });
+        const change = new SimpleChange(null, {id : fakeGlobalFilter[0].id}, true);
+        component.ngOnChanges({ 'filterParam': change });
+    });
+
+    it('should change current filter when filterParam (name) changes', (done) => {
+        component.filters = fakeGlobalFilter;
+        component.currentFilter = null;
+
+        component.filterClick.subscribe((filter: FilterRepresentationModel) => {
+            expect(filter).toEqual(fakeGlobalFilter[0]);
+            expect(component.currentFilter).toEqual(filter);
+            done();
+        });
+        const change = new SimpleChange(null, {name : fakeGlobalFilter[0].name}, true);
+        component.ngOnChanges({ 'filterParam': change });
+    });
+
     it('should reload filters by app name on binding changes', () => {
         spyOn(component, 'getFiltersByAppName').and.stub();
         const appName = 'fake-app-name';
@@ -301,17 +327,18 @@ describe('TaskFiltersComponent', () => {
 
     it('should return the current filter after one is selected', () => {
         let filter = fakeGlobalFilter[1];
+        component.filters = fakeGlobalFilter;
 
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(filter);
         expect(component.getCurrentFilter()).toBe(filter);
     });
 
-    it('should load Default list when no appid or taskid are provided', () => {
+    it('should load default list when appid is null', () => {
         spyOn(component, 'getFiltersByAppId').and.stub();
 
         let change = new SimpleChange(null, null, true);
-        component.ngOnChanges({ 'appName': change });
+        component.ngOnChanges({ 'appId': change });
 
         expect(component.getFiltersByAppId).toHaveBeenCalled();
     });

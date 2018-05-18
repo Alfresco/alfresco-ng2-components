@@ -22,8 +22,11 @@ import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.m
 import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
 
+/**
+ * @deprecated: in 2.4.0 'adf-filters' and 'taskListService-filters' selectors were deprecated, use adf-task-filters instead.
+ */
 @Component({
-    selector: 'adf-filters, taskListService-filters',
+    selector: 'adf-task-filters, adf-filters, taskListService-filters',
     templateUrl: './task-filters.component.html',
     styleUrls: ['task-filters.component.scss']
 })
@@ -73,18 +76,18 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     ngOnInit() { }
 
     ngOnChanges(changes: SimpleChanges) {
-        let appId = changes['appId'];
-        if (appId && (appId.currentValue || appId.currentValue === null)) {
-            this.getFiltersByAppId(appId.currentValue);
-            return;
-        }
-        let appName = changes['appName'];
-        if (appName && appName !== null && appName.currentValue) {
+        const appName = changes['appName'];
+        const appId = changes['appId'];
+        if (appName && appName.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
-            return;
+        } else if (appId) {
+            this.getFiltersByAppId(appId.currentValue);
         }
 
-        this.getFiltersByAppId();
+        const filterParam = changes['filterParam'];
+        if (filterParam && filterParam.currentValue) {
+            this.selectFilter(filterParam.currentValue);
+        }
     }
 
     /**
@@ -154,9 +157,15 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * Pass the selected filter as next
      * @param filter
      */
-    public selectFilter(filter: FilterRepresentationModel) {
-        this.currentFilter = filter;
-        this.filterClick.emit(filter);
+    public selectFilter(newFilter: FilterRepresentationModel) {
+        if (newFilter) {
+            this.currentFilter = this.filters.find(filter =>
+                newFilter.id === filter.id ||
+                (newFilter.name &&
+                    (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
+                ));
+            this.filterClick.emit(this.currentFilter);
+        }
     }
 
     /**
