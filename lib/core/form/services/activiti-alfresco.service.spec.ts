@@ -259,8 +259,8 @@ describe('ActivitiContentService', () => {
             path: {
                 elements: [
                     { id: 'fake-parent-1', name: 'no-site', nodeType: 'cm:fake' },
-                    { id: 'fake-parent-2', name: 'Sites', nodeType: 'st:sites' },
-                    { id: 'fake-parent-3', name: 'good-site', nodeType: 'st:sites' }
+                    { id: 'fake-parent-2', name: 'Sites', nodeType: 'st:site' },
+                    { id: 'fake-parent-3', name: 'good-site', nodeType: 'st:site' }
                 ]
             },
             content: {
