@@ -193,8 +193,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'error/:id',
-                component: ErrorContentComponent,
-                canActivate: [AuthGuardEcm]
+                component: ErrorContentComponent
             }
         ]
     }

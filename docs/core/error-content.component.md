@@ -1,7 +1,3 @@
----
-Added: v2.4.0
-Status: Active
----
 # Error Content Component
 
 Displays info about a specific error.
