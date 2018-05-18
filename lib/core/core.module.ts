@@ -41,7 +41,7 @@ import { FormModule } from './form/form.module';
 import { SidenavLayoutModule } from './sidenav-layout/sidenav-layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
-import { ErrorContentModule } from './templates/error-content/error-content.module';
+import { TemplatetModule } from './templates/template.module';
 
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
@@ -155,7 +155,7 @@ export function providers() {
         DataColumnModule,
         DataTableModule,
         ButtonsMenuModule,
-        ErrorContentModule,
+        TemplatetModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -192,7 +192,7 @@ export function providers() {
         DataTableModule,
         TranslateModule,
         ButtonsMenuModule,
-        ErrorContentModule
+        TemplatetModule
     ]
 })
 export class CoreModuleLazy {
@@ -226,7 +226,7 @@ export class CoreModuleLazy {
         DataColumnModule,
         DataTableModule,
         ButtonsMenuModule,
-        ErrorContentModule,
+        TemplatetModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -266,7 +266,7 @@ export class CoreModuleLazy {
         DataTableModule,
         TranslateModule,
         ButtonsMenuModule,
-        ErrorContentModule,
+        TemplatetModule,
         SortingPickerComponent
     ],
     providers: [

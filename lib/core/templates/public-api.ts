@@ -15,5 +15,7 @@
  * limitations under the License.
  */
 
-export * from './error-content.module';
-export * from './error-content.component';
+export * from './error-content/error-content.component';
+export * from './empty-content/empty-content.component';
+
+export * from './template.module';

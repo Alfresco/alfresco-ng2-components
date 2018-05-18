@@ -18,8 +18,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../../material.module';
-import { ErrorContentComponent } from './error-content.component';
+import { MaterialModule } from '../material.module';
+import { ErrorContentComponent } from './error-content/error-content.component';
+import { EmptyContentComponent } from './empty-content/empty-content.component';
 
 @NgModule({
     imports: [
@@ -28,10 +29,12 @@ import { ErrorContentComponent } from './error-content.component';
         TranslateModule
     ],
     declarations: [
-        ErrorContentComponent
+        ErrorContentComponent,
+        EmptyContentComponent
     ],
     exports: [
-        ErrorContentComponent
+        ErrorContentComponent,
+        EmptyContentComponent
     ]
 })
-export class ErrorContentModule {}
+export class TemplatetModule {}
