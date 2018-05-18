@@ -26,7 +26,28 @@ var MDNav = /** @class */ (function () {
         }
         return new MDNav(this.root, this.root.children.length);
     };
-    MDNav.prototype.emphasis = function (test, index) {
+    MDNav.prototype.findAll = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        if (!this.root || !this.root.children) {
+            return [];
+        }
+        var result = [];
+        var currIndex = 0;
+        for (var i = this.pos; i < this.root.children.length; i++) {
+            var child = this.root.children[i];
+            if (test(child)) {
+                if (currIndex === index) {
+                    result.push(new MDNav(this.root, i));
+                }
+                else {
+                    currIndex++;
+                }
+            }
+        }
+        return result;
+    };
+    MDNav.prototype.emph = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
@@ -58,6 +79,13 @@ var MDNav = /** @class */ (function () {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
+            return h.type === "listItem" && test(h);
+        }, index);
+    };
+    MDNav.prototype.listItems = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.findAll(function (h) {
             return h.type === "listItem" && test(h);
         }, index);
     };

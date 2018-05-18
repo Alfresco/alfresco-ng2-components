@@ -300,8 +300,12 @@ export function updatePhase(tree, pathname, aggData, errorMessages) {
         // Copy docs back from the .md file when the JSDocs are empty.
         let inputMD = getPropDocsFromMD(tree, "Properties", 3);
         let outputMD = getPropDocsFromMD(tree, "Events", 2);
-        let methodMD = getMethodDocsFromMD(tree);
         updatePropDocsFromMD(compData, inputMD, outputMD, errorMessages);
+       
+        if (classType === "service") {
+            let methodMD = getMethodDocsFromMD(tree);
+            updateMethodDocsFromMD(compData, methodMD, errorMessages);
+        }
 
         let templateName = path.resolve(templateFolder, classType + ".combyne");
         let templateSource = fs.readFileSync(templateName, "utf8");
@@ -422,18 +426,28 @@ function getMethodDocsFromMD(tree) {
     let i = 0;
 
     while (!methItem.empty) {
-        let methName = methItem.childNav
+        let methNameSection = methItem.childNav
         .paragraph().childNav
-        .strong().childNav
-        .text().item.value;
+        .strong().childNav;
 
-        let methDoc = methItem.childNav
-        .paragraph().childNav
-        .html()
-        .text().item.value;
+        let methName = '';
 
-        console.log(`${methName}: ${methDoc}`);
-        //getMDMethodParams(methItem);
+        // Method docs must be in "new" format with names and types styled separately.
+        if (!methNameSection.empty) {
+            methName = methNameSection.text().item.value;
+
+            let methDoc = methItem.childNav
+            .paragraph().childNav
+            .html()
+            .text().item.value;
+
+            let params = getMDMethodParams(methItem);
+
+            result[methName] = {
+                "docText": methDoc.replace(/^\n/, ""),
+                "params": params
+            };
+        }
 
         i++;
 
@@ -450,30 +464,37 @@ function getMethodDocsFromMD(tree) {
 
 
 function getMDMethodParams(methItem: MDNav) {
+    let result = {};
+
     let paramList = methItem.childNav.list().childNav;
 
-    let paramListItem = paramList
-    .listItem(l=>true, 1);
+    let paramListItems = paramList
+    .listItems();
 
-    let i = 0;
-
-    while (!paramListItem.empty) {
-        let paramName = paramListItem.childNav
+    paramListItems.forEach(paramListItem => {
+        let paramNameNode = paramListItem.childNav
         .paragraph().childNav
-        .emphasis().childNav
-        .text().item.value;
+        .emph().childNav;
+
+        let paramName;
+
+        if (!paramNameNode.empty) {
+            paramName = paramNameNode.text().item.value.replace(/:/, "");
+        } else {
+            paramName = paramListItem.childNav
+            .paragraph().childNav
+            .strong().childNav
+            .text().item.value;
+        }
 
         let paramDoc = paramListItem.childNav
         .paragraph().childNav
         .text(t=>true, 1).item.value;
 
-        console.log(`${paramName}: ${paramDoc}`);
+        result[paramName] = paramDoc.replace(/^[ -]+/, "");
+    });
 
-        i++;
-
-        paramListItem = paramList.childNav
-        .listItem(l=>true, i);
-    }
+    return result;
 }
 
 
@@ -492,5 +513,26 @@ function updatePropDocsFromMD(comp: ComponentInfo, inputDocs, outputDocs, errorM
             prop.docText = propMDDoc;
             errorMessages.push(`Warning: empty JSDocs for property "${prop.name}" may need sync with the .md file.`);
         }
+    });
+}
+
+
+function updateMethodDocsFromMD(comp: ComponentInfo, methodDocs, errorMessages) {
+    comp.methods.forEach(meth => {
+        let currMethMD = methodDocs[meth.name]
+
+        // If JSDocs are empty but MD docs aren't then the Markdown is presumably more up-to-date.
+        if (!meth.docText && currMethMD.docText) {
+            meth.docText = currMethMD.docText;
+            errorMessages.push(`Warning: empty JSDocs for method sig "${meth.name}" may need sync with the .md file.`);
+        }
+        
+        meth.params.forEach(param => {
+            if (!param.docText && currMethMD.params[param.name])
+            {
+                param.docText = currMethMD.params[param.name];
+                errorMessages.push(`Warning: empty JSDocs for parameter "${param.name} (${meth.name})" may need sync with the .md file.`);
+            }
+        });
     });
 }

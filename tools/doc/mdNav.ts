@@ -26,7 +26,32 @@ export class MDNav {
     }
 
 
-    emphasis(test: (element: any) => boolean = () => true, index: number = 0): MDNav {
+    findAll(test: (element: any) => boolean = () => true, index: number = 0): MDNav[] {
+        if (!this.root || !this.root.children) {
+            return [];
+        }
+
+        let result = [];
+
+        let currIndex = 0;
+
+        for (let i = this.pos; i < this.root.children.length; i++) {
+            let child = this.root.children[i];
+
+            if (test(child)) {
+                if (currIndex === index) {
+                    result.push(new MDNav(this.root, i));
+                } else {
+                    currIndex++;
+                }
+            }
+        }
+
+        return result;
+    }
+
+
+    emph(test: (element: any) => boolean = () => true, index: number = 0): MDNav {
         return this.find((h) => {
             return h.type === "emphasis" && test(h);
         }, index);
@@ -60,6 +85,11 @@ export class MDNav {
         }, index);
     }
 
+    listItems(test: (element: any) => boolean = () => true, index: number = 0): MDNav[] {
+        return this.findAll((h) => {
+            return h.type === "listItem" && test(h);
+        }, index);
+    }
 
     paragraph(test: (element: any) => boolean = () => true, index: number = 0): MDNav {
         return this.find((h) => {
