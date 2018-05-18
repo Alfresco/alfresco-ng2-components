@@ -19,106 +19,15 @@ import { Component, SimpleChange, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@ang
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { fakeGlobalTask, fakeCutomSchema } from '../../mock';
 
 declare let jasmine: any;
 
 describe('TaskListComponent', () => {
-
-    let fakeGlobalTask = {
-        size: 2,
-        start: 0,
-        total: 2,
-        data: [
-            {
-                id: 14, name: 'nameFake1',
-                description: 'descriptionFake1',
-                category: 'categoryFake1',
-                assignee: {
-                    id: 2, firstName: 'firstNameFake1', lastName: 'lastNameFake1', email: 'emailFake1'
-                },
-                created: '2017-03-01T12:25:17.189+0000',
-                dueDate: '2017-04-02T12:25:17.189+0000',
-                endDate: '2017-05-03T12:25:31.129+0000',
-                duration: 13940,
-                priority: 50,
-                parentTaskId: 1,
-                parentTaskName: 'parentTaskNameFake',
-                processInstanceId: 2511,
-                processInstanceName: 'processInstanceNameFake',
-                processDefinitionId: 'myprocess:1:4',
-                processDefinitionName: 'processDefinitionNameFake',
-                processDefinitionDescription: 'processDefinitionDescriptionFake',
-                processDefinitionKey: 'myprocess',
-                processDefinitionCategory: 'http://www.activiti.org/processdef',
-                processDefinitionVersion: 1,
-                processDefinitionDeploymentId: '1',
-                formKey: 1,
-                processInstanceStartUserId: null,
-                initiatorCanCompleteTask: false,
-                adhocTaskCanBeReassigned: false,
-                taskDefinitionKey: 'sid-B6813AF5-8ACD-4481-A4D5-8BAAD1CB1416',
-                executionId: 2511,
-                memberOfCandidateGroup: false,
-                memberOfCandidateUsers: false,
-                managerOfCandidateGroup: false
-            },
-
-            {
-                id: 2, name: '', description: 'descriptionFake2', category: null,
-                assignee: {
-                    id: 1, firstName: 'fistNameFake2', lastName: 'Administrator2', email: 'admin'
-                },
-                created: '2017-03-01T12:25:17.189+0000',
-                dueDate: '2017-04-02T12:25:17.189+0000',
-                endDate: null
-            }
-        ]
-    };
-
-    let fakeCutomSchema = [
-            {
-                'key': 'fakeName',
-                'type': 'text',
-                'title': 'ADF_TASK_LIST.PROPERTIES.FAKE',
-                'sortable': true
-            },
-            {
-                'key': 'fakeTaskName',
-                'type': 'text',
-                'title': 'ADF_TASK_LIST.PROPERTIES.TASK_FAKE',
-                'sortable': true
-            }
-        ];
-
-    let fakeColumnSchema = {
-        'default': [
-                {
-                    'key': 'name',
-                    'type': 'text',
-                    'title': 'ADF_TASK_LIST.PROPERTIES.NAME',
-                    'sortable': true
-                },
-                {
-                    'key': 'created',
-                    'type': 'text',
-                    'title': 'ADF_TASK_LIST.PROPERTIES.CREATED',
-                    'cssClass': 'hidden',
-                    'sortable': true
-                },
-                {
-                    'key': 'assignee',
-                    'type': 'text',
-                    'title': 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
-                    'cssClass': 'hidden',
-                    'sortable': true
-                }
-            ]
-        , fakeCutomSchema };
-
     let component: TaskListComponent;
     let fixture: ComponentFixture<TaskListComponent>;
     let appConfig: AppConfigService;
@@ -155,8 +64,7 @@ describe('TaskListComponent', () => {
                     ]
                 }
             }
-        }
-    );
+        });
 
     });
 
@@ -170,39 +78,27 @@ describe('TaskListComponent', () => {
 
     it('should use the default schemaColumn as default', () => {
         component.ngAfterContentInit();
-        expect(component.data.getColumns()).toBeDefined();
-        expect(component.data.getColumns().length).toEqual(3);
-    });
-
-    it('should use the schemaColumn passed in input', () => {
-        component.data = new ObjectDataTableAdapter(
-            [],
-            [
-                {type: 'text', key: 'fake-id', title: 'Name'}
-            ]
-        );
-
-        component.ngAfterContentInit();
-        expect(component.data.getColumns()).toBeDefined();
-        expect(component.data.getColumns().length).toEqual(1);
+        expect(component.schemaColumns).toBeDefined();
+        expect(component.schemaColumns.length).toEqual(3);
     });
 
     it('should use the custom schemaColumn from app.config.json', () => {
+        component.presetColumn = 'fakeCutomSchema';
         component.ngAfterContentInit();
         fixture.detectChanges();
-        expect(component.layoutPresets).toEqual(fakeColumnSchema);
+        expect(component.schemaColumns).toEqual(fakeCutomSchema);
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
         component.presetColumn = 'fakeCutomSchema';
         fixture.detectChanges();
-        expect(component.data.getColumns()).toBeDefined();
-        expect(component.data.getColumns().length).toEqual(2);
+        expect(component.schemaColumns).toBeDefined();
+        expect(component.schemaColumns.length).toEqual(2);
     });
 
     it('should return an empty task list when no input parameters are passed', () => {
         component.ngAfterContentInit();
-        expect(component.data).toBeDefined();
+        expect(component.rows).toBeDefined();
         expect(component.isListEmpty()).toBeTruthy();
     });
 
@@ -213,34 +109,34 @@ describe('TaskListComponent', () => {
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
+            expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
-            expect(component.data.getRows()[0].getValue('description')).toEqual('descriptionFake1');
-            expect(component.data.getRows()[0].getValue('category')).toEqual('categoryFake1');
-            expect(component.data.getRows()[0].getValue('assignee').id).toEqual(2);
-            expect(component.data.getRows()[0].getValue('assignee').firstName).toEqual('firstNameFake1');
-            expect(component.data.getRows()[0].getValue('assignee').lastName).toEqual('lastNameFake1');
-            expect(component.data.getRows()[0].getValue('assignee').email).toEqual('emailFake1');
-            expect(component.data.getRows()[0].getValue('created')).toEqual('2017-03-01T12:25:17.189+0000');
-            expect(component.data.getRows()[0].getValue('dueDate')).toEqual('2017-04-02T12:25:17.189+0000');
-            expect(component.data.getRows()[0].getValue('endDate')).toEqual('2017-05-03T12:25:31.129+0000');
-            expect(component.data.getRows()[0].getValue('duration')).toEqual(13940);
-            expect(component.data.getRows()[0].getValue('priority')).toEqual(50);
-            expect(component.data.getRows()[0].getValue('parentTaskId')).toEqual(1);
-            expect(component.data.getRows()[0].getValue('parentTaskName')).toEqual('parentTaskNameFake');
-            expect(component.data.getRows()[0].getValue('processInstanceId')).toEqual(2511);
-            expect(component.data.getRows()[0].getValue('processInstanceName')).toEqual('processInstanceNameFake');
-            expect(component.data.getRows()[0].getValue('processDefinitionId')).toEqual('myprocess:1:4');
-            expect(component.data.getRows()[0].getValue('processDefinitionName')).toEqual('processDefinitionNameFake');
-            expect(component.data.getRows()[0].getValue('processDefinitionDescription')).toEqual('processDefinitionDescriptionFake');
-            expect(component.data.getRows()[0].getValue('processDefinitionKey')).toEqual('myprocess');
-            expect(component.data.getRows()[0].getValue('processDefinitionCategory')).toEqual('http://www.activiti.org/processdef');
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('nameFake1');
+            expect(component.rows[0]['description']).toEqual('descriptionFake1');
+            expect(component.rows[0]['category']).toEqual('categoryFake1');
+            expect(component.rows[0]['assignee'].id).toEqual(2);
+            expect(component.rows[0]['assignee'].firstName).toEqual('firstNameFake1');
+            expect(component.rows[0]['assignee'].lastName).toEqual('lastNameFake1');
+            expect(component.rows[0][('assignee')].email).toEqual('emailFake1');
+            expect(component.rows[0]['created']).toEqual('2017-03-01T12:25:17.189+0000');
+            expect(component.rows[0]['dueDate']).toEqual('2017-04-02T12:25:17.189+0000');
+            expect(component.rows[0]['endDate']).toEqual('2017-05-03T12:25:31.129+0000');
+            expect(component.rows[0]['duration']).toEqual(13940);
+            expect(component.rows[0]['priority']).toEqual(50);
+            expect(component.rows[0]['parentTaskId']).toEqual(1);
+            expect(component.rows[0]['parentTaskName']).toEqual('parentTaskNameFake');
+            expect(component.rows[0]['processInstanceId']).toEqual(2511);
+            expect(component.rows[0]['processInstanceName']).toEqual('processInstanceNameFake');
+            expect(component.rows[0]['processDefinitionId']).toEqual('myprocess:1:4');
+            expect(component.rows[0]['processDefinitionName']).toEqual('processDefinitionNameFake');
+            expect(component.rows[0]['processDefinitionDescription']).toEqual('processDefinitionDescriptionFake');
+            expect(component.rows[0]['processDefinitionKey']).toEqual('myprocess');
+            expect(component.rows[0]['processDefinitionCategory']).toEqual('http://www.activiti.org/processdef');
             done();
         });
         component.ngAfterContentInit();
-        component.ngOnChanges({'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment});
+        component.ngOnChanges({ 'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment });
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -257,15 +153,15 @@ describe('TaskListComponent', () => {
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
+            expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('nameFake1');
             done();
         });
 
         component.ngAfterContentInit();
-        component.ngOnChanges({'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment});
+        component.ngOnChanges({ 'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment });
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -282,16 +178,16 @@ describe('TaskListComponent', () => {
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
+            expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
-            expect(component.data.getRows()[0].getValue('processInstanceId')).toEqual(2511);
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('nameFake1');
+            expect(component.rows[0]['processInstanceId']).toEqual(2511);
             done();
         });
 
         component.ngAfterContentInit();
-        component.ngOnChanges({'state': state, 'processInstanceId': processInstanceId, 'assignment': assignment});
+        component.ngOnChanges({ 'state': state, 'processInstanceId': processInstanceId, 'assignment': assignment });
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -307,19 +203,19 @@ describe('TaskListComponent', () => {
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
+            expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
-            expect(component.data.getRows()[0].getValue('processInstanceId')).toEqual(2511);
-            expect(component.data.getRows()[0].getValue('endDate')).toBeDefined();
-            expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
-            expect(component.data.getRows()[1].getValue('endDate')).toBeNull();
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('nameFake1');
+            expect(component.rows[0]['processInstanceId']).toEqual(2511);
+            expect(component.rows[0]['endDate']).toBeDefined();
+            expect(component.rows[1]['name']).toEqual('No name');
+            expect(component.rows[1]['endDate']).toBeNull();
             done();
         });
 
         component.ngAfterContentInit();
-        component.ngOnChanges({'state': state, 'processInstanceId': processInstanceId});
+        component.ngOnChanges({ 'state': state, 'processInstanceId': processInstanceId });
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -334,24 +230,14 @@ describe('TaskListComponent', () => {
         expect(component.getCurrentId()).toBeNull();
     });
 
-    it('should return selected true for the selected task', () => {
-        component.data = new ObjectDataTableAdapter(
-            [
-                {id: '999', name: 'Fake-name'},
-                {id: '888', name: 'Fake-name-888'}
-            ],
-            [
-                {type: 'text', key: 'id', title: 'Id'},
-                {type: 'text', key: 'name', title: 'Name'}
-            ]
-        );
+    it('should return selected id for the selected task', () => {
+        component.rows = [
+            { id: '999', name: 'Fake-name' },
+            { id: '888', name: 'Fake-name-888' }
+        ];
         component.selectTask('888');
-        const dataRow = component.data.getRows();
-        expect(dataRow).toBeDefined();
-        expect(dataRow[0].getValue('id')).toEqual('999');
-        expect(dataRow[0].isSelected).toEqual(false);
-        expect(dataRow[1].getValue('id')).toEqual('888');
-        expect(dataRow[1].isSelected).toEqual(true);
+        expect(component.rows).toBeDefined();
+        expect(component.currentInstanceId).toEqual('888');
     });
 
     it('should reload tasks when reload() is called', (done) => {
@@ -360,10 +246,10 @@ describe('TaskListComponent', () => {
         component.ngAfterContentInit();
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
+            expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('nameFake1');
             done();
         });
         fixture.detectChanges();
@@ -394,13 +280,7 @@ describe('TaskListComponent', () => {
     describe('component changes', () => {
 
         beforeEach(() => {
-            component.data = new ObjectDataTableAdapter(
-                [],
-                [
-                    {type: 'text', key: 'fake-id', title: 'Name'}
-                ]
-            );
-
+            component.rows = fakeGlobalTask.data;
             fixture.detectChanges();
         });
 
@@ -408,43 +288,24 @@ describe('TaskListComponent', () => {
             spyOn(component, 'reload').and.stub();
             component.currentInstanceId = '999';
 
-            component.data = new ObjectDataTableAdapter(
-                [
-                    {id: '999', name: 'Fake-name'}
-                ],
-                [
-                    {type: 'text', key: 'id', title: 'Id'},
-                    {type: 'text', key: 'name', title: 'Name'}
-                ]
-            );
-
+            component.rows = [{ id: '999', name: 'Fake-name' }];
             const landingTaskId = '999';
             let change = new SimpleChange(null, landingTaskId, true);
             component.ngOnChanges({'landingTaskId': change});
             expect(component.reload).not.toHaveBeenCalled();
-            expect(component.data.getRows().length).toEqual(1);
+            expect(component.rows.length).toEqual(1);
         });
 
         it('should reload the tasks if the loadingTaskId is different from the current task', (done) => {
             component.currentInstanceId = '999';
-
-            component.data = new ObjectDataTableAdapter(
-                [
-                    {id: '999', name: 'Fake-name'}
-                ],
-                [
-                    {type: 'text', key: 'id', title: 'Id'},
-                    {type: 'text', key: 'name', title: 'Name'}
-                ]
-            );
-
+            component.rows = [{ id: '999', name: 'Fake-name' }];
             const landingTaskId = '888';
             let change = new SimpleChange(null, landingTaskId, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
-                expect(component.data.getRows().length).toEqual(2);
+                expect(component.rows).toBeDefined();
+                expect(component.rows.length).toEqual(2);
                 done();
             });
 
@@ -457,9 +318,10 @@ describe('TaskListComponent', () => {
             });
         });
 
-        it('should NOT reload the process list when no parameters changed', () => {
-            expect(component.isListEmpty()).toBeTruthy();
+        it('should NOT reload the task list when no parameters changed', () => {
+            component.rows = null;
             component.ngOnChanges({});
+            fixture.detectChanges();
             expect(component.isListEmpty()).toBeTruthy();
         });
 
@@ -469,13 +331,13 @@ describe('TaskListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[1]['name']).toEqual('No name');
                 done();
             });
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
@@ -490,14 +352,14 @@ describe('TaskListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[1]['name']).toEqual('No name');
                 done();
             });
 
-            component.ngOnChanges({'processDefinitionKey': change});
+            component.ngOnChanges({ 'processDefinitionKey': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
@@ -512,14 +374,14 @@ describe('TaskListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[1]['name']).toEqual('No name');
                 done();
             });
 
-            component.ngOnChanges({'state': change});
+            component.ngOnChanges({ 'state': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
@@ -534,14 +396,14 @@ describe('TaskListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[1]['name']).toEqual('No name');
                 done();
             });
 
-            component.ngOnChanges({'sort': change});
+            component.ngOnChanges({ 'sort': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
@@ -556,14 +418,14 @@ describe('TaskListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[1]['name']).toEqual('No name');
                 done();
             });
 
-            component.ngOnChanges({'name': change});
+            component.ngOnChanges({ 'name': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
@@ -578,14 +440,14 @@ describe('TaskListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[1]['name']).toEqual('No name');
                 done();
             });
 
-            component.ngOnChanges({'assignment': change});
+            component.ngOnChanges({ 'assignment': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
@@ -639,10 +501,10 @@ describe('CustomTaskListComponent', () => {
 
     it('should fetch custom schemaColumn from html', () => {
         fixture.detectChanges();
-        expect(component.taskList.data.getColumns()).toBeDefined();
-        expect(component.taskList.data.getColumns()[0].title).toEqual('ADF_TASK_LIST.PROPERTIES.NAME');
-        expect(component.taskList.data.getColumns()[2].title).toEqual('ADF_TASK_LIST.PROPERTIES.CREATED');
-        expect(component.taskList.data.getColumns().length).toEqual(3);
+        expect(component.taskList.columnList).toBeDefined();
+        expect(component.taskList.schemaColumns[0]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.NAME');
+        expect(component.taskList.schemaColumns[1]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.CREATED');
+        expect(component.taskList.schemaColumns.length).toEqual(3);
     });
 });
 

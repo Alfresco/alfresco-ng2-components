@@ -18,7 +18,8 @@
 import { DataRowEvent, DataTableSchema, EmptyCustomContentDirective } from '@alfresco/adf-core';
 import {
     AppConfigService, PaginationComponent, PaginatedComponent,
-    UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
+    UserPreferencesService, UserPreferenceValues, PaginationModel
+} from '@alfresco/adf-core';
 import {
     AfterContentInit, Component, ContentChild, EventEmitter,
     Input, OnChanges, Output, SimpleChanges } from '@angular/core';
@@ -200,6 +201,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.loadTasksByState().subscribe(
             (tasks) => {
                 this.rows = this.optimizeNames(tasks.data);
+                this.selectTask(this.landingTaskId);
                 this.success.emit(tasks);
                 this.isLoading = false;
                 this.pagination.next({
@@ -221,6 +223,28 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     /**
+     * Select the task given in input if present
+     */
+    selectTask(taskIdSelected: string): void {
+        console.log(this.isListEmpty());
+        if (!this.isListEmpty()) {
+            let dataRow;
+            if (taskIdSelected) {
+                dataRow = this.rows.find(currentRow => currentRow['id'] === taskIdSelected);
+                if (!dataRow) {
+                    dataRow = this.rows[0];
+                }
+            } else {
+                dataRow = this.rows[0];
+            }
+            this.rows[0] = dataRow;
+            this.currentInstanceId = dataRow['id'];
+        } else {
+            this.currentInstanceId = null;
+        }
+    }
+
+    /**
      * Return the current id
      */
     getCurrentId(): string {
@@ -239,8 +263,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * Check if the list is empty
      */
     isListEmpty(): boolean {
-        return this.rows === undefined ||
-            (this.rows && this.rows.length === 0);
+        console.log(this.rows);
+        console.log(!this.rows);
+        console.log(!this.rows || this.rows.length === 0);
+        return !this.rows || this.rows.length === 0;
     }
 
     onRowClick(item: DataRowEvent) {
@@ -272,7 +298,9 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      */
     private optimizeNames(instances: any[]): any[] {
         instances = instances.map(t => {
-            t.name = t.name ? t.name : 'No name';
+            if (!t.name) {
+                t.name = 'No name';
+            }
             return t;
         });
         return instances;
