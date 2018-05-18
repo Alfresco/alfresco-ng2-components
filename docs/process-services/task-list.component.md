@@ -209,6 +209,17 @@ typical tasklist.
 
 You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [DataColumn](../core/data-column.component.md) page for more information about these features.
 
+### Show custom template when tasklist is empty
+
+You can add your own template or message as shown in the example below:
+
+```html
+<adf-tasklist>
+    <adf-empty-custom-content>
+        Your Content
+    </adf-empty-custom-content>
+<adf-tasklist>
+```
 ## See also
 
 -   [Data column component](../core/data-column.component.md)
