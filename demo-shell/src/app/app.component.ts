@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
 
         this.apiService.getInstance().on('error', (error) => {
             this.router.navigate(['/error', error.status]);
-        }
+        });
     }
 
     private setProvider() {
