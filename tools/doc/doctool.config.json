@@ -17,8 +17,7 @@
             "toc"
         ],
         "dev": [
-            "tsInfo",
-            "typeLinker"
+            "tsInfo"
         ]
     }
 }
