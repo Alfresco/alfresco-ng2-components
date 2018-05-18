@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
 
         this.pageTitleService.setTitle('title');
 
-        this.alfrescoApiService.getInstance().oAlfrescoApiServicen('error', (error) => {
+        this.alfrescoApiService.getInstance().on('error', (error) => {
 
             if (error.status === '404') {
                 this.router.navigate(['/error', error.status]);
