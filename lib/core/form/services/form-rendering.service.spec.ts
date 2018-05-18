@@ -85,11 +85,12 @@ describe('FormRenderingService', () => {
         ).toThrowError('resolver is null or not defined');
     });
 
-    it('should fail overriding existing resolver without explicit flag', () => {
+    it('should fail overriding existing resolver with explicit flag', () => {
         expect(
             () => service.setComponentTypeResolver(
                 FormFieldTypes.TEXT,
-                DynamicComponentResolver.fromType(UnknownWidgetComponent)
+                DynamicComponentResolver.fromType(UnknownWidgetComponent),
+                false
             )
         ).toThrowError('already mapped, use override option if you intend replacing existing mapping.');
     });
@@ -97,6 +98,12 @@ describe('FormRenderingService', () => {
     it('should override existing resolver with explicit flag', () => {
         let customResolver = DynamicComponentResolver.fromType(UnknownWidgetComponent);
         service.setComponentTypeResolver(FormFieldTypes.TEXT, customResolver, true);
+        expect(service.getComponentTypeResolver(FormFieldTypes.TEXT)).toBe(customResolver);
+    });
+
+    it('should override existing resolver without explicit flag', () => {
+        let customResolver = DynamicComponentResolver.fromType(UnknownWidgetComponent);
+        service.setComponentTypeResolver(FormFieldTypes.TEXT, customResolver);
         expect(service.getComponentTypeResolver(FormFieldTypes.TEXT)).toBe(customResolver);
     });
 
