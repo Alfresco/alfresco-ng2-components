@@ -24,6 +24,10 @@
         .mat-button {
             text-transform: uppercase;
         }
+
+        &--topSpace {
+            padding-top: 15px;
+        }
     }
 
 }

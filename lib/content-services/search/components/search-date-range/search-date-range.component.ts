@@ -127,8 +127,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         const inputValue = event.srcElement.value;
 
         if (inputValue) {
-            const formatDate = moment(inputValue, this.datePickerDateFormat);
-
+            const formatDate = this.dateAdapter.parse(inputValue, this.datePickerDateFormat);
             if (formatDate.isValid()) {
                 formControl.setValue(formatDate);
             }
