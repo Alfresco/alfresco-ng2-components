@@ -217,7 +217,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.sub = this.route.params.subscribe(params => {
             const applicationId = params['appId'];
 
-            this.filterSelected = params['filterId'] ? { id: params['filterId'] } : { index: 0 };
+            this.filterSelected = params['filterId'] ? { id: +params['filterId'] } : { index: 0 };
 
             if (applicationId && applicationId !== '0') {
                 this.appId = params['appId'];
