@@ -277,9 +277,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    onNavigationError(err: any) {
-        if (err) {
-            this.errorMessage = err.message || 'Navigation error';
+    onNavigationError(error: any) {
+        if (error) {
+            this.router.navigate(['/error', error.status]);
         }
     }
 

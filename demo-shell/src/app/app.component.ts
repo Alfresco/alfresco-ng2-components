@@ -16,13 +16,13 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { SettingsService, PageTitleService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiService, SettingsService, PageTitleService, StorageService } from '@alfresco/adf-core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
 
@@ -31,15 +31,19 @@ export class AppComponent implements OnInit {
                 private pageTitleService: PageTitleService) {
     }
 
-  ngOnInit() {
-    this.setProvider();
+    ngOnInit() {
+        this.setProvider();
 
-    this.pageTitleService.setTitle('title');
-  }
+        this.pageTitleService.setTitle('title');
 
-  private setProvider() {
-    if (this.storage.hasItem(`providers`)) {
-      this.settingsService.setProviders(this.storage.getItem(`providers`));
+        this.apiService.getInstance().on('error', (error) => {
+            this.router.navigate(['/error', error.status]);
+        }
     }
-  }
+
+    private setProvider() {
+        if (this.storage.hasItem(`providers`)) {
+            this.settingsService.setProviders(this.storage.getItem(`providers`));
+        }
+    }
 }
