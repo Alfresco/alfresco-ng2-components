@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentService, UploadService, TranslationService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { UploadButtonComponent } from './upload-button.component';
-import { TranslationMock, PermissionsEnum } from '@alfresco/adf-core';
+import { TranslationMock } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('UploadButtonComponent', () => {
