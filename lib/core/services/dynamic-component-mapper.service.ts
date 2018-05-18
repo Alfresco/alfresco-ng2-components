@@ -50,7 +50,7 @@ export abstract class DynamicComponentMapper {
      * @param resolver The new resolver function
      * @param override The new resolver will only replace an existing one if this parameter is true
      */
-    setComponentTypeResolver(type: string, resolver: DynamicComponentResolveFunction, override: boolean = false) {
+    setComponentTypeResolver(type: string, resolver: DynamicComponentResolveFunction, override: boolean = true) {
         if (!type) {
             throw new Error(`type is null or not defined`);
         }
