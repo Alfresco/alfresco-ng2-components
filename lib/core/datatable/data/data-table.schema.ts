@@ -31,7 +31,7 @@ export abstract class DataTableSchema {
 
     /** The columns that the datatable will show. */
     @Input()
-    schemaColumns: string;
+    schemaColumns: any;
 
     private layoutPresets = {};
 
