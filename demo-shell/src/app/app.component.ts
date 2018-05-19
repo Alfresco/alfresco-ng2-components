@@ -16,30 +16,40 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { SettingsService, PageTitleService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiService, SettingsService, PageTitleService, StorageService } from '@alfresco/adf-core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
 
     constructor(private settingsService: SettingsService,
                 private storage: StorageService,
-                private pageTitleService: PageTitleService) {
+                private pageTitleService: PageTitleService,
+                private alfrescoApiService: AlfrescoApiService,
+                private router: Router) {
     }
 
-  ngOnInit() {
-    this.setProvider();
+    ngOnInit() {
+        this.setProvider();
 
-    this.pageTitleService.setTitle('title');
-  }
+        this.pageTitleService.setTitle('title');
 
-  private setProvider() {
-    if (this.storage.hasItem(`providers`)) {
-      this.settingsService.setProviders(this.storage.getItem(`providers`));
+        this.alfrescoApiService.getInstance().on('error', (error) => {
+
+            if (error.status === '404') {
+                this.router.navigate(['/error', error.status]);
+            }
+        });
     }
-  }
+
+    private setProvider() {
+        if (this.storage.hasItem(`providers`)) {
+            this.settingsService.setProviders(this.storage.getItem(`providers`));
+        }
+    }
 }

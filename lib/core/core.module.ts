@@ -41,6 +41,7 @@ import { FormModule } from './form/form.module';
 import { SidenavLayoutModule } from './sidenav-layout/sidenav-layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
+import { TemplatetModule } from './templates/template.module';
 
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
@@ -80,7 +81,6 @@ import { UploadService } from './services/upload.service';
 import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
 import { startupServiceFactory } from './services/startup-service-factory';
-import { EmptyContentComponent } from './components/empty-content/empty-content.component';
 import { SortingPickerComponent } from './components/sorting-picker/sorting-picker.component';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
@@ -155,6 +155,7 @@ export function providers() {
         DataColumnModule,
         DataTableModule,
         ButtonsMenuModule,
+        TemplatetModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -190,7 +191,8 @@ export function providers() {
         DataColumnModule,
         DataTableModule,
         TranslateModule,
-        ButtonsMenuModule
+        ButtonsMenuModule,
+        TemplatetModule
     ]
 })
 export class CoreModuleLazy {
@@ -224,6 +226,7 @@ export class CoreModuleLazy {
         DataColumnModule,
         DataTableModule,
         ButtonsMenuModule,
+        TemplatetModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -233,7 +236,6 @@ export class CoreModuleLazy {
         })
     ],
     declarations: [
-        EmptyContentComponent,
         SortingPickerComponent
     ],
     exports: [
@@ -264,7 +266,7 @@ export class CoreModuleLazy {
         DataTableModule,
         TranslateModule,
         ButtonsMenuModule,
-        EmptyContentComponent,
+        TemplatetModule,
         SortingPickerComponent
     ],
     providers: [

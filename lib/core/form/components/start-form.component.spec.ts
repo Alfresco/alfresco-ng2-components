@@ -48,7 +48,6 @@ describe('StartFormComponent', () => {
     });
 
     beforeEach(() => {
-
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
         formService = TestBed.get(FormService);
@@ -57,6 +56,10 @@ describe('StartFormComponent', () => {
         getStartFormSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(Observable.of({
             processDefinitionName: 'my:process'
         }));
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should load start form on change if processDefinitionId defined', () => {
