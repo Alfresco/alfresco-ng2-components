@@ -35,9 +35,9 @@ export * from './sidenav-layout/index';
 export * from './comments/index';
 export * from './buttons-menu/index';
 
-export * from './components/empty-content/empty-content.component';
 export * from './components/sorting-picker/sorting-picker.component';
 
+export * from './templates/index';
 export * from './pipes/index';
 export * from './services/index';
 export * from './directives/index';

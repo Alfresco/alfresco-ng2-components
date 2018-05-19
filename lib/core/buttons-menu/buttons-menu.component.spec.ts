@@ -20,6 +20,7 @@ import { ButtonsMenuComponent } from './buttons-menu.component';
 import { MenuButton } from './menu-button.model';
 import { MaterialModule } from '../material.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { setupTestBed } from '../testing/setupTestBed';
 
 describe('ButtonsMenuComponent', () => {
 
@@ -27,14 +28,12 @@ describe('ButtonsMenuComponent', () => {
     let buttonsMenuComponent: ButtonsMenuComponent;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                CoreTestingModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreTestingModule,
+            MaterialModule
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ButtonsMenuComponent);
