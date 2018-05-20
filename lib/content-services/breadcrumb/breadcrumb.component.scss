@@ -15,7 +15,6 @@
 	    font-weight: 600;
         letter-spacing: -0.2px;
         color: mat-color($foreground, text, 0.54);
-        width: 0;
 
         &-container {
             margin: 0;
@@ -32,7 +31,7 @@
                 height: 0;
                 overflow: hidden;
                 margin-top: 35px;
-                
+
                 &.mat-select {
                     width: 0;
                 }
@@ -51,20 +50,24 @@
                     color: mat-color($primary);
                     outline: none;
                 }
-    
+
+                &-icon {
+                    position: relative;
+                }
+
                 &-arrow {
                     font-size: 17px;
-                    position: relative;
-                    left: -28px;
-                    top: -2px;
+                    position: absolute;
+                    left: 4px;
+                    top: 4px;
                     color: white;
                     z-index: 2;
                 }
-    
+
                 &-arrow.isRoot {
                     visibility: hidden;
                 }
-    
+
                 &-arrow.focus {
                     border: none;
                 }

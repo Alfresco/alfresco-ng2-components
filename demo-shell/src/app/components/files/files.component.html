@@ -32,6 +32,11 @@
         <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" [relations]="'members'">
         </adf-sites-dropdown>
     </div>
+
+    <!-- demonstrates breadcrumb use outside of the toolbar -->
+    <adf-breadcrumb root="Personal Files" [target]="documentList" [folderNode]="documentList.folderNode">
+    </adf-breadcrumb>
+
     <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
         <adf-upload-drag-area fxFlex="1 1 auto"
                               [disabled]="disableDragArea"
