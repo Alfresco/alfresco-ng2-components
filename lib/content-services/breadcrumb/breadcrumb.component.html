@@ -4,8 +4,10 @@
         tabindex="0"
         class="adf-breadcrumb-dropdown-trigger"
         (click)="open()">
-        <mat-icon [class.isRoot]="!hasPreviousNodes()">folder</mat-icon>
-        <mat-icon [class.isRoot]="!hasPreviousNodes()" class="adf-breadcrumb-dropdown-trigger-arrow">arrow_drop_down</mat-icon>
+        <div class="adf-breadcrumb-dropdown-trigger-icon">
+            <mat-icon [class.isRoot]="!hasPreviousNodes()">folder</mat-icon>
+            <mat-icon [class.isRoot]="!hasPreviousNodes()" class="adf-breadcrumb-dropdown-trigger-arrow">arrow_drop_down</mat-icon>
+        </div>
     </button>
 
     <mat-select
