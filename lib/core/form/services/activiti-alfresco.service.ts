@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
-import { AlfrescoApi, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { AlfrescoApi, MinimalNodeEntryEntity, RelatedContentRepresentation } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
@@ -85,9 +85,11 @@ export class ActivitiContentService {
 
     applyAlfrescoNode(node: MinimalNodeEntryEntity, siteId: string, accountId: string) {
         let apiService: AlfrescoApi = this.apiService.getInstance();
-        let params: any = {
+        const currentSideId = siteId ? siteId : this.getSiteNameFromNodePath(node);
+        const params: RelatedContentRepresentation = {
             source: accountId,
-            sourceId: node.id + ';1.0@' + siteId,
+            mimeType: node.content.mimeType,
+            sourceId: node.id + ';' + node.properties['cm:versionLabel'] + '@' + currentSideId,
             name: node.name,
             link: false
         };
@@ -95,6 +97,18 @@ export class ActivitiContentService {
                 apiService.activiti.contentApi.createTemporaryRelatedContent(params))
                     .map(this.toJson)
                     .catch(err => this.handleError(err));
+    }
+
+    private getSiteNameFromNodePath(node: MinimalNodeEntryEntity): string {
+        let siteName = '';
+        if (node.path) {
+            const foundNode = node.path
+                .elements.find((pathNode: MinimalNodeEntryEntity) =>
+                    pathNode.nodeType === 'st:site' &&
+                    pathNode.name !== 'Sites');
+            siteName = foundNode ? foundNode.name : '';
+        }
+        return siteName.toLocaleLowerCase();
     }
 
     toJson(res: any) {
