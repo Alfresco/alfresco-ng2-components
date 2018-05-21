@@ -19,14 +19,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RatingComponent } from './rating.component';
 import { setupTestBed } from '../../core/testing';
 import { ContentTestingModule } from '../testing/content.testing.module';
-
-declare let jasmine: any;
+import { Observable } from 'rxjs/Observable';
+import { RatingService } from './services/rating.service';
 
 describe('Rating component', () => {
 
     let component: any;
     let fixture: ComponentFixture<RatingComponent>;
     let element: HTMLElement;
+    let service: RatingService;
 
     setupTestBed({
         imports: [ContentTestingModule]
@@ -34,6 +35,7 @@ describe('Rating component', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(RatingComponent);
+        service = TestBed.get(RatingService);
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
@@ -48,38 +50,36 @@ describe('Rating component', () => {
 
     describe('Rendering tests', () => {
 
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('should rating component should be present', (done) => {
+            spyOn(service, 'getRating').and.returnValue(Observable.of({
+                entry: {
+                    id: 'fiveStar',
+                    aggregate: {
+                        numberOfRatings: 1,
+                        average: 4
+                    }
+                }
+            }));
+
             fixture.detectChanges();
 
             component.ngOnChanges().subscribe(() => {
                 expect(element.querySelector('#adf-rating-container')).not.toBe(null);
                 done();
             });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    entry: {
-                        id: 'fiveStar',
-                        aggregate: {
-                            numberOfRatings: 1,
-                            average: 4
-                        }
-                    }
-                }
-            });
         });
 
         it('should the star rating filled with the right grey/colored star', (done) => {
+            spyOn(service, 'getRating').and.returnValue(Observable.of({
+                entry: {
+                    id: 'fiveStar',
+                    aggregate: {
+                        numberOfRatings: 4,
+                        average: 3
+                    }
+                }
+            }));
+
             fixture.detectChanges();
 
             component.ngOnChanges().subscribe(() => {
@@ -89,23 +89,27 @@ describe('Rating component', () => {
                 expect(element.querySelectorAll('.adf-grey-star').length).toBe(2);
                 done();
             });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    entry: {
-                        id: 'fiveStar',
-                        aggregate: {
-                            numberOfRatings: 4,
-                            average: 3
-                        }
-                    }
-                }
-            });
         });
 
         it('should click on a star change your vote', (done) => {
+            spyOn(service, 'getRating').and.returnValue(Observable.of({
+                'entry': {
+                    myRating: 1,
+                    'ratedAt': '2017-04-06T14:34:28.061+0000',
+                    'id': 'fiveStar',
+                    'aggregate': { 'numberOfRatings': 1, 'average': 1.0 }
+                }
+            }));
+
+            spyOn(service, 'postRating').and.returnValue(Observable.of({
+                'entry': {
+                    'myRating': 3,
+                    'ratedAt': '2017-04-06T14:36:40.731+0000',
+                    'id': 'fiveStar',
+                    'aggregate': { 'numberOfRatings': 1, 'average': 3.0 }
+                }
+            }));
+
             fixture.detectChanges();
 
             component.ngOnChanges().subscribe(() => {
@@ -123,33 +127,8 @@ describe('Rating component', () => {
 
                 let starThree: any = element.querySelector('#adf-colored-star-3');
                 starThree.click();
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: {
-                        'entry': {
-                            'myRating': 3,
-                            'ratedAt': '2017-04-06T14:36:40.731+0000',
-                            'id': 'fiveStar',
-                            'aggregate': {'numberOfRatings': 1, 'average': 3.0}
-                        }
-                    }
-                });
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    'entry': {
-                        myRating: 1,
-                        'ratedAt': '2017-04-06T14:34:28.061+0000',
-                        'id': 'fiveStar',
-                        'aggregate': {'numberOfRatings': 1, 'average': 1.0}
-                    }
-                }
-            });
         });
 
     });
