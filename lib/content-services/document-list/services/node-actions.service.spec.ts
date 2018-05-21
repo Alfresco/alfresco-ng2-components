@@ -69,7 +69,7 @@ describe('NodeActionsService', () => {
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
 
         service.copyContent(fakeNode, 'allowed').subscribe((value) => {
-            expect(value).toBe('OPERATION.SUCCES.CONTENT.COPY');
+            expect(value).toBe('OPERATION.SUCCESS.CONTENT.COPY');
         });
     }));
 
@@ -78,7 +78,7 @@ describe('NodeActionsService', () => {
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
 
         service.moveContent(fakeNode, 'allowed').subscribe((value) => {
-            expect(value).toBe('OPERATION.SUCCES.CONTENT.MOVE');
+            expect(value).toBe('OPERATION.SUCCESS.CONTENT.MOVE');
         });
     }));
 
@@ -87,7 +87,7 @@ describe('NodeActionsService', () => {
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
 
         service.moveFolder(fakeNode, 'allowed').subscribe((value) => {
-            expect(value).toBe('OPERATION.SUCCES.FOLDER.MOVE');
+            expect(value).toBe('OPERATION.SUCCESS.FOLDER.MOVE');
         });
     }));
 
@@ -96,7 +96,7 @@ describe('NodeActionsService', () => {
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
 
         service.copyFolder(fakeNode, 'allowed').subscribe((value) => {
-            expect(value).toBe('OPERATION.SUCCES.FOLDER.COPY');
+            expect(value).toBe('OPERATION.SUCCESS.FOLDER.COPY');
         });
     }));
 
