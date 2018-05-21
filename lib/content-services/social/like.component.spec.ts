@@ -79,6 +79,8 @@ describe('Like component', () => {
     }));
 
     it('should decrease the number of likes when clicked and is already liked', async(() => {
+        spyOn(service, 'deleteRating').and.returnValue(Observable.of('');
+
         simulateResponseWithLikes(1);
 
         component.likesCounter = 2;
