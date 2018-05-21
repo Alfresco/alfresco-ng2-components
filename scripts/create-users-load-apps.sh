@@ -9,9 +9,9 @@ ecm_user="admin"
 ecm_pass="admin"
 
 user_1=("dev@app.activiti.com" "dev" "user")
-user_2=("mike_rotch@app.activiti.com" "mike" "rotch")
-user_3=("mike_hunt@app.activiti.com" "mike" "hunt")
-user_4=("ivana_tinkle@app.activiti.com" "ivana" "tinkle")
+user_2=("mike_smith@app.activiti.com" "mike" "rotch")
+user_3=("mike_james@app.activiti.com" "mike" "hunt")
+user_4=("ivan_jones@app.activiti.com" "ivana" "tinkle")
 user_5=("anita_bath@app.activiti.com" "anita" "bath")
 user_6=("jenni_joy@activiti.com" "jenni" "joy")
 user_7=("qa@app.activiti.com" "qa" "user")
