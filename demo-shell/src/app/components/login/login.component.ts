@@ -121,6 +121,6 @@ export class LoginComponent implements OnInit {
 
     checkForm(event: any) {
         const values = event.values;
-        console.log(values);
+        this.logService.log(values);
     }
 }
