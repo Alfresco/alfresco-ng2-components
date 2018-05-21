@@ -4,7 +4,7 @@ var fs = require("fs");
 var path = require("path");
 var replaceSection = require("mdast-util-heading-range");
 var remark = require("remark");
-var combyne = require("combyne");
+var ejs = require("ejs");
 var typedoc_1 = require("typedoc");
 var mdNav_1 = require("../mdNav");
 var libFolders = ["core", "content-services", "process-services", "insights"];
@@ -79,9 +79,9 @@ var ParamInfo = /** @class */ (function () {
         this.combined = this.name;
         if (this.isOptional)
             this.combined += "?";
-        this.combined += ": " + this.type;
+        this.combined += ": `" + this.type + "`";
         if (this.defaultValue !== "")
-            this.combined += " = " + this.defaultValue;
+            this.combined += " = `" + this.defaultValue + "`";
     }
     return ParamInfo;
 }());
@@ -213,10 +213,10 @@ function updatePhase(tree, pathname, aggData, errorMessages) {
             var methodMD = getMethodDocsFromMD(tree);
             updateMethodDocsFromMD(compData, methodMD, errorMessages);
         }
-        var templateName = path.resolve(templateFolder, classType + ".combyne");
+        var templateName = path.resolve(templateFolder, classType + ".ejs");
         var templateSource = fs.readFileSync(templateName, "utf8");
-        var template = combyne(templateSource);
-        var mdText = template.render(compData);
+        var template = ejs.compile(templateSource);
+        var mdText = template(compData);
         mdText = mdText.replace(/^ +\|/mg, "|");
         var newSection_1 = remark().data("settings", { paddedTable: false, gfm: false }).parse(mdText.trim()).children;
         replaceSection(tree, "Class members", function (before, section, after) {
