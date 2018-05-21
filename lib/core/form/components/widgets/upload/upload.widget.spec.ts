@@ -33,7 +33,7 @@ let fakePngAnswer = {
     'id': 1155,
     'name': 'a_png_file.png',
     'created': '2017-07-25T17:17:37.099Z',
-    'createdBy': {'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin'},
+    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
     'relatedContent': false,
     'contentAvailable': true,
     'link': false,
@@ -47,7 +47,7 @@ let fakeJpgAnswer = {
     'id': 1156,
     'name': 'a_jpg_file.jpg',
     'created': '2017-07-25T17:17:37.118Z',
-    'createdBy': {'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin'},
+    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
     'relatedContent': false,
     'contentAvailable': true,
     'link': false,
@@ -57,14 +57,28 @@ let fakeJpgAnswer = {
     'thumbnailStatus': 'queued'
 };
 
-declare let jasmine: any;
-
 describe('UploadWidgetComponent', () => {
+
+    function  fakeCreationFile  (name, id) {
+        return {
+            'id': id,
+            'name': name,
+            'created': '2017-07-25T17:17:37.118Z',
+            'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
+            'relatedContent': false,
+            'contentAvailable': true,
+            'link': false,
+            'mimeType': 'image/jpeg',
+            'simpleType': 'image',
+            'previewStatus': 'queued',
+            'thumbnailStatus': 'queued'
+        };
+    }
 
     let contentService: ProcessContentService;
 
-    let filePngFake = new File(['fakePng'], 'file-fake.png', {type: 'image/png'});
-    let filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', {type: 'image/jpg'});
+    let filePngFake = new File(['fakePng'], 'file-fake.png', { type: 'image/png' });
+    let filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', { type: 'image/jpg' });
 
     setupTestBed({
         imports: [
@@ -89,16 +103,6 @@ describe('UploadWidgetComponent', () => {
             contentService = TestBed.get(ProcessContentService);
         }));
 
-        beforeEach(() => {
-            jasmine.Ajax.install();
-
-        });
-
-        afterEach(() => {
-            fixture.destroy();
-            jasmine.Ajax.uninstall();
-        });
-
         it('should setup with field data', () => {
             const fileName = 'hello world';
             const encodedFileName = encodeURI(fileName);
@@ -106,7 +110,7 @@ describe('UploadWidgetComponent', () => {
             uploadWidgetComponent.field = new FormFieldModel(null, {
                 type: FormFieldTypes.UPLOAD,
                 value: [
-                    {name: encodedFileName}
+                    { name: encodedFileName }
                 ]
             });
 
@@ -125,7 +129,7 @@ describe('UploadWidgetComponent', () => {
             uploadWidgetComponent.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: [
-                    {name: 'filename'}
+                    { name: 'filename' }
                 ]
             });
 
@@ -136,7 +140,7 @@ describe('UploadWidgetComponent', () => {
         });
 
         beforeEach(() => {
-            uploadWidgetComponent.field = new FormFieldModel(new FormModel({taskId: 'fake-upload-id'}), {
+            uploadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-upload-id' }), {
                 id: 'upload-id',
                 name: 'upload-name',
                 value: '',
@@ -144,6 +148,7 @@ describe('UploadWidgetComponent', () => {
                 readOnly: false
             });
             formServiceInstance = TestBed.get(FormService);
+            uploadWidgetComponent.field.value = [];
         });
 
         it('should be not present in readonly forms', async(() => {
@@ -184,16 +189,12 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should show the list file after upload a new content', async(() => {
+            spyOn(contentService, 'createTemporaryRawRelatedContent').and.returnValue(Observable.of(fakePngAnswer));
+
             uploadWidgetComponent.field.params.multiple = false;
             fixture.detectChanges();
             let inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
-            inputDebugElement.triggerEventHandler('change', {target: {files: [filJpgFake]}});
-
-            jasmine.Ajax.requests.at(0).respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: fakeJpgAnswer
-            });
+            inputDebugElement.triggerEventHandler('change', { target: { files: [filJpgFake] } });
 
             let filesList = fixture.debugElement.query(By.css('#file-1156'));
             expect(filesList).toBeDefined();
@@ -201,24 +202,22 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should update the form after deleted a file', async(() => {
+            spyOn(contentService, 'createTemporaryRawRelatedContent').and.callFake((file) => {
+                if (file.name === 'file-fake.png') {
+                    return Observable.of(fakePngAnswer);
+                }
+
+                if (file.name === 'file-fake.jpg') {
+                    return Observable.of(fakeJpgAnswer);
+                }
+            });
+
             uploadWidgetComponent.field.params.multiple = true;
 
             spyOn(uploadWidgetComponent.field, 'updateForm');
             fixture.detectChanges();
             let inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
-            inputDebugElement.triggerEventHandler('change', {target: {files: [filePngFake, filJpgFake]}});
-
-            jasmine.Ajax.requests.at(0).respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: fakePngAnswer
-            });
-
-            jasmine.Ajax.requests.at(1).respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: fakeJpgAnswer
-            });
+            inputDebugElement.triggerEventHandler('change', { target: { files: [filePngFake, filJpgFake] } });
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -231,22 +230,20 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should set has field value all the files uploaded', async(() => {
+            spyOn(contentService, 'createTemporaryRawRelatedContent').and.callFake((file) => {
+                if (file.name === 'file-fake.png') {
+                    return Observable.of(fakePngAnswer);
+                }
+
+                if (file.name === 'file-fake.jpg') {
+                    return Observable.of(fakeJpgAnswer);
+                }
+            });
+
             uploadWidgetComponent.field.params.multiple = true;
             fixture.detectChanges();
             let inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
-            inputDebugElement.triggerEventHandler('change', {target: {files: [filePngFake, filJpgFake]}});
-
-            jasmine.Ajax.requests.at(0).respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: fakePngAnswer
-            });
-
-            jasmine.Ajax.requests.at(1).respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: fakeJpgAnswer
-            });
+            inputDebugElement.triggerEventHandler('change', { target: { files: [filePngFake, filJpgFake] } });
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -263,7 +260,6 @@ describe('UploadWidgetComponent', () => {
 
         it('should show all the file uploaded on multiple field', async(() => {
             uploadWidgetComponent.field.params.multiple = true;
-            uploadWidgetComponent.field.value = [];
             uploadWidgetComponent.field.value.push(fakeJpgAnswer);
             uploadWidgetComponent.field.value.push(fakePngAnswer);
             fixture.detectChanges();
@@ -280,98 +276,87 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should show correctly the file name when is formed with special characters', async(() => {
-            uploadWidgetComponent.field.value = [];
-            fakeJpgAnswer.name = '±!@#$%^&*()_+{}:”|<>?§™£-=[];’\\,./.jpg';
-            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            uploadWidgetComponent.field.value.push(fakeCreationFile('±!@#$%^&*()_+{}:”|<>?§™£-=[];’\\,./.jpg', 10));
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-1156');
+                let jpegElement = element.querySelector('#file-10');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe(`±!@#$%^&*()_+{}:”|<>?§™£-=[];’\\,./.jpg`);
             });
         }));
 
         it('should show correctly the file name when is formed with Arabic characters', async(() => {
-            uploadWidgetComponent.field.value = [];
-            fakeJpgAnswer.name = 'غ ظ	ض	ذ	خ	ث	ت	ش	ر	ق	ص	ف	ع	س	ن	م	ل	ك	ي	ط	ح	ز	و	ه	د	ج	ب	ا.jpg';
-            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            let name = 'غ ظ	ض	ذ	خ	ث	ت	ش	ر	ق	ص	ف	ع	س	ن	م	ل	ك	ي	ط	ح	ز	و	ه	د	ج	ب	ا.jpg';
+            uploadWidgetComponent.field.value.push(fakeCreationFile(name, 11));
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-1156');
+                let jpegElement = element.querySelector('#file-11');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe('غ ظ	ض	ذ	خ	ث	ت	ش	ر	ق	ص	ف	ع	س	ن	م	ل	ك	ي	ط	ح	ز	و	ه	د	ج	ب	ا.jpg');
             });
         }));
 
         it('should show correctly the file name when is formed with French characters', async(() => {
-            uploadWidgetComponent.field.value = [];
-            fakeJpgAnswer.name = 'Àâæçéèêëïîôœùûüÿ.jpg';
-            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            uploadWidgetComponent.field.value.push(fakeCreationFile('Àâæçéèêëïîôœùûüÿ.jpg', 12));
+
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-1156');
+                let jpegElement = element.querySelector('#file-12');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe('Àâæçéèêëïîôœùûüÿ.jpg');
             });
         }));
 
         it('should show correctly the file name when is formed with Greek characters', async(() => {
-            uploadWidgetComponent.field.value = [];
-            fakeJpgAnswer.name = 'άέήίϊϊΐόύϋΰώθωερτψυιοπασδφγηςκλζχξωβνμ.jpg';
-            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            uploadWidgetComponent.field.value.push(fakeCreationFile('άέήίϊϊΐόύϋΰώθωερτψυιοπασδφγηςκλζχξωβνμ.jpg', 13));
+
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-1156');
+                let jpegElement = element.querySelector('#file-13');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe('άέήίϊϊΐόύϋΰώθωερτψυιοπασδφγηςκλζχξωβνμ.jpg');
             });
         }));
 
         it('should show correctly the file name when is formed with Polish accented characters', async(() => {
-            uploadWidgetComponent.field.value = [];
-            fakeJpgAnswer.name = 'Ą	Ć	Ę	Ł	Ń	Ó	Ś	Ź	Żą	ć	ę	ł	ń	ó	ś	ź	ż.jpg';
-            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            uploadWidgetComponent.field.value.push(fakeCreationFile('Ą	Ć	Ę	Ł	Ń	Ó	Ś	Ź	Żą	ć	ę	ł	ń	ó	ś	ź	ż.jpg', 14));
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-1156');
+                let jpegElement = element.querySelector('#file-14');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe('Ą	Ć	Ę	Ł	Ń	Ó	Ś	Ź	Żą	ć	ę	ł	ń	ó	ś	ź	ż.jpg');
             });
         }));
 
         it('should show correctly the file name when is formed with Spanish accented characters', async(() => {
-            uploadWidgetComponent.field.value = [];
-            fakeJpgAnswer.name = 'á, é, í, ó, ú, ñ, Ñ, ü, Ü, ¿, ¡. Á, É, Í, Ó, Ú.jpg';
-            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            uploadWidgetComponent.field.value.push(fakeCreationFile('á, é, í, ó, ú, ñ, Ñ, ü, Ü, ¿, ¡. Á, É, Í, Ó, Ú.jpg', 15));
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-1156');
+                let jpegElement = element.querySelector('#file-15');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe('á, é, í, ó, ú, ñ, Ñ, ü, Ü, ¿, ¡. Á, É, Í, Ó, Ú.jpg');
             });
         }));
 
         it('should show correctly the file name when is formed with Swedish characters', async(() => {
-            uploadWidgetComponent.field.value = [];
-            fakeJpgAnswer.name = 'Äåéö.jpg';
-            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            uploadWidgetComponent.field.value.push(fakeCreationFile('Äåéö.jpg', 16));
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-1156');
+                let jpegElement = element.querySelector('#file-16');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe('Äåéö.jpg');
             });
@@ -379,7 +364,6 @@ describe('UploadWidgetComponent', () => {
 
         it('should remove file from field value', async(() => {
             uploadWidgetComponent.field.params.multiple = true;
-            uploadWidgetComponent.field.value = [];
             uploadWidgetComponent.field.value.push(fakeJpgAnswer);
             uploadWidgetComponent.field.value.push(fakePngAnswer);
             fixture.detectChanges();
@@ -396,7 +380,6 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should emit form content clicked event on icon click', (done) => {
-
             spyOn(contentService, 'getContentPreview').and.returnValue(Observable.of(new Blob()));
             spyOn(contentService, 'getFileRawContent').and.returnValue(Observable.of(new Blob()));
 
@@ -408,7 +391,6 @@ describe('UploadWidgetComponent', () => {
             });
 
             uploadWidgetComponent.field.params.multiple = true;
-            uploadWidgetComponent.field.value = [];
             uploadWidgetComponent.field.value.push(fakeJpgAnswer);
             uploadWidgetComponent.field.value.push(fakePngAnswer);
             fixture.detectChanges();

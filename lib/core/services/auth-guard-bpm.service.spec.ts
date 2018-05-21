@@ -57,6 +57,8 @@ describe('AuthGuardService BPM', () => {
     }));
 
     it('if the alfresco js api is NOT logged in should trigger a redirect event', async(() => {
+        appConfigService.config.loginRoute = 'login';
+
         spyOn(routerService, 'navigate');
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
