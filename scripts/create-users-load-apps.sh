@@ -1,5 +1,5 @@
 #!/bin/bash
-base_url="http://adfdev.envalfresco.com/"
+base_url="http://adfdev.envalfresco.com"
 bpm_url="$base_url/activiti-app"
 ecm_url="$base_url/alfresco"
 
