@@ -100,7 +100,7 @@ export class NodeActionsService {
                 const selection = selections[0];
                 this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, selection.id)
                     .subscribe(
-                    observable.next.bind(observable, `OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`),
+                    observable.next.bind(observable, `OPERATION.SUCCESS.${type.toUpperCase()}.${action.toUpperCase()}`),
                     observable.error.bind(observable)
                     );
             },
