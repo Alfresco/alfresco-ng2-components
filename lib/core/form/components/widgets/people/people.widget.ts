@@ -19,12 +19,11 @@
 
 import { PeopleProcessService } from '../../../../services/people-process.service';
 import { UserProcessModel } from '../../../../models';
-import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
 import { baseHost, WidgetComponent } from './../widget.component';
-import { FormControl } from "@angular/forms";
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import {
     catchError,
@@ -33,7 +32,7 @@ import {
     switchMap,
     tap
 } from 'rxjs/operators';
-import 'rxjs/add/observable/empty'
+import 'rxjs/add/observable/empty';
 
 @Component({
     selector: 'people-widget',
@@ -47,17 +46,18 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     @ViewChild('inputValue')
     input: ElementRef;
 
-    minTermLength: number = 1;
-    oldValue: string;
     users: UserProcessModel[] = [];
     groupId: string;
+    value: any;
 
     searchTerm = new FormControl();
     errorMsg = '';
     searchTerms$: Observable<string> = this.searchTerm.valueChanges;
 
     items$ = this.searchTerms$.pipe(
-        tap(() => this.errorMsg = ''),
+        tap(() => {
+            this.errorMsg = '';
+        }),
         distinctUntilChanged(),
         switchMap(searchTerm => this.formService.getWorkflowUsers(searchTerm)
             .pipe(
@@ -65,7 +65,8 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                     this.errorMsg = err.message;
                     return Observable.empty<Response>();
                 })
-            )),
+            )
+        ),
         map(this.checkList)
     );
 
@@ -83,35 +84,20 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
+    checkList(list) {
+        return list && list.length === 0 ? [] : list;
+    }
+
     onKeyUp(event: KeyboardEvent) {
         let value = (this.input.nativeElement as HTMLInputElement).value;
-        if (value && value.length >= this.minTermLength && this.oldValue !== value) {
-            if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
-                if (value.length >= this.minTermLength) {
-                    this.oldValue = value;
-                    this.searchUsers(value);
-                }
-            }
-        } else {
-            this.validateValue(value);
-        }
-    }
-
-    checkList(list) {
-        return list.length = 0 ? [] : list;
-    }
-
-    searchUsers(userName: string) {
-        this.formService.getWorkflowUsers(userName, this.groupId)
-            .subscribe((result: UserProcessModel[]) => {
-                this.users = result || [];
-                this.validateValue(userName);
-            });
+        this.validateValue(value);
     }
 
     validateValue(userName: string) {
         if (this.isValidUser(userName)) {
             this.field.validationSummary.message = '';
+            this.field.validate();
+            this.field.form.validateForm();
         } else if (!userName) {
             this.field.value = null;
             this.users = [];
@@ -125,7 +111,12 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     isValidUser(value: string): boolean {
         let isValid = false;
         if (value) {
-            let resultUser: UserProcessModel = this.users.find((user) => this.getDisplayName(user).toLocaleLowerCase() === value.toLocaleLowerCase());
+            this.formService.getWorkflowUsers(value, this.groupId)
+                .subscribe((result: UserProcessModel[]) => {
+                    this.users = result || [];
+                });
+            let resultUser: UserProcessModel = this.users.find((user) => {
+                return this.getDisplayName(user).toLocaleLowerCase() === value.toLocaleLowerCase(); });
 
             if (resultUser) {
                 isValid = true;

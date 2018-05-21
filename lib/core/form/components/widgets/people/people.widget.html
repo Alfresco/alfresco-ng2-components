@@ -9,9 +9,9 @@
                class="adf-input"
                type="text"
                [id]="field.id"
+               (keyup)="onKeyUp($event)"
                [formControl] ="searchTerm"
                [value]="getDisplayName(field.value)"
-               (keyup)="onKeyUp($event)"
                [disabled]="field.readOnly"
                placeholder="{{field.placeholder}}"
                [matAutocomplete]="auto">

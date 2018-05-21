@@ -203,7 +203,6 @@ describe('PeopleWidgetComponent', () => {
 
         let keyboardEvent = new KeyboardEvent('keypress');
         (element.querySelector('input') as HTMLInputElement).value = '123';
-        widget.minTermLength = 4;
         widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowUsers).not.toHaveBeenCalled();
@@ -219,6 +218,26 @@ describe('PeopleWidgetComponent', () => {
         widget.onKeyUp(keyboardEvent);
 
         expect(widget.users).toEqual([]);
+    });
+
+    it('should reset users list when value is empty', () => {
+        let value = '';
+        widget.validateValue(value);
+        expect(widget.users).toBe([]);
+    });
+
+    it('should check and return list if is not empty', () => {
+        let users: any = [{
+            id: 'people-id',
+            firstName: 'John',
+            lastName: 'Doe'
+        }, {
+            id: 'people-id2',
+            firstName: 'John',
+            lastName: 'Ping'
+        }];
+
+        expect(widget.checkList(users)).toBe(users);
     });
 
     describe('when template is ready', () => {
