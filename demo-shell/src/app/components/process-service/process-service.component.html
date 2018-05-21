@@ -198,6 +198,7 @@
                         [appId]="appId"
                         [name]="defaultProcessName"
                         [processDefinitionName]="defaultProcessDefinitionName"
+                        (formContentClicked)="onContentClick($event)"
                         (start)="onStartProcessInstance($event)"
                         (cancel)="onCancelProcessInstance()">
                     </adf-start-process>

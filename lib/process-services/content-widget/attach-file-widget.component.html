@@ -63,7 +63,7 @@
         <mat-list-item class="adf-attach-files-row" *ngFor="let file of field.value">
             <img mat-list-icon class="adf-attach-widget__icon"
                  [id]="'file-'+file.id+'-icon'"
-                 [src]="getIcon(file.mimeType)"
+                 [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)"
                  [alt]="mimeTypeIcon"
                  (click)="onAttachFileClicked(file)"
                  (keyup.enter)="onAttachFileClicked(file)"

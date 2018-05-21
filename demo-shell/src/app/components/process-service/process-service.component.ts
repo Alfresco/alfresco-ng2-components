@@ -389,7 +389,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onContentClick(content: any): void {
-        this.preview.showBlob(content.name, content.contentBlob);
+        if (content.contentBlob) {
+            this.preview.showBlob(content.name, content.contentBlob);
+        } else {
+            this.preview.showResource(content.sourceId.split(';')[0]);
+        }
     }
 
     onAuditClick(event: any) {
