@@ -273,8 +273,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * Check if the list is empty
      */
     isListEmpty(): boolean {
-        return this.rows === undefined ||
-            (this.rows && this.rows.length === 0);
+        return !this.rows || this.rows.length === 0;
     }
 
     onRowClick(item: DataRowEvent) {
