@@ -64,9 +64,14 @@ import { Subscription } from 'rxjs/Subscription';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
 import { PreviewService } from '../../services/preview.service';
+import { Location } from '@angular/common';
 
 const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
+
+const TASK_ROUTE = 0;
+const PROCESS_ROUTE = 1;
+const REPORT_ROUTE = 2;
 
 @Component({
     selector: 'app-process-service',
@@ -109,7 +114,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Input()
     appId: number = null;
 
-    @Input()
     filterSelected: object = null;
 
     @Output()
@@ -138,8 +142,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     taskFilter: FilterRepresentationModel;
     report: any;
-    processFilter: ProcessInstanceFilterRepresentation;
-
+    processFilter: any;
     sub: Subscription;
     blobFile: any;
     flag = true;
@@ -164,6 +167,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private preview: PreviewService,
                 formRenderingService: FormRenderingService,
                 formService: FormService,
+                private location: Location,
                 private preferenceService: UserPreferencesService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
@@ -240,7 +244,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onTaskFilterClick(filter: FilterRepresentationModel): void {
         this.applyTaskFilter(filter);
         this.resetTaskPaginationPage();
-        this.router.navigate(['/activiti/apps', this.appId || 0, 'tasks', filter.id]);
     }
 
     resetTaskPaginationPage() {
@@ -248,13 +251,14 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onTabChange(event: any): void {
-        this.showProcessPagination = event.index === 1;
-        this.paginationPageSize = this.preferenceService.paginationSize;
-        if (this.processList) {
-            this.processList.reload();
-        }
-        if (this.taskList) {
-            this.taskList.reload();
+        const index = event.index;
+        this.showProcessPagination = index === PROCESS_ROUTE;
+        if (index === TASK_ROUTE) {
+            this.relocateLocationToTask();
+        } else if (index === PROCESS_ROUTE) {
+            this.relocateLocationToProcess();
+        } else if (index === REPORT_ROUTE) {
+            this.relocateLocationToReport();
         }
     }
 
@@ -272,10 +276,12 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     applyTaskFilter(filter: FilterRepresentationModel) {
-        this.taskFilter = filter;
+        this.taskFilter = Object.assign({}, filter);
+
         if (filter && this.taskList) {
             this.taskList.hasCustomDataSource = false;
         }
+        this.relocateLocationToTask();
     }
 
     onStartTaskSuccess(event: any): void {
@@ -295,6 +301,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onProcessFilterClick(event: ProcessInstanceFilterRepresentation): void {
         this.processFilter = event;
         this.resetProcessPaginationPage();
+        this.relocateLocationToProcess();
     }
 
     resetProcessPaginationPage() {
@@ -386,6 +393,18 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     navigateToProcess(): void {
         this.router.navigate([`/activiti/apps/${this.appId}/processes/`]);
+    }
+
+    relocateLocationToProcess(): void {
+        this.location.go(`/activiti/apps/${this.appId || 0}/processes/${this.processFilter.id}`);
+    }
+
+    relocateLocationToTask(): void {
+        this.location.go(`/activiti/apps/${this.appId || 0}/tasks/${this.taskFilter.id}`);
+    }
+
+    relocateLocationToReport(): void {
+        this.location.go(`/activiti/apps/${this.appId || 0}/report/`);
     }
 
     onContentClick(content: any): void {

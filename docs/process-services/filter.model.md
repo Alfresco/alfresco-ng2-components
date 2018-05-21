@@ -26,7 +26,7 @@ class AppDefinitionRepresentationModel {
 }
 
 class FilterParamsModel {
-    id: string;
+    id: number;
     name: string;
     index: number;
 }
