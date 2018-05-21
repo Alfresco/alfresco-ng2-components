@@ -69,7 +69,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     /** The columns that the datatable will show. */
     @Input()
-    private schemaColumns: DataColumn[] = [];
+    schemaColumns: any[] = [];
 
     /* Toggles default selection of the first row */
     @Input()

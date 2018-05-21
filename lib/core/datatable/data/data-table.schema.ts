@@ -41,7 +41,9 @@ export abstract class DataTableSchema {
 
     public createDatatableSchema(): void {
         this.loadLayoutPresets();
-        this.schemaColumns = this.mergeJsonAndHtmlSchema();
+        if (!this.schemaColumns || this.schemaColumns.length < 0) {
+            this.schemaColumns = this.mergeJsonAndHtmlSchema();
+        }
     }
 
     public loadLayoutPresets(): void {

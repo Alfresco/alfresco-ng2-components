@@ -226,7 +226,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * Select the task given in input if present
      */
     selectTask(taskIdSelected: string): void {
-        console.log(this.isListEmpty());
         if (!this.isListEmpty()) {
             let dataRow;
             if (taskIdSelected) {
@@ -263,9 +262,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * Check if the list is empty
      */
     isListEmpty(): boolean {
-        console.log(this.rows);
-        console.log(!this.rows);
-        console.log(!this.rows || this.rows.length === 0);
         return !this.rows || this.rows.length === 0;
     }
 

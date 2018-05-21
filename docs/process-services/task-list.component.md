@@ -73,17 +73,11 @@ renders details of any chosen instance.
 
 ### Setting the column schema
 
-You can pass a [DataTableAdapter instance](../core/datatable-adapter.interface.md)
-to set a column schema for the tasklist as shown below :
+You can pass schemaColumns to set a column for the tasklist as shown below :
 
 ```ts
-let data = new ObjectDataTableAdapter(
-    // Row data
-    [
-        { id: 1, name: 'Name 1' },
-        { id: 2, name: 'Name 2' }
-    ],
-    // Column schema
+// Column schema
+let schema = 
     [
         { 
             type: 'text', 
@@ -97,13 +91,12 @@ let data = new ObjectDataTableAdapter(
             title: 'Name', 
             sortable: true
         }
-    ]
-);
+    ];
 ```
 
 ```html
 <adf-tasklist
-    [data]="'data'">
+    [schemaColumns]="schema">
 </adf-tasklist>
 ```
 
