@@ -1,12 +1,12 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var path = require("path");
 var replaceSection = require("mdast-util-heading-range");
 var remark = require("remark");
 var frontMatter = require("remark-frontmatter");
 var yaml = require("js-yaml");
-var combyne = require("combyne");
+var ejs = require("ejs");
 var unist = require("../unistHelpers");
 var tutFolder = path.resolve("docs", "tutorials");
 var templateFolder = path.resolve("tools", "doc", "templates");
@@ -17,10 +17,10 @@ function readPhase(tree, pathname, aggData) { }
 exports.readPhase = readPhase;
 function aggPhase(aggData) {
     var indexDocData = getIndexDocData();
-    var templateName = path.resolve(templateFolder, "tutIndex.combyne");
+    var templateName = path.resolve(templateFolder, "tutIndex.ejs");
     var templateSource = fs.readFileSync(templateName, "utf8");
-    var template = combyne(templateSource);
-    var mdText = template.render(indexDocData);
+    var template = ejs.compile(templateSource);
+    var mdText = template(indexDocData);
     mdText = mdText.replace(/^ +\|/mg, "|");
     var newSection = remark().data("settings", { paddedTable: false, gfm: false }).parse(mdText.trim()).children;
     var tutIndexFile = path.resolve(tutFolder, "README.md");
