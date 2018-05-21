@@ -72,7 +72,7 @@
     "SELECT_LOCATION": "选择位置"
   },
   "OPERATION": {
-    "SUCCES": {
+    "SUCCESS": {
       "CONTENT": {
         "COPY": "复制成功",
         "MOVE": "移动成功"

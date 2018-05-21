@@ -72,7 +72,7 @@
     "SELECT_LOCATION": "Выбрать местоположение"
   },
   "OPERATION": {
-    "SUCCES": {
+    "SUCCESS": {
       "CONTENT": {
         "COPY": "Копирование выполнено",
         "MOVE": "Перемещение выполнено"
