@@ -13,9 +13,9 @@ In this tutorial you are going to learn how to develop on top of Alfresco Conten
 
 The only prerequisite of this tutorial is the availability of an instance of Alfresco Content Services in a [Docker](https://www.docker.com/) container. Docker is not the only option you might have for the deployment, but it is the faster we found to focus on the development instead of the environment setup.
 
-If you don't have an instance of Alfresco Content Services up and running check the [preparation of the development environment](./preparing-environment.html).
+If you don't have an instance of Alfresco Content Services up and running check the [preparation of the development environment](./preparing-environment.md).
 
-Only to download the requested libraries, you will need the `npm` client. Also in this case check the [preparation of the development environment](./preparing-environment.html) for further details on how to install it into your development environment.
+Only to download the requested libraries, you will need the `npm` client. Also in this case check the [preparation of the development environment](./preparing-environment.md) for further details on how to install it into your development environment.
 
 ## Creating the JavaScript application
 
