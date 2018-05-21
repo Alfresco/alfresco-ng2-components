@@ -6,7 +6,7 @@ import * as remark from "remark";
 import * as stringify from "remark-stringify";
 import * as frontMatter from "remark-frontmatter";
 import * as yaml from "js-yaml";
-import * as combyne from "combyne";
+import * as ejs from "ejs";
 
 import * as unist from "../unistHelpers";
 
@@ -23,11 +23,11 @@ export function readPhase(tree, pathname, aggData) {}
 export function aggPhase(aggData) {
     let indexDocData = getIndexDocData();
 
-    let templateName = path.resolve(templateFolder, "tutIndex.combyne");
+    let templateName = path.resolve(templateFolder, "tutIndex.ejs");
     let templateSource = fs.readFileSync(templateName, "utf8");
-    let template = combyne(templateSource);
+    let template = ejs.compile(templateSource);
 
-    let mdText = template.render(indexDocData);
+    let mdText = template(indexDocData);
     mdText = mdText.replace(/^ +\|/mg, "|");
 
     let newSection = remark().data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;

@@ -7,6 +7,7 @@ import * as stringify from "remark-stringify";
 import * as frontMatter from "remark-frontmatter";
 
 import * as combyne from "combyne";
+import * as ejs from "ejs";
 
 import {
     Application,
@@ -129,10 +130,10 @@ class ParamInfo {
         if (this.isOptional)
             this.combined += "?";
 
-        this.combined += `: ${this.type}`;
+        this.combined += `: \`${this.type}\``;
         
         if (this.defaultValue !== "")
-            this.combined += ` = ${this.defaultValue}`;
+            this.combined += ` = \`${this.defaultValue}\``;
     }
 }
 
@@ -307,11 +308,11 @@ export function updatePhase(tree, pathname, aggData, errorMessages) {
             updateMethodDocsFromMD(compData, methodMD, errorMessages);
         }
 
-        let templateName = path.resolve(templateFolder, classType + ".combyne");
+        let templateName = path.resolve(templateFolder, classType + ".ejs");
         let templateSource = fs.readFileSync(templateName, "utf8");
-        let template = combyne(templateSource);
+        let template = ejs.compile(templateSource);
 
-        let mdText = template.render(compData);
+        let mdText = template(compData);
         mdText = mdText.replace(/^ +\|/mg, "|");
 
         let newSection = remark().data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;

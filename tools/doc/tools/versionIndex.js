@@ -7,7 +7,7 @@ var stringify = require("remark-stringify");
 var zone = require("mdast-zone");
 var frontMatter = require("remark-frontmatter");
 
-var combyne = require("combyne");
+var ejs = require("ejs");
 
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
@@ -77,9 +77,9 @@ function aggPhase(aggData) {
             return 0;
     });
 
-    var templateName = path.resolve(templateFolder, "versIndex.combyne");
+    var templateName = path.resolve(templateFolder, "versIndex.ejs");
     var templateSource = fs.readFileSync(templateName, "utf8");
-    var template = combyne(templateSource);
+    var template = ejs.compile(templateSource);
 
     for (var i = 0; i < keys.length; i++) {
         var version = keys[i];
@@ -105,7 +105,7 @@ function aggPhase(aggData) {
             });
         }
 
-        var mdText = template.render(versionTemplateData);
+        var mdText = template(versionTemplateData);
         mdText = mdText.replace(/^ +-/mg, "-");
 
         var newSection = remark().data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;
