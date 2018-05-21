@@ -52,6 +52,7 @@
     [disableCsrf]="disableCsrf"
     [showLoginActions]="showFooter"
     [showRememberMe]="showFooter"
+    (executeSubmit)="checkForm($event)"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
     (success)="onLogin($event)"
     (error)="onError($event)">
