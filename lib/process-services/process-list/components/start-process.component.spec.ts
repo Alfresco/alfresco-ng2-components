@@ -79,6 +79,11 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({ 'appId': change });
             });
 
+            afterEach(() => {
+                fixture.destroy();
+                TestBed.resetTestingModule();
+            });
+
             it('should enable start button when name and process filled out', async(() => {
                 component.selectedProcessDef = testProcessDefRepr;
                 fixture.detectChanges();
@@ -155,13 +160,17 @@ describe('StartFormComponent', () => {
         describe('CS content connection', () => {
 
             it('alfrescoRepositoryName default configuration property', () => {
+                appConfig.config = Object.assign(appConfig.config, {
+                    'alfrescoRepositoryName': null
+                });
+
                 expect(component.getAlfrescoRepositoryName()).toBe('alfresco-1Alfresco');
             });
 
             it('alfrescoRepositoryName configuration property should be fetched', () => {
                 appConfig.config = Object.assign(appConfig.config, {
                     'alfrescoRepositoryName': 'alfresco-123'
-                };
+                });
 
                 expect(component.getAlfrescoRepositoryName()).toBe('alfresco-123Alfresco');
             });
@@ -171,7 +180,7 @@ describe('StartFormComponent', () => {
                 component.values = {};
                 component.values['file'] = {
                     isFile: true,
-                    name= 'example-file'
+                    name: 'example-file'
                 };
 
                 component.moveNodeFromCStoPS();
