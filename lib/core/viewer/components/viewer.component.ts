@@ -334,7 +334,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private setUpNodeFile(data: MinimalNodeEntryEntity) {
-        this.mimeType = data.content.mimeType;
+        if (data.content) {
+            this.mimeType = data.content.mimeType;
+        }
+
         this.displayName = data.name;
 
         this.urlFileContent = this.apiService.contentApi.getContentUrl(data.id);
