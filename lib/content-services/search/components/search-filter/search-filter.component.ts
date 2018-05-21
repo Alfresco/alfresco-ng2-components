@@ -161,12 +161,16 @@ export class SearchFilterComponent implements OnInit {
 
             this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.facetQueriesPageSize);
 
-            const expandedFields = this.responseFacetFields.filter(field => field.expanded).map(field => field.label);
+            const expandedFields = this.responseFacetFields
+                .filter(field => field.expanded)
+                .map(field => field.label);
 
             this.responseFacetFields = (context.facetsFields || []).map(
                 field => {
+                    const settings = this.queryBuilder.getFacetField(field.label);
+
                     field.label = this.translationService.instant(field.label);
-                    field.pageSize = field.pageSize || 5;
+                    field.pageSize = field.pageSize || settings.pageSize || 5;
                     field.currentPageSize = field.pageSize;
                     field.expanded = expandedFields.includes(field.label);
 
