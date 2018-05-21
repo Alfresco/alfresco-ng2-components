@@ -27,7 +27,7 @@ import { Observable } from 'rxjs/Observable';
 
 declare let jasmine: any;
 
-fdescribe('AnalyticsReportParametersComponent', () => {
+describe('AnalyticsReportParametersComponent', () => {
 
     let component: AnalyticsReportParametersComponent;
     let fixture: ComponentFixture<AnalyticsReportParametersComponent>;
