@@ -74,9 +74,8 @@ export class SearchQueryBuilderService {
     }
 
     getFacetQuery(label: string): FacetQuery {
-        if (label) {
-            const queries = this.config.facetQueries.queries || [];
-            return queries.find(query => query.label === label);
+        if (label && this.hasFacetQueries) {
+            return this.config.facetQueries.queries.find(query => query.label === label);
         }
         return null;
     }
@@ -171,10 +170,8 @@ export class SearchQueryBuilderService {
     }
 
     private get facetQueries(): FacetQuery[] {
-        const config = this.config.facetQueries;
-
-        if (config && config.queries && config.queries.length > 0) {
-            return config.queries.map(query => {
+        if (this.hasFacetQueries) {
+            return this.config.facetQueries.queries.map(query => {
                 return <FacetQuery> { ...query };
             });
         }
@@ -199,5 +196,15 @@ export class SearchQueryBuilderService {
         }
 
         return null;
+    }
+
+    private get hasFacetQueries(): boolean {
+        if (this.config
+            && this.config.facetQueries
+            && this.config.facetQueries.queries
+            && this.config.facetQueries.queries.length > 0) {
+            return true;
+        }
+        return false;
     }
 }
