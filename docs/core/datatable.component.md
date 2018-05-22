@@ -80,6 +80,8 @@ export class DataTableDemo {
 }
 ```
 
+### Setting the column schema
+
 You can also use HTML-based schema declaration like shown below:
 
 ```html
@@ -93,6 +95,34 @@ You can also use HTML-based schema declaration like shown below:
     </data-columns>
 </adf-datatable>
 ```
+
+You can also use schemaColumns input to set a column as shown below :
+
+```ts
+// Column schema
+let schema = 
+    [
+        { 
+            type: 'text', 
+            key: 'id', 
+            title: 'Id', 
+            sortable: true 
+        },
+        {
+            type: 'text', 
+            key: 'name', 
+            title: 'Name', 
+            sortable: true
+        }
+    ];
+```
+
+```html
+<adf-datatable
+    [schemaColumns]="schema">
+</adf-datatable>
+```
+
 
 ```ts
 import { ObjectDataTableAdapter } from '@alfresco/adf-core';

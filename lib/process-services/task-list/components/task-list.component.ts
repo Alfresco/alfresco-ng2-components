@@ -193,6 +193,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         if (!this.hasCustomDataSource) {
             this.requestNode = this.createRequestNode();
             this.load(this.requestNode);
+        } else {
+            this.isLoading = false;
         }
     }
 
@@ -227,16 +229,11 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     selectTask(taskIdSelected: string): void {
         if (!this.isListEmpty()) {
             let dataRow;
-            if (this.rows.length > 0) {
-                if (taskIdSelected) {
-                    dataRow = this.rows.find((currentRow: any) => {
-                        return currentRow['id'] === taskIdSelected;
-                    });
-
-                    if (!dataRow) {
-                        dataRow = this.rows[0];
-                    }
-                } else {
+            if (taskIdSelected) {
+                dataRow = this.rows.find((currentRow: any) => {
+                    return currentRow['id'] === taskIdSelected;
+                });
+                if (!dataRow) {
                     dataRow = this.rows[0];
                 }
                 dataRow['isSelected'] = true;
