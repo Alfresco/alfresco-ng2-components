@@ -41,7 +41,12 @@ describe('PropertyGroupTranslatorService', () => {
     setupTestBed({
         imports: [ContentTestingModule],
         providers: [
-            { provide: LogService, useValue: { error: () => {} }}
+            {
+                provide: LogService, useValue: {
+                error: () => {
+                }
+            }
+            }
         ]
     });
 
@@ -56,11 +61,17 @@ describe('PropertyGroupTranslatorService', () => {
             mandatory: false,
             multiValued: false
         };
+
         propertyGroup = {
             title: 'Faro Automated Solutions',
             properties: [property]
         };
+
         propertyGroups = [];
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     describe('General transformation', () => {
@@ -74,14 +85,14 @@ describe('PropertyGroupTranslatorService', () => {
                 mandatory: false,
                 multiValued: false
             },
-            {
-                name: 'FAS:ALOY',
-                title: 'title',
-                dataType: 'd:text',
-                defaultValue: 'defaultValue',
-                mandatory: false,
-                multiValued: false
-            }];
+                {
+                    name: 'FAS:ALOY',
+                    title: 'title',
+                    dataType: 'd:text',
+                    defaultValue: 'defaultValue',
+                    mandatory: false,
+                    multiValued: false
+                }];
             propertyGroups.push(propertyGroup);
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
@@ -132,7 +143,7 @@ describe('PropertyGroupTranslatorService', () => {
             property.title = 'The Faro Plague';
             property.dataType = 'daemonic:scorcher';
             property.defaultValue = 'Daemonic beast';
-            propertyGroups.push(propertyGroup);
+            propertyGroups.push(Object.assign({}, propertyGroup));
 
             service.translateToCardViewGroups(propertyGroups, propertyValues);
             expect(logService.error).toHaveBeenCalledWith('Unknown type for mapping: daemonic:scorcher');
@@ -143,7 +154,12 @@ describe('PropertyGroupTranslatorService', () => {
             property.title = 'The Faro Plague';
             property.dataType = 'daemonic:scorcher';
             property.defaultValue = 'Daemonic beast';
-            propertyGroups.push(propertyGroup);
+            propertyGroups.push({
+                title: 'Faro Automated Solutions',
+                properties: [property]
+            });
+
+            propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
 
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
             const cardViewProperty: CardViewTextItemModel = <CardViewTextItemModel> cardViewGroup[0].properties[0];
