@@ -266,7 +266,7 @@ describe('TaskFiltersComponent', () => {
             done();
         });
 
-        component.selectFilter(currentFilter);
+        component.selectFilterAndEmit(currentFilter);
     });
 
     it('should reload filters by appId on binding changes', () => {
@@ -283,35 +283,32 @@ describe('TaskFiltersComponent', () => {
         spyOn(component, 'getFiltersByAppId').and.stub();
         const appId = null;
 
-        let change = new SimpleChange(null, appId, true);
+        let change = new SimpleChange(undefined, appId, true);
         component.ngOnChanges({ 'appId': change });
 
         expect(component.getFiltersByAppId).toHaveBeenCalledWith(appId);
     });
 
-    it('should change current filter when filterParam (id) changes', (done) => {
+    it('should change current filter when filterParam (id) changes', async() => {
         component.filters = fakeGlobalFilter;
         component.currentFilter = null;
 
-        component.filterClick.subscribe((filter: FilterRepresentationModel) => {
-            expect(filter).toEqual(fakeGlobalFilter[0]);
-            expect(component.currentFilter).toEqual(filter);
-            done();
+        fixture.whenStable().then(() => {
+            expect(component.currentFilter.id).toEqual(fakeGlobalFilter[2].id);
         });
-        const change = new SimpleChange(null, {id : fakeGlobalFilter[0].id}, true);
+        const change = new SimpleChange(null, {id : fakeGlobalFilter[2].id}, true);
         component.ngOnChanges({ 'filterParam': change });
     });
 
-    it('should change current filter when filterParam (name) changes', (done) => {
+    it('should change current filter when filterParam (name) changes', async() => {
         component.filters = fakeGlobalFilter;
         component.currentFilter = null;
 
-        component.filterClick.subscribe((filter: FilterRepresentationModel) => {
-            expect(filter).toEqual(fakeGlobalFilter[0]);
-            expect(component.currentFilter).toEqual(filter);
-            done();
+        fixture.whenStable().then(() => {
+            expect(component.currentFilter.name).toEqual(fakeGlobalFilter[2].name);
         });
-        const change = new SimpleChange(null, {name : fakeGlobalFilter[0].name}, true);
+
+        const change = new SimpleChange(null, {name : fakeGlobalFilter[2].name}, true);
         component.ngOnChanges({ 'filterParam': change });
     });
 
@@ -337,7 +334,7 @@ describe('TaskFiltersComponent', () => {
     it('should load default list when appid is null', () => {
         spyOn(component, 'getFiltersByAppId').and.stub();
 
-        let change = new SimpleChange(null, null, true);
+        let change = new SimpleChange(undefined, null, true);
         component.ngOnChanges({ 'appId': change });
 
         expect(component.getFiltersByAppId).toHaveBeenCalled();

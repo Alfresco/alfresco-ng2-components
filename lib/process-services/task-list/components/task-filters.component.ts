@@ -164,6 +164,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                     (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
                 ));
         }
+        if (!this.currentFilter) {
+            this.selectDefaultTaskFilter();
+        }
     }
 
     public selectFilterAndEmit(newFilter: FilterParamsModel) {
@@ -196,7 +199,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * Select as default task filter the first in the list
      * @param filteredFilterList
      */
-    public selectDefaultTaskFilter(filteredFilterList: FilterRepresentationModel[]) {
+    public selectDefaultTaskFilter() {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
         }
