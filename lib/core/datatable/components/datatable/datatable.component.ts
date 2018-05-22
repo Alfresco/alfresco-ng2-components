@@ -233,6 +233,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
         this.singleClickStreamSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
+            this.handleRowSelection(event.value, <MouseEvent | KeyboardEvent> event.event);
             this.rowClick.emit(event);
             if (!event.defaultPrevented) {
                 this.elementRef.nativeElement.dispatchEvent(
@@ -305,7 +306,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
 
         if (row) {
-            this.handleRowSelection(row, e);
             const dataRowEvent = new DataRowEvent(row, e, this);
             this.clickObserver.next(dataRowEvent);
         }
