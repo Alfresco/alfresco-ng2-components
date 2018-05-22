@@ -21,6 +21,9 @@ import { SearchConfiguration } from '../../search-configuration.interface';
 import { AppConfigService, TranslationMock } from '@alfresco/adf-core';
 import { Subject } from 'rxjs/Subject';
 import { ResponseFacetQueryList } from './models/response-facet-query-list.model';
+import { ResponseFacetField } from '../../response-facet-field.interface';
+import { SearchFilterList } from './models/search-filter-list.model';
+import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 
 describe('SearchSettingsComponent', () => {
 
@@ -338,6 +341,69 @@ describe('SearchSettingsComponent', () => {
         component.unselectFacetBucket(null);
 
         expect(queryBuilder.update).not.toHaveBeenCalled();
+    });
+
+    it('should allow to to reset selected buckets', () => {
+        const buckets: FacetFieldBucket[] = [
+            { label: 'bucket1', $checked: true, count: 1, filterQuery: 'q1' },
+            { label: 'bucket2', $checked: false, count: 1, filterQuery: 'q2' }
+        ];
+
+        const field: ResponseFacetField = {
+            label: 'field1',
+            buckets: new SearchFilterList<FacetFieldBucket>(buckets)
+        };
+
+        expect(component.canResetSelectedBuckets(field)).toBeTruthy();
+    });
+
+    it('should not allow to reset selected buckets', () => {
+        const buckets: FacetFieldBucket[] = [
+            { label: 'bucket1', $checked: false, count: 1, filterQuery: 'q1' },
+            { label: 'bucket2', $checked: false, count: 1, filterQuery: 'q2' }
+        ];
+
+        const field: ResponseFacetField = {
+            label: 'field1',
+            buckets: new SearchFilterList<FacetFieldBucket>(buckets)
+        };
+
+        expect(component.canResetSelectedBuckets(field)).toBeFalsy();
+    });
+
+    it('should reset selected buckets', () => {
+        const buckets: FacetFieldBucket[] = [
+            { label: 'bucket1', $checked: false, count: 1, filterQuery: 'q1' },
+            { label: 'bucket2', $checked: true, count: 1, filterQuery: 'q2' }
+        ];
+
+        const field: ResponseFacetField = {
+            label: 'field1',
+            buckets: new SearchFilterList<FacetFieldBucket>(buckets)
+        };
+
+        component.resetSelectedBuckets(field);
+
+        expect(buckets[0].$checked).toBeFalsy();
+        expect(buckets[1].$checked).toBeFalsy();
+    });
+
+    it('should update query build upon resetting buckets', () => {
+        spyOn(queryBuilder, 'update').and.stub();
+
+        const buckets: FacetFieldBucket[] = [
+            { label: 'bucket1', $checked: false, count: 1, filterQuery: 'q1' },
+            { label: 'bucket2', $checked: true, count: 1, filterQuery: 'q2' }
+        ];
+
+        const field: ResponseFacetField = {
+            label: 'field1',
+            buckets: new SearchFilterList<FacetFieldBucket>(buckets)
+        };
+
+        component.resetSelectedBuckets(field);
+
+        expect(queryBuilder.update).toHaveBeenCalled();
     });
 
 });

@@ -137,7 +137,7 @@ export class SearchFilterComponent implements OnInit {
         this.queryBuilder.update();
     }
 
-    unselectFacetBucket(bucket: FacetFieldBucket) {
+    unselectFacetBucket(bucket: FacetFieldBucket, reloadQuery: boolean = true) {
         if (bucket) {
             const idx = this.selectedBuckets.findIndex(
                 selectedBucket => selectedBucket.$field === bucket.$field && selectedBucket.label === bucket.label
@@ -147,6 +147,25 @@ export class SearchFilterComponent implements OnInit {
                 this.selectedBuckets.splice(idx, 1);
             }
             this.queryBuilder.removeFilterQuery(bucket.filterQuery);
+
+            if (reloadQuery) {
+                this.queryBuilder.update();
+            }
+        }
+    }
+
+    canResetSelectedBuckets(field: ResponseFacetField): boolean {
+        if (field && field.buckets) {
+            return field.buckets.items.some(bucket => bucket.$checked);
+        }
+        return false;
+    }
+
+    resetSelectedBuckets(field: ResponseFacetField) {
+        if (field && field.buckets) {
+            field.buckets.items.forEach(bucket => {
+                this.unselectFacetBucket(bucket, false);
+            });
             this.queryBuilder.update();
         }
     }

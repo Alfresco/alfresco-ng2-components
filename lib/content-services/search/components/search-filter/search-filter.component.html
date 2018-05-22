@@ -91,17 +91,32 @@
             </mat-checkbox>
         </div>
 
+        <div class="facet-buttons" *ngIf="field.buckets.fitsPage">
+            <button *ngIf="canResetSelectedBuckets(field)"
+                mat-button
+                color="primary"
+                (click)="resetSelectedBuckets(field)">
+                {{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}
+            </button>
+        </div>
+
         <div class="facet-buttons" *ngIf="!field.buckets.fitsPage">
-            <button mat-button
+            <button mat-icon-button
+                *ngIf="canResetSelectedBuckets(field)"
+                title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
+                (click)="resetSelectedBuckets(field)">
+                <mat-icon>clear</mat-icon>
+            </button>
+            <button mat-icon-button
                 *ngIf="field.buckets.canShowLessItems"
-                (click)="field.buckets.showLessItems()">
-                {{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}
+                (click)="field.buckets.showLessItems()"
+                title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}">
                 <mat-icon>keyboard_arrow_up</mat-icon>
             </button>
-            <button mat-button
+            <button mat-icon-button
                 *ngIf="field.buckets.canShowMoreItems"
-                (click)="field.buckets.showMoreItems()">
-                {{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}
+                (click)="field.buckets.showMoreItems()"
+                title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}">
                 <mat-icon>keyboard_arrow_down</mat-icon>
             </button>
         </div>
