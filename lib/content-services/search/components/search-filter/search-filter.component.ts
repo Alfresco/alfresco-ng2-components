@@ -129,12 +129,15 @@ export class SearchFilterComponent implements OnInit {
         this.queryBuilder.update();
     }
 
-    unselectFacetQuery(label: string) {
+    unselectFacetQuery(label: string, reloadQuery: boolean = true) {
         const facetQuery = this.queryBuilder.getFacetQuery(label);
         this.selectedFacetQueries = this.selectedFacetQueries.filter(selectedQuery => selectedQuery !== label);
 
         this.queryBuilder.removeFilterQuery(facetQuery.query);
-        this.queryBuilder.update();
+
+        if (reloadQuery) {
+            this.queryBuilder.update();
+        }
     }
 
     unselectFacetBucket(bucket: FacetFieldBucket, reloadQuery: boolean = true) {
@@ -151,6 +154,19 @@ export class SearchFilterComponent implements OnInit {
             if (reloadQuery) {
                 this.queryBuilder.update();
             }
+        }
+    }
+
+    canResetSelectedQueries(): boolean {
+        return this.selectedFacetQueries && this.selectedFacetQueries.length > 0;
+    }
+
+    resetSelectedQueries() {
+        if (this.canResetSelectedQueries()) {
+            this.selectedFacetQueries.forEach(query => {
+                this.unselectFacetQuery(query, false);
+            });
+            this.queryBuilder.update();
         }
     }
 

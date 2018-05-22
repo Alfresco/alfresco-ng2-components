@@ -44,16 +44,22 @@
             </ng-container>
         </div>
         <div class="facet-buttons">
-            <button mat-button
+            <button mat-icon-button
+                *ngIf="canResetSelectedQueries()"
+                title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
+                (click)="resetSelectedQueries()">
+                <mat-icon>clear</mat-icon>
+            </button>
+            <button mat-icon-button
                 *ngIf="responseFacetQueries.canShowLessItems"
+                title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}"
                 (click)="responseFacetQueries.showLessItems()">
-                {{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}
                 <mat-icon>keyboard_arrow_up</mat-icon>
             </button>
-            <button mat-button
+            <button mat-icon-button
                 *ngIf="responseFacetQueries.canShowMoreItems"
+                title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}"
                 (click)="responseFacetQueries.showMoreItems()">
-                {{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}
                 <mat-icon>keyboard_arrow_down</mat-icon>
             </button>
         </div>
