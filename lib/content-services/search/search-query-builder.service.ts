@@ -25,6 +25,7 @@ import { SearchRange } from './search-range.interface';
 import { SearchConfiguration } from './search-configuration.interface';
 import { FacetQuery } from './facet-query.interface';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
+import { FacetField } from './facet-field.interface';
 
 @Injectable()
 export class SearchQueryBuilderService {
@@ -47,7 +48,7 @@ export class SearchQueryBuilderService {
         this.config = appConfig.get<SearchConfiguration>('search');
 
         if (this.config) {
-            this.categories = (this.config.categories || []).filter(f => f.enabled);
+            this.categories = (this.config.categories || []).filter(category => category.enabled);
             this.filterQueries = this.config.filterQueries || [];
 
             if (this.config.sorting) {
@@ -58,7 +59,7 @@ export class SearchQueryBuilderService {
 
     addFilterQuery(query: string): void {
         if (query) {
-            const existing = this.filterQueries.find(q => q.query === query);
+            const existing = this.filterQueries.find(filterQuery => filterQuery.query === query);
             if (!existing) {
                 this.filterQueries.push({ query: query });
             }
@@ -67,14 +68,23 @@ export class SearchQueryBuilderService {
 
     removeFilterQuery(query: string): void {
         if (query) {
-            this.filterQueries = this.filterQueries.filter(f => f.query !== query);
+            this.filterQueries = this.filterQueries
+                .filter(filterQuery => filterQuery.query !== query);
         }
     }
 
     getFacetQuery(label: string): FacetQuery {
         if (label) {
             const queries = this.config.facetQueries.queries || [];
-            return queries.find(q => q.label === label);
+            return queries.find(query => query.label === label);
+        }
+        return null;
+    }
+
+    getFacetField(label: string): FacetField {
+        if (label) {
+            const fields = this.config.facetFields || [];
+            return fields.find(field => field.label === label);
         }
         return null;
     }
