@@ -26,7 +26,7 @@ Renders a list containing all the tasks matched by the parameters specified.
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | The id of the app.  |
 | processInstanceId | `string` |  | The Instance Id of the process.  |
-| processDefinitionKey | `string` |  | The Definition Key of the process.  |
+| processDefinitionKey | `string` |  | The Definition Key of the process.  **Deprecated:** in 2.3.0   |
 | state | `string` |  | Current state of the process. Possible values are: `completed`, `active`.  |
 | assignment | `string` |  | The assignment of the process. Possible values are: "assignee" (the current user is the assignee), candidate (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value(the current user is involved). |
 | sort | `string` |  | Define the sort order of the processes. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |

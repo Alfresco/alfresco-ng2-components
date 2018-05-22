@@ -30,6 +30,7 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
+import { deprecate } from 'util';
 
 @Component({
     selector: 'adf-tasklist',
@@ -50,7 +51,9 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     @Input()
     processInstanceId: string;
 
-    /** The Definition Key of the process. */
+    /** The Definition Key of the process.
+     * @deprecated
+     */
     @Input()
     processDefinitionKey: string;
 
