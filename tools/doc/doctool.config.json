@@ -5,6 +5,7 @@
             "versionIndex",
             "tutorialIndex",
             "tsInfo",
+            "typeLinker",
             "toc"
         ],
         "index": [
@@ -14,6 +15,7 @@
         ],
         "enhance": [
             "tsInfo",
+            "typeLinker",
             "toc"
         ],
         "dev": [

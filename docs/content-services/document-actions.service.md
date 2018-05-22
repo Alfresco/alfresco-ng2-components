@@ -6,24 +6,24 @@ Last reviewed: 2018-03-29
 
 # Document Actions service
 
-Implements the document menu actions for the Document List component.
+Implements the document menu actions for the [Document List component](../content-services/document-list.component.md).
 
 ## Class members
 
 ### Methods
 
--   `canExecuteAction(obj: any = null): boolean`<br/>
+-   **canExecuteAction**(obj: `any` = `null`): `boolean`<br/>
     Checks if actions can be executed for an item.
-    -   `obj: any = null` -  Item to receive an action
+    -   _obj:_ `any`  - Item to receive an action
     -   **Returns** `boolean` - True if the action can be executed on this item, false otherwise
--   `getHandler(key: string = null): ContentActionHandler`<br/>
+-   **getHandler**(key: `string` = `null`): `ContentActionHandler`<br/>
     Gets the handler for an action.
-    -   `key: string = null` -  Identifier of the action
+    -   _key:_ `string`  - Identifier of the action
     -   **Returns** `ContentActionHandler` - The handler for the action
--   `setHandler(key: string = null, handler: ContentActionHandler = null): boolean`<br/>
+-   **setHandler**(key: `string` = `null`, handler: `ContentActionHandler` = `null`): `boolean`<br/>
     Sets a new handler for an action.
-    -   `key: string = null` -  Identifier of the action
-    -   `handler: ContentActionHandler = null` -  Handler for the action
+    -   _key:_ `string`  - Identifier of the action
+    -   _handler:_ `ContentActionHandler`  - Handler for the action
     -   **Returns** `boolean` - False if the key was an empty/null string, true otherwise
 
 ## Details

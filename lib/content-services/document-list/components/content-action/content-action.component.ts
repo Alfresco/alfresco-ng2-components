@@ -43,6 +43,7 @@ export class ContentActionComponent implements OnInit, OnChanges {
     @Input()
     icon: string;
 
+    /** Visibility state (see examples). */
     @Input()
     visible: boolean | Function = true;
 

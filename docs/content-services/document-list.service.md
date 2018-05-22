@@ -6,64 +6,64 @@ Last reviewed: 2018-04-16
 
 # Document List service
 
-Implements node operations used by the Document List component.
+Implements node operations used by the [Document List component](../content-services/document-list.component.md).
 
 ## Class members
 
 ### Methods
 
--   `copyNode(nodeId: string = null, targetParentId: string = null): Observable<any>`<br/>
+-   **copyNode**(nodeId: `string` = `null`, targetParentId: `string` = `null`): `Observable<any>`<br/>
     Copy a node to destination node
-    -   `nodeId: string = null` -  The id of the node to be copied
-    -   `targetParentId: string = null` -  The id of the folder where the node will be copied
+    -   _nodeId:_ `string`  - The id of the node to be copied
+    -   _targetParentId:_ `string`  - The id of the folder where the node will be copied
     -   **Returns** `Observable<any>` - NodeEntry for the copied node
--   `createFolder(name: string = null, parentId: string = null): Observable<MinimalNodeEntity>`<br/>
+-   **createFolder**(name: `string` = `null`, parentId: `string` = `null`): `Observable<MinimalNodeEntity>`<br/>
     Creates a new folder in the path.
-    -   `name: string = null` -  Folder name
-    -   `parentId: string = null` -  Parent folder ID
+    -   _name:_ `string`  - Folder name
+    -   _parentId:_ `string`  - Parent folder ID
     -   **Returns** `Observable<MinimalNodeEntity>` - Details of the created folder node
--   `deleteNode(nodeId: string = null): Observable<any>`<br/>
+-   **deleteNode**(nodeId: `string` = `null`): `Observable<any>`<br/>
     Deletes a node.
-    -   `nodeId: string = null` -  ID of the node to delete
+    -   _nodeId:_ `string`  - ID of the node to delete
     -   **Returns** `Observable<any>` - Empty response when the operation is complete
--   `getDefaultMimeTypeIcon(): string`<br/>
+-   **getDefaultMimeTypeIcon**(): `string`<br/>
     Gets a default icon for MIME types with no specific icon.
     -   **Returns** `string` - Path to the icon file
--   `getDocumentThumbnailUrl(node: MinimalNodeEntity = null): string`<br/>
+-   **getDocumentThumbnailUrl**(node: `MinimalNodeEntity` = `null`): `string`<br/>
     Get thumbnail URL for the given document node.
-    -   `node: MinimalNodeEntity = null` -  Node to get URL for.
+    -   _node:_ `MinimalNodeEntity`  - Node to get URL for.
     -   **Returns** `string` - Thumbnail URL string
--   `getFolder(folder: string = null, opts?: any = null, includeFields: string[] =  []): Observable<NodePaging>`<br/>
+-   **getFolder**(folder: `string` = `null`, opts?: `any` = `null`, includeFields: `string[]` = `[]`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts)<br/>
     Gets the folder node with the specified relative name path below the root node.
-    -   `folder: string = null` -  Path to folder.
-    -   `opts?: any = null` - (Optional) Options.
-    -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** `Observable<NodePaging>` - Details of the folder
--   `getFolderNode(nodeId: string = null, includeFields: string[] =  []): Observable<MinimalNodeEntryEntity>`<br/>
+    -   _folder:_ `string`  - Path to folder.
+    -   _opts:_ `any`  - (Optional)Options.
+    -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
+    -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - Details of the folder
+-   **getFolderNode**(nodeId: `string` = `null`, includeFields: `string[]` = `[]`): `Observable<MinimalNodeEntryEntity>`<br/>
 
-    -   `nodeId: string = null` -  ID of the folder node
-    -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
+    -   _nodeId:_ `string`  - ID of the folder node
+    -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the folder
 
--   `getMimeTypeIcon(mimeType: string = null): string`<br/>
+-   **getMimeTypeIcon**(mimeType: `string` = `null`): `string`<br/>
     Gets the icon that represents a MIME type.
-    -   `mimeType: string = null` -  MIME type to get the icon for
+    -   _mimeType:_ `string`  - MIME type to get the icon for
     -   **Returns** `string` - Path to the icon file
--   `getNode(nodeId: string = null, includeFields: string[] =  []): Observable<NodeEntry>`<br/>
+-   **getNode**(nodeId: `string` = `null`, includeFields: `string[]` = `[]`): `Observable<NodeEntry>`<br/>
     Gets a node via its node ID.
-    -   `nodeId: string = null` -  ID of the target node
-    -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** `Observable<NodeEntry>` - Details of the folder
--   `hasPermission(node: any = null, permission: PermissionsEnum | string = null): boolean`<br/>
+-   **hasPermission**(node: `any` = `null`, permission: `PermissionsEnum | string` = `null`): `boolean`<br/>
 
-    -   `node: any = null` -  Target node
-    -   `permission: PermissionsEnum | string = null` -  Permission level to query
+    -   _node:_ `any`  - Target node
+    -   _permission:_ `PermissionsEnum | string`  - Permission level to query
     -   **Returns** `boolean` - True if the node has the permission, false otherwise
 
--   `moveNode(nodeId: string = null, targetParentId: string = null): Observable<any>`<br/>
+-   **moveNode**(nodeId: `string` = `null`, targetParentId: `string` = `null`): `Observable<any>`<br/>
     Moves a node to destination node.
-    -   `nodeId: string = null` -  The id of the node to be moved
-    -   `targetParentId: string = null` -  The id of the folder where the node will be moved
+    -   _nodeId:_ `string`  - The id of the node to be moved
+    -   _targetParentId:_ `string`  - The id of the folder where the node will be moved
     -   **Returns** `Observable<any>` - NodeEntry for the moved node
 
 ## Details

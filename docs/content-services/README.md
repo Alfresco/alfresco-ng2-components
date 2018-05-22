@@ -18,11 +18,15 @@ for more information about installing and using the source code.
 | [Content node selector component](content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../../lib/content-services/content-node-selector/content-node-selector.component.ts) |
 | [Content action component](content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../../lib/content-services/document-list/components/content-action/content-action.component.ts) |
 | [Document list component](document-list.component.md) | Displays the documents from a repository. | [Source](../../lib/content-services/document-list/components/document-list.component.ts) |
+| [Add permission dialog component](add-permission-dialog.component.md) | Allow user to search people or group that could be added to the current node permissions. | [Source](../../lib/content-services/permission-manager/components/add-permission/add-permission-dialog.component.ts) |
+| [Add permission panel component](add-permission-panel.component.md) | Allow user to search people or group that could be added to the current node permissions. | [Source](../../lib/content-services/permission-manager/components/add-permission/add-permission-panel.component.ts) |
+| [Add permission component](add-permission.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../../lib/content-services/permission-manager/components/add-permission/add-permission.component.ts) |
 | [Permission list component](permission-list.component.md) | Shows node permissions as a table. | [Source](../../lib/content-services/permission-manager/components/permission-list/permission-list.component.ts) |
 | [Search chip list component](search-chip-list.component.md) | Displays search criteria as a set of "chips". | [Source](../../lib/content-services/search/components/search-chip-list/search-chip-list.component.ts) |
 | [Search control component](search-control.component.md) | Displays a input text which shows find-as-you-type suggestions. | [Source](../../lib/content-services/search/components/search-control.component.ts) |
 | [Search filter component](search-filter.component.md) | Represents a main container component for custom search and faceted search settings. | [Source](../../lib/content-services/search/components/search-filter/search-filter.component.ts) |
-| [Search component](search.component.md) | Searches items for supplied search terms.  | [Source](../../lib/content-services/search/components/search.component.ts) |
+| [Search sorting picker component](search-sorting-picker.component.md) | Provides an ability to select one of the predefined sorting definitions for search results: | [Source](../../lib/content-services/search/components/search-sorting-picker/search-sorting-picker.component.ts) |
+| [Search component](search.component.md) | Searches items for supplied search terms. | [Source](../../lib/content-services/search/components/search.component.ts) |
 | [Sites dropdown component](sites-dropdown.component.md) | Displays a dropdown menu to show and interact with the sites of the current user. | [Source](../../lib/content-services/site-dropdown/sites-dropdown.component.ts) |
 | [Like component](like.component.md) | Allows a user to add "likes" to an item. | [Source](../../lib/content-services/social/like.component.ts) |
 | [Rating component](rating.component.md) | Allows a user to add ratings to an item. | [Source](../../lib/content-services/social/rating.component.ts) |
@@ -33,7 +37,7 @@ for more information about installing and using the source code.
 | [Upload button component](upload-button.component.md) | Activates a file upload. | [Source](../../lib/content-services/upload/components/upload-button.component.ts) |
 | [Upload drag area component](upload-drag-area.component.md) | Adds a drag and drop area to upload files to ACS. | [Source](../../lib/content-services/upload/components/upload-drag-area.component.ts) |
 | [Upload version button component](upload-version-button.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Activates a file version upload. | [Source](../../lib/content-services/upload/components/upload-version-button.component.ts) |
-| [Version list component](version-list.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a Version Manager component | [Source](../../lib/content-services/version-manager/version-list.component.ts) |
+| [Version list component](version-list.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a [Version Manager component](../content-services/version-manager.component.md). | [Source](../../lib/content-services/version-manager/version-list.component.ts) |
 | [Version manager component](version-manager.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../../lib/content-services/version-manager/version-manager.component.ts) |
 | [Webscript component](webscript.component.md) | Provides access to Webscript features. | [Source](../../lib/content-services/webscript/webscript.component.ts) |
 
@@ -62,12 +66,13 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Content node dialog service](content-node-dialog.service.md) | Displays and manages dialogs for selecting content to open, copy or upload. | [Source](../../lib/content-services/content-node-selector/content-node-dialog.service.ts) |
 | [Custom resources service](custom-resources.service.md) | Manages Document List information that is specific to a user. | [Source](../../lib/content-services/document-list/services/custom-resources.service.ts) |
-| [Document actions service](document-actions.service.md) | Implements the document menu actions for the Document List component. | [Source](../../lib/content-services/document-list/services/document-actions.service.ts) |
-| [Document list service](document-list.service.md) | Implements node operations used by the Document List component. | [Source](../../lib/content-services/document-list/services/document-list.service.ts) |
-| [Folder actions service](folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../../lib/content-services/document-list/services/folder-actions.service.ts) |
-| [Node permission service](node-permission.service.md) | Manages the role permissions for the content nodes | [Source](../../lib/content-services/permission-manager/services/node-permission.service.ts) |
+| [Document actions service](document-actions.service.md) | Implements the document menu actions for the [Document List component](../content-services/document-list.component.md). | [Source](../../lib/content-services/document-list/services/document-actions.service.ts) |
+| [Document list service](document-list.service.md) | Implements node operations used by the [Document List component](../content-services/document-list.component.md). | [Source](../../lib/content-services/document-list/services/document-list.service.ts) |
+| [Folder actions service](folder-actions.service.md) | Implements the folder menu actions for the [Document List component](../content-services/document-list.component.md). | [Source](../../lib/content-services/document-list/services/folder-actions.service.ts) |
+| [Node permission service](node-permission.service.md) | Manages role permissions for content nodes. | [Source](../../lib/content-services/permission-manager/services/node-permission.service.ts) |
 | [Search query builder service](search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final Search query. | [Source](../../lib/content-services/search/search-query-builder.service.ts) |
 | [Rating service](rating.service.md) | Manages ratings for items in Content Services. | [Source](../../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](tag.service.md) | Manages tags in Content Services. | [Source](../../lib/content-services/tag/services/tag.service.ts) |
+| _Node permission dialog service_ | _Not currently documented_ | [Source](../../lib/content-services/permission-manager/services/node-permission-dialog.service.ts) |
 
 <!--content-services end-->

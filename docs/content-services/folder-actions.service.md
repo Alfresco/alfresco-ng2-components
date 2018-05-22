@@ -6,24 +6,24 @@ Last reviewed: 2018-04-05
 
 # Folder Actions service
 
-Implements the folder menu actions for the Document List component.
+Implements the folder menu actions for the [Document List component](../content-services/document-list.component.md).
 
 ## Class members
 
 ### Methods
 
--   `canExecuteAction(obj: any = null): boolean`<br/>
+-   **canExecuteAction**(obj: `any` = `null`): `boolean`<br/>
     Checks if an action is available for a particular item.
-    -   `obj: any = null` -  Item to check
+    -   _obj:_ `any`  - Item to check
     -   **Returns** `boolean` - True if the action is available, false otherwise
--   `getHandler(key: string = null): ContentActionHandler`<br/>
+-   **getHandler**(key: `string` = `null`): `ContentActionHandler`<br/>
     Gets the handler function for an action.
-    -   `key: string = null` -  Identifier for the action
+    -   _key:_ `string`  - Identifier for the action
     -   **Returns** `ContentActionHandler` - The handler function
--   `setHandler(key: string = null, handler: ContentActionHandler = null): boolean`<br/>
+-   **setHandler**(key: `string` = `null`, handler: `ContentActionHandler` = `null`): `boolean`<br/>
     Sets a new handler function for an action.
-    -   `key: string = null` -  Identifier for the action
-    -   `handler: ContentActionHandler = null` -  The new handler function
+    -   _key:_ `string`  - Identifier for the action
+    -   _handler:_ `ContentActionHandler`  - The new handler function
     -   **Returns** `boolean` - True if the key was a valid action identifier, false otherwise
 
 ## Details

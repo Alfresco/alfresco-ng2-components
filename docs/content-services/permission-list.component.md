@@ -40,6 +40,7 @@ or custom template can be added:
 
 | Name | Type | Description |
 | -- | -- | -- |
+| error | `EventEmitter<any>` |  |
 | update | `EventEmitter<PermissionElement>` | Emitted when the permission is updated. |
 
 ## Details
