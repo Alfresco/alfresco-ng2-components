@@ -26,8 +26,6 @@ import { ResponseFacetQuery } from '../../response-facet-query.interface';
 import { ResponseFacetQueryList } from './models/response-facet-query-list.model';
 import { SearchFilterList } from './models/search-filter-list.model';
 
-const DEFAULT_PAGE_SIZE = 5;
-
 @Component({
     selector: 'adf-search-filter',
     templateUrl: './search-filter.component.html',
@@ -37,13 +35,15 @@ const DEFAULT_PAGE_SIZE = 5;
 })
 export class SearchFilterComponent implements OnInit {
 
+    private DEFAULT_PAGE_SIZE = 5;
+
     selectedFacetQueries: string[] = [];
     selectedBuckets: FacetFieldBucket[] = [];
     responseFacetQueries: ResponseFacetQueryList;
     responseFacetFields: ResponseFacetField[] = [];
 
     facetQueriesLabel: string = 'Facet Queries';
-    facetQueriesPageSize = DEFAULT_PAGE_SIZE;
+    facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesExpanded = false;
 
     constructor(public queryBuilder: SearchQueryBuilderService,
@@ -53,7 +53,7 @@ export class SearchFilterComponent implements OnInit {
 
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
-            this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || DEFAULT_PAGE_SIZE;
+            this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || this.DEFAULT_PAGE_SIZE;
             this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
         }
 
@@ -172,7 +172,7 @@ export class SearchFilterComponent implements OnInit {
                     const settings = this.queryBuilder.getFacetField(field.label);
 
                     field.label = this.translationService.instant(field.label);
-                    field.pageSize = field.pageSize || settings.pageSize || DEFAULT_PAGE_SIZE;
+                    field.pageSize = field.pageSize || settings.pageSize || this.DEFAULT_PAGE_SIZE;
                     field.currentPageSize = field.pageSize;
                     field.expanded = expandedFields.includes(field.label);
 
