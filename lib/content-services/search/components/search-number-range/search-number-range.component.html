@@ -28,7 +28,7 @@
 
 
     <div class="facet-buttons">
-        <button mat-button color="primary" (click)="reset()">
+        <button mat-button color="primary" type="button" (click)="reset()">
             {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
         </button>
         <button mat-button color="primary" type="submit" [disabled]="!form.valid">
