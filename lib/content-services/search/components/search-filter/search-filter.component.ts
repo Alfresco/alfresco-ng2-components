@@ -129,15 +129,20 @@ export class SearchFilterComponent implements OnInit {
         this.queryBuilder.update();
     }
 
-    unselectFacetQuery(label: string) {
+    unselectFacetQuery(label: string, reloadQuery: boolean = true) {
         const facetQuery = this.queryBuilder.getFacetQuery(label);
+        if (facetQuery) {
+            this.queryBuilder.removeFilterQuery(facetQuery.query);
+        }
+
         this.selectedFacetQueries = this.selectedFacetQueries.filter(selectedQuery => selectedQuery !== label);
 
-        this.queryBuilder.removeFilterQuery(facetQuery.query);
-        this.queryBuilder.update();
+        if (reloadQuery) {
+            this.queryBuilder.update();
+        }
     }
 
-    unselectFacetBucket(bucket: FacetFieldBucket) {
+    unselectFacetBucket(bucket: FacetFieldBucket, reloadQuery: boolean = true) {
         if (bucket) {
             const idx = this.selectedBuckets.findIndex(
                 selectedBucket => selectedBucket.$field === bucket.$field && selectedBucket.label === bucket.label
@@ -147,6 +152,40 @@ export class SearchFilterComponent implements OnInit {
                 this.selectedBuckets.splice(idx, 1);
             }
             this.queryBuilder.removeFilterQuery(bucket.filterQuery);
+
+            bucket.$checked = false;
+
+            if (reloadQuery) {
+                this.queryBuilder.update();
+            }
+        }
+    }
+
+    canResetSelectedQueries(): boolean {
+        return this.selectedFacetQueries && this.selectedFacetQueries.length > 0;
+    }
+
+    resetSelectedQueries() {
+        if (this.canResetSelectedQueries()) {
+            this.selectedFacetQueries.forEach(query => {
+                this.unselectFacetQuery(query, false);
+            });
+            this.queryBuilder.update();
+        }
+    }
+
+    canResetSelectedBuckets(field: ResponseFacetField): boolean {
+        if (field && field.buckets) {
+            return field.buckets.items.some(bucket => bucket.$checked);
+        }
+        return false;
+    }
+
+    resetSelectedBuckets(field: ResponseFacetField) {
+        if (field && field.buckets) {
+            field.buckets.items.forEach(bucket => {
+                this.unselectFacetBucket(bucket, false);
+            });
             this.queryBuilder.update();
         }
     }
