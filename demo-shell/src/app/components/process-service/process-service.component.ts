@@ -29,7 +29,7 @@ import {
     Output
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProcessInstanceFilterRepresentation, Pagination } from 'alfresco-js-api';
+import { ProcessInstanceFilterRepresentation, Pagination, UserProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import {
     FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues
@@ -142,7 +142,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     taskFilter: FilterRepresentationModel;
     report: any;
-    processFilter: any;
+    processFilter: UserProcessInstanceFilterRepresentation;
     sub: Subscription;
     blobFile: any;
     flag = true;
@@ -298,7 +298,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.currentTaskId = this.taskList.getCurrentId();
     }
 
-    onProcessFilterClick(event: ProcessInstanceFilterRepresentation): void {
+    onProcessFilterClick(event: UserProcessInstanceFilterRepresentation): void {
         this.processFilter = event;
         this.resetProcessPaginationPage();
         this.relocateLocationToProcess();
