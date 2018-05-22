@@ -16,7 +16,7 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
@@ -35,15 +35,15 @@ describe('DropdownBreadcrumb', () => {
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
         component = fixture.componentInstance;
         documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
-    });
+    }));
 
-    afterEach(() => {
+    afterEach(async(() => {
         fixture.destroy();
-    });
+    }));
 
     function openSelect() {
         const folderIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="dropdown-breadcrumb-trigger"]');
@@ -60,7 +60,6 @@ describe('DropdownBreadcrumb', () => {
     function clickOnTheFirstOption() {
         const option: any = document.querySelector('[id^="mat-option"]');
         option.click();
-        fixture.detectChanges();
     }
 
     it('should display only the current folder name if there is no previous folders', (done) => {
@@ -129,10 +128,6 @@ describe('DropdownBreadcrumb', () => {
 
     it('should emit navigation event when clicking on an option', (done) => {
         fakeNodeWithCreatePermission.path.elements = [{ id: '1', name: 'Stark Industries' }];
-        component.navigate.subscribe(val => {
-            expect(val).toEqual({ id: '1', name: 'Stark Industries' });
-            done();
-        });
 
         triggerComponentChange(fakeNodeWithCreatePermission);
 
@@ -141,6 +136,11 @@ describe('DropdownBreadcrumb', () => {
             openSelect();
 
             fixture.whenStable().then(() => {
+                component.navigate.subscribe(val => {
+                    expect(val).toEqual({ id: '1', name: 'Stark Industries' });
+                    done();
+                });
+
                 clickOnTheFirstOption();
             });
         });

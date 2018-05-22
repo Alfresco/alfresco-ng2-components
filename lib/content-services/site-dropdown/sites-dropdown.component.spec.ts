@@ -380,7 +380,7 @@ describe('DropdownSitesComponent', () => {
                     component.relations = Relations.Members;
                 }));
 
-                it('should show only sites which logged user is member of when member relation is set', async(() => {
+                it('should show only sites which logged user is member of when member relation is set', (done) => {
                     spyOn(siteService, 'getEcmCurrentLoggedUserName').and.returnValue('test');
 
                     fixture.detectChanges();
@@ -393,9 +393,10 @@ describe('DropdownSitesComponent', () => {
                             expect(options[1].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
                             expect(options[2].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');
                             expect(options[3]).toBeUndefined();
+                            done();
                         });
                     });
-                }));
+                });
             });
 
             describe('No relations', () => {
@@ -403,7 +404,7 @@ describe('DropdownSitesComponent', () => {
                     component.relations = [];
                 }));
 
-                it('should show all the sites if no relation is set', async(() => {
+                it('should show all the sites if no relation is set', (done) => {
                     spyOn(siteService, 'getEcmCurrentLoggedUserName').and.returnValue('test');
 
                     fixture.detectChanges();
@@ -416,9 +417,10 @@ describe('DropdownSitesComponent', () => {
                             expect(options[1].nativeElement.innerText).toContain('FAKE-MODERATED-SITE');
                             expect(options[2].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
                             expect(options[3].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');
+                            done();
                         });
                     });
-                }));
+                });
             });
         });
     });

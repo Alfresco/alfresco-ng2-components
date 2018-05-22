@@ -68,6 +68,8 @@ describe('DocumentList', () => {
         documentListService = TestBed.get(DocumentListService);
         apiService = TestBed.get(AlfrescoApiService);
         customResourcesService = TestBed.get(CustomResourcesService);
+
+        spyOn(documentList, 'onPageLoaded').and.callThrough();
     });
 
     afterEach(() => {
@@ -1103,7 +1105,7 @@ describe('DocumentList', () => {
 
     it('should fetch user membership sites', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve());
+        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.loadFolderByNodeId('-mysites-');
         expect(peopleApi.getSiteMembership).toHaveBeenCalled();
@@ -1226,7 +1228,7 @@ describe('DocumentList', () => {
         documentList.currentFolderId = '12345-some-id-6789';
 
         const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve());
+        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.loadFolderByNodeId('-mysites-');
         expect(documentList.currentFolderId).toBe('-mysites-');
