@@ -170,7 +170,7 @@ describe('SearchQueryBuilder', () => {
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const field = builder.getFacetField('Missing');
 
-        expect(field).toBeNull();
+        expect(field).toBeUndefined();
     });
 
     xit('should build query and raise an event on update', async () => {

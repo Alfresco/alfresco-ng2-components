@@ -171,8 +171,13 @@ export class SearchFilterComponent implements OnInit {
                 field => {
                     const settings = this.queryBuilder.getFacetField(field.label);
 
+                    let fallbackPageSize = this.DEFAULT_PAGE_SIZE;
+                    if (settings && settings.pageSize) {
+                        fallbackPageSize = settings.pageSize;
+                    }
+
                     field.label = this.translationService.instant(field.label);
-                    field.pageSize = field.pageSize || settings.pageSize || this.DEFAULT_PAGE_SIZE;
+                    field.pageSize = field.pageSize || fallbackPageSize;
                     field.currentPageSize = field.pageSize;
                     field.expanded = expandedFields.includes(field.label);
 
