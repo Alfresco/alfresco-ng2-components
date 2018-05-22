@@ -229,7 +229,7 @@ describe('UploadDragAreaComponent', () => {
                 isFile: true,
                 name: 'file-fake.png',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
@@ -251,7 +251,7 @@ describe('UploadDragAreaComponent', () => {
                 isFile: true,
                 name: 'file-fake.png',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
@@ -272,7 +272,7 @@ describe('UploadDragAreaComponent', () => {
                 isFile: true,
                 name: 'file-fake.png',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
@@ -281,27 +281,28 @@ describe('UploadDragAreaComponent', () => {
         }));
 
         it('should upload a file when user has create permission on target folder', async(() => {
-        let fakeItem = {
-            fullPath: '/folder-fake/file-fake.png',
-            isDirectory: false,
-            isFile: true,
-            name: 'file-fake.png',
-            file: (callbackFile) => {
-                let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                callbackFile(fileFake);
-            }
-        };
+            let fakeItem = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                name: 'file-fake.png',
+                file: (callbackFile) => {
+                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    callbackFile(fileFake);
+                }
+            };
 
-        let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeItem]
                 }
             });
 
-        component.onUploadFiles(fakeCustomEvent);
-    }));
-});
+            component.onUploadFiles(fakeCustomEvent);
+        }));
+    });
+
     describe('Events', () => {
         it('should raise an error if upload a file goes wrong', (done) => {
             let fakeItem = {
