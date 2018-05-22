@@ -25,6 +25,7 @@ import { SearchRange } from './search-range.interface';
 import { SearchConfiguration } from './search-configuration.interface';
 import { FacetQuery } from './facet-query.interface';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
+import { FacetField } from './facet-field.interface';
 
 @Injectable()
 export class SearchQueryBuilderService {
@@ -75,6 +76,14 @@ export class SearchQueryBuilderService {
     getFacetQuery(label: string): FacetQuery {
         if (label && this.hasFacetQueries) {
             return this.config.facetQueries.queries.find(query => query.label === label);
+        }
+        return null;
+    }
+
+    getFacetField(label: string): FacetField {
+        if (label) {
+            const fields = this.config.facetFields || [];
+            return fields.find(field => field.label === label);
         }
         return null;
     }
