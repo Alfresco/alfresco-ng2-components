@@ -35,13 +35,15 @@ import { SearchFilterList } from './models/search-filter-list.model';
 })
 export class SearchFilterComponent implements OnInit {
 
+    private DEFAULT_PAGE_SIZE = 5;
+
     selectedFacetQueries: string[] = [];
     selectedBuckets: FacetFieldBucket[] = [];
     responseFacetQueries: ResponseFacetQueryList;
     responseFacetFields: ResponseFacetField[] = [];
 
     facetQueriesLabel: string = 'Facet Queries';
-    facetQueriesPageSize = 5;
+    facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesExpanded = false;
 
     constructor(public queryBuilder: SearchQueryBuilderService,
@@ -51,7 +53,7 @@ export class SearchFilterComponent implements OnInit {
 
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
-            this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || 5;
+            this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || this.DEFAULT_PAGE_SIZE;
             this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
         }
 
@@ -161,12 +163,21 @@ export class SearchFilterComponent implements OnInit {
 
             this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.facetQueriesPageSize);
 
-            const expandedFields = this.responseFacetFields.filter(field => field.expanded).map(field => field.label);
+            const expandedFields = this.responseFacetFields
+                .filter(field => field.expanded)
+                .map(field => field.label);
 
             this.responseFacetFields = (context.facetsFields || []).map(
                 field => {
+                    const settings = this.queryBuilder.getFacetField(field.label);
+
+                    let fallbackPageSize = this.DEFAULT_PAGE_SIZE;
+                    if (settings && settings.pageSize) {
+                        fallbackPageSize = settings.pageSize;
+                    }
+
                     field.label = this.translationService.instant(field.label);
-                    field.pageSize = field.pageSize || 5;
+                    field.pageSize = field.pageSize || fallbackPageSize;
                     field.currentPageSize = field.pageSize;
                     field.expanded = expandedFields.includes(field.label);
 
