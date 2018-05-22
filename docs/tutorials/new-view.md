@@ -23,6 +23,8 @@ For further details about creating a component, refer to the tutorial [here](new
 An Angular application has one singleton instance of the `Router` service that is used to match the browser's URL with the corresponding component to display. The `Router` service must be configured in a Typescript file with a syntax similar to the following source code.
 
 ```ts
+import { Routes, RouterModule } from '@angular/router';
+
 const appRoutes: Routes = [
   { path: 'path-in-the-app', component: ExistingComponent },
   { path: '**', component: PageNotFoundComponent }
