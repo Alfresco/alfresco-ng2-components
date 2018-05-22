@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange, NO_ERRORS_SCHEMA, QueryList } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
@@ -231,25 +231,50 @@ describe('DataTable', () => {
         expect(dataTable.resetSelection).toHaveBeenCalled();
     });
 
-    it('should select only one row with [single] selection mode', () => {
+    it('should select only one row with [single] selection mode', (done) => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter(
             [
-                { name: '1' },
+                { name: '1', isSelected: true },
                 { name: '2' }
             ],
-            [ new ObjectDataColumn({ key: 'name'}) ]
+            [new ObjectDataColumn({ key: 'name' })]
         );
         const rows = dataTable.data.getRows();
 
         dataTable.ngOnChanges({});
-        dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeFalsy();
 
-        dataTable.onRowClick(rows[1], null);
-        expect(rows[0].isSelected).toBeFalsy();
-        expect(rows[1].isSelected).toBeTruthy();
+        dataTable.rowClick.subscribe((event) => {
+            expect(rows[0].isSelected).toBeFalsy();
+            expect(rows[1].isSelected).toBeTruthy();
+            done();
+        });
+
+        dataTable.onRowClick(rows[1], new MouseEvent('click'));
+    });
+
+    it('should select only one row with [single] selection mode and key modifier', (done) => {
+        dataTable.selectionMode = 'single';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1', isSelected: true },
+                { name: '2' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+        const rows = dataTable.data.getRows();
+
+        dataTable.ngOnChanges({});
+
+        dataTable.rowClick.subscribe((event) => {
+            expect(rows[0].isSelected).toBeFalsy();
+            expect(rows[1].isSelected).toBeTruthy();
+            done();
+        });
+
+        dataTable.onRowClick(rows[1], new MouseEvent('click', {
+            metaKey: true
+        }));
     });
 
     it('should select only one row with [single] selection mode pressing enter key', () => {
@@ -296,70 +321,67 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeTruthy();
     });
 
-    it('should not unselect the row with [single] selection mode', () => {
+    it('should NOT unselect the row with [single] selection mode', (done) => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter(
             [
-                { name: '1' },
+                { name: '1', isSelected: true },
                 { name: '2' }
             ],
-            [ new ObjectDataColumn({ key: 'name'}) ]
+            [new ObjectDataColumn({ key: 'name' })]
         );
         const rows = dataTable.data.getRows();
-
         dataTable.ngOnChanges({});
-        dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeFalsy();
 
+        dataTable.rowClick.subscribe((event) => {
+            expect(rows[0].isSelected).toBeTruthy();
+            expect(rows[1].isSelected).toBeFalsy();
+            done();
+        });
         dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeFalsy();
     });
 
-    it('should unselect the row with [multiple] selection mode and modifier key', () => {
+    it('should unselect the row with [multiple] selection mode and modifier key', (done) => {
         dataTable.selectionMode = 'multiple';
         dataTable.data = new ObjectDataTableAdapter(
-            [ { name: '1' } ],
-            [ new ObjectDataColumn({ key: 'name'}) ]
+            [{ name: '1', isSelected: true }],
+            [new ObjectDataColumn({ key: 'name' })]
         );
         const rows = dataTable.data.getRows();
+        rows[0].isSelected = true;
 
         dataTable.ngOnChanges({});
-        dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
+        dataTable.rowClick.subscribe(() => {
+            expect(rows[0].isSelected).toBeFalsy();
+            done();
+        });
 
-        dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeFalsy();
-
-        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
-        expect(rows[0].isSelected).toBeTruthy();
-
-        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
-        expect(rows[0].isSelected).toBeFalsy();
+        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() { } });
     });
 
-    it('should select multiple rows with [multiple] selection mode', () => {
+    it('should select multiple rows with [multiple] selection mode and modifier key', (done) => {
         dataTable.selectionMode = 'multiple';
         dataTable.data = new ObjectDataTableAdapter(
             [
-                { name: '1' },
+                { name: '1', isSelected: true },
                 { name: '2' }
             ],
-            [ new ObjectDataColumn({ key: 'name'}) ]
+            [new ObjectDataColumn({ key: 'name' })]
         );
         const rows = dataTable.data.getRows();
+        rows[0].isSelected = true;
 
         const event = new MouseEvent('click', {
             metaKey: true
         });
-
+        dataTable.selection.push(rows[0]);
         dataTable.ngOnChanges({});
-        dataTable.onRowClick(rows[0], event);
+        dataTable.rowClick.subscribe(() => {
+            expect(rows[0].isSelected).toBeTruthy();
+            expect(rows[1].isSelected).toBeTruthy();
+            done();
+        });
         dataTable.onRowClick(rows[1], event);
-
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeTruthy();
     });
 
     it('should put actions menu to the right by default', () => {

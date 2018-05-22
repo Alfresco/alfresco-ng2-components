@@ -233,9 +233,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
         this.singleClickStreamSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
+            this.handleRowSelection(event.value, <MouseEvent | KeyboardEvent> event.event);
             this.rowClick.emit(event);
             if (!event.defaultPrevented) {
-                this.handleRowSelection(event.value, <MouseEvent | KeyboardEvent> event.event);
                 this.elementRef.nativeElement.dispatchEvent(
                     new CustomEvent('row-click', {
                         detail: event,
