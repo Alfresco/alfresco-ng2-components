@@ -83,7 +83,7 @@ export class AppComponent {
 
 ### Webscript View HTML example
 
-This sample demonstrates how to implement a Webscript component that renders the HTML contents that come from a webscript
+This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the HTML contents that come from a webscript
 This sample Web Scripts reside in your Alfresco Server. You can access the folder webscript here:
 
 `http://localhost:8080/alfresco/service/sample/folder/Company%20Home`
@@ -102,7 +102,7 @@ This sample Web Scripts reside in your Alfresco Server. You can access the folde
 
 ### Webscript View DATATABLE example
 
-This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
+This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the JSON contents that come from a webscript
 
 `http://localhost:8080/alfresco/service/sample/folder/DATATABLE`
 
@@ -159,7 +159,7 @@ that will render the following table
 
 ### Webscript View JSON example
 
-This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
+This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the JSON contents that come from a webscript
 This sample Web Scripts reside in your Alfresco Server. You can access the folder webscript here:
 
 `http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE`

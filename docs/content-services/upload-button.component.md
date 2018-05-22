@@ -34,12 +34,12 @@ Activates a file upload.
 | majorVersion | `boolean` | false | majorVersion boolean field to true to indicate a major version should be created. |
 | maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
 | multipleFiles | `boolean` | false | Allows/disallows multiple files |
+| nodeType | `string` | "cm:content" | Custom node type for uploaded file |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 | staticTitle | `string` |  | Defines the text of the upload button. |
 | tooltip | `string` |  null | Custom tooltip text. |
 | uploadFolders | `boolean` | false | Allows/disallows upload folders (only for Chrome). |
 | versioning | `boolean` | false | Toggles versioning. |
-| nodeType | `string` | "cm:content" | Custom node type for uploaded file. |
 
 ### Events
 
@@ -47,7 +47,7 @@ Activates a file upload.
 | -- | -- | -- |
 | createFolder | `EventEmitter<Object>` | Emitted when a folder is created. |
 | error | `EventEmitter<Object>` | Emitted when an error occurs. |
-| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when create permission is missing. |
+| permissionEvent | [`EventEmitter<PermissionModel>`](../../lib/content-services/document-list/models/permissions.model.ts) | Emitted when create permission is missing. |
 | success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details
