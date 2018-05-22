@@ -308,13 +308,26 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     private setTableSchema() {
-        if (this.columnList && this.columnList.columns) {
-            this.schemaColumns = this.columnList.columns.map(c => <DataColumn> c);
+        let schema = [];
+        if (!this.schemaColumns || this.schemaColumns.length === 0) {
+            schema = this.getSchemaFromHtml();
+        } else {
+            schema = this.schemaColumns.concat(this.getSchemaFromHtml());
         }
+
+        this.schemaColumns = schema;
 
         if (this.data && this.schemaColumns && this.schemaColumns.length > 0) {
             this.data.setColumns(this.schemaColumns);
         }
+    }
+
+    public getSchemaFromHtml(): any {
+        let schema = [];
+        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
+        }
+        return schema;
     }
 
     onRowClick(row: DataRow, e: MouseEvent) {
