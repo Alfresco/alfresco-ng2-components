@@ -54,7 +54,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showViewer = false;
     showVersions = false;
     displayMode = DisplayMode.List;
-    includeFields = ['isLocked', 'aspectNames'];
+    includeFields = ['isFavorite', 'isLocked', 'aspectNames'];
 
     baseShareUrl = this.appConfig.get<string>('ecmHost') + '/preview/s/';
 
