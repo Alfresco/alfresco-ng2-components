@@ -25,7 +25,6 @@ import { SearchRange } from './search-range.interface';
 import { SearchConfiguration } from './search-configuration.interface';
 import { FacetQuery } from './facet-query.interface';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
-import { FacetField } from './facet-field.interface';
 
 @Injectable()
 export class SearchQueryBuilderService {
