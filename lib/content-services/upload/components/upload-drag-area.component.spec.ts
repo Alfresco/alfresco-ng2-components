@@ -304,7 +304,10 @@ describe('UploadDragAreaComponent', () => {
     });
 
     describe('Events', () => {
+
         it('should raise an error if upload a file goes wrong', (done) => {
+            spyOn(uploadService, 'getUploadPromise').and.callThrough();
+
             let fakeItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
