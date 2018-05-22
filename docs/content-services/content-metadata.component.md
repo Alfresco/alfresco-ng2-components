@@ -29,7 +29,7 @@ Displays and edits metadata related to a node.
 | displayEmpty | `boolean` | false | Toggles whether to display empty values in the card view |
 | editable | `boolean` | false | Toggles whether the edit button should be shown |
 | expanded | `boolean` | false | Toggles between expanded (ie, full information) and collapsed (ie, reduced information) in the display |
-| multi | `boolean` | false | The multi="true" input allows the expansions state to be set independently of each other. When multi="false" (default) just one panel can be expanded at a given time |
+| multi | `boolean` | false | The multi parameter of the underlying material expansion panel |
 | node | `MinimalNodeEntryEntity` |  | (required) The node entity to fetch metadata about |
 | preset | `string` |  | Name of the metadata preset, which defines aspects and their properties |
 

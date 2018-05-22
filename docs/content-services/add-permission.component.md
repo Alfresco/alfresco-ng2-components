@@ -37,4 +37,3 @@ Searches for people or groups to add to the current node permissions.
 
 This component extends the [Add permission panel component](../add-permission-panel.component.md) 
 and apply the action confirm when the selection made is accepted.
-

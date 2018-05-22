@@ -43,5 +43,5 @@ Allows folders to be edited.
 
 ## Details
 
-Pass this directive a folder to edit its name and description using a Folder Dialog component.
+Pass this directive a folder to edit its name and description using a [Folder Dialog component](../../lib/content-services/dialogs/folder.dialog.ts).
 If the data is valid then the dialog emits a `folderEdit` event when it closes.

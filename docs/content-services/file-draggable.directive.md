@@ -52,7 +52,7 @@ Some sample CSS to show the drag and drop area:
 
 ## Details
 
-Typically you would use the Upload Drag Area component instead of this directive.
+Typically you would use the [Upload Drag Area component](../content-services/upload-drag-area.component.md) instead of this directive.
 
 ### Event handler implementations
 

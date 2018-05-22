@@ -28,14 +28,14 @@ Indicates the current position within a navigation hierarchy.
 | folderNode | `MinimalNodeEntryEntity` |  null | Active node, builds UI based on folderNode.path.elements collection. |
 | root | `string` |  null | (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use an i18n resource key for the property value. |
 | rootId | `string` |  null | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
-| target | `DocumentListComponent` |  | (optional) Document List component to operate with. The list will update when the breadcrumb is clicked. |
+| target | [`DocumentListComponent`](../content-services/document-list.component.md) |  | (optional) [Document List component](../content-services/document-list.component.md) to operate with. The list will update when the breadcrumb is clicked. |
 | transform | `function` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| navigate | `EventEmitter<PathElementEntity>` | Emitted when the user clicks on a breadcrumb. |
+| navigate | [`EventEmitter<PathElementEntity>`](../../lib/content-services/document-list/models/document-library.model.ts) | Emitted when the user clicks on a breadcrumb. |
 
 ## Details
 
@@ -47,7 +47,7 @@ the list by altering the node's `path.elements` property.
 
 Below is an example of how you might do this with the
 [Content Node Selector component](content-node-selector.component.md). In this case, you pass the 
-transform function via the `breadcrumbTransform` property of `ContentNodeSelectorComponentData` during
+transform function via the `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) during
 initialization:
 
 ```ts

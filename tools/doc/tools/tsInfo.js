@@ -148,6 +148,8 @@ var ComponentInfo = /** @class */ (function () {
                 });
             }
         });
+        this.hasInputs = false;
+        this.hasOutputs = false;
         this.properties.forEach(function (prop) {
             if (prop.isInput)
                 _this.hasInputs = true;

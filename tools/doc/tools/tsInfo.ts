@@ -230,6 +230,9 @@ class ComponentInfo {
             }
         });
         
+        this.hasInputs = false;
+        this.hasOutputs = false;
+        
         this.properties.forEach(prop => {
             if (prop.isInput)
                 this.hasInputs = true;

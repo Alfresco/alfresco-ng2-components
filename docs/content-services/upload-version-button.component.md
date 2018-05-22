@@ -27,7 +27,7 @@ to enrich the features and decrease the restrictions currently applied to node v
 This component extends the [Upload Button component](upload-button.component.md). The
 properties and events are the same except for the `node` property that specifies the node
 to be versioned (this is a _required_ input parameter). However, some properties don't make
-sense when applied to the Upload Version Button component, so they are simply ignored.
+sense when applied to the [Upload Version Button component,](../content-services/upload-version-button.component.md) so they are simply ignored.
 
 ## Class members
 
@@ -36,10 +36,13 @@ sense when applied to the Upload Version Button component, so they are simply ig
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
+| comment | `string` |  | When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history |
 | disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
+| majorVersion | `boolean` | false | majorVersion boolean field to true to indicate a major version should be created. |
 | maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
 | multipleFiles | `boolean` | false | Allows/disallows multiple files |
 | node | `MinimalNodeEntryEntity` |  | (**Required**) The node to be versioned. |
+| nodeType | `string` | "cm:content" | Custom node type for uploaded file |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 | staticTitle | `string` |  | Defines the text of the upload button. |
 | tooltip | `string` |  null | Custom tooltip text. |
@@ -52,7 +55,7 @@ sense when applied to the Upload Version Button component, so they are simply ig
 | -- | -- | -- |
 | createFolder | `EventEmitter<Object>` | Emitted when a folder is created. |
 | error | `EventEmitter<Object>` | Emitted when an error occurs. |
-| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when delete permission is missing. |
+| permissionEvent | [`EventEmitter<PermissionModel>`](../../lib/content-services/document-list/models/permissions.model.ts) | Emitted when create permission is missing. |
 | success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details

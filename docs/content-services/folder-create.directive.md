@@ -46,9 +46,9 @@ Creates folders.
 
 Pass this directive the id of the parent folder where you want the new folder node to be created.
 If no value is provided, the '-my-' alias is used.
-This will open a Folder Dialog component to receive data for the new folder. If the data is valid
+This will open a [Folder Dialog component](../../lib/content-services/dialogs/folder.dialog.ts) to receive data for the new folder. If the data is valid
 then the dialog will emit a `success` event when it closes.
 
 ## See also
 
-- [Folder Edit directive](folder-edit.directive.md)
+-   [Folder Edit directive](folder-edit.directive.md)
