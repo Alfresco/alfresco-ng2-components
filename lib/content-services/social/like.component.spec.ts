@@ -28,7 +28,6 @@ describe('Like component', () => {
     let fixture: ComponentFixture<LikeComponent>;
     let element: HTMLElement;
     let service: RatingService;
-    let spyRating: any;
 
     setupTestBed({
         imports: [ContentTestingModule]
@@ -37,7 +36,7 @@ describe('Like component', () => {
     beforeEach(async(() => {
         service = TestBed.get(RatingService);
 
-        spyRating = spyOn(service, 'getRating').and.returnValue(Observable.of({
+        spyOn(service, 'getRating').and.returnValue(Observable.of({
             entry: {
                 id: 'likes',
                 aggregate: { numberOfRatings: 2 }
