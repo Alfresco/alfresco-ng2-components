@@ -26,7 +26,7 @@ for more information about installing and using the source code.
 | [Search control component](search-control.component.md) | Displays a input text which shows find-as-you-type suggestions. | [Source](../../lib/content-services/search/components/search-control.component.ts) |
 | [Search filter component](search-filter.component.md) | Represents a main container component for custom search and faceted search settings. | [Source](../../lib/content-services/search/components/search-filter/search-filter.component.ts) |
 | [Search sorting picker component](search-sorting-picker.component.md) | Provides an ability to select one of the predefined sorting definitions for search results: | [Source](../../lib/content-services/search/components/search-sorting-picker/search-sorting-picker.component.ts) |
-| [Search component](search.component.md) | Searches items for supplied search terms. | [Source](../../lib/content-services/search/components/search.component.ts) |
+| [Search component](search.component.md) | Searches items for supplied search terms.  | [Source](../../lib/content-services/search/components/search.component.ts) |
 | [Sites dropdown component](sites-dropdown.component.md) | Displays a dropdown menu to show and interact with the sites of the current user. | [Source](../../lib/content-services/site-dropdown/sites-dropdown.component.ts) |
 | [Like component](like.component.md) | Allows a user to add "likes" to an item. | [Source](../../lib/content-services/social/like.component.ts) |
 | [Rating component](rating.component.md) | Allows a user to add ratings to an item. | [Source](../../lib/content-services/social/rating.component.ts) |
