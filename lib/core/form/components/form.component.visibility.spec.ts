@@ -144,16 +144,16 @@ describe('FormComponent UI and visibility', () => {
             const dropdown = fixture.debugElement.queryAll(By.css('#country'));
             expect(dropdown).toBeDefined();
             expect(dropdown).not.toBeNull();
+            const options = fixture.debugElement.queryAll(By.css('mat-option'));
+            const optOne = options[1];
+            const optTwo = options[2];
+            const optThree = options[3];
 
-            const optOne = fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'));
-            const optTwo = fixture.debugElement.queryAll(By.css('[id="mat-option-2"]'));
-            const optThree = fixture.debugElement.queryAll(By.css('[id="mat-option-3"]'));
+            expect(optOne.nativeElement.innerText.trim()).toEqual('united kingdom');
+            expect(optTwo.nativeElement.innerText.trim()).toEqual('italy');
+            expect(optThree.nativeElement.innerText.trim()).toEqual('france');
 
-            expect(optOne[0].nativeElement.innerText.trim()).toEqual('united kingdom');
-            expect(optTwo[0].nativeElement.innerText.trim()).toEqual('italy');
-            expect(optThree[0].nativeElement.innerText.trim()).toEqual('france');
-
-            optTwo[0].nativeElement.click();
+            optTwo.nativeElement.click();
             fixture.detectChanges();
             expect(dropdown[0].nativeElement.innerText.trim()).toEqual('italy');
             tick(SELECT_CLOSE_ANIMATION);
