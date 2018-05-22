@@ -1,9 +1,9 @@
 <div class="adf-error-content">
     <p class="adf-error-content-code">{{ errorCode }}</p>
     <div class="adf-error-content-shadow"></div>
-    <p class="adf-error-content-title">{{ errorTitle | translate }}</p>
-    <p class="adf-error-content-description">{{ errorDescription | translate }}
+    <p class="adf-error-content-title">{{ 'ERROR_CONTENT.' + errorCode + '.TITLE' | translate }}</p>
+    <p class="adf-error-content-description">{{ 'ERROR_CONTENT.' + errorCode + '.DESCRIPTION' | translate }}
         <a href="{{errorLinkUrl}}" *ngIf="errorLinkText" 
-        class="adf-error-content-description-link" > {{ errorLinkText | translate }}</a></p>
-    <a href="" mat-raised-button color="primary" routerLink="/home">{{ homeButton | translate}}</a>
+        class="adf-error-content-description-link" > {{ 'ERROR_CONTENT.' + errorCode + '.LINK.TEXT' | translate }}</a></p>
+    <a href="" mat-raised-button color="primary" routerLink="/home">{{ 'ERROR_CONTENT.HOME_BUTTON' | translate}}</a>
 </div>

@@ -30,13 +30,8 @@ import { TranslationService } from '../../services/translation.service';
 export class ErrorContentComponent implements OnInit {
 
     errorCode: string;
-
-    errorTitle: string;
-    errorDescription: string;
     errorLinkText: string;
     errorLinkUrl: string;
-
-    homeButton: string;
 
     constructor(private route: ActivatedRoute,
                 private translateService: TranslationService) {
@@ -52,28 +47,15 @@ export class ErrorContentComponent implements OnInit {
         }
 
         this.getData();
-
     }
 
     getData() {
-        this.errorTitle = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.TITLE');
-
-        if (this.errorTitle === 'ERROR_CONTENT.' + this.errorCode + '.TITLE') {
-            this.errorCode = 'UNKNOWN';
-            this.errorTitle = this.translateService.instant(
-                'ERROR_CONTENT.' + this.errorCode + '.TITLE');
-        }
-
-        this.errorDescription = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.DESCRIPTION');
-        this.errorLinkText = this.translateService.instant(
+        this.errorLinkText= this.translateService.instant(
             'ERROR_CONTENT.' + this.errorCode + '.LINK.TEXT');
-        this.errorLinkUrl = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.LINK.URL');
 
-        this.homeButton = this.translateService.instant(
-            'ERROR_CONTENT.HOME_BUTTON').toUpperCase();
-
+        if (this.errorLinkText) {
+            this.errorLinkUrl = this.translateService.instant(
+                'ERROR_CONTENT.' + this.errorCode + '.LINK.URL');
+        }
     }
 }
