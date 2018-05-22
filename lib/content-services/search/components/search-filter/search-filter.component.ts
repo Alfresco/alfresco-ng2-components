@@ -131,9 +131,11 @@ export class SearchFilterComponent implements OnInit {
 
     unselectFacetQuery(label: string, reloadQuery: boolean = true) {
         const facetQuery = this.queryBuilder.getFacetQuery(label);
-        this.selectedFacetQueries = this.selectedFacetQueries.filter(selectedQuery => selectedQuery !== label);
+        if (facetQuery) {
+            this.queryBuilder.removeFilterQuery(facetQuery.query);
+        }
 
-        this.queryBuilder.removeFilterQuery(facetQuery.query);
+        this.selectedFacetQueries = this.selectedFacetQueries.filter(selectedQuery => selectedQuery !== label);
 
         if (reloadQuery) {
             this.queryBuilder.update();
@@ -150,6 +152,8 @@ export class SearchFilterComponent implements OnInit {
                 this.selectedBuckets.splice(idx, 1);
             }
             this.queryBuilder.removeFilterQuery(bucket.filterQuery);
+
+            bucket.$checked = false;
 
             if (reloadQuery) {
                 this.queryBuilder.update();

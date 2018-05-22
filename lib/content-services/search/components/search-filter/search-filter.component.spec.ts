@@ -373,8 +373,8 @@ describe('SearchSettingsComponent', () => {
 
     it('should reset selected buckets', () => {
         const buckets: FacetFieldBucket[] = [
-            { label: 'bucket1', $checked: false, count: 1, filterQuery: 'q1' },
-            { label: 'bucket2', $checked: true, count: 1, filterQuery: 'q2' }
+            { label: 'bucket1', $checked: false, count: 1, filterQuery: 'q1', $field: 'field1' },
+            { label: 'bucket2', $checked: true, count: 1, filterQuery: 'q2', $field: 'field1' }
         ];
 
         const field: ResponseFacetField = {
@@ -382,18 +382,20 @@ describe('SearchSettingsComponent', () => {
             buckets: new SearchFilterList<FacetFieldBucket>(buckets)
         };
 
+        component.selectedBuckets = [buckets[1]];
         component.resetSelectedBuckets(field);
 
         expect(buckets[0].$checked).toBeFalsy();
         expect(buckets[1].$checked).toBeFalsy();
+        expect(component.selectedBuckets.length).toBe(0);
     });
 
     it('should update query builder upon resetting buckets', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
         const buckets: FacetFieldBucket[] = [
-            { label: 'bucket1', $checked: false, count: 1, filterQuery: 'q1' },
-            { label: 'bucket2', $checked: true, count: 1, filterQuery: 'q2' }
+            { label: 'bucket1', $checked: false, count: 1, filterQuery: 'q1', $field: 'field1' },
+            { label: 'bucket2', $checked: true, count: 1, filterQuery: 'q2', $field: 'field1' }
         ];
 
         const field: ResponseFacetField = {
@@ -401,6 +403,7 @@ describe('SearchSettingsComponent', () => {
             buckets: new SearchFilterList<FacetFieldBucket>(buckets)
         };
 
+        component.selectedBuckets = [buckets[1]];
         component.resetSelectedBuckets(field);
 
         expect(queryBuilder.update).toHaveBeenCalled();
@@ -420,18 +423,18 @@ describe('SearchSettingsComponent', () => {
         const methodSpy = spyOn(component, 'unselectFacetQuery').and.stub();
 
         component.selectedFacetQueries = ['q1', 'q2'];
-        component.canResetSelectedQueries();
+        component.resetSelectedQueries();
 
         expect(methodSpy.calls.count()).toBe(2);
-        expect(methodSpy.calls.argsFor(0)).toEqual('q1');
-        expect(methodSpy.calls.argsFor(1)).toEqual('q2');
+        expect(methodSpy.calls.argsFor(0)).toEqual(['q1', false]);
+        expect(methodSpy.calls.argsFor(1)).toEqual(['q2', false]);
     });
 
     it('should update query builder upon resetting selected queries', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
         component.selectedFacetQueries = ['q1', 'q2'];
-        component.canResetSelectedQueries();
+        component.resetSelectedQueries();
 
         expect(queryBuilder.update).toHaveBeenCalled();
     });
