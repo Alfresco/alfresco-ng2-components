@@ -30,7 +30,6 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
-import { deprecate } from 'util';
 
 @Component({
     selector: 'adf-tasklist',
