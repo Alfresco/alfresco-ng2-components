@@ -33,29 +33,25 @@ describe('Like component', () => {
         imports: [ContentTestingModule]
     });
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(LikeComponent);
+    beforeEach(async(() => {
         service = TestBed.get(RatingService);
 
-        element = fixture.nativeElement;
-        component = fixture.componentInstance;
-        component.nodeId = 'test-id';
-        fixture.detectChanges();
-    });
-
-    function simulateResponseWithLikes(numberOfRatings: number) {
         spyOn(service, 'getRating').and.returnValue(Observable.of({
             entry: {
                 id: 'likes',
-                aggregate: { numberOfRatings }
+                aggregate: { numberOfRatings: 2 }
             }
         }));
-    }
+
+        fixture = TestBed.createComponent(LikeComponent);
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        component.nodeId = 'test-id';
+        component.ngOnChanges();
+        fixture.detectChanges();
+    }));
 
     it('should load the likes by default on onChanges', async(() => {
-        simulateResponseWithLikes(2);
-
-        component.ngOnChanges();
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -64,9 +60,12 @@ describe('Like component', () => {
     }));
 
     it('should increase the number of likes when clicked', async(() => {
-        simulateResponseWithLikes(3);
-
-        component.likesCounter = 2;
+        spyOn(service, 'postRating').and.returnValue(Observable.of({
+            entry: {
+                id: 'likes',
+                aggregate: { numberOfRatings: 3 }
+            }
+        }));
 
         let likeButton: any = element.querySelector('#adf-like-test-id');
         likeButton.click();
@@ -75,15 +74,11 @@ describe('Like component', () => {
             fixture.detectChanges();
             expect(element.querySelector('#adf-like-counter').innerHTML).toBe('3');
         });
-
     }));
 
     it('should decrease the number of likes when clicked and is already liked', async(() => {
         spyOn(service, 'deleteRating').and.returnValue(Observable.of('');
 
-        simulateResponseWithLikes(1);
-
-        component.likesCounter = 2;
         component.isLike = true;
 
         let likeButton: any = element.querySelector('#adf-like-test-id');

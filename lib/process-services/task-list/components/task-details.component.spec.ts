@@ -29,8 +29,7 @@ import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOu
 import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-
-declare let jasmine: any;
+import { PeopleProcessService } from '@alfresco/adf-core';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: 'fake-id',
@@ -51,6 +50,7 @@ describe('TaskDetailsComponent', () => {
     let completeTaskSpy: jasmine.Spy;
     let logService: LogService;
     let commentProcessService: CommentProcessService;
+    let peopleProcessService: PeopleProcessService;
 
     setupTestBed({
         imports: [
@@ -87,6 +87,7 @@ describe('TaskDetailsComponent', () => {
         ]));
 
         fixture = TestBed.createComponent(TaskDetailsComponent);
+        peopleProcessService = TestBed.get(PeopleProcessService);
         component = fixture.componentInstance;
     });
 
@@ -412,16 +413,20 @@ describe('TaskDetailsComponent', () => {
             fixture.detectChanges();
         });
 
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('should return an observable with user search results', (done) => {
-            component.peopleSearch$.subscribe((users) => {
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.of([{
+                    id: 1,
+                    firstName: 'fake-test-1',
+                    lastName: 'fake-last-1',
+                    email: 'fake-test-1@test.com'
+                }, {
+                    id: 2,
+                    firstName: 'fake-test-2',
+                    lastName: 'fake-last-2',
+                    email: 'fake-test-2@test.com'
+                }]));
+
+            component.peopleSearch.subscribe((users) => {
                 expect(users.length).toBe(2);
                 expect(users[0].firstName).toBe('fake-test-1');
                 expect(users[0].lastName).toBe('fake-last-1');
@@ -430,46 +435,25 @@ describe('TaskDetailsComponent', () => {
                 done();
             });
             component.searchUser('fake-search-word');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    data: [{
-                        id: 1,
-                        firstName: 'fake-test-1',
-                        lastName: 'fake-last-1',
-                        email: 'fake-test-1@test.com'
-                    }, {
-                        id: 2,
-                        firstName: 'fake-test-2',
-                        lastName: 'fake-last-2',
-                        email: 'fake-test-2@test.com'
-                    }]
-                }
-            });
         });
 
         it('should return an empty list for not valid search', (done) => {
-            component.peopleSearch$.subscribe((users) => {
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.of([]));
+
+            component.peopleSearch.subscribe((users) => {
                 expect(users.length).toBe(0);
                 done();
             });
             component.searchUser('fake-search-word');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {}
-            });
         });
 
         it('should log error message when search fails', async(() => {
-            component.peopleSearch$.subscribe(() => {
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.throw(''));
+
+            component.peopleSearch.subscribe(() => {
                 expect(logService.error).toHaveBeenCalledWith('Could not load users');
             });
             component.searchUser('fake-search');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
         }));
 
         it('should assign task to user', () => {
