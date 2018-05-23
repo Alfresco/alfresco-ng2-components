@@ -71,6 +71,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     columns: any[] = [];
 
+    /** Define the sort order of the datatable. Possible values are :
+     * [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`]
+     */
+    @Input()
+    sorting: any[] = [];
+
     /* Toggles default selection of the first row */
     @Input()
     selectFirstRow: boolean = true;
@@ -230,6 +236,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return rows.map(row => new ObjectDataRow(row));
     }
 
+    convertToDataSorting(sorting: any []): DataSorting {
+        return sorting ? new DataSorting(sorting[0], sorting[1]) : this.data.getSorting();
+    }
+
     private initAndSubscribeClickStream() {
         this.unsubscribeClickStream();
         let singleClickStream = this.click$
@@ -293,6 +303,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private setTableRows(rows) {
         if (this.data) {
             this.data.setRows(this.convertToRowsData(rows));
+            this.data.setSorting(this.convertToDataSorting(this.sorting));
             this.selectFirst();
         }
     }
