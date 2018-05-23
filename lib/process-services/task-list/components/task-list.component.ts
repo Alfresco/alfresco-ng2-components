@@ -86,6 +86,13 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     landingTaskId: string;
 
+    /** Data source object that represents the number and the type of the columns that
+     * you want to show.
+     */
+    /** @deprecated 2.4.0 */
+    @Input()
+    data: DataTableAdapter;
+
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
      * multiple rows.
@@ -154,6 +161,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     ngAfterContentInit() {
         this.createDatatableSchema();
+        if (this.data && this.data.getColumns().length === 0) {
+            this.data.setColumns(this.columns);
+        }
+
         if (this.appId) {
             this.reload();
         }

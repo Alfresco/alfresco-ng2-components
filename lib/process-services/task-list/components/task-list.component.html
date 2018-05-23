@@ -2,8 +2,9 @@
 <div *ngIf="requestNode">
     <div>
         <adf-datatable
+            [data]="data"
             [rows]="rows"
-            [schemaColumns]="schemaColumns"
+            [columns]="columns"
             [loading]="isLoading"
             [multiselect]="multiselect"
             [selectionMode]="selectionMode"

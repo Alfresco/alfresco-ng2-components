@@ -78,22 +78,22 @@ describe('TaskListComponent', () => {
 
     it('should use the default schemaColumn as default', () => {
         component.ngAfterContentInit();
-        expect(component.schemaColumns).toBeDefined();
-        expect(component.schemaColumns.length).toEqual(3);
+        expect(component.columns).toBeDefined();
+        expect(component.columns.length).toEqual(3);
     });
 
     it('should use the custom schemaColumn from app.config.json', () => {
         component.presetColumn = 'fakeCutomSchema';
         component.ngAfterContentInit();
         fixture.detectChanges();
-        expect(component.schemaColumns).toEqual(fakeCutomSchema);
+        expect(component.columns).toEqual(fakeCutomSchema);
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
         component.presetColumn = 'fakeCutomSchema';
         fixture.detectChanges();
-        expect(component.schemaColumns).toBeDefined();
-        expect(component.schemaColumns.length).toEqual(2);
+        expect(component.columns).toBeDefined();
+        expect(component.columns.length).toEqual(2);
     });
 
     it('should return an empty task list when no input parameters are passed', () => {
@@ -502,9 +502,9 @@ describe('CustomTaskListComponent', () => {
     it('should fetch custom schemaColumn from html', () => {
         fixture.detectChanges();
         expect(component.taskList.columnList).toBeDefined();
-        expect(component.taskList.schemaColumns[0]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.NAME');
-        expect(component.taskList.schemaColumns[1]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.CREATED');
-        expect(component.taskList.schemaColumns.length).toEqual(3);
+        expect(component.taskList.columns[0]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.NAME');
+        expect(component.taskList.columns[1]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.CREATED');
+        expect(component.taskList.columns.length).toEqual(3);
     });
 });
 
