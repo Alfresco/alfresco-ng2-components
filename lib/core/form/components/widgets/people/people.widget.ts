@@ -67,7 +67,24 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 })
             )
         ),
-        map(this.checkList)
+        map((list) => {
+            let value = (this.input.nativeElement as HTMLInputElement).value;
+
+            if (this.isValidUser(value)) {
+                this.field.validationSummary.message = '';
+                this.field.validate();
+                this.field.form.validateForm();
+            } else if (!value) {
+                this.field.value = null;
+                this.users = [];
+            } else {
+                this.field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
+                this.field.markAsInvalid();
+                this.field.form.markAsInvalid();
+            }
+
+            return list;
+        })
     );
 
     constructor(public formService: FormService, public peopleProcessService: PeopleProcessService) {
@@ -81,30 +98,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 let restrictWithGroup = <GroupModel> params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
             }
-        }
-    }
-
-    checkList(list) {
-        return list && list.length === 0 ? [] : list;
-    }
-
-    onKeyUp(event: KeyboardEvent) {
-        let value = (this.input.nativeElement as HTMLInputElement).value;
-        this.validateValue(value);
-    }
-
-    validateValue(userName: string) {
-        if (this.isValidUser(userName)) {
-            this.field.validationSummary.message = '';
-            this.field.validate();
-            this.field.form.validateForm();
-        } else if (!userName) {
-            this.field.value = null;
-            this.users = [];
-        } else {
-            this.field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
-            this.field.markAsInvalid();
-            this.field.form.markAsInvalid();
         }
     }
 
