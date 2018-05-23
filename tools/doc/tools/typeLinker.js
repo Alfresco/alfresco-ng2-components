@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var fs = require("fs");
 var typedoc_1 = require("typedoc");
@@ -226,10 +226,10 @@ function handleLinksInBodyText(aggData, text) {
         var link = resolveTypeLink(aggData, word);
         var matchStart = void 0;
         if (!link) {
-            var match = matcher.nextWord(word.toLowerCase(), scanner.index);
-            if (match && match[0]) {
-                link = resolveTypeLink(aggData, match[0].value);
-                matchStart = match[0].startPos;
+            var match_1 = matcher.nextWord(word.toLowerCase(), scanner.index);
+            if (match_1 && match_1[0]) {
+                link = resolveTypeLink(aggData, match_1[0].value);
+                matchStart = match_1[0].startPos;
             }
         }
         else {
@@ -268,12 +268,12 @@ function resolveTypeLink(aggData, text) {
     }
 }
 function cleanTypeName(text) {
-    var matches = text.match(/[a-zA-Z0-9_]+<([a-zA-Z0-9_]+)>/);
+    var matches = text.match(/[a-zA-Z0-9_]+<([a-zA-Z0-9_]+)(\[\])?>/);
     if (matches) {
         return matches[1];
     }
     else {
-        return text;
+        return text.replace(/\[\]$/, "");
     }
 }
 function isLinkable(kind) {

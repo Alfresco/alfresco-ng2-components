@@ -12,19 +12,19 @@ Gets information about a Content Services user.
 
 ### Methods
 
--   `getCurrentPerson(): Observable<any>`<br/>
+-   **getCurrentPerson**(): `Observable<any>`<br/>
     Gets information about the user who is currently logged in.
     -   **Returns** `Observable<any>` - User information
--   `getPerson(personId: string = null): Observable<any>`<br/>
+-   **getPerson**(personId: `string` = `null`): `Observable<any>`<br/>
     Gets information about a user identified by their username.
-    -   `personId: string = null` -  ID of the target user
+    -   _personId:_ `string`  - ID of the target user
     -   **Returns** `Observable<any>` - User information
 
 ## Details
 
 The class returned by `getPerson` and `getCurrentPerson` is detailed
 in the [Ecm User model docs](ecm-user.model.md). The `avatarId` passed to
-`getUserProfileImage` is available as a field of the `EcmUserModel` instance
+`getUserProfileImage` is available as a field of the [`EcmUserModel`](../core/ecm-user.model.md) instance
 returned for a particular person.
 
 See the

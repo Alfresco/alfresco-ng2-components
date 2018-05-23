@@ -4,7 +4,7 @@ Displays info about a specific error.
 
 ## Basic Usage
 
-Once you have catched the error in your server you will need to redirect to ```/error/errorCode``` to display information about that error. 
+Once you have catched the error in your server you will need to redirect to `/error/errorCode` to display information about that error. 
 
 ```ts
 this.router.navigate(['/error', errorCode]);
@@ -27,16 +27,16 @@ this.router.navigate(['/error', errorCode]);
 ### Error Content Component
 
 | Name | Type | Description |
-| --- | --- | -- |
+| ---- | ---- | ----------- |
 | errorCode | string | Error code |
 | errorTitle | string | Error title |
 | errorDescription | string | Short description about the error |
-| errorLink | string | (Optional) This link will be attached at the end of the error description and itt will be highlighted.|
-
+| errorLink | string | (Optional) This link will be attached at the end of the error description and itt will be highlighted. |
 
 ## Details
 
-You can customize your errors by adding them to the tranlate files inside ```lib/core/i18n```.
+You can customize your errors by adding them to the tranlate files inside `lib/core/i18n`.
+
 ```json
 "ERROR_CONTENT": {
     "HOME_BUTTON": "Back to home",
@@ -58,6 +58,3 @@ You can customize your errors by adding them to the tranlate files inside ```lib
     }
   }
 ```
-
-
-

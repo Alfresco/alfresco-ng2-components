@@ -12,11 +12,25 @@ Gets a list of items a user has marked as their favorites.
 
 ### Methods
 
--   `getFavorites(personId: string = null, options?: any = null): Observable<NodePaging>`<br/>
+-   **getFavorites**(personId: `string` = `null`, options?: `any` = `null`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts)<br/>
     Gets the favorites for a user.
-    -   `personId: string = null` -  ID of the user
-    -   `options?: any = null` - (Optional) Options supported by JSAPI
-    -   **Returns** `Observable<NodePaging>` - List of favorites
+    -   _personId:_ `string`  - ID of the user
+    -   _options:_ `any`  - (Optional) Options supported by JSAPI
+    -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - List of favorites
+-   **remapFavoriteEntries**(entries: `any[]` = `null`): `any[]`<br/>
+
+    -   _entries:_ `any[]`  - 
+    -   **Returns** `any[]` - 
+
+-   **remapFavoritesData**(data: `any` = `{}`): [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)<br/>
+
+    -   _data:_ `any`  - 
+    -   **Returns** [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) - 
+
+-   **remapEntry**(\_\_namedParameters: `object` = `null`): `any`<br/>
+
+    -   _\_\_namedParameters:_ `object`  - 
+    -   **Returns** `any` -
 
 ## Details
 

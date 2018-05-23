@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Page Title service
 
 Sets the page title.
@@ -10,9 +11,9 @@ Sets the page title.
 
 ### Methods
 
--   `setTitle(value: string = '')`  
-    Sets the page title.  
-    -   `value` - The new title
+-   **setTitle**(value: `string` = `""`)<br/>
+    Sets the page title.
+    -   _value:_ `string`  - The new title
 
 ## Details
 

@@ -6,7 +6,7 @@ Last reviewed: 2018-05-08
 
 # Card View Item interface
 
-Defines the implementation of an item in a Card View component.
+Defines the implementation of an item in a [Card View component](../core/card-view.component.md).
 
 ## Definition
 
@@ -34,7 +34,7 @@ export interface CardViewItem {
 | displayValue | string | "" | The value to display |
 | editable | boolean | false | Toggles whether the item is editable |
 | clickable | boolean | false | Toggles whether the item is clickable |
-| icon | string | | The material icon to show beside clickable items |
+| icon | string |  | The material icon to show beside clickable items |
 
 ## Details
 
@@ -45,10 +45,10 @@ component for a custom item type.
 For example, follow the steps given below to add a **stardate** type to display Captain
 Picard's birthday (47457.1):
 
-1. Define the model for the custom type.
+1.  Define the model for the custom type.
 
-    Your model must extend the `CardViewBaseItemModel` class and implement the `CardViewItem`
-    and `DynamicComponentModel` interfaces. See the
+    Your model must extend the [`CardViewBaseItemModel`](../../lib/core/card-view/models/card-view-baseitem.model.ts) class and implement the [`CardViewItem`](../../lib/core/card-view/interfaces/card-view-item.interface.ts)
+    and [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts) interfaces. See the
     [Card View Text Item model source](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts)
     for an example of how to do this.
 
@@ -69,7 +69,7 @@ Picard's birthday (47457.1):
     }
     ```
 
-2. Define the component for the custom type.
+2.  Define the component for the custom type.
 
     The selector is not important given that this is a dynamically loaded component.
     You can choose any name for the selector, but it makes sense to follow the Angular standards.
@@ -104,7 +104,7 @@ Picard's birthday (47457.1):
     [Card View Date Item component source](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) for examples of how to make the field
     editable.
 
-3. Add your custom component to your module's `entryComponents` list.
+3.  Add your custom component to your module's `entryComponents` list.
 
     You must register your component in your module's `entryComponents` array
     to enable Angular to load it dynamically:
@@ -123,7 +123,7 @@ Picard's birthday (47457.1):
     export class MyModule {}
     ```
 
-4. Bind your custom component to the custom model type so that Angular's dynamic component
+4.  Bind your custom component to the custom model type so that Angular's dynamic component
     loader can find it.
 
     ```ts
@@ -146,5 +146,5 @@ Picard's birthday (47457.1):
 
 ## See also
 
-- [Card View component](card-view.component.md)
-- [Card Item Types service](card-item-types.service.md)
+-   [Card View component](card-view.component.md)
+-   [Card Item Types service](card-item-types.service.md)

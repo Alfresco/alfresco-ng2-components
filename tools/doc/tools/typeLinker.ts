@@ -20,6 +20,7 @@ import { CommentTag } from "typedoc/dist/lib/models";
 
 import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
+import { match } from "minimatch";
 
 
 const includedNodeTypes = [
@@ -335,12 +336,12 @@ function resolveTypeLink(aggData, text): string {
 
 
 function cleanTypeName(text) {
-    let matches = text.match(/[a-zA-Z0-9_]+<([a-zA-Z0-9_]+)>/);
+    let matches = text.match(/[a-zA-Z0-9_]+<([a-zA-Z0-9_]+)(\[\])?>/);
 
     if (matches) {
         return matches[1];
     } else {
-        return text;
+        return text.replace(/\[\]$/, "");
     }
 }
 

@@ -6,27 +6,27 @@ Last reviewed: 2018-05-08
 
 # Card Item Type service
 
-Maps type names to field component types for the Card View component.
+Maps type names to field component types for the [Card View component](../core/card-view.component.md).
 
 ## Class members
 
 ### Methods
 
--   `getComponentTypeResolver(type: string = null, defaultValue: Type<__type> =  this.defaultValue): DynamicComponentResolveFunction`<br/>
+-   **getComponentTypeResolver**(type: `string` = `null`, defaultValue: `Type<__type>` = `this.defaultValue`): `DynamicComponentResolveFunction`<br/>
     Gets the currently active ComponentTypeResolver function for a field type.
-    -   `type: string = null` -  The type whose resolver you want
-    -   `defaultValue: Type<__type> =  this.defaultValue` -  Default type returned for types that are not yet mapped
+    -   _type:_ `string`  - The type whose resolver you want
+    -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
     -   **Returns** `DynamicComponentResolveFunction` - Resolver function
--   `resolveComponentType(model: DynamicComponentModel = null, defaultValue: Type<__type> =  this.defaultValue): Type<__type>`<br/>
+-   **resolveComponentType**(model: [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts) = `null`, defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
     Finds the component type that is needed to render a form field.
-    -   `model: DynamicComponentModel = null` -  (form-field.model.md) for the field to render
-    -   `defaultValue: Type<__type> =  this.defaultValue` -  Default type returned for field types that are not yet mapped.
+    -   _model:_ [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts)  - (form-field.model.md) for the field to render
+    -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<__type>` - Component type
--   `setComponentTypeResolver(type: string = null, resolver: DynamicComponentResolveFunction = null, override: boolean = false)`<br/>
+-   **setComponentTypeResolver**(type: `string` = `null`, resolver: `DynamicComponentResolveFunction` = `null`, override: `boolean` = `true`)<br/>
     Sets or optionally replaces a ComponentTypeResolver function for a field type.
-    -   `type: string = null` -  The type whose resolver you want to set
-    -   `resolver: DynamicComponentResolveFunction = null` -  The new resolver function
-    -   `override: boolean = false` -  The new resolver will only replace an existing one if this parameter is true
+    -   _type:_ `string`  - The type whose resolver you want to set
+    -   _resolver:_ `DynamicComponentResolveFunction`  - The new resolver function
+    -   _override:_ `boolean`  - The new resolver will only replace an existing one if this parameter is true
 
 ## Details
 
@@ -51,8 +51,8 @@ The default mapping is shown below:
 
 You can define your own custom field types for the Card View (see the
 [Card View Item interface](card-view-item.interface.md) page for full details of how to do this).
-When you have defined the field component, you need to register it with the Card Item Type service
-so that the Card View component can make use of it:
+When you have defined the field component, you need to register it with the [Card Item Type service](../../lib/core/card-view/services/card-item-types.service.ts)
+so that the [Card View component](../core/card-view.component.md) can make use of it:
 
 ```ts
 @Component({

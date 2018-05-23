@@ -36,28 +36,28 @@ Adds "infinite" pagination to the component it is used with.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
+| -- | -- | -- | -- |
 | loading | `boolean` | false | Is a new page loading? |
-| pageSize | `number` | InfinitePaginationComponent.DEFAULT_PAGE_SIZE | Number of items that are added with each "load more" event. |
-| pagination | `Pagination` |  | Pagination object. |
+| pageSize | `number` |  [`InfinitePaginationComponent`](../core/infinite-pagination.component.md).DEFAULT_PAGE_SIZE | Number of items that are added with each "load more" event. |
+| pagination | [`PaginationModel`](../../lib/core/models/pagination.model.ts) |  | **Deprecated:** 2.3.0  [Pagination](../../lib/content-services/document-list/models/document-library.model.ts) object. |
 | target | `PaginatedComponent` |  | Component that provides custom pagination support. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| loadMore | `EventEmitter<Pagination>` | Emitted when the "Load More" button is clicked. |
+| -- | -- | -- |
+| loadMore | [`EventEmitter<Pagination>`](../../lib/content-services/document-list/models/document-library.model.ts) | Emitted when the "Load More" button is clicked. |
 
 ## Details
 
-Pagination is the process of dividing a list into separate ranges or "pages" with a
+[`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts) is the process of dividing a list into separate ranges or "pages" with a
 certain number of items each. This allows a long list to be delivered in manageable pieces
 rather than all at once. "Infinite" pagination means that there is no upper limit on
 the number of items that can be displayed visually; a single page is shown initially but
 the user can extend the list one page at a time by clicking a "Load More" button.
 
 The `loadMore` event is emitted when the button is pressed. It is passed a
-[Pagination](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/Pagination.md)
+[`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts)
 parameter which contains the details of the current page (the start offset of the
 page within the list to be shown, whether there are more items left to show, etc).
 

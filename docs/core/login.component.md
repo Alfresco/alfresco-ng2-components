@@ -14,6 +14,8 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 -   [Basic usage](#basic-usage)
 
+-   [Class members](#class-members)
+
     -   [Properties](#properties)
     -   [Events](#events)
 
@@ -42,26 +44,26 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| showRememberMe | `boolean` | `true` | Should the `Remember me` checkbox be shown? |
-| showLoginActions | `boolean` | `true` | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
-| needHelpLink | `string` | `''` | Sets the URL of the NEED HELP link in the footer. |
-| registerLink | `string` | `''` | Sets the URL of the REGISTER link in the footer. |
-| logoImageUrl | `string` | `'./assets/images/alfresco-logo.svg'` | Path to a custom logo image. |
-| backgroundImageUrl | `string` | `'./assets/images/background.svg'` | Path to a custom background image. |
-| copyrightText | `string` | `'\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.'` | The copyright text below the login box. |
-| providers | `string` |  | Possible valid values are ECM, BPM or ALL. By default, this component will log in only to ECM. If you want to log in in both systems then use ALL. There is also a way to call your Auth token API using the string "OAUTH" (supported only for BPM) |
-| fieldsValidation | `any` |  | Custom validation rules for the login form. |
+| -- | -- | -- | -- |
+| backgroundImageUrl | `string` | "./assets/images/background.svg" | Path to a custom background image. |
+| copyrightText | `string` | "© 2016 Alfresco Software, Inc. All Rights Reserved." | The copyright text below the login box. |
 | disableCsrf | `boolean` |  | Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. |
-| successRoute | `string` | `null` | Route to redirect to on successful login. |
+| fieldsValidation | `any` |  | Custom validation rules for the login form. |
+| logoImageUrl | `string` | "./assets/images/alfresco-logo.svg" | Path to a custom logo image. |
+| needHelpLink | `string` | "" | Sets the URL of the NEED HELP link in the footer. |
+| providers | `string` |  | Possible valid values are ECM, BPM or ALL. By default, this component will log in only to ECM. If you want to log in in both systems then use ALL. |
+| registerLink | `string` | "" | Sets the URL of the REGISTER link in the footer. |
+| showLoginActions | `boolean` | true | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
+| showRememberMe | `boolean` | true | Should the `Remember me` checkbox be shown? |
+| successRoute | `string` |  null | Route to redirect to on successful login. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| success | `EventEmitter<LoginSuccessEvent>` | Emitted when the login is successful. |
-| error | `EventEmitter<LoginErrorEvent>` | Emitted when the login fails. |
-| executeSubmit | `EventEmitter<LoginSubmitEvent>` | Emitted when the login form is submitted. |
+| -- | -- | -- |
+| error | [`EventEmitter<LoginErrorEvent>`](../../lib/core/login/models/login-error.event.ts) | Emitted when the login fails. |
+| executeSubmit | [`EventEmitter<LoginSubmitEvent>`](../../lib/core/login/models/login-submit.event.ts) | Emitted when the login form is submitted. |
+| success | [`EventEmitter<LoginSuccessEvent>`](../../lib/core/login/models/login-success.event.ts) | Emitted when the login is successful. |
 
 ## Details
 
@@ -94,7 +96,7 @@ export class AppComponent {
 
 ### Changing content
 
-You can replace the content of the header and footer of the Login component with
+You can replace the content of the header and footer of the [Login component](../core/login.component.md) with
 your own custom content, as shown in the examples below:
 
 ```html

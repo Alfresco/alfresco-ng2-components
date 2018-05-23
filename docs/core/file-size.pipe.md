@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # File Size pipe
 
 Converts a number of bytes to the equivalent in KB, MB, etc.
