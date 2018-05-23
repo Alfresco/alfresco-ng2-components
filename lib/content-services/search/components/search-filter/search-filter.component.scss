@@ -6,6 +6,10 @@
 
         .mat-checkbox {
             margin: 5px;
+
+            &.mat-checkbox-checked .mat-checkbox-label {
+                font-weight: bold;
+            }
         }
     }
 
