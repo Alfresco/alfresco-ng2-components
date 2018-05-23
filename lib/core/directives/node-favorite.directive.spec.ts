@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
