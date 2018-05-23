@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Observable';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { formDefinitionDropdownField, formDefinitionTwoTextFields } from '../../mock';
+import { formDefinitionDropdownField, formDefinitionTwoTextFields, formDefinitionRequiredField } from '../../mock';
 import { formReadonlyTwoTextFields } from '../../mock';
 import { formDefVisibilitiFieldDependsOnNextOne, formDefVisibilitiFieldDependsOnPreviousOne } from '../../mock';
 import { FormService } from './../services/form.service';
@@ -72,6 +72,45 @@ describe('FormComponent UI and visibility', () => {
         expect(fixture.componentInstance instanceof FormComponent).toBe(true, 'should create FormComponent');
     });
 
+    describe('Validation icon', () => {
+
+        it('should display valid icon for valid form', () => {
+            spyOn(service, 'getTask').and.returnValue(Observable.of({}));
+            spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionTwoTextFields));
+
+            let change = new SimpleChange(null, 1, true);
+            component.ngOnChanges({ 'taskId': change });
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#adf-valid-form-icon'))).toBeDefined();
+            expect(fixture.debugElement.query(By.css('#adf-valid-form-icon'))).not.toBeNull();
+            expect(fixture.debugElement.query(By.css('#adf-invalid-form-icon'))).toBeNull();
+        });
+
+        it('should display invalid icon for valid form', () => {
+            spyOn(service, 'getTask').and.returnValue(Observable.of({}));
+            spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionRequiredField));
+
+            let change = new SimpleChange(null, 1, true);
+            component.ngOnChanges({ 'taskId': change });
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#adf-valid-form-icon'))).toBeNull();
+            expect(fixture.debugElement.query(By.css('#adf-invalid-form-icon'))).toBeDefined();
+            expect(fixture.debugElement.query(By.css('#adf-invalid-form-icon'))).not.toBeNull();
+        });
+
+        it('should NOT display validation icon when [showValidationIcon] is false', () => {
+            spyOn(service, 'getTask').and.returnValue(Observable.of({}));
+            spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionTwoTextFields));
+
+            let change = new SimpleChange(null, 1, true);
+            component.ngOnChanges({ 'taskId': change });
+            component.showValidationIcon = false;
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#adf-valid-form-icon'))).toBeNull();
+            expect(fixture.debugElement.query(By.css('#adf-invalid-form-icon'))).toBeNull();
+        });
+    });
+
     describe('form definition', () => {
 
         it('should display two text fields form definition', () => {
@@ -105,16 +144,16 @@ describe('FormComponent UI and visibility', () => {
             const dropdown = fixture.debugElement.queryAll(By.css('#country'));
             expect(dropdown).toBeDefined();
             expect(dropdown).not.toBeNull();
+            const options = fixture.debugElement.queryAll(By.css('mat-option'));
+            const optOne = options[1];
+            const optTwo = options[2];
+            const optThree = options[3];
 
-            const optOne = fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'));
-            const optTwo = fixture.debugElement.queryAll(By.css('[id="mat-option-2"]'));
-            const optThree = fixture.debugElement.queryAll(By.css('[id="mat-option-3"]'));
+            expect(optOne.nativeElement.innerText.trim()).toEqual('united kingdom');
+            expect(optTwo.nativeElement.innerText.trim()).toEqual('italy');
+            expect(optThree.nativeElement.innerText.trim()).toEqual('france');
 
-            expect(optOne[0].nativeElement.innerText.trim()).toEqual('united kingdom');
-            expect(optTwo[0].nativeElement.innerText.trim()).toEqual('italy');
-            expect(optThree[0].nativeElement.innerText.trim()).toEqual('france');
-
-            optTwo[0].nativeElement.click();
+            optTwo.nativeElement.click();
             fixture.detectChanges();
             expect(dropdown[0].nativeElement.innerText.trim()).toEqual('italy');
             tick(SELECT_CLOSE_ANIMATION);
