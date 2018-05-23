@@ -13,8 +13,10 @@ Searches for people or groups to add to the current node permissions.
 ## Basic Usage
 
 ```html
-<adf-add-permission [nodeId]="nodeId"
-    (success)="onSuccess($event)" (error)="onError($event)">
+<adf-add-permission
+    [nodeId]="nodeId"
+    (success)="onSuccess($event)"
+    (error)="onError($event)">
 </adf-add-permission>
 ```
 
@@ -35,5 +37,11 @@ Searches for people or groups to add to the current node permissions.
 
 ## Details
 
-This component extends the [Add permission panel component](../add-permission-panel.component.md) 
-and apply the action confirm when the selection made is accepted.
+This component extends the [Add permission panel component](../content-services/add-permission-panel.component.md)
+to apply the chosen selection of permissions when they are accepted. You can also
+use the [Add permission dialog component](../content-services/add-permission-dialog.component.md) to perform the same action using a dialog.
+
+## See also
+
+-   [Add permission panel component](../content-services/add-permission-panel.component.md)
+-   [Add permission dialog component](../content-services/add-permission-dialog.component.md)

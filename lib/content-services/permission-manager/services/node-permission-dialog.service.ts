@@ -31,6 +31,12 @@ export class NodePermissionDialogService {
                 private nodePermissionService: NodePermissionService) {
     }
 
+    /**
+     * Opens a dialog to add permissions to a node.
+     * @param nodeId ID of the target node
+     * @param title Dialog title
+     * @returns Node with updated permissions
+     */
     openAddPermissionDialog(nodeId: string, title?: string): Observable<MinimalNodeEntity[]> {
         const confirm = new Subject<MinimalNodeEntity[]>();
 
@@ -52,10 +58,19 @@ export class NodePermissionDialogService {
         this.dialog.open(AddPermissionDialogComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
     }
 
+    /**
+     * Closes the currently-open dialog.
+     */
     close() {
         this.dialog.closeAll();
     }
 
+    /**
+     * Opens a dialog to update permissions for a node.
+     * @param nodeId ID of the target node
+     * @param title Dialog title
+     * @returns Node with updated permissions
+     */
     updateNodePermissionByDialog(nodeId?: string, title?: string): Observable<MinimalNodeEntryEntity> {
         return this.openAddPermissionDialog(nodeId, title).switchMap((selection) => {
             return this.nodePermissionService.updateNodePermissions(nodeId, selection);
