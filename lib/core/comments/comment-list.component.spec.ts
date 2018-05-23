@@ -31,11 +31,11 @@ const testUser: UserProcessModel = new UserProcessModel({
     lastName: 'User',
     email: 'tu@domain.com'
 });
-const testDate = new Date();
+
 const processCommentOne: CommentModel = new CommentModel({
     id: 1,
     message: 'Test Comment',
-    created: testDate.toDateString(),
+    created: new Date().toDateString(),
     createdBy: testUser
 });
 
@@ -208,13 +208,13 @@ describe('CommentListComponent', () => {
         fixture.whenStable().then(() => {
             let elements = fixture.nativeElement.querySelectorAll('#comment-time');
             expect(elements.length).toBe(1);
-            expect(elements[0].innerText).toBe(commentList.transformDate(testDate.toDateString()));
+            expect(elements[0].innerText).toBe(commentList.transformDate(processCommentOne.created));
             expect(fixture.nativeElement.querySelector('#comment-time:empty')).toBeNull();
         });
     }));
 
     it('comment date time should start with Today when comment date is today', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [Object.assign({}, processCommentOne)];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -224,8 +224,9 @@ describe('CommentListComponent', () => {
     }));
 
     it('comment date time should start with Yesterday when comment date is yesterday', async(() => {
-        processCommentOne.created = new Date((Date.now() - 24 * 3600 * 1000));
-        commentList.comments = [processCommentOne];
+        let commentOld = Object.assign({}, processCommentOne);
+        commentOld.created = new Date((Date.now() - 24 * 3600 * 1000));
+        commentList.comments = [commentOld];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -235,8 +236,9 @@ describe('CommentListComponent', () => {
     }));
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', async(() => {
-        processCommentOne.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
-        commentList.comments = [processCommentOne];
+        let commentOld = Object.assign({}, processCommentOne);
+        commentOld.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
+        commentList.comments = [commentOld];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
