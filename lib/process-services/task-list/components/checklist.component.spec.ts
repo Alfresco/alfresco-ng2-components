@@ -29,12 +29,6 @@ const fakeTaskDetail = new TaskDetailsModel({
     name: 'fake-check-name'
 });
 
-const fakeTaskDetailCompleted = new TaskDetailsModel({
-    id: 'fake-completed-id',
-    name: 'fake-completed-name',
-    endDate: '2018-05-23T11:25:14.552+0000'
-});
-
 describe('ChecklistComponent', () => {
 
     let checklistComponent: ChecklistComponent;
@@ -150,16 +144,6 @@ describe('ChecklistComponent', () => {
             fixture.detectChanges();
             expect(element.querySelector('#check-fake-check-id')).not.toBeNull();
             expect(element.querySelector('#check-fake-check-id').textContent).toContain('fake-check-name');
-        });
-
-        it('should not show delete icon when checklist task is completed', () => {
-            checklistComponent.checklist.push(fakeTaskDetail);
-            checklistComponent.checklist.push(fakeTaskDetailCompleted);
-            fixture.detectChanges();
-            expect(element.querySelector('#remove-fake-check-id')).not.toBeNull();
-            expect(element.querySelector('#check-fake-completed-id')).not.toBeNull();
-            expect(element.querySelector('#check-fake-completed-id')).toBeDefined();
-            expect(element.querySelector('#remove-fake-completed-id')).toBeNull();
         });
 
         it('should add checklist', async(() => {
