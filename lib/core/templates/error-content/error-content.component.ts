@@ -50,7 +50,7 @@ export class ErrorContentComponent implements OnInit {
     }
 
     getData() {
-        this.errorLinkText= this.translateService.instant(
+        this.errorLinkText = this.translateService.instant(
             'ERROR_CONTENT.' + this.errorCode + '.LINK.TEXT');
 
         if (this.errorLinkText) {
