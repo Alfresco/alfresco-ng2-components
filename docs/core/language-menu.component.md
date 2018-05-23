@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Language Menu component
 
 Displays all the languages that are present in the "app.config.json" or the default one (EN).
@@ -24,7 +25,7 @@ How to attach an ADF Language Menu as main menu
 ## Details
 
 In the previous example we are using the ADF Language Menu as main menu.
-The Language Menu component is able to fetch all the languages from the "app.config.json".
+The [Language Menu component](../core/language-menu.component.md) is able to fetch all the languages from the "app.config.json".
 This is how the configuration looks like in the the "app.config.json"
 
 ```json

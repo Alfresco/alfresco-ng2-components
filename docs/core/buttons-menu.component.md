@@ -2,6 +2,7 @@
 Added: v2.4.0
 Status: Active
 ---
+
 # Buttons Menu Component
 
 Displays buttons on a responsive menu.
@@ -15,6 +16,7 @@ This component shows buttons on a responsive menu that changes depending on the 
     [buttons]="buttons">
 </adf-buttons-action-menu>  
 ```
+
 You will need to declare all the buttons that you want to have inside your menu in the parent component. 
 
 ```ts
@@ -55,20 +57,19 @@ buttons: MenuButton[] = [];
 ### Buttons Menu Component
 
 | Name | Type | Description |
-| --- | --- | -- |
+| ---- | ---- | ----------- |
 | buttons | `MenuButton []` | The array that contains all the buttons for the menu |
 
 ### Button Model
 
 | Name | Type | Description |
-| --- | --- | -- |
+| ---- | ---- | ----------- |
 | label | `string` | Label to display for the button. |
 | icon | `string` | Icon to display for the button. |
 | handler | `function` | Callback for the event handler once the button is clicked. |
 | styles | `string` | Classes to apply to the button. |
 | id | `string` | Id of the button. |
 | isVisible | `function` | Variable to define if button is visible or hidden. This function must return a boolean parameter. For instance, if it returns true the button will be visible. If it returns false the button will be hiden. |
-
 
 ## Details
 
@@ -85,6 +86,3 @@ Menu Button Model
 ## See also
 
 -   [Menu Button Model](./menu-button.model.md)
-
-
-

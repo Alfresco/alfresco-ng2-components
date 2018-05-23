@@ -2,9 +2,10 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Toolbar Title Component
 
-Supplies custom HTML to be included in a Toolbar component title.
+Supplies custom HTML to be included in a [Toolbar component](../core/toolbar.component.md) title.
 
 ![](../docassets/images/adf-toolbar-02.png)
 

@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Translation service
 
 Supports localisation.
@@ -10,21 +11,27 @@ Supports localisation.
 
 ### Methods
 
--   `addTranslationFolder(name: string = '', path: string = '')`  
-    Adds a new folder of translation source files.  
-    -   `name` - Name for the translation provider
-    -   `path` - Path to the folder
--   `use(lang: string): Observable<any>`  
-    Sets the target language for translations.  
-    -   `lang` - Code name for the language
--   `get(key: string|Array<string>, interpolateParams?: Object): Observable<any>`  
-    Gets the translation for the supplied key.  
-    -   `key` - Key to translate
-    -   `interpolateParams` - (Optional) String(s) to be interpolated into the main message
--   `instant(key: string | Array<string>, interpolateParams?: Object): any`  
-    Directly returns the translation for the supplied key.  
-    -   `key` - Key to translate
-    -   `interpolateParams` - (Optional) String(s) to be interpolated into the main message
+-   **addTranslationFolder**(name: `string` = `""`, path: `string` = `""`)<br/>
+    Adds a new folder of translation source files.
+    -   _name:_ `string`  - Name for the translation provider
+    -   _path:_ `string`  - Path to the folder
+-   **get**(key: `string | Array<string>` = `null`, interpolateParams?: `Object` = `null`): `Observable<string | any>`<br/>
+    Gets the translation for the supplied key.
+    -   _key:_ `string | Array<string>`  - Key to translate
+    -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
+    -   **Returns** `Observable<string | any>` - Translated text
+-   **instant**(key: `string | Array<string>` = `null`, interpolateParams?: `Object` = `null`): `string | any`<br/>
+    Directly returns the translation for the supplied key.
+    -   _key:_ `string | Array<string>`  - Key to translate
+    -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
+    -   **Returns** `string | any` - Translated text
+-   **onTranslationChanged**(lang: `string` = `null`)<br/>
+    Triggers a notification callback when the translation language changes.
+    -   _lang:_ `string`  - The new language code
+-   **use**(lang: `string` = `null`): `Observable<any>`<br/>
+    Sets the target language for translations.
+    -   _lang:_ `string`  - Code name for the language
+    -   **Returns** `Observable<any>` - Translations available for the language
 
 ## Details
 
@@ -140,7 +147,7 @@ You can register as many entries as you like.
 
 Depending on your application, you may want to have buttons or dropdown menus to allow language selection for the end users.
 
-You can use `TranslationService` to switch languages from your code based on input events of your choice:
+You can use [`TranslationService`](../core/translation.service.md) to switch languages from your code based on input events of your choice:
 
 ```ts
 class MyComponent {

@@ -12,25 +12,25 @@ Gets information about Process Services users.
 
 ### Methods
 
--   `getUserImage(user: UserProcessModel = null): string`<br/>
+-   **getUserImage**(user: [`UserProcessModel`](../core/user-process.model.md) = `null`): `string`<br/>
     Gets the profile picture URL for the specified user.
-    -   `user: UserProcessModel = null` -  The target user
+    -   _user:_ [`UserProcessModel`](../core/user-process.model.md)  - The target user
     -   **Returns** `string` - Profile picture URL
--   `getWorkflowUsers(taskId?: string = null, searchWord?: string = null): Observable<UserProcessModel[]>`<br/>
+-   **getWorkflowUsers**(taskId?: `string` = `null`, searchWord?: `string` = `null`): [`Observable<UserProcessModel[]>`](../core/user-process.model.md)<br/>
     Gets information about users across all tasks.
-    -   `taskId?: string = null` - (Optional) ID of the task
-    -   `searchWord?: string = null` - (Optional) Filter text to search for
-    -   **Returns** `Observable<UserProcessModel[]>` - Array of user information objects
--   `involveUserWithTask(taskId: string = null, idToInvolve: string = null): Observable<UserProcessModel[]>`<br/>
+    -   _taskId:_ `string`  - (Optional) ID of the task
+    -   _searchWord:_ `string`  - (Optional) Filter text to search for
+    -   **Returns** [`Observable<UserProcessModel[]>`](../core/user-process.model.md) - Array of user information objects
+-   **involveUserWithTask**(taskId: `string` = `null`, idToInvolve: `string` = `null`): [`Observable<UserProcessModel[]>`](../core/user-process.model.md)<br/>
     Sets a user to be involved with a task.
-    -   `taskId: string = null` -  ID of the target task
-    -   `idToInvolve: string = null` -  ID of the user to involve
-    -   **Returns** `Observable<UserProcessModel[]>` - Empty response when the update completes
--   `removeInvolvedUser(taskId: string = null, idToRemove: string = null): Observable<UserProcessModel[]>`<br/>
+    -   _taskId:_ `string`  - ID of the target task
+    -   _idToInvolve:_ `string`  - ID of the user to involve
+    -   **Returns** [`Observable<UserProcessModel[]>`](../core/user-process.model.md) - Empty response when the update completes
+-   **removeInvolvedUser**(taskId: `string` = `null`, idToRemove: `string` = `null`): [`Observable<UserProcessModel[]>`](../core/user-process.model.md)<br/>
     Removes a user who is currently involved with a task.
-    -   `taskId: string = null` -  ID of the target task
-    -   `idToRemove: string = null` -  ID of the user to remove
-    -   **Returns** `Observable<UserProcessModel[]>` - Empty response when the update completes
+    -   _taskId:_ `string`  - ID of the target task
+    -   _idToRemove:_ `string`  - ID of the user to remove
+    -   **Returns** [`Observable<UserProcessModel[]>`](../core/user-process.model.md) - Empty response when the update completes
 
 ## Details
 

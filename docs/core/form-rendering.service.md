@@ -6,34 +6,34 @@ Last reviewed: 2018-05-08
 
 # Form Rendering service
 
-Maps an APS form field type string onto the corresponding form widget component type.
+Maps an APS form field type string onto the corresponding form [widget component](../insights/widget.component.md) type.
 
 ## Class members
 
 ### Methods
 
--   `getComponentTypeResolver(type: string = null, defaultValue: Type<__type> =  this.defaultValue): DynamicComponentResolveFunction`<br/>
+-   **getComponentTypeResolver**(type: `string` = `null`, defaultValue: `Type<__type>` = `this.defaultValue`): `DynamicComponentResolveFunction`<br/>
     Gets the currently active ComponentTypeResolver function for a field type.
-    -   `type: string = null` -  The type whose resolver you want
-    -   `defaultValue: Type<__type> =  this.defaultValue` -  Default type returned for types that are not yet mapped
+    -   _type:_ `string`  - The type whose resolver you want
+    -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
     -   **Returns** `DynamicComponentResolveFunction` - Resolver function
--   `resolveComponentType(model: DynamicComponentModel = null, defaultValue: Type<__type> =  this.defaultValue): Type<__type>`<br/>
+-   **resolveComponentType**(model: [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts) = `null`, defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
     Finds the component type that is needed to render a form field.
-    -   `model: DynamicComponentModel = null` -  (form-field.model.md) for the field to render
-    -   `defaultValue: Type<__type> =  this.defaultValue` -  Default type returned for field types that are not yet mapped.
+    -   _model:_ [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts)  - (form-field.model.md) for the field to render
+    -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<__type>` - Component type
--   `setComponentTypeResolver(type: string = null, resolver: DynamicComponentResolveFunction = null, override: boolean = false)`<br/>
+-   **setComponentTypeResolver**(type: `string` = `null`, resolver: `DynamicComponentResolveFunction` = `null`, override: `boolean` = `true`)<br/>
     Sets or optionally replaces a ComponentTypeResolver function for a field type.
-    -   `type: string = null` -  The type whose resolver you want to set
-    -   `resolver: DynamicComponentResolveFunction = null` -  The new resolver function
-    -   `override: boolean = false` -  The new resolver will only replace an existing one if this parameter is true
+    -   _type:_ `string`  - The type whose resolver you want to set
+    -   _resolver:_ `DynamicComponentResolveFunction`  - The new resolver function
+    -   _override:_ `boolean`  - The new resolver will only replace an existing one if this parameter is true
 
 ## Details
 
-The Form Field component uses this service to choose which widget to use to render an instance of a
-form field. The Form Field model stores the field type name as a string (see the table below).
-The Form Rendering service maintains a mapping between each type name and
-a corresponding ComponentTypeResolver function. The function takes a FormFieldModel object as its argument and
+The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field component uses this service to choose which widget to use to render an instance of a
+form field. The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field model stores the field type name as a string (see the table below).
+The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Rendering service maintains a mapping between each type name and
+a corresponding ComponentTypeResolver function. The function takes a [`FormFieldModel`](../core/form-field.model.md) object as its argument and
 uses the data from the object to determine which widget should be used to render the field.
 
 In some cases, the field type string alone is enough to determine the widget type and so the function
@@ -59,7 +59,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 
 ### Default type mapping
 
-The Form Rendering service is initialized with the mapping shown in the table below:
+The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Rendering service is initialized with the mapping shown in the table below:
 
 | Stencil name | Field type string | Component type |
 | ------------ | ----------------- | -------------- |

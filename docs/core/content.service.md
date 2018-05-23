@@ -12,62 +12,62 @@ Accesses app-generated data objects via URLs and file downloads.
 
 ### Methods
 
--   `createFolder(relativePath: string = null, name: string = null, parentId?: string = null): Observable<FolderCreatedEvent>`<br/>
+-   **createFolder**(relativePath: `string` = `null`, name: `string` = `null`, parentId?: `string` = `null`): [`Observable<FolderCreatedEvent>`](../../lib/core/events/folder-created.event.ts)<br/>
     Creates a folder.
-    -   `relativePath: string = null` -  Location to create the folder
-    -   `name: string = null` -  Folder name
-    -   `parentId?: string = null` - (Optional) Node ID of parent folder
-    -   **Returns** `Observable<FolderCreatedEvent>` - Information about the new folder
--   `createTrustedUrl(blob: Blob = null): string`<br/>
+    -   _relativePath:_ `string`  - Location to create the folder
+    -   _name:_ `string`  - Folder name
+    -   _parentId:_ `string`  - (Optional) Node ID of parent folder
+    -   **Returns** [`Observable<FolderCreatedEvent>`](../../lib/core/events/folder-created.event.ts) - Information about the new folder
+-   **createTrustedUrl**(blob: `Blob` = `null`): `string`<br/>
     Creates a trusted object URL from the Blob. WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
-    -   `blob: Blob = null` -  Data to wrap into object URL
+    -   _blob:_ `Blob`  - Data to wrap into object URL
     -   **Returns** `string` - URL string
--   `downloadBlob(blob: Blob = null, fileName: string = null)`<br/>
+-   **downloadBlob**(blob: `Blob` = `null`, fileName: `string` = `null`)<br/>
     Invokes content download for a Blob with a file name.
-    -   `blob: Blob = null` -  Content to download.
-    -   `fileName: string = null` -  Name of the resulting file.
--   `downloadData(data: any = null, fileName: string = null)`<br/>
+    -   _blob:_ `Blob`  - Content to download.
+    -   _fileName:_ `string`  - Name of the resulting file.
+-   **downloadData**(data: `any` = `null`, fileName: `string` = `null`)<br/>
     Invokes content download for a data array with a file name.
-    -   `data: any = null` -  Data to download.
-    -   `fileName: string = null` -  Name of the resulting file.
--   `downloadJSON(json: any = null, fileName: string = null)`<br/>
+    -   _data:_ `any`  - Data to download.
+    -   _fileName:_ `string`  - Name of the resulting file.
+-   **downloadJSON**(json: `any` = `null`, fileName: `string` = `null`)<br/>
     Invokes content download for a JSON object with a file name.
-    -   `json: any = null` -  JSON object to download.
-    -   `fileName: string = null` -  Name of the resulting file.
--   `getContentUrl(node: any = null, attachment?: boolean = null, ticket?: string = null): string`<br/>
+    -   _json:_ `any`  - JSON object to download.
+    -   _fileName:_ `string`  - Name of the resulting file.
+-   **getContentUrl**(node: `any` = `null`, attachment?: `boolean` = `null`, ticket?: `string` = `null`): `string`<br/>
     Gets a content URL for the given node.
-    -   `node: any = null` -  Node to get URL for.
-    -   `attachment?: boolean = null` - (Optional) Toggles whether to retrieve content as an attachment for download
-    -   `ticket?: string = null` - (Optional) Custom ticket to use for authentication
+    -   _node:_ `any`  - Node to get URL for.
+    -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
+    -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
     -   **Returns** `string` - URL string
--   `getDocumentThumbnailUrl(node: any = null, attachment?: boolean = null, ticket?: string = null): string`<br/>
+-   **getDocumentThumbnailUrl**(node: `any` = `null`, attachment?: `boolean` = `null`, ticket?: `string` = `null`): `string`<br/>
     Gets a thumbnail URL for the given document node.
-    -   `node: any = null` -  Node to get URL for.
-    -   `attachment?: boolean = null` - (Optional) Toggles whether to retrieve content as an attachment for download
-    -   `ticket?: string = null` - (Optional) Custom ticket to use for authentication
+    -   _node:_ `any`  - Node to get URL for.
+    -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
+    -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
     -   **Returns** `string` - URL string
--   `getNode(nodeId: string = null, opts?: any = null): Observable<NodeEntry>`<br/>
+-   **getNode**(nodeId: `string` = `null`, opts?: `any` = `null`): `Observable<NodeEntry>`<br/>
     Gets a Node via its node ID.
-    -   `nodeId: string = null` -  ID of the target node
-    -   `opts?: any = null` - (Optional) Options supported by JSAPI
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _opts:_ `any`  - (Optional) Options supported by JSAPI
     -   **Returns** `Observable<NodeEntry>` - Details of the folder
--   `getNodeContent(nodeId: string = null): Observable<any>`<br/>
+-   **getNodeContent**(nodeId: `string` = `null`): `Observable<any>`<br/>
     Gets content for the given node.
-    -   `nodeId: string = null` -  ID of the target node
+    -   _nodeId:_ `string`  - ID of the target node
     -   **Returns** `Observable<any>` - Content data
--   `hasAllowableOperations(node: any = null): boolean`<br/>
+-   **hasAllowableOperations**(node: `any` = `null`): `boolean`<br/>
     Checks if the node has the properties allowableOperations
-    -   `node: any = null` -  Node to check allowableOperations
+    -   _node:_ `any`  - Node to check allowableOperations
     -   **Returns** `boolean` - True if the node has the property, false otherwise
--   `hasPermission(node: Node = null, permission: PermissionsEnum | string = null): boolean`<br/>
+-   **hasPermission**(node: `Node` = `null`, permission: `PermissionsEnum | string` = `null`): `boolean`<br/>
     Checks if the user has permissions on that node
-    -   `node: Node = null` -  Node to check allowableOperations
-    -   `permission: PermissionsEnum | string = null` -  Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+    -   _node:_ `Node`  - Node to check allowableOperations
+    -   _permission:_ `PermissionsEnum | string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 
 ## Details
 
-Use the Content service to deliver data to the user from `Blob` objects.
+Use the [Content service](../core/content.service.md) to deliver data to the user from `Blob` objects.
 
 The [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) class
 (implemented in the browser, not ADF) represents an array of bytes that you can

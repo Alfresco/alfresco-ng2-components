@@ -12,19 +12,21 @@ Stores key-value data items as browser cookies.
 
 ### Methods
 
--   `getItem(key: string = null): string | null`<br/>
+-   **clear**()<br/>
+
+-   **getItem**(key: `string` = `null`): `string | null`<br/>
     Retrieves a cookie by its key.
-    -   `key: string = null` -  Key to identify the cookie
+    -   _key:_ `string`  - Key to identify the cookie
     -   **Returns** `string | null` - The cookie data or null if it is not found
--   `isEnabled(): boolean`<br/>
+-   **isEnabled**(): `boolean`<br/>
     Checks if cookies are enabled.
     -   **Returns** `boolean` - True if enabled, false otherwise
--   `setItem(key: string = null, data: string = null, expiration: Date | null = null, path: string | null = null)`<br/>
+-   **setItem**(key: `string` = `null`, data: `string` = `null`, expiration: `Date | null` = `null`, path: `string | null` = `null`)<br/>
     Sets a cookie.
-    -   `key: string = null` -  Key to identify the cookie
-    -   `data: string = null` -  Data value to set for the cookie
-    -   `expiration: Date | null = null` -  Expiration date of the data
-    -   `path: string | null = null` -  "Pathname" to store the cookie
+    -   _key:_ `string`  - Key to identify the cookie
+    -   _data:_ `string`  - Data value to set for the cookie
+    -   _expiration:_ `Date | null`  - Expiration date of the data
+    -   _path:_ `string | null`  - "Pathname" to store the cookie
 
 ## Details
 

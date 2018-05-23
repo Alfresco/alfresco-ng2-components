@@ -6,7 +6,7 @@ Last reviewed: 2018-03-20
 
 # Form Field model
 
-Contains the value and metadata for a field of a Form component.
+Contains the value and metadata for a field of a [`Form`](../../lib/process-services/task-list/models/form.model.ts) component.
 
 ## Properties
 
@@ -49,16 +49,16 @@ Contains the value and metadata for a field of a Form component.
 | fields | FormFieldModel\[] | \[] | Fields contained within a container field |
 | columns | ContainerColumnModel\[] | \[] | Column definitions for a container field |
 | emptyOption | FormFieldOption |  | Dropdown menu item to use when no option is chosen |
-| validationSummary | string |  | Error/information message added during field validation (see [FormFieldValidator](form-field-validator.interface.md) interface) |
+| validationSummary | string |  | Error/information message added during field validation (see [`FormFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) interface) |
 
 ## Details
 
-Every field of a form has an associated `FormFieldModel` instance that contains the
+Every field of a form has an associated [`FormFieldModel`](../core/form-field.model.md) instance that contains the
 field's value and metadata. The standard widgets use this information to render fields and you can also make use of it in your own custom widgets and field validators.
 
 ### Custom widgets
 
-You will need to use the properties of `FormFieldModel` if you want to implement your own
+You will need to use the properties of [`FormFieldModel`](../core/form-field.model.md) if you want to implement your own
 custom widgets. Aside from the `value` property (which contains the data value entered into
 the field), there are also a few other fields that are used for specific types of data. For
 example, the `currency` property holds the currency symbol to be displayed next to the value
@@ -66,13 +66,13 @@ example, the `currency` property holds the currency symbol to be displayed next 
 
 ### Validation
 
-A [Form](form.component.md) or [Task Details](../process-services/task-details.component.md) component can
+A [`Form`](../../lib/process-services/task-list/models/form.model.ts) or [Task Details](../process-services/task-details.component.md) component can
 be supplied with a set of validator objects. Each validator applies a particular kind of
-check to a field. A number of `FormFieldModel` properties are used by validators. For
+check to a field. A number of [`FormFieldModel`](../core/form-field.model.md) properties are used by validators. For
 example, `minValue` and `maxValue` are used to check that a numeric value falls within an
 allowed range and `regexPattern` defines a regular expression that a text field should
 match. Also, the `validationSummary` is used to send a message back from the validator
-for the user to read. See the [FormFieldValidator](form-field-validator.interface.md) page for more information about implementing validators.
+for the user to read. See the [`FormFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) page for more information about implementing validators.
 
 ### REST properties
 
@@ -96,6 +96,6 @@ contains full details about how the REST calls work, along with a worked example
 ## See also
 
 -   [Extensibility](../user-guide/extensibility.md)
--   [FormFieldValidator](form-field-validator.interface.md)
+-   [`FormFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts)
 -   [Form rendering service](form-rendering.service.md)
 -   [Form component](form.component.md)

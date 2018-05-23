@@ -12,25 +12,31 @@ Accesses and manipulates sites from a Content Services repository.
 
 ### Methods
 
--   `getSites(opts: any = {}): Observable<SitePaging>`  
-    Gets a list of all sites in the repository.  
-    -   `opts` - Options supported by JSAPI
--   `getSite(siteId: string, opts?: any): Observable<SiteEntry>`  
-    Gets the details for a site.  
-    -   `siteId` - ID of the target site
-    -   `opts` - (Optional) Options supported by JSAPI
--   `deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any>`  
-    Deletes a site.  
-    -   `siteId` - Site to delete
-    -   `permanentFlag` - True: deletion is permanent; False: site is moved to the trash
--   `getSiteContent(siteId: string): Observable<SiteEntry>`  
-    Gets a site's content.  
-    -   `siteId` - ID of the target site
--   `getSiteMembers(siteId: string): Observable<SiteEntry>`  
-    Gets a list of all a site's members.  
-    -   `siteId` - ID of the target site
--   `getEcmCurrentLoggedUserName(): string`  
-    Gets the username of the user currently logged into ACS.  
+-   **deleteSite**(siteId: `string` = `null`, permanentFlag: `boolean` = `true`): `Observable<any>`<br/>
+    Deletes a site.
+    -   _siteId:_ `string`  - Site to delete
+    -   _permanentFlag:_ `boolean`  - True: deletion is permanent; False: site is moved to the trash
+    -   **Returns** `Observable<any>` - Null response notifying when the operation is complete
+-   **getEcmCurrentLoggedUserName**(): `string`<br/>
+    Gets the username of the user currently logged into ACS.
+    -   **Returns** `string` - Username string
+-   **getSite**(siteId: `string` = `null`, opts?: `any` = `null`): `Observable<SiteEntry>`<br/>
+    Gets the details for a site.
+    -   _siteId:_ `string`  - ID of the target site
+    -   _opts:_ `any`  - (Optional) Options supported by JSAPI
+    -   **Returns** `Observable<SiteEntry>` - Information about the site
+-   **getSiteContent**(siteId: `string` = `null`): `Observable<SiteEntry>`<br/>
+    Gets a site's content.
+    -   _siteId:_ `string`  - ID of the target site
+    -   **Returns** `Observable<SiteEntry>` - Site content
+-   **getSiteMembers**(siteId: `string` = `null`): `Observable<SiteEntry>`<br/>
+    Gets a list of all a site's members.
+    -   _siteId:_ `string`  - ID of the target site
+    -   **Returns** `Observable<SiteEntry>` - Site members
+-   **getSites**(opts: `any` = `{}`): `Observable<SitePaging>`<br/>
+    Gets a list of all sites in the repository.
+    -   _opts:_ `any`  - Options supported by JSAPI
+    -   **Returns** `Observable<SitePaging>` - List of sites
 
 ## Details
 

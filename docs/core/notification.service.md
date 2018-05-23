@@ -2,29 +2,32 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Notification Service
 
 Shows a notification message with optional feedback.
 
-![Notification Service screenshot](docassets/images/NotiService.png)
+![Notification Service screenshot](../docassets/images/NotiService.png)
 
 ## Class members
 
 ### Methods
 
--   `openSnackMessage(message: string, millisecondsDuration?: number): MatSnackBarRef<any>`  
-    Opens a snackbar notification to show a message.  
-    -   `message` - The message to show
-    -   `millisecondsDuration` - (Optional) Time before notification disappears after being shown
--   `openSnackMessageAction(message: string, action: string, millisecondsDuration?: number): MatSnackBarRef<any>`  
-    Opens a snackbar notification with a message and a response button.  
-    -   `message` - The message to show
-    -   `action` - Caption for the response button
-    -   `millisecondsDuration` - (Optional) Time before the notification disappears (unless the button is clicked)
+-   **openSnackMessage**(message: `string` = `null`, millisecondsDuration?: `number` = `null`): `MatSnackBarRef<any>`<br/>
+    Opens a snackbar notification to show a message.
+    -   _message:_ `string`  - The message to show
+    -   _millisecondsDuration:_ `number`  - (Optional) Time before notification disappears after being shown
+    -   **Returns** `MatSnackBarRef<any>` - Information/control object for the snackbar
+-   **openSnackMessageAction**(message: `string` = `null`, action: `string` = `null`, millisecondsDuration?: `number` = `null`): `MatSnackBarRef<any>`<br/>
+    Opens a snackbar notification with a message and a response button.
+    -   _message:_ `string`  - The message to show
+    -   _action:_ `string`  - Caption for the response button
+    -   _millisecondsDuration:_ `number`  - (Optional) Time before the notification disappears (unless the button is clicked)
+    -   **Returns** `MatSnackBarRef<any>` - Information/control object for the snackbar
 
 ## Details
 
-The Notification Service is implemented on top of the Angular Material Design snackbar.
+The [Notification Service](../core/notification.service.md) is implemented on top of the Angular Material Design snackbar.
 Use this service to show a notification message, and optionally get feedback from it.
 
 ```ts

@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Alfresco Content service
 
 Gets URLs and access info and creates folders in Content Services.
@@ -19,13 +20,13 @@ Gets the URL for a node's content.
 `getNodeContent(nodeId: string): Observable<any>`<br/>
 Gets a node's content.
 
-`createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent>`<br/>
+[`createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent>`](../../lib/core/events/folder-created.event.ts)<br/>
 Creates a folder.
 
 `hasPermission(node: any, permission: PermissionsEnum|string): boolean`<br/>
 Checks if the user has the specified permissions for `node`.
 
-`hasAllowableOperations(node: any): boolean `<br/>
+`hasAllowableOperations(node: any): boolean`<br/>
 Checks if the the node has the `allowableOperations` property.
 
 ## Details
@@ -51,9 +52,7 @@ See the
 for more information about the low-level REST API that these methods are based on.
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+
 <!-- seealso start -->
 
 <!-- seealso end -->
-
-
-

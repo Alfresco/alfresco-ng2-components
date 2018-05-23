@@ -105,20 +105,20 @@ URL with `urlFile`.
 | thumbnailsTemplate | `TemplateRef<any>` |  null | The template for the pdf thumbnails. |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
 | urlFileViewer | `string` |  null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
-| fileNodeId | `` |  | Node Id of the file to load. |
+| fileNodeId |  |  | Node Id of the file to load. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| download | `any` | Emitted when user clicks the 'Download' button. |
-| extensionChange | `any` | Emitted when the filename extension changes. |
-| goBack | `any` | Emitted when user clicks the 'Back' button. |
-| navigateBefore | `any` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
-| navigateNext | `any` | Emitted when user clicks 'Navigate Next' (">") button. |
-| print | `any` | Emitted when user clicks the 'Print' button. |
-| share | `any` | Emitted when user clicks the 'Share' button. |
-| showViewerChange | `any` | Emitted when the viewer is shown or hidden. |
+| download | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Download' button. |
+| extensionChange | `EventEmitter<string>` | Emitted when the filename extension changes. |
+| goBack | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Back' button. |
+| navigateBefore | `EventEmitter<Object>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
+| navigateNext | `EventEmitter<Object>` | Emitted when user clicks 'Navigate Next' (">") button. |
+| print | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Print' button. |
+| share | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Share' button. |
+| showViewerChange | `EventEmitter<boolean>` | Emitted when the viewer is shown or hidden. |
 
 ## Keyboard shortcuts
 
@@ -183,7 +183,7 @@ You can provide custom file parameters, for example a value for the `mimeType` o
 
 ### Supported file formats
 
-The Viewer component consists of separate Views that handle particular types of type families based on either a file extension or a mime type:
+The [Viewer component](../core/viewer.component.md) consists of separate Views that handle particular types of type families based on either a file extension or a mime type:
 
 -   PDF View
     -   application/pdf
@@ -241,7 +241,7 @@ Configure your webpack-enabled application with the PDF.js library as follows.
 npm install pdfjs-dist
 ```
 
-2.  Update `vendors.ts` by appending the following code. This will enable the viewer component
+2.  Update `vendors.ts` by appending the following code. This will enable the [viewer component](../core/viewer.component.md)
     and compatibility mode for all browsers. It will also configure the web worker for the PDF.js
     library to render PDF files in the background:
 
@@ -265,7 +265,7 @@ new CopyWebpackPlugin([
 ])
 ```
 
-The Viewer component now should be able to display PDF files.
+The [Viewer component](../core/viewer.component.md) now should be able to display PDF files.
 
 ### Custom toolbar
 
@@ -309,7 +309,7 @@ The result should look like this:
 
 ### Custom sidebar
 
-The Viewer component also supports custom sidebar components and layouts.
+The [Viewer component](../core/viewer.component.md) also supports custom sidebar components and layouts.
 Set the `allowSidebar` property to `true` to enable this feature.
 
 The custom sidebar can be injected in two different ways:
@@ -428,7 +428,7 @@ You can enable a custom "More actions" menu by providing at least one action ins
 ### Extending the Viewer
 
 You can define your own custom handle to handle other file formats that are not yet supported by
-the Viewer component. Below is an example that shows how to use the `adf-viewer-extension`
+the [Viewer component](../core/viewer.component.md). Below is an example that shows how to use the `adf-viewer-extension`
 to handle 3D data files:
 
 ```html

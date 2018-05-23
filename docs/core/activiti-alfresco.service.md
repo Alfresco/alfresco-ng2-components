@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Activiti Alfresco Content Service
 
 Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS).
@@ -35,7 +36,8 @@ export class SomePageComponent implements OnInit {
 
 ## Methods
 
-#### getAlfrescoNodes(accountId: string, folderId: string): Observable<[ExternalContent]>
+#### getAlfrescoNodes(accountId: string, folderId: string): Observable&lt;[ExternalContent]>
+
 Get all the nodes under passed in folder node ID (e.g. 3062d73b-fe47-4040-89d2-79efae63869c) for passed in 
 Alfresco Repository account ID as configured in APS: 
 
@@ -58,26 +60,25 @@ The `folderNodeId` needs to identify a folder node ID in the Alfresco Repository
 
 The response contained in `nodes` is an array with properties for each object like in this sample:
 
-```
-0:
-    folder: false
-    id: "2223d3c2-0709-4dd7-a79b-c45571901889;1.0"
-    simpleType: "pdf"
-    title: "JLAN_Server_Installation_Guide.pdf"
-1:
-    folder: false
-    id: "900b4dc0-bfdc-4ec1-84dd-5f1f0a420066;1.0"
-    simpleType: "image"
-    title: "Screen Shot 2017-09-21 at 15.44.23.png"
-    
-2:
-    folder: true
-    id: "f7010382-7b4e-4a78-bb94-9de092439230"
-    simpleType: "folder"
-    title: "Event More Stuff"
-```
+    0:
+        folder: false
+        id: "2223d3c2-0709-4dd7-a79b-c45571901889;1.0"
+        simpleType: "pdf"
+        title: "JLAN_Server_Installation_Guide.pdf"
+    1:
+        folder: false
+        id: "900b4dc0-bfdc-4ec1-84dd-5f1f0a420066;1.0"
+        simpleType: "image"
+        title: "Screen Shot 2017-09-21 at 15.44.23.png"
+        
+    2:
+        folder: true
+        id: "f7010382-7b4e-4a78-bb94-9de092439230"
+        simpleType: "folder"
+        title: "Event More Stuff"
 
 #### linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink>
+
 Link Alfresco content as related content in APS by passing in Alfresco node identifying the content, the Share site
 that contains the content, and the Alfresco Repository account ID as configured in APS:
 
@@ -109,23 +110,21 @@ The `externalContentNode` identifies the content that should be set up as tempor
 
 The response contained in `link` looks like in this sample:
 
-```
-link:
-    contentAvailable: true
-    created: Tue Nov 07 2017 13:18:48 GMT+0000 (GMT) {}
-    createdBy: {id: 1, firstName: null, lastName: "Administrator", email: "admin@app.activiti.com"}
-    id: 6006
-    link:true
-    mimeType: null
-    name: "simple.txt"
-    previewStatus: "queued"
-    relatedContent: false
-    simpleType: "content"
-    source: "alfresco-2"
-    sourceId: "da196918-1324-4e97-9d26-d28f1837a0b6@sample-workspace"
-    thumbnailStatus: "queued"
-```
- 
+    link:
+        contentAvailable: true
+        created: Tue Nov 07 2017 13:18:48 GMT+0000 (GMT) {}
+        createdBy: {id: 1, firstName: null, lastName: "Administrator", email: "admin@app.activiti.com"}
+        id: 6006
+        link:true
+        mimeType: null
+        name: "simple.txt"
+        previewStatus: "queued"
+        relatedContent: false
+        simpleType: "content"
+        source: "alfresco-2"
+        sourceId: "da196918-1324-4e97-9d26-d28f1837a0b6@sample-workspace"
+        thumbnailStatus: "queued"
+
 <!-- seealso start -->
 
 <!-- seealso end -->

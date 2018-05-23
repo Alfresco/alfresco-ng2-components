@@ -18,9 +18,9 @@ Implements text field input masks.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| textMask | any |  | Object defining mask and "reversed" status. |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| textMask | `object` |  | Object defining mask and "reversed" status. |
 
 ## Details
 

@@ -37,4 +37,4 @@ You can also chain values with other pipes, for example `translation` one:
 
 ## See also
 
-- [App Config service](app-config.service.md)
+-   [App Config service](app-config.service.md)

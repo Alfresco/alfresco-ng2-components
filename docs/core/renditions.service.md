@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Deprecated
 ---
+
 # Renditions service
 
 Manages prearranged conversions of content to different formats.
@@ -31,11 +32,11 @@ version of ADF.
 ACS allows content items to be converted to other formats for display or delivery.
 For example, a raw text file might be converted to HTML to enable better formatting
 in a web browser or a PDF might be converted to an equivalent bitmap image. A
-*rendition* is a prearranged conversion that is set up for an item for convenient
+_rendition_ is a prearranged conversion that is set up for an item for convenient
 repeated use. More information about renditions is available in the
 [Content Services documentation](https://docs.alfresco.com/5.2/references/dev-extension-points-content-transformer.html).
 
-In the Renditions service methods, the `nodeId` is a string identifying the content
+In the [Renditions service](../core/renditions.service.md) methods, the `nodeId` is a string identifying the content
 node that the rendition applies to. This can be obtained from
 [Document List component](../content-services/document-list.component.md) events and various other places
 in the ADF API. The `encoding` identifies the conversion performed by the rendition.
