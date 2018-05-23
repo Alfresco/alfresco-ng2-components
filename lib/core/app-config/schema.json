@@ -365,7 +365,7 @@
                         "properties": {
                               "type": "array",
                               "items": {
-                                "enum": [ "assignee", "status", "priority", "dueDate", "category", "parentName", "created-by", "created", "id", "description", "formName" ]
+                                "enum": [ "assignee", "status", "priority", "dueDate", "category", "parentName", "created", "id", "description", "formName" ]
                               }
                         }
                     }

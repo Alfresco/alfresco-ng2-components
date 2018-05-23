@@ -41,7 +41,7 @@ The component populates an internal array of
 
 By default all properties are displayed:
 
-***assignee***, ***status***, ***priority***, ***dueDate***, ***category***, ***parentName***, ***created-by***, ***created***, ***id***, ***description***, ***formName***. 
+***assignee***, ***status***, ***priority***, ***dueDate***, ***category***, ***parentName***, ***created***, ***id***, ***description***, ***formName***. 
 
 However, you can also choose which properties to show using a configuration in `app.config.json`:
 

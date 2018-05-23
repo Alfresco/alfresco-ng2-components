@@ -114,16 +114,6 @@ describe('TaskHeaderComponent', () => {
 
     }));
 
-    it('should display created-by', async(() => {
-        component.refreshData();
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-created-by"] .adf-property-value'));
-            expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
-        });
-    }));
-
     it('should display priority', async(() => {
         component.taskDetails.priority = 27;
         component.refreshData();
