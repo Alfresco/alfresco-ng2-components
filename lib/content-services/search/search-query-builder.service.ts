@@ -25,6 +25,7 @@ import { SearchRange } from './search-range.interface';
 import { SearchConfiguration } from './search-configuration.interface';
 import { FacetQuery } from './facet-query.interface';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
+import { FacetField } from './facet-field.interface';
 
 @Injectable()
 export class SearchQueryBuilderService {
@@ -47,7 +48,7 @@ export class SearchQueryBuilderService {
         this.config = appConfig.get<SearchConfiguration>('search');
 
         if (this.config) {
-            this.categories = (this.config.categories || []).filter(f => f.enabled);
+            this.categories = (this.config.categories || []).filter(category => category.enabled);
             this.filterQueries = this.config.filterQueries || [];
 
             if (this.config.sorting) {
@@ -58,7 +59,7 @@ export class SearchQueryBuilderService {
 
     addFilterQuery(query: string): void {
         if (query) {
-            const existing = this.filterQueries.find(q => q.query === query);
+            const existing = this.filterQueries.find(filterQuery => filterQuery.query === query);
             if (!existing) {
                 this.filterQueries.push({ query: query });
             }
@@ -67,14 +68,22 @@ export class SearchQueryBuilderService {
 
     removeFilterQuery(query: string): void {
         if (query) {
-            this.filterQueries = this.filterQueries.filter(f => f.query !== query);
+            this.filterQueries = this.filterQueries
+                .filter(filterQuery => filterQuery.query !== query);
         }
     }
 
     getFacetQuery(label: string): FacetQuery {
+        if (label && this.hasFacetQueries) {
+            return this.config.facetQueries.queries.find(query => query.label === label);
+        }
+        return null;
+    }
+
+    getFacetField(label: string): FacetField {
         if (label) {
-            const queries = this.config.facetQueries.queries || [];
-            return queries.find(q => q.label === label);
+            const fields = this.config.facetFields || [];
+            return fields.find(field => field.label === label);
         }
         return null;
     }
@@ -161,10 +170,8 @@ export class SearchQueryBuilderService {
     }
 
     private get facetQueries(): FacetQuery[] {
-        const config = this.config.facetQueries;
-
-        if (config && config.queries && config.queries.length > 0) {
-            return config.queries.map(query => {
+        if (this.hasFacetQueries) {
+            return this.config.facetQueries.queries.map(query => {
                 return <FacetQuery> { ...query };
             });
         }
@@ -189,5 +196,15 @@ export class SearchQueryBuilderService {
         }
 
         return null;
+    }
+
+    private get hasFacetQueries(): boolean {
+        if (this.config
+            && this.config.facetQueries
+            && this.config.facetQueries.queries
+            && this.config.facetQueries.queries.length > 0) {
+            return true;
+        }
+        return false;
     }
 }

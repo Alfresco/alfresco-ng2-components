@@ -72,7 +72,7 @@
     "SELECT_LOCATION": "場所の選択"
   },
   "OPERATION": {
-    "SUCCES": {
+    "SUCCESS": {
       "CONTENT": {
         "COPY": "コピーが完了しました",
         "MOVE": "移動が完了しました"

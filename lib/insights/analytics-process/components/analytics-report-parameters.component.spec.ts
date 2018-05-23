@@ -22,6 +22,8 @@ import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { AnalyticsService } from '../services/analytics.service';
+import { Observable } from 'rxjs/Observable';
 
 declare let jasmine: any;
 
@@ -31,6 +33,7 @@ describe('AnalyticsReportParametersComponent', () => {
     let fixture: ComponentFixture<AnalyticsReportParametersComponent>;
     let element: HTMLElement;
     let validForm = false;
+    let service: AnalyticsService;
 
     setupTestBed({
         imports: [InsightsTestingModule]
@@ -38,6 +41,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsReportParametersComponent);
+        service = TestBed.get(AnalyticsService);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         spyOn(component, 'isFormValid').and.callFake(() => {
@@ -444,6 +448,7 @@ describe('AnalyticsReportParametersComponent', () => {
             }));
 
             it('Should be able to change the report title', (done) => {
+                spyOn(service, 'updateReport').and.returnValue(Observable.of(analyticParamsMock.reportDefParamStatus));
 
                 let title: HTMLElement = element.querySelector('h4');
                 title.click();
@@ -463,12 +468,6 @@ describe('AnalyticsReportParametersComponent', () => {
                     let titleChanged: HTMLElement = element.querySelector('h4');
                     expect(titleChanged.textContent.trim()).toEqual('FAKE_TEST_NAME');
                     done();
-                });
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: analyticParamsMock.reportDefParamStatus
                 });
             });
 

@@ -23,5 +23,6 @@ export interface FacetField {
     offset?: number;
     prefix?: string;
 
+    pageSize?: number;
     $checked?: boolean;
 }

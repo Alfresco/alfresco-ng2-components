@@ -35,47 +35,53 @@ describe('DropdownBreadcrumb', () => {
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
         component = fixture.componentInstance;
         documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
-    });
+    }));
 
-    afterEach(() => {
+    afterEach(async(() => {
         fixture.destroy();
-    });
+    }));
 
     function openSelect() {
-        const folderIcon = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-trigger"]'));
-        folderIcon.triggerEventHandler('click', null);
+        const folderIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="dropdown-breadcrumb-trigger"]');
+        folderIcon.click();
         fixture.detectChanges();
     }
 
     function triggerComponentChange(fakeNodeData) {
         const change = new SimpleChange(null, fakeNodeData, true);
-        component.ngOnChanges({'folderNode': change});
+        component.ngOnChanges({ 'folderNode': change });
         fixture.detectChanges();
     }
 
     function clickOnTheFirstOption() {
-        const option = fixture.debugElement.query(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
-        option.triggerEventHandler('click', null);
+        const option: any = document.querySelector('[id^="mat-option"]');
+        option.click();
     }
 
-    it('should display only the current folder name if there is no previous folders', () => {
+    it('should display only the current folder name if there is no previous folders', (done) => {
         fakeNodeWithCreatePermission.path.elements = [];
 
         triggerComponentChange(fakeNodeWithCreatePermission);
-        openSelect();
 
-        const currentFolder = fixture.debugElement.query(By.css('[data-automation-id="current-folder"]'));
-        const path = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-path"]'));
-        expect(path).toBeNull();
-        expect(currentFolder).not.toBeNull();
-        expect(currentFolder.nativeElement.innerText.trim()).toEqual('Test');
+        fixture.whenStable().then(() => {
+
+            openSelect();
+
+            const currentFolder = fixture.debugElement.query(By.css('[data-automation-id="current-folder"]'));
+            const path = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-path"]'));
+            expect(path).toBeNull();
+            expect(currentFolder).not.toBeNull();
+            expect(currentFolder.nativeElement.innerText.trim()).toEqual('Test');
+
+            done();
+        });
     });
 
-    it('should display only the path in the selectbox', () => {
+    it('should display only the path in the selectbox', (done) => {
         fakeNodeWithCreatePermission.path.elements = [
             { id: '1', name: 'Stark Industries' },
             { id: '2', name: 'User Homes' },
@@ -83,15 +89,20 @@ describe('DropdownBreadcrumb', () => {
         ];
 
         triggerComponentChange(fakeNodeWithCreatePermission);
-        openSelect();
 
-        const path = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-path"]'));
-        const options = fixture.debugElement.queryAll(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
-        expect(path).not.toBeNull();
-        expect(options.length).toBe(3);
+        fixture.whenStable().then(() => {
+
+            openSelect();
+
+            const path = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-path"]'));
+            const options = fixture.debugElement.queryAll(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
+            expect(path).not.toBeNull();
+            expect(options.length).toBe(3);
+            done();
+        });
     });
 
-    it('should display the path in reverse order', () => {
+    it('should display the path in reverse order', (done) => {
         fakeNodeWithCreatePermission.path.elements = [
             { id: '1', name: 'Stark Industries' },
             { id: '2', name: 'User Homes' },
@@ -99,46 +110,73 @@ describe('DropdownBreadcrumb', () => {
         ];
 
         triggerComponentChange(fakeNodeWithCreatePermission);
-        openSelect();
 
-        const options = fixture.debugElement.queryAll(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
-        expect(options.length).toBe(3);
-        expect(options[0].nativeElement.innerText.trim()).toBe('J.A.R.V.I.S');
-        expect(options[1].nativeElement.innerText.trim()).toBe('User Homes');
-        expect(options[2].nativeElement.innerText.trim()).toBe('Stark Industries');
+        fixture.whenStable().then(() => {
+
+            openSelect();
+
+            fixture.whenStable().then(() => {
+                const options = fixture.debugElement.queryAll(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
+                expect(options.length).toBe(3);
+                expect(options[0].nativeElement.innerText.trim()).toBe('J.A.R.V.I.S');
+                expect(options[1].nativeElement.innerText.trim()).toBe('User Homes');
+                expect(options[2].nativeElement.innerText.trim()).toBe('Stark Industries');
+                done();
+            });
+        });
     });
 
     it('should emit navigation event when clicking on an option', (done) => {
         fakeNodeWithCreatePermission.path.elements = [{ id: '1', name: 'Stark Industries' }];
-        component.navigate.subscribe(val => {
-            expect(val).toEqual({ id: '1', name: 'Stark Industries' });
-            done();
-        });
 
         triggerComponentChange(fakeNodeWithCreatePermission);
-        openSelect();
 
-        clickOnTheFirstOption();
+        fixture.whenStable().then(() => {
+
+            openSelect();
+
+            fixture.whenStable().then(() => {
+                component.navigate.subscribe(val => {
+                    expect(val).toEqual({ id: '1', name: 'Stark Industries' });
+                    done();
+                });
+
+                clickOnTheFirstOption();
+            });
+        });
     });
 
-    it('should update document list  when clicking on an option', () => {
+    it('should update document list  when clicking on an option', (done) => {
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
         component.target = documentList;
         fakeNodeWithCreatePermission.path.elements = [{ id: '1', name: 'Stark Industries' }];
         triggerComponentChange(fakeNodeWithCreatePermission);
-        openSelect();
 
-        clickOnTheFirstOption();
+        fixture.whenStable().then(() => {
+            openSelect();
+            fixture.whenStable().then(() => {
 
-        expect(documentList.loadFolderByNodeId).toHaveBeenCalledWith('1');
+                clickOnTheFirstOption();
+
+                expect(documentList.loadFolderByNodeId).toHaveBeenCalledWith('1');
+                done();
+            });
+        });
     });
 
-    it('should open the selectbox when clicking on the folder icon', async(() => {
+    it('should open the selectbox when clicking on the folder icon', (done) => {
         triggerComponentChange(fakeNodeWithCreatePermission);
         spyOn(component.selectbox, 'open');
 
-        openSelect();
+        fixture.whenStable().then(() => {
 
-        expect(component.selectbox.open).toHaveBeenCalled();
-    }));
+            openSelect();
+
+            fixture.whenStable().then(() => {
+
+                expect(component.selectbox.open).toHaveBeenCalled();
+                done();
+            });
+        });
+    });
 });

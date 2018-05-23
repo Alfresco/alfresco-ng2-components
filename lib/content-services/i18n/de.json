@@ -72,7 +72,7 @@
     "SELECT_LOCATION": "Speicherort auswählen"
   },
   "OPERATION": {
-    "SUCCES": {
+    "SUCCESS": {
       "CONTENT": {
         "COPY": "Kopieren erfolgreich",
         "MOVE": "Verschieben erfolgreich"

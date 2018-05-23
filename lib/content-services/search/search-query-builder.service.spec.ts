@@ -144,6 +144,35 @@ describe('SearchQueryBuilder', () => {
         expect(query2).toBeNull();
     });
 
+    it('should fetch facet from the config by label', () => {
+        const config: SearchConfiguration = {
+            categories: [],
+            facetFields: [
+                { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
+                { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
+            ]
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        const field = builder.getFacetField('Size');
+
+        expect(field.label).toBe('Size');
+        expect(field.field).toBe('content.size');
+    });
+
+    it('should not fetch facet from the config by label', () => {
+        const config: SearchConfiguration = {
+            categories: [],
+            facetFields: [
+                { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
+                { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
+            ]
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        const field = builder.getFacetField('Missing');
+
+        expect(field).toBeUndefined();
+    });
+
     xit('should build query and raise an event on update', async () => {
         const builder = new SearchQueryBuilderService(buildConfig({}), null);
         const query = {};

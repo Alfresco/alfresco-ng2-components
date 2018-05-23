@@ -35,13 +35,15 @@ import { SearchFilterList } from './models/search-filter-list.model';
 })
 export class SearchFilterComponent implements OnInit {
 
+    private DEFAULT_PAGE_SIZE = 5;
+
     selectedFacetQueries: string[] = [];
     selectedBuckets: FacetFieldBucket[] = [];
     responseFacetQueries: ResponseFacetQueryList;
     responseFacetFields: ResponseFacetField[] = [];
 
     facetQueriesLabel: string = 'Facet Queries';
-    facetQueriesPageSize = 5;
+    facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesExpanded = false;
 
     constructor(public queryBuilder: SearchQueryBuilderService,
@@ -51,7 +53,7 @@ export class SearchFilterComponent implements OnInit {
 
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
-            this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || 5;
+            this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || this.DEFAULT_PAGE_SIZE;
             this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
         }
 
@@ -127,15 +129,20 @@ export class SearchFilterComponent implements OnInit {
         this.queryBuilder.update();
     }
 
-    unselectFacetQuery(label: string) {
+    unselectFacetQuery(label: string, reloadQuery: boolean = true) {
         const facetQuery = this.queryBuilder.getFacetQuery(label);
+        if (facetQuery) {
+            this.queryBuilder.removeFilterQuery(facetQuery.query);
+        }
+
         this.selectedFacetQueries = this.selectedFacetQueries.filter(selectedQuery => selectedQuery !== label);
 
-        this.queryBuilder.removeFilterQuery(facetQuery.query);
-        this.queryBuilder.update();
+        if (reloadQuery) {
+            this.queryBuilder.update();
+        }
     }
 
-    unselectFacetBucket(bucket: FacetFieldBucket) {
+    unselectFacetBucket(bucket: FacetFieldBucket, reloadQuery: boolean = true) {
         if (bucket) {
             const idx = this.selectedBuckets.findIndex(
                 selectedBucket => selectedBucket.$field === bucket.$field && selectedBucket.label === bucket.label
@@ -145,6 +152,40 @@ export class SearchFilterComponent implements OnInit {
                 this.selectedBuckets.splice(idx, 1);
             }
             this.queryBuilder.removeFilterQuery(bucket.filterQuery);
+
+            bucket.$checked = false;
+
+            if (reloadQuery) {
+                this.queryBuilder.update();
+            }
+        }
+    }
+
+    canResetSelectedQueries(): boolean {
+        return this.selectedFacetQueries && this.selectedFacetQueries.length > 0;
+    }
+
+    resetSelectedQueries() {
+        if (this.canResetSelectedQueries()) {
+            this.selectedFacetQueries.forEach(query => {
+                this.unselectFacetQuery(query, false);
+            });
+            this.queryBuilder.update();
+        }
+    }
+
+    canResetSelectedBuckets(field: ResponseFacetField): boolean {
+        if (field && field.buckets) {
+            return field.buckets.items.some(bucket => bucket.$checked);
+        }
+        return false;
+    }
+
+    resetSelectedBuckets(field: ResponseFacetField) {
+        if (field && field.buckets) {
+            field.buckets.items.forEach(bucket => {
+                this.unselectFacetBucket(bucket, false);
+            });
             this.queryBuilder.update();
         }
     }
@@ -161,12 +202,21 @@ export class SearchFilterComponent implements OnInit {
 
             this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.facetQueriesPageSize);
 
-            const expandedFields = this.responseFacetFields.filter(field => field.expanded).map(field => field.label);
+            const expandedFields = this.responseFacetFields
+                .filter(field => field.expanded)
+                .map(field => field.label);
 
             this.responseFacetFields = (context.facetsFields || []).map(
                 field => {
+                    const settings = this.queryBuilder.getFacetField(field.label);
+
+                    let fallbackPageSize = this.DEFAULT_PAGE_SIZE;
+                    if (settings && settings.pageSize) {
+                        fallbackPageSize = settings.pageSize;
+                    }
+
                     field.label = this.translationService.instant(field.label);
-                    field.pageSize = field.pageSize || 5;
+                    field.pageSize = field.pageSize || fallbackPageSize;
                     field.currentPageSize = field.pageSize;
                     field.expanded = expandedFields.includes(field.label);
 

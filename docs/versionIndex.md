@@ -29,6 +29,7 @@ of components organized by ADF libraries.
 -   [Search chip list component](content-services/search-chip-list.component.md)
 -   [Search filter component](content-services/search-filter.component.md)
 -   [Search query builder service](content-services/search-query-builder.service.md)
+-   [Search sorting picker component](content-services/search-sorting-picker.component.md)
 -   [Sidenav layout component](core/sidenav-layout.component.md)
 -   [Upload version button component](content-services/upload-version-button.component.md)
 
@@ -101,6 +102,7 @@ of components organized by ADF libraries.
 -   [Bpm user model](core/bpm-user.model.md)
 -   [Bpm user service](core/bpm-user.service.md)
 -   [Breadcrumb component](content-services/breadcrumb.component.md)
+-   [Card item types service](core/card-item-types.service.md)
 -   [Card view update service](core/card-view-update.service.md)
 -   [Card view component](core/card-view.component.md)
 -   [Checklist component](process-services/checklist.component.md)
@@ -128,6 +130,7 @@ of components organized by ADF libraries.
 -   [Dropdown breadcrumb component](content-services/dropdown-breadcrumb.component.md)
 -   [Ecm user model](core/ecm-user.model.md)
 -   [Ecm user service](core/ecm-user.service.md)
+-   [Error content component](core/error-content.component.md)
 -   [Favorites api service](core/favorites-api.service.md)
 -   [File draggable directive](content-services/file-draggable.directive.md)
 -   [File size pipe](core/file-size.pipe.md)
