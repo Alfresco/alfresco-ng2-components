@@ -6,7 +6,7 @@ Last reviewed: 2018-05-03
 
 # Add Permission Dialog Component
 
-Allow user to search people or group that could be added to the current node permissions.
+Displays a dialog to search for people or groups to add to the current node permissions.
 
 ![Add Permission Component](../docassets/images/add-permission-component.png)
 
@@ -28,10 +28,12 @@ import { NodePermissionDialogService } from '@alfresco/adf-content-services';
 
 ## Details
 
-This component extends the [Add permission panel component](../add-permission-panel.component.md) 
-and apply the action confirm when the selection made is accepted.
-The dialog will be opened via the nodePermissionDialogService which will provide an Observable to subscribe to for getting the node selected.
-In case you want the dialog service to take care of update the current node you can call `updateNodePermissionByDialog` in this way : 
+This component extends the [Add permission panel component](../content-services/add-permission-panel.component.md)
+to apply the chosen selection of permissions when they are accepted.
+You can open the dialog with the [Node Permission Dialog Service](../content-services/node-permission-dialog.service.md). This returns Observables that
+you can subscribe to for get the details of the node after the update.
+Use the `updateNodePermissionByDialog` from the service to update node permissions, as shown in
+the following example:
 
 ```ts
 import { NodePermissionDialogService } from '@alfresco/adf-content-services';
@@ -46,3 +48,8 @@ import { NodePermissionDialogService } from '@alfresco/adf-content-services';
         this.showErrorMessage(error);
     });
 ```
+
+## See also
+
+-   [Node permission dialog service](node-permission-dialog.service.md)
+-   [Add permission panel component](add-permission-panel.component.md)
