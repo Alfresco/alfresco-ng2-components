@@ -24,6 +24,10 @@
        overflow: visible !important;
    }
 
+   .adf-menu {
+       padding-top: 55px;
+   }
+
   .adf-app-layout {
     display: flex;
     flex: 1;
@@ -97,6 +101,10 @@
   @media screen and  ($mat-small) {
     .adf-userinfo-name {
       display: none;
+    }
+
+    .adf-menu {
+        padding-top: 0;
     }
   }
 
