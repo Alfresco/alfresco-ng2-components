@@ -19,7 +19,7 @@ import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 import { SearchComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
-import { UserPreferencesService, SearchService } from '@alfresco/adf-core';
+import { UserPreferencesService, SearchService, SearchConfigurationService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-search-result-component',
@@ -44,6 +44,7 @@ export class SearchResultComponent implements OnInit {
     constructor(public router: Router,
                 private preferences: UserPreferencesService,
                 private queryBuilder: SearchQueryBuilderService,
+                private searchConfiguration: SearchConfigurationService,
                 @Optional() private route: ActivatedRoute) {
         this.maxItems = this.preferences.paginationSize;
         queryBuilder.paging = {
@@ -63,8 +64,12 @@ export class SearchResultComponent implements OnInit {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
-                this.queryBuilder.queryFragments['queryName'] = `cm:name:'${this.searchedWord}'`;
-                this.queryBuilder.update();
+                if (this.searchedWord) {
+                    const queryBody = this.searchConfiguration.generateQueryBody(this.searchedWord, 0, 100);
+
+                    this.queryBuilder.userQuery = queryBody.query.query;
+                    this.queryBuilder.update();
+                }
             });
         }
     }
