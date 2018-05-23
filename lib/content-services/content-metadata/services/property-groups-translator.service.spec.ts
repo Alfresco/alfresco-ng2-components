@@ -143,6 +143,9 @@ describe('PropertyGroupTranslatorService', () => {
             property.title = 'The Faro Plague';
             property.dataType = 'daemonic:scorcher';
             property.defaultValue = 'Daemonic beast';
+
+            propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
+
             propertyGroups.push(Object.assign({}, propertyGroup));
 
             service.translateToCardViewGroups(propertyGroups, propertyValues);
