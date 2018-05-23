@@ -76,27 +76,6 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the task list filtered by processDefinitionKey', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(res => {
-                expect(res).toBeDefined();
-                expect(res.size).toEqual(2);
-                expect(res.start).toEqual(0);
-                expect(res.data).toBeDefined();
-                expect(res.data.length).toEqual(2);
-                expect(res.data[0].name).toEqual('FakeNameTask');
-                expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                expect(res.data[0].assignee.firstName).toEqual('firstName');
-                expect(res.data[0].assignee.lastName).toEqual('lastName');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeTaskListDifferentProcessDefinitionKey)
-            });
-        });
-
         it('should return the task list with all tasks filtered by state', (done) => {
             spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
             spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));

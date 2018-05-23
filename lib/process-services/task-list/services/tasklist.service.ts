@@ -18,7 +18,6 @@
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -31,13 +30,9 @@ import 'rxjs/add/observable/from';
 
 @Injectable()
 export class TaskListService {
-    private tasksListSubject = new Subject<TaskListModel>();
-
-    public tasksList$: Observable<TaskListModel>;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.tasksList$ = this.tasksListSubject.asObservable();
     }
 
     /**
@@ -88,8 +83,7 @@ export class TaskListService {
      */
     getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
         return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
-            .map((res: any) => {
-                this.tasksListSubject.next(res);
+            .map((res: TaskListModel) => {
                 return res;
             }).catch(err => this.handleError(err));
     }
@@ -136,7 +130,6 @@ export class TaskListService {
                     const tasks = Object.assign({}, activeTasks);
                     tasks.total += completedTasks.total;
                     tasks.data = tasks.data.concat(completedTasks.data);
-                    this.tasksListSubject.next(tasks);
                     return tasks;
                 }
             );
@@ -374,7 +367,6 @@ export class TaskListService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        this.tasksListSubject.error(error);
         return Observable.throw(error || 'Server error');
     }
 

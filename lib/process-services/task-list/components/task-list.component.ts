@@ -50,7 +50,9 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     @Input()
     processInstanceId: string;
 
-    /** The Definition Key of the process. */
+    /** The Definition Key of the process.
+     * @deprecated 2.4.0
+     */
     @Input()
     processDefinitionKey: string;
 
