@@ -73,7 +73,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     /** The columns that the datatable will show. */
     @Input()
-    schemaColumns: any[] = [];
+    columns: any[] = [];
 
     /* Toggles default selection of the first row */
     @Input()
@@ -299,7 +299,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     private initTable() {
-        this.data = new ObjectDataTableAdapter(this.rows, this.schema);
+        this.data = new ObjectDataTableAdapter(this.rows, this.columns);
         this.setupData(this.data);
         this.rowMenuCache = {};
     }
@@ -345,16 +345,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     private setTableSchema() {
         let schema = [];
-        if (!this.schemaColumns || this.schemaColumns.length === 0) {
+        if (!this.columns || this.columns.length === 0) {
             schema = this.getSchemaFromHtml();
         } else {
-            schema = this.schemaColumns.concat(this.getSchemaFromHtml());
+            schema = this.columns.concat(this.getSchemaFromHtml());
         }
 
-        this.schemaColumns = schema;
+        this.columns = schema;
 
-        if (this.data && this.schemaColumns && this.schemaColumns.length > 0) {
-            this.data.setColumns(this.schemaColumns);
+        if (this.data && this.columns && this.columns.length > 0) {
+            this.data.setColumns(this.columns);
         }
     }
 

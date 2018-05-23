@@ -73,34 +73,7 @@ renders details of any chosen instance.
 
 ### Setting the column schema
 
-You can pass schemaColumns to set a column for the tasklist as shown below :
-
-```ts
-// Column schema
-let schema = 
-    [
-        { 
-            type: 'text', 
-            key: 'id', 
-            title: 'Id', 
-            sortable: true 
-        },
-        {
-            type: 'text', 
-            key: 'name', 
-            title: 'Name', 
-            sortable: true
-        }
-    ];
-```
-
-```html
-<adf-tasklist
-    [schemaColumns]="schema">
-</adf-tasklist>
-```
-
-Alternatively, you can use an HTML-based schema declaration:
+You can use an HTML-based schema declaration to set a column schema for the tasklist as shown below :
 
 ```html
 <adf-tasklist ...>
