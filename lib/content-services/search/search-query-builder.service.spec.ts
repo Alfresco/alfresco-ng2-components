@@ -27,6 +27,23 @@ describe('SearchQueryBuilder', () => {
         return config;
     };
 
+    it('should have empty user query by default', () => {
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
+        expect(builder.userQuery).toBe('');
+    });
+
+    it('should wrap user query with brackets', () => {
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
+        builder.userQuery = 'my query';
+        expect(builder.userQuery).toEqual('(my query)');
+    });
+
+    it('should trim user query value', () => {
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
+        builder.userQuery = ' something   ';
+        expect(builder.userQuery).toEqual('(something)');
+    });
+
     it('should use only enabled categories', () => {
         const config: SearchConfiguration = {
             categories: [
@@ -361,6 +378,21 @@ describe('SearchQueryBuilder', () => {
             maxItems: 5,
             skipCount: 5
         });
+    });
+
+    it('should build final request with user and custom queries', () => {
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ]
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.userQuery = 'my query';
+
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.query.query).toBe('(my query) AND (cm:name:test)');
     });
 
 });
