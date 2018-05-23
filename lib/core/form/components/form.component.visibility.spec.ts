@@ -65,6 +65,7 @@ describe('FormComponent UI and visibility', () => {
 
     afterEach(() => {
         fixture.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create instance of FormComponent', () => {
