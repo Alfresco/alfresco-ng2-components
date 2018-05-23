@@ -30,6 +30,8 @@ import { FacetField } from './facet-field.interface';
 @Injectable()
 export class SearchQueryBuilderService {
 
+    private _userQuery = '';
+
     updated: Subject<QueryBody> = new Subject();
     executed: Subject<any> = new Subject();
 
@@ -39,12 +41,21 @@ export class SearchQueryBuilderService {
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: Array<SearchSortingDefinition> = [];
 
+    get userQuery(): string {
+        return this._userQuery;
+    }
+
+    set userQuery(value: string) {
+        value = (value || '').trim();
+        this._userQuery = value ? `(${value})` : '';
+    }
+
     config: SearchConfiguration;
 
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    constructor(appConfig: AppConfigService,  private alfrescoApiService: AlfrescoApiService) {
+    constructor(appConfig: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
         this.config = appConfig.get<SearchConfiguration>('search');
 
         if (this.config) {
@@ -100,17 +111,7 @@ export class SearchQueryBuilderService {
     }
 
     buildQuery(): QueryBody {
-        let query = '';
-
-        this.categories.forEach(facet => {
-            const customQuery = this.queryFragments[facet.id];
-            if (customQuery) {
-                if (query.length > 0) {
-                    query += ' AND ';
-                }
-                query += `(${customQuery})`;
-            }
-        });
+        let query = this.getFinalQuery();
 
         const include = this.config.include || [];
         if (include.length === 0) {
@@ -118,7 +119,6 @@ export class SearchQueryBuilderService {
         }
 
         if (query) {
-
             const result: QueryBody = {
                 query: {
                     query: query,
@@ -177,6 +177,26 @@ export class SearchQueryBuilderService {
         }
 
         return null;
+    }
+
+    private getFinalQuery(): string {
+        let query = '';
+
+        this.categories.forEach(facet => {
+            const customQuery = this.queryFragments[facet.id];
+            if (customQuery) {
+                if (query.length > 0) {
+                    query += ' AND ';
+                }
+                query += `(${customQuery})`;
+            }
+        });
+
+        const result = [this.userQuery, query]
+            .filter(entry => entry)
+            .join(' AND ');
+
+        return result;
     }
 
     private get facetFields(): RequestFacetFields {
