@@ -8,6 +8,21 @@ Last reviewed: 2018-04-10
 
 Selectively disables an HTML element or Angular component
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+
+-   [Details](#details)
+
+    -   [HTML element example](#html-element-example)
+    -   [Angular component example](#angular-component-example)
+    -   [Implementing the NodePermissionSubject interface](#implementing-the-nodepermissionsubject-interface)
+    -   [Defining your component as an EXTENDIBLE_COMPONENT parent component](#defining-your-component-as-an-extendible_component-parent-component)
+
 ## Basic Usage
 
 ```html
@@ -35,7 +50,7 @@ Selectively disables an HTML element or Angular component
 
 ## Details
 
-The Node Permission directive lets you disable an HTML element or Angular component
+The [Node Permission directive](../core/node-permission.directive.md) lets you disable an HTML element or Angular component
 by taking a collection of `MinimalNodeEntity` instances and checking their permissions.
 
 The decorated element will be disabled if:
@@ -69,7 +84,7 @@ one or more documents that they have permission to delete.
 
 ### Angular component example
 
-You can add the directive to any Angular component that implements the `NodePermissionSubject`
+You can add the directive to any Angular component that implements the [`NodePermissionSubject`](../../lib/core/directives/node-permission.directive.ts)
 interface (the [Upload Drag Area component](../content-services/upload-drag-area.component.md),
 for example). You can also use it in much the same way as you would with an HTML element:
 
@@ -84,12 +99,12 @@ for example). You can also use it in much the same way as you would with an HTML
 ```
 
 To enable your own component to work with this directive, you need to implement the
-`NodePermissionSubject` interface and also define it as an EXTENDIBLE_COMPONENT parent component,
+[`NodePermissionSubject`](../../lib/core/directives/node-permission.directive.ts) interface and also define it as an EXTENDIBLE_COMPONENT parent component,
 as described in the following sections.
 
 ### Implementing the NodePermissionSubject interface
 
-The component must implement the `NodePermissionSubject` interface which means it must have a
+The component must implement the [`NodePermissionSubject`](../../lib/core/directives/node-permission.directive.ts) interface which means it must have a
 boolean `disabled` property. This is the property that will be set by the directive:
 
 ```js

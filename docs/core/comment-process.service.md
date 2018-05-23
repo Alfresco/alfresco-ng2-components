@@ -12,24 +12,24 @@ Adds and retrieves comments for task and process instances in Process Services.
 
 ### Methods
 
--   `addProcessInstanceComment(processInstanceId: string = null, message: string = null): Observable<CommentModel>`<br/>
+-   **addProcessInstanceComment**(processInstanceId: `string` = `null`, message: `string` = `null`): [`Observable<CommentModel>`](../../lib/core/models/comment.model.ts)<br/>
     Adds a comment to a process instance.
-    -   `processInstanceId: string = null` -  ID of the target process instance
-    -   `message: string = null` -  Text for the comment
-    -   **Returns** `Observable<CommentModel>` - Details of the comment added
--   `addTaskComment(taskId: string = null, message: string = null): Observable<CommentModel>`<br/>
+    -   _processInstanceId:_ `string`  - ID of the target process instance
+    -   _message:_ `string`  - Text for the comment
+    -   **Returns** [`Observable<CommentModel>`](../../lib/core/models/comment.model.ts) - Details of the comment added
+-   **addTaskComment**(taskId: `string` = `null`, message: `string` = `null`): [`Observable<CommentModel>`](../../lib/core/models/comment.model.ts)<br/>
     Adds a comment to a task.
-    -   `taskId: string = null` -  ID of the target task
-    -   `message: string = null` -  Text for the comment
-    -   **Returns** `Observable<CommentModel>` - Details about the comment
--   `getProcessInstanceComments(processInstanceId: string = null): Observable<CommentModel[]>`<br/>
+    -   _taskId:_ `string`  - ID of the target task
+    -   _message:_ `string`  - Text for the comment
+    -   **Returns** [`Observable<CommentModel>`](../../lib/core/models/comment.model.ts) - Details about the comment
+-   **getProcessInstanceComments**(processInstanceId: `string` = `null`): [`Observable<CommentModel[]>`](../../lib/core/models/comment.model.ts)<br/>
     Gets all comments that have been added to a process instance.
-    -   `processInstanceId: string = null` -  ID of the target process instance
-    -   **Returns** `Observable<CommentModel[]>` - Details for each comment
--   `getTaskComments(taskId: string = null): Observable<CommentModel[]>`<br/>
+    -   _processInstanceId:_ `string`  - ID of the target process instance
+    -   **Returns** [`Observable<CommentModel[]>`](../../lib/core/models/comment.model.ts) - Details for each comment
+-   **getTaskComments**(taskId: `string` = `null`): [`Observable<CommentModel[]>`](../../lib/core/models/comment.model.ts)<br/>
     Gets all comments that have been added to a task.
-    -   `taskId: string = null` -  ID of the target task
-    -   **Returns** `Observable<CommentModel[]>` - Details for each comment
+    -   _taskId:_ `string`  - ID of the target task
+    -   **Returns** [`Observable<CommentModel[]>`](../../lib/core/models/comment.model.ts) - Details for each comment
 
 ## Details
 

@@ -12,16 +12,16 @@ Gets details of the Process Services apps that are deployed for the user.
 
 ### Methods
 
--   `getApplicationDetailsById(appId: number = null): Observable<AppDefinitionRepresentation>`<br/>
+-   **getApplicationDetailsById**(appId: `number` = `null`): `Observable<AppDefinitionRepresentation>`<br/>
     Gets the details for a specific app ID number.
-    -   `appId: number = null` -  ID of the target app
+    -   _appId:_ `number`  - ID of the target app
     -   **Returns** `Observable<AppDefinitionRepresentation>` - Details of the app
--   `getDeployedApplications(): Observable<AppDefinitionRepresentation[]>`<br/>
+-   **getDeployedApplications**(): `Observable<AppDefinitionRepresentation[]>`<br/>
     Gets a list of deployed apps for this user.
     -   **Returns** `Observable<AppDefinitionRepresentation[]>` - The list of deployed apps
--   `getDeployedApplicationsByName(name: string = null): Observable<AppDefinitionRepresentation>`<br/>
-    Gets a list of deployed apps for this user, where the app name is \`name\`.
-    -   `name: string = null` -  Name of the app
+-   **getDeployedApplicationsByName**(name: `string` = `null`): `Observable<AppDefinitionRepresentation>`<br/>
+    Gets a list of deployed apps for this user, where the app name is `name`.
+    -   _name:_ `string`  - Name of the app
     -   **Returns** `Observable<AppDefinitionRepresentation>` - The list of deployed apps
 
 ## Details

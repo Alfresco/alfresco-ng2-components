@@ -86,11 +86,11 @@ Defining properties from Typescript:
 | -- | -- | -- | -- |
 | displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
 | editable | `boolean` |  | Toggles whether or not the items can be edited. |
-| properties | `CardViewItem[]` |  | (**required**) Items to show in the card view. |
+| properties | [`CardViewItem[]`](../../lib/core/card-view/interfaces/card-view-item.interface.ts) |  | (**required**) Items to show in the card view. |
 
 ## Details
 
-You define the property list, the CardViewComponent does the rest. Each property represents a card view item (a row) in the card view component. The following item types are available by default:
+You define the property list, the [`CardViewComponent`](../core/card-view.component.md) does the rest. Each property represents a card view item (a row) in the [card view component](../core/card-view.component.md). The following item types are available by default:
 
 -   [**CardViewTextItemModel**](#card-text-item) - _for text items_
 -   [**CardViewMapItemModel**](#card-map-item) - _for map items_
@@ -139,12 +139,12 @@ clicked item.
 
 The `properties` array contains instances of models that represent the layout of the Card View.
 The ordering of the models in the array matches the ordering of items in the view. Each of the
-models extends the abstract `CardViewBaseItemModel` class to add functionality for
+models extends the abstract [`CardViewBaseItemModel`](../../lib/core/card-view/models/card-view-baseitem.model.ts) class to add functionality for
 specific data types, as described below.
 
 #### Card Text Item
 
-`CardViewTextItemModel` is a property type for text properties.
+[`CardViewTextItemModel`](../../lib/core/card-view/models/card-view-textitem.model.ts) is a property type for text properties.
 
 ```ts
 const textItemProperty = new CardViewTextItemModel(options);
@@ -185,7 +185,7 @@ new CardViewTextItemModel({
 
 #### Card Map Item
 
-`CardViewMapItemModel` is a property type for map properties.
+[`CardViewMapItemModel`](../../lib/core/card-view/models/card-view-mapitem.model.ts) is a property type for map properties.
 
 ```ts
 const mapItemProperty = new CardViewMapItemModel(options);
@@ -202,7 +202,7 @@ const mapItemProperty = new CardViewMapItemModel(options);
 
 #### Card Date Item
 
-`CardViewDateItemModel` is a property type for date properties.
+[`CardViewDateItemModel`](../../lib/core/card-view/models/card-view-dateitem.model.ts) is a property type for date properties.
 
 ```ts
 const dateItemProperty = new CardViewDateItemModel(options);
@@ -220,7 +220,7 @@ const dateItemProperty = new CardViewDateItemModel(options);
 
 #### Card Datetime Item
 
-`CardViewDatetimeItemModel` is a property type for datetime properties.
+[`CardViewDatetimeItemModel`](../../lib/core/card-view/models/card-view-datetimeitem.model.ts) is a property type for datetime properties.
 
 ```ts
 const datetimeItemProperty = new CardViewDatetimeItemModel(options);
@@ -238,7 +238,7 @@ const datetimeItemProperty = new CardViewDatetimeItemModel(options);
 
 #### Card Bool Item
 
-`CardViewBoolItemModel` is a property type for boolean properties.
+[`CardViewBoolItemModel`](../../lib/core/card-view/models/card-view-boolitem.model.ts) is a property type for boolean properties.
 
 ```ts
 const boolItemProperty = new CardViewBoolItemModel(options);
@@ -255,7 +255,7 @@ const boolItemProperty = new CardViewBoolItemModel(options);
 
 #### Card Int Item
 
-`CardViewIntItemModel` is a property type for integer properties.
+[`CardViewIntItemModel`](../../lib/core/card-view/models/card-view-intitem.model.ts) is a property type for integer properties.
 
 ```ts
 const intItemProperty = new CardViewIntItemModel(options);
@@ -272,7 +272,7 @@ const intItemProperty = new CardViewIntItemModel(options);
 
 #### Card Float Item
 
-`CardViewFloatItemModel` is a property type for float properties.
+[`CardViewFloatItemModel`](../../lib/core/card-view/models/card-view-floatitem.model.ts) is a property type for float properties.
 
 ```ts
 const floatItemProperty = new CardViewFloatItemModel(options);

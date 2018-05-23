@@ -48,8 +48,8 @@ export class MyComponent {
 
 | Name | Type | Description |
 | -- | -- | -- |
-| toggle | `EventEmitter<any>` | Emitted when the favorite setting is complete. |
 | error | `EventEmitter<any>` | Emitted when the favorite setting has fail. |
+| toggle | `EventEmitter<any>` | Emitted when the favorite setting is complete. |
 
 ## Details
 

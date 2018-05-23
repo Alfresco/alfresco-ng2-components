@@ -11,65 +11,65 @@ Manipulates content related to a Process Instance or Task Instance in APS.
 
 ### Methods
 
--   `createProcessRelatedContent(processInstanceId: string = null, content: any = null, opts?: any = null): Observable<any>`<br/>
+-   **createProcessRelatedContent**(processInstanceId: `string` = `null`, content: `any` = `null`, opts?: `any` = `null`): `Observable<any>`<br/>
     Associates an uploaded file with a process instance.
-    -   `processInstanceId: string = null` -  ID of the target process instance
-    -   `content: any = null` -  File to associate
-    -   `opts?: any = null` - (Optional) Options supported by JSAPI
+    -   _processInstanceId:_ `string`  - ID of the target process instance
+    -   _content:_ `any`  - File to associate
+    -   _opts:_ `any`  - (Optional) Options supported by JSAPI
     -   **Returns** `Observable<any>` - Details of created content
--   `createTaskRelatedContent(taskId: string = null, file: any = null, opts?: any = null): any`<br/>
+-   **createTaskRelatedContent**(taskId: `string` = `null`, file: `any` = `null`, opts?: `any` = `null`): `Observable<any>`<br/>
     Associates an uploaded file with a task instance.
-    -   `taskId: string = null` -  ID of the target task
-    -   `file: any = null` -  File to associate
-    -   `opts?: any = null` - (Optional) Options supported by JSAPI
-    -   **Returns** `any` - Details of created content
--   `createTemporaryRawRelatedContent(file: any = null): Observable<RelatedContentRepresentation>`<br/>
+    -   _taskId:_ `string`  - ID of the target task
+    -   _file:_ `any`  - File to associate
+    -   _opts:_ `any`  - (Optional) Options supported by JSAPI
+    -   **Returns** `Observable<any>` - Details of created content
+-   **createTemporaryRawRelatedContent**(file: `any` = `null`): `Observable<RelatedContentRepresentation>`<br/>
     Create temporary related content from an uploaded file.
-    -   `file: any = null` -  File to use for content
+    -   _file:_ `any`  - File to use for content
     -   **Returns** `Observable<RelatedContentRepresentation>` - The created content data
--   `deleteRelatedContent(contentId: number = null): Observable<any>`<br/>
+-   **deleteRelatedContent**(contentId: `number` = `null`): `Observable<any>`<br/>
     Deletes related content.
-    -   `contentId: number = null` -  Identifier of the content to delete
+    -   _contentId:_ `number`  - Identifier of the content to delete
     -   **Returns** `Observable<any>` - Null response that notifies when the deletion is complete
--   `getContentPreview(contentId: number = null): Observable<Blob>`<br/>
+-   **getContentPreview**(contentId: `number` = `null`): `Observable<Blob>`<br/>
     Gets the preview for a related content file.
-    -   `contentId: number = null` -  ID of the related content
+    -   _contentId:_ `number`  - ID of the related content
     -   **Returns** `Observable<Blob>` - Binary data of the content preview
--   `getContentThumbnail(contentId: number = null): Observable<Blob>`<br/>
+-   **getContentThumbnail**(contentId: `number` = `null`): `Observable<Blob>`<br/>
     Gets the thumbnail for a related content file.
-    -   `contentId: number = null` -  ID of the related content
+    -   _contentId:_ `number`  - ID of the related content
     -   **Returns** `Observable<Blob>` - Binary data of the thumbnail image
--   `getFileContent(contentId: number = null): Observable<RelatedContentRepresentation>`<br/>
+-   **getFileContent**(contentId: `number` = `null`): `Observable<RelatedContentRepresentation>`<br/>
     Gets the metadata for a related content item.
-    -   `contentId: number = null` -  ID of the content item
+    -   _contentId:_ `number`  - ID of the content item
     -   **Returns** `Observable<RelatedContentRepresentation>` - Metadata for the content
--   `getFileRawContent(contentId: number = null): Observable<Blob>`<br/>
+-   **getFileRawContent**(contentId: `number` = `null`): `Observable<Blob>`<br/>
     Gets raw binary content data for a related content file.
-    -   `contentId: number = null` -  ID of the related content
+    -   _contentId:_ `number`  - ID of the related content
     -   **Returns** `Observable<Blob>` - Binary data of the related content
--   `getFileRawContentUrl(contentId: number = null): string`<br/>
+-   **getFileRawContentUrl**(contentId: `number` = `null`): `string`<br/>
     Gets a URL for direct access to a related content file.
-    -   `contentId: number = null` -  ID of the related content
+    -   _contentId:_ `number`  - ID of the related content
     -   **Returns** `string` - URL to access the content
--   `getProcessRelatedContent(processId: string = null): Observable<any>`<br/>
+-   **getProcessRelatedContent**(processId: `string` = `null`): `Observable<any>`<br/>
     Gets related content items for a process instance.
-    -   `processId: string = null` -  ID of the target process
+    -   _processId:_ `string`  - ID of the target process
     -   **Returns** `Observable<any>` - Metadata for the content
--   `getTaskRelatedContent(taskId: string = null): Observable<any>`<br/>
+-   **getTaskRelatedContent**(taskId: `string` = `null`): `Observable<any>`<br/>
     Gets related content items for a task instance.
-    -   `taskId: string = null` -  ID of the target task
+    -   _taskId:_ `string`  - ID of the target task
     -   **Returns** `Observable<any>` - Metadata for the content
--   `handleError(error: any = null): Observable<any>`<br/>
+-   **handleError**(error: `any` = `null`): `Observable<any>`<br/>
     Reports an error message.
-    -   `error: any = null` -  Data object with optional `message` and `status` fields for the error
+    -   _error:_ `any`  - Data object with optional `message` and `status` fields for the error
     -   **Returns** `Observable<any>` - Callback when an error occurs
--   `toJson(res: any = null): any`<br/>
+-   **toJson**(res: `any` = `null`): `any`<br/>
     Creates a JSON representation of data.
-    -   `res: any = null` -  Object representing data
+    -   _res:_ `any`  - Object representing data
     -   **Returns** `any` - JSON object
--   `toJsonArray(res: any = null): any`<br/>
+-   **toJsonArray**(res: `any` = `null`): `any`<br/>
     Creates a JSON array representation of data.
-    -   `res: any = null` -  Object representing data
+    -   _res:_ `any`  - Object representing data
     -   **Returns** `any` - JSON array object
 
 ## Methods

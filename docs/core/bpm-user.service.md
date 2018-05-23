@@ -12,10 +12,10 @@ Gets information about the current Process Services user.
 
 ### Methods
 
--   `getCurrentUserInfo(): Observable<BpmUserModel>`<br/>
+-   **getCurrentUserInfo**(): [`Observable<BpmUserModel>`](../core/bpm-user.model.md)<br/>
     Gets information about the current user.
-    -   **Returns** `Observable<BpmUserModel>` - User information object
--   `getCurrentUserProfileImage(): string`<br/>
+    -   **Returns** [`Observable<BpmUserModel>`](../core/bpm-user.model.md) - User information object
+-   **getCurrentUserProfileImage**(): `string`<br/>
     Gets the current user's profile image as a URL.
     -   **Returns** `string` - URL string
 

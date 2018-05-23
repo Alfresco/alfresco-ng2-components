@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Node Name Tooltip pipe
 
 Formats the tooltip for a Node.

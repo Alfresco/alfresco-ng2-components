@@ -8,50 +8,65 @@ Last reviewed: 2018-04-06
 
 Accesses and manipulates ACS document nodes using their node IDs.
 
+## Contents
+
+-   [Class members](#class-members)
+
+    -   [Methods](#methods)
+
+-   [Details](#details)
+
+    -   [Getting node information](#getting-node-information)
+    -   [Getting folder node contents](#getting-folder-node-contents)
+    -   [Creating and updating nodes](#creating-and-updating-nodes)
+    -   [Deleting and restoring nodes](#deleting-and-restoring-nodes)
+
+-   [See also](#see-also)
+
 ## Class members
 
 ### Methods
 
--   `createFolder(parentNodeId: string = null, nodeBody: any = null, options: any =  {}): Observable<MinimalNodeEntryEntity>`<br/>
+-   **createFolder**(parentNodeId: `string` = `null`, nodeBody: `any` = `null`, options: `any` = `{}`): `Observable<MinimalNodeEntryEntity>`<br/>
     Creates a new folder node inside a parent folder.
-    -   `parentNodeId: string = null` -  ID of the parent folder node
-    -   `nodeBody: any = null` -  Data for the new folder
-    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   _parentNodeId:_ `string`  - ID of the parent folder node
+    -   _nodeBody:_ `any`  - Data for the new folder
+    -   _options:_ `any`  - Optional parameters supported by JSAPI
     -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the new folder
--   `createNode(parentNodeId: string = null, nodeBody: any = null, options: any =  {}): Observable<MinimalNodeEntryEntity>`<br/>
+-   **createNode**(parentNodeId: `string` = `null`, nodeBody: `any` = `null`, options: `any` = `{}`): `Observable<MinimalNodeEntryEntity>`<br/>
     Creates a new document node inside a folder.
-    -   `parentNodeId: string = null` -  ID of the parent folder node
-    -   `nodeBody: any = null` -  Data for the new node
-    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   _parentNodeId:_ `string`  - ID of the parent folder node
+    -   _nodeBody:_ `any`  - Data for the new node
+    -   _options:_ `any`  - Optional parameters supported by JSAPI
     -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the new node
--   `deleteNode(nodeId: string = null, options: any =  {}): Observable<void>`<br/>
+-   **deleteNode**(nodeId: `string` = `null`, options: `any` = `{}`): `Observable<void>`<br/>
     Moves a node to the trashcan.
-    -   `nodeId: string = null` -  ID of the target node
-    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _options:_ `any`  - Optional parameters supported by JSAPI
     -   **Returns** `Observable<void>` - Empty result that notifies when the deletion is complete
--   `getNode(nodeId: string = null, options: any =  {}): Observable<MinimalNodeEntryEntity>`<br/>
+-   **getNode**(nodeId: `string` = `null`, options: `any` = `{}`): `Observable<MinimalNodeEntryEntity>`<br/>
     Gets the stored information about a node.
-    -   `nodeId: string = null` -  ID of the target node
-    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _options:_ `any`  - Optional parameters supported by JSAPI
     -   **Returns** `Observable<MinimalNodeEntryEntity>` - Node information
--   `getNodeChildren(nodeId: string = null, options: any =  {}): Observable<NodePaging>`<br/>
+-   **getNodeChildren**(nodeId: `string` = `null`, options: `any` = `{}`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts)<br/>
     Gets the items contained in a folder node.
-    -   `nodeId: string = null` -  ID of the target node
-    -   `options: any =  {}` -  Optional parameters supported by JSAPI
-    -   **Returns** `Observable<NodePaging>` - List of child items from the folder
--   `handleError(error: any = null): Observable<any>`<br/>
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _options:_ `any`  - Optional parameters supported by JSAPI
+    -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - List of child items from the folder
+-   **handleError**(error: `any` = `null`): `Observable<any>`<br/>
     Reports an error.
-    -   `error: any = null` -  Object representing the error
+    -   _error:_ `any`  - Object representing the error
     -   **Returns** `Observable<any>` - Error information
--   `restoreNode(nodeId: string = null): Observable<MinimalNodeEntryEntity>`<br/>
+-   **restoreNode**(nodeId: `string` = `null`): `Observable<MinimalNodeEntryEntity>`<br/>
     Restores a node previously moved to the trashcan.
-    -   `nodeId: string = null` -  ID of the node to restore
+    -   _nodeId:_ `string`  - ID of the node to restore
     -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the restored node
--   `updateNode(nodeId: string = null, nodeBody: any = null, options: any =  {}): Observable<MinimalNodeEntryEntity>`<br/>
+-   **updateNode**(nodeId: `string` = `null`, nodeBody: `any` = `null`, options: `any` = `{}`): `Observable<MinimalNodeEntryEntity>`<br/>
     Updates the information about a node.
-    -   `nodeId: string = null` -  ID of the target node
-    -   `nodeBody: any = null` -  New data for the node
-    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _nodeBody:_ `any`  - New data for the node
+    -   _options:_ `any`  - Optional parameters supported by JSAPI
     -   **Returns** `Observable<MinimalNodeEntryEntity>` - Updated node information
 
 ## Details
@@ -65,7 +80,7 @@ by dashes, eg:
 The string is convenient for storage, for passing as an 
 [Angular route parameter](https://angular.io/guide/router)
 and other purposes but doesn't enable you to do very much with the node itself.
-The Nodes Api Service has methods for getting information about nodes and
+The [Nodes Api Service](../core/nodes-api.service.md) has methods for getting information about nodes and
 managing them within the repository (creating, deleting, etc).
 
 Other lower level interfaces to the ACS nodes API are also available - see the
@@ -109,7 +124,7 @@ of a [Document List component](../content-services/document-list.component.md) o
 [Document List row](../content-services/document-list.component.md#underlying-node-object). In these cases,
 you might pass the `id` or `parentId` as a [route parameter](https://angular.io/guide/router)
 to a page describing the node in full detail. The component receiving the node ID can
-use the Nodes Api service to "decode" the ID string into a MinimalNodeEntryEntity:
+use the [Nodes Api service](../core/nodes-api.service.md) to "decode" the ID string into a MinimalNodeEntryEntity:
 
 ```ts
 import { ActivatedRoute, Router } from '@angular/router';

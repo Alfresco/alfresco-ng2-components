@@ -10,6 +10,23 @@ Displays the standard three-region ADF application layout.
 
 ![Sidenav on desktop](../docassets/images/sidenav-layout.png)
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+    -   [Events](#events)
+
+-   [Details](#details)
+
+    -   [Public attributes](#public-attributes)
+    -   [Events](#events-1)
+    -   [Template context](#template-context)
+    -   [menuOpenState$](#menuopenstate)
+    -   [Preserving the menu state](#preserving-the-menu-state)
+
 ## Basic Usage
 
 ```html
@@ -49,13 +66,19 @@ Displays the standard three-region ADF application layout.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| sidenavMin | `number` |  | (**required**) Width in pixels when compacted |
-| sidenavMax | `number` |  | (**required**) Width in pixels when expanded |
-| stepOver | `number` |  | (**required**) "Breakpoint" size (ie, number of pixels for selecting between mobile and desktop layouts) |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? |
 | hideSidenav | `boolean` | false | Toggles showing/hiding the navigation region |
-| expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? | 
+| sidenavMax | `number` |  | ( |
+| sidenavMin | `number` |  | ( |
+| stepOver | `number` |  | ( |
+
+### Events
+
+| Name | Type | Description |
+| -- | -- | -- |
+| expanded | `EventEmitter<boolean>` |  |
 
 ## Details
 
@@ -86,12 +109,13 @@ Mobile layout (screen width less than the `stepOver` value):
 ### Public attributes
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| menuOpenState$ | Observable&lt;boolean&gt; | true | Another way to listen to menu open/closed state |
+| ---- | ---- | ------- | ----------- |
+| menuOpenState$ | Observable&lt;boolean> | true | Another way to listen to menu open/closed state |
 
 ### Events
 
 | Name | Type | Description |
+| -- | -- | -- |
 | expanded | `EventEmitter<boolean>` | Emmitted when the menu toggle and the collapsed/expanded state of the sideNav changes
 
 ### Template context
@@ -110,25 +134,22 @@ Beside the template context's **isMenuMinimized** variable, another way to liste
 
 Every time the menu state is changed, the following values are emitted:
 
-- true, if the menu got into opened state
-- false, if the menu git into closed state
+-   true, if the menu got into opened state
+-   false, if the menu git into closed state
 
 ### Preserving the menu state
 
 It is possible to preserve the state of the menu between sessions. This require to first set a property in the appConfig.json file. 
 
-```
-    "sideNav" : {
-        "preserveState" : true
-    }
-```
+        "sideNav" : {
+            "preserveState" : true
+        }
+
 If this property is set, the collapsed/expanded state will be stored in the local storage, and it will be restored with page reload or the next time the user visits the app. 
 Beside this, it is also possible to set the default value in the appConfig.json file: 
 
-```
-    "sideNav" : {
-        "expandedSidenav" : true
-    }
-```
+        "sideNav" : {
+            "expandedSidenav" : true
+        }
 
 By default the collapsed/exapnded state should be read from the application configuration file, but only if there is no value for the collapsed/expanded state in the local storage.

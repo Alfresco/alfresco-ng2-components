@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Ecm User model
 
 Contains information about a Content Services user.

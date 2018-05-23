@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Comment list component
 
 Shows a list of comments.
@@ -47,7 +48,7 @@ export class SomeComponent implements OnInit {
   }
 ```
 
-In the component template use the comment list component:
+In the component template use the [comment list component](../core/comment-list.component.md):
 
 ```html
 <adf-comment-list
@@ -61,11 +62,11 @@ In the component template use the comment list component:
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| comments | `any[]` |  | The comments data used to populate the list.  |
+| -- | -- | -- | -- |
+| comments | [`CommentModel[]`](../../lib/core/models/comment.model.ts) |  | The comments data used to populate the list. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| clickRow | `EventEmitter<any>` | Emitted when the user clicks on one of the comment rows. |
+| -- | -- | -- |
+| clickRow | [`EventEmitter<CommentModel>`](../../lib/core/models/comment.model.ts) | Emitted when the user clicks on one of the comment rows. |

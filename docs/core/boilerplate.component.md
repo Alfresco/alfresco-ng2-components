@@ -7,6 +7,7 @@ Shows how to write a Markdown file for a component.
 <!-- Most doc files don't need a table of contents. Delete this part unless
 you have added about five subsections in the Details part.
 -->
+
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
 <!-- toc -->
@@ -16,6 +17,7 @@ you have added about five subsections in the Details part.
 <!-- markdown-toc end -->
 
 ## Basic Usage
+
 <!-- Delete any Basic Usage parts that you don't need (eg, some components don't
 have any properties). -->
 
@@ -31,14 +33,14 @@ have any properties). -->
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------- | ----------- |
 | prop1 | string | 'hello' | The property description in the table should be no more than a few sentences. Add extra description in the Details section if you need to. |
 | prop2 | boolean | true | Prop tables should have name, type, default and description, in that order. Leave default value blank if appropriate. |
 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | someEvent | Keep description short for the table. Usually starts with "Emitted when..." |
 | anotherEvent | Emitted when the user double-clicks a list node |
 
@@ -58,6 +60,7 @@ explanation. Add them as level 3 headings in the Details part only - to keep the
 of the docs, you shouldn't normally add any new level 1 or 2 sections to the Markdown.
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+
 <!-- seealso start -->
 
 <!-- seealso end -->

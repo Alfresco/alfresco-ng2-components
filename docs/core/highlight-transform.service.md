@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Highlight Transform service
 
 Adds HTML to a string to highlight chosen sections.
@@ -10,11 +11,12 @@ Adds HTML to a string to highlight chosen sections.
 
 ### Methods
 
--   `highlight(text: string, search: string, wrapperClass: string = 'highlight'): HightlightTransformResult`  
-    Searches for `search` string(s) within `text` and highlights all occurrences.  
-    -   `text` - Text to search within
-    -   `search` - Text pattern to search for
-    -   `wrapperClass` - CSS class used to provide highlighting style
+-   **highlight**(text: `string` = `null`, search: `string` = `null`, wrapperClass: `string` = `"highlight"`): [`HightlightTransformResult`](../../lib/core/services/highlight-transform.service.ts)<br/>
+    Searches for `search` string(s) within `text` and highlights all occurrences.
+    -   _text:_ `string`  - Text to search within
+    -   _search:_ `string`  - Text pattern to search for
+    -   _wrapperClass:_ `string`  - CSS class used to provide highlighting style
+    -   **Returns** [`HightlightTransformResult`](../../lib/core/services/highlight-transform.service.ts) - New text along with boolean value to indicate whether anything was highlighted
 
 ## Details
 
@@ -29,7 +31,7 @@ highlight any of those words individually. The &lt;span> element includes a
 `class` attribute which defaults to "highlight" but you can pass any class name
 you like using the `wrapperClass` parameter.
 
-The resulting text with HTML highlighting is returned within a `HightlightTransformResult`
+The resulting text with HTML highlighting is returned within a [`HightlightTransformResult`](../../lib/core/services/highlight-transform.service.ts)
 object:
 
 ```ts

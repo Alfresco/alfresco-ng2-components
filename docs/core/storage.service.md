@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Storage service
 
 Stores items in the form of key-value pairs.
@@ -10,22 +11,23 @@ Stores items in the form of key-value pairs.
 
 ### Methods
 
--   `getItem(key: string): string`  
-    Gets an item.  
-    -   `key` - Key to identify the item
--   `setItem(key: string, data: string)`  
-    Stores an item  
-    -   `key` - Key to identify the item
-    -   `data` - Data to store
--   `clear()`  
-    Removes all currently stored items.   
-
--   `removeItem(key: string)`  
-    Removes a single item.  
-    -   `key` - Key to identify the item
--   `hasItem(key: string): boolean`  
-    Is any item currently stored under `key`?  
-    -   `key` - Key identifying item to check
+-   **clear**()<br/>
+    Removes all currently stored items.
+-   **getItem**(key: `string` = `null`): `string | null`<br/>
+    Gets an item.
+    -   _key:_ `string`  - Key to identify the item
+    -   **Returns** `string | null` - The item (if any) retrieved by the key
+-   **hasItem**(key: `string` = `null`): `boolean`<br/>
+    Is any item currently stored under `key`?
+    -   _key:_ `string`  - Key identifying item to check
+    -   **Returns** `boolean` - True if key retrieves an item, false otherwise
+-   **removeItem**(key: `string` = `null`)<br/>
+    Removes a single item.
+    -   _key:_ `string`  - Key to identify the item
+-   **setItem**(key: `string` = `null`, data: `string` = `null`)<br/>
+    Stores an item
+    -   _key:_ `string`  - Key to identify the item
+    -   _data:_ `string`  - Data to store
 
 ## Details
 

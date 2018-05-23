@@ -11,7 +11,7 @@ Provides a generic "Empty Content" UI and can used as a placeholder for componen
 ## Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | icon | string | Material Icon to use |
 | title | string | String or Resource Key for the title |
 | subtitle | string | String or Resource Key for the subtitle |

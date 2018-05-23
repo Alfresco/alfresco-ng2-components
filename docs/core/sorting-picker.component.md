@@ -39,5 +39,5 @@ You can bind a collection of any objects that expose the following properties:
 ## Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | change | `EventEmitter<{ key: string, ascending: boolean }>` | Raised each time sorting key or direction gets changed. |
