@@ -50,8 +50,7 @@ import {
     TaskDetailsComponent,
     TaskDetailsEvent,
     TaskFiltersComponent,
-    TaskListComponent,
-    TaskListService
+    TaskListComponent
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
@@ -157,7 +156,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
                 private router: Router,
-                private taskListService: TaskListService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private appConfig: AppConfigService,
@@ -234,7 +232,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     ngOnDestroy() {
         this.sub.unsubscribe();
-        this.taskListService.tasksList$.subscribe();
     }
 
     onTaskFilterClick(filter: FilterRepresentationModel): void {

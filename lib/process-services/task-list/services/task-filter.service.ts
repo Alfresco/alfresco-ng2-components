@@ -18,20 +18,14 @@
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { FilterRepresentationModel } from '../models/filter.model';
-import { TaskListModel } from '../models/task-list.model';
 import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class TaskFilterService {
-    private tasksListSubject = new Subject<TaskListModel>();
-
-    public tasksList$: Observable<TaskListModel>;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.tasksList$ = this.tasksListSubject.asObservable();
     }
 
     /**
@@ -216,7 +210,6 @@ export class TaskFilterService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        this.tasksListSubject.error(error);
         return Observable.throw(error || 'Server error');
     }
 
