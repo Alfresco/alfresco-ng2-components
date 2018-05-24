@@ -207,7 +207,7 @@ describe('CommentListComponent', () => {
         fixture.whenStable().then(() => {
             let elements = fixture.nativeElement.querySelectorAll('#comment-time');
             expect(elements.length).toBe(1);
-            expect(elements[0].innerText).toBe(commentList.transformDate(processCommentOne.created));
+            expect(elements[0].innerText).toBe(commentList.transformDate(processCommentOne.created.toDateString()));
             expect(fixture.nativeElement.querySelector('#comment-time:empty')).toBeNull();
         });
     }));
