@@ -151,8 +151,10 @@ describe('CommentListComponent', () => {
 
     it('should deselect the previous selected comment when a new one is clicked', async(() => {
         processCommentOne.isSelected = true;
-        commentList.selectedComment = processCommentOne;
-        commentList.comments = [processCommentOne, processCommentTwo];
+        let commentOne = Object.assign({}, processCommentOne);
+        let commentTwo = Object.assign({}, processCommentTwo);
+        commentList.selectedComment = commentOne;
+        commentList.comments = [commentOne, commentTwo];
 
         commentList.clickRow.subscribe(selectedComment => {
             fixture.detectChanges();
@@ -200,25 +202,13 @@ describe('CommentListComponent', () => {
         });
     }));
 
-    it('should show comment date time when input is given', async(() => {
-        commentList.comments = [Object.assign({}, processCommentOne)];
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            let elements = fixture.nativeElement.querySelectorAll('#comment-time');
-            expect(elements.length).toBe(1);
-            expect(elements[0].innerText).toBe(commentList.transformDate(processCommentOne.created.toDateString()));
-            expect(fixture.nativeElement.querySelector('#comment-time:empty')).toBeNull();
-        });
-    }));
-
     it('comment date time should start with Today when comment date is today', async(() => {
         commentList.comments = [Object.assign({}, processCommentOne)];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
             element = fixture.nativeElement.querySelector('#comment-time');
-            expect(element.innerText).toContain('Today');
+            expect(element.innerText).toContain('a few seconds ago');
         });
     }));
 
@@ -230,7 +220,7 @@ describe('CommentListComponent', () => {
 
         fixture.whenStable().then(() => {
             element = fixture.nativeElement.querySelector('#comment-time');
-            expect(element.innerText).toContain('Yesterday');
+            expect(element.innerText).toContain('a day ago');
         });
     }));
 

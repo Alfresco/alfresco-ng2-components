@@ -22,12 +22,14 @@ import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataColumnModule } from '../data-column/data-column.module';
 import { DataTableModule } from '../datatable/datatable.module';
+import { PipeModule } from '../pipes/pipe.module';
 
 import { CommentListComponent } from './comment-list.component';
 import { CommentsComponent } from './comments.component';
 
 @NgModule({
     imports: [
+        PipeModule,
         DataColumnModule,
         DataTableModule,
         FormsModule,
