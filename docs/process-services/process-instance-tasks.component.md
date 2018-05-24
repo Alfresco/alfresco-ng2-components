@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Process Instance Tasks component
 
 Lists both the active and completed tasks associated with a particular process instance
@@ -20,13 +21,13 @@ Lists both the active and completed tasks associated with a particular process i
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| processInstanceDetails | `ProcessInstance` |  | (**required**) The ID of the process instance to display tasks for.  |
-| showRefreshButton | `boolean` | `true` | Toggles whether to show a refresh button next to the list of tasks to allow it to be updated from the server. |
+| -- | -- | -- | -- |
+| processInstanceDetails | [`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts) |  | (**required**) The ID of the process instance to display tasks for. |
+| showRefreshButton | `boolean` | true | Toggles whether to show a refresh button next to the list of tasks to allow it to be updated from the server. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
+| -- | -- | -- |
 | error | `EventEmitter<any>` | Emitted when an error occurs. |
-| taskClick | `EventEmitter<TaskDetailsEvent>` | Emitted when a task is clicked. |
+| taskClick | [`EventEmitter<TaskDetailsEvent>`](../../lib/process-services/task-list/models/task-details.event.ts) | Emitted when a task is clicked. |

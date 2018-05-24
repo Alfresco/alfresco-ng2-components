@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Select app Component
 
 Show all available apps and return the selected app.

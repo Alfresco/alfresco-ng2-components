@@ -2,9 +2,27 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Process Filters Component
 
 Collection of criteria used to filter process instances, which may be customized by users.
+
+## Contents
+
+-   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+    -   [Events](#events)
+
+-   [Details](#details)
+
+    -   [How filter the activiti process filters](#how-filter-the-activiti-process-filters)
+    -   [FilterParamsModel](#filterparamsmodel)
+    -   [How to create an accordion menu with the processes filter](#how-to-create-an-accordion-menu-with-the-processes-filter)
+
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -19,19 +37,19 @@ Collection of criteria used to filter process instances, which may be customized
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| filterParam | `FilterProcessRepresentationModel` |  | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
-| appId | `number` |  | Display filters available to the current user for the application with the specified ID.  |
-| appName | `string` |  | Display filters available to the current user for the application with the specified name.  |
-| showIcon | `boolean` | `true` | Toggle to show or hide the filter's icon.  |
+| -- | -- | -- | -- |
+| appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
+| appName | `string` |  | Display filters available to the current user for the application with the specified name. |
+| filterParam | [`FilterProcessRepresentationModel`](../../lib/process-services/process-list/models/filter-process.model.ts) |  | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
+| showIcon | `boolean` | true | Toggle to show or hide the filter's icon. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
+| -- | -- | -- |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
 | filterClick | `EventEmitter<ProcessInstanceFilterRepresentation>` | Emitted when the user selects a filter from the list. |
 | success | `EventEmitter<ProcessInstanceFilterRepresentation[]>` | Emitted when the list of filters has been successfully loaded from the server. |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
 
 ## Details
 
@@ -51,7 +69,7 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 </adf-process-instance-filters>
 ```
 
-You can use inside the filterParam one of the properties defined by [FilterParamsModel](#filterparamsmodel) (see below).
+You can use inside the filterParam one of the properties defined by [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts) (see below).
 
 ### FilterParamsModel
 

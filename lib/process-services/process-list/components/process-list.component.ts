@@ -84,11 +84,11 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     name: string;
 
-    /* The page number of the processes to fetch. */
+    /** The page number of the processes to fetch. */
     @Input()
     page: number = 0;
 
-    /* The page number processes to fetch. */
+    /** The number of processes to fetch in each page. */
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
@@ -100,18 +100,18 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     data: DataTableAdapter;
 
-    /* Toggles multiple row selection, renders checkboxes at the beginning of each row */
+    /** Toggles multiple row selection, which renders checkboxes at the beginning of each row */
     @Input()
     multiselect: boolean = false;
 
-    /* Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+    /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
      * multiple rows.
      */
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
-    /* Toggles default selection of the first row */
+    /** Toggles default selection of the first row */
     @Input()
     selectFirstRow: boolean = true;
 
