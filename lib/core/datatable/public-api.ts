@@ -39,5 +39,6 @@ export * from './components/datatable/location-cell.component';
 export * from './directives/loading-template.directive';
 export * from './directives/no-content-template.directive';
 export * from './directives/no-permission-template.directive';
+export * from './directives/empty-custom-content.directive';
 
 export * from './datatable.module';
