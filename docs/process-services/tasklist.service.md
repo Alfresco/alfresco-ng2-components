@@ -12,86 +12,107 @@ Manages Task Instances.
 
 ### Methods
 
--   `getFilterForTaskById(taskId: string, filterList: FilterRepresentationModel[]): Observable<FilterRepresentationModel>`  
-    Gets all the filters in the list that belong to a task.  
-    -   `taskId` - ID of the target task
-    -   `filterList` - List of filters to search through
--   `isTaskRelatedToFilter(taskId: string, filter: FilterRepresentationModel): Observable<FilterRepresentationModel>`  
-    Checks if a taskId is filtered with the given filter.  
-    -   `taskId` - ID of the target task
-    -   `filter` - The filter you want to check
--   `getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel>`  
-    Gets all the tasks matching the supplied query.  
-    -   `requestNode` - Query to search for tasks
--   `findTasksByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel>`  
-    Gets tasks matching a query and state value.  
-    -   `requestNode` - Query to search for tasks
-    -   `state` - (Optional) Task state. Can be "open" or "completed".
--   `findAllTaskByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel>`  
-    Gets all tasks matching a query and state value.  
-    -   `requestNode` - Query to search for tasks.
-    -   `state` - (Optional) Task state. Can be "open" or "completed". 
--   `findAllTasksWithoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel>`  
-    Get all tasks matching the supplied query but ignoring the task state.  
-    -   `requestNode` - Query to search for tasks
--   `getTaskDetails(taskId: string): Observable<TaskDetailsModel>`  
-    Gets details for a task.  
-    -   `taskId` - ID of the target task.
--   `getTaskChecklist(id: string): Observable<TaskDetailsModel[]>`  
-    Gets the checklist for a task.  
-    -   `id` - ID of the target task
--   `getFormList(): Observable<Form[]>`  
-    Gets all available reusable forms.  
-
--   `attachFormToATask(taskId: string, formId: number): Observable<any>`  
-    Attaches a form to a task.  
-    -   `taskId` - ID of the target task
-    -   `formId` - ID of the form to add
--   `addTask(task: TaskDetailsModel): Observable<TaskDetailsModel>`  
-    Adds a subtask (ie, a checklist task) to a parent task.  
-    -   `task` - The task to add
--   `deleteTask(taskId: string): Observable<TaskDetailsModel>`  
-    Deletes a subtask (ie, a checklist task) from a parent task.  
-    -   `taskId` - The task to delete
--   `completeTask(taskId: string): any`  
-    Gives completed status to a task.  
-    -   `taskId` - ID of the target task
--   `getTotalTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<any>`  
-    Gets the total number of the tasks found by a query.  
-    -   `requestNode` - Query to search for tasks
--   `createNewTask(task: TaskDetailsModel): Observable<TaskDetailsModel>`  
-    Creates a new standalone task.  
-    -   `task` - Details of the new task
--   `assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel>`  
-    Assigns a task to a user or group.  
-    -   `taskId` - The task to assign
-    -   `requestNode` - User or group to assign the task to
--   `assignTaskByUserId(taskId: string, userId: number): Observable<TaskDetailsModel>`  
-    Assigns a task to a user.  
-    -   `taskId` - ID of the task to assign
-    -   `userId` - ID of the user to assign the task to
--   `claimTask(taskId: string): Observable<TaskDetailsModel>`  
-    Claims a task for the current user.  
-    -   `taskId` - ID of the task to claim
--   `unclaimTask(taskId: string): Observable<TaskDetailsModel>`  
-    Unclaims a task for the current user.  
-    -   `taskId` - ID of the task to unclaim
--   `updateTask(taskId: any, updated): Observable<TaskDetailsModel>`  
-    Updates the details (name, description, due date) for a task.  
-    -   `taskId` - ID of the task to update
-    -   `updated` - Data to update the task (as a \`TaskUpdateRepresentation\` instance).
--   `fetchTaskAuditPdfById(taskId: string): Observable<Blob>`  
-    Fetches the Task Audit information in PDF format.  
-    -   `taskId` - ID of the target task
--   `fetchTaskAuditJsonById(taskId: string): Observable<any>`  
-    Fetch the Task Audit information in JSON format  
-    -   `taskId` - ID of the target task
+-   **addTask**(task: [`TaskDetailsModel`](../process-services/task-details.model.md) = `null`): [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md)<br/>
+    Adds a subtask (ie, a checklist task) to a parent task.
+    -   _task:_ [`TaskDetailsModel`](../process-services/task-details.model.md)  - The task to add
+    -   **Returns** [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md) - The subtask that was added
+-   **assignTask**(taskId: `string` = `null`, requestNode: `any` = `null`): [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md)<br/>
+    Assigns a task to a user or group.
+    -   _taskId:_ `string`  - The task to assign
+    -   _requestNode:_ `any`  - User or group to assign the task to
+    -   **Returns** [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md) - Details of the assigned task
+-   **assignTaskByUserId**(taskId: `string` = `null`, userId: `number` = `null`): [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md)<br/>
+    Assigns a task to a user.
+    -   _taskId:_ `string`  - ID of the task to assign
+    -   _userId:_ `number`  - ID of the user to assign the task to
+    -   **Returns** [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md) - Details of the assigned task
+-   **attachFormToATask**(taskId: `string` = `null`, formId: `number` = `null`): `Observable<any>`<br/>
+    Attaches a form to a task.
+    -   _taskId:_ `string`  - ID of the target task
+    -   _formId:_ `number`  - ID of the form to add
+    -   **Returns** `Observable<any>` - Null response notifying when the operation is complete
+-   **claimTask**(taskId: `string` = `null`): [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md)<br/>
+    Claims a task for the current user.
+    -   _taskId:_ `string`  - ID of the task to claim
+    -   **Returns** [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md) - Details of the claimed task
+-   **completeTask**(taskId: `string` = `null`): `Observable<any>`<br/>
+    Gives completed status to a task.
+    -   _taskId:_ `string`  - ID of the target task
+    -   **Returns** `Observable<any>` - Null response notifying when the operation is complete
+-   **createNewTask**(task: [`TaskDetailsModel`](../process-services/task-details.model.md) = `null`): [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md)<br/>
+    Creates a new standalone task.
+    -   _task:_ [`TaskDetailsModel`](../process-services/task-details.model.md)  - Details of the new task
+    -   **Returns** [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md) - Details of the newly created task
+-   **deleteTask**(taskId: `string` = `null`): [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md)<br/>
+    Deletes a subtask (ie, a checklist task) from a parent task.
+    -   _taskId:_ `string`  - The task to delete
+    -   **Returns** [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md) - Null response notifying when the operation is complete
+-   **fetchTaskAuditJsonById**(taskId: `string` = `null`): `Observable<any>`<br/>
+    Fetch the Task Audit information in JSON format
+    -   _taskId:_ `string`  - ID of the target task
+    -   **Returns** `Observable<any>` - JSON data
+-   **fetchTaskAuditPdfById**(taskId: `string` = `null`): `Observable<Blob>`<br/>
+    Fetches the Task Audit information in PDF format.
+    -   _taskId:_ `string`  - ID of the target task
+    -   **Returns** `Observable<Blob>` - Binary PDF data
+-   **findAllTaskByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) = `null`, state?: `string` = `null`): [`Observable<TaskListModel>`](../../lib/process-services/task-list/models/task-list.model.ts)<br/>
+    Gets all tasks matching a query and state value.
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)  - Query to search for tasks.
+    -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed".
+    -   **Returns** [`Observable<TaskListModel>`](../../lib/process-services/task-list/models/task-list.model.ts) - List of tasks
+-   **findAllTasksWithoutState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) = `null`): [`Observable<TaskListModel>`](../../lib/process-services/task-list/models/task-list.model.ts)<br/>
+    Gets all tasks matching the supplied query but ignoring the task state.
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)  - Query to search for tasks
+    -   **Returns** [`Observable<TaskListModel>`](../../lib/process-services/task-list/models/task-list.model.ts) - List of tasks
+-   **findTasksByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) = `null`, state?: `string` = `null`): [`Observable<TaskListModel>`](../../lib/process-services/task-list/models/task-list.model.ts)<br/>
+    Gets tasks matching a query and state value.
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)  - Query to search for tasks
+    -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed".
+    -   **Returns** [`Observable<TaskListModel>`](../../lib/process-services/task-list/models/task-list.model.ts) - List of tasks
+-   **getFilterForTaskById**(taskId: `string` = `null`, filterList: [`FilterRepresentationModel[]`](../../lib/process-services/task-list/models/filter.model.ts) = `null`): [`Observable<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Gets all the filters in the list that belong to a task.
+    -   _taskId:_ `string`  - ID of the target task
+    -   _filterList:_ [`FilterRepresentationModel[]`](../../lib/process-services/task-list/models/filter.model.ts)  - List of filters to search through
+    -   **Returns** [`Observable<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts) - Filters belonging to the task
+-   **getFormList**(): [`Observable<Form[]>`](../../lib/process-services/task-list/models/form.model.ts)<br/>
+    Gets all available reusable forms.
+    -   **Returns** [`Observable<Form[]>`](../../lib/process-services/task-list/models/form.model.ts) - Array of form details
+-   **getTaskChecklist**(id: `string` = `null`): [`Observable<TaskDetailsModel[]>`](../process-services/task-details.model.md)<br/>
+    Gets the checklist for a task.
+    -   _id:_ `string`  - ID of the target task
+    -   **Returns** [`Observable<TaskDetailsModel[]>`](../process-services/task-details.model.md) - Array of checklist task details
+-   **getTaskDetails**(taskId: `string` = `null`): [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md)<br/>
+    Gets details for a task.
+    -   _taskId:_ `string`  - ID of the target task.
+    -   **Returns** [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md) - Task details
+-   **getTasks**(requestNode: [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) = `null`): [`Observable<TaskListModel>`](../../lib/process-services/task-list/models/task-list.model.ts)<br/>
+    Gets all the tasks matching the supplied query.
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)  - Query to search for tasks
+    -   **Returns** [`Observable<TaskListModel>`](../../lib/process-services/task-list/models/task-list.model.ts) - List of tasks
+-   **getTotalTasks**(requestNode: [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) = `null`): `Observable<any>`<br/>
+    Gets the total number of the tasks found by a query.
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)  - Query to search for tasks
+    -   **Returns** `Observable<any>` - Number of tasks
+-   **isTaskRelatedToFilter**(taskId: `string` = `null`, filter: [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) = `null`): [`Observable<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Checks if a taskId is filtered with the given filter.
+    -   _taskId:_ `string`  - ID of the target task
+    -   _filter:_ [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)  - The filter you want to check
+    -   **Returns** [`Observable<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts) - The filter if it is related or null otherwise
+-   **unclaimTask**(taskId: `string` = `null`): [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md)<br/>
+    Unclaims a task for the current user.
+    -   _taskId:_ `string`  - ID of the task to unclaim
+    -   **Returns** [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md) - Null response notifying when the operation is complete
+-   **updateTask**(taskId: `any` = `null`, updated: `any` = `null`): [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md)<br/>
+    Updates the details (name, description, due date) for a task.
+    -   _taskId:_ `any`  - ID of the task to update
+    -   _updated:_ `any`  - Data to update the task (as a `TaskUpdateRepresentation` instance).
+    -   **Returns** [`Observable<TaskDetailsModel>`](../process-services/task-details.model.md) - Updated task details
 
 ## Details
 
 ### Task details
 
-Several of the methods return one or more `TaskDetailsModel` instances corresponding
+Several of the methods return one or more [`TaskDetailsModel`](../process-services/task-details.model.md) instances corresponding
 to tasks or subtasks matched by a query of some kind. For example, `getTaskDetails`
 could be used as shown below:
 
@@ -104,45 +125,43 @@ this.tasklistService.getTaskDetails(taskInstanceId).subscribe( (taskInstance: Ta
 });
 ```
 
-The resulting `TaskDetailsModel` object contains information like the following:
+The resulting [`TaskDetailsModel`](../process-services/task-details.model.md) object contains information like the following:
 
-```
-    adhocTaskCanBeReassigned: false
-    assignee: UserProcessModel {pictureId: null, id: 1, email: "admin@app.activiti.com", firstName: null, lastName: "Administrator"}
-    category: null
-    created: Wed Oct 11 2017 09:07:14 GMT+0100 (BST) {}
-    description: null
-    dueDate: null
-    duration: null
-    endDate: null
-    executionId: "11337"
-    formKey: "9"
-    id: "15303"
-    initiatorCanCompleteTask: false
-    involvedPeople: []
-    managerOfCandidateGroup: false
-    memberOfCandidateGroup: false
-    memberOfCandidateUsers: false
-    name: "Clarify Invoice - Invoice-20302.pdf"
-    parentTaskId: null
-    parentTaskName: null
-    priority: 50
-    processDefinitionCategory: "http://www.activiti.org/processdef"
-    processDefinitionDeploymentId: "18"
-    processDefinitionDescription: "This is a simple invoice approval process that allows a person to assign a dedicated approver for the the invoice. It will then be routed to the Accounting department for payment preparation. Once payment is prepared the invoice will be stored in a specific folder and an email notification will be sent."
-    processDefinitionId: "InvoiceApprovalProcess:2:21"
-    processDefinitionKey: "InvoiceApprovalProcess"
-    processDefinitionName: "Invoice Approval Process"
-    processDefinitionVersion: 2
-    processInstanceId: "11337"
-    processInstanceName: null
-    processInstanceStartUserId: "1"
-    taskDefinitionKey: "clarifyInvoice"
-```
+        adhocTaskCanBeReassigned: false
+        assignee: UserProcessModel {pictureId: null, id: 1, email: "admin@app.activiti.com", firstName: null, lastName: "Administrator"}
+        category: null
+        created: Wed Oct 11 2017 09:07:14 GMT+0100 (BST) {}
+        description: null
+        dueDate: null
+        duration: null
+        endDate: null
+        executionId: "11337"
+        formKey: "9"
+        id: "15303"
+        initiatorCanCompleteTask: false
+        involvedPeople: []
+        managerOfCandidateGroup: false
+        memberOfCandidateGroup: false
+        memberOfCandidateUsers: false
+        name: "Clarify Invoice - Invoice-20302.pdf"
+        parentTaskId: null
+        parentTaskName: null
+        priority: 50
+        processDefinitionCategory: "http://www.activiti.org/processdef"
+        processDefinitionDeploymentId: "18"
+        processDefinitionDescription: "This is a simple invoice approval process that allows a person to assign a dedicated approver for the the invoice. It will then be routed to the Accounting department for payment preparation. Once payment is prepared the invoice will be stored in a specific folder and an email notification will be sent."
+        processDefinitionId: "InvoiceApprovalProcess:2:21"
+        processDefinitionKey: "InvoiceApprovalProcess"
+        processDefinitionName: "Invoice Approval Process"
+        processDefinitionVersion: 2
+        processInstanceId: "11337"
+        processInstanceName: null
+        processInstanceStartUserId: "1"
+        taskDefinitionKey: "clarifyInvoice"
 
 ### Queries
 
-Some of the methods run a search query contained in a `TaskQueryRequestRepresentationModel` and
+Some of the methods run a search query contained in a [`TaskQueryRequestRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) and
 return the matched tasks. Below is an example of how you might run a query using `getTasks`:
 
 ```ts
@@ -181,8 +200,8 @@ The `assignment` property filters tasks based on how they are assigned (or not a
 Use `assignee` if you are interested in tasks that are assigned to a user. If you want to see 
 pooled tasks (i.e. tasks that needs to be claimed by a user), then use `candidate`.
 
-A successful query returns a `TaskListModel` with the `data` property set to an array of
-`TaskDetailsModel`:
+A successful query returns a [`TaskListModel`](../../lib/process-services/task-list/models/task-list.model.ts) with the `data` property set to an array of
+[`TaskDetailsModel`](../process-services/task-details.model.md):
 
     data:
         0: {id: "75010", name: "Approve Invoice  - Invoice-10202.pdf", description: null, category: null, assignee: {…}, …}

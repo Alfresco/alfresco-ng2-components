@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # People Component
 
 Displays users involved with a specified task
@@ -11,6 +12,8 @@ Displays users involved with a specified task
 ## Contents
 
 -   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
 
     -   [Properties](#properties)
 
@@ -37,21 +40,21 @@ Displays users involved with a specified task
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| people | `any[]` | `[]` | The array of User objects to display.  |
-| taskId | `string` | `''` | The numeric ID of the task.  |
-| readOnly | `boolean` | `false` | Should the data be read-only?  |
+| -- | -- | -- | -- |
+| people | [`UserProcessModel[]`](../core/user-process.model.md) |  \[] | The array of User objects to display. |
+| readOnly | `boolean` | false | Should the data be read-only? |
+| taskId | `string` | "" | The numeric ID of the task. |
 
 ## Details
 
 ### How to customize the people component behavior
 
-The people component provide two methods to customize the behavior:
+The [people component](../process-services/people.component.md) provide two methods to customize the behavior:
 
 -   involveUserAndCloseSearch: The selected user is going to be added and the search section closed
 -   involveUserWithoutCloseSearch: The selected user is going to be added without close the search section
 
-In this way will be easy customize the people component to involve the user with the single or double click event:
+In this way will be easy customize the [people component](../process-services/people.component.md) to involve the user with the single or double click event:
 
 ### Involve People single click and close search
 

@@ -11,42 +11,52 @@ Manage Task Filters, which are pre-configured Task Instance queries.
 
 ### Methods
 
--   `createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]>`  
-    Creates and returns the default filters for a process app.  
-    -   `appId` - ID of the target app
--   `getTaskListFilters(appId?: number): Observable<FilterRepresentationModel[]>`  
-    Gets all task filters for a process app.  
-    -   `appId` - (Optional) Optional ID for a specific app
--   `getTaskFilterById(filterId: number, appId?: number): Observable<FilterRepresentationModel>`  
-    Gets a task filter by ID.  
-    -   `filterId` - ID of the filter
-    -   `appId` - (Optional) ID of the app for the filter
--   `getTaskFilterByName(taskName: string, appId?: number): Observable<FilterRepresentationModel>`  
-    Gets a task filter by name.  
-    -   `taskName` - Name of the filter
-    -   `appId` - (Optional) ID of the app for the filter
--   `addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel>`  
-    Adds a new task filter  
-    -   `filter` - The new filter to add
--   `callApiTaskFilters(appId?: number): any`  
-    Calls `getUserTaskFilters` from the Alfresco JS API.  
-    -   `appId` - (Optional) ID of the target app
--   `getInvolvedTasksFilterInstance(appId: number): FilterRepresentationModel`  
-    Creates and returns a filter for "Involved" task instances.  
-    -   `appId` - ID of the target app
--   `getMyTasksFilterInstance(appId: number): FilterRepresentationModel`  
-    Creates and returns a filter for "My Tasks" task instances.  
-    -   `appId` - ID of the target app
--   `getQueuedTasksFilterInstance(appId: number): FilterRepresentationModel`  
-    Creates and returns a filter for "Queued Tasks" task instances.  
-    -   `appId` - ID of the target app
--   `getCompletedTasksFilterInstance(appId: number): FilterRepresentationModel`  
-    Creates and returns a filter for "Completed" task instances.  
-    -   `appId` - ID of the target app
+-   **addFilter**(filter: [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) = `null`): [`Observable<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Adds a new task filter
+    -   _filter:_ [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)  - The new filter to add
+    -   **Returns** [`Observable<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts) - Details of task filter just added
+-   **callApiTaskFilters**(appId?: `number` = `null`): `Promise<any>`<br/>
+    Calls `getUserTaskFilters` from the Alfresco JS API.
+    -   _appId:_ `number`  - (Optional) ID of the target app
+    -   **Returns** `Promise<any>` - List of task filters
+-   **createDefaultFilters**(appId: `number` = `null`): [`Observable<FilterRepresentationModel[]>`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Creates and returns the default filters for a process app.
+    -   _appId:_ `number`  - ID of the target app
+    -   **Returns** [`Observable<FilterRepresentationModel[]>`](../../lib/process-services/task-list/models/filter.model.ts) - Array of default filters just created
+-   **getCompletedTasksFilterInstance**(appId: `number` = `null`): [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Creates and returns a filter for "Completed" task instances.
+    -   _appId:_ `number`  - ID of the target app
+    -   **Returns** [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) - The newly created filter
+-   **getInvolvedTasksFilterInstance**(appId: `number` = `null`): [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Creates and returns a filter for "Involved" task instances.
+    -   _appId:_ `number`  - ID of the target app
+    -   **Returns** [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) - The newly created filter
+-   **getMyTasksFilterInstance**(appId: `number` = `null`): [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Creates and returns a filter for "My Tasks" task instances.
+    -   _appId:_ `number`  - ID of the target app
+    -   **Returns** [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) - The newly created filter
+-   **getQueuedTasksFilterInstance**(appId: `number` = `null`): [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Creates and returns a filter for "Queued Tasks" task instances.
+    -   _appId:_ `number`  - ID of the target app
+    -   **Returns** [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) - The newly created filter
+-   **getTaskFilterById**(filterId: `number` = `null`, appId?: `number` = `null`): [`Observable<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Gets a task filter by ID.
+    -   _filterId:_ `number`  - ID of the filter
+    -   _appId:_ `number`  - (Optional) ID of the app for the filter
+    -   **Returns** [`Observable<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts) - Details of task filter
+-   **getTaskFilterByName**(taskName: `string` = `null`, appId?: `number` = `null`): [`Observable<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Gets a task filter by name.
+    -   _taskName:_ `string`  - Name of the filter
+    -   _appId:_ `number`  - (Optional) ID of the app for the filter
+    -   **Returns** [`Observable<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts) - Details of task filter
+-   **getTaskListFilters**(appId?: `number` = `null`): [`Observable<FilterRepresentationModel[]>`](../../lib/process-services/task-list/models/filter.model.ts)<br/>
+    Gets all task filters for a process app.
+    -   _appId:_ `number`  - (Optional) Optional ID for a specific app
+    -   **Returns** [`Observable<FilterRepresentationModel[]>`](../../lib/process-services/task-list/models/filter.model.ts) - Array of task filter details
 
 ## Details
 
-The methods of this service generally return an instance of `FilterRepresentationModel` or
+The methods of this service generally return an instance of [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) or
 an array of instances. For example, you could use `getTaskListFilters` as follows:
 
 ```ts
@@ -58,7 +68,7 @@ this.taskFilterService.getTaskListFilters(processAppId).subscribe( (filters: Fil
 });
 ```
 
-The response is an array of `FilterRepresentationModel` objects:
+The response is an array of [`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts) objects:
 
     filters:  
         0: {id: 10, appId: 2, name: "Involved Tasks", recent: true, icon: "glyphicon-align-left", …}
