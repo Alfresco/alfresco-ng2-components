@@ -14,7 +14,7 @@ fairly straightforward to maintain.
 -   [I18n concepts](#i18n-concepts)
 -   [ADF support for i18n](#adf-support-for-i18n)
 -   [Using the translate pipe](#using-the-translate-pipe)
--   [Adding your own messages](#adding-your-own-messages)
+-   [Adding and replacing messages](#adding-and-replacing-messages)
 -   [Interpolations](#interpolations)
 -   [Selecting the display language](#selecting-the-display-language)
 -   [Support for i18n within ADF components](#support-for-i18n-within-adf-components)
@@ -149,13 +149,20 @@ component's `.ts` file:
 
 <!-- {% endraw %} -->
 
-## Adding your own messages
+## Adding and replacing messages
 
 The built-in translations certainly won't cover everything you will need for
-your app but you can easily replace them with your own lists. This involves
-making copies of the existing lists in your app's folder and adding your
-own keys. See the [Translation service](../core/translation.service.md) page for
-full details and examples.
+your app but you can easily replace them with your own lists. This enables you
+to add new keys and also replace the text of existing keys with your own.
+
+To override the default translations, you need to copy the existing source files
+(en.json, fr.json, etc) to your application. These local copies will completely
+replace the default files. You can then modify the local files with new keys
+or replace the text of existing keys to suit your needs.
+
+The [Translation service](../core/translation.service.md) page has full details
+of how to do this, including the locations of the required files and code samples
+for enabling your new translations in your app.
 
 ## Interpolations
 
