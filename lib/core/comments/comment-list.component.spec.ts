@@ -133,7 +133,7 @@ describe('CommentListComponent', () => {
     });
 
     it('should emit row click event', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [Object.assign({}, processCommentOne)];
 
         commentList.clickRow.subscribe(selectedComment => {
             expect(selectedComment.id).toEqual(1);
@@ -177,7 +177,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('should show comment message when input is given', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [Object.assign({}, processCommentOne)];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -189,7 +189,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('should show comment user when input is given', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [Object.assign({}, processCommentOne)];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -201,7 +201,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('should show comment date time when input is given', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [Object.assign({}, processCommentOne)];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -248,7 +248,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('should show user icon when input is given', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [Object.assign({}, processCommentOne)];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
