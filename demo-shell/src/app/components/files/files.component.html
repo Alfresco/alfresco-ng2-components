@@ -110,7 +110,6 @@
                     </button>
                     <button mat-icon-button
                             [disabled]="!documentList.selection.length"
-                            (toggle)="documentList.reload()"
                             #favorite="adfFavorite"
                             [adf-node-favorite]="documentList.selection"
                             matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.FAVORITES' | translate }}">
