@@ -17,6 +17,7 @@
 
 import { Component, Input, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { PdfViewerComponent } from './pdfViewer.component';
 
 @Component({
     selector: 'adf-pdf-thumb',
@@ -38,8 +39,9 @@ export class PdfThumbComponent implements OnInit {
     }
 
     private getThumb(page): Promise<string> {
-        const canvas = this.getCanvas();
+        const canvas = this.getCanvas(page);
         const viewport = page.getViewport(1);
+
         const scale = Math.min((canvas.height / viewport.height), (canvas.width / viewport.width));
 
         return page.render({
@@ -52,12 +54,28 @@ export class PdfThumbComponent implements OnInit {
         });
     }
 
-    private getCanvas(): HTMLCanvasElement {
-        const elementRect = this.element.nativeElement.getBoundingClientRect();
-        const canvas = document.createElement('canvas');
+    private isLandscape(page): boolean {
+        const viewport = page.getViewport(1);
+        if (viewport.height < viewport.width) {
+            return true;
+        }
 
-        canvas.width = elementRect.width;
-        canvas.height = elementRect.height;
+        return false;
+    }
+
+    private getCanvas(page): HTMLCanvasElement {
+        const canvas = document.createElement('canvas');
+        const width = 91;
+        const height = 114;
+
+        if (this.isLandscape(page)) {
+            canvas.width = height;
+            canvas.height = width;
+
+        } else {
+            canvas.width = width;
+            canvas.height = height;
+        }
 
         return canvas;
     }
