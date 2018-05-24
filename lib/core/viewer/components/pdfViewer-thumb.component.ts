@@ -30,8 +30,7 @@ export class PdfThumbComponent implements OnInit {
 
     image$: Promise<string>;
 
-    constructor(
-        private element: ElementRef, private sanitizer: DomSanitizer) {}
+    constructor(private sanitizer: DomSanitizer) {}
 
     ngOnInit() {
         this.image$ = this.page.getPage().then((page) => this.getThumb(page));
