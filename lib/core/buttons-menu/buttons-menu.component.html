@@ -1,5 +1,5 @@
 <div fxShow fxHide.xs="true" *ngIf="hasButtons()" id="adf-buttons-menu">
-    <ng-container *ngFor="let button of buttons">
+    <ng-container *ngFor="let button of convertedButtons">
         <ng-container *ngTemplateOutlet="desktopMenu; context: button"></ng-container>
      </ng-container>
 </div>
@@ -8,7 +8,7 @@
         <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #editReportMenu="matMenu">
-        <ng-container *ngFor="let button of buttons">
+        <ng-container *ngFor="let button of convertedButtons">
            <ng-container *ngTemplateOutlet="mobileMenu; context:button"></ng-container>
         </ng-container>
     </mat-menu>
@@ -25,3 +25,7 @@
         <mat-icon>{{icon}}</mat-icon><span>{{label | translate}}</span>
     </button>
 </ng-template>
+
+<ng-content *ngIf="false">
+
+</ng-content>
