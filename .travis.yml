@@ -65,7 +65,7 @@ script:
 jobs:
     include:
         - stage: Demo shell prod && Demo shell e2e && Check ADF exports
-          script: ./scripts/test-dist.sh -n $TRAVIS_BUILD_NUMBER --verbose && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
+          script: ./scripts/test-dist.sh -n $TRAVIS_BUILD_NUMBER || exit 1
         - # Test Update version 2.0.0
           script: ./scripts/test-e2e-bc.sh
         - # Test expors
@@ -77,6 +77,8 @@ jobs:
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n adf-app-manager-ui
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-modeler-app
+        - stage: Crate docker PR
+          script: node ./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1
         - stage: Deploy PR
           script: node ./scripts/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1
 
