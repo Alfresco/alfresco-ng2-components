@@ -16,7 +16,14 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, UploadService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import {
+    AlfrescoApiService,
+    AlfrescoApiServiceMock,
+    FileModel,
+    UploadService,
+    setupTestBed,
+    CoreModule
+} from '@alfresco/adf-core';
 
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
@@ -70,7 +77,8 @@ describe('UploadDragAreaComponent', () => {
             UploadDragAreaComponent
         ],
         providers: [
-            UploadService
+            UploadService,
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
 
