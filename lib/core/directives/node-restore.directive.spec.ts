@@ -39,7 +39,7 @@ class TestComponent {
     doneSpy = jasmine.createSpy('doneSpy');
 }
 
-fdescribe('NodeRestoreDirective', () => {
+describe('NodeRestoreDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let element: DebugElement;
     let component: TestComponent;
