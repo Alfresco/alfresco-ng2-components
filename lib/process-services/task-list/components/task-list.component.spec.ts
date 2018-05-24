@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, SimpleChange, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
@@ -643,4 +644,41 @@ describe('CustomTaskListComponent', () => {
         expect(component.taskList.data.getColumns()[2].title).toEqual('ADF_TASK_LIST.PROPERTIES.CREATED');
         expect(component.taskList.data.getColumns().length).toEqual(3);
     });
+});
+
+@Component({
+    template: `
+    <adf-tasklist>
+        <adf-empty-content-holder>
+            <p id="custom-id"></p>
+        </adf-empty-content-holder>
+    </adf-tasklist>
+       `
+})
+class EmptyTemplateComponent {
+}
+
+describe('Custom EmptyTemplateComponent', () => {
+    let component: EmptyTemplateComponent;
+    let fixture: ComponentFixture<EmptyTemplateComponent>;
+
+    setupTestBed({
+        imports: [ProcessTestingModule],
+        declarations: [EmptyTemplateComponent],
+        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(EmptyTemplateComponent);
+        fixture.detectChanges();
+        component = fixture.componentInstance;
+    });
+
+    it('should render the custom template', async(() => {
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#custom-id'))).not.toBeNull();
+            expect(fixture.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
+        });
+    }));
 });

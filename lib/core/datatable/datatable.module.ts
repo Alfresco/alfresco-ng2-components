@@ -37,6 +37,7 @@ import { LocationCellComponent } from './components/datatable/location-cell.comp
 import { LoadingContentTemplateDirective } from './directives/loading-template.directive';
 import { NoContentTemplateDirective } from './directives/no-content-template.directive';
 import { NoPermissionTemplateDirective } from './directives/no-permission-template.directive';
+import { EmptyCustomContentDirective } from './directives/empty-custom-content.directive';
 
 @NgModule({
     imports: [
@@ -60,7 +61,8 @@ import { NoPermissionTemplateDirective } from './directives/no-permission-templa
         LocationCellComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
-        LoadingContentTemplateDirective
+        LoadingContentTemplateDirective,
+        EmptyCustomContentDirective
     ],
     exports: [
         DataTableComponent,
@@ -74,7 +76,8 @@ import { NoPermissionTemplateDirective } from './directives/no-permission-templa
         LocationCellComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
-        LoadingContentTemplateDirective
+        LoadingContentTemplateDirective,
+        EmptyCustomContentDirective
     ]
 })
 export class DataTableModule {}
