@@ -40,7 +40,6 @@
                         [assignment]="taskFilter?.filter?.assignment"
                         [state]="taskFilter?.filter?.state"
                         [sort]="taskFilter?.filter?.sort"
-                        [data]="dataTasks"
                         [landingTaskId]="currentTaskId"
                         (rowClick)="onTaskRowClick($event)"
                         (success)="onSuccessTaskList($event)"
@@ -144,7 +143,6 @@
                         [page]="processPage"
                         [size]="paginationPageSize"
                         [sort]="processFilter?.filter?.sort"
-                        [data]="dataProcesses"
                         (rowClick)="onProcessRowClick($event)"
                         (row-dblclick)="onProcessRowDblClick($event)"
                         (success)="onSuccessProcessList($event)">

@@ -251,6 +251,17 @@ describe('ProcessInstanceListComponent', () => {
         expect(component.getCurrentId()).toBeNull();
     });
 
+    it('should return the sorting order if sort is defined', () => {
+        component.sort = 'fakeKey-fakeOrder';
+        fixture.detectChanges();
+        expect(component.getDataSort()).toEqual(['fakeKey', 'fakeOrder']);
+    });
+
+    it('should return the default sorting order if sort is not defined', () => {
+        fixture.detectChanges();
+        expect(component.getDataSort()).toEqual(['created', 'desc']);
+    });
+
     it('should return selected true for the selected process', () => {
         component.data = new ObjectDataTableAdapter(
             [

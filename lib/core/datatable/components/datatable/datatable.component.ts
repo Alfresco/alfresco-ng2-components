@@ -67,6 +67,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     rows: any[] = [];
 
+    /** Define the sort order of the datatable. Possible values are :
+     * [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`]
+     */
+    @Input()
+    sorting: any[] = [];
+
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
      */
@@ -224,6 +230,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return rows.map(row => new ObjectDataRow(row));
     }
 
+    convertToDataSorting(sorting: any[]): DataSorting {
+        if (sorting) {
+            return new DataSorting(sorting[0], sorting[1]);
+        }
+    }
+
     private initAndSubscribeClickStream() {
         this.unsubscribeClickStream();
         let singleClickStream = this.click$
@@ -287,6 +299,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private setTableRows(rows) {
         if (this.data) {
             this.data.setRows(this.convertToRowsData(rows));
+            this.data.setSorting(this.convertToDataSorting(this.sorting));
         }
     }
 

@@ -131,6 +131,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     currentInstanceId: string;
     isLoading: boolean = true;
     layoutPresets = {};
+    dataSort: any[] = [];
 
     pagination: BehaviorSubject<PaginationModel>;
 
@@ -169,6 +170,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.dataSort = this.getDataSort();
         if (this.isPropertyChanged(changes)) {
             this.reload();
         }
@@ -287,6 +289,13 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
                 this.currentInstanceId = null;
             }
         }
+    }
+
+    /**
+     * Return the sorting order
+     */
+    getDataSort(): any[] {
+        return this.sort ? this.sort.split('-') : ['created', 'desc'];
     }
 
     /**

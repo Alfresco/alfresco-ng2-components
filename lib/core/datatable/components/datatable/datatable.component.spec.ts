@@ -207,6 +207,46 @@ describe('DataTable', () => {
         expect(element.querySelector('[data-automation-id="text_FAKE"]')).not.toBeNull();
     });
 
+    it('should set rows to the data when rows defined', () => {
+        const dataRows =
+            [
+                { name: 'test1' },
+                { name: 'test2' },
+                { name: 'test3' },
+                { name: 'test4' }
+            ];
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+        fixture.detectChanges();
+
+        const rows = dataTable.data.getRows();
+        expect(rows[0].getValue('name')).toEqual('test1');
+        expect(rows[1].getValue('name')).toEqual('test2');
+    });
+
+    it('should set sort order if sorting is defined', () => {
+        const dataSortObj = new DataSorting('created', 'desc');
+        const dataRows = [{ name: 'test1' }];
+
+        dataTable.sorting = [ 'created', 'desc' ];
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        const dataSort = dataTable.data.getSorting();
+        expect(dataSort).toEqual(dataSortObj);
+    });
+
     it('should reset selection on mode change', () => {
         spyOn(dataTable, 'resetSelection').and.callThrough();
 
