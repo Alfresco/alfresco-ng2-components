@@ -75,12 +75,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     columns: any[] = [];
 
-    /** Define the sort order of the datatable. Possible values are :
-     * [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`]
-     */
-    @Input()
-    sorting: any[] = [];
-
     /* Toggles default selection of the first row */
     @Input()
     selectFirstRow: boolean = true;
@@ -335,7 +329,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 this.resetSelection();
             }
             this.data.setRows(this.convertToRowsData(rows));
-            this.data.setSorting(this.convertToDataSorting(this.sorting));
             this.selectFirst();
         }
     }

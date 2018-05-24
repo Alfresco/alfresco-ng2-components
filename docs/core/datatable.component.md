@@ -272,7 +272,6 @@ export class DataTableDemo {
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | selectFirstRow | `boolean` | `true` | Toggles the first row selection. |
 | showHeader | `boolean` | true | Toggles the header. |
-| sorting | `any[]` | `[]` | Define the sorting order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 
 ### Events
 
