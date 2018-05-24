@@ -38,7 +38,9 @@ let nameExceptions = {
     "datatable.component": "DataTableComponent",
     "tasklist.service": "TaskListService",
     "text-mask.component": "InputMaskDirective",
-    "card-item-types.service": "CardItemTypeService"
+    "card-item-types.service": "CardItemTypeService",
+    "create-task-attachment.component": "AttachmentComponent",
+    "process-list.component": "ProcessInstanceListComponent"
 }
 
 

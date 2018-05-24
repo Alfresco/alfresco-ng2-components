@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # People Search component
 
 Searches users/people.
@@ -17,16 +18,16 @@ Searches users/people.
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| results | `Observable<any[]>` |  | The parameters to show people list.  |
+| -- | -- | -- | -- |
+| results | [`Observable<UserProcessModel[]>`](../core/user-process.model.md) |  | Parameters for displaying the list. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
+| -- | -- | -- |
+| closeSearch | `EventEmitter<Object>` | Emitted when the "close" button is clicked. |
 | searchPeople | `EventEmitter<any>` | Emitted when a search is performed with a new keyword. |
-| success | `EventEmitter<any>` | Emitted when a user is selected and the action button is clicked. |
-| closeSearch | `EventEmitter<{}>` | Emitted when the "close" button is clicked. |
+| success | [`EventEmitter<UserProcessModel>`](../core/user-process.model.md) | Emitted when a user is selected and the action button is clicked. |
 
 ## Details
 

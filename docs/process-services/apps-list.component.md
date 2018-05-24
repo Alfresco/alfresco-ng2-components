@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Apps List Component
 
 Shows all available apps.
@@ -34,15 +35,15 @@ If we intend to show a custom template if there are no apps present
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| layoutType | `string` | `AppsListComponent.LAYOUT_GRID` | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
-| filtersAppId | `any[]` |  | Provides a way to filter the apps to show.  |
+| -- | -- | -- | -- |
+| filtersAppId | `any[]` |  | Provides a way to filter the apps to show. |
+| layoutType | `string` |  [`AppsListComponent`](../process-services/apps-list.component.md).LAYOUT_GRID | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| appClick | `EventEmitter<AppDefinitionRepresentationModel>` | Emitted when an app entry is clicked. |
+| -- | -- | -- |
+| appClick | [`EventEmitter<AppDefinitionRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts) | Emitted when an app entry is clicked. |
 | error | `EventEmitter<any>` | Emitted when an error occurs. |
 
 ## Details
