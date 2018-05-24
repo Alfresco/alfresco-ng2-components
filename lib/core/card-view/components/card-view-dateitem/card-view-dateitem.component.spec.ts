@@ -63,7 +63,7 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should NOT render the default as value if the value is empty, editable:false and displayEmpty is false', () => {
-        component.property = new CardViewDateItemModel ({
+        component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: '',
             key: 'datekey',
@@ -81,7 +81,7 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should render the default as value if the value is empty, editable:false and displayEmpty is true', () => {
-        component.property = new CardViewDateItemModel ({
+        component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: '',
             key: 'datekey',
@@ -99,7 +99,7 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should render the default as value if the value is empty and editable:true', () => {
-        component.property = new CardViewDateItemModel ({
+        component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: '',
             key: 'datekey',
@@ -176,15 +176,16 @@ describe('CardViewDateItemComponent', () => {
         const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
         fixture.detectChanges();
 
-        cardViewUpdateService.itemUpdated$.subscribe(
+        let disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
             (updateNotification) => {
                 expect(updateNotification.target).toBe(component.property);
-                expect(updateNotification.changed).toEqual({datekey: expectedDate.toDate()});
+                expect(updateNotification.changed).toEqual({ datekey: expectedDate.toDate() });
+                disposableUpdate.unsubscribe();
                 done();
             }
         );
 
-        component.onDateChanged({value: expectedDate});
+        component.onDateChanged({ value: expectedDate });
     });
 
     it('should update the propery\'s value after a succesful update attempt', async(() => {
@@ -194,7 +195,7 @@ describe('CardViewDateItemComponent', () => {
         const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
         fixture.detectChanges();
 
-        component.onDateChanged({value: expectedDate});
+        component.onDateChanged({ value: expectedDate });
 
         fixture.whenStable().then(
             (updateNotification) => {
