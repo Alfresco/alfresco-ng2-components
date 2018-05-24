@@ -35,21 +35,21 @@ const testUser: UserProcessModel = new UserProcessModel({
 const processCommentOne: CommentModel = new CommentModel({
     id: 1,
     message: 'Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: testUser
 });
 
 const processCommentTwo: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: testUser
 });
 
 const contentCommentUserPictureDefined: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: {
         enabled: true,
         firstName: 'some',
@@ -65,7 +65,7 @@ const contentCommentUserPictureDefined: CommentModel = new CommentModel({
 const processCommentUserPictureDefined: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: {
         id: '1',
         firstName: 'Test',
@@ -78,7 +78,7 @@ const processCommentUserPictureDefined: CommentModel = new CommentModel({
 const contentCommentUserNoPictureDefined: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: {
         enabled: true,
         firstName: 'some',
@@ -93,7 +93,7 @@ const contentCommentUserNoPictureDefined: CommentModel = new CommentModel({
 const processCommentUserNoPictureDefined: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: {
         id: '1',
         firstName: 'Test',

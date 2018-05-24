@@ -18,8 +18,6 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { setupTestBed } from '../testing/setupTestBed';
@@ -44,7 +42,6 @@ describe('NodeRestoreDirective', () => {
     let element: DebugElement;
     let component: TestComponent;
     let alfrescoService: AlfrescoApiService;
-    let router: Router;
     let nodesService;
     let coreApi;
     let directiveInstance;
@@ -53,7 +50,6 @@ describe('NodeRestoreDirective', () => {
     setupTestBed({
         imports: [
             CoreModule.forRoot(),
-            RouterTestingModule,
             NoopAnimationsModule
         ],
         declarations: [
@@ -73,7 +69,6 @@ describe('NodeRestoreDirective', () => {
         alfrescoService = TestBed.get(AlfrescoApiService);
         nodesService = alfrescoService.getInstance().nodes;
         coreApi = alfrescoService.getInstance().core;
-        router = TestBed.get(Router);
 
         restoreNodeSpy = spyOn(nodesService, 'restoreNode').and.returnValue(Promise.resolve());
         spyOn(coreApi.nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve({

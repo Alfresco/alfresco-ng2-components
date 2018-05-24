@@ -27,7 +27,6 @@ import {
     fakeRepresentationFilter2,
     fakeTaskDetails,
     fakeTaskList,
-    fakeTaskListDifferentProcessDefinitionKey,
     fakeTasksChecklist,
     fakeUser1,
     fakeUser2,
