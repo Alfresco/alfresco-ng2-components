@@ -258,6 +258,7 @@ export class DataTableDemo {
 | actions | `boolean` | false | Toggles the data actions column. |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
 | allowDropFiles | `boolean` | false | Toggles file drop support for rows (see [Upload directive](upload.directive.md) for further details). |
+| columns | `any[]` | `[]` | The columns that the datatable will show.  |
 | contextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
 | display | `string` |  [`DisplayMode`](../../lib/core/datatable/components/datatable/datatable.component.ts).List | Selects the display mode of the table. Can be "list" or "gallery". |
@@ -269,7 +270,9 @@ export class DataTableDemo {
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
 | rows | `any[]` |  \[] | The rows that the datatable will show. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| selectFirstRow | `boolean` | `true` | Toggles the first row selection. |
 | showHeader | `boolean` | true | Toggles the header. |
+| sorting | `any[]` | `[]` | Define the sorting order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 
 ### Events
 
