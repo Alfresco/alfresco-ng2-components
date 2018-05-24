@@ -278,7 +278,7 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
     }
 
     private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
-        const MIN_DATE_FORMAT = 'YYYY-MM-DD hh:mm A';
+        const MIN_DATE_FORMAT = 'YYYY-MM-DD hh:mm AZ'; // max and min dates are in UTC
 
         let isValid = true;
         let fieldValueDate;
@@ -325,7 +325,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
     }
 
     private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
-        const MAX_DATE_FORMAT = 'YYYY-MM-DD hh:mm A';
+        const MAX_DATE_FORMAT = 'YYYY-MM-DD hh:mm AZ'; // max and min dates are in UTC
         let isValid = true;
         let fieldValueDate;
 
