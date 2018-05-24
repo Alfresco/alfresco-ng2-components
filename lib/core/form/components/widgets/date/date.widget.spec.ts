@@ -127,9 +127,16 @@ describe('DateWidgetComponent', () => {
         }));
 
         it('should check correctly the min value with different formats', async(() => {
-            widget.field.value = '11-30-9999';
-            widget.field.dateDisplayFormat = 'MM-DD-YYYY';
-            widget.field.minValue = '30-12-9999';
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '11-30-9999',
+                type: 'date',
+                readOnly: 'false',
+                dateDisplayFormat: 'MM-DD-YYYY',
+                minValue: '30-12-9999'
+            });
+
             widget.ngOnInit();
             widget.field.validate();
             fixture.detectChanges();

@@ -46,6 +46,7 @@ describe('DateTimeWidgetComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should setup min value for date picker', () => {
