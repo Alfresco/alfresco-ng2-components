@@ -17,7 +17,6 @@
 
 import { Component, Input, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PdfViewerComponent } from './pdfViewer.component';
 
 @Component({
     selector: 'adf-pdf-thumb',
