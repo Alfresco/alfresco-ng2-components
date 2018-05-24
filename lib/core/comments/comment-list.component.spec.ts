@@ -139,7 +139,6 @@ describe('CommentListComponent', () => {
             expect(selectedComment.id).toEqual(1);
             expect(selectedComment.message).toEqual('Test Comment');
             expect(selectedComment.createdBy).toEqual(testUser);
-            expect(selectedComment.created).toEqual(testDate.toDateString());
             expect(selectedComment.isSelected).toBeTruthy();
         });
 
