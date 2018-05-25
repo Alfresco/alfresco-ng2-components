@@ -50,7 +50,7 @@ export class ChecklistComponent implements OnInit, OnChanges {
     @Output()
     checklistTaskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
 
-    /** Emitted when a checklist task is deleted. */
+    /** Emitted when a checklitst task is deleted. */
     @Output()
     checklistTaskDeleted: EventEmitter<string> = new EventEmitter<string>();
 
@@ -148,9 +148,6 @@ export class ChecklistComponent implements OnInit, OnChanges {
 
     public cancel() {
         this.dialog.closeAll();
-        // if (this.addNewDialog) {
-        //     this.addNewDialog.nativeElement.close();
-        // }
         this.taskName = '';
     }
 }

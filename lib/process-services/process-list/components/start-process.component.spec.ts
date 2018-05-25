@@ -65,6 +65,11 @@ describe('StartFormComponent', () => {
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of({ id: 1234 }));
     });
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
     it('should create instance of StartProcessInstanceComponent', () => {
         expect(fixture.componentInstance instanceof StartProcessInstanceComponent).toBe(true, 'should create StartProcessInstanceComponent');
     });
@@ -79,14 +84,16 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({ 'appId': change });
             });
 
-            afterEach(() => {
-                fixture.destroy();
-                TestBed.resetTestingModule();
-            });
-
             it('should enable start button when name and process filled out', async(() => {
-                component.selectedProcessDef = testProcessDefRepr;
+                spyOn(component, 'loadStartProcess').and.callThrough();
+
+                component.processDefinitionName = 'My Process 1';
+
+                let change = new SimpleChange(null, 123, true);
+                component.ngOnChanges({ 'appId': change });
+
                 fixture.detectChanges();
+
                 fixture.whenStable().then(() => {
                     let startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn.disabled).toBe(false);
