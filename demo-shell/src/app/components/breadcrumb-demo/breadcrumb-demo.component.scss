@@ -7,3 +7,14 @@
 .content {
     margin: 10px 0;
 }
+
+.full-content-toolbar {
+    .adf-toolbar-title {
+        display: flex;
+        width: 100%;
+
+        .adf-breadcrumb {
+            width: 0;
+        }
+    }
+}
