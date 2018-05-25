@@ -889,8 +889,7 @@ describe('DocumentList', () => {
     it('should emit node-click DOM event', (done) => {
         let node = new NodeMinimalEntry();
 
-        const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
-        htmlElement.addEventListener('node-click', (e: CustomEvent) => {
+        document.addEventListener('node-click', (e: CustomEvent) => {
             done();
         });
 
