@@ -67,7 +67,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                             this.errorMsg = err.message;
                             return Observable.empty<Response>();
                         })
-                    )
+                    );
             } else {
                 return Observable.empty<Response>();
             }
