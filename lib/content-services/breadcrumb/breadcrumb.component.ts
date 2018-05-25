@@ -67,7 +67,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     /** Maximum number of nodes to display before wrapping them with a dropdown element.  */
     @Input()
-    maxItems: number = 3;
+    maxItems: number;
 
     previousNodes: PathElementEntity[];
     lastNodes: PathElementEntity[];
