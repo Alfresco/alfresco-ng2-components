@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { CustomMomentDateAdapter, SearchDateRangeComponent } from './search-date-range.component';
+import { SearchDateRangeComponent } from './search-date-range.component';
 import { Observable } from 'rxjs/Observable';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, MomentDateAdapter } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -34,9 +34,9 @@ describe('SearchDateRangeComponent', () => {
         const localeFixture = 'it';
         const dateFormatFixture = 'DD-MMM-YY';
 
-        const buildAdapter = (): CustomMomentDateAdapter => {
-            const dateAdapter = new CustomMomentDateAdapter(null);
-            dateAdapter.customDateFormat = null;
+        const buildAdapter = (): MomentDateAdapter => {
+            const dateAdapter = new MomentDateAdapter();
+            dateAdapter.overrideDisplyaFormat = null;
             return dateAdapter;
         };
 
@@ -72,14 +72,14 @@ describe('SearchDateRangeComponent', () => {
         it('should setup the format of the date from configuration', () => {
             component.settings = {field: 'cm:created', dateFormat: dateFormatFixture};
             component.ngOnInit();
-            expect(theDateAdapter.customDateFormat).toBe(dateFormatFixture);
+            expect(theDateAdapter.overrideDisplyaFormat).toBe(dateFormatFixture);
         });
 
         it('should setup form control with formatted valid date on change', () => {
             component.settings = {field: 'cm:created', dateFormat: dateFormatFixture};
             component.ngOnInit();
 
-            const inputString = '20.feb.18';
+            const inputString = '20-feb-18';
             const momentFromInput = moment(inputString, dateFormatFixture);
             expect(momentFromInput.isValid()).toBeTruthy();
 
