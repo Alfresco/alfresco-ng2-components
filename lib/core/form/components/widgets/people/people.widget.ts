@@ -46,7 +46,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     @ViewChild('inputValue')
     input: ElementRef;
 
-    users: any;
+    users: any = [];
     groupId: string;
     value: any;
 

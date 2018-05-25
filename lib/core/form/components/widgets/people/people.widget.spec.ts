@@ -112,6 +112,26 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.groupId).toBe('<id>');
     });
 
+    it('should reset users when the input field is blank string', () => {
+        widget.field.value = new UserProcessModel({
+            id: '',
+            firstName: '',
+            lastName: ''
+        });
+
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
+
+        widget.ngOnInit();
+        fixture.detectChanges();
+
+        expect(widget.users).toEqual([]);
+    });
+
     describe('when template is ready', () => {
 
         let fakeUserResult = [
