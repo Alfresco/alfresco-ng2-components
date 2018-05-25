@@ -62,15 +62,15 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     transform: (node) => any;
 
-    @ViewChild('select') selectbox: MatSelect;
+    @ViewChild('dropdown')
+    dropdown: MatSelect;
+
+    /** Maximum number of nodes to display before wrapping them with a dropdown element.  */
+    @Input()
+    maxItems: number;
 
     previousNodes: PathElementEntity[];
     lastNodes: PathElementEntity[];
-
-    /** Number of successive nodes that are going to be shown inside the
-     * breadcrumb
-     */
-    SUCCESSIVE_NODES = 3;
 
     route: PathElementEntity[] = [];
 
@@ -80,7 +80,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     /** Emitted when the user clicks on a breadcrumb. */
     @Output()
-    navigate: EventEmitter<PathElementEntity> = new EventEmitter<PathElementEntity>();
+    navigate = new EventEmitter<PathElementEntity>();
 
     ngOnInit() {
         this.transform = this.transform ? this.transform : null;
@@ -101,9 +101,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
 
     protected recalculateNodes(): void {
-        if (this.route.length > this.SUCCESSIVE_NODES) {
-            this.lastNodes = this.route.slice(this.route.length - this.SUCCESSIVE_NODES);
-            this.previousNodes = this.route.slice(0, this.route.length - this.SUCCESSIVE_NODES);
+        if (this.maxItems && this.route.length > this.maxItems) {
+            this.lastNodes = this.route.slice(this.route.length - this.maxItems);
+            this.previousNodes = this.route.slice(0, this.route.length - this.maxItems);
             this.previousNodes.reverse();
         } else {
             this.lastNodes = this.route;
@@ -112,8 +112,8 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
 
     open(): void {
-        if (this.selectbox) {
-            this.selectbox.open();
+        if (this.dropdown) {
+            this.dropdown.open();
         }
     }
 

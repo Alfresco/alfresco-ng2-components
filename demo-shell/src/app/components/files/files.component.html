@@ -33,10 +33,6 @@
         </adf-sites-dropdown>
     </div>
 
-    <!-- demonstrates breadcrumb use outside of the toolbar -->
-    <adf-breadcrumb root="Personal Files" [target]="documentList" [folderNode]="documentList.folderNode">
-    </adf-breadcrumb>
-
     <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
         <adf-upload-drag-area fxFlex="1 1 auto"
                               [disabled]="disableDragArea"
@@ -54,7 +50,7 @@
                 <adf-toolbar-title fxFlex="0 1 auto">
                     <adf-breadcrumb fxShow fxHide.lt-sm="true"
                                     class="files-breadcrumb"
-                                    root="Personal Files"
+                                    root="APP.PERSONAL-FILES"
                                     [target]="documentList"
                                     [folderNode]="documentList.folderNode">
                     </adf-breadcrumb>
