@@ -15,6 +15,7 @@
 	    font-weight: 600;
         letter-spacing: -0.2px;
         color: mat-color($foreground, text, 0.54);
+        overflow: hidden;
 
         &-container {
             margin: 0;
@@ -89,14 +90,20 @@
             text-align: left;
             opacity: 0.6;
 
+            flex: 0 10 auto;
+            min-width: 35px;
+            text-overflow: ellipsis;
+
             &:hover,
             &.active {
                 opacity: 1;
             }
 
             &.active {
-                flex: 1 0 auto;
+                flex: 1 1 auto;
                 color: mat-color($foreground, text, 0.87);
+                min-width: initial;
+                width: auto;
 		    }
 
             &-chevron {
@@ -118,23 +125,21 @@
             }
 
             &-anchor {
+                box-sizing: border-box;
                 color: inherit;
                 text-decoration: none;
-                display: block;
+                display: inline-block;
                 width: 100%;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
-            }
-
-            &.active {
-                display: block;
+                flex: 0 1 auto;
             }
 
             &-current {
                 text-overflow: ellipsis;
                 overflow: hidden;
-                max-width: 300px;
+                white-space: nowrap;
             }
         }
 

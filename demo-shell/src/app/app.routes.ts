@@ -47,6 +47,7 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
 import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
+import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -54,6 +55,11 @@ export const appRoutes: Routes = [
     { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [AuthGuardEcm], outlet: 'overlay' },
     { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
+    {
+        path: 'breadcrumb',
+        component: BreadcrumbDemoComponent,
+        canActivate: [AuthGuardEcm]
+    },
     {
         path: '',
         component: AppLayoutComponent,

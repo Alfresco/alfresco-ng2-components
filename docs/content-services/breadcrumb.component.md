@@ -30,6 +30,7 @@ Indicates the current position within a navigation hierarchy.
 | rootId | `string` |  null | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
 | target | [`DocumentListComponent`](../content-services/document-list.component.md) |  | (optional) [Document List component](../content-services/document-list.component.md) to operate with. The list will update when the breadcrumb is clicked. |
 | transform | `function` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
+| maxItems | `number` | | Maximum number of nodes to display before wrapping them with a dropdown element. Not restricted by default. |
 
 ### Events
 
@@ -86,7 +87,7 @@ A transform function to remove the "Sites" folder from the path would look somet
 
 Below, the breadcrumb is shown before and after the transform function is applied:
 
-![Content Node Selector breadcrumbTransfrom before/after screenshot](../docassets/images/breadcrumbTransform.png)
+![Content Node Selector breadcrumbTransform before/after screenshot](../docassets/images/breadcrumbTransform.png)
 
 ## See also
 
