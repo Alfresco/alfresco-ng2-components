@@ -1,4 +1,5 @@
 @mixin adf-layout-container-theme($theme) {
+    $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
 
     adf-layout-container {
@@ -32,6 +33,7 @@
     .mat-sidenav {
         overflow: hidden;
         border-right: 1px solid mat-color($foreground, text, 0.07);
+        background-color: mat-color($background,background);
     }
 
     mat-sidenav-content {
