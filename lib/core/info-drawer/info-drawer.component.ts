@@ -25,6 +25,9 @@ export class InfoDrawerTabComponent {
     @Input()
     label: string = 'Main tab';
 
+    @Input()
+    icon: string = '';
+
     @ViewChild(TemplateRef)
     content: TemplateRef<any>;
 }
