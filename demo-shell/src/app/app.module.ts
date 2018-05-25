@@ -51,6 +51,7 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { PreviewService } from './services/preview.service';
+import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
 
 @NgModule({
     imports: [
@@ -101,7 +102,8 @@ import { PreviewService } from './services/preview.service';
         FormLoadingComponent,
         DemoPermissionComponent,
         FormLoadingComponent,
-        BlobPreviewComponent
+        BlobPreviewComponent,
+        BreadcrumbDemoComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },

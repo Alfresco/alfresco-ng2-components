@@ -1,0 +1,43 @@
+<h1>Breadcrumb</h1>
+<ul>
+    <li>Try creating and navigating long paths</li>
+    <li>Try resizing the browser width to ensure items are trimmed as expected</li>
+</ul>
+
+<h2>1. Standalone (fixed size)</h2>
+<small>Component is used in the fixed-width layout</small>
+
+<div class="breadcrumb-container-restricted">
+    <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+    </adf-breadcrumb>
+</div>
+
+<h2>2. Standalone (full width)</h2>
+<small>Component fits the parent container width</small>
+
+<div>
+    <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+    </adf-breadcrumb>
+</div>
+
+<h2>Toolbar (standalone)</h2>
+<small>Component used as a child of the Toolbar component</small>
+
+<adf-toolbar>
+    <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+    </adf-breadcrumb>
+</adf-toolbar>
+
+<h2>Toolbar (title)</h2>
+<small>Component is wrapped into the Toolbar Title component</small>
+<adf-toolbar>
+    <adf-toolbar-title>
+        <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+        </adf-breadcrumb>
+    </adf-toolbar-title>
+</adf-toolbar>
+
+<div class="content">
+    <adf-document-list #documentList currentFolderId="-my-">
+    </adf-document-list>
+</div>
