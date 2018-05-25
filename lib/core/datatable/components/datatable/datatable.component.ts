@@ -213,6 +213,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             this.resetSelection();
             this.emitRowSelectionEvent('row-unselect', null);
         }
+
+        if (this.isPropertyChanged(changes['sorting'])) {
+            this.setTableSorting(changes['sorting'].currentValue);
+        }
     }
 
     ngDoCheck() {
@@ -231,7 +235,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     convertToDataSorting(sorting: any[]): DataSorting {
-        if (sorting) {
+        if (sorting && sorting.length > 0) {
             return new DataSorting(sorting[0], sorting[1]);
         }
     }
@@ -299,7 +303,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private setTableRows(rows) {
         if (this.data) {
             this.data.setRows(this.convertToRowsData(rows));
-            this.data.setSorting(this.convertToDataSorting(this.sorting));
         }
     }
 
@@ -310,6 +313,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
         if (this.data && this.schema && this.schema.length > 0) {
             this.data.setColumns(this.schema);
+        }
+    }
+
+    private setTableSorting(sorting) {
+        if (this.data) {
+            this.data.setSorting(this.convertToDataSorting(sorting));
         }
     }
 

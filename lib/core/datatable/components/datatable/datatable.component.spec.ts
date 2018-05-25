@@ -231,15 +231,31 @@ describe('DataTable', () => {
 
     it('should set sort order if sorting is defined', () => {
         const dataSortObj = new DataSorting('created', 'desc');
-        const dataRows = [{ name: 'test1' }];
 
-        dataTable.sorting = [ 'created', 'desc' ];
+        const sort = [ 'created', 'desc' ];
         dataTable.data = new ObjectDataTableAdapter([],
             [new ObjectDataColumn({ key: 'name' })]
         );
 
         dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+            sorting: new SimpleChange(null, sort, false)
+        });
+
+        fixture.detectChanges();
+        const dataSort = dataTable.data.getSorting();
+        expect(dataSort).toEqual(dataSortObj);
+    });
+
+    it('should set custom sort order', () => {
+        const dataSortObj = new DataSorting('dummayName', 'asc');
+
+        const sort = [ 'dummayName', 'asc' ];
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+        dataTable.data.setSorting(new DataSorting('created', 'desc'));
+        dataTable.ngOnChanges({
+            sorting: new SimpleChange(null, sort, false)
         });
 
         fixture.detectChanges();

@@ -136,7 +136,6 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
     isLoading: boolean = true;
-    dataSort: any[] = [];
 
     /**
      * Toggles custom data source mode.
@@ -184,7 +183,6 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.dataSort = this.getDataSort();
         if (this.isPropertyChanged(changes)) {
             this.reload();
         }
@@ -306,8 +304,10 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     /**
      * Return the sorting order
      */
-    getDataSort(): any[] {
-        return this.sort ? this.sort.split('-') : ['created', 'desc'];
+    get dataSort(): any[] {
+        if (this.sort) {
+            return this.sort.split('-');
+        }
     }
 
     /**
