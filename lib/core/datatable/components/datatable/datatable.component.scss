@@ -390,8 +390,6 @@
         .ellipsis-cell {
             .cell-container {
                 height: 100%;
-                display: inline-grid;
-                width: 100%;
             }
 
             .cell-container > * {
@@ -407,7 +405,7 @@
             /* visible content */
             .cell-value {
                 display: block;
-                position: relative;
+                position: absolute;
                 max-width: calc(100% - 2em);
                 white-space: nowrap;
                 overflow: hidden;
