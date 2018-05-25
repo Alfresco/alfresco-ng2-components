@@ -32,6 +32,7 @@ import {
 } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
+declare let moment: any;
 
 describe('FormFieldValidator', () => {
 
@@ -662,6 +663,15 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeTruthy();
         });
 
+        it('should take into account that max value is in UTC and use appropriate format string', () => {
+            const maxValueFromActivitiInput = '31-3-2018 12:00 AM';
+            const maxValueSavedInForm = moment(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
+
+            const maxValueOnValidator = moment(maxValueSavedInForm, validator.MAX_DATETIME_FORMAT);
+
+            expect(maxValueOnValidator.format('DD-M-YYYY hh:mm A')).toBe(maxValueFromActivitiInput);
+        });
+
         it('should succeed validating value checking the time', () => {
             let field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
@@ -754,6 +764,15 @@ describe('FormFieldValidator', () => {
             });
 
             expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should take into account that min value is in UTC and use appropriate format string', () => {
+            const minValueFromActivitiInput = '02-3-2018 06:00 AM';
+            const minValueSavedInForm = moment(minValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
+
+            const minValueOnValidator = moment(minValueSavedInForm, validator.MIN_DATETIME_FORMAT);
+
+            expect(minValueOnValidator.format('DD-M-YYYY hh:mm A')).toBe(minValueFromActivitiInput);
         });
 
         it('should succeed validating value by time', () => {
