@@ -1,9 +1,22 @@
 <div class="adf-error-content">
-    <p class="adf-error-content-code">{{ errorCode }}</p>
+    <p class="adf-error-content-code">
+        {{ errorCode }}
+    </p>
     <div class="adf-error-content-shadow"></div>
-    <p class="adf-error-content-title">{{ 'ERROR_CONTENT.' + errorCode + '.TITLE' | translate }}</p>
-    <p class="adf-error-content-description">{{ 'ERROR_CONTENT.' + errorCode + '.DESCRIPTION' | translate }}
-        <a href="{{errorLinkUrl}}" *ngIf="errorLinkText" 
-        class="adf-error-content-description-link" > {{ 'ERROR_CONTENT.' + errorCode + '.LINK.TEXT' | translate }}</a></p>
-    <a href="" mat-raised-button color="primary" routerLink="/home">{{ 'ERROR_CONTENT.HOME_BUTTON' | translate}}</a>
+    <p class="adf-error-content-title">
+        {{ 'ERROR_CONTENT.' + errorCode + '.TITLE' | translate }}
+    </p>
+    <p class="adf-error-content-description">
+        {{ 'ERROR_CONTENT.' + errorCode + '.DESCRIPTION' | translate }}
+    </p>
+    <div class="adf-error-content-buttons">
+        <a href="/" mat-raised-button color="primary" 
+            *ngIf="secondaryButtonText" (click)="onSecondButton()"
+            class="adf-error-content-description-link"> 
+            {{ 'ERROR_CONTENT.' + errorCode + '.SECONDARY_BUTTON.TEXT' | translate | uppercase }}
+        </a>
+        <a href="/" mat-raised-button color="primary" (click)="onReturnButton()">
+            {{ 'ERROR_CONTENT.' + this.errorCode + '.RETURN_BUTTON.TEXT' | translate | uppercase }}
+        </a>
+    </div>
 </div>

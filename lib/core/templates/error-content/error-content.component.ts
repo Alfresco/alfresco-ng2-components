@@ -16,7 +16,7 @@
  */
 
 import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit } from '@angular/core';
-import { Params, ActivatedRoute } from '@angular/router';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 import { TranslationService } from '../../services/translation.service';
 
 @Component({
@@ -30,10 +30,12 @@ import { TranslationService } from '../../services/translation.service';
 export class ErrorContentComponent implements OnInit {
 
     errorCode: string;
-    errorLinkText: string;
-    errorLinkUrl: string;
+    secondaryButtonText: string;
+    secondaryButtonUrl: string;
+    returnButtonUrl: string;
 
     constructor(private route: ActivatedRoute,
+                private router: Router,
                 private translateService: TranslationService) {
     }
 
@@ -50,12 +52,23 @@ export class ErrorContentComponent implements OnInit {
     }
 
     getData() {
-        this.errorLinkText = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.LINK.TEXT');
+        this.returnButtonUrl = this.translateService.instant(
+            'ERROR_CONTENT.' + this.errorCode + '.RETURN_BUTTON.ROUTE');
 
-        if (this.errorLinkText) {
-            this.errorLinkUrl = this.translateService.instant(
-                'ERROR_CONTENT.' + this.errorCode + '.LINK.URL');
+        this.secondaryButtonText = this.translateService.instant(
+            'ERROR_CONTENT.' + this.errorCode + '.SECONDARY_BUTTON.TEXT');
+
+        if (this.secondaryButtonText) {
+            this.secondaryButtonUrl = this.translateService.instant(
+                'ERROR_CONTENT.' + this.errorCode + '.SECONDARY_BUTTON.URL');
         }
+    }
+
+    onSecondButton() {
+        this.router.navigate(['/' + this.secondaryButtonUrl]);
+    }
+
+    onReturnButton() {
+        this.router.navigate(['/' + this.returnButtonUrl]);
     }
 }

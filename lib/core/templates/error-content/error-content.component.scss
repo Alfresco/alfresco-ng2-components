@@ -39,11 +39,12 @@
             min-width: 250px;
             margin-bottom: 60px;
             line-height: 30px;
+        }
 
-            &-link{
-                color: mat-color($primary);
-                text-decoration: none;
-            }
+        &-buttons {
+            display: flex;
+            width: 100%;
+            justify-content: space-evenly;
         }
     }
 

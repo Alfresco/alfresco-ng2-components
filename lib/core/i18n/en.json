@@ -264,29 +264,40 @@
     }
   },
   "ERROR_CONTENT": {
-    "HOME_BUTTON": "Back to home",
     "UNKNOWN": {
       "TITLE": "Oops!",
       "DESCRIPTION": "Looks like something went wrong.",
-      "LINK": {
+      "SECONDARY_BUTTON": {
         "TEXT": "",
         "URL": ""
+      },
+      "RETURN_BUTTON": { 
+        "TEXT": "Back to home",
+        "ROUTE": "home"
       }
     },
     "403": {
       "TITLE": "Error 403 forbidden",
-      "DESCRIPTION": "Access to this resource on the server is denied. Check the URL and if necessary",
-      "LINK": {
-        "TEXT": "report this issue.",
+      "DESCRIPTION": "Access to this resource on the server is denied.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Report issue",
         "URL": ""
+      },
+      "RETURN_BUTTON": { 
+        "TEXT": "Back to home",
+        "ROUTE": "home"
       }
     },
     "404": {
       "TITLE": "An error occurred.",
       "DESCRIPTION": "We couldn’t find the page you were looking for.",
-      "LINK": {
+      "SECONDARY_BUTTON": {
         "TEXT": "",
         "URL": ""
+      },
+      "RETURN_BUTTON": { 
+        "TEXT": "Back to home",
+        "ROUTE": "home"
       }
     }
   }

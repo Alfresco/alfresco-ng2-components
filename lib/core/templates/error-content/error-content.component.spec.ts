@@ -24,7 +24,7 @@ import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
 import { setupTestBed } from '../../testing/setupTestBed';
 
-describe('ErrorContentComponent', () => {
+fdescribe('ErrorContentComponent', () => {
 
     let fixture;
     let errorContentComponent: ErrorContentComponent;
@@ -76,8 +76,15 @@ describe('ErrorContentComponent', () => {
         expect(errorContentElement).toBeDefined();
     }));
 
-    it('should render report issue links', async(() => {
-        errorContentComponent.errorLinkUrl = '403 Link';
+    it('should render error description', async(() => {
+        fixture.detectChanges();
+        const errorContentElement = element.querySelector('.adf-error-content-description');
+        expect(errorContentElement).not.toBeNull();
+        expect(errorContentElement).toBeDefined();
+    }));
+
+    it('should render secondary button', async(() => {
+        errorContentComponent.secondaryButtonUrl = 'mocked url';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const errorContentElement = element.querySelector('.adf-error-content-description-link');
@@ -86,7 +93,7 @@ describe('ErrorContentComponent', () => {
         });
     }));
 
-    it('should hide link if this one is empty', async(() => {
+    it('should hide secondary button if this one has no value', async(() => {
         spyOn(translateService, 'instant').and.callFake((inputString) => {
             return '';
         } );
