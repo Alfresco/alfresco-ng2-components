@@ -44,7 +44,7 @@ Renders a list containing all the tasks matched by the parameters specified.
 | -- | -- | -- | -- |
 | appId | `number` |  | The id of the app. |
 | assignment | `string` |  | The assignment of the process. Possible values are: "assignee" (the current user is the assignee), candidate (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value(the current user is involved). |
-| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source object that represents the number and the type of the columns that you want to show. |
+| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source object that represents the number and the type of the columns that you want to show.  **Deprecated:** in 2.4.0 |
 | landingTaskId | `string` |  | Define which task id should be selected after reloading. If the task id doesn't exist or nothing is passed then the first task will be selected. |
 | multiselect | `boolean` | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | name | `string` |  | Name of the tasklist. |
@@ -54,7 +54,7 @@ Renders a list containing all the tasks matched by the parameters specified.
 | processInstanceId | `string` |  | The Instance Id of the process. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | size | `number` |  [`PaginationComponent`](../core/pagination.component.md).DEFAULT_PAGINATION.maxItems | The number of tasks to fetch. Default value: 25. |
-| sort | `string` |  | Define the sort order of the processes. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
+| sort | `string` |  | Define the sort order of the tasks. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
 | state | `string` |  | Current state of the process. Possible values are: `completed`, `active`. |
 
 ### Events
