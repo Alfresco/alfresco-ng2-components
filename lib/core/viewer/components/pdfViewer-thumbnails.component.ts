@@ -33,18 +33,24 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     virtualHeight: number = 0;
     translateY: number = 0;
     renderItems = [];
-    height = 114;
 
     private items = [];
     private margin: number = 15;
-    private itemHeight: number;
+    private currentHeight: number = 0;
+    private itemHeight = this.currentHeight + this.margin;
+
 
     @ContentChild(TemplateRef)
     template: any;
 
+
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         this.calculateItems();
+    }
+
+    receiveHeight($event) {
+        this.itemHeight = $event + this.margin;
     }
 
     constructor(private element: ElementRef) {
@@ -53,9 +59,8 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.itemHeight = this.height + this.margin;
-        this.element.nativeElement.addEventListener('scroll', this.calculateItems, true);
         this.pdfViewer.eventBus.on('pagechange', this.onPageChange);
+        this.element.nativeElement.addEventListener('scroll', this.calculateItems, true);
 
         this.items = this.getPages();
         this.calculateItems();
@@ -69,6 +74,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.element.nativeElement.removeEventListener('scroll', this.calculateItems, true);
         this.pdfViewer.eventBus.off('pagechange', this.onPageChange);
     }
+
 
     trackByFn(index: number, item: any): number {
         return item.id;
