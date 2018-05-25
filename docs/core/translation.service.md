@@ -70,7 +70,7 @@ general format of the path to this folder will be:
 
 `<app>/src/assets/my-translations/i18n`
 
-If you wanted English and French translations then you would copy the built-in
+If you wanted English and French translations then you would add
 `en.json` and `fr.json` files into the `i18n` folder and add your new keys:
 
     // en.json
@@ -83,6 +83,22 @@ If you wanted English and French translations then you would copy the built-in
         ...
       "WELCOME_MESSAGE": "Bienvenue !"
         ...
+
+The files follow the same hierarchical key:value JSON format as the built-in translations.
+You can add new keys to your local files or redefine existing keys but the built-in definitions
+will be used for any keys you don't explicitly define in your files. For example, `en.json` might
+look like the following:
+
+```json
+{
+  "title": "my app",
+  "LOGIN": {
+     "LABEL": {
+        "LOGIN": "Custom Sign In"
+     }
+  }
+}
+```
 
 To enable the new translations in your app, you also need to register them in your
 `app.module.ts` file. Import `TRANSLATION_PROVIDER` and add the path of your
@@ -127,10 +143,6 @@ ngOnInit() {
   }
   ...
 ```
-
-The new translation files completely replace the built-in ones.
-If you want to continue using the built-in keys then you must add your new
-keys to copies of the existing files.
 
 Note: the `source` property points to the web application root. Ensure you have
 webpack correctly set up to copy all the i18n files at compile time.

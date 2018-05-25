@@ -155,14 +155,28 @@ The built-in translations certainly won't cover everything you will need for
 your app but you can easily replace them with your own lists. This enables you
 to add new keys and also replace the text of existing keys with your own.
 
-To override the default translations, you need to copy the existing source files
-(en.json, fr.json, etc) to your application. These local copies will completely
-replace the default files. You can then modify the local files with new keys
-or replace the text of existing keys to suit your needs.
+To modify the default translations, you need to create local translation source files
+(en.json, fr.json, etc) within your application. The local files have the same basic
+hierarchical key:value structure as the built-in translations. You can add new keys to
+your local files to extend the default set or override a default translation by redefining
+an existing key with new message text. The default translations will be used for any keys
+that you don't explicitly override. For example, your local `en.json` might look like the
+following:
+
+```json
+{
+  "title": "my app",
+  "LOGIN": {
+     "LABEL": {
+        "LOGIN": "Custom Sign In"
+     }
+  }
+}
+```
 
 The [Translation service](../core/translation.service.md) page has full details
-of how to do this, including the locations of the required files and code samples
-for enabling your new translations in your app.
+of how to add custom translations, including the locations of the required files
+and code samples for enabling the new translations in your app.
 
 ## Interpolations
 
