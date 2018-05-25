@@ -18,7 +18,7 @@
         .mat-toolbar {
             min-height: $adf-toolbar-height;
             border: 1px solid mat-color($foreground, text, .07);
-            background-color: mat-color($background, hover, .02);
+            background-color: mat-color($background, app-bar);
         }
 
         .mat-toolbar-row {
