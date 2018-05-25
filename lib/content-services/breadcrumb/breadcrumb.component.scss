@@ -15,6 +15,7 @@
 	    font-weight: 600;
         letter-spacing: -0.2px;
         color: mat-color($foreground, text, 0.54);
+        overflow: hidden;
 
         &-container {
             margin: 0;
