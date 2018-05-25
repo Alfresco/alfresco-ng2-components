@@ -81,7 +81,7 @@ import { UploadService } from './services/upload.service';
 import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
 import { startupServiceFactory } from './services/startup-service-factory';
-import { SortingPickerComponent } from './components/sorting-picker/sorting-picker.component';
+import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -162,7 +162,8 @@ export function providers() {
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient, LogService]
             }
-        })
+        }),
+        SortingPickerModule
     ],
     exports: [
         AboutModule,
@@ -192,7 +193,8 @@ export function providers() {
         DataTableModule,
         TranslateModule,
         ButtonsMenuModule,
-        TemplatetModule
+        TemplatetModule,
+        SortingPickerModule
     ]
 })
 export class CoreModuleLazy {
@@ -233,10 +235,8 @@ export class CoreModuleLazy {
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient, LogService]
             }
-        })
-    ],
-    declarations: [
-        SortingPickerComponent
+        }),
+        SortingPickerModule
     ],
     exports: [
         AboutModule,
@@ -267,7 +267,7 @@ export class CoreModuleLazy {
         TranslateModule,
         ButtonsMenuModule,
         TemplatetModule,
-        SortingPickerComponent
+        SortingPickerModule
     ],
     providers: [
         ...providers(),
