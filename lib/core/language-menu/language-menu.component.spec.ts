@@ -41,12 +41,11 @@ describe('LanguageMenuComponent', () => {
         fixture.destroy();
     });
 
-    it('should have the default language', () => {
-        fixture.detectChanges();
-        expect(component.languages).toEqual([{ key: 'en', label: 'English'}]);
-    });
-
     it('should fetch the languages from the app config if present', () => {
+        fixture.detectChanges();
+
+        expect(component.languages).toEqual([{ key: 'en', label: 'English' }]);
+
         appConfig.config.languages = [
             {
                 key: 'fake-key-1',
