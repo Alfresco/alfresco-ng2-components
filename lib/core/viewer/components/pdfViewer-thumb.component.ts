@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -28,8 +28,11 @@ export class PdfThumbComponent implements OnInit {
     @Input()
     page: any = null;
 
+    @Output('update')
+    height: EventEmitter<number> = new EventEmitter<number>();
+
     image$: Promise<string>;
-    width = 100;
+    width = 91;
 
 
     constructor(private sanitizer: DomSanitizer) {}
@@ -45,6 +48,7 @@ export class PdfThumbComponent implements OnInit {
         const canvas = this.getCanvas(pageRatio);
         const scale = Math.min((canvas.height / viewport.height), (canvas.width / viewport.width));
 
+
         return page.render({
             canvasContext: canvas.getContext('2d'),
             viewport: page.getViewport(scale)
@@ -57,9 +61,10 @@ export class PdfThumbComponent implements OnInit {
 
     private getCanvas(pageRatio): HTMLCanvasElement {
         const canvas = document.createElement('canvas');
-
+        const currentHeight = Math.floor(this.width / pageRatio);
         canvas.width = this.width;
-        canvas.height = this.width / pageRatio;
+        this.height.emit(currentHeight);
+        canvas.height = currentHeight;
         return canvas;
     }
 }
