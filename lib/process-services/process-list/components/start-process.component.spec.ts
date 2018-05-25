@@ -353,7 +353,7 @@ describe('StartFormComponent', () => {
         });
     });
 
-    fdescribe('start process', () => {
+    describe('start process', () => {
 
         beforeEach(() => {
             component.name = 'My new process';
