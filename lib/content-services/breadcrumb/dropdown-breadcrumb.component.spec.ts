@@ -63,9 +63,10 @@ describe('DropdownBreadcrumb', () => {
     }
 
     it('should display only the current folder name if there is no previous folders', (done) => {
-        fakeNodeWithCreatePermission.path.elements = [];
+        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [];
 
-        triggerComponentChange(fakeNodeWithCreatePermission);
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
         fixture.whenStable().then(() => {
 
@@ -82,13 +83,14 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should display only the path in the selectbox', (done) => {
-        fakeNodeWithCreatePermission.path.elements = [
+        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [
             { id: '1', name: 'Stark Industries' },
             { id: '2', name: 'User Homes' },
             { id: '3', name: 'J.A.R.V.I.S' }
         ];
 
-        triggerComponentChange(fakeNodeWithCreatePermission);
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
         fixture.whenStable().then(() => {
 
@@ -103,13 +105,14 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should display the path in reverse order', (done) => {
-        fakeNodeWithCreatePermission.path.elements = [
+        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [
             { id: '1', name: 'Stark Industries' },
             { id: '2', name: 'User Homes' },
             { id: '3', name: 'J.A.R.V.I.S' }
         ];
 
-        triggerComponentChange(fakeNodeWithCreatePermission);
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
         fixture.whenStable().then(() => {
 
@@ -127,9 +130,10 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should emit navigation event when clicking on an option', (done) => {
-        fakeNodeWithCreatePermission.path.elements = [{ id: '1', name: 'Stark Industries' }];
+        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
 
-        triggerComponentChange(fakeNodeWithCreatePermission);
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
         fixture.whenStable().then(() => {
 
@@ -149,8 +153,9 @@ describe('DropdownBreadcrumb', () => {
     it('should update document list  when clicking on an option', (done) => {
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
         component.target = documentList;
-        fakeNodeWithCreatePermission.path.elements = [{ id: '1', name: 'Stark Industries' }];
-        triggerComponentChange(fakeNodeWithCreatePermission);
+        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
         fixture.whenStable().then(() => {
             openSelect();
@@ -165,15 +170,13 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should open the selectbox when clicking on the folder icon', (done) => {
-        triggerComponentChange(fakeNodeWithCreatePermission);
+        triggerComponentChange(JSON.parse(JSON.stringify(fakeNodeWithCreatePermission)));
         spyOn(component.dropdown, 'open');
 
         fixture.whenStable().then(() => {
-
             openSelect();
 
             fixture.whenStable().then(() => {
-
                 expect(component.dropdown.open).toHaveBeenCalled();
                 done();
             });
