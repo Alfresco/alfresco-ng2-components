@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/*tslint:disable:ban*/
-
 import { TestBed, async } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { ErrorContentComponent } from './error-content.component';
