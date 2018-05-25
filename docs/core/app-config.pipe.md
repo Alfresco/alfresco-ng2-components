@@ -1,13 +1,14 @@
 ---
 Added: v2.4.0
 Status: Active
+Last reviewed: 2018-05-24
 ---
 
 # App Config Pipe
 
 Retrieves values from the application configuration file directly.
 
-## Examples
+## Basic usage
 
 ```html
 <adf-login
@@ -15,9 +16,12 @@ Retrieves values from the application configuration file directly.
 </adf-login>
 ```
 
-## Fallback values
+## Details
 
-You can use pipe parameters to pass fallback value:
+### Fallback values
+
+You can use the pipe parameter to pass a fallback value which will be
+used if the property name is not found:
 
 ```html
 <adf-login
@@ -25,9 +29,9 @@ You can use pipe parameters to pass fallback value:
 </adf-login>
 ```
 
-## Chaining with other pipes
+### Chaining with other pipes
 
-You can also chain values with other pipes, for example `translation` one:
+You can also chain values with other pipes such as the translation pipe:
 
 ```html
 <adf-login

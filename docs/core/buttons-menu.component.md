@@ -1,15 +1,16 @@
 ---
 Added: v2.4.0
 Status: Active
+Last reviewed: 2018-04-24
 ---
 
 # Buttons Menu Component
 
 Displays buttons on a responsive menu.
 
-## Basic Usage
+![adf-buttons-menu-desktop](../docassets/images/adf-buttons-menu-desktop.png)
 
-This component shows buttons on a responsive menu that changes depending on the device's screen.
+## Basic Usage
 
 ```html
 <adf-buttons-action-menu
@@ -17,7 +18,30 @@ This component shows buttons on a responsive menu that changes depending on the 
 </adf-buttons-action-menu>  
 ```
 
-You will need to declare all the buttons that you want to have inside your menu in the parent component. 
+## Class members
+
+### Properties
+
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| buttons | [`MenuButton[]`](../../lib/core/buttons-menu/menu-button.model.ts) |  | Array of buttons that defines the menu. |
+
+## Details
+
+This component shows buttons on a responsive menu. The display of the menu changes to fit
+the screen size of the device:
+
+Desktop view of the menu
+
+![adf-buttons-menu-desktop](../docassets/images/adf-buttons-menu-desktop.png)
+
+Mobile view of the menu
+
+![adf-buttons-menu-mobile](../docassets/images/adf-buttons-menu-mobile.png)
+
+The `buttons` property contains an array of [MenuButton](../../lib/core/buttons-menu/menu-button.model.ts) instances that define
+the label and appearance of each button along with a handler function to
+implement its action:
 
 ```ts
 buttons: MenuButton[] = [];
@@ -51,37 +75,6 @@ buttons: MenuButton[] = [];
             })
         ];
 ```
-
-## Properties
-
-### Buttons Menu Component
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| buttons | `MenuButton []` | The array that contains all the buttons for the menu |
-
-### Button Model
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| label | `string` | Label to display for the button. |
-| icon | `string` | Icon to display for the button. |
-| handler | `function` | Callback for the event handler once the button is clicked. |
-| styles | `string` | Classes to apply to the button. |
-| id | `string` | Id of the button. |
-| isVisible | `function` | Variable to define if button is visible or hidden. This function must return a boolean parameter. For instance, if it returns true the button will be visible. If it returns false the button will be hiden. |
-
-## Details
-
-This component uses [Angular Material](https://material.angular.io/) to style the menu.
-
-Desktop view of the menu
-![adf-buttons-menu-desktop](../docassets/images/adf-buttons-menu-desktop.png)
-
-Mobile view of the menu
-![adf-buttons-menu-mobile](../docassets/images/adf-buttons-menu-mobile.png)
-
-Menu Button Model
 
 ## See also
 

@@ -26,6 +26,7 @@ import { MenuButton } from './menu-button.model';
 })
 
 export class ButtonsMenuComponent implements OnChanges {
+    /** Array of buttons that defines the menu. */
     @Input() buttons: MenuButton[];
 
     ngOnChanges(changes: SimpleChanges) {
