@@ -67,6 +67,14 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     rows: any[] = [];
 
+    /** The columns that the datatable will show. */
+    @Input()
+    columns: any[] = [];
+
+    /* Toggles default selection of the first row */
+    @Input()
+    selectFirstRow: boolean = true;
+
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
      */
@@ -153,8 +161,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
-
-    private schema: DataColumn[] = [];
 
     private differ: any;
     private rowMenuCache: object = {};
@@ -276,7 +282,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     private initTable() {
-        this.data = new ObjectDataTableAdapter(this.rows, this.schema);
+        this.data = new ObjectDataTableAdapter(this.rows, this.columns);
         this.rowMenuCache = {};
     }
 
@@ -287,17 +293,41 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private setTableRows(rows) {
         if (this.data) {
             this.data.setRows(this.convertToRowsData(rows));
+            this.selectFirst();
+        }
+    }
+
+    private selectFirst() {
+        if (this.selectFirstRow) {
+            if (this.data && this.data.getRows().length > 0) {
+                let row = this.data.getRows()[0];
+                row.isSelected = true;
+                this.data.selectedRow = row;
+            }
         }
     }
 
     private setTableSchema() {
-        if (this.columnList && this.columnList.columns) {
-            this.schema = this.columnList.columns.map(c => <DataColumn> c);
+        let schema = [];
+        if (!this.columns || this.columns.length === 0) {
+            schema = this.getSchemaFromHtml();
+        } else {
+            schema = this.columns.concat(this.getSchemaFromHtml());
         }
 
-        if (this.data && this.schema && this.schema.length > 0) {
-            this.data.setColumns(this.schema);
+        this.columns = schema;
+
+        if (this.data && this.columns && this.columns.length > 0) {
+            this.data.setColumns(this.columns);
         }
+    }
+
+    public getSchemaFromHtml(): any {
+        let schema = [];
+        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
+        }
+        return schema;
     }
 
     onRowClick(row: DataRow, e: MouseEvent) {

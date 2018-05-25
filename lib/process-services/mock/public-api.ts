@@ -23,4 +23,5 @@ export * from './process/process.model.mock';
 export * from './task/start-task.mock';
 export * from './task/task-details.mock';
 export * from './task/task-details.component.mock';
+export * from './task/task-list.mock';
 export * from './task/tasklist-service.mock';
