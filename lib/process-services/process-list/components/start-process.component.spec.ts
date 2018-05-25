@@ -353,7 +353,7 @@ describe('StartFormComponent', () => {
         });
     });
 
-    describe('start process', () => {
+    fdescribe('start process', () => {
 
         beforeEach(() => {
             component.name = 'My new process';
@@ -434,18 +434,17 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should emit start event when start select a process and add a name', async(() => {
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+        it('should emit start event when start select a process and add a name', (done) => {
+            let disposableStart = component.start.subscribe(() => {
+                disposableStart.unsubscribe();
+                done();
+            });
+
             component.selectedProcessDef = testProcessDefRepr;
             component.name = 'my:Process';
             component.startProcess();
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                let startButton = fixture.nativeElement.querySelector('#button-start');
-                startButton.click();
-                expect(startSpy).toHaveBeenCalled();
-            });
-        }));
+        });
 
         it('should not emit start event when start the process without select a process and name', () => {
             component.name = null;
@@ -472,17 +471,17 @@ describe('StartFormComponent', () => {
             expect(startSpy).not.toHaveBeenCalled();
         });
 
-        it('should able to start the process when the required fields are filled up', async(() => {
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+        it('should able to start the process when the required fields are filled up', (done) => {
             component.name = 'my:process1';
             component.selectedProcessDef = testProcessDefRepr;
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                let startButton = fixture.nativeElement.querySelector('#button-start');
-                startButton.click();
-                expect(startSpy).toHaveBeenCalled();
+
+            let disposableStart = component.start.subscribe(() => {
+                disposableStart.unsubscribe();
+                done();
             });
-        }));
+
+            component.startProcess();
+        });
 
         it('should return true if startFrom defined', async(() => {
             component.selectedProcessDef = testProcessDefRepr;
