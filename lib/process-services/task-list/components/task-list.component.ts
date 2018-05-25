@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataRowEvent, DataTableSchema, EmptyCustomContentDirective } from '@alfresco/adf-core';
+import { DataRowEvent, DataTableAdapter, DataTableSchema, EmptyCustomContentDirective } from '@alfresco/adf-core';
 import {
     AppConfigService, PaginationComponent, PaginatedComponent,
     UserPreferencesService, UserPreferenceValues, PaginationModel
