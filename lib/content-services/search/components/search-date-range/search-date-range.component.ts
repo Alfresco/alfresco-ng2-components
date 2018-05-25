@@ -18,7 +18,7 @@
 import { OnInit, Component, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
 
 import { SearchWidget } from '../../search-widget.interface';
 import { SearchWidgetSettings } from '../../search-widget-settings.interface';
@@ -31,29 +31,13 @@ declare let moment: any;
 
 const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
 
-export class CustomMomentDateAdapter extends MomentDateAdapter {
-    customDateFormat: string;
-
-    parse(value: any, parseFormat: any): any {
-        const dateFormat = this.customDateFormat ? this.customDateFormat : DEFAULT_FORMAT_DATE;
-
-        return super.parse(value, dateFormat);
-    }
-
-    format(value: Moment, displayFormat: string): string {
-        const dateFormat = this.customDateFormat ? this.customDateFormat : DEFAULT_FORMAT_DATE;
-
-        return super.format(value, dateFormat);
-    }
-}
-
 @Component({
     selector: 'adf-search-date-range',
     templateUrl: './search-date-range.component.html',
     styleUrls: ['./search-date-range.component.scss'],
     providers: [
-        {provide: DateAdapter, useClass: CustomMomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}
     ],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
@@ -80,8 +64,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         if (this.settings) {
             this.datePickerDateFormat = this.settings.dateFormat || DEFAULT_FORMAT_DATE;
         }
-        const theCustomDateAdapter = <CustomMomentDateAdapter> <any> this.dateAdapter;
-        theCustomDateAdapter.customDateFormat = this.datePickerDateFormat;
+        const theCustomDateAdapter = <MomentDateAdapter> <any> this.dateAdapter;
+        theCustomDateAdapter.overrideDisplyaFormat = this.datePickerDateFormat;
 
         this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.setLocale(locale);
@@ -99,7 +83,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
             to: this.to
         });
 
-        this.maxDate = moment().startOf('day');
+        this.maxDate = this.dateAdapter.today().startOf('day');
     }
 
     apply(model: { from: string, to: string }, isValid: boolean) {
@@ -128,7 +112,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
 
         if (inputValue) {
             const formatDate = this.dateAdapter.parse(inputValue, this.datePickerDateFormat);
-            if (formatDate.isValid()) {
+            if (formatDate && formatDate.isValid()) {
                 formControl.setValue(formatDate);
             }
         }
@@ -137,5 +121,9 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     setLocale(locale) {
         this.dateAdapter.setLocale(locale);
         moment.locale(locale);
+    }
+
+    hasParseError(formControl) {
+        return formControl.hasError('matDatepickerParse') && formControl.getError('matDatepickerParse').text;
     }
 }
