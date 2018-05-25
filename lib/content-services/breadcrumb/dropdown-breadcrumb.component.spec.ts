@@ -166,7 +166,7 @@ describe('DropdownBreadcrumb', () => {
 
     it('should open the selectbox when clicking on the folder icon', (done) => {
         triggerComponentChange(fakeNodeWithCreatePermission);
-        spyOn(component.selectbox, 'open');
+        spyOn(component.dropdown, 'open');
 
         fixture.whenStable().then(() => {
 
@@ -174,7 +174,7 @@ describe('DropdownBreadcrumb', () => {
 
             fixture.whenStable().then(() => {
 
-                expect(component.selectbox.open).toHaveBeenCalled();
+                expect(component.dropdown.open).toHaveBeenCalled();
                 done();
             });
         });

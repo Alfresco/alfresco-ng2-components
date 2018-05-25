@@ -134,7 +134,7 @@
             &-current {
                 text-overflow: ellipsis;
                 overflow: hidden;
-                max-width: 300px;
+                white-space: nowrap;
             }
         }
 

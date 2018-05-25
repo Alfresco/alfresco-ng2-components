@@ -1,4 +1,4 @@
-<div *ngIf="folderNode" data-automation-id="breadcrumb" class="adf-breadcrumb-container">
+<nav *ngIf="folderNode" data-automation-id="breadcrumb" class="adf-breadcrumb-container" role="navigation">
     <button
         *ngIf="hasPreviousNodes()"
         tabindex="0"
@@ -11,7 +11,7 @@
     </button>
 
     <mat-select
-        #select
+        #dropdown
         *ngIf="hasPreviousNodes()"
         class="adf-breadcrumb-dropdown-path"
         tabindex="0">
@@ -25,11 +25,12 @@
         </mat-option>
     </mat-select>
 
-    <li *ngFor="let item of lastNodes; let last = last"
+    <div *ngFor="let item of lastNodes; let last = last"
         [class.active]="last"
         [ngSwitch]="last"
         title="{{ item.name | translate }}"
-        class="adf-breadcrumb-item">
+        class="adf-breadcrumb-item"
+        role="listitem">
 
         <a *ngSwitchDefault href="#" [attr.data-automation-id]="'breadcrumb_' + item.name"
             class="adf-breadcrumb-item-anchor"
@@ -44,13 +45,13 @@
         <mat-icon class="adf-breadcrumb-item-chevron" *ngIf="!last">
             chevron_right
         </mat-icon>
-    </li>
-</div>
+    </div>
+</nav>
 
-<div *ngIf="!folderNode && hasRoot" data-automation-id="breadcrumb">
-    <li class="adf-breadcrumb-item active">
+<nav *ngIf="!folderNode && hasRoot" data-automation-id="breadcrumb" role="navigation">
+    <div class="adf-breadcrumb-item active" role="listitem">
         <div class="adf-breadcrumb-item-current">
             {{ root | translate }}
         </div>
-    </li>
-</div>
+    </div>
+</nav>
