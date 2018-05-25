@@ -17,18 +17,20 @@
 
 import { EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { TranslationService } from '../services/translation.service';
 
 export interface LangChangeEvent {
     lang: string;
     translations: any;
 }
 
-export class TranslationMock {
+export class TranslationMock implements TranslationService {
 
     defaultLang: string = 'en';
     userLang: string;
     customLoader: any;
-    translate = {
+
+    translate: any = {
         onLangChange: new EventEmitter<LangChangeEvent>()
     };
 
