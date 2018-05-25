@@ -100,7 +100,12 @@ describe('DateWidgetComponent', () => {
 
     describe('template check', () => {
 
-        beforeEach(() => {
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should show visible date widget', async(() => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -109,15 +114,8 @@ describe('DateWidgetComponent', () => {
                 readOnly: 'false'
             });
             widget.field.isVisible = true;
+            widget.ngOnInit();
             fixture.detectChanges();
-        });
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
-
-        it('should show visible date widget', async(() => {
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#date-field-id')).toBeDefined();
                 expect(element.querySelector('#date-field-id')).not.toBeNull();
@@ -130,15 +128,14 @@ describe('DateWidgetComponent', () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
-                value: '11-30-9999',
+                value:  '11-30-9999',
                 type: 'date',
                 readOnly: 'false',
-                dateDisplayFormat: 'MM-DD-YYYY',
-                minValue: '30-12-9999'
+                dateDisplayFormat : 'MM-DD-YYYY',
+                minValue : '30-12-9999'
             });
-
+            widget.field.isVisible = true;
             widget.ngOnInit();
-            widget.field.validate();
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
@@ -151,7 +148,14 @@ describe('DateWidgetComponent', () => {
         }));
 
         it('should show the correct format type', async(() => {
-            widget.field.value = '12-30-9999';
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value:  '12-30-9999';
+                type: 'date',
+                readOnly: 'false'
+            });
+            widget.field.isVisible = true;
             widget.field.dateDisplayFormat = 'MM-DD-YYYY';
             widget.ngOnInit();
             fixture.detectChanges();
@@ -165,6 +169,14 @@ describe('DateWidgetComponent', () => {
         }));
 
         it('should disable date button when is readonly', async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '9-9-9999',
+                type: 'date',
+                readOnly: 'false'
+            });
+            widget.field.isVisible = true;
             widget.field.readOnly = false;
             fixture.detectChanges();
 
