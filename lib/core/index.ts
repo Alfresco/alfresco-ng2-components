@@ -34,9 +34,7 @@ export * from './form/index';
 export * from './sidenav-layout/index';
 export * from './comments/index';
 export * from './buttons-menu/index';
-
-export * from './components/sorting-picker/sorting-picker.component';
-
+export * from './sorting-picker/index';
 export * from './templates/index';
 export * from './pipes/index';
 export * from './services/index';
