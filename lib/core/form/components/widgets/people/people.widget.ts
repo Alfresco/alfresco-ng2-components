@@ -46,7 +46,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     @ViewChild('inputValue')
     input: ElementRef;
 
-    users: UserProcessModel[] = [];
+    users: any;
     groupId: string;
     value: any;
 
@@ -59,18 +59,28 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             this.errorMsg = '';
         }),
         distinctUntilChanged(),
-        switchMap(searchTerm => this.formService.getWorkflowUsers(searchTerm)
-            .pipe(
-                catchError(err => {
-                    this.errorMsg = err.message;
-                    return Observable.empty<Response>();
-                })
-            )
-        ),
+        switchMap((searchTerm) => {
+            if (typeof searchTerm === 'string') {
+                return this.formService.getWorkflowUsers(searchTerm, this.groupId)
+                    .pipe(
+                        catchError(err => {
+                            this.errorMsg = err.message;
+                            return Observable.empty<Response>();
+                        })
+                    )
+            } else {
+                return Observable.empty<Response>();
+            }
+        }),
         map((list) => {
             let value = (this.input.nativeElement as HTMLInputElement).value;
 
-            if (this.isValidUser(value)) {
+            this.users = list;
+
+            let resultUser: UserProcessModel = this.users.find((user) => {
+                return this.getDisplayName(user).toLocaleLowerCase() === value.toLocaleLowerCase(); });
+
+            if (resultUser) {
                 this.field.validationSummary.message = '';
                 this.field.validate();
                 this.field.form.validateForm();
@@ -101,24 +111,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    isValidUser(value: string): boolean {
-        let isValid = false;
-        if (value) {
-            this.formService.getWorkflowUsers(value, this.groupId)
-                .subscribe((result: UserProcessModel[]) => {
-                    this.users = result || [];
-                });
-            let resultUser: UserProcessModel = this.users.find((user) => {
-                return this.getDisplayName(user).toLocaleLowerCase() === value.toLocaleLowerCase(); });
-
-            if (resultUser) {
-                isValid = true;
-            }
-        }
-
-        return isValid;
-    }
-
     getDisplayName(model: UserProcessModel) {
         if (model) {
             let displayName = `${model.firstName || ''} ${model.lastName || ''}`;
@@ -129,7 +121,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     onItemSelect(item: UserProcessModel) {
         if (item) {
-            this.field.value = item;
+            this.field.value = `${item.firstName || ''} ${item.lastName || ''}`;
         }
     }
 }
