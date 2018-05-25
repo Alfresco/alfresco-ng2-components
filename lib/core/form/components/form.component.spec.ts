@@ -226,7 +226,7 @@ describe('FormComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formService, 'getFormDefinitionById').and.returnValue(Observable.of(fakeForm));
+        spyOn(formService, 'getFormDefinitionById').and.returnValue(Observable.of(JSON.parse(JSON.stringify(fakeForm))));
         const formId = '123';
 
         formComponent.formId = formId;
@@ -816,7 +816,7 @@ describe('FormComponent', () => {
     });
 
     it('should refresh form values when data is changed', () => {
-        formComponent.form = new FormModel(fakeForm);
+        formComponent.form = new FormModel(JSON.parse(JSON.stringify(fakeForm)));
         let formFields = formComponent.form.getFormFields();
 
         let labelField = formFields.find(field => field.id === 'label');
@@ -842,7 +842,7 @@ describe('FormComponent', () => {
     });
 
     it('should refresh radio buttons value when id is given to data', () => {
-        formComponent.form = new FormModel(fakeForm);
+        formComponent.form = new FormModel(JSON.parse(JSON.stringify(fakeForm)));
         let formFields = formComponent.form.getFormFields();
         let radioFieldById = formFields.find(field => field.id === 'radio');
 
