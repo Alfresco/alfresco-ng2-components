@@ -42,7 +42,7 @@ describe('SearchDateRangeComponent', () => {
 
         const buildUserPreferences = (): any => {
             const userPreferences = {
-                userPreferenceStatus: {LOCALE: localeFixture},
+                userPreferenceStatus: { LOCALE: localeFixture },
                 select: (property) => {
                     return Observable.of(userPreferences.userPreferenceStatus[property]);
                 }
@@ -70,38 +70,38 @@ describe('SearchDateRangeComponent', () => {
         });
 
         it('should setup the format of the date from configuration', () => {
-            component.settings = {field: 'cm:created', dateFormat: dateFormatFixture};
+            component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
             component.ngOnInit();
             expect(theDateAdapter.overrideDisplyaFormat).toBe(dateFormatFixture);
         });
 
         it('should setup form control with formatted valid date on change', () => {
-            component.settings = {field: 'cm:created', dateFormat: dateFormatFixture};
+            component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
             component.ngOnInit();
 
             const inputString = '20-feb-18';
             const momentFromInput = moment(inputString, dateFormatFixture);
             expect(momentFromInput.isValid()).toBeTruthy();
 
-            component.onChangedHandler({srcElement: {value: inputString}}, component.from);
+            component.onChangedHandler({ srcElement: { value: inputString } }, component.from);
             expect(component.from.value.toString()).toEqual(momentFromInput.toString());
         });
 
         it('should NOT setup form control with invalid date on change', () => {
-            component.settings = {field: 'cm:created', dateFormat: dateFormatFixture};
+            component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
             component.ngOnInit();
 
             const inputString = '20.f.18';
             const momentFromInput = moment(inputString, dateFormatFixture);
             expect(momentFromInput.isValid()).toBeFalsy();
 
-            component.onChangedHandler({srcElement: {value: inputString}}, component.from);
+            component.onChangedHandler({ srcElement: { value: inputString } }, component.from);
             expect(component.from.value.toString()).not.toEqual(momentFromInput.toString());
         });
 
         it('should reset form', () => {
             component.ngOnInit();
-            component.form.setValue({from: fromDate, to: toDate});
+            component.form.setValue({ from: fromDate, to: toDate });
 
             expect(component.from.value).toEqual(fromDate);
             expect(component.to.value).toEqual(toDate);
@@ -110,7 +110,7 @@ describe('SearchDateRangeComponent', () => {
 
             expect(component.from.value).toEqual('');
             expect(component.to.value).toEqual('');
-            expect(component.form.value).toEqual({from: '', to: ''});
+            expect(component.form.value).toEqual({ from: '', to: '' });
         });
 
         it('should update query builder on reset', () => {
@@ -118,7 +118,8 @@ describe('SearchDateRangeComponent', () => {
                 queryFragments: {
                     createdDateRange: 'query'
                 },
-                update() {}
+                update() {
+                }
             };
 
             component.id = 'createdDateRange';
@@ -136,12 +137,13 @@ describe('SearchDateRangeComponent', () => {
         it('should update query builder on value changes', () => {
             const context: any = {
                 queryFragments: {},
-                update() {}
+                update() {
+                }
             };
 
             component.id = 'createdDateRange';
             component.context = context;
-            component.settings = {field: 'cm:created'};
+            component.settings = { field: 'cm:created' };
 
             spyOn(context, 'update').and.stub();
 
@@ -180,8 +182,12 @@ describe('SearchDateRangeComponent', () => {
                 return Observable.of(key);
             });
 
-            component.settings = {'dateFormat': dateFormatFixture, field: 'cm:created'};
+            component.settings = { 'dateFormat': dateFormatFixture, field: 'cm:created' };
             fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
         });
 
         it('should display the required format when input date is invalid', () => {
@@ -194,7 +200,10 @@ describe('SearchDateRangeComponent', () => {
             fixture.detectChanges();
 
             expect(translationSpy.calls.mostRecent().args)
-                .toEqual(['SEARCH.FILTER.VALIDATION.INVALID-DATE', {requiredFormat: dateFormatFixture}]);
+                .toEqual(['SEARCH.FILTER.VALIDATION.INVALID-DATE', { requiredFormat: dateFormatFixture }]);
+
+            inputEl.value = '';
+            fixture.detectChanges();
         });
     });
 });
