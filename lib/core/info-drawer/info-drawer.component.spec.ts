@@ -75,6 +75,8 @@ describe('InfoDrawerComponent', () => {
         </adf-info-drawer-tab>
         <adf-info-drawer-tab label="Tab2">
         </adf-info-drawer-tab>
+        <adf-info-drawer-tab label="Tab3" icon="tab-icon">
+        </adf-info-drawer-tab>
     </adf-info-drawer>
        `
 })
@@ -122,5 +124,13 @@ describe('Custom InfoDrawer', () => {
         let tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab.length).toBe(1);
         expect(tab[0].nativeElement.innerText).toBe('Tab2');
+    });
+
+    it('should render a tab with icon', () => {
+        component.tabIndex = 2;
+        fixture.detectChanges();
+        let tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
+        expect(tab[0].nativeElement.innerText).not.toBe('Tab3');
+        expect(tab[0].nativeElement.innerText).toContain('tab-icon');
     });
 });
