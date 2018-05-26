@@ -53,4 +53,5 @@ You can also customize the three regions (title, buttons and content) as with th
 
 ## See also
 
--   [Info drawer layout component](info-drawer-layout.component.md)
+- [Info drawer layout component](info-drawer-layout.component.md)
+- [Info drawer layout component](info-drawer-tab.component.md)
