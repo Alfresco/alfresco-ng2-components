@@ -119,8 +119,10 @@ describe('SearchControlComponent', () => {
             searchServiceSpy.and.returnValue(
                 Observable.of({ entry: { list: [] } })
             );
-            component.searchChange.subscribe(value => {
+
+            let searchDisposable = component.searchChange.subscribe(value => {
                 expect(value).toBe('customSearchTerm');
+                searchDisposable.unsubscribe();
                 done();
             });
 
@@ -159,8 +161,9 @@ describe('SearchControlComponent', () => {
         it('should still fire an event when user inputs a search term less than 3 characters', (done) => {
             searchServiceSpy.and.returnValue(Observable.of(JSON.parse(JSON.stringify(results))));
 
-            component.searchChange.subscribe(value => {
+            let searchDisposable = component.searchChange.subscribe(value => {
                 expect(value).toBe('cu');
+                searchDisposable.unsubscribe();
             });
 
             fixture.detectChanges();
@@ -216,8 +219,9 @@ describe('SearchControlComponent', () => {
         }));
 
         xit('should fire a search when a enter key is pressed', (done) => {
-            component.submit.subscribe((value) => {
+            let searchDisposable = component.submit.subscribe((value) => {
                 expect(value).toBe('TEST');
+                searchDisposable.unsubscribe();
                 done();
             });
 
@@ -575,8 +579,9 @@ describe('SearchControlComponent', () => {
         it('should emit a option clicked event when item is clicked', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(Observable.of(JSON.parse(JSON.stringify(results))));
-            component.optionClicked.subscribe((item) => {
+            let clickDisposable = component.optionClicked.subscribe((item) => {
                 expect(item.entry.id).toBe('123');
+                clickDisposable.unsubscribe();
                 done();
             });
             fixture.detectChanges();
@@ -592,8 +597,9 @@ describe('SearchControlComponent', () => {
         it('should set deactivate the search after element is clicked', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(Observable.of(JSON.parse(JSON.stringify(results))));
-            component.optionClicked.subscribe((item) => {
+            let clickDisposable = component.optionClicked.subscribe((item) => {
                 expect(component.subscriptAnimationState).toBe('inactive');
+                clickDisposable.unsubscribe();
                 done();
             });
             fixture.detectChanges();
@@ -610,9 +616,10 @@ describe('SearchControlComponent', () => {
         it('should NOT reset the search term after element is clicked', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(Observable.of(JSON.parse(JSON.stringify(results))));
-            component.optionClicked.subscribe((item) => {
+            let clickDisposable = component.optionClicked.subscribe((item) => {
                 expect(component.searchTerm).not.toBeFalsy();
                 expect(component.searchTerm).toBe('TEST');
+                clickDisposable.unsubscribe();
                 done();
             });
             fixture.detectChanges();
