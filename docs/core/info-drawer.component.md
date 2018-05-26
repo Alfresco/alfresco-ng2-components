@@ -30,18 +30,6 @@ Displays a sidebar-style information panel with tabs.
 </adf-info-drawer>
 ```
 
-Render icon tab instead of labels:
-
-```html
-<adf-info-drawer>
-
-    <adf-info-drawer-tab label="Details" icon="comment">
-        <mycomponent3></mycomponent3>
-    </adf-info-drawer-tab>
-
-</adf-info-drawer>
-```
-
 ## Class members
 
 ### Properties
@@ -65,4 +53,5 @@ You can also customize the three regions (title, buttons and content) as with th
 
 ## See also
 
--   [Info drawer layout component](info-drawer-layout.component.md)
+- [Info drawer layout component](info-drawer-layout.component.md)
+- [Info drawer layout component](info-drawer-tab.component.md)
