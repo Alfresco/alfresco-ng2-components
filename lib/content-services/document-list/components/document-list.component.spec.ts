@@ -249,8 +249,9 @@ describe('DocumentList', () => {
 
         spyOn(documentListService, 'getFolder').and.returnValue(Observable.of(fakeNodeAnswerWithNOEntries));
 
-        documentList.ready.subscribe(() => {
+        let disposableReady = documentList.ready.subscribe(() => {
             expect(element.querySelector('#adf-document-list-empty')).toBeDefined();
+            disposableReady.unsubscribe();
             done();
         });
 
@@ -536,8 +537,9 @@ describe('DocumentList', () => {
 
     it('should emit nodeClick event', (done) => {
         let node = new FileNode();
-        documentList.nodeClick.subscribe(e => {
+        let disposableClick = documentList.nodeClick.subscribe(e => {
             expect(e.value).toBe(node);
+            disposableClick.unsubscribe();
             done();
         });
         documentList.onNodeClick(node);
@@ -625,8 +627,9 @@ describe('DocumentList', () => {
 
     it('should emit file preview event on single click', (done) => {
         let file = new FileNode();
-        documentList.preview.subscribe(e => {
+        let disposablePreview = documentList.preview.subscribe(e => {
             expect(e.value).toBe(file);
+            disposablePreview.unsubscribe();
             done();
         });
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
@@ -635,8 +638,9 @@ describe('DocumentList', () => {
 
     it('should emit file preview event on double click', (done) => {
         let file = new FileNode();
-        documentList.preview.subscribe(e => {
+        let disposablePreview = documentList.preview.subscribe(e => {
             expect(e.value).toBe(file);
+            disposablePreview.unsubscribe();
             done();
         });
         documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
@@ -927,8 +931,9 @@ describe('DocumentList', () => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
         spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.throw(error));
 
-        documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe(error);
+            disposableError.unsubscribe();
             done();
         });
 
@@ -940,8 +945,9 @@ describe('DocumentList', () => {
         spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNodeWithCreatePermission));
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
 
-        documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe(error);
+            disposableError.unsubscribe();
             done();
         });
 
@@ -952,9 +958,10 @@ describe('DocumentList', () => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
         spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.throw(error));
 
-        documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe(error);
             expect(documentList.noPermission).toBe(true);
+            disposableError.unsubscribe();
             done();
         });
 
@@ -1024,8 +1031,9 @@ describe('DocumentList', () => {
     it('should emit error when fetch trashcan fails', (done) => {
         spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.reject('error'));
 
-        documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');
+            disposableError.unsubscribe();
             done();
         });
 
@@ -1044,8 +1052,9 @@ describe('DocumentList', () => {
         spyOn(apiService.getInstance().core.sharedlinksApi, 'findSharedLinks')
             .and.returnValue(Promise.reject('error'));
 
-        documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');
+            disposableError.unsubscribe();
             done();
         });
 
@@ -1064,8 +1073,9 @@ describe('DocumentList', () => {
         spyOn(apiService.getInstance().core.sitesApi, 'getSites')
             .and.returnValue(Promise.reject('error'));
 
-        documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');
+            disposableReady.unsubscribe();
             done();
         });
 
@@ -1080,9 +1090,10 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-sites-');
         expect(sitesApi.getSites).toHaveBeenCalled();
 
-        documentList.ready.subscribe((page) => {
+        let disposableReady = documentList.ready.subscribe((page) => {
             const entriesWithoutName = page.list.entries.filter(item => !item.entry.name);
             expect(entriesWithoutName.length).toBe(0);
+            disposableReady.unsubscribe();
             done();
         });
     });
@@ -1095,9 +1106,10 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-sites-');
         expect(sitesApi.getSites).toHaveBeenCalled();
 
-        documentList.ready.subscribe((page) => {
+        let disposableReady = documentList.ready.subscribe((page) => {
             const wrongName = page.list.entries.filter(item => (item.entry.name !== item.entry.title));
             expect(wrongName.length).toBe(0);
+            disposableReady.unsubscribe();
             done();
         });
     });
@@ -1114,8 +1126,9 @@ describe('DocumentList', () => {
         spyOn(apiService.getInstance().core.peopleApi, 'getSiteMembership')
             .and.returnValue(Promise.reject('error'));
 
-        documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');
+            disposableError.unsubscribe();
             done();
         });
 
@@ -1130,9 +1143,10 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-mysites-');
         expect(peopleApi.getSiteMembership).toHaveBeenCalled();
 
-        documentList.ready.subscribe((page) => {
+        let disposableReady = documentList.ready.subscribe((page) => {
             const entriesWithoutName = page.list.entries.filter(item => !item.entry.name);
             expect(entriesWithoutName.length).toBe(0);
+            disposableReady.unsubscribe();
             done();
         });
     });
@@ -1145,9 +1159,10 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-mysites-');
         expect(peopleApi.getSiteMembership).toHaveBeenCalled();
 
-        documentList.ready.subscribe((page) => {
+        let disposableReady = documentList.ready.subscribe((page) => {
             const wrongName = page.list.entries.filter(item => (item.entry.name !== item.entry.title));
             expect(wrongName.length).toBe(0);
+            disposableReady.unsubscribe();
             done();
         });
     });
@@ -1164,8 +1179,9 @@ describe('DocumentList', () => {
         spyOn(apiService.getInstance().core.favoritesApi, 'getFavorites')
             .and.returnValue(Promise.reject('error'));
 
-        documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');
+            disposableError.unsubscribe();
             done();
         });
 
@@ -1185,8 +1201,9 @@ describe('DocumentList', () => {
     it('should emit error when fetch recent fails on getPerson call', (done) => {
         spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.reject('error'));
 
-        documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');
+            disposableError.unsubscribe();
             done();
         });
 
@@ -1196,8 +1213,9 @@ describe('DocumentList', () => {
     xit('should emit error when fetch recent fails on search call', (done) => {
         spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(Observable.throw('error'));
 
-        documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');
+            disposableError.unsubscribe();
             done();
         });
 

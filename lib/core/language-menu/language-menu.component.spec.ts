@@ -57,7 +57,7 @@ describe('LanguageMenuComponent', () => {
             }
         ];
 
-        fixture.detectChanges();
+        component.ngOnInit();
         expect(component.languages).toEqual([
             {
                 key: 'fake-key-1',
