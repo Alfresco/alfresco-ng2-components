@@ -1075,7 +1075,7 @@ describe('DocumentList', () => {
 
         let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');
-            disposableReady.unsubscribe();
+            disposableError.unsubscribe();
             done();
         });
 
