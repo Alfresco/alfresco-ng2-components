@@ -49,6 +49,8 @@ describe('DocumentList', () => {
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
+    let spyGetSites: any;
+    let spyFavorite: any;
 
     setupTestBed({
         imports: [ContentTestingModule],
@@ -69,7 +71,8 @@ describe('DocumentList', () => {
         apiService = TestBed.get(AlfrescoApiService);
         customResourcesService = TestBed.get(CustomResourcesService);
 
-        spyOn(documentList, 'onPageLoaded').and.callThrough();
+        spyGetSites = spyOn(apiService.sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
+        spyFavorite = spyOn(apiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({list: []}));
     });
 
     afterEach(() => {
@@ -1063,15 +1066,13 @@ describe('DocumentList', () => {
 
     it('should fetch sites', () => {
         const sitesApi = apiService.getInstance().core.sitesApi;
-        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(null));
 
         documentList.loadFolderByNodeId('-sites-');
         expect(sitesApi.getSites).toHaveBeenCalled();
     });
 
     it('should emit error when fetch sites fails', (done) => {
-        spyOn(apiService.getInstance().core.sitesApi, 'getSites')
-            .and.returnValue(Promise.reject('error'));
+        spyGetSites.and.returnValue(Promise.reject('error'));
 
         let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');
@@ -1084,11 +1085,6 @@ describe('DocumentList', () => {
 
     it('should assure that sites have name property set', (done) => {
         fixture.detectChanges();
-        const sitesApi = apiService.getInstance().core.sitesApi;
-        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
-
-        documentList.loadFolderByNodeId('-sites-');
-        expect(sitesApi.getSites).toHaveBeenCalled();
 
         let disposableReady = documentList.ready.subscribe((page) => {
             const entriesWithoutName = page.list.entries.filter(item => !item.entry.name);
@@ -1096,15 +1092,12 @@ describe('DocumentList', () => {
             disposableReady.unsubscribe();
             done();
         });
+
+        documentList.loadFolderByNodeId('-sites-');
     });
 
     it('should assure that sites have name property set correctly', (done) => {
         fixture.detectChanges();
-        const sitesApi = apiService.getInstance().core.sitesApi;
-        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
-
-        documentList.loadFolderByNodeId('-sites-');
-        expect(sitesApi.getSites).toHaveBeenCalled();
 
         let disposableReady = documentList.ready.subscribe((page) => {
             const wrongName = page.list.entries.filter(item => (item.entry.name !== item.entry.title));
@@ -1112,6 +1105,8 @@ describe('DocumentList', () => {
             disposableReady.unsubscribe();
             done();
         });
+
+        documentList.loadFolderByNodeId('-sites-');
     });
 
     it('should fetch user membership sites', () => {
@@ -1169,15 +1164,14 @@ describe('DocumentList', () => {
 
     it('should fetch favorites', () => {
         const favoritesApi = apiService.getInstance().core.favoritesApi;
-        spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
+        spyFavorite.and.returnValue(Promise.resolve(null));
 
         documentList.loadFolderByNodeId('-favorites-');
         expect(favoritesApi.getFavorites).toHaveBeenCalled();
     });
 
     it('should emit error when fetch favorites fails', (done) => {
-        spyOn(apiService.getInstance().core.favoritesApi, 'getFavorites')
-            .and.returnValue(Promise.reject('error'));
+        spyFavorite.and.returnValue(Promise.reject('error'));
 
         let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');
@@ -1234,7 +1228,6 @@ describe('DocumentList', () => {
         documentList.folderNode = <any> {};
 
         const sitesApi = apiService.getInstance().core.sitesApi;
-        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(null));
 
         documentList.loadFolderByNodeId('-sites-');
 
