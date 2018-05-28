@@ -47,10 +47,9 @@ docker tag alfresco/demo-shell:${current_tag} alfresco/demo-shell:${current_tag}
 if $EXEC_LOGIN == true; then
     echo "====== LOGIN  ====="
     docker login -u "${USERNAME}" -p "${PASSWORD}"
-    docker push "alfresco/demo-shell"
 fi
 
-
+docker push "alfresco/demo-shell"
 echo "====== CLEAN LOCAL IMAGE TAG ${current_tag} ====="
 docker rmi -f alfresco/demo-shell:${current_tag}
 done
