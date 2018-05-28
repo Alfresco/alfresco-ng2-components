@@ -21,19 +21,8 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { ChecklistComponent } from './checklist.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-
-declare let jasmine: any;
-
-const fakeTaskDetail = new TaskDetailsModel({
-    id: 'fake-check-id',
-    name: 'fake-check-name'
-});
-
-const fakeTaskDetailCompleted = new TaskDetailsModel({
-    id: 'fake-completed-id',
-    name: 'fake-completed-name',
-    endDate: '2018-05-23T11:25:14.552+0000'
-});
+import { TaskListService } from './../services/tasklist.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('ChecklistComponent', () => {
 
@@ -41,12 +30,16 @@ describe('ChecklistComponent', () => {
     let fixture: ComponentFixture<ChecklistComponent>;
     let element: HTMLElement;
     let showChecklistDialog;
+    let service: TaskListService;
 
     setupTestBed({
         imports: [ProcessTestingModule]
     });
 
     beforeEach(async(() => {
+        service = TestBed.get(TaskListService);
+        spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of([{ id: 'fake-check-changed-id', name: 'fake-check-changed-name' }] ));
+
         fixture = TestBed.createComponent(ChecklistComponent);
         checklistComponent = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -68,7 +61,10 @@ describe('ChecklistComponent', () => {
 
         beforeEach(() => {
             checklistComponent.taskId = 'fake-task-id';
-            checklistComponent.checklist.push(fakeTaskDetail);
+            checklistComponent.checklist.push(new TaskDetailsModel({
+                id: 'fake-check-id',
+                name: 'fake-check-name'
+            }));
             checklistComponent.readOnly = true;
 
             fixture.detectChanges();
@@ -89,7 +85,10 @@ describe('ChecklistComponent', () => {
         beforeEach(() => {
             checklistComponent.taskId = 'fake-task-id';
             checklistComponent.readOnly = false;
-            checklistComponent.checklist.push(fakeTaskDetail);
+            checklistComponent.checklist.push(new TaskDetailsModel({
+                id: 'fake-check-id',
+                name: 'fake-check-name'
+            }));
 
             fixture.detectChanges();
             showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
@@ -133,12 +132,7 @@ describe('ChecklistComponent', () => {
             showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
         });
 
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
         afterEach(() => {
-            jasmine.Ajax.uninstall();
             const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
             overlayContainers.forEach((overlayContainer) => {
                 overlayContainer.innerHTML = '';
@@ -146,15 +140,25 @@ describe('ChecklistComponent', () => {
         });
 
         it('should show task checklist', () => {
-            checklistComponent.checklist.push(fakeTaskDetail);
+            checklistComponent.checklist.push(new TaskDetailsModel({
+                id: 'fake-check-id',
+                name: 'fake-check-name'
+            }));
             fixture.detectChanges();
             expect(element.querySelector('#check-fake-check-id')).not.toBeNull();
             expect(element.querySelector('#check-fake-check-id').textContent).toContain('fake-check-name');
         });
 
         it('should not show delete icon when checklist task is completed', () => {
-            checklistComponent.checklist.push(fakeTaskDetail);
-            checklistComponent.checklist.push(fakeTaskDetailCompleted);
+            checklistComponent.checklist.push(new TaskDetailsModel({
+                id: 'fake-check-id',
+                name: 'fake-check-name'
+            }));
+            checklistComponent.checklist.push(new TaskDetailsModel({
+                id: 'fake-completed-id',
+                name: 'fake-completed-name',
+                endDate: '2018-05-23T11:25:14.552+0000'
+            }));
             fixture.detectChanges();
             expect(element.querySelector('#remove-fake-check-id')).not.toBeNull();
             expect(element.querySelector('#check-fake-completed-id')).not.toBeNull();
@@ -163,14 +167,14 @@ describe('ChecklistComponent', () => {
         });
 
         it('should add checklist', async(() => {
+            spyOn(service, 'addTask').and.returnValue(Observable.of({
+              id: 'fake-check-added-id', name: 'fake-check-added-name'
+            }));
+
             showChecklistDialog.click();
             let addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
             addButtonDialog.click();
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: { id: 'fake-check-added-id', name: 'fake-check-added-name' }
-            });
+
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#check-fake-check-added-id')).not.toBeNull();
@@ -179,17 +183,19 @@ describe('ChecklistComponent', () => {
         }));
 
         it('should remove a checklist element', async(() => {
+            spyOn(service, 'deleteTask').and.returnValue(Observable.of(''));
+
             checklistComponent.taskId = 'new-fake-task-id';
-            checklistComponent.checklist.push(fakeTaskDetail);
+            checklistComponent.checklist.push(new TaskDetailsModel({
+                id: 'fake-check-id',
+                name: 'fake-check-name'
+            }));
             fixture.detectChanges();
             let checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
             expect(checklistElementRemove).toBeDefined();
             expect(checklistElementRemove).not.toBeNull();
             checklistElementRemove.click();
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json'
-            });
+
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#fake-check-id')).toBeNull();
@@ -197,36 +203,38 @@ describe('ChecklistComponent', () => {
         }));
 
         it('should send an event when the checklist is deleted', (done) => {
+            spyOn(service, 'deleteTask').and.returnValue(Observable.of(''));
+            let disposableDelete = checklistComponent.checklistTaskDeleted.subscribe(() => {
+                expect(element.querySelector('#fake-check-id')).toBeNull();
+                disposableDelete.unsubscribe();
+                done();
+            });
+
             checklistComponent.taskId = 'new-fake-task-id';
-            checklistComponent.checklist.push(fakeTaskDetail);
+            checklistComponent.checklist.push(new TaskDetailsModel({
+                id: 'fake-check-id',
+                name: 'fake-check-name'
+            }));
             fixture.detectChanges();
             let checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
             expect(checklistElementRemove).toBeDefined();
             expect(checklistElementRemove).not.toBeNull();
             checklistElementRemove.click();
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json'
-            });
-            checklistComponent.checklistTaskDeleted.subscribe(() => {
-                expect(element.querySelector('#fake-check-id')).toBeNull();
-                done();
-            });
         });
 
         it('should show load task checklist on change', async(() => {
+
             checklistComponent.taskId = 'new-fake-task-id';
-            checklistComponent.checklist.push(fakeTaskDetail);
+            checklistComponent.checklist.push(new TaskDetailsModel({
+                id: 'fake-check-id',
+                name: 'fake-check-name'
+            }));
             fixture.detectChanges();
             let change = new SimpleChange(null, 'new-fake-task-id', true);
             checklistComponent.ngOnChanges({
                 taskId: change
             });
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: { data: [{ id: 'fake-check-changed-id', name: 'fake-check-changed-name' }] }
-            });
+
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#check-fake-check-changed-id')).not.toBeNull();
@@ -236,7 +244,10 @@ describe('ChecklistComponent', () => {
 
         it('should show empty checklist when task id is null', async(() => {
             checklistComponent.taskId = 'new-fake-task-id';
-            checklistComponent.checklist.push(fakeTaskDetail);
+            checklistComponent.checklist.push(new TaskDetailsModel({
+                id: 'fake-check-id',
+                name: 'fake-check-name'
+            }));
             fixture.detectChanges();
             checklistComponent.taskId = null;
             let change = new SimpleChange(null, 'new-fake-task-id', true);
@@ -251,22 +262,20 @@ describe('ChecklistComponent', () => {
         }));
 
         it('should emit checklist task created event when the checklist is successfully added', (done) => {
-            checklistComponent.checklistTaskCreated.subscribe((taskAdded: TaskDetailsModel) => {
+            spyOn(service, 'addTask').and.returnValue(Observable.of({ id: 'fake-check-added-id', name: 'fake-check-added-name' }));
+
+            let disposableCreated = checklistComponent.checklistTaskCreated.subscribe((taskAdded: TaskDetailsModel) => {
                 fixture.detectChanges();
                 expect(taskAdded.id).toEqual('fake-check-added-id');
                 expect(taskAdded.name).toEqual('fake-check-added-name');
                 expect(element.querySelector('#check-fake-check-added-id')).not.toBeNull();
                 expect(element.querySelector('#check-fake-check-added-id').textContent).toContain('fake-check-added-name');
+                disposableCreated.unsubscribe();
                 done();
             });
             showChecklistDialog.click();
             let addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
             addButtonDialog.click();
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: { id: 'fake-check-added-id', name: 'fake-check-added-name' }
-            });
         });
     });
 

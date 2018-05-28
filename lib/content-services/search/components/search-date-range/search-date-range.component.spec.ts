@@ -63,12 +63,6 @@ describe('SearchDateRangeComponent', () => {
             expect(component.form).toBeDefined();
         });
 
-        it('should setup locale from userPreferencesService', () => {
-            spyOn(component, 'setLocale').and.stub();
-            component.ngOnInit();
-            expect(component.setLocale).toHaveBeenCalledWith(localeFixture);
-        });
-
         it('should setup the format of the date from configuration', () => {
             component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
             component.ngOnInit();

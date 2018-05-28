@@ -15,20 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
 @Component({
     selector: 'adf-checklist',
     templateUrl: './checklist.component.html',
-    styleUrls: ['./checklist.component.scss'],
-    providers: [TaskListService]
+    styleUrls: ['./checklist.component.scss']
 })
-export class ChecklistComponent implements OnInit, OnChanges {
+export class ChecklistComponent implements OnChanges {
 
     /** (required) The id of the parent task to which subtasks are
      * attached.
@@ -65,25 +62,13 @@ export class ChecklistComponent implements OnInit, OnChanges {
 
     checklist: TaskDetailsModel [] = [];
 
-    private taskObserver: Observer<TaskDetailsModel>;
-    task$: Observable<TaskDetailsModel>;
-
     /**
      * Constructor
      * @param auth
      * @param translate
      */
-    constructor(
-        private activitiTaskList: TaskListService,
-        private dialog: MatDialog
-    ) {
-        this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
-    }
-
-    ngOnInit() {
-        this.task$.subscribe((task: TaskDetailsModel) => {
-            this.checklist.push(task);
-        });
+    constructor(private activitiTaskList: TaskListService,
+                private dialog: MatDialog) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -98,9 +83,9 @@ export class ChecklistComponent implements OnInit, OnChanges {
         this.checklist = [];
         if (this.taskId) {
             this.activitiTaskList.getTaskChecklist(this.taskId).subscribe(
-                (res: TaskDetailsModel[]) => {
-                    res.forEach((task) => {
-                        this.taskObserver.next(task);
+                (taskDetailsModel: TaskDetailsModel[]) => {
+                    taskDetailsModel.forEach((task) => {
+                        this.checklist.push(task);
                     });
                 },
                 (error) => {

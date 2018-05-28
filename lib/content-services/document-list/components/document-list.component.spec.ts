@@ -1227,8 +1227,6 @@ describe('DocumentList', () => {
     it('should reset folder node on loading folder by node id', () => {
         documentList.folderNode = <any> {};
 
-        const sitesApi = apiService.getInstance().core.sitesApi;
-
         documentList.loadFolderByNodeId('-sites-');
 
         expect(documentList.folderNode).toBeNull();
