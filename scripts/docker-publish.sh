@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+eval $EXEC_LOGIN=false
 
 show_help() {
     echo "Usage: docker_publish.sh"
@@ -16,6 +17,7 @@ username_set() {
 
 password_set() {
     PASSWORD=$1
+    EXEC_LOGIN=true
 }
 
 
@@ -42,9 +44,12 @@ echo "====== PUBLISH DOCKER IMAGE TAG ${current_tag} ====="
 docker build -t alfresco/demo-shell:${current_tag} .
 docker tag alfresco/demo-shell:${current_tag} alfresco/demo-shell:${current_tag}
 
-echo "====== LOGIN  ====="
-docker login -u "${USERNAME}" -p "${PASSWORD}"
-docker push "alfresco/demo-shell"
+if $EXEC_LOGIN == true; then
+    echo "====== LOGIN  ====="
+    docker login -u "${USERNAME}" -p "${PASSWORD}"
+    docker push "alfresco/demo-shell"
+fi
+
 
 echo "====== CLEAN LOCAL IMAGE TAG ${current_tag} ====="
 docker rmi -f alfresco/demo-shell:${current_tag}
