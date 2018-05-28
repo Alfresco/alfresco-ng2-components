@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-eval $EXEC_LOGIN=false
+eval EXEC_LOGIN=false
 
 show_help() {
     echo "Usage: docker_publish.sh"
