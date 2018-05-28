@@ -305,8 +305,12 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
      * Return the sorting order
      */
     get dataSort(): any[] {
-        if (this.sort) {
-            return this.sort.split('-');
+        if (!this.sort) {
+            return;
+        }
+        let sortingParams: string[] = this.sort.split('-');
+        if (sortingParams.length === 2) {
+            return sortingParams;
         }
     }
 

@@ -293,8 +293,14 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      * Return the sorting order
      */
     get dataSort(): any[] {
-        if (this.sort) {
-            return this.sort.split('-');
+        if (!this.sort) {
+            return;
+        }
+        let sortingParams: string[] = this.sort.split('-');
+        if (sortingParams.length === 2) {
+            let sortColumn = sortingParams[0] === 'created' ? 'started' : sortingParams[0];
+            let sortOrder = sortingParams[1];
+            return [sortColumn, sortOrder];
         }
     }
 
