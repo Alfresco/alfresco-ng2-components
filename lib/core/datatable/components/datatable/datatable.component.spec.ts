@@ -428,15 +428,6 @@ describe('DataTable', () => {
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
-    xit('should load data table on onChange', () => {
-        let table = new DataTableComponent(null, null);
-        let data = new ObjectDataTableAdapter([], []);
-
-        expect(table.data).toBeUndefined();
-        table.ngOnChanges({'data': new SimpleChange('123', data, true)});
-        expect(table.data).toEqual(data);
-    });
-
     it('should initialize with custom data', () => {
         let data = new ObjectDataTableAdapter([], []);
         dataTable.data = data;
@@ -632,6 +623,22 @@ describe('DataTable', () => {
         expect(dataTable.isSelectAllChecked).toBeTruthy();
         dataTable.onSelectAllClick(<MatCheckboxChange> { checked: false });
         expect(dataTable.isSelectAllChecked).toBeFalsy();
+    });
+
+    it('should reset selection upon data rows change', () => {
+        let data = new ObjectDataTableAdapter([{}, {}, {}], []);
+
+        dataTable.data = data;
+        dataTable.multiselect = true;
+        dataTable.ngAfterContentInit();
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
+
+        expect(dataTable.selection.every(entry => entry.isSelected));
+
+        data.setRows([]);
+        fixture.detectChanges();
+
+        expect(dataTable.selection.every(entry => !entry.isSelected));
     });
 
     it('should update rows on "select all" click', () => {
