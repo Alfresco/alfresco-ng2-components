@@ -1,4 +1,5 @@
 <adf-datatable
+    #dataTable
     [data]="data"
     [selectionMode]="selectionMode"
     [multiselect]="multiselect"
@@ -19,6 +20,10 @@
     </data-columns>
     -->
 </adf-datatable>
+
+<div>
+    Selected items: {{ dataTable.selection?.length }}
+</div>
 
 <div data-automation-id="multiselect">
     <mat-checkbox [(ngModel)]="multiselect">{{ 'DATATABLE.MULTISELECT'| translate }}</mat-checkbox>
