@@ -46,7 +46,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     @ViewChild('inputValue')
     input: ElementRef;
 
-    users: any = [];
     groupId: string;
     value: any;
 
@@ -54,43 +53,31 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     errorMsg = '';
     searchTerms$: Observable<string> = this.searchTerm.valueChanges;
 
-    items$ = this.searchTerms$.pipe(
+    users$ = this.searchTerms$.pipe(
         tap(() => {
             this.errorMsg = '';
         }),
         distinctUntilChanged(),
         switchMap((searchTerm) => {
-            if (typeof searchTerm === 'string') {
-                return this.formService.getWorkflowUsers(searchTerm, this.groupId)
-                    .pipe(
-                        catchError(err => {
-                            this.errorMsg = err.message;
-                            return Observable.empty<Response>();
-                        })
-                    );
-            } else {
-                return Observable.empty<Response>();
-            }
+            let userResponse = Observable.empty();
+
+            userResponse = this.formService.getWorkflowUsers(searchTerm, this.groupId)
+                .pipe(
+                    catchError(err => {
+                        this.errorMsg = err.message;
+                        return userResponse;
+                    })
+                );
+
+            return userResponse;
         }),
-        map((list) => {
+        map((list: UserProcessModel[]) => {
             let value = (this.input.nativeElement as HTMLInputElement).value;
 
-            this.users = list;
-
-            let resultUser: UserProcessModel = this.users.find((user) => {
-                return this.getDisplayName(user).toLocaleLowerCase() === value.toLocaleLowerCase(); });
-
-            if (resultUser) {
-                this.field.validationSummary.message = '';
-                this.field.validate();
-                this.field.form.validateForm();
-            } else if (!value) {
-                this.field.value = null;
-                this.users = [];
+            if (value) {
+                this.checkUserAndValidateForm(list, value);
             } else {
-                this.field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
-                this.field.markAsInvalid();
-                this.field.form.markAsInvalid();
+                this.field.value = null;
             }
 
             return list;
@@ -109,6 +96,26 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 this.groupId = restrictWithGroup.id;
             }
         }
+    }
+
+    checkUserAndValidateForm(list, value) {
+        const isValidUser = this.isValidUser(list, value);
+        if (isValidUser) {
+            this.field.validationSummary.message = '';
+            this.field.validate();
+            this.field.form.validateForm();
+        } else {
+            this.field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
+            this.field.markAsInvalid();
+            this.field.form.markAsInvalid();
+        }
+    }
+
+    isValidUser(users: UserProcessModel[], name: string) {
+        let resultUser: UserProcessModel = users.find((user) => {
+            return this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
+        });
+        return resultUser;
     }
 
     getDisplayName(model: UserProcessModel) {
