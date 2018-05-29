@@ -18,11 +18,9 @@
 /* tslint:disable:component-selector no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from 'alfresco-js-api';
+import { DeletedNodeEntry, DeletedNodesPaging } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { NotificationService } from '../services/notification.service';
 import { TranslationService } from '../services/translation.service';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/zip';
@@ -52,9 +50,7 @@ export class NodeRestoreDirective {
     }
 
     constructor(private alfrescoApiService: AlfrescoApiService,
-                private translation: TranslationService,
-                private router: Router,
-                private notification: NotificationService) {
+                private translation: TranslationService) {
         this.restoreProcessStatus = this.processStatus();
     }
 
@@ -65,36 +61,35 @@ export class NodeRestoreDirective {
 
         const nodesWithPath = this.getNodesWithPath(selection);
 
-        if (selection.length && !nodesWithPath.length) {
+        if (selection.length && nodesWithPath.length) {
+
+            this.restoreNodesBatch(nodesWithPath)
+                .do((restoredNodes) => {
+                    const status = this.processStatus(restoredNodes);
+
+                    this.restoreProcessStatus.fail.push(...status.fail);
+                    this.restoreProcessStatus.success.push(...status.success);
+                })
+                .mergeMap(() => this.getDeletedNodes())
+                .subscribe(
+                    (deletedNodesList: any) => {
+                        const { entries: nodelist } = deletedNodesList.list;
+                        const { fail: restoreErrorNodes } = this.restoreProcessStatus;
+                        const selectedNodes = this.diff(restoreErrorNodes, selection, false);
+                        const remainingNodes = this.diff(selectedNodes, nodelist);
+
+                        if (!remainingNodes.length) {
+                            this.notification();
+                        } else {
+                            this.recover(remainingNodes);
+                        }
+                    }
+                );
+        } else {
             this.restoreProcessStatus.fail.push(...selection);
-            this.restoreNotification();
-            this.refresh();
+            this.notification();
             return;
         }
-
-        this.restoreNodesBatch(nodesWithPath)
-            .do((restoredNodes) => {
-                const status = this.processStatus(restoredNodes);
-
-                this.restoreProcessStatus.fail.push(...status.fail);
-                this.restoreProcessStatus.success.push(...status.success);
-            })
-            .mergeMap(() => this.getDeletedNodes())
-            .subscribe(
-                (deletedNodesList: any) => {
-                    const { entries: nodelist } = deletedNodesList.list;
-                    const { fail: restoreErrorNodes } = this.restoreProcessStatus;
-                    const selectedNodes = this.diff(restoreErrorNodes, selection, false);
-                    const remainingNodes = this.diff(selectedNodes, nodelist);
-
-                    if (!remainingNodes.length) {
-                        this.restoreNotification();
-                        this.refresh();
-                    } else {
-                        this.recover(remainingNodes);
-                    }
-                }
-            );
     }
 
     private restoreNodesBatch(batch: DeletedNodeEntry[]): Observable<DeletedNodeEntry[]> {
@@ -131,12 +126,6 @@ export class NodeRestoreDirective {
                     entry
                 });
             });
-    }
-
-    private navigateLocation(path: PathInfoEntity) {
-        const parent = path.elements[path.elements.length - 1];
-
-        this.router.navigate([this.location, parent.id]);
     }
 
     private diff(selection, list, fromList = true): any {
@@ -246,21 +235,19 @@ export class NodeRestoreDirective {
         }
     }
 
-    private restoreNotification(): void {
+    private notification(): void {
         const status = Object.assign({}, this.restoreProcessStatus);
 
         let message = this.getRestoreMessage();
+        this.reset();
 
         const action = (status.oneSucceeded && !status.someFailed) ? this.translation.instant('CORE.RESTORE_NODE.VIEW') : '';
 
-        this.notification.openSnackMessageAction(message, action)
-            .onAction()
-            .subscribe(() => this.navigateLocation(status.success[0].entry.path));
+        this.restore.emit({ message: message, action: action });
     }
 
-    private refresh(): void {
+    private reset(): void {
         this.restoreProcessStatus.reset();
         this.selection = [];
-        this.restore.emit();
     }
 }

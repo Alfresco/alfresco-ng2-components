@@ -601,7 +601,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.noPermission = false;
     }
 
-    private onPageLoaded(nodePaging: NodePaging) {
+    onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
             this.data.loadPage(nodePaging, this.pagination.getValue().merge);
             this.loading = false;

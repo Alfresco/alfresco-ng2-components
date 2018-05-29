@@ -65,6 +65,11 @@ describe('StartFormComponent', () => {
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of({ id: 1234 }));
     });
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
     it('should create instance of StartProcessInstanceComponent', () => {
         expect(fixture.componentInstance instanceof StartProcessInstanceComponent).toBe(true, 'should create StartProcessInstanceComponent');
     });
@@ -79,14 +84,16 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({ 'appId': change });
             });
 
-            afterEach(() => {
-                fixture.destroy();
-                TestBed.resetTestingModule();
-            });
-
             it('should enable start button when name and process filled out', async(() => {
-                component.selectedProcessDef = testProcessDefRepr;
+                spyOn(component, 'loadStartProcess').and.callThrough();
+
+                component.processDefinitionName = 'My Process 1';
+
+                let change = new SimpleChange(null, 123, true);
+                component.ngOnChanges({ 'appId': change });
+
                 fixture.detectChanges();
+
                 fixture.whenStable().then(() => {
                     let startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn.disabled).toBe(false);
@@ -434,18 +441,17 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should emit start event when start select a process and add a name', async(() => {
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+        it('should emit start event when start select a process and add a name', (done) => {
+            let disposableStart = component.start.subscribe(() => {
+                disposableStart.unsubscribe();
+                done();
+            });
+
             component.selectedProcessDef = testProcessDefRepr;
             component.name = 'my:Process';
             component.startProcess();
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                let startButton = fixture.nativeElement.querySelector('#button-start');
-                startButton.click();
-                expect(startSpy).toHaveBeenCalled();
-            });
-        }));
+        });
 
         it('should not emit start event when start the process without select a process and name', () => {
             component.name = null;
@@ -472,17 +478,17 @@ describe('StartFormComponent', () => {
             expect(startSpy).not.toHaveBeenCalled();
         });
 
-        it('should able to start the process when the required fields are filled up', async(() => {
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+        it('should able to start the process when the required fields are filled up', (done) => {
             component.name = 'my:process1';
             component.selectedProcessDef = testProcessDefRepr;
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                let startButton = fixture.nativeElement.querySelector('#button-start');
-                startButton.click();
-                expect(startSpy).toHaveBeenCalled();
+
+            let disposableStart = component.start.subscribe(() => {
+                disposableStart.unsubscribe();
+                done();
             });
-        }));
+
+            component.startProcess();
+        });
 
         it('should return true if startFrom defined', async(() => {
             component.selectedProcessDef = testProcessDefRepr;

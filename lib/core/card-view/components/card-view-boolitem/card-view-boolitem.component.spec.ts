@@ -64,7 +64,7 @@ describe('CardViewBoolItemComponent', () => {
             expect(value).not.toBeNull();
         });
 
-        it('should NOT render the label and value if the property is NOT editable and doesn\'t have a proper boolean value set' , () => {
+        it('should NOT render the label and value if the property is NOT editable and doesn\'t have a proper boolean value set', () => {
             component.editable = true;
             component.property.value = undefined;
             component.property.editable = false;
@@ -77,7 +77,7 @@ describe('CardViewBoolItemComponent', () => {
             expect(value).toBeNull();
         });
 
-        it('should render the label and value if the property is NOT editable but has a proper boolean value set' , () => {
+        it('should render the label and value if the property is NOT editable but has a proper boolean value set', () => {
             component.editable = true;
             component.property.value = false;
             component.property.editable = false;
@@ -179,7 +179,7 @@ describe('CardViewBoolItemComponent', () => {
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
 
-            component.changed(<MatCheckboxChange> {checked: true});
+            component.changed(<MatCheckboxChange> { checked: true });
 
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(component.property, true);
         });
@@ -187,7 +187,7 @@ describe('CardViewBoolItemComponent', () => {
         it('should update the property value after a changed', async(() => {
             component.property.value = true;
 
-            component.changed(<MatCheckboxChange> {checked: false});
+            component.changed(<MatCheckboxChange> { checked: false });
 
             fixture.whenStable().then(() => {
                 expect(component.property.value).toBe(false);
@@ -199,10 +199,11 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = false;
             fixture.detectChanges();
 
-            cardViewUpdateService.itemUpdated$.subscribe(
+            let disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
                 (updateNotification) => {
                     expect(updateNotification.target).toBe(component.property);
                     expect(updateNotification.changed).toEqual({ boolkey: true });
+                    disposableUpdate.unsubscribe();
                     done();
                 }
             );

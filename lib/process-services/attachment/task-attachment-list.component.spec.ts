@@ -32,6 +32,7 @@ describe('TaskAttachmentList', () => {
     let mockAttachment: any;
     let deleteContentSpy: jasmine.Spy;
     let getFileRawContentSpy: jasmine.Spy;
+    let disposablelSuccess: any;
 
     setupTestBed({
         imports: [ProcessTestingModule],
@@ -83,7 +84,7 @@ describe('TaskAttachmentList', () => {
             mockAttachment
         ));
 
-        deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({successCode: true}));
+        deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({ successCode: true }));
 
         let blobObj = new Blob();
         getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(blobObj));
@@ -94,6 +95,10 @@ describe('TaskAttachmentList', () => {
         overlayContainers.forEach((overlayContainer) => {
             overlayContainer.innerHTML = '';
         });
+
+        if (disposablelSuccess) {
+            disposablelSuccess.unsubscribe();
+        }
     });
 
     it('should load attachments when taskId specified', () => {
@@ -112,7 +117,7 @@ describe('TaskAttachmentList', () => {
 
     it('should emit a success event when the attachments are loaded', () => {
         let change = new SimpleChange(null, '123', true);
-        component.success.subscribe((attachments) => {
+        disposablelSuccess = component.success.subscribe((attachments) => {
             expect(attachments[0].name).toEqual(mockAttachment.data[0].name);
             expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
         });
@@ -307,12 +312,12 @@ describe('TaskAttachmentList', () => {
 
 @Component({
     template: `
-    <adf-task-attachment-list>
-        <adf-empty-list>
-            <div adf-empty-list-header class="adf-empty-list-header">Custom header</div>
-        </adf-empty-list>
-    </adf-task-attachment-list>
-       `
+        <adf-task-attachment-list>
+            <adf-empty-list>
+                <div adf-empty-list-header class="adf-empty-list-header">Custom header</div>
+            </adf-empty-list>
+        </adf-task-attachment-list>
+    `
 })
 class CustomEmptyTemplateComponent {
 }
@@ -323,7 +328,7 @@ describe('Custom CustomEmptyTemplateComponent', () => {
     setupTestBed({
         imports: [ProcessTestingModule],
         declarations: [CustomEmptyTemplateComponent],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {

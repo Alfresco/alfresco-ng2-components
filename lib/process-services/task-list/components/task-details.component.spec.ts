@@ -267,7 +267,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should show placeholder message if there is no next task', () => {
-            getTasksSpy.and.returnValue(Observable.of(noDataMock));
+            getTasksSpy.and.returnValue(Observable.of([]));
             component.onComplete();
             fixture.detectChanges();
             expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');

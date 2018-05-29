@@ -31,25 +31,25 @@ const testUser: UserProcessModel = new UserProcessModel({
     lastName: 'User',
     email: 'tu@domain.com'
 });
-const testDate = new Date();
+
 const processCommentOne: CommentModel = new CommentModel({
     id: 1,
     message: 'Test Comment',
-    created: testDate.toDateString(),
+    created: new Date(),
     createdBy: testUser
 });
 
 const processCommentTwo: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: testUser
 });
 
 const contentCommentUserPictureDefined: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: {
         enabled: true,
         firstName: 'some',
@@ -65,7 +65,7 @@ const contentCommentUserPictureDefined: CommentModel = new CommentModel({
 const processCommentUserPictureDefined: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: {
         id: '1',
         firstName: 'Test',
@@ -78,7 +78,7 @@ const processCommentUserPictureDefined: CommentModel = new CommentModel({
 const contentCommentUserNoPictureDefined: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: {
         enabled: true,
         firstName: 'some',
@@ -93,7 +93,7 @@ const contentCommentUserNoPictureDefined: CommentModel = new CommentModel({
 const processCommentUserNoPictureDefined: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
-    created: new Date().toDateString(),
+    created: new Date(),
     createdBy: {
         id: '1',
         firstName: 'Test',
@@ -133,13 +133,12 @@ describe('CommentListComponent', () => {
     });
 
     it('should emit row click event', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [Object.assign({}, processCommentOne)];
 
         commentList.clickRow.subscribe(selectedComment => {
             expect(selectedComment.id).toEqual(1);
             expect(selectedComment.message).toEqual('Test Comment');
             expect(selectedComment.createdBy).toEqual(testUser);
-            expect(selectedComment.created).toEqual(testDate.toDateString());
             expect(selectedComment.isSelected).toBeTruthy();
         });
 
@@ -152,8 +151,10 @@ describe('CommentListComponent', () => {
 
     it('should deselect the previous selected comment when a new one is clicked', async(() => {
         processCommentOne.isSelected = true;
-        commentList.selectedComment = processCommentOne;
-        commentList.comments = [processCommentOne, processCommentTwo];
+        let commentOne = Object.assign({}, processCommentOne);
+        let commentTwo = Object.assign({}, processCommentTwo);
+        commentList.selectedComment = commentOne;
+        commentList.comments = [commentOne, commentTwo];
 
         commentList.clickRow.subscribe(selectedComment => {
             fixture.detectChanges();
@@ -178,7 +179,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('should show comment message when input is given', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [Object.assign({}, processCommentOne)];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -190,7 +191,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('should show comment user when input is given', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [Object.assign({}, processCommentOne)];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -201,42 +202,35 @@ describe('CommentListComponent', () => {
         });
     }));
 
-    it('should show comment date time when input is given', async(() => {
-        commentList.comments = [processCommentOne];
-        fixture.detectChanges();
+    it('comment date time should start with few seconds ago when comment date is few seconds ago', async(() => {
+        let commenFewSecond = Object.assign({}, processCommentOne);
+        commenFewSecond.created = new Date();
 
-        fixture.whenStable().then(() => {
-            let elements = fixture.nativeElement.querySelectorAll('#comment-time');
-            expect(elements.length).toBe(1);
-            expect(elements[0].innerText).toBe(commentList.transformDate(testDate.toDateString()));
-            expect(fixture.nativeElement.querySelector('#comment-time:empty')).toBeNull();
-        });
-    }));
-
-    it('comment date time should start with Today when comment date is today', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [commenFewSecond];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
             element = fixture.nativeElement.querySelector('#comment-time');
-            expect(element.innerText).toContain('Today');
+            expect(element.innerText).toContain('a few seconds ago');
         });
     }));
 
     it('comment date time should start with Yesterday when comment date is yesterday', async(() => {
-        processCommentOne.created = new Date((Date.now() - 24 * 3600 * 1000));
-        commentList.comments = [processCommentOne];
+        let commentOld = Object.assign({}, processCommentOne);
+        commentOld.created = new Date((Date.now() - 24 * 3600 * 1000));
+        commentList.comments = [commentOld];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
             element = fixture.nativeElement.querySelector('#comment-time');
-            expect(element.innerText).toContain('Yesterday');
+            expect(element.innerText).toContain('a day ago');
         });
     }));
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', async(() => {
-        processCommentOne.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
-        commentList.comments = [processCommentOne];
+        let commentOld = Object.assign({}, processCommentOne);
+        commentOld.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
+        commentList.comments = [commentOld];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -247,7 +241,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('should show user icon when input is given', async(() => {
-        commentList.comments = [processCommentOne];
+        commentList.comments = [Object.assign({}, processCommentOne)];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {

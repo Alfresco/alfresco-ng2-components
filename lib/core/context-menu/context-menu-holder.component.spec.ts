@@ -101,31 +101,46 @@ describe('ContextMenuHolderComponent', () => {
     });
 
     describe('onMenuItemClick()', () => {
-        const menuItem = {
-            model: {
-                disabled: false
-            },
-            subject: {
-                next: (val) => val
-            }
-        };
-
-        const event = {
-            preventDefault: () => null,
-            stopImmediatePropagation: () => null
-        };
-
-        beforeEach(() => {
-            spyOn(menuItem.subject, 'next');
-        });
 
         it('should emit when link is not disabled', () => {
+            const menuItem = {
+                model: {
+                    disabled: false
+                },
+                subject: {
+                    next: (val) => val
+                }
+            };
+
+            spyOn(menuItem.subject, 'next');
+
+            const event = {
+                preventDefault: () => null,
+                stopImmediatePropagation: () => null
+            };
+
             component.onMenuItemClick(<any> event, menuItem);
 
             expect(menuItem.subject.next).toHaveBeenCalledWith(menuItem);
         });
 
         it('should not emit when link is disabled', () => {
+            const menuItem = {
+                model: {
+                    disabled: false
+                },
+                subject: {
+                    next: (val) => val
+                }
+            };
+
+            spyOn(menuItem.subject, 'next');
+
+            const event = {
+                preventDefault: () => null,
+                stopImmediatePropagation: () => null
+            };
+
             menuItem.model.disabled = true;
             component.onMenuItemClick(<any> event, menuItem);
 
