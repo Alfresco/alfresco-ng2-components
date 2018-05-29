@@ -162,6 +162,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private subscriptions: Subscription[] = [];
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
+    private dataRowChanged: Subscription;
 
     constructor(private elementRef: ElementRef,
                 differs: IterableDiffers,
@@ -190,6 +191,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 this.initTable();
             } else {
                 this.data = changes['data'].currentValue;
+                this.setupData(this.data);
             }
             return;
         }
@@ -277,15 +279,34 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     private initTable() {
         this.data = new ObjectDataTableAdapter(this.rows, this.schema);
+        this.setupData(this.data);
         this.rowMenuCache = {};
+    }
+
+    private setupData(adapter: DataTableAdapter) {
+        if (this.dataRowChanged) {
+            this.dataRowChanged.unsubscribe();
+            this.dataRowChanged = null;
+        }
+
+        this.resetSelection();
+
+        if (adapter && adapter.rowsChanged) {
+            this.dataRowChanged = adapter.rowsChanged.subscribe(() => {
+                this.resetSelection();
+            });
+        }
     }
 
     isTableEmpty() {
         return this.data === undefined || this.data === null;
     }
 
-    private setTableRows(rows) {
+    private setTableRows(rows: any[]) {
         if (this.data) {
+            if (rows && rows.length > 0) {
+                this.resetSelection();
+            }
             this.data.setRows(this.convertToRowsData(rows));
         }
     }
@@ -566,8 +587,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     getSortableColumns() {
-        return this.data.getColumns().filter((currentColum) => {
-            return currentColum.sortable === true;
+        return this.data.getColumns().filter(column => {
+            return column.sortable === true;
         });
     }
 

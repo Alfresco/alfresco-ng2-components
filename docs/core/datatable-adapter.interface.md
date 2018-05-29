@@ -14,6 +14,12 @@ and [Tasklist](../process-services/task-list.component.md) components.
 | ---- | ---- | ----------- |
 | selectedRow | DataRow | The data for the currently selected row. |
 
+## Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| rowsChanged? | `Subject<Array<DataRow>>` | Raised when data adapter gets new rows. |
+
 ## Methods
 
 [`getRows(): Array<DataRow>;`](../../lib/core/datatable/data/data-row.model.ts)<br/>
@@ -27,11 +33,11 @@ Get/set an array of column specifications.
 `getValue(row: DataRow, col: DataColumn): any;`<br/>
 Get the data value from a specific table cell.
 
-`getSorting(): DataSorting;`
-`setSorting(sorting: DataSorting): void;`
+`getSorting(): DataSorting;`<br/>
+`setSorting(sorting: DataSorting): void;`<br/>
 Get/set the sorting key and direction (ascending or descending).
 
-`sort(key?: string, direction?: string): void;`
+`sort(key?: string, direction?: string): void;`<br/>
 Sort the table with a specified key and direction (ascending or descending).
 
 ## Details
