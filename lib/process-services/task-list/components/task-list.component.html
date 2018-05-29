@@ -1,6 +1,5 @@
 <div *ngIf="!requestNode">{{ 'ADF_TASK_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
-<div *ngIf="requestNode">
-    <div>
+<ng-container *ngIf="requestNode">
         <adf-datatable
             [data]="data"
             [sorting]="dataSort"
@@ -31,5 +30,4 @@
                 </ng-template>
             </no-content-template>
         </adf-datatable>
-    </div>
-</div>
+</ng-container>
