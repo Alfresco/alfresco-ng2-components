@@ -663,13 +663,37 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeTruthy();
         });
 
-        it('should take into account that max value is in UTC and use appropriate format string', () => {
+        it('should take into account that max value is in UTC and NOT fail validating value checking the time', () => {
             const maxValueFromActivitiInput = '31-3-2018 12:00 AM';
             const maxValueSavedInForm = moment(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
 
-            const maxValueOnValidator = moment(maxValueSavedInForm, validator.MAX_DATETIME_FORMAT);
+            const localValidValue = '2018-3-30 11:59 PM';
 
-            expect(maxValueOnValidator.format('DD-M-YYYY hh:mm A')).toBe(maxValueFromActivitiInput);
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: localValidValue,
+                maxValue: maxValueSavedInForm
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should take into account that max value is in UTC and fail validating value checking the time', () => {
+            const maxValueFromActivitiInput = '31-3-2018 12:00 AM';
+            const maxValueSavedInForm = moment(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
+
+            let localInvalidValue = '2018-3-31 12:01 AM';
+
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: localInvalidValue,
+                maxValue: maxValueSavedInForm
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBeFalsy();
+            expect(field.validationSummary).not.toBeNull();
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
         });
 
         it('should succeed validating value checking the time', () => {
@@ -766,13 +790,37 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeTruthy();
         });
 
-        it('should take into account that min value is in UTC and use appropriate format string', () => {
+        it('should take into account that min value is in UTC and NOT fail validating value checking the time', () => {
             const minValueFromActivitiInput = '02-3-2018 06:00 AM';
             const minValueSavedInForm = moment(minValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
 
-            const minValueOnValidator = moment(minValueSavedInForm, validator.MIN_DATETIME_FORMAT);
+            const localValidValue = '2018-3-02 06:01 AM';
 
-            expect(minValueOnValidator.format('DD-M-YYYY hh:mm A')).toBe(minValueFromActivitiInput);
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: localValidValue,
+                minValue: minValueSavedInForm
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should take into account that min value is in UTC and fail validating value checking the time', () => {
+            const minValueFromActivitiInput = '02-3-2018 06:00 AM';
+            const minValueSavedInForm = moment(minValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
+
+            let localInvalidValue = '2018-3-02 05:59 AM';
+
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: localInvalidValue,
+                minValue: minValueSavedInForm
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBeFalsy();
+            expect(field.validationSummary).not.toBeNull();
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
         });
 
         it('should succeed validating value by time', () => {
