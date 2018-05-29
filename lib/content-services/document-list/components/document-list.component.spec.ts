@@ -71,6 +71,8 @@ describe('DocumentList', () => {
         apiService = TestBed.get(AlfrescoApiService);
         customResourcesService = TestBed.get(CustomResourcesService);
 
+        documentList.ngOnInit();
+
         spyGetSites = spyOn(apiService.sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
         spyFavorite = spyOn(apiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({list: []}));
     });
@@ -80,9 +82,6 @@ describe('DocumentList', () => {
     });
 
     it('should update schema if columns change', fakeAsync(() => {
-
-        documentList.ngOnInit();
-
         documentList.columnList = new DataColumnListComponent();
         documentList.columnList.columns = new QueryList<DataColumnComponent>();
 
@@ -733,6 +732,7 @@ describe('DocumentList', () => {
     it('should display folder content from loadFolder on reload if folderNode defined', () => {
         documentList.folderNode = new NodeMinimal();
 
+        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Observable.of(''));
         spyOn(documentList, 'loadFolder').and.callThrough();
         documentList.reload();
         expect(documentList.loadFolder).toHaveBeenCalled();
@@ -914,8 +914,7 @@ describe('DocumentList', () => {
     it('should emit node-dblclick DOM event', (done) => {
         let node = new NodeMinimalEntry();
 
-        const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
-        htmlElement.addEventListener('node-dblclick', (e: CustomEvent) => {
+        document.addEventListener('node-dblclick', (e: CustomEvent) => {
             done();
         });
 
