@@ -61,13 +61,15 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         switchMap((searchTerm) => {
             let userResponse = Observable.empty();
 
-            userResponse = this.formService.getWorkflowUsers(searchTerm, this.groupId)
-                .pipe(
-                    catchError(err => {
-                        this.errorMsg = err.message;
-                        return userResponse;
-                    })
-                );
+            if (typeof searchTerm === 'string') {
+                userResponse = this.formService.getWorkflowUsers(searchTerm, this.groupId)
+                    .pipe(
+                        catchError(err => {
+                            this.errorMsg = err.message;
+                            return userResponse;
+                        })
+                    );
+            }
 
             return userResponse;
         }),
@@ -112,10 +114,9 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     isValidUser(users: UserProcessModel[], name: string) {
-        let resultUser: UserProcessModel = users.find((user) => {
+        return users.find((user) => {
             return this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
         });
-        return resultUser;
     }
 
     getDisplayName(model: UserProcessModel) {
