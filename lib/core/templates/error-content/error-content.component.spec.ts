@@ -81,16 +81,6 @@ describe('ErrorContentComponent', () => {
         expect(errorContentElement).toBeDefined();
     }));
 
-    it('should render secondary button', async(() => {
-        errorContentComponent.secondaryButtonUrl = 'mocked url';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const errorContentElement = element.querySelector('.adf-error-content-description-link');
-            expect(errorContentElement).not.toBeNull();
-            expect(errorContentElement).toBeDefined();
-        });
-    }));
-
     it('should hide secondary button if this one has no value', async(() => {
         spyOn(translateService, 'instant').and.callFake((inputString) => {
             return '';
@@ -99,6 +89,29 @@ describe('ErrorContentComponent', () => {
         fixture.whenStable().then(() => {
             const errorContentElement = element.querySelector('.adf-error-content-description-link');
             expect(errorContentElement).toBeNull();
+        });
+    }));
+
+    it('should render secondary button with its value from the translate file', async(() => {
+        spyOn(translateService, 'instant').and.callFake((inputString) => {
+            return 'Secondary Button';
+        } );
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(errorContentComponent.secondaryButtonText).toBe('Secondary Button');
+            const errorContentElement = element.querySelector('.adf-error-content-description-link');
+            expect(errorContentElement).not.toBeNull();
+            expect(errorContentElement).toBeDefined();
+        });
+    }));
+
+    it('should render return button with its value from the translate file', async(() => {
+        spyOn(translateService, 'instant').and.callFake((inputString) => {
+            return 'Home';
+        } );
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(errorContentComponent.returnButtonUrl).toBe('Home');
         });
     }));
 
