@@ -20,9 +20,7 @@ import {
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Subscription, Observable, Observer } from 'rxjs/Rx';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
@@ -162,7 +160,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private subscriptions: Subscription[] = [];
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
-    private dataRowChanged: Subscription;
+    private dataRowsChanged: Subscription;
 
     constructor(private elementRef: ElementRef,
                 differs: IterableDiffers,
@@ -201,6 +199,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 this.initTable();
             } else {
                 this.setTableRows(changes['rows'].currentValue);
+                this.setupData(this.data);
             }
             return;
         }
@@ -284,15 +283,15 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     private setupData(adapter: DataTableAdapter) {
-        if (this.dataRowChanged) {
-            this.dataRowChanged.unsubscribe();
-            this.dataRowChanged = null;
+        if (this.dataRowsChanged) {
+            this.dataRowsChanged.unsubscribe();
+            this.dataRowsChanged = null;
         }
 
         this.resetSelection();
 
         if (adapter && adapter.rowsChanged) {
-            this.dataRowChanged = adapter.rowsChanged.subscribe(() => {
+            this.dataRowsChanged = adapter.rowsChanged.subscribe(() => {
                 this.resetSelection();
             });
         }
@@ -624,7 +623,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     ngOnDestroy() {
         this.unsubscribeClickStream();
+
         this.subscriptions.forEach(s => s.unsubscribe());
         this.subscriptions = [];
+
+        if (this.dataRowsChanged) {
+            this.dataRowsChanged.unsubscribe();
+            this.dataRowsChanged = null;
+        }
     }
 }

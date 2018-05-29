@@ -31,7 +31,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     private _columns: DataColumn[];
 
     selectedRow: DataRow;
-    rowsChanged = new Subject<Array<DataRow>>();
+    rowsChanged: Subject<Array<DataRow>>;
 
     static generateSchema(data: any[]) {
         let schema = [];
@@ -77,6 +77,8 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                 this.sort(sortable[0].key, 'asc');
             }
         }
+
+        this.rowsChanged = new Subject<Array<DataRow>>();
     }
 
     getRows(): Array<DataRow> {
