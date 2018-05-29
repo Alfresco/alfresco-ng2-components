@@ -31,7 +31,7 @@
             [maxResults]="liveSearchMaxResults"
             [queryBody]="customQueryBody">
     <ng-template let-data>
-        <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list">
+        <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list" class="adf-search-autocomplete-list">
             <mat-list-item
                 *ngFor="let item of data?.list?.entries; let idx = index"
                 id="result_option_{{idx}}"

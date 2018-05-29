@@ -54,6 +54,10 @@
             }
         }
 
+        &-search-autocomplete-list {
+            z-index: 10;
+        }
+
         &-search-autocomplete-item {
 
             &:hover {
