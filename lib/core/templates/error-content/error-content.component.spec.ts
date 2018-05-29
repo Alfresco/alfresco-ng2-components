@@ -22,7 +22,7 @@ import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
 import { setupTestBed } from '../../testing/setupTestBed';
 
-fdescribe('ErrorContentComponent', () => {
+describe('ErrorContentComponent', () => {
 
     let fixture;
     let errorContentComponent: ErrorContentComponent;
