@@ -30,7 +30,6 @@ export class PdfThumbComponent implements OnInit {
 
     image$: Promise<string>;
 
-
     constructor(private sanitizer: DomSanitizer) {}
 
     ngOnInit() {
