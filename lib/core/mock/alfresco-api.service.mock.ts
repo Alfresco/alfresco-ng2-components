@@ -29,10 +29,23 @@ export class AlfrescoApiServiceMock extends AlfrescoApiService {
     constructor(protected appConfig: AppConfigService,
                 protected storage: StorageService) {
         super(appConfig, storage);
-        this.initAlfrescoApi();
+        if (!this.alfrescoApi) {
+            this.initAlfrescoApi();
+        }
+    }
+
+    async load() {
+        await this.appConfig.load().then(() => {
+            if (!this.alfrescoApi) {
+                this.initAlfrescoApi();
+            }
+        });
     }
 
     async reset() {
+        if (this.alfrescoApi) {
+            this.alfrescoApi = null;
+        }
         this.initAlfrescoApi();
     }
 

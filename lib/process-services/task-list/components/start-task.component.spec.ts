@@ -21,7 +21,6 @@ import { Observable } from 'rxjs/Observable';
 import { startTaskMock } from '../../mock';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskListService } from '../services/tasklist.service';
-import {  } from './../assets/start-task.mock';
 import { StartTaskComponent } from './start-task.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 
@@ -48,23 +47,6 @@ describe('StartTaskComponent', () => {
     setupTestBed({
         imports: [ProcessTestingModule]
     });
-
-    // beforeEach(async(() => {
-    //     TestBed.configureTestingModule({
-    //         declarations: [
-    //             StartTaskComponent,
-    //             PeopleSearchFieldComponent,
-    //             PeopleListComponent,
-    //             PeopleSelectorComponent
-    //         ],
-    //         providers: [
-    //             TaskListService,
-    //             { provide: TranslationService, useClass: TranslationMock }
-    //         ]
-    //     }).compileComponents().then(() => {
-
-    //     });
-    // }));
 
     beforeEach(async(() => {
         fixture = TestBed.createComponent(StartTaskComponent);

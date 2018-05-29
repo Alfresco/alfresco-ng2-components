@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange, NO_ERRORS_SCHEMA, QueryList } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';

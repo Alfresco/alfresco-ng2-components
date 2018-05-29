@@ -61,6 +61,7 @@ describe('AuthGuardService', () => {
 
     it('should set redirect url', async(() => {
         state.url = 'some-url';
+        appConfigService.config.loginRoute = 'login';
 
         spyOn(router, 'navigate');
         spyOn(authService, 'setRedirect');
@@ -75,6 +76,7 @@ describe('AuthGuardService', () => {
 
     it('should set redirect url with query params', async(() => {
         state.url = 'some-url;q=query';
+        appConfigService.config.loginRoute = 'login';
 
         spyOn(router, 'navigate');
         spyOn(authService, 'setRedirect');

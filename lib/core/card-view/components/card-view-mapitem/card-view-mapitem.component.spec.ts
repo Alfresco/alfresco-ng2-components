@@ -118,11 +118,12 @@ describe('CardViewMapItemComponent', () => {
         fixture.detectChanges();
         let value: any = element.querySelector('.adf-mapitem-clickable-value');
 
-        service.itemClicked$.subscribe((response) => {
+        let disposableUpdate = service.itemClicked$.subscribe((response) => {
             expect(response.target).not.toBeNull();
             expect(response.target.type).toEqual('map');
             expect(response.target.clickable).toBeTruthy();
             expect(response.target.displayValue).toEqual('fakeProcessName');
+            disposableUpdate.unsubscribe();
             done();
         });
 

@@ -41,7 +41,8 @@ export class CardViewTextItemComponent implements OnChanges {
     editedValue: string;
     errorMessages: string[];
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {}
+    constructor(private cardViewUpdateService: CardViewUpdateService) {
+    }
 
     ngOnChanges(): void {
         this.editedValue = this.property.value;
@@ -83,7 +84,7 @@ export class CardViewTextItemComponent implements OnChanges {
 
     update(): void {
         if (this.property.isValid(this.editedValue)) {
-            this.cardViewUpdateService.update(this.property, this.editedValue );
+            this.cardViewUpdateService.update(this.property, this.editedValue);
             this.property.value = this.editedValue;
             this.setEditMode(false);
         } else {

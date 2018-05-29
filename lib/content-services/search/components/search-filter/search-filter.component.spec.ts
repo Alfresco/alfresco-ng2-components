@@ -293,7 +293,7 @@ describe('SearchSettingsComponent', () => {
         const bucket1 = { label: 'b1', $field: 'f1', count: 1, filterQuery: 'q1' };
         const bucket2 = { label: 'b2', $field: 'f2', count: 1, filterQuery: 'q2' };
 
-        component.selectedBuckets = [ bucket2 ];
+        component.selectedBuckets = [bucket2];
         component.responseFacetFields = <any> [
             { label: 'f2', buckets: [] }
         ];
@@ -302,8 +302,8 @@ describe('SearchSettingsComponent', () => {
             list: {
                 context: {
                     facetsFields: [
-                        { label: 'f1', buckets: [ bucket1 ] },
-                        { label: 'f2', buckets: [ bucket2 ] }
+                        { label: 'f1', buckets: [bucket1] },
+                        { label: 'f2', buckets: [bucket2] }
                     ]
                 }
             }

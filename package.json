@@ -33,6 +33,11 @@
     "webpack": "node ./node_modules/webpack/bin/webpack.js",
     "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js"
   },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run lint && npm run lint-lib"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
