@@ -33,23 +33,20 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     virtualHeight: number = 0;
     translateY: number = 0;
     renderItems = [];
-    width:number = 91;
+    width: number = 91;
 
     private items = [];
     private margin: number = 15;
     private currentHeight: number = 0;
     private itemHeight: number = 0;
 
-
     @ContentChild(TemplateRef)
     template: any;
-
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         this.calculateItems();
     }
-
 
     constructor(private element: ElementRef) {
         this.calculateItems = this.calculateItems.bind(this);
@@ -63,7 +60,6 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.setHeight(this.pdfViewer.currentPageNumber);
         this.items = this.getPages();
         this.calculateItems();
-        
     }
 
     ngAfterViewInit() {
@@ -105,22 +101,21 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     getPages() {
         return this.pdfViewer._pages.map((page) => ({
             id: page.id,
-            getWidth: () => { return this.width },
-            getHeight: () => { return this.currentHeight },
+            getWidth: () => { return this.width; },
+            getHeight: () => { return this.currentHeight; },
             getPage: () => this.pdfViewer.pdfDocument.getPage(page.id)
         }));
     }
 
-    private setHeight(id):number {
+    private setHeight(id): number {
         const height = this.pdfViewer.pdfDocument.getPage(id).then((page) => this.calculateHeight(page));
         return height;
     }
 
     private calculateHeight(page) {
-        const viewport =page.getViewport(1);
+        const viewport = page.getViewport(1);
         const pageRatio = viewport.width / viewport.height;
         const height = Math.floor(this.width / pageRatio);
-        
         this.currentHeight = height;
         this.itemHeight = height + this.margin;
     }
