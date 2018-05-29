@@ -9,22 +9,23 @@
             width: 100%;
         }
 
+        &-people-widget-row {
+            display: flex;
+            align-items: center;
+        }
+
         &-people-widget-pic {
             background: mat-color($primary);
-            display: inline-block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 40px;
             height: 40px;
             border-radius: 100px;
             color: mat-color($foreground, text);
-            text-align: center;
             font-weight: bolder;
             font-size: 18px;
             text-transform: uppercase;
-            vertical-align: middle;
-        }
-
-        &-people-widget-row {
-            padding-bottom: 10px;
         }
 
         &-people-widget-image {
