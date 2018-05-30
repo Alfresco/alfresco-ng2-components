@@ -20,9 +20,7 @@ import {
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Subscription, Observable, Observer } from 'rxjs/Rx';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
@@ -168,6 +166,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private subscriptions: Subscription[] = [];
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
+    private dataRowsChanged: Subscription;
 
     constructor(private elementRef: ElementRef,
                 differs: IterableDiffers,
@@ -196,6 +195,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 this.initTable();
             } else {
                 this.data = changes['data'].currentValue;
+                this.setupData(this.data);
             }
             return;
         }
@@ -205,6 +205,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 this.initTable();
             } else {
                 this.setTableRows(changes['rows'].currentValue);
+                this.setupData(this.data);
             }
             return;
         }
@@ -293,15 +294,34 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     private initTable() {
         this.data = new ObjectDataTableAdapter(this.rows, this.schema);
+        this.setupData(this.data);
         this.rowMenuCache = {};
+    }
+
+    private setupData(adapter: DataTableAdapter) {
+        if (this.dataRowsChanged) {
+            this.dataRowsChanged.unsubscribe();
+            this.dataRowsChanged = null;
+        }
+
+        this.resetSelection();
+
+        if (adapter && adapter.rowsChanged) {
+            this.dataRowsChanged = adapter.rowsChanged.subscribe(() => {
+                this.resetSelection();
+            });
+        }
     }
 
     isTableEmpty() {
         return this.data === undefined || this.data === null;
     }
 
-    private setTableRows(rows) {
+    private setTableRows(rows: any[]) {
         if (this.data) {
+            if (rows && rows.length > 0) {
+                this.resetSelection();
+            }
             this.data.setRows(this.convertToRowsData(rows));
         }
     }
@@ -560,7 +580,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
-    private selectRow(row: DataRow, value: boolean) {
+    selectRow(row: DataRow, value: boolean) {
         if (row) {
             row.isSelected = value;
             const idx = this.selection.indexOf(row);
@@ -588,8 +608,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     getSortableColumns() {
-        return this.data.getColumns().filter((currentColum) => {
-            return currentColum.sortable === true;
+        return this.data.getColumns().filter(column => {
+            return column.sortable === true;
         });
     }
 
@@ -625,7 +645,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     ngOnDestroy() {
         this.unsubscribeClickStream();
+
         this.subscriptions.forEach(s => s.unsubscribe());
         this.subscriptions = [];
+
+        if (this.dataRowsChanged) {
+            this.dataRowsChanged.unsubscribe();
+            this.dataRowsChanged = null;
+        }
     }
 }

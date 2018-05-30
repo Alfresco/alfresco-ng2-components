@@ -21,6 +21,7 @@ import { ObjectDataRow } from './object-datarow.model';
 import { ObjectDataColumn } from './object-datacolumn.model';
 import { DataSorting } from './data-sorting.model';
 import { DataTableAdapter } from './datatable-adapter';
+import { Subject } from 'rxjs/Subject';
 
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
@@ -30,6 +31,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     private _columns: DataColumn[];
 
     selectedRow: DataRow;
+    rowsChanged: Subject<Array<DataRow>>;
 
     static generateSchema(data: any[]) {
         let schema = [];
@@ -75,6 +77,8 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                 this.sort(sortable[0].key, 'asc');
             }
         }
+
+        this.rowsChanged = new Subject<Array<DataRow>>();
     }
 
     getRows(): Array<DataRow> {
@@ -84,6 +88,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     setRows(rows: Array<DataRow>) {
         this._rows = rows || [];
         this.sort();
+        this.rowsChanged.next(this._rows);
     }
 
     getColumns(): Array<DataColumn> {

@@ -1,30 +1,34 @@
-<div class="p-10">
-    <adf-datatable
-        [data]="data"
-        [selectionMode]="selectionMode"
-        [multiselect]="multiselect"
-        [actions]="true"
-        rowStyleClass="custom-row-style"
-        (showRowActionsMenu)="onShowRowActionsMenu($event)"
-        (executeRowAction)="onExecuteRowAction($event)"
-        (row-click)="onRowClick($event)"
-        (row-dblclick)="onRowDblClick($event)">
-        <!-- HTML column definition demo -->
-        <!--
-        <data-columns>
-            <data-column type="image" key="icon" [sortable]="false"></data-column>
-            <data-column key="id" title="Id"></data-column>
-            <data-column key="createdOn" title="Created"></data-column>
-            <data-column key="name" title="Name" class="full-width name-column"></data-column>
-            <data-column key="createdBy.name" title="Created By"></data-column>
-        </data-columns>
-        -->
-    </adf-datatable>
+<adf-datatable
+    #dataTable
+    [data]="data"
+    [selectionMode]="selectionMode"
+    [multiselect]="multiselect"
+    [actions]="true"
+    rowStyleClass="custom-row-style"
+    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+    (executeRowAction)="onExecuteRowAction($event)"
+    (row-click)="onRowClick($event)"
+    (row-dblclick)="onRowDblClick($event)">
+    <!-- HTML column definition demo -->
+    <!--
+    <data-columns>
+        <data-column type="image" key="icon" [sortable]="false"></data-column>
+        <data-column key="id" title="Id"></data-column>
+        <data-column key="createdOn" title="Created"></data-column>
+        <data-column key="name" title="Name" class="full-width name-column"></data-column>
+        <data-column key="createdBy.name" title="Created By"></data-column>
+    </data-columns>
+    -->
+</adf-datatable>
+
+<div>
+    Selected items: {{ dataTable.selection?.length }}
 </div>
-<div class="p-10" data-automation-id="multiselect">
+
+<div data-automation-id="multiselect">
     <mat-checkbox [(ngModel)]="multiselect">{{ 'DATATABLE.MULTISELECT'| translate }}</mat-checkbox>
 </div>
-<div class="p-10">
+<div>
     <p>{{ 'DATATABLE.MULTISELECT_DESCRIPTION'| translate }}</p>
     <mat-form-field>
         <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
@@ -34,7 +38,7 @@
         </mat-select>
     </mat-form-field>
 </div>
-<div class="p-10">
+<div>
     <button mat-raised-button (click)="reset()">{{ 'DATATABLE.RESET_DEFAULT'| translate }}</button>
     <button mat-raised-button (click)="addRow()">{{ 'DATATABLE.ADD_ROW'| translate }}</button>
     <button mat-raised-button (click)="replaceRows()">{{ 'DATATABLE.REPLACE_ROWS'| translate }}</button>

@@ -22,8 +22,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'app-datatable',
-    templateUrl: './datatable.component.html',
-    styleUrls: ['./datatable.component.scss']
+    templateUrl: './datatable.component.html'
 })
 export class DataTableComponent {
 
@@ -41,8 +40,8 @@ export class DataTableComponent {
 
     private _imageUrl = 'http://placehold.it/140x100';
     private _createdBy: any = {
-        name: 'Denys Vuika',
-        email: 'denys.vuika@alfresco.com'
+        name: 'Administrator',
+        email: 'admin@alfresco.com'
     };
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
