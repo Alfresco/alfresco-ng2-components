@@ -31,7 +31,7 @@ import {
     PaginationComponent, FormValues, DisplayMode, UserPreferenceValues, InfinitePaginationComponent
 } from '@alfresco/adf-core';
 
-import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
+import { DocumentListComponent, PermissionStyleModel, UploadFilesEvent } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
@@ -512,5 +512,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             return true;
         }
         return false;
+    }
+
+    onBeginUpload(event: UploadFilesEvent) {
+        console.log(event);
     }
 }

@@ -39,7 +39,8 @@
                               [rootFolderId]="getDocumentListCurrentFolderId()"
                               [versioning]="versioning"
                               [adf-node-permission]="'create'"
-                              [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []">
+                              [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
+                              (beginUpload)="onBeginUpload($event)">
             <div *ngIf="errorMessage" class="error-message">
                 <button (click)="resetError()" mat-icon-button>
                     <mat-icon>highlight_off</mat-icon>
