@@ -309,7 +309,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFolderChange($event) {
-        this.router.navigate(['/files', $event.value.id]);
+        this.router.navigate(['/files', $event.value.id, 'display', this.displayMode]);
     }
 
     handlePermissionError(event: any) {
@@ -492,18 +492,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     toogleGalleryView(): void {
+        this.displayMode = this.displayMode === DisplayMode.List ? DisplayMode.Gallery : DisplayMode.List;
         const url = this
             .router
             .createUrlTree(['/files', this.currentFolderId, 'display', this.displayMode])
             .toString();
 
-        if (this.displayMode === DisplayMode.List) {
-            this.displayMode = DisplayMode.Gallery;
-            this.location.go(url);
-        } else {
-            this.displayMode = DisplayMode.List;
-            this.location.go(url);
-        }
+        this.location.go(url);
     }
 
     onInfiniteScrolling(): void {
