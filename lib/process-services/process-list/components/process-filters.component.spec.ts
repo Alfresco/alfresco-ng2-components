@@ -31,27 +31,23 @@ describe('ProcessFiltersComponent', () => {
     let mockErrorFilterPromise;
 
     beforeEach(() => {
-        fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
-            resolve([
-                new FilterProcessRepresentationModel({
-                    name: 'FakeInvolvedTasks',
-                    filter: { state: 'open', assignment: 'fake-involved' }
-                }),
-                new FilterProcessRepresentationModel({
-                    name: 'FakeMyTasks',
-                    filter: { state: 'open', assignment: 'fake-assignee' }
-                }),
-                new FilterProcessRepresentationModel({
-                    name: 'Running',
-                    filter: { state: 'open', assignment: 'fake-running' }
-                })
-            ]);
-        });
+        fakeGlobalFilterPromise = Promise.resolve([
+            new FilterProcessRepresentationModel({
+                name: 'FakeInvolvedTasks',
+                filter: { state: 'open', assignment: 'fake-involved' }
+            }),
+            new FilterProcessRepresentationModel({
+                name: 'FakeMyTasks',
+                filter: { state: 'open', assignment: 'fake-assignee' }
+            }),
+            new FilterProcessRepresentationModel({
+                name: 'Running',
+                filter: { state: 'open', assignment: 'fake-running' }
+            })
+        ]);
 
-        mockErrorFilterPromise = new Promise(function (resolve, reject) {
-            reject({
-                error: 'wrong request'
-            });
+        mockErrorFilterPromise = Promise.reject({
+            error: 'wrong request'
         });
 
         processFilterService = new ProcessFilterService(null);
@@ -96,12 +92,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should return the filter task list, filtered By Name', (done) => {
-
-        let fakeDeployedApplicationsPromise = new Promise(function (resolve, reject) {
-            resolve({  id: 1 });
-        });
-
-        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
+        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(Promise.resolve({ id: 1 })));
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test', true);

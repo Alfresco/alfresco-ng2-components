@@ -199,6 +199,7 @@
                 [sorting]="sorting"
                 [sortingMode]="sortingMode"
                 [showHeader]="showHeader"
+                [thumbnails]="thumbnails"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (ready)="emitReadyEvent($event)"
@@ -473,6 +474,12 @@
 
         <section>
             <mat-slide-toggle [color]="'primary'" [(ngModel)]="maxSizeShow">{{'DOCUMENT_LIST.MAX_SIZE' |
+                translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle [color]="'primary'" (click)="toggleThumbnails()" >{{'DOCUMENT_LIST.THUMBNAILS' |
                 translate}}
             </mat-slide-toggle>
         </section>

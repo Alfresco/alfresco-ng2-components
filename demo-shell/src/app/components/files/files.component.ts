@@ -178,6 +178,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     supportedPages: number[];
     currentSiteid = '';
     warnOnMultipleUploads = false;
+    thumbnails = false;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -212,6 +213,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.multipleFileUpload = false;
         this.folderUpload = !this.folderUpload;
         return this.folderUpload;
+    }
+
+    toggleThumbnails() {
+        this.thumbnails = !this.thumbnails;
+        this.documentList.reload();
     }
 
     ngOnInit() {

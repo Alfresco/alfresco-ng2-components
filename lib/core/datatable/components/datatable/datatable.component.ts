@@ -27,7 +27,6 @@ import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
-import { ThumbnailService } from '../../../services/thumbnail.service';
 
 import { ObjectDataRow } from '../../data/object-datarow.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
@@ -175,8 +174,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private dataRowsChanged: Subscription;
 
     constructor(private elementRef: ElementRef,
-                differs: IterableDiffers,
-                private thumbnailService?: ThumbnailService) {
+                differs: IterableDiffers) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
@@ -511,15 +509,14 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         this.emitRowSelectionEvent(domEventName, row);
     }
 
-    onImageLoadingError(event: Event, mimeType?: string) {
-
+    onImageLoadingError(event: Event, row: DataRow) {
         if (event) {
             let element = <any> event.target;
 
             if (this.fallbackThumbnail) {
                 element.src = this.fallbackThumbnail;
             } else {
-                element.src = this.thumbnailService.getMimeTypeIcon(mimeType);
+                element.src = row.imageErrorResolver(event);
             }
         }
     }
