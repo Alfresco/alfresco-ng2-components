@@ -364,6 +364,14 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
+    public getSchemaFromHtml(): any {
+        let schema = [];
+        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
+        }
+        return schema;
+    }
+
     onRowClick(row: DataRow, e: MouseEvent) {
         if (e) {
             e.preventDefault();

@@ -103,6 +103,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     multiselect: boolean = false;
 
+    /* Toggles default selection of the first row */
+    @Input()
+    selectFirstRow: boolean = true;
+
     /** Emitted when a task in the list is clicked */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -214,6 +218,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.loadTasksByState().subscribe(
             (tasks) => {
                 this.rows = this.optimizeNames(tasks.data);
+                this.selectTask(this.landingTaskId);
                 this.success.emit(tasks);
                 this.isLoading = false;
                 this.pagination.next({
@@ -247,10 +252,13 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
                 if (!dataRow) {
                     dataRow = this.rows[0];
                 }
-                dataRow['isSelected'] = true;
-                this.rows[0] = dataRow;
-                this.currentInstanceId = dataRow['id'];
+            } else {
+                dataRow = this.rows[0];
             }
+            this.rows[0] = dataRow;
+            this.currentInstanceId = dataRow['id'];
+        } else {
+            this.currentInstanceId = null;
         }
     }
 
@@ -313,7 +321,9 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      */
     private optimizeNames(instances: any[]): any[] {
         instances = instances.map(t => {
-            t.name = t.name ? t.name : 'No name';
+            if (!t.name) {
+                t.name = 'No name';
+            }
             return t;
         });
         return instances;

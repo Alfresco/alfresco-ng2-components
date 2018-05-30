@@ -2,10 +2,11 @@
 <ng-container *ngIf="requestNode">
         <adf-datatable
             [data]="data"
-            [sorting]="dataSort"
             [rows]="rows"
             [columns]="columns"
+            [sorting]="dataSort"
             [loading]="isLoading"
+            [selectFirstRow]="selectFirstRow"
             [multiselect]="multiselect"
             [selectionMode]="selectionMode"
             (row-select)="onRowSelect($event)"
