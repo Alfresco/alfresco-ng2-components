@@ -227,7 +227,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                     this.currentFolderId = params['id'];
                 }
 
-                if (params['mode']) {
+                if (params['mode'] && params['mode'] === DisplayMode.Gallery) {
                     this.displayMode = DisplayMode.Gallery;
                 }
             });
