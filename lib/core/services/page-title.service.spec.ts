@@ -52,7 +52,9 @@ class TestConfig {
                     }
                 },
                 get: () => this.setup.applicationName,
-                load: () => {}
+                load: () => {
+                    return Promise.resolve();
+                }
             }
         };
 
@@ -71,7 +73,7 @@ class TestConfig {
             ]
         });
 
-        inject([ Title, PageTitleService, TranslationService ], (titleService, appTitleService, translationService) => {
+        inject([Title, PageTitleService, TranslationService], (titleService, appTitleService, translationService) => {
             this.titleService = titleService;
             this.appTitleService = appTitleService;
             this.translationService = translationService;
