@@ -131,6 +131,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     currentInstanceId: string;
     isLoading: boolean = true;
     layoutPresets = {};
+    sorting: any[] = ['created', 'desc'];
 
     pagination: BehaviorSubject<PaginationModel>;
 
@@ -287,6 +288,14 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
                 this.currentInstanceId = null;
             }
         }
+    }
+
+    /**
+     * Sort the process based on current value of 'sort' property
+     * Return the sorting order
+     */
+    get dataSort(): any[] {
+        return this.sort ? this.sort.split('-') : this.sorting;
     }
 
     /**
