@@ -16,7 +16,7 @@
  */
 
 import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit } from '@angular/core';
-import { Params, ActivatedRoute } from '@angular/router';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 import { TranslationService } from '../../services/translation.service';
 
 @Component({
@@ -30,15 +30,12 @@ import { TranslationService } from '../../services/translation.service';
 export class ErrorContentComponent implements OnInit {
 
     errorCode: string;
-
-    errorTitle: string;
-    errorDescription: string;
-    errorLinkText: string;
-    errorLinkUrl: string;
-
-    homeButton: string;
+    secondaryButtonText: string;
+    secondaryButtonUrl: string;
+    returnButtonUrl: string;
 
     constructor(private route: ActivatedRoute,
+                private router: Router,
                 private translateService: TranslationService) {
     }
 
@@ -52,28 +49,26 @@ export class ErrorContentComponent implements OnInit {
         }
 
         this.getData();
-
     }
 
     getData() {
-        this.errorTitle = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.TITLE');
+        this.returnButtonUrl = this.translateService.instant(
+            'ERROR_CONTENT.' + this.errorCode + '.RETURN_BUTTON.ROUTE');
 
-        if (this.errorTitle === 'ERROR_CONTENT.' + this.errorCode + '.TITLE') {
-            this.errorCode = 'UNKNOWN';
-            this.errorTitle = this.translateService.instant(
-                'ERROR_CONTENT.' + this.errorCode + '.TITLE');
+        this.secondaryButtonText = this.translateService.instant(
+            'ERROR_CONTENT.' + this.errorCode + '.SECONDARY_BUTTON.TEXT');
+
+        if (this.secondaryButtonText) {
+            this.secondaryButtonUrl = this.translateService.instant(
+                'ERROR_CONTENT.' + this.errorCode + '.SECONDARY_BUTTON.URL');
         }
+    }
 
-        this.errorDescription = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.DESCRIPTION');
-        this.errorLinkText = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.LINK.TEXT');
-        this.errorLinkUrl = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.LINK.URL');
+    onSecondButton() {
+        this.router.navigate(['/' + this.secondaryButtonUrl]);
+    }
 
-        this.homeButton = this.translateService.instant(
-            'ERROR_CONTENT.HOME_BUTTON').toUpperCase();
-
+    onReturnButton() {
+        this.router.navigate(['/' + this.returnButtonUrl]);
     }
 }

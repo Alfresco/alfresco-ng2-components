@@ -37,4 +37,4 @@ import { EmptyContentComponent } from './empty-content/empty-content.component';
         EmptyContentComponent
     ]
 })
-export class TemplatetModule {}
+export class TemplateModule {}
