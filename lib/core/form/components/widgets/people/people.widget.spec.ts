@@ -16,7 +16,6 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { UserProcessModel } from '../../../../models';
 import { Observable } from 'rxjs/Observable';
 import { FormService } from '../../../services/form.service';
@@ -143,11 +142,7 @@ describe('PeopleWidgetComponent', () => {
         });
 
         it('should show an error message if the user is invalid', async(() => {
-            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-            peopleHTMLElement.focus();
-            peopleHTMLElement.value = 'K';
-            peopleHTMLElement.dispatchEvent(new Event('keyup'));
-            peopleHTMLElement.dispatchEvent(new Event('input'));
+            widget.checkUserAndValidateForm(fakeUserResult, 'K');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('.adf-error-text')).not.toBeNull();
@@ -156,16 +151,10 @@ describe('PeopleWidgetComponent', () => {
         }));
 
         it('should show the people if the typed result match', async(() => {
-            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-            peopleHTMLElement.focus();
-            peopleHTMLElement.value = 'T';
-            peopleHTMLElement.dispatchEvent(new Event('keyup'));
-            peopleHTMLElement.dispatchEvent(new Event('input'));
+            widget.checkUserAndValidateForm(fakeUserResult, 'Test01 Test01');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
-                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
+                expect(widget.field.validationSummary.message).toBe('');
             });
         }));
 
