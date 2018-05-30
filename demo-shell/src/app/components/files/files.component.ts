@@ -177,6 +177,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     infiniteScrolling: boolean;
     supportedPages: number[];
     currentSiteid = '';
+    warnOnMultipleUploads = false;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -515,9 +516,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onBeginUpload(event: UploadFilesEvent) {
-        if (event) {
+        if (this.warnOnMultipleUploads && event) {
             const files = event.files || [];
-            if (files.length > 2) {
+            if (files.length > 1) {
                 event.pauseUpload();
 
                 const dialogRef = this.dialog.open(ConfirmDialogComponent, {

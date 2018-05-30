@@ -501,6 +501,12 @@
             </mat-slide-toggle>
         </section>
 
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="warnOnMultipleUploads">
+                {{'APP.WARN-MULTIPLE-UPLOADS' | translate}}
+            </mat-slide-toggle>
+        </section>
+
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">
             <mat-form-field floatPlaceholder="float">
