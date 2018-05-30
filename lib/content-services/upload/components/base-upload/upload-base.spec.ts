@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslationService, UploadService, setupTestBed, CoreModule, FileModel } from '@alfresco/adf-core';
 import { UploadBase } from './upload-base';
@@ -24,13 +24,14 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'adf-upload-button-test',
-    template: 'test componente'
+    template: 'test component'
 })
 export class UploadTestComponent extends UploadBase {
 
     constructor(protected uploadService: UploadService,
-                protected translationService: TranslationService) {
-        super(uploadService, translationService);
+                protected translationService: TranslationService,
+                protected ngZone: NgZone) {
+        super(uploadService, translationService, ngZone);
     }
 }
 
