@@ -54,6 +54,7 @@ export class TaskStandaloneComponent {
     @Output()
     complete: EventEmitter<void> = new EventEmitter<void>();
 
+    /** Emitted when the form associated with the form task is attached. */
     @Output()
     formAttached: EventEmitter<void> = new EventEmitter<void>();
 
