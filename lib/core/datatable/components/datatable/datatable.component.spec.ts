@@ -289,22 +289,11 @@ describe('DataTable', () => {
 
     it('should select first row when selectFirstRow set to true', () => {
         dataTable.selectFirstRow = true;
-        const dataRows =
-            [
-                { name: 'TEST1' },
-                { name: 'FAKE2' },
-                { name: 'TEST2' },
-                { name: 'FAKE2' }
-            ];
-        dataTable.data = new ObjectDataTableAdapter(dataRows,
+        dataTable.rows = [{ name: 'TEST1' }, { name: 'FAKE2' }, { name: 'TEST2' }, { name: 'FAKE2' }];
+        dataTable.data = new ObjectDataTableAdapter([],
             [new ObjectDataColumn({ key: 'name' })]
         );
-
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
-        });
         fixture.detectChanges();
-
         const rows = dataTable.data.getRows();
         expect(rows[0].isSelected).toBeTruthy();
         expect(rows[1].isSelected).toBeFalsy();
