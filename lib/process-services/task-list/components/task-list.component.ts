@@ -136,6 +136,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
     isLoading: boolean = true;
+    sorting: any[] = ['created', 'desc'];
 
     /**
      * Toggles custom data source mode.
@@ -299,6 +300,14 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
 
             this.currentInstanceId = null;
         }
+    }
+
+    /**
+     * Return the sorting order
+     * Sort the tasks based on current value of 'sort' property
+     */
+    get dataSort(): any[] {
+        return this.sort ? this.sort.split('-') : this.sorting;
     }
 
     /**

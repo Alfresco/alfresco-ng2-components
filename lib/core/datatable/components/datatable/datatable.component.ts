@@ -67,6 +67,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     rows: any[] = [];
 
+    /** Define the sort order of the datatable. Possible values are :
+     * [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`]
+     */
+    @Input()
+    sorting: any[] = [];
+
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
      */
@@ -207,6 +213,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             this.resetSelection();
             this.emitRowSelectionEvent('row-unselect', null);
         }
+
+        if (this.isPropertyChanged(changes['sorting'])) {
+            this.setTableSorting(changes['sorting'].currentValue);
+        }
     }
 
     ngDoCheck() {
@@ -222,6 +232,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     convertToRowsData(rows: any []): ObjectDataRow[] {
         return rows.map(row => new ObjectDataRow(row));
+    }
+
+    convertToDataSorting(sorting: any[]): DataSorting {
+        if (sorting && sorting.length > 0) {
+            return new DataSorting(sorting[0], sorting[1]);
+        }
     }
 
     private initAndSubscribeClickStream() {
@@ -297,6 +313,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
         if (this.data && this.schema && this.schema.length > 0) {
             this.data.setColumns(this.schema);
+        }
+    }
+
+    private setTableSorting(sorting) {
+        if (this.data) {
+            this.data.setSorting(this.convertToDataSorting(sorting));
         }
     }
 

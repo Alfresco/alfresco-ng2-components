@@ -121,6 +121,22 @@ information defined in `app.config.json` as in the example below:
 </adf-process-instance-list>
 ```
 
+### Setting Sorting Order for the list
+
+you can pass sorting order as shown in the example below:
+
+```ts
+// Possible values are : `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |
+let sortParam = 'created-desc'; 
+```
+
+```html
+<adf-process-instance-list
+    [appId]="'1'"
+    [sort]="sortParam">
+</adf-process-instance-list>
+```
+
 <!-- {% endraw %} -->
 
 ### Pagination strategy

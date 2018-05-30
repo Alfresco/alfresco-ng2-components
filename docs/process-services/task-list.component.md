@@ -187,6 +187,22 @@ You can use an HTML-based schema and an `app.config.json` custom schema declarat
 </adf-tasklist>
 ```
 
+### Setting Sorting Order for the list
+
+you can pass sorting order as shown in the example below:
+
+```ts
+// Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc`
+let sortParam = 'created-desc'; 
+```
+
+```html
+<adf-tasklist
+    [appId]="'1'"
+    [sort]="sortParam">
+</adf-tasklist>
+```
+
 <!-- {% endraw %} -->
 
 ### Pagination strategy
