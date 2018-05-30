@@ -18,7 +18,7 @@ and [Tasklist](../process-services/task-list.component.md) components.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| rowsChanged? | `Subject<Array<DataRow>>` | Raised when data adapter gets new rows. |
+| rowsChanged | `Subject<Array<DataRow>>` | Raised when data adapter gets new rows. |
 
 ## Methods
 
