@@ -15,18 +15,20 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { ShareDialogComponent } from './share.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { setupTestBed } from '@alfresco/adf-core';
+import { SharedLinksApiService, setupTestBed } from '@alfresco/adf-core';
 
 describe('ShareDialogComponent', () => {
 
     let fixture: ComponentFixture<ShareDialogComponent>;
+    let spyCreate: any;
     let component: ShareDialogComponent;
+    let sharedLinksApiService: SharedLinksApiService;
     const dialogRef = {
         close: jasmine.createSpy('close')
     };
@@ -46,36 +48,44 @@ describe('ShareDialogComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ShareDialogComponent);
+        sharedLinksApiService = TestBed.get(SharedLinksApiService);
         component = fixture.componentInstance;
 
         fixture.detectChanges();
+
+        spyCreate = spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(Observable.of({ entry: { id: 'test-sharedId' } }));
     });
 
-    it('should init the dialog with the file name and baseShareUrl', () => {
-        expect(component.fileName).toBe('example-name');
-        expect(component.baseShareUrl).toBe('baseShareUrl-example');
-    });
+    it('should init the dialog with the file name and baseShareUrl', async(() => {
+        component.data = {
+            baseShareUrl: 'base-url/',
+            node: { entry: { properties: { 'qshare:sharedId': 'example-link' }, name: 'example-name' } }
+        };
+
+        component.ngOnInit();
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            expect(fixture.nativeElement.querySelector('#adf-share-link').value).toBe('base-url/example-link');
+        });
+    }));
 
     describe('public link creation', () => {
 
         it('should not create the public link if it already present in the node', () => {
-            let spyCreate = spyOn(component, 'createSharedLinks').and.returnValue(Observable.of(''));
+            component.data = {
+                node: { entry: { properties: { 'qshare:sharedId': 'example-link' }, name: 'example-name' } }
+            };
 
             component.ngOnInit();
 
             expect(spyCreate).not.toHaveBeenCalled();
         });
 
-        it('should not create the public link if it already present in the node', () => {
+        it('should create the public link if is not present in the node', () => {
             component.data = {
-                node: { entry: { name: 'example-name' } },
-                baseShareUrl: 'baseShareUrl-example'
-            };
-
-            let spyCreate = spyOn(component, 'createSharedLinks').and.returnValue(Observable.of(''));
-
-            data = {
-                node: { entry: { name: 'example-name' } },
+                node: { entry: { properties: {}, name: 'example-name' } },
                 baseShareUrl: 'baseShareUrl-example'
             };
 
@@ -83,6 +93,20 @@ describe('ShareDialogComponent', () => {
 
             expect(spyCreate).toHaveBeenCalled();
         });
+
+        it('should update the data structure after created the link', async(() => {
+            component.data = {
+                node: { entry: { name: 'example-name', properties: {} } },
+                baseShareUrl: 'baseShareUrl-example'
+            };
+            component.ngOnInit();
+
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                expect(component.data.node.entry.properties['qshare:sharedId']).toBe('test-sharedId');
+            });
+        }));
     });
 
 });

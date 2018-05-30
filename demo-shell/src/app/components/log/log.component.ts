@@ -32,11 +32,13 @@ export class LogComponent {
     constructor(public logService: LogService) {
 
         logService.onMessage.subscribe((message) => {
-            this.logs.push({ type: message.type, text: JSON.stringify(message.text) });
-            this.logsData = new ObjectDataTableAdapter(this.logs, [
-                { type: 'text', key: 'type', title: 'Log level', sortable: true },
-                { type: 'text', key: 'text', title: 'Message', sortable: false }
-            ]);
+            if (typeof message.text === 'string') {
+                this.logs.push({ type: message.type, text: JSON.stringify(message.text) });
+                this.logsData = new ObjectDataTableAdapter(this.logs, [
+                    { type: 'text', key: 'type', title: 'Log level', sortable: true },
+                    { type: 'text', key: 'text', title: 'Message', sortable: false }
+                ]);
+            }
         });
     }
 

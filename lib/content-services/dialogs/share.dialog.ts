@@ -74,6 +74,7 @@ export class ShareDialogComponent implements OnInit {
         this.sharedLinksApiService.createSharedLinks(nodeId).subscribe((sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
+                    this.data.node.entry.properties['qshare:sharedId'] = this.sharedId;
                     this.isFileShared = true;
                     this.isDisabled = false;
                 }
