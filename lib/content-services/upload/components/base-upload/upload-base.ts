@@ -16,7 +16,7 @@
  */
 
 import { FileModel, FileInfo } from '@alfresco/adf-core';
-import { EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { UploadService, TranslationService } from '@alfresco/adf-core';
 import { Subscription } from 'rxjs/Rx';
 import { UploadFilesEvent } from '../upload-files.event';
@@ -80,7 +80,8 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     protected subscriptions: Subscription[] = [];
 
     constructor(protected uploadService: UploadService,
-                protected translationService: TranslationService) {
+                protected translationService: TranslationService,
+                protected ngZone: NgZone) {
     }
 
     ngOnInit() {
@@ -125,18 +126,20 @@ export abstract class UploadBase implements OnInit, OnDestroy {
             .filter(this.isFileAcceptable.bind(this))
             .filter(this.isFileSizeAcceptable.bind(this));
 
-        const event = new UploadFilesEvent(
-            [...filteredFiles],
-            this.uploadService
-        );
-        this.beginUpload.emit(event);
+        this.ngZone.run(() => {
+            const event = new UploadFilesEvent(
+                [...filteredFiles],
+                this.uploadService
+            );
+            this.beginUpload.emit(event);
 
-        if (!event.defaultPrevented) {
-            if (filteredFiles.length > 0) {
-                this.uploadService.addToQueue(...filteredFiles);
-                this.uploadService.uploadFilesInTheQueue(this.success);
+            if (!event.defaultPrevented) {
+                if (filteredFiles.length > 0) {
+                    this.uploadService.addToQueue(...filteredFiles);
+                    this.uploadService.uploadFilesInTheQueue(this.success);
+                }
             }
-        }
+        });
     }
 
     /**
