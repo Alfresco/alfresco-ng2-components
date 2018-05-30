@@ -22,7 +22,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { By } from '@angular/platform-browser';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, SitesService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
@@ -36,7 +36,8 @@ describe('ContentNodeSelectorDialogComponent', () => {
         title: 'Move along citizen...',
         actionName: 'move',
         select: new EventEmitter<MinimalNodeEntryEntity>(),
-        rowFilter: () => {},
+        rowFilter: () => {
+        },
         imageResolver: () => 'piccolo',
         currentFolderId: 'cat-girl-nuku-nuku'
     };
@@ -51,8 +52,10 @@ describe('ContentNodeSelectorDialogComponent', () => {
 
     beforeEach(() => {
         const documentListService: DocumentListService = TestBed.get(DocumentListService);
+        const sitesService: SitesService = TestBed.get(SitesService);
         spyOn(documentListService, 'getFolder').and.returnValue(Observable.of({ list: [] }));
         spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of({}));
+        spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries: [] } }));
 
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
         component = fixture.componentInstance;
@@ -108,8 +111,10 @@ describe('ContentNodeSelectorDialogComponent', () => {
         it('should complete the data stream when user click "CANCEL"', () => {
             let cancelButton;
             data.select.subscribe(
-                () => { },
-                () => { },
+                () => {
+                },
+                () => {
+                },
                 () => {
                     cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
                     expect(cancelButton).not.toBeNull();

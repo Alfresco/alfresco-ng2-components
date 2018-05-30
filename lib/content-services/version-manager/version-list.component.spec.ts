@@ -76,6 +76,7 @@ describe('VersionListComponent', () => {
     });
 
     it('should delete the version if user confirms', () => {
+        spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({ list: { entries: [] } }));
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
                 return Observable.of(true);
