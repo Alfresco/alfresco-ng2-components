@@ -50,6 +50,10 @@ export class TaskStandaloneComponent {
     @Output()
     complete: EventEmitter<void> = new EventEmitter<void>();
 
+    /** Emitted when the form associated with the form task is attached. */
+    @Output()
+    attachForm: EventEmitter<void> = new EventEmitter<void>();
+
     constructor() { }
 
     onCancelButtonClick(): void {
@@ -60,11 +64,19 @@ export class TaskStandaloneComponent {
         this.complete.emit();
     }
 
+    onAttachFormButtonClick(): void {
+        this.attachForm.emit();
+    }
+
     hasCompleteButton(): boolean {
         return this.hasCompletePermission && !this.isCompleted;
     }
 
     hasCancelButton(): boolean {
         return !this.hideCancelButton && !this.isCompleted;
+    }
+
+    hasAttachFormButton(): boolean {
+        return !this.isCompleted;
     }
 }
