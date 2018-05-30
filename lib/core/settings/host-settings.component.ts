@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, EventEmitter, Output, ViewEncapsulation, OnInit } from '@angular/core';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { LogService } from '../services/log.service';
 import { SettingsService } from '../services/settings.service';
 import { StorageService } from '../services/storage.service';
 import { TranslationService } from '../services/translation.service';
+import { UserPreferencesService } from '../services';
 
 @Component({
     selector: 'adf-host-settings',
@@ -31,20 +32,15 @@ import { TranslationService } from '../services/translation.service';
     styleUrls: ['host-settings.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class HostSettingsComponent {
+export class HostSettingsComponent implements OnInit {
 
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 
-    ecmHost: string;
     ecmHostTmp: string;
-    bpmHost: string;
     bpmHostTmp: string;
-    urlFormControlEcm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
-    urlFormControlBpm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
-
-    /** Determines which configurations are shown. Possible valid values are "ECM", "BPM" or "ALL". */
-    @Input()
-    providers: string = 'ALL';
+    providers = ['ALL', 'BPM', 'ECM'];
+    providerSelected = 'BPM';
+    form: FormGroup;
 
     /** Emitted when the URL is invalid. */
     @Output()
@@ -54,16 +50,44 @@ export class HostSettingsComponent {
     @Output()
     ecmHostChange = new EventEmitter<string>();
 
+    @Output()
+    cancel = new EventEmitter<boolean>();
+
+    @Output()
+    success = new EventEmitter<boolean>();
+
     /** Emitted when the bpm host URL is changed. */
     @Output()
     bpmHostChange = new EventEmitter<string>();
 
     constructor(private settingsService: SettingsService,
+                private userPreference: UserPreferencesService,
                 private storage: StorageService,
                 private logService: LogService,
+                private fb: FormBuilder,
                 private translationService: TranslationService) {
-        this.ecmHostTmp = this.ecmHost = storage.getItem('ecmHost') || this.settingsService.ecmHost;
-        this.bpmHostTmp = this.bpmHost = storage.getItem('bpmHost') || this.settingsService.bpmHost;
+    }
+
+    ngOnInit() {
+        this.ecmHostTmp = this.storage.getItem('ecmHost') || this.settingsService.ecmHost;
+        this.bpmHostTmp = this.storage.getItem('bpmHost') || this.settingsService.bpmHost;
+
+        this.form = this.fb.group({
+            sso: [this.userPreference.sso, Validators.required],
+            providers: [this.userPreference.providers, Validators.required],
+            urlFormControlEcm: [this.ecmHostTmp, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
+            urlFormControlBpm: [this.bpmHostTmp, [Validators.required, Validators.pattern(this.HOST_REGEX)]]
+        });
+
+        this.form.controls.providers.valueChanges.distinctUntilChanged().debounceTime(200).subscribe(provider => {
+            if (!this.isProviderValid(provider)) {
+                this.form.controls.providers.setErrors({'providerNotAllowed': true});
+            }
+        });
+    }
+
+    isProviderValid(provider: string): boolean {
+        return provider === 'BPM' || provider === 'ECM' || provider === 'ALL';
     }
 
     public onChangeECMHost(event: any): void {
@@ -92,18 +116,34 @@ export class HostSettingsComponent {
         }
     }
 
-    public save(event: KeyboardEvent): void {
-        if (this.bpmHost !== this.bpmHostTmp) {
-            this.storage.setItem(`bpmHost`, this.bpmHostTmp);
+    onCancel() {
+        this.cancel.emit(true);
+    }
+
+    onSubmit(values: any) {
+        this.userPreference.sso = values.sso;
+        this.userPreference.providers = values.providers;
+        if (this.isBPM(values.providers)) {
+            this.storage.setItem(`bpmHost`, values.urlFormControlBpm);
+        } else if (this.isECM(values.providers)) {
+            this.storage.setItem(`ecmHost`, values.urlFormControlEcm);
+        } else {
+            this.storage.setItem(`bpmHost`, values.urlFormControlBpm);
+            this.storage.setItem(`ecmHost`, values.urlFormControlEcm);
         }
-        if (this.ecmHost !== this.ecmHostTmp) {
-            this.storage.setItem(`ecmHost`, this.ecmHostTmp);
-        }
-        window.location.href = '/';
+        this.success.emit(true);
     }
 
     isValidUrl(url: string) {
         return /^(http|https):\/\/.*/.test(url);
+    }
+
+    isBPM(value): boolean {
+        return value === 'BPM';
+    }
+
+    isECM(value): boolean {
+        return value === 'ECM';
     }
 
 }

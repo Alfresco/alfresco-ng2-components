@@ -196,4 +196,28 @@ export class UserPreferencesService {
         return this.appConfig.get<string>('locale') || this.translate.getBrowserLang() || 'en';
     }
 
+    get providers(): string {
+        if (this.storage.hasItem('providers')) {
+            return this.storage.getItem('providers');
+        } else {
+            return this.appConfig.get('providers', 'ECM');
+        }
+    }
+
+    set providers(providers: string) {
+        this.storage.setItem('providers', providers);
+    }
+
+    get sso(): boolean {
+        if (this.storage.hasItem('sso')) {
+            return JSON.parse(this.storage.getItem('sso'));
+        } else {
+            return this.appConfig.get<boolean>('sso', false);
+        }
+    }
+
+    set sso(value: boolean) {
+        this.storage.setItem('sso', value + '');
+    }
+
 }

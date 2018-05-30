@@ -113,7 +113,7 @@ export class AlfrescoApiService {
 
     protected initAlfrescoApi() {
         this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
-            provider: this.storage.getItem('AUTH_TYPE'),
+            provider: this.appConfig.get('providers', 'ECM'),
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),
             hostEcm: this.appConfig.get<string>('ecmHost'),

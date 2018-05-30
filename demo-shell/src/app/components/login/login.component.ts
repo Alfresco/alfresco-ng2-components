@@ -18,7 +18,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LogService, StorageService } from '@alfresco/adf-core';
+import { LogService, UserPreferencesService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-login',
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     customMinLength = 2;
 
     constructor(private router: Router,
-                private storage: StorageService,
+                private userPreference: UserPreferencesService,
                 private logService: LogService) {
         this.customValidation = {
             username: ['', Validators.compose([Validators.required, Validators.minLength(this.customMinLength)])],
@@ -53,14 +53,12 @@ export class LoginComponent implements OnInit {
         this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', {minLength: this.customMinLength});
         this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
 
-        if (this.storage.hasItem('providers')) {
-            this.providers = this.storage.getItem('providers');
-        }
-
         this.initProviders();
     }
 
     initProviders() {
+        this.providers = this.userPreference.providers;
+
         if (this.providers === 'BPM') {
             this.isECM = false;
             this.isBPM = true;
@@ -83,12 +81,12 @@ export class LoginComponent implements OnInit {
 
     toggleECM() {
         this.isECM = !this.isECM;
-        this.storage.setItem('providers', this.updateProvider());
+        this.userPreference.providers = this.updateProvider();
     }
 
     toggleBPM() {
         this.isBPM = !this.isBPM;
-        this.storage.setItem('providers', this.updateProvider());
+        this.userPreference.providers = this.updateProvider();
     }
 
     toggleCSRF() {

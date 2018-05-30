@@ -28,7 +28,7 @@ import { Router } from '@angular/router';
 export class AuthenticationSSOService {
 
     private bearerExcludedUrls: string[];
-
+    private redirectUri: string;
     constructor(
         private router: Router,
         private tokenService: AuthTokenProcessorService,
@@ -49,6 +49,7 @@ export class AuthenticationSSOService {
 
                 if (!loggedIn) {
                     this.logOut();
+                    window.location.reload();
                 }
                 return loggedIn;
             });
@@ -90,8 +91,8 @@ export class AuthenticationSSOService {
     async loadDiscoveryDocumentAndLogin() {
         await this.configureWithNewConfigApi();
         if (this.oauthService.hasValidAccessToken()) {
-            const redirectUri = this.appConfig.get('oauth2.redirectUri', '');
-            this.router.navigate([redirectUri]);
+            this.redirectUri = this.appConfig.get('oauth2.redirectUri', '/');
+            this.router.navigate([this.redirectUri]);
         } else {
             await this.oauthService.loadDiscoveryDocumentAndLogin();
         }
@@ -107,7 +108,7 @@ export class AuthenticationSSOService {
     private createAuthConfigFromJSON(): AuthConfig {
         return {
             issuer: this.appConfig.get('oauth2.host'),
-            redirectUri: window.location.origin + this.appConfig.get('oauth2.redirectUri', ''),
+            redirectUri: window.location.origin + this.appConfig.get('oauth2.redirectUri', '/'),
             requireHttps: this.appConfig.get('oauth2.requireHttps', true),
             silentRefreshRedirectUri: window.location.origin + this.appConfig.get('oauth2.silentRefreshRedirectUri', ''),
             clientId: this.appConfig.get('oauth2.clientId'),

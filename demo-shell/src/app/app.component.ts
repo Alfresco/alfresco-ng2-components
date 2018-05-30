@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { AlfrescoApiService, SettingsService, PageTitleService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiService, PageTitleService, UserPreferencesService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 import { AuthenticationSSOService } from '@alfresco/adf-core';
 
@@ -28,16 +28,14 @@ import { AuthenticationSSOService } from '@alfresco/adf-core';
 })
 export class AppComponent implements OnInit {
 
-    constructor(private settingsService: SettingsService,
-                private storage: StorageService,
-                private pageTitleService: PageTitleService,
+    constructor(private pageTitleService: PageTitleService,
                 private alfrescoApiService: AlfrescoApiService,
+                private userPreference: UserPreferencesService,
                 private authSSOService: AuthenticationSSOService,
                 private router: Router) {
     }
 
     ngOnInit() {
-        this.setProvider();
 
         this.pageTitleService.setTitle('title');
 
@@ -47,12 +45,10 @@ export class AppComponent implements OnInit {
                 this.router.navigate(['/error', error.status]);
             }
         });
-        this.authSSOService.loadDiscoveryDocumentAndLogin();
-    }
-
-    private setProvider() {
-        if (this.storage.hasItem(`providers`)) {
-            this.settingsService.setProviders(this.storage.getItem(`providers`));
+        if (this.userPreference.sso) {
+            this.authSSOService.loadDiscoveryDocumentAndLogin();
+        } else {
+            this.router.navigate(['home']);
         }
     }
 }

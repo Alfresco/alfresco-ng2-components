@@ -1,11 +1,25 @@
 <div class="adf-setting-container">
+    <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)">
     <div class="adf-setting-card-padding"></div>
     <mat-toolbar color="primary" class="adf-setting-toolbar">
         <h3>{{'CORE.HOST_SETTINGS.TITLE' | translate}}</h3>
     </mat-toolbar>
 
     <mat-card class="adf-setting-card">
-        <div *ngIf="providers==='ALL' || providers==='ECM'">
+        <section>
+            <mat-slide-toggle color="primary" [formControl]="form.controls['sso']">
+                SSO
+            </mat-slide-toggle>
+        </section>
+        <mat-form-field>
+        <mat-select placeholder="Provider" [formControl]="form.controls['providers']">
+            <mat-option *ngFor="let provider of providers"  [value]="provider">
+            {{ provider }}
+            </mat-option>
+        </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="form.controls['providers'].value ==='ALL' || form.controls['providers'].value ==='ECM'">
             <mat-card-header>
                 <mat-card-subtitle>{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}</mat-card-subtitle>
             </mat-card-header>
@@ -13,15 +27,14 @@
                 <mat-form-field class="full-width">
                     <mat-icon class="adf-CORE.HOST_SETTINGS-link-icon" matPrefix>link</mat-icon>
                     <input matInput
-                           [formControl]="urlFormControlEcm"
+                            [formControl]="form.controls['urlFormControlEcm']"
                            data-automation-id="ecmHost"
                            type="text"
                            (change)="onChangeECMHost($event)"
                            tabindex="2"
                            id="ecmHost"
-                           value="{{ecmHost}}"
                            placeholder="http(s)://host|ip:port(/path)">
-                    <mat-error *ngIf="urlFormControlEcm.hasError('pattern')">
+                    <mat-error *ngIf="form.controls['urlFormControlEcm'].hasError('pattern')">
                         {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
                     </mat-error>
                 </mat-form-field>
@@ -29,7 +42,7 @@
             </mat-card-content>
         </div>
         <p>
-        <div *ngIf="providers==='ALL' || providers==='BPM'">
+        <div *ngIf="form.controls['providers'].value==='ALL' || form.controls['providers'].value==='BPM'">
             <mat-card-header>
                 <mat-card-subtitle>{{'CORE.HOST_SETTINGS.BP-HOST' | translate }}</mat-card-subtitle>
             </mat-card-header>
@@ -38,15 +51,14 @@
                 <mat-form-field class="full-width">
                     <mat-icon class="adf-CORE.HOST_SETTINGS-link-icon" matPrefix>link</mat-icon>
                     <input matInput
-                           [formControl]="urlFormControlBpm"
+                            [formControl]="form.controls['urlFormControlBpm']"
                            data-automation-id="bpmHost"
                            type="text"
                            (change)="onChangeBPMHost($event)"
                            tabindex="2"
                            id="bpmHost"
-                           value="{{bpmHost}}"
                            placeholder="http(s)://host|ip:port(/path)">
-                    <mat-error *ngIf="urlFormControlBpm.hasError('pattern')">
+                    <mat-error *ngIf="form.controls['urlFormControlBpm'].hasError('pattern')">
                         {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
                     </mat-error>
                 </mat-form-field>
@@ -54,17 +66,18 @@
         </div>
         <mat-card-actions class="adf-CORE.HOST_SETTINGS-actions">
 
-            <button mat-button onclick="window.history.back()" color="primary">
+            <button mat-button (click)="onCancel()" color="primary">
                 {{'CORE.HOST_SETTINGS.BACK' | translate }}
             </button>
 
-            <button mat-raised-button (click)="save($event)"
-                    [disabled]="urlFormControlBpm.hasError('pattern') || urlFormControlEcm.hasError('pattern')"
-                    color="primary">
+            <button type="submit" id="host-button" tabindex="4"
+                class="adf-login-button"
+                mat-raised-button color="primary"
+                data-automation-id="host-button" [disabled]="!form.valid">
                 {{'CORE.HOST_SETTINGS.APPLY' | translate }}
             </button>
-
         </mat-card-actions>
     </mat-card>
+    </form>
     <div class="adf-setting-card-padding"></div>
 </div>

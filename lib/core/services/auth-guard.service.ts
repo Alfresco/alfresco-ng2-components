@@ -21,22 +21,30 @@ import {
   CanActivateChild, RouterStateSnapshot, Router,
   PRIMARY_OUTLET, UrlTree, UrlSegmentGroup, UrlSegment
 } from '@angular/router';
-import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
+import { AuthenticationSSOService } from './authentication-sso.service';
+import { Observable } from 'rxjs/Observable';
+import { UserPreferencesService } from './user-preferences.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
     constructor(private authService: AuthenticationService,
                 private router: Router,
-                private appConfig: AppConfigService) {}
+                private authSSOService: AuthenticationSSOService,
+                private appConfig: AppConfigService,
+                private userPreference: UserPreferencesService) {}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        const redirectUrl = state.url;
-
-        return this.checkLogin(redirectUrl);
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
+        if (this.userPreference.sso) {
+            return this.authSSOService.checkLogin(state.url, route.data);
+        } else {
+            const redirectUrl = state.url;
+            return this.checkLogin(redirectUrl);
+        }
     }
 
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
         return this.canActivate(route, state);
     }
 
