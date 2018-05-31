@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     templateUrl: './task-list-demo.component.html',
@@ -23,4 +23,7 @@ import { Component } from '@angular/core';
 })
 export class TaskListDemoComponent {
 
+    @Input()
+    appId: number;
+    
 }
