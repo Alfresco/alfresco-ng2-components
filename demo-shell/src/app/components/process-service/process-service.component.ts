@@ -145,6 +145,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     presetColoum = 'default';
     showProcessPagination = false;
 
+    showTaskTab = true;
+    showProcessTab = false;
+
     fieldValidators = [
         ...FORM_FIELD_VALIDATORS,
         new DemoFieldValidator()
@@ -243,8 +246,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         const index = event.index;
         this.showProcessPagination = index === PROCESS_ROUTE;
         if (index === TASK_ROUTE) {
+            this.showTaskTab = event.index === this.tabs.tasks;
             this.relocateLocationToTask();
         } else if (index === PROCESS_ROUTE) {
+            this.showProcessTab =  event.index === this.tabs.processes;
             this.relocateLocationToProcess();
         } else if (index === REPORT_ROUTE) {
             this.relocateLocationToReport();
