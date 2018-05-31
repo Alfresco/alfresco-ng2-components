@@ -37,7 +37,7 @@ Displays a sidebar-style information panel with tabs.
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | selectedIndex | `number` | 0 | The selected index tab. |
-| title | `string | null` |  null | The title of the info drawer. |
+| title | `string \| null` |  null | The title of the info drawer. |
 
 ### Events
 
@@ -53,5 +53,5 @@ You can also customize the three regions (title, buttons and content) as with th
 
 ## See also
 
-- [Info drawer layout component](info-drawer-layout.component.md)
-- [Info drawer layout component](info-drawer-tab.component.md)
+-   [Info drawer layout component](info-drawer-layout.component.md)
+-   [Info drawer layout component](info-drawer-tab.component.md)
