@@ -162,6 +162,38 @@ describe('SearchSettingsComponent', () => {
         expect(queryBuilder.update).toHaveBeenCalled();
     });
 
+    it('should allow facetQueries when defined in configuration', () => {
+        component.queryBuilder.config = {
+            categories: [],
+            facetQueries: {
+                queries: [
+                    { label: 'q1', query: 'query1' }
+                ]
+            }
+        };
+
+        expect(component.isFacetQueriesDefined).toBe(true);
+    });
+
+    it('should not allow facetQueries when not defined in configuration', () => {
+        component.queryBuilder.config = {
+            categories: []
+        };
+
+        expect(component.isFacetQueriesDefined).toBe(false);
+    });
+
+    it('should not allow facetQueries when queries are not defined in configuration', () => {
+        component.queryBuilder.config = {
+            categories: [],
+            facetQueries: {
+                queries: []
+            }
+        };
+
+        expect(component.isFacetQueriesDefined).toBe(false);
+    });
+
     it('should fetch facet queries from response payload', () => {
         component.responseFacetQueries = new ResponseFacetQueryList();
         const queries = [
