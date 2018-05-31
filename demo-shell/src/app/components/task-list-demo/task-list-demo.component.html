@@ -10,18 +10,17 @@
 
     <mat-form-field>
             <mat-select placeholder="Assignment" #assignment>
-                <mat-option [value]="assignee">Assignee</mat-option>
-                <mat-option [value]="candidate">Candidate</mat-option>
-                <mat-option [value]="group_x">Group X</mat-option>
-                <mat-option [value]="">No value</mat-option>
+                <mat-option value="assignee">Assignee</mat-option>
+                <mat-option value="candidate">Candidate</mat-option>
+                <mat-option value="">No value</mat-option>
             </mat-select>
     </mat-form-field>
     
     <mat-form-field>
             <mat-select placeholder="State" #state>
-                <mat-option [value]="all">All</mat-option>
-                <mat-option [value]="open">Open</mat-option>
-                <mat-option [value]="completed">Completed</mat-option>
+                <mat-option value="all">All</mat-option>
+                <mat-option value="open">Open</mat-option>
+                <mat-option value="completed">Completed</mat-option>
             </mat-select>
     </mat-form-field>
 </div>
