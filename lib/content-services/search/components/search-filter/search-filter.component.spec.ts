@@ -163,15 +163,22 @@ describe('SearchSettingsComponent', () => {
     });
 
     it('should allow facetQueries when defined in configuration', () => {
-        appConfig.config.search = {
-            facetQueries: {}
+        component.queryBuilder.config = {
+            categories: [],
+            facetQueries: {
+                queries: [
+                    { label: 'q1', query: 'query1' }
+                ]
+            }
         };
 
         expect(component.isFacetQueriesDefined).toBe(true);
     });
 
     it('should not allow facetQueries when not defined in configuration', () => {
-        appConfig.config.search = {};
+        component.queryBuilder.config = {
+            categories: []
+        };
 
         expect(component.isFacetQueriesDefined).toBe(false);
     });
