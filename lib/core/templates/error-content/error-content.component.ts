@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, AfterContentChecked } from '@angular/core';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { TranslationService } from '../../services/translation.service';
 
@@ -27,7 +27,7 @@ import { TranslationService } from '../../services/translation.service';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-error-content' }
 })
-export class ErrorContentComponent implements OnInit {
+export class ErrorContentComponent implements OnInit, AfterContentChecked {
 
     errorCode: string;
     secondaryButtonText: string;
@@ -44,10 +44,17 @@ export class ErrorContentComponent implements OnInit {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
                     this.errorCode = params['id'];
+                    const unknown = this.translateService.instant(
+                        'ERROR_CONTENT.' + this.errorCode + '.TITLE');git 
+                    if (unknown === 'ERROR_CONTENT.' + this.errorCode + '.TITLE') {
+                        this.errorCode = "UNKNOWN";
+                    }
                 }
             });
         }
+    }
 
+    ngAfterContentChecked(){
         this.getData();
     }
 
