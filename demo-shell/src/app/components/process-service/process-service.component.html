@@ -155,7 +155,7 @@
 
                     </adf-process-instance-list>
                     <adf-pagination
-                        *ngIf="showProcessPagination"
+                        *ngIf="processList"
                         [target]="processList"
                         (changePageSize)="onChangePageSize($event)"
                         [supportedPageSizes]="supportedPages"

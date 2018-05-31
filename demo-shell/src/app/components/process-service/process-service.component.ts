@@ -143,7 +143,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     flag = true;
 
     presetColoum = 'default';
-    showProcessPagination = false;
 
     showTaskTab = true;
     showProcessTab = false;
@@ -244,7 +243,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     onTabChange(event: any): void {
         const index = event.index;
-        this.showProcessPagination = index === PROCESS_ROUTE;
         if (index === TASK_ROUTE) {
             this.showTaskTab = event.index === this.tabs.tasks;
             this.relocateLocationToTask();
@@ -307,7 +305,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onSuccessProcessList(event: any): void {
-        this.showProcessPagination = true;
         this.currentProcessInstanceId = this.processList.getCurrentId();
     }
 
@@ -351,7 +348,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onStartProcessInstance(instance: ProcessInstance): void {
-        this.showProcessPagination = false;
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
         this.activitiprocessfilter.selectRunningFilter();
@@ -390,7 +386,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     relocateLocationToProcess(): void {
-        this.location.go(`/activiti/apps/${this.appId || 0}/processes/${this.processFilter.id}`);
+        this.location.go(`/activiti/apps/${this.appId || 0}/processes/${this.processFilter ? this.processFilter.id : 0}`);
     }
 
     relocateLocationToTask(): void {
