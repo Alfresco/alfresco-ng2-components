@@ -93,7 +93,7 @@ export class MyView {
 | permission | `string` |  | The permission type. |
 | target | `string` |  [`ContentActionTarget`](../../lib/content-services/document-list/models/content-action.model.ts).All | Type of item that the action appies to. Can be "document" or "folder" |
 | title | `string` | "Action" | The title of the action as shown in the menu. |
-| visible | `boolean | Function` | true | Visibility state (see examples). |
+| visible | `boolean \| Function` | true | Visibility state (see examples). |
 
 ### Events
 
