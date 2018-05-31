@@ -17,7 +17,7 @@
         </adf-search-widget-container>
     </mat-expansion-panel>
 
-    <mat-expansion-panel [expanded]="facetQueriesExpanded">
+    <mat-expansion-panel *ngIf="isFacetQueriesDefined" [expanded]="facetQueriesExpanded">
         <mat-expansion-panel-header>
             <mat-panel-title>{{ facetQueriesLabel | translate }}</mat-panel-title>
         </mat-expansion-panel-header>

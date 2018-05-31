@@ -159,6 +159,19 @@ export class SearchQueryBuilderService {
         return [];
     }
 
+    /**
+     * Check if FacetQueries has been defined
+     */
+    get hasFacetQueries(): boolean {
+        if (this.config
+            && this.config.facetQueries
+            && this.config.facetQueries.queries
+            && this.config.facetQueries.queries.length > 0) {
+            return true;
+        }
+        return false;
+    }
+
     private get sort(): RequestSortDefinitionInner[] {
         return this.sorting.map(def => {
             return {
@@ -216,15 +229,5 @@ export class SearchQueryBuilderService {
         }
 
         return null;
-    }
-
-    private get hasFacetQueries(): boolean {
-        if (this.config
-            && this.config.facetQueries
-            && this.config.facetQueries.queries
-            && this.config.facetQueries.queries.length > 0) {
-            return true;
-        }
-        return false;
     }
 }
