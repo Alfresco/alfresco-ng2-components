@@ -1,4 +1,40 @@
+<div class="task-list-demo-inputs">
+
+    <mat-form-field>
+        <input matInput placeholder="Name" #name>
+    </mat-form-field>
+    
+    <mat-form-field>
+        <input matInput placeholder="ProcessDefinitionId" #processId>
+    </mat-form-field>
+
+    <mat-form-field>
+            <mat-select placeholder="Assignment" #assignment>
+                <mat-option [value]="assignee">Assignee</mat-option>
+                <mat-option [value]="candidate">Candidate</mat-option>
+                <mat-option [value]="group_x">Group X</mat-option>
+                <mat-option [value]="">No value</mat-option>
+            </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field>
+            <mat-select placeholder="State" #state>
+                <mat-option [value]="all">All</mat-option>
+                <mat-option [value]="open">Open</mat-option>
+                <mat-option [value]="completed">Completed</mat-option>
+            </mat-select>
+    </mat-form-field>
+</div>
+
 <adf-tasklist 
-    [appId]="appId">
+    [appId]="appId" 
+    [name]="name.value" 
+    [processDefinitionId]="processId.value" 
+    [assignment]="assignment.value" 
+    [state]="state.value" 
+    #taskList>
 </adf-tasklist>
 
+<adf-pagination
+    [target]="taskList">
+</adf-pagination>
