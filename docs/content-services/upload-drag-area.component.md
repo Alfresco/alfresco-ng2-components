@@ -51,8 +51,8 @@ export class AppComponent {
 | --- | --- | --- |
 | beginUpload | `EventEmitter<UploadFilesEvent>()` | Raised after files or folders dropped and before the upload process starts. |
 | createFolder | `EventEmitter<Object>` | **Deprecated:** No longer used by the framework |
-| error | `EventEmitter<Object>` | **Deprecated:** 2.4.0 2.4.0 Use UploadService.fileUploadError instead |
-| success | `EventEmitter<Object>` | **Deprecated:** 2.4.0 2.4.0 Use UploadService.fileUploadComplete instead |
+| error | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
+| success | `EventEmitter<Object>` | Emitted when an error occurs. |
 
 ## Intercepting uploads
 

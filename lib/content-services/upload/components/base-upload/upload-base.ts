@@ -59,7 +59,6 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     @Input()
     nodeType: string = 'cm:content';
 
-    /** @deprecated 2.4.0 Use UploadService.fileUploadComplete instead */
     /** Emitted when the file is uploaded successfully. */
     @Output()
     success = new EventEmitter();
@@ -69,7 +68,6 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     @Output()
     createFolder = new EventEmitter();
 
-    /** @deprecated 2.4.0 Use UploadService.fileUploadError instead */
     /** Emitted when an error occurs. */
     @Output()
     error = new EventEmitter();
