@@ -31,7 +31,7 @@ import {
     PaginationComponent, FormValues, DisplayMode, UserPreferenceValues, InfinitePaginationComponent
 } from '@alfresco/adf-core';
 
-import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
+import { DocumentListComponent, PermissionStyleModel, UploadFilesEvent, ConfirmDialogComponent } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
@@ -177,6 +177,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     infiniteScrolling: boolean;
     supportedPages: number[];
     currentSiteid = '';
+    warnOnMultipleUploads = false;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -512,5 +513,28 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             return true;
         }
         return false;
+    }
+
+    onBeginUpload(event: UploadFilesEvent) {
+        if (this.warnOnMultipleUploads && event) {
+            const files = event.files || [];
+            if (files.length > 1) {
+                event.pauseUpload();
+
+                const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                    data: {
+                        title: 'Upload',
+                        message: `Are you sure you want to upload ${files.length} file(s)?`
+                    },
+                    minWidth: '250px'
+                });
+
+                dialogRef.afterClosed().subscribe(result => {
+                    if (result === true) {
+                        event.resumeUpload();
+                    }
+                });
+            }
+        }
     }
 }

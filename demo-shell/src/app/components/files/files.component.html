@@ -39,7 +39,8 @@
                               [rootFolderId]="getDocumentListCurrentFolderId()"
                               [versioning]="versioning"
                               [adf-node-permission]="'create'"
-                              [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []">
+                              [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
+                              (beginUpload)="onBeginUpload($event)">
             <div *ngIf="errorMessage" class="error-message">
                 <button (click)="resetError()" mat-icon-button>
                     <mat-icon>highlight_off</mat-icon>
@@ -497,6 +498,12 @@
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="allowVersionDownload">
                 {{'APP.ADF_VERSION_MANAGER.ALLOW_DOWNLOAD' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="warnOnMultipleUploads">
+                {{'APP.WARN-MULTIPLE-UPLOADS' | translate}}
             </mat-slide-toggle>
         </section>
 

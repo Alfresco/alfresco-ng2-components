@@ -16,10 +16,12 @@
  */
 
 import { FileModel, FileInfo } from '@alfresco/adf-core';
-import { EventEmitter, Input, Output } from '@angular/core';
+import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { UploadService, TranslationService } from '@alfresco/adf-core';
+import { Subscription } from 'rxjs/Rx';
+import { UploadFilesEvent } from '../upload-files.event';
 
-export abstract class UploadBase {
+export abstract class UploadBase implements OnInit, OnDestroy {
 
     /** Sets a limit on the maximum size (in bytes) of a file to be uploaded.
      * Has no effect if undefined.
@@ -61,7 +63,7 @@ export abstract class UploadBase {
     @Output()
     success = new EventEmitter();
 
-    /** @deprecated 2.4.0 */
+    /** @deprecated 2.4.0 No longer used by the framework */
     /** Emitted when a folder is created. */
     @Output()
     createFolder = new EventEmitter();
@@ -70,8 +72,28 @@ export abstract class UploadBase {
     @Output()
     error = new EventEmitter();
 
+    @Output()
+    beginUpload = new EventEmitter<UploadFilesEvent>();
+
+    protected subscriptions: Subscription[] = [];
+
     constructor(protected uploadService: UploadService,
-                protected translationService: TranslationService) {
+                protected translationService: TranslationService,
+                protected ngZone: NgZone) {
+    }
+
+    ngOnInit() {
+        this.subscriptions.push(
+            this.uploadService.fileUploadError.subscribe((error) => {
+                this.error.emit(error);
+            })
+        );
+
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     /**
@@ -102,13 +124,20 @@ export abstract class UploadBase {
             .filter(this.isFileAcceptable.bind(this))
             .filter(this.isFileSizeAcceptable.bind(this));
 
-        if (filteredFiles.length > 0) {
-            this.uploadService.addToQueue(...filteredFiles);
-            this.uploadService.uploadFilesInTheQueue(this.success);
-            this.uploadService.fileUploadError.subscribe((error) => {
-                this.error.emit(error);
-            });
-        }
+        this.ngZone.run(() => {
+            const event = new UploadFilesEvent(
+                [...filteredFiles],
+                this.uploadService
+            );
+            this.beginUpload.emit(event);
+
+            if (!event.defaultPrevented) {
+                if (filteredFiles.length > 0) {
+                    this.uploadService.addToQueue(...filteredFiles);
+                    this.uploadService.uploadFilesInTheQueue(this.success);
+                }
+            }
+        });
     }
 
     /**
@@ -176,9 +205,12 @@ export abstract class UploadBase {
         if (!this.isFileSizeAllowed(file)) {
             acceptableSize = false;
 
-            this.translationService.get('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', { fileName: file.name }).subscribe((message: string) => {
-                this.error.emit(message);
-            });
+            const message = this.translationService.instant(
+                'FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE',
+                { fileName: file.name }
+            );
+
+            this.error.emit(message);
         }
 
         return acceptableSize;

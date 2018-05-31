@@ -98,7 +98,7 @@ export class UploadService {
      * Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
      * @param emitter (Deprecated) Emitter to invoke on file status change
      */
-    uploadFilesInTheQueue(emitter: EventEmitter<any>): void {
+    uploadFilesInTheQueue(emitter?: EventEmitter<any>): void {
         if (!this.activeTask) {
             let file = this.queue.find(currentFile => currentFile.status === FileUploadStatus.Pending);
             if (file) {
@@ -200,15 +200,21 @@ export class UploadService {
         })
             .on('abort', () => {
                 this.onUploadAborted(file);
-                emitter.emit({ value: 'File aborted' });
+                if (emitter) {
+                    emitter.emit({ value: 'File aborted' });
+                }
             })
             .on('error', err => {
                 this.onUploadError(file, err);
-                emitter.emit({ value: 'Error file uploaded' });
+                if (emitter) {
+                    emitter.emit({ value: 'Error file uploaded' });
+                }
             })
             .on('success', data => {
                 this.onUploadComplete(file, data);
-                emitter.emit({ value: data });
+                if (emitter) {
+                    emitter.emit({ value: data });
+                }
             })
             .catch(err => {
                 throw err;
