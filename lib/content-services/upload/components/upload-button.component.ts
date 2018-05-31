@@ -21,7 +21,7 @@ import {
 } from '@alfresco/adf-core';
 import {
     Component, EventEmitter, forwardRef, Input,
-    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation
+    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, NgZone
 } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
@@ -67,8 +67,9 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     constructor(protected uploadService: UploadService,
                 private contentService: ContentService,
                 protected translationService: TranslationService,
-                protected logService: LogService) {
-        super(uploadService, translationService);
+                protected logService: LogService,
+                protected ngZone: NgZone) {
+        super(uploadService, translationService, ngZone);
     }
 
     ngOnInit() {

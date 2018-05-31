@@ -19,7 +19,7 @@ import {
     EXTENDIBLE_COMPONENT, FileInfo, FileModel, FileUtils, NodePermissionSubject,
     NotificationService, TranslationService, UploadService, ContentService, PermissionsEnum
 } from '@alfresco/adf-core';
-import { Component, forwardRef, Input, ViewEncapsulation } from '@angular/core';
+import { Component, forwardRef, Input, ViewEncapsulation, NgZone } from '@angular/core';
 import { UploadBase } from './base-upload/upload-base';
 
 @Component({
@@ -43,8 +43,9 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
     constructor(protected uploadService: UploadService,
                 protected translationService: TranslationService,
                 private notificationService: NotificationService,
-                private contentService: ContentService) {
-        super(uploadService, translationService);
+                private contentService: ContentService,
+                protected ngZone: NgZone) {
+        super(uploadService, translationService, ngZone);
     }
 
     /**

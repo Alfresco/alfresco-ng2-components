@@ -48,7 +48,64 @@ export class AppComponent {
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
-| createFolder | `EventEmitter<Object>` | Emitted when a folder is created. |
-| error | `EventEmitter<Object>` | Emitted when an error occurs. |
-| success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
+| --- | --- | --- |
+| beginUpload | `EventEmitter<UploadFilesEvent>()` | Raised after files or folders dropped and before the upload process starts. |
+| createFolder | `EventEmitter<Object>` | **Deprecated:** No longer used by the framework |
+| error | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
+| success | `EventEmitter<Object>` | Emitted when an error occurs. |
+
+## Intercepting uploads
+
+You can intercept the upload process by utilizing the `beginUpload` event. 
+
+The event has a type of `UploadFilesEvent` and provides the following APIs:
+
+* **files**: get access to the FileInfo objects that are prepared for the upload
+* **pauseUpload**: pause the upload and perform additional tasks, like showing the confirmation dialog
+* **resumeUpload**: resume the upload process
+
+## Example
+
+Wire the `beginUpload` event at the template level
+
+```html
+<adf-upload-drag-area (beginUpload)="onBeginUpload($event)" ...>
+    ...
+</adf-upload-drag-area>
+```
+
+Create the `onBeginUpload` handler that invokes a confirmation dialog
+
+```ts
+import { UploadFilesEvent, ConfirmDialogComponent } from '@alfresco/adf-content-services';
+
+@Component({...})
+export class MyComponent {
+
+    onBeginUpload(event: UploadFilesEvent) {
+        const files = event.files || [];
+
+        if (files.length > 1) {
+            event.pauseUpload();
+
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                data: {
+                    title: 'Upload',
+                    message: `Are you sure you want to upload ${files.length} file(s)?`
+                },
+                minWidth: '250px'
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+                if (result === true) {
+                    event.resumeUpload();
+                }
+            });
+        }
+    }
+
+}
+```
+
+The example above is going to raise confirmation dialog every time a user uploads more than 1 file.
+That can be either 2 or more files, or a folder with multiple entries.

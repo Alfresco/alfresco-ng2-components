@@ -12,7 +12,8 @@
       "ALLOW_DOWNLOAD" :"Enable version download",
       "READ_ONLY" : "Read only"
     },
-    "PERSONAL-FILES": "Personal Files"
+    "PERSONAL-FILES": "Personal Files",
+    "WARN-MULTIPLE-UPLOADS": "Warn on multiple uploads"
   },
     "title": "Welcome",
     "VERSION": {

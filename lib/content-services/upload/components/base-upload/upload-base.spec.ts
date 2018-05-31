@@ -15,22 +15,24 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, NgZone } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { TranslationService, UploadService, setupTestBed, CoreModule, FileModel } from '@alfresco/adf-core';
 import { UploadBase } from './upload-base';
 import { TranslationMock } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UploadFilesEvent } from '../upload-files.event';
 
 @Component({
     selector: 'adf-upload-button-test',
-    template: 'test componente'
+    template: 'test component'
 })
 export class UploadTestComponent extends UploadBase {
 
     constructor(protected uploadService: UploadService,
-                protected translationService: TranslationService) {
-        super(uploadService, translationService);
+                protected translationService: TranslationService,
+                protected ngZone: NgZone) {
+        super(uploadService, translationService, ngZone);
     }
 }
 
@@ -65,6 +67,66 @@ describe('UploadBase', () => {
     afterEach(() => {
         fixture.destroy();
         TestBed.resetTestingModule();
+    });
+
+    describe('beginUpload', () => {
+
+        it('should raise event', done => {
+            spyOn(uploadService, 'addToQueue').and.stub();
+            spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
+
+            component.beginUpload.subscribe(() => done());
+            const file = <File> { name: 'bigFile.png', size: 1000 };
+            component.uploadFiles([file]);
+            fixture.detectChanges();
+        });
+
+        it('should pause upload', fakeAsync(() => {
+            spyOn(uploadService, 'addToQueue').and.stub();
+            spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
+
+            let prevented = false;
+            component.beginUpload.subscribe(event => {
+                event.preventDefault();
+                prevented = true;
+            });
+            const file = <File> { name: 'bigFile.png', size: 1000 };
+            component.uploadFiles([file]);
+
+            tick();
+            expect(prevented).toBeTruthy();
+            expect(uploadService.addToQueue).not.toHaveBeenCalled();
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
+        }));
+
+        it('should resume upload', fakeAsync(() => {
+            const addToQueue = spyOn(uploadService, 'addToQueue').and.stub();
+            const uploadFilesInTheQueue = spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
+
+            let prevented = false;
+            let uploadEvent: UploadFilesEvent;
+            component.beginUpload.subscribe(event => {
+                uploadEvent = event;
+                event.preventDefault();
+                prevented = true;
+            });
+            const file = <File> { name: 'bigFile.png', size: 1000 };
+            component.uploadFiles([file]);
+
+            tick();
+            expect(prevented).toBeTruthy();
+            expect(addToQueue).not.toHaveBeenCalled();
+            expect(uploadFilesInTheQueue).not.toHaveBeenCalled();
+
+            addToQueue.calls.reset();
+            uploadFilesInTheQueue.calls.reset();
+
+            uploadEvent.resumeUpload();
+
+            expect(addToQueue).toHaveBeenCalled();
+            expect(uploadFilesInTheQueue).toHaveBeenCalled();
+        }));
+
     });
 
     describe('filesize', () => {
