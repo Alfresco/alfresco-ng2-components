@@ -183,6 +183,17 @@ describe('SearchSettingsComponent', () => {
         expect(component.isFacetQueriesDefined).toBe(false);
     });
 
+    it('should not allow facetQueries when queries are not defined in configuration', () => {
+        component.queryBuilder.config = {
+            categories: [],
+            facetQueries: {
+                queries: []
+            }
+        };
+
+        expect(component.isFacetQueriesDefined).toBe(false);
+    });
+
     it('should fetch facet queries from response payload', () => {
         component.responseFacetQueries = new ResponseFacetQueryList();
         const queries = [

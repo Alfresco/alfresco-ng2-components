@@ -72,7 +72,7 @@ export class SearchFilterComponent implements OnInit {
     }
 
     get isFacetQueriesDefined() {
-        return !!(this.queryBuilder.config && this.queryBuilder.config.facetQueries);
+        return this.queryBuilder.hasFacetQueries;
     }
 
     onCategoryExpanded(category: SearchCategory) {
