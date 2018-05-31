@@ -33,6 +33,7 @@ var PropInfo = /** @class */ (function () {
         this.defaultValue = rawProp.defaultValue || "";
         this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
         this.type = rawProp.type ? rawProp.type.toString() : "";
+        this.type = this.type.replace(/\|/, "\\|");
         this.isDeprecated = rawProp.comment && rawProp.comment.hasTag("deprecated");
         if (this.isDeprecated) {
             this.docText = "**Deprecated:** " + rawProp.comment.getTag("deprecated").text.replace(/[\n\r]+/g, " ").trim();
