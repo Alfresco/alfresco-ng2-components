@@ -1,6 +1,6 @@
 <mat-tab-group [(selectedIndex)]="activeTab" (selectedTabChange)="onTabChange($event)" data-automation-id="navigation-bar">
     <mat-tab id="tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
-        <div class="page-content">
+        <div class="page-content" *ngIf="showTaskTab">
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="adf-grid-item adf-tasks-menu" fxFlex.gt-md="225px">
                     <div class="adf-list-buttons">
@@ -104,7 +104,7 @@
     </mat-tab>
     <mat-tab id="processes-header" href="#processes"
             label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
-        <div class="page-content">
+        <div class="page-content" *ngIf="showProcessTab">
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="adf-grid-item adf-processes-menu" fxFlex.gt-md="225px">
                     <div class="adf-list-buttons">
