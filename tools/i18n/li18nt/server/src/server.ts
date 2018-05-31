@@ -7,7 +7,8 @@
 import {
 	IPCMessageReader, IPCMessageWriter, createConnection, IConnection, TextDocuments, TextDocument,
 	Diagnostic, DiagnosticSeverity, InitializeResult, TextDocumentPositionParams, CompletionItem,
-	CompletionItemKind
+	CompletionItemKind,
+	MessageReader
 } from 'vscode-languageserver';
 
 // Create a connection for the server. The connection uses Node's IPC as a transport
@@ -67,10 +68,61 @@ connection.onDidChangeConfiguration((change) => {
 	documents.all().forEach(validateTextDocument);
 });
 
+
+class SGStringProblem {
+	constructor(
+		public messageCode: string,
+		public lineNum: number,
+		public startCharPos: number,
+		public endCharPos: number
+	){}
+}
+
+
+let sgErrorMessages: {[index: string]: string} = {
+	'SG0001': 'Polite words are not recommended for UI text'	
+};
+
+
+
+
+
 function validateTextDocument(textDocument: TextDocument): void {
 	let diagnostics: Diagnostic[] = [];
+	let messages: SGStringProblem[] = [];
+
 	let lines = textDocument.getText().split(/\r?\n/g);
 	let problems = 0;
+
+	for (var i = 0; i < lines.length && problems < maxNumberOfProblems; i++) {
+		let line = lines[i];
+		let checkWord = 'please';
+
+		let index = line.indexOf(checkWord);
+		
+		if (index >= 0) {
+			problems++;
+			messages.push(new SGStringProblem("SG0001", i, index, index + checkWord.length));
+		}
+	}
+
+	messages.forEach(message => {
+		let errorMessage = sgErrorMessages[message.messageCode] || "No message available";
+		let fullMessageText = `${message.messageCode}: ${errorMessage}`;
+		let diag: Diagnostic = {
+			severity: DiagnosticSeverity.Warning,
+			range: {
+				start: { line: message.lineNum, character: message.startCharPos },
+				end: { line: message.lineNum, character: message.endCharPos }
+			},
+			message: fullMessageText,
+			source: 'ex'
+		}
+
+		diagnostics.push(diag);
+	});
+
+	/*
 	for (var i = 0; i < lines.length && problems < maxNumberOfProblems; i++) {
 		let line = lines[i];
 		let index = line.indexOf('please');
@@ -103,6 +155,7 @@ function validateTextDocument(textDocument: TextDocument): void {
 			diagnostics.push(diagnosic);
 		}
 	}
+	*/
 	// Send the computed diagnostics to VSCode.
 	connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
 }
