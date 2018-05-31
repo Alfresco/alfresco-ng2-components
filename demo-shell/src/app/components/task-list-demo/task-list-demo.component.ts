@@ -21,9 +21,22 @@ import { Component, Input } from '@angular/core';
     templateUrl: './task-list-demo.component.html',
     styleUrls: [`./task-list-demo.component.scss`],
 })
+
 export class TaskListDemoComponent {
 
     @Input()
     appId: number;
-    
+
+    @Input()
+    processDefinitionId: string;
+
+    @Input()
+    state: string;
+
+    @Input()
+    assignment: string;
+
+    @Input()
+    name: string;
+
 }
