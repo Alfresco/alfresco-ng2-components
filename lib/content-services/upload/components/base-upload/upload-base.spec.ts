@@ -99,7 +99,7 @@ describe('UploadBase', () => {
             expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
         }));
 
-        it('should pause upload', fakeAsync(() => {
+        it('should resume upload', fakeAsync(() => {
             const addToQueue = spyOn(uploadService, 'addToQueue').and.stub();
             const uploadFilesInTheQueue = spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
 
