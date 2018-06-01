@@ -59,6 +59,7 @@
                 <!-- Actions (left) -->
                 <div *ngIf="actions && actionsPosition === 'left'" class="adf-datatable-table-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
+                            [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_left_' + idx"
                             [attr.data-automation-id]="'action_menu_' + idx">
                         <mat-icon>more_vert</mat-icon>
@@ -162,6 +163,7 @@
                 <div *ngIf="actions && actionsPosition === 'right'"
                      class="adf-datatable-table-cell alfresco-datatable__actions-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
+                            [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_right_' + idx"
                             [attr.data-automation-id]="'action_menu_' + idx">
                         <mat-icon>more_vert</mat-icon>

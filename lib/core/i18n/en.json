@@ -207,6 +207,9 @@
         "TITLE": "Drag and drop",
         "SUBTITLE": "to upload files"
       }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Content actions"
     }
   },
   "USER_PROFILE": {
