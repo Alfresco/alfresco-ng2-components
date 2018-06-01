@@ -54,7 +54,6 @@ import {
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
-import { ObjectDataRow } from '@alfresco/adf-core';
 import { Subscription } from 'rxjs/Subscription';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
@@ -163,7 +162,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 formService: FormService,
                 private location: Location,
                 private preferenceService: UserPreferencesService) {
-
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
@@ -446,11 +444,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.activeTab = this.tabs.tasks;
 
         const taskId = event.value.id;
-        const processTaskDataRow = new ObjectDataRow({
+        const processTaskDataRow: any = {
             id: taskId,
             name: event.value.name || 'No name',
             created: event.value.created
-        });
+        };
         this.activitifilter.selectFilter(null);
         if (this.taskList) {
             this.taskList.setCustomDataSource([processTaskDataRow]);

@@ -80,7 +80,72 @@ export class DataTableDemo {
 }
 ```
 
-You can also use HTML-based schema declaration like shown below:
+### Setting the rows and column schema
+
+You can set rows and columns to the ObjectDataTableAdapter like shown below:
+
+```ts
+import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
+
+@Component({...})
+export class DataTableDemo {
+    data: ObjectDataTableAdapter;
+
+    constructor() {
+        this.data = new ObjectDataTableAdapter(
+            // data
+            [
+                {id: 1, name: 'Name 1'},
+                {id: 2, name: 'Name 2'}
+            ],
+            // columns
+            [
+                {
+                    type: 'text',
+                    key: 'id',
+                    title: 'Id',
+                    sortable: true
+                },
+                {
+                    type: 'text',
+                    key: 'name',
+                    title: 'Name',
+                    cssClass: 'full-width',
+                    sortable: true
+                }
+            ]
+        );
+    }
+}
+```
+
+```html
+<adf-datatable 
+    [data]="data">
+</adf-datatable>
+```
+
+You can also set rows and HTML-based schema declaration like shown below:
+
+```ts
+import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
+
+@Component({...})
+export class DataTableDemo {
+    data: ObjectDataTableAdapter;
+
+    constructor() {
+        this.data = new ObjectDataTableAdapter(
+            // data
+            [
+                {id: 1, name: 'Name 1'},
+                {id: 2, name: 'Name 2'}
+            ],
+            []
+        );
+    }
+}
+```
 
 ```html
 <adf-datatable [data]="data">
@@ -94,35 +159,94 @@ You can also use HTML-based schema declaration like shown below:
 </adf-datatable>
 ```
 
+You can also set rows to the ObjectDataTableAdapter and set columns as an input like shown below :
+
 ```ts
-import { ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
 
 @Component({...})
 export class DataTableDemo {
     data: ObjectDataTableAdapter;
+    schema: any;
 
     constructor() {
         this.data = new ObjectDataTableAdapter(
             // data
             [
-                {
-                    id: 1, 
-                    name: 'Name 1', 
-                    createdBy : { name: 'user'}, 
-                    createdOn: 123, 
-                    icon: 'http://example.com/img.png'
+                {id: 1, name: 'Name 1'},
+                {id: 2, name: 'Name 2'}
+            ],
+            []
+        );
+        // columns
+        this.schema =
+            [
+                { 
+                    type: 'text', 
+                    key: 'id', 
+                    title: 'Id', 
+                    sortable: true 
                 },
                 {
-                    id: 2, 
-                    name: 'Name 2', 
-                    createdBy : { name: 'user 2'}, 
-                    createdOn: 123, 
-                    icon: 'http://example.com/img.png'
+                    type: 'text', 
+                    key: 'name', 
+                    title: 'Name', 
+                    sortable: true
                 }
-            ]
-        );
+            ];
     }
 }
+```
+
+```html
+<adf-datatable
+    [data]="data"
+    [columns]="schema">
+</adf-datatable>
+```
+
+You can also set rows and columns through inputs as shown below :
+
+```ts
+import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
+
+@Component({...})
+export class DataTableDemo {
+    rows: any;
+    schema: any;
+
+    constructor() {
+        // data
+        this.rows =
+            [
+                {id: 1, name: 'Name 1'},
+                {id: 2, name: 'Name 2'}
+            ];
+        // columns
+        this.schema =
+            [
+                { 
+                    type: 'text', 
+                    key: 'id', 
+                    title: 'Id', 
+                    sortable: true 
+                },
+                {
+                    type: 'text', 
+                    key: 'name', 
+                    title: 'Name', 
+                    sortable: true
+                }
+            ];
+    }
+}
+```
+
+```html
+<adf-datatable
+    [rows]="rows"
+    [columns]="schema">
+</adf-datatable>
 ```
 
 ## Class members
@@ -134,6 +258,7 @@ export class DataTableDemo {
 | actions | `boolean` | false | Toggles the data actions column. |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
 | allowDropFiles | `boolean` | false | Toggles file drop support for rows (see [Upload directive](upload.directive.md) for further details). |
+| columns | `any[]` | `[]` | The columns that the datatable will show.  |
 | contextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
 | display | `string` |  [`DisplayMode`](../../lib/core/datatable/components/datatable/datatable.component.ts).List | Selects the display mode of the table. Can be "list" or "gallery". |
@@ -145,8 +270,8 @@ export class DataTableDemo {
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
 | rows | `any[]` |  \[] | The rows that the datatable will show. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| selectFirstRow | `boolean` | `true` | Toggles the first row selection. |
 | showHeader | `boolean` | true | Toggles the header. |
-| sorting | `any[]` | `[]` | Define the sorting order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 
 ### Events
 
