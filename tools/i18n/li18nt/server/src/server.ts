@@ -7,8 +7,7 @@
 import {
 	IPCMessageReader, IPCMessageWriter, createConnection, IConnection, TextDocuments, TextDocument,
 	Diagnostic, DiagnosticSeverity, InitializeResult, TextDocumentPositionParams, CompletionItem,
-	CompletionItemKind,
-	MessageReader
+	CompletionItemKind
 } from 'vscode-languageserver';
 
 // Create a connection for the server. The connection uses Node's IPC as a transport
@@ -22,12 +21,12 @@ let documents: TextDocuments = new TextDocuments();
 documents.listen(connection);
 
 
-let shouldSendDiagnosticRelatedInformation: boolean = false;
+//let shouldSendDiagnosticRelatedInformation: boolean = false;
 
 // After the server has started the client sends an initialize request. The server receives
 // in the passed params the rootPath of the workspace plus the client capabilities.
 connection.onInitialize((_params): InitializeResult => {
-	shouldSendDiagnosticRelatedInformation = _params.capabilities && _params.capabilities.textDocument && _params.capabilities.textDocument.publishDiagnostics && _params.capabilities.textDocument.publishDiagnostics.relatedInformation;
+	//shouldSendDiagnosticRelatedInformation = _params.capabilities && _params.capabilities.textDocument && _params.capabilities.textDocument.publishDiagnostics && _params.capabilities.textDocument.publishDiagnostics.relatedInformation;
 	return {
 		capabilities: {
 			// Tell the client that the server works in FULL text document sync mode
@@ -80,11 +79,79 @@ class SGStringProblem {
 
 
 let sgErrorMessages: {[index: string]: string} = {
-	'SG0001': 'Polite words are not recommended for UI text'	
+	'SG0001': 'Polite words are not recommended for UI text',
+	'SG0002': 'Avoid using interjections in UI text ("oops", "yeah", "wow")',
+	'SG0003': 'Avoid exclamations ("!")',
+	'SG0004': 'Avoid unusual punctuation marks (";", "~", "^")',
+	'SG0005': 'Don\'t use the ampersand ("&") as a replacement for "and"',
+	'SG0006': 'Write numbers using digits instead of words'
 };
 
 
+type SGRule = (line: string, lineNum: number) => SGStringProblem[];
 
+
+let rules: SGRule[] = [
+	sg0001, sg0002, sg0003, sg0004, sg0005, sg0006
+];
+
+
+function sg0001(line: string,  lineNum: number): SGStringProblem[] {
+	// Use global regex to allow repeated searching from the end of the
+	// previous match.
+	let checkWords = /\b(please|thanks|thank you)\b/gi;
+	return checkForRegExpMatches(checkWords, line, lineNum, "SG0001");
+}
+
+
+function sg0002(line: string,  lineNum: number): SGStringProblem[] {
+	let checkWords = /\b(whoops|oops|wow|yeah|hey|oh|aw)\b/gi;
+	return checkForRegExpMatches(checkWords, line, lineNum, "SG0002");
+}
+
+
+function sg0003(line: string,  lineNum: number): SGStringProblem[] {
+	let checkWords = /!+/gi;
+	return checkForRegExpMatches(checkWords, line, lineNum, "SG0003");
+}
+
+function sg0004(line: string,  lineNum: number): SGStringProblem[] {
+	let checkWords = /[;~\^]+/gi;
+	return checkForRegExpMatches(checkWords, line, lineNum, "SG0004");
+}
+
+
+function sg0005(line: string,  lineNum: number): SGStringProblem[] {
+	let checkWords = /&+/gi;
+	return checkForRegExpMatches(checkWords, line, lineNum, "SG0005");
+}
+
+
+function sg0006(line: string,  lineNum: number): SGStringProblem[] {
+	let checkWords = /\b(two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\b/gi;
+	return checkForRegExpMatches(checkWords, line, lineNum, "SG0006");
+}
+
+function checkForRegExpMatches(re: RegExp, line: string, lineNum: number, ruleName: string): SGStringProblem[] {
+	let problems: SGStringProblem[] = [];
+
+	let matchInfo = re.exec(line);
+	
+	while (matchInfo) {
+		problems.push(
+			new SGStringProblem(
+				ruleName,
+				lineNum,
+				matchInfo.index,
+				matchInfo.index + matchInfo[0].length
+			)
+		);
+
+		matchInfo = re.exec(line);
+	}
+
+	return problems;
+}
 
 
 function validateTextDocument(textDocument: TextDocument): void {
@@ -96,14 +163,12 @@ function validateTextDocument(textDocument: TextDocument): void {
 
 	for (var i = 0; i < lines.length && problems < maxNumberOfProblems; i++) {
 		let line = lines[i];
-		let checkWord = 'please';
 
-		let index = line.indexOf(checkWord);
-		
-		if (index >= 0) {
-			problems++;
-			messages.push(new SGStringProblem("SG0001", i, index, index + checkWord.length));
-		}
+		rules.forEach(rule => {
+			let newProblems = rule(line, i);
+			messages.push(...newProblems);
+			problems += newProblems.length;
+		});
 	}
 
 	messages.forEach(message => {
@@ -116,7 +181,7 @@ function validateTextDocument(textDocument: TextDocument): void {
 				end: { line: message.lineNum, character: message.endCharPos }
 			},
 			message: fullMessageText,
-			source: 'ex'
+			source: 'li18nt'
 		}
 
 		diagnostics.push(diag);
