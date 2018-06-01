@@ -2,7 +2,7 @@
 
 This document lists the guidelines from the
 [Alfresco UI style guide](https://docs.alfresco.com/sites/docs.alfresco.com/files/public/docs_team/u2/Alfresco-Writing-Guide.pdf)
-in the form of separate rules. The list can be used in a checking procedure to identify
+in the form of separate rules. The list can be as a check to identify
 specific types of mistake and suggest solutions. However, the main
 [style guide](https://docs.alfresco.com/sites/docs.alfresco.com/files/public/docs_team/u2/Alfresco-Writing-Guide.pdf)
 remains the definitive source for the guidelines and explains and develops the reasons for
@@ -46,3 +46,15 @@ and twenty three") instead of digits ("123"). Style guides differ on this issue 
 style is to prefer digits over words when writing numbers. The exception is for numbers from
 1 million upwards. For these, write digits followed by "million", "billion", etc. Something like
 "10 billion" is easier to read than 10000000000.
+
+### SG0007: Contractions ("can't", "won't" "isn't") are usually better than equivalent phrase
+
+Contractions such as "can't", "won't" and "isn't" are shorter and more familiar than "cannot",
+"will not", "is not" and help to make the UI seem a bit friendlier. Avoid the full phrase except
+in cases where you want to emphasise an instruction very strongly ("Do not change these settings
+unless you are sure you need to do so").
+
+###SG0008: Leave out trademark and copyright symbols
+
+There is no legal requirement to use trademark and copyright symbols ("™", "©", "®") in UI
+text. They will be covered in the docs if they are needed at all, so don't use them in the UI.
