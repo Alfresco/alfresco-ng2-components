@@ -20,21 +20,23 @@ export interface CardViewItem {
     displayValue: string;
     editable?: boolean;
     icon?: string;
+    data?: any;
 }
 ```
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| label | string | "" | Item label |
-| value | any |  | The original data value for the item |
-| key | string | "" | Identifying key (important when editing the item) |
-| default | any |  | The default value to display if the value is empty |
-| displayValue | string | "" | The value to display |
-| editable | boolean | false | Toggles whether the item is editable |
-| clickable | boolean | false | Toggles whether the item is clickable |
-| icon | string |  | The material icon to show beside clickable items |
+| Name         | Type    | Default | Description                                                                                                                                                                                                  |
+| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| label        | string  | ""      | Item label                                                                                                                                                                                                   |
+| value        | any     |         | The original data value for the item                                                                                                                                                                         |
+| key          | string  | ""      | Identifying key (important when editing the item)                                                                                                                                                            |
+| default      | any     |         | The default value to display if the value is empty                                                                                                                                                           |
+| displayValue | string  | ""      | The value to display                                                                                                                                                                                         |
+| editable     | boolean | false   | Toggles whether the item is editable                                                                                                                                                                         |
+| clickable    | boolean | false   | Toggles whether the item is clickable                                                                                                                                                                        |
+| icon         | string  |         | The material icon to show beside clickable items                                                                                                                                                             |
+| data         | any     | null    | Any custom data which is needed to be provided and stored in the model for any reason. During an update or a click event this can be a container of any custom data which can be useful for 3rd party codes. |
 
 ## Details
 
@@ -55,8 +57,7 @@ Picard's birthday (47457.1):
     ```ts
     import { CardViewBaseItemModel, CardViewItem, DynamicComponentModel } from '@alfresco/adf-core';
 
-    export class CardViewStarDateItemModel extends CardViewBaseItemModel implements
-    CardViewItem, DynamicComponentModel {
+    export class CardViewStarDateItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
         type: string = 'star-date';
 
         get displayValue() {
@@ -99,7 +100,7 @@ Picard's birthday (47457.1):
     ```
 
     See the
-    [Card View Text Item component source](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) 
+    [Card View Text Item component source](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts)
     or the
     [Card View Date Item component source](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) for examples of how to make the field
     editable.
@@ -146,5 +147,5 @@ Picard's birthday (47457.1):
 
 ## See also
 
--   [Card View component](card-view.component.md)
--   [Card Item Types service](card-item-types.service.md)
+*   [Card View component](card-view.component.md)
+*   [Card Item Types service](card-item-types.service.md)
