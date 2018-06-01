@@ -44,6 +44,7 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
+import { UserRepresentation } from 'alfresco-js-api';
 
 @Component({
     selector: 'adf-task-details',
@@ -179,6 +180,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     peopleSearch: Observable<UserProcessModel[]>;
 
+    currentLoggedUser: UserRepresentation;
+
     constructor(private taskListService: TaskListService,
                 private authService: AuthenticationService,
                 private peopleProcessService: PeopleProcessService,
@@ -199,6 +202,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
         this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
         this.cardViewUpdateService.itemClicked$.subscribe(this.clickTaskDetails.bind(this));
+
+        this.authService.getBpmLoggedUser().subscribe((user: UserRepresentation) => {
+            this.currentLoggedUser = user;
+        });
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -286,7 +293,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     isAssignedToMe(): boolean {
-        return this.isAssigned() ? this.taskDetails.assignee.email === this.authService.getBpmUsername() : false;
+        return this.isAssigned() ? this.taskDetails.assignee.email.toLocaleLowerCase() === this.currentLoggedUser.email.toLocaleLowerCase() : false;
     }
 
     isCompleteButtonEnabled(): boolean {
