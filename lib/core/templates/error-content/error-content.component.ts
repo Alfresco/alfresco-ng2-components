@@ -45,7 +45,7 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
                 if (params['id']) {
                     this.errorCode = params['id'];
                     const unknown = this.translateService.instant(
-                        'ERROR_CONTENT.' + this.errorCode + '.TITLE');git 
+                        'ERROR_CONTENT.' + this.errorCode + '.TITLE');
                     if (unknown === 'ERROR_CONTENT.' + this.errorCode + '.TITLE') {
                         this.errorCode = "UNKNOWN";
                     }
