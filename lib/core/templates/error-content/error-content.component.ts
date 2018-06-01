@@ -44,8 +44,10 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
                     this.errorCode = params['id'];
-                    const unknown = this.translateService.instant(
-                        'ERROR_CONTENT.' + this.errorCode + '.TITLE');
+                    let unknown = "";
+                    this.translateService.get('ERROR_CONTENT.' + this.errorCode + '.TITLE').subscribe((errorTranslation: string) => {
+                        unknown = errorTranslation;
+                    });
                     if (unknown === 'ERROR_CONTENT.' + this.errorCode + '.TITLE') {
                         this.errorCode = "UNKNOWN";
                     }
