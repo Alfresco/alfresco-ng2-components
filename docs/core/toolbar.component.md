@@ -80,6 +80,28 @@ You can divide groups of elements with a visual separator `<adf-toolbar-divider>
 </adf-toolbar>
 ```
 
+### Spacer
+
+You can provide a separate element with `adf-toolbar--spacer` class name
+to fill the empty space and move the content to the right of the toolbar if needed:
+
+```html
+<adf-toolbar>
+    <adf-toolbar-title>
+        ...
+    <adf-toolbar-title>
+    
+    <div class="adf-toolbar--spacer"></div>
+
+    <button></button>
+    <adf-toolbar-divider></adf-toolbar-divider>
+    <button></button>
+</adf-toolbar>
+```
+
+In the example above, the toolbar title element is rendered to the left,
+but all the buttons are pushed to the right side.
+
 ### Dropdown menu
 
 You can use the following example to create a dropdown menu:
