@@ -160,6 +160,13 @@
   },
   "SEARCH": {
     "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Search",
+      "ARIA-LABEL": "Search button"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "Search input"
+    },
     "RESULTS": {
       "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
       "NONE": "No results found for {{searchTerm}}",
