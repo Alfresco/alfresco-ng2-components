@@ -15,12 +15,12 @@ Shows a notification message with optional feedback.
 
 -   **openSnackMessage**(message: `string` = `null`, millisecondsDuration?: `number` = `null`): `MatSnackBarRef<any>`<br/>
     Opens a snackbar notification to show a message.
-    -   _message:_ `string`  - The message to show
+    -   _message:_ `string`  - The message (or resource key) to show.
     -   _millisecondsDuration:_ `number`  - (Optional) Time before notification disappears after being shown
     -   **Returns** `MatSnackBarRef<any>` - Information/control object for the snackbar
 -   **openSnackMessageAction**(message: `string` = `null`, action: `string` = `null`, millisecondsDuration?: `number` = `null`): `MatSnackBarRef<any>`<br/>
     Opens a snackbar notification with a message and a response button.
-    -   _message:_ `string`  - The message to show
+    -   _message:_ `string`  - The message (or resource key) to show.
     -   _action:_ `string`  - Caption for the response button
     -   _millisecondsDuration:_ `number`  - (Optional) Time before the notification disappears (unless the button is clicked)
     -   **Returns** `MatSnackBarRef<any>` - Information/control object for the snackbar
@@ -39,9 +39,12 @@ export class MyComponent implements OnInit {
     }
 
     ngOnInit() {
-          this.notificationService.openSnackMessage('test', 200000).afterDismissed().subscribe(() => {
-                    console.log('The snack-bar was dismissed');
-                });
+        this.notificationService
+            .openSnackMessage('test', 200000)
+            .afterDismissed()
+            .subscribe(() => {
+                console.log('The snack-bar was dismissed');
+            });
     }
 }
 ```
@@ -55,7 +58,10 @@ export class MyComponent implements OnInit {
     }
 
     ngOnInit() {
-         this.notificationService.openSnackMessageAction('Do you want to report this issue?', 'send', 200000).afterDismissed().subscribe(() => {
+        this.notificationService
+            .openSnackMessageAction('Do you want to report this issue?', 'send', 200000)
+            .afterDismissed()
+            .subscribe(() => {
                 console.log('The snack-bar was dismissed');
             });
     }
