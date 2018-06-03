@@ -32,11 +32,7 @@ describe('PdfThumbListComponent', () => {
     const page = (id) => {
         return {
             id,
-            getPage: () => Promise.resolve({
-                getViewport: () => {
-                    return 1;
-                }
-            })
+            getPage: Promise.resolve()
         };
     };
 
@@ -51,12 +47,8 @@ describe('PdfThumbListComponent', () => {
         },
         pdfDocument: {
             getPage: (pageNum) => Promise.resolve({
-                getViewport: () => {
-                    return 1;
-                },
-                render: () => {
-                    return Promise.resolve({});
-                }
+                getViewport: () => ({ height: 421, width: 335 }),
+                render: jasmine.createSpy('render').and.returnValue(Promise.resolve())
             })
         },
         _pages: [
@@ -78,7 +70,6 @@ describe('PdfThumbListComponent', () => {
     beforeEach(async(() => {
         fixture = TestBed.createComponent(PdfThumbListComponent);
         component = fixture.componentInstance;
-
         component.pdfViewer = viewerMock;
 
         // provide scrollable container
@@ -100,6 +91,7 @@ describe('PdfThumbListComponent', () => {
     });
 
     it('should render next range on scroll', () => {
+        component.currentHeight = 114;
         fixture.nativeElement.scrollTop = 700;
         fixture.detectChanges();
 

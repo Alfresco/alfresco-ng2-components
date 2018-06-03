@@ -43,7 +43,6 @@ export class PdfThumbComponent implements OnInit {
         const canvas = this.getCanvas(pageRatio);
         const scale = Math.min((canvas.height / viewport.height), (canvas.width / viewport.width));
 
-
         return page.render({
             canvasContext: canvas.getContext('2d'),
             viewport: page.getViewport(scale)

@@ -38,7 +38,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private items = [];
     private margin: number = 15;
-    private itemHeight: number = 0;
+    private itemHeight: number = 114 + this.margin;
 
     @ContentChild(TemplateRef)
     template: any;

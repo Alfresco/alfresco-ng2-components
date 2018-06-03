@@ -28,12 +28,17 @@ describe('PdfThumbComponent', () => {
     const domSanitizer = {
         bypassSecurityTrustUrl: () => 'image-data'
     };
+    const width = 91;
+    const height = 119;
     const page = {
         id: 'pageId',
         getPage: jasmine.createSpy('getPage').and.returnValue(Promise.resolve({
-            getViewport: () => ({ height: 0, width: 0 }),
+            getViewport: () => ({ height: width, width: height }),
             render: jasmine.createSpy('render').and.returnValue(Promise.resolve())
-        }))
+        })),
+
+        getWidth: jasmine.createSpy('getWidth').and.returnValue(width),
+        getHeight: jasmine.createSpy('getHeight').and.returnValue(height)
     };
 
     setupTestBed({
