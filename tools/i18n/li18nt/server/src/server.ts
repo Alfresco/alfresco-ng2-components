@@ -10,6 +10,10 @@ import {
 	CompletionItemKind
 } from 'vscode-languageserver';
 
+import {
+	SGStringProblem, sgErrorMessages, rules
+} from './SGStyleRules';
+
 // Create a connection for the server. The connection uses Node's IPC as a transport
 let connection: IConnection = createConnection(new IPCMessageReader(process), new IPCMessageWriter(process));
 
@@ -42,7 +46,9 @@ connection.onInitialize((_params): InitializeResult => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent((change) => {
-	validateTextDocument(change.document);
+	if (change.document.uri.endsWith('en.json')) {
+		validateTextDocument(change.document);
+	}
 });
 
 // The settings interface describe the server relevant settings part
@@ -67,104 +73,6 @@ connection.onDidChangeConfiguration((change) => {
 	documents.all().forEach(validateTextDocument);
 });
 
-
-class SGStringProblem {
-	constructor(
-		public messageCode: string,
-		public lineNum: number,
-		public startCharPos: number,
-		public endCharPos: number
-	){}
-}
-
-
-let sgErrorMessages: {[index: string]: string} = {
-	'SG0001': 'Polite words are not recommended for UI text',
-	'SG0002': 'Avoid using interjections in UI text ("oops", "yeah", "wow")',
-	'SG0003': 'Avoid exclamations ("!")',
-	'SG0004': 'Avoid unusual punctuation marks (";", "~", "^")',
-	'SG0005': 'Don\'t use the ampersand ("&") as a replacement for "and"',
-	'SG0006': 'Write numbers using digits instead of words',
-	'SG0007': 'Contractions ("can\'t", "won\'t" "isn\'t") are usually better than the equivalent phrase',
-	'SG0008': 'Leave out trademark and copyright symbols'
-};
-
-
-type SGRule = (line: string, lineNum: number) => SGStringProblem[];
-
-
-let rules: SGRule[] = [
-	sg0001, sg0002, sg0003, sg0004, sg0005, sg0006, sg0007, sg0008
-];
-
-
-function sg0001(line: string,  lineNum: number): SGStringProblem[] {
-	// Use global regex to allow repeated searching from the end of the
-	// previous match.
-	let checkWords = /\b(please|thanks|thank you|sorry)\b/gi;
-	return checkForRegExpMatches(checkWords, line, lineNum, "SG0001");
-}
-
-
-function sg0002(line: string,  lineNum: number): SGStringProblem[] {
-	let checkWords = /\b(whoops|oops|wow|yeah|hey|oh|aw)\b/gi;
-	return checkForRegExpMatches(checkWords, line, lineNum, "SG0002");
-}
-
-
-function sg0003(line: string,  lineNum: number): SGStringProblem[] {
-	let checkWords = /!+/gi;
-	return checkForRegExpMatches(checkWords, line, lineNum, "SG0003");
-}
-
-function sg0004(line: string,  lineNum: number): SGStringProblem[] {
-	let checkWords = /[;~\^]+/gi;
-	return checkForRegExpMatches(checkWords, line, lineNum, "SG0004");
-}
-
-
-function sg0005(line: string,  lineNum: number): SGStringProblem[] {
-	let checkWords = /&+/gi;
-	return checkForRegExpMatches(checkWords, line, lineNum, "SG0005");
-}
-
-
-function sg0006(line: string,  lineNum: number): SGStringProblem[] {
-	let checkWords = /\b(two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\b/gi;
-	return checkForRegExpMatches(checkWords, line, lineNum, "SG0006");
-}
-
-
-function sg0007(line: string,  lineNum: number): SGStringProblem[] {
-	let checkWords = /\b(cannot|do not|will not|have not|is not|should not|you are|we will)\b/gi;
-	return checkForRegExpMatches(checkWords, line, lineNum, "SG0007");
-}
-
-function sg0008(line: string,  lineNum: number): SGStringProblem[] {
-	let checkWords = /[\u00a9\u00ae\u2122]+/gi;
-	return checkForRegExpMatches(checkWords, line, lineNum, "SG0008");
-}
-
-function checkForRegExpMatches(re: RegExp, line: string, lineNum: number, ruleName: string): SGStringProblem[] {
-	let problems: SGStringProblem[] = [];
-
-	let matchInfo = re.exec(line);
-	
-	while (matchInfo) {
-		problems.push(
-			new SGStringProblem(
-				ruleName,
-				lineNum,
-				matchInfo.index,
-				matchInfo.index + matchInfo[0].length
-			)
-		);
-
-		matchInfo = re.exec(line);
-	}
-
-	return problems;
-}
 
 
 function validateTextDocument(textDocument: TextDocument): void {
@@ -200,40 +108,6 @@ function validateTextDocument(textDocument: TextDocument): void {
 		diagnostics.push(diag);
 	});
 
-	/*
-	for (var i = 0; i < lines.length && problems < maxNumberOfProblems; i++) {
-		let line = lines[i];
-		let index = line.indexOf('please');
-		if (index >= 0) {
-			problems++;
-
-			let diagnosic: Diagnostic = {
-				severity: DiagnosticSeverity.Warning,
-				range: {
-					start: { line: i, character: index },
-					end: { line: i, character: index + 6 }
-				},
-				message: `The word "please" is not recommended`,
-				source: 'ex'
-			};
-			if (shouldSendDiagnosticRelatedInformation) {
-				diagnosic.relatedInformation = [
-					{
-						location: {
-							uri: textDocument.uri,
-							range: {
-								start: { line: i, character: index },
-								end: { line: i, character: index + 6 }
-							}
-						},
-						message: 'Rule a14: no politeness'
-					}
-				];
-			}
-			diagnostics.push(diagnosic);
-		}
-	}
-	*/
 	// Send the computed diagnostics to VSCode.
 	connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
 }
