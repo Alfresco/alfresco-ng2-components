@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector no-access-missing-member no-input-rename  */
-
-import { Component,  OnChanges, SimpleChanges, ContentChildren, QueryList } from '@angular/core';
-
-import { MatButton } from '@angular/material';
+import { Component, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { MatMenuItem } from '@angular/material';
 
 @Component({
     selector: 'adf-buttons-action-menu',
@@ -27,18 +24,18 @@ import { MatButton } from '@angular/material';
     styleUrls: ['./buttons-menu.component.scss']
 })
 
-export class ButtonsMenuComponent implements OnChanges {
+export class ButtonsMenuComponent implements  AfterContentInit {
 
-    @ContentChildren(MatButton) buttons: QueryList<MatButton>
+    @ContentChildren(MatMenuItem) buttons: QueryList<MatMenuItem>;
 
-    ngOnChanges(changes: SimpleChanges) {
-        this.buttons = changes['buttons'].currentValue;
-    }
+    isMenuEmpty: boolean;
 
     ngAfterContentInit() {
-        this.buttons.forEach(button => {
-            console.log(button);
-        });
+        if (this.buttons.length > 0) {
+            this.isMenuEmpty = false;
+        } else {
+            this.isMenuEmpty = true;
+        }
     }
 
     isMobile(): boolean {

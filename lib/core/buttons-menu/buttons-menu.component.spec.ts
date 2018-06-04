@@ -16,76 +16,99 @@
  */
 
 import { TestBed, async } from '@angular/core/testing';
-import { ButtonsMenuComponent } from './buttons-menu.component';
-import { MenuButton } from './menu-button.model';
 import { MaterialModule } from '../material.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { setupTestBed } from '../testing/setupTestBed';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CustomEmptyContainerComponent, CustomContainerComponent } from '../mock/buttons-menu.mock';
 
 describe('ButtonsMenuComponent', () => {
 
-    let fixture;
-    let buttonsMenuComponent: ButtonsMenuComponent;
-    let element: HTMLElement;
+    describe('When Buttons are injected', () => {
 
-    setupTestBed({
-        imports: [
-            CoreTestingModule,
-            MaterialModule
-        ]
-    });
+        let fixture;
+        let component: CustomContainerComponent;
+        let element: HTMLElement;
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(ButtonsMenuComponent);
-        element = fixture.nativeElement;
-        buttonsMenuComponent = <ButtonsMenuComponent> fixture.debugElement.componentInstance;
-    });
-
-    afterEach(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
-    });
-
-    it('should hide buttons menu div if buttons input is empty', async(() => {
-        buttonsMenuComponent.buttons = [];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const buttonsMenuElement = element.querySelector('#adf-buttons-menu');
-            expect(buttonsMenuElement).toBeNull();
+        setupTestBed({
+            imports: [
+                CoreTestingModule,
+                MaterialModule
+            ],
+            declarations: [
+                CustomContainerComponent
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA
+            ]
         });
-    }));
 
-    it('should render buttons menu when there is at least one button declared in the buttons array', async(() => {
-        const button = new MenuButton({
-            label: 'button',
-            icon: 'button',
-            id: 'clickMe'
+        beforeEach(() => {
+            fixture = TestBed.createComponent(CustomContainerComponent);
+            element = fixture.debugElement.nativeElement;
+            component = fixture.componentInstance;
         });
-        buttonsMenuComponent.buttons = [button];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const buttonsMenuElement = element.querySelector('#adf-buttons-menu');
-            expect(buttonsMenuElement).not.toBeNull();
-            expect(buttonsMenuElement).toBeDefined();
-        });
-    }));
 
-    it('should call the handler function when button is clicked', async(() => {
-        const button = new MenuButton({
-            label: 'button',
-            icon: 'button',
-            id: 'clickMe'
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
         });
-        button.handler = jasmine.createSpy('handler');
-        buttonsMenuComponent.buttons = [button];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const buttonsMenuElement: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#clickMe');
-            expect(buttonsMenuElement).not.toBeNull();
-            expect(buttonsMenuElement).toBeDefined();
-            buttonsMenuElement.click();
+
+        it('should render buttons menu when at least one button is declared', async(() => {
             fixture.detectChanges();
-            expect(button.handler).toHaveBeenCalled();
+            fixture.whenStable().then(() => {
+                const buttonsMenuElement = element.querySelector('#adf-buttons-menu');
+                expect(buttonsMenuElement).toBeDefined();
+            });
+        }));
+
+        it('should trigger event when a specific button is clicked', async(() => {
+            expect(component.value).toBeUndefined();
+            let button = element.querySelector('button');
+            button.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(component.value).toBe(1);
+            });
+        }));
+    });
+
+    describe('When no buttons are injected', () => {
+        let fixture;
+        let component: CustomEmptyContainerComponent;
+        let element: HTMLElement;
+
+        setupTestBed({
+            imports: [
+                CoreTestingModule,
+                MaterialModule
+            ],
+            declarations: [
+                CustomEmptyContainerComponent
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA
+            ]
         });
-    }));
+
+        beforeEach(() => {
+            fixture = TestBed.createComponent(CustomEmptyContainerComponent);
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should hide buttons menu if buttons input is empty', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const buttonsMenuElement = element.querySelector('#adf-buttons-menu');
+                expect(buttonsMenuElement).toBeNull();
+            });
+        }));
+    });
+
 });

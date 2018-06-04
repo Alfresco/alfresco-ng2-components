@@ -3,13 +3,16 @@
     .adf-buttons-menu {
         margin-right: 10px;
 
+        & div {
+            display: flex;
+        }
+
         &-mobile {
             margin-right: 10px;
         }
 
-        &-desktop {
+        &-desktop  {
             display: flex;
-            flex-direction: row;
 
             button {
                 color: black;
