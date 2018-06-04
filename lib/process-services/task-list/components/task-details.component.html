@@ -39,13 +39,14 @@
                           (error)='onFormError($event)'
                           (executeOutcome)='onFormExecuteOutcome($event)'>
                 </adf-form>
-                <adf-task-standalone *ngIf="!hasFormKey()" 
+                <adf-task-standalone *ngIf="!hasFormKey()"
                 [taskName]= "taskDetails.name"
                 [isCompleted]="isCompletedTask()"
                 [hasCompletePermission]="isCompleteButtonEnabled()"
                 [hideCancelButton]="true"
                 (complete)="onComplete()">
                 </adf-task-standalone>
+                <adf-attach-form></adf-attach-form>
             </div>
             <div *ngIf="!isAssigned()" id="claim-message-id">
                 {{ 'ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM' | translate }}

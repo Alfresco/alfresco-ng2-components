@@ -1,0 +1,63 @@
+<mat-card>
+    <mat-card-content>
+        <div class="adf-no-form-message-container">
+            <div class="adf-no-form-message-list">
+                <div>
+                    <mat-form-field>
+                        <mat-select placeholder="New Claims Data Review Food">
+                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                                {{ food.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label class="adf-label">Title</label>
+                    <mat-form-field>
+                        <mat-select>
+                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                                {{ food.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <label class="adf-label">Full name</label>
+                    <mat-form-field class="example-full-width">
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label class="adf-label">Date of birth</label>
+                    <date-time-widget></date-time-widget>
+                    <mat-form-field>
+                        <mat-select>
+                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                                {{ food.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <label class="adf-label">Nationality</label>
+                    <mat-form-field>
+                        <mat-select>
+                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                                {{ food.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label class="adf-label">Mobile</label>
+                    <mat-form-field class="example-full-width">
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+
+    <mat-card-actions class="adf-no-form-mat-card-actions">
+        <div>
+            <button mat-button id="adf-no-form-cancel-button">{{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL' | translate }}</button>
+            <button mat-button id="adf-no-form-attach-form-button" color="primary">{{ 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ATTACHFORM' | translate }}</button>
+        </div>
+    </mat-card-actions>
+</mat-card>
