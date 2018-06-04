@@ -1,4 +1,4 @@
-<div fxShow fxHide.xs="true" *ngIf="hasButtons()" id="adf-buttons-menu">
+<!-- <div fxShow fxHide.xs="true" *ngIf="hasButtons()" id="adf-buttons-menu">
     <ng-container *ngFor="let button of convertedButtons">
         <ng-container *ngTemplateOutlet="desktopMenu; context: button"></ng-container>
      </ng-container>
@@ -12,9 +12,9 @@
            <ng-container *ngTemplateOutlet="mobileMenu; context:button"></ng-container>
         </ng-container>
     </mat-menu>
-</div>
+</div> -->
 
-<ng-template #desktopMenu let-handler="handler" let-icon="icon" let-label="label" let-styles="styles" let-id="id" let-isVisible="isVisible">
+<!-- <ng-template #desktopMenu let-handler="handler" let-icon="icon" let-label="label" let-styles="styles" let-id="id" let-isVisible="isVisible">
     <button mat-button (click)="handler()" id="{{id}}" *ngIf="isVisible()" class="styles">
         <mat-icon>{{icon}}</mat-icon>
     </button>
@@ -24,8 +24,25 @@
     <button mat-menu-item (click)="handler()" id="{{id}}" *ngIf="isVisible()" class="styles">
         <mat-icon>{{icon}}</mat-icon><span>{{label | translate}}</span>
     </button>
+</ng-template> -->
+
+<div id="adf-buttons-menu" class="adf-buttons-menu">
+    <div *ngIf="isMobile()">
+        <button mat-icon-button [matMenuTriggerFor]="editReportMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #editReportMenu="matMenu" class="adf-buttons-menu-mobile">
+            <ng-content *ngTemplateOutlet="desktop">
+            </ng-content>
+        </mat-menu>
+    </div>
+
+    <div *ngIf="!isMobile()" class="adf-buttons-menu-desktop">
+        <ng-content *ngTemplateOutlet="desktop">
+        </ng-content>
+    </div>
+</div>
+
+<ng-template #desktop>
+    <ng-content></ng-content>
 </ng-template>
-
-<ng-content *ngIf="false">
-
-</ng-content>
