@@ -23,6 +23,9 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AuthConfig, OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
 import { AuthTokenProcessorService } from './auth-token-processor.service';
 import { Router } from '@angular/router';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { UserPreferencesService } from './user-preferences.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 @Injectable()
 export class AuthenticationSSOService {
@@ -31,8 +34,12 @@ export class AuthenticationSSOService {
     private redirectUri: string;
     constructor(
         private router: Router,
+        private alfrescoApi: AlfrescoApiService,
         private tokenService: AuthTokenProcessorService,
+        private userPreference: UserPreferencesService,
         private appConfig: AppConfigService, private oauthService: OAuthService) {
+        this.oauthService.setStorage(localStorage);
+        this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     }
 
     token: string;
@@ -49,7 +56,11 @@ export class AuthenticationSSOService {
 
                 if (!loggedIn) {
                     this.logOut();
-                    window.location.reload();
+                }
+                const apiInstance = this.alfrescoApi.getInstance();
+                if (apiInstance && apiInstance.oauth2Auth) {
+                    const authAPI: any = apiInstance.oauth2Auth;
+                    authAPI.authentications.basicAuth.accessToken = this.oauthService.getAccessToken();
                 }
                 return loggedIn;
             });
@@ -59,8 +70,17 @@ export class AuthenticationSSOService {
         return this.oauthService.getIdToken();
     }
 
-    logOut() {
+    logOut(noRedirectToLogoutUrl?: boolean) {
+        const idToken = this.oauthService.getIdToken();
+        localStorage.removeItem('session_state');
         this.oauthService.logOut();
+        if (!idToken) {
+            window.location.reload();
+        }
+    }
+
+    removeTicket() {
+        this.logOut(true);
     }
 
     getBearerExcludedUrls(): string[] {
@@ -91,7 +111,7 @@ export class AuthenticationSSOService {
     async loadDiscoveryDocumentAndLogin() {
         await this.configureWithNewConfigApi();
         if (this.oauthService.hasValidAccessToken()) {
-            this.redirectUri = this.appConfig.get('oauth2.redirectUri', '/');
+            this.redirectUri = this.userPreference.oauthConfig.redirectUri;
             this.router.navigate([this.redirectUri]);
         } else {
             await this.oauthService.loadDiscoveryDocumentAndLogin();
@@ -101,20 +121,19 @@ export class AuthenticationSSOService {
     async configureWithNewConfigApi() {
         const authConfig: AuthConfig = this.createAuthConfigFromJSON();
         this.oauthService.configure(authConfig);
-        this.oauthService.setStorage(localStorage);
-        this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     }
 
     private createAuthConfigFromJSON(): AuthConfig {
+        const oauthConfig: OauthConfigModel = this.userPreference.oauthConfig;
         return {
-            issuer: this.appConfig.get('oauth2.host'),
-            redirectUri: window.location.origin + this.appConfig.get('oauth2.redirectUri', '/'),
-            requireHttps: this.appConfig.get('oauth2.requireHttps', true),
-            silentRefreshRedirectUri: window.location.origin + this.appConfig.get('oauth2.silentRefreshRedirectUri', ''),
-            clientId: this.appConfig.get('oauth2.clientId'),
-            scope: this.appConfig.get('oauth2.scope'),
-            showDebugInformation: this.appConfig.get('oauth2.showDebugInformation', false),
-            sessionChecksEnabled: this.appConfig.get('oauth2.sessionChecksEnabled', false)
+            issuer: oauthConfig.host,
+            clientId: oauthConfig.clientId,
+            redirectUri: window.location.origin + oauthConfig.redirectUri || '/',
+            scope: oauthConfig.scope,
+            requireHttps: oauthConfig.requireHttps,
+            silentRefreshRedirectUri: window.location.origin + oauthConfig.silentRefreshRedirectUri || '',
+            showDebugInformation: oauthConfig.showDebugInformation || false,
+            sessionChecksEnabled: oauthConfig.sessionChecksEnabled || false
         };
     }
 

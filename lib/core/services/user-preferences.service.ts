@@ -20,9 +20,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
 import 'rxjs/add/operator/distinctUntilChanged';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 export enum UserPreferenceValues {
     PaginationSize = 'PAGINATION_SIZE',
@@ -58,8 +58,7 @@ export class UserPreferencesService {
     constructor(
         public translate: TranslateService,
         private appConfig: AppConfigService,
-        private storage: StorageService,
-        private apiService: AlfrescoApiService
+        private storage: StorageService
     ) {
         this.appConfig.onLoad.subscribe(this.initUserPreferenceStatus.bind(this));
         this.localeSubject = new BehaviorSubject(this.userPreferenceStatus[UserPreferenceValues.Locale]);
@@ -151,7 +150,6 @@ export class UserPreferencesService {
     /** Authorization type (can be "ECM", "BPM" or "ALL"). */
     set authType(value: string) {
         this.storage.setItem('AUTH_TYPE', value);
-        this.apiService.reset();
     }
 
     get authType(): string {
@@ -161,7 +159,6 @@ export class UserPreferencesService {
     /** Prevents the CSRF Token from being submitted if true. Only valid for Process Services. */
     set disableCSRF(value: boolean) {
         this.set('DISABLE_CSRF', value);
-        this.apiService.reset();
     }
 
     get disableCSRF(): boolean {
@@ -208,16 +205,44 @@ export class UserPreferencesService {
         this.storage.setItem('providers', providers);
     }
 
-    get sso(): boolean {
-        if (this.storage.hasItem('sso')) {
-            return JSON.parse(this.storage.getItem('sso'));
+    get bpmHost(): string {
+        if (this.storage.hasItem('bpmHost')) {
+            return this.storage.getItem('bpmHost');
         } else {
-            return this.appConfig.get<boolean>('sso', false);
+            return this.appConfig.get('bpmHost');
         }
     }
 
-    set sso(value: boolean) {
-        this.storage.setItem('sso', value + '');
+    set bpmHost(bpmHost: string) {
+        this.storage.setItem('bpmHost', bpmHost);
+    }
+
+    get ecmHost(): string {
+        if (this.storage.hasItem('ecmHost')) {
+            return this.storage.getItem('ecmHost');
+        } else {
+            return this.appConfig.get('ecmHost');
+        }
+    }
+
+    set ecmHost(ecmHost: string) {
+        this.storage.setItem('ecmHost', ecmHost);
+    }
+
+    get oauthConfig(): OauthConfigModel {
+        if (this.storage.hasItem('oauthConfig')) {
+            return JSON.parse(this.storage.getItem('oauthConfig'));
+        } else {
+            return this.appConfig.get<OauthConfigModel>('oauth2');
+        }
+    }
+
+    set oauthConfig(oauthConfig: OauthConfigModel) {
+        this.storage.setItem('oauthConfig', JSON.stringify(oauthConfig));
+    }
+
+    get sso(): boolean {
+        return this.providers === 'OAUTH' && this.oauthConfig.implicitFlow;
     }
 
 }

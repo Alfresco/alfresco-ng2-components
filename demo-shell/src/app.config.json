@@ -2,12 +2,13 @@
     "$schema": "../../lib/core/app-config/schema.json",
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
-    "providers": "BPM",
+    "providers": "OAUTH",
     "sso": true,
     "oauth2": {
       "host": "http://a5e2f93de10af11e8a0560a1bea5b7c8-236709433.us-east-1.elb.amazonaws.com:30081/auth/realms/springboot",
       "redirectUri": "/",
       "requireHttps": false,
+      "implicitFlow": true,
       "clientId": "activiti",
       "scope": "openid",
       "secret": ""

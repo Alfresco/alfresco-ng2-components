@@ -118,6 +118,7 @@
       "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
     "HOST_SETTINGS": {
+      "REQUIRED": "The field is required",
       "CS_URL_ERROR": "Content Services address doesn't match the URL format",
       "PS_URL_ERROR": "Process Services address doesn't match the URL format",
       "TITLE": "Settings",

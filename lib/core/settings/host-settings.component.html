@@ -1,83 +1,103 @@
 <div class="adf-setting-container">
-    <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)">
-    <div class="adf-setting-card-padding"></div>
     <mat-toolbar color="primary" class="adf-setting-toolbar">
         <h3>{{'CORE.HOST_SETTINGS.TITLE' | translate}}</h3>
     </mat-toolbar>
-
     <mat-card class="adf-setting-card">
-        <section>
-            <mat-slide-toggle color="primary" [formControl]="form.controls['sso']">
-                SSO
-            </mat-slide-toggle>
-        </section>
-        <mat-form-field>
-        <mat-select placeholder="Provider" [formControl]="form.controls['providers']">
-            <mat-option *ngFor="let provider of providers"  [value]="provider">
-            {{ provider }}
-            </mat-option>
-        </mat-select>
-        </mat-form-field>
+        <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)">
+            <mat-form-field>
+                <mat-select placeholder="Provider" [formControl]="providers">
+                    <mat-option *ngFor="let provider of providersValues" [value]="provider">
+                        {{ provider }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
-        <div *ngIf="form.controls['providers'].value ==='ALL' || form.controls['providers'].value ==='ECM'">
-            <mat-card-header>
-                <mat-card-subtitle>{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field class="full-width">
-                    <mat-icon class="adf-CORE.HOST_SETTINGS-link-icon" matPrefix>link</mat-icon>
-                    <input matInput
-                            [formControl]="form.controls['urlFormControlEcm']"
-                           data-automation-id="ecmHost"
-                           type="text"
-                           (change)="onChangeECMHost($event)"
-                           tabindex="2"
-                           id="ecmHost"
-                           placeholder="http(s)://host|ip:port(/path)">
-                    <mat-error *ngIf="form.controls['urlFormControlEcm'].hasError('pattern')">
-                        {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
-                    </mat-error>
-                </mat-form-field>
-                <p>
-            </mat-card-content>
-        </div>
-        <p>
-        <div *ngIf="form.controls['providers'].value==='ALL' || form.controls['providers'].value==='BPM'">
-            <mat-card-header>
-                <mat-card-subtitle>{{'CORE.HOST_SETTINGS.BP-HOST' | translate }}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
+            <ng-container *ngIf="isALL() || isECM()">
+                <mat-card-header>
+                    <mat-card-subtitle>{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-form-field class="full-width">
+                        <mat-icon class="adf-CORE.HOST_SETTINGS-link-icon" matPrefix>link</mat-icon>
+                        <input matInput [formControl]="ecmHost" data-automation-id="ecmHost" type="text" tabindex="2" id="ecmHost" placeholder="http(s)://host|ip:port(/path)">
+                        <mat-error *ngIf="ecmHost.hasError('pattern')">
+                            {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
+                        </mat-error>
+                        <mat-error *ngIf="ecmHost.hasError('required')">
+                            {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
+                        </mat-error>
+                    </mat-form-field>
+                    <p>
+                </mat-card-content>
+            </ng-container>
 
-                <mat-form-field class="full-width">
-                    <mat-icon class="adf-CORE.HOST_SETTINGS-link-icon" matPrefix>link</mat-icon>
-                    <input matInput
-                            [formControl]="form.controls['urlFormControlBpm']"
-                           data-automation-id="bpmHost"
-                           type="text"
-                           (change)="onChangeBPMHost($event)"
-                           tabindex="2"
-                           id="bpmHost"
-                           placeholder="http(s)://host|ip:port(/path)">
-                    <mat-error *ngIf="form.controls['urlFormControlBpm'].hasError('pattern')">
-                        {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
-                    </mat-error>
-                </mat-form-field>
-            </mat-card-content>
-        </div>
-        <mat-card-actions class="adf-CORE.HOST_SETTINGS-actions">
+            <ng-container *ngIf="isALL() || isOAUTH() || isBPM()">
+                <mat-card-content>
+                    <mat-form-field class="full-width" floatLabel="{{'CORE.HOST_SETTINGS.BP-HOST' | translate }}">
+                        <mat-label>{{'CORE.HOST_SETTINGS.BP-HOST' | translate }}</mat-label>
+                        <input matInput [formControl]="bpmHost" data-automation-id="bpmHost" type="text" tabindex="2" id="bpmHost" placeholder="http(s)://host|ip:port(/path)">
+                        <mat-error *ngIf="bpmHost.hasError('pattern')">
+                            {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
+                        </mat-error>
+                        <mat-error *ngIf="bpmHost.hasError('required')">
+                            {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
+                        </mat-error>
+                    </mat-form-field>
+                    <ng-container *ngIf="isOAUTH()">
+                    <div formGroupName="oauthConfig">
+                        <mat-form-field class="full-width" floatLabel="Auth Host">
+                            <mat-label>Auth Host</mat-label>
+                            <input matInput name="host" formControlName="host" placeholder="http(s)://host|ip:port(/path)" >
+                            <mat-error *ngIf="host.hasError('pattern')">
+                                {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
+                            </mat-error>
+                            <mat-error *ngIf="host.hasError('required')">
+                                {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" floatLabel="Client Id">
+                            <mat-label>Client Id</mat-label>
+                            <input matInput name="clientId" formControlName="clientId" placeholder="Client Id">
+                            <mat-error *ngIf="clientId.hasError('required')">
+                                {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
+                            </mat-error>
+                        </mat-form-field>
 
-            <button mat-button (click)="onCancel()" color="primary">
-                {{'CORE.HOST_SETTINGS.BACK' | translate }}
-            </button>
+                        <mat-form-field class="full-width" floatLabel="Scope">
+                            <mat-label>Scope</mat-label>
+                            <input matInput name="scope" formControlName="scope" placeholder="Scope Id">
+                            <mat-error *ngIf="scope.hasError('required')">
+                                {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
+                            </mat-error>
+                        </mat-form-field>
 
-            <button type="submit" id="host-button" tabindex="4"
-                class="adf-login-button"
-                mat-raised-button color="primary"
-                data-automation-id="host-button" [disabled]="!form.valid">
-                {{'CORE.HOST_SETTINGS.APPLY' | translate }}
-            </button>
-        </mat-card-actions>
+                        <label for="requireHttps">RequireHttps</label>
+                        <mat-slide-toggle class="full-width" name="requireHttps" [color]="'primary'" formControlName="requireHttps">
+                        </mat-slide-toggle>
+
+                        <label for="implicitFlow">Implicit Flow</label>
+                        <mat-slide-toggle class="full-width" name="implicitFlow" [color]="'primary'" [disabled]=true formControlName="implicitFlow">
+                        </mat-slide-toggle>
+                        <mat-form-field class="full-width" floatLabel="Redirect Uri">
+                            <mat-label>Redirect Uri</mat-label>
+                            <input matInput placeholder="Redirect Uri" name="redirectUri" formControlName="redirectUri">
+                            <mat-error *ngIf="redirectUri.hasError('required')">
+                                {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    </ng-container>
+                </mat-card-content>
+            </ng-container>
+            <mat-card-actions class="adf-CORE.HOST_SETTINGS-actions">
+                <button mat-button (click)="onCancel()" color="primary">
+                    {{'CORE.HOST_SETTINGS.BACK' | translate }}
+                </button>
+                <button type="submit" id="host-button" tabindex="4" class="adf-login-button" mat-raised-button color="primary" data-automation-id="host-button"
+                    [disabled]="!form.valid">
+                    {{'CORE.HOST_SETTINGS.APPLY' | translate }}
+                </button>
+            </mat-card-actions>
+        </form>
     </mat-card>
-    </form>
-    <div class="adf-setting-card-padding"></div>
 </div>

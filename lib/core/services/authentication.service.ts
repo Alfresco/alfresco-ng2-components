@@ -69,7 +69,7 @@ export class AuthenticationService {
                 this.saveTickets();
                 this.onLogin.next(response);
                 return {
-                    type: this.preferences.authType,
+                    type: this.preferences.providers,
                     ticket: response
                 };
             })

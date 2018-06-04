@@ -16,11 +16,8 @@
  */
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { LogService } from '../services/log.service';
-import { SettingsService } from '../services/settings.service';
+import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { StorageService } from '../services/storage.service';
-import { TranslationService } from '../services/translation.service';
 import { UserPreferencesService } from '../services';
 
 @Component({
@@ -36,9 +33,7 @@ export class HostSettingsComponent implements OnInit {
 
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 
-    ecmHostTmp: string;
-    bpmHostTmp: string;
-    providers = ['ALL', 'BPM', 'ECM'];
+    providersValues = ['ALL', 'BPM', 'ECM', 'OAUTH'];
     providerSelected = 'BPM';
     form: FormGroup;
 
@@ -60,60 +55,32 @@ export class HostSettingsComponent implements OnInit {
     @Output()
     bpmHostChange = new EventEmitter<string>();
 
-    constructor(private settingsService: SettingsService,
+    constructor(private fb: FormBuilder,
                 private userPreference: UserPreferencesService,
-                private storage: StorageService,
-                private logService: LogService,
-                private fb: FormBuilder,
-                private translationService: TranslationService) {
+                private storage: StorageService) {
     }
 
     ngOnInit() {
-        this.ecmHostTmp = this.storage.getItem('ecmHost') || this.settingsService.ecmHost;
-        this.bpmHostTmp = this.storage.getItem('bpmHost') || this.settingsService.bpmHost;
+
+        let providerValue = this.userPreference.providers;
+        const oAuthConfig = this.userPreference.oauthConfig;
+
+        const oauthGroup = this.fb.group( {
+            host: [oAuthConfig.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
+            clientId: [oAuthConfig.clientId, Validators.required],
+            redirectUri: [oAuthConfig.redirectUri, Validators.required],
+            scope: [oAuthConfig.scope, Validators.required],
+            secretId: oAuthConfig.secret,
+            requireHttps: oAuthConfig.requireHttps,
+            implicitFlow: oAuthConfig.implicitFlow
+        });
 
         this.form = this.fb.group({
-            sso: [this.userPreference.sso, Validators.required],
-            providers: [this.userPreference.providers, Validators.required],
-            urlFormControlEcm: [this.ecmHostTmp, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
-            urlFormControlBpm: [this.bpmHostTmp, [Validators.required, Validators.pattern(this.HOST_REGEX)]]
+            providers: [providerValue, Validators.required],
+            ecmHost: [this.userPreference.ecmHost, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
+            oauthConfig: oauthGroup,
+            bpmHost: [this.userPreference.bpmHost, [Validators.required, Validators.pattern(this.HOST_REGEX)]]
         });
-
-        this.form.controls.providers.valueChanges.distinctUntilChanged().debounceTime(200).subscribe(provider => {
-            if (!this.isProviderValid(provider)) {
-                this.form.controls.providers.setErrors({'providerNotAllowed': true});
-            }
-        });
-    }
-
-    isProviderValid(provider: string): boolean {
-        return provider === 'BPM' || provider === 'ECM' || provider === 'ALL';
-    }
-
-    public onChangeECMHost(event: any): void {
-        let value = (<HTMLInputElement> event.target).value.trim();
-        if (value && this.isValidUrl(value)) {
-            this.logService.info(`ECM host: ${value}`);
-            this.ecmHostTmp = value;
-            this.ecmHostChange.emit(value);
-        } else {
-            this.translationService.get('CORE.HOST_SETTING.CS_URL_ERROR').subscribe((message) => {
-                this.error.emit(message);
-            });
-        }
-    }
-
-    public onChangeBPMHost(event: any): void {
-        let value = (<HTMLInputElement> event.target).value.trim();
-        if (value && this.isValidUrl(value)) {
-            this.logService.info(`BPM host: ${value}`);
-            this.bpmHostTmp = value;
-            this.bpmHostChange.emit(value);
-        } else {
-            this.translationService.get('CORE.HOST_SETTING.PS_URL_ERROR').subscribe((message) => {
-                this.error.emit(message);
-            });
-        }
     }
 
     onCancel() {
@@ -121,29 +88,91 @@ export class HostSettingsComponent implements OnInit {
     }
 
     onSubmit(values: any) {
-        this.userPreference.sso = values.sso;
         this.userPreference.providers = values.providers;
-        if (this.isBPM(values.providers)) {
-            this.storage.setItem(`bpmHost`, values.urlFormControlBpm);
-        } else if (this.isECM(values.providers)) {
-            this.storage.setItem(`ecmHost`, values.urlFormControlEcm);
-        } else {
-            this.storage.setItem(`bpmHost`, values.urlFormControlBpm);
-            this.storage.setItem(`ecmHost`, values.urlFormControlEcm);
+        if (this.isBPM()) {
+            this.saveBPMValues(values);
+        } else if (this.isECM()) {
+            this.saveECMValues(values);
+        } else if (this.isALL()) {
+            this.saveECMValues(values);
+            this.saveBPMValues(values);
+        } else if (this.isOAUTH()) {
+            this.saveOAuthValues(values);
         }
         this.success.emit(true);
     }
 
-    isValidUrl(url: string) {
-        return /^(http|https):\/\/.*/.test(url);
+    saveOAuthValues(values: any) {
+        this.userPreference.oauthConfig = values.oauthConfig;
+        this.storage.setItem(`bpmHost`, values.bpmHost);
     }
 
-    isBPM(value): boolean {
-        return value === 'BPM';
+    saveBPMValues(values: any) {
+        this.storage.setItem(`bpmHost`, values.bpmHost);
     }
 
-    isECM(value): boolean {
-        return value === 'ECM';
+    saveECMValues(values: any) {
+        this.storage.setItem(`ecmHost`, values.ecmHost);
+    }
+
+    isBPM(): boolean {
+        return this.providers.value === 'BPM';
+    }
+
+    isECM(): boolean {
+        return this.providers.value === 'ECM';
+    }
+
+    isALL(): boolean {
+        return this.providers.value === 'ALL';
+    }
+
+    isOAUTH(): boolean {
+        return this.providers.value === 'OAUTH';
+    }
+
+    get providers(): AbstractControl {
+        return this.form.get('providers');
+    }
+
+    get bpmHost(): AbstractControl {
+        return this.form.get('bpmHost');
+    }
+
+    get ecmHost(): AbstractControl {
+        return this.form.get('ecmHost');
+    }
+
+    get host(): AbstractControl {
+        return this.oauthConfig.get('host');
+    }
+
+    get clientId(): AbstractControl {
+        return this.oauthConfig.get('clientId');
+    }
+
+    get scope(): AbstractControl {
+        return this.oauthConfig.get('scope');
+    }
+
+    get secretId(): AbstractControl {
+        return this.oauthConfig.get('secretId');
+    }
+
+    get implicitFlow(): AbstractControl {
+        return this.oauthConfig.get('implicitFlow');
+    }
+
+    get requireHttps(): AbstractControl {
+        return this.oauthConfig.get('requireHttps');
+    }
+
+    get redirectUri(): AbstractControl {
+        return this.oauthConfig.get('redirectUri');
+    }
+
+    get oauthConfig(): AbstractControl {
+        return this.form.get('oauthConfig');
     }
 
 }

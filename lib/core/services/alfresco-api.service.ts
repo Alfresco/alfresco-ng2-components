@@ -25,6 +25,7 @@ import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs/Subject';
+import { UserPreferencesService } from './user-preferences.service';
 
 /* tslint:disable:adf-file-name */
 
@@ -95,6 +96,7 @@ export class AlfrescoApiService {
     }
 
     constructor(protected appConfig: AppConfigService,
+                protected userPreference: UserPreferencesService,
                 protected storage: StorageService) {
     }
 
@@ -113,11 +115,11 @@ export class AlfrescoApiService {
 
     protected initAlfrescoApi() {
         this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
-            provider: this.appConfig.get('providers', 'ECM'),
+            provider: this.userPreference.providers,
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),
-            hostEcm: this.appConfig.get<string>('ecmHost'),
-            hostBpm: this.appConfig.get<string>('bpmHost'),
+            hostEcm: this.userPreference.ecmHost,
+            hostBpm: this.userPreference.bpmHost,
             contextRootBpm: this.appConfig.get<string>('contextRootBpm'),
             contextRoot: this.appConfig.get<string>('contextRootEcm'),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
