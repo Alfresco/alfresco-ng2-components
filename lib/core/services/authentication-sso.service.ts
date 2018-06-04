@@ -74,7 +74,7 @@ export class AuthenticationSSOService {
         const idToken = this.oauthService.getIdToken();
         localStorage.removeItem('session_state');
         this.oauthService.logOut();
-        if (!idToken) {
+        if (!idToken && this.userPreference.sso) {
             window.location.reload();
         }
     }
@@ -109,12 +109,16 @@ export class AuthenticationSSOService {
     }
 
     async loadDiscoveryDocumentAndLogin() {
-        await this.configureWithNewConfigApi();
-        if (this.oauthService.hasValidAccessToken()) {
-            this.redirectUri = this.userPreference.oauthConfig.redirectUri;
-            this.router.navigate([this.redirectUri]);
+        if (this.userPreference.sso) {
+            await this.configureWithNewConfigApi();
+            if (this.oauthService.hasValidAccessToken()) {
+                this.redirectUri = this.userPreference.oauthConfig.redirectUri;
+                this.router.navigate([this.redirectUri]);
+            } else {
+                await this.oauthService.loadDiscoveryDocumentAndLogin();
+            }
         } else {
-            await this.oauthService.loadDiscoveryDocumentAndLogin();
+            this.router.navigate([this.redirectUri]);
         }
     }
 

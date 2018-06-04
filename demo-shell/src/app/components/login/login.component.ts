@@ -34,8 +34,6 @@ export class LoginComponent implements OnInit {
     customValidation: any;
 
     disableCsrf = false;
-    isECM = true;
-    isBPM = false;
     showFooter = true;
     customMinLength = 2;
 
@@ -58,17 +56,6 @@ export class LoginComponent implements OnInit {
 
     initProviders() {
         this.providers = this.userPreference.providers;
-
-        if (this.providers === 'BPM') {
-            this.isECM = false;
-            this.isBPM = true;
-        } else if (this.providers === 'ECM') {
-            this.isECM = true;
-            this.isBPM = false;
-        } else if (this.providers === 'ALL') {
-            this.isECM = true;
-            this.isBPM = true;
-        }
     }
 
     onLogin($event) {
@@ -79,42 +66,12 @@ export class LoginComponent implements OnInit {
         this.logService.error($event);
     }
 
-    toggleECM() {
-        this.isECM = !this.isECM;
-        this.userPreference.providers = this.updateProvider();
-    }
-
-    toggleBPM() {
-        this.isBPM = !this.isBPM;
-        this.userPreference.providers = this.updateProvider();
-    }
-
     toggleCSRF() {
         this.disableCsrf = !this.disableCsrf;
     }
 
     toggleFooter() {
         this.showFooter = !this.showFooter;
-    }
-
-    updateProvider() {
-        if (this.isBPM && this.isECM) {
-            this.providers = 'ALL';
-            return this.providers;
-        }
-
-        if (this.isECM) {
-            this.providers = 'ECM';
-            return this.providers;
-        }
-
-        if (this.isBPM) {
-            this.providers = 'BPM';
-            return this.providers;
-        }
-
-        this.providers = '';
-        return this.providers;
     }
 
     checkForm(event: any) {

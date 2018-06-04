@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { LogService, AuthenticationService, AuthenticationSSOService } from '@alfresco/adf-core';
+import { LogService, AuthenticationService, AuthenticationSSOService, AlfrescoApiService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,6 +27,7 @@ export class SettingsComponent {
 
     constructor(private router: Router,
         private authService: AuthenticationService,
+        private alfrescoApiService: AlfrescoApiService,
         private authSSOService: AuthenticationSSOService,
         public logService: LogService) {
     }
@@ -42,6 +43,7 @@ export class SettingsComponent {
     onSuccess() {
         this.authService.removeTicket();
         this.authSSOService.removeTicket();
+        this.alfrescoApiService.reset();
         this.router.navigate(['/']);
     }
 }

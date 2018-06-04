@@ -38,7 +38,7 @@ export class AuthGuardEcm implements CanActivate {
     }
 
     private isLoggedIn(): Promise<boolean> {
-        if (!this.authApi.isLoggedIn()) {
+        if (this.authApi === undefined || !this.authApi.isLoggedIn()) {
             return Promise.resolve(false);
         }
 

@@ -17,7 +17,6 @@
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { StorageService } from '../services/storage.service';
 import { UserPreferencesService } from '../services';
 
 @Component({
@@ -56,8 +55,7 @@ export class HostSettingsComponent implements OnInit {
     bpmHostChange = new EventEmitter<string>();
 
     constructor(private fb: FormBuilder,
-                private userPreference: UserPreferencesService,
-                private storage: StorageService) {
+                private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
@@ -104,15 +102,15 @@ export class HostSettingsComponent implements OnInit {
 
     saveOAuthValues(values: any) {
         this.userPreference.oauthConfig = values.oauthConfig;
-        this.storage.setItem(`bpmHost`, values.bpmHost);
+        this.userPreference.bpmHost = values.bpmHost;
     }
 
     saveBPMValues(values: any) {
-        this.storage.setItem(`bpmHost`, values.bpmHost);
+        this.userPreference.bpmHost = values.bpmHost;
     }
 
     saveECMValues(values: any) {
-        this.storage.setItem(`ecmHost`, values.ecmHost);
+        this.userPreference.ecmHost = values.ecmHost;
     }
 
     isBPM(): boolean {
