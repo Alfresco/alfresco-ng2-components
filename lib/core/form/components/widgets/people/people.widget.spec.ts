@@ -143,7 +143,11 @@ describe('PeopleWidgetComponent', () => {
         });
 
         it('should show an error message if the user is invalid', async(() => {
-            widget.checkUserAndValidateForm(fakeUserResult, 'K');
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            peopleHTMLElement.focus();
+            peopleHTMLElement.value = 'K';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('.adf-error-text')).not.toBeNull();
