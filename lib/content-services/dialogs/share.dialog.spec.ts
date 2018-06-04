@@ -27,6 +27,7 @@ describe('ShareDialogComponent', () => {
 
     let fixture: ComponentFixture<ShareDialogComponent>;
     let spyCreate: any;
+    let spyDelete: any;
     let component: ShareDialogComponent;
     let sharedLinksApiService: SharedLinksApiService;
     const dialogRef = {
@@ -54,6 +55,7 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
 
         spyCreate = spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(Observable.of({ entry: { id: 'test-sharedId' } }));
+        spyDelete = spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(Observable.of({}));
     });
 
     it('should init the dialog with the file name and baseShareUrl', async(() => {
@@ -83,7 +85,7 @@ describe('ShareDialogComponent', () => {
             expect(spyCreate).not.toHaveBeenCalled();
         });
 
-        it('should create the public link if is not present in the node', () => {
+        it('should not create the public link if is not present in the node', () => {
             component.data = {
                 node: { entry: { properties: {}, name: 'example-name' } },
                 baseShareUrl: 'baseShareUrl-example'
@@ -91,20 +93,34 @@ describe('ShareDialogComponent', () => {
 
             component.ngOnInit();
 
-            expect(spyCreate).toHaveBeenCalled();
+            expect(spyCreate).not.toHaveBeenCalled();
         });
 
-        it('should update the data structure after created the link', async(() => {
+        it('should be able to delete the shared link', async(() => {
             component.data = {
-                node: { entry: { name: 'example-name', properties: {} } },
+                node: { entry: { name: 'example-name', properties: { 'qshare:sharedId': 'example-link' } } },
                 baseShareUrl: 'baseShareUrl-example'
             };
             component.ngOnInit();
-
             fixture.detectChanges();
-
+            fixture.nativeElement.querySelector('#adf-share-toggle-input').click();
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(component.data.node.entry.properties['qshare:sharedId']).toBe('test-sharedId');
+                expect(spyDelete).toHaveBeenCalled();
+                expect(component.data.node.entry.properties['qshare:sharedId']).toBeNull();
+            });
+        }));
+
+        it('should show the toggle disabled when the shareid property is null', async(() => {
+            component.data = {
+                node: { entry: { name: 'example-name', properties: { 'qshare:sharedId': null } } },
+                baseShareUrl: 'baseShareUrl-example'
+            };
+            component.ngOnInit();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(fixture.nativeElement.querySelector('#adf-share-toggle')).not.toBeNull();
+                expect(fixture.nativeElement.querySelector('#adf-share-toggle.mat-checked')).toBeNull();
             });
         }));
     });
