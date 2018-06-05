@@ -422,7 +422,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             if (rows && rows.length > 0) {
                 rows.forEach(r => r.isSelected = false);
             }
-            this.selection.splice(0);
+            this.selection = [];
         }
         this.isSelectAllChecked = false;
     }
@@ -613,17 +613,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     selectRow(row: DataRow, value: boolean) {
         if (row) {
             row.isSelected = value;
-            const idx = this.selection.indexOf(row);
-
-            if (value) {
-                if (idx < 0) {
-                    this.selection.push(row);
-                }
-            } else {
-                if (idx > -1) {
-                    this.selection.splice(idx, 1);
-                }
-            }
+            const rows = this.data.getRows() || [];
+            this.selection = rows.filter(r => r.isSelected);
         }
     }
 
