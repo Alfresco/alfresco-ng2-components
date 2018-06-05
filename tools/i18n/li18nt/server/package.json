@@ -3,7 +3,7 @@
 	"description": "Style checker for ADF translation files.",
 	"version": "0.0.1",
 	"author": "Alfresco Software",
-	"license": "MIT",
+	"license": "Apache-2.0",
 	"engines": {
 		"node": "*"
 	},
