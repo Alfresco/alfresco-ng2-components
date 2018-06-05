@@ -21,6 +21,8 @@ import { ErrorContentComponent } from './error-content.component';
 import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
 import { setupTestBed } from '../../testing/setupTestBed';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 describe('ErrorContentComponent', () => {
 
@@ -30,9 +32,12 @@ describe('ErrorContentComponent', () => {
     let translateService: TranslationService;
 
     setupTestBed({
-        imports: [CoreTestingModule],
+        imports: [
+            CoreTestingModule
+        ],
         providers: [
-            { provide: TranslationService, useClass: TranslationMock }
+            { provide: TranslationService, useClass: TranslationMock },
+            { provide: ActivatedRoute, useValue: { params: Observable.of({id: '404'})}}
         ]
     });
 
@@ -84,7 +89,7 @@ describe('ErrorContentComponent', () => {
     it('should hide secondary button if this one has no value', async(() => {
         spyOn(translateService, 'instant').and.callFake((inputString) => {
             return '';
-        } );
+        });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const errorContentElement = element.querySelector('.adf-error-content-description-link');
@@ -95,7 +100,7 @@ describe('ErrorContentComponent', () => {
     it('should render secondary button with its value from the translate file', async(() => {
         spyOn(translateService, 'instant').and.callFake((inputString) => {
             return 'Secondary Button';
-        } );
+        });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(errorContentComponent.secondaryButtonText).toBe('Secondary Button');
@@ -108,10 +113,25 @@ describe('ErrorContentComponent', () => {
     it('should render return button with its value from the translate file', async(() => {
         spyOn(translateService, 'instant').and.callFake((inputString) => {
             return 'Home';
-        } );
+        });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(errorContentComponent.returnButtonUrl).toBe('Home');
+        });
+    }));
+
+    it('should navigate to an error given by the route params', async(() => {
+        spyOn(translateService, 'get').and.returnValue(Observable.of('404'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(errorContentComponent.errorCode).toBe('404');
+        });
+    }));
+
+    it('should navigate to the default error UNKNOWN if it does not find the error', async(() => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(errorContentComponent.errorCode).toBe('UNKNOWN');
         });
     }));
 
