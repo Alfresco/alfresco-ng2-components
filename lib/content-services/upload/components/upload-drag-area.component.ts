@@ -60,6 +60,7 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
     }
 
     /**
+     * @deprecated in 2.4.0: use `onFilesDropped` instead
      * Called when the file are dropped in the drag area
      *
      * @param item - FileEntity
