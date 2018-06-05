@@ -15,7 +15,7 @@ Renders a list containing all the process instances matched by the parameters sp
 ```html
 <adf-process-instance-list
     [appId]="'1'"
-    [state]="'open'">
+    [state]="'all'">
 </adf-process-instance-list>
 ```
 
@@ -75,7 +75,7 @@ You can define a custom schema for the list in the `app.config.json` file and ac
 ```html
 <adf-process-instance-list
     [appId]="'1'"
-    [state]="'open'"
+    [state]="'all'"
     [presetColumn]="'customSchema'">
 </adf-process-instance-list>
 ```
