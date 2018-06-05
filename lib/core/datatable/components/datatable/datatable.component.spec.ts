@@ -52,7 +52,7 @@ describe('DataTable', () => {
         fixture.destroy();
     });
 
-    fit('should preserve the top-to-bottom selection order', () => {
+    it('should preserve the top-to-bottom selection order', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ id: 1 }, { id: 2 }, { id: 3 }],
             [ new ObjectDataColumn({ key: 'id' })]
