@@ -11,7 +11,15 @@
       "SHOW_COMMENTS": "Показать комментарии к версиям",
       "ALLOW_DOWNLOAD": "Разрешить загрузку версии"
     },
-    "PERSONAL-FILES": "Личные файлы"
+    "PERSONAL-FILES": "Личные файлы",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "Ничего",
+        "ALL": "Все",
+        "FOLDER": "Папка",
+        "DOCUMENT": "Документ"
+      }
+    }
   },
   "title": "Добро пожаловать",
   "VERSION": {
