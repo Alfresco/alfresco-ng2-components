@@ -134,11 +134,11 @@ describe('DateWidgetComponent', () => {
                 dateDisplayFormat : 'MM-DD-YYYY',
                 minValue : '30-12-9999'
             });
-            widget.field.isVisible = true;
-            widget.ngOnInit();
             fixture.detectChanges();
+            widget.field.validate();
             fixture.whenStable()
-                .then(() => {
+            .then(() => {
+                    fixture.detectChanges();
                     expect(element.querySelector('#date-field-id')).toBeDefined();
                     expect(element.querySelector('#date-field-id')).not.toBeNull();
                     let dateElement: any = element.querySelector('#date-field-id');
