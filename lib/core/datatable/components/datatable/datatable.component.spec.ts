@@ -52,6 +52,24 @@ describe('DataTable', () => {
         fixture.destroy();
     });
 
+    it('should preserve the top-to-bottom selection order', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ id: 1 }, { id: 2 }, { id: 3 }],
+            [ new ObjectDataColumn({ key: 'id' })]
+        );
+
+        const rows = dataTable.data.getRows();
+
+        dataTable.selectRow(rows[2], true);
+        dataTable.selectRow(rows[0], true);
+        dataTable.selectRow(rows[1], true);
+
+        const selection = dataTable.selection;
+        expect(selection[0].getValue('id')).toBe(1);
+        expect(selection[1].getValue('id')).toBe(2);
+        expect(selection[2].getValue('id')).toBe(3);
+    });
+
     it('should update schema if columns change', fakeAsync(() => {
 
         dataTable.columnList = new DataColumnListComponent();
