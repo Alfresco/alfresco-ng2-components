@@ -75,7 +75,6 @@ describe('ButtonsMenuComponent', () => {
 
     describe('When no buttons are injected', () => {
         let fixture;
-        let component: CustomEmptyContainerComponent;
         let element: HTMLElement;
 
         setupTestBed({
@@ -94,7 +93,6 @@ describe('ButtonsMenuComponent', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(CustomEmptyContainerComponent);
             element = fixture.nativeElement;
-            component = fixture.componentInstance;
         });
 
         afterEach(() => {
