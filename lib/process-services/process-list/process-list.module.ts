@@ -20,7 +20,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormModule, CommentsModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { ProcessCommentsModule } from '../process-comments/process-comments.module';
 import { CardViewModule, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/adf-core';
@@ -40,7 +40,7 @@ import { StartProcessInstanceComponent } from './components/start-process.compon
     imports: [
         CommonModule,
         DataTableModule,
-        FormModule,
+        CoreModule,
         TaskListModule,
         MaterialModule,
         FlexLayoutModule,
@@ -52,7 +52,6 @@ import { StartProcessInstanceComponent } from './components/start-process.compon
         DataColumnModule,
         DirectiveModule,
         PeopleModule,
-        CommentsModule,
         ContentWidgetModule,
         ProcessCommentsModule
     ],

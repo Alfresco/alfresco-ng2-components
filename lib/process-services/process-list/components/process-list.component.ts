@@ -23,7 +23,8 @@ import {
     DataTableAdapter,
     ObjectDataColumn,
     ObjectDataRow,
-    ObjectDataTableAdapter
+    ObjectDataTableAdapter,
+    EmptyCustomContentDirective
 } from '@alfresco/adf-core';
 import {
     AppConfigService,
@@ -59,6 +60,8 @@ import { ProcessListModel } from '../models/process-list.model';
 export class ProcessInstanceListComponent implements OnChanges, AfterContentInit, PaginatedComponent {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+
+    @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
 
     @ViewChild('dataTable') dataTable: DataTableComponent;
 
