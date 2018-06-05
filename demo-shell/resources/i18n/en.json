@@ -13,7 +13,15 @@
       "READ_ONLY" : "Read only"
     },
     "PERSONAL-FILES": "Personal Files",
-    "WARN-MULTIPLE-UPLOADS": "Warn on multiple uploads"
+    "WARN-MULTIPLE-UPLOADS": "Warn on multiple uploads",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "None",
+        "ALL": "All",
+        "FOLDER": "Folder",
+        "DOCUMENT": "Document"
+      }
+    }
   },
     "title": "Welcome",
     "VERSION": {
