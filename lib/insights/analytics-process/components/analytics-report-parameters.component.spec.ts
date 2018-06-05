@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /*tslint:disable:ban*/
-
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
@@ -29,7 +27,7 @@ import { Observable } from 'rxjs/Observable';
 
 declare let jasmine: any;
 
-fdescribe('AnalyticsReportParametersComponent', () => {
+describe('AnalyticsReportParametersComponent', () => {
 
     let component: AnalyticsReportParametersComponent;
     let fixture: ComponentFixture<AnalyticsReportParametersComponent>;
@@ -561,7 +559,7 @@ fdescribe('AnalyticsReportParametersComponent', () => {
                 });
             }));
 
-            fit('Should raise an event for report deleted', async(() => {
+            it('Should raise an event for report deleted', async(() => {
                 fixture.detectChanges();
                 spyOn(component, 'deleteReport');
                 let deleteButton = fixture.debugElement.nativeElement.querySelector('#delete-button');
