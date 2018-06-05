@@ -158,6 +158,18 @@ The Process Instance List also supports pagination:
 </adf-pagination>
 ```
 
+### Show custom template when processList is empty
+
+You can add your own template or message as shown in the example below:
+
+```html
+<adf-process-instance-list>
+    <adf-empty-custom-content>
+        Your Content
+    </adf-empty-custom-content>
+<adf-process-instance-list>
+```
+
 ## See also
 
 -   [Data column component](../core/data-column.component.md)

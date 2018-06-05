@@ -153,7 +153,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "NONE": "No process instances found",
+      "TITLE": "No Processes Found",
+      "SUBTITLE":"Create a new process that you want to easily find later",
       "SUMMARY": "{{total}} process instances found",
       "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
     },
