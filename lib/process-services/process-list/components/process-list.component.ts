@@ -174,8 +174,16 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
+            if (this.isSortChanged(changes)) {
+                this.sorting = this.sort ? this.sort.split('-') : this.sorting;
+            }
             this.reload();
         }
+    }
+
+    private isSortChanged(changes: SimpleChanges): boolean {
+        const actualSort = changes['sort'];
+        return actualSort && actualSort.currentValue && actualSort.currentValue !== actualSort.previousValue;
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
@@ -291,14 +299,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
                 this.currentInstanceId = null;
             }
         }
-    }
-
-    /**
-     * Sort the process based on current value of 'sort' property
-     * Return the sorting order
-     */
-    get dataSort(): any[] {
-        return this.sort ? this.sort.split('-') : this.sorting;
     }
 
     /**

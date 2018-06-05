@@ -183,8 +183,16 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
+            if (this.isSortChanged(changes)) {
+                this.sorting = this.sort ? this.sort.split('-') : this.sorting;
+            }
             this.reload();
         }
+    }
+
+    private isSortChanged(changes: SimpleChanges): boolean {
+        const actualSort = changes['sort'];
+        return actualSort && actualSort.currentValue && actualSort.currentValue !== actualSort.previousValue;
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
@@ -266,9 +274,9 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * Return the sorting order
      * Sort the tasks based on current value of 'sort' property
      */
-    get dataSort(): any[] {
-        return this.sort ? this.sort.split('-') : this.sorting;
-    }
+    // get dataSort(): any[] {
+    //     return this.sort ? this.sort.split('-') : this.sorting;
+    // }
 
     /**
      * Return the current id

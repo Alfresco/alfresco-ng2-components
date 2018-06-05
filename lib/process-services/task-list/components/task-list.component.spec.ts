@@ -230,12 +230,6 @@ describe('TaskListComponent', () => {
         expect(component.getCurrentId()).toBeNull();
     });
 
-    it('should return the sorting order if sort is defined', () => {
-        component.sort = 'fakeKey-fakeOrder';
-        fixture.detectChanges();
-        expect(component.dataSort).toEqual(['fakeKey', 'fakeOrder']);
-    });
-
     it('should return selected id for the selected task', () => {
         component.rows = [
             { id: '999', name: 'Fake-name' },
