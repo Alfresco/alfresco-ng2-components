@@ -23,11 +23,12 @@ import { By } from '@angular/platform-browser';
 import { ProcessInstanceListComponent } from './process-list.component';
 
 import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { DataRowEvent, DataSorting, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 
 import { fakeProcessInstance, fakeProcessInstancesWithNoName } from '../../mock';
 import { ProcessService } from '../services/process.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { fakeProcessCutomSchema } from '../../mock';
 
 describe('ProcessInstanceListComponent', () => {
 
@@ -36,39 +37,6 @@ describe('ProcessInstanceListComponent', () => {
     let service: ProcessService;
     let getProcessInstancesSpy: jasmine.Spy;
     let appConfig: AppConfigService;
-
-    let fakeCutomSchema = [
-        {
-            'key': 'fakeName',
-            'type': 'text',
-            'title': 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
-            'sortable': true
-        },
-        {
-            'key': 'fakeProcessName',
-            'type': 'text',
-            'title': 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
-            'sortable': true
-        }
-    ];
-
-    let fakeColumnSchema = {
-        'default': [
-                {
-                    'key': 'name',
-                    'type': 'text',
-                    'title': 'ADF_PROCESS_LIST.PROPERTIES.NAME',
-                    'sortable': true
-                },
-                {
-                    'key': 'created',
-                    'type': 'text',
-                    'title': 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
-                    'cssClass': 'hidden',
-                    'sortable': true
-                }
-            ]
-        , fakeCutomSchema };
 
     setupTestBed({
         imports: [
@@ -85,7 +53,7 @@ describe('ProcessInstanceListComponent', () => {
         getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstance));
         appConfig.config['adf-process-list'] = {
             'presets': {
-                'fakeCutomSchema': [
+                'fakeProcessCutomSchema': [
                     {
                         'key': 'fakeName',
                         'type': 'text',
@@ -105,8 +73,8 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should use the default schemaColumn as default', () => {
         component.ngAfterContentInit();
-        expect(component.data.getColumns()).toBeDefined();
-        expect(component.data.getColumns().length).toEqual(2);
+        expect(component.columns).toBeDefined();
+        expect(component.columns.length).toEqual(2);
     });
 
     it('should use the schemaColumn passed in input', () => {
@@ -123,22 +91,23 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should fetch the custom schemaColumn from app.config.json', () => {
+        component.presetColumn = 'fakeProcessCutomSchema';
         component.ngAfterContentInit();
         fixture.detectChanges();
-        expect(component.layoutPresets).toEqual(fakeColumnSchema);
+        expect(component.columns).toEqual(fakeProcessCutomSchema);
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
-        component.presetColumn = 'fakeCutomSchema';
+        component.presetColumn = 'fakeProcessCutomSchema';
         component.ngAfterContentInit();
         fixture.detectChanges();
-        expect(component.data.getColumns()).toBeDefined();
-        expect(component.data.getColumns().length).toEqual(2);
+        expect(component.columns).toBeDefined();
+        expect(component.columns.length).toEqual(2);
     });
 
     it('should return an empty process list when no input parameters are passed', () => {
         component.ngAfterContentInit();
-        expect(component.data).toBeDefined();
+        expect(component.rows).toBeDefined();
         expect(component.isListEmpty()).toBeTruthy();
     });
 
@@ -164,74 +133,11 @@ describe('ProcessInstanceListComponent', () => {
         component.processDefinitionKey = null;
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
+            expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
-        });
-        fixture.detectChanges();
-    }));
-
-    it('should order the process instances by name column when no sort passed', async(() => {
-        component.appId = 1;
-        component.state = 'open';
-        component.processDefinitionKey = null;
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 382927392');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Process 773443333');
-        });
-        fixture.detectChanges();
-    }));
-
-    it('should order the process instances by descending column when specified', async(() => {
-        component.appId = 1;
-        component.state = 'open';
-        component.processDefinitionKey = null;
-        component.sort = 'name-desc';
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
-        });
-        fixture.detectChanges();
-    }));
-
-    it('should order the process instances by ascending column when specified', async(() => {
-        component.appId = 1;
-        component.state = 'open';
-        component.processDefinitionKey = null;
-        component.sort = 'started-asc';
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
-        });
-        fixture.detectChanges();
-    }));
-
-    it('should order the process instances by descending start date when specified', async(() => {
-        component.appId = 1;
-        component.state = 'open';
-        component.processDefinitionKey = null;
-        component.sort = 'started-desc';
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 382927392');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Process 773443333');
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('Process 773443333');
+            expect(component.rows[1]['name']).toEqual('Process 382927392');
         });
         fixture.detectChanges();
     }));
@@ -242,8 +148,8 @@ describe('ProcessInstanceListComponent', () => {
         component.state = 'open';
         component.processDefinitionKey = 'fakeprocess';
         component.success.subscribe( (res) => {
-            expect(component.data.getRows()[0].getValue('name')).toEqual('Fake Process Name - Nov 9, 2017, 12:36:14 PM');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Fake Process Name - Nov 9, 2017, 12:37:25 PM');
+            expect(component.rows[0]['name']).toEqual('Fake Process Name - Nov 9, 2017, 12:36:14 PM');
+            expect(component.rows[1]['name']).toEqual('Fake Process Name - Nov 9, 2017, 12:37:25 PM');
         });
         fixture.detectChanges();
     }));
@@ -254,44 +160,28 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should return selected true for the selected process', () => {
-        component.data = new ObjectDataTableAdapter(
+        component.rows =
             [
                 { id: '999', name: 'Fake-name' },
                 { id: '888', name: 'Fake-name-888' }
-            ],
-            [
-                { type: 'text', key: 'id', title: 'Id' },
-                { type: 'text', key: 'name', title: 'Name' }
-            ]
-        );
+            ];
         component.selectFirst();
-        const dataRow = component.data.getRows();
+        const dataRow = component.rows[0];
         expect(dataRow).toBeDefined();
-        expect(dataRow[0].getValue('id')).toEqual('999');
-        expect(dataRow[0].isSelected).toEqual(true);
-        expect(dataRow[1].getValue('id')).toEqual('888');
-        expect(dataRow[1].isSelected).toEqual(false);
+        expect(component.currentInstanceId).toEqual('999');
     });
 
     it('should not select first row when selectFirstRow is false', () => {
-        component.data = new ObjectDataTableAdapter(
+        component.rows =
             [
                 { id: '999', name: 'Fake-name' },
                 { id: '888', name: 'Fake-name-888' }
-            ],
-            [
-                { type: 'text', key: 'id', title: 'Id' },
-                { type: 'text', key: 'name', title: 'Name' }
-            ]
-        );
+            ];
         component.selectFirstRow = false;
         component.selectFirst();
-        const dataRow = component.data.getRows();
+        const dataRow = component.rows;
         expect(dataRow).toBeDefined();
-        expect(dataRow[0].getValue('id')).toEqual('999');
-        expect(dataRow[0].isSelected).toEqual(false);
-        expect(dataRow[1].getValue('id')).toEqual('888');
-        expect(dataRow[1].isSelected).toEqual(false);
+        expect(dataRow[0]['id']).toEqual('999');
     });
 
     it('should throw an exception when the response is wrong', fakeAsync(() => {
@@ -327,10 +217,10 @@ describe('ProcessInstanceListComponent', () => {
         component.state = 'open';
         component.success.subscribe( (res) => {
             expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
+            expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('Process 773443333');
             done();
         });
         component.reload();
@@ -410,8 +300,8 @@ describe('ProcessInstanceListComponent', () => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[0]['name']).toEqual('Process 773443333');
                 done();
             });
 
@@ -424,10 +314,10 @@ describe('ProcessInstanceListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[0]['name']).toEqual('Process 773443333');
                 done();
             });
 
@@ -440,10 +330,10 @@ describe('ProcessInstanceListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[0]['name']).toEqual('Process 773443333');
                 done();
             });
 
@@ -456,28 +346,13 @@ describe('ProcessInstanceListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[0]['name']).toEqual('Process 773443333');
                 done();
             });
 
-            component.ngOnChanges({'sort': change});
-        });
-
-        it('should sort the list when the sort parameter changes', (done) => {
-            const sort = 'created-asc';
-            let change = new SimpleChange(null, sort, true);
-            let sortSpy = spyOn(component.data, 'setSorting');
-
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(sortSpy).toHaveBeenCalledWith(new DataSorting('started', 'asc'));
-                done();
-            });
-
-            component.sort = sort;
             component.ngOnChanges({'sort': change});
         });
 
@@ -487,10 +362,10 @@ describe('ProcessInstanceListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[0]['name']).toEqual('Process 773443333');
                 done();
             });
 
@@ -542,10 +417,10 @@ describe('CustomProcessListComponent', () => {
 
     it('should fetch custom schemaColumn from html', () => {
         fixture.detectChanges();
-        expect(component.processList.data.getColumns()).toBeDefined();
-        expect(component.processList.data.getColumns()[1].title).toEqual('ADF_PROCESS_LIST.PROPERTIES.END_DATE');
-        expect(component.processList.data.getColumns()[2].title).toEqual('ADF_PROCESS_LIST.PROPERTIES.CREATED');
-        expect(component.processList.data.getColumns().length).toEqual(3);
+        expect(component.processList.columns).toBeDefined();
+        expect(component.processList.columns.length).toEqual(3);
+        expect(component.processList.columns[1]['title']).toEqual('ADF_PROCESS_LIST.PROPERTIES.END_DATE');
+        expect(component.processList.columns[2]['title']).toEqual('ADF_PROCESS_LIST.PROPERTIES.CREATED');
     });
 });
 
