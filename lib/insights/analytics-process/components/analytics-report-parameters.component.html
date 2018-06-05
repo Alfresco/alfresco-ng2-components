@@ -26,17 +26,17 @@
                         </div>
                     </adf-toolbar-title> 
                     <adf-buttons-action-menu *ngIf="!isEditable">
-                        <button mat-menu-item (click)="toggleParameters()">
+                        <button mat-menu-item (click)="toggleParameters()" id="">
                             <mat-icon>settings</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-SETTING' | translate }}</span>
                         </button>
-                        <button mat-menu-item (click)="deleteReport()">
+                        <button mat-menu-item (click)="deleteReport()" id="delete-button">
                             <mat-icon>delete</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-DELETE' | translate }}</span>
                         </button>
                         <div *ngIf="isFormValid()">
-                            <button mat-menu-item (click)="showDialog('Export')">
+                            <button mat-menu-item (click)="showDialog('Export')" id="export-button">
                                 <mat-icon>file_download</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate }}</span>
                             </button>
-                            <button mat-menu-item (click)="showDialog('Save')">
+                            <button mat-menu-item (click)="showDialog('Save')" id="save-button">
                                 <mat-icon>save</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-SAVE' | translate }}</span>
                             </button>
                         </div>

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /*tslint:disable:ban*/
+
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
@@ -27,7 +29,7 @@ import { Observable } from 'rxjs/Observable';
 
 declare let jasmine: any;
 
-describe('AnalyticsReportParametersComponent', () => {
+fdescribe('AnalyticsReportParametersComponent', () => {
 
     let component: AnalyticsReportParametersComponent;
     let fixture: ComponentFixture<AnalyticsReportParametersComponent>;
@@ -559,21 +561,17 @@ describe('AnalyticsReportParametersComponent', () => {
                 });
             }));
 
-            it('Should raise an event for report deleted', async(() => {
+            fit('Should raise an event for report deleted', async(() => {
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    let deleteButton = fixture.debugElement.nativeElement.querySelector('#delete-button');
-                    expect(deleteButton).toBeDefined();
-                    expect(deleteButton).not.toBeNull();
-                    component.deleteReportSuccess.subscribe((reportId) => {
-                        expect(reportId).not.toBeNull();
-                    });
-                    deleteButton.click();
-                    jasmine.Ajax.requests.mostRecent().respondWith({
-                        status: 200,
-                        contentType: 'json'
-                    });
+                spyOn(component, 'deleteReport');
+                let deleteButton = fixture.debugElement.nativeElement.querySelector('#delete-button');
+                expect(deleteButton).toBeDefined();
+                expect(deleteButton).not.toBeNull();
+                component.deleteReportSuccess.subscribe((reportId) => {
+                    expect(reportId).not.toBeNull();
                 });
+                deleteButton.click();
+                expect(component.deleteReport).toHaveBeenCalled();
             }));
 
             it('Should hide export button if the form is not valid', async(() => {
