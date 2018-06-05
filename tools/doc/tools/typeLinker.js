@@ -12,6 +12,13 @@ var includedNodeTypes = [
 ];
 var docFolder = path.resolve("docs");
 var adfLibNames = ["core", "content-services", "insights", "process-services"];
+var externalTypes = {
+    'EventEmitter': 'https://angular.io/api/core/EventEmitter',
+    'MatSnackBarRef': 'https://material.angular.io/components/snack-bar/overview',
+    'Observable': 'http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html',
+    'SiteEntry': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md',
+    'SitePaging': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md'
+};
 function initPhase(aggData) {
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
@@ -62,10 +69,10 @@ function updatePhase(tree, pathname, aggData) {
                 }
             }
         }
-        else if (node.type === "paragraph") {
+        else if ((node.type === "paragraph")) {
             node.children.forEach(function (child, index) {
-                if (child.type === "text") {
-                    var newNodes = handleLinksInBodyText(aggData, child.value);
+                if ((child.type === "text") || (child.type === "inlineCode")) {
+                    var newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
                     (_a = node.children).splice.apply(_a, [index, 1].concat(newNodes));
                 }
                 else {
@@ -181,7 +188,7 @@ var SplitNameLookup = /** @class */ (function () {
 var WordScanner = /** @class */ (function () {
     function WordScanner(text) {
         this.text = text;
-        this.separators = " \n\r\t.;:";
+        this.separators = " \n\r\t.;:<>[]";
         this.index = 0;
         this.nextSeparator = 0;
         this.next();
@@ -214,7 +221,8 @@ var WordScanner = /** @class */ (function () {
     };
     return WordScanner;
 }());
-function handleLinksInBodyText(aggData, text) {
+function handleLinksInBodyText(aggData, text, wrapInlineCode) {
+    if (wrapInlineCode === void 0) { wrapInlineCode = false; }
     var result = [];
     var currTextStart = 0;
     var matcher = new SplitNameMatcher(aggData.nameLookup.root);
@@ -237,9 +245,23 @@ function handleLinksInBodyText(aggData, text) {
         }
         if (link) {
             var linkText = text.substring(matchStart, scanner.nextSeparator);
-            var linkNode = unist.makeLink(unist.makeText(linkText), link);
+            var linkTitle = void 0;
+            if (wrapInlineCode) {
+                linkTitle = unist.makeInlineCode(linkText);
+            }
+            else {
+                linkTitle = unist.makeText(linkText);
+            }
+            var linkNode = unist.makeLink(linkTitle, link);
             var prevText = text.substring(currTextStart, matchStart);
-            result.push(unist.makeText(prevText));
+            if (prevText) {
+                if (wrapInlineCode) {
+                    result.push(unist.makeInlineCode(prevText));
+                }
+                else {
+                    result.push(unist.makeText(prevText));
+                }
+            }
             result.push(linkNode);
             currTextStart = scanner.nextSeparator;
             matcher.reset();
@@ -247,7 +269,12 @@ function handleLinksInBodyText(aggData, text) {
     }
     var remainingText = text.substring(currTextStart, text.length);
     if (remainingText) {
-        result.push(unist.makeText(remainingText));
+        if (wrapInlineCode) {
+            result.push(unist.makeInlineCode(remainingText));
+        }
+        else {
+            result.push(unist.makeText(remainingText));
+        }
     }
     return result;
 }
@@ -262,6 +289,9 @@ function resolveTypeLink(aggData, text) {
             url = "../" + possDocFile;
         }
         return url;
+    }
+    else if (externalTypes[possTypeName]) {
+        return externalTypes[possTypeName];
     }
     else {
         return "";

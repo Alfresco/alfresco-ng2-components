@@ -33,6 +33,15 @@ const docFolder = path.resolve("docs");
 const adfLibNames = ["core", "content-services", "insights", "process-services"];
 
 
+const externalTypes = {
+    'EventEmitter': 'https://angular.io/api/core/EventEmitter',
+    'MatSnackBarRef': 'https://material.angular.io/components/snack-bar/overview',
+    'Observable': 'http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html',
+    'SiteEntry': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md',
+    'SitePaging': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md'
+};
+
+
 export function initPhase(aggData) {
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
@@ -98,10 +107,10 @@ export function updatePhase(tree, pathname, aggData) {
                     convertNodeToTypeLink(node, node.children[0].value, link);
                 }
             }
-        } else if (node.type === "paragraph") {
+        } else if ((node.type === "paragraph")) {
             node.children.forEach((child, index) => {
-                if (child.type === "text") {
-                    let newNodes = handleLinksInBodyText(aggData, child.value);
+                if ((child.type === "text") || (child.type === "inlineCode")) {
+                    let newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
                     node.children.splice(index, 1, ...newNodes);
                 } else {
                     traverseMDTree(child);
@@ -229,7 +238,7 @@ class WordScanner {
     current: string;
 
     constructor(public text: string) {
-        this.separators = " \n\r\t.;:";
+        this.separators = " \n\r\t.;:<>[]";
         this.index = 0;
         this.nextSeparator = 0;
         this.next();
@@ -269,7 +278,7 @@ class WordScanner {
 }
 
 
-function handleLinksInBodyText(aggData, text: string): Node[] {
+function handleLinksInBodyText(aggData, text: string, wrapInlineCode: boolean = false): Node[] {
     let result = [];
     let currTextStart = 0;
     let matcher = new SplitNameMatcher(aggData.nameLookup.root);
@@ -296,9 +305,25 @@ function handleLinksInBodyText(aggData, text: string): Node[] {
 
         if (link) {
             let linkText = text.substring(matchStart, scanner.nextSeparator);
-            let linkNode = unist.makeLink(unist.makeText(linkText), link);
+            let linkTitle;
+
+            if (wrapInlineCode) {
+                linkTitle = unist.makeInlineCode(linkText);
+            } else {
+                linkTitle = unist.makeText(linkText);
+            }
+
+            let linkNode = unist.makeLink(linkTitle, link);
             let prevText = text.substring(currTextStart, matchStart);
-            result.push(unist.makeText(prevText));
+
+            if (prevText) {
+                if (wrapInlineCode) {
+                    result.push(unist.makeInlineCode(prevText));
+                } else {
+                    result.push(unist.makeText(prevText));
+                }
+            }
+
             result.push(linkNode);
             currTextStart = scanner.nextSeparator;
             matcher.reset();
@@ -308,7 +333,11 @@ function handleLinksInBodyText(aggData, text: string): Node[] {
     let remainingText = text.substring(currTextStart, text.length);
 
     if (remainingText) {
-        result.push(unist.makeText(remainingText));
+        if (wrapInlineCode) {
+            result.push(unist.makeInlineCode(remainingText));
+        } else {
+            result.push(unist.makeText(remainingText));
+        }
     }
 
     return result;
@@ -329,6 +358,8 @@ function resolveTypeLink(aggData, text): string {
         }
 
         return url;
+    } else if (externalTypes[possTypeName]) {
+        return externalTypes[possTypeName];
     } else {
         return "";
     }

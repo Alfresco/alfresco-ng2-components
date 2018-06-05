@@ -132,5 +132,9 @@ module.exports = {
 
     isText: function (node) {
         return node.type === "text";
+    },
+
+    isLink: function (node) {
+        return node.type === "inlineCode";
     }
 }
