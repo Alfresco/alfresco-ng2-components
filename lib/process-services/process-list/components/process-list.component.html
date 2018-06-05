@@ -1,5 +1,4 @@
-<div>
-    <adf-datatable #dataTable
+<adf-datatable #dataTable
         [data]="data"
         [sorting]="dataSort"
         [loading]="isLoading"
@@ -18,12 +17,13 @@
             </ng-template>
         </loading-content-template>
         <no-content-template>
-            <!--Add your custom empty template here-->
             <ng-template>
-                <div class="no-content-message">
-                    {{ (requestNode ? 'ADF_PROCESS_LIST.LIST.NONE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate }}
-                </div>
+                    <adf-empty-content *ngIf="!emptyCustomContent"
+                    icon="assessment"
+                    [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate "
+                    [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate">
+                    </adf-empty-content>
+                <ng-content select="adf-empty-custom-content"></ng-content>
             </ng-template>
         </no-content-template>
     </adf-datatable>
-</div>
