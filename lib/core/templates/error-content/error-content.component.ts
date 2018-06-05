@@ -57,10 +57,10 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
     }
 
     ngAfterContentChecked() {
-        this.getData();
+        this.getTranslations();
     }
 
-    getData() {
+    getTranslations() {
         this.returnButtonUrl = this.translateService.instant(
             'ERROR_CONTENT.' + this.errorCode + '.RETURN_BUTTON.ROUTE');
 
