@@ -15,28 +15,68 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     templateUrl: './task-list-demo.component.html',
     styleUrls: [`./task-list-demo.component.scss`],
 })
 
-export class TaskListDemoComponent {
+export class TaskListDemoComponent implements OnInit{
 
-    @Input()
     appId: number;
 
-    @Input()
     processDefinitionId: string;
 
-    @Input()
     state: string;
 
-    @Input()
     assignment: string;
 
-    @Input()
     name: string;
+
+    sort: string;
+
+    taskProcessDefinitionId = new FormControl();
+
+    taskState = new FormControl();
+
+    taskAssignment = new FormControl();
+    
+    taskName = new FormControl();
+
+    taskSort = new FormControl();
+
+    constructor(private route: ActivatedRoute) {
+    }
+
+    ngOnInit() {
+        if (this.route) {
+            this.route.params.forEach((params: Params) => {
+                if (params['id']) {
+                    this.appId = +params['id'];
+                } else {
+                    this.appId = 0;
+                }
+            });
+        }
+    }
+
+    filterTasks() {
+        this.processDefinitionId = this.taskProcessDefinitionId.value;
+        this.name = this.taskName.value;
+        this.assignment = this.taskAssignment.value;
+        this.state = this.taskState.value;
+        this.sort = this.taskSort.value;
+    }
+
+    resetTaskFilters() {
+        this.taskProcessDefinitionId.reset();
+        this.taskName.reset();
+        this.taskAssignment.reset();
+        this.taskState.reset();
+        this.taskSort.reset();
+    }
 
 }
