@@ -42,14 +42,15 @@
 </ng-container>
 
 <ng-template #empty>
-    
-    <ng-content *ngIf="hasCustomEmptyListTemplate; else defaulEmptyList" class="adf-custom-empty-template"></ng-content>
-    
-    <ng-template #defaulEmptyList>
-        <adf-empty-list *ngIf="isEmpty()">
-            <div adf-empty-list-header class="adf-empty-list-header">
-                {{ 'ADF_TASK_LIST.APPS.NONE' | translate }}
-            </div>
-        </adf-empty-list>
-    </ng-template>
+    <div class="adf-app-list-empty" *ngIf="isEmpty()">
+        <ng-content select="adf-empty-custom-content" *ngIf="hasEmptyCustomContentTemplate; else defaultEmptyTemplate" class="adf-custom-empty-template"></ng-content>
+
+        <ng-template #defaultEmptyTemplate>
+            <adf-empty-content
+                icon="apps"
+                [title]="'ADF_TASK_LIST.APPS.TITLE' | translate"
+                [subtitle]="'ADF_TASK_LIST.APPS.SUBTITLE' | translate">
+            </adf-empty-content>
+        </ng-template>
+    </div>
 </ng-template>
