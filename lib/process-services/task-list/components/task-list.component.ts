@@ -271,14 +271,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     /**
-     * Return the sorting order
-     * Sort the tasks based on current value of 'sort' property
-     */
-    // get dataSort(): any[] {
-    //     return this.sort ? this.sort.split('-') : this.sorting;
-    // }
-
-    /**
      * Return the current id
      */
     getCurrentId(): string {
