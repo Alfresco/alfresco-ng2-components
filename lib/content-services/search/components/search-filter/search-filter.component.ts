@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
 import { SearchService, TranslationService } from '@alfresco/adf-core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
@@ -33,10 +33,11 @@ import { SearchFilterList } from './models/search-filter-list.model';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-filter' }
 })
-export class SearchFilterComponent implements OnInit {
+export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private DEFAULT_PAGE_SIZE = 5;
 
+    isAlive = true;
     selectedFacetQueries: string[] = [];
     selectedBuckets: FacetFieldBucket[] = [];
     responseFacetQueries: ResponseFacetQueryList;
@@ -57,18 +58,26 @@ export class SearchFilterComponent implements OnInit {
             this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
         }
 
-        this.queryBuilder.updated.subscribe(query => {
+        this.queryBuilder.updated
+            .takeWhile(() => this.isAlive)
+            .subscribe(query => {
             this.queryBuilder.execute();
         });
     }
 
     ngOnInit() {
         if (this.queryBuilder) {
-            this.queryBuilder.executed.subscribe(data => {
+            this.queryBuilder.executed
+                .takeWhile(() => this.isAlive)
+                .subscribe(data => {
                 this.onDataLoaded(data);
                 this.searchService.dataLoaded.next(data);
             });
         }
+    }
+
+    ngOnDestroy() {
+       this.isAlive = false;
     }
 
     get isFacetQueriesDefined() {
