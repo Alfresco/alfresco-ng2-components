@@ -40,8 +40,8 @@ or custom template can be added:
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` |  |
-| update | `EventEmitter<PermissionElement>` | Emitted when the permission is updated. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` |  |
+| update | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<PermissionElement>` | Emitted when the permission is updated. |
 
 ## Details
 

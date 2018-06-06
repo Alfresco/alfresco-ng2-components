@@ -26,7 +26,7 @@ Searches for people or groups to add to the current node permissions.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| select | `EventEmitter<any>` | Emitted when a permission list item is selected. |
+| select | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a permission list item is selected. |
 
 ## Details
 

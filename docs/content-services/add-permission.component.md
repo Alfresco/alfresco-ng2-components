@@ -32,8 +32,8 @@ Searches for people or groups to add to the current node permissions.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs during the update. |
-| success | `EventEmitter<MinimalNodeEntryEntity>` | Emitted when the node is updated successfully. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during the update. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the node is updated successfully. |
 
 ## Details
 

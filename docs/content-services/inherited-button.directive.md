@@ -28,7 +28,7 @@ Update the current node by adding/removing the inherited permissions.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| updated | `EventEmitter<MinimalNodeEntryEntity>` | Emitted when the node is updated. |
+| updated | [`EventEmitter<MinimalNodeEntryEntity>`](../content-services/document-library.model.md) | Emitted when the node is updated. |
 
 ## Details
 
