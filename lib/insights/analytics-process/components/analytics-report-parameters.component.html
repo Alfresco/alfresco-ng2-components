@@ -29,7 +29,7 @@
                         <button mat-menu-item (click)="toggleParameters()" id="">
                             <mat-icon>settings</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-SETTING' | translate }}</span>
                         </button>
-                        <button mat-menu-item (click)="deleteReport()" id="delete-button">
+                        <button mat-menu-item (click)="deleteReport(reportId)" id="delete-button">
                             <mat-icon>delete</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-DELETE' | translate }}</span>
                         </button>
                         <div *ngIf="isFormValid()">

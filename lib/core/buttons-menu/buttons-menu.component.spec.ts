@@ -19,8 +19,36 @@ import { TestBed, async } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CustomEmptyContainerComponent, CustomContainerComponent } from '../mock/buttons-menu.mock';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+
+@Component({
+    selector: 'adf-custom-container',
+    template: `
+        <adf-buttons-action-menu>
+            <button mat-menu-item (click)="assignValue()">
+                <mat-icon>settings</mat-icon><span> Button </span>
+            </button>
+        </adf-buttons-action-menu>
+    `
+})
+export class CustomContainerComponent {
+
+    value: number;
+
+    assignValue() {
+        this.value = 1;
+    }
+}
+
+@Component({
+    selector: 'adf-custom-empty-container',
+    template: `
+        <adf-buttons-action-menu>
+        </adf-buttons-action-menu>
+    `
+})
+export class CustomEmptyContainerComponent {
+}
 
 describe('ButtonsMenuComponent', () => {
 
