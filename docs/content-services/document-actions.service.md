@@ -16,14 +16,14 @@ Implements the document menu actions for the [Document List component](../conten
     Checks if actions can be executed for an item.
     -   _obj:_ `any`  - Item to receive an action
     -   **Returns** `boolean` - True if the action can be executed on this item, false otherwise
--   **getHandler**(key: `string` = `null`): `ContentActionHandler`<br/>
+-   **getHandler**(key: `string` = `null`): [`ContentActionHandler`](../../lib/content-services/document-list/models/content-action.model.ts)<br/>
     Gets the handler for an action.
     -   _key:_ `string`  - Identifier of the action
-    -   **Returns** `ContentActionHandler` - The handler for the action
--   **setHandler**(key: `string` = `null`, handler: `ContentActionHandler` = `null`): `boolean`<br/>
+    -   **Returns** [`ContentActionHandler`](../../lib/content-services/document-list/models/content-action.model.ts) - The handler for the action
+-   **setHandler**(key: `string` = `null`, handler: [`ContentActionHandler`](../../lib/content-services/document-list/models/content-action.model.ts) = `null`): `boolean`<br/>
     Sets a new handler for an action.
     -   _key:_ `string`  - Identifier of the action
-    -   _handler:_ `ContentActionHandler`  - Handler for the action
+    -   _handler:_ [`ContentActionHandler`](../../lib/content-services/document-list/models/content-action.model.ts)  - Handler for the action
     -   **Returns** `boolean` - False if the key was an empty/null string, true otherwise
 
 ## Details

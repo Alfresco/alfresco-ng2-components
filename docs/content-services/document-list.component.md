@@ -69,7 +69,7 @@ Displays the documents from a repository.
 | display | `string` |  [`DisplayMode`](../../lib/core/datatable/components/datatable/datatable.component.ts).List | Change the display mode of the table. Can be "list" or "gallery". |
 | emptyFolderImageUrl | `string` | "./assets/images/empty_doc_lib.svg" | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
 | enableInfiniteScrolling | `boolean` | false | Set document list to work in infinite scrolling mode |
-| folderNode | `MinimalNodeEntryEntity` |  null | Currently displayed folder node |
+| folderNode | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  null | Currently displayed folder node |
 | imageResolver | `any \| null` |  null | Custom image resolver |
 | includeFields | `string[]` |  | Include additional information about the node in the server request.for example: association, isLink, isLocked and others. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
@@ -79,7 +79,7 @@ Displays the documents from a repository.
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |
 | navigationMode | `string` |  [`DocumentListComponent`](../content-services/document-list.component.md).DOUBLE_CLICK_NAVIGATION | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
 | node | [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) |  null | The Document list will show all the nodes contained in the [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) entity |
-| permissionsStyle | [`PermissionStyleModel[]`](../../lib/content-services/document-list/models/permissions-style.model.ts) |  \[] | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
+| permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` |  \[] | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
 | rowFilter | `any \| null` |  null | Custom row filter |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
@@ -94,11 +94,11 @@ Displays the documents from a repository.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when the API fails to get the Document List data |
-| folderChange | [`EventEmitter<NodeEntryEvent>`](../../lib/content-services/document-list/components/node.event.ts) | Emitted when the current display folder changes |
-| nodeClick | [`EventEmitter<NodeEntityEvent>`](../../lib/content-services/document-list/components/node.event.ts) | Emitted when the user clicks a list node |
-| nodeDblClick | [`EventEmitter<NodeEntityEvent>`](../../lib/content-services/document-list/components/node.event.ts) | Emitted when the user double-clicks a list node |
-| preview | [`EventEmitter<NodeEntityEvent>`](../../lib/content-services/document-list/components/node.event.ts) | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../core/viewer.component.md). |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the API fails to get the Document List data |
+| folderChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the current display folder changes |
+| nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
+| nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
+| preview | `EventEmitter<NodeEntityEvent>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the Viewer component. |
 | ready | `EventEmitter<NodePaging>` | Emitted when the Document List has loaded all items and is ready for use |
 
 ## Details

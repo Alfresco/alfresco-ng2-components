@@ -26,7 +26,7 @@ Shows a dialog listing all the files uploaded with the Upload Button or Drag Are
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when a file in the list has an error. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a file in the list has an error. |
 
 ## Details
 
