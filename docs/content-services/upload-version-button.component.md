@@ -41,7 +41,7 @@ sense when applied to the [Upload Version Button component,](../content-services
 | majorVersion | `boolean` | false | majorVersion boolean field to true to indicate a major version should be created. |
 | maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
 | multipleFiles | `boolean` | false | Allows/disallows multiple files |
-| node | `MinimalNodeEntryEntity` |  | (**Required**) The node to be versioned. |
+| node | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | (**Required**) The node to be versioned. |
 | nodeType | `string` | "cm:content" | Custom node type for uploaded file |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 | staticTitle | `string` |  | Defines the text of the upload button. |
@@ -53,9 +53,10 @@ sense when applied to the [Upload Version Button component,](../content-services
 
 | Name | Type | Description |
 | -- | -- | -- |
-| createFolder | `EventEmitter<Object>` | Emitted when a folder is created. |
-| error | `EventEmitter<Object>` | Emitted when an error occurs. |
-| permissionEvent | [`EventEmitter<PermissionModel>`](../../lib/content-services/document-list/models/permissions.model.ts) | Emitted when create permission is missing. |
+| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` |  |
+| createFolder | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a folder is created. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
+| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when create permission is missing. |
 | success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details
@@ -72,7 +73,7 @@ So, to sum up, this component:
 
 -   **Can** upload a new version from the same file extension regardless of the file name.
 -   **Cannot** upload a new version that has a different file extension, to the file that was
-    originally uploaded (an error message will be emitted by the `error` EventEmitter of the component.
+    originally uploaded (an error message will be emitted by the `error` [`EventEmitter`](https://angular.io/api/core/EventEmitter) of the component.
 
 ## See also
 

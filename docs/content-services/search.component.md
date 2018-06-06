@@ -51,8 +51,8 @@ Searches items for supplied search terms.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
-| resultLoaded | [`EventEmitter<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) | Emitted when search results have fully loaded. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when search results have fully loaded. |
 
 ## Details
 
@@ -158,7 +158,7 @@ By doing this, you can get the results as the user types into the input text.
 You can get finer control over the parameters of a search by defining them in a custom
 [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
 object. The recommended way to do this is with a custom implementation of the
-[Search Configuration interface](../core/search-configuration.interface.md) (the `queryBody` parameter of the `Search component` is now deprecated). The ADF source provides a standard implementation of this
+[Search Configuration interface](../core/search-configuration.interface.md) (the `queryBody` parameter of the [`Search component`](../content-services/search.component.md) is now deprecated). The ADF source provides a standard implementation of this
 interface, [`SearchConfigurationService`](../core/search-configuration.service.md) that you can use as a base to adapt to your needs. See the
 [Search Configuration interface](../core/search-configuration.interface.md) page for full details of how to
 customize your search.

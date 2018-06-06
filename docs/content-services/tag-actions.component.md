@@ -29,6 +29,6 @@ Shows available actions for tags.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
-| result | `EventEmitter<Object>` | Emitted when an action is chosen. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| result | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an action is chosen. |
 | successAdd | `EventEmitter<any>` | Emitted when a tag is added successfully. |

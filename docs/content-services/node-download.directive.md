@@ -29,4 +29,4 @@ Allows folders and/or files to be downloaded, with multiple nodes packed as a '.
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| adfNodeDownload | `MinimalNodeEntity[]` |  | Nodes to download. |
+| adfNodeDownload | [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]` |  | Nodes to download. |

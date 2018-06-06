@@ -45,9 +45,10 @@ Activates a file upload.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| createFolder | `EventEmitter<Object>` | Emitted when a folder is created. |
-| error | `EventEmitter<Object>` | Emitted when an error occurs. |
-| permissionEvent | [`EventEmitter<PermissionModel>`](../../lib/content-services/document-list/models/permissions.model.ts) | Emitted when create permission is missing. |
+| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` |  |
+| createFolder | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a folder is created. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
+| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when create permission is missing. |
 | success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details

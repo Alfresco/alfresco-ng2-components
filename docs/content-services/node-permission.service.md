@@ -12,39 +12,39 @@ Manages role permissions for content nodes.
 
 ### Methods
 
--   **getGroupMemeberByGroupName**(groupName: `string` = `null`, opts?: `any` = `null`): `Observable<GroupMemberPaging>`<br/>
+-   **getGroupMemeberByGroupName**(groupName: `string` = `null`, opts?: `any` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<GroupMemberPaging>`<br/>
     Gets all members related to a group name.
     -   _groupName:_ `string`  - Name of group to look for members
-    -   _opts:_ `any`  - (Optional)Extra options supported by JSAPI
-    -   **Returns** `Observable<GroupMemberPaging>` - List of members
--   **getNodeRoles**(node: `MinimalNodeEntryEntity` = `null`): `Observable<string[]>`<br/>
+    -   _opts:_ `any`  - (Optional) Extra options supported by JSAPI
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<GroupMemberPaging>` - List of members
+-   **getNodeRoles**(node: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>`<br/>
     Gets a list of roles for the current node.
-    -   _node:_ `MinimalNodeEntryEntity`  - The target node
-    -   **Returns** `Observable<string[]>` - Array of strings representing the roles
--   **removePermission**(node: `MinimalNodeEntryEntity` = `null`, permissionToRemove: `PermissionElement` = `null`): `Observable<MinimalNodeEntryEntity>`<br/>
+    -   _node:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - The target node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>` - Array of strings representing the roles
+-   **removePermission**(node: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) = `null`, permissionToRemove: `PermissionElement` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
 
-    -   _node:_ `MinimalNodeEntryEntity`  - 
+    -   _node:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - 
     -   _permissionToRemove:_ `PermissionElement`  - 
-    -   **Returns** `Observable<MinimalNodeEntryEntity>` - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - 
 
--   **updateLocallySetPermissions**(node: `MinimalNodeEntryEntity` = `null`, nodes: `MinimalNodeEntity[]` = `null`, nodeRole: `string[]` = `null`): `Observable<MinimalNodeEntryEntity>`<br/>
+-   **updateLocallySetPermissions**(node: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) = `null`, nodes: [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]` = `null`, nodeRole: `string[]` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
 
-    -   _node:_ `MinimalNodeEntryEntity`  - 
-    -   _nodes:_ `MinimalNodeEntity[]`  - 
+    -   _node:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - 
+    -   _nodes:_ [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]`  - 
     -   _nodeRole:_ `string[]`  - 
-    -   **Returns** `Observable<MinimalNodeEntryEntity>` - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - 
 
--   **updateNodePermissions**(nodeId: `string` = `null`, permissionList: `MinimalNodeEntity[]` = `null`): `Observable<MinimalNodeEntryEntity>`<br/>
+-   **updateNodePermissions**(nodeId: `string` = `null`, permissionList: [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
 
     -   _nodeId:_ `string`  - 
-    -   _permissionList:_ `MinimalNodeEntity[]`  - 
-    -   **Returns** `Observable<MinimalNodeEntryEntity>` - 
+    -   _permissionList:_ [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]`  - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - 
 
--   **updatePermissionRole**(node: `MinimalNodeEntryEntity` = `null`, updatedPermissionRole: `PermissionElement` = `null`): `Observable<MinimalNodeEntryEntity>`<br/>
+-   **updatePermissionRole**(node: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) = `null`, updatedPermissionRole: `PermissionElement` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
     Updates the permission for a node.
-    -   _node:_ `MinimalNodeEntryEntity`  - Target node
+    -   _node:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - Target node
     -   _updatedPermissionRole:_ `PermissionElement`  - Permission role to update or add
-    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Node with updated permission
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Node with updated permission
 
 ## Details
 

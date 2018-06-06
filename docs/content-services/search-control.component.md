@@ -38,8 +38,8 @@ Displays a input text which shows find-as-you-type suggestions.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| optionClicked | `EventEmitter<any>` | Emitted when a file item from the list of "find-as-you-type" results is selected. |
-| searchChange | `EventEmitter<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then the term is truncated to an empty string. |
+| optionClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a file item from the list of "find-as-you-type" results is selected. |
+| searchChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then the term is truncated to an empty string. |
 | submit | `EventEmitter<any>` | Emitted when the search is submitted pressing ENTER button. The search term is provided as value of the event. |
 
 ## Details

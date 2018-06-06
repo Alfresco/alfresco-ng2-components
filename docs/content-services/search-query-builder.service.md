@@ -23,6 +23,11 @@ Stores information from all the custom search and faceted search widgets, compil
 
     -   **Returns** `Promise<void>` - 
 
+-   **getFacetField**(label: `string` = `null`): [`FacetField`](../../lib/content-services/search/facet-field.interface.ts)<br/>
+
+    -   _label:_ `string`  - 
+    -   **Returns** [`FacetField`](../../lib/content-services/search/facet-field.interface.ts) - 
+
 -   **getFacetQuery**(label: `string` = `null`): [`FacetQuery`](../../lib/content-services/search/facet-query.interface.ts)<br/>
 
     -   _label:_ `string`  - 
@@ -31,9 +36,9 @@ Stores information from all the custom search and faceted search widgets, compil
 -   **getPrimarySorting**(): [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts)<br/>
     Returns primary sorting definition.
     -   **Returns** [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts) - 
--   **getSortingOptions**(): `SearchSortingDefinition[]`<br/>
+-   **getSortingOptions**(): [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts)`[]`<br/>
     Returns all pre-configured sorting options that users can choose from.
-    -   **Returns** `SearchSortingDefinition[]` - 
+    -   **Returns** [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts)`[]` - 
 -   **removeFilterQuery**(query: `string` = `null`)<br/>
 
     -   _query:_ `string`  - 

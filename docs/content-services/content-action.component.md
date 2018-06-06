@@ -99,9 +99,9 @@ export class MyView {
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<Object>` | Emitted when an error occurs during the action. Applies to copy and move actions. |
-| execute | `EventEmitter<Object>` | Emitted when the user selects the action from the menu. |
-| permissionEvent | `EventEmitter<Object>` | Emitted when a permission error occurs |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs during the action. Applies to copy and move actions. |
+| execute | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the user selects the action from the menu. |
+| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a permission error occurs |
 | success | `EventEmitter<Object>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
 
 ## Details

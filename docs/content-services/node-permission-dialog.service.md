@@ -14,16 +14,16 @@ Displays dialogs to let the user set node permissions.
 
 -   **close**()<br/>
     Closes the currently-open dialog.
--   **openAddPermissionDialog**(nodeId: `string` = `null`, title?: `string` = `null`): `Observable<MinimalNodeEntity[]>`<br/>
+-   **openAddPermissionDialog**(nodeId: `string` = `null`, title?: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntity`](../content-services/document-library.model.md)`[]>`<br/>
     Opens a dialog to add permissions to a node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   _title:_ `string`  - (Optional)Dialog title
-    -   **Returns** `Observable<MinimalNodeEntity[]>` - Node with updated permissions
--   **updateNodePermissionByDialog**(nodeId?: `string` = `null`, title?: `string` = `null`): `Observable<MinimalNodeEntryEntity>`<br/>
+    -   _title:_ `string`  - (Optional) Dialog title
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntity`](../content-services/document-library.model.md)`[]>` - Node with updated permissions
+-   **updateNodePermissionByDialog**(nodeId?: `string` = `null`, title?: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
     Opens a dialog to update permissions for a node.
-    -   _nodeId:_ `string`  - (Optional)ID of the target node
-    -   _title:_ `string`  - (Optional)Dialog title
-    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Node with updated permissions
+    -   _nodeId:_ `string`  - (Optional) ID of the target node
+    -   _title:_ `string`  - (Optional) Dialog title
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Node with updated permissions
 
 ## Details
 

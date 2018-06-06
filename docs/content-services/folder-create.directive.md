@@ -39,8 +39,8 @@ Creates folders.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs (eg, a folder with same name already exists). |
-| success | `EventEmitter<MinimalNodeEntryEntity>` | Emitted when the folder is created successfully. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs (eg, a folder with same name already exists). |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the folder is created successfully. |
 
 ## Details
 
