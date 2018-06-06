@@ -19,7 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
-        "NONE": "No task lists found"
+        "TITLE": "No Tasks Found",
+        "SUBTITLE":"Create a new task that you want to easily find later"
       }
     },
     "PROPERTIES": {
