@@ -13,7 +13,6 @@ Provides drag-and-drop features for an element such as a `div`.
 ```html
 <div [file-draggable]="true" id="DragAndDropBorder" class="drag-and-drop-border"
      (filesDropped)="onFilesDropped($event)"
-     (filesEntityDropped)="onFilesEntityDropped($event)"
      (folderEntityDropped)="onFolderEntityDropped($event)"
      dropzone="" webkitdropzone="*" #dragAndDropArea>
   <ng-content></ng-content>
@@ -47,7 +46,7 @@ Some sample CSS to show the drag and drop area:
 | Name | Type | Description |
 | -- | -- | -- |
 | filesDropped | `EventEmitter<File[]>` | Emitted when one or more files are dragged and dropped onto the draggable element. |
-| filesEntityDropped | `EventEmitter<any>` | Emitted when one or more files are dragged and dropped onto the draggable element. |
+| filesEntityDropped | `EventEmitter<any>` | **Deprecated in 2.4.0**: use `filesDropped` instead. Emitted when one or more files are dragged and dropped onto the draggable element. |
 | folderEntityDropped | `EventEmitter<any>` | Emitted when a directory is dragged and dropped onto the draggable element. |
 
 ## Details
@@ -64,11 +63,6 @@ export class SomeComponent implements OnInit {
       // Use for example the uploadService to upload files to ACS
       console.log('# of files dropped: ', files.length);
     }
-  }
-
-  onFilesEntityDropped(item: any): void {
-    // Use for example the uploadService to upload files to ACS
-    console.log('# of files dropped: ', item);
   }
 
   onFolderEntityDropped(folder: any): void {

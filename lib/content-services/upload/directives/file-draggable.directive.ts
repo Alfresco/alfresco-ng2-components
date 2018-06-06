@@ -35,7 +35,9 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     @Output()
     filesDropped: EventEmitter<File[]> = new EventEmitter<File[]>();
 
-    /** Emitted when one or more files are dragged and dropped onto the draggable element. */
+    /** @deprecated in 2.4.0: use `filesDropped` instead.
+     * Emitted when one or more files are dragged and dropped onto the draggable element.
+     */
     @Output()
     filesEntityDropped: EventEmitter<any> = new EventEmitter();
 
@@ -74,26 +76,34 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
 
-            let items = event.dataTransfer.items;
+            // Chrome, Edge, Firefox, Opera (Files + Folders)
+            const items = event.dataTransfer.items;
             if (items) {
+                const files: File[] = [];
+
                 for (let i = 0; i < items.length; i++) {
-                    if (typeof items[i].webkitGetAsEntry !== 'undefined') {
-                        let item = items[i].webkitGetAsEntry();
+                    if (items[i].webkitGetAsEntry) {
+                        const item = items[i].webkitGetAsEntry();
+
                         if (item) {
                             if (item.isFile) {
-                                this.filesEntityDropped.emit(item);
+                                const file = items[i].getAsFile();
+
+                                if (file) {
+                                    files.push(file);
+                                }
                             } else if (item.isDirectory) {
                                 this.folderEntityDropped.emit(item);
                             }
                         }
-                    } else {
-                        let files = FileUtils.toFileArray(event.dataTransfer.files);
-                        this.filesDropped.emit(files);
                     }
                 }
+                if (files.length > 0) {
+                    this.filesDropped.emit(files);
+                }
             } else {
-                // safari or FF
-                let files = FileUtils.toFileArray(event.dataTransfer.files);
+                // IE, Safari, Chrome, Edge, Firefox, Opera (Files only)
+                const files = FileUtils.toFileArray(event.dataTransfer.files);
                 this.filesDropped.emit(files);
             }
 
