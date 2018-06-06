@@ -24,9 +24,9 @@ If we intend to show a custom template if there are no apps present
 ```html
 <adf-apps
     [layoutType]="'GRID'">
-        <adf-empty-list>
-            <div adf-empty-list-header class="adf-empty-list-header">No apps present</div>
-        </adf-empty-list>
+        <adf-empty-custom-content>
+            No Apps present
+        </adf-empty-custom-content>
 </adf-apps>
 ```
 
