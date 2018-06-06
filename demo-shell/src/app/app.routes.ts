@@ -227,13 +227,23 @@ export const appRoutes: Routes = [
                 loadChildren: 'app/components/lazy-loading/lazy-loading.module#LazyLoadingModule'
             },
             {
+                path: 'task-list',
+                component: TaskListDemoComponent,
+                canActivate: [AuthGuardBpm]
+            },
+            {
+                path: 'task-list/:id',
+                component: TaskListDemoComponent,
+                canActivate: [AuthGuardBpm]
+            },
+            {
                 path: 'error/:id',
                 component: ErrorContentComponent
             },
             {
                 path: '**',
                 redirectTo: 'error/404'
-            }
+            }   
 
         ]
     }
