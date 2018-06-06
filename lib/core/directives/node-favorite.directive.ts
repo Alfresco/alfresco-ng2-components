@@ -125,9 +125,17 @@ export class NodeFavoriteDirective implements OnChanges {
     }
 
     private getFavorite(selected: MinimalNodeEntity): Observable<any> {
-        const { name, isFile, isFolder } = selected.entry;
+        const node = selected.entry;
+
+        // ACS 6.x with 'isFavorite' include
+        if (node && node.hasOwnProperty('isFavorite')) {
+            return Observable.of(selected);
+        }
+
+        // ACS 5.x and 6.x without 'isFavorite' include
+        const { name, isFile, isFolder } = node;
         // shared files have nodeId
-        const id = (<any> selected).entry.nodeId || selected.entry.id;
+        const id = node.nodeId || node.id;
 
         const promise = this.alfrescoApiService.favoritesApi.getFavorite('-me-', id);
 
