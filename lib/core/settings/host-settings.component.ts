@@ -33,7 +33,6 @@ export class HostSettingsComponent implements OnInit {
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 
     providersValues = ['ALL', 'BPM', 'ECM', 'OAUTH'];
-    providerSelected = 'BPM';
     form: FormGroup;
 
     /** Emitted when the URL is invalid. */
@@ -60,25 +59,28 @@ export class HostSettingsComponent implements OnInit {
 
     ngOnInit() {
 
-        let providerValue = this.userPreference.providers;
-        const oAuthConfig = this.userPreference.oauthConfig;
-
-        const oauthGroup = this.fb.group( {
-            host: [oAuthConfig.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
-            clientId: [oAuthConfig.clientId, Validators.required],
-            redirectUri: [oAuthConfig.redirectUri, Validators.required],
-            scope: [oAuthConfig.scope, Validators.required],
-            secretId: oAuthConfig.secret,
-            requireHttps: oAuthConfig.requireHttps,
-            implicitFlow: oAuthConfig.implicitFlow
-        });
+        let providerSelected = this.userPreference.providers;
 
         this.form = this.fb.group({
-            providers: [providerValue, Validators.required],
+            providers: [providerSelected, Validators.required],
             ecmHost: [this.userPreference.ecmHost, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
-            oauthConfig: oauthGroup,
             bpmHost: [this.userPreference.bpmHost, [Validators.required, Validators.pattern(this.HOST_REGEX)]]
         });
+
+        const oAuthConfig = this.userPreference.oauthConfig;
+        if (oAuthConfig) {
+            const oauthGroup = this.fb.group( {
+                host: [oAuthConfig.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
+                clientId: [oAuthConfig.clientId, Validators.required],
+                redirectUri: [oAuthConfig.redirectUri, Validators.required],
+                scope: [oAuthConfig.scope, Validators.required],
+                secretId: oAuthConfig.secret,
+                requireHttps: oAuthConfig.requireHttps,
+                implicitFlow: oAuthConfig.implicitFlow
+            });
+            this.form.addControl('oauthConfig', oauthGroup);
+        }
+
     }
 
     onCancel() {

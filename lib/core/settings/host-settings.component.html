@@ -47,7 +47,7 @@
                     <div formGroupName="oauthConfig">
                         <mat-form-field class="full-width" floatLabel="Auth Host">
                             <mat-label>Auth Host</mat-label>
-                            <input matInput name="host" formControlName="host" placeholder="http(s)://host|ip:port(/path)" >
+                            <input matInput name="host" id="oauthHost" formControlName="host" placeholder="http(s)://host|ip:port(/path)" >
                             <mat-error *ngIf="host.hasError('pattern')">
                                 {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
                             </mat-error>
@@ -57,7 +57,7 @@
                         </mat-form-field>
                         <mat-form-field class="full-width" floatLabel="Client Id">
                             <mat-label>Client Id</mat-label>
-                            <input matInput name="clientId" formControlName="clientId" placeholder="Client Id">
+                            <input matInput name="clientId" id="clientId" formControlName="clientId" placeholder="Client Id">
                             <mat-error *ngIf="clientId.hasError('required')">
                                 {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
                             </mat-error>
