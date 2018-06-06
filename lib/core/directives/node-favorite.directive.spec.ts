@@ -21,11 +21,12 @@ import { NodeFavoriteDirective } from './node-favorite.directive';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from '../services/storage.service';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 describe('NodeFavoriteDirective', () => {
 
     let directive;
-    let alfrescoApiService;
+    let alfrescoApiService: AlfrescoApiService;
 
     beforeEach(() => {
         alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
@@ -316,6 +317,22 @@ describe('NodeFavoriteDirective', () => {
     });
 
     describe('getFavorite()', () => {
+
+        it('should not hit server when using 6.x api', fakeAsync(() => {
+            spyOn(alfrescoApiService.favoritesApi, 'getFavorite').and.callThrough();
+
+            const selection = [
+                { entry: { id: '1', name: 'name1', isFavorite: true } }
+            ];
+
+            let change = new SimpleChange(null, selection, true);
+            directive.ngOnChanges({'selection': change});
+            tick();
+
+            expect(directive.favorites[0].entry.isFavorite).toBe(true);
+            expect(alfrescoApiService.favoritesApi.getFavorite).not.toHaveBeenCalled();
+        }));
+
         it('should process node as favorite', fakeAsync(() => {
             spyOn(alfrescoApiService.getInstance().core.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve());
 
