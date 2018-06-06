@@ -13,7 +13,8 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "No apps found",
+      "TITLE": "No Applications Found",
+      "SUBTITLE":"Create a new application that you want to easily find later",
       "TASK_APP_NAME": "Task App"
     },
     "LIST": {

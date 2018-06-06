@@ -243,9 +243,9 @@ describe('AppsListComponent', () => {
 @Component({
     template: `
     <adf-apps>
-        <adf-empty-list>
-            <div adf-empty-list-header class="adf-empty-list-header">No Apps</div>
-        </adf-empty-list>
+        <adf-empty-custom-content>
+            <p id="custom-id">No Apps</p>
+        </adf-empty-custom-content>
     </adf-apps>
        `
 })
@@ -272,7 +272,7 @@ describe('Custom CustomEmptyAppListTemplateComponent', () => {
     it('should render the custom no-apps template', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
+            let title: any = fixture.debugElement.queryAll(By.css('#custom-id'));
             expect(title.length).toBe(1);
             expect(title[0].nativeElement.innerText).toBe('No Apps');
         });
