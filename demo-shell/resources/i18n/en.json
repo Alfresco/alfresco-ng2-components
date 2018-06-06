@@ -42,6 +42,7 @@
     "APP_LAYOUT": {
         "APP_NAME": "ADF Demo Application",
         "HOME": "Home",
+        "NOTIFICATIONS": "Notifications",
         "CONTENT_SERVICES": "Content Services",
         "BREADCRUMB": "Breadcrumb",
         "PROCESS_SERVICES": "Process Services",

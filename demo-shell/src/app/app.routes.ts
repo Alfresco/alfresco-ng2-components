@@ -48,6 +48,7 @@ import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -59,6 +60,16 @@ export const appRoutes: Routes = [
         path: 'breadcrumb',
         component: BreadcrumbDemoComponent,
         canActivate: [AuthGuardEcm]
+    },
+    {
+        path: 'notifications',
+        component: AppLayoutComponent ,
+        children: [
+            {
+                path: '',
+                component: NotificationsComponent
+            }
+        ]
     },
     {
         path: '',

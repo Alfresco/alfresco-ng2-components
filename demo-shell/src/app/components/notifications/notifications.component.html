@@ -1,0 +1,35 @@
+<div class="main-content">
+    <h1>Notification Service</h1>
+
+    <ul>
+        <li>Try setting custom message with unicode characters, for example: <strong>I ♥️ ADF</strong></li>
+        <li>Try setting custom i18n resource key, for example: <strong>APP_LAYOUT.NOTIFICATIONS</strong></li>
+        <li>Try toggling the action button. Clicking the action within SnackBar should update the label under the toggle button.</li>
+        <li>All elements support <em>data-automation-id</em> attributes and can be automated.</li>
+    </ul>
+
+    <mat-form-field>
+        <input
+            matInput
+            placeholder="Message"
+            [(ngModel)]="message"
+            data-automation-id="notification-message">
+    </mat-form-field>
+
+    <button mat-icon-button (click)="send()">
+        <mat-icon>send</mat-icon>
+    </button>
+
+    <div>
+        <mat-slide-toggle
+            [(ngModel)]="withAction"
+            data-automation-id="notification-action-toggle">
+            With action
+        </mat-slide-toggle>
+    </div>
+
+    <div data-automation-id="notification-action-output">
+        {{ actionOutput }}
+    </div>
+
+</div>
