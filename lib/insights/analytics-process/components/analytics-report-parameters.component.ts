@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService, LogService, MenuButton } from '@alfresco/adf-core';
+import { ContentService, LogService } from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,
@@ -95,8 +95,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     reportName: string;
 
-    buttons: MenuButton[] = [];
-
     private dropDownSub;
     private reportParamsSub;
     private paramOpts;
@@ -138,7 +136,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         if (reportId && reportId.currentValue) {
             this.reportId = reportId.currentValue;
             this.getReportParams(reportId.currentValue);
-            this.setButtons();
         }
 
         let appId = changes['appId'];
@@ -390,35 +387,5 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     isFormValid() {
         return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
-    }
-
-    setButtons() {
-        this.buttons = [
-            new MenuButton({
-                label: 'ANALYTICS.MESSAGES.ICON-SETTING',
-                icon: 'settings',
-                handler: this.toggleParameters.bind(this)
-            }),
-            new MenuButton({
-                label: 'ANALYTICS.MESSAGES.ICON-DELETE',
-                icon: 'delete',
-                handler: this.deleteReport.bind(this, this.reportId),
-                id: 'delete-button'
-            }),
-            new MenuButton({
-                label: 'ANALYTICS.MESSAGES.ICON-EXPORT-CSV',
-                icon: 'file_download',
-                handler: this.showDialog.bind(this, 'Export'),
-                id: 'export-button',
-                isVisible: this.isFormValid.bind(this)
-            }),
-            new MenuButton({
-                label: 'ANALYTICS.MESSAGES.ICON-SAVE',
-                icon: 'save',
-                handler: this.showDialog.bind(this, 'Save'),
-                id: 'save-button',
-                isVisible: this.isFormValid.bind(this)
-            })
-        ];
     }
 }
