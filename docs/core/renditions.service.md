@@ -9,16 +9,16 @@ Manages prearranged conversions of content to different formats.
 
 ## Methods
 
-`isRenditionAvailable(nodeId: string, encoding: string): Observable<boolean>`<br/>
+`isRenditionAvailable(nodeId: string, encoding: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
 Has the specified rendition been set up for this item?
 
-`isConversionPossible(nodeId: string, encoding: string): Observable<boolean>`<br/>
+`isConversionPossible(nodeId: string, encoding: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
 Is it possible to convert this item to the specified format?
 
 `getRenditionUrl(nodeId: string, encoding: string): string`<br/>
 Gets a URL linking to a rendition.
 
-`getRenditionsListByNodeId(nodeId: string): Observable<RenditionPaging>`<br/>
+`getRenditionsListByNodeId(nodeId: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<RenditionPaging>`<br/>
 Gets all available renditions for an item.
 
 `convert(nodeId: string, encoding: string, pollingInterval: number = 1000)`<br/>

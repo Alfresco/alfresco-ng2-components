@@ -18,7 +18,7 @@ and [Tasklist](../process-services/task-list.component.md) components.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| rowsChanged | `Subject<Array<DataRow>>` | Raised when data adapter gets new rows. |
+| rowsChanged | [`Subject<Array<DataRow>>`](../../lib/core/datatable/data/data-row.model.ts) | Raised when data adapter gets new rows. |
 
 ## Methods
 
@@ -30,10 +30,10 @@ Get/set the values for display in the table using an array of rows.
 [`setColumns(columns: Array<DataColumn>): void;`](../../lib/core/datatable/data/data-column.model.ts)<br/>
 Get/set an array of column specifications.
 
-`getValue(row: DataRow, col: DataColumn): any;`<br/>
+`getValue(row: `[`DataRow,`](../../lib/core/datatable/data/data-row.model.ts)` col: DataColumn): any;`<br/>
 Get the data value from a specific table cell.
 
-`getSorting(): DataSorting;`<br/>
+`getSorting(): `[`DataSorting`](../../lib/core/datatable/data/data-sorting.model.ts)`;`<br/>
 `setSorting(sorting: DataSorting): void;`<br/>
 Get/set the sorting key and direction (ascending or descending).
 

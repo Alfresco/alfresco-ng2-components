@@ -46,7 +46,7 @@ Adds "infinite" pagination to the component it is used with.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| loadMore | [`EventEmitter<Pagination>`](../../lib/content-services/document-list/models/document-library.model.ts) | Emitted when the "Load More" button is clicked. |
+| loadMore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the "Load More" button is clicked. |
 
 ## Details
 

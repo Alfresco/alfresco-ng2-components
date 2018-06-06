@@ -30,10 +30,10 @@ Stores preferences for components.
 -   **getStoragePrefix**(): `string`<br/>
     Gets the active storage prefix for preferences.
     -   **Returns** `string` - Storage prefix
--   **select**(property: `string` = `null`): `Observable<any>`<br/>
+-   **select**(property: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Sets up a callback to notify when a property has changed.
     -   _property:_ `string`  - The property to watch
-    -   **Returns** `Observable<any>` - Notification callback
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Notification callback
 -   **set**(property: `string` = `null`, value: `any` = `null`)<br/>
     Sets a preference property.
     -   _property:_ `string`  - Name of the property

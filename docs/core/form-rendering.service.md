@@ -12,20 +12,20 @@ Maps an APS form field type string onto the corresponding form [widget component
 
 ### Methods
 
--   **getComponentTypeResolver**(type: `string` = `null`, defaultValue: `Type<__type>` = `this.defaultValue`): `DynamicComponentResolveFunction`<br/>
+-   **getComponentTypeResolver**(type: `string` = `null`, defaultValue: `Type<__type>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
     Gets the currently active ComponentTypeResolver function for a field type.
     -   _type:_ `string`  - The type whose resolver you want
     -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
-    -   **Returns** `DynamicComponentResolveFunction` - Resolver function
+    -   **Returns** [`DynamicComponentResolveFunction`](../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
 -   **resolveComponentType**(model: [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts) = `null`, defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
     Finds the component type that is needed to render a form field.
-    -   _model:_ [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts)  - (form-field.model.md) for the field to render
+    -   _model:_ [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../lib/process-services/task-list/models/form.model.ts) field model for the field to render
     -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<__type>` - Component type
--   **setComponentTypeResolver**(type: `string` = `null`, resolver: `DynamicComponentResolveFunction` = `null`, override: `boolean` = `true`)<br/>
+-   **setComponentTypeResolver**(type: `string` = `null`, resolver: [`DynamicComponentResolveFunction`](../../lib/core/services/dynamic-component-mapper.service.ts) = `null`, override: `boolean` = `true`)<br/>
     Sets or optionally replaces a ComponentTypeResolver function for a field type.
     -   _type:_ `string`  - The type whose resolver you want to set
-    -   _resolver:_ `DynamicComponentResolveFunction`  - The new resolver function
+    -   _resolver:_ [`DynamicComponentResolveFunction`](../../lib/core/services/dynamic-component-mapper.service.ts)  - The new resolver function
     -   _override:_ `boolean`  - The new resolver will only replace an existing one if this parameter is true
 
 ## Details

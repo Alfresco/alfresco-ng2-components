@@ -24,7 +24,7 @@ Displays buttons on a responsive menu.
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| buttons | [`MenuButton[]`](../../lib/core/buttons-menu/menu-button.model.ts) |  | Array of buttons that defines the menu. |
+| buttons | [`MenuButton`](../../lib/core/buttons-menu/menu-button.model.ts)`[]` |  | Array of buttons that defines the menu. |
 
 ## Details
 
@@ -39,7 +39,7 @@ Mobile view of the menu
 
 ![adf-buttons-menu-mobile](../docassets/images/adf-buttons-menu-mobile.png)
 
-The `buttons` property contains an array of [MenuButton](../../lib/core/buttons-menu/menu-button.model.ts) instances that define
+The `buttons` property contains an array of [`MenuButton`](../../lib/core/buttons-menu/menu-button.model.ts) instances that define
 the label and appearance of each button along with a handler function to
 implement its action:
 

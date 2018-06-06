@@ -78,7 +78,7 @@ Displays the standard three-region ADF application layout.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| expanded | `EventEmitter<boolean>` |  |
+| expanded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` |  |
 
 ## Details
 
@@ -115,8 +115,8 @@ Mobile layout (screen width less than the `stepOver` value):
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
-| expanded | `EventEmitter<boolean>` | Emmitted when the menu toggle and the collapsed/expanded state of the sideNav changes
+| ---- | ---- | ----------- |
+| expanded | `EventEmitter<boolean>` | Emmitted when the menu toggle and the collapsed/expanded state of the sideNav changes |
 
 ### Template context
 

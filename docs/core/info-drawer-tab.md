@@ -42,10 +42,10 @@ Render tab with icon instead of labels:
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | label | `string` | '' | Tab label. |
-| icon | `string` |  null | The material design icon. |
+| icon | `string` | null | The material design icon. |
 
 ## See also
 
-- [Info drawer layout component](info-drawer.component.md)
+-   [Info drawer layout component](info-drawer.component.md)

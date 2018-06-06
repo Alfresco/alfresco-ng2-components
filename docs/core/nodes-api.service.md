@@ -27,47 +27,47 @@ Accesses and manipulates ACS document nodes using their node IDs.
 
 ### Methods
 
--   **createFolder**(parentNodeId: `string` = `null`, nodeBody: `any` = `null`, options: `any` = `{}`): `Observable<MinimalNodeEntryEntity>`<br/>
+-   **createFolder**(parentNodeId: `string` = `null`, nodeBody: `any` = `null`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<MinimalNodeEntryEntity>`<br/>
     Creates a new folder node inside a parent folder.
     -   _parentNodeId:_ `string`  - ID of the parent folder node
     -   _nodeBody:_ `any`  - Data for the new folder
     -   _options:_ `any`  - Optional parameters supported by JSAPI
-    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the new folder
--   **createNode**(parentNodeId: `string` = `null`, nodeBody: `any` = `null`, options: `any` = `{}`): `Observable<MinimalNodeEntryEntity>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<MinimalNodeEntryEntity>` - Details of the new folder
+-   **createNode**(parentNodeId: `string` = `null`, nodeBody: `any` = `null`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<MinimalNodeEntryEntity>`<br/>
     Creates a new document node inside a folder.
     -   _parentNodeId:_ `string`  - ID of the parent folder node
     -   _nodeBody:_ `any`  - Data for the new node
     -   _options:_ `any`  - Optional parameters supported by JSAPI
-    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the new node
--   **deleteNode**(nodeId: `string` = `null`, options: `any` = `{}`): `Observable<void>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<MinimalNodeEntryEntity>` - Details of the new node
+-   **deleteNode**(nodeId: `string` = `null`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
     Moves a node to the trashcan.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JSAPI
-    -   **Returns** `Observable<void>` - Empty result that notifies when the deletion is complete
--   **getNode**(nodeId: `string` = `null`, options: `any` = `{}`): `Observable<MinimalNodeEntryEntity>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` - Empty result that notifies when the deletion is complete
+-   **getNode**(nodeId: `string` = `null`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<MinimalNodeEntryEntity>`<br/>
     Gets the stored information about a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JSAPI
-    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Node information
--   **getNodeChildren**(nodeId: `string` = `null`, options: `any` = `{}`): [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts)<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<MinimalNodeEntryEntity>` - Node information
+-   **getNodeChildren**(nodeId: `string` = `null`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the items contained in a folder node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JSAPI
-    -   **Returns** [`Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts) - List of child items from the folder
--   **handleError**(error: `any` = `null`): `Observable<any>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of child items from the folder
+-   **handleError**(error: `any` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Reports an error.
     -   _error:_ `any`  - Object representing the error
-    -   **Returns** `Observable<any>` - Error information
--   **restoreNode**(nodeId: `string` = `null`): `Observable<MinimalNodeEntryEntity>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Error information
+-   **restoreNode**(nodeId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<MinimalNodeEntryEntity>`<br/>
     Restores a node previously moved to the trashcan.
     -   _nodeId:_ `string`  - ID of the node to restore
-    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the restored node
--   **updateNode**(nodeId: `string` = `null`, nodeBody: `any` = `null`, options: `any` = `{}`): `Observable<MinimalNodeEntryEntity>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<MinimalNodeEntryEntity>` - Details of the restored node
+-   **updateNode**(nodeId: `string` = `null`, nodeBody: `any` = `null`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<MinimalNodeEntryEntity>`<br/>
     Updates the information about a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _nodeBody:_ `any`  - New data for the node
     -   _options:_ `any`  - Optional parameters supported by JSAPI
-    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Updated node information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<MinimalNodeEntryEntity>` - Updated node information
 
 ## Details
 

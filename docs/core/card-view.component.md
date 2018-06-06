@@ -86,7 +86,7 @@ Defining properties from Typescript:
 | -- | -- | -- | -- |
 | displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
 | editable | `boolean` |  | Toggles whether or not the items can be edited. |
-| properties | [`CardViewItem[]`](../../lib/core/card-view/interfaces/card-view-item.interface.ts) |  | (**required**) Items to show in the card view. |
+| properties | [`CardViewItem`](../../lib/core/card-view/interfaces/card-view-item.interface.ts)`[]` |  | (**required**) Items to show in the card view. |
 
 ## Details
 

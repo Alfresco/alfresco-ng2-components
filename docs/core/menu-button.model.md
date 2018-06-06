@@ -34,7 +34,7 @@ let button = new MenuButton({
 ## Details
 
 An array of [`MenuButton`](../../lib/core/buttons-menu/menu-button.model.ts) instances is passed to the Button Menu component via its
-`buttons` property. See the Buttons Menu component page for a code sample and
+`buttons` property. See the [Buttons Menu component](../core/buttons-menu.component.md) page for a code sample and
 further details about setting up the menu.
 
 ## See also
