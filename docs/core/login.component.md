@@ -61,9 +61,9 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | [`EventEmitter<LoginErrorEvent>`](../../lib/core/login/models/login-error.event.ts) | Emitted when the login fails. |
-| executeSubmit | [`EventEmitter<LoginSubmitEvent>`](../../lib/core/login/models/login-submit.event.ts) | Emitted when the login form is submitted. |
-| success | [`EventEmitter<LoginSuccessEvent>`](../../lib/core/login/models/login-success.event.ts) | Emitted when the login is successful. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../lib/core/login/models/login-error.event.ts)`>` | Emitted when the login fails. |
+| executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../lib/core/login/models/login-submit.event.ts)`>` | Emitted when the login form is submitted. |
+| success | `EventEmitter<LoginSuccessEvent>` | Emitted when the login is successful. |
 
 ## Details
 

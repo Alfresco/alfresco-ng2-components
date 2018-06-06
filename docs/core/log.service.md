@@ -58,7 +58,7 @@ If you want set for example the log to warning:
 
 ### Log message bus
 
-The logservice provide also an Observable **_onMessage_**  where you can subscribe and recive all the logs: 
+The logservice provide also an [`Observable`](http://reactivex.io/documentation/observable.html) **_onMessage_**  where you can subscribe and recive all the logs: 
 
 The messagge object recived form the bus is composed:
 

@@ -12,18 +12,18 @@ Provides access to various APIs related to file upload features.
 
 ### Methods
 
--   **addToQueue**(files: [`FileModel[]`](../../lib/core/models/file.model.ts) = `null`): [`FileModel[]`](../../lib/core/models/file.model.ts)<br/>
+-   **addToQueue**(files: [`FileModel`](../../lib/core/models/file.model.ts)`[]` = `null`): [`FileModel`](../../lib/core/models/file.model.ts)`[]`<br/>
     Adds files to the uploading queue to be uploaded
-    -   _files:_ [`FileModel[]`](../../lib/core/models/file.model.ts)  - One or more separate parameters or an array of files to queue
-    -   **Returns** [`FileModel[]`](../../lib/core/models/file.model.ts) - Array of files that were not blocked from upload by the ignore list
--   **cancelUpload**(files: [`FileModel[]`](../../lib/core/models/file.model.ts) = `null`)<br/>
+    -   _files:_ [`FileModel`](../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files to queue
+    -   **Returns** [`FileModel`](../../lib/core/models/file.model.ts)`[]` - Array of files that were not blocked from upload by the ignore list
+-   **cancelUpload**(files: [`FileModel`](../../lib/core/models/file.model.ts)`[]` = `null`)<br/>
     Cancels uploading of files.
-    -   _files:_ [`FileModel[]`](../../lib/core/models/file.model.ts)  - One or more separate parameters or an array of files specifying uploads to cancel
+    -   _files:_ [`FileModel`](../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files specifying uploads to cancel
 -   **clearQueue**()<br/>
     Clears the upload queue
--   **getQueue**(): [`FileModel[]`](../../lib/core/models/file.model.ts)<br/>
+-   **getQueue**(): [`FileModel`](../../lib/core/models/file.model.ts)`[]`<br/>
     Gets the file Queue
-    -   **Returns** [`FileModel[]`](../../lib/core/models/file.model.ts) - Array of files that form the queue
+    -   **Returns** [`FileModel`](../../lib/core/models/file.model.ts)`[]` - Array of files that form the queue
 -   **getUploadPromise**(file: [`FileModel`](../../lib/core/models/file.model.ts) = `null`): `any`<br/>
     Gets an upload promise for a file.
     -   _file:_ [`FileModel`](../../lib/core/models/file.model.ts)  - The target file
@@ -31,9 +31,9 @@ Provides access to various APIs related to file upload features.
 -   **isUploading**(): `boolean`<br/>
     Checks whether the service is uploading a file.
     -   **Returns** `boolean` - True if a file is uploading, false otherwise
--   **uploadFilesInTheQueue**(emitter: `EventEmitter<any>` = `null`)<br/>
+-   **uploadFilesInTheQueue**(emitter?: [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` = `null`)<br/>
     Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
-    -   _emitter:_ `EventEmitter<any>`  - (Deprecated) Emitter to invoke on file status change
+    -   _emitter:_ [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`  - (Optional) (Deprecated) Emitter to invoke on file status change
 
 ## Events
 

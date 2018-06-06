@@ -69,7 +69,7 @@ export abstract class DynamicComponentMapper {
 
     /**
      * Finds the component type that is needed to render a form field.
-     * @param model [Form field model](form-field.model.md) for the field to render
+     * @param model Form field model for the field to render
      * @param defaultValue Default type returned for field types that are not yet mapped.
      * @returns Component type
      */

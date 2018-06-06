@@ -34,9 +34,15 @@ const adfLibNames = ["core", "content-services", "insights", "process-services"]
 
 
 const externalTypes = {
+    'Blob': 'https://developer.mozilla.org/en-US/docs/Web/API/Blob',
     'EventEmitter': 'https://angular.io/api/core/EventEmitter',
     'MatSnackBarRef': 'https://material.angular.io/components/snack-bar/overview',
-    'Observable': 'http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html',
+    'TemplateRef': 'https://angular.io/api/core/TemplateRef',
+    'Observable': 'http://reactivex.io/documentation/observable.html',
+    'Subject': 'http://reactivex.io/documentation/subject.html',
+    'AppDefinitionRepresentation': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md',
+    'NodeEntry': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md',
+    'RelatedContentRepresentation': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md',
     'SiteEntry': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md',
     'SitePaging': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md'
 };
@@ -238,7 +244,7 @@ class WordScanner {
     current: string;
 
     constructor(public text: string) {
-        this.separators = " \n\r\t.;:<>[]";
+        this.separators = " \n\r\t.;:<>[]&|";
         this.index = 0;
         this.nextSeparator = 0;
         this.next();
@@ -346,6 +352,11 @@ function handleLinksInBodyText(aggData, text: string, wrapInlineCode: boolean = 
 
 function resolveTypeLink(aggData, text): string {
     let possTypeName = cleanTypeName(text);
+
+    if (possTypeName === 'constructor') {
+        return "";
+    }
+
     let ref: Reflection = aggData.projData.findReflectionByName(possTypeName);
 
     if (ref && isLinkable(ref.kind)) {
@@ -380,7 +391,8 @@ function cleanTypeName(text) {
 function isLinkable(kind: ReflectionKind) {
     return (kind === ReflectionKind.Class) ||
     (kind === ReflectionKind.Interface) ||
-    (kind === ReflectionKind.Enum);
+    (kind === ReflectionKind.Enum) ||
+    (kind === ReflectionKind.TypeAlias);
 }
 
 function convertNodeToTypeLink(node, text, url) {

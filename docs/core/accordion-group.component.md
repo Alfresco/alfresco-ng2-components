@@ -52,7 +52,7 @@ export class MyComponent implements OnInit {
 
 | Name | Type | Description |
 | -- | -- | -- |
-| headingClick | `EventEmitter<any>` | Emitted when the heading is clicked. |
+| headingClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the heading is clicked. |
 
 ## Details
 

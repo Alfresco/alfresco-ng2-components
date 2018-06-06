@@ -31,10 +31,10 @@ Provides authentication to ACS and APS.
 -   **getTicketEcmBase64**(): `string | null`<br/>
     Gets the BPM ticket from the Storage in Base 64 format.
     -   **Returns** `string | null` - The ticket or `null` if none was found
--   **handleError**(error: `any` = `null`): `Observable<any>`<br/>
+-   **handleError**(error: `any` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Prints an error message in the console browser
     -   _error:_ `any`  - Error message
-    -   **Returns** `Observable<any>` - Object representing the error message
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Object representing the error message
 -   **isBpmLoggedIn**(): `boolean`<br/>
     Checks if the user is logged in on a BPM provider.
     -   **Returns** `boolean` - True if logged in, false otherwise
@@ -47,15 +47,15 @@ Provides authentication to ACS and APS.
 -   **isRememberMeSet**(): `boolean`<br/>
     Checks whether the "remember me" cookie was set or not.
     -   **Returns** `boolean` - True if set, false otherwise
--   **login**(username: `string` = `null`, password: `string` = `null`, rememberMe: `boolean` = `false`): `Observable<object>`<br/>
+-   **login**(username: `string` = `null`, password: `string` = `null`, rememberMe: `boolean` = `false`): [`Observable`](http://reactivex.io/documentation/observable.html)`<object>`<br/>
     Logs the user in.
     -   _username:_ `string`  - Username for the login
     -   _password:_ `string`  - Password for the login
     -   _rememberMe:_ `boolean`  - Stores the user's login details if true
-    -   **Returns** `Observable<object>` - Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
--   **logout**(): `Observable<any>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<object>` - Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
+-   **logout**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Logs the user out.
-    -   **Returns** `Observable<any>` - Response event called when logout is complete
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Response event called when logout is complete
 -   **removeTicket**()<br/>
     Removes the login ticket from Storage.
 -   **saveTicketAuth**()<br/>

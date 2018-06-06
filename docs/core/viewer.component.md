@@ -86,7 +86,7 @@ URL with `urlFile`.
 | allowShare | `boolean` | false | Toggles sharing. |
 | allowSidebar | `boolean` | false | Toggles the sidebar. |
 | allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
-| blobFile | `Blob` |  | Loads a Blob File |
+| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
 | canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
 | canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
 | displayName | `string` |  | Specifies the name of the file when it is not available from the URL. |
@@ -101,8 +101,8 @@ URL with `urlFile`.
 | showToolbar | `boolean` | true | Hide or show the toolbar |
 | showViewer | `boolean` | true | Hide or show the viewer |
 | sidebarPosition | `string` | "right" | The position of the sidebar. Can be `left` or `right`. |
-| sidebarTemplate | `TemplateRef<any>` |  null | The template for the sidebar. The template context contains the loaded node data. |
-| thumbnailsTemplate | `TemplateRef<any>` |  null | The template for the pdf thumbnails. |
+| sidebarTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` |  null | The template for the sidebar. The template context contains the loaded node data. |
+| thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` |  null | The template for the pdf thumbnails. |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
 | urlFileViewer | `string` |  null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
 | fileNodeId |  |  | Node Id of the file to load. |
@@ -111,10 +111,10 @@ URL with `urlFile`.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| download | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Download' button. |
-| extensionChange | `EventEmitter<string>` | Emitted when the filename extension changes. |
-| goBack | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Back' button. |
-| navigateBefore | `EventEmitter<Object>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
+| download | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Download' button. |
+| extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
+| goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
+| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
 | navigateNext | `EventEmitter<Object>` | Emitted when user clicks 'Navigate Next' (">") button. |
 | print | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Print' button. |
 | share | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Share' button. |

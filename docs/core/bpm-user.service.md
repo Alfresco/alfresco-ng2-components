@@ -12,9 +12,9 @@ Gets information about the current Process Services user.
 
 ### Methods
 
--   **getCurrentUserInfo**(): [`Observable<BpmUserModel>`](../core/bpm-user.model.md)<br/>
+-   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../core/bpm-user.model.md)`>`<br/>
     Gets information about the current user.
-    -   **Returns** [`Observable<BpmUserModel>`](../core/bpm-user.model.md) - User information object
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../core/bpm-user.model.md)`>` - User information object
 -   **getCurrentUserProfileImage**(): `string`<br/>
     Gets the current user's profile image as a URL.
     -   **Returns** `string` - URL string

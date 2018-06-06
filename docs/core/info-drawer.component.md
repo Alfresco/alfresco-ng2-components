@@ -43,7 +43,7 @@ Displays a sidebar-style information panel with tabs.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| currentTab | `EventEmitter<number>` | Emitted when the currently active tab changes. |
+| currentTab | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<number>` | Emitted when the currently active tab changes. |
 
 ## Details
 

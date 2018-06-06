@@ -13,17 +13,17 @@ Shows a notification message with optional feedback.
 
 ### Methods
 
--   **openSnackMessage**(message: `string` = `null`, millisecondsDuration?: `number` = `null`): `MatSnackBarRef<any>`<br/>
-    Opens a snackbar notification to show a message.
+-   **openSnackMessage**(message: `string` = `null`, millisecondsDuration?: `number` = `null`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    Opens a SnackBar notification to show a message.
     -   _message:_ `string`  - The message (or resource key) to show.
     -   _millisecondsDuration:_ `number`  - (Optional) Time before notification disappears after being shown
-    -   **Returns** `MatSnackBarRef<any>` - Information/control object for the snackbar
--   **openSnackMessageAction**(message: `string` = `null`, action: `string` = `null`, millisecondsDuration?: `number` = `null`): `MatSnackBarRef<any>`<br/>
-    Opens a snackbar notification with a message and a response button.
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
+-   **openSnackMessageAction**(message: `string` = `null`, action: `string` = `null`, millisecondsDuration?: `number` = `null`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    Opens a SnackBar notification with a message and a response button.
     -   _message:_ `string`  - The message (or resource key) to show.
     -   _action:_ `string`  - Caption for the response button
     -   _millisecondsDuration:_ `number`  - (Optional) Time before the notification disappears (unless the button is clicked)
-    -   **Returns** `MatSnackBarRef<any>` - Information/control object for the snackbar
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
 
 ## Details
 
