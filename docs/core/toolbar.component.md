@@ -21,6 +21,7 @@ Simple container for headers, titles, actions and breadcrumbs.
 
     -   [Custom title](#custom-title)
     -   [Divider](#divider)
+    -   [Spacer](#spacer)
     -   [Dropdown menu](#dropdown-menu)
     -   [Custom color](#custom-color)
 

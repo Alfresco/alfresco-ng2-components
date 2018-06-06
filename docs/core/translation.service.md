@@ -15,11 +15,11 @@ Supports localisation.
     Adds a new folder of translation source files.
     -   _name:_ `string`  - Name for the translation provider
     -   _path:_ `string`  - Path to the folder
--   **get**(key: `string | Array<string>` = `null`, interpolateParams?: `Object` = `null`): `Observable<string | any>`<br/>
+-   **get**(key: `string | Array<string>` = `null`, interpolateParams?: `Object` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string | any>`<br/>
     Gets the translation for the supplied key.
     -   _key:_ `string | Array<string>`  - Key to translate
     -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
-    -   **Returns** `Observable<string | any>` - Translated text
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string | any>` - Translated text
 -   **instant**(key: `string | Array<string>` = `null`, interpolateParams?: `Object` = `null`): `string | any`<br/>
     Directly returns the translation for the supplied key.
     -   _key:_ `string | Array<string>`  - Key to translate
@@ -28,10 +28,10 @@ Supports localisation.
 -   **onTranslationChanged**(lang: `string` = `null`)<br/>
     Triggers a notification callback when the translation language changes.
     -   _lang:_ `string`  - The new language code
--   **use**(lang: `string` = `null`): `Observable<any>`<br/>
+-   **use**(lang: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Sets the target language for translations.
     -   _lang:_ `string`  - Code name for the language
-    -   **Returns** `Observable<any>` - Translations available for the language
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Translations available for the language
 
 ## Details
 

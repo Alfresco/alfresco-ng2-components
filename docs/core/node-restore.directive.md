@@ -39,7 +39,7 @@ Restores deleted nodes to their original location.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| restore | `EventEmitter<any>` | Emitted when restoration is complete. |
+| restore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when restoration is complete. |
 
 ## Details
 

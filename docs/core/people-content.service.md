@@ -12,13 +12,13 @@ Gets information about a Content Services user.
 
 ### Methods
 
--   **getCurrentPerson**(): `Observable<any>`<br/>
+-   **getCurrentPerson**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets information about the user who is currently logged in.
-    -   **Returns** `Observable<any>` - User information
--   **getPerson**(personId: `string` = `null`): `Observable<any>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
+-   **getPerson**(personId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets information about a user identified by their username.
     -   _personId:_ `string`  - ID of the target user
-    -   **Returns** `Observable<any>` - User information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
 
 ## Details
 

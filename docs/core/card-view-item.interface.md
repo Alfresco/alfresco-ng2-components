@@ -26,17 +26,17 @@ export interface CardViewItem {
 
 ### Properties
 
-| Name         | Type    | Default | Description                                                                                                                                                                                                  |
-| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| label        | string  | ""      | Item label                                                                                                                                                                                                   |
-| value        | any     |         | The original data value for the item                                                                                                                                                                         |
-| key          | string  | ""      | Identifying key (important when editing the item)                                                                                                                                                            |
-| default      | any     |         | The default value to display if the value is empty                                                                                                                                                           |
-| displayValue | string  | ""      | The value to display                                                                                                                                                                                         |
-| editable     | boolean | false   | Toggles whether the item is editable                                                                                                                                                                         |
-| clickable    | boolean | false   | Toggles whether the item is clickable                                                                                                                                                                        |
-| icon         | string  |         | The material icon to show beside clickable items                                                                                                                                                             |
-| data         | any     | null    | Any custom data which is needed to be provided and stored in the model for any reason. During an update or a click event this can be a container of any custom data which can be useful for 3rd party codes. |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label | string | "" | Item label |
+| value | any |  | The original data value for the item |
+| key | string | "" | Identifying key (important when editing the item) |
+| default | any |  | The default value to display if the value is empty |
+| displayValue | string | "" | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
+| clickable | boolean | false | Toggles whether the item is clickable |
+| icon | string |  | The material icon to show beside clickable items |
+| data | any | null | Any custom data which is needed to be provided and stored in the model for any reason. During an update or a click event this can be a container of any custom data which can be useful for 3rd party codes. |
 
 ## Details
 
@@ -147,5 +147,5 @@ Picard's birthday (47457.1):
 
 ## See also
 
-*   [Card View component](card-view.component.md)
-*   [Card Item Types service](card-item-types.service.md)
+-   [Card View component](card-view.component.md)
+-   [Card Item Types service](card-item-types.service.md)

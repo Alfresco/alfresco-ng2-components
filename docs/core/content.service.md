@@ -12,19 +12,19 @@ Accesses app-generated data objects via URLs and file downloads.
 
 ### Methods
 
--   **createFolder**(relativePath: `string` = `null`, name: `string` = `null`, parentId?: `string` = `null`): [`Observable<FolderCreatedEvent>`](../../lib/core/events/folder-created.event.ts)<br/>
+-   **createFolder**(relativePath: `string` = `null`, name: `string` = `null`, parentId?: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FolderCreatedEvent`](../../lib/core/events/folder-created.event.ts)`>`<br/>
     Creates a folder.
     -   _relativePath:_ `string`  - Location to create the folder
     -   _name:_ `string`  - Folder name
     -   _parentId:_ `string`  - (Optional) Node ID of parent folder
-    -   **Returns** [`Observable<FolderCreatedEvent>`](../../lib/core/events/folder-created.event.ts) - Information about the new folder
--   **createTrustedUrl**(blob: `Blob` = `null`): `string`<br/>
-    Creates a trusted object URL from the Blob. WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
-    -   _blob:_ `Blob`  - Data to wrap into object URL
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FolderCreatedEvent`](../../lib/core/events/folder-created.event.ts)`>` - Information about the new folder
+-   **createTrustedUrl**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) = `null`): `string`<br/>
+    Creates a trusted object URL from the [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob). WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
+    -   _blob:_ [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Data to wrap into object URL
     -   **Returns** `string` - URL string
--   **downloadBlob**(blob: `Blob` = `null`, fileName: `string` = `null`)<br/>
-    Invokes content download for a Blob with a file name.
-    -   _blob:_ `Blob`  - Content to download.
+-   **downloadBlob**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) = `null`, fileName: `string` = `null`)<br/>
+    Invokes content download for a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) with a file name.
+    -   _blob:_ [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Content to download.
     -   _fileName:_ `string`  - Name of the resulting file.
 -   **downloadData**(data: `any` = `null`, fileName: `string` = `null`)<br/>
     Invokes content download for a data array with a file name.
@@ -46,48 +46,48 @@ Accesses app-generated data objects via URLs and file downloads.
     -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
     -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
     -   **Returns** `string` - URL string
--   **getNode**(nodeId: `string` = `null`, opts?: `any` = `null`): `Observable<NodeEntry>`<br/>
+-   **getNode**(nodeId: `string` = `null`, opts?: `any` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Gets a Node via its node ID.
     -   _nodeId:_ `string`  - ID of the target node
     -   _opts:_ `any`  - (Optional) Options supported by JSAPI
-    -   **Returns** `Observable<NodeEntry>` - Details of the folder
--   **getNodeContent**(nodeId: `string` = `null`): `Observable<any>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
+-   **getNodeContent**(nodeId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets content for the given node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   **Returns** `Observable<any>` - Content data
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Content data
 -   **hasAllowableOperations**(node: `any` = `null`): `boolean`<br/>
     Checks if the node has the properties allowableOperations
     -   _node:_ `any`  - Node to check allowableOperations
     -   **Returns** `boolean` - True if the node has the property, false otherwise
--   **hasPermission**(node: `Node` = `null`, permission: `PermissionsEnum | string` = `null`): `boolean`<br/>
+-   **hasPermission**(node: `Node` = `null`, permission: [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)` | string` = `null`): `boolean`<br/>
     Checks if the user has permissions on that node
     -   _node:_ `Node`  - Node to check allowableOperations
-    -   _permission:_ `PermissionsEnum | string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+    -   _permission:_ [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)` | string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 
 ## Details
 
-Use the [Content service](../core/content.service.md) to deliver data to the user from `Blob` objects.
+Use the [Content service](../core/content.service.md) to deliver data to the user from [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) objects.
 
-The [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) class
+The [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) class
 (implemented in the browser, not ADF) represents an array of bytes that you can
 use to construct and store data in any binary format you choose.
-The user can access a Blob either by downloading the byte array as a file or in
+The user can access a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) either by downloading the byte array as a file or in
 some cases by viewing it directly in the browser via a special URL that references
-the Blob. For example, you could use the Blob interface to construct an image in the
+the [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob). For example, you could use the [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) interface to construct an image in the
 [PNG format](https://en.wikipedia.org/wiki/Portable_Network_Graphics). Since
-PNG is a format the browser can display, you could use the Blob's URL in an
+PNG is a format the browser can display, you could use the [Blob's](https://developer.mozilla.org/en-US/docs/Web/API/Blob) URL in an
 &lt;img> element to view the image within the page. Alternatively, you could let
 the user download it as a PNG file.
 
-The `downloadBlob` method starts a download of the Blob data to the `filename`
+The `downloadBlob` method starts a download of the [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) data to the `filename`
 within the user's downloads folder. The other `downloadXXX` methods do the same
-but first convert the supplied data to a Blob before downloading; see the
+but first convert the supplied data to a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) before downloading; see the
 [Blob reference page](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
-for details of how a Blob's contents are assembled from the constructor arguments.
+for details of how a [Blob's](https://developer.mozilla.org/en-US/docs/Web/API/Blob) contents are assembled from the constructor arguments.
 
-Use `createdTrustedUrl` to generate a URL string for a Blob. The URL refers to
-the Blob as though it were a file but it is actually an object stored in memory,
+Use `createdTrustedUrl` to generate a URL string for a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob). The URL refers to
+the [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) as though it were a file but it is actually an object stored in memory,
 so it does not persist across browser sessions. This URL can be used much like any
 other, so you could use it for the `src` attribute of an &lt;img> element or the
 `href` of a download link. Note that while the URL is 'trusted', the data it contains

@@ -12,13 +12,13 @@ Gets information about a Content Services user.
 
 ### Methods
 
--   **getCurrentUserInfo**(): [`Observable<EcmUserModel>`](../core/ecm-user.model.md)<br/>
+-   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../core/ecm-user.model.md)`>`<br/>
     Gets information about the user who is currently logged-in.
-    -   **Returns** [`Observable<EcmUserModel>`](../core/ecm-user.model.md) - User information as for getUserInfo
--   **getUserInfo**(userName: `string` = `null`): [`Observable<EcmUserModel>`](../core/ecm-user.model.md)<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../core/ecm-user.model.md)`>` - User information as for getUserInfo
+-   **getUserInfo**(userName: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../core/ecm-user.model.md)`>`<br/>
     Gets information about a user identified by their username.
     -   _userName:_ `string`  - Target username
-    -   **Returns** [`Observable<EcmUserModel>`](../core/ecm-user.model.md) - User information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../core/ecm-user.model.md)`>` - User information
 -   **getUserProfileImage**(avatarId: `string` = `null`): `string`<br/>
     Returns a profile image as a URL.
     -   _avatarId:_ `string`  - Target avatar

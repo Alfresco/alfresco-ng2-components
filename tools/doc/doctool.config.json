@@ -19,7 +19,8 @@
             "toc"
         ],
         "dev": [
-            "versionIndex"
+            "tsInfo",
+            "typeLinker"
         ]
     }
 }

@@ -29,10 +29,10 @@ Supports app configuration settings, stored server side.
 -   **load**(): `Promise<any>`<br/>
     Loads the config file.
     -   **Returns** `Promise<any>` - Notification when loading is complete
--   **select**(property: `string` = `null`): `Observable<any>`<br/>
+-   **select**(property: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Requests notification of a property value when it is loaded.
     -   _property:_ `string`  - The desired property value
-    -   **Returns** `Observable<any>` - [Property](../../lib/content-services/content-metadata/interfaces/property.interface.ts) value, when loaded
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Property value, when loaded
 
 ## Details
 

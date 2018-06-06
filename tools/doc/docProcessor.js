@@ -66,10 +66,13 @@ function updatePhase(filenames, aggData) {
             showErrors(pathname, errorMessages);
         }
 
-        if (modified)
+        if (program.json) {
+            console.log(JSON.stringify(tree));
+        }
+
+        if (modified) {
             fs.writeFileSync(filenames[i], remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false, gfm: false}).stringify(tree));
-        
-        //console.log(JSON.stringify(tree));
+        }
     }
 }
 
@@ -128,6 +131,7 @@ function getAllDocFilePaths(docFolder, files) {
 program
 .usage("[options] <source>")
 .option("-p, --profile [profileName]", "Select named config profile", "default")
+.option("-j, --json", "Output JSON data for Markdown syntax tree")
 .parse(process.argv);
 
 var sourcePath;

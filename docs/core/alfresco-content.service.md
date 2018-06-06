@@ -17,13 +17,13 @@ Gets a thumbnail URL for a node.
 `getContentUrl(nodeId: any, attachment?: boolean, ticket?: string): string`<br/>
 Gets the URL for a node's content.
 
-`getNodeContent(nodeId: string): Observable<any>`<br/>
+`getNodeContent(nodeId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
 Gets a node's content.
 
 [`createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent>`](../../lib/core/events/folder-created.event.ts)<br/>
 Creates a folder.
 
-`hasPermission(node: any, permission: PermissionsEnum|string): boolean`<br/>
+`hasPermission(node: any, permission:`[`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string): boolean`<br/>
 Checks if the user has the specified permissions for `node`.
 
 `hasAllowableOperations(node: any): boolean`<br/>
