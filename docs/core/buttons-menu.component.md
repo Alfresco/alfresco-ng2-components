@@ -6,76 +6,47 @@ Last reviewed: 2018-04-24
 
 # Buttons Menu Component
 
-Displays buttons on a responsive menu.
-
-![adf-buttons-menu-desktop](../docassets/images/adf-buttons-menu-desktop.png)
+Displays buttons on a responsive menu. This way the html doesn't need to 
 
 ## Basic Usage
 
+In order to use this component, you will have to place the buttons that you want to have in your menu inside this component's html tags.
+They must use the following structure:
+
 ```html
-<adf-buttons-action-menu
-    [buttons]="buttons">
+<adf-buttons-action-menu>
+     <button mat-menu-item (click)="showSettings()">
+        <mat-icon>settings</mat-icon><span>Settings</span>
+    </button>
+    <button mat-menu-item (click)="delete()">
+        <mat-icon>delete</mat-icon><span>Delete</span>
+    </button>
 </adf-buttons-action-menu>  
+```
+
+Notice that they need an icon and a label for the button inside a span tag. They also make use of the Angular material directive `mat-menu-item`.
+
+```html
+<button mat-menu-item (click)="event()">
+        <mat-icon> icon </mat-icon>
+        <span> label </span>
+</button>
 ```
 
 ## Class members
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| buttons | [`MenuButton`](../../lib/core/buttons-menu/menu-button.model.ts)`[]` |  | Array of buttons that defines the menu. |
-
+| Name | Type  | Description |
+| -- | -- | -- |
+| isMenuEmpty | boolean | If the menu has no buttons it won't be displayed. |
+ 
 ## Details
 
-This component shows buttons on a responsive menu. The display of the menu changes to fit
-the screen size of the device:
+This component is fully responsive and it will display two different layouts regarding the screen size. 
 
-Desktop view of the menu
-
+#### Desktop View
 ![adf-buttons-menu-desktop](../docassets/images/adf-buttons-menu-desktop.png)
-
-Mobile view of the menu
-
+#### Mobile View
 ![adf-buttons-menu-mobile](../docassets/images/adf-buttons-menu-mobile.png)
 
-The `buttons` property contains an array of [`MenuButton`](../../lib/core/buttons-menu/menu-button.model.ts) instances that define
-the label and appearance of each button along with a handler function to
-implement its action:
-
-```ts
-buttons: MenuButton[] = [];
-
- setButtons() {
-        this.buttons = [
-            new MenuButton({
-                label: 'Settings',
-                icon: 'settings',
-                handler: this.settings.bind(this)
-            }),
-            new MenuButton({
-                label: 'Delete',
-                icon: 'delete',
-                handler: this.deleteItem.bind(this, this.reportId),
-                id: 'delete-button'
-            }),
-            new MenuButton({
-                label: 'Export',
-                icon: 'file_download',
-                handler: this.exportItem.bind(this),
-                id: 'export-button',
-                isVisible: this.isItemValid.bind(this)
-            }),
-            new MenuButton({
-                label: 'Save',
-                icon: 'save',
-                handler: this.saveItem.bind(this),
-                id: 'save-button',
-                isVisible: this.isItemValid.bind(this)
-            })
-        ];
-```
-
-## See also
-
--   [Menu Button Model](./menu-button.model.md)
