@@ -26,8 +26,9 @@
             <no-content-template>
                 <ng-template>
                     <adf-empty-content *ngIf="!emptyCustomContent"
-                        icon="assessment"
-                        [title]="'ADF_TASK_LIST.LIST.MESSAGES.NONE' | translate">
+                        icon="assignment"
+                        [title]="'ADF_TASK_LIST.LIST.MESSAGES.TITLE' | translate"
+                        [subtitle]="'ADF_TASK_LIST.LIST.MESSAGES.SUBTITLE' | translate">
                     </adf-empty-content>
                     <ng-content select="adf-empty-custom-content"></ng-content>
                 </ng-template>
