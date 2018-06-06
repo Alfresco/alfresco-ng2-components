@@ -536,7 +536,8 @@
                 [versioning]="versioning"
                 [adf-node-permission]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
-                (permissionEvent)="handlePermissionError($event)">
+                (permissionEvent)="handlePermissionError($event)"
+                (beginUpload)="onBeginUpload($event)">
             </adf-upload-button>
         </div>
         <div *ngIf="acceptedFilesTypeShow">
