@@ -20,6 +20,7 @@ import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, Conte
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { AppDefinitionRepresentationModel } from '../task-list';
+import { appsPresetsDefaultModel } from './apps-preset.model';
 import { IconModel } from './icon.model';
 
 @Component({
@@ -27,7 +28,7 @@ import { IconModel } from './icon.model';
     templateUrl: 'apps-list.component.html',
     styleUrls: ['./apps-list.component.scss']
 })
-export class AppsListComponent implements OnInit, AfterContentInit {
+export class AppsListComponent extends DataTableSchema implements OnInit, AfterContentInit {
 
     public static LAYOUT_LIST: string = 'LIST';
     public static LAYOUT_GRID: string = 'GRID';
@@ -36,6 +37,7 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     public static DEFAULT_TASKS_APP_THEME: string = 'theme-2';
     public static DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
     public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
+    public static PRESET_KEY = 'adf-apps-list.presets';
 
     @ContentChild(EmptyCustomContentDirective)
     emptyCustomContent: EmptyCustomContentDirective;
@@ -50,9 +52,28 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     @Input()
     filtersAppId: any[];
 
+    /* Toggles multiple row selection, renders checkboxes at the beginning of each row */
+    @Input()
+    multiselect: boolean = false;
+
+    /* Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+     * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
+     * multiple rows.
+     */
+    @Input()
+    selectionMode: string = 'single'; // none|single|multiple
+
     /** Emitted when an app entry is clicked. */
     @Output()
     appClick: EventEmitter<AppDefinitionRepresentationModel> = new EventEmitter<AppDefinitionRepresentationModel>();
+
+    /** Emitted when a row in the app list is clicked. */
+    @Output()
+    rowClick: EventEmitter<any> = new EventEmitter<any>();
+
+    /** Emitted when rows are selected/unselected */
+    @Output()
+    rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
 
     /** Emitted when an error occurs. */
     @Output()
@@ -63,7 +84,9 @@ export class AppsListComponent implements OnInit, AfterContentInit {
 
     currentApp: AppDefinitionRepresentationModel;
 
-    appList: AppDefinitionRepresentationModel [] = [];
+    appList: AppDefinitionRepresentationModel[] = [];
+    selectedApps: any[];
+    rows: any[] = [];
 
     private iconsMDL: IconModel;
 
@@ -73,8 +96,10 @@ export class AppsListComponent implements OnInit, AfterContentInit {
 
     constructor(
         private appsProcessService: AppsProcessService,
-        private translationService: TranslationService) {
-            this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer => this.appsObserver = observer).share();
+        private translationService: TranslationService,
+        appConfigService: AppConfigService) {
+        super(appConfigService, AppsListComponent.PRESET_KEY, appsPresetsDefaultModel);
+        this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer => this.appsObserver = observer).share();
     }
 
     ngOnInit() {
@@ -84,12 +109,16 @@ export class AppsListComponent implements OnInit, AfterContentInit {
 
         this.apps$.subscribe((app: any) => {
             this.appList.push(app);
+            if (this.isList()) {
+                this.setDataRows(this.appList);
+            }
         });
         this.iconsMDL = new IconModel();
         this.load();
     }
 
     ngAfterContentInit() {
+        this.createDatatableSchema();
         if (this.emptyCustomContent) {
             this.hasEmptyCustomContentTemplate = true;
         }
@@ -98,24 +127,24 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     private load() {
         this.loading = true;
         this.appsProcessService.getDeployedApplications()
-        .subscribe(
-            (res: AppDefinitionRepresentationModel[]) => {
-                this.filterApps(res).forEach((app: AppDefinitionRepresentationModel) => {
-                    if (this.isDefaultApp(app)) {
-                        app.theme = AppsListComponent.DEFAULT_TASKS_APP_THEME;
-                        app.icon = AppsListComponent.DEFAULT_TASKS_APP_ICON;
-                        this.appsObserver.next(app);
-                    } else if (app.deploymentId) {
-                        this.appsObserver.next(app);
-                    }
+            .subscribe(
+                (res: AppDefinitionRepresentationModel[]) => {
+                    this.filterApps(res).forEach((app: AppDefinitionRepresentationModel) => {
+                        if (this.isDefaultApp(app)) {
+                            app.theme = AppsListComponent.DEFAULT_TASKS_APP_THEME;
+                            app.icon = AppsListComponent.DEFAULT_TASKS_APP_ICON;
+                            this.appsObserver.next(app);
+                        } else if (app.deploymentId) {
+                            this.appsObserver.next(app);
+                        }
+                        this.loading = false;
+                    });
+                },
+                (err) => {
+                    this.error.emit(err);
                     this.loading = false;
-                });
-            },
-            (err) => {
-                this.error.emit(err);
-                this.loading = false;
-            }
-        );
+                }
+            );
     }
 
     isDefaultApp(app) {
@@ -145,7 +174,7 @@ export class AppsListComponent implements OnInit, AfterContentInit {
         return (this.currentApp !== undefined && appId === this.currentApp.id);
     }
 
-    private filterApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
+    private filterApps(apps: AppDefinitionRepresentationModel[]): AppDefinitionRepresentationModel[] {
         let filteredApps: AppDefinitionRepresentationModel[] = [];
         if (this.filtersAppId) {
             apps.filter((app: AppDefinitionRepresentationModel) => {
@@ -183,6 +212,32 @@ export class AppsListComponent implements OnInit, AfterContentInit {
         this.layoutType = AppsListComponent.LAYOUT_GRID;
     }
 
+    setDataRows(rows: any[]) {
+        if (rows && rows.length > 0) {
+            this.rows = this.optimizeNames(rows);
+            this.selectFirst();
+        }
+    }
+
+    private optimizeNames(apps: any[]): any[] {
+        apps = apps.map(app => {
+            if (this.isDefaultApp(app)) {
+                app.name = this.translationService.instant('ADF_TASK_LIST.APPS.TASK_APP_NAME');
+            }
+            return app;
+        });
+        return apps;
+    }
+
+    selectFirst() {
+        if (!this.isEmpty()) {
+            let row = this.rows[0];
+            this.currentApp = row;
+        } else {
+            this.currentApp = null;
+        }
+    }
+
     /**
      * Return true if the layout type is LIST
      */
@@ -211,6 +266,30 @@ export class AppsListComponent implements OnInit, AfterContentInit {
 
     getBackgroundIcon(app: AppDefinitionRepresentationModel): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(app.icon);
+    }
+
+    onRowClick(event: any): void {
+        const item = event.value;
+        const app = item.obj;
+        this.rowClick.emit(app);
+    }
+
+    onRowSelect(event: CustomEvent): void {
+        this.selectedApps = [...event.detail.selection];
+        this.rowsSelected.emit(this.selectedApps);
+    }
+
+    onRowUnselect(event: CustomEvent): void {
+        this.selectedApps = [...event.detail.selection];
+        this.rowsSelected.emit(this.selectedApps);
+    }
+
+    onRowKeyUp(event: CustomEvent): void {
+        if (event.detail.keyboardEvent.key === 'Enter') {
+            const app = event.detail.row.obj;
+            event.preventDefault();
+            this.rowClick.emit(app);
+        }
     }
 
 }

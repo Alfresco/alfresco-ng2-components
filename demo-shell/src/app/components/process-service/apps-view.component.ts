@@ -15,21 +15,60 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 import { AppDefinitionRepresentationModel } from '@alfresco/adf-process-services';
 
 @Component({
     selector: 'app-process-list-view',
     templateUrl: './apps-view.component.html'
 })
-export class AppsViewComponent {
+export class AppsViewComponent implements OnDestroy {
+
+    layoutType = 'GRID';
+    presetColumn = 'apps-list';
+    actions: any;
+    private routeSub: Subscription;
 
     constructor(private router: Router) {
+        this.routeSub = this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.fetchInfoFromUrl(event.url);
+            }
+        });
+
+        const routerState = this.router.routerState.snapshot;
+        this.fetchInfoFromUrl(routerState.url);
     }
 
-     onAppClicked(app: AppDefinitionRepresentationModel) {
-         this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);
-     }
+    ngOnDestroy() {
+        this.routeSub.unsubscribe();
+    }
 
+    fetchInfoFromUrl(url: string) {
+        const parts = url.split('/');
+        console.log(parts);
+        if (parts.length > 2) {
+            this.layoutType = parts[3].toUpperCase();
+        }
+    }
+
+    onAppClicked(app: AppDefinitionRepresentationModel) {
+        this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);
+    }
+
+    performAction(row: any): void {
+        this.router.navigate(['/activiti/apps', row.id || 0, 'tasks']);
+    }
+
+    setActions(row: any): void {
+        this.actions = [{ key: 'tasks', icon: 'assignment', label: 'View Task' }];
+    }
+
+    onRowDoubleClick(event: any) {
+        const app = event.detail.value.obj;
+        const id = app.id;
+        this.router.navigate(['/activiti/apps', id || 0, 'tasks']);
+    }
 }

@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-import { DebugElement, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DebugElement, ViewChild, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
+import { AppsProcessService, AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { DataRowEvent, ObjectDataRow, ObjectDataColumn } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent } from './apps-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
+import { appsPresetsDefaultModel } from './apps-preset.model';
 
 describe('AppsListComponent', () => {
 
@@ -31,7 +33,35 @@ describe('AppsListComponent', () => {
     let fixture: ComponentFixture<AppsListComponent>;
     let debugElement: DebugElement;
     let service: AppsProcessService;
+    let appConfig: AppConfigService;
     let getAppsSpy: jasmine.Spy;
+
+    let fakeCustomSchema = [
+        new ObjectDataColumn({
+            'key': 'fakeName',
+            'type': 'text',
+            'title': 'ADF_APPS_LIST.PROPERTIES.FAKE_NAME',
+            'sortable': true
+        }),
+        new ObjectDataColumn({
+            'key': 'deploymentId',
+            'type': 'text',
+            'title': 'ADF_APPS_LIST.PROPERTIES.FAKE-ID',
+            'sortable': true
+        })
+    ];
+
+    let fakeApp = {
+        'id': 106,
+        'defaultAppId': null,
+        'name': 'my cool app',
+        'description': '',
+        'modelId': 309,
+        'theme': 'theme-1',
+        'icon': 'glyphicon-asterisk',
+        'deploymentId': '4158',
+        'tenantId': 1
+    };
 
     setupTestBed({
         imports: [ProcessTestingModule]
@@ -43,7 +73,49 @@ describe('AppsListComponent', () => {
         debugElement = fixture.debugElement;
 
         service = TestBed.get(AppsProcessService);
+        appConfig = TestBed.get(AppConfigService);
+        appConfig.config.bpmHost = 'http://localhost:9876/bpm';
         getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(Observable.of(deployedApps));
+        appConfig.config = Object.assign(appConfig.config, {
+            'adf-apps-list': {
+                'presets': {
+                    'fakeCustomSchema': [
+                        {
+                            'key': 'fakeName',
+                            'type': 'text',
+                            'title': 'ADF_APPS_LIST.PROPERTIES.FAKE_NAME',
+                            'sortable': true
+                        },
+                        {
+                            'key': 'deploymentId',
+                            'type': 'text',
+                            'title': 'ADF_APPS_LIST.PROPERTIES.FAKE-ID',
+                            'sortable': true
+                        }
+                    ]
+                }
+            }
+        });
+    });
+
+    it('should use the default schemaColumn as default', () => {
+        component.ngAfterContentInit();
+        expect(component.columns).toBeDefined();
+        expect(component.columns.length).toEqual(1);
+    });
+
+    it('should use the custom schemaColumn from app.config.json', () => {
+        component.presetColumn = 'fakeCustomSchema';
+        component.ngAfterContentInit();
+        fixture.detectChanges();
+        expect(component.columns).toEqual(fakeCustomSchema);
+    });
+
+    it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
+        component.presetColumn = 'fakeCustomSchema';
+        fixture.detectChanges();
+        expect(component.columns).toBeDefined();
+        expect(component.columns.length).toEqual(2);
     });
 
     it('should define layoutType with the default value', () => {
@@ -65,13 +137,13 @@ describe('AppsListComponent', () => {
         component.loading = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-        let loadingSpinner = fixture.nativeElement.querySelector('mat-spinner');
-        expect(loadingSpinner).toBeDefined();
+            let loadingSpinner = fixture.nativeElement.querySelector('mat-spinner');
+            expect(loadingSpinner).toBeDefined();
         });
     }));
 
     it('should show the apps filtered by defaultAppId', () => {
-        component.filtersAppId = [{defaultAppId: 'fake-app-1'}];
+        component.filtersAppId = [{ defaultAppId: 'fake-app-1' }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -79,7 +151,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by deploymentId', () => {
-        component.filtersAppId = [{deploymentId: '4'}];
+        component.filtersAppId = [{ deploymentId: '4' }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -88,7 +160,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by name', () => {
-        component.filtersAppId = [{name: 'App5'}];
+        component.filtersAppId = [{ name: 'App5' }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -97,7 +169,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by id', () => {
-        component.filtersAppId = [{id: 6}];
+        component.filtersAppId = [{ id: 6 }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -106,7 +178,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by modelId', () => {
-        component.filtersAppId = [{modelId: 66}];
+        component.filtersAppId = [{ modelId: 66 }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -115,7 +187,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by tenandId', () => {
-        component.filtersAppId = [{tenantId: 9}];
+        component.filtersAppId = [{ tenantId: 9 }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -238,6 +310,65 @@ describe('AppsListComponent', () => {
 
     });
 
+    describe('List apps', () => {
+
+        beforeEach(() => {
+            getAppsSpy.and.returnValue(Observable.of(deployedApps));
+            this.layoutType = 'LIST';
+            fixture.detectChanges();
+        });
+
+        it('should emit row click event', (done) => {
+            let row = new ObjectDataRow({
+                fakeApp
+            });
+            let rowEvent = new DataRowEvent(row, null);
+
+            component.rowClick.subscribe(a => {
+                expect(a).toBeDefined();
+                done();
+            });
+
+            component.onRowClick(rowEvent);
+        });
+
+        it('should emit row click event on Enter', (done) => {
+            let prevented = false;
+            let keyEvent = new CustomEvent('Keyboard event', {
+                detail: {
+                    keyboardEvent: { key: 'Enter' },
+                    row: new ObjectDataRow(fakeApp)
+                }
+            });
+
+            spyOn(keyEvent, 'preventDefault').and.callFake(() => prevented = true);
+
+            component.rowClick.subscribe((a: any) => {
+                expect(a.deploymentId).toEqual('4158');
+                expect(prevented).toBeTruthy();
+                done();
+            });
+
+            component.onRowKeyUp(keyEvent);
+        });
+
+        it('should NOT emit row click event on every other key', async(() => {
+            let triggered = false;
+            let keyEvent = new CustomEvent('Keyboard event', {
+                detail: {
+                    keyboardEvent: { key: 'Space' },
+                    row: new ObjectDataRow(fakeApp)
+                }
+            });
+
+            component.rowClick.subscribe(() => triggered = true);
+            component.onRowKeyUp(keyEvent);
+
+            fixture.whenStable().then(() => {
+                expect(triggered).toBeFalsy();
+            });
+        }));
+    });
 });
 
 @Component({
@@ -258,7 +389,7 @@ describe('Custom CustomEmptyAppListTemplateComponent', () => {
     setupTestBed({
         imports: [ProcessTestingModule],
         declarations: [CustomEmptyAppListTemplateComponent],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {
@@ -277,4 +408,49 @@ describe('Custom CustomEmptyAppListTemplateComponent', () => {
             expect(title[0].nativeElement.innerText).toBe('No Apps');
         });
     }));
+});
+
+@Component({
+    template: `
+    <adf-apps #appList>
+        <data-columns>
+            <data-column key="name" title="ADF_APPS_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
+            <data-column key="deploymentId" title="ADF_APPS_LIST.PROPERTIES.ID"></data-column>
+            <data-column key="action" title="Action"></data-column>
+        </data-columns>
+    </adf-apps>`
+})
+
+class CustomAppsListComponent {
+
+    @ViewChild(AppsListComponent)
+    appList: AppsListComponent;
+}
+
+describe('CustomTaskListComponent', () => {
+    let fixture: ComponentFixture<CustomAppsListComponent>;
+    let component: CustomAppsListComponent;
+
+    setupTestBed({
+        imports: [CoreModule],
+        declarations: [AppsListComponent, CustomAppsListComponent]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CustomAppsListComponent);
+        fixture.detectChanges();
+        component = fixture.componentInstance;
+    });
+
+    it('should create instance of CustomAppsListComponent', () => {
+        expect(component instanceof CustomAppsListComponent).toBe(true, 'should create CustomAppsListComponent');
+    });
+
+    it('should fetch custom schemaColumn from html', () => {
+        fixture.detectChanges();
+        expect(component.appList.columnList).toBeDefined();
+        expect(component.appList.columns[0]['title']).toEqual('ADF_APPS_LIST.PROPERTIES.NAME');
+        expect(component.appList.columns[1]['title']).toEqual('ADF_APPS_LIST.PROPERTIES.ID');
+        expect(component.appList.columns.length).toEqual(3);
+    });
 });
