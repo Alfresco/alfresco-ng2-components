@@ -25,7 +25,7 @@ import { ActivatedRoute, Params } from '@angular/router';
     styleUrls: [`./task-list-demo.component.scss`],
 })
 
-export class TaskListDemoComponent implements OnInit{
+export class TaskListDemoComponent implements OnInit {
 
     appIdDefault: number;
 
@@ -43,7 +43,7 @@ export class TaskListDemoComponent implements OnInit{
 
     taskListForm: FormGroup;
 
-    constructor(private route: ActivatedRoute, 
+    constructor(private route: ActivatedRoute,
                 private formBuilder: FormBuilder) {
     }
 
@@ -90,5 +90,4 @@ export class TaskListDemoComponent implements OnInit{
     resetTaskForm() {
         this.taskListForm.reset();
     }
-
 }
