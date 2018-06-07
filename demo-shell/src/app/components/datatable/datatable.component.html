@@ -1,3 +1,7 @@
+<mat-form-field>
+    <input matInput placeholder="Name filter" [(ngModel)]="data.filterValue">
+</mat-form-field>
+
 <adf-datatable
     #dataTable
     [data]="data"
@@ -43,5 +47,4 @@
     <button mat-raised-button (click)="addRow()">{{ 'DATATABLE.ADD_ROW'| translate }}</button>
     <button mat-raised-button (click)="replaceRows()">{{ 'DATATABLE.REPLACE_ROWS'| translate }}</button>
     <button mat-raised-button (click)="replaceColumns()">{{ 'DATATABLE.REPLACE_COLUMNS'| translate }}</button>
-    <button mat-raised-button (click)="getRowForNode()">{{ 'DATATABLE.LOAD_NODE'| translate }}</button>
 </div>
