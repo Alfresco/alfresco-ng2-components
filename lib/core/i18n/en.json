@@ -198,7 +198,8 @@
     "BUTTON": {
       "LOGIN": "SIGN IN",
       "CHECKING": "CHECKING",
-      "WELCOME": "WELCOME"
+      "WELCOME": "WELCOME",
+      "SSO": "SIGN IN SSO"
     },
     "ACTION": {
       "HELP": "NEED HELP?",

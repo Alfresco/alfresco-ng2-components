@@ -68,7 +68,6 @@ export class AppLayoutComponent implements OnInit {
     }
 
     constructor(private userpreference: UserPreferencesService, private config: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
-
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
             this.enabelRedirect = false;
         }

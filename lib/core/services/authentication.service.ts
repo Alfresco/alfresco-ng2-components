@@ -67,7 +67,7 @@ export class AuthenticationService {
      */
     login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string, ticket: any }> {
         this.removeTicket();
-        return Observable.fromPromise(this.callApiLogin(username, password))
+        return Observable.fromPromise(this.alfrescoApi.getInstance().login(username, password))
             .map((response: any) => {
                 this.saveRememberMeCookie(rememberMe);
                 this.saveTickets();
@@ -78,6 +78,13 @@ export class AuthenticationService {
                 };
             })
             .catch(err => this.handleError(err));
+    }
+
+    /**
+     * Logs the user in with SSO
+     */
+    ssoImplictiLogin(){
+        this.alfrescoApi.getInstance().implicitLogin();
     }
 
     /**
@@ -102,15 +109,6 @@ export class AuthenticationService {
      */
     isRememberMeSet(): boolean {
         return (this.cookie.getItem(REMEMBER_ME_COOKIE_KEY) === null) ? false : true;
-    }
-
-    /**
-     * Initialize the alfresco Api with user and password end call the login method
-     * @param username
-     * @param password
-     */
-    private callApiLogin(username: string, password: string) {
-        return this.alfrescoApi.getInstance().login(username, password);
     }
 
     /**
