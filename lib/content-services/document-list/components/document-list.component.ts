@@ -23,7 +23,7 @@ import {
 import {
     ContentService, DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent,
     DisplayMode, ObjectDataColumn, PaginatedComponent, AppConfigService, DataColumnListComponent,
-    UserPreferencesService, PaginationModel
+    UserPreferencesService, PaginationModel, ThumbnailService
 } from '@alfresco/adf-core';
 
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
@@ -243,7 +243,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private appConfig: AppConfigService,
                 private preferences: UserPreferencesService,
                 private customResourcesService: CustomResourcesService,
-                private contentService: ContentService) {
+                private contentService: ContentService,
+                private thumbnailService: ThumbnailService) {
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -333,7 +334,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     ngOnInit() {
         this.loadLayoutPresets();
-        this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting(), this.sortingMode);
+        this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, null, this.getDefaultSorting(), this.sortingMode);
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
@@ -371,7 +372,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.documentListService, schema, this.getDefaultSorting(), this.sortingMode);
+            this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, schema, this.getDefaultSorting(), this.sortingMode);
         } else if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }
@@ -384,7 +385,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     ngOnChanges(changes: SimpleChanges) {
         this.resetSelection();
+        if (this.data) {
+            this.data.thumbnails = this.thumbnails;
 
+        }
         if (changes.sortingMode && !changes.sortingMode.firstChange && this.data) {
             this.data.sortingMode = changes.sortingMode.currentValue;
         }

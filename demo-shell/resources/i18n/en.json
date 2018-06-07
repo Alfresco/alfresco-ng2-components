@@ -95,6 +95,7 @@
         "CUSTOM_FILTER" :"Custom extensions filter",
         "MAX_SIZE" : "Max size filter",
         "ENABLE_VERSIONING" :"Enable versioning",
+        "THUMBNAILS" :"Enable Thumbnails",
         "DESCRIPTION_UPLOAD" : "Enable upload",
         "ENABLE_INFINITE_SCROLL":"Enable Infinite Scrolling",
         "MULTISELECT_DESCRIPTION" : "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",

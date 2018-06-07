@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { DataRow } from '@alfresco/adf-core';
-import { ObjectUtils } from '@alfresco/adf-core';
+import { DataRow, ObjectUtils, ThumbnailService } from '@alfresco/adf-core';
 import { MinimalNode, MinimalNodeEntity } from 'alfresco-js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
@@ -34,7 +33,10 @@ export class ShareDataRow implements DataRow {
         return this.obj;
     }
 
-    constructor(private obj: MinimalNodeEntity, private documentListService: DocumentListService, private permissionsStyle: PermissionStyleModel[]) {
+    constructor(private obj: MinimalNodeEntity,
+                private documentListService: DocumentListService,
+                private permissionsStyle: PermissionStyleModel[],
+                private thumbnailService?: ThumbnailService) {
         if (!obj) {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
@@ -89,6 +91,10 @@ export class ShareDataRow implements DataRow {
             return this.cache[key];
         }
         return ObjectUtils.getValue(this.obj.entry, key);
+    }
+
+    imageErrorResolver(event: Event): any {
+        return this.thumbnailService.getMimeTypeIcon(this.obj.entry.content.mimeType);
     }
 
     hasValue(key: string): boolean {

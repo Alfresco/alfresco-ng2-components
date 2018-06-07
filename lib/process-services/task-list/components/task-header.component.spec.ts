@@ -241,7 +241,7 @@ describe('TaskHeaderComponent', () => {
     }));
 
     it('should call the service\'s unclaim method on unclaiming', async(() => {
-        spyOn(service, 'unclaimTask');
+        spyOn(service, 'unclaimTask').and.returnValue(Observable.of(true));
         component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
         component.refreshData();
         fixture.detectChanges();
