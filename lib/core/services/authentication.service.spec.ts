@@ -60,7 +60,8 @@ describe('AuthenticationService', () => {
     describe('remember me', () => {
 
         beforeEach(() => {
-            preferences.authType = 'ECM';
+            preferences.providers = 'ECM';
+            apiService.reset();
         });
 
         it('[ECM] should save the remember me cookie as a session cookie after successful login', (done) => {
@@ -123,7 +124,8 @@ describe('AuthenticationService', () => {
     describe('when the setting is ECM', () => {
 
         beforeEach(() => {
-            preferences.authType = 'ECM';
+            preferences.providers = 'ECM';
+            apiService.reset();
         });
 
         it('should require remember me set for ECM check', () => {
@@ -154,7 +156,7 @@ describe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 201,
+                status: 201,
                 contentType: 'application/json',
                 responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
             });
@@ -274,26 +276,27 @@ describe('AuthenticationService', () => {
         it('[ECM] should set/get redirectUrl when provider is ECM', () => {
             authService.setRedirect({ provider: 'ECM', navigation: ['some-url'] });
 
-            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
+            expect(authService.getRedirect(preferences.providers)).toEqual(['some-url']);
         });
 
         it('[ECM] should set/get redirectUrl when provider is BPM', () => {
             authService.setRedirect({ provider: 'BPM', navigation: ['some-url'] });
 
-            expect(authService.getRedirect(preferences.authType)).toBeNull();
+            expect(authService.getRedirect(preferences.providers)).toBeNull();
         });
 
         it('[ECM] should return null as redirectUrl when redirectUrl field is not set', () => {
             authService.setRedirect(null);
 
-            expect(authService.getRedirect(preferences.authType)).toBeNull();
+            expect(authService.getRedirect(preferences.providers)).toBeNull();
         });
     });
 
     describe('when the setting is BPM', () => {
 
         beforeEach(() => {
-            preferences.authType = 'BPM';
+            preferences.providers = 'BPM';
+            apiService.reset();
         });
 
         it('should require remember me set for BPM check', () => {
@@ -426,26 +429,27 @@ describe('AuthenticationService', () => {
         it('[BPM] should set/get redirectUrl when provider is BPM', () => {
             authService.setRedirect({ provider: 'BPM', navigation: ['some-url'] });
 
-            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
+            expect(authService.getRedirect(preferences.providers)).toEqual(['some-url']);
         });
 
         it('[BPM] should set/get redirectUrl when provider is ECM', () => {
             authService.setRedirect({ provider: 'ECM', navigation: ['some-url'] });
 
-            expect(authService.getRedirect(preferences.authType)).toBeNull();
+            expect(authService.getRedirect(preferences.providers)).toBeNull();
         });
 
         it('[BPM] should return null as redirectUrl when redirectUrl field is not set', () => {
             authService.setRedirect(null);
 
-            expect(authService.getRedirect(preferences.authType)).toBeNull();
+            expect(authService.getRedirect(preferences.providers)).toBeNull();
         });
     });
 
     describe('when the setting is both ECM and BPM ', () => {
 
         beforeEach(() => {
-            preferences.authType = 'ALL';
+            preferences.providers = 'ALL';
+            apiService.reset();
         });
 
         it('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
@@ -542,25 +546,25 @@ describe('AuthenticationService', () => {
         it('[ALL] should set/get redirectUrl when provider is ALL', () => {
             authService.setRedirect({ provider: 'ALL', navigation: ['some-url'] });
 
-            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
+            expect(authService.getRedirect(preferences.providers)).toEqual(['some-url']);
         });
 
         it('[ALL] should set/get redirectUrl when provider is BPM', () => {
             authService.setRedirect({ provider: 'BPM', navigation: ['some-url'] });
 
-            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
+            expect(authService.getRedirect(preferences.providers)).toEqual(['some-url']);
         });
 
         it('[ALL] should set/get redirectUrl when provider is ECM', () => {
             authService.setRedirect({ provider: 'ECM', navigation: ['some-url'] });
 
-            expect(authService.getRedirect(preferences.authType)).toEqual(['some-url']);
+            expect(authService.getRedirect(preferences.providers)).toEqual(['some-url']);
         });
 
         it('[ALL] should return null as redirectUrl when redirectUrl field is not set', () => {
             authService.setRedirect(null);
 
-            expect(authService.getRedirect(preferences.authType)).toBeNull();
+            expect(authService.getRedirect(preferences.providers)).toBeNull();
         });
     });
 

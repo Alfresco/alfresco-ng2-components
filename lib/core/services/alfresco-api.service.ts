@@ -26,6 +26,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs/Subject';
 import { UserPreferencesService } from './user-preferences.service';
+import { ConnectedPositionStrategy } from '@angular/cdk/overlay';
 
 /* tslint:disable:adf-file-name */
 
@@ -107,20 +108,17 @@ export class AlfrescoApiService {
     }
 
     async reset() {
-        if (this.alfrescoApi) {
-            this.alfrescoApi = null;
-            delete this.alfrescoApi;
-            this.initAlfrescoApi();
-        }
+        this.initAlfrescoApi();
     }
 
     protected initAlfrescoApi() {
-        let oauth: any = Object.assign ({}, this.userPreference.oauthConfig);
+        let oauth: any = Object.assign({}, this.userPreference.oauthConfig);
         if (oauth) {
-            oauth.redirectUri = window.location.origin + ( oauth.redirectUri || '/' );
-            oauth.redirectUriLogout = window.location.origin + ( oauth.redirectUriLogout || '/' );
+            oauth.redirectUri = window.location.origin + (oauth.redirectUri || '/');
+            oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
         }
-        this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
+
+        const config = {
             provider: this.userPreference.providers,
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),
@@ -130,6 +128,12 @@ export class AlfrescoApiService {
             contextRoot: this.appConfig.get<string>('contextRootEcm'),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
             oauth2: oauth
-        });
+        };
+
+        if (this.alfrescoApi) {
+            this.alfrescoApi.configureJsApi(config);
+        } else {
+            this.alfrescoApi = <AlfrescoApi> new alfrescoApi(config);
+        }
     }
 }

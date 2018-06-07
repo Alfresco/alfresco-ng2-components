@@ -35,32 +35,4 @@ export class AlfrescoApiServiceMock extends AlfrescoApiService {
             this.initAlfrescoApi();
         }
     }
-
-    async load() {
-        await this.appConfig.load().then(() => {
-            if (!this.alfrescoApi) {
-                this.initAlfrescoApi();
-            }
-        });
-    }
-
-    async reset() {
-        if (this.alfrescoApi) {
-            this.alfrescoApi = null;
-        }
-        this.initAlfrescoApi();
-    }
-
-    protected async initAlfrescoApi() {
-        this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
-            provider: this.userPreference.providers,
-            ticketEcm: this.storage.getItem('ticket-ECM'),
-            ticketBpm: this.storage.getItem('ticket-BPM'),
-            hostEcm: this.userPreference.ecmHost,
-            hostBpm: this.userPreference.bpmHost,
-            contextRoot: 'alfresco',
-            disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
-            oauth2: this.appConfig.get<any>('oauth2')
-        });
-    }
 }

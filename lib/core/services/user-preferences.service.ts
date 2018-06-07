@@ -148,6 +148,7 @@ export class UserPreferencesService {
     }
 
     /** Authorization type (can be "ECM", "BPM" or "ALL"). */
+    /** @deprecated in 2.4.0 */
     set authType(authType: string) {
         let storedAuthType = this.storage.getItem('AUTH_TYPE');
 
@@ -156,6 +157,7 @@ export class UserPreferencesService {
         }
     }
 
+    /** @deprecated in 2.4.0 */
     get authType(): string {
         return this.storage.getItem('AUTH_TYPE') || 'ALL';
     }
