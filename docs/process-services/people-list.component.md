@@ -79,11 +79,11 @@ Note that the [people list component](../process-services/people-list.component.
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | actions | `boolean` | false | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu. |
-| users | [`UserProcessModel[]`](../core/user-process.model.md) |  | The array of user data used to populate the people list. |
+| users | [`UserProcessModel`](../core/user-process.model.md)`[]` |  | The array of user data used to populate the people list. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| clickAction | [`EventEmitter<UserEventModel>`](../../lib/process-services/task-list/models/user-event.model.ts) | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
-| clickRow | [`EventEmitter<UserProcessModel>`](../core/user-process.model.md) | Emitted when the user clicks a row in the people list. |
+| clickAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserEventModel`](../../lib/process-services/task-list/models/user-event.model.ts)`>` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
+| clickRow | `EventEmitter<UserProcessModel>` | Emitted when the user clicks a row in the people list. |

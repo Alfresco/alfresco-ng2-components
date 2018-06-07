@@ -30,5 +30,5 @@ This component can be used when there is no form attached to a task.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| cancel | `EventEmitter<void>` | Emitted when the "Cancel" button is clicked. |
-| complete | `EventEmitter<void>` | Emitted when the form associated with the task is completed. |
+| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the "Cancel" button is clicked. |
+| complete | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the form associated with the task is completed. |

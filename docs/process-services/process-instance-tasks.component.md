@@ -29,5 +29,5 @@ Lists both the active and completed tasks associated with a particular process i
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
-| taskClick | [`EventEmitter<TaskDetailsEvent>`](../../lib/process-services/task-list/models/task-details.event.ts) | Emitted when a task is clicked. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| taskClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsEvent`](../../lib/process-services/task-list/models/task-details.event.ts)`>` | Emitted when a task is clicked. |

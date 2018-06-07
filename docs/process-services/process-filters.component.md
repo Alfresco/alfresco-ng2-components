@@ -47,8 +47,8 @@ Collection of criteria used to filter process instances, which may be customized
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
-| filterClick | `EventEmitter<ProcessInstanceFilterRepresentation>` | Emitted when the user selects a filter from the list. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md)`>` | Emitted when the user selects a filter from the list. |
 | success | `EventEmitter<ProcessInstanceFilterRepresentation[]>` | Emitted when the list of filters has been successfully loaded from the server. |
 
 ## Details
