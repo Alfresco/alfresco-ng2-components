@@ -166,8 +166,10 @@ export class UserPreferencesService {
     set disableCSRF(csrf: boolean) {
         let storedCSRF = this.storage.getItem('DISABLE_CSRF');
 
-        if (csrf.toString() === storedCSRF) {
-            this.set('DISABLE_CSRF', csrf);
+        if (csrf !== null && csrf !== undefined) {
+            if (csrf.toString() === storedCSRF) {
+                this.set('DISABLE_CSRF', csrf);
+            }
         }
     }
 

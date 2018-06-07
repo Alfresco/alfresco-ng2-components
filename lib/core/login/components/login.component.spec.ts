@@ -66,14 +66,14 @@ describe('LoginComponent', () => {
         component.showRememberMe = true;
         component.showLoginActions = true;
 
-        usernameInput = element.querySelector('#username');
-        passwordInput = element.querySelector('#password');
-
         authService = TestBed.get(AuthenticationService);
         router = TestBed.get(Router);
         userPreferences = TestBed.get(UserPreferencesService);
 
         fixture.detectChanges();
+
+        usernameInput = element.querySelector('#username');
+        passwordInput = element.querySelector('#password');
     });
 
     afterEach(() => {
@@ -584,7 +584,7 @@ describe('LoginComponent', () => {
         loginWithCredentials('fake-username', 'fake-password');
     }));
 
-    describe('SSO ', () => {
+    describe('SSO', () => {
 
         beforeEach(() => {
             userPreferences.oauthConfig = { implicitFlow: true };
