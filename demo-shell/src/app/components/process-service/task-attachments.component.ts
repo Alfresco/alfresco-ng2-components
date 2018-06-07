@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { TaskListService, TaskAttachmentListComponent, TaskDetailsModel, TaskUploadService } from '@alfresco/adf-process-services';
 import { UploadService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
+import { Subscription } from 'rxjs/Subscription';
 
 export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
     return new TaskUploadService(api, config);
@@ -37,7 +38,7 @@ export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppCon
     ]
 })
 
-export class TaskAttachmentsComponent implements OnInit, OnChanges {
+export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('taskAttachList')
     taskAttachList: TaskAttachmentListComponent;
@@ -47,13 +48,19 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges {
 
     taskDetails: any;
 
+    private subscriptions: Subscription[] = [];
+
     constructor(
         private uploadService: UploadService,
         private activitiTaskList: TaskListService,
         private preview: PreviewService) {}
 
     ngOnInit() {
-        this.uploadService.fileUploadComplete.subscribe(value => this.onFileUploadComplete(value.data));
+        this.subscriptions.push(
+            this.uploadService.fileUploadComplete.subscribe(
+                value => this.onFileUploadComplete(value.data)
+            )
+        );
     }
 
     ngOnChanges() {
@@ -63,6 +70,11 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges {
                     this.taskDetails = taskDetails;
                 });
         }
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     onFileUploadComplete(content: any) {

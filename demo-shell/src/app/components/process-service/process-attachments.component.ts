@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ProcessInstance, ProcessService ,
     ProcessAttachmentListComponent, ProcessUploadService } from '@alfresco/adf-process-services';
 import { UploadService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { AppConfigService } from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
+import { Subscription } from 'rxjs/Subscription';
 
 export function processUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
     return new ProcessUploadService(api, config);
@@ -40,7 +41,7 @@ export function processUploadServiceFactory(api: AlfrescoApiService, config: App
     ]
 })
 
-export class ProcessAttachmentsComponent implements OnInit, OnChanges {
+export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('processAttachList')
     processAttachList: ProcessAttachmentListComponent;
@@ -50,6 +51,8 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges {
 
     processInstance: ProcessInstance;
 
+    private subscriptions: Subscription[] = [];
+
     constructor(
         private uploadService: UploadService,
         private processService: ProcessService,
@@ -57,7 +60,11 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnInit() {
-        this.uploadService.fileUploadComplete.subscribe(value => this.onFileUploadComplete(value.data));
+        this.subscriptions.push(
+            this.uploadService.fileUploadComplete.subscribe(
+                value => this.onFileUploadComplete(value.data)
+            )
+        );
     }
 
     ngOnChanges() {
@@ -67,6 +74,11 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges {
                 this.processInstance = processInstance;
             });
         }
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     onFileUploadComplete(content: any) {

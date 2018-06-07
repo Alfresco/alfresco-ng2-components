@@ -252,9 +252,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptions = this.subscriptions.concat([
+        this.subscriptions.push(
             this.apiService.nodeUpdated.subscribe(node => this.onNodeUpdated(node))
-        ]);
+        );
     }
 
     ngOnDestroy() {
