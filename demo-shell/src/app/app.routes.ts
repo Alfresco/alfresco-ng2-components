@@ -238,8 +238,7 @@ export const appRoutes: Routes = [
             {
                 path: '**',
                 redirectTo: 'error/404'
-            }   
-
+            }
         ]
     }
 ];
