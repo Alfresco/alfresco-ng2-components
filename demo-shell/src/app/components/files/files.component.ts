@@ -537,4 +537,15 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
     }
+
+    isCustomActionDisabled = (node: MinimalNodeEntity): boolean => {
+        if (node && node.entry && node.entry.name === 'custom') {
+            return false;
+        }
+        return true;
+    }
+
+    runCustomAction(event) {
+        console.log(event);
+    }
 }

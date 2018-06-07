@@ -87,11 +87,11 @@ export class MyView {
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it? |
-| disabled | `boolean` | false | Is the menu item disabled? |
+| disabled | `boolean \|Function` | false | Toggles the disabled state. |
 | handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move". |
 | icon | `string` |  | The name of the icon to display next to the menu command (can be left blank). |
 | permission | `string` |  | The permission type. |
-| target | `string` |  [`ContentActionTarget`](../../lib/content-services/document-list/models/content-action.model.ts).All | Type of item that the action appies to. Can be "document" or "folder" |
+| target | `string` |  [`ContentActionTarget`](../../lib/content-services/document-list/models/content-action.model.ts).All | Type of item that the action applies to. Can be "document" or "folder" |
 | title | `string` | "Action" | The title of the action as shown in the menu. |
 | visible | `boolean \| Function` | true | Visibility state (see examples). |
 
@@ -393,7 +393,85 @@ Please note that if you want to preserve `this` context within the evaluator fun
 its property should be declared as a lambda one:
 
 ```ts
-functionName = (parameters): boolean => {
+funcName = (parameters): boolean => {
+    // implementation
+    return true;
+}
+```
+
+### Conditional disabled state
+
+Similar to `visible` property, it is possible to control the `disabled` state with the following scenarios:
+
+- direct value of `boolean` type
+- binding to a property of the `boolean` type
+- binding to a property of the `Function` type that evaluates condition and returns `boolean` value
+
+#### Using direct value of boolean type
+
+```html
+<content-action
+    target="all"
+    title="Action for 'custom' node"
+    [disabled]="true"
+    (execute)="runCustomAction($event)">
+</content-action>
+```
+
+#### Using a property of the boolean type
+
+```html
+<content-action
+    target="all"
+    title="Action for 'custom' node"
+    [disabled]="shouldDisableAction"
+    (execute)="runCustomAction($event)">
+</content-action>
+```
+
+The markup above relies on the `shouldDisableAction` property declared at your component class level:
+
+```ts
+export class MyComponent {
+
+    @Input()
+    shouldDisableAction = true;
+
+}
+```
+
+#### Using a property of the Function type
+
+```html
+<content-action
+    target="all"
+    title="Action for 'custom' node"
+    [disabled]="isCustomActionDisabled"
+    (execute)="runCustomAction($event)">
+</content-action>
+```
+
+The code above relies on the `isCustomActionDisabled` property of a `Function` type declared at your component class level:
+
+```ts
+export class MyComponent {
+
+    isCustomActionDisabled = (node: MinimalNodeEntity): boolean => {
+        if (node && node.entry && node.entry.name === 'custom') {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+Code above checks the node name, and evaluates to `true` only if corresponding node is called "custom". 
+
+Please note that if you want to preserve `this` context within the evaluator function,
+its property should be declared as a lambda one:
+
+```ts
+funcName = (parameters): boolean => {
     // implementation
     return true;
 }

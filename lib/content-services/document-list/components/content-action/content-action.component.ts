@@ -65,7 +65,7 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
     /** Is the menu item disabled? */
     @Input()
-    disabled: boolean = false;
+    disabled: boolean | Function = false;
 
     /** Emitted when the user selects the action from the menu. */
     @Output()
