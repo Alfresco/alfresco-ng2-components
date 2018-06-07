@@ -20,7 +20,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { OauthConfigModel } from '../models/oauth-config.model';
@@ -58,8 +57,7 @@ export class UserPreferencesService {
 
     constructor(public translate: TranslateService,
                 private appConfig: AppConfigService,
-                private storage: StorageService,
-                private apiService: AlfrescoApiService) {
+                private storage: StorageService) {
         this.appConfig.onLoad.subscribe(this.initUserPreferenceStatus.bind(this));
         this.localeSubject = new BehaviorSubject(this.userPreferenceStatus[UserPreferenceValues.Locale]);
         this.locale$ = this.localeSubject.asObservable();
@@ -155,7 +153,6 @@ export class UserPreferencesService {
 
         if (authType !== storedAuthType) {
             this.storage.setItem('AUTH_TYPE', authType);
-            this.apiService.reset();
         }
     }
 
@@ -169,7 +166,6 @@ export class UserPreferencesService {
 
         if (csrf.toString() === storedCSRF) {
             this.set('DISABLE_CSRF', csrf);
-            this.apiService.reset();
         }
     }
 
