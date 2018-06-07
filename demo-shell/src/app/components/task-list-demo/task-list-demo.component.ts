@@ -16,8 +16,9 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+
 
 @Component({
     templateUrl: './task-list-demo.component.html',
@@ -38,17 +39,10 @@ export class TaskListDemoComponent implements OnInit{
 
     sort: string;
 
-    taskProcessDefinitionId = new FormControl();
+    taskListForm: FormGroup;
 
-    taskState = new FormControl();
-
-    taskAssignment = new FormControl();
-    
-    taskName = new FormControl();
-
-    taskSort = new FormControl();
-
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute, 
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -61,22 +55,36 @@ export class TaskListDemoComponent implements OnInit{
                 }
             });
         }
+
+        this.buildForm();
     }
 
-    filterTasks() {
-        this.processDefinitionId = this.taskProcessDefinitionId.value;
-        this.name = this.taskName.value;
-        this.assignment = this.taskAssignment.value;
-        this.state = this.taskState.value;
-        this.sort = this.taskSort.value;
+    buildForm() {
+        this.taskListForm = this.formBuilder.group({
+            taskName: '',
+            taskProcessDefinitionId: '',
+            taskAssignment: '',
+            taskState: '',
+            taskSort: ''
+        });
+
+        this.taskListForm.valueChanges
+            .debounceTime(500)
+            .subscribe(taskFilter => {
+                this.filterTasks(taskFilter);
+        });
     }
 
-    resetTaskFilters() {
-        this.taskProcessDefinitionId.reset();
-        this.taskName.reset();
-        this.taskAssignment.reset();
-        this.taskState.reset();
-        this.taskSort.reset();
+    filterTasks(taskFilter: any) {
+        this.processDefinitionId = taskFilter.taskProcessDefinitionId;
+        this.name = taskFilter.taskName;
+        this.assignment = taskFilter.taskAssignment;
+        this.state = taskFilter.taskState;
+        this.sort = taskFilter.taskSort;
+    }
+
+    resetTaskForm() {
+        this.taskListForm.reset();
     }
 
 }
