@@ -17,7 +17,7 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardEcm, ErrorContentComponent } from '@alfresco/adf-core';
+import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -133,55 +133,55 @@ export const appRoutes: Routes = [
             {
                 path: 'activiti',
                 component: AppsViewComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti/apps',
                 component: AppsViewComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti/apps/:appId/tasks',
                 component: ProcessServiceComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti/apps/:appId/tasks/:filterId',
                 component: ProcessServiceComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti/apps/:appId/processes',
                 component: ProcessServiceComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti/apps/:appId/diagram/:processDefinitionId',
                 component: ShowDiagramComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti/apps/:appId/report',
                 component: ProcessServiceComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuardBpm]
             },
             // TODO: check if neeeded
             {
                 path: 'activiti/appId/:appId',
                 component: ProcessServiceComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuardBpm]
             },
             // TODO: check if needed
             {
                 path: 'activiti/tasks/:id',
                 component: FormViewerComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuardBpm]
             },
             // TODO: check if needed
             {
                 path: 'activiti/tasksnode/:id',
                 component: FormNodeViewerComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuardBpm]
             },
             {
                 path: 'webscript',

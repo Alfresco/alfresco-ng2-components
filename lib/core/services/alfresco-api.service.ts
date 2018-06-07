@@ -119,6 +119,7 @@ export class AlfrescoApiService {
         let oauth: any = Object.assign ({}, this.userPreference.oauthConfig);
         if (oauth) {
             oauth.redirectUri = window.location.origin + oauth.redirectUri;
+            oauth.redirectUriLogout = window.location.origin + oauth.redirectUriLogout;
         }
         this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
             provider: this.userPreference.providers,

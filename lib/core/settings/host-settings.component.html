@@ -6,8 +6,8 @@
         <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)">
             <mat-form-field>
                 <mat-select placeholder="Provider" [formControl]="providers">
-                    <mat-option *ngFor="let provider of providersValues" [value]="provider">
-                        {{ provider }}
+                    <mat-option *ngFor="let provider of providersValues" [value]="provider.value">
+                        {{ provider.title }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

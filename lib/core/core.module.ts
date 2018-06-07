@@ -83,7 +83,6 @@ import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
 import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
-import { OAuthModule, OAuthService, UrlHelperService } from 'angular-oauth2-oidc';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -91,8 +90,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
 
 export function providers() {
     return [
-        OAuthService,
-        UrlHelperService,
         AuthenticationService,
         AlfrescoApiService,
         SettingsService,
@@ -133,7 +130,6 @@ export function providers() {
 
 @NgModule({
     imports: [
-        OAuthModule.forRoot(),
         AboutModule,
         ViewerModule,
         SidenavLayoutModule,

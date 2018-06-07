@@ -21,9 +21,9 @@ export interface OauthConfigModel {
     scope: string;
     implicitFlow: boolean;
     redirectUri: string;
-    secret?: string;
-    silentLogin: boolean;
+    silentLogin?: boolean;
     silentRefreshRedirectUri?: string;
-    showDebugInformation?: boolean;
-    sessionChecksEnabled?: boolean;
+    secret?: string;
+    refreshTokenTimeout?: number;
+    redirectUriLogout?: string;
 }
