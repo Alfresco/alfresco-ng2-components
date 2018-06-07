@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit {
     @Output()
     executeSubmit = new EventEmitter<LoginSubmitEvent>();
 
-    isSSOenabled: boolean = false;
+    implicitFlow: boolean = false;
 
     form: FormGroup;
     isError: boolean = false;
@@ -156,7 +156,11 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.isSSOenabled = this.authService.isOauth();
+        if (this.authService.isOauth()) {
+            if (this.userPreferences.oauthConfig && this.userPreferences.oauthConfig.implicitFlow) {
+                this.implicitFlow = true;
+            }
+        }
 
         if (this.hasCustomFiledsValidation()) {
             this.form = this._fb.group(this.fieldsValidation);

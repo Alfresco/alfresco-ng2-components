@@ -21,7 +21,7 @@
 
                     <mat-card-content class="adf-login-controls">
 
-                        <div *ngIf="!isSSOenabled">
+                        <div *ngIf="!implicitFlow">
                             <!--ERRORS AREA-->
                             <div class="adf-error-container">
                                 <div *ngIf="isError" id="login-error" data-automation-id="login-error"
@@ -114,8 +114,8 @@
                             </div>
                         </div>
 
-                        <div *ngIf="isSSOenabled">
-                            <button type="button" (click)="implicitLogin()" id="login-button" tabindex="1"
+                        <div *ngIf="implicitFlow">
+                            <button type="button" (click)="implicitLogin()" id="login-button-sso" tabindex="1"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     data-automation-id="login-button-sso">
