@@ -16,7 +16,7 @@
  */
 
 import { CommonModule, DatePipe } from '@angular/common';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -49,14 +49,10 @@ import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { AppsProcessService } from './services/apps-process.service';
-import { AuthSSOInterceptor } from './services/auth-sso.interceptor';
 import { AuthGuardBpm } from './services/auth-guard-bpm.service';
 import { AuthGuardEcm } from './services/auth-guard-ecm.service';
-import { AuthGuardSSO } from './services/auth-guard-sso.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthenticationService } from './services/authentication.service';
-import { AuthenticationSSOService } from './services/authentication-sso.service';
-import { AuthTokenProcessorService } from './services/auth-token-processor.service';
 import { CardItemTypeService } from './card-view/services/card-item-types.service';
 import { CardViewUpdateService } from './card-view/services/card-view-update.service';
 import { CommentProcessService } from './services/comment-process.service';
@@ -98,14 +94,11 @@ export function providers() {
         OAuthService,
         UrlHelperService,
         AuthenticationService,
-        AuthenticationSSOService,
-        AuthTokenProcessorService,
         AlfrescoApiService,
         SettingsService,
         ContentService,
         AuthGuard,
         AuthGuardEcm,
-        AuthGuardSSO,
         AuthGuardBpm,
         AppsProcessService,
         PageTitleService,
@@ -290,10 +283,6 @@ export class CoreModuleLazy {
                 AlfrescoApiService
             ],
             multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS, useClass:
-              AuthSSOInterceptor, multi: true
         }
     ]
 })

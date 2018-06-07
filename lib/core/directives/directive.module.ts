@@ -21,7 +21,6 @@ import { MaterialModule } from '../material.module';
 
 import { HighlightDirective } from './highlight.directive';
 import { LogoutDirective } from './logout.directive';
-import { LogoutSSODirective } from './logout-sso.directive';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { NodePermissionDirective } from './node-permission.directive';
@@ -36,7 +35,6 @@ import { UploadDirective } from './upload.directive';
     declarations: [
         HighlightDirective,
         LogoutDirective,
-        LogoutSSODirective,
         NodeDeleteDirective,
         NodeFavoriteDirective,
         NodePermissionDirective,
@@ -46,7 +44,6 @@ import { UploadDirective } from './upload.directive';
     exports: [
         HighlightDirective,
         LogoutDirective,
-        LogoutSSODirective,
         NodeDeleteDirective,
         NodeFavoriteDirective,
         NodePermissionDirective,

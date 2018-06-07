@@ -16,20 +16,10 @@
  */
 
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppDefinitionRepresentationModel } from '@alfresco/adf-process-services';
 
 @Component({
-    selector: 'app-process-cloud-view',
-    templateUrl: './apps-cloud-view.component.html'
+    selector: 'app-logout',
+    templateUrl: './logout.component.html',
+    styleUrls: ['./logout.component.scss']
 })
-export class AppsCloudViewComponent {
-
-    constructor(private router: Router) {
-    }
-
-     onAppClicked(app: AppDefinitionRepresentationModel) {
-         this.router.navigate(['/process-cloud/apps', app.id || 0, 'tasks']);
-     }
-
-}
+export class LogoutComponent {}

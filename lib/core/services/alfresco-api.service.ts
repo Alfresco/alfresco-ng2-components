@@ -110,8 +110,9 @@ export class AlfrescoApiService {
     async reset() {
         if (this.alfrescoApi) {
             this.alfrescoApi = null;
+            delete this.alfrescoApi;
+            this.initAlfrescoApi();
         }
-        this.initAlfrescoApi();
     }
 
     protected initAlfrescoApi() {

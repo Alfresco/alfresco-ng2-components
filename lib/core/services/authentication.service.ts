@@ -217,7 +217,7 @@ export class AuthenticationService {
         if (this.cookie.isEnabled() && !this.isRememberMeSet()) {
             return false;
         }
-        return this.alfrescoApi.getInstance().ecmAuth && !!this.alfrescoApi.getInstance().ecmAuth.isLoggedIn();
+        return this.alfrescoApi.getInstance().isEcmLoggedIn();
     }
 
     /**
@@ -228,7 +228,7 @@ export class AuthenticationService {
         if (this.cookie.isEnabled() && !this.isRememberMeSet()) {
             return false;
         }
-        return this.alfrescoApi.getInstance().bpmAuth && !!this.alfrescoApi.getInstance().bpmAuth.isLoggedIn();
+        return this.alfrescoApi.getInstance().isBpmLoggedIn();
     }
 
     /**
@@ -236,7 +236,7 @@ export class AuthenticationService {
      * @returns The ECM username
      */
     getEcmUsername(): string {
-        return this.alfrescoApi.getInstance().ecmAuth.username;
+        return this.alfrescoApi.getInstance().getEcmUsername();
     }
 
     /**
@@ -244,7 +244,7 @@ export class AuthenticationService {
      * @returns The BPM username
      */
     getBpmUsername(): string {
-        return this.alfrescoApi.getInstance().bpmAuth.username;
+        return this.alfrescoApi.getInstance().getBpmUsername();
     }
 
     /** Sets the URL to redirect to after login.

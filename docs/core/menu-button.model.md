@@ -19,6 +19,7 @@ let button = new MenuButton({
     isVisible: this.isItemValid.bind(this)
 });
 ```
+## Class members
 
 ## Properties
 

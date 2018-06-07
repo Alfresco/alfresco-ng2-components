@@ -20,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { AppConfigService } from '../app-config/app-config.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { OauthConfigModel } from '../models/oauth-config.model';
@@ -50,16 +51,15 @@ export class UserPreferencesService {
      * @deprecated we are grouping every value changed on the user preference in a single stream : userPreferenceValue$
      */
     locale$: Observable<string>;
-    private localeSubject: BehaviorSubject<string> ;
+    private localeSubject: BehaviorSubject<string>;
 
     private onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
-    constructor(
-        public translate: TranslateService,
-        private appConfig: AppConfigService,
-        private storage: StorageService
-    ) {
+    constructor(public translate: TranslateService,
+                private appConfig: AppConfigService,
+                private storage: StorageService,
+                private apiService: AlfrescoApiService) {
         this.appConfig.onLoad.subscribe(this.initUserPreferenceStatus.bind(this));
         this.localeSubject = new BehaviorSubject(this.userPreferenceStatus[UserPreferenceValues.Locale]);
         this.locale$ = this.localeSubject.asObservable();
@@ -105,7 +105,9 @@ export class UserPreferencesService {
      * @param value New value for the property
      */
     set(property: string, value: any) {
-        if (!property) { return; }
+        if (!property) {
+            return;
+        }
         this.storage.setItem(
             this.getPropertyKey(property),
             value
@@ -148,8 +150,13 @@ export class UserPreferencesService {
     }
 
     /** Authorization type (can be "ECM", "BPM" or "ALL"). */
-    set authType(value: string) {
-        this.storage.setItem('AUTH_TYPE', value);
+    set authType(authType: string) {
+        let storedAuthType = this.storage.getItem('AUTH_TYPE');
+
+        if (authType !== storedAuthType) {
+            this.storage.setItem('AUTH_TYPE', authType);
+            this.apiService.reset();
+        }
     }
 
     get authType(): string {
@@ -157,8 +164,13 @@ export class UserPreferencesService {
     }
 
     /** Prevents the CSRF Token from being submitted if true. Only valid for Process Services. */
-    set disableCSRF(value: boolean) {
-        this.set('DISABLE_CSRF', value);
+    set disableCSRF(csrf: boolean) {
+        let storedCSRF = this.storage.getItem('DISABLE_CSRF');
+
+        if (csrf.toString() === storedCSRF) {
+            this.set('DISABLE_CSRF', csrf);
+            this.apiService.reset();
+        }
     }
 
     get disableCSRF(): boolean {

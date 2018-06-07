@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AdfModule } from './adf.module';
 import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/login/login.component';
+import { LogoutComponent } from './components/logout/logout.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
@@ -72,6 +73,7 @@ import { NotificationsComponent } from './components/notifications/notifications
     declarations: [
         AppComponent,
         LoginComponent,
+        LogoutComponent,
         SettingsComponent,
         AppLayoutComponent,
         HomeComponent,
@@ -85,7 +87,6 @@ import { NotificationsComponent } from './components/notifications/notifications
         FormViewerComponent,
         FormNodeViewerComponent,
         AppsViewComponent,
-        AppsCloudViewComponent,
         DataTableComponent,
         FilesComponent,
         FileViewComponent,

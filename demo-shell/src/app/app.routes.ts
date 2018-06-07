@@ -17,11 +17,12 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardEcm, AuthGuardSSO, ErrorContentComponent } from '@alfresco/adf-core';
+import { AuthGuard, AuthGuardEcm, ErrorContentComponent } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { HomeComponent } from './components/home/home.component';
+import { LogoutComponent } from './components/logout/logout.component';
 import { AboutComponent } from './components/about/about.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
@@ -53,6 +54,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
+    { path: 'logout', component: LogoutComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ], outlet: 'overlay' },
     { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
@@ -132,11 +134,6 @@ export const appRoutes: Routes = [
                 path: 'activiti',
                 component: AppsViewComponent,
                 canActivate: [AuthGuard]
-            },
-            {
-                path: 'process-cloud',
-                component: AppsCloudViewComponent,
-                canActivate: [AuthGuardSSO]
             },
             {
                 path: 'activiti/apps',

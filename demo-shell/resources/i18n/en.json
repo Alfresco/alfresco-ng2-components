@@ -6,6 +6,16 @@
       "PROPERTIES": "Properties",
       "VERSIONS": "Versions"
     },
+    "HOME": {
+      "TITLE": "Angular components for Alfresco",
+      "DOCUMENTATION": "Documentation"
+    },
+    "LOGOUT": {
+      "TITLE": "Logout Page",
+      "SUB_TITLE": "You are now logged out",
+      "LOGIN": "Login",
+      "HOME": "Home"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Allow delete",
       "SHOW_COMMENTS" : "Show comments on versions",

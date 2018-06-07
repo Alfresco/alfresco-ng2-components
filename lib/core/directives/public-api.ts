@@ -17,7 +17,6 @@
 
 export * from './highlight.directive';
 export * from './logout.directive';
-export * from './logout-sso.directive';
 export * from './node-delete.directive';
 export * from './node-favorite.directive';
 export * from './node-permission.directive';

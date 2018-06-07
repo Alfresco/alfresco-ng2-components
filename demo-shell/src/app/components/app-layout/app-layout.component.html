@@ -37,7 +37,7 @@
                     <mat-icon matListIcon class="sidenav-menu-icon">{{link.icon}}</mat-icon>
                     <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">{{link.title | translate }}</div>
                 </a>
-                <a mat-list-item adf-logout class="adf-sidenav-link">
+                <a mat-list-item adf-logout [enabelRedirect]="enabelRedirect" redirectUri="/logout" class="adf-sidenav-link">
                     <mat-icon matListIcon class="sidenav-menu-icon">exit_to_app</mat-icon>
                     <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Logout</div>
                 </a>
