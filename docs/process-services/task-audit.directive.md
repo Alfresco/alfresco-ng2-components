@@ -36,5 +36,5 @@ Fetches the Task Audit information in PDF or JSON format.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| clicked | `EventEmitter<any>` | Emitted when the decorated element is clicked. |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
+| clicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the decorated element is clicked. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |

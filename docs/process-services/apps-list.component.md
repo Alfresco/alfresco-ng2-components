@@ -43,7 +43,7 @@ If we intend to show a custom template if there are no apps present
 
 | Name | Type | Description |
 | -- | -- | -- |
-| appClick | [`EventEmitter<AppDefinitionRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts) | Emitted when an app entry is clicked. |
+| appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`AppDefinitionRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)`>` | Emitted when an app entry is clicked. |
 | error | `EventEmitter<any>` | Emitted when an error occurs. |
 
 ## Details

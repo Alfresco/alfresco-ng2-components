@@ -45,6 +45,7 @@ const externalTypes = {
     'MinimalNodeEntity': '../content-services/document-library.model.md',
     'MinimalNodeEntryEntity': '../content-services/document-library.model.md',
     'NodeEntry': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md',
+    'ProcessInstanceFilterRepresentation': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md',
     'RelatedContentRepresentation': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md',
     'SiteEntry': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md',
     'SitePaging': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md'

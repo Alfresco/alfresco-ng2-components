@@ -19,15 +19,15 @@ Searches users/people.
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| results | [`Observable<UserProcessModel[]>`](../core/user-process.model.md) |  | Parameters for displaying the list. |
+| results | [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../core/user-process.model.md)`[]>` |  | Parameters for displaying the list. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| closeSearch | `EventEmitter<Object>` | Emitted when the "close" button is clicked. |
-| searchPeople | `EventEmitter<any>` | Emitted when a search is performed with a new keyword. |
-| success | [`EventEmitter<UserProcessModel>`](../core/user-process.model.md) | Emitted when a user is selected and the action button is clicked. |
+| closeSearch | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the "close" button is clicked. |
+| searchPeople | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a search is performed with a new keyword. |
+| success | `EventEmitter<UserProcessModel>` | Emitted when a user is selected and the action button is clicked. |
 
 ## Details
 

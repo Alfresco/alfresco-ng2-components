@@ -19,7 +19,7 @@ Displays attached documents on a specified process instance
 </adf-process-attachment-list>
 ```
 
-Make sure to override the [UploadService](../core/upload.service.md) with the [ProcessUploadService](../../lib/process-services/task-list/services/process-upload.service.ts)
+Make sure to override the [`UploadService`](../core/upload.service.md) with the [`ProcessUploadService`](../../lib/process-services/task-list/services/process-upload.service.ts)
 
 ```ts
 import { UploadService } from '@alfresco/adf-core';
@@ -49,8 +49,8 @@ export class MyCustomProcessAttachmentComponent {
 
 | Name | Type | Description |
 | -- | -- | -- |
-| attachmentClick | `EventEmitter<Object>` | Emitted when the attachment is double-clicked or the view option is selected from the context menu by the user from within the component. Returns a Blob representing the object that was clicked. |
-| error | `EventEmitter<any>` | Emitted when the attachment list is not able to fetch the attachments (eg, following a network error). |
+| attachmentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment is double-clicked or the view option is selected from the context menu by the user from within the component. Returns a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) representing the object that was clicked. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the attachment list is not able to fetch the attachments (eg, following a network error). |
 | success | `EventEmitter<Object>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments. |
 
 ## Details

@@ -31,8 +31,8 @@ Shows all the information related to a task.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| claim | `EventEmitter<any>` | Emitted when the task is claimed. |
-| unclaim | `EventEmitter<any>` | Emitted when the task is unclaimed (ie, requeued). |
+| claim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed. |
+| unclaim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is unclaimed (ie, requeued). |
 
 ## Details
 
