@@ -12,24 +12,9 @@ var includedNodeTypes = [
 ];
 var docFolder = path.resolve("docs");
 var adfLibNames = ["core", "content-services", "insights", "process-services"];
-var externalTypes = {
-    'Blob': 'https://developer.mozilla.org/en-US/docs/Web/API/Blob',
-    'EventEmitter': 'https://angular.io/api/core/EventEmitter',
-    'MatSnackBarRef': 'https://material.angular.io/components/snack-bar/overview',
-    'TemplateRef': 'https://angular.io/api/core/TemplateRef',
-    'Observable': 'http://reactivex.io/documentation/observable.html',
-    'Subject': 'http://reactivex.io/documentation/subject.html',
-    'AppDefinitionRepresentation': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md',
-    'DeletedNodesPaging': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/DeletedNodesPaging.md',
-    'MinimalNodeEntity': '../content-services/document-library.model.md',
-    'MinimalNodeEntryEntity': '../content-services/document-library.model.md',
-    'NodeEntry': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md',
-    'ProcessInstanceFilterRepresentation': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md',
-    'RelatedContentRepresentation': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md',
-    'SiteEntry': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md',
-    'SitePaging': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md'
-};
+var externalNameLinks;
 function initPhase(aggData) {
+    externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
     adfLibNames.forEach(function (libName) {
@@ -303,8 +288,8 @@ function resolveTypeLink(aggData, text) {
         }
         return url;
     }
-    else if (externalTypes[possTypeName]) {
-        return externalTypes[possTypeName];
+    else if (externalNameLinks[possTypeName]) {
+        return externalNameLinks[possTypeName];
     }
     else {
         return "";

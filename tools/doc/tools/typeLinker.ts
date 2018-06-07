@@ -33,6 +33,7 @@ const docFolder = path.resolve("docs");
 const adfLibNames = ["core", "content-services", "insights", "process-services"];
 
 
+<<<<<<< HEAD
 const externalTypes = {
     'Blob': 'https://developer.mozilla.org/en-US/docs/Web/API/Blob',
     'EventEmitter': 'https://angular.io/api/core/EventEmitter',
@@ -51,8 +52,12 @@ const externalTypes = {
     'SitePaging': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md'
 };
 
+=======
+let externalNameLinks;
+>>>>>>> [ADF-3150] Moved config to doctools.config.json and removed obsolete scripts
 
 export function initPhase(aggData) {
+    externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
 
@@ -373,8 +378,8 @@ function resolveTypeLink(aggData, text): string {
         }
 
         return url;
-    } else if (externalTypes[possTypeName]) {
-        return externalTypes[possTypeName];
+    } else if (externalNameLinks[possTypeName]) {
+        return externalNameLinks[possTypeName];
     } else {
         return "";
     }

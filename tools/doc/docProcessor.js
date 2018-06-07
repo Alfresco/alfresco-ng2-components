@@ -147,6 +147,7 @@ var sourceInfo = fs.statSync(sourcePath);
 var toolModules = loadToolModules();
 
 var config = loadConfig();
+aggData['config'] = config;
 
 var toolList;
 
