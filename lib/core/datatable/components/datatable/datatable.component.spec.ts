@@ -29,7 +29,22 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../../data-column/data-column.component';
 
-describe('DataTable', () => {
+class FakeDataRow implements DataRow {
+    isDropTarget = false;
+    isSelected = true;
+    hasValue(key: any) {
+        return true;
+    }
+    getValue() {
+        return '1';
+    }
+    imageErrorResolver() {
+        return './assets/images/ft_ic_miscellaneous.svg';
+    }
+}
+
+/*tslint:disable:ban*/
+fdescribe('DataTable', () => {
 
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
@@ -881,9 +896,9 @@ describe('DataTable', () => {
                 src: 'missing-image'
             }
         };
-
+        const row = new FakeDataRow();
         dataTable.fallbackThumbnail = '<fallback>';
-        dataTable.onImageLoadingError(event);
+        dataTable.onImageLoadingError(event, row);
         expect(event.target.src).toBe(dataTable.fallbackThumbnail);
     });
 
@@ -894,21 +909,10 @@ describe('DataTable', () => {
                 src: originalSrc
             }
         };
-
+        const row = new FakeDataRow();
         dataTable.fallbackThumbnail = null;
-        dataTable.onImageLoadingError(event);
+        dataTable.onImageLoadingError(event, row);
         expect(event.target.src).toBe('./assets/images/ft_ic_miscellaneous.svg' );
-    });
-
-    it('should replace image source with icon if fallback is not available and mimeType is provided', () => {
-        let event = <any> {
-            target: {
-                src: 'missing-image'
-            }
-        };
-
-        dataTable.onImageLoadingError(event, 'image/png');
-        expect(event.target.src).toBe('./assets/images/ft_ic_raster_image.svg');
     });
 
     it('should not get cell tooltip when row is not provided', () => {

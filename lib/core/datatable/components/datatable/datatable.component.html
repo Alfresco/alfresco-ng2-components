@@ -93,16 +93,17 @@
                     <div *ngIf="!col.template" class="cell-container">
                         <ng-container [ngSwitch]="col.type">
                             <div *ngSwitchCase="'image'" class="cell-value">
-                                <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}</mat-icon>
+                                <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}
+                                </mat-icon>
                                 <ng-template #no_iconvalue>
                                     <mat-icon class="adf-datatable-selected"
-                                        *ngIf="row.isSelected; else no_selected_row" svgIcon="selected">
+                                              *ngIf="row.isSelected; else no_selected_row" svgIcon="selected">
                                     </mat-icon>
                                     <ng-template #no_selected_row>
-                                            <img
+                                        <img
                                             alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
                                             src="{{ data.getValue(row, col) }}"
-                                            (error)="onImageLoadingError($event, row.obj.entry.content.mimeType)">
+                                            (error)="onImageLoadingError($event, row)">
                                     </ng-template>
                                 </ng-template>
                             </div>
@@ -206,7 +207,7 @@
         <div *ngIf="loading"
              [class.adf-datatable-row]="display === 'list'"
              [class.adf-data-table-card-loading]="display === 'gallery'">
-            <div class="adf-datatable-table-cell" >
+            <div class="adf-datatable-table-cell">
                 <ng-template *ngIf="loadingTemplate"
                              ngFor [ngForOf]="[data]"
                              [ngForTemplate]="loadingTemplate">

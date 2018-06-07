@@ -64,9 +64,7 @@ describe('TaskFiltersComponent', () => {
         error: 'wrong request'
     };
 
-    let mockErrorFilterPromise = new Promise(function (resolve, reject) {
-        reject(mockErrorFilterList);
-    });
+    let mockErrorFilterPromise = new Promise.reject(mockErrorFilterList);
 
     let component: TaskFiltersComponent;
     let fixture: ComponentFixture<TaskFiltersComponent>;
@@ -180,7 +178,7 @@ describe('TaskFiltersComponent', () => {
     it('should select the task filter based on the input by name param', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
-        component.filterParam = new FilterParamsModel({name: 'FakeMyTasks1'});
+        component.filterParam = new FilterParamsModel({ name: 'FakeMyTasks1' });
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
 
@@ -199,7 +197,7 @@ describe('TaskFiltersComponent', () => {
     it('should select the default task filter if filter input does not exist', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
-        component.filterParam = new FilterParamsModel({name: 'UnexistableFilter'});
+        component.filterParam = new FilterParamsModel({ name: 'UnexistableFilter' });
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -219,7 +217,7 @@ describe('TaskFiltersComponent', () => {
     it('should select the task filter based on the input by index param', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
-        component.filterParam = new FilterParamsModel({index: 2});
+        component.filterParam = new FilterParamsModel({ index: 2 });
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -239,7 +237,7 @@ describe('TaskFiltersComponent', () => {
     it('should select the task filter based on the input by id param', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
-        component.filterParam = new FilterParamsModel({id: 10});
+        component.filterParam = new FilterParamsModel({ id: 10 });
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -289,18 +287,18 @@ describe('TaskFiltersComponent', () => {
         expect(component.getFiltersByAppId).toHaveBeenCalledWith(appId);
     });
 
-    it('should change current filter when filterParam (id) changes', async() => {
+    it('should change current filter when filterParam (id) changes', async () => {
         component.filters = fakeGlobalFilter;
         component.currentFilter = null;
 
         fixture.whenStable().then(() => {
             expect(component.currentFilter.id).toEqual(fakeGlobalFilter[2].id);
         });
-        const change = new SimpleChange(null, {id : fakeGlobalFilter[2].id}, true);
+        const change = new SimpleChange(null, { id: fakeGlobalFilter[2].id }, true);
         component.ngOnChanges({ 'filterParam': change });
     });
 
-    it('should change current filter when filterParam (name) changes', async() => {
+    it('should change current filter when filterParam (name) changes', async () => {
         component.filters = fakeGlobalFilter;
         component.currentFilter = null;
 
@@ -308,7 +306,7 @@ describe('TaskFiltersComponent', () => {
             expect(component.currentFilter.name).toEqual(fakeGlobalFilter[2].name);
         });
 
-        const change = new SimpleChange(null, {name : fakeGlobalFilter[2].name}, true);
+        const change = new SimpleChange(null, { name: fakeGlobalFilter[2].name }, true);
         component.ngOnChanges({ 'filterParam': change });
     });
 

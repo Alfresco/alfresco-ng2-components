@@ -35,4 +35,8 @@ export class ObjectDataRow implements DataRow {
     hasValue(key: string): boolean {
         return this.getValue(key) !== undefined;
     }
+
+    imageErrorResolver(event: Event): string {
+        return '';
+    }
 }
