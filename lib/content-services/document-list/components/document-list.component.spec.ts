@@ -440,7 +440,7 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
-        expect(actions[0].disabled).toBeUndefined();
+        expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should not disable the action if there is the right permission for the folder', () => {
@@ -460,7 +460,7 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
-        expect(actions[0].disabled).toBeUndefined();
+        expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should not disable the action if there are no permissions for the file and disable with no permission is false', () => {
@@ -480,7 +480,7 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
-        expect(actions[0].disabled).toBeUndefined();
+        expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should not disable the action if there are no permissions for the folder and disable with no permission is false', () => {
@@ -500,7 +500,7 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
-        expect(actions[0].disabled).toBeUndefined();
+        expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should disable the action if there are no permissions for the file and disable with no permission is true', () => {
