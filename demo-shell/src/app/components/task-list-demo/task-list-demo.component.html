@@ -2,37 +2,46 @@
 
      <form [formGroup]="taskListForm">
         <mat-form-field>
+            <mat-label>AppId</mat-label>
+                <input 
+                matInput  
+                class="form-control" 
+                formControlName="appIdCustom">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Task Name</mat-label>
             <input 
             matInput 
-            placeholder="Task Name" 
             class="form-control" 
             formControlName="taskName">
         </mat-form-field>
 
         <mat-form-field>
+            <mat-label>ProcessDefinitionId</mat-label>
             <input 
             matInput 
-            placeholder="ProcessDefinitionId" 
-            matTooltip="E.g. SimpleProcess:1:2"
             class="form-control" 
             formControlName="taskProcessDefinitionId">
+            <mat-hint>SimpleProcess:1:2</mat-hint>
         </mat-form-field>
 
         <mat-form-field>
+                <mat-label>Assignment</mat-label>
                 <mat-select 
-                placeholder="Assignment" 
                 class="form-control" 
                 formControlName="taskAssignment">
                     <mat-option value="assignee">Assignee</mat-option>
                     <mat-option value="candidate">Candidate</mat-option>
-                    <mat-option value="">No value</mat-option>
                 </mat-select>
         </mat-form-field>
 
         <mat-form-field>
+                <mat-label>State</mat-label>
                 <mat-select 
-                placeholder="State" 
-                class="form-control" formControlName="taskState">
+
+                class="form-control" 
+                formControlName="taskState">
                     <mat-option value="all">All</mat-option>
                     <mat-option value="active">Active</mat-option>
                     <mat-option value="completed">Completed</mat-option>
@@ -40,8 +49,8 @@
         </mat-form-field>
 
         <mat-form-field>
+                <mat-label>Sort</mat-label>
                 <mat-select 
-                placeholder="Sort" 
                 class="form-control" 
                 formControlName="taskSort">
                     <mat-option value="created-asc">Created (asc)</mat-option>
@@ -57,7 +66,7 @@
 </div>
 
 <adf-tasklist
-    [appId]="appId" 
+    [appId]="appIdDefault" 
     [name]="name" 
     [processDefinitionId]="processDefinitionId" 
     [assignment]="assignment" 
