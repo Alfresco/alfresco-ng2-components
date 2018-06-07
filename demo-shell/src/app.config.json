@@ -478,14 +478,6 @@
 
     "adf-apps-list": {
         "presets": {
-            "default": [
-                {
-                    "key": "name",
-                    "type": "text",
-                    "title": "ADF_PROCESS_LIST.PROPERTIES.NAME",
-                    "sortable": true
-                }
-            ],
             "apps-list": [
                 {
                     "key": "name",

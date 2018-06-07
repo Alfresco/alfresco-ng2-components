@@ -48,7 +48,6 @@ export class AppsViewComponent implements OnDestroy {
 
     fetchInfoFromUrl(url: string) {
         const parts = url.split('/');
-        console.log(parts);
         if (parts.length > 2) {
             this.layoutType = parts[3].toUpperCase();
         }

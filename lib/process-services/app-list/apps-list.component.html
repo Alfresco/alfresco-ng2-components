@@ -1,7 +1,7 @@
 <div class="menu-container" *ngIf="!isEmpty()">
     <div class="adf-app-list" *ngIf="isList()">
         <adf-datatable #dataTable
-            [rows]="rows"
+            [rows]="appList"
             [columns]="columns"
             [selectionMode]="selectionMode"
             [multiselect]="multiselect"

@@ -36,7 +36,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/notifications', icon: 'alarm', title: 'APP_LAYOUT.NOTIFICATIONS'},
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES' },
-        { href: '/activiti/apps/list', icon: 'list', title: 'APP_LAYOUT.APP_list' },
+        { href: '/activiti/apps/list', icon: 'list', title: 'APP_LAYOUT.APP_LIST' },
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/trashcan', icon: 'delete', title: 'APP_LAYOUT.TRASHCAN' },
         { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },

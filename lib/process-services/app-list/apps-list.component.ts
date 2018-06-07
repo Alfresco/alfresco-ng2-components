@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppsProcessService, TranslationService, EmptyCustomContentDirective } from '@alfresco/adf-core';
+import { AppsProcessService, AppConfigService, DataTableSchema, TranslationService, EmptyCustomContentDirective } from '@alfresco/adf-core';
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -86,7 +86,6 @@ export class AppsListComponent extends DataTableSchema implements OnInit, AfterC
 
     appList: AppDefinitionRepresentationModel[] = [];
     selectedApps: any[];
-    rows: any[] = [];
 
     private iconsMDL: IconModel;
 
@@ -212,9 +211,9 @@ export class AppsListComponent extends DataTableSchema implements OnInit, AfterC
         this.layoutType = AppsListComponent.LAYOUT_GRID;
     }
 
-    setDataRows(rows: any[]) {
+    private setDataRows(rows: any[]): void {
         if (rows && rows.length > 0) {
-            this.rows = this.optimizeNames(rows);
+            this.appList = this.optimizeNames(rows);
             this.selectFirst();
         }
     }
@@ -229,10 +228,10 @@ export class AppsListComponent extends DataTableSchema implements OnInit, AfterC
         return apps;
     }
 
-    selectFirst() {
+    private selectFirst(): void {
         if (!this.isEmpty()) {
-            let row = this.rows[0];
-            this.currentApp = row;
+            let app = this.appList[0];
+            this.currentApp = app;
         } else {
             this.currentApp = null;
         }

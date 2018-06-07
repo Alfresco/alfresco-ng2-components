@@ -25,7 +25,6 @@ import { Observable } from 'rxjs/Observable';
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent } from './apps-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
-import { appsPresetsDefaultModel } from './apps-preset.model';
 
 describe('AppsListComponent', () => {
 
@@ -36,7 +35,7 @@ describe('AppsListComponent', () => {
     let appConfig: AppConfigService;
     let getAppsSpy: jasmine.Spy;
 
-    let fakeCustomSchema = [
+    const fakeCustomSchema = [
         new ObjectDataColumn({
             'key': 'fakeName',
             'type': 'text',
@@ -51,7 +50,7 @@ describe('AppsListComponent', () => {
         })
     ];
 
-    let fakeApp = {
+    const fakeApp = {
         'id': 106,
         'defaultAppId': null,
         'name': 'my cool app',
@@ -319,10 +318,10 @@ describe('AppsListComponent', () => {
         });
 
         it('should emit row click event', (done) => {
-            let row = new ObjectDataRow({
+            const row = new ObjectDataRow({
                 fakeApp
             });
-            let rowEvent = new DataRowEvent(row, null);
+            const rowEvent = new DataRowEvent(row, null);
 
             component.rowClick.subscribe(a => {
                 expect(a).toBeDefined();
@@ -333,8 +332,8 @@ describe('AppsListComponent', () => {
         });
 
         it('should emit row click event on Enter', (done) => {
-            let prevented = false;
-            let keyEvent = new CustomEvent('Keyboard event', {
+            const prevented = false;
+            const keyEvent = new CustomEvent('Keyboard event', {
                 detail: {
                     keyboardEvent: { key: 'Enter' },
                     row: new ObjectDataRow(fakeApp)
@@ -353,8 +352,8 @@ describe('AppsListComponent', () => {
         });
 
         it('should NOT emit row click event on every other key', async(() => {
-            let triggered = false;
-            let keyEvent = new CustomEvent('Keyboard event', {
+            const triggered = false;
+            const keyEvent = new CustomEvent('Keyboard event', {
                 detail: {
                     keyboardEvent: { key: 'Space' },
                     row: new ObjectDataRow(fakeApp)
@@ -427,7 +426,7 @@ class CustomAppsListComponent {
     appList: AppsListComponent;
 }
 
-describe('CustomTaskListComponent', () => {
+describe('CustomAppsListComponent', () => {
     let fixture: ComponentFixture<CustomAppsListComponent>;
     let component: CustomAppsListComponent;
 
