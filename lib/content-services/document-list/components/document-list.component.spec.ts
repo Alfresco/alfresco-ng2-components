@@ -359,6 +359,28 @@ describe('DocumentList', () => {
         expect(actions[0].title).toBe('Action1');
     });
 
+    it('should evaluate conditional disabled state for content action', () => {
+        documentList.actions = [
+            new ContentActionModel({
+                target: 'document',
+                title: 'Action1',
+                disabled: (): boolean => true
+            }),
+            new ContentActionModel({
+                target: 'document',
+                title: 'Action2',
+                disabled: (): boolean => false
+            })
+        ];
+
+        const nodeFile = { entry: { isFile: true, name: 'xyz' } };
+        const actions = documentList.getNodeActions(nodeFile);
+
+        expect(actions.length).toBe(2);
+        expect(actions[0].disabled).toBeTruthy();
+        expect(actions[1].disabled).toBeFalsy();
+    });
+
     it('should not disable the action if there is copy permission', () => {
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
@@ -418,7 +440,7 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
-        expect(actions[0].disabled).toBeUndefined();
+        expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should not disable the action if there is the right permission for the folder', () => {
@@ -438,7 +460,7 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
-        expect(actions[0].disabled).toBeUndefined();
+        expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should not disable the action if there are no permissions for the file and disable with no permission is false', () => {
@@ -458,7 +480,7 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
-        expect(actions[0].disabled).toBeUndefined();
+        expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should not disable the action if there are no permissions for the folder and disable with no permission is false', () => {
@@ -478,7 +500,7 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
-        expect(actions[0].disabled).toBeUndefined();
+        expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should disable the action if there are no permissions for the file and disable with no permission is true', () => {
