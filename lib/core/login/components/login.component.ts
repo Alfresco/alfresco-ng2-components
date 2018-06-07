@@ -192,7 +192,7 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    implicitLogin(){
+    implicitLogin() {
         this.authService.ssoImplictiLogin();
     }
 

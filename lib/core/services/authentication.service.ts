@@ -83,7 +83,7 @@ export class AuthenticationService {
     /**
      * Logs the user in with SSO
      */
-    ssoImplictiLogin(){
+    ssoImplictiLogin() {
         this.alfrescoApi.getInstance().implicitLogin();
     }
 
