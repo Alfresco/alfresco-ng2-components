@@ -54,7 +54,7 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 | providers | `string` |  | Possible valid values are ECM, BPM or ALL. By default, this component will log in only to ECM. If you want to log in in both systems then use ALL. |
 | registerLink | `string` | "" | Sets the URL of the REGISTER link in the footer. |
 | showLoginActions | `boolean` | true | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
-| showRememberMe | `boolean` | true | Should the `Remember me` checkbox be shown? |
+| showRememberMe | `boolean` | true | Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly. |
 | successRoute | `string` |  null | Route to redirect to on successful login. |
 
 ### Events
