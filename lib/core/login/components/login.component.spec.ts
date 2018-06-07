@@ -58,7 +58,7 @@ describe('LoginComponent', () => {
         imports: [CoreTestingModule]
     });
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         fixture = TestBed.createComponent(LoginComponent);
 
         element = fixture.nativeElement;
@@ -66,15 +66,17 @@ describe('LoginComponent', () => {
         component.showRememberMe = true;
         component.showLoginActions = true;
 
-        usernameInput = element.querySelector('#username');
-        passwordInput = element.querySelector('#password');
-
         authService = TestBed.get(AuthenticationService);
         router = TestBed.get(Router);
         userPreferences = TestBed.get(UserPreferencesService);
 
         fixture.detectChanges();
-    });
+
+        fixture.whenStable().then(() => {
+            usernameInput = element.querySelector('#username');
+            passwordInput = element.querySelector('#password');
+        });
+    }));
 
     afterEach(() => {
         fixture.destroy();
@@ -98,7 +100,7 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to route on successful login', () => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket'}));
+        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
         spyOn(router, 'navigate');
@@ -107,10 +109,10 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to previous route state on successful login', () => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket'}));
+        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
-        authService.setRedirect({ provider: 'ECM', navigation: ['some-route'] } );
+        authService.setRedirect({ provider: 'ECM', navigation: ['some-route'] });
 
         spyOn(router, 'navigate');
 
@@ -158,7 +160,7 @@ describe('LoginComponent', () => {
         });
 
         it('should be changed to the "welcome key" after a successful login attempt', () => {
-            spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket'}));
+            spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
             loginWithCredentials('fake-username', 'fake-password');
 
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.WELCOME');
@@ -382,7 +384,7 @@ describe('LoginComponent', () => {
     });
 
     it('should return success event after the login have succeeded', (done) => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket'}));
+        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
 
         component.providers = 'ECM';
         expect(component.isError).toBe(false);
@@ -514,7 +516,7 @@ describe('LoginComponent', () => {
 
             expect(component.isError).toBe(false);
             expect(event).toEqual(
-                new LoginSuccessEvent({type: 'type', ticket: 'ticket'}, 'fake-username', null)
+                new LoginSuccessEvent({ type: 'type', ticket: 'ticket' }, 'fake-username', null)
             );
         });
 
@@ -583,4 +585,47 @@ describe('LoginComponent', () => {
 
         loginWithCredentials('fake-username', 'fake-password');
     }));
+
+    describe('SSO', () => {
+
+        beforeEach(() => {
+            userPreferences.oauthConfig = { implicitFlow: true };
+        });
+
+        afterEach(() => {
+            userPreferences.oauthConfig = null;
+        });
+
+        it('should not show login username and password if SSO implicit flow is active', async(() => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            expect(element.querySelector('#username')).toBeNull();
+            expect(element.querySelector('#password')).toBeNull();
+
+        }));
+
+        it('should not show the login base auth button', async(() => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+            userPreferences.oauthConfig = { implicitFlow: true };
+
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            expect(element.querySelector('#login-button')).toBeNull();
+        }));
+
+        it('should  show the login SSO button', async(() => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+            userPreferences.oauthConfig = { implicitFlow: true };
+
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            expect(element.querySelector('#login-button-sso')).toBeDefined();
+        }));
+
+    });
 });

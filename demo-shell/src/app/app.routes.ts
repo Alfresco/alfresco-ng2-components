@@ -17,11 +17,12 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardBpm, AuthGuardEcm, ErrorContentComponent } from '@alfresco/adf-core';
+import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { HomeComponent } from './components/home/home.component';
+import { LogoutComponent } from './components/logout/logout.component';
 import { AboutComponent } from './components/about/about.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
@@ -52,8 +53,9 @@ import { NotificationsComponent } from './components/notifications/notifications
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
+    { path: 'logout', component: LogoutComponent },
     { path: 'settings', component: SettingsComponent },
-    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [AuthGuardEcm], outlet: 'overlay' },
+    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ], outlet: 'overlay' },
     { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
@@ -226,4 +228,4 @@ export const appRoutes: Routes = [
     }
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { initialNavigation: true });

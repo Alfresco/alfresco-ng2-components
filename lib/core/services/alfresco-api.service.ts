@@ -25,6 +25,7 @@ import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs/Subject';
+import { UserPreferencesService } from './user-preferences.service';
 
 /* tslint:disable:adf-file-name */
 
@@ -95,6 +96,7 @@ export class AlfrescoApiService {
     }
 
     constructor(protected appConfig: AppConfigService,
+                protected userPreference: UserPreferencesService,
                 protected storage: StorageService) {
     }
 
@@ -105,23 +107,32 @@ export class AlfrescoApiService {
     }
 
     async reset() {
-        if (this.alfrescoApi) {
-            this.alfrescoApi = null;
-        }
         this.initAlfrescoApi();
     }
 
     protected initAlfrescoApi() {
-        this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
-            provider: this.storage.getItem('AUTH_TYPE'),
+        let oauth: any = Object.assign({}, this.userPreference.oauthConfig);
+        if (oauth) {
+            oauth.redirectUri = window.location.origin + (oauth.redirectUri || '/');
+            oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
+        }
+
+        const config = {
+            provider: this.userPreference.providers,
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),
-            hostEcm: this.appConfig.get<string>('ecmHost'),
-            hostBpm: this.appConfig.get<string>('bpmHost'),
+            hostEcm: this.userPreference.ecmHost,
+            hostBpm: this.userPreference.bpmHost,
             contextRootBpm: this.appConfig.get<string>('contextRootBpm'),
             contextRoot: this.appConfig.get<string>('contextRootEcm'),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
-            oauth2: this.appConfig.get<any>('oauth2')
-        });
+            oauth2: oauth
+        };
+
+        if (this.alfrescoApi) {
+            this.alfrescoApi.configureJsApi(config);
+        } else {
+            this.alfrescoApi = <AlfrescoApi> new alfrescoApi(config);
+        }
     }
 }

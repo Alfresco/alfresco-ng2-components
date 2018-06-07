@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import {
     fakeAppFilter,
     fakeAppPromise,
@@ -23,15 +23,24 @@ import {
 } from '../../mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
-import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, setupTestBed, CoreModule, UserPreferencesService } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
 describe('Activiti Task filter Service', () => {
 
     let service: TaskFilterService;
+    let userPreferences: UserPreferencesService;
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
+
     beforeEach(async(() => {
-        service = new TaskFilterService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()), new LogService(new AppConfigService(null)));
+        userPreferences = TestBed.get(UserPreferencesService);
+        service = new TaskFilterService(new AlfrescoApiServiceMock(new AppConfigService(null), userPreferences, new StorageService()), new LogService(new AppConfigService(null)));
         jasmine.Ajax.install();
     }));
 

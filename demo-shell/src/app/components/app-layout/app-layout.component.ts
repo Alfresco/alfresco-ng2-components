@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
+import { UserPreferencesService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: 'app-layout.component.html',
@@ -54,18 +54,23 @@ export class AppLayoutComponent implements OnInit {
 
     expandedSidenav = false;
 
+    enabelRedirect = true;
 
     ngOnInit() {
         const expand = this.config.get<boolean>('sideNav.expandedSidenav');
         const preserveState = this.config.get('sideNav.preserveState');
 
-        if (preserveState && expand)  {
+        if (preserveState && expand) {
             this.expandedSidenav = (this.userpreference.get('expandedSidenav', expand.toString()) === 'true');
         } else if (expand) {
             this.expandedSidenav = expand;
         }
     }
-    constructor( private userpreference: UserPreferencesService, private config: AppConfigService) {
+
+    constructor(private userpreference: UserPreferencesService, private config: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
+        if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
+            this.enabelRedirect = false;
+        }
     }
 
     setState(state) {

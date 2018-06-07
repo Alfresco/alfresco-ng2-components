@@ -120,6 +120,8 @@ export class LoginComponent implements OnInit {
     @Output()
     executeSubmit = new EventEmitter<LoginSubmitEvent>();
 
+    implicitFlow: boolean = false;
+
     form: FormGroup;
     isError: boolean = false;
     errorMsg: string;
@@ -154,6 +156,12 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.authService.isOauth()) {
+            if (this.userPreferences.oauthConfig && this.userPreferences.oauthConfig.implicitFlow) {
+                this.implicitFlow = true;
+            }
+        }
+
         if (this.hasCustomFiledsValidation()) {
             this.form = this._fb.group(this.fieldsValidation);
         } else {
@@ -178,7 +186,7 @@ export class LoginComponent implements OnInit {
         this.settingsService.csrfDisabled = this.disableCsrf;
 
         this.disableError();
-        const args = new LoginSubmitEvent({controls : { username : this.form.controls.username} });
+        const args = new LoginSubmitEvent({ controls: { username: this.form.controls.username } });
         this.executeSubmit.emit(args);
 
         if (args.defaultPrevented) {
@@ -186,6 +194,10 @@ export class LoginComponent implements OnInit {
         } else {
             this.performLogin(values);
         }
+    }
+
+    implicitLogin() {
+        this.authService.ssoImplictiLogin();
     }
 
     /**

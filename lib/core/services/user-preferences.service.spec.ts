@@ -156,9 +156,9 @@ describe('UserPreferencesService', () => {
     });
 
     it('should stream only the selected attribute changes when using select', (done) => {
-        preferences.disableCSRF = true;
+        preferences.disableCSRF = false;
         preferences.select(UserPreferenceValues.DisableCSRF).subscribe((disableCSRFFlag) => {
-            expect(disableCSRFFlag).toBeTruthy();
+            expect(disableCSRFFlag).toBeFalsy();
             done();
         });
     });

@@ -18,10 +18,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Http } from '@angular/http';
 import { AuthenticationService } from '../services/authentication.service';
-import { AppConfigService } from '../app-config/app-config.service';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { DiscoveryApiService } from '../services/discovery-api.service';
 import { ObjectDataTableAdapter } from '../datatable/data/object-datatable-adapter';
+import { UserPreferencesService } from '../services/user-preferences.service';
 
 @Component({
     selector: 'adf-about',
@@ -44,7 +44,7 @@ export class AboutComponent implements OnInit {
     bpmVersion: BpmProductVersionModel = null;
 
     constructor(private http: Http,
-                private appConfig: AppConfigService,
+                private userPreference: UserPreferencesService,
                 private authService: AuthenticationService,
                 private discovery: DiscoveryApiService) {
     }
@@ -114,8 +114,8 @@ export class AboutComponent implements OnInit {
 
         });
 
-        this.ecmHost = this.appConfig.get<string>('ecmHost');
-        this.bpmHost = this.appConfig.get<string>('bpmHost');
+        this.ecmHost = this.userPreference.ecmHost;
+        this.bpmHost = this.userPreference.bpmHost;
     }
 
     private gitHubLinkCreation(alfrescoPackagesTableRepresentation): void {

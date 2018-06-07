@@ -17,6 +17,7 @@
 
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';

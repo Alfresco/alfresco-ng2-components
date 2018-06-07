@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ContentChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -23,56 +23,152 @@ import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from '../services';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
+import { LogoutDirective } from './logout.directive';
 
 describe('LogoutDirective', () => {
 
-    @Component({
-        selector: 'adf-test-component',
-        template: '<button adf-logout></button>'
-    })
-    class TestComponent {}
+    describe('No input', () => {
 
-    let fixture: ComponentFixture<TestComponent>;
-    let router: Router;
-    let authService: AuthenticationService;
+        @Component({
+            selector: 'adf-test-component',
+            template: '<button adf-logout></button>'
+        })
+        class TestComponent {
+            @ContentChildren(LogoutDirective)
+            logoutDirective: LogoutDirective;
+        }
 
-    setupTestBed({
-        imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
-        ],
-        declarations: [
-            TestComponent
-        ]
+        let fixture: ComponentFixture<TestComponent>;
+        let router: Router;
+        let authService: AuthenticationService;
+
+        setupTestBed({
+            imports: [
+                CoreModule.forRoot(),
+                RouterTestingModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
+
+        beforeEach(() => {
+            router = TestBed.get(Router);
+            authService = TestBed.get(AuthenticationService);
+            fixture = TestBed.createComponent(TestComponent);
+            fixture.detectChanges();
+        });
+
+        it('should redirect to login on click', () => {
+            spyOn(router, 'navigate').and.callThrough();
+            spyOn(authService, 'logout').and.returnValue(Observable.of(true));
+
+            const button = fixture.nativeElement.querySelector('button');
+            button.click();
+
+            expect(authService.logout).toHaveBeenCalled();
+            expect(router.navigate).toHaveBeenCalledWith(['/login']);
+        });
+
+        it('should redirect to login even on logout error', () => {
+            spyOn(router, 'navigate').and.callThrough();
+            spyOn(authService, 'logout').and.returnValue(Observable.throw('err'));
+
+            const button = fixture.nativeElement.querySelector('button');
+            button.click();
+
+            expect(authService.logout).toHaveBeenCalled();
+            expect(router.navigate).toHaveBeenCalledWith(['/login']);
+        });
+
     });
 
-    beforeEach(() => {
-        router = TestBed.get(Router);
-        authService = TestBed.get(AuthenticationService);
-        fixture = TestBed.createComponent(TestComponent);
-        fixture.detectChanges();
+    describe('redirectUri', () => {
+
+        @Component({
+            selector: 'adf-test-component',
+            template: '<button adf-logout redirectUri="/myCustomUri"></button>'
+        })
+        class TestComponent {
+            @ContentChildren(LogoutDirective)
+            logoutDirective: LogoutDirective;
+        }
+
+        let fixture: ComponentFixture<TestComponent>;
+        let router: Router;
+        let authService: AuthenticationService;
+
+        setupTestBed({
+            imports: [
+                CoreModule.forRoot(),
+                RouterTestingModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
+
+        beforeEach(() => {
+            router = TestBed.get(Router);
+            authService = TestBed.get(AuthenticationService);
+            fixture = TestBed.createComponent(TestComponent);
+            fixture.detectChanges();
+        });
+
+        it('should redirect to the the input redirectUri on click if present', () => {
+            spyOn(router, 'navigate').and.callThrough();
+            spyOn(authService, 'logout').and.returnValue(Observable.of(true));
+
+            const button = fixture.nativeElement.querySelector('button');
+            button.click();
+
+            expect(authService.logout).toHaveBeenCalled();
+            expect(router.navigate).toHaveBeenCalledWith(['/myCustomUri']);
+        });
+
     });
 
-    it('should redirect to login on click', () => {
-        spyOn(router, 'navigate').and.callThrough();
-        spyOn(authService, 'logout').and.returnValue(Observable.of(true));
+    describe('redirectUri', () => {
 
-        const button = fixture.nativeElement.querySelector('button');
-        button.click();
+        @Component({
+            selector: 'adf-test-component',
+            template: '<button adf-logout [enabelRedirect]="false"></button>'
+        })
+        class TestComponent {
+            @ContentChildren(LogoutDirective)
+            logoutDirective: LogoutDirective;
+        }
 
-        expect(authService.logout).toHaveBeenCalled();
-        expect(router.navigate).toHaveBeenCalledWith([ '/login' ]);
-    });
+        let fixture: ComponentFixture<TestComponent>;
+        let router: Router;
+        let authService: AuthenticationService;
 
-    it('should redirect to login even on logout error', () => {
-        spyOn(router, 'navigate').and.callThrough();
-        spyOn(authService, 'logout').and.returnValue(Observable.throw('err'));
+        setupTestBed({
+            imports: [
+                CoreModule.forRoot(),
+                RouterTestingModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
 
-        const button = fixture.nativeElement.querySelector('button');
-        button.click();
+        beforeEach(() => {
+            router = TestBed.get(Router);
+            authService = TestBed.get(AuthenticationService);
+            fixture = TestBed.createComponent(TestComponent);
+            fixture.detectChanges();
+        });
 
-        expect(authService.logout).toHaveBeenCalled();
-        expect(router.navigate).toHaveBeenCalledWith([ '/login' ]);
+        it('should not redirect if enabelRedirect is false', () => {
+            spyOn(router, 'navigate').and.callThrough();
+            spyOn(authService, 'logout').and.returnValue(Observable.of(true));
+            const button = fixture.nativeElement.querySelector('button');
+            button.click();
+
+            expect(authService.logout).toHaveBeenCalled();
+            expect(router.navigate).not.toHaveBeenCalled();
+        });
     });
 
 });

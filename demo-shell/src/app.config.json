@@ -2,7 +2,18 @@
     "$schema": "../../lib/core/app-config/schema.json",
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
+    "providers": "OAUTH",
     "contextRootBpm": "activiti-app",
+    "oauth2": {
+      "host": "YOUR_AUTH_SERVER",
+      "clientId": "activiti",
+      "scope": "openid",
+      "secret": "",
+      "implicitFlow": true,
+      "silentLogin": true,
+      "redirectUri": "/",
+      "redirectUriLogout": "/logout"
+    },
     "application": {
         "name": "Alfresco ADF Application",
         "copyright": "© 2016 - 2018 Alfresco Software, Inc. All Rights Reserved."
