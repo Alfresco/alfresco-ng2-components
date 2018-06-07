@@ -45,8 +45,8 @@ Shows all available filters.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs during loading. |
-| filterClick | [`EventEmitter<FilterRepresentationModel>`](../../lib/process-services/task-list/models/filter.model.ts) | Emitted when a filter in the list is clicked. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
+| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)`>` | Emitted when a filter in the list is clicked. |
 | success | `EventEmitter<any>` | Emitted when the list is loaded. |
 
 ## Details

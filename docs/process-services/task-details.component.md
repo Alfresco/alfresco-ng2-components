@@ -23,7 +23,7 @@ Shows the details of the task ID passed in as input.
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | debugMode | `boolean` | false | Toggles debug mode. |
-| fieldValidators | [`FormFieldValidator[]`](../../lib/core/form/components/widgets/core/form-field-validator.ts) |  \[] | Field validators for use with the form. |
+| fieldValidators | [`FormFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` |  \[] | Field validators for use with the form. |
 | readOnlyForm | `boolean` | false | Toggles read-only state of the form. All form widgets render as read-only if enabled. |
 | showChecklist | `boolean` | true | Toggles `Checklist` feature for the Header component. |
 | showComments | `boolean` | true | Toggles `Comments` feature for the Header component. |
@@ -41,15 +41,15 @@ Shows the details of the task ID passed in as input.
 
 | Name | Type | Description |
 | -- | -- | -- |
-| assignTask | `EventEmitter<void>` | Emitted when a task is assigned. |
-| claimedTask | `EventEmitter<string>` | Emitted when a task is claimed. |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
-| executeOutcome | [`EventEmitter<FormOutcomeEvent>`](../../lib/core/form/components/widgets/core/form-outcome-event.model.ts) | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
-| formCompleted | [`EventEmitter<FormModel>`](../../lib/core/form/components/widgets/core/form.model.ts) | Emitted when the form is submitted with the `Complete` outcome. |
-| formContentClicked | [`EventEmitter<ContentLinkModel>`](../../lib/core/form/components/widgets/core/content-link.model.ts) | Emitted when the form field content is clicked. |
-| formLoaded | [`EventEmitter<FormModel>`](../../lib/core/form/components/widgets/core/form.model.ts) | Emitted when the form is loaded or reloaded. |
-| formSaved | [`EventEmitter<FormModel>`](../../lib/core/form/components/widgets/core/form.model.ts) | Emitted when the form is submitted with the `Save` or custom outcomes. |
-| taskCreated | [`EventEmitter<TaskDetailsModel>`](../process-services/task-details.model.md) | Emitted when a checklist task is created. |
+| assignTask | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when a task is assigned. |
+| claimedTask | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task is claimed. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
+| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
+| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when the form field content is clicked. |
+| formLoaded | `EventEmitter<FormModel>` | Emitted when the form is loaded or reloaded. |
+| formSaved | `EventEmitter<FormModel>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
+| taskCreated | `EventEmitter<TaskDetailsModel>` | Emitted when a checklist task is created. |
 | taskDeleted | `EventEmitter<string>` | Emitted when a checklist task is deleted. |
 | unClaimedTask | `EventEmitter<string>` | Emitted when a task is unclaimed. |
 

@@ -8,6 +8,23 @@ Last reviewed: 2018-05-24
 
 Renders a list containing all the process instances matched by the parameters specified.
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+    -   [Events](#events)
+
+-   [Details](#details)
+
+    -   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
+    -   [Pagination strategy](#pagination-strategy)
+    -   [Show custom template when processList is empty](#show-custom-template-when-processlist-is-empty)
+
+-   [See also](#see-also)
+
 ## Basic Usage
 
 **app.component.html**
@@ -42,9 +59,9 @@ Renders a list containing all the process instances matched by the parameters sp
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
-| rowClick | `EventEmitter<string>` | Emitted when a row in the process list is clicked. |
-| success | [`EventEmitter<ProcessListModel>`](../../lib/process-services/process-list/models/process-list.model.ts) | Emitted when the list of process instances has been loaded successfully from the server. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
+| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
+| success | `EventEmitter<ProcessListModel>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 

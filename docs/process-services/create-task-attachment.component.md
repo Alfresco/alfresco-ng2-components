@@ -31,5 +31,5 @@ Displays Upload Component (Drag and Click) to upload the attachment to a specifi
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs while creating or uploading an  attachment from the user within the component. |
-| success | `EventEmitter<any>` | Emitted when an attachment is created or uploaded successfully from within the component. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while creating or uploading an  attachment from the user within the component. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an attachment is created or uploaded successfully from within the component. |
