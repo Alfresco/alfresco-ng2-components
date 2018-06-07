@@ -4,17 +4,16 @@
     "bpmHost": "http://{hostname}:{port}",
     "loginRoute": "login",
     "providers": "OAUTH",
-    "sso": true,
+    "contextRootBpm": "activiti-app",
     "oauth2": {
-      "host": "http://a5e2f93de10af11e8a0560a1bea5b7c8-236709433.us-east-1.elb.amazonaws.com:30081/auth/realms/springboot",
-      "redirectUri": "/",
-      "silentLogin": true,
-      "implicitFlow": true,
+      "host": "YOUR_OAUTH_INSTANCE",
       "clientId": "activiti",
       "scope": "openid",
-      "secret": ""
+      "secret": "",
+      "implicitFlow": true,
+      "redirectUri": "http://localhost:3000/",
+      "redirectUriLogout": "http://localhost:3000/logout"
     },
-    "contextRootBpm": "activiti-app",
     "application": {
         "name": "Alfresco ADF Application",
         "copyright": "© 2016 - 2018 Alfresco Software, Inc. All Rights Reserved."
