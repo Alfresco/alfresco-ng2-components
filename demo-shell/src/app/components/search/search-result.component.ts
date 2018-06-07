@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional, ViewChild } from '@angular/core';
+import { Component, OnInit, Optional, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 import { SearchComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { UserPreferencesService, SearchService, SearchConfigurationService } from '@alfresco/adf-core';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-search-result-component',
@@ -27,7 +28,7 @@ import { UserPreferencesService, SearchService, SearchConfigurationService } fro
     styleUrls: ['./search-result.component.scss'],
     providers: [SearchService]
 })
-export class SearchResultComponent implements OnInit {
+export class SearchResultComponent implements OnInit, OnDestroy {
 
     @ViewChild('searchResult')
     searchResult: SearchComponent;
@@ -40,6 +41,8 @@ export class SearchResultComponent implements OnInit {
     skipCount = 0;
 
     sorting = ['name', 'asc'];
+
+    private subscriptions: Subscription[] = [];
 
     constructor(public router: Router,
                 private preferences: UserPreferencesService,
@@ -57,9 +60,11 @@ export class SearchResultComponent implements OnInit {
 
         this.sorting = this.getSorting();
 
-        this.queryBuilder.updated.subscribe(() => {
-            this.sorting = this.getSorting();
-        });
+        this.subscriptions.push(
+            this.queryBuilder.updated.subscribe(() => {
+                this.sorting = this.getSorting();
+            })
+        );
 
         if (this.route) {
             this.route.params.forEach((params: Params) => {
@@ -72,6 +77,11 @@ export class SearchResultComponent implements OnInit {
                 }
             });
         }
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     onSearchResultLoaded(nodePaging: NodePaging) {
