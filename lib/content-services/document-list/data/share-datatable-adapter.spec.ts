@@ -66,7 +66,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should setup columns when constructor is missing schema', () => {
-
+        const adapter = new ShareDataTableAdapter(documentListService, null, null);
         expect(adapter.getColumns()).toEqual([]);
     });
 
