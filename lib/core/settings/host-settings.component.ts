@@ -32,7 +32,7 @@ export class HostSettingsComponent implements OnInit {
 
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 
-    providersValues = ['ALL', 'BPM', 'ECM', 'OAUTH'];
+    providersValues = ['ECM and BPM', 'BPM', 'ECM', 'OAUTH'];
     form: FormGroup;
 
     /** Emitted when the URL is invalid. */
@@ -124,7 +124,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     isALL(): boolean {
-        return this.providers.value === 'ALL';
+        return this.providers.value === 'ECM and BPM';
     }
 
     isOAUTH(): boolean {

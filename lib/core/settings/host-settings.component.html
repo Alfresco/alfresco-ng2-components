@@ -56,7 +56,7 @@
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="full-width" floatLabel="Client Id">
-                            <mat-label>Client Id</mat-label>
+                            <mat-label>{{ 'CORE.HOST_SETTINGS.CLIENT'| translate }}d</mat-label>
                             <input matInput name="clientId" id="clientId" formControlName="clientId" placeholder="Client Id">
                             <mat-error *ngIf="clientId.hasError('required')">
                                 {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
@@ -64,23 +64,20 @@
                         </mat-form-field>
 
                         <mat-form-field class="full-width" floatLabel="Scope">
-                            <mat-label>Scope</mat-label>
-                            <input matInput name="scope" formControlName="scope" placeholder="Scope Id">
+                            <mat-label>{{ 'CORE.HOST_SETTINGS.SCOPE'| translate }}</mat-label>
+                            <input matInput name="{{ 'CORE.HOST_SETTINGS.SCOPE'| translate }}" formControlName="scope" placeholder="Scope Id">
                             <mat-error *ngIf="scope.hasError('required')">
                                 {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
                             </mat-error>
                         </mat-form-field>
 
-                        <label for="silentLogin">SilentLogin</label>
+                        <label for="silentLogin">{{ 'CORE.HOST_SETTINGS.SILENT'| translate }}</label>
                         <mat-slide-toggle class="full-width" name="silentLogin" [color]="'primary'" formControlName="silentLogin">
                         </mat-slide-toggle>
 
-                        <label for="implicitFlow">Implicit Flow</label>
-                        <mat-slide-toggle class="full-width" name="implicitFlow" [color]="'primary'" [disabled]=true formControlName="implicitFlow">
-                        </mat-slide-toggle>
                         <mat-form-field class="full-width" floatLabel="Redirect Uri">
-                            <mat-label>Redirect Uri</mat-label>
-                            <input matInput placeholder="Redirect Uri" name="redirectUri" formControlName="redirectUri">
+                            <mat-label>{{ 'CORE.HOST_SETTINGS.REDIRECT'| translate }}</mat-label>
+                            <input matInput placeholder="{{ 'CORE.HOST_SETTINGS.REDIRECT'| translate }}" name="redirectUri" formControlName="redirectUri">
                             <mat-error *ngIf="redirectUri.hasError('required')">
                                 {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
                             </mat-error>
