@@ -1,12 +1,12 @@
 <div class="task-list-demo-inputs">
 
-     <form>
+     <form [formGroup]="taskListForm">
         <mat-form-field>
             <input 
             matInput 
             placeholder="Task Name" 
-            [formControl]="taskName" 
-            (keyup)="filterTasks()">
+            class="form-control" 
+            formControlName="taskName">
         </mat-form-field>
 
         <mat-form-field>
@@ -14,15 +14,15 @@
             matInput 
             placeholder="ProcessDefinitionId" 
             matTooltip="E.g. SimpleProcess:1:2"
-            [formControl]="taskProcessDefinitionId" 
-            (keyup)="filterTasks()">
+            class="form-control" 
+            formControlName="taskProcessDefinitionId">
         </mat-form-field>
 
         <mat-form-field>
                 <mat-select 
                 placeholder="Assignment" 
-                [formControl]="taskAssignment" 
-                (change)="filterTasks()">
+                class="form-control" 
+                formControlName="taskAssignment">
                     <mat-option value="assignee">Assignee</mat-option>
                     <mat-option value="candidate">Candidate</mat-option>
                     <mat-option value="">No value</mat-option>
@@ -32,8 +32,7 @@
         <mat-form-field>
                 <mat-select 
                 placeholder="State" 
-                [formControl]="taskState" 
-                (change)="filterTasks()">
+                class="form-control" formControlName="taskState">
                     <mat-option value="all">All</mat-option>
                     <mat-option value="active">Active</mat-option>
                     <mat-option value="completed">Completed</mat-option>
@@ -43,8 +42,8 @@
         <mat-form-field>
                 <mat-select 
                 placeholder="Sort" 
-                [formControl]="taskSort" 
-                (change)="filterTasks()">
+                class="form-control" 
+                formControlName="taskSort">
                     <mat-option value="created-asc">Created (asc)</mat-option>
                     <mat-option value="created-desc">Created (desc)</mat-option>
                     <mat-option value="due-asc">Due (asc)</mat-option>
@@ -52,7 +51,7 @@
                 </mat-select>
         </mat-form-field>
         <div class="adf-reset-button">
-            <button mat-raised-button (click)="resetTaskFilters()">Reset</button>
+            <button mat-raised-button (click)="resetTaskForm()">Reset</button>
         </div>
     </form>
 </div>
