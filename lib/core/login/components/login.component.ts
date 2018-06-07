@@ -58,7 +58,11 @@ export class LoginComponent implements OnInit {
 
     isPasswordShow: boolean = false;
 
-    /** Should the `Remember me` checkbox be shown? */
+    /**
+     * Should the `Remember me` checkbox be shown? When selected, this
+     * option will remember the logged-in user after the browser is closed
+     * to avoid logging in repeatedly.
+     */
     @Input()
     showRememberMe: boolean = true;
 
