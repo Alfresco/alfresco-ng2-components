@@ -24,5 +24,5 @@ export interface DataRow {
 
     getValue(key: string): any;
 
-    imageErrorResolver(event: Event): any;
+    imageErrorResolver?(event: Event): any;
 }
