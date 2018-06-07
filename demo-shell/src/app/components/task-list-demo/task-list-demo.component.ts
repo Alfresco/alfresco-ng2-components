@@ -27,7 +27,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 export class TaskListDemoComponent implements OnInit{
 
-    appId: number;
+    appIdDefault: number;
+
+    appIdCustom: number;
 
     processDefinitionId: string;
 
@@ -49,9 +51,9 @@ export class TaskListDemoComponent implements OnInit{
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
-                    this.appId = +params['id'];
+                    this.appIdDefault = +params['id'];
                 } else {
-                    this.appId = 0;
+                    this.appIdDefault = 0;
                 }
             });
         }
@@ -61,6 +63,7 @@ export class TaskListDemoComponent implements OnInit{
 
     buildForm() {
         this.taskListForm = this.formBuilder.group({
+            appIdCustom: this.appIdDefault,
             taskName: '',
             taskProcessDefinitionId: '',
             taskAssignment: '',
@@ -76,6 +79,7 @@ export class TaskListDemoComponent implements OnInit{
     }
 
     filterTasks(taskFilter: any) {
+        this.appIdDefault = taskFilter.appIdCustom;
         this.processDefinitionId = taskFilter.taskProcessDefinitionId;
         this.name = taskFilter.taskName;
         this.assignment = taskFilter.taskAssignment;
