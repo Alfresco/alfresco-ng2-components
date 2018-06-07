@@ -34,15 +34,7 @@ let excludePatterns = [
 ];
 
 
-let nameExceptions = {
-    "datatable.component": "DataTableComponent",
-    "tasklist.service": "TaskListService",
-    "text-mask.component": "InputMaskDirective",
-    "card-item-types.service": "CardItemTypeService",
-    "create-task-attachment.component": "AttachmentComponent",
-    "process-list.component": "ProcessInstanceListComponent"
-}
-
+let nameExceptions;
 
 let undocMethodNames = {
     "ngOnChanges": 1
@@ -268,6 +260,8 @@ class ComponentInfo {
 
 
 export function initPhase(aggData) {
+    nameExceptions = aggData.config.typeNameExceptions;
+
     let app = new Application({
         exclude: excludePatterns,
         ignoreCompilerErrors: true,

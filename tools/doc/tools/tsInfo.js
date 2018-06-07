@@ -12,14 +12,7 @@ var templateFolder = path.resolve("tools", "doc", "templates");
 var excludePatterns = [
     "**/*.spec.ts"
 ];
-var nameExceptions = {
-    "datatable.component": "DataTableComponent",
-    "tasklist.service": "TaskListService",
-    "text-mask.component": "InputMaskDirective",
-    "card-item-types.service": "CardItemTypeService",
-    "create-task-attachment.component": "AttachmentComponent",
-    "process-list.component": "ProcessInstanceListComponent"
-};
+var nameExceptions;
 var undocMethodNames = {
     "ngOnChanges": 1
 };
@@ -182,6 +175,7 @@ var ComponentInfo = /** @class */ (function () {
     return ComponentInfo;
 }());
 function initPhase(aggData) {
+    nameExceptions = aggData.config.typeNameExceptions;
     var app = new typedoc_1.Application({
         exclude: excludePatterns,
         ignoreCompilerErrors: true,
