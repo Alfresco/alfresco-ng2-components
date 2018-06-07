@@ -114,6 +114,15 @@ export class ContentActionComponent implements OnInit, OnChanges {
                 this.folderActionModel.visible = changes.visible.currentValue;
             }
         }
+
+        if (changes.disabled && !changes.disabled.firstChange) {
+            if (this.documentActionModel) {
+                this.documentActionModel.disabled = changes.disabled.currentValue;
+            }
+            if (this.folderActionModel) {
+                this.folderActionModel.disabled = changes.disabled.currentValue;
+            }
+        }
     }
 
     register(model: ContentActionModel): boolean {
