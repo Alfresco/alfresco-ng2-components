@@ -51,6 +51,7 @@ import { BlobPreviewComponent } from './components/blob-preview/blob-preview.com
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
+import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -220,6 +221,10 @@ export const appRoutes: Routes = [
                 path: 'overlay-viewer',
                 component: OverlayViewerComponent,
                 canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'report-issue',
+                component: ReportIssueComponent
             },
             {
                 path: 'datatable-lazy',
