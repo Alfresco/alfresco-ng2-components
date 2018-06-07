@@ -74,7 +74,7 @@ export class HostSettingsComponent implements OnInit {
                 clientId: [oAuthConfig.clientId, Validators.required],
                 redirectUri: [oAuthConfig.redirectUri, Validators.required],
                 scope: [oAuthConfig.scope, Validators.required],
-                secretId: oAuthConfig.secret,
+                secret: oAuthConfig.secret,
                 silentLogin: oAuthConfig.silentLogin,
                 implicitFlow: oAuthConfig.implicitFlow
             });

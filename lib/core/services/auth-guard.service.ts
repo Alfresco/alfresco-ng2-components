@@ -24,11 +24,13 @@ import {
 import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs/Observable';
 import { AppConfigService } from '../app-config/app-config.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
     constructor(private authService: AuthenticationService,
                 private router: Router,
+                private userPreference: UserPreferencesService,
                 private appConfig: AppConfigService) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
@@ -44,11 +46,15 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         if (this.authService.isLoggedIn()) {
             return true;
         }
-        if (!this.authService.isOauth()) {
+        if (!this.authService.isOauth() || this.isOAuthWithoutSilentLogin() ) {
             this.router.navigate([this.getRouteDestinationForLogin()]);
         }
 
         return false;
+    }
+
+    isOAuthWithoutSilentLogin() {
+        return this.authService.isOauth() && this.userPreference.oauthConfig.silentLogin === false;
     }
 
     public getRouteDestinationForLogin(): string {

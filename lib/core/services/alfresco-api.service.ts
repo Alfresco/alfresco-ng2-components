@@ -116,7 +116,7 @@ export class AlfrescoApiService {
     }
 
     protected initAlfrescoApi() {
-        let oauth: alfrescoApi.Oauth2Config = this.appConfig.get<any>('oauth2');
+        let oauth: any = Object.assign ({}, this.userPreference.oauthConfig);
         if (oauth) {
             oauth.redirectUri = window.location.origin + oauth.redirectUri;
         }
@@ -129,11 +129,7 @@ export class AlfrescoApiService {
             contextRootBpm: this.appConfig.get<string>('contextRootBpm'),
             contextRoot: this.appConfig.get<string>('contextRootEcm'),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
-            oauth2: this.appConfig.get<any>('oauth2')
+            oauth2: oauth
         });
-    }
-
-    async login() {
-        this.alfrescoApi.oauth2Auth.initOauth();
     }
 }

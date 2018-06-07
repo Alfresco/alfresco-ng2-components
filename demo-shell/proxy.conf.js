@@ -15,7 +15,7 @@ module.exports = {
     }
   },
   "/activiti-app": {
-    "target": "http://localhost:9999",
+    "target": "http://apskeycloak.envalfresco.com",
     "secure": false,
     "pathRewrite": {
       "^/activiti-app/activiti-app": ""
