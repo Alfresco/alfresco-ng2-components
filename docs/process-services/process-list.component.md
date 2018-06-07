@@ -43,7 +43,7 @@ Renders a list containing all the process instances matched by the parameters sp
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | appId | `number` |  | The id of the app. |
-| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
+| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. **Deprecated:** in 2.4.0  |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
 | name | `string` |  | The name of the list. |
 | page | `number` | 0 | The page number of the processes to fetch. |
