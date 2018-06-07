@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { AlfrescoApiService, SettingsService, PageTitleService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiService, PageTitleService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,15 +27,12 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
 
-    constructor(private settingsService: SettingsService,
-                private storage: StorageService,
-                private pageTitleService: PageTitleService,
+    constructor(private pageTitleService: PageTitleService,
                 private alfrescoApiService: AlfrescoApiService,
                 private router: Router) {
     }
 
     ngOnInit() {
-        this.setProvider();
 
         this.pageTitleService.setTitle('title');
 
@@ -45,11 +42,5 @@ export class AppComponent implements OnInit {
                 this.router.navigate(['/error', error.status]);
             }
         });
-    }
-
-    private setProvider() {
-        if (this.storage.hasItem(`providers`)) {
-            this.settingsService.setProviders(this.storage.getItem(`providers`));
-        }
     }
 }

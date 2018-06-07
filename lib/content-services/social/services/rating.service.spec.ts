@@ -15,17 +15,27 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiServiceMock, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AppConfigService, StorageService, setupTestBed, CoreModule, UserPreferencesService } from '@alfresco/adf-core';
 import { RatingService } from './rating.service';
+import { TestBed } from '@angular/core/testing';
 
 declare let jasmine: any;
 
 describe('Rating service', () => {
 
     let service;
+    let userPreferences: UserPreferencesService;
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
-        service = new RatingService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()));
+        userPreferences = TestBed.get(UserPreferencesService);
+
+        service = new RatingService(new AlfrescoApiServiceMock(new AppConfigService(null), userPreferences, new StorageService()));
     });
 
     beforeEach(() => {

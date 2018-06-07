@@ -20,6 +20,9 @@ import {
     AppConfigService,
     ContentService,
     StorageService,
+    UserPreferencesService,
+    setupTestBed,
+    CoreModule,
     TranslationMock
 } from '@alfresco/adf-core';
 import { FileNode, FolderNode } from '../../mock';
@@ -28,16 +31,25 @@ import { DocumentActionsService } from './document-actions.service';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { Observable } from 'rxjs/Observable';
+import { TestBed } from '@angular/core/testing';
 
 describe('DocumentActionsService', () => {
 
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
     let nodeActionsService: NodeActionsService;
+    let userPreferences;
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
+        userPreferences = TestBed.get(UserPreferencesService);
         let contentService = new ContentService(null, null, null, null);
-        let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), userPreferences, new StorageService());
 
         documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
         service = new DocumentActionsService(null, null, new TranslationMock(), documentListService, contentService);

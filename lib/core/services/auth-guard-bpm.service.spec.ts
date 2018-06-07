@@ -35,6 +35,7 @@ describe('AuthGuardService BPM', () => {
     });
 
     beforeEach(() => {
+        localStorage.clear();
         authService = TestBed.get(AuthenticationService);
         authGuard = TestBed.get(AuthGuardBpm);
         routerService = TestBed.get(Router);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Input, Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 
@@ -24,11 +24,18 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class LogoutDirective implements OnInit {
 
-    constructor(
-        private elementRef: ElementRef,
-        private renderer: Renderer2,
-        private router: Router,
-        private auth: AuthenticationService) {
+    /** Uri to be redirect after the logout default value login */
+    @Input()
+    redirectUri: string = '/login';
+
+    /** Enable redirect after logout */
+    @Input()
+    enabelRedirect: boolean = true;
+
+    constructor(private elementRef: ElementRef,
+                private renderer: Renderer2,
+                private router: Router,
+                private auth: AuthenticationService) {
     }
 
     ngOnInit() {
@@ -42,12 +49,14 @@ export class LogoutDirective implements OnInit {
 
     logout() {
         this.auth.logout().subscribe(
-            () => this.redirectToLogin(),
-            () => this.redirectToLogin()
+            () => this.redirectToUri(),
+            () => this.redirectToUri()
         );
     }
 
-    redirectToLogin() {
-        this.router.navigate(['/login']);
+    redirectToUri() {
+        if (this.enabelRedirect) {
+            this.router.navigate([this.redirectUri]);
+        }
     }
 }

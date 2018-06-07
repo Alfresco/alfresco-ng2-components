@@ -35,6 +35,7 @@ describe('AuthGuardService', () => {
     });
 
     beforeEach(() => {
+        localStorage.clear();
         state = { url: '' };
         authService = TestBed.get(AuthenticationService);
         router = TestBed.get(Router);

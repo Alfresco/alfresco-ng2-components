@@ -3,24 +3,6 @@
 <div class="settings">
     <p class="toggle">
         <mat-slide-toggle
-            id="switch1"
-            [color]="'primary'"
-            (change)="toggleECM()"
-            [checked]="isECM">
-            {{ 'LOGIN.CONTENT_SERVICES'| translate }}
-        </mat-slide-toggle>
-    </p>
-    <p class="toggle">
-        <mat-slide-toggle
-            id="switch2"
-            [color]="'primary'"
-            (change)="toggleBPM()"
-            [checked]="isBPM">
-            {{ 'LOGIN.PROCESS_SERVICES'| translate }}
-        </mat-slide-toggle>
-    </p>
-    <p class="toggle">
-        <mat-slide-toggle
             id="switch3"
             [color]="'primary'"
             (change)="toggleCSRF()"
@@ -57,24 +39,6 @@
     (success)="onLogin($event)"
     (error)="onError($event)">
     <div class="mobile-settings">
-        <p>
-            <mat-slide-toggle
-                id="switch1-mobile"
-                [color]="'primary'"
-                (change)="toggleECM()"
-                [checked]="isECM">
-                {{ 'LOGIN.CONTENT_SERVICES'| translate }}
-            </mat-slide-toggle>
-        </p>
-        <p>
-            <mat-slide-toggle
-                id="switch2-mobile"
-                [color]="'primary'"
-                (change)="toggleBPM()"
-                [checked]="isBPM">
-                {{ 'LOGIN.PROCESS_SERVICES'| translate }}
-            </mat-slide-toggle>
-        </p>
         <p>
             <mat-slide-toggle
                 id="switch3-mobile"
