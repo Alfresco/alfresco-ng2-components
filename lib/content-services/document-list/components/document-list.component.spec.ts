@@ -359,6 +359,28 @@ describe('DocumentList', () => {
         expect(actions[0].title).toBe('Action1');
     });
 
+    it('should evaluate conditional disabled state for content action', () => {
+        documentList.actions = [
+            new ContentActionModel({
+                target: 'document',
+                title: 'Action1',
+                disabled: (): boolean => true
+            }),
+            new ContentActionModel({
+                target: 'document',
+                title: 'Action2',
+                disabled: (): boolean => false
+            })
+        ];
+
+        const nodeFile = { entry: { isFile: true, name: 'xyz' } };
+        const actions = documentList.getNodeActions(nodeFile);
+
+        expect(actions.length).toBe(2);
+        expect(actions[0].disabled).toBeTruthy();
+        expect(actions[1].disabled).toBeFalsy();
+    });
+
     it('should not disable the action if there is copy permission', () => {
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
