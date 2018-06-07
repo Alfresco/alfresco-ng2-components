@@ -6,7 +6,7 @@
     "providers": "OAUTH",
     "contextRootBpm": "activiti-app",
     "oauth2": {
-      "host": "http://localhost:30081/auth/realms/springboot",
+      "host": "http://a5e2f93de10af11e8a0560a1bea5b7c8-236709433.us-east-1.elb.amazonaws.com:30081/auth/realms/springboot",
       "clientId": "activiti",
       "scope": "openid",
       "secret": "",

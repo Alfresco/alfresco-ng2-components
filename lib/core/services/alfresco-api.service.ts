@@ -104,7 +104,6 @@ export class AlfrescoApiService {
         await this.appConfig.load().then(() => {
             this.initAlfrescoApi();
         });
-        // await this.login();
     }
 
     async reset() {
@@ -118,8 +117,8 @@ export class AlfrescoApiService {
     protected initAlfrescoApi() {
         let oauth: any = Object.assign ({}, this.userPreference.oauthConfig);
         if (oauth) {
-            oauth.redirectUri = window.location.origin + oauth.redirectUri;
-            oauth.redirectUriLogout = window.location.origin + oauth.redirectUriLogout;
+            oauth.redirectUri = window.location.origin + ( oauth.redirectUri || '/' );
+            oauth.redirectUriLogout = window.location.origin + ( oauth.redirectUriLogout || '/' );
         }
         this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
             provider: this.userPreference.providers,
