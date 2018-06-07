@@ -585,9 +585,17 @@ describe('LoginComponent', () => {
     }));
 
     describe('SSO ', () => {
+
+        beforeEach(() => {
+            userPreferences.oauthConfig = { implicitFlow: true };
+        });
+
+        afterEach(() => {
+            userPreferences.oauthConfig = null;
+        });
+
         it('should not show login username and password if SSO implicit flow is active', async(() => {
             spyOn(authService, 'isOauth').and.returnValue(true);
-            userPreferences.oauthConfig = { implicitFlow: true };
 
             component.ngOnInit();
             fixture.detectChanges();
