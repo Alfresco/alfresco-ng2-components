@@ -465,7 +465,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     .map(action => new ContentActionModel(action));
 
                 actionsByTarget.forEach((action) => {
-                    this.disableActionsWithNoPermissions(node, action);
+                    action.disabled = this.isActionDisabled(action, node);
                 });
 
                 return actionsByTarget;
@@ -475,10 +475,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return [];
     }
 
-    disableActionsWithNoPermissions(node: MinimalNodeEntity, action: ContentActionModel) {
-        if (action.permission && action.disableWithNoPermission && !this.contentService.hasPermission(node.entry, action.permission)) {
-            action.disabled = true;
+    private isActionDisabled(action: ContentActionModel, node: MinimalNodeEntity): boolean {
+        if (typeof action.disabled === 'function') {
+            return action.disabled(node);
         }
+
+        if (action.permission && action.disableWithNoPermission && !this.contentService.hasPermission(node.entry, action.permission)) {
+            return true;
+        }
+
+        return false;
     }
 
     @HostListener('contextmenu', ['$event'])

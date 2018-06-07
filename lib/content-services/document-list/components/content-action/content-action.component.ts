@@ -66,7 +66,7 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Is the menu item disabled? */
     @Input()
-    disabled: boolean = false;
+    disabled: boolean | Function = false;
 
     /** Emitted when the user selects the action from the menu. */
     @Output()
@@ -115,6 +115,15 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
             }
             if (this.folderActionModel) {
                 this.folderActionModel.visible = changes.visible.currentValue;
+            }
+        }
+
+        if (changes.disabled && !changes.disabled.firstChange) {
+            if (this.documentActionModel) {
+                this.documentActionModel.disabled = changes.disabled.currentValue;
+            }
+            if (this.folderActionModel) {
+                this.folderActionModel.disabled = changes.disabled.currentValue;
             }
         }
     }

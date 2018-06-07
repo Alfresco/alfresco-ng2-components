@@ -279,6 +279,12 @@
                 </data-columns>
 
                 <content-actions>
+                    <content-action
+                        target="all"
+                        title="Action for 'custom' node"
+                        [disabled]="isCustomActionDisabled"
+                        (execute)="runCustomAction($event)">
+                    </content-action>
                     <!-- Conditional actions demo -->
                     <content-action
                         icon="get_app"
