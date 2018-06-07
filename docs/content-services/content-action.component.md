@@ -87,7 +87,7 @@ export class MyView {
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it? |
-| disabled | `boolean \|Function` | false | Toggles the disabled state. |
+| disabled | `boolean \|Function` | false | Is the menu item disabled? |
 | handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move". |
 | icon | `string` |  | The name of the icon to display next to the menu command (can be left blank). |
 | permission | `string` |  | The permission type. |
