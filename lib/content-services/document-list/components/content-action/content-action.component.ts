@@ -17,13 +17,14 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 
 import { ContentActionHandler } from '../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
 import { FolderActionsService } from '../../services/folder-actions.service';
 import { ContentActionModel, ContentActionTarget } from './../../models/content-action.model';
 import { ContentActionListComponent } from './content-action-list.component';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'content-action',
@@ -33,7 +34,7 @@ import { ContentActionListComponent } from './content-action-list.component';
         FolderActionsService
     ]
 })
-export class ContentActionComponent implements OnInit, OnChanges {
+export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
 
     /** The title of the action as shown in the menu. */
     @Input()
@@ -51,7 +52,7 @@ export class ContentActionComponent implements OnInit, OnChanges {
     @Input()
     handler: string;
 
-    /** Type of item that the action appies to. Can be "document" or "folder" */
+    /** Type of item that the action applies to. Can be "document" or "folder" */
     @Input()
     target: string = ContentActionTarget.All;
 
@@ -90,6 +91,8 @@ export class ContentActionComponent implements OnInit, OnChanges {
     documentActionModel: ContentActionModel;
     folderActionModel: ContentActionModel;
 
+    private subscriptions: Subscription[] = [];
+
     constructor(
         private list: ContentActionListComponent,
         private documentActions: DocumentActionsService,
@@ -114,6 +117,14 @@ export class ContentActionComponent implements OnInit, OnChanges {
                 this.folderActionModel.visible = changes.visible.currentValue;
             }
         }
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
+
+        this.documentActionModel = null;
+        this.folderActionModel = null;
     }
 
     register(model: ContentActionModel): boolean {
@@ -149,40 +160,40 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
     getSystemHandler(target: string, name: string): ContentActionHandler {
         if (target) {
-            let ltarget = target.toLowerCase();
+            target = target.toLowerCase();
 
-            if (ltarget === ContentActionTarget.Document) {
+            if (target === ContentActionTarget.Document) {
                 if (this.documentActions) {
-                    this.documentActions.permissionEvent.subscribe((permission) => {
-                        this.permissionEvent.emit(permission);
-                    });
-
-                    this.documentActions.error.subscribe((errors) => {
-                        this.error.emit(errors);
-                    });
-
-                    this.documentActions.success.subscribe((message) => {
-                        this.success.emit(message);
-                    });
+                    this.subscriptions.push(
+                        this.documentActions.permissionEvent.subscribe(permission => {
+                            this.permissionEvent.emit(permission);
+                        }),
+                        this.documentActions.error.subscribe(errors => {
+                            this.error.emit(errors);
+                        }),
+                        this.documentActions.success.subscribe(message => {
+                            this.success.emit(message);
+                        })
+                    );
 
                     return this.documentActions.getHandler(name);
                 }
                 return null;
             }
 
-            if (ltarget === ContentActionTarget.Folder) {
+            if (target === ContentActionTarget.Folder) {
                 if (this.folderActions) {
-                    this.folderActions.permissionEvent.subscribe((permission) => {
-                        this.permissionEvent.emit(permission);
-                    });
-
-                    this.folderActions.error.subscribe((errors) => {
-                        this.error.emit(errors);
-                    });
-
-                    this.folderActions.success.subscribe((message) => {
-                        this.success.emit(message);
-                    });
+                    this.subscriptions.push(
+                        this.folderActions.permissionEvent.subscribe(permission => {
+                            this.permissionEvent.emit(permission);
+                        }),
+                        this.folderActions.error.subscribe(errors => {
+                            this.error.emit(errors);
+                        }),
+                        this.folderActions.success.subscribe(message => {
+                            this.success.emit(message);
+                        })
+                    );
 
                     return this.folderActions.getHandler(name);
                 }
