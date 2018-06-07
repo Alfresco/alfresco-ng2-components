@@ -21,7 +21,6 @@ var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe
 var searchFolderOmitRegex = /(config)|(mock)|(i18n)|(assets)|(styles)/;
 
 var docsFolderPath = path.resolve("docs");
-var undocStoplistFileName = path.resolve(docsFolderPath, "undocStoplist.json");
 var rootFolder = "lib";
 var indexMdFilePath = path.resolve(docsFolderPath, "README.md");
 
@@ -37,7 +36,7 @@ var experimentalIconURL = "docassets/images/ExperimentalIcon.png";
 
 
 function initPhase(aggData) {
-    aggData.stoplist = makeStoplist(undocStoplistFileName);    
+    aggData.stoplist = makeStoplist(aggData.config);    
     aggData.srcData = {};
     aggData.mdFileDesc = [];
     aggData.mdFileStatus = [];
@@ -159,9 +158,8 @@ function updatePhase(tree, pathname, aggData) {
 
 
 // Create a stoplist of regular expressions.
-function makeStoplist(slFilePath) {
-    var listExpressions = JSON.parse(fs.readFileSync(slFilePath, 'utf8'));
-    
+function makeStoplist(config) {    
+    var listExpressions = config.undocStoplist;
     var result = [];
     
     for (var i = 0; i < listExpressions.length; i++) {
