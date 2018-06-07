@@ -36,6 +36,8 @@ export const setupTestBed = (moduleDef: TestModuleMetadata) => {
             preventAngularFromResetting();
             TestBed.configureTestingModule(moduleDef);
             await TestBed.compileComponents();
+            localStorage.clear();
+            sessionStorage.clear();
 
             // prevent Angular from resetting testing module
             TestBed.resetTestingModule = () => TestBed;

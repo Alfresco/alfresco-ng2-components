@@ -53,7 +53,6 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { PreviewService } from './services/preview.service';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
-import { AppsCloudViewComponent } from './components/process-cloud/apps-cloud-view.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({

@@ -23,25 +23,18 @@ import { UploadService } from './upload.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
 describe('UploadService', () => {
     let service: UploadService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule
-            ],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                StorageService,
-                UploadService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule, AppConfigModule]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);
@@ -53,6 +46,8 @@ describe('UploadService', () => {
         };
 
         service = TestBed.get(UploadService);
+        service.queue = [];
+        service.activeTask = null;
         jasmine.Ajax.install();
     });
 
@@ -162,6 +157,8 @@ describe('UploadService', () => {
     });
 
     it('If newVersion is set, name should be a param', () => {
+        let uploadFileSpy = spyOn(service.apiService.getInstance().upload, 'uploadFile').and.callThrough();
+
         let emitter = new EventEmitter();
 
         const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, {
@@ -170,7 +167,16 @@ describe('UploadService', () => {
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
-        expect(jasmine.Ajax.requests.mostRecent().params.has('name')).toBe(true);
+        expect(uploadFileSpy).toHaveBeenCalledWith({
+            name: 'fake-name',
+            size: 10
+        }, undefined, undefined, null, {
+            renditions: 'doclib',
+            overwrite: true,
+            majorVersion: undefined,
+            comment: undefined,
+            name: 'fake-name'
+        });
     });
 
     it('should use custom root folder ID given to the service', (done) => {

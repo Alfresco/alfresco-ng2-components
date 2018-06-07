@@ -26,7 +26,6 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs/Subject';
 import { UserPreferencesService } from './user-preferences.service';
-import { ConnectedPositionStrategy } from '@angular/cdk/overlay';
 
 /* tslint:disable:adf-file-name */
 

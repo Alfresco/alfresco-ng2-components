@@ -17,6 +17,7 @@
 
 import { inject, TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
+import { Observable } from 'rxjs/Observable';
 
 import { AppConfigService } from '../app-config/app-config.service';
 import { PageTitleService } from './page-title.service';
@@ -54,7 +55,8 @@ class TestConfig {
                 get: () => this.setup.applicationName,
                 load: () => {
                     return Promise.resolve();
-                }
+                },
+                onLoad: Observable.of({})
             }
         };
 

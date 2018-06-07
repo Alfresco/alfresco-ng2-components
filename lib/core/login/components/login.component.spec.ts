@@ -58,7 +58,7 @@ describe('LoginComponent', () => {
         imports: [CoreTestingModule]
     });
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         fixture = TestBed.createComponent(LoginComponent);
 
         element = fixture.nativeElement;
@@ -72,9 +72,11 @@ describe('LoginComponent', () => {
 
         fixture.detectChanges();
 
-        usernameInput = element.querySelector('#username');
-        passwordInput = element.querySelector('#password');
-    });
+        fixture.whenStable().then(() => {
+            usernameInput = element.querySelector('#username');
+            passwordInput = element.querySelector('#password');
+        });
+    }));
 
     afterEach(() => {
         fixture.destroy();
