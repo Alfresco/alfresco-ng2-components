@@ -13,12 +13,9 @@
             </mat-form-field>
 
             <ng-container *ngIf="isALL() || isECM()">
-                <mat-card-header>
-                    <mat-card-subtitle>{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}</mat-card-subtitle>
-                </mat-card-header>
                 <mat-card-content>
-                    <mat-form-field class="full-width">
-                        <mat-icon class="adf-CORE.HOST_SETTINGS-link-icon" matPrefix>link</mat-icon>
+                    <mat-form-field class="full-width" floatLabel="{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}" >
+                        <mat-label>{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}</mat-label>
                         <input matInput [formControl]="ecmHost" data-automation-id="ecmHost" type="text" tabindex="2" id="ecmHost" placeholder="http(s)://host|ip:port(/path)">
                         <mat-error *ngIf="ecmHost.hasError('pattern')">
                             {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
@@ -86,7 +83,7 @@
                     </ng-container>
                 </mat-card-content>
             </ng-container>
-            <mat-card-actions class="adf-CORE.HOST_SETTINGS-actions">
+            <mat-card-actions class="adf-actions">
                 <button mat-button (click)="onCancel()" color="primary">
                     {{'CORE.HOST_SETTINGS.BACK' | translate }}
                 </button>
