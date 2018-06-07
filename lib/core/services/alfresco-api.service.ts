@@ -104,6 +104,7 @@ export class AlfrescoApiService {
         await this.appConfig.load().then(() => {
             this.initAlfrescoApi();
         });
+        // await this.login();
     }
 
     async reset() {
@@ -114,6 +115,10 @@ export class AlfrescoApiService {
     }
 
     protected initAlfrescoApi() {
+        let oauth: alfrescoApi.Oauth2Config = this.appConfig.get<any>('oauth2');
+        if (oauth) {
+            oauth.redirectUri = window.location.origin + oauth.redirectUri;
+        }
         this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
             provider: this.userPreference.providers,
             ticketEcm: this.storage.getItem('ticket-ECM'),
@@ -125,5 +130,9 @@ export class AlfrescoApiService {
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
             oauth2: this.appConfig.get<any>('oauth2')
         });
+    }
+
+    async login() {
+        this.alfrescoApi.oauth2Auth.initOauth();
     }
 }

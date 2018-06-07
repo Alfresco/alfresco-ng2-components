@@ -134,7 +134,7 @@ export class AuthenticationSSOService {
             clientId: oauthConfig.clientId,
             redirectUri: window.location.origin + oauthConfig.redirectUri || '/',
             scope: oauthConfig.scope,
-            requireHttps: oauthConfig.requireHttps,
+            silentLogin: oauthConfig.silentLogin,
             silentRefreshRedirectUri: window.location.origin + oauthConfig.silentRefreshRedirectUri || '',
             showDebugInformation: oauthConfig.showDebugInformation || false,
             sessionChecksEnabled: oauthConfig.sessionChecksEnabled || false

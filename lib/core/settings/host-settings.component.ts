@@ -75,7 +75,7 @@ export class HostSettingsComponent implements OnInit {
                 redirectUri: [oAuthConfig.redirectUri, Validators.required],
                 scope: [oAuthConfig.scope, Validators.required],
                 secretId: oAuthConfig.secret,
-                requireHttps: oAuthConfig.requireHttps,
+                silentLogin: oAuthConfig.silentLogin,
                 implicitFlow: oAuthConfig.implicitFlow
             });
             this.form.addControl('oauthConfig', oauthGroup);
@@ -163,8 +163,8 @@ export class HostSettingsComponent implements OnInit {
         return this.oauthConfig.get('implicitFlow');
     }
 
-    get requireHttps(): AbstractControl {
-        return this.oauthConfig.get('requireHttps');
+    get silentLogin(): AbstractControl {
+        return this.oauthConfig.get('silentLogin');
     }
 
     get redirectUri(): AbstractControl {

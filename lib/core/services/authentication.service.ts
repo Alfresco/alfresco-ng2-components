@@ -54,6 +54,10 @@ export class AuthenticationService {
         return !!this.alfrescoApi.getInstance().isLoggedIn();
     }
 
+    isOauth(): boolean {
+        return this.alfrescoApi.getInstance().isOauthConfiguration();
+    }
+
     /**
      * Logs the user in.
      * @param username Username for the login

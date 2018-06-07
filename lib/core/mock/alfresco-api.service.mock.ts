@@ -51,7 +51,7 @@ export class AlfrescoApiServiceMock extends AlfrescoApiService {
         this.initAlfrescoApi();
     }
 
-    protected initAlfrescoApi() {
+    protected async initAlfrescoApi() {
         this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
             provider: this.userPreference.providers,
             ticketEcm: this.storage.getItem('ticket-ECM'),

@@ -20,16 +20,28 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angul
 import { Observable } from 'rxjs/Observable';
 
 import { AuthenticationSSOService } from './authentication-sso.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable()
 export class AuthGuardSSO implements CanActivate {
 
     constructor(
-        private authSSOService: AuthenticationSSOService) {
+        private alfrescoApiService: AlfrescoApiService,
+        authSSOService: AuthenticationSSOService) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
-        return this.authSSOService.checkLogin(state.url, route.data);
+        return this.checkLogin(state.url, route.data);
+    }
+
+    checkLogin(redirectUrl: string, data: any): Observable<boolean> {
+        return Observable.of(this.alfrescoApiService.getInstance().oauth2Auth.isValidAccessToken()
+            .map(loggedIn => {
+                if (!loggedIn) {
+                    return false;
+                }
+                return loggedIn;
+            }));
     }
 
 }

@@ -22,7 +22,7 @@ export interface OauthConfigModel {
     implicitFlow: boolean;
     redirectUri: string;
     secret?: string;
-    requireHttps: boolean;
+    silentLogin: boolean;
     silentRefreshRedirectUri?: string;
     showDebugInformation?: boolean;
     sessionChecksEnabled?: boolean;

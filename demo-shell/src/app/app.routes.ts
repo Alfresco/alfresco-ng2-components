@@ -232,4 +232,4 @@ export const appRoutes: Routes = [
     }
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { initialNavigation: false });
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { initialNavigation: true });

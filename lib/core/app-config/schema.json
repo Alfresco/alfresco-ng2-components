@@ -464,7 +464,7 @@
           "required": [ "host", "clientId", "secret", "scope" ],
           "properties": {
               "host": { "type": "string" },
-              "requireHttps": { "type": "boolean" },
+              "silentLogin": { "type": "boolean" },
               "authPath": { "type": "string" },
               "clientId": { "type": "string" },
               "secret": { "type": "string" },

@@ -226,7 +226,7 @@ describe('HostSettingsComponent', () => {
             userPreferences.oauthConfig = {
                 host: 'http://localhost:6543',
                 redirectUri: '/',
-                requireHttps: false,
+                silentLogin: false,
                 implicitFlow: true,
                 clientId: 'activiti',
                 scope: 'openid',
