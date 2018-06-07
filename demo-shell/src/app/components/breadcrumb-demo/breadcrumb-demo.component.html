@@ -21,6 +21,17 @@
         </adf-breadcrumb>
     </div>
 
+    <h2>2.1 Standalone with Dropdown (full width)</h2>
+    <small>
+        Component fits the parent container width but is limited to 3 items to display at once.
+        It should automatically switch to the Dropdown mode if the path exceeds 3 nodes.
+    </small>
+
+    <div>
+        <adf-breadcrumb [maxItems]="3" root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+        </adf-breadcrumb>
+    </div>
+
     <h2>3. Toolbar (standalone)</h2>
     <small>Component used as a child of the Toolbar component</small>
 
