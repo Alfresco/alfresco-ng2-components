@@ -137,7 +137,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     taskFilter: FilterRepresentationModel;
     report: any;
     processFilter: UserProcessInstanceFilterRepresentation;
-    sub: Subscription;
     blobFile: any;
     flag = true;
 
@@ -150,6 +149,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         ...FORM_FIELD_VALIDATORS,
         new DemoFieldValidator()
     ];
+
+    private subscriptions: Subscription[] = [];
 
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
@@ -172,27 +173,26 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         // Uncomment this line to map 'custom_stencil_01' to local editor component
         formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
 
-        formService.formLoaded.subscribe((e: FormEvent) => {
-            this.logService.log(`Form loaded: ${e.form.id}`);
-        });
-
-        formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
-            this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
-        });
-
-        this.preferenceService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
-            this.paginationPageSize = pageSize;
-        });
-
-        formService.validateDynamicTableRow.subscribe(
-            (validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
-                const row: DynamicTableRow = validateDynamicTableRowEvent.row;
-                if (row && row.value && row.value.name === 'admin') {
-                    validateDynamicTableRowEvent.summary.isValid = false;
-                    validateDynamicTableRowEvent.summary.message = 'Sorry, wrong value. You cannot use "admin".';
-                    validateDynamicTableRowEvent.preventDefault();
+        this.subscriptions.push(
+            formService.formLoaded.subscribe((e: FormEvent) => {
+                this.logService.log(`Form loaded: ${e.form.id}`);
+            }),
+            formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
+                this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+            }),
+            this.preferenceService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
+                this.paginationPageSize = pageSize;
+            }),
+            formService.validateDynamicTableRow.subscribe(
+                (validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
+                    const row: DynamicTableRow = validateDynamicTableRowEvent.row;
+                    if (row && row.value && row.value.name === 'admin') {
+                        validateDynamicTableRowEvent.summary.isValid = false;
+                        validateDynamicTableRowEvent.summary.message = 'Sorry, wrong value. You cannot use "admin".';
+                        validateDynamicTableRowEvent.preventDefault();
+                    }
                 }
-            }
+            )
         );
 
         // Uncomment this block to see form event handling in action
@@ -208,7 +208,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         if (this.router.url.includes('processes')) {
             this.activeTab = this.tabs.processes;
         }
-        this.sub = this.route.params.subscribe(params => {
+        this.route.params.subscribe(params => {
             const applicationId = params['appId'];
 
             this.filterSelected = params['filterId'] ? { id: +params['filterId'] } : { index: 0 };
@@ -227,7 +227,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     onTaskFilterClick(filter: FilterRepresentationModel): void {
