@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { Validators, FormGroup, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
 import { UserPreferencesService } from '../services/user-preferences.service';
 
@@ -32,12 +32,8 @@ export class HostSettingsComponent implements OnInit {
 
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 
-    providersValues = [
-        { title: 'ECM and BPM', value: 'ALL' },
-        { title: 'BPM', value: 'BPM' },
-        { title: 'ECM', value: 'ECM' },
-        { title: 'OAUTH', value: 'OAUTH' }
-    ];
+    @Input()
+    providers;
 
     form: FormGroup;
 
@@ -69,12 +65,12 @@ export class HostSettingsComponent implements OnInit {
         let providerSelected = this.userPreference.providers;
 
         this.form = this.fb.group({
-            providers: [providerSelected, Validators.required]
+            providersControl: [providerSelected, Validators.required]
         });
 
         this.addFormGroups();
 
-        this.providers.valueChanges.subscribe( () => {
+        this.providersControl.valueChanges.subscribe( () => {
             this.removeFormGroups();
             this.addFormGroups();
         }) ;
@@ -169,23 +165,23 @@ export class HostSettingsComponent implements OnInit {
     }
 
     isBPM(): boolean {
-        return this.providers.value === 'BPM';
+        return this.providersControl.value === 'BPM';
     }
 
     isECM(): boolean {
-        return this.providers.value === 'ECM';
+        return this.providersControl.value === 'ECM';
     }
 
     isALL(): boolean {
-        return this.providers.value === 'ALL';
+        return this.providersControl.value === 'ALL';
     }
 
     isOAUTH(): boolean {
-        return this.providers.value === 'OAUTH';
+        return this.providersControl.value === 'OAUTH';
     }
 
-    get providers(): AbstractControl {
-        return this.form.get('providers');
+    get providersControl(): AbstractControl {
+        return this.form.get('providersControl');
     }
 
     get bpmHost(): AbstractControl {

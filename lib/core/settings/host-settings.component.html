@@ -5,8 +5,8 @@
     <mat-card class="adf-setting-card">
         <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)">
             <mat-form-field>
-                <mat-select placeholder="Provider" [formControl]="providers">
-                    <mat-option *ngFor="let provider of providersValues" [value]="provider.value">
+                <mat-select placeholder="Provider" [formControl]="providersControl">
+                    <mat-option *ngFor="let provider of providers" [value]="provider.value">
                         {{ provider.title }}
                     </mat-option>
                 </mat-select>

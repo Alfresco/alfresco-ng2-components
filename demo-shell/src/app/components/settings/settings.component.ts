@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LogService, AuthenticationService, AlfrescoApiService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 
@@ -24,6 +24,12 @@ import { Router } from '@angular/router';
     templateUrl: 'settings.component.html'
 })
 export class SettingsComponent {
+
+    @Input()
+    providers = [
+        { title: 'BPM', value: 'BPM' },
+        { title: 'OAUTH', value: 'OAUTH' }
+    ];
 
     constructor(private router: Router,
         private authService: AuthenticationService,
