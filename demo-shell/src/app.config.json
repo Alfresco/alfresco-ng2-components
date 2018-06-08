@@ -2,10 +2,11 @@
     "$schema": "../../lib/core/app-config/schema.json",
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
-    "providers": "OAUTH",
+    "loginRoute": "login",
+    "providers": "ALL",
     "contextRootBpm": "activiti-app",
     "oauth2": {
-      "host": "YOUR_AUTH_SERVER",
+      "host": "http://localhost:30081/auth/realms/myrealms",
       "clientId": "activiti",
       "scope": "openid",
       "secret": "",
