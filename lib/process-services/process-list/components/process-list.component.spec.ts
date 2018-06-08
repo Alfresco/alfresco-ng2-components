@@ -562,7 +562,6 @@ class EmptyTemplateComponent {
 }
 
 describe('Custom EmptyTemplateComponent', () => {
-    let component: EmptyTemplateComponent;
     let fixture: ComponentFixture<EmptyTemplateComponent>;
 
     setupTestBed({
@@ -574,7 +573,6 @@ describe('Custom EmptyTemplateComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         fixture.detectChanges();
-        component = fixture.componentInstance;
     });
 
     it('should render the custom template', async(() => {

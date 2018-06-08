@@ -216,7 +216,6 @@ describe('HostSettingsComponent', () => {
 
     describe('OAUTH ', () => {
 
-        let ecmUrlInput;
         let bpmUrlInput;
         let oauthHostUrlInput;
         let clientIdInput;

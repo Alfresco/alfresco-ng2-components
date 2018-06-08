@@ -97,6 +97,7 @@ describe('ProcessAttachmentListComponent', () => {
     });
 
     afterEach(() => {
+        fixture.destroy();
         const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
 
         overlayContainers.forEach((overlayContainer) => {

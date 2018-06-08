@@ -16,13 +16,12 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { FileModel, FileUploadOptions, FileUploadStatus } from '../models/file.model';
 import { AppConfigModule } from '../app-config/app-config.module';
 import { UploadService } from './upload.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { StorageService } from './storage.service';
 
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -31,6 +30,7 @@ declare let jasmine: any;
 
 describe('UploadService', () => {
     let service: UploadService;
+    let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [CoreTestingModule, AppConfigModule]
@@ -46,6 +46,7 @@ describe('UploadService', () => {
         };
 
         service = TestBed.get(UploadService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
         service.queue = [];
         service.activeTask = null;
         jasmine.Ajax.install();
@@ -157,7 +158,7 @@ describe('UploadService', () => {
     });
 
     it('If newVersion is set, name should be a param', () => {
-        let uploadFileSpy = spyOn(service.apiService.getInstance().upload, 'uploadFile').and.callThrough();
+        let uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
 
         let emitter = new EventEmitter();
 
