@@ -165,8 +165,7 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
             disableWithNoPermission: this.disableWithNoPermission,
             target: target,
             disabled: this.disabled,
-            visible: this.visible,
-            template: this
+            visible: this.visible
         });
         if (this.handler) {
             model.handler = this.getSystemHandler(target, this.handler);

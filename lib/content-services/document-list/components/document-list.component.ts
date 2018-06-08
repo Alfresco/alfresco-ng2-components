@@ -493,26 +493,23 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private isActionVisible(action: ContentActionModel, node: MinimalNodeEntity): boolean {
-        const template = action.template;
-        if (typeof template.visible === 'function') {
-            return template.visible(node);
+        if (typeof action.visible === 'function') {
+            return action.visible(node);
         }
 
-        return template.visible;
+        return action.visible;
     }
 
     private isActionDisabled(action: ContentActionModel, node: MinimalNodeEntity): boolean {
-        const template = action.template;
-
-        if (typeof template.disabled === 'function') {
-            return template.disabled(node);
+        if (typeof action.disabled === 'function') {
+            return action.disabled(node);
         }
 
-        if (template.permission && template.disableWithNoPermission && !this.contentService.hasPermission(node.entry, template.permission)) {
+        if (action.permission && action.disableWithNoPermission && !this.contentService.hasPermission(node.entry, action.permission)) {
             return true;
         }
 
-        return template.disabled;
+        return action.disabled;
     }
 
     @HostListener('contextmenu', ['$event'])

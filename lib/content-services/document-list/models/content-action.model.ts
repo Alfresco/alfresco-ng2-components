@@ -28,8 +28,6 @@ export class ContentActionModel {
     disabled: boolean | Function = false;
     visible: boolean | Function = true;
 
-    template?: ContentActionComponent;
-
     constructor(obj?: any) {
         if (obj) {
             this.icon = obj.icon;
@@ -47,8 +45,6 @@ export class ContentActionModel {
             if (obj.hasOwnProperty('visible')) {
                 this.visible = obj.visible;
             }
-
-            this.template = obj.template;
         }
     }
 }
