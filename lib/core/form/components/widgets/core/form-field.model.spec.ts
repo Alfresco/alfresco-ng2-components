@@ -328,7 +328,7 @@ describe('FormFieldModel', () => {
         expect(form.values['radio-1']).toEqual(field.options[1]);
     });
 
-    it('should update form with the first radio button value', () => {
+    it('radio button value should be null when no default is set', () => {
         let form = new FormModel();
         let field = new FormFieldModel(form, {
             id: 'radio-2',
@@ -340,7 +340,7 @@ describe('FormFieldModel', () => {
         });
 
         field.value = 'missing';
-        expect(form.values['radio-2']).toEqual(field.options[0]);
+        expect(form.values['radio-2']).toBeUndefined();
     });
 
     it('should not update form with display-only field value', () => {

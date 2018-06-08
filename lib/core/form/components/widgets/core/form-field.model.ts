@@ -317,8 +317,6 @@ export class FormFieldModel extends FormWidgetModel {
                 opt.id === value || opt.name === value || (value && (opt.id === value.id || opt.name === value.name)));
             if (entry.length > 0) {
                 value = entry[0].id;
-            } else {
-                value = this.options[0] ? this.options[0].id : json.value;
             }
         }
 
