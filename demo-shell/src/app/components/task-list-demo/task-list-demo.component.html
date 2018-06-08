@@ -71,19 +71,24 @@
     </form>
 </div>
 
-<adf-tasklist
-    *ngIf="isAppIdValid"
-    [appId]="appIdDefault" 
-    [name]="name" 
-    [processDefinitionId]="processDefinitionId" 
-    [assignment]="assignment" 
-    [state]="state" 
-    [sort]="sort"
-    (error)="invalidAppId()"
-    (success)="validAppId()"
-    #taskList>
-</adf-tasklist>
+<div *ngIf="isAppIdValid">
+    <adf-tasklist
+        [appId]="appIdDefault" 
+        [name]="name" 
+        [processDefinitionId]="processDefinitionId" 
+        [assignment]="assignment" 
+        [state]="state" 
+        [sort]="sort"
+        (error)="invalidAppId()"
+        (success)="validAppId()"
+        #taskList>
+    </adf-tasklist>
+    
+    <adf-pagination 
+        [target]="taskList">
+    </adf-pagination>
+</div>
+<div *ngIf="!isAppIdValid" class="task-list-demo-error-message">
+    The app does not exist.
+</div>
 
-<adf-pagination 
-    [target]="taskList">
-</adf-pagination>
