@@ -43,8 +43,7 @@ class FakeDataRow implements DataRow {
     }
 }
 
-/*tslint:disable:ban*/
-fdescribe('DataTable', () => {
+describe('DataTable', () => {
 
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
