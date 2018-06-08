@@ -43,7 +43,7 @@ export class TaskListDemoComponent implements OnInit {
 
     taskListForm: FormGroup;
 
-    errorMessage: string;    
+    errorMessage: string;
 
     isAppIdValid: boolean;
 
