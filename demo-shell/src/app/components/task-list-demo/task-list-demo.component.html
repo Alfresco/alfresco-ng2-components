@@ -2,12 +2,17 @@
 
      <form [formGroup]="taskListForm">
         <mat-form-field>
-            <mat-label>AppId</mat-label>
+            <mat-label>App Id</mat-label>
                 <input 
-                matInput  
+                matInput
+                type="number"  
                 class="form-control" 
                 formControlName="appIdCustom">
+                <mat-error *ngIf="appId.hasError('required')">
+                        {{ errorMessage }}
+                </mat-error>
         </mat-form-field>
+        
 
         <mat-form-field>
             <mat-label>Task Name</mat-label>
@@ -59,6 +64,7 @@
                     <mat-option value="due-desc">Due (desc)</mat-option>
                 </mat-select>
         </mat-form-field>
+
         <div class="adf-reset-button">
             <button mat-raised-button (click)="resetTaskForm()">Reset</button>
         </div>
@@ -66,12 +72,15 @@
 </div>
 
 <adf-tasklist
+    *ngIf="isAppIdValid"
     [appId]="appIdDefault" 
     [name]="name" 
     [processDefinitionId]="processDefinitionId" 
     [assignment]="assignment" 
     [state]="state" 
     [sort]="sort"
+    (error)="invalidAppId()"
+    (success)="validAppId()"
     #taskList>
 </adf-tasklist>
 
