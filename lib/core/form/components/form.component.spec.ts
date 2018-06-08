@@ -822,7 +822,7 @@ describe('FormComponent', () => {
         let labelField = formFields.find(field => field.id === 'label');
         let radioField = formFields.find(field => field.id === 'radio');
         expect(labelField.value).toBe('empty');
-        expect(radioField.value).toBe('option_1');
+        expect(radioField.value).toBeNull();
 
         let formValues: any = {};
         formValues.label = {
