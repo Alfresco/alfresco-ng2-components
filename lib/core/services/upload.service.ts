@@ -33,13 +33,14 @@ let minimatch: any = (<any> minimatch_).default || minimatch_;
 @Injectable()
 export class UploadService {
 
-    private queue: FileModel[] = [];
     private cache: { [key: string]: any } = {};
     private totalComplete: number = 0;
     private totalAborted: number = 0;
     private totalError: number = 0;
-    private activeTask: Promise<any> = null;
     private excludedFileList: String[] = [];
+
+    activeTask: Promise<any> = null;
+    queue: FileModel[] = [];
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();

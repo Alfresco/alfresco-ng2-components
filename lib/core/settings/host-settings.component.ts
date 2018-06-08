@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { UserPreferencesService } from '../services';
+import { UserPreferencesService } from '../services/user-preferences.service';
 
 @Component({
     selector: 'adf-host-settings',

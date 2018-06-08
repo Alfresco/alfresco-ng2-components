@@ -64,7 +64,7 @@ describe('TaskFiltersComponent', () => {
         error: 'wrong request'
     };
 
-    let mockErrorFilterPromise = new Promise.reject(mockErrorFilterList);
+    let mockErrorFilterPromise = Promise.reject(mockErrorFilterList);
 
     let component: TaskFiltersComponent;
     let fixture: ComponentFixture<TaskFiltersComponent>;
