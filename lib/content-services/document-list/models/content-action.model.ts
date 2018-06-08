@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { ContentActionComponent } from '../components/content-action/content-action.component';
-
 export class ContentActionModel {
     icon: string;
     title: string;
