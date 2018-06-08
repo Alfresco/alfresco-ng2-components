@@ -68,7 +68,7 @@ describe('DataTable', () => {
 
     it('should preserve the historical selection order', () => {
         dataTable.data = new ObjectDataTableAdapter(
-            [{ id: 1 }, { id: 2 }, { id: 3 }],
+            [{ id: 0 }, { id: 1 }, { id: 2 }],
             [ new ObjectDataColumn({ key: 'id' })]
         );
 
