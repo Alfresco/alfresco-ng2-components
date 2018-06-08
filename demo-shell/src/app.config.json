@@ -6,7 +6,7 @@
     "providers": "ALL",
     "contextRootBpm": "activiti-app",
     "oauth2": {
-      "host": "http://localhost:30081/auth/realms/myrealms",
+      "host": "http://localhost:30081/auth/realms/myrealm",
       "clientId": "activiti",
       "scope": "openid",
       "secret": "",
