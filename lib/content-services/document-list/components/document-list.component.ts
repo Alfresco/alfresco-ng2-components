@@ -236,6 +236,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private _pagination: BehaviorSubject<PaginationModel>;
     private layoutPresets = {};
     private subscriptions: Subscription[] = [];
+    private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -333,6 +334,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnInit() {
+        this.rowMenuCache = {};
         this.loadLayoutPresets();
         this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, null, this.getDefaultSorting(), this.sortingMode);
         this.data.thumbnails = this.thumbnails;
@@ -444,9 +446,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
-        let target = null;
 
         if (node && node.entry) {
+            let target = null;
+
             if (node.entry.isFile) {
                 target = 'document';
             } else if (node.entry.isFolder) {
@@ -454,6 +457,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
 
             if (target) {
+                const actions = this.rowMenuCache[node.entry.id];
+                if (actions) {
+                    actions.forEach(action => {
+                        this.refreshAction(action, node);
+                    });
+                    return actions;
+                }
+
                 let actionsByTarget = this.actions
                     .filter(entry => {
                         const isVisible = (typeof entry.visible === 'function')
@@ -465,9 +476,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     .map(action => new ContentActionModel(action));
 
                 actionsByTarget.forEach((action) => {
-                    action.disabled = this.isActionDisabled(action, node);
+                    this.refreshAction(action, node);
                 });
 
+                this.rowMenuCache[node.entry.id] = actionsByTarget;
                 return actionsByTarget;
             }
         }
@@ -475,16 +487,32 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return [];
     }
 
-    private isActionDisabled(action: ContentActionModel, node: MinimalNodeEntity): boolean {
-        if (typeof action.disabled === 'function') {
-            return action.disabled(node);
+    private refreshAction(action: ContentActionModel, node: MinimalNodeEntity) {
+        action.disabled = this.isActionDisabled(action, node);
+        action.visible = this.isActionVisible(action, node);
+    }
+
+    private isActionVisible(action: ContentActionModel, node: MinimalNodeEntity): boolean {
+        const template = action.template;
+        if (typeof template.visible === 'function') {
+            return template.visible(node);
         }
 
-        if (action.permission && action.disableWithNoPermission && !this.contentService.hasPermission(node.entry, action.permission)) {
+        return template.visible;
+    }
+
+    private isActionDisabled(action: ContentActionModel, node: MinimalNodeEntity): boolean {
+        const template = action.template;
+
+        if (typeof template.disabled === 'function') {
+            return template.disabled(node);
+        }
+
+        if (template.permission && template.disableWithNoPermission && !this.contentService.hasPermission(node.entry, template.permission)) {
             return true;
         }
 
-        return false;
+        return template.disabled;
     }
 
     @HostListener('contextmenu', ['$event'])

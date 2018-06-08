@@ -132,13 +132,27 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
         this.subscriptions = [];
 
-        this.documentActionModel = null;
-        this.folderActionModel = null;
+        if (this.documentActionModel) {
+            this.unregister(this.documentActionModel);
+            this.documentActionModel = null;
+        }
+
+        if (this.folderActionModel) {
+            this.unregister(this.folderActionModel);
+            this.folderActionModel = null;
+        }
     }
 
     register(model: ContentActionModel): boolean {
         if (this.list) {
             return this.list.registerAction(model);
+        }
+        return false;
+    }
+
+    unregister(model: ContentActionModel): boolean {
+        if (this.list) {
+            return this.list.unregisterAction(model);
         }
         return false;
     }
@@ -151,7 +165,8 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
             disableWithNoPermission: this.disableWithNoPermission,
             target: target,
             disabled: this.disabled,
-            visible: this.visible
+            visible: this.visible,
+            template: this
         });
         if (this.handler) {
             model.handler = this.getSystemHandler(target, this.handler);

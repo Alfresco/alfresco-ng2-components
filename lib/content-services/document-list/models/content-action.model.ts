@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { ContentActionComponent } from '../components/content-action/content-action.component';
+
 export class ContentActionModel {
     icon: string;
     title: string;
@@ -25,6 +27,8 @@ export class ContentActionModel {
     disableWithNoPermission: boolean = false;
     disabled: boolean | Function = false;
     visible: boolean | Function = true;
+
+    template?: ContentActionComponent;
 
     constructor(obj?: any) {
         if (obj) {
@@ -43,6 +47,8 @@ export class ContentActionModel {
             if (obj.hasOwnProperty('visible')) {
                 this.visible = obj.visible;
             }
+
+            this.template = obj.template;
         }
     }
 }

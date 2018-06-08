@@ -279,13 +279,13 @@
                 </data-columns>
 
                 <content-actions>
+                    <!-- Conditional actions demo -->
                     <content-action
                         target="all"
                         title="Action for 'custom' node"
                         [disabled]="isCustomActionDisabled"
                         (execute)="runCustomAction($event)">
                     </content-action>
-                    <!-- Conditional actions demo -->
                     <content-action
                         icon="get_app"
                         title="Download this file now!"
@@ -297,12 +297,6 @@
                         title="Never see this action again"
                         handler="download"
                         [visible]="false">
-                    </content-action>
-                    <content-action
-                        icon="get_app"
-                        title="This can be toggled"
-                        handler="download"
-                        [visible]="showCustomDownloadAction">
                     </content-action>
                     <!-- common actions -->
                     <content-action
@@ -445,12 +439,6 @@
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="showNameColumn">
                 Show Name Column
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="showCustomDownloadAction">
-                Toggle custom download action
             </mat-slide-toggle>
         </section>
 
