@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-08
 ---
 
 # Info drawer layout component
@@ -29,11 +30,15 @@ Displays a sidebar-style information panel.
 
 ## Details
 
-As the name suggests, this is basically just a layout with CSS styling. There are three regions where you can add your own content, as shown in the example:
+As the name suggests, this is basically just a layout with CSS styling. There are three
+regions where you can add your own content, as shown in the example:
 
 -   info-drawer-title
 -   info-drawer-buttons
 -   info-drawer-content
+
+See the [Info drawer layout component](../core/info-drawer-layout.component.md) for an alternative approach that uses tabs to
+structure the content of the info drawer.
 
 ## See also
 

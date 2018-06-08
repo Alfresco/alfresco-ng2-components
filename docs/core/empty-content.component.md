@@ -1,22 +1,44 @@
 ---
 Added: v2.4.0
 Status: Active
-Last reviewed:
+Last reviewed: 2018-06-08
 ---
 
 # Empty Content Component
 
-Provides a generic "Empty Content" UI and can used as a placeholder for components that need to show different content when being empty.
+Provides a generic "Empty Content" placeholder for components.
 
-## Properties
+![Favorites screen](../docassets/images/empty-content-favorites.png)
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| icon | string | Material Icon to use |
-| title | string | String or Resource Key for the title |
-| subtitle | string | String or Resource Key for the subtitle |
+## Basic usage
 
-## Examples
+```html
+<adf-document-list>
+    <empty-folder-content>
+        <ng-template>
+            <adf-empty-content
+                icon="star_rate"
+                title="APP.BROWSE.FAVORITES.EMPTY_STATE.TITLE"
+                subtitle="APP.BROWSE.FAVORITES.EMPTY_STATE.TEXT">
+            </adf-empty-folder>
+        </ng-template>
+    </empty-folder-content>
+</adf-document-list>
+```
+
+## Class members
+
+### Properties
+
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| icon | `string` | "cake" | Material Icon to use |
+| subtitle | `string` | "" | String or Resource Key for the title |
+| title | `string` | "" | String or Resource Key for the subtitle |
+
+## Details
+
+### Usage examples
 
 ```html
 <adf-document-list>
@@ -52,3 +74,7 @@ You can also use multiple lines instead of the subtitle section:
 ```
 
 ![Trashcan screen](../docassets/images/empty-content-trashcan.png)
+
+## See also
+
+-   [Error content component](error-content.component.md)

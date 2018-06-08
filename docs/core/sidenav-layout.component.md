@@ -1,7 +1,7 @@
 ---
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-04-11
+Last reviewed: 2018-06-08
 ---
 
 # Sidenav Layout component
@@ -21,8 +21,6 @@ Displays the standard three-region ADF application layout.
 
 -   [Details](#details)
 
-    -   [Public attributes](#public-attributes)
-    -   [Events](#events-1)
     -   [Template context](#template-context)
     -   [menuOpenState$](#menuopenstate)
     -   [Preserving the menu state](#preserving-the-menu-state)
@@ -70,15 +68,15 @@ Displays the standard three-region ADF application layout.
 | -- | -- | -- | -- |
 | expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? |
 | hideSidenav | `boolean` | false | Toggles showing/hiding the navigation region |
-| sidenavMax | `number` |  | ( |
-| sidenavMin | `number` |  | ( |
-| stepOver | `number` |  | ( |
+| sidenavMax | `number` |  | Maximum size of the navigation region |
+| sidenavMin | `number` |  | Minimum size of the navigation region |
+| stepOver | `number` |  | Screen size at which display switches from small screen to large screen configuration |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| expanded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` |  |
+| expanded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes |
 
 ## Details
 
@@ -106,18 +104,6 @@ Desktop layout (screen width greater than the `stepOver` value):
 Mobile layout (screen width less than the `stepOver` value):
 ![Sidenav on mobile](../docassets/images/sidenav-layout-mobile.png)
 
-### Public attributes
-
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| menuOpenState$ | Observable&lt;boolean> | true | Another way to listen to menu open/closed state |
-
-### Events
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| expanded | `EventEmitter<boolean>` | Emmitted when the menu toggle and the collapsed/expanded state of the sideNav changes |
-
 ### Template context
 
 Each template is given a context containing the following methods:
@@ -130,26 +116,38 @@ Each template is given a context containing the following methods:
 
 ### menuOpenState$
 
-Beside the template context's **isMenuMinimized** variable, another way to listen to the component's menu's open/closed state is the menuOpenState$ observable, which is driven by a BehaviorSubject at the background. The value emitted on this observable is the opposite of the isMenuMinimized template variable.
+Beside the template context's **isMenuMinimized** variable, another way to listen to the component's menu's open/closed state is with the `menuOpenState$` observable, which is driven by a `BehaviorSubject` in the background. The value emitted by this observable is the opposite of the `isMenuMinimized` template variable.
+
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| menuOpenState$ | Observable&lt;boolean> | true | Another way to listen to menu open/closed state |
 
 Every time the menu state is changed, the following values are emitted:
 
--   true, if the menu got into opened state
--   false, if the menu git into closed state
+-   true, if the menu changed to the opened state
+-   false, if the menu changed to the closed state
 
 ### Preserving the menu state
 
-It is possible to preserve the state of the menu between sessions. This require to first set a property in the appConfig.json file. 
+You can preserve the state of the menu between sessions. To do this, you first need to
+set a property in the `app.config.json` file:
 
-        "sideNav" : {
-            "preserveState" : true
-        }
+```json
+"sideNav" : {
+    "preserveState" : true
+}
+```
 
-If this property is set, the collapsed/expanded state will be stored in the local storage, and it will be restored with page reload or the next time the user visits the app. 
-Beside this, it is also possible to set the default value in the appConfig.json file: 
+When this property is set, the collapsed/expanded state will be stored in the local storage
+and restored when the page is reloaded or when the user next uses the app.
 
-        "sideNav" : {
-            "expandedSidenav" : true
-        }
+You can also set the default state in the `app.config.json` file: 
 
-By default the collapsed/exapnded state should be read from the application configuration file, but only if there is no value for the collapsed/expanded state in the local storage.
+```json
+"sideNav" : {
+    "expandedSidenav" : true
+}
+```
+
+Note that if `preserveState` is set then the current state of the sidenav (set by the user)
+will override this default setting.
