@@ -66,7 +66,7 @@ describe('DataTable', () => {
         fixture.destroy();
     });
 
-    it('should preserve the top-to-bottom selection order', () => {
+    it('should preserve the historical selection order', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ id: 1 }, { id: 2 }, { id: 3 }],
             [ new ObjectDataColumn({ key: 'id' })]
@@ -79,9 +79,9 @@ describe('DataTable', () => {
         dataTable.selectRow(rows[1], true);
 
         const selection = dataTable.selection;
-        expect(selection[0].getValue('id')).toBe(1);
-        expect(selection[1].getValue('id')).toBe(2);
-        expect(selection[2].getValue('id')).toBe(3);
+        expect(selection[0].getValue('id')).toBe(2);
+        expect(selection[1].getValue('id')).toBe(0);
+        expect(selection[2].getValue('id')).toBe(1);
     });
 
     it('should update schema if columns change', fakeAsync(() => {

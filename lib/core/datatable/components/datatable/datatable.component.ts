@@ -601,8 +601,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     selectRow(row: DataRow, value: boolean) {
         if (row) {
             row.isSelected = value;
-            const rows = this.data.getRows() || [];
-            this.selection = rows.filter(r => r.isSelected);
+            const idx = this.selection.indexOf(row);
+            if (value) {
+                if (idx < 0) {
+                    this.selection.push(row);
+                }
+            } else {
+                if (idx > -1) {
+                    this.selection.splice(idx, 1);
+                }
+            }
         }
     }
 
