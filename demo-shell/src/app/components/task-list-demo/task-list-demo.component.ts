@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 
 
@@ -43,6 +43,10 @@ export class TaskListDemoComponent implements OnInit {
 
     taskListForm: FormGroup;
 
+    errorMessage: string;    
+
+    isAppIdValid: boolean;
+
     constructor(private route: ActivatedRoute,
                 private formBuilder: FormBuilder) {
     }
@@ -58,12 +62,17 @@ export class TaskListDemoComponent implements OnInit {
             });
         }
 
+        this.errorMessage = 'Insert App Id';
+
         this.buildForm();
+
+        this.validAppId();
+
     }
 
     buildForm() {
         this.taskListForm = this.formBuilder.group({
-            appIdCustom: this.appIdDefault,
+            appIdCustom: [this.appIdDefault, Validators.required],
             taskName: '',
             taskProcessDefinitionId: '',
             taskAssignment: '',
@@ -79,6 +88,9 @@ export class TaskListDemoComponent implements OnInit {
     }
 
     filterTasks(taskFilter: any) {
+
+        this.validAppId();
+
         this.appIdDefault = taskFilter.appIdCustom;
         this.processDefinitionId = taskFilter.taskProcessDefinitionId;
         this.name = taskFilter.taskName;
@@ -90,4 +102,14 @@ export class TaskListDemoComponent implements OnInit {
     resetTaskForm() {
         this.taskListForm.reset();
     }
+
+    invalidAppId() {
+        this.isAppIdValid = false;
+    }
+
+    validAppId() {
+        this.isAppIdValid = true;
+    }
+
+    get appId() { return this.taskListForm.get('appIdCustom'); }
 }
