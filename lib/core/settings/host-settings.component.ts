@@ -33,7 +33,12 @@ export class HostSettingsComponent implements OnInit {
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 
     @Input()
-    providers;
+    providers = [
+        { title: 'BPM and ECM', value: 'ALL' },
+        { title: 'BPM', value: 'BPM' },
+        { title: 'ECM', value: 'ECM' },
+        { title: 'OAUTH', value: 'OAUTH' }
+    ];
 
     form: FormGroup;
 
