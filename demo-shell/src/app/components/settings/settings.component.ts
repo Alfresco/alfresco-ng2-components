@@ -27,7 +27,9 @@ export class SettingsComponent {
 
     @Input()
     providers = [
+        { title: 'BPM and ECM', value: 'ALL' },
         { title: 'BPM', value: 'BPM' },
+        { title: 'ECM', value: 'ECM' },
         { title: 'OAUTH', value: 'OAUTH' }
     ];
 
