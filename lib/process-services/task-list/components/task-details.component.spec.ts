@@ -156,6 +156,7 @@ describe('TaskDetailsComponent', () => {
 
     it('should not display task standalone component when the task have an associated form', async(() => {
         component.taskId = '123';
+        taskDetailsMock.formKey = '10';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();

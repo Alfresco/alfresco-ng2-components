@@ -15,20 +15,69 @@
  * limitations under the License.
  */
 
-import { Component } from "@angular/core";
+import { LogService } from '@alfresco/adf-core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Form } from '../models/form.model';
+import { Observable } from 'rxjs/Observable';
+import { TaskListService } from './../services/tasklist.service';
 
 @Component({
     selector: 'adf-attach-form',
     templateUrl: './attach-form.component.html',
-    styleUrls: ['./attach-form.component.scss'],
+    styleUrls: ['./attach-form.component.scss']
 })
 
-export class AttachFormComponent {
-    constructor() { }
+export class AttachFormComponent implements OnInit {
+    constructor(private taskService: TaskListService,
+                private logService: LogService) { }
 
-    foods = [
-        {value: 'steak-0', viewValue: 'Steak'},
-        {value: 'pizza-1', viewValue: 'Pizza'},
-        {value: 'tacos-2', viewValue: 'Tacos'}
-    ];
+    @Input()
+    taskDetails;
+
+    /** Emitted when the "Cancel" button is clicked. */
+    @Output()
+    cancelAttachForm: EventEmitter<void> = new EventEmitter<void>();
+
+    /** Emitted when the form associated with the form task is attached. */
+    @Output()
+    completeAttachForm: EventEmitter<void> = new EventEmitter<void>();
+
+    /** Emitted when an error occurs. */
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
+    forms: Form[];
+
+    formKey: number;
+
+    ngOnInit() {
+        this.loadFormsTask();
+    }
+
+    onCancelButtonClick(): void {
+        this.cancelAttachForm.emit();
+    }
+
+    onAttachFormButtonClick(): void {
+        this.completeAttachForm.emit();
+        this.attachForm(this.taskDetails.id, this.formKey);
+    }
+
+    private loadFormsTask(): void {
+        this.taskService.getFormList().subscribe((res: Form[]) => {
+                this.forms = res;
+            },
+            (err) => {
+                this.error.emit(err);
+                this.logService.error('An error occurred while trying to get the forms');
+            });
+    }
+
+    private attachForm(taskId: string, formKey: number): Observable<any> {
+        let response = Observable.of();
+        if (taskId && formKey) {
+            response = this.taskService.attachFormToATask(taskId, formKey);
+        }
+        return response;
+    }
 }

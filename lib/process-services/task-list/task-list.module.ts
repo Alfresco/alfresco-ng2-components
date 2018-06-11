@@ -40,7 +40,7 @@ import { TaskFiltersComponent } from './components/task-filters.component';
 import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
 import { TaskStandaloneComponent } from './components/task-standalone.component';
-import { AttachFormComponent } from './components/attach-form.component'
+import { AttachFormComponent } from './components/attach-form.component';
 
 @NgModule({
     imports: [

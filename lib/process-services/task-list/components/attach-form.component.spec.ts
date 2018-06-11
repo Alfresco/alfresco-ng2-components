@@ -14,3 +14,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import { AttachFormComponent } from './attach-form.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { setupTestBed } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
+
+describe('TaskStandaloneComponent', () => {
+    let component: AttachFormComponent;
+    let fixture: ComponentFixture<AttachFormComponent>;
+    let element: HTMLElement;
+
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
+
+    beforeEach(async(() => {
+        fixture = TestBed.createComponent(AttachFormComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+        fixture.detectChanges();
+    }));
+
+    it('should emit cancel event if clicked on Cancel Button ', async(() => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const emitSpy = spyOn(component.cancelAttachForm, 'emit');
+            const el = fixture.nativeElement.querySelector('#adf-no-form-cancel-button');
+            el.click();
+            expect(emitSpy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should emit complete event if clicked on Complete Button', async(() => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const emitSpy = spyOn(component.completeAttachForm, 'emit');
+            expect(element.querySelector('#adf-no-form-attach-form-button')).toBeDefined();
+            const el = fixture.nativeElement.querySelector('#adf-no-form-attach-form-button');
+            el.click();
+            expect(emitSpy).toHaveBeenCalled();
+        });
+    }));
+});
