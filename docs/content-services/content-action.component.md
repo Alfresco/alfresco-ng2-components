@@ -324,12 +324,10 @@ allow the item being copied/moved to be the destination if it is itself a folder
 
 ### Conditional visibility
 
-The Content-action component allows you to control visibility with the help of the `visible`
-property which can receive its value in three main ways:
+The `<content-action>` component allows you to control visibility with the help of the `visible` property and supports the following scenarios:
 
--   direct `boolean` value
--   binding to a `boolean` property
--   binding to a `Function` property that evaluates the condition and returns a `boolean` value
+-   direct value of `boolean` type
+-   binding to a property of the `Function` type that evaluates condition and returns `boolean` value
 
 #### Using direct boolean value
 
@@ -342,30 +340,7 @@ property which can receive its value in three main ways:
 </content-action>
 ```
 
-#### Binding to a boolean property
-
-```html
-<content-action
-    icon="get_app"
-    title="This can be toggled"
-    handler="download"
-    [visible]="showCustomDownloadAction">
-</content-action>
-```
-
-The markup above relies on the `showCustomDownloadAction` property declared in your
-component class:
-
-```ts
-export class MyComponent {
-
-    @Input()
-    showCustomDownloadAction = true;
-
-}
-```
-
-#### Binding to a Function property
+#### Using a property of the Function type
 
 ```html
  <content-action
@@ -409,7 +384,6 @@ funcName = (parameters): boolean => {
 Similar to `visible` property, it is possible to control the `disabled` state with the following scenarios:
 
 - direct value of `boolean` type
-- binding to a property of the `boolean` type
 - binding to a property of the `Function` type that evaluates condition and returns `boolean` value
 
 #### Using direct value of boolean type
@@ -421,28 +395,6 @@ Similar to `visible` property, it is possible to control the `disabled` state wi
     [disabled]="true"
     (execute)="runCustomAction($event)">
 </content-action>
-```
-
-#### Using a property of the boolean type
-
-```html
-<content-action
-    target="all"
-    title="Action for 'custom' node"
-    [disabled]="shouldDisableAction"
-    (execute)="runCustomAction($event)">
-</content-action>
-```
-
-The markup above relies on the `shouldDisableAction` property declared at your component class level:
-
-```ts
-export class MyComponent {
-
-    @Input()
-    shouldDisableAction = true;
-
-}
 ```
 
 #### Using a property of the Function type
