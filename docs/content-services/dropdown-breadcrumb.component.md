@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-08
 ---
 
 # Dropdown Breadcrumb Component
@@ -35,7 +36,13 @@ Indicates the current position within a navigation hierarchy using a dropdown me
 
 | Name | Type | Description |
 | -- | -- | -- |
-| navigate | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the user clicks on a breadcrumb. |
+| navigate | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PathElementEntity`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the user clicks on a breadcrumb. |
+
+## Details
+
+Although this component inherits the `maxItems` property from the [Breadcrumb component,](../content-services/breadcrumb.component.md) the
+"crumbs" are _always_ shown on a menu. By contrast, the Breadcrumb component only falls back
+to a menu when its maximum number of nodes is exceeded. 
 
 ## See also
 

@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-08
 ---
 
 # Toolbar Component
@@ -53,7 +54,8 @@ Simple container for headers, titles, actions and breadcrumbs.
 
 ### Custom title
 
-You can use any HTML layout or Angular component as a content of the Title section by using the special `<adf-toolbar-title>` component instead of the "title" attribute:
+You can use any HTML layout or Angular component as the content of the title section by
+using the `<adf-toolbar-title>` subcomponent instead of the "title" attribute:
 
 ```html
 <adf-toolbar>
@@ -63,8 +65,6 @@ You can use any HTML layout or Angular component as a content of the Title secti
     ...
 </adf-toolbar>
 ```
-
-The toolbar should now look similar to the following:
 
 ![](../docassets/images/adf-toolbar-02.png)
 
@@ -83,8 +83,9 @@ You can divide groups of elements with a visual separator `<adf-toolbar-divider>
 
 ### Spacer
 
-You can provide a separate element with `adf-toolbar--spacer` class name
-to fill the empty space and move the content to the right of the toolbar if needed:
+You can split the toolbar into separate sections at the left and right of the screen
+with the `adf-toolbar--spacer` CSS class. In the following example, the toolbar title
+element is rendered to the left but all the buttons are pushed to the right side:
 
 ```html
 <adf-toolbar>
@@ -100,12 +101,11 @@ to fill the empty space and move the content to the right of the toolbar if need
 </adf-toolbar>
 ```
 
-In the example above, the toolbar title element is rendered to the left,
-but all the buttons are pushed to the right side.
-
 ### Dropdown menu
 
-You can use the following example to create a dropdown menu:
+The following example shows how to create a dropdown menu. The code is based
+on the `<mat-menu>` component from the `@angular/material` library
+but you could also use your own custom menu components:
 
 ```html
 <adf-toolbar title="Toolbar">
@@ -131,11 +131,10 @@ You can use the following example to create a dropdown menu:
 </adf-toolbar>
 ```
 
-The code above is based on the `<mat-menu>` component from the `@angular/material` library. You can use any custom menu component as well.
-
 ![](../docassets/images/adf-toolbar-03.png)
 
-Once you click the menu button you should see the following menu items as defined earlier:
+With the menu set up like this, you would see the following menu items as defined earlier
+when you click the menu button:
 
 ![](../docassets/images/adf-toolbar-04.png)
 
@@ -143,7 +142,8 @@ Once you click the menu button you should see the following menu items as define
 
 Besides the default color you can use 'primary', 'accent', or 'warn' values:
 
-Depending on the overall application theme the colors of the toolbar should change.
+You might also want to change colors to follow your application's color
+[theme](../user-guide/theming.md):
 
 For example:
 

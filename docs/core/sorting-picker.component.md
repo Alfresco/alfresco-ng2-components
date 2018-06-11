@@ -1,11 +1,16 @@
 ---
 Added: v2.4.0
 Status: Active
+Last reviewed: 2018-06-08
 ---
 
 # Sorting Picker Component
 
-Provides an ability to pick one of the predefined sorting definitions and define sorting direction:
+Selects from a set of predefined sorting definitions and directions.
+
+![Sorting Picker](../docassets/images/sorting-picker.png)
+
+## Basic Usage
 
 ```html
 <adf-sorting-picker
@@ -16,11 +21,30 @@ Provides an ability to pick one of the predefined sorting definitions and define
 </adf-sorting-picker>
 ```
 
-![Sorting Picker](../docassets/images/sorting-picker.png)
+## Class members
 
-## Options format
+### Properties
 
-You can bind a collection of any objects that expose the following properties:
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| ascending | `boolean` | true | Current sorting direction |
+| options | `Array<object>` |  \[] | Available sorting options |
+| selected | `string` |  | Currently selected option key |
+
+### Events
+
+| Name | Type | Description |
+| -- | -- | -- |
+| change | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<object>` | Raised each time sorting key or direction gets changed. |
+
+## Details
+
+The picker shows the user a menu of sorting options (which could be data columns to sort on
+alphabetical vs numerical search, etc) and the choice of ascending vs descending sort order.
+Note that picker only implements the menu, so you are responsible for implementing the sorting
+options yourself.
+
+The `options` property contains an array of any objects that expose the following properties:
 
 ```ts
 {
@@ -29,15 +53,13 @@ You can bind a collection of any objects that expose the following properties:
 }
 ```
 
-## Properties
+The `key` is an identifying value and the `label` is the text that the user will see in the
+picker. The selected `key` is reported by the `change` event, which passes an object like the
+following as its parameter:
 
-| Name | Type | Default Value | Description |
-| options | `Array<{key: string, label: string}>` | `[]` | Available sorting options. |
-| selected | `string` | | Currently selected option key. |
-| ascending | `boolean` | true | Current sorting direction. |
-
-## Events
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| change | `EventEmitter<{ key: string, ascending: boolean }>` | Raised each time sorting key or direction gets changed. |
+```ts
+{
+    key: string,
+    ascending: boolean
+}
+```

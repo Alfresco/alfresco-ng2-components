@@ -1,11 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-08
 ---
 
 # Log Service
 
-Provide a log functionality for your ADF application.
+Provides log functionality.
 
 ## Basic Usage
 
@@ -31,9 +32,73 @@ export class AppComponent {
 }
 ```
 
+```ts
+import { LogService } from '@alfresco/adf-core';
+
+@Component({...})
+export class AppComponent {
+
+    constructor(logService: LogService, myIntegrationService: MyIntegrationService)) {
+        logService.onMessage.subscribe((message) => {
+               myIntegrationService.send(message.text,message.type);
+         });
+    }
+}
+```
+
+## Class members
+
+### Methods
+
+-   **assert**(test?: `boolean` = `null`, message?: `string` = `null`, optionalParams: `any[]` = `null`)<br/>
+    Logs a message if a boolean test fails.
+    -   _test:_ `boolean`  - (Optional) Test value (typically a boolean expression)
+    -   _message:_ `string`  - (Optional) Message to show if test is false
+    -   _optionalParams:_ `any[]`  - Interpolation values for the message in "printf" format
+-   **debug**(message?: `any` = `null`, optionalParams: `any[]` = `null`)<br/>
+    Logs a message at the "DEBUG" level.
+    -   _message:_ `any`  - (Optional) Message to log
+    -   _optionalParams:_ `any[]`  - Interpolation values for the message in "printf" format
+-   **error**(message?: `any` = `null`, optionalParams: `any[]` = `null`)<br/>
+    Logs a message at the "ERROR" level.
+    -   _message:_ `any`  - (Optional) Message to log
+    -   _optionalParams:_ `any[]`  - Interpolation values for the message in "printf" format
+-   **getLogLevel**(level: `string` = `null`): [`LogLevelsEnum`](../../lib/core/models/log-levels.model.ts)<br/>
+    Converts a log level name string into its numeric equivalent.
+    -   _level:_ `string`  - Level name
+    -   **Returns** [`LogLevelsEnum`](../../lib/core/models/log-levels.model.ts) - Numeric log level
+-   **group**(groupTitle?: `string` = `null`, optionalParams: `any[]` = `null`)<br/>
+    Starts an indented group of log messages.
+    -   _groupTitle:_ `string`  - (Optional) Title shown at the start of the group
+    -   _optionalParams:_ `any[]`  - Interpolation values for the title in "printf" format
+-   **groupEnd**()<br/>
+    Ends a indented group of log messages.
+-   **info**(message?: `any` = `null`, optionalParams: `any[]` = `null`)<br/>
+    Logs a message at the "INFO" level.
+    -   _message:_ `any`  - (Optional) Message to log
+    -   _optionalParams:_ `any[]`  - Interpolation values for the message in "printf" format
+-   **log**(message?: `any` = `null`, optionalParams: `any[]` = `null`)<br/>
+    Logs a message at any level from "TRACE" upwards.
+    -   _message:_ `any`  - (Optional) Message to log
+    -   _optionalParams:_ `any[]`  - Interpolation values for the message in "printf" format
+-   **messageBus**(text: `string` = `null`, logLevel: `string` = `null`)<br/>
+    Triggers notification callback for log messages.
+    -   _text:_ `string`  - Message text
+    -   _logLevel:_ `string`  - Log level for the message
+-   **trace**(message?: `any` = `null`, optionalParams: `any[]` = `null`)<br/>
+    Logs a message at the "TRACE" level.
+    -   _message:_ `any`  - (Optional) Message to log
+    -   _optionalParams:_ `any[]`  - Interpolation values for the message in "printf" format
+-   **warn**(message?: `any` = `null`, optionalParams: `any[]` = `null`)<br/>
+    Logs a message at the "WARN" level.
+    -   _message:_ `any`  - (Optional) Message to log
+    -   _optionalParams:_ `any[]`  - Interpolation values for the message in "printf" format
+
+## Details
+
 ### Log levels
 
-The [log service](../core/log.service.md) provide 6 level of logs:
+There are 6 levels of logs that you can use:
 
 | Name | Level |
 | ---- | ----- |
@@ -44,9 +109,10 @@ The [log service](../core/log.service.md) provide 6 level of logs:
 | ERROR | 1 |
 | SILENT | 0 |
 
-You can configure the log level setting the **_logLevel_** properties in the **app.config.json**. By default the level is TRACE.
+You can set the default log level using the **_logLevel_** property in `app.config.json`.
+The factory setting for this property is `TRACE`.
 
-If you want set for example the log to warning:
+For example, you can set the default log level to `WARNING` as follows:
 
 **app.config.json**
 
@@ -58,9 +124,10 @@ If you want set for example the log to warning:
 
 ### Log message bus
 
-The logservice provide also an [`Observable`](http://reactivex.io/documentation/observable.html) **_onMessage_**  where you can subscribe and recive all the logs: 
-
-The messagge object recived form the bus is composed:
+The [log service](../core/log.service.md) also provides an
+[`Observable`](http://reactivex.io/documentation/observable.html) called `_onMessage_`
+that you can subscribe to if you want to receive all the log messages. 
+The message object passed as a parameter to the `onMessage` handler has the following format:
 
 ```ts
 {
@@ -69,21 +136,10 @@ The messagge object recived form the bus is composed:
 }
 ```
 
-## Usage
+### Using the log to feed analytics
 
-```ts
-import { LogService } from '@alfresco/adf-core';
-
-@Component({...})
-export class AppComponent {
-
-    constructor(logService: LogService, myIntegrationService: MyIntegrationService)) {
-    
-        logService.onMessage.subscribe((message) => {
-               myIntegrationService.send(message.text,message.type);
-         });
-                
-    }
-    
-}
-```
+You can pass the log output to an analytics system to collect error and assertion data
+from apps as they run. This can help you spot which problems users are running into most
+often and the situations in which they occur. See the tutorial about
+[integrating the log service with analytics](https://community.alfresco.com/community/application-development-framework/blog/2018/05/01/how-to-integrate-adf-log-service-with-mixpanel-analytics-service)
+on the Alfresco Community site for further information.

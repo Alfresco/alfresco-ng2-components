@@ -1,28 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-07
 ---
 
 # Task Filters component
 
 Shows all available filters.
-
-## Contents
-
--   [Basic Usage](#basic-usage)
-
--   [Class members](#class-members)
-
-    -   [Properties](#properties)
-    -   [Events](#events)
-
--   [Details](#details)
-
-    -   [How filter the activiti task filters](#how-filter-the-activiti-task-filters)
-    -   [FilterParamsModel](#filterparamsmodel)
-    -   [How to create an accordion menu with the task filter](#how-to-create-an-accordion-menu-with-the-task-filter)
-
--   [See also](#see-also)
 
 ## Basic Usage
 
@@ -51,7 +35,9 @@ Shows all available filters.
 
 ## Details
 
-### How filter the activiti task filters
+### Filtering APS task filters
+
+Use the `filterParam` property to restrict the range of filters that are shown:
 
 ```html
 <adf-task-filters 
@@ -59,17 +45,9 @@ Shows all available filters.
 </adf-task-filters>
 ```
 
-You can use inside the filterParam one of the properties from [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts) (see below).
+You can use properties from [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts)
+as the value of `filterParam` as shown in the table below:
 
-### FilterParamsModel
-
-```json
-{
-    "id": "number",
-    "name": "string",
-    "index": "number"
-}
-```
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -79,8 +57,9 @@ You can use inside the filterParam one of the properties from [`FilterParamsMode
 
 ### How to create an accordion menu with the task filter
 
-The task filter often works well as an item in an accordion menu. See the [Accordion component](../core/accordion.component.md)
-page for an example of how to do set this up.
+The task filter often works well as an item in an accordion menu. See the
+[Accordion component](../core/accordion.component.md)
+page for an example of how to set this up.
 
 ## See also
 
