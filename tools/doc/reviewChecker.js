@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var fs = require("fs");
 var process = require("process");
@@ -14,14 +14,14 @@ var stoplist_1 = require("./stoplist");
 var adf20StartDate = "2017-11-20";
 var commitWeight = 0.1;
 var scoreTimeBase = 60;
-var rootFolder = ".";
-var stoplistFilePath = path.resolve("..", "tools", "doc", "commitStoplist.json");
+var libFolder = "lib";
+var stoplistFilePath = path.resolve("tools", "doc", "commitStoplist.json");
 var angFilePattern = /(component)|(directive)|(model)|(pipe)|(service)|(widget)/;
 var srcData = {};
 var stoplist = new stoplist_1.Stoplist(stoplistFilePath);
-var docsFolderPath = path.resolve("..", "docs");
+var docsFolderPath = path.resolve("docs");
 var libFolders = ["core", "content-services", "process-services", "insights"];
-libsearch(srcData, path.resolve(rootFolder));
+libsearch(srcData, path.resolve(libFolder));
 /*
 let keys = Object.keys(srcData);
 

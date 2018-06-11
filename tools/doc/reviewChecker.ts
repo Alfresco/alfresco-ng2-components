@@ -19,19 +19,19 @@ const adf20StartDate = "2017-11-20";
 const commitWeight = 0.1;
 const scoreTimeBase = 60;
 
-const rootFolder = ".";
-const stoplistFilePath = path.resolve("..", "tools", "doc", "commitStoplist.json");
+const libFolder = "lib";
+const stoplistFilePath = path.resolve("tools", "doc", "commitStoplist.json");
 
 const angFilePattern = /(component)|(directive)|(model)|(pipe)|(service)|(widget)/;
 
 let srcData = {};
 let stoplist = new Stoplist(stoplistFilePath);
 
-let docsFolderPath = path.resolve("..", "docs");
+let docsFolderPath = path.resolve("docs");
 
 let libFolders = ["core", "content-services", "process-services", "insights"];
 
-libsearch(srcData, path.resolve(rootFolder));
+libsearch(srcData, path.resolve(libFolder));
 
 /*
 let keys = Object.keys(srcData);

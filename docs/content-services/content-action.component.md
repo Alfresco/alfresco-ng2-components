@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-08
 ---
 
 # Content Action component
@@ -107,7 +108,7 @@ export class MyView {
 ## Details
 
 The document actions are rendered on a dropdown menu for each items of content. You can use the
-`target` property to choose whether the action applies to folders , documents or both. (By default the actions arre applied to both)
+`target` property to choose whether the action applies to folders, documents or both. (By default the actions are applied to both)
 
 A number of built-in actions are defined to handle common use cases:
 
@@ -127,7 +128,7 @@ function in the same action. The `execute` function is passed a [`NodeMinimalEnt
 parameter (see the [Document Library model](document-library.model.md) page for more
 information) which contains full details of the item that the action is operating on. For
 example, with `handler="delete"` you could use `execute` to show a message with the name,
-type and other details of the item just deleted:
+type, and other details of the item just deleted:
 
 ```html
  <content-actions>
@@ -184,7 +185,7 @@ This action simply execute one of the built-in actions described above:
 
 #### Custom handler
 
-If you specify a custom handler it will be executed at any click of the action:
+If you specify a custom handler it will be executed whenever the action is selected:
 
 ```html
 <adf-document-list [contentActions]="true"...>
@@ -211,11 +212,11 @@ export class MyComponent {
 
 #### System handler combined with custom handler
 
-If you specify both system handler and your own custom handler with
-`(execute)="myCustomActionAfterDelete($event)"`, your handler will run after a system handler completes 
-successfully. A system operation is considered successful if there are no permission or
-network-related errors for the system request. You can avoid permission errors simply by disabling
-an item for users who don't have permission to use it (set `disableWithNoPermission="true"`). 
+If you specify both a system handler and your own custom handler with
+`(execute)="myCustomActionAfterDelete($event)"`, your handler will run after the system handler
+completes successfully. A system operation is considered successful if there are no permission
+or network-related errors for the system request. You can avoid permission errors simply
+by disablingan item for users who don't have permission to use it (set `disableWithNoPermission="true"`). 
 
 ```html
 <adf-document-list ...>
@@ -323,13 +324,14 @@ allow the item being copied/moved to be the destination if it is itself a folder
 
 ### Conditional visibility
 
-The `<content-action>` component allows you to control visibility with the help of the `visible` property and supports three major scenarios:
+The Content-action component allows you to control visibility with the help of the `visible`
+property which can receive its value in three main ways:
 
--   direct value of `boolean` type
--   binding to a property of the `boolean` type
--   binding to a property of the `Function` type that evaluates condition and returns `boolean` value
+-   direct `boolean` value
+-   binding to a `boolean` property
+-   binding to a `Function` property that evaluates the condition and returns a `boolean` value
 
-#### Using direct value of boolean type
+#### Using direct boolean value
 
 ```html
 <content-action
@@ -340,7 +342,7 @@ The `<content-action>` component allows you to control visibility with the help 
 </content-action>
 ```
 
-#### Using a property of the boolean type
+#### Binding to a boolean property
 
 ```html
 <content-action
@@ -351,7 +353,8 @@ The `<content-action>` component allows you to control visibility with the help 
 </content-action>
 ```
 
-The markup above relies on the `showCustomDownloadAction` property declared at your component class level:
+The markup above relies on the `showCustomDownloadAction` property declared in your
+component class:
 
 ```ts
 export class MyComponent {
@@ -362,7 +365,7 @@ export class MyComponent {
 }
 ```
 
-#### Using a property of the Function type
+#### Binding to a Function property
 
 ```html
  <content-action
@@ -373,7 +376,8 @@ export class MyComponent {
 </content-action>
 ```
 
-The code above relies on the `canDownloadNode` property of a `Function` type declared at your component class level:
+The code above relies on the `canDownloadNode` property (of `Function` type) declared in
+your component class:
 
 ```ts
 export class MyComponent {
@@ -387,10 +391,11 @@ export class MyComponent {
 }
 ```
 
-Code above checks the node name, and evaluates to `true` only if corresponding node is called "For Sale.docx". 
+The code above checks the node name and evaluates to `true` only if the corresponding
+node is called "For Sale.docx". 
 
-Please note that if you want to preserve `this` context within the evaluator function,
-its property should be declared as a lambda one:
+Note that if you want to preserve `this` context within the evaluator function then
+the property should be declared as a lambda function:
 
 ```ts
 funcName = (parameters): boolean => {
@@ -495,13 +500,8 @@ Defining error, permission and success callbacks are pretty much the same as doi
 
 ![Copy/move document action](../docassets/images/document-action-copymove.png)
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-
-<!-- seealso start -->
-
 ## See also
 
 -   [Document list component](document-list.component.md)
 -   [Document actions service](document-actions.service.md)
 -   [Folder actions service](folder-actions.service.md)
-    <!-- seealso end -->

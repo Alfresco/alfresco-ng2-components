@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-08
 ---
 
 # Apps List Component
@@ -17,9 +18,7 @@ Shows all available apps.
 </adf-apps>
 ```
 
-## Passing custom no-apps template
-
-If we intend to show a custom template if there are no apps present
+You can also show a custom template if there are no apps present:
 
 ```html
 <adf-apps
@@ -48,24 +47,9 @@ If we intend to show a custom template if there are no apps present
 
 ## Details
 
-### How filter the activiti apps
-
-If you want to show some specific apps you can specify them through the filtersAppId parameters
-
-```html
-<adf-apps 
-    [filtersAppId]="'[
-        {defaultAppId: 'tasks'}, 
-        {deploymentId: '15037'}, 
-        {name : 'my app name'}]'">
-</adf-apps>
-```
-
-In this specific case only the Tasks app, the app with deploymentId 15037 and the app with "my app name" will be shown.
-
-![how-filter-apps](../docassets/images/how-filter-apps.png)
-
-You can use inside the filter one of the following property 
+You can specify a restricted list of apps using the `filtersAppId` property. This array
+contains a list of objects containing the property values you are interested in. You can
+use any of the following properties as filters:
 
 ```json
 { 
@@ -77,3 +61,18 @@ You can use inside the filter one of the following property
     "tenantId": "number"
 }
 ```
+
+For example, if you set `filtersAppId` as follows:
+
+```html
+<adf-apps 
+    [filtersAppId]="'[
+        {defaultAppId: 'tasks'}, 
+        {deploymentId: '15037'}, 
+        {name : 'my app name'}]'">
+</adf-apps>
+```
+
+...then only the Tasks app, the app with `deploymentId` 15037 and the app with "my app name" will be shown.
+
+![how-filter-apps](../docassets/images/how-filter-apps.png)

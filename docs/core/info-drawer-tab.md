@@ -1,4 +1,12 @@
+---
+Added: v2.4.0
+Status: Active
+Last reviewed: 2018-06-08
+---
+
 # Info Drawer Tab component
+
+Renders tabs in a [Info drawer component](../core/info-drawer.component.md).
 
 ![Info drawer screenshot](../docassets/images/label-tab.png)
 
@@ -46,6 +54,11 @@ Render tab with icon instead of labels:
 | label | `string` | '' | Tab label. |
 | icon | `string` | null | The material design icon. |
 
+## Details
+
+See the [Info drawer component](../core/info-drawer.component.md) page for details of how to use this subcomponent.
+
 ## See also
 
--   [Info drawer layout component](info-drawer.component.md)
+-   [Info drawer component](info-drawer.component.md)
+-   [Info drawer layout component](info-drawer-layout.component.md)
