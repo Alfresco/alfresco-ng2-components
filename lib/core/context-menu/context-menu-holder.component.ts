@@ -29,13 +29,15 @@ import { ContextMenuService } from './context-menu.service';
     template: `
         <button mat-button [matMenuTriggerFor]="contextMenu"></button>
         <mat-menu #contextMenu="matMenu" class="context-menu">
-            <button *ngFor="let link of links"
-                mat-menu-item
-                [disabled]="link.model?.disabled"
-                (click)="onMenuItemClick($event, link)">
-                <mat-icon *ngIf="showIcons && link.model?.icon">{{ link.model.icon }}</mat-icon>
-                {{ (link.title || link.model?.title) | translate }}
-            </button>
+            <ng-container *ngFor="let link of links">
+                <button *ngIf="link.model?.visible"
+                    mat-menu-item
+                    [disabled]="link.model?.disabled"
+                    (click)="onMenuItemClick($event, link)">
+                    <mat-icon *ngIf="showIcons && link.model?.icon">{{ link.model.icon }}</mat-icon>
+                    {{ (link.title || link.model?.title) | translate }}
+                </button>
+            </ng-container>
         </mat-menu>
     `
 })
