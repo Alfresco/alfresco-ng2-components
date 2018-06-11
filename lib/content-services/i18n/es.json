@@ -6,7 +6,12 @@
       "DOWNLOAD": "Descargar",
       "UPLOAD": {
         "TITLE": "Cargar nueva versión",
-        "TOOLTIP": "Restricción: debe cargar un fichero con el mismo nombre para crear una nueva versión del mismo"
+        "TOOLTIP": "Restricción: debe cargar un fichero con el mismo nombre para crear una nueva versión del mismo",
+        "MAJOR": "cambios mayores (2.0)",
+        "MINOR": "cambios menores (1.1)",
+        "COMMENT": "Dejar un comentario",
+        "ADD": "Añadir nueva versión",
+        "CANCEL": "Cancelar"
       }
     },
     "CONFIRM_DELETE": {
@@ -155,6 +160,13 @@
   },
   "SEARCH": {
     "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Buscar",
+      "ARIA-LABEL": "Botón de búsqueda"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "Entrada de búsqueda"
+    },
     "RESULTS": {
       "SUMMARY": "{{numResults}} resultados encontrados para {{searchTerm}}",
       "NONE": "No se han encontrado resultados para {{searchTerm}}",
@@ -163,6 +175,29 @@
         "NAME": "Nombre a mostrar",
         "MODIFIED_BY": "Modificado por",
         "MODIFIED_AT": "Modificado a las"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "Borrar",
+        "APPLY": "Aplicar",
+        "CLEAR-ALL": "Borrar todo",
+        "SHOW-MORE": "Mostrar más",
+        "SHOW-LESS": "Mostrar menos",
+        "FILTER-CATEGORY": "Filtrar categoría"
+      },
+      "RANGE": {
+        "FROM": "De",
+        "TO": "A",
+        "FROM-DATE": "De",
+        "TO-DATE": "A"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Valor necesario",
+        "NO-DAYS": "No se han seleccionado días.",
+        "INVALID-FORMAT": "Formato no válido",
+        "INVALID-DATE": "Fecha no válida. La fecha debe tener el formato '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "La fecha es posterior a la fecha máxima."
       }
     },
     "ICONS": {
@@ -235,7 +270,20 @@
       "INHERITED": "Heredado",
       "AUTHORITY_ID": "ID de autoridad",
       "ROLE": "Función",
-      "LOCALLY_SET": "Establecido localmente"
+      "LOCALLY_SET": "Establecido localmente",
+      "NO_PERMISSIONS": "Sin permisos"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Buscar",
+      "TYPE-MESSAGE": "Escriba algo para comenzar a buscar grupos o personas",
+      "NO-RESULT": "No se han encontrado resultados para esta búsqueda",
+      "ADD-ACTION": "Añadir",
+      "CLOSE-ACTION": "Cerrar",
+      "BASE-DIALOG-TITLE": "Buscar un grupo o personas para añadir...",
+      "EVERYONE": "Todos"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "Uno o más de los permisos que ha establecido ya existe: {{list}}"
     }
   }
 }

@@ -13,7 +13,8 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "Geen apps gevonden",
+      "TITLE": "Geen toepassingen gevonden",
+      "SUBTITLE": "Maak een nieuwe toepassing die u later gemakkelijk wilt kunnen vinden",
       "TASK_APP_NAME": "Task App"
     },
     "LIST": {
@@ -153,7 +154,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "NONE": "Geen procesinstances gevonden",
+      "TITLE": "Geen processen gevonden",
+      "SUBTITLE": "Maak een nieuw proces dat u later gemakkelijk wilt kunnen vinden",
       "SUMMARY": "{{total}} procesinstances gevonden",
       "ERROR": "Kan procesinstances niet laden. Probeer het opnieuw of geef het volgende bericht door aan het IT-team: {{errorMessage}}"
     },

@@ -118,7 +118,6 @@
       "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
     "HOST_SETTINGS": {
-      "REQUIRED": "The field is required",
       "CS_URL_ERROR": "Content Services address doesn't match the URL format",
       "PS_URL_ERROR": "Process Services address doesn't match the URL format",
       "TITLE": "Settings",
@@ -126,11 +125,7 @@
       "BP-HOST": "Process Services URL",
       "BACK": "Back",
       "APPLY": "APPLY",
-      "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL.",
-      "REDIRECT": "Redirect Uri",
-      "SILENT": "Silent Login",
-      "SCOPE": "Scope",
-      "CLIENT": "ClientId"
+      "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL."
     },
     "CARDVIEW": {
       "VALIDATORS": {
@@ -198,8 +193,7 @@
     "BUTTON": {
       "LOGIN": "SIGN IN",
       "CHECKING": "CHECKING",
-      "WELCOME": "WELCOME",
-      "SSO": "SIGN IN SSO"
+      "WELCOME": "WELCOME"
     },
     "ACTION": {
       "HELP": "NEED HELP?",
@@ -280,7 +274,7 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Oops!",
+      "TITLE": "We hit a problem.",
       "DESCRIPTION": "Looks like something went wrong.",
       "SECONDARY_BUTTON": {
         "TEXT": "",
@@ -288,19 +282,19 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "Back to home",
-        "ROUTE": "home"
+        "ROUTE": "Home"
       }
     },
     "403": {
-      "TITLE": "Error 403 forbidden",
-      "DESCRIPTION": "Access to this resource on the server is denied.",
+      "TITLE": "You don't have permission to access this server.",
+      "DESCRIPTION": "You're not allowed access to this resource on the server.",
       "SECONDARY_BUTTON": {
         "TEXT": "Report issue",
         "URL": ""
       },
       "RETURN_BUTTON": {
         "TEXT": "Back to home",
-        "ROUTE": "home"
+        "ROUTE": "Home"
       }
     },
     "404": {
@@ -312,7 +306,7 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "Back to home",
-        "ROUTE": "home"
+        "ROUTE": "Home"
       }
     }
   }

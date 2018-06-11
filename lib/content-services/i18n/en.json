@@ -196,8 +196,8 @@
         "REQUIRED-VALUE": "Required value",
         "NO-DAYS": "No days selected.",
         "INVALID-FORMAT": "Invalid Format",
-        "INVALID-DATE": "Invalid date. Please enter the date in the format '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "Date is too late."
+        "INVALID-DATE": "Invalid date. The date must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "The date is beyond the maximum date."
       }
     },
     "ICONS": {
@@ -283,7 +283,7 @@
       "EVERYONE" : "EVERYONE"
     },
     "ERROR": {
-      "DUPLICATE-PERMISSION": "One or more of the permission you set is already present : {{list}}"
+      "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}"
     }
   }
 }

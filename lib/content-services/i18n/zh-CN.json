@@ -6,7 +6,12 @@
       "DOWNLOAD": "下载",
       "UPLOAD": {
         "TITLE": "上传新版本",
-        "TOOLTIP": "限制：您必须上传同名文件才能创建该文件的新版本"
+        "TOOLTIP": "限制：您必须上传同名文件才能创建该文件的新版本",
+        "MAJOR": "主要更改 (2.0)",
+        "MINOR": "次要更改 (1.1)",
+        "COMMENT": "发表评论",
+        "ADD": "添加新版本",
+        "CANCEL": "取消"
       }
     },
     "CONFIRM_DELETE": {
@@ -155,6 +160,13 @@
   },
   "SEARCH": {
     "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "搜索",
+      "ARIA-LABEL": "搜索按钮"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "搜索输入"
+    },
     "RESULTS": {
       "SUMMARY": "已找到 {{numResults}} 个 {{searchTerm}} 的结果",
       "NONE": "未找到 {{searchTerm}} 的结果",
@@ -163,6 +175,29 @@
         "NAME": "显示名称",
         "MODIFIED_BY": "修改人",
         "MODIFIED_AT": "修改时间"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "清除",
+        "APPLY": "应用",
+        "CLEAR-ALL": "全部清除",
+        "SHOW-MORE": "显示更多",
+        "SHOW-LESS": "显示更少",
+        "FILTER-CATEGORY": "过滤类别"
+      },
+      "RANGE": {
+        "FROM": "从",
+        "TO": "到",
+        "FROM-DATE": "从",
+        "TO-DATE": "到"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "必需值",
+        "NO-DAYS": "未选择天数。",
+        "INVALID-FORMAT": "格式无效",
+        "INVALID-DATE": "日期无效。日期的格式必须为 '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "日期超过最大日期。"
       }
     },
     "ICONS": {
@@ -235,7 +270,20 @@
       "INHERITED": "已继承",
       "AUTHORITY_ID": "权限 ID",
       "ROLE": "角色",
-      "LOCALLY_SET": "本地设置"
+      "LOCALLY_SET": "本地设置",
+      "NO_PERMISSIONS": "无权限"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "搜索",
+      "TYPE-MESSAGE": "输入内容以开始搜索组或人员",
+      "NO-RESULT": "找不到此搜索的结果",
+      "ADD-ACTION": "添加",
+      "CLOSE-ACTION": "关闭",
+      "BASE-DIALOG-TITLE": "搜索要添加的组或人员...",
+      "EVERYONE": "任何人"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "您所设置的一个或多个权限已经存在：{{list}}"
     }
   }
 }
