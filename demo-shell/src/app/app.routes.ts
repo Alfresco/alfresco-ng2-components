@@ -155,6 +155,11 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardBpm]
             },
             {
+                path: 'activiti/apps/:appId/processes/:filterId',
+                component: ProcessServiceComponent,
+                canActivate: [AuthGuardBpm]
+            },
+            {
                 path: 'activiti/apps/:appId/diagram/:processDefinitionId',
                 component: ShowDiagramComponent,
                 canActivate: [AuthGuardBpm]
@@ -164,7 +169,7 @@ export const appRoutes: Routes = [
                 component: ProcessServiceComponent,
                 canActivate: [AuthGuardBpm]
             },
-            // TODO: check if neeeded
+            // TODO: check if needed
             {
                 path: 'activiti/appId/:appId',
                 component: ProcessServiceComponent,

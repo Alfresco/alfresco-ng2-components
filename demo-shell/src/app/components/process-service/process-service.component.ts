@@ -142,8 +142,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     presetColoum = 'default';
 
-    showTaskTab = true;
-    showProcessTab = false;
+    showTaskTab: boolean;
+    showProcessTab: boolean;
 
     fieldValidators = [
         ...FORM_FIELD_VALIDATORS,
@@ -208,6 +208,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         if (this.router.url.includes('processes')) {
             this.activeTab = this.tabs.processes;
         }
+        this.showProcessTab = this.activeTab === this.tabs.processes;
+        this.showTaskTab = this.activeTab === this.tabs.tasks;
         this.route.params.subscribe(params => {
             const applicationId = params['appId'];
 
