@@ -292,8 +292,22 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         return this.taskDetails.assignee ? true : false;
     }
 
+    private hasEmailAddress(): boolean {
+        return this.taskDetails.assignee.email ? true : false;
+    }
+
     isAssignedToMe(): boolean {
-        return this.isAssigned() ? this.taskDetails.assignee.email.toLocaleLowerCase() === this.currentLoggedUser.email.toLocaleLowerCase() : false;
+        return this.isAssigned() && this.hasEmailAddress() ?
+                    this.isEmailEqual(this.taskDetails.assignee.email, this.currentLoggedUser.email) :
+                    this.isExternalIdEqual(this.taskDetails.assignee.externalId, this.currentLoggedUser.externalId);
+    }
+
+    private isEmailEqual(assigneeMail, currentLoggedEmail): boolean {
+        return assigneeMail.toLocaleLowerCase() === currentLoggedEmail.toLocaleLowerCase();
+    }
+
+    private isExternalIdEqual(assigneeExternalId, currentUserExternalId): boolean {
+        return assigneeExternalId.toLocaleLowerCase() === currentUserExternalId.toLocaleLowerCase();
     }
 
     isCompleteButtonEnabled(): boolean {
