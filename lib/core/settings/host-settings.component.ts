@@ -98,7 +98,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private addOAuthFormGroup() {
-        if (this.isOAUTH() && !this.oauthConfig) {
+        if (this.isOAUTH()) {
             const oauthFormGroup = this.createOAuthFormGroup();
             this.form.addControl('oauthConfig', oauthFormGroup);
         }
@@ -119,18 +119,19 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createOAuthFormGroup(): AbstractControl {
-        const oAuthConfig = this.userPreference.oauthConfig;
-        if (oAuthConfig) {
-            return this.fb.group({
-                host: [oAuthConfig.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
-                clientId: [oAuthConfig.clientId, Validators.required],
-                redirectUri: [oAuthConfig.redirectUri, Validators.required],
-                scope: [oAuthConfig.scope, Validators.required],
-                secret: oAuthConfig.secret,
-                silentLogin: oAuthConfig.silentLogin,
-                implicitFlow: oAuthConfig.implicitFlow
-            });
+        let oAuthConfig: any = {};
+        if (this.userPreference.oauthConfig) {
+            oAuthConfig = this.userPreference.oauthConfig;
         }
+        return this.fb.group({
+            host: [oAuthConfig.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
+            clientId: [oAuthConfig.clientId, Validators.required],
+            redirectUri: [oAuthConfig.redirectUri, Validators.required],
+            scope: [oAuthConfig.scope, Validators.required],
+            secret: oAuthConfig.secret,
+            silentLogin: oAuthConfig.silentLogin,
+            implicitFlow: oAuthConfig.implicitFlow
+        });
     }
 
     private createBPMFormControl(): AbstractControl {
@@ -146,7 +147,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     onSubmit(values: any) {
-        this.userPreference.providers = values.providers;
+        this.userPreference.providers = values.providersControl;
         if (this.isBPM()) {
             this.saveBPMValues(values);
         } else if (this.isECM()) {

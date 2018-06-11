@@ -4,7 +4,8 @@
     </mat-toolbar>
     <mat-card class="adf-setting-card">
         <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)">
-            <mat-form-field>
+            <mat-label>{{'CORE.HOST_SETTINGS.PROVIDER' | translate }}</mat-label>
+            <mat-form-field floatLabel="{{'CORE.HOST_SETTINGS.PROVIDER' | translate }}">
                 <mat-select placeholder="Provider" [formControl]="providersControl">
                     <mat-option *ngFor="let provider of providers" [value]="provider.value">
                         {{ provider.title }}
