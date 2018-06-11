@@ -5,6 +5,7 @@
     "loginRoute": "login",
     "providers": "ALL",
     "contextRootBpm": "activiti-app",
+    "contextRootEcm": "example",
     "oauth2": {
       "host": "http://localhost:30081/auth/realms/myrealm",
       "clientId": "activiti",

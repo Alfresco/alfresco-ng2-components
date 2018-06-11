@@ -13,7 +13,8 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "Aucune application trouvée",
+      "TITLE": "Aucune application trouvée",
+      "SUBTITLE": "Créer une nouvelle application à laquelle vous pourrez accéder facilement par la suite",
       "TASK_APP_NAME": "Application Tâches"
     },
     "LIST": {
@@ -153,7 +154,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "NONE": "Aucune instance de processus trouvée",
+      "TITLE": "Aucun processus trouvé",
+      "SUBTITLE": "Créer un nouveau processus auquel vous pourrez accéder facilement par la suite",
       "SUMMARY": "{{total}} instances de processus trouvées",
       "ERROR": "Impossible de charger les instances de processus. Réessayez ou transférez le message suivant au service informatique : {{errorMessage}}"
     },

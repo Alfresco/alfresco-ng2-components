@@ -38,6 +38,12 @@
       "YB": "YB"
     },
     "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Auswahl der Seitengröße",
+        "CURRENT_PAGE": "Auswahl aktuelle Seite",
+        "PREVIOUS_PAGE": "Schaltfläche 'Vorherige Seite'",
+        "NEXT_PAGE": "Schaltfläche 'Nächste Seite'"
+      },
       "ITEMS_RANGE": "Angezeigt werden {{ range }} von {{ total }}",
       "ITEMS_PER_PAGE": "Elemente pro Seite",
       "CURRENT_PAGE": "Seite {{ number }}",
@@ -201,6 +207,9 @@
         "TITLE": "Ziehen und ablegen",
         "SUBTITLE": "um Dateien hochzuladen"
       }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Content-Aktionen"
     }
   },
   "USER_PROFILE": {
@@ -261,6 +270,44 @@
       "CLOSE": "Schließen",
       "PLACEHOLDER": "Passwort",
       "ERROR": "Passwort ist falsch"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Es ist ein Fehler aufgetreten.",
+      "DESCRIPTION": "Es scheint ein Fehler aufgetreten zu sein.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zurück zur Startseite",
+        "ROUTE": "Startseite"
+      }
+    },
+    "403": {
+      "TITLE": "Sie sind nicht zum Zugriff auf diesen Server berechtigt.",
+      "DESCRIPTION": "Sie sind nicht zum Zugriff auf diese Ressource auf dem Server berechtigt.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Problem melden",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zurück zur Startseite",
+        "ROUTE": "Startseite"
+      }
+    },
+    "404": {
+      "TITLE": "Es ist ein Fehler aufgetreten.",
+      "DESCRIPTION": "Die Seite, nach der Sie suchen, wurde nicht gefunden.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zurück zur Startseite",
+        "ROUTE": "Startseite"
+      }
     }
   }
 }

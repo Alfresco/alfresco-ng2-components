@@ -9,7 +9,18 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Löschen zulassen",
       "SHOW_COMMENTS": "Anmerkungen zu Versionen einblenden",
-      "ALLOW_DOWNLOAD": "Versions-Download zulassen"
+      "ALLOW_DOWNLOAD": "Versions-Download zulassen",
+      "READ_ONLY": "Schreibgeschützt"
+    },
+    "PERSONAL-FILES": "Persönliche Dateien",
+    "WARN-MULTIPLE-UPLOADS": "Warnung bei Mehrfach-Uploads anzeigen.",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "Keine",
+        "ALL": "Alle",
+        "FOLDER": "Ordner",
+        "DOCUMENT": "Dokument"
+      }
     }
   },
   "title": "Willkommen",
@@ -32,6 +43,7 @@
     "APP_NAME": "ADF-Demoanwendung",
     "HOME": "Startseite",
     "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "Breadcrumb",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Anmelden",
     "CUSTOM_SOURCES": "Benutzerdefinierte Quellen",
@@ -97,7 +109,13 @@
       "NEW_FOLDER": "Neuer Ordner",
       "EDIT_FOLDER": "Ordner bearbeiten",
       "DOWNLOAD": "Herunterladen",
-      "DELETE": "Löschen"
+      "DELETE": "Löschen",
+      "FAVORITES": "Zu Favoriten hinzufügen",
+      "SHARE": "Freigeben",
+      "THEME": "Farbschema auswählen",
+      "SHOW_VERSION": "Version anzeigen",
+      "HIDE_VERSION": "Version ausblenden",
+      "LISTVIEW": "Listenansichtsmodus"
     },
     "ACTIONS": {
       "VERSIONS": "Versionen verwalten",

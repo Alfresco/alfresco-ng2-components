@@ -9,12 +9,14 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Разрешить удаление",
       "SHOW_COMMENTS": "Показать комментарии к версиям",
-      "ALLOW_DOWNLOAD": "Разрешить загрузку версии"
+      "ALLOW_DOWNLOAD": "Разрешить загрузку версии",
+      "READ_ONLY": "Только чтение"
     },
     "PERSONAL-FILES": "Личные файлы",
+    "WARN-MULTIPLE-UPLOADS": "Показывать предупреждение для нескольких загрузок.",
     "SEARCH": {
       "RADIO": {
-        "NONE": "Ничего",
+        "NONE": "Нет",
         "ALL": "Все",
         "FOLDER": "Папка",
         "DOCUMENT": "Документ"
@@ -41,6 +43,7 @@
     "APP_NAME": "Демонстрационное приложение ADF",
     "HOME": "Домашняя",
     "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "Иерархия",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Войти",
     "CUSTOM_SOURCES": "Пользовательские источники",
@@ -106,7 +109,13 @@
       "NEW_FOLDER": "Новая папка",
       "EDIT_FOLDER": "Редактировать папку",
       "DOWNLOAD": "Скачать",
-      "DELETE": "Удалить"
+      "DELETE": "Удалить",
+      "FAVORITES": "Добавить в избранное",
+      "SHARE": "Открыть доступ",
+      "THEME": "Выберите тему",
+      "SHOW_VERSION": "Показать версию",
+      "HIDE_VERSION": "Скрыть версию",
+      "LISTVIEW": "Режим просмотра списка"
     },
     "ACTIONS": {
       "VERSIONS": "Управление версиями",

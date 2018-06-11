@@ -13,7 +13,8 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "未找到应用程序",
+      "TITLE": "找不到应用程序",
+      "SUBTITLE": "创建您想要今后轻松查找的新应用程序",
       "TASK_APP_NAME": "任务 App"
     },
     "LIST": {
@@ -153,7 +154,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "NONE": "未找到进程实例",
+      "TITLE": "找不到进程",
+      "SUBTITLE": "创建您想要今后轻松查找的新进程",
       "SUMMARY": "找到 {{total}} 个进程实例",
       "ERROR": "无法加载进程实例。请重试，或将以下信息告知 IT 团队：{{errorMessage}}"
     },

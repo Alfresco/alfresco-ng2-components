@@ -9,7 +9,18 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Verwijderen toestaan",
       "SHOW_COMMENTS": "Opmerkingen over versies tonen",
-      "ALLOW_DOWNLOAD": "Downloaden van versies toestaan"
+      "ALLOW_DOWNLOAD": "Downloaden van versies toestaan",
+      "READ_ONLY": "Alleen-lezen"
+    },
+    "PERSONAL-FILES": "Persoonlijke bestanden",
+    "WARN-MULTIPLE-UPLOADS": "Waarschuwing weergeven bij meerdere uploads.",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "Geen",
+        "ALL": "Alle",
+        "FOLDER": "Map",
+        "DOCUMENT": "Document"
+      }
     }
   },
   "title": "Welkom",
@@ -32,6 +43,7 @@
     "APP_NAME": "ADF-demotoepassing",
     "HOME": "Home",
     "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "Navigatiepad",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Aanmelden",
     "CUSTOM_SOURCES": "Aangepaste bronnen",
@@ -97,7 +109,13 @@
       "NEW_FOLDER": "Nieuwe map",
       "EDIT_FOLDER": "Map bewerken",
       "DOWNLOAD": "Downloaden",
-      "DELETE": "Verwijderen"
+      "DELETE": "Verwijderen",
+      "FAVORITES": "Toevoegen aan favorieten",
+      "SHARE": "Delen",
+      "THEME": "Een thema selecteren",
+      "SHOW_VERSION": "Versie weergeven",
+      "HIDE_VERSION": "Versie verbergen",
+      "LISTVIEW": "Lijstweergavemodus"
     },
     "ACTIONS": {
       "VERSIONS": "Versies beheren",

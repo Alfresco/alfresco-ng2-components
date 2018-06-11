@@ -13,7 +13,8 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "Nenhum aplicativo encontrado",
+      "TITLE": "Nenhum Aplicativo Encontrado",
+      "SUBTITLE": "Crie um aplicativo que você possa identificar com facilidade depois",
       "TASK_APP_NAME": "Aplicativo de tarefas"
     },
     "LIST": {
@@ -153,7 +154,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "NONE": "Nenhuma instância de processo encontrada",
+      "TITLE": "Nenhum Processo Encontrado",
+      "SUBTITLE": "Crie um processo que você possa identificar com facilidade depois",
       "SUMMARY": "{{total}} instâncias de processo encontradas",
       "ERROR": "Não foi possível carregar as instâncias de processos. Tente novamente ou compartilhe a mensagem a seguir com sua Equipe de TI: {{errorMessage}}"
     },
