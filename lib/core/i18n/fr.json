@@ -38,6 +38,12 @@
       "YB": "Yo"
     },
     "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Sélecteur de taille de la page",
+        "CURRENT_PAGE": "Sélecteur de page active",
+        "PREVIOUS_PAGE": "Bouton Page préc.",
+        "NEXT_PAGE": "Bouton Page suiv."
+      },
       "ITEMS_RANGE": "Affichage de {{ range }} sur {{ total }}",
       "ITEMS_PER_PAGE": "Éléments par page",
       "CURRENT_PAGE": "Page {{ number }}",
@@ -176,7 +182,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Requis",
-      "USERNAME-MIN": "Votre nom d'utilisateur doit comporter au moins {{minLenght}} caractères.",
+      "USERNAME-MIN": "Votre nom d'utilisateur doit comporter au moins {{ minLength }} caractères.",
       "PASSWORD-REQUIRED": "Entrez votre mot de passe pour vous connecter",
       "LOGIN-ERROR-CREDENTIALS": "Le nom d'utilisateur ou le mot de passe entré est inconnu",
       "LOGIN-ERROR-PROVIDERS": "Le fournisseur ne peut pas être non défini",
@@ -201,6 +207,9 @@
         "TITLE": "Glissez-déposez",
         "SUBTITLE": "les fichiers à importer"
       }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Actions sur le contenu"
     }
   },
   "USER_PROFILE": {
@@ -261,6 +270,44 @@
       "CLOSE": "Fermer",
       "PLACEHOLDER": "Mot de passe",
       "ERROR": "Mot de passe erroné"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Une erreur est survenue.",
+      "DESCRIPTION": "Il semble qu'une erreur soit survenue.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Retour à l'accueil",
+        "ROUTE": "Accueil"
+      }
+    },
+    "403": {
+      "TITLE": "Vous n'avez pas les droits d'accès à ce serveur.",
+      "DESCRIPTION": "Vous n'êtes pas autorisé à accéder à cette ressource sur le serveur.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Signaler le problème",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Retour à l'accueil",
+        "ROUTE": "Accueil"
+      }
+    },
+    "404": {
+      "TITLE": "Une erreur est survenue.",
+      "DESCRIPTION": "Impossible de trouver la page recherchée.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Retour à l'accueil",
+        "ROUTE": "Accueil"
+      }
     }
   }
 }

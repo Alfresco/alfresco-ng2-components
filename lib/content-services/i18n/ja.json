@@ -6,7 +6,12 @@
       "DOWNLOAD": "ダウンロード",
       "UPLOAD": {
         "TITLE": "新しいバージョンのアップロード",
-        "TOOLTIP": "制限事項: 作成する新しいバージョンのファイルと同じ名前のファイルをアップロードする必要があります"
+        "TOOLTIP": "制限事項: 作成する新しいバージョンのファイルと同じ名前のファイルをアップロードする必要があります",
+        "MAJOR": "大きな変更 (2.0)",
+        "MINOR": "小さな変更 (1.1)",
+        "COMMENT": "コメントを残す",
+        "ADD": "新しいバージョンを追加する",
+        "CANCEL": "キャンセル"
       }
     },
     "CONFIRM_DELETE": {
@@ -155,6 +160,13 @@
   },
   "SEARCH": {
     "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "検索",
+      "ARIA-LABEL": "検索ボタン"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "検索条件"
+    },
     "RESULTS": {
       "SUMMARY": "{{searchTerm}} の検索結果は {{numResults}} 件です",
       "NONE": "{{searchTerm}} の検索結果は 0 件です",
@@ -163,6 +175,29 @@
         "NAME": "表示名",
         "MODIFIED_BY": "変更者",
         "MODIFIED_AT": "変更日"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "消去",
+        "APPLY": "適用",
+        "CLEAR-ALL": "すべて消去",
+        "SHOW-MORE": "続きを表示",
+        "SHOW-LESS": "詳細を隠す",
+        "FILTER-CATEGORY": "カテゴリをフィルタする"
+      },
+      "RANGE": {
+        "FROM": "開始",
+        "TO": "終了",
+        "FROM-DATE": "開始日",
+        "TO-DATE": "終了日"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "必須の値",
+        "NO-DAYS": "日付が選択されていません。",
+        "INVALID-FORMAT": "無効な形式",
+        "INVALID-DATE": "無効な日付です。日付は '{{ requiredFormat }}' 形式で指定する必要があります",
+        "BEYOND-MAX-DATE": "この日付は最長の日付よりも後です。"
       }
     },
     "ICONS": {
@@ -235,7 +270,20 @@
       "INHERITED": "継承された権限",
       "AUTHORITY_ID": "権限 ID",
       "ROLE": "ロール",
-      "LOCALLY_SET": "ローカルで設定された権限"
+      "LOCALLY_SET": "ローカルで設定された権限",
+      "NO_PERMISSIONS": "権限がありません"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "検索",
+      "TYPE-MESSAGE": "グループまたはメンバーの検索条件を入力してください",
+      "NO-RESULT": "この条件に一致する結果はありません",
+      "ADD-ACTION": "追加",
+      "CLOSE-ACTION": "閉じる",
+      "BASE-DIALOG-TITLE": "追加するグループまたはメンバーの検索...",
+      "EVERYONE": "全員"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "設定済みの権限が既にあります: {{list}}"
     }
   }
 }

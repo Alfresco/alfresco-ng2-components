@@ -9,7 +9,18 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "削除を許可する",
       "SHOW_COMMENTS": "バージョンに関するコメントを表示",
-      "ALLOW_DOWNLOAD": "バージョンのダウンロードを許可する"
+      "ALLOW_DOWNLOAD": "バージョンのダウンロードを許可する",
+      "READ_ONLY": "読取り専用"
+    },
+    "PERSONAL-FILES": "個人的なファイル",
+    "WARN-MULTIPLE-UPLOADS": "複数のアップロードの警告を表示します。",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "なし",
+        "ALL": "すべて",
+        "FOLDER": "フォルダ",
+        "DOCUMENT": "文書"
+      }
     }
   },
   "title": "ようこそ",
@@ -32,6 +43,7 @@
     "APP_NAME": "ADF デモアプリケーション",
     "HOME": "ホーム",
     "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "階層リンク",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "ログイン",
     "CUSTOM_SOURCES": "カスタムソース",
@@ -97,7 +109,13 @@
       "NEW_FOLDER": "新しいフォルダ",
       "EDIT_FOLDER": "フォルダの編集",
       "DOWNLOAD": "ダウンロード",
-      "DELETE": "削除"
+      "DELETE": "削除",
+      "FAVORITES": "[お気に入り] に追加",
+      "SHARE": "共有",
+      "THEME": "テーマを選択してください",
+      "SHOW_VERSION": "バージョンを表示する",
+      "HIDE_VERSION": "バージョンを隠す",
+      "LISTVIEW": "一覧表示モード"
     },
     "ACTIONS": {
       "VERSIONS": "バージョンの管理",
