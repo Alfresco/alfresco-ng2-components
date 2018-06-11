@@ -173,6 +173,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     showAssignee: boolean = false;
+    showAttachForm: boolean = false;
+    showTaskStandaloneForm: boolean = true;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
     public errorDialogRef: MatDialogRef<TemplateRef<any>>;
@@ -340,6 +342,21 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.taskListService.completeTask(this.taskId).subscribe(
             (res) => this.onFormCompleted(null)
         );
+    }
+
+    onShowAttachForm() {
+        this.showAttachForm = true;
+        this.showTaskStandaloneForm = false;
+    }
+
+    onCancelAttachForm() {
+        this.showAttachForm = false;
+        this.showTaskStandaloneForm = true;
+    }
+
+    onCompleteAttachForm() {
+        this.showAttachForm = false;
+        this.showTaskStandaloneForm = false;
     }
 
     onFormContentClick(content: ContentLinkModel): void {

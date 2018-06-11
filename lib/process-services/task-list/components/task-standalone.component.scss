@@ -37,7 +37,7 @@
             margin: auto;
             width: fit-content !important;
         }
-        &-no-form-mat-card-actions {
+        &-no-form-mat-card-actions.mat-card-actions {
             display: flex;
             justify-content: space-between;
             & .mat-button {

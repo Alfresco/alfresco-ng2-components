@@ -52,7 +52,7 @@ export class TaskStandaloneComponent {
 
     /** Emitted when the form associated with the form task is attached. */
     @Output()
-    attachForm: EventEmitter<void> = new EventEmitter<void>();
+    showAttachForm: EventEmitter<void> = new EventEmitter<void>();
 
     constructor() { }
 
@@ -65,7 +65,7 @@ export class TaskStandaloneComponent {
     }
 
     onAttachFormButtonClick(): void {
-        this.attachForm.emit();
+        this.showAttachForm.emit();
     }
 
     hasCompleteButton(): boolean {
