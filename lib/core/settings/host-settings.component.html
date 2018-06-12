@@ -5,8 +5,6 @@
     <mat-card class="adf-setting-card">
         <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)">
 
-            showSelectProviders {{showSelectProviders}}
-
             <mat-form-field floatLabel="{{'CORE.HOST_SETTINGS.PROVIDER' | translate }}" *ngIf="showSelectProviders">
                 <mat-select  id="adf-provider-selector" placeholder="Provider" [formControl]="providersControl">
                     <mat-option *ngFor="let provider of providers" [value]="provider">
