@@ -7,11 +7,11 @@
       "IMAGE_NOT_AVAILABLE": "Preview not available"
     },
     "FIELD": {
-      "LOCALSTORAGE" : "Local storage",
+      "LOCALSTORAGE": "Local storage",
       "SOURCE": "Select source from ",
       "SHOW_FILE": "Show",
       "DOWNLOAD_FILE": "Download",
-      "REMOVE_FILE":"Remove",
+      "REMOVE_FILE": "Remove",
       "UPLOAD": "UPLOAD",
       "REQUIRED": "*Required",
       "VALIDATOR": {
@@ -118,6 +118,13 @@
       "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
     "HOST_SETTINGS": {
+      "TYPE-AUTH": "Authentication type",
+      "BASIC": "Basic Auth",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "implicitFlow",
+      "TYPE-AUTH": "Authentication type",
+      "PROVIDER": "Provider",
+      "REQUIRED": "The field is required",
       "CS_URL_ERROR": "Content Services address doesn't match the URL format",
       "PS_URL_ERROR": "Process Services address doesn't match the URL format",
       "TITLE": "Settings",
@@ -125,7 +132,11 @@
       "BP-HOST": "Process Services URL",
       "BACK": "Back",
       "APPLY": "APPLY",
-      "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL."
+      "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL.",
+      "REDIRECT": "Redirect Uri",
+      "SILENT": "Silent Login",
+      "SCOPE": "Scope",
+      "CLIENT": "ClientId"
     },
     "CARDVIEW": {
       "VALIDATORS": {
@@ -135,17 +146,17 @@
     },
     "METADATA": {
       "BASIC": {
-          "HEADER": "Properties",
-          "NAME": "Name",
-          "TITLE": "Title",
-          "DESCRIPTION": "Description",
-          "AUTHOR": "Author",
-          "MIMETYPE": "Mimetype",
-          "SIZE": "Size",
-          "CREATOR": "Creator",
-          "CREATED_DATE": "Created Date",
-          "MODIFIER": "Modifier",
-          "MODIFIED_DATE": "Modified Date"
+        "HEADER": "Properties",
+        "NAME": "Name",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "AUTHOR": "Author",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Size",
+        "CREATOR": "Creator",
+        "CREATED_DATE": "Created Date",
+        "MODIFIER": "Modifier",
+        "MODIFIED_DATE": "Modified Date"
       },
       "ACTIONS": {
         "EDIT": "Edit",
@@ -193,7 +204,8 @@
     "BUTTON": {
       "LOGIN": "SIGN IN",
       "CHECKING": "CHECKING",
-      "WELCOME": "WELCOME"
+      "WELCOME": "WELCOME",
+      "SSO": "SIGN IN SSO"
     },
     "ACTION": {
       "HELP": "NEED HELP?",
@@ -261,8 +273,8 @@
         "PAGE": "Page {{ pageNum }}"
       },
       "METADATA": {
-          "MORE_INFORMATION": "More information",
-          "LESS_INFORMATION": "Less information"
+        "MORE_INFORMATION": "More information",
+        "LESS_INFORMATION": "Less information"
       }
     },
     "PDF_DIALOG": {

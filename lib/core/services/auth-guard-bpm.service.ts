@@ -22,11 +22,13 @@ import {
 } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable()
 export class AuthGuardBpm implements CanActivate, CanActivateChild {
     constructor(private authService: AuthenticationService,
                 private router: Router,
+                private userPreference: UserPreferencesService,
                 private appConfig: AppConfigService) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -42,13 +44,19 @@ export class AuthGuardBpm implements CanActivate, CanActivateChild {
             return true;
         }
 
-        const navigation = this.getNavigationCommands(redirectUrl);
+        if (!this.authService.isOauth() || this.isOAuthWithoutSilentLogin() ) {
+            const navigation = this.getNavigationCommands(redirectUrl);
 
-        this.authService.setRedirect({ provider: 'BPM', navigation });
-        const pathToLogin = this.getRouteDestinationForLogin();
-        this.router.navigate(['/' + pathToLogin]);
+            this.authService.setRedirect({ provider: 'BPM', navigation });
+            const pathToLogin = this.getRouteDestinationForLogin();
+            this.router.navigate(['/' + pathToLogin]);
+        }
 
         return false;
+    }
+
+    isOAuthWithoutSilentLogin() {
+        return this.authService.isOauth() && this.userPreference.oauthConfig.silentLogin === false;
     }
 
     private getRouteDestinationForLogin(): string {

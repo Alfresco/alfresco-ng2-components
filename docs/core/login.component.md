@@ -273,6 +273,31 @@ export class MyCustomLogin {
 }
 ```
 
+### SSO login
+
+### Implicit Flow
+
+If the 'app.config.json' or you used the host-setting component to use the SSO Oauth the login component will show only a button to login:
+
+```JSON
+    "authType" :"OAUTH",
+    "oauth2": {
+      "host": "http://localhost:30081/auth/realms/myrealm",
+      "clientId": "activiti",
+      "scope": "openid",
+      "secret": "",
+      "implicitFlow": true,
+      "silentLogin": false,
+      "redirectUri": "/",
+      "redirectUriLogout": "/logout"
+    },
+ ```
+ 
+![Login component](../docassets/images/sso-login.png)
+
+Note if the silentLogin property in the oauth2 configuration is true will not be possible to show the login page. with silentLogin true the application is automatically redirect to the 
+authorization server when is not logged-in
+
 Note that if you do not call `event.preventDefault()` then the default behaviour 
 will execute _after_ your custom code has completed.
 

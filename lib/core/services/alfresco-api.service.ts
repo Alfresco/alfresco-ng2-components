@@ -111,18 +111,19 @@ export class AlfrescoApiService {
     }
 
     protected initAlfrescoApi() {
-        let oauth: any = Object.assign({}, this.userPreference.oauthConfig);
-        if (oauth) {
+        let oauth;
+        if (this.userPreference.oauthConfig) {
+            oauth = Object.assign({}, this.userPreference.oauthConfig);
             oauth.redirectUri = window.location.origin + (oauth.redirectUri || '/');
             oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
         }
-
         const config = {
             provider: this.userPreference.providers,
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),
             hostEcm: this.userPreference.ecmHost,
             hostBpm: this.userPreference.bpmHost,
+            authType: this.userPreference.authType,
             contextRootBpm: this.appConfig.get<string>('contextRootBpm'),
             contextRoot: this.appConfig.get<string>('contextRootEcm'),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',

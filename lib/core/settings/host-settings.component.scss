@@ -5,16 +5,17 @@
         height: 100%;
         align-items: center;
 
+        .adf-authentication-type{
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
         .adf-setting-container {
             width: 800px;
             display: table;
             margin: 0 auto;
             border-collapse: collapse;
             border-spacing: 0;
-        }
-
-        .full-width {
-            width: 100%;
         }
 
         .adf-setting-card-padding {
@@ -33,6 +34,10 @@
         .adf-settings-actions {
             display: flex;
             justify-content: flex-end;
+        }
+
+        .full-width {
+            width: 100%;
         }
     }
 
