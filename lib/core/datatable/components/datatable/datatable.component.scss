@@ -456,16 +456,19 @@
     }
 
     .adf-upload__dragging {
-        & > td {
-            border-top: $data-table-drag-border;
-            border-bottom: $data-table-drag-border;
+        & > div {
+            border-top: $data-table-drag-border !important;
+            border-bottom: $data-table-drag-border !important;
+            border-color: $data-table-drag-border;
 
             &:first-child {
                 border-left: $data-table-drag-border;
+                border-color: $data-table-drag-border;
             }
 
             &:last-child {
-                border-right: $data-table-drag-border;
+                border-right: $data-table-drag-border !important;
+                border-color: $data-table-drag-border;
             }
         }
     }
