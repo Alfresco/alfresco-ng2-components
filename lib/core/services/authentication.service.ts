@@ -256,7 +256,7 @@ export class AuthenticationService {
      * @param provider Service provider. Can be "ECM", "BPM" or "ALL".
      * @returns The redirect URL
      */
-    getRedirect(provider: string): any[] {
+    getRedirect(provider: string): string|null {
         return this.hasValidRedirection(provider) ? this.redirect.navigation : null;
     }
 

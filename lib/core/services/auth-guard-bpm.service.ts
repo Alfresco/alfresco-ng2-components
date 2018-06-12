@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot,
-  Router, PRIMARY_OUTLET, UrlTree, UrlSegmentGroup, UrlSegment
+  Router
 } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
@@ -45,9 +45,7 @@ export class AuthGuardBpm implements CanActivate, CanActivateChild {
         }
 
         if (!this.authService.isOauth() || this.isOAuthWithoutSilentLogin() ) {
-            const navigation = this.getNavigationCommands(redirectUrl);
-
-            this.authService.setRedirect({ provider: 'BPM', navigation });
+            this.authService.setRedirect({ provider: 'BPM', navigation: redirectUrl });
             const pathToLogin = this.getRouteDestinationForLogin();
             this.router.navigate(['/' + pathToLogin]);
         }
@@ -63,21 +61,5 @@ export class AuthGuardBpm implements CanActivate, CanActivateChild {
         return this.appConfig &&
                this.appConfig.get<string>('loginRoute') ?
                         this.appConfig.get<string>('loginRoute') : 'login';
-    }
-
-    private getNavigationCommands(redirectUrl: string): any[] {
-        const urlTree: UrlTree = this.router.parseUrl(redirectUrl);
-        const urlSegmentGroup: UrlSegmentGroup = urlTree.root.children[PRIMARY_OUTLET];
-
-        if (!urlSegmentGroup) {
-            return [redirectUrl];
-        }
-
-        const urlSegments: UrlSegment[] = urlSegmentGroup.segments;
-
-        return urlSegments.reduce(function(acc, item) {
-            acc.push(item.path, item.parameters);
-            return acc;
-        }, []);
     }
 }

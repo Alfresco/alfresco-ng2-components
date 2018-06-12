@@ -27,7 +27,7 @@ export class AuthenticationMock /*extends AuthenticationService*/ {
         this.redirect = url;
     }
 
-    getRedirectUrl(): any[] {
+    getRedirectUrl(): string|null {
         return this.redirect ? this.redirect.navigation : null;
     }
 

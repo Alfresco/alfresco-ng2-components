@@ -21,7 +21,7 @@
 
 export class RedirectionModel {
     provider: string;
-    navigation?: any[];
+    navigation?: string;
 
     constructor(obj?: any) {
         if (obj) {

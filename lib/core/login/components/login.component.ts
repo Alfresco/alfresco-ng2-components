@@ -240,7 +240,7 @@ export class LoginComponent implements OnInit {
 
                     if (redirect) {
                         this.authService.setRedirect(null);
-                        this.router.navigate(redirect);
+                        this.router.navigateByUrl(redirect);
                     } else if (this.successRoute) {
                         this.router.navigate([this.successRoute]);
                     }
