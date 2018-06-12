@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
     templateUrl: 'settings.component.html'
 })
 export class SettingsComponent {
-    
+
     constructor(private router: Router,
                 public logService: LogService) {
     }
