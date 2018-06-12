@@ -5,6 +5,16 @@
     "loginRoute": "login",
     "providers": "ALL",
     "contextRootBpm": "activiti-app",
+    "oauth2": {
+      "host": "http://localhost:30081/auth/realms/myrealm",
+      "clientId": "activiti",
+      "scope": "openid",
+      "secret": "",
+      "implicitFlow": true,
+      "silentLogin": true,
+      "redirectUri": "/",
+      "redirectUriLogout": "/logout"
+    },
     "application": {
         "name": "Alfresco ADF Application",
         "copyright": "© 2016 - 2018 Alfresco Software, Inc. All Rights Reserved."
