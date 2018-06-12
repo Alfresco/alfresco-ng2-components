@@ -86,8 +86,9 @@ describe('UploadService', () => {
     it('should make XHR done request after the file is added in the queue', (done) => {
         let emitter = new EventEmitter();
 
-        emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe(e => {
             expect(e.value).toBe('File uploaded');
+            emitterDisposable.unsubscribe();
             done();
         });
         let fileFake = new FileModel(
@@ -111,8 +112,9 @@ describe('UploadService', () => {
     it('should make XHR error request after an error occur', (done) => {
         let emitter = new EventEmitter();
 
-        emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe(e => {
             expect(e.value).toBe('Error file uploaded');
+            emitterDisposable.unsubscribe();
             done();
         });
         let fileFake = new FileModel(
@@ -134,10 +136,12 @@ describe('UploadService', () => {
     it('should make XHR abort request after the xhr abort is called', (done) => {
         let emitter = new EventEmitter();
 
-        emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe(e => {
             expect(e.value).toEqual('File aborted');
+            emitterDisposable.unsubscribe();
             done();
         });
+
         let fileFake = new FileModel(<File> { name: 'fake-name', size: 10 });
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
@@ -183,8 +187,9 @@ describe('UploadService', () => {
     it('should use custom root folder ID given to the service', (done) => {
         let emitter = new EventEmitter();
 
-        emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe(e => {
             expect(e.value).toBe('File uploaded');
+            emitterDisposable.unsubscribe();
             done();
         });
         let filesFake = new FileModel(
