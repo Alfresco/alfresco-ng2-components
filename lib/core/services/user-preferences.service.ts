@@ -147,21 +147,6 @@ export class UserPreferencesService {
         return this.defaults.supportedPageSizes;
     }
 
-    /** Authorization type (can be "ECM", "BPM" or "ALL"). */
-    /** @deprecated in 2.4.0 */
-    set authType(authType: string) {
-        let storedAuthType = this.storage.getItem('AUTH_TYPE');
-
-        if (authType !== storedAuthType) {
-            this.storage.setItem('AUTH_TYPE', authType);
-        }
-    }
-
-    /** @deprecated in 2.4.0 */
-    get authType(): string {
-        return this.storage.getItem('AUTH_TYPE') || 'ALL';
-    }
-
     /** Prevents the CSRF Token from being submitted if true. Only valid for Process Services. */
     set disableCSRF(csrf: boolean) {
         let storedCSRF = this.storage.getItem('DISABLE_CSRF');
@@ -253,8 +238,16 @@ export class UserPreferencesService {
         this.storage.setItem('oauthConfig', JSON.stringify(oauthConfig));
     }
 
-    get sso(): boolean {
-        return this.providers === 'OAUTH' && this.oauthConfig.implicitFlow;
+    get authType(): string {
+        if (this.storage.hasItem('authType')) {
+            return this.storage.getItem('authType');
+        } else {
+            return this.appConfig.get<string>('authType');
+        }
+    }
+
+    set authType(authType: string) {
+        this.storage.setItem('authType', authType);
     }
 
 }

@@ -118,6 +118,10 @@
       "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
     "HOST_SETTINGS": {
+      "TYPE-AUTH": "Authentication type",
+      "BASIC": "Basic Auth",
+      "SSSO": "SSO",
+      "TYPE-AUTH": "Authentication type",
       "PROVIDER": "Provider",
       "REQUIRED": "The field is required",
       "CS_URL_ERROR": "Content Services address doesn't match the URL format",
