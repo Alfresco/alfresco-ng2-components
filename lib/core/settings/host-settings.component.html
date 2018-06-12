@@ -4,10 +4,13 @@
     </mat-toolbar>
     <mat-card class="adf-setting-card">
         <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)">
-            <mat-form-field floatLabel="{{'CORE.HOST_SETTINGS.PROVIDER' | translate }}">
-                <mat-select placeholder="Provider" [formControl]="providersControl">
-                    <mat-option *ngFor="let provider of providers" [value]="provider.value">
-                        {{ provider.title }}
+
+            showSelectProviders {{showSelectProviders}}
+
+            <mat-form-field floatLabel="{{'CORE.HOST_SETTINGS.PROVIDER' | translate }}" *ngIf="showSelectProviders">
+                <mat-select  id="adf-provider-selector" placeholder="Provider" [formControl]="providersControl">
+                    <mat-option *ngFor="let provider of providers" [value]="provider">
+                        {{ provider }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -15,9 +18,9 @@
             <div class="adf-authentication-type">
                 <label> {{'CORE.HOST_SETTINGS.TYPE-AUTH' | translate }} : </label>
                 <mat-radio-group formControlName="authType" >
-                <mat-radio-button value="BASIC"> {{'CORE.HOST_SETTINGS.BASIC' | translate }}
+                <mat-radio-button value="BASIC">{{'CORE.HOST_SETTINGS.BASIC' | translate }}
                 </mat-radio-button>
-                <mat-radio-button value="OAUTH">{{'CORE.HOST_SETTINGS.SSSO' | translate }}
+                <mat-radio-button value="OAUTH">{{'CORE.HOST_SETTINGS.SSO' | translate }}
                 </mat-radio-button>
             </mat-radio-group>
             </div>
@@ -90,6 +93,12 @@
                     <mat-slide-toggle class="full-width" name="silentLogin" [color]="'primary'"
                                       formControlName="silentLogin">
                     </mat-slide-toggle>
+
+                    <label for="implicitFlow">{{ 'CORE.HOST_SETTINGS.IMPLICIT-FLOW'| translate }}</label>
+                    <mat-slide-toggle class="full-width" name="implicitFlow" [color]="'primary'"
+                                      formControlName="implicitFlow">
+                    </mat-slide-toggle>
+
 
                     <mat-form-field class="full-width" floatLabel="Redirect Uri">
                         <mat-label>{{ 'CORE.HOST_SETTINGS.REDIRECT'| translate }}</mat-label>

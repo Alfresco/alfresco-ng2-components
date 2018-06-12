@@ -123,6 +123,7 @@ export class AlfrescoApiService {
             ticketBpm: this.storage.getItem('ticket-BPM'),
             hostEcm: this.userPreference.ecmHost,
             hostBpm: this.userPreference.bpmHost,
+            authType: this.userPreference.authType,
             contextRootBpm: this.appConfig.get<string>('contextRootBpm'),
             contextRoot: this.appConfig.get<string>('contextRootEcm'),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',

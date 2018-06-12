@@ -7,11 +7,11 @@
       "IMAGE_NOT_AVAILABLE": "Preview not available"
     },
     "FIELD": {
-      "LOCALSTORAGE" : "Local storage",
+      "LOCALSTORAGE": "Local storage",
       "SOURCE": "Select source from ",
       "SHOW_FILE": "Show",
       "DOWNLOAD_FILE": "Download",
-      "REMOVE_FILE":"Remove",
+      "REMOVE_FILE": "Remove",
       "UPLOAD": "UPLOAD",
       "REQUIRED": "*Required",
       "VALIDATOR": {
@@ -121,6 +121,7 @@
       "TYPE-AUTH": "Authentication type",
       "BASIC": "Basic Auth",
       "SSSO": "SSO",
+      "IMPLICIT-FLOW": "implicitFlow",
       "TYPE-AUTH": "Authentication type",
       "PROVIDER": "Provider",
       "REQUIRED": "The field is required",
@@ -145,17 +146,17 @@
     },
     "METADATA": {
       "BASIC": {
-          "HEADER": "Properties",
-          "NAME": "Name",
-          "TITLE": "Title",
-          "DESCRIPTION": "Description",
-          "AUTHOR": "Author",
-          "MIMETYPE": "Mimetype",
-          "SIZE": "Size",
-          "CREATOR": "Creator",
-          "CREATED_DATE": "Created Date",
-          "MODIFIER": "Modifier",
-          "MODIFIED_DATE": "Modified Date"
+        "HEADER": "Properties",
+        "NAME": "Name",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "AUTHOR": "Author",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Size",
+        "CREATOR": "Creator",
+        "CREATED_DATE": "Created Date",
+        "MODIFIER": "Modifier",
+        "MODIFIED_DATE": "Modified Date"
       },
       "ACTIONS": {
         "EDIT": "Edit",
@@ -272,8 +273,8 @@
         "PAGE": "Page {{ pageNum }}"
       },
       "METADATA": {
-          "MORE_INFORMATION": "More information",
-          "LESS_INFORMATION": "Less information"
+        "MORE_INFORMATION": "More information",
+        "LESS_INFORMATION": "Less information"
       }
     },
     "PDF_DIALOG": {

@@ -33,11 +33,9 @@ export class HostSettingsComponent implements OnInit {
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 
     @Input()
-    providers = [
-        { title: 'BPM and ECM', value: 'ALL' },
-        { title: 'BPM', value: 'BPM' },
-        { title: 'ECM', value: 'ECM' }
-    ];
+    providers: string[] = ['BPM', 'ECM', 'ALL'];
+
+    showSelectProviders = true;
 
     form: FormGroup;
 
@@ -68,6 +66,10 @@ export class HostSettingsComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.providers.length === 1) {
+            this.showSelectProviders = false;
+        }
+
         let providerSelected = this.userPreference.providers;
 
         let authType = 'BASIC';

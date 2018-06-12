@@ -43,6 +43,53 @@ describe('HostSettingsComponent', () => {
         fixture.destroy();
     });
 
+    describe('Providers', () => {
+
+        beforeEach(() => {
+            userPreferences.providers = 'ECM';
+            userPreferences.authType = 'OAUTH';
+            userPreferences.oauthConfig = {
+                host: 'http://localhost:6543',
+                redirectUri: '/',
+                silentLogin: false,
+                implicitFlow: true,
+                clientId: 'activiti',
+                scope: 'openid',
+                secret: ''
+            };
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should not show the providers select box if you hav eine porovider', (done) => {
+            component.providers = ['BPM'];
+            component.ngOnInit();
+
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#adf-provider-selector')).toBeNull();
+                done();
+            });
+        });
+
+        it('should show the providers select box if you hav eine porovider', (done) => {
+            component.providers = ['BPM', 'ECM'];
+            component.ngOnInit();
+
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#adf-provider-selector')).not.toBeNull();
+                done();
+            });
+        });
+
+    });
+
     describe('BPM ', () => {
 
         let ecmUrlInput;
@@ -75,7 +122,7 @@ describe('HostSettingsComponent', () => {
             bpmUrlInput.dispatchEvent(new Event('input'));
         });
 
-        it('should have an invalid form when the inserted is wrong', (done) => {
+        it('should have an invalid form when the inserted url is wrong', (done) => {
             const url = 'wrong';
 
             component.form.statusChanges.subscribe((status: string) => {
@@ -217,11 +264,13 @@ describe('HostSettingsComponent', () => {
     describe('OAUTH ', () => {
 
         let bpmUrlInput;
+        let ecmUrlInput;
         let oauthHostUrlInput;
         let clientIdInput;
 
         beforeEach(() => {
-            userPreferences.providers = 'OAUTH';
+            userPreferences.providers = 'ALL';
+            userPreferences.authType = 'OAUTH';
             userPreferences.oauthConfig = {
                 host: 'http://localhost:6543',
                 redirectUri: '/',
@@ -233,6 +282,7 @@ describe('HostSettingsComponent', () => {
             };
             fixture.detectChanges();
             bpmUrlInput = element.querySelector('#bpmHost');
+            ecmUrlInput = element.querySelector('#ecmHost');
             oauthHostUrlInput = element.querySelector('#oauthHost');
             clientIdInput = element.querySelector('#clientId');
         });
@@ -241,13 +291,17 @@ describe('HostSettingsComponent', () => {
             fixture.destroy();
         });
 
-        it('should have a valid form when the BPM is correct', (done) => {
+        it('should have a valid form when the urls are correct', (done) => {
             const urlBpm = 'http://localhost:9999/bpm';
+            const urlEcm = 'http://localhost:9999/bpm';
 
             component.form.statusChanges.subscribe((status: string) => {
                 expect(status).toEqual('VALID');
                 done();
             });
+
+            ecmUrlInput.value = urlEcm;
+            ecmUrlInput.dispatchEvent(new Event('input'));
 
             bpmUrlInput.value = urlBpm;
             bpmUrlInput.dispatchEvent(new Event('input'));
