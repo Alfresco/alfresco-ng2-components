@@ -20,7 +20,6 @@ import {
     ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router,
     PRIMARY_OUTLET, UrlTree, UrlSegmentGroup, UrlSegment
 } from '@angular/router';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
 
@@ -28,42 +27,30 @@ import { AppConfigService } from '../app-config/app-config.service';
 export class AuthGuardEcm implements CanActivate {
     constructor(
         private authService: AuthenticationService,
-        private apiService: AlfrescoApiService,
         private router: Router,
         private appConfig: AppConfigService) {
     }
 
-    private get authApi() {
-        return this.apiService.getInstance().ecmAuth;
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        return this.checkLogin(state.url);
     }
 
-    private isLoggedIn(): Promise<boolean> {
-        if (this.authApi === undefined || !this.authApi.isLoggedIn()) {
-            return Promise.resolve(false);
-        }
-
-        return this.authApi
-            .validateTicket()
-            .then(() => true, () => false)
-            .catch(() => false);
-    }
-
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         return this.canActivate(route, state);
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-        return this.isLoggedIn().then(isLoggedIn => {
-            if (!isLoggedIn) {
-                const navigation = this.getNavigationCommands(state.url);
+    checkLogin(redirectUrl: string): boolean {
+        if (this.authService.isEcmLoggedIn()) {
+            return true;
+        }
 
-                this.authService.setRedirect({ provider: 'ECM', navigation });
-                const pathToLogin = this.getRouteDestinationForLogin();
-                this.router.navigate(['/' + pathToLogin]);
-            }
+        const navigation = this.getNavigationCommands(redirectUrl);
 
-            return isLoggedIn;
-        });
+        this.authService.setRedirect({ provider: 'ECM', navigation });
+        const pathToLogin = this.getRouteDestinationForLogin();
+        this.router.navigate(['/' + pathToLogin]);
+
+        return false;
     }
 
     private getRouteDestinationForLogin(): string {

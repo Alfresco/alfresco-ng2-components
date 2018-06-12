@@ -24,7 +24,7 @@ describe('AlfrescoApiService', () => {
     let service: AlfrescoApiService;
 
     beforeEach(() => {
-        service = new AlfrescoApiService(null, null);
+        service = new AlfrescoApiService(null, null, null);
     });
 
     it('should rase nodeChanged event with node payload', (done) => {

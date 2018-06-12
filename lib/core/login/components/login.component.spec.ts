@@ -25,6 +25,7 @@ import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
 import { Observable } from 'rxjs/Observable';
+import { OauthConfigModel } from '../../models/oauth-config.model';
 
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -589,7 +590,7 @@ describe('LoginComponent', () => {
     describe('SSO', () => {
 
         beforeEach(() => {
-            userPreferences.oauthConfig = { implicitFlow: true };
+            userPreferences.oauthConfig = <OauthConfigModel> { implicitFlow: true };
         });
 
         afterEach(() => {
@@ -609,7 +610,7 @@ describe('LoginComponent', () => {
 
         it('should not show the login base auth button', async(() => {
             spyOn(authService, 'isOauth').and.returnValue(true);
-            userPreferences.oauthConfig = { implicitFlow: true };
+            userPreferences.oauthConfig = <OauthConfigModel> { implicitFlow: true };
 
             component.ngOnInit();
             fixture.detectChanges();
@@ -619,7 +620,7 @@ describe('LoginComponent', () => {
 
         it('should  show the login SSO button', async(() => {
             spyOn(authService, 'isOauth').and.returnValue(true);
-            userPreferences.oauthConfig = { implicitFlow: true };
+            userPreferences.oauthConfig = <OauthConfigModel> { implicitFlow: true };
 
             component.ngOnInit();
             fixture.detectChanges();

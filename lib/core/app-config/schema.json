@@ -458,7 +458,11 @@
                 }
             }
         },
-        "oauth2": {
+        "authType": {
+          "description": "Kind of authentication BASIC or OAUTH, default value BASIC",
+          "type": "string"
+        },
+       "oauth2": {
           "description": "AUTH configuration parameters",
           "type": "object",
           "required": [ "host", "clientId", "secret", "scope" ],

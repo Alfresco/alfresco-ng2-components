@@ -13,7 +13,7 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 
 ```html
 <adf-host-settings>
-</adf-breadcrumb>
+</adf-host-settings>
 ```
 
 ## Class members
@@ -22,12 +22,12 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| providers | `string` | "ALL" | Determines which configurations are shown. Possible valid values are "ECM", "BPM" or "ALL". |
+| providers | `array` |  | Tell the component which provider option are available. Possible valid values are "ECM" (Content), "BPM" (Process) , "ALL" (Content and Process), 'OAUTH2' SSO . |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| bpmHostChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the bpm host URL is changed. |
-| ecmHostChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the ecm host URL is changed. |
+| bpmHostChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the bpm host URL is changed. **Deprecated:** in 2.4.0 |
+| ecmHostChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the ecm host URL is changed. **Deprecated:** in 2.4.0 |
 | error | `EventEmitter<string>` | Emitted when the URL is invalid. |
