@@ -7,10 +7,10 @@
                 matInput
                 type="number"  
                 class="form-control" 
-                formControlName="appIdCustom">
-                <mat-error *ngIf="appId.hasError('required')">
+                [formControl]="appId">
+                <!-- <mat-error *ngIf="appId.hasError('required')">
                         {{ errorMessage }}
-                </mat-error>
+                </mat-error> -->
         </mat-form-field>
         
 
@@ -19,7 +19,7 @@
             <input 
             matInput 
             class="form-control" 
-            formControlName="taskName">
+            [formControl]="taskName">
         </mat-form-field>
 
         <mat-form-field>
@@ -27,7 +27,7 @@
             <input 
             matInput 
             class="form-control" 
-            formControlName="taskProcessDefinitionId">
+            [formControl]="taskProcessDefinitionId">
             <mat-hint>SimpleProcess:1:2</mat-hint>
         </mat-form-field>
 
@@ -35,7 +35,7 @@
                 <mat-label>Assignment</mat-label>
                 <mat-select 
                 class="form-control" 
-                formControlName="taskAssignment">
+                [formControl]="taskAssignment">
                     <mat-option value="assignee">Assignee</mat-option>
                     <mat-option value="candidate">Candidate</mat-option>
                 </mat-select>
@@ -46,7 +46,7 @@
                 <mat-select 
 
                 class="form-control" 
-                formControlName="taskState">
+                [formControl]="taskState">
                     <mat-option value="all">All</mat-option>
                     <mat-option value="active">Active</mat-option>
                     <mat-option value="completed">Completed</mat-option>
@@ -57,7 +57,7 @@
                 <mat-label>Sort</mat-label>
                 <mat-select 
                 class="form-control" 
-                formControlName="taskSort">
+                [formControl]="taskSort">
                     <mat-option value="created-asc">Created (asc)</mat-option>
                     <mat-option value="created-desc">Created (desc)</mat-option>
                     <mat-option value="due-asc">Due (asc)</mat-option>
@@ -71,24 +71,19 @@
     </form>
 </div>
 
-<div *ngIf="isAppIdValid">
+<div>
     <adf-tasklist
-        [appId]="appIdDefault" 
+        [appId]="appId" 
         [name]="name" 
         [processDefinitionId]="processDefinitionId" 
         [assignment]="assignment" 
         [state]="state" 
         [sort]="sort"
-        (error)="invalidAppId()"
-        (success)="validAppId()"
         #taskList>
     </adf-tasklist>
     
     <adf-pagination 
         [target]="taskList">
     </adf-pagination>
-</div>
-<div *ngIf="!isAppIdValid" class="task-list-demo-error-message">
-    The app does not exist.
 </div>
 

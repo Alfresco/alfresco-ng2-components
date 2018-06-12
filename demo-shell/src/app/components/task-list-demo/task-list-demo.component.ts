@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 
 
@@ -27,25 +27,11 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 export class TaskListDemoComponent implements OnInit {
 
-    appIdDefault: number;
-
-    appIdCustom: number;
-
-    processDefinitionId: string;
-
-    state: string;
-
-    assignment: string;
-
-    name: string;
-
-    sort: string;
+    defaultAppId: number;
 
     taskListForm: FormGroup;
 
     errorMessage: string;
-
-    isAppIdValid: boolean;
 
     constructor(private route: ActivatedRoute,
                 private formBuilder: FormBuilder) {
@@ -55,9 +41,9 @@ export class TaskListDemoComponent implements OnInit {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
-                    this.appIdDefault = +params['id'];
+                    this.defaultAppId = +params['id'];
                 } else {
-                    this.appIdDefault = 0;
+                    this.defaultAppId = 0;
                 }
             });
         }
@@ -66,18 +52,18 @@ export class TaskListDemoComponent implements OnInit {
 
         this.buildForm();
 
-        this.validAppId();
-
     }
 
     buildForm() {
+
+
         this.taskListForm = this.formBuilder.group({
-            appIdCustom: [this.appIdDefault, Validators.required],
-            taskName: '',
-            taskProcessDefinitionId: '',
-            taskAssignment: '',
-            taskState: '',
-            taskSort: ''
+            appId: new FormControl(this.defaultAppId, Validators.required),
+            taskName: new FormControl(''),
+            taskProcessDefinitionId: new FormControl(''),
+            taskAssignment: new FormControl(''),
+            taskState: new FormControl(''),
+            taskSort: new FormControl('')
         });
 
         this.taskListForm.valueChanges
@@ -88,10 +74,7 @@ export class TaskListDemoComponent implements OnInit {
     }
 
     filterTasks(taskFilter: any) {
-
-        this.validAppId();
-
-        this.appIdDefault = taskFilter.appIdCustom;
+        this.appId = taskFilter.appId;
         this.processDefinitionId = taskFilter.taskProcessDefinitionId;
         this.name = taskFilter.taskName;
         this.assignment = taskFilter.taskAssignment;
@@ -103,13 +86,6 @@ export class TaskListDemoComponent implements OnInit {
         this.taskListForm.reset();
     }
 
-    invalidAppId() {
-        this.isAppIdValid = false;
-    }
 
-    validAppId() {
-        this.isAppIdValid = true;
-    }
-
-    get appId() { return this.taskListForm.get('appIdCustom'); }
+    // get appIds() { return this.taskListForm.get('appId'); }
 }
