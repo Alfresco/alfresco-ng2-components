@@ -120,7 +120,7 @@
     "HOST_SETTINGS": {
       "TYPE-AUTH": "Authentication type",
       "BASIC": "Basic Auth",
-      "SSSO": "SSO",
+      "SSO": "SSO",
       "IMPLICIT-FLOW": "implicitFlow",
       "TYPE-AUTH": "Authentication type",
       "PROVIDER": "Provider",
