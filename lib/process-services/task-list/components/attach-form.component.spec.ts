@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 
-describe('TaskStandaloneComponent', () => {
+describe('AttachFormComponent', () => {
     let component: AttachFormComponent;
     let fixture: ComponentFixture<AttachFormComponent>;
     let element: HTMLElement;

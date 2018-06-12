@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { LogService, FormService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-task-standalone',
@@ -24,11 +25,11 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
     encapsulation: ViewEncapsulation.None
 })
 
-export class TaskStandaloneComponent {
+export class TaskStandaloneComponent implements OnInit {
 
-    /** Name of the task. */
+    /** Details of the task. */
     @Input()
-    taskName: string;
+    taskDetails;
 
     /** If true then Task completed message is shown and `Complete` and `Cancel` buttons are hidden. */
     @Input()
@@ -50,11 +51,18 @@ export class TaskStandaloneComponent {
     @Output()
     complete: EventEmitter<void> = new EventEmitter<void>();
 
-    /** Emitted when the form associated with the form task is attached. */
-    @Output()
-    showAttachForm: EventEmitter<void> = new EventEmitter<void>();
+    showAttachForm: boolean = false;
 
-    constructor() { }
+    taskName: string;
+
+    constructor(
+        private formService: FormService,
+        private logService: LogService
+    ) { }
+
+    ngOnInit() {
+        this.taskName = this.taskDetails.name;
+    }
 
     onCancelButtonClick(): void {
         this.cancel.emit();
@@ -62,10 +70,6 @@ export class TaskStandaloneComponent {
 
     onCompleteButtonClick(): void {
         this.complete.emit();
-    }
-
-    onAttachFormButtonClick(): void {
-        this.showAttachForm.emit();
     }
 
     hasCompleteButton(): boolean {
@@ -78,5 +82,21 @@ export class TaskStandaloneComponent {
 
     hasAttachFormButton(): boolean {
         return !this.isCompleted;
+    }
+
+    onShowAttachForm() {
+        this.showAttachForm = true;
+    }
+
+    onCancelAttachForm() {
+        this.showAttachForm = false;
+    }
+
+    onCompleteAttachForm() {
+        this.showAttachForm = false;
+
+        this.formService.getTaskForm(this.taskDetails.id)
+            .subscribe((res) => {
+            }, error => this.logService.error('Could not load forms'));
     }
 }

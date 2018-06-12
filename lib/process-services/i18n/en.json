@@ -152,6 +152,9 @@
       "NO_FORM_MESSAGE": "No forms attached",
       "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
       "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
+    },
+    "ATTACH_FORM":{
+      "SELECT_FORM": "Select Form To Attach"
     }
   },
   "ADF_PROCESS_LIST": {

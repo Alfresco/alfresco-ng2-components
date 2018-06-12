@@ -32,7 +32,7 @@ export class AttachFormComponent implements OnInit {
                 private logService: LogService) { }
 
     @Input()
-    taskDetails;
+    taskId;
 
     /** Emitted when the "Cancel" button is clicked. */
     @Output()
@@ -60,7 +60,7 @@ export class AttachFormComponent implements OnInit {
 
     onAttachFormButtonClick(): void {
         this.completeAttachForm.emit();
-        this.attachForm(this.taskDetails.id, this.formKey);
+        this.attachForm(this.taskId, this.formKey);
     }
 
     private loadFormsTask(): void {
