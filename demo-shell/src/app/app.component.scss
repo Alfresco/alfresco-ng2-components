@@ -1,7 +1,7 @@
 router-outlet[name="overlay"] + * {
     width: 100%;
     height: 100%;
-    z-index: 999999;
+    z-index: 999;
     position: absolute;
     top: 0;
     right: 0;
