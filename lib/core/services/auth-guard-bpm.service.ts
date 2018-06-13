@@ -45,7 +45,7 @@ export class AuthGuardBpm implements CanActivate, CanActivateChild {
         }
 
         if (!this.authService.isOauth() || this.isOAuthWithoutSilentLogin() ) {
-            this.authService.setRedirect({ provider: 'BPM', navigation: redirectUrl });
+            this.authService.setRedirect({ provider: 'BPM', url: redirectUrl });
             const pathToLogin = this.getRouteDestinationForLogin();
             this.router.navigate(['/' + pathToLogin]);
         }

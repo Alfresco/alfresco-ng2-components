@@ -46,7 +46,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             return true;
         }
         if (!this.authService.isOauth() || this.isOAuthWithoutSilentLogin() ) {
-            this.authService.setRedirect({ provider: 'ALL', navigation: redirectUrl } );
+            this.authService.setRedirect({ provider: 'ALL', url: redirectUrl } );
 
             const pathToLogin = this.getRouteDestinationForLogin();
             this.router.navigate(['/' + pathToLogin]);

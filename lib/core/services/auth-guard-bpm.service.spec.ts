@@ -76,7 +76,7 @@ describe('AuthGuardService BPM', () => {
         authGuard.canActivate(null, router);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'BPM', navigation: 'some-url'
+            provider: 'BPM', url: 'some-url'
         });
         expect(authService.getRedirect('BPM')).toEqual('some-url');
     }));
@@ -89,7 +89,7 @@ describe('AuthGuardService BPM', () => {
         authGuard.canActivate(null, router);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'BPM', navigation: 'some-url;q=123'
+            provider: 'BPM', url: 'some-url;q=123'
         });
         expect(authService.getRedirect('BPM')).toEqual('some-url;q=123');
     }));
@@ -102,7 +102,7 @@ describe('AuthGuardService BPM', () => {
         authGuard.canActivate(null, router);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'BPM', navigation: '/'
+            provider: 'BPM', url: '/'
         });
         expect(authService.getRedirect('BPM')).toEqual('/');
     }));
@@ -116,7 +116,7 @@ describe('AuthGuardService BPM', () => {
         authGuard.canActivate(null, router);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'BPM', navigation: 'some-url'
+            provider: 'BPM', url: 'some-url'
         });
         expect(routerService.navigate).toHaveBeenCalledWith(['/fakeLoginRoute']);
     }));

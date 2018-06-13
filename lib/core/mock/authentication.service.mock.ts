@@ -21,14 +21,14 @@ import { RedirectionModel } from '../models/redirection.model';
 
 // TODO: should be extending AuthenticationService
 export class AuthenticationMock /*extends AuthenticationService*/ {
-    private redirect: RedirectionModel = null;
+    private redirectUrl: RedirectionModel = null;
 
     setRedirectUrl(url: RedirectionModel) {
-        this.redirect = url;
+        this.redirectUrl = url;
     }
 
     getRedirectUrl(): string|null {
-        return this.redirect ? this.redirect.navigation : null;
+        return this.redirectUrl ? this.redirectUrl.url : null;
     }
 
     // TODO: real auth service returns Observable<string>

@@ -104,16 +104,16 @@ describe('LoginComponent', () => {
         spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
-        spyOn(router, 'navigateByUrl');
+        spyOn(router, 'navigate');
         loginWithCredentials('fake-username', 'fake-password');
-        expect(router.navigateByUrl).toHaveBeenCalledWith('/home', { skipLocationChange: false });
+        expect(router.navigate).toHaveBeenCalledWith([redirect]);
     });
 
     it('should redirect to previous route state on successful login', () => {
         spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
-        authService.setRedirect({ provider: 'ECM', navigation: 'some-route' });
+        authService.setRedirect({ provider: 'ECM', url: 'some-route' });
 
         spyOn(router, 'navigateByUrl');
 

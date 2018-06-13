@@ -43,7 +43,7 @@ export class AuthGuardEcm implements CanActivate {
             return true;
         }
 
-        this.authService.setRedirect({ provider: 'ECM', navigation: redirectUrl });
+        this.authService.setRedirect({ provider: 'ECM', url: redirectUrl });
         const pathToLogin = this.getRouteDestinationForLogin();
         this.router.navigate(['/' + pathToLogin]);
 
