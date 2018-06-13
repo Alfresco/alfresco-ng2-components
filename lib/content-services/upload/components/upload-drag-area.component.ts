@@ -119,10 +119,18 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
         let isAllowed: boolean = this.contentService.hasPermission(event.detail.data.obj.entry, PermissionsEnum.CREATE);
         if (isAllowed) {
             let fileInfo: FileInfo[] = event.detail.files;
+            if (this.isTargetNodeFolder(event)) {
+                const destinationFolderName = event.detail.data.obj.entry.name;
+                fileInfo.map((file) => file.relativeFolder = file.relativeFolder.concat(destinationFolderName));
+            }
             if (fileInfo && fileInfo.length > 0) {
                 this.uploadFilesInfo(fileInfo);
             }
         }
+    }
+
+    private isTargetNodeFolder(event: CustomEvent): boolean {
+        return event.detail.data.obj && event.detail.data.obj.entry.isFolder;
     }
 
 }
