@@ -18,6 +18,7 @@
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { Validators, FormGroup, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
 import { UserPreferencesService } from '../services/user-preferences.service';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Component({
     selector: 'adf-host-settings',
@@ -62,6 +63,7 @@ export class HostSettingsComponent implements OnInit {
     bpmHostChange = new EventEmitter<string>();
 
     constructor(private formBuilder: FormBuilder,
+                private alfrescoApiService: AlfrescoApiService,
                 private userPreference: UserPreferencesService) {
     }
 
@@ -168,6 +170,8 @@ export class HostSettingsComponent implements OnInit {
         }
 
         this.userPreference.authType = values.authType;
+
+        this.alfrescoApiService.reset();
 
         this.success.emit(true);
     }

@@ -20,6 +20,7 @@ import { HostSettingsComponent } from './host-settings.component';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { UserPreferencesService } from '../services/user-preferences.service';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 describe('HostSettingsComponent', () => {
 
@@ -27,6 +28,7 @@ describe('HostSettingsComponent', () => {
     let component: HostSettingsComponent;
     let userPreferences: UserPreferencesService;
     let element: any;
+    let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [CoreTestingModule]
@@ -36,6 +38,7 @@ describe('HostSettingsComponent', () => {
         fixture = TestBed.createComponent(HostSettingsComponent);
         component = fixture.componentInstance;
         userPreferences = TestBed.get(UserPreferencesService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
         element = fixture.nativeElement;
     });
 
@@ -84,6 +87,20 @@ describe('HostSettingsComponent', () => {
 
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#adf-provider-selector')).not.toBeNull();
+                done();
+            });
+        });
+
+        it('should reset the apiservice after submit', (done) => {
+            let resetSpy = spyOn(alfrescoApiService, 'reset');
+            component.providers = ['BPM', 'ECM'];
+            component.ngOnInit();
+
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                element.querySelector('#host-button').click();
+                expect(resetSpy).toHaveBeenCalled();
                 done();
             });
         });
