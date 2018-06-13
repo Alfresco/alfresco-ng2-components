@@ -24,6 +24,7 @@
     },
     "externalNameLinks": {
         "Blob": "https://developer.mozilla.org/en-US/docs/Web/API/Blob",
+        "Promise": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
         "EventEmitter": "https://angular.io/api/core/EventEmitter",
         "MatSnackBarRef": "https://material.angular.io/components/snack-bar/overview",
         "TemplateRef": "https://angular.io/api/core/TemplateRef",
