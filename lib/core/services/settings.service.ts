@@ -66,12 +66,12 @@ export class SettingsService {
     /** @deprecated in 1.7.0 */
     public getProviders(): string {
         this.logService.log(`SettingsService.getProviders is deprecated. Use UserPreferencesService.authType instead.`);
-        return this.preferences.authType;
+        return this.preferences.providers;
     }
 
     /** @deprecated in 1.7.0 */
     public setProviders(providers: string) {
         this.logService.log(`SettingsService.getProviders is deprecated. Use UserPreferencesService.authType instead.`);
-        this.preferences.authType = providers;
+        this.preferences.providers = providers;
     }
 }

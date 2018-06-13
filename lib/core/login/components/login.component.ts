@@ -16,21 +16,14 @@
  */
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    TemplateRef,
-    ViewEncapsulation
+    Component, ElementRef, EventEmitter, Input, OnInit,
+    Output, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { LogService } from '../../services/log.service';
-import { SettingsService } from '../../services/settings.service';
 import { TranslationService } from '../../services/translation.service';
 import { UserPreferencesService } from '../../services/user-preferences.service';
 
@@ -90,8 +83,9 @@ export class LoginComponent implements OnInit {
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
-    /** Possible valid values are ECM, BPM or ALL. By default, this component
-     * will log in only to ECM. If you want to log in in both systems then use ALL.
+    /** Possible valid values are ECM, BPM or ALL.
+     * deprecated in 2.4.0 use the providers property in the the app.config.json
+     * @deprecated 2.4.0
      */
     @Input()
     providers: string;
@@ -140,12 +134,10 @@ export class LoginComponent implements OnInit {
      * Constructor
      * @param _fb
      * @param authService
-     * @param settingsService
      * @param translate
      */
     constructor(private _fb: FormBuilder,
                 private authService: AuthenticationService,
-                private settingsService: SettingsService,
                 private translateService: TranslationService,
                 private logService: LogService,
                 private elementRef: ElementRef,
@@ -177,13 +169,9 @@ export class LoginComponent implements OnInit {
      * @param event
      */
     onSubmit(values: any) {
-
-        if (!this.checkRequiredParams()) {
-            return false;
+        if (this.disableCsrf !== null && this.disableCsrf !== undefined) {
+            this.userPreferences.disableCSRF = this.disableCsrf;
         }
-
-        this.settingsService.setProviders(this.providers);
-        this.settingsService.csrfDisabled = this.disableCsrf;
 
         this.disableError();
         const args = new LoginSubmitEvent({ controls: { username: this.form.controls.username } });
@@ -270,25 +258,6 @@ export class LoginComponent implements OnInit {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
 
         }
-    }
-
-    /**
-     * Check the require parameter
-     */
-    private checkRequiredParams(): boolean {
-
-        let isAllParamPresent: boolean = true;
-
-        if (this.providers === undefined || this.providers === null || this.providers === '') {
-            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS';
-            this.enableError();
-            let messageProviders: any;
-            messageProviders = this.translateService.get(this.errorMsg);
-            this.error.emit(new LoginErrorEvent(messageProviders.value));
-            isAllParamPresent = false;
-        }
-
-        return isAllParamPresent;
     }
 
     /**
