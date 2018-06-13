@@ -62,7 +62,7 @@ export class HostSettingsComponent implements OnInit {
     bpmHostChange = new EventEmitter<string>();
 
     constructor(private formBuilder: FormBuilder,
-                private userPreference: UserPreferencesService) {
+                private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
@@ -70,16 +70,16 @@ export class HostSettingsComponent implements OnInit {
             this.showSelectProviders = false;
         }
 
-        let providerSelected = this.userPreference.providers;
+        let providerSelected = this.userPreferencesService.providers;
 
         this.form = this.formBuilder.group({
             providersControl: [providerSelected, Validators.required],
-            authType: this.userPreference.authType
+            authType: this.userPreferencesService.authType
         });
 
         this.addFormGroups();
 
-        if (this.userPreference.authType === 'OAUTH') {
+        if (this.userPreferencesService.authType === 'OAUTH') {
             this.addOAuthFormGroup();
         }
 
@@ -127,7 +127,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createOAuthFormGroup(): AbstractControl {
-        const oAuthConfig: any = this.userPreference.oauthConfig ? this.userPreference.oauthConfig : {};
+        const oAuthConfig: any = this.userPreferencesService.oauthConfig ? this.userPreferencesService.oauthConfig : {};
         return this.formBuilder.group({
             host: [oAuthConfig.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
             clientId: [oAuthConfig.clientId, Validators.required],
@@ -140,11 +140,11 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createBPMFormControl(): AbstractControl {
-        return new FormControl(this.userPreference.bpmHost, [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+        return new FormControl(this.userPreferencesService.bpmHost, [Validators.required, Validators.pattern(this.HOST_REGEX)]);
     }
 
     private createECMFormControl(): AbstractControl {
-        return new FormControl(this.userPreference.ecmHost, [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+        return new FormControl(this.userPreferencesService.ecmHost, [Validators.required, Validators.pattern(this.HOST_REGEX)]);
     }
 
     onCancel() {
@@ -152,7 +152,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     onSubmit(values: any) {
-        this.userPreference.providers = values.providersControl;
+        this.userPreferencesService.providers = values.providersControl;
 
         if (this.isBPM()) {
             this.saveBPMValues(values);
@@ -167,21 +167,21 @@ export class HostSettingsComponent implements OnInit {
             this.saveOAuthValues(values);
         }
 
-        this.userPreference.authType = values.authType;
+        this.userPreferencesService.authType = values.authType;
 
         this.success.emit(true);
     }
 
     private saveOAuthValues(values: any) {
-        this.userPreference.oauthConfig = values.oauthConfig;
+        this.userPreferencesService.oauthConfig = values.oauthConfig;
     }
 
     private saveBPMValues(values: any) {
-        this.userPreference.bpmHost = values.bpmHost;
+        this.userPreferencesService.bpmHost = values.bpmHost;
     }
 
     private saveECMValues(values: any) {
-        this.userPreference.ecmHost = values.ecmHost;
+        this.userPreferencesService.ecmHost = values.ecmHost;
     }
 
     isBPM(): boolean {

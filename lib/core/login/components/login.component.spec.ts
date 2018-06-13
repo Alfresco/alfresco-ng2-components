@@ -562,19 +562,6 @@ describe('LoginComponent', () => {
         expect(element.querySelector('#password').type).toEqual('password');
     });
 
-    it('should emit error event when the providers is undefined', async(() => {
-        component.error.subscribe((error) => {
-            fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
-            expect(error).toEqual(new LoginErrorEvent('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS'));
-        });
-
-        loginWithCredentials('fake-username', 'fake-password', null);
-    }));
-
     it('should emit only the username and not the password as part of the executeSubmit', async(() => {
         component.executeSubmit.subscribe((res) => {
             fixture.detectChanges();
