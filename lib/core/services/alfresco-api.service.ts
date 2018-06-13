@@ -106,7 +106,7 @@ export class AlfrescoApiService {
             this.userPreferencesService.select(UserPreferenceValues.authType),
             this.userPreferencesService.select(UserPreferenceValues.providers)).subscribe(() => {
             this.reset();
-        })
+        });
 
     }
 
