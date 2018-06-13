@@ -36,6 +36,7 @@
     <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
         <adf-upload-drag-area fxFlex="1 1 auto"
                               [disabled]="disableDragArea"
+                              [acceptedFilesType]="acceptedFilesType"
                               [rootFolderId]="getDocumentListCurrentFolderId()"
                               [versioning]="versioning"
                               [adf-node-permission]="'create'"
