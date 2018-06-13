@@ -72,14 +72,9 @@ export class HostSettingsComponent implements OnInit {
 
         let providerSelected = this.userPreference.providers;
 
-        let authType = 'BASIC';
-        if (this.userPreference.authType === 'OAUTH') {
-            authType = this.userPreference.authType;
-        }
-
         this.form = this.formBuilder.group({
             providersControl: [providerSelected, Validators.required],
-            authType: authType
+            authType: this.userPreference.authType
         });
 
         this.addFormGroups();
@@ -132,11 +127,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createOAuthFormGroup(): AbstractControl {
-        let oAuthConfig: any = {};
-        if (this.userPreference.authType === 'OAUTH') {
-            oAuthConfig = this.userPreference.oauthConfig;
-        }
-
+        const oAuthConfig: any = this.userPreference.oauthConfig ? this.userPreference.oauthConfig : {};
         return this.formBuilder.group({
             host: [oAuthConfig.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
             clientId: [oAuthConfig.clientId, Validators.required],

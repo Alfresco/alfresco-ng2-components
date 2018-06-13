@@ -242,7 +242,7 @@ export class UserPreferencesService {
         if (this.storage.hasItem('authType')) {
             return this.storage.getItem('authType');
         } else {
-            return this.appConfig.get<string>('authType');
+            return this.appConfig.get<string>('authType', 'BASIC');
         }
     }
 
