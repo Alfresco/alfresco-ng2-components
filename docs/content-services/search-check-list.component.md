@@ -4,9 +4,9 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# Search check list component 
+# Search check list component
 
-Implements a checklist widget for the Search Filter component.
+Implements a checklist widget for the [Search Filter component](../content-services/search-filter.component.md).
 
 ![Check list widget screenshot](../docassets/images/search-check-list.png)
 
@@ -47,7 +47,7 @@ Implements a checklist widget for the Search Filter component.
 ## Details
 
 This widget displays a list of checkboxes, each of which toggles a particular query fragment
-in the search. See the Search filter component for full details of how to use the widgets
+in the search. See the [Search filter component](../content-services/search-filter.component.md) for full details of how to use the widgets
 in a search query.
 
 In the settings, the `options` array, defines the checkboxes that toggle the supplied query
@@ -69,9 +69,9 @@ items in the list.
 
 ## See also
 
-- Search filter component
-- Search date range component
-- Search number range component
-- Search radio component
-- Search slider component
-- Search text component
+-   [Search filter component](../content-services/search-filter.component.md)
+-   [Search date range component](../content-services/search-date-range.component.md)
+-   [Search number range component](../content-services/search-number-range.component.md)
+-   [Search radio component](../content-services/search-radio.component.md)
+-   [Search slider component](../content-services/search-slider.component.md)
+-   [Search text component](../content-services/search-text.component.md)

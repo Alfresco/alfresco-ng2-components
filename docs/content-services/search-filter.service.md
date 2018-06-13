@@ -4,14 +4,14 @@ Status: Active
 Last reviewed: 2018-06-12
 ---
 
-# Search filter service 
+# Search filter service
 
-Registers widgets for use with the Search Filter component.
+Registers widgets for use with the [Search Filter component](../content-services/search-filter.component.md).
 
 ## Details
 
 This component keeps track of all widgets registered for use with the
-Search Filter component. All the built-in widgets are registered by default
+[Search Filter component](../content-services/search-filter.component.md). All the built-in widgets are registered by default
 but you should register any new custom widgets you create explicitly:
 
 ```ts
@@ -32,5 +32,5 @@ custom search widgets.
 
 ## See also
 
-- Search Widget interface
-- Search Filter component
+-   [`SearchWidget`](../../lib/content-services/search/search-widget.interface.ts)
+-   [Search Filter component](../content-services/search-filter.component.md)

@@ -4,9 +4,9 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# Search text component 
+# Search text component
 
-Implements a text input widget for the Search Filter component.
+Implements a text input widget for the [Search Filter component](../content-services/search-filter.component.md).
 
 ![Text Widget](../docassets/images/search-text.png)
 
@@ -43,18 +43,17 @@ Implements a text input widget for the Search Filter component.
 | pattern | string | Regular expression pattern to restrict the format of the input text |
 | placeholder | string | Text displayed in the widget when the input string is empty |
 
-
 ## Details
 
 This component lets the user add a text value to search for in the specified
-`field`. See the Search filter component for full
+`field`. See the [Search filter component](../content-services/search-filter.component.md) for full
 details of how to use widgets in a search query.
 
 ## See also
 
-- Search filter component
-- Search check list component
-- Search date range component
-- Search number range component
-- Search radio component
-- Search slider component
+-   [Search filter component](../content-services/search-filter.component.md)
+-   [Search check list component](../content-services/search-check-list.component.md)
+-   [Search date range component](../content-services/search-date-range.component.md)
+-   [Search number range component](../content-services/search-number-range.component.md)
+-   [Search radio component](../content-services/search-radio.component.md)
+-   [Search slider component](../content-services/search-slider.component.md)

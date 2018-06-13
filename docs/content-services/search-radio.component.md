@@ -4,9 +4,9 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# Search radio component 
+# Search radio component
 
-Implements a radio button list widget for the Search Filter component.
+Implements a radio button list widget for the [Search Filter component](../content-services/search-filter.component.md).
 
 ![Radio Widget screenshot](../docassets/images/search-radio.png)
 
@@ -43,14 +43,14 @@ Implements a radio button list widget for the Search Filter component.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| options | `array` | Array of objects with `name` and `value` properties. Each object defines a radio button, labelled with `name`, that adds the query fragment in `value` to the query when enabled. Add the `default` property to one item to have it selected initially when the widget is displayed. |
+| options | `array` | Array of objects with `name` and `value` properties. Each object defines a radio button, labelled with `name`, that adds the query fragment in `value` to the query when enabled. Set the `default` property to `true` for one item to have it selected initially when the widget is displayed. |
 
 ## Details
 
 This component displays a list of radio buttons, each of which toggles a particular
 query fragment in the search. This behaviour is very similar to that of the
-Search check list component except only one item at a time can be selected. See the
-Search filter component for full details of how to use the widgets in a search query.
+[Search check list component](../content-services/search-check-list.component.md) except only one item at a time can be selected. See the
+[Search filter component](../content-services/search-filter.component.md) for full details of how to use the widgets in a search query.
 
 The component can be set to split a long list of buttons into separate pages
 using the `pageSize` value as the number of buttons to show per page (default is 5).
@@ -59,9 +59,9 @@ buttons as appropriate.
 
 ## See also
 
-- Search filter component
-- Search check list component
-- Search date range component
-- Search number range component
-- Search slider component
-- Search text component
+-   [Search filter component](../content-services/search-filter.component.md)
+-   [Search check list component](../content-services/search-check-list.component.md)
+-   [Search date range component](../content-services/search-date-range.component.md)
+-   [Search number range component](../content-services/search-number-range.component.md)
+-   [Search slider component](../content-services/search-slider.component.md)
+-   [Search text component](../content-services/search-text.component.md)
