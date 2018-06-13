@@ -83,8 +83,9 @@ export class LoginComponent implements OnInit {
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
-    /** Possible valid values are ECM, BPM or ALL. If no providers are defined the value will be get from the providers value of the app.config.json
-     * If no app.config.json is definet By default, this component will log in only to ECM. If you want to log in in both systems then use ALL.
+    /** Possible valid values are ECM, BPM or ALL.
+     * deprecated in 2.4.0 use the providers property in the the app.config.json
+     * @deprecated 2.4.0
      */
     @Input()
     providers: string;
@@ -168,11 +169,6 @@ export class LoginComponent implements OnInit {
      * @param event
      */
     onSubmit(values: any) {
-
-        if (this.providers) {
-            this.userPreferences.providers = this.providers;
-        }
-
         if (this.disableCsrf !== null && this.disableCsrf !== undefined) {
             this.userPreferences.disableCSRF = this.disableCsrf;
         }
