@@ -102,6 +102,7 @@
         "people-selector",
         "sidenav-layout-",
         "layout-container",
-        "search-"
+        "search-",
+        "empty-custom-content"
     ]
 }

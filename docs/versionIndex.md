@@ -6,10 +6,44 @@ of components organized by ADF libraries.
 
 ## Versions
 
+-   [v2.4.0](#v240)
 -   [v2.3.0](#v230)
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v2.4.0
+
+**Release:** Forthcoming<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.3<br/>
+
+### Components added
+
+<!--v240 start-->
+
+-   [About component](core/about.component.md)
+-   [Add permission dialog component](content-services/add-permission-dialog.component.md)
+-   [Add permission panel component](content-services/add-permission-panel.component.md)
+-   [Add permission component](content-services/add-permission.component.md)
+-   [App config pipe](core/app-config.pipe.md)
+-   [Buttons menu component](core/buttons-menu.component.md)
+-   [Empty content component](core/empty-content.component.md)
+-   [Error content component](core/error-content.component.md)
+-   [Menu button model](core/menu-button.model.md)
+-   [Node permission dialog service](content-services/node-permission-dialog.service.md)
+-   [Search check list component](content-services/search-check-list.component.md)
+-   [Search date range component](content-services/search-date-range.component.md)
+-   [Search filter service](content-services/search-filter.service.md)
+-   [Search number range component](content-services/search-number-range.component.md)
+-   [Search radio component](content-services/search-radio.component.md)
+-   [Search slider component](content-services/search-slider.component.md)
+-   [Search text component](content-services/search-text.component.md)
+-   [Sorting picker component](core/sorting-picker.component.md)
+
+<!--v240 end-->
+
+([Back to top](#versions))
 
 ## v2.3.0
 
@@ -130,7 +164,6 @@ of components organized by ADF libraries.
 -   [Dropdown breadcrumb component](content-services/dropdown-breadcrumb.component.md)
 -   [Ecm user model](core/ecm-user.model.md)
 -   [Ecm user service](core/ecm-user.service.md)
--   [Error content component](core/error-content.component.md)
 -   [Favorites api service](core/favorites-api.service.md)
 -   [File draggable directive](content-services/file-draggable.directive.md)
 -   [File size pipe](core/file-size.pipe.md)

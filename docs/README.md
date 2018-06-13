@@ -56,13 +56,12 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [About component](core/about.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | This component allow you to have a general overview of the version of ADF installed and the status of the [Content service](../core/content.service.md) and [Process service](../process-services/process.service.md). | [Source](../lib/core/about/about.component.ts) |
-| [Buttons menu component](core/buttons-menu.component.md) | Displays buttons on a responsive menu. | [Source](../lib/core/buttons-menu/buttons-menu.component.ts) |
+| [Buttons menu component](core/buttons-menu.component.md) | Displays buttons on a responsive menu.  | [Source](../lib/core/buttons-menu/buttons-menu.component.ts) |
 | [Card view component](core/card-view.component.md) | Displays a configurable property list renderer. | [Source](../lib/core/card-view/components/card-view/card-view.component.ts) |
 | [Accordion group component](core/accordion-group.component.md) | Adds a collapsible panel to an accordion menu. | [Source](../lib/core/collapsable/accordion-group.component.ts) |
 | [Accordion component](core/accordion.component.md) | Creates a collapsible accordion menu. | [Source](../lib/core/collapsable/accordion.component.ts) |
 | [Comment list component](core/comment-list.component.md) | Shows a list of comments. | [Source](../lib/core/comments/comment-list.component.ts) |
 | [Comments component](core/comments.component.md) | Displays comments from users involved in a specified task or content and allows an involved user to add a comment to a task or a content. | [Source](../lib/core/comments/comments.component.ts) |
-| [Sorting picker component](core/sorting-picker.component.md) | Provides an ability to pick one of the predefined sorting definitions and define sorting direction: | [Source](../lib/core/components/sorting-picker/sorting-picker.component.ts) |
 | [Data column component](core/data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../lib/core/data-column/data-column.component.ts) |
 | [Datatable component](core/datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../lib/core/datatable/components/datatable/datatable.component.ts) |
 | [Form field component](core/form-field.component.md) | A form field in an APS form. | [Source](../lib/core/form/components/form-field/form-field.component.ts) |
@@ -79,7 +78,8 @@ for more information about installing and using the source code.
 | [Host settings component](core/host-settings.component.md) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../lib/core/settings/host-settings.component.ts) |
 | [Sidebar action menu component](core/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/sidenav-layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav layout component](core/sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../lib/core/sidenav-layout/components/sidenav-layout/sidenav-layout.component.ts) |
-| [Empty content component](core/empty-content.component.md) | Provides a generic "Empty Content" UI and can used as a placeholder for components that need to show different content when being empty. | [Source](../lib/core/templates/empty-content/empty-content.component.ts) |
+| [Sorting picker component](core/sorting-picker.component.md) | Selects from a set of predefined sorting definitions and directions. | [Source](../lib/core/sorting-picker/sorting-picker.component.ts) |
+| [Empty content component](core/empty-content.component.md) | Provides a generic "Empty Content" placeholder for components. | [Source](../lib/core/templates/empty-content/empty-content.component.ts) |
 | [Error content component](core/error-content.component.md) | Displays info about a specific error. | [Source](../lib/core/templates/error-content/error-content.component.ts) |
 | [Toolbar divider component](core/toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../lib/core/toolbar/toolbar-divider.component.ts) |
 | [Toolbar title component](core/toolbar-title.component.md) | Supplies custom HTML to be included in a [Toolbar component](../core/toolbar.component.md) title. | [Source](../lib/core/toolbar/toolbar-title.component.ts) |
@@ -104,7 +104,6 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Menu button model](core/menu-button.model.md) | Defines the properties for an item in a [Buttons Menu component](../core/buttons-menu.component.md). | [Source](../lib/core/buttons-menu/menu-button.model.ts) |
 | [Form field model](core/form-field.model.md) | Contains the value and metadata for a field of a [`Form`](../../lib/process-services/task-list/models/form.model.ts) component. | [Source](../lib/core/form/components/widgets/core/form-field.model.ts) |
 | [Comment process model](core/comment-process.model.md) | Represents a comment added to a Process Services task or process instance. | [Source](../lib/core/models/comment-process.model.ts) |
 | [Product version model](core/product-version.model.md) | Contains version and license information classes for Alfresco products. | [Source](../lib/core/models/product-version.model.ts) |
@@ -148,7 +147,7 @@ for more information about installing and using the source code.
 | [Discovery api service](core/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/services/discovery-api.service.ts) |
 | [Favorites api service](core/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/services/favorites-api.service.ts) |
 | [Highlight transform service](core/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/services/highlight-transform.service.ts) |
-| [Log service](core/log.service.md) | Provide a log functionality for your ADF application. | [Source](../lib/core/services/log.service.ts) |
+| [Log service](core/log.service.md) | Provides log functionality. | [Source](../lib/core/services/log.service.ts) |
 | [Nodes api service](core/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/services/nodes-api.service.ts) |
 | [Notification service](core/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/services/notification.service.ts) |
 | [Page title service](core/page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
@@ -208,10 +207,16 @@ for more information about installing and using the source code.
 | [Add permission panel component](content-services/add-permission-panel.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../lib/content-services/permission-manager/components/add-permission/add-permission-panel.component.ts) |
 | [Add permission component](content-services/add-permission.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../lib/content-services/permission-manager/components/add-permission/add-permission.component.ts) |
 | [Permission list component](content-services/permission-list.component.md) | Shows node permissions as a table. | [Source](../lib/content-services/permission-manager/components/permission-list/permission-list.component.ts) |
+| [Search check list component](content-services/search-check-list.component.md) | Implements a checklist widget for the [Search Filter component](../content-services/search-filter.component.md). | [Source](../lib/content-services/search/components/search-check-list/search-check-list.component.ts) |
 | [Search chip list component](content-services/search-chip-list.component.md) | Displays search criteria as a set of "chips". | [Source](../lib/content-services/search/components/search-chip-list/search-chip-list.component.ts) |
 | [Search control component](content-services/search-control.component.md) | Displays a input text which shows find-as-you-type suggestions. | [Source](../lib/content-services/search/components/search-control.component.ts) |
+| [Search date range component](content-services/search-date-range.component.md) | Implements a date range widget for the [Search Filter component](../content-services/search-filter.component.md). | [Source](../lib/content-services/search/components/search-date-range/search-date-range.component.ts) |
 | [Search filter component](content-services/search-filter.component.md) | Represents a main container component for custom search and faceted search settings. | [Source](../lib/content-services/search/components/search-filter/search-filter.component.ts) |
+| [Search number range component](content-services/search-number-range.component.md) | Implements a number range widget for the [Search Filter component](../content-services/search-filter.component.md). | [Source](../lib/content-services/search/components/search-number-range/search-number-range.component.ts) |
+| [Search radio component](content-services/search-radio.component.md) | Implements a radio button list widget for the [Search Filter component](../content-services/search-filter.component.md). | [Source](../lib/content-services/search/components/search-radio/search-radio.component.ts) |
+| [Search slider component](content-services/search-slider.component.md) | Implements a numeric slider widget for the [Search Filter component](../content-services/search-filter.component.md). | [Source](../lib/content-services/search/components/search-slider/search-slider.component.ts) |
 | [Search sorting picker component](content-services/search-sorting-picker.component.md) | Provides an ability to select one of the predefined sorting definitions for search results: | [Source](../lib/content-services/search/components/search-sorting-picker/search-sorting-picker.component.ts) |
+| [Search text component](content-services/search-text.component.md) | Implements a text input widget for the [Search Filter component](../content-services/search-filter.component.md). | [Source](../lib/content-services/search/components/search-text/search-text.component.ts) |
 | [Search component](content-services/search.component.md) | Searches items for supplied search terms.  | [Source](../lib/content-services/search/components/search.component.ts) |
 | [Sites dropdown component](content-services/sites-dropdown.component.md) | Displays a dropdown menu to show and interact with the sites of the current user. | [Source](../lib/content-services/site-dropdown/sites-dropdown.component.ts) |
 | [Like component](content-services/like.component.md) | Allows a user to add "likes" to an item. | [Source](../lib/content-services/social/like.component.ts) |
@@ -257,11 +262,18 @@ for more information about installing and using the source code.
 | [Folder actions service](content-services/folder-actions.service.md) | Implements the folder menu actions for the [Document List component](../content-services/document-list.component.md). | [Source](../lib/content-services/document-list/services/folder-actions.service.ts) |
 | [Node permission dialog service](content-services/node-permission-dialog.service.md) | Displays dialogs to let the user set node permissions. | [Source](../lib/content-services/permission-manager/services/node-permission-dialog.service.ts) |
 | [Node permission service](content-services/node-permission.service.md) | Manages role permissions for content nodes. | [Source](../lib/content-services/permission-manager/services/node-permission.service.ts) |
-| [Search query builder service](content-services/search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final Search query. | [Source](../lib/content-services/search/search-query-builder.service.ts) |
+| [Search filter service](content-services/search-filter.service.md) | Registers widgets for use with the [Search Filter component](../content-services/search-filter.component.md). | [Source](../lib/content-services/search/components/search-filter/search-filter.service.ts) |
+| [Search query builder service](content-services/search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final search query. | [Source](../lib/content-services/search/search-query-builder.service.ts) |
 | [Rating service](content-services/rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](content-services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/tag/services/tag.service.ts) |
 
 <!--content-services end-->
+
+## Other classes and interfaces
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
 
 [(Back to Contents)](#contents)
 
