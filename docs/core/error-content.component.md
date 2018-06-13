@@ -1,10 +1,16 @@
+---
+Added: v2.4.0
+Status: Active
+Last reviewed: 2018-06-13
+---
+
 # Error Content Component
 
 Displays info about a specific error.
 
 ## Basic Usage
 
-Once you have catched the error in your server you will need to redirect to `/error/errorCode` to display information about that error. 
+Once you have caught the error in your server you will need to redirect to `/error/errorCode` to display information about that error. 
 
 ```ts
 this.router.navigate(['/error', errorCode]);
@@ -42,15 +48,16 @@ this.router.navigate(['/error', errorCode]);
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | errorCode | string | Error code |
-| returnButtonUrl | string | This is the text that will be displayed inside the secondary button |
-| secondaryButtonText | string | (Optional) This is the text that will be displayed inside the secondary button |
-| secondaryButtonUrl | string | (Optional) This is the link for the secondary button |
+| returnButtonUrl | string | URL for the return button |
+| secondaryButtonText | string | (Optional) Text that will be displayed inside the secondary button |
+| secondaryButtonUrl | string | (Optional) URL for the secondary button |
 
-Notice that you will also have to provide values for the variables used in the view template.
+Note that you will also have to provide values for the variables used in the view template.
 
 ## Details
 
-You can customize your errors by adding them to the translate files inside `lib/core/i18n`.
+You can customize your error messages by adding them to the translate files inside
+`lib/core/i18n`:
 
 ```json
 "ERROR_CONTENT": {
@@ -68,3 +75,7 @@ You can customize your errors by adding them to the translate files inside `lib/
     }
   }
 ```
+
+## See also
+
+- [Empty Content component](empty-content.component.md)
