@@ -151,7 +151,7 @@ export class UserPreferencesService {
     getDefaultPageSizes(): number[] {
         return this.defaults.supportedPageSizes;
     }
-    
+
     /** Prevents the CSRF Token from being submitted if true. Only valid for Process Services. */
     set disableCSRF(csrf: boolean) {
         let storedCSRF = this.storage.getItem('DISABLE_CSRF');
