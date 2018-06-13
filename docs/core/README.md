@@ -12,13 +12,12 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [About component](about.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | This component allow you to have a general overview of the version of ADF installed and the status of the [Content service](../core/content.service.md) and [Process service](../process-services/process.service.md). | [Source](../../lib/core/about/about.component.ts) |
-| [Buttons menu component](buttons-menu.component.md) | Displays buttons on a responsive menu. | [Source](../../lib/core/buttons-menu/buttons-menu.component.ts) |
+| [Buttons menu component](buttons-menu.component.md) | Displays buttons on a responsive menu.  | [Source](../../lib/core/buttons-menu/buttons-menu.component.ts) |
 | [Card view component](card-view.component.md) | Displays a configurable property list renderer. | [Source](../../lib/core/card-view/components/card-view/card-view.component.ts) |
 | [Accordion group component](accordion-group.component.md) | Adds a collapsible panel to an accordion menu. | [Source](../../lib/core/collapsable/accordion-group.component.ts) |
 | [Accordion component](accordion.component.md) | Creates a collapsible accordion menu. | [Source](../../lib/core/collapsable/accordion.component.ts) |
 | [Comment list component](comment-list.component.md) | Shows a list of comments. | [Source](../../lib/core/comments/comment-list.component.ts) |
 | [Comments component](comments.component.md) | Displays comments from users involved in a specified task or content and allows an involved user to add a comment to a task or a content. | [Source](../../lib/core/comments/comments.component.ts) |
-| [Sorting picker component](sorting-picker.component.md) | Provides an ability to pick one of the predefined sorting definitions and define sorting direction: | [Source](../../lib/core/components/sorting-picker/sorting-picker.component.ts) |
 | [Data column component](data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../../lib/core/data-column/data-column.component.ts) |
 | [Datatable component](datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../../lib/core/datatable/components/datatable/datatable.component.ts) |
 | [Form field component](form-field.component.md) | A form field in an APS form. | [Source](../../lib/core/form/components/form-field/form-field.component.ts) |
@@ -35,7 +34,8 @@ for more information about installing and using the source code.
 | [Host settings component](host-settings.component.md) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../../lib/core/settings/host-settings.component.ts) |
 | [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/sidenav-layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav layout component](sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../../lib/core/sidenav-layout/components/sidenav-layout/sidenav-layout.component.ts) |
-| [Empty content component](empty-content.component.md) | Provides a generic "Empty Content" UI and can used as a placeholder for components that need to show different content when being empty. | [Source](../../lib/core/templates/empty-content/empty-content.component.ts) |
+| [Sorting picker component](sorting-picker.component.md) | Selects from a set of predefined sorting definitions and directions. | [Source](../../lib/core/sorting-picker/sorting-picker.component.ts) |
+| [Empty content component](empty-content.component.md) | Provides a generic "Empty Content" placeholder for components. | [Source](../../lib/core/templates/empty-content/empty-content.component.ts) |
 | [Error content component](error-content.component.md) | Displays info about a specific error. | [Source](../../lib/core/templates/error-content/error-content.component.ts) |
 | [Toolbar divider component](toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../../lib/core/toolbar/toolbar-divider.component.ts) |
 | [Toolbar title component](toolbar-title.component.md) | Supplies custom HTML to be included in a [Toolbar component](../core/toolbar.component.md) title. | [Source](../../lib/core/toolbar/toolbar-title.component.ts) |
@@ -60,7 +60,6 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Menu button model](menu-button.model.md) | Defines the properties for an item in a [Buttons Menu component](../core/buttons-menu.component.md). | [Source](../../lib/core/buttons-menu/menu-button.model.ts) |
 | [Form field model](form-field.model.md) | Contains the value and metadata for a field of a [`Form`](../../lib/process-services/task-list/models/form.model.ts) component. | [Source](../../lib/core/form/components/widgets/core/form-field.model.ts) |
 | [Comment process model](comment-process.model.md) | Represents a comment added to a Process Services task or process instance. | [Source](../../lib/core/models/comment-process.model.ts) |
 | [Product version model](product-version.model.md) | Contains version and license information classes for Alfresco products. | [Source](../../lib/core/models/product-version.model.ts) |
@@ -104,7 +103,7 @@ for more information about installing and using the source code.
 | [Discovery api service](discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../../lib/core/services/discovery-api.service.ts) |
 | [Favorites api service](favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../../lib/core/services/favorites-api.service.ts) |
 | [Highlight transform service](highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../../lib/core/services/highlight-transform.service.ts) |
-| [Log service](log.service.md) | Provide a log functionality for your ADF application. | [Source](../../lib/core/services/log.service.ts) |
+| [Log service](log.service.md) | Provides log functionality. | [Source](../../lib/core/services/log.service.ts) |
 | [Nodes api service](nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../../lib/core/services/nodes-api.service.ts) |
 | [Notification service](notification.service.md) | Shows a notification message with optional feedback. | [Source](../../lib/core/services/notification.service.ts) |
 | [Page title service](page-title.service.md) | Sets the page title. | [Source](../../lib/core/services/page-title.service.ts) |

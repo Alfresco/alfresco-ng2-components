@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-13
 ---
 
 # Host settings component
@@ -22,7 +23,7 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| providers | `array` |  | Tell the component which provider option are available. Possible valid values are "ECM" (Content), "BPM" (Process) , "ALL" (Content and Process), 'OAUTH2' SSO . |
+| providers | `array` |  | Tells the component which provider option are available. Possible valid values are "ECM" (Content), "BPM" (Process) , "ALL" (Content and Process), 'OAUTH2' SSO . |
 
 ### Events
 
