@@ -22,8 +22,6 @@ export interface OauthConfigModel {
     implicitFlow: boolean;
     redirectUri: string;
     silentLogin?: boolean;
-    silentRefreshRedirectUri?: string;
     secret?: string;
-    refreshTokenTimeout?: number;
     redirectUriLogout?: string;
 }

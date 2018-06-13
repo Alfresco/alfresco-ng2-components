@@ -474,7 +474,6 @@
               "secret": { "type": "string" },
               "redirectUri": { "type": "string" },
               "redirectUriLogout": { "type": "string" },
-              "silentRefreshRedirectUri": { "type": "string" },
               "scope": { "type": "string" }
           }
         },
