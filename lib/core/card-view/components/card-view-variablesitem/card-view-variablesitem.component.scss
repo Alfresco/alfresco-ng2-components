@@ -1,0 +1,12 @@
+.card-view {
+    &__variables {
+        &__col {
+            display: inline-block;
+            width: 39%;
+
+            .mat-form-field {
+                width: 100%;
+            }
+        }
+    }
+}

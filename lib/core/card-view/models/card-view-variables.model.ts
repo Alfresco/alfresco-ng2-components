@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 
-export * from './card-view-baseitem.model';
-export * from './card-view-boolitem.model';
-export * from './card-view-dateitem.model';
-export * from './card-view-datetimeitem.model';
-export * from './card-view-floatitem.model';
-export * from './card-view-intitem.model';
-export * from './card-view-mapitem.model';
-export * from './card-view-textitem.model';
-export * from './card-view-variables.model';
+import { CardViewItem } from '../interfaces/card-view-item.interface';
+import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
+import { CardViewBaseItemModel } from './card-view-baseitem.model';
+import { CardViewVariablesItemProperties } from '../interfaces/card-view.interfaces';
+
+export class CardViewVariablesItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
+    type: string = 'variables';
+
+    constructor(obj: CardViewVariablesItemProperties) {
+        super(obj);
+    }
+
+    get displayValue() {
+        return this.value;
+    }
+}

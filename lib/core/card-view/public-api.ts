@@ -20,7 +20,8 @@ export {
     CardViewBoolItemComponent,
     CardViewDateItemComponent,
     CardViewMapItemComponent,
-    CardViewTextItemComponent
+    CardViewTextItemComponent,
+    CardViewVariablesItemComponent
 } from './components/card-view.components';
 
 export * from './interfaces/card-view.interfaces';

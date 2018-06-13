@@ -21,3 +21,4 @@ export * from './card-view-dateitem/card-view-dateitem.component';
 export * from './card-view-item-dispatcher/card-view-item-dispatcher.component';
 export * from './card-view-mapitem/card-view-mapitem.component';
 export * from './card-view-textitem/card-view-textitem.component';
+export * from './card-view-variablesitem/card-view-variablesitem.component';
