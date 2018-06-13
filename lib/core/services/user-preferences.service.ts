@@ -204,7 +204,9 @@ export class UserPreferencesService {
     }
 
     set providers(providers: string) {
-        this.storage.setItem('providers', providers);
+        if (providers !== this.providers) {
+            this.storage.setItem('providers', providers);
+        }
     }
 
     get bpmHost(): string {
@@ -216,7 +218,9 @@ export class UserPreferencesService {
     }
 
     set bpmHost(bpmHost: string) {
-        this.storage.setItem('bpmHost', bpmHost);
+        if (bpmHost !== this.bpmHost) {
+            this.storage.setItem('bpmHost', bpmHost);
+        }
     }
 
     get ecmHost(): string {
@@ -228,7 +232,9 @@ export class UserPreferencesService {
     }
 
     set ecmHost(ecmHost: string) {
-        this.storage.setItem('ecmHost', ecmHost);
+        if (ecmHost !== this.ecmHost) {
+            this.storage.setItem('ecmHost', ecmHost);
+        }
     }
 
     get oauthConfig(): OauthConfigModel {
@@ -240,7 +246,9 @@ export class UserPreferencesService {
     }
 
     set oauthConfig(oauthConfig: OauthConfigModel) {
-        this.storage.setItem('oauthConfig', JSON.stringify(oauthConfig));
+        if (JSON.stringify(oauthConfig) !== JSON.stringify(this.oauthConfig)) {
+            this.storage.setItem('oauthConfig', JSON.stringify(oauthConfig));
+        }
     }
 
     get authType(): string {
@@ -252,7 +260,9 @@ export class UserPreferencesService {
     }
 
     set authType(authType: string) {
-        this.storage.setItem('authType', authType);
+        if (authType !== this.authType) {
+            this.storage.setItem('authType', authType);
+        }
     }
 
 }
