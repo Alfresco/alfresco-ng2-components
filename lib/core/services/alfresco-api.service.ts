@@ -25,7 +25,8 @@ import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs/Subject';
-import { UserPreferencesService } from './user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from './user-preferences.service';
+import { merge } from 'rxjs/observable/merge';
 
 /* tslint:disable:adf-file-name */
 
@@ -96,8 +97,17 @@ export class AlfrescoApiService {
     }
 
     constructor(protected appConfig: AppConfigService,
-                protected userPreference: UserPreferencesService,
+                protected userPreferencesService: UserPreferencesService,
                 protected storage: StorageService) {
+
+        merge(this.userPreferencesService.select(UserPreferenceValues.oauthConfig),
+            this.userPreferencesService.select(UserPreferenceValues.ecmHost),
+            this.userPreferencesService.select(UserPreferenceValues.bpmHost),
+            this.userPreferencesService.select(UserPreferenceValues.authType),
+            this.userPreferencesService.select(UserPreferenceValues.providers)).subscribe(() => {
+            this.reset();
+        })
+
     }
 
     async load() {
@@ -112,18 +122,18 @@ export class AlfrescoApiService {
 
     protected initAlfrescoApi() {
         let oauth;
-        if (this.userPreference.oauthConfig) {
-            oauth = Object.assign({}, this.userPreference.oauthConfig);
+        if (this.userPreferencesService.oauthConfig) {
+            oauth = Object.assign({}, this.userPreferencesService.oauthConfig);
             oauth.redirectUri = window.location.origin + (oauth.redirectUri || '/');
             oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
         }
         const config = {
-            provider: this.userPreference.providers,
+            provider: this.userPreferencesService.providers,
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),
-            hostEcm: this.userPreference.ecmHost,
-            hostBpm: this.userPreference.bpmHost,
-            authType: this.userPreference.authType,
+            hostEcm: this.userPreferencesService.ecmHost,
+            hostBpm: this.userPreferencesService.bpmHost,
+            authType: this.userPreferencesService.authType,
             contextRootBpm: this.appConfig.get<string>('contextRootBpm'),
             contextRoot: this.appConfig.get<string>('contextRootEcm'),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',

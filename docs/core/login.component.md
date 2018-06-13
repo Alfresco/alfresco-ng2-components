@@ -34,7 +34,6 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 ```html
 <adf-login 
-    providers="ECM"
     successRoute="/home">
 </adf-login>
 ```
@@ -73,7 +72,6 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 ```html
 <adf-login 
-    providers="ALL"
     (success)="mySuccessMethod($event)"
     (error)="myErrorMethod($event)">
 </adf-login>

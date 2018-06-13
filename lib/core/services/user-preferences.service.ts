@@ -28,7 +28,12 @@ export enum UserPreferenceValues {
     PaginationSize = 'PAGINATION_SIZE',
     DisableCSRF = 'DISABLE_CSRF',
     Locale = 'LOCALE',
-    SupportedPageSizes = 'supportedPageSizes'
+    SupportedPageSizes = 'supportedPageSizes',
+    oauthConfig = 'oauthConfig',
+    ecmHost = 'ecmHost',
+    bpmHost = 'bpmHost',
+    providers = 'providers',
+    authType = 'authType'
 }
 
 @Injectable()
@@ -146,7 +151,7 @@ export class UserPreferencesService {
     getDefaultPageSizes(): number[] {
         return this.defaults.supportedPageSizes;
     }
-
+    
     /** Prevents the CSRF Token from being submitted if true. Only valid for Process Services. */
     set disableCSRF(csrf: boolean) {
         let storedCSRF = this.storage.getItem('DISABLE_CSRF');

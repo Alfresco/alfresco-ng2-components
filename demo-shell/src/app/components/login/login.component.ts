@@ -18,7 +18,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LogService, UserPreferencesService } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-login',
@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
     @ViewChild('alfrescologin')
     alfrescologin: any;
 
-    providers = 'ECM';
     customValidation: any;
 
     disableCsrf = false;
@@ -38,7 +37,6 @@ export class LoginComponent implements OnInit {
     customMinLength = 2;
 
     constructor(private router: Router,
-                private userPreference: UserPreferencesService,
                 private logService: LogService) {
         this.customValidation = {
             username: ['', Validators.compose([Validators.required, Validators.minLength(this.customMinLength)])],
@@ -50,12 +48,6 @@ export class LoginComponent implements OnInit {
         this.alfrescologin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
         this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', {minLength: this.customMinLength});
         this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
-
-        this.initProviders();
-    }
-
-    initProviders() {
-        this.providers = this.userPreference.providers;
     }
 
     onLogin($event) {
