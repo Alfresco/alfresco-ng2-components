@@ -55,7 +55,6 @@
                  [ngStyle]="rowStyle"
                  [ngClass]="getRowStyle(row)"
                  (keyup)="onRowKeyUp(row, $event)">
-
                 <!-- Actions (left) -->
                 <div *ngIf="actions && actionsPosition === 'left'" class="adf-datatable-table-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
