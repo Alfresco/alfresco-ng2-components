@@ -16,9 +16,8 @@
  */
 
 import { AlfrescoApiServiceMock, AlfrescoApiService,
-    AppConfigService, StorageService, ContentService, UserPreferencesService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+    AppConfigService, StorageService, ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
-import { TestBed } from '@angular/core/testing';
 
 declare let jasmine: any;
 
@@ -26,7 +25,6 @@ describe('DocumentListService', () => {
 
     let service: DocumentListService;
     let alfrescoApiService: AlfrescoApiService;
-    let userPreferences: UserPreferencesService;
 
     let fakeEntryNode = {
         'entry': {

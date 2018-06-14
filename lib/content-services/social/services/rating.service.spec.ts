@@ -17,7 +17,6 @@
 
 import { AlfrescoApiServiceMock, AppConfigService, StorageService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { RatingService } from './rating.service';
-import { TestBed } from '@angular/core/testing';
 
 declare let jasmine: any;
 
@@ -32,8 +31,6 @@ describe('Rating service', () => {
     });
 
     beforeEach(() => {
-        userPreferences = TestBed.get(UserPreferencesService);
-
         service = new RatingService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()));
     });
 

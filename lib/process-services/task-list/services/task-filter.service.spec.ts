@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import {
-    fakeAppFilter,
-    fakeAppPromise,
-    fakeFilters
-} from '../../mock';
+import { async } from '@angular/core/testing';
+import { fakeAppFilter, fakeAppPromise, fakeFilters } from '../../mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, setupTestBed, CoreModule } from '@alfresco/adf-core';

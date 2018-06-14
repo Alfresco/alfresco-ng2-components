@@ -24,7 +24,6 @@ import { DocumentActionsService } from './document-actions.service';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { Observable } from 'rxjs/Observable';
-import { TestBed } from '@angular/core/testing';
 
 describe('DocumentActionsService', () => {
 

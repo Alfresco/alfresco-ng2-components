@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { async } from '@angular/core/testing';
 import { exampleProcess, fakeProcessInstances } from '../../mock';
 import { mockError, fakeProcessDef, fakeTasksList } from '../../mock';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
