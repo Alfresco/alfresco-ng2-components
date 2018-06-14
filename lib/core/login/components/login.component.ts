@@ -15,22 +15,10 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    TemplateRef,
-    ViewEncapsulation
+import { Component, ElementRef, EventEmitter,
+    Input, OnInit, Output, TemplateRef, ViewEncapsulation
 } from '@angular/core';
-import {
-    AbstractControl,
-    FormBuilder,
-    FormGroup,
-    Validators
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
@@ -71,22 +59,28 @@ export class LoginComponent implements OnInit {
      * option will remember the logged-in user after the browser is closed
      * to avoid logging in repeatedly.
      */
-    @Input() showRememberMe: boolean = true;
+    @Input()
+    showRememberMe: boolean = true;
 
     /** Should the extra actions (`Need Help`, `Register`, etc) be shown? */
-    @Input() showLoginActions: boolean = true;
+    @Input()
+    showLoginActions: boolean = true;
 
     /** Sets the URL of the NEED HELP link in the footer. */
-    @Input() needHelpLink: string = '';
+    @Input()
+    needHelpLink: string = '';
 
     /** Sets the URL of the REGISTER link in the footer. */
-    @Input() registerLink: string = '';
+    @Input()
+    registerLink: string = '';
 
     /** Path to a custom logo image. */
-    @Input() logoImageUrl: string = './assets/images/alfresco-logo.svg';
+    @Input()
+    logoImageUrl: string = './assets/images/alfresco-logo.svg';
 
     /** Path to a custom background image. */
-    @Input() backgroundImageUrl: string = './assets/images/background.svg';
+    @Input()
+    backgroundImageUrl: string = './assets/images/background.svg';
 
     /** The copyright text below the login box. */
     @Input()
@@ -96,25 +90,32 @@ export class LoginComponent implements OnInit {
      * deprecated in 2.4.0 use the providers property in the the app.config.json
      * @deprecated 2.4.0
      */
-    @Input() providers: string;
+    @Input()
+    providers: string;
 
     /** Custom validation rules for the login form. */
-    @Input() fieldsValidation: any;
+    @Input()
+    fieldsValidation: any;
 
     /** Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. */
-    @Input() disableCsrf: boolean;
+    @Input()
+    disableCsrf: boolean;
 
     /** Route to redirect to on successful login. */
-    @Input() successRoute: string = null;
+    @Input()
+    successRoute: string = null;
 
     /** Emitted when the login is successful. */
-    @Output() success = new EventEmitter<LoginSuccessEvent>();
+    @Output()
+    success = new EventEmitter<LoginSuccessEvent>();
 
     /** Emitted when the login fails. */
-    @Output() error = new EventEmitter<LoginErrorEvent>();
+    @Output()
+    error = new EventEmitter<LoginErrorEvent>();
 
     /** Emitted when the login form is submitted. */
-    @Output() executeSubmit = new EventEmitter<LoginSubmitEvent>();
+    @Output()
+    executeSubmit = new EventEmitter<LoginSubmitEvent>();
 
     implicitFlow: boolean = false;
 
