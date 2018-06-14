@@ -94,7 +94,7 @@ export class TaskListDemoComponent implements OnInit {
             taskSort: new FormControl('')
         });
 
-        if(this.taskListForm.valid) {
+        if (this.taskListForm.valid) {
             this.taskListForm.valueChanges
             .debounceTime(1000)
                 .subscribe(taskFilter => {
@@ -131,7 +131,7 @@ export class TaskListDemoComponent implements OnInit {
     get taskAssignment(): AbstractControl {
         return this.taskListForm.get('taskAssignment');
     }
-    
+
     get taskState(): AbstractControl {
         return this.taskListForm.get('taskState');
     }
