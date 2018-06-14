@@ -271,7 +271,6 @@ export class DataTableDemo {
 | rowStyle | `string` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
 | rows | `any[]` |  \[] | The rows that the datatable will show. |
-| selectFirstRow | `boolean` | true | Toggles the first row selection. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `boolean` | true | Toggles the header. |
 | sorting | `any[]` |  \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |

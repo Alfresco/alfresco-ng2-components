@@ -74,10 +74,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     columns: any[] = [];
 
-    /* Toggles default selection of the first row */
-    @Input()
-    selectFirstRow: boolean = true;
-
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
      */
@@ -202,7 +198,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 this.initTable();
             } else {
                 this.data = changes['data'].currentValue;
-                this.setupData(this.data);
+                this.resetSelection();
             }
             return;
         }
@@ -212,7 +208,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 this.initTable();
             } else {
                 this.setTableRows(changes['rows'].currentValue);
-                this.setupData(this.data);
             }
             return;
         }
@@ -239,7 +234,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     convertToRowsData(rows: any []): ObjectDataRow[] {
-        return rows.map(row => new ObjectDataRow(row));
+        return rows.map(row => new ObjectDataRow(row, row.isSelected));
     }
 
     convertToDataSorting(sorting: any[]): DataSorting {
@@ -301,23 +296,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     private initTable() {
         this.data = new ObjectDataTableAdapter(this.rows, this.columns);
-        this.setupData(this.data);
-        this.rowMenuCache = {};
-    }
-
-    private setupData(adapter: DataTableAdapter) {
-        if (this.dataRowsChanged) {
-            this.dataRowsChanged.unsubscribe();
-            this.dataRowsChanged = null;
-        }
-
         this.resetSelection();
-
-        if (adapter && adapter.rowsChanged) {
-            this.dataRowsChanged = adapter.rowsChanged.subscribe(() => {
-                this.resetSelection();
-            });
-        }
+        this.rowMenuCache = {};
     }
 
     isTableEmpty() {
@@ -326,21 +306,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     private setTableRows(rows: any[]) {
         if (this.data) {
-            if (rows && rows.length > 0) {
-                this.resetSelection();
-            }
+            this.resetSelection();
             this.data.setRows(this.convertToRowsData(rows));
-            this.selectFirst();
-        }
-    }
-
-    private selectFirst() {
-        if (this.selectFirstRow) {
-            if (this.data && this.data.getRows().length > 0) {
-                let row = this.data.getRows()[0];
-                row.isSelected = true;
-                this.data.selectedRow = row;
-            }
         }
     }
 
