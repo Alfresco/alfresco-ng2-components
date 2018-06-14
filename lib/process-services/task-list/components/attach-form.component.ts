@@ -16,7 +16,7 @@
  */
 
 import { LogService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, OnChanges, Output } from '@angular/core';
 import { Form } from '../models/form.model';
 import { Observable } from 'rxjs/Observable';
 import { TaskListService } from './../services/tasklist.service';
@@ -27,10 +27,11 @@ import { TaskListService } from './../services/tasklist.service';
     styleUrls: ['./attach-form.component.scss']
 })
 
-export class AttachFormComponent implements OnInit {
+export class AttachFormComponent implements OnInit, OnChanges {
     constructor(private taskService: TaskListService,
                 private logService: LogService) { }
 
+    /** The id of the task whose details we are asking for. */
     @Input()
     taskId;
 
@@ -54,13 +55,17 @@ export class AttachFormComponent implements OnInit {
         this.loadFormsTask();
     }
 
+    ngOnChanges() {
+        this.loadFormsTask();
+    }
+
     onCancelButtonClick(): void {
         this.cancelAttachForm.emit();
     }
 
     onAttachFormButtonClick(): void {
-        this.completeAttachForm.emit();
         this.attachForm(this.taskId, this.formKey);
+        this.completeAttachForm.emit();
     }
 
     private loadFormsTask(): void {

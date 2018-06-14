@@ -58,4 +58,14 @@ describe('AttachFormComponent', () => {
             expect(emitSpy).toHaveBeenCalled();
         });
     }));
+
+    it('should show the formPreview of the selected form', async(() => {
+        component.formKey = 12;
+        fixture.detectChanges();
+        const formContainer = fixture.debugElement.nativeElement.querySelector('.adf-form-container');
+        fixture.whenStable().then(() => {
+            expect(formContainer).toBeDefined();
+            expect(formContainer).toBeNull();
+        });
+    }));
 });
