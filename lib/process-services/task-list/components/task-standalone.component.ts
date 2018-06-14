@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { LogService, FormService } from '@alfresco/adf-core';
 
 @Component({
@@ -25,11 +25,15 @@ import { LogService, FormService } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 
-export class TaskStandaloneComponent implements OnInit {
+export class TaskStandaloneComponent {
 
-    /** Details of the task. */
+    /** Name of the task. */
     @Input()
-    taskDetails;
+    taskName;
+
+    /** Id of the task. */
+    @Input()
+    taskId;
 
     /** If true then Task completed message is shown and `Complete` and `Cancel` buttons are hidden. */
     @Input()
@@ -53,16 +57,10 @@ export class TaskStandaloneComponent implements OnInit {
 
     showAttachForm: boolean = false;
 
-    taskName: string;
-
     constructor(
         private formService: FormService,
         private logService: LogService
     ) { }
-
-    ngOnInit() {
-        this.taskName = this.taskDetails.name;
-    }
 
     onCancelButtonClick(): void {
         this.cancel.emit();
@@ -95,7 +93,7 @@ export class TaskStandaloneComponent implements OnInit {
     onCompleteAttachForm() {
         this.showAttachForm = false;
 
-        this.formService.getTaskForm(this.taskDetails.id)
+        this.formService.getTaskForm(this.taskId)
             .subscribe((res) => {
             }, error => this.logService.error('Could not load forms'));
     }

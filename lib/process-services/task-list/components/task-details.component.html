@@ -40,7 +40,8 @@
                           (executeOutcome)='onFormExecuteOutcome($event)'>
                 </adf-form>
                 <adf-task-standalone *ngIf="!hasFormKey()"
-                                     [taskDetails]= "taskDetails"
+                                     [taskName]= "taskDetails.name"
+                                     [taskId]= "taskDetails.id"
                                      [isCompleted]="isCompletedTask()"
                                      [hasCompletePermission]="isCompleteButtonEnabled()"
                                      [hideCancelButton]="true"

@@ -27,7 +27,7 @@
 </mat-card>
 
 <adf-attach-form *ngIf="showAttachForm"
-                 [taskId]="taskDetails.id"
+                 [taskId]="taskId"
                  (cancelAttachForm)="onCancelAttachForm()"
                  (completeAttachForm)="onCompleteAttachForm()">
 </adf-attach-form>
