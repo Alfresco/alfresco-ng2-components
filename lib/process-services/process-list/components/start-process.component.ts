@@ -15,22 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation
+import { Component, EventEmitter, Input, OnChanges,
+    Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import {
-    ActivitiContentService,
-    AppConfigService,
-    StartFormComponent,
-    FormRenderingService,
-    FormValues
+import { ActivitiContentService, AppConfigService, AppConfigValues,
+    StartFormComponent, FormRenderingService, FormValues
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
@@ -138,7 +127,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     getAlfrescoRepositoryName(): string {
-        let alfrescoRepositoryName = this.appConfig.get<string>('alfrescoRepositoryName');
+        let alfrescoRepositoryName = this.appConfig.get<string>(AppConfigValues.ALFRESCO_REPOSITORY_NAME);
         if (!alfrescoRepositoryName) {
             alfrescoRepositoryName = 'alfresco-1';
         }

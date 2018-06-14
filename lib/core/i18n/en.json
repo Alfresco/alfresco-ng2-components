@@ -122,7 +122,6 @@
       "BASIC": "Basic Auth",
       "SSO": "SSO",
       "IMPLICIT-FLOW": "implicitFlow",
-      "TYPE-AUTH": "Authentication type",
       "PROVIDER": "Provider",
       "REQUIRED": "The field is required",
       "CS_URL_ERROR": "Content Services address doesn't match the URL format",

@@ -16,12 +16,11 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { fakeAsync, tick, TestBed } from '@angular/core/testing';
+import { fakeAsync, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from '../services/storage.service';
-import { UserPreferencesService } from '../services/user-preferences.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
@@ -29,15 +28,13 @@ describe('NodeFavoriteDirective', () => {
 
     let directive;
     let alfrescoApiService;
-    let userPreferences;
 
     setupTestBed({
         imports: [CoreTestingModule]
     });
 
     beforeEach(() => {
-        userPreferences = TestBed.get(UserPreferencesService);
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), userPreferences, new StorageService());
+        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         directive = new NodeFavoriteDirective( alfrescoApiService);
     });
 

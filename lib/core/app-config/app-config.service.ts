@@ -21,10 +21,23 @@ import { ObjectUtils } from '../utils/object-utils';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
+export enum AppConfigValues {
+    APP_CONFIG_LANGUAGES_KEY = 'languages',
+    PROVIDERS = 'providers',
+    OAUTHCONFIG = 'oauth2',
+    ECMHOST = 'ecmHost',
+    BPMHOST = 'bpmHost',
+    AUTHTYPE = 'authType',
+    CONTEXTROOTECM = 'contextRootEcm',
+    CONTEXTROOTBPM = 'contextRootBpm',
+    ALFRESCO_REPOSITORY_NAME = 'alfrescoRepositoryName',
+    LOG_LEVEL = 'logLevel',
+    LOGIN_ROUTE = 'loginRoute',
+    DISABLECSRF = 'disableCSRF'
+}
+
 @Injectable()
 export class AppConfigService {
-
-    static APP_CONFIG_LANGUAGES_KEY = 'languages';
 
     config: any = {
         application: {

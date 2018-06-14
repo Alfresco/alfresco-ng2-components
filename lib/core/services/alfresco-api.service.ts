@@ -17,22 +17,30 @@
 
 import { Injectable } from '@angular/core';
 import {
-    AlfrescoApi, ContentApi, FavoritesApi, NodesApi,
-    PeopleApi, RenditionsApi, SharedlinksApi, SitesApi,
-    VersionsApi, ClassesApi, SearchApi, GroupsApi, MinimalNodeEntryEntity
+    AlfrescoApi,
+    ContentApi,
+    FavoritesApi,
+    NodesApi,
+    PeopleApi,
+    RenditionsApi,
+    SharedlinksApi,
+    SitesApi,
+    VersionsApi,
+    ClassesApi,
+    SearchApi,
+    GroupsApi,
+    MinimalNodeEntryEntity
 } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs/Subject';
-import { UserPreferencesService, UserPreferenceValues } from './user-preferences.service';
-import { merge } from 'rxjs/observable/merge';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 /* tslint:disable:adf-file-name */
 
 @Injectable()
 export class AlfrescoApiService {
-
     /**
      * Publish/subscribe to events related to node updates.
      */
@@ -96,19 +104,7 @@ export class AlfrescoApiService {
         return this.getInstance().core.groupsApi;
     }
 
-    constructor(protected appConfig: AppConfigService,
-                protected userPreferencesService: UserPreferencesService,
-                protected storage: StorageService) {
-
-        merge(this.userPreferencesService.select(UserPreferenceValues.oauthConfig),
-            this.userPreferencesService.select(UserPreferenceValues.ecmHost),
-            this.userPreferencesService.select(UserPreferenceValues.bpmHost),
-            this.userPreferencesService.select(UserPreferenceValues.authType),
-            this.userPreferencesService.select(UserPreferenceValues.providers)).subscribe(() => {
-            this.reset();
-        });
-
-    }
+    constructor(protected appConfig: AppConfigService, protected storage: StorageService) {}
 
     async load() {
         await this.appConfig.load().then(() => {
@@ -121,21 +117,22 @@ export class AlfrescoApiService {
     }
 
     protected initAlfrescoApi() {
-        let oauth;
-        if (this.userPreferencesService.oauthConfig) {
-            oauth = Object.assign({}, this.userPreferencesService.oauthConfig);
+        let oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+
+        if (oauth) {
             oauth.redirectUri = window.location.origin + (oauth.redirectUri || '/');
             oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
         }
+
         const config = {
-            provider: this.userPreferencesService.providers,
+            provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),
-            hostEcm: this.userPreferencesService.ecmHost,
-            hostBpm: this.userPreferencesService.bpmHost,
-            authType: this.userPreferencesService.authType,
-            contextRootBpm: this.appConfig.get<string>('contextRootBpm'),
-            contextRoot: this.appConfig.get<string>('contextRootEcm'),
+            hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
+            hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
+            authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE),
+            contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
+            contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
             oauth2: oauth
         };

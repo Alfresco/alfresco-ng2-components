@@ -15,6 +15,8 @@ that the component is complete and suitable for normal use. The other status lev
     but is now obsolete and will probably be removed in a future version of ADF.
 -   **Experimental** ![](docassets/images/ExperimentalIcon.png) - The component is available for
     experimentation but not fully complete and tested for production code.
+-   **Internal** ![](docassets/images/InternalIcon.png) - The component is available for
+    internal test use but not meant to be used in production
 
 There is also a set of ADF tutorials that describe how to accomplish tasks step-by-step.
 See the [Tutorials index](tutorials/README.md) for the full list.

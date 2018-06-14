@@ -273,9 +273,18 @@
             "description": "BPM host",
             "type": "string"
         },
+        "providers": {
+            "description": "This parameter can accept as value ECM BPM or ALL you can set it accordingly where you want log-in",
+            "type": "string",
+            "enum": [ "ECM", "BPM", "ALL"]
+        },
         "contextRootBpm": {
             "description": "The context root of the BPM host",
             "type": "string"
+        },
+        "disableCSRF": {
+            "description": "The context root of the BPM host",
+            "type": "boolean"
         },
         "application": {
             "description": "Application's global configuration",
@@ -460,7 +469,8 @@
         },
         "authType": {
           "description": "Kind of authentication BASIC or OAUTH, default value BASIC",
-          "type": "string"
+          "type": "string",
+          "enum": [ "BASIC", "OAUTH" ]
         },
        "oauth2": {
           "description": "AUTH configuration parameters",

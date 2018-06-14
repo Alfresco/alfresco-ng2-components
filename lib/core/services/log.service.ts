@@ -18,7 +18,7 @@
 /* tslint:disable:no-console  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { logLevels, LogLevelsEnum } from '../models/log-levels.model';
 import { Subject } from 'rxjs/Subject';
 
@@ -26,7 +26,7 @@ import { Subject } from 'rxjs/Subject';
 export class LogService {
 
     get currentLogLevel() {
-        let configLevel: string = this.appConfig.get<string>('logLevel');
+        let configLevel: string = this.appConfig.get<string>(AppConfigValues.LOG_LEVEL);
 
         if (configLevel) {
             return this.getLogLevel(configLevel);
