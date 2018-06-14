@@ -49,6 +49,7 @@ import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
+import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 
 export const appRoutes: Routes = [
@@ -221,6 +222,16 @@ export const appRoutes: Routes = [
                 loadChildren: 'app/components/lazy-loading/lazy-loading.module#LazyLoadingModule'
             },
             {
+                path: 'task-list',
+                component: TaskListDemoComponent,
+                canActivate: [AuthGuardBpm]
+            },
+            {
+                path: 'task-list/:id',
+                component: TaskListDemoComponent,
+                canActivate: [AuthGuardBpm]
+            },
+            {
                 path: 'error/:id',
                 component: ErrorContentComponent
             },
@@ -228,7 +239,6 @@ export const appRoutes: Routes = [
                 path: '**',
                 redirectTo: 'error/404'
             }
-
         ]
     }
 ];
