@@ -319,27 +319,29 @@ describe('DataTable', () => {
         expect(dataTable.resetSelection).toHaveBeenCalled();
     });
 
-    it('should select first row when selectFirstRow set to true', () => {
-        dataTable.selectFirstRow = true;
-        dataTable.rows = [{ name: 'TEST1' }, { name: 'FAKE2' }, { name: 'TEST2' }, { name: 'FAKE2' }];
+    it('should select the row where isSelected is true', () => {
+        dataTable.rows = [
+                { name: 'TEST1' },
+                { name: 'FAKE2' },
+                { name: 'TEST2', isSelected : true },
+                { name: 'FAKE2' }];
         dataTable.data = new ObjectDataTableAdapter([],
             [new ObjectDataColumn({ key: 'name' })]
         );
         fixture.detectChanges();
         const rows = dataTable.data.getRows();
-        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[0].isSelected).toBeFalsy();
         expect(rows[1].isSelected).toBeFalsy();
-        expect(rows[2].isSelected).toBeFalsy();
+        expect(rows[2].isSelected).toBeTruthy();
+        expect(rows[3].isSelected).toBeFalsy();
     });
 
-    it('should not select first row when selectFirstRow set to false', () => {
-        dataTable.selectFirstRow = false;
+    it('should not select any row when isSelected is not defined', () => {
         const dataRows =
             [
                 { name: 'TEST1' },
                 { name: 'FAKE2' },
-                { name: 'TEST2' },
-                { name: 'FAKE2' }
+                { name: 'TEST2' }
             ];
         dataTable.data = new ObjectDataTableAdapter(dataRows,
             [new ObjectDataColumn({ key: 'name' })]
