@@ -64,6 +64,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
 
     onAttachFormButtonClick(): void {
         this.attachForm(this.taskId, this.formKey);
+        this.completeAttachForm.emit();
     }
 
     private loadFormsTask(): void {

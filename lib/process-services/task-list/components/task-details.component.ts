@@ -175,7 +175,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     showAssignee: boolean = false;
-    showTaskStandaloneForm: boolean = true;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
     public errorDialogRef: MatDialogRef<TemplateRef<any>>;
