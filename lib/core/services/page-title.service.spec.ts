@@ -15,115 +15,64 @@
  * limitations under the License.
  */
 
-import { inject, TestBed } from '@angular/core/testing';
-import { Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
-
+import { TestBed } from '@angular/core/testing';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
 import { AppConfigService } from '../app-config/app-config.service';
 import { PageTitleService } from './page-title.service';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslationService } from './translation.service';
-import { TranslationMock } from '../mock/translation.service.mock';
-
-class TestConfig {
-    private setup: any = {
-        applicationName: undefined
-    };
-
-    titleService: Title = null;
-    appTitleService: PageTitleService = null;
-    translationService: TranslationService;
-
-    constructor(setup: any = {}) {
-        Object.assign(this.setup, setup);
-
-        const titleServiceProvider = {
-            provide: Title,
-            useValue: {
-                setTitle: jasmine.createSpy('setTitleSpy')
-            }
-        };
-
-        const appConfigProvider = {
-            provide: AppConfigService,
-            useValue: {
-                config: {
-                    application: {
-                        name: this.setup.applicationName
-                    }
-                },
-                get: () => this.setup.applicationName,
-                load: () => {
-                    return Promise.resolve();
-                },
-                onLoad: Observable.of({})
-            }
-        };
-
-        TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ],
-            providers: [
-                titleServiceProvider,
-                appConfigProvider,
-                PageTitleService,
-                {
-                    provide: TranslationService,
-                    useClass: TranslationMock
-                }
-            ]
-        });
-
-        inject([Title, PageTitleService, TranslationService], (titleService, appTitleService, translationService) => {
-            this.titleService = titleService;
-            this.appTitleService = appTitleService;
-            this.translationService = translationService;
-        })();
-    }
-}
+import { Title } from '@angular/platform-browser';
 
 describe('AppTitle service', () => {
-    it('should set default application name', () => {
-        const { appTitleService, titleService } = new TestConfig({
-            applicationName: undefined
-        });
 
-        appTitleService.setTitle();
-        expect(titleService.setTitle).toHaveBeenCalledWith('Alfresco ADF Application');
+    let titleService: any;
+    let translationService: any;
+    let pageTitleService: any;
+    let appConfigService: any;
+    let titleServiceSpy: any;
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
+
+    beforeEach(() => {
+        titleService = TestBed.get(Title);
+        pageTitleService = TestBed.get(PageTitleService);
+        translationService = TestBed.get(TranslationService);
+        appConfigService = TestBed.get(AppConfigService);
+
+        titleServiceSpy = spyOn(titleService, 'setTitle').and.callThrough();
+
+        appConfigService.config.application.name = 'My application';
+    });
+
+    it('should set default application name', () => {
+        appConfigService.config.application = {};
+        pageTitleService.setTitle();
+        expect(titleServiceSpy).toHaveBeenCalledWith('Alfresco ADF Application');
     });
 
     it('should set only the application name', () => {
-        const { appTitleService, titleService } = new TestConfig({
-            applicationName: 'My application'
-        });
-
-        appTitleService.setTitle();
-        expect(titleService.setTitle).toHaveBeenCalledWith('My application');
+        pageTitleService.setTitle();
+        expect(titleServiceSpy).toHaveBeenCalledWith('My application');
     });
 
     it('should append application name to the title', () => {
-        const { appTitleService, titleService } = new TestConfig({
-            applicationName: 'My application'
-        });
-
-        appTitleService.setTitle('My page');
-        expect(titleService.setTitle).toHaveBeenCalledWith('My page - My application');
+        pageTitleService.setTitle('My page');
+        expect(titleServiceSpy).toHaveBeenCalledWith('My page - My application');
     });
 
     it('should update title on language change', () => {
-        const { appTitleService, titleService, translationService } = new TestConfig({
-            applicationName: 'My application'
-        });
-
         spyOn(translationService, 'instant').and.returnValues('hello', 'привет');
 
-        appTitleService.setTitle('key');
-        expect(titleService.setTitle).toHaveBeenCalledWith('hello - My application');
+        pageTitleService.setTitle('key');
+        expect(titleServiceSpy).toHaveBeenCalledWith('hello - My application');
 
         (<any> titleService).setTitle.calls.reset();
 
         translationService.translate.onLangChange.next(<any> {});
-        expect(titleService.setTitle).toHaveBeenCalledWith('привет - My application');
+        expect(titleServiceSpy).toHaveBeenCalledWith('привет - My application');
     });
 });
