@@ -17,8 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import {
-    ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router,
-    PRIMARY_OUTLET, UrlTree, UrlSegmentGroup, UrlSegment
+    ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router
 } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
@@ -44,9 +43,7 @@ export class AuthGuardEcm implements CanActivate {
             return true;
         }
 
-        const navigation = this.getNavigationCommands(redirectUrl);
-
-        this.authService.setRedirect({ provider: 'ECM', navigation });
+        this.authService.setRedirect({ provider: 'ECM', url: redirectUrl });
         const pathToLogin = this.getRouteDestinationForLogin();
         this.router.navigate(['/' + pathToLogin]);
 
@@ -57,21 +54,5 @@ export class AuthGuardEcm implements CanActivate {
         return this.appConfig &&
                this.appConfig.get<string>('loginRoute') ?
                         this.appConfig.get<string>('loginRoute') : 'login';
-    }
-
-    private getNavigationCommands(redirectUrl: string): any[] {
-        const urlTree: UrlTree = this.router.parseUrl(redirectUrl);
-        const urlSegmentGroup: UrlSegmentGroup = urlTree.root.children[PRIMARY_OUTLET];
-
-        if (!urlSegmentGroup) {
-            return [redirectUrl];
-        }
-
-        const urlSegments: UrlSegment[] = urlSegmentGroup.segments;
-
-        return urlSegments.reduce(function(acc, item) {
-            acc.push(item.path, item.parameters);
-            return acc;
-        }, []);
     }
 }

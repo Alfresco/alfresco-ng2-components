@@ -76,9 +76,9 @@ describe('AuthGuardService ECM', () => {
         authGuard.canActivate(null, router);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', navigation: ['some-url', {}]
+            provider: 'ECM', url: 'some-url'
         });
-        expect(authService.getRedirect('ECM')).toEqual(['some-url', {}]);
+        expect(authService.getRedirect('ECM')).toEqual('some-url');
     }));
 
     it('should set redirect navigation commands with query params', async(() => {
@@ -89,9 +89,9 @@ describe('AuthGuardService ECM', () => {
         authGuard.canActivate(null, router);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', navigation: ['some-url', {q: '123'}]
+            provider: 'ECM', url: 'some-url;q=123'
         });
-        expect(authService.getRedirect('ECM')).toEqual(['some-url', { q: '123' }]);
+        expect(authService.getRedirect('ECM')).toEqual('some-url;q=123');
     }));
 
     it('should set redirect navigation commands with query params', async(() => {
@@ -102,9 +102,9 @@ describe('AuthGuardService ECM', () => {
         authGuard.canActivate(null, router);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', navigation: ['/']
+            provider: 'ECM', url: '/'
         });
-        expect(authService.getRedirect('ECM')).toEqual(['/']);
+        expect(authService.getRedirect('ECM')).toEqual('/');
     }));
 
     it('should get redirect url from config if there is one configured', async(() => {
@@ -116,7 +116,7 @@ describe('AuthGuardService ECM', () => {
         authGuard.canActivate(null, router);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', navigation: ['some-url', {}]
+            provider: 'ECM', url: 'some-url'
         });
         expect(routerService.navigate).toHaveBeenCalledWith(['/fakeLoginRoute']);
     }));
