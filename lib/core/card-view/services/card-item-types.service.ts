@@ -20,7 +20,7 @@ import { CardViewDateItemComponent } from '../components/card-view-dateitem/card
 import { CardViewMapItemComponent } from '../components/card-view-mapitem/card-view-mapitem.component';
 import { CardViewTextItemComponent } from '../components/card-view-textitem/card-view-textitem.component';
 import { CardViewBoolItemComponent } from '../components/card-view-boolitem/card-view-boolitem.component';
-import { CardViewVariablesItemComponent } from "../components/card-view-variablesitem/card-view-variablesitem.component";
+import { CardViewVariablesItemComponent } from '../components/card-view-variablesitem/card-view-variablesitem.component';
 import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services/dynamic-component-mapper.service';
 
 @Injectable()

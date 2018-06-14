@@ -17,8 +17,8 @@
 
 import { Component, Input, OnChanges } from '@angular/core';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { CardViewVariablesItemModel } from "../../models/card-view.models";
-import { CardViewVariablesType } from "../../interfaces/card-view.interfaces";
+import { CardViewVariablesItemModel } from '../../models/card-view.models';
+import { CardViewVariablesType } from '../../interfaces/card-view.interfaces';
 
 @Component({
     selector: 'adf-card-view-boolitem',
@@ -39,7 +39,7 @@ export class CardViewVariablesItemComponent implements OnChanges {
         this.variables = this.property.value || [];
     }
 
-    create(): void {
+    add(): void {
         this.variables.push({ name: '', value: '' });
     }
 

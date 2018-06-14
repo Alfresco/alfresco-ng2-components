@@ -23,5 +23,5 @@ export interface CardViewVariablesType {
 }
 
 export interface CardViewVariablesItemProperties extends CardViewItemProperties {
-    value: CardViewVariablesType[]
+    value: CardViewVariablesType[];
 }
