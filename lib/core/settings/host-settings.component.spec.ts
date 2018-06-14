@@ -48,7 +48,7 @@ describe('HostSettingsComponent', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
             appConfigService.config.authType = 'OAUTH';
-            appConfigService.config.oauthConfig = {
+            appConfigService.config.oauth2 = {
                 host: 'http://localhost:6543',
                 redirectUri: '/',
                 silentLogin: false,
@@ -276,7 +276,7 @@ describe('HostSettingsComponent', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'ALL';
             appConfigService.config.authType = 'OAUTH';
-            appConfigService.config.oauthConfig = {
+            appConfigService.config.oauth2 = {
                 host: 'http://localhost:6543',
                 redirectUri: '/',
                 silentLogin: false,
