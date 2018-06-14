@@ -1,0 +1,26 @@
+<main>
+    <h1>Object picker</h1>
+
+
+    <h2>Plain picker</h2>
+
+    dropdownHideMyFiles: {{dropdownHideMyFiles}}
+
+    <div style="height:400px;width:700px">
+        <adf-content-node-selector-panel
+            [currentFolderId]="'-root-'">
+        </adf-content-node-selector-panel>
+    </div>
+
+
+    <h2>Hide My files</h2>
+
+
+    <div style="height:400px;width:700px">
+        <adf-content-node-selector-panel
+            [currentFolderId]="'-root-'"
+            [dropdownHideMyFiles]="true">
+        </adf-content-node-selector-panel>
+    </div>
+
+</main>
