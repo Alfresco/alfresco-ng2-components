@@ -663,12 +663,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
-    datatableLayoutFix() {      
+    datatableLayoutFix() {
         const maxGalleryRows = 7;
 
-        if(this.display === 'gallery') {
+        if (this.display === 'gallery') {
             for (let i = 0; i < maxGalleryRows; i++) {
-               this.fakeRows.push("");  
+               this.fakeRows.push('');
             }
         } else {
             this.fakeRows = [];
