@@ -9,14 +9,14 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * limitations under the License.
  */
 
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 
 
@@ -32,6 +32,36 @@ export class TaskListDemoComponent implements OnInit {
     taskListForm: FormGroup;
 
     errorMessage: string;
+
+    appId: number;
+
+    processDefinitionId: string;
+
+    state: string;
+
+    assignment: string;
+
+    name: string;
+
+    sort: string;
+
+    assignmentOptions = [
+        {value: 'assignee', title: 'Assignee'},
+        {value: 'candidate', title: 'Candidate'}
+    ];
+
+    stateOptions = [
+        {value: 'all', title: 'All'},
+        {value: 'active', title: 'Active'},
+        {value: 'completed', title: 'Completed'}
+    ];
+
+    sortOptions = [
+        {value: 'created-asc', title: 'Created (asc)'},
+        {value: 'created-desc', title: 'Created (desc)'},
+        {value: 'due-asc', title: 'Due (asc)'},
+        {value: 'due-desc', title: 'Due (desc)'}
+    ];
 
     constructor(private route: ActivatedRoute,
                 private formBuilder: FormBuilder) {
@@ -55,10 +85,8 @@ export class TaskListDemoComponent implements OnInit {
     }
 
     buildForm() {
-
-
         this.taskListForm = this.formBuilder.group({
-            appId: new FormControl(this.defaultAppId, Validators.required),
+            taskAppId: new FormControl(this.defaultAppId, [Validators.required, Validators.pattern('^[0-9]*$')]),
             taskName: new FormControl(''),
             taskProcessDefinitionId: new FormControl(''),
             taskAssignment: new FormControl(''),
@@ -66,15 +94,17 @@ export class TaskListDemoComponent implements OnInit {
             taskSort: new FormControl('')
         });
 
-        this.taskListForm.valueChanges
-            .debounceTime(500)
-            .subscribe(taskFilter => {
-                this.filterTasks(taskFilter);
-        });
+        if(this.taskListForm.valid) {
+            this.taskListForm.valueChanges
+            .debounceTime(1000)
+                .subscribe(taskFilter => {
+                    this.filterTasks(taskFilter);
+            });
+        }
     }
 
     filterTasks(taskFilter: any) {
-        this.appId = taskFilter.appId;
+        this.appId = taskFilter.taskAppId;
         this.processDefinitionId = taskFilter.taskProcessDefinitionId;
         this.name = taskFilter.taskName;
         this.assignment = taskFilter.taskAssignment;
@@ -86,6 +116,27 @@ export class TaskListDemoComponent implements OnInit {
         this.taskListForm.reset();
     }
 
+    get taskAppId(): AbstractControl {
+        return this.taskListForm.get('taskAppId');
+    }
 
-    // get appIds() { return this.taskListForm.get('appId'); }
+    get taskProcessDefinitionId(): AbstractControl {
+        return this.taskListForm.get('taskProcessDefinitionId');
+    }
+
+    get taskName(): AbstractControl {
+        return this.taskListForm.get('taskName');
+    }
+
+    get taskAssignment(): AbstractControl {
+        return this.taskListForm.get('taskAssignment');
+    }
+    
+    get taskState(): AbstractControl {
+        return this.taskListForm.get('taskState');
+    }
+
+    get taskSort(): AbstractControl {
+        return this.taskListForm.get('taskSort');
+    }
 }
