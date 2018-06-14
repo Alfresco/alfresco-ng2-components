@@ -96,10 +96,8 @@ describe('DocumentListService', () => {
     });
 
     beforeEach(() => {
-        userPreferences = TestBed.get(UserPreferencesService);
-
         let contentService = new ContentService(null, null, null, null);
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), userPreferences, new StorageService());
+        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         service = new DocumentListService(null, contentService, alfrescoApiService, null, null);
         jasmine.Ajax.install();
     });

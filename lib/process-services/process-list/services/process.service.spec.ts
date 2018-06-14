@@ -40,7 +40,7 @@ describe('ProcessService', () => {
 
     beforeEach(() => {
         userPreferences = TestBed.get(UserPreferencesService);
-        apiService = new AlfrescoApiServiceMock(new AppConfigService(null), userPreferences, new StorageService() );
+        apiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService() );
         service = new ProcessService(apiService);
         alfrescoApi = apiService.getInstance();
     });

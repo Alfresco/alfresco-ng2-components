@@ -23,14 +23,13 @@ import {
 } from '../../mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
-import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, setupTestBed, CoreModule, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
 describe('Activiti Task filter Service', () => {
 
     let service: TaskFilterService;
-    let userPreferences: UserPreferencesService;
 
     setupTestBed({
         imports: [
@@ -39,8 +38,7 @@ describe('Activiti Task filter Service', () => {
     });
 
     beforeEach(async(() => {
-        userPreferences = TestBed.get(UserPreferencesService);
-        service = new TaskFilterService(new AlfrescoApiServiceMock(new AppConfigService(null), userPreferences, new StorageService()), new LogService(new AppConfigService(null)));
+        service = new TaskFilterService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()), new LogService(new AppConfigService(null)));
         jasmine.Ajax.install();
     }));
 

@@ -15,15 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    AlfrescoApiServiceMock,
-    AppConfigService,
-    ContentService,
-    StorageService,
-    UserPreferencesService,
-    setupTestBed,
-    CoreModule,
-    TranslationMock
+import { AlfrescoApiServiceMock, AppConfigService, ContentService,
+    StorageService, setupTestBed, CoreModule, TranslationMock
 } from '@alfresco/adf-core';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -38,7 +31,6 @@ describe('DocumentActionsService', () => {
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
     let nodeActionsService: NodeActionsService;
-    let userPreferences;
 
     setupTestBed({
         imports: [
@@ -47,9 +39,8 @@ describe('DocumentActionsService', () => {
     });
 
     beforeEach(() => {
-        userPreferences = TestBed.get(UserPreferencesService);
         let contentService = new ContentService(null, null, null, null);
-        let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), userPreferences, new StorageService());
+        let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
 
         documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
         service = new DocumentActionsService(null, null, new TranslationMock(), documentListService, contentService);
