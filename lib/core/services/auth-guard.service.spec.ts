@@ -70,7 +70,7 @@ describe('AuthGuardService', () => {
         service.canActivate(null, state);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', navigation: ['some-url', {}]
+            provider: 'ALL', url: 'some-url'
         });
         expect(router.navigate).toHaveBeenCalledWith(['/login']);
     }));
@@ -85,7 +85,7 @@ describe('AuthGuardService', () => {
         service.canActivate(null, state);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', navigation: ['some-url', { q: 'query' } ]
+            provider: 'ALL', url: 'some-url;q=query'
         });
         expect(router.navigate).toHaveBeenCalledWith(['/login']);
     }));
@@ -100,7 +100,7 @@ describe('AuthGuardService', () => {
         service.canActivate(null, state);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', navigation: ['some-url', {}]
+            provider: 'ALL', url: 'some-url'
         });
         expect(router.navigate).toHaveBeenCalledWith(['/fakeLoginRoute']);
     }));
@@ -114,7 +114,7 @@ describe('AuthGuardService', () => {
         service.canActivate(null, state);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', navigation: ['/']
+            provider: 'ALL', url: '/'
         });
     }));
 });

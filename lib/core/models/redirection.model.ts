@@ -21,12 +21,12 @@
 
 export class RedirectionModel {
     provider: string;
-    navigation?: any[];
+    url?: string;
 
     constructor(obj?: any) {
         if (obj) {
             this.provider = obj.provider;
-            this.navigation = obj.navigation || null;
+            this.url = obj.url || null;
         }
     }
 
