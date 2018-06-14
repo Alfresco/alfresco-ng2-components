@@ -157,7 +157,7 @@ export class MDNav {
         if (this.item && this.item["value"]) {
             return this.item.value;
         } else {
-            return undefined;
+            return "";
         }
     }
 }

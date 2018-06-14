@@ -165,7 +165,7 @@ var MDNav = /** @class */ (function () {
                 return this.item.value;
             }
             else {
-                return undefined;
+                return "";
             }
         },
         enumerable: true,

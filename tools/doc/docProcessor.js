@@ -53,6 +53,10 @@ function updatePhase(filenames, aggData) {
         errorMessages = [];
         var pathname = filenames[i]; // path.resolve(srcFolder, filenames[i]);
         
+        if (program.verbose) {
+            console.log(pathname);
+        }
+        
         var src = fs.readFileSync(pathname);
         var tree = remark().use(frontMatter, ["yaml"]).parse(src)
 
@@ -132,6 +136,7 @@ program
 .usage("[options] <source>")
 .option("-p, --profile [profileName]", "Select named config profile", "default")
 .option("-j, --json", "Output JSON data for Markdown syntax tree")
+.option("-v, --verbose", "Log doc files as they are processed")
 .parse(process.argv);
 
 var sourcePath;
