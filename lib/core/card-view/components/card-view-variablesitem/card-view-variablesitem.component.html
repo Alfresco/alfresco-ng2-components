@@ -14,12 +14,18 @@
         <div class="card-view__variables__row" *ngFor="let variable of variables; let i = index">
             <div class="card-view__variables__col">
                 <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Name" (blur)="save($event)" [(ngModel)]="variables[i].name">
+                    <input matInput
+                           placeholder="{{ 'CORE.CARDVIEW.VARIABLES.NAME' | translate }}"
+                           (blur)="save($event)"
+                           [(ngModel)]="variables[i].name">
                 </mat-form-field>
             </div>
             <div class="card-view__variables__col">
                 <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Value" (blur)="save($event)" [(ngModel)]="variables[i].value">
+                    <input matInput
+                           placeholder="{{ 'CORE.CARDVIEW.VARIABLES.VALUE' | translate }}"
+                           (blur)="save($event)"
+                           [(ngModel)]="variables[i].value">
                 </mat-form-field>
             </div>
             <button mat-icon-button (click)="remove(i)" class="card-view__variables__remove-btn">

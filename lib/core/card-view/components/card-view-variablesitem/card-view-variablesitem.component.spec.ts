@@ -22,7 +22,7 @@ import { CardViewVariablesItemComponent } from './card-view-variablesitem.compon
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 
-describe('CardViewTextItemComponent', () => {
+describe('CardViewVariablesItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewVariablesItemComponent>;
     let component: CardViewVariablesItemComponent;
