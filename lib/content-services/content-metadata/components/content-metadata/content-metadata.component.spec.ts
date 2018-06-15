@@ -23,20 +23,12 @@ import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import {
-    CardViewBaseItemModel,
-    CardViewComponent,
-    CardViewUpdateService,
-    NodesApiService,
-    LogService,
-    setupTestBed
-    } from '@alfresco/adf-core';
+import { CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService, LogService, setupTestBed } from '@alfresco/adf-core';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataComponent', () => {
-
     let component: ContentMetadataComponent;
     let fixture: ComponentFixture<ContentMetadataComponent>;
     let node: MinimalNodeEntryEntity;
@@ -45,9 +37,7 @@ describe('ContentMetadataComponent', () => {
 
     setupTestBed({
         imports: [ContentTestingModule],
-        providers: [
-            { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
-        ]
+        providers: [{ provide: LogService, useValue: { error: jasmine.createSpy('error') } }]
     });
 
     beforeEach(() => {
@@ -81,7 +71,6 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Default input param values', () => {
-
         it('should have editable input param as false by default', () => {
             expect(component.editable).toBe(false);
         });
@@ -96,7 +85,6 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Folder', () => {
-
         it('should show the folder node', () => {
             component.expanded = false;
             fixture.detectChanges();
@@ -112,7 +100,6 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Saving', () => {
-
         it('should save the node on itemUpdate', () => {
             const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
                 updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
@@ -139,7 +126,7 @@ describe('ContentMetadataComponent', () => {
             updateService.update(property, 'updated-value');
 
             fixture.whenStable().then(() => {
-                expect(component.node).toBe(expectedNode);
+                expect(component.node).toEqual(expectedNode);
             });
         }));
 
@@ -160,9 +147,7 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Properties loading', () => {
-
-        let expectedNode,
-            contentMetadataService: ContentMetadataService;
+        let expectedNode, contentMetadataService: ContentMetadataService;
 
         beforeEach(() => {
             expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
@@ -248,22 +233,5 @@ describe('ContentMetadataComponent', () => {
                 expect(basicPropertiesComponent.displayEmpty).toBe(false);
             });
         }));
-
-        it('should be performed again if property updating occured, since the originally passed node has changed, so the previously calculated properties', () => {
-            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
-                updateService = fixture.debugElement.injector.get(CardViewUpdateService),
-                nodesApiService = TestBed.get(NodesApiService);
-
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => Observable.of(node));
-            spyOn(contentMetadataService, 'getBasicProperties');
-            component.ngOnChanges({ node: new SimpleChange(null, node, true) });
-            updateService.update(property, 'updated-value');
-
-            component.ngOnChanges({ expanded: new SimpleChange(false, true, false) });
-            component.ngOnChanges({ expanded: new SimpleChange(true, false, false) });
-            component.ngOnChanges({ expanded: new SimpleChange(false, true, false) });
-
-            expect(contentMetadataService.getBasicProperties).toHaveBeenCalledTimes(2);
-        });
     });
 });
