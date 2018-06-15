@@ -296,6 +296,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     private initTable() {
         this.data = new ObjectDataTableAdapter(this.rows, this.columns);
+        this.setTableSorting(this.sorting);
         this.resetSelection();
         this.rowMenuCache = {};
     }
