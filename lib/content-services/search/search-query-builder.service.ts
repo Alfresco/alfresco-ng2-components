@@ -57,13 +57,24 @@ export class SearchQueryBuilderService {
 
     constructor(appConfig: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
         this.config = appConfig.get<SearchConfiguration>('search');
+        this.resetToDefaults();
+    }
 
+    resetToDefaults() {
         if (this.config) {
-            this.categories = (this.config.categories || []).filter(category => category.enabled);
-            this.filterQueries = this.config.filterQueries || [];
+            this.categories =
+                (this.config.categories || [])
+                    .filter(category => category.enabled)
+                    .map(category => { return { ...category }; });
+
+            this.filterQueries =
+                (this.config.filterQueries || [])
+                    .map(query => { return {...query}; });
 
             if (this.config.sorting) {
-                this.sorting = this.config.sorting.defaults || [];
+                this.sorting =
+                    (this.config.sorting.defaults || [])
+                        .map(sorting => { return { ...sorting }; });
             }
         }
     }
