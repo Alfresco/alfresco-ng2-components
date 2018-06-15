@@ -27,6 +27,31 @@ describe('SearchQueryBuilder', () => {
         return config;
     };
 
+    fit('should reset to defaults', () => {
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true },
+                <any> { id: 'cat2', enabled: true }
+            ],
+            filterQueries: [
+                { query: 'query1' },
+                { query: 'query2' }
+            ]
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+
+        builder.categories = [];
+        builder.filterQueries = [];
+
+        expect(builder.categories.length).toBe(0);
+        expect(builder.filterQueries.length).toBe(0);
+
+        builder.resetToDefaults();
+
+        expect(builder.categories.length).toBe(2);
+        expect(builder.filterQueries.length).toBe(2);
+    });
+
     it('should have empty user query by default', () => {
         const builder = new SearchQueryBuilderService(buildConfig({}), null);
         expect(builder.userQuery).toBe('');
