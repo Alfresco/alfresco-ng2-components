@@ -6,7 +6,7 @@ import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppConfigService, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService } from '@alfresco/adf-core';
 import { AppComponent } from './app.component';
 import { AdfModule } from './adf.module';
 import { MaterialModule } from './material.module';
@@ -43,7 +43,6 @@ import { MetadataDialogAdapterComponent } from './components/files/metadata-dial
 import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
-import { DebugAppConfigService } from './services/debug-app-config.service';
 
 import { routing } from './app.routes';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -110,7 +109,7 @@ import { NotificationsComponent } from './components/notifications/notifications
         NotificationsComponent
     ],
     providers: [
-        { provide: AppConfigService, useClass: DebugAppConfigService },
+        { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -129,11 +128,7 @@ import { NotificationsComponent } from './components/notifications/notifications
         },
         PreviewService
     ],
-    entryComponents: [
-        VersionManagerDialogAdapterComponent,
-        MetadataDialogAdapterComponent
-    ],
+    entryComponents: [VersionManagerDialogAdapterComponent, MetadataDialogAdapterComponent],
     bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

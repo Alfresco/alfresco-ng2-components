@@ -22,18 +22,11 @@ import { Observable } from 'rxjs/Observable';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import 'rxjs/add/operator/distinctUntilChanged';
-import { OauthConfigModel } from '../models/oauth-config.model';
 
 export enum UserPreferenceValues {
     PaginationSize = 'PAGINATION_SIZE',
-    DisableCSRF = 'DISABLE_CSRF',
     Locale = 'LOCALE',
-    SupportedPageSizes = 'supportedPageSizes',
-    oauthConfig = 'oauthConfig',
-    ecmHost = 'ecmHost',
-    bpmHost = 'bpmHost',
-    providers = 'providers',
-    authType = 'authType'
+    SupportedPageSizes = 'supportedPageSizes'
 }
 
 @Injectable()
@@ -45,11 +38,7 @@ export class UserPreferencesService {
         locale: 'en'
     };
 
-    private userPreferenceStatus: any = {
-        paginationSize: 25,
-        supportedPageSizes: [5, 10, 15, 20],
-        LOCALE: 'en'
-    };
+    private userPreferenceStatus: any = this.defaults;
 
     /**
      * @deprecated we are grouping every value changed on the user preference in a single stream : userPreferenceValue$
@@ -75,7 +64,6 @@ export class UserPreferencesService {
         this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.paginationSize ?
             this.paginationSize : this.appConfig.get('pagination.size', this.defaults.paginationSize);
         this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
-        this.userPreferenceStatus[UserPreferenceValues.DisableCSRF] = this.disableCSRF;
     }
 
     /**
@@ -120,6 +108,19 @@ export class UserPreferencesService {
     }
 
     /**
+     * Check if an item is present in the storage
+     * @param property Name of the property
+     */
+    hasItem(property: string) {
+        if (!property) {
+            return;
+        }
+        return this.storage.hasItem(
+            this.getPropertyKey(property)
+        );
+    }
+
+    /**
      * Gets the active storage prefix for preferences.
      * @returns Storage prefix
      */
@@ -152,21 +153,6 @@ export class UserPreferencesService {
         return this.defaults.supportedPageSizes;
     }
 
-    /** Prevents the CSRF Token from being submitted if true. Only valid for Process Services. */
-    set disableCSRF(csrf: boolean) {
-        let storedCSRF = this.storage.getItem('DISABLE_CSRF');
-
-        if (csrf !== null && csrf !== undefined) {
-            if (csrf.toString() === storedCSRF) {
-                this.set('DISABLE_CSRF', csrf);
-            }
-        }
-    }
-
-    get disableCSRF(): boolean {
-        return this.get('DISABLE_CSRF') === 'true';
-    }
-
     /** Pagination size. */
     set paginationSize(value: number) {
         this.set('PAGINATION_SIZE', value);
@@ -193,76 +179,6 @@ export class UserPreferencesService {
      */
     public getDefaultLocale(): string {
         return this.appConfig.get<string>('locale') || this.translate.getBrowserLang() || 'en';
-    }
-
-    get providers(): string {
-        if (this.storage.hasItem('providers')) {
-            return this.storage.getItem('providers');
-        } else {
-            return this.appConfig.get('providers', 'ECM');
-        }
-    }
-
-    set providers(providers: string) {
-        if (providers !== this.providers) {
-            this.storage.setItem('providers', providers);
-        }
-    }
-
-    get bpmHost(): string {
-        if (this.storage.hasItem('bpmHost')) {
-            return this.storage.getItem('bpmHost');
-        } else {
-            return this.appConfig.get('bpmHost');
-        }
-    }
-
-    set bpmHost(bpmHost: string) {
-        if (bpmHost !== this.bpmHost) {
-            this.storage.setItem('bpmHost', bpmHost);
-        }
-    }
-
-    get ecmHost(): string {
-        if (this.storage.hasItem('ecmHost')) {
-            return this.storage.getItem('ecmHost');
-        } else {
-            return this.appConfig.get('ecmHost');
-        }
-    }
-
-    set ecmHost(ecmHost: string) {
-        if (ecmHost !== this.ecmHost) {
-            this.storage.setItem('ecmHost', ecmHost);
-        }
-    }
-
-    get oauthConfig(): OauthConfigModel {
-        if (this.storage.hasItem('oauthConfig')) {
-            return JSON.parse(this.storage.getItem('oauthConfig'));
-        } else {
-            return this.appConfig.get<OauthConfigModel>('oauth2');
-        }
-    }
-
-    set oauthConfig(oauthConfig: OauthConfigModel) {
-        if (JSON.stringify(oauthConfig) !== JSON.stringify(this.oauthConfig)) {
-            this.storage.setItem('oauthConfig', JSON.stringify(oauthConfig));
-        }
-    }
-
-    get authType(): string {
-        if (this.storage.hasItem('authType')) {
-            return this.storage.getItem('authType');
-        } else {
-            return this.appConfig.get<string>('authType', 'BASIC');
-        }
-    }
-
-    set authType(authType: string) {
-        if (authType !== this.authType) {
-            this.storage.setItem('authType', authType);
-        }
     }
 
 }

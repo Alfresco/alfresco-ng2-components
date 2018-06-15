@@ -20,14 +20,14 @@ import {
     ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router
 } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 @Injectable()
 export class AuthGuardEcm implements CanActivate {
-    constructor(
-        private authService: AuthenticationService,
-        private router: Router,
-        private appConfig: AppConfigService) {
+    constructor(private authService: AuthenticationService,
+                private router: Router,
+                private appConfig: AppConfigService) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -43,16 +43,23 @@ export class AuthGuardEcm implements CanActivate {
             return true;
         }
 
-        this.authService.setRedirect({ provider: 'ECM', url: redirectUrl });
-        const pathToLogin = this.getRouteDestinationForLogin();
-        this.router.navigate(['/' + pathToLogin]);
+        if (!this.authService.isOauth() || this.isOAuthWithoutSilentLogin()) {
+            this.authService.setRedirect({ provider: 'ECM', url: redirectUrl });
+            const pathToLogin = this.getRouteDestinationForLogin();
+            this.router.navigate(['/' + pathToLogin]);
+        }
 
         return false;
     }
 
+    isOAuthWithoutSilentLogin() {
+        let oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+        return this.authService.isOauth() && oauth.silentLogin === false;
+    }
+
     private getRouteDestinationForLogin(): string {
         return this.appConfig &&
-               this.appConfig.get<string>('loginRoute') ?
-                        this.appConfig.get<string>('loginRoute') : 'login';
+            this.appConfig.get<string>(AppConfigValues.LOGIN_ROUTE) ?
+            this.appConfig.get<string>(AppConfigValues.LOGIN_ROUTE) : 'login';
     }
 }

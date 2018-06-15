@@ -22,11 +22,11 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { RedirectionModel } from '../models/redirection.model';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
@@ -39,7 +39,7 @@ export class AuthenticationService {
     onLogout: Subject<any> = new Subject<any>();
 
     constructor(
-        private preferences: UserPreferencesService,
+        private appConfig: AppConfigService,
         private alfrescoApi: AlfrescoApiService,
         private storage: StorageService,
         private cookie: CookieService,
@@ -73,7 +73,7 @@ export class AuthenticationService {
                 this.saveTickets();
                 this.onLogin.next(response);
                 return {
-                    type: this.preferences.providers,
+                    type: this.appConfig.get(AppConfigValues.PROVIDERS),
                     ticket: response
                 };
             })
@@ -83,7 +83,7 @@ export class AuthenticationService {
     /**
      * Logs the user in with SSO
      */
-    ssoImplictiLogin() {
+    ssoImplicitLogin() {
         this.alfrescoApi.getInstance().implicitLogin();
     }
 

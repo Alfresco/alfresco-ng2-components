@@ -17,21 +17,21 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppConfigService, StorageService } from '@alfresco/adf-core';
+import { StorageService } from '../services/storage.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 
 @Injectable()
 export class DebugAppConfigService extends AppConfigService {
-
     constructor(private storage: StorageService, http: HttpClient) {
         super(http);
     }
 
     /** @override */
     get<T>(key: string, defaultValue?: T): T {
-        if (key === 'ecmHost' || key === 'bpmHost') {
-            return <T> (<any> this.storage.getItem(key) || super.get<T>(key));
+        if (key === AppConfigValues.OAUTHCONFIG) {
+            return <T> (JSON.parse(this.storage.getItem(key)) || super.get<T>(key, defaultValue));
+        } else {
+            return <T> (<any> this.storage.getItem(key) || super.get<T>(key, defaultValue));
         }
-        return super.get<T>(key, defaultValue);
     }
-
 }

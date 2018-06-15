@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
-    AuthenticationService, ContentService, TranslationService,
+    AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
     PaginationComponent, FormValues, DisplayMode, UserPreferenceValues, InfinitePaginationComponent
@@ -56,7 +56,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     displayMode = DisplayMode.List;
     includeFields = ['isFavorite', 'isLocked', 'aspectNames'];
 
-    baseShareUrl = this.preference.ecmHost + '/preview/s/';
+    baseShareUrl = this.appConfig.get<string>(AppConfigValues.ECMHOST) + '/preview/s/';
 
     toolbarColor = 'default';
 
@@ -188,6 +188,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private translateService: TranslationService,
                 private router: Router,
                 private logService: LogService,
+                private appConfig: AppConfigService,
                 private preference: UserPreferencesService,
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,

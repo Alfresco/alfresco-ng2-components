@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { async } from '@angular/core/testing';
 import { mockError, fakeProcessFilters } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
-import { AlfrescoApiServiceMock, AlfrescoApiService, AppConfigService, StorageService, UserPreferencesService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AlfrescoApiService, AppConfigService, StorageService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
@@ -28,7 +28,6 @@ describe('Process filter', () => {
     let service: ProcessFilterService;
     let apiService: AlfrescoApiService;
     let alfrescoApi: any;
-    let userPreferences: UserPreferencesService;
 
     setupTestBed({
         imports: [
@@ -37,8 +36,7 @@ describe('Process filter', () => {
     });
 
     beforeEach(() => {
-        userPreferences = TestBed.get(UserPreferencesService);
-        apiService = new AlfrescoApiServiceMock(new AppConfigService(null), userPreferences, new StorageService() );
+        apiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService() );
         service = new ProcessFilterService(apiService);
         alfrescoApi = apiService.getInstance();
     });
