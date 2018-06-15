@@ -216,6 +216,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             this.resetSelection();
             this.emitRowSelectionEvent('row-unselect', null);
         }
+
+        if (this.isPropertyChanged(changes['sorting'])) {
+            this.setTableSorting(changes['sorting'].currentValue);
+        }
     }
 
     ngDoCheck() {
