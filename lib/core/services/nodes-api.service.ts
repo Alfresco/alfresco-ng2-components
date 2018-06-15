@@ -118,8 +118,14 @@ export class NodesApiService {
      */
     updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
         const { nodesApi, handleError, getEntryFromEntity } = this;
+
+        const defaults = {
+            include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
+        };
+        const queryOptions = Object.assign(defaults, options);
+
         const promise = nodesApi
-            .updateNode(nodeId, nodeBody, options)
+            .updateNode(nodeId, nodeBody, queryOptions)
             .then(getEntryFromEntity);
 
         return Observable.fromPromise(promise).catch(handleError);
