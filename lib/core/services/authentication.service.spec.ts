@@ -20,7 +20,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
@@ -29,7 +29,7 @@ declare let jasmine: any;
 describe('AuthenticationService', () => {
     let apiService: AlfrescoApiService;
     let authService: AuthenticationService;
-    let preferences: UserPreferencesService;
+    let appConfigService: AppConfigService;
     let storage: StorageService;
     let cookie: CookieService;
 
@@ -40,7 +40,6 @@ describe('AuthenticationService', () => {
     beforeEach(() => {
         apiService = TestBed.get(AlfrescoApiService);
         authService = TestBed.get(AuthenticationService);
-        preferences = TestBed.get(UserPreferencesService);
 
         cookie = TestBed.get(CookieService);
         cookie.clear();
@@ -60,7 +59,9 @@ describe('AuthenticationService', () => {
     describe('remember me', () => {
 
         beforeEach(() => {
-            preferences.providers = 'ECM';
+            appConfigService = TestBed.get(AppConfigService);
+            appConfigService.config.providers = 'ECM';
+            appConfigService.load();
             apiService.reset();
         });
 
@@ -124,7 +125,8 @@ describe('AuthenticationService', () => {
     describe('when the setting is ECM', () => {
 
         beforeEach(() => {
-            preferences.providers = 'ECM';
+            appConfigService.config.providers = 'ECM';
+            appConfigService.load();
             apiService.reset();
         });
 
@@ -276,26 +278,27 @@ describe('AuthenticationService', () => {
         it('[ECM] should set/get redirectUrl when provider is ECM', () => {
             authService.setRedirect({ provider: 'ECM', url: 'some-url' });
 
-            expect(authService.getRedirect(preferences.providers)).toEqual('some-url');
+            expect(authService.getRedirect(appConfigService.config.providers)).toEqual('some-url');
         });
 
         it('[ECM] should set/get redirectUrl when provider is BPM', () => {
             authService.setRedirect({ provider: 'BPM', url: 'some-url' });
 
-            expect(authService.getRedirect(preferences.providers)).toBeNull();
+            expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
         });
 
         it('[ECM] should return null as redirectUrl when redirectUrl field is not set', () => {
             authService.setRedirect(null);
 
-            expect(authService.getRedirect(preferences.providers)).toBeNull();
+            expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
         });
     });
 
     describe('when the setting is BPM', () => {
 
         beforeEach(() => {
-            preferences.providers = 'BPM';
+            appConfigService.config.providers = 'BPM';
+            appConfigService.load();
             apiService.reset();
         });
 
@@ -429,26 +432,27 @@ describe('AuthenticationService', () => {
         it('[BPM] should set/get redirectUrl when provider is BPM', () => {
             authService.setRedirect({ provider: 'BPM', url: 'some-url' });
 
-            expect(authService.getRedirect(preferences.providers)).toEqual('some-url');
+            expect(authService.getRedirect(appConfigService.config.providers)).toEqual('some-url');
         });
 
         it('[BPM] should set/get redirectUrl when provider is ECM', () => {
             authService.setRedirect({ provider: 'ECM', url: 'some-url' });
 
-            expect(authService.getRedirect(preferences.providers)).toBeNull();
+            expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
         });
 
         it('[BPM] should return null as redirectUrl when redirectUrl field is not set', () => {
             authService.setRedirect(null);
 
-            expect(authService.getRedirect(preferences.providers)).toBeNull();
+            expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
         });
     });
 
     describe('when the setting is both ECM and BPM ', () => {
 
         beforeEach(() => {
-            preferences.providers = 'ALL';
+            appConfigService.config.providers = 'ALL';
+            appConfigService.load();
             apiService.reset();
         });
 
@@ -546,25 +550,25 @@ describe('AuthenticationService', () => {
         it('[ALL] should set/get redirectUrl when provider is ALL', () => {
             authService.setRedirect({ provider: 'ALL', url: 'some-url' });
 
-            expect(authService.getRedirect(preferences.providers)).toEqual('some-url');
+            expect(authService.getRedirect(appConfigService.config.providers)).toEqual('some-url');
         });
 
         it('[ALL] should set/get redirectUrl when provider is BPM', () => {
             authService.setRedirect({ provider: 'BPM', url: 'some-url' });
 
-            expect(authService.getRedirect(preferences.providers)).toEqual('some-url');
+            expect(authService.getRedirect(appConfigService.config.providers)).toEqual('some-url');
         });
 
         it('[ALL] should set/get redirectUrl when provider is ECM', () => {
             authService.setRedirect({ provider: 'ECM', url: 'some-url' });
 
-            expect(authService.getRedirect(preferences.providers)).toEqual('some-url');
+            expect(authService.getRedirect(appConfigService.config.providers)).toEqual('some-url');
         });
 
         it('[ALL] should return null as redirectUrl when redirectUrl field is not set', () => {
             authService.setRedirect(null);
 
-            expect(authService.getRedirect(preferences.providers)).toBeNull();
+            expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
         });
     });
 

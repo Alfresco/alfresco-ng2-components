@@ -1,11 +1,12 @@
 ---
 Added: v2.0.0
-Status: Active
+Status: Internal
 Last reviewed: 2018-06-13
 ---
 
 # Host settings component
 
+`This component Note this comonent is not meant to be used in production`
 Validates the URLs for ACS and APS and saves them in the user's local storage
 
 ![Host settings](../docassets/images/host-settings-component.png)
@@ -15,6 +16,15 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 ```html
 <adf-host-settings>
 </adf-host-settings>
+```
+
+```ts
+@NgModule({
+ providers: [
+        { provide: AppConfigService, useClass: DebugAppConfigService },
+    ]
+)]
+
 ```
 
 ## Class members

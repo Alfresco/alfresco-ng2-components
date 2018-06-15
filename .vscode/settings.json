@@ -1,26 +1,27 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/.DS_Store": true,
-        "**/coverage": true,
-        "**/.happypack": true
-    },
-    "editor.renderIndentGuides": true,
-    "markdownlint.config": {
-        "MD032": false,
-        "MD004": false,
-        "MD024": false,
-        "MD009": false,
-        "MD013": false,
-        "MD036": false,
-        "MD033" : false,
-        "MD031" : false
-    },
-    "cSpell.words": [
-        "mincount",
-        "webscript"
-    ]
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/coverage": true,
+    "**/.happypack": true
+  },
+  "editor.renderIndentGuides": true,
+  "window.zoomLevel": 8,
+  "html.format.wrapAttributes": "force",
+  "markdownlint.config": {
+    "MD032": false,
+    "MD004": false,
+    "MD024": false,
+    "MD009": false,
+    "MD013": false,
+    "MD036": false,
+    "MD033": false,
+    "MD031": false
+  },
+  "cSpell.words": ["mincount", "webscript"]
 }

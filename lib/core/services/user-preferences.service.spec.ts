@@ -20,7 +20,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
-import { UserPreferenceValues } from './user-preferences.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
@@ -154,13 +153,4 @@ describe('UserPreferencesService', () => {
             done();
         });
     });
-
-    it('should stream only the selected attribute changes when using select', (done) => {
-        preferences.disableCSRF = false;
-        preferences.select(UserPreferenceValues.DisableCSRF).subscribe((disableCSRFFlag) => {
-            expect(disableCSRFFlag).toBeFalsy();
-            done();
-        });
-    });
-
 });

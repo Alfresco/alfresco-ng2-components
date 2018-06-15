@@ -19,13 +19,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HostSettingsComponent } from './host-settings.component';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { UserPreferencesService } from '../services/user-preferences.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
 describe('HostSettingsComponent', () => {
 
     let fixture: ComponentFixture<HostSettingsComponent>;
     let component: HostSettingsComponent;
-    let userPreferences: UserPreferencesService;
+    let appConfigService: AppConfigService;
     let element: any;
 
     setupTestBed({
@@ -35,7 +35,7 @@ describe('HostSettingsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(HostSettingsComponent);
         component = fixture.componentInstance;
-        userPreferences = TestBed.get(UserPreferencesService);
+        appConfigService = TestBed.get(AppConfigService);
         element = fixture.nativeElement;
     });
 
@@ -46,9 +46,9 @@ describe('HostSettingsComponent', () => {
     describe('Providers', () => {
 
         beforeEach(() => {
-            userPreferences.providers = 'ECM';
-            userPreferences.authType = 'OAUTH';
-            userPreferences.oauthConfig = {
+            appConfigService.config.providers = 'ECM';
+            appConfigService.config.authType = 'OAUTH';
+            appConfigService.config.oauth2 = {
                 host: 'http://localhost:6543',
                 redirectUri: '/',
                 silentLogin: false,
@@ -57,6 +57,8 @@ describe('HostSettingsComponent', () => {
                 scope: 'openid',
                 secret: ''
             };
+
+            appConfigService.load();
             fixture.detectChanges();
         });
 
@@ -64,7 +66,7 @@ describe('HostSettingsComponent', () => {
             fixture.destroy();
         });
 
-        it('should not show the providers select box if you hav eine porovider', (done) => {
+        it('should not show the providers select box if you have any provider', (done) => {
             component.providers = ['BPM'];
             component.ngOnInit();
 
@@ -76,7 +78,7 @@ describe('HostSettingsComponent', () => {
             });
         });
 
-        it('should show the providers select box if you hav eine porovider', (done) => {
+        it('should show the providers select box if you have any provider', (done) => {
             component.providers = ['BPM', 'ECM'];
             component.ngOnInit();
 
@@ -96,7 +98,8 @@ describe('HostSettingsComponent', () => {
         let bpmUrlInput;
 
         beforeEach(() => {
-            userPreferences.providers = 'BPM';
+            appConfigService.config.providers = 'BPM';
+            appConfigService.load();
             fixture.detectChanges();
             bpmUrlInput = element.querySelector('#bpmHost');
             ecmUrlInput = element.querySelector('#ecmHost');
@@ -148,7 +151,8 @@ describe('HostSettingsComponent', () => {
         let bpmUrlInput;
 
         beforeEach(() => {
-            userPreferences.providers = 'ECM';
+            appConfigService.config.providers = 'ECM';
+            appConfigService.load();
             fixture.detectChanges();
             bpmUrlInput = element.querySelector('#bpmHost');
             ecmUrlInput = element.querySelector('#ecmHost');
@@ -195,7 +199,8 @@ describe('HostSettingsComponent', () => {
         let bpmUrlInput;
 
         beforeEach(() => {
-            userPreferences.providers = 'ALL';
+            appConfigService.config.providers = 'ALL';
+            appConfigService.load();
             fixture.detectChanges();
             bpmUrlInput = element.querySelector('#bpmHost');
             ecmUrlInput = element.querySelector('#ecmHost');
@@ -269,9 +274,9 @@ describe('HostSettingsComponent', () => {
         let clientIdInput;
 
         beforeEach(() => {
-            userPreferences.providers = 'ALL';
-            userPreferences.authType = 'OAUTH';
-            userPreferences.oauthConfig = {
+            appConfigService.config.providers = 'ALL';
+            appConfigService.config.authType = 'OAUTH';
+            appConfigService.config.oauth2 = {
                 host: 'http://localhost:6543',
                 redirectUri: '/',
                 silentLogin: false,
@@ -280,6 +285,7 @@ describe('HostSettingsComponent', () => {
                 scope: 'openid',
                 secret: ''
             };
+            appConfigService.load();
             fixture.detectChanges();
             bpmUrlInput = element.querySelector('#bpmHost');
             ecmUrlInput = element.querySelector('#ecmHost');

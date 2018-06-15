@@ -17,7 +17,10 @@
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { Validators, FormGroup, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
-import { UserPreferencesService } from '../services/user-preferences.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { StorageService } from '../services/storage.service';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 @Component({
     selector: 'adf-host-settings',
@@ -62,7 +65,9 @@ export class HostSettingsComponent implements OnInit {
     bpmHostChange = new EventEmitter<string>();
 
     constructor(private formBuilder: FormBuilder,
-                private userPreferencesService: UserPreferencesService) {
+                private storageService: StorageService,
+                private alfrescoApiService: AlfrescoApiService,
+                private appConfig: AppConfigService) {
     }
 
     ngOnInit() {
@@ -70,16 +75,16 @@ export class HostSettingsComponent implements OnInit {
             this.showSelectProviders = false;
         }
 
-        let providerSelected = this.userPreferencesService.providers;
+        let providerSelected = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
 
         this.form = this.formBuilder.group({
             providersControl: [providerSelected, Validators.required],
-            authType: this.userPreferencesService.authType
+            authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE)
         });
 
         this.addFormGroups();
 
-        if (this.userPreferencesService.authType === 'OAUTH') {
+        if (this.appConfig.get<string>(AppConfigValues.AUTHTYPE) === 'OAUTH') {
             this.addOAuthFormGroup();
         }
 
@@ -127,24 +132,25 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createOAuthFormGroup(): AbstractControl {
-        const oAuthConfig: any = this.userPreferencesService.oauthConfig ? this.userPreferencesService.oauthConfig : {};
+        let oauth = <OauthConfigModel> this.appConfig.get(AppConfigValues.OAUTHCONFIG, {});
+
         return this.formBuilder.group({
-            host: [oAuthConfig.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
-            clientId: [oAuthConfig.clientId, Validators.required],
-            redirectUri: [oAuthConfig.redirectUri, Validators.required],
-            scope: [oAuthConfig.scope, Validators.required],
-            secret: oAuthConfig.secret,
-            silentLogin: oAuthConfig.silentLogin,
-            implicitFlow: oAuthConfig.implicitFlow
+            host: [oauth.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
+            clientId: [oauth.clientId, Validators.required],
+            redirectUri: [oauth.redirectUri, Validators.required],
+            scope: [oauth.scope, Validators.required],
+            secret: oauth.secret,
+            silentLogin: oauth.silentLogin,
+            implicitFlow: oauth.implicitFlow
         });
     }
 
     private createBPMFormControl(): AbstractControl {
-        return new FormControl(this.userPreferencesService.bpmHost, [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+        return new FormControl(this.appConfig.get<string>(AppConfigValues.BPMHOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
     }
 
     private createECMFormControl(): AbstractControl {
-        return new FormControl(this.userPreferencesService.ecmHost, [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+        return new FormControl(this.appConfig.get<string>(AppConfigValues.ECMHOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
     }
 
     onCancel() {
@@ -152,7 +158,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     onSubmit(values: any) {
-        this.userPreferencesService.providers = values.providersControl;
+        this.storageService.setItem(AppConfigValues.PROVIDERS, values.providersControl);
 
         if (this.isBPM()) {
             this.saveBPMValues(values);
@@ -167,21 +173,22 @@ export class HostSettingsComponent implements OnInit {
             this.saveOAuthValues(values);
         }
 
-        this.userPreferencesService.authType = values.authType;
+        this.storageService.setItem(AppConfigValues.AUTHTYPE, values.authType);
 
+        this.alfrescoApiService.reset();
         this.success.emit(true);
     }
 
     private saveOAuthValues(values: any) {
-        this.userPreferencesService.oauthConfig = values.oauthConfig;
+        this.storageService.setItem(AppConfigValues.OAUTHCONFIG, JSON.stringify(values.oauthConfig));
     }
 
     private saveBPMValues(values: any) {
-        this.userPreferencesService.bpmHost = values.bpmHost;
+        this.storageService.setItem(AppConfigValues.BPMHOST, values.bpmHost);
     }
 
     private saveECMValues(values: any) {
-        this.userPreferencesService.ecmHost = values.ecmHost;
+        this.storageService.setItem(AppConfigValues.ECMHOST, values.ecmHost);
     }
 
     isBPM(): boolean {

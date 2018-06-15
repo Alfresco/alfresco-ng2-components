@@ -32,7 +32,7 @@ for more information about installing and using the source code.
 | [Infinite pagination component](infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../../lib/core/pagination/infinite-pagination.component.ts) |
 | [Pagination component](pagination.component.md) | Adds pagination to the component it is used with. | [Source](../../lib/core/pagination/pagination.component.ts) |
 | [Host settings component](host-settings.component.md) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../../lib/core/settings/host-settings.component.ts) |
-| [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/sidenav-layout/components/sidebar-action/sidebar-action-menu.component.ts) |
+| [Sidebar action menu component](sidebar-action-menu.component.md) ![Internal](docassets/images/InternalIcon.png) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/sidenav-layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav layout component](sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../../lib/core/sidenav-layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Sorting picker component](sorting-picker.component.md) | Selects from a set of predefined sorting definitions and directions. | [Source](../../lib/core/sorting-picker/sorting-picker.component.ts) |
 | [Empty content component](empty-content.component.md) | Provides a generic "Empty Content" placeholder for components. | [Source](../../lib/core/templates/empty-content/empty-content.component.ts) |

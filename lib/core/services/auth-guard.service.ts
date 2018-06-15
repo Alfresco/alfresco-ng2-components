@@ -17,20 +17,20 @@
 
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot, CanActivate,
-  CanActivateChild, RouterStateSnapshot, Router
+    ActivatedRouteSnapshot, CanActivate,
+    CanActivateChild, RouterStateSnapshot, Router
 } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs/Observable';
-import { AppConfigService } from '../app-config/app-config.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
     constructor(private authService: AuthenticationService,
                 private router: Router,
-                private userPreference: UserPreferencesService,
-                private appConfig: AppConfigService) {}
+                private appConfig: AppConfigService) {
+    }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
         const redirectUrl = state.url;
@@ -45,8 +45,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         if (this.authService.isLoggedIn()) {
             return true;
         }
-        if (!this.authService.isOauth() || this.isOAuthWithoutSilentLogin() ) {
-            this.authService.setRedirect({ provider: 'ALL', url: redirectUrl } );
+        if (!this.authService.isOauth() || this.isOAuthWithoutSilentLogin()) {
+            this.authService.setRedirect({ provider: 'ALL', url: redirectUrl });
 
             const pathToLogin = this.getRouteDestinationForLogin();
             this.router.navigate(['/' + pathToLogin]);
@@ -56,12 +56,13 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
 
     isOAuthWithoutSilentLogin() {
-        return this.authService.isOauth() && this.userPreference.oauthConfig.silentLogin === false;
+        let oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+        return this.authService.isOauth() && oauth.silentLogin === false;
     }
 
     public getRouteDestinationForLogin(): string {
         return this.appConfig &&
-               this.appConfig.get<string>('loginRoute') ?
-                        this.appConfig.get<string>('loginRoute') : 'login';
+        this.appConfig.get<string>(AppConfigValues.LOGIN_ROUTE) ?
+            this.appConfig.get<string>(AppConfigValues.LOGIN_ROUTE) : 'login';
     }
 }

@@ -20,12 +20,14 @@ import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { UserPreferencesService } from '../../services/user-preferences.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
 import { Observable } from 'rxjs/Observable';
 import { OauthConfigModel } from '../../models/oauth-config.model';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -37,6 +39,8 @@ describe('LoginComponent', () => {
     let authService: AuthenticationService;
     let router: Router;
     let userPreferences: UserPreferencesService;
+    let appConfigService: AppConfigService;
+    let alfrescoApiService: AlfrescoApiService;
 
     let usernameInput, passwordInput;
 
@@ -70,6 +74,8 @@ describe('LoginComponent', () => {
         authService = TestBed.get(AuthenticationService);
         router = TestBed.get(Router);
         userPreferences = TestBed.get(UserPreferencesService);
+        appConfigService = TestBed.get(AppConfigService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
 
         fixture.detectChanges();
 
@@ -577,11 +583,9 @@ describe('LoginComponent', () => {
     describe('SSO', () => {
 
         beforeEach(() => {
-            userPreferences.oauthConfig = <OauthConfigModel> { implicitFlow: true };
-        });
-
-        afterEach(() => {
-            userPreferences.oauthConfig = null;
+            appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true };
+            appConfigService.load();
+            alfrescoApiService.reset();
         });
 
         it('should not show login username and password if SSO implicit flow is active', async(() => {
@@ -590,29 +594,34 @@ describe('LoginComponent', () => {
             component.ngOnInit();
             fixture.detectChanges();
 
-            expect(element.querySelector('#username')).toBeNull();
-            expect(element.querySelector('#password')).toBeNull();
+            fixture.detectChanges();
 
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#username')).toBeNull();
+                expect(element.querySelector('#password')).toBeNull();
+            });
         }));
 
         it('should not show the login base auth button', async(() => {
             spyOn(authService, 'isOauth').and.returnValue(true);
-            userPreferences.oauthConfig = <OauthConfigModel> { implicitFlow: true };
 
             component.ngOnInit();
             fixture.detectChanges();
 
-            expect(element.querySelector('#login-button')).toBeNull();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#login-button')).toBeNull();
+            });
         }));
 
         it('should  show the login SSO button', async(() => {
             spyOn(authService, 'isOauth').and.returnValue(true);
-            userPreferences.oauthConfig = <OauthConfigModel> { implicitFlow: true };
 
             component.ngOnInit();
             fixture.detectChanges();
 
-            expect(element.querySelector('#login-button-sso')).toBeDefined();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#login-button-sso')).toBeDefined();
+            });
         }));
 
     });
