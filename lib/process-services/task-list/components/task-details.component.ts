@@ -21,6 +21,7 @@ import {
     CardViewUpdateService,
     ClickNotification,
     LogService,
+    FormService,
     UpdateNotification,
     FormRenderingService,
     CommentsComponent
@@ -183,6 +184,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                 private authService: AuthenticationService,
                 private peopleProcessService: PeopleProcessService,
                 private formRenderingService: FormRenderingService,
+                private formService: FormService,
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,
                 private dialog: MatDialog) {
@@ -340,6 +342,13 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.taskListService.completeTask(this.taskId).subscribe(
             (res) => this.onFormCompleted(null)
         );
+    }
+
+    onFormAttached() {
+        this.formService.getTaskForm(this.taskId)
+            .subscribe((res) => {
+                this.loadDetails(this.taskId);
+            }, error => this.logService.error('Could not load forms'));
     }
 
     onFormContentClick(content: ContentLinkModel): void {

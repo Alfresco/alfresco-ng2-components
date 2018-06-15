@@ -16,7 +16,6 @@
  */
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { LogService, FormService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-task-standalone',
@@ -55,12 +54,12 @@ export class TaskStandaloneComponent {
     @Output()
     complete: EventEmitter<void> = new EventEmitter<void>();
 
+    @Output()
+    formAttached: EventEmitter<void> = new EventEmitter<void>();
+
     showAttachForm: boolean = false;
 
-    constructor(
-        private formService: FormService,
-        private logService: LogService
-    ) { }
+    constructor() { }
 
     onCancelButtonClick(): void {
         this.cancel.emit();
@@ -92,9 +91,6 @@ export class TaskStandaloneComponent {
 
     onCompleteAttachForm() {
         this.showAttachForm = false;
-
-        this.formService.getTaskForm(this.taskId)
-            .subscribe((res) => {
-            }, error => this.logService.error('Could not load forms'));
+        this.formAttached.emit();
     }
 }

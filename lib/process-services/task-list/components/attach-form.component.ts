@@ -18,7 +18,6 @@
 import { LogService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, OnChanges, Output } from '@angular/core';
 import { Form } from '../models/form.model';
-import { Observable } from 'rxjs/Observable';
 import { TaskListService } from './../services/tasklist.service';
 
 @Component({
@@ -65,7 +64,6 @@ export class AttachFormComponent implements OnInit, OnChanges {
 
     onAttachFormButtonClick(): void {
         this.attachForm(this.taskId, this.formKey);
-        this.completeAttachForm.emit();
     }
 
     private loadFormsTask(): void {
@@ -78,11 +76,12 @@ export class AttachFormComponent implements OnInit, OnChanges {
             });
     }
 
-    private attachForm(taskId: string, formKey: number): Observable<any> {
-        let response = Observable.of();
+    private attachForm(taskId: string, formKey: number) {
         if (taskId && formKey) {
-            response = this.taskService.attachFormToATask(taskId, formKey);
+            this.taskService.attachFormToATask(taskId, formKey)
+                .subscribe((res) => {
+                    this.completeAttachForm.emit();
+                });
         }
-        return response;
     }
 }

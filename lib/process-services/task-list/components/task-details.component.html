@@ -45,7 +45,8 @@
                                      [isCompleted]="isCompletedTask()"
                                      [hasCompletePermission]="isCompleteButtonEnabled()"
                                      [hideCancelButton]="true"
-                                     (complete)="onComplete()">
+                                     (complete)="onComplete()"
+                                     (formAttached)="onFormAttached()">
                 </adf-task-standalone>
             </div>
             <div *ngIf="!isAssigned()" id="claim-message-id">
