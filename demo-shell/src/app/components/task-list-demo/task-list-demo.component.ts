@@ -93,14 +93,15 @@ export class TaskListDemoComponent implements OnInit {
             taskState: new FormControl(''),
             taskSort: new FormControl('')
         });
-
-        if (this.taskListForm.valid) {
-            this.taskListForm.valueChanges
-            .debounceTime(1000)
-                .subscribe(taskFilter => {
+        
+        this.taskListForm.valueChanges
+        .debounceTime(500)
+            .subscribe(taskFilter => {
+                if (this.isFormValid()) {
                     this.filterTasks(taskFilter);
-            });
-        }
+                }
+        });
+        
     }
 
     filterTasks(taskFilter: any) {
@@ -114,6 +115,10 @@ export class TaskListDemoComponent implements OnInit {
 
     resetTaskForm() {
         this.taskListForm.reset();
+    }
+
+    isFormValid() {
+        return this.taskListForm && this.taskListForm.dirty && this.taskListForm.valid;
     }
 
     get taskAppId(): AbstractControl {
