@@ -1,0 +1,27 @@
+.content-node-selector-demo {
+
+    &-main {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-content: center;
+        align-self: center;
+        align-items: center;
+    }
+
+    &-basic-table {
+        height:400px;
+        width:700px
+    }
+
+    &-basic-label {
+        display: flex;
+        align-self: center;
+    }
+
+    &-example-form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
