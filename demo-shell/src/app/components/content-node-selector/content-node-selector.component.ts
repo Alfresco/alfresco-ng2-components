@@ -18,6 +18,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { SitePaging, SiteEntry, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ShareDataRow } from '@alfresco/adf-content-services';
+import { DataRow, DataColumn, ThumbnailService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './content-node-selector.component.html',
@@ -26,12 +27,21 @@ import { ShareDataRow } from '@alfresco/adf-content-services';
 })
 export class ContentNodeSelectorComponent {
 
+    constructor(private thumbnailService: ThumbnailService) {
+    }
+
     dropdownHideMyFiles = false;
     showFiles = false;
     showFolders = false;
+    enableImageResolver = false;
+    validSelection = false;
 
     customSideGuid = '';
     customSideTitle = '';
+    actualPageSize = 2;
+
+    rowFilterFunction: any = null;
+    customImageResolver: any = null;
 
     defaultSites: SiteEntry[] = [
         { entry: { title: 'MINE', guid: '-my-' } },
@@ -59,6 +69,19 @@ export class ContentNodeSelectorComponent {
         this.customSideTitle = '';
     }
 
+    recreateRowFilterFunction() {
+        this.rowFilterFunction = this.rowFilteringExample.bind(this);
+    }
+
+    recreateImageResolverFunction() {
+        this.enableImageResolver = !this.enableImageResolver;
+        if (this.enableImageResolver) {
+            this.customImageResolver = this.customImageResolverExample.bind(this);
+        } else {
+            this.customImageResolver = null;
+        }
+    }
+
     rowFilteringExample(row: ShareDataRow) {
         let showNode = true;
         const node: MinimalNodeEntryEntity = row.node.entry;
@@ -69,5 +92,17 @@ export class ContentNodeSelectorComponent {
             showNode = node.isFolder;
         }
         return showNode;
+    }
+
+    customImageResolverExample(row: DataRow, col: DataColumn) {
+        return this.thumbnailService.getMimeTypeIcon('video/quicktime');
+    }
+
+    onNodeSelect(node: MinimalNodeEntryEntity) {
+        this.validSelection = !!node;
+    }
+
+    customIsValidFunction(entry: MinimalNodeEntryEntity): boolean {
+        return entry.name.startsWith('a') || entry.name.startsWith('A');
     }
 }
