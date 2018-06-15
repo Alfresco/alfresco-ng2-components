@@ -17,44 +17,49 @@
 
 import { Component, Input, OnChanges } from '@angular/core';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { CardViewVariablesItemModel } from '../../models/card-view.models';
-import { CardViewVariablesType } from '../../interfaces/card-view.interfaces';
+import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
+import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
 
 @Component({
     selector: 'adf-card-view-boolitem',
-    templateUrl: './card-view-variablesitem.component.html',
-    styleUrls: ['./card-view-variablesitem.component.scss']
+    templateUrl: './card-view-keyvaluepairsitem.component.html',
+    styleUrls: ['./card-view-keyvaluepairsitem.component.scss']
 })
 
-export class CardViewVariablesItemComponent implements OnChanges {
+export class CardViewKeyValuePairsItemComponent implements OnChanges {
 
     @Input()
-    property: CardViewVariablesItemModel;
+    property: CardViewKeyValuePairsItemModel;
 
-    variables: CardViewVariablesType[];
+    values: CardViewKeyValuePairsItemType[];
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
     ngOnChanges() {
-        this.variables = this.property.value || [];
+        this.values = this.property.value || [];
     }
 
     add(): void {
-        this.variables.push({ name: '', value: '' });
+        this.values.push({ name: '', value: '' });
     }
 
     remove(index: number): void {
-        this.variables.splice(index, 1);
-        this.save();
+        this.values.splice(index, 1);
+        this.save(true);
     }
 
-    save(event?): void {
-        if (!event || event.target.value.length) {
-            const validVariables = this.variables.filter(variable => variable.name.length && variable.value.length);
-            if (!event || validVariables.length) {
-                this.cardViewUpdateService.update(this.property, validVariables);
-                this.property.value = validVariables;
-            }
+    onBlur(value): void {
+        if (value.length) {
+            this.save();
+        }
+    }
+
+    save(remove?: boolean): void {
+        const validValues = this.values.filter(i => i.name.length && i.value.length);
+
+        if (remove || validValues.length) {
+            this.cardViewUpdateService.update(this.property, validValues);
+            this.property.value = validValues;
         }
     }
 }

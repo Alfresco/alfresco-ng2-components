@@ -17,11 +17,11 @@
 
 import { CardViewItemProperties } from './card-view-item-properties.interface';
 
-export interface CardViewVariablesType {
+export interface CardViewKeyValuePairsItemType {
     name: string;
     value: string;
 }
 
-export interface CardViewVariablesItemProperties extends CardViewItemProperties {
-    value: CardViewVariablesType[];
+export interface CardViewKeyValuePairsItemProperties extends CardViewItemProperties {
+    value: CardViewKeyValuePairsItemType[];
 }

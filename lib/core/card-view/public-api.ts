@@ -21,7 +21,7 @@ export {
     CardViewDateItemComponent,
     CardViewMapItemComponent,
     CardViewTextItemComponent,
-    CardViewVariablesItemComponent
+    CardViewKeyValuePairsItemComponent
 } from './components/card-view.components';
 
 export * from './interfaces/card-view.interfaces';

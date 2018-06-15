@@ -18,12 +18,12 @@
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
-import { CardViewVariablesItemProperties } from '../interfaces/card-view.interfaces';
+import { CardViewKeyValuePairsItemProperties } from '../interfaces/card-view.interfaces';
 
-export class CardViewVariablesItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'variables';
+export class CardViewKeyValuePairsItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
+    type: string = 'keyvaluepairs';
 
-    constructor(obj: CardViewVariablesItemProperties) {
+    constructor(obj: CardViewKeyValuePairsItemProperties) {
         super(obj);
     }
 

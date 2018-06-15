@@ -37,7 +37,7 @@ import { CardViewDateItemComponent } from './components/card-view-dateitem/card-
 import { CardViewItemDispatcherComponent } from './components/card-view-item-dispatcher/card-view-item-dispatcher.component';
 import { CardViewMapItemComponent } from './components/card-view-mapitem/card-view-mapitem.component';
 import { CardViewTextItemComponent } from './components/card-view-textitem/card-view-textitem.component';
-import { CardViewVariablesItemComponent } from './components/card-view-variablesitem/card-view-variablesitem.component';
+import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
 
 @NgModule({
     imports: [
@@ -60,7 +60,7 @@ import { CardViewVariablesItemComponent } from './components/card-view-variables
         CardViewDateItemComponent,
         CardViewMapItemComponent,
         CardViewTextItemComponent,
-        CardViewVariablesItemComponent,
+        CardViewKeyValuePairsItemComponent,
         CardViewItemDispatcherComponent,
         CardViewContentProxyDirective
     ],
@@ -69,7 +69,7 @@ import { CardViewVariablesItemComponent } from './components/card-view-variables
         CardViewDateItemComponent,
         CardViewMapItemComponent,
         CardViewTextItemComponent,
-        CardViewVariablesItemComponent
+        CardViewKeyValuePairsItemComponent
     ],
     exports: [
         CardViewComponent,
@@ -77,7 +77,7 @@ import { CardViewVariablesItemComponent } from './components/card-view-variables
         CardViewDateItemComponent,
         CardViewMapItemComponent,
         CardViewTextItemComponent,
-        CardViewVariablesItemComponent
+        CardViewKeyValuePairsItemComponent
     ]
 })
 export class CardViewModule {}
