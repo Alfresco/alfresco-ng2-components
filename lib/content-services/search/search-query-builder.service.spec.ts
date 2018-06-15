@@ -27,7 +27,7 @@ describe('SearchQueryBuilder', () => {
         return config;
     };
 
-    fit('should reset to defaults', () => {
+    it('should reset to defaults', () => {
         const config: SearchConfiguration = {
             categories: [
                 <any> { id: 'cat1', enabled: true },
