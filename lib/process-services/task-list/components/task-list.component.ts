@@ -257,7 +257,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
                 dataRow = this.rows.find((currentRow: any) => {
                     return currentRow['id'] === taskIdSelected;
                 });
-            } else if (this.selectFirstRow) {
+            }
+            if (!dataRow && this.selectFirstRow) {
                 dataRow = this.rows[0];
             }
             if (dataRow) {
