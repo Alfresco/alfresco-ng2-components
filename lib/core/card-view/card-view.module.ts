@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import {
     MatButtonModule,
     MatDatepickerModule,
+    MatTableModule,
     MatIconModule,
     MatInputModule,
     MatCheckboxModule,
@@ -49,6 +50,7 @@ import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyva
         MatNativeDateModule,
         MatCheckboxModule,
         MatInputModule,
+        MatTableModule,
         MatIconModule,
         MatButtonModule,
         MatDatetimepickerModule,

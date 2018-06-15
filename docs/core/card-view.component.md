@@ -305,6 +305,7 @@ const keyValuePairsItemProperty = new CardViewKeyValuePairsItemModel(options);
 | ---- | ---- | ------- | ----------- |
 | label\* | string |  | Item label |
 | key\* | string |  | Identifying key (important when editing the item) |
+| editable | boolean | false | Toggles whether the item is editable |
 | value\* | `[{ name: '', value: '' }, ...]` |  | The original data value for the item |
 
 

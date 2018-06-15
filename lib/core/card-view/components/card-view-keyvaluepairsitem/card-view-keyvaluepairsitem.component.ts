@@ -19,6 +19,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
 import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
     selector: 'adf-card-view-boolitem',
@@ -31,12 +32,21 @@ export class CardViewKeyValuePairsItemComponent implements OnChanges {
     @Input()
     property: CardViewKeyValuePairsItemModel;
 
+    @Input()
+    editable: boolean = false;
+
     values: CardViewKeyValuePairsItemType[];
+    matTableValues: MatTableDataSource<CardViewKeyValuePairsItemType>;
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
     ngOnChanges() {
         this.values = this.property.value || [];
+        this.matTableValues = new MatTableDataSource(this.values);
+    }
+
+    isEditable(): boolean {
+        return this.editable && this.property.editable;
     }
 
     add(): void {

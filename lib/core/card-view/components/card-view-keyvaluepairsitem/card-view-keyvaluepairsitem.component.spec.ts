@@ -23,7 +23,7 @@ import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 
-describe('CardViewVariablesItemComponent', () => {
+describe('CardViewKeyValuePairsItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewKeyValuePairsItemComponent>;
     let component: CardViewKeyValuePairsItemComponent;
@@ -42,8 +42,10 @@ describe('CardViewVariablesItemComponent', () => {
         component.property = new CardViewKeyValuePairsItemModel({
             label: 'Key Value Pairs',
             value: [],
-            key: 'key-value-pairs'
+            key: 'key-value-pairs',
+            editable: true
         });
+        component.editable = true;
     });
 
     afterEach(() => {
@@ -60,8 +62,26 @@ describe('CardViewVariablesItemComponent', () => {
             expect(labelValue.nativeElement.innerText).toBe('Key Value Pairs');
         });
 
+        it('should render readOnly table is editable property is FALSE', () => {
+            component.property = new CardViewKeyValuePairsItemModel({
+                label: 'Key Value Pairs',
+                value: mockData,
+                key: 'key-value-pairs'
+            });
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            const table = fixture.debugElement.query(By.css('.card-view__key-value-pairs__read-only'));
+            const form = fixture.debugElement.query(By.css('.card-view__key-value-pairs'));
+
+            expect(table).not.toBeNull();
+            expect(form).toBeNull();
+        });
+
         it('should add new item on ADD button click', () => {
             component.ngOnChanges();
+            fixture.detectChanges();
 
             const addButton = fixture.debugElement.query(By.css('.card-view__key-value-pairs__add-btn'));
             addButton.triggerEventHandler('click', null);
@@ -82,6 +102,7 @@ describe('CardViewVariablesItemComponent', () => {
         it('should remove an item from list on REMOVE button click', () => {
             spyOn(cardViewUpdateService, 'update');
             component.ngOnChanges();
+            fixture.detectChanges();
 
             const addButton = fixture.debugElement.query(By.css('.card-view__key-value-pairs__add-btn'));
             addButton.triggerEventHandler('click', null);
@@ -102,6 +123,7 @@ describe('CardViewVariablesItemComponent', () => {
         it('should update property on input blur', async(() => {
             spyOn(cardViewUpdateService, 'update');
             component.ngOnChanges();
+            fixture.detectChanges();
 
             const addButton = fixture.debugElement.query(By.css('.card-view__key-value-pairs__add-btn'));
             addButton.triggerEventHandler('click', null);
@@ -129,6 +151,7 @@ describe('CardViewVariablesItemComponent', () => {
         it('should not update property if at least one input is empty on blur', async(() => {
             spyOn(cardViewUpdateService, 'update');
             component.ngOnChanges();
+            fixture.detectChanges();
 
             const addButton = fixture.debugElement.query(By.css('.card-view__key-value-pairs__add-btn'));
             addButton.triggerEventHandler('click', null);

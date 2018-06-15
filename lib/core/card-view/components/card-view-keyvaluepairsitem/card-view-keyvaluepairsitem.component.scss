@@ -8,5 +8,15 @@
                 width: 100%;
             }
         }
+
+        &__read-only {
+            .mat-table {
+                box-shadow: none;
+            }
+
+            .mat-header-row, .mat-row {
+                padding: 0;
+            }
+        }
     }
 }

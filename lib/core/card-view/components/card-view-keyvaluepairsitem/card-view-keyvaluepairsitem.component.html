@@ -1,11 +1,31 @@
 <div class="adf-property-label">{{ property.label | translate }}</div>
 <div class="adf-property-value">
-    {{ 'CORE.CARDVIEW.KEYVALUEPAIRS.ADD' | translate }}
-    <button (click)="add()" mat-icon-button class="card-view__key-value-pairs__add-btn">
-        <mat-icon>add</mat-icon>
-    </button>
 
-    <div class="card-view__key-value-pairs" *ngIf="values && values.length">
+    <div *ngIf="isEditable()">
+        {{ 'CORE.CARDVIEW.KEYVALUEPAIRS.ADD' | translate }}
+        <button (click)="add()" mat-icon-button class="card-view__key-value-pairs__add-btn">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+
+    <div *ngIf="!isEditable()" class="card-view__key-value-pairs__read-only">
+        <mat-table #table [dataSource]="matTableValues" class="mat-elevation-z8">
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef>{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.NAME' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let item">{{item.name}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="value">
+                <mat-header-cell *matHeaderCellDef>{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.VALUE' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let item">{{item.value}}</mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="['name', 'value']"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: ['name', 'value'];"></mat-row>
+        </mat-table>
+    </div>
+
+
+    <div class="card-view__key-value-pairs" *ngIf="isEditable() && values && values.length">
         <div class="card-view__key-value-pairs__row">
             <div class="card-view__key-value-pairs__col">{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.NAME' | translate }}</div>
             <div class="card-view__key-value-pairs__col">{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.VALUE' | translate }}</div>
