@@ -7,13 +7,11 @@
     margin: 5px;
 }
 
-.adf-cancel-button {
-    margin-left: 20px;
+.adf-version-upload-buttons {
+    display: flex;
     float: right;
-}
-
-.adf-new-version-file-upload {
-    float: right;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .adf-new-version-max-width {

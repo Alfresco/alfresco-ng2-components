@@ -15,13 +15,9 @@
     </mat-form-field>
 
 </div>
-<div>
-    <button mat-raised-button (click)="cancelUpload()" class="adf-cancel-button">{{
-        'ADF_VERSION_LIST.ACTIONS.UPLOAD.CANCEL'| translate }}
-    </button>
+<div class="adf-version-upload-buttons">
     <adf-upload-version-button
         data-automation-id="adf-new-version-file-upload"
-        class="adf-new-version-file-upload"
         staticTitle="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TITLE' | translate }}"
         [node]="node"
         [disabled]="!canUpload()"
@@ -33,5 +29,8 @@
         (success)="success.emit($event)"
         (error)="error.emit($event)">
     </adf-upload-version-button>
+    <button mat-raised-button (click)="cancelUpload()">{{
+        'ADF_VERSION_LIST.ACTIONS.UPLOAD.CANCEL'| translate }}
+    </button>
 </div>
 
