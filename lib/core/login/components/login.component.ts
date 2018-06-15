@@ -319,12 +319,14 @@ export class LoginComponent implements OnInit {
     /**
      * Display and hide the password value.
      */
-    toggleShowPassword() {
-        this.isPasswordShow = !this.isPasswordShow;
-        this.elementRef.nativeElement.querySelector('#password').type = this
-            .isPasswordShow
-            ? 'text'
-            : 'password';
+    toggleShowPassword(event) {
+        if (event.type === 'click' || event.key === 'Enter') {
+            this.isPasswordShow = !this.isPasswordShow;
+            this.elementRef.nativeElement.querySelector('#password').type = this
+                .isPasswordShow
+                ? 'text'
+                : 'password';
+        }
     }
 
     /**
