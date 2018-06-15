@@ -26,7 +26,7 @@ import { Subscription } from 'rxjs/Subscription';
     selector: 'app-search-result-component',
     templateUrl: './search-result.component.html',
     styleUrls: ['./search-result.component.scss'],
-    providers: [SearchService]
+    providers: [SearchService, SearchQueryBuilderService]
 })
 export class SearchResultComponent implements OnInit, OnDestroy {
 
