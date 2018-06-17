@@ -22,11 +22,11 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
+import { RedirectionModel } from '../models/redirection.model';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import { RedirectionModel } from '../models/redirection.model';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
@@ -116,9 +116,10 @@ export class AuthenticationService {
      * @returns Response event called when logout is complete
      */
     logout() {
+        this.removeTicket();
+
         return Observable.fromPromise(this.callApiLogout())
             .do(response => {
-                this.removeTicket();
                 this.onLogout.next(response);
                 return response;
             })
