@@ -19,6 +19,7 @@ import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } fro
 import { Validators, FormGroup, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from '../services/storage.service';
+import { AuthenticationService } from '../services/authentication.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 
@@ -66,6 +67,7 @@ export class HostSettingsComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private storageService: StorageService,
+                private authenticationService: AuthenticationService,
                 private alfrescoApiService: AlfrescoApiService,
                 private appConfig: AppConfigService) {
     }
@@ -176,7 +178,11 @@ export class HostSettingsComponent implements OnInit {
         this.storageService.setItem(AppConfigValues.AUTHTYPE, values.authType);
 
         this.alfrescoApiService.reset();
-        this.success.emit(true);
+        this.authenticationService.logout().subscribe(() => {
+                this.success.emit(true);
+            }, () => {
+                this.success.emit(true);
+            });
     }
 
     private saveOAuthValues(values: any) {
