@@ -25,6 +25,7 @@ import { TranslationService } from '../services/translation.service';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/operator/mergeMap';
+import { AUTOCOMPLETE_PANEL_HEIGHT } from '@angular/material';
 
 export class RestoreMessageModel {
     message: string;
@@ -249,7 +250,15 @@ export class NodeRestoreDirective {
 
         const action = (status.oneSucceeded && !status.someFailed) ? this.translation.instant('CORE.RESTORE_NODE.VIEW') : '';
 
-        this.restore.emit({ message: message, action: action, path: status.success[0].entry.path });
+        let path;
+        if (status.success && status.success.length > 0) {
+            path = status.success[0].entry.path;
+        }
+        this.restore.emit({
+            message: message,
+            action: action,
+            path: path
+        });
     }
 
     private reset(): void {

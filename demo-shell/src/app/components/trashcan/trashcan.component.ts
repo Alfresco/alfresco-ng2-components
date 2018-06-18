@@ -34,7 +34,8 @@ import { PathInfoEntity } from 'alfresco-js-api';
     styleUrls: ['trashcan.component.scss']
 })
 export class TrashcanComponent {
-    @ViewChild("documentList") documentList: DocumentListComponent;
+    @ViewChild('documentList')
+    documentList: DocumentListComponent;
 
     supportedPages = [];
     currentLocale;
