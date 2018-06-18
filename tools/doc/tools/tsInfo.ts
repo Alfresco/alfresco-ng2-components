@@ -3,10 +3,9 @@ import * as path from "path";
 
 import * as replaceSection from "mdast-util-heading-range";
 import * as remark from "remark";
-import * as stringify from "remark-stringify";
-import * as frontMatter from "remark-frontmatter";
+// import * as stringify from "remark-stringify";
+// import * as frontMatter from "remark-frontmatter";
 
-import * as combyne from "combyne";
 import * as ejs from "ejs";
 
 import {
@@ -295,9 +294,11 @@ export function updatePhase(tree, pathname, aggData, errorMessages) {
     }
 
     let compData = new ComponentInfo(classRef);
-    let classType = compName.match(/component|directive|service/i);
+    let classTypeMatch = compName.match(/component|directive|service/i);
 
-    if (classType) {
+    if (classTypeMatch) {
+        let classType = classTypeMatch[0].toLowerCase();
+
         // Copy docs back from the .md file when the JSDocs are empty.
         let inputMD = getPropDocsFromMD(tree, "Properties", 3);
         let outputMD = getPropDocsFromMD(tree, "Events", 2);
@@ -440,7 +441,7 @@ function getMethodDocsFromMD(tree) {
             let methDoc = methItem.childNav
             .paragraph().childNav
             .html()
-            .text().item.value;
+            .text().value;
 
             let params = getMDMethodParams(methItem);
 
@@ -523,13 +524,13 @@ function updateMethodDocsFromMD(comp: ComponentInfo, methodDocs, errorMessages) 
         let currMethMD = methodDocs[meth.name]
 
         // If JSDocs are empty but MD docs aren't then the Markdown is presumably more up-to-date.
-        if (!meth.docText && currMethMD.docText) {
+        if (!meth.docText && currMethMD && currMethMD.docText) {
             meth.docText = currMethMD.docText;
             errorMessages.push(`Warning: empty JSDocs for method sig "${meth.name}" may need sync with the .md file.`);
         }
         
         meth.params.forEach(param => {
-            if (!param.docText && currMethMD.params[param.name])
+            if (!param.docText && currMethMD && currMethMD.params[param.name])
             {
                 param.docText = currMethMD.params[param.name];
                 errorMessages.push(`Warning: empty JSDocs for parameter "${param.name} (${meth.name})" may need sync with the .md file.`);
