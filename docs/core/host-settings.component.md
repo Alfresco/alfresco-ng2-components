@@ -6,8 +6,9 @@ Last reviewed: 2018-06-13
 
 # Host settings component
 
-`This component Note this component is not meant to be used in production`
 Validates the URLs for ACS and APS and saves them in the user's local storage
+
+**Note:** this is an internal component and is not meant to be used in production.
 
 ![Host settings](../docassets/images/host-settings-component.png)
 
