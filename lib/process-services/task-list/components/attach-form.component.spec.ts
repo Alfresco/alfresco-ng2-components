@@ -49,6 +49,8 @@ describe('AttachFormComponent', () => {
     }));
 
     it('should emit complete event if clicked on Complete Button', async(() => {
+        component.taskId = 1;
+        component.formKey = 2;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const emitSpy = spyOn(component.completeAttachForm, 'emit');
@@ -60,12 +62,15 @@ describe('AttachFormComponent', () => {
     }));
 
     it('should show the formPreview of the selected form', async(() => {
+        component.taskId = 1;
         component.formKey = 12;
         fixture.detectChanges();
         const formContainer = fixture.debugElement.nativeElement.querySelector('.adf-form-container');
         fixture.whenStable().then(() => {
+            const el = fixture.nativeElement.querySelector('#mat-option-1');
+            el.click();
             expect(formContainer).toBeDefined();
-            expect(formContainer).toBeNull();
+            expect(formContainer).not.toBeNull();
         });
     }));
 });
