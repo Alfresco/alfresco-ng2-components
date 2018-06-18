@@ -79,14 +79,16 @@ export class HostSettingsComponent implements OnInit {
 
         let providerSelected = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
 
+        const authType = this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC');
+
         this.form = this.formBuilder.group({
             providersControl: [providerSelected, Validators.required],
-            authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE)
+            authType: authType
         });
 
         this.addFormGroups();
 
-        if (this.appConfig.get<string>(AppConfigValues.AUTHTYPE) === 'OAUTH') {
+        if (authType === 'OAUTH') {
             this.addOAuthFormGroup();
         }
 
