@@ -606,8 +606,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private async displayNodeRendition(nodeId: string) {
-        this.isLoading = true;
-
         try {
             const rendition = await this.resolveRendition(nodeId, 'pdf');
             if (rendition) {
