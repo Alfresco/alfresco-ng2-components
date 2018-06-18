@@ -15,7 +15,7 @@ Restores deleted nodes to their original location.
     <button mat-icon-button
         location="/files"
         [adf-restore]="documentList.selection"
-        (restore)="documentList.reload()">
+        (restore)="onRestore($event)">
         <mat-icon>restore</mat-icon>
     </button>
 </adf-toolbar>
@@ -24,6 +24,24 @@ Restores deleted nodes to their original location.
     currentFolderId="-trash-" ...>
     ...
 </adf-document-list>
+```
+
+```ts
+    onRestore(restoreMessage: RestoreMessageModel) {
+        this.notificationService
+            .openSnackMessageAction(
+                restoreMessage.message,
+                restoreMessage.action
+            )
+            .onAction()
+            .subscribe(() => this.navigateLocation(restoreMessage.a));
+        this.documentList.reload();
+    }
+
+    navigateLocation(path: PathInfoEntity) {
+        const parent = path.elements[path.elements.length - 1];
+        this.router.navigate(['files/', parent.id]);
+    }
 ```
 
 ## Class members

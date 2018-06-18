@@ -64,13 +64,12 @@ export class TrashcanComponent {
                 restoreMessage.action
             )
             .onAction()
-            .subscribe(() => this.navigateLocation(restoreMessage.parentNodeId));
+            .subscribe(() => this.navigateLocation(restoreMessage.path));
         this.documentList.reload();
     }
 
     private navigateLocation(path: PathInfoEntity) {
         const parent = path.elements[path.elements.length - 1];
-
         this.router.navigate(['files/', parent.id]);
     }
 

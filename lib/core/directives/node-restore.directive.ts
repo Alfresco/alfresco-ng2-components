@@ -18,7 +18,7 @@
 /* tslint:disable:component-selector no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { DeletedNodeEntry, DeletedNodesPaging } from 'alfresco-js-api';
+import { DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
@@ -28,7 +28,7 @@ import 'rxjs/add/operator/mergeMap';
 
 export class RestoreMessageModel {
     message: string;
-    parentNodeId: string;
+    path: PathInfoEntity;
     action: string;
 }
 
@@ -249,7 +249,7 @@ export class NodeRestoreDirective {
 
         const action = (status.oneSucceeded && !status.someFailed) ? this.translation.instant('CORE.RESTORE_NODE.VIEW') : '';
 
-        this.restore.emit({ message: message, action: action, parentNodeId: status.success[0].entry.path });
+        this.restore.emit({ message: message, action: action, path: status.success[0].entry.path });
     }
 
     private reset(): void {
