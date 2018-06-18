@@ -32,14 +32,14 @@ Restores deleted nodes to their original location.
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| location | `string` | "" | Path to restored node. |
+| location | `string` | "" | **Deprecated:** 2.4.0 Path to restored node. |
 | adf-restore | `DeletedNodeEntry[]` |  | Array of deleted nodes to restore. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| restore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when restoration is complete. |
+| restore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`RestoreMessageModel`](../../lib/core/directives/node-restore.directive.ts)`>` | Emitted when restoration is complete. |
 
 ## Details
 
