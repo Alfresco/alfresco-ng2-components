@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges, SimpleChange, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService } from '@alfresco/adf-core';
@@ -30,7 +30,6 @@ import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
-
     /** (required) The node entity to fetch metadata about */
     @Input()
     node: MinimalNodeEntryEntity;
@@ -57,35 +56,35 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     @Input()
     preset: string;
 
-    nodeHasBeenUpdated: boolean = false;
+    componentInited: boolean = false;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
-    constructor(private contentMetadataService: ContentMetadataService,
-                private cardViewUpdateService: CardViewUpdateService,
-                private nodesApiService: NodesApiService,
-                private logService: LogService,
-                private alfrescoApiService: AlfrescoApiService) {}
+    constructor(
+        private contentMetadataService: ContentMetadataService,
+        private cardViewUpdateService: CardViewUpdateService,
+        private nodesApiService: NodesApiService,
+        private logService: LogService,
+        private alfrescoApiService: AlfrescoApiService
+    ) {}
 
     ngOnInit() {
-        this.cardViewUpdateService.itemUpdated$
-            .switchMap(this.saveNode.bind(this))
-            .subscribe(
-                (node) => {
-                    this.nodeHasBeenUpdated = true;
-                    this.node = node;
-                    this.alfrescoApiService.nodeUpdated.next(node);
-                },
-                error => this.logService.error(error)
-            );
+        this.cardViewUpdateService.itemUpdated$.switchMap(this.saveNode.bind(this)).subscribe(
+            updatedNode => {
+                Object.assign(this.node, updatedNode);
+                this.alfrescoApiService.nodeUpdated.next(this.node);
+            },
+            error => this.logService.error(error)
+        );
+
+        this.componentInited = true;
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const nodeChange: SimpleChange = changes['node'];
-        if (nodeChange || this.nodeHasBeenUpdated) {
-            const node = nodeChange && nodeChange.currentValue || this.node;
-            this.nodeHasBeenUpdated = false;
+        const changedNode: MinimalNodeEntryEntity = changes['node'] && changes['node'].currentValue;
 
+        if (!this.componentInited || (changedNode && changedNode !== this.node)) {
+            const node = changedNode || this.node;
             this.basicProperties$ = this.contentMetadataService.getBasicProperties(node);
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
         }
