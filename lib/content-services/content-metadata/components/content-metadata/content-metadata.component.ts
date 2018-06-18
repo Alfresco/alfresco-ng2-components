@@ -26,29 +26,35 @@ import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
     selector: 'adf-content-metadata',
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
-    host: { class: 'adf-content-metadata' },
+    host: { 'class': 'adf-content-metadata' },
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
     /** (required) The node entity to fetch metadata about */
-    @Input() node: MinimalNodeEntryEntity;
+    @Input()
+    node: MinimalNodeEntryEntity;
 
     /** Toggles whether the edit button should be shown */
-    @Input() editable: boolean = false;
+    @Input()
+    editable: boolean = false;
 
     /** Toggles whether to display empty values in the card view */
-    @Input() displayEmpty: boolean = false;
+    @Input()
+    displayEmpty: boolean = false;
 
     /** Toggles between expanded (ie, full information) and collapsed
      * (ie, reduced information) in the display
      */
-    @Input() expanded: boolean = false;
+    @Input()
+    expanded: boolean = false;
 
     /** The multi parameter of the underlying material expansion panel */
-    @Input() multi = false;
+    @Input()
+    multi = false;
 
     /** Name of the metadata preset, which defines aspects and their properties */
-    @Input() preset: string;
+    @Input()
+    preset: string;
 
     componentInited: boolean = false;
     basicProperties$: Observable<CardViewItem[]>;
