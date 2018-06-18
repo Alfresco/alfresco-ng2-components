@@ -105,4 +105,11 @@ export class ContentNodeSelectorComponent {
     customIsValidFunction(entry: MinimalNodeEntryEntity): boolean {
         return entry.name.startsWith('a') || entry.name.startsWith('A');
     }
+
+    customBreadcrumbFunction(node: MinimalNodeEntryEntity) {
+        if (node && node.path && node.path.elements) {
+            node.path.elements = node.path.elements.filter((element) => !element.name.toLocaleLowerCase().startsWith('d') ? element : null );
+        }
+        return node;
+    }
 }
