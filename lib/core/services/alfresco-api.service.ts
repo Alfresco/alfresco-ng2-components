@@ -117,7 +117,6 @@ export class AlfrescoApiService {
     }
 
     protected initAlfrescoApi() {
-        // let oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
         let oauth: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
         if (oauth) {
             oauth.redirectUri = window.location.origin + (oauth.redirectUri || '/');
