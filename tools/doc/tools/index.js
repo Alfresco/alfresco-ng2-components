@@ -31,12 +31,18 @@ var maxBriefDescLength = 180;
 
 var adfLibNames = ["core", "content-services", "insights", "process-services"];
 
+/*
 var deprecatedIconURL = "docassets/images/DeprecatedIcon.png";
 var experimentalIconURL = "docassets/images/ExperimentalIcon.png";
+var internalIconURL = "docassets/images/InternalIcon.png"
+*/
 
+var statusIcons;
 
 function initPhase(aggData) {
-    aggData.stoplist = makeStoplist(aggData.config);
+    statusIcons = aggData.config["statusIcons"] || {};
+
+    aggData.stoplist = makeStoplist(aggData.config);    
     aggData.srcData = {};
     aggData.mdFileDesc = [];
     aggData.mdFileStatus = [];
@@ -290,21 +296,40 @@ function makeMDDocumentedTableRow(docItem, forSubFolder) {
 
     var linkCellItems = [mdFileLink];
 
+    /*
     var finalDepIconURL = deprecatedIconURL;
     var finalExIconURL = experimentalIconURL;
+    var finalIntIconURL = internalIconURL;
 
     if (forSubFolder) {
         finalDepIconURL = "../" + finalDepIconURL;
         finalExIconURL = "../" + finalExIconURL;
     }
+    */
+
+    var pathPrefix = "";
+
+    if (forSubFolder) {
+        pathPrefix = "../";
+    }
 
     if (docItem.status) {
+        /*
         if (docItem.status === "Deprecated") {
             linkCellItems.push(unist.makeText(" "));
             linkCellItems.push(unist.makeImage(finalDepIconURL, "Deprecated"));
         } else if (docItem.status === "Experimental") {
             linkCellItems.push(unist.makeText(" "));
             linkCellItems.push(unist.makeImage(finalExIconURL, "Experimental"));
+        } else if (docItem.status === "Internal") {
+            linkCellItems.push(unist.makeText(" "));
+            linkCellItems.push(unist.makeImage(finalIntIconURL, "Internal"));
+        }
+        */
+
+        if (statusIcons[docItem.status]) {
+            linkCellItems.push(unist.makeText(" "));
+            linkCellItems.push(unist.makeImage(pathPrefix + statusIcons[docItem.status], docItem.status));
         }
     }
 

@@ -22,6 +22,11 @@
             "index"
         ]
     },
+    "statusIcons": {
+        "Deprecated": "docassets/images/DeprecatedIcon.png",
+        "Experimental": "docassets/images/ExperimentalIcon.png",
+        "Internal": "docassets/images/InternalIcon.png"
+    },
     "externalNameLinks": {
         "Blob": "https://developer.mozilla.org/en-US/docs/Web/API/Blob",
         "Promise": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",

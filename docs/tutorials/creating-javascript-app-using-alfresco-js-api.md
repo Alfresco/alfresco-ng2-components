@@ -4,10 +4,7 @@ Level: Basic
 
 # Creating your Alfresco JavaScript application
 
-In this tutorial you will learn how to create an application in JavaScript from scratch to
-interact with Alfresco. This is a "getting started" task that should enable you to start
-developing your own JavaScript application on top of Alfresco Content Services or Alfresco
-Process Services.
+In this tutorial you will learn how to create an application in JavaScript from scratch to interact with Alfresco. This is a "getting started" task that should enable you to start developing your own JavaScript application on top of Alfresco Content Services or Alfresco Process Services.
 
 The tutorial uses Alfresco Content Services for demonstration purposes, but development on
 top of Alfresco Process Services follows exactly the same principles.
