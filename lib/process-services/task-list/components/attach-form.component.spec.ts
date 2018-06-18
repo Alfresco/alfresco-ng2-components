@@ -19,11 +19,14 @@ import { AttachFormComponent } from './attach-form.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TaskListService } from './../services/tasklist.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('AttachFormComponent', () => {
     let component: AttachFormComponent;
     let fixture: ComponentFixture<AttachFormComponent>;
     let element: HTMLElement;
+    let taskService: TaskListService;
 
     setupTestBed({
         imports: [
@@ -35,6 +38,7 @@ describe('AttachFormComponent', () => {
         fixture = TestBed.createComponent(AttachFormComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
+        taskService = TestBed.get(TaskListService);
         fixture.detectChanges();
     }));
 
@@ -48,16 +52,17 @@ describe('AttachFormComponent', () => {
         });
     }));
 
-    it('should emit complete event if clicked on Complete Button', async(() => {
+    it('should call attachFormToATask if clicked on Complete Button', async(() => {
         component.taskId = 1;
         component.formKey = 2;
+        spyOn(taskService, 'attachFormToATask').and.returnValue(Observable.of(true));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const emitSpy = spyOn(component.completeAttachForm, 'emit');
+            // const emitSpy = spyOn(component.completeAttachForm, 'emit');
             expect(element.querySelector('#adf-no-form-attach-form-button')).toBeDefined();
             const el = fixture.nativeElement.querySelector('#adf-no-form-attach-form-button');
             el.click();
-            expect(emitSpy).toHaveBeenCalled();
+            expect(taskService.attachFormToATask).toHaveBeenCalledWith(1, 2);
         });
     }));
 
@@ -67,6 +72,7 @@ describe('AttachFormComponent', () => {
         fixture.detectChanges();
         const formContainer = fixture.debugElement.nativeElement.querySelector('.adf-form-container');
         fixture.whenStable().then(() => {
+            expect(element.querySelector('#mat-option-1')).toBeDefined();
             const el = fixture.nativeElement.querySelector('#mat-option-1');
             el.click();
             expect(formContainer).toBeDefined();
