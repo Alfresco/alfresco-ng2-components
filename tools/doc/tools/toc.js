@@ -1,4 +1,6 @@
-var remark = require("remark");
+var path = require("path");
+
+//var remark = require("remark");
 var tocGenerator = require("mdast-util-toc");
 var replaceSection = require("mdast-util-heading-range");
 
@@ -73,6 +75,10 @@ function establishContentsSection(mdTree) {
 }
 
 function updatePhase(tree, pathname, aggData) {
+    if (path.basename(pathname, ".md").match(/README|versionIndex/)) {
+        return false;
+    }
+
 // If we need a contents section then add one or update the existing one.
     var numTocHeadings = establishContentsSection(tree);
 
