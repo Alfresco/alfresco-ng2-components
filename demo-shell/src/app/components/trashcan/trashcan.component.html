@@ -17,7 +17,7 @@
             <button
                 mat-icon-button
                 (selection-node-restored)="refresh()"
-                (restore)="documentList.reload()"
+                (restore)="onRestore($event)"
                 [adf-restore]="documentList.selection"
                 *ngIf="documentList.selection.length"
                 title="{{ 'TRASHCAN.ACTIONS.RESTORE' | translate }}">

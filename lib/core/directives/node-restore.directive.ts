@@ -18,13 +18,19 @@
 /* tslint:disable:component-selector no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { DeletedNodeEntry, DeletedNodesPaging } from 'alfresco-js-api';
+import { DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/operator/mergeMap';
+
+export class RestoreMessageModel {
+    message: string;
+    path: PathInfoEntity;
+    action: string;
+}
 
 @Directive({
     selector: '[adf-restore]'
@@ -36,13 +42,13 @@ export class NodeRestoreDirective {
     @Input('adf-restore')
     selection: DeletedNodeEntry[];
 
-    /** Path to restored node. */
+    /** @deprecated 2.4.0 Path to restored node. */
     @Input()
     location: string = '';
 
     /** Emitted when restoration is complete. */
     @Output()
-    restore: EventEmitter<any> = new EventEmitter();
+    restore: EventEmitter<RestoreMessageModel> = new EventEmitter();
 
     @HostListener('click')
     onClick() {
@@ -243,7 +249,15 @@ export class NodeRestoreDirective {
 
         const action = (status.oneSucceeded && !status.someFailed) ? this.translation.instant('CORE.RESTORE_NODE.VIEW') : '';
 
-        this.restore.emit({ message: message, action: action });
+        let path;
+        if (status.success && status.success.length > 0) {
+            path = status.success[0].entry.path;
+        }
+        this.restore.emit({
+            message: message,
+            action: action,
+            path: path
+        });
     }
 
     private reset(): void {
