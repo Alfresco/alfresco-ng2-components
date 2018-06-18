@@ -25,7 +25,6 @@ import { TranslationService } from '../services/translation.service';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/operator/mergeMap';
-import { AUTOCOMPLETE_PANEL_HEIGHT } from '@angular/material';
 
 export class RestoreMessageModel {
     message: string;
