@@ -104,7 +104,7 @@ function aggPhase(aggData) {
 
         var libName = adfLibNames[l];
         var libSection = sections[libName];
-        
+
         var md = makeLibSectionMD(libSection, false);
 
         zone(indexFileTree, libName, (startComment, oldSection, endComment) => {
@@ -164,14 +164,14 @@ function updatePhase(tree, pathname, aggData) {
 
 
 // Create a stoplist of regular expressions.
-function makeStoplist(config) {    
+function makeStoplist(config) {
     var listExpressions = config.undocStoplist;
     var result = [];
-    
+
     for (var i = 0; i < listExpressions.length; i++) {
         result.push(new RegExp(listExpressions[i]));
     }
-    
+
     return result;
 }
 
@@ -182,7 +182,7 @@ function rejectItemViaStoplist(stoplist, itemName) {
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -216,11 +216,13 @@ function prepareIndexSections(aggData) {
                 "status": status
             });
         } else if (!rejectItemViaStoplist(aggData.stoplist, itemName)) {
+            if(sections[libName]){
             sections[libName][srcData.type].undocumented.push({
                 "displayName": displayName,
                 "mdName": itemName + ".md",
                 "srcPath": srcData.path
             });
+            }
         }
     }
 
@@ -248,9 +250,9 @@ function initEmptySections() {
 
 function buildMDDocumentedTable(docItems, forSubFolder) {
     var rows = [
-        
+
     ];
-    
+
     for (var i = 0; i < docItems.length; i++) {
         rows.push(makeMDDocumentedTableRow(docItems[i], forSubFolder));
     }
@@ -262,9 +264,9 @@ function buildMDDocumentedTable(docItems, forSubFolder) {
 
 function buildMDUndocumentedTable(docItems, forSubFolder) {
     var rows = [
-       
+
     ];
-    
+
     for (var i = 0; i < docItems.length; i++) {
         rows.push(makeMDUndocumentedTableRow(docItems[i], forSubFolder));
     }
@@ -361,7 +363,7 @@ function makeLibSectionMD(libSection, forSubFolder){
     var md = [];
 
     var libClassTypes = Object.keys(libSection);
-    
+
     for (var i = 0; i < libClassTypes.length; i++) {
         var classType = libClassTypes[i];
 
@@ -375,7 +377,7 @@ function makeLibSectionMD(libSection, forSubFolder){
         if ((classSection.documented.length > 0) || (classSection.undocumented.length > 0)) {
             displayNameNode = unist.makeText(ngHelpers.dekebabifyName(classType + "s"));
             md.push(unist.makeHeading(displayNameNode, 2));
-        
+
             var tableRows = [
                 unist.makeTableRow([
                     unist.makeTableCell([unist.makeText("Name")]),
