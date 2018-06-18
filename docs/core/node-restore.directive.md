@@ -34,7 +34,7 @@ Restores deleted nodes to their original location.
                 restoreMessage.action
             )
             .onAction()
-            .subscribe(() => this.navigateLocation(restoreMessage.a));
+            .subscribe(() => this.navigateLocation(restoreMessage.path));
         this.documentList.reload();
     }
 

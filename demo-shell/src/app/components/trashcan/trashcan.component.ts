@@ -30,8 +30,8 @@ import { Router } from '@angular/router';
 import { PathInfoEntity } from 'alfresco-js-api';
 
 @Component({
-    templateUrl: "./trashcan.component.html",
-    styleUrls: ["trashcan.component.scss"]
+    templateUrl: './trashcan.component.html',
+    styleUrls: ['trashcan.component.scss']
 })
 export class TrashcanComponent {
     @ViewChild("documentList") documentList: DocumentListComponent;
