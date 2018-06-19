@@ -1,6 +1,7 @@
 var fs = require("fs");
 var path = require("path");
 var program = require("commander");
+var lodash = require("lodash");
 
 var remark = require("remark");
 var parse = require("remark-parse");
@@ -58,7 +59,9 @@ function updatePhase(filenames, aggData) {
         }
         
         var src = fs.readFileSync(pathname);
-        var tree = remark().use(frontMatter, ["yaml"]).parse(src)
+        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
+
+        var original = removeTextPosInfo(deepCopy(tree));
 
         var modified = false;
 
@@ -70,14 +73,39 @@ function updatePhase(filenames, aggData) {
             showErrors(pathname, errorMessages);
         }
 
+        tree = removeTextPosInfo(tree);
+
+        /*
+        console.log("Original:");
+        console.log(JSON.stringify(original));
+        console.log("Updated:");
+        console.log(JSON.stringify(tree));
+        */
+       
         if (program.json) {
             console.log(JSON.stringify(tree));
         }
+        
+        modified = !lodash.isEqual(tree, original);
 
         if (modified) {
+            console.log(`Modified: ${pathname}`);
             fs.writeFileSync(filenames[i], remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false, gfm: false}).stringify(tree));
         }
     }
+}
+
+
+function deepCopy(obj) {
+    // Despite how it looks, this technique is apparently quite efficient
+    // because the JSON routines are implemented in C code and faster
+    // than the equivalent JavaScript loops ;-)
+    return JSON.parse(JSON.stringify(obj));
+}
+
+
+function removeTextPosInfo(tree) {
+    return JSON.parse(JSON.stringify(tree, (key, value) => key === "position" ? undefined : value));
 }
 
 

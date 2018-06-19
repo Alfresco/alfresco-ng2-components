@@ -316,7 +316,7 @@ export function updatePhase(tree, pathname, aggData, errorMessages) {
         let mdText = template(compData);
         mdText = mdText.replace(/^ +\|/mg, "|");
 
-        let newSection = remark().data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;
+        let newSection = remark().parse(mdText.trim()).children;
 
         replaceSection(tree, "Class members", (before, section, after) => {
             newSection.unshift(before);

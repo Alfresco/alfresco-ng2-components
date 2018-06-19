@@ -220,7 +220,7 @@ function updatePhase(tree, pathname, aggData, errorMessages) {
         var template = ejs.compile(templateSource);
         var mdText = template(compData);
         mdText = mdText.replace(/^ +\|/mg, "|");
-        var newSection_1 = remark().data("settings", { paddedTable: false, gfm: false }).parse(mdText.trim()).children;
+        var newSection_1 = remark().parse(mdText.trim()).children;
         replaceSection(tree, "Class members", function (before, section, after) {
             newSection_1.unshift(before);
             newSection_1.push(after);
