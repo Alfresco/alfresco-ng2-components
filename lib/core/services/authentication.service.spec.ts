@@ -19,18 +19,16 @@ import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
-import { StorageService } from './storage.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
-fdescribe('AuthenticationService', () => {
+describe('AuthenticationService', () => {
     let apiService: AlfrescoApiService;
     let authService: AuthenticationService;
     let appConfigService: AppConfigService;
-    let storage: StorageService;
     let cookie: CookieService;
 
     setupTestBed({
@@ -38,28 +36,25 @@ fdescribe('AuthenticationService', () => {
     });
 
     beforeEach(() => {
+        sessionStorage.clear();
         apiService = TestBed.get(AlfrescoApiService);
         authService = TestBed.get(AuthenticationService);
 
         cookie = TestBed.get(CookieService);
         cookie.clear();
 
-        storage = TestBed.get(StorageService);
-        storage.clear();
-
         jasmine.Ajax.install();
+        appConfigService = TestBed.get(AppConfigService);
     });
 
     afterEach(() => {
         cookie.clear();
-        storage.clear();
         jasmine.Ajax.uninstall();
     });
 
     describe('remember me', () => {
 
         beforeEach(() => {
-            appConfigService = TestBed.get(AppConfigService);
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
             apiService.reset();
@@ -181,7 +176,7 @@ fdescribe('AuthenticationService', () => {
             let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 let disposableLogout = authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(undefined);
+                    expect(authService.getTicketEcm()).toBe(null);
                     expect(authService.isEcmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
                     disposableLogout.unsubscribe();
@@ -269,7 +264,7 @@ fdescribe('AuthenticationService', () => {
             let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 let disposableLogout = authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketBpm()).toBe(undefined);
+                    expect(authService.getTicketBpm()).toBe(null);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     disposableLogout.unsubscribe();
                     disposableLogin.unsubscribe();
@@ -357,7 +352,7 @@ fdescribe('AuthenticationService', () => {
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
                     expect(authService.getTicketEcm()).toBe(undefined, 'getTicketEcm');
-                    expect(authService.getTicketBpm()).toBe(undefined, 'getTicketBpm');
+                    expect(authService.getTicketBpm()).toBe('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk', 'getTicketBpm');
                     expect(authService.isEcmLoggedIn()).toBe(false, 'isEcmLoggedIn');
                     disposableLogin.unsubscribe();
                     done();
@@ -378,7 +373,7 @@ fdescribe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(undefined);
+                    expect(authService.getTicketEcm()).toBe('fake-post-ticket');
                     expect(authService.getTicketBpm()).toBe(undefined);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
