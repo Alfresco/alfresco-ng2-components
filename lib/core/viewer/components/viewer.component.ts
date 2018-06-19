@@ -267,7 +267,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.isLoading = true;
             this.setUpNodeFile(node).then(() => {
                 this.isLoading = false;
-            })
+            });
         }
     }
 
@@ -289,7 +289,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     (data: MinimalNodeEntryEntity) => {
                         this.setUpNodeFile(data).then(() => {
                             this.isLoading = false;
-                        })
+                        });
                     },
                     (error) => {
                         this.isLoading = false;
