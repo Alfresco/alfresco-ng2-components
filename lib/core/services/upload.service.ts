@@ -157,7 +157,8 @@ export class UploadService {
      */
     getUploadPromise(file: FileModel) {
         let opts: any = {
-            renditions: 'doclib'
+            renditions: 'doclib',
+            include: ['allowableOperations']
         };
 
         if (file.options.newVersion === true) {

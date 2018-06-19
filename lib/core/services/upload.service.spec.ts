@@ -99,7 +99,7 @@ describe('UploadService', () => {
         service.uploadFilesInTheQueue(emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
+        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -124,7 +124,7 @@ describe('UploadService', () => {
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
-            .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
+            .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 404,
@@ -177,6 +177,7 @@ describe('UploadService', () => {
             size: 10
         }, undefined, undefined, null, {
             renditions: 'doclib',
+            include: [ 'allowableOperations' ],
             overwrite: true,
             majorVersion: undefined,
             comment: undefined,
@@ -200,7 +201,7 @@ describe('UploadService', () => {
         service.uploadFilesInTheQueue(emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true');
+        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true&include=allowableOperations');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
