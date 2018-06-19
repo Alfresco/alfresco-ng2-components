@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -29,7 +30,7 @@ import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
     host: { 'class': 'adf-content-metadata' },
     encapsulation: ViewEncapsulation.None
 })
-export class ContentMetadataComponent implements OnChanges, OnInit {
+export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /** (required) The node entity to fetch metadata about */
     @Input()
     node: MinimalNodeEntryEntity;
@@ -59,6 +60,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     componentInited: boolean = false;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
+    disposableNodeUpdate: Subscription;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -69,7 +71,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     ) {}
 
     ngOnInit() {
-        this.cardViewUpdateService.itemUpdated$.switchMap(this.saveNode.bind(this)).subscribe(
+        this.disposableNodeUpdate =  this.cardViewUpdateService.itemUpdated$.switchMap(this.saveNode.bind(this)).subscribe(
             updatedNode => {
                 Object.assign(this.node, updatedNode);
                 this.alfrescoApiService.nodeUpdated.next(this.node);
@@ -93,4 +95,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     private saveNode({ changed: nodeBody }): Observable<MinimalNodeEntryEntity> {
         return this.nodesApiService.updateNode(this.node.id, nodeBody);
     }
+
+    ngOnDestroy() {
+        this.disposableNodeUpdate.unsubscribe();
+    }
+
 }
