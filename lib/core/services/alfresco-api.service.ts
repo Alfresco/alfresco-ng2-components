@@ -125,8 +125,6 @@ export class AlfrescoApiService {
 
         const config = {
             provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
-            ticketEcm: this.storage.getItem('ticket-ECM'),
-            ticketBpm: this.storage.getItem('ticket-BPM'),
             hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
             hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
             authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),

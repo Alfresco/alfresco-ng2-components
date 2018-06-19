@@ -21,7 +21,6 @@ import { Subject } from 'rxjs/Subject';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
-import { StorageService } from './storage.service';
 import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import 'rxjs/add/observable/fromPromise';
@@ -41,7 +40,6 @@ export class AuthenticationService {
     constructor(
         private appConfig: AppConfigService,
         private alfrescoApi: AlfrescoApiService,
-        private storage: StorageService,
         private cookie: CookieService,
         private logService: LogService) {
     }
@@ -66,11 +64,9 @@ export class AuthenticationService {
      * @returns Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
      */
     login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string, ticket: any }> {
-        this.removeTicket();
         return Observable.fromPromise(this.alfrescoApi.getInstance().login(username, password))
             .map((response: any) => {
                 this.saveRememberMeCookie(rememberMe);
-                this.saveTickets();
                 this.onLogin.next(response);
                 return {
                     type: this.appConfig.get(AppConfigValues.PROVIDERS),
@@ -116,7 +112,7 @@ export class AuthenticationService {
      * @returns Response event called when logout is complete
      */
     logout() {
-        this.removeTicket();
+        this.alfrescoApi.getInstance().invalidateSession();
 
         return Observable.fromPromise(this.callApiLogout())
             .do(response => {
@@ -136,20 +132,11 @@ export class AuthenticationService {
     }
 
     /**
-     * Removes the login ticket from Storage.
-     */
-    removeTicket(): void {
-        this.storage.removeItem('ticket-ECM');
-        this.storage.removeItem('ticket-BPM');
-        this.alfrescoApi.getInstance().setTicket(undefined, undefined);
-    }
-
-    /**
      * Gets the ECM ticket stored in the Storage.
      * @returns The ticket or `null` if none was found
      */
     getTicketEcm(): string | null {
-        return this.storage.getItem('ticket-ECM');
+        return this.alfrescoApi.getInstance().getTicketEcm();
     }
 
     /**
@@ -157,7 +144,7 @@ export class AuthenticationService {
      * @returns The ticket or `null` if none was found
      */
     getTicketBpm(): string | null {
-        return this.storage.getItem('ticket-BPM');
+        return this.alfrescoApi.getInstance().getTicketBpm();
     }
 
     /**
@@ -165,47 +152,11 @@ export class AuthenticationService {
      * @returns The ticket or `null` if none was found
      */
     getTicketEcmBase64(): string | null {
-        let ticket = this.storage.getItem('ticket-ECM');
+        let ticket = this.alfrescoApi.getInstance().getTicketEcm();
         if (ticket) {
             return 'Basic ' + btoa(ticket);
         }
         return null;
-    }
-
-    /**
-     * Saves the ECM and BPM ticket in the Storage.
-     */
-    saveTickets(): void {
-        this.saveTicketEcm();
-        this.saveTicketBpm();
-        this.saveTicketAuth();
-    }
-
-    /**
-     * Saves the ECM ticket in the Storage.
-     */
-    saveTicketEcm(): void {
-        if (this.alfrescoApi.getInstance() && this.alfrescoApi.getInstance().getTicketEcm()) {
-            this.storage.setItem('ticket-ECM', this.alfrescoApi.getInstance().getTicketEcm());
-        }
-    }
-
-    /**
-     * Saves the BPM ticket in the Storage.
-     */
-    saveTicketBpm(): void {
-        if (this.alfrescoApi.getInstance() && this.alfrescoApi.getInstance().getTicketBpm()) {
-            this.storage.setItem('ticket-BPM', this.alfrescoApi.getInstance().getTicketBpm());
-        }
-    }
-
-    /**
-     * Saves the AUTH ticket in the Storage.
-     */
-    saveTicketAuth(): void {
-        if (this.alfrescoApi.getInstance() && (<any> this.alfrescoApi.getInstance()).getTicketAuth()) {
-            this.storage.setItem('ticket-AUTH', (<any> this.alfrescoApi.getInstance()).getTicketAuth());
-        }
     }
 
     /**
