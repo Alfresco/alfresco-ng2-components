@@ -41,7 +41,6 @@ var statusIcons;
 
 function initPhase(aggData) {
     statusIcons = aggData.config["statusIcons"] || {};
-
     aggData.stoplist = makeStoplist(aggData.config);    
     aggData.srcData = {};
     aggData.mdFileDesc = [];

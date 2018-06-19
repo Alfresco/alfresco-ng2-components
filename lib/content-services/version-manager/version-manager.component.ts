@@ -71,8 +71,6 @@ export class VersionManagerComponent {
     constructor(config: AppConfigService,
                 private contentService: ContentService,
                 private alfrescoApiService: AlfrescoApiService) {
-        this.showComments = config.get('adf-version-manager.allowComments', true);
-        this.allowDownload = config.get('adf-version-manager.allowDownload', true);
     }
 
     onUploadSuccess(event) {
