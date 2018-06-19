@@ -551,4 +551,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     runCustomAction(event) {
         console.log(event);
     }
+
+    getFileFiltering() {
+        return this.acceptedFilesTypeShow ? this.acceptedFilesType : '*';
+    }
 }
