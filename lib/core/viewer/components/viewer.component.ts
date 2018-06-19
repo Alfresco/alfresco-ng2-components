@@ -285,7 +285,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.setUpUrlFile();
                 this.isLoading = false;
             } else if (this.nodeId) {
-                this.apiService.nodesApi.getNodeInfo(this.nodeId).then(
+                this.apiService.nodesApi.getNodeInfo(this.nodeId, { include: ['allowableOperations'] }).then(
                     (data: MinimalNodeEntryEntity) => {
                         this.setUpNodeFile(data).then(() => {
                             this.isLoading = false;
