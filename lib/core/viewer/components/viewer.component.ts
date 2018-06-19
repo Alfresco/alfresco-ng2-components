@@ -265,7 +265,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         if (node && node.id === this.nodeId) {
             this.generateCacheBusterNumber();
             this.isLoading = true;
-            this.setUpNodeFile(node).then(()=>{
+            this.setUpNodeFile(node).then(() => {
                 this.isLoading = false;
             })
         }
@@ -287,7 +287,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             } else if (this.nodeId) {
                 this.apiService.nodesApi.getNodeInfo(this.nodeId).then(
                     (data: MinimalNodeEntryEntity) => {
-                        this.setUpNodeFile(data).then(()=>{
+                        this.setUpNodeFile(data).then(() => {
                             this.isLoading = false;
                         })
                     },
@@ -662,14 +662,14 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         if (rendition) {
             const status = rendition.entry.status.toString();
 
-             if (status === 'NOT_CREATED') {
+            if (status === 'NOT_CREATED') {
                 try {
                     await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId });
-                    rendition =  await this.waitRendition(nodeId, renditionId, 0);
+                    rendition = await this.waitRendition(nodeId, renditionId, 0);
                 } catch (err) {
                     this.logService.error(err);
                 }
-             }
+            }
         }
 
         return rendition;
