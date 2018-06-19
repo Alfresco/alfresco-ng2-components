@@ -128,7 +128,7 @@ export class AlfrescoApiService {
             hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
             hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
             authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),
-            contextRootBpm: this.appConfig.get< string>(AppConfigValues.CONTEXTROOTBPM),
+            contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
             contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
             oauth2: oauth
