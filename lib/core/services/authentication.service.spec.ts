@@ -19,7 +19,6 @@ import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
-import { StorageService } from './storage.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -30,7 +29,6 @@ describe('AuthenticationService', () => {
     let apiService: AlfrescoApiService;
     let authService: AuthenticationService;
     let appConfigService: AppConfigService;
-    let storage: StorageService;
     let cookie: CookieService;
 
     setupTestBed({
@@ -38,28 +36,25 @@ describe('AuthenticationService', () => {
     });
 
     beforeEach(() => {
+        sessionStorage.clear();
         apiService = TestBed.get(AlfrescoApiService);
         authService = TestBed.get(AuthenticationService);
 
         cookie = TestBed.get(CookieService);
         cookie.clear();
 
-        storage = TestBed.get(StorageService);
-        storage.clear();
-
         jasmine.Ajax.install();
+        appConfigService = TestBed.get(AppConfigService);
     });
 
     afterEach(() => {
         cookie.clear();
-        storage.clear();
         jasmine.Ajax.uninstall();
     });
 
     describe('remember me', () => {
 
         beforeEach(() => {
-            appConfigService = TestBed.get(AppConfigService);
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
             apiService.reset();
@@ -164,49 +159,6 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[ECM] should save only ECM ticket on localStorage', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.isLoggedIn()).toBe(true);
-                expect(authService.getTicketBpm()).toBeNull();
-                expect(apiService.getInstance().bpmAuth.isLoggedIn()).toBeFalsy();
-                disposableLogin.unsubscribe();
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
-            });
-        });
-
-        it('[ECM] should return ticket undefined when the credentials are wrong', (done) => {
-            let disposableLogin = authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
-                (res) => {
-                },
-                (err: any) => {
-                    expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(null);
-                    expect(authService.isEcmLoggedIn()).toBe(false);
-                    disposableLogin.unsubscribe();
-                    done();
-                });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 403,
-                contentType: 'application/json',
-                responseText: JSON.stringify({
-                    'error': {
-                        'errorKey': 'Login failed',
-                        'statusCode': 403,
-                        'briefSummary': '05150009 Login failed',
-                        'stackTrace': 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-                        'descriptionURL': 'https://api-explorer.alfresco.com'
-                    }
-                })
-            });
-        });
-
         it('[ECM] should login in the ECM if no provider are defined calling the login', (done) => {
             let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 disposableLogin.unsubscribe();
@@ -308,39 +260,6 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[BPM] should save only BPM ticket on localStorage', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.isLoggedIn()).toBe(true);
-                expect(authService.getTicketEcm()).toBeNull();
-                expect(apiService.getInstance().ecmAuth.isLoggedIn()).toBeFalsy();
-                disposableLogin.unsubscribe();
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
-            });
-        });
-
-        it('[BPM] should return ticket undefined when the credentials are wrong', (done) => {
-            let disposableLogin = authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
-                (res) => {
-                },
-                (err: any) => {
-                    expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
-                    expect(authService.getTicketBpm()).toBe(null, 'getTicketBpm');
-                    expect(authService.isBpmLoggedIn()).toBe(false, 'isBpmLoggedIn');
-                    disposableLogin.unsubscribe();
-                    done();
-                });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 403
-            });
-        });
-
         it('[BPM] should return a ticket undefined after logout', (done) => {
             let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 let disposableLogout = authService.logout().subscribe(() => {
@@ -432,8 +351,8 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
-                    expect(authService.getTicketEcm()).toBe(null, 'getTicketEcm');
-                    expect(authService.getTicketBpm()).toBe(null, 'getTicketBpm');
+                    expect(authService.getTicketEcm()).toBe(undefined, 'getTicketEcm');
+                    expect(authService.getTicketBpm()).toBe('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk', 'getTicketBpm');
                     expect(authService.isEcmLoggedIn()).toBe(false, 'isEcmLoggedIn');
                     disposableLogin.unsubscribe();
                     done();
@@ -454,8 +373,8 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(null);
-                    expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.getTicketEcm()).toBe('fake-post-ticket');
+                    expect(authService.getTicketBpm()).toBe(undefined);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
                     done();
@@ -478,8 +397,8 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(null);
-                    expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.getTicketEcm()).toBe(undefined);
+                    expect(authService.getTicketBpm()).toBe(undefined);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     expect(authService.isEcmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
