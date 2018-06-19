@@ -91,7 +91,7 @@ export class SitesService {
      * @returns Username string
      */
     getEcmCurrentLoggedUserName(): string {
-        return this.apiService.getInstance().ecmAuth.username;
+        return this.apiService.getInstance().getEcmUsername();
     }
 
     private handleError(error: Response): any {
