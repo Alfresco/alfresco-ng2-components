@@ -50,6 +50,7 @@ function updatePhase(tree, pathname, aggData) {
             return;
         }
         if (node.type === "inlineCode") {
+            console.log("Link text: " + node.value);
             var link = resolveTypeLink(aggData, node.value);
             if (link) {
                 convertNodeToTypeLink(node, node.value, link);
@@ -64,7 +65,7 @@ function updatePhase(tree, pathname, aggData) {
                 }
             }
         }
-        else if ((node.type === "paragraph")) {
+        else if ((node.type === "paragraph") || (node.type === "tableCell")) {
             node.children.forEach(function (child, index) {
                 if ((child.type === "text") || (child.type === "inlineCode")) {
                     var newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
