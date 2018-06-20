@@ -36,7 +36,7 @@ export class LogComponent {
             try {
                 contentMessage = JSON.stringify(message.text);
             } catch (error) {
-                contentMessage = error.message;
+                return;
             }
             this.logs.push({ type: message.type, text: contentMessage});
             this.logsData = new ObjectDataTableAdapter(this.logs, [
