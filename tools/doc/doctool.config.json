@@ -19,7 +19,8 @@
             "toc"
         ],
         "dev": [
-            "tsInfo"
+            "tsInfo",
+            "typeLinker"
         ]
     },
     "statusIcons": {
