@@ -58,7 +58,6 @@ describe('AttachFormComponent', () => {
         spyOn(taskService, 'attachFormToATask').and.returnValue(Observable.of(true));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            // const emitSpy = spyOn(component.completeAttachForm, 'emit');
             expect(element.querySelector('#adf-no-form-attach-form-button')).toBeDefined();
             const el = fixture.nativeElement.querySelector('#adf-no-form-attach-form-button');
             el.click();
@@ -72,9 +71,9 @@ describe('AttachFormComponent', () => {
         fixture.detectChanges();
         const formContainer = fixture.debugElement.nativeElement.querySelector('.adf-form-container');
         fixture.whenStable().then(() => {
-            expect(element.querySelector('#mat-option-1')).toBeDefined();
-            const el = fixture.nativeElement.querySelector('#mat-option-1');
-            el.click();
+            expect(element.querySelector('.mat-option')).toBeDefined();
+            const option = fixture.nativeElement.querySelector('.mat-option');
+            option.click();
             expect(formContainer).toBeDefined();
             expect(formContainer).not.toBeNull();
         });
