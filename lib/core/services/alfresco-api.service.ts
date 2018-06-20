@@ -144,8 +144,12 @@ export class AlfrescoApiService {
     }
 
     // @deprecated 3.0.0 get only from app config
-    private getDisableCSRF() {
-        return this.storage.getItem(AppConfigValues.DISABLECSRF) || this.appConfig.get(AppConfigValues.DISABLECSRF);
+    private getDisableCSRF(): boolean {
+        if (this.storage.getItem(AppConfigValues.DISABLECSRF) === 'true') {
+            return true;
+        } else {
+            return this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF);
+        }
     }
 
     // @deprecated 3.0.0 get only from app config
