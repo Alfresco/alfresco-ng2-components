@@ -37,6 +37,7 @@ describe('AuthenticationService', () => {
 
     beforeEach(() => {
         sessionStorage.clear();
+        localStorage.clear();
         apiService = TestBed.get(AlfrescoApiService);
         authService = TestBed.get(AuthenticationService);
 
