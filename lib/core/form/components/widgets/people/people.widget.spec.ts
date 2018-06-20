@@ -169,6 +169,18 @@ describe('PeopleWidgetComponent', () => {
             });
         }));
 
+        it('should hide result list if input is empty', () => {
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            peopleHTMLElement.focus();
+            peopleHTMLElement.value = '';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).toBeNull();
+            });
+        });
     });
 
 });
