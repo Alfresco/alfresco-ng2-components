@@ -18,12 +18,14 @@
 import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { LogService } from './log.service';
+import { StorageService } from './storage.service';
 
 @Injectable()
 export class SettingsService {
 
     constructor(private appConfig: AppConfigService,
-                private logService: LogService) {
+                private logService: LogService,
+                private storage: StorageService) {
     }
 
     /** @deprecated in 1.6.0 */
@@ -35,6 +37,9 @@ export class SettingsService {
     /** @deprecated in 1.7.0 */
     public set csrfDisabled(csrfDisabled: boolean) {
         this.logService.log(`SettingsService.csrfDisabled is deprecated. Use UserPreferencesService.disableCSRF instead.`);
+        if (csrfDisabled !== null && csrfDisabled !== undefined) {
+            this.storage.setItem(AppConfigValues.DISABLECSRF, csrfDisabled.toString());
+        }
     }
 
     /** @deprecated in 1.6.0 */
@@ -62,11 +67,12 @@ export class SettingsService {
     /** @deprecated in 1.7.0 */
     public getProviders(): string {
         this.logService.log(`SettingsService.getProviders is deprecated. Use UserPreferencesService.authType instead.`);
-        return this.appConfig.get<string>(AppConfigValues.PROVIDERS);
+        return this.storage.getItem(AppConfigValues.PROVIDERS) || this.appConfig.get<string>(AppConfigValues.PROVIDERS);
     }
 
     /** @deprecated in 1.7.0 */
     public setProviders(providers: string) {
         this.logService.log(`SettingsService.aetProviders is deprecated. Use the app-config.json`);
+        this.storage.setItem(AppConfigValues.PROVIDERS, providers);
     }
 }

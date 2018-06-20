@@ -25,6 +25,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { LogService } from '../../services/log.service';
 import { TranslationService } from '../../services/translation.service';
 import { UserPreferencesService } from '../../services/user-preferences.service';
+import { SettingsService } from '../../services/settings.service';
 
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSubmitEvent } from '../models/login-submit.event';
@@ -86,9 +87,8 @@ export class LoginComponent implements OnInit {
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
-    /** Possible valid values are ECM, BPM or ALL.
-     * deprecated in 2.4.0 use the providers property in the the app.config.json
-     * @deprecated 2.4.0
+    /** @deprecated 3.0.0 Possible valid values are ECM, BPM or ALL.
+     * deprecated in 3.0.0 use the providers property in the the app.config.json
      */
     @Input()
     providers: string;
@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
     @Input()
     fieldsValidation: any;
 
-    /** Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. */
+    /** @depreated 3.0.0 Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. */
     @Input()
     disableCsrf: boolean;
 
@@ -147,7 +147,8 @@ export class LoginComponent implements OnInit {
         private elementRef: ElementRef,
         private router: Router,
         private appConfig: AppConfigService,
-        private userPreferences: UserPreferencesService
+        private userPreferences: UserPreferencesService,
+        private settingsService: SettingsService
     ) {
         this.initFormError();
         this.initFormFieldsMessages();
@@ -176,9 +177,8 @@ export class LoginComponent implements OnInit {
      * @param event
      */
     onSubmit(values: any) {
-        if (this.disableCsrf !== null && this.disableCsrf !== undefined) {
-            this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF);
-        }
+        this.settingsService.setProviders(this.providers);
+        this.settingsService.csrfDisabled = this.disableCsrf;
 
         this.disableError();
         const args = new LoginSubmitEvent({

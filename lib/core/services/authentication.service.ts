@@ -164,7 +164,7 @@ export class AuthenticationService {
      * @returns True if logged in, false otherwise
      */
     isEcmLoggedIn(): boolean {
-        if (this.cookie.isEnabled() && !this.isRememberMeSet()) {
+        if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
             return false;
         }
         return this.alfrescoApi.getInstance().isEcmLoggedIn();
@@ -175,7 +175,7 @@ export class AuthenticationService {
      * @returns True if logged in, false otherwise
      */
     isBpmLoggedIn(): boolean {
-        if (this.cookie.isEnabled() && !this.isRememberMeSet()) {
+        if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
             return false;
         }
         return this.alfrescoApi.getInstance().isBpmLoggedIn();
