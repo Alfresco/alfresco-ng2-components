@@ -27,7 +27,7 @@ var PropInfo = /** @class */ (function () {
         this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
         this.defaultValue = rawProp.defaultValue || "";
         this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
-        this.type = rawProp.type ? rawProp.type.toString() : "";
+        this.type = rawProp.type ? rawProp.type.toString().replace(/\s/g, "") : "";
         this.type = this.type.replace(/\|/, "\\|");
         this.isDeprecated = rawProp.comment && rawProp.comment.hasTag("deprecated");
         if (this.isDeprecated) {
@@ -69,7 +69,7 @@ var PropInfo = /** @class */ (function () {
 var ParamInfo = /** @class */ (function () {
     function ParamInfo(rawParam) {
         this.name = rawParam.name;
-        this.type = rawParam.type.toString();
+        this.type = rawParam.type.toString().replace(/\s/g, "");
         this.defaultValue = rawParam.defaultValue;
         this.docText = rawParam.comment ? rawParam.comment.text : "";
         this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
@@ -88,7 +88,7 @@ var MethodSigInfo = /** @class */ (function () {
         var _this = this;
         this.errorMessages = [];
         this.name = rawSig.name;
-        this.returnType = rawSig.type ? rawSig.type.toString() : "";
+        this.returnType = rawSig.type ? rawSig.type.toString().replace(/\s/g, "") : "";
         this.returnsSomething = this.returnType != "void";
         if (rawSig.hasComment()) {
             this.docText = rawSig.comment.shortText + rawSig.comment.text;

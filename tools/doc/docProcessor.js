@@ -79,9 +79,9 @@ function updatePhase(filenames, aggData) {
         if (program.json) {
             let filename = path.basename(pathname);
 
-            console.log(`\nFile "${filename} before processing:`);
+            console.log(`\nFile "${filename}" before processing:`);
             console.log(JSON.stringify(original));
-            console.log(`\nFile "${filename} after processing:`);
+            console.log(`\nFile "${filename}" after processing:`);
             console.log(JSON.stringify(tree));
         }
         
