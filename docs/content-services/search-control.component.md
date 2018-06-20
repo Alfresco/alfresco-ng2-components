@@ -27,7 +27,7 @@ Displays a input text which shows find-as-you-type suggestions.
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | autocomplete | `boolean` | false | Toggles auto-completion of the search input field. |
-| customQueryBody | `QueryBody` |  | **Deprecated:** in 2.1.0 |
+| customQueryBody | `QueryBody` |  | (**Deprecated:** in 2.1.0)  |
 | expandable | `boolean` | true | Toggles whether to use an expanding search control. If false then a regular input is used. |
 | highlight | `boolean` | false | Toggles highlighting of the search term in the results. |
 | inputType | `string` | "text" | Type of the input field to render, e.g. "search" or "text" (default). |
