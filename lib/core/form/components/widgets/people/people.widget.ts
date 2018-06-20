@@ -80,6 +80,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 this.checkUserAndValidateForm(list, value);
             } else {
                 this.field.value = null;
+                list = [];
             }
 
             return list;
