@@ -27,6 +27,8 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
     -   [Customizing validation rules](#customizing-validation-rules)
     -   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
     -   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
+    -   [SSO login](#sso-login)
+    -   [Implicit Flow](#implicit-flow)
 
 -   [See Also](#see-also)
 
@@ -50,7 +52,7 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 | fieldsValidation | `any` |  | Custom validation rules for the login form. |
 | logoImageUrl | `string` | "./assets/images/alfresco-logo.svg" | Path to a custom logo image. |
 | needHelpLink | `string` | "" | Sets the URL of the NEED HELP link in the footer. |
-| providers | `string` |  | Possible valid values are ECM, BPM or ALL. By default, this component will log in only to ECM. If you want to log in in both systems then use ALL. |
+| providers | `string` |  | **Deprecated:** 3.0.0 |
 | registerLink | `string` | "" | Sets the URL of the REGISTER link in the footer. |
 | showLoginActions | `boolean` | true | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
 | showRememberMe | `boolean` | true | Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly. |
@@ -275,7 +277,7 @@ export class MyCustomLogin {
 
 ### Implicit Flow
 
-If the 'app.config.json' or you used the host-setting component to use the SSO Oauth the login component will show only a button to login:
+If the 'app.config.json' or you used the host-setting component to use the SSO Oauth the [login component](../core/login.component.md) will show only a button to login:
 
 ```JSON
     "authType" :"OAUTH",
@@ -289,8 +291,8 @@ If the 'app.config.json' or you used the host-setting component to use the SSO O
       "redirectUri": "/",
       "redirectUriLogout": "/logout"
     },
- ```
- 
+```
+
 ![Login component](../docassets/images/sso-login.png)
 
 Note if the silentLogin property in the oauth2 configuration is true will not be possible to show the login page. with silentLogin true the application is automatically redirect to the 
