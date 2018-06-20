@@ -128,6 +128,7 @@ describe('AuthenticationService', () => {
         it('should require remember me set for ECM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(true);
             spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(authService, 'isOauth').and.returnValue(false);
             spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isEcmLoggedIn()).toBeFalsy();
@@ -137,6 +138,7 @@ describe('AuthenticationService', () => {
         it('should not require cookie service enabled for ECM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(false);
             spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(authService, 'isOauth').and.returnValue(false);
             spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isEcmLoggedIn()).toBeFalsy();
@@ -230,6 +232,7 @@ describe('AuthenticationService', () => {
         it('should require remember me set for BPM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(true);
             spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(authService, 'isOauth').and.returnValue(false);
             spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isBpmLoggedIn()).toBeFalsy();
