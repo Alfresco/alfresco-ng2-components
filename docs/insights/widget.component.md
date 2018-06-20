@@ -28,19 +28,19 @@ export class CustomEditorComponent extends WidgetComponent {}
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| field | `FormFieldModel` |  | Data to be displayed in the field |
+| -- | -- | -- | -- |
+| field | [`FormFieldModel`](../core/form-field.model.md) |  | Data to be displayed in the field |
 | readOnly | `boolean` | false | Does the widget show a read-only value? (ie, can't be edited) |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| fieldChanged | `EventEmitter<FormFieldModel>` | **Deprecated:** Used only to trigger visibility engine; components should do that internally if needed |
+| -- | -- | -- |
+| fieldChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../core/form-field.model.md)`>` | (**Deprecated:** Used only to trigger visibility engine; components should do that internally if needed)  |
 
 ## Details
 
-The Widget component is the base class for all standard and custom form widgets. See the
+The [Widget component](../insights/widget.component.md) is the base class for all standard and custom form widgets. See the
 [Form Extensibility and Customisation](../user-guide/extensibility.md) page for full details about
 implementing custom widgets.
 

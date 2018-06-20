@@ -65,7 +65,7 @@ class PropInfo {
         this.isDeprecated = rawProp.comment && rawProp.comment.hasTag("deprecated");
 
         if (this.isDeprecated) {
-            this.docText = "**Deprecated:** " + rawProp.comment.getTag("deprecated").text.replace(/[\n\r]+/g, " ").trim();
+            this.docText = "(**Deprecated:** " + rawProp.comment.getTag("deprecated").text.replace(/[\n\r]+/g, " ").trim() + ") " + this.docText;
         }
 
         if (rawProp.decorators) {
