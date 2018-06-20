@@ -74,7 +74,7 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
-    it('should init value from the field', () => {
+    it('should init value from the field', async(() => {
         widget.field.value = new UserProcessModel({
             id: 'people-id',
             firstName: 'John',
@@ -90,9 +90,10 @@ describe('PeopleWidgetComponent', () => {
 
         widget.ngOnInit();
         fixture.detectChanges();
-
-        expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
-    });
+        fixture.whenStable().then(() => {
+            expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
+        });
+    }));
 
     it('should require form field to setup values on init', () => {
         widget.field.value = null;
