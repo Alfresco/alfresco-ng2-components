@@ -87,8 +87,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /** Data source object that represents the number and the type of the columns that
      * you want to show.
+     * @deprecated 2.4.0
      */
-    /** @deprecated 2.4.0 */
     @Input()
     data: DataTableAdapter;
 
@@ -103,7 +103,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     multiselect: boolean = false;
 
-    /* Toggles default selection of the first row */
+    /** Toggles default selection of the first row */
     @Input()
     selectFirstRow: boolean = true;
 
