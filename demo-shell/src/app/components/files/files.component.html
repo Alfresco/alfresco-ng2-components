@@ -386,29 +386,38 @@
         </adf-upload-drag-area>
 
         <adf-info-drawer-layout *ngIf="showVersions" class="adf-manage-versions-sidebar" fxFlex="0 0 auto">
-
             <div info-drawer-content>
-                <ng-container *ngIf="hasOneFileSelected();else choose_document_template">
-                    <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
-                        <adf-version-manager
-                            [node]="documentList.selection[0].entry"
-                            [showComments]="showVersionComments"
-                            [allowDownload]="allowVersionDownload">
-                        </adf-version-manager>
-                    </ng-container>
-                </ng-container>
-                <ng-template #choose_document_template>
-                    <div class="adf-manage-versions-empty">
-                        <mat-icon class="adf-manage-versions-empty-icon">face</mat-icon>
-                        {{'VERSION.CHOOSE_FILE' | translate}}
-                    </div>
-                </ng-template>
-                <ng-template #no_permission_to_versions>
-                    <div class="adf-manage-versions-no-permission">
-                        <mat-icon class="adf-manage-versions-no-permission-icon">warning</mat-icon>
-                        {{'VERSION.NO_PERMISSION' | translate}}
-                    </div>
-                </ng-template>
+
+                <adf-info-drawer [title]="'Details'">
+                    <adf-info-drawer-tab [label]="'Properties'">
+                        <adf-content-metadata-card
+                            [node]="documentList.selection[0].entry">
+                        </adf-content-metadata-card>
+                    </adf-info-drawer-tab>
+                    <adf-info-drawer-tab [label]="'Versions'">
+                        <ng-container *ngIf="hasOneFileSelected();else choose_document_template">
+                            <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
+                                <adf-version-manager
+                                    [node]="documentList.selection[0].entry"
+                                    [showComments]="showVersionComments"
+                                    [allowDownload]="allowVersionDownload">
+                                </adf-version-manager>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #choose_document_template>
+                            <div class="adf-manage-versions-empty">
+                                <mat-icon class="adf-manage-versions-empty-icon">face</mat-icon>
+                                {{'VERSION.CHOOSE_FILE' | translate}}
+                            </div>
+                        </ng-template>
+                        <ng-template #no_permission_to_versions>
+                            <div class="adf-manage-versions-no-permission">
+                                <mat-icon class="adf-manage-versions-no-permission-icon">warning</mat-icon>
+                                {{'VERSION.NO_PERMISSION' | translate}}
+                            </div>
+                        </ng-template>
+                    </adf-info-drawer-tab>
+                </adf-info-drawer>
             </div>
         </adf-info-drawer-layout>
     </div>
