@@ -75,12 +75,12 @@ function updatePhase(filenames, aggData) {
 
         tree = removeTextPosInfo(tree);
 
-        /*
+        //*
         console.log("Original:");
         console.log(JSON.stringify(original));
         console.log("Updated:");
         console.log(JSON.stringify(tree));
-        */
+        /* */
        
         if (program.json) {
             console.log(JSON.stringify(tree));
