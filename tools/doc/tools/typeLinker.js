@@ -49,14 +49,16 @@ function updatePhase(tree, pathname, aggData) {
         if (!includedNodeTypes.includes(node.type)) {
             return;
         }
-        if (node.type === "inlineCode") {
-            console.log("Link text: " + node.value);
-            var link = resolveTypeLink(aggData, node.value);
+        /*if (node.type === "inlineCode") {
+            console.log(`Link text: ${node.value}`);
+            let link = resolveTypeLink(aggData, node.value);
+
             if (link) {
                 convertNodeToTypeLink(node, node.value, link);
             }
-        }
-        else if (node.type === "link") {
+            
+        } else */
+        if (node.type === "link") {
             if (node.children && ((node.children[0].type === "inlineCode") ||
                 (node.children[0].type === "text"))) {
                 var link = resolveTypeLink(aggData, node.children[0].value);
@@ -65,7 +67,7 @@ function updatePhase(tree, pathname, aggData) {
                 }
             }
         }
-        else if ((node.type === "paragraph") || (node.type === "tableCell")) {
+        else if ((node.children) && (node.type !== "heading")) {
             node.children.forEach(function (child, index) {
                 if ((child.type === "text") || (child.type === "inlineCode")) {
                     var newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
@@ -76,12 +78,12 @@ function updatePhase(tree, pathname, aggData) {
                 }
                 var _a;
             });
-        }
-        else if (node.children) {
-            node.children.forEach(function (child) {
+        } /*else if (node.children) {
+            node.children.forEach(child => {
                 traverseMDTree(child);
             });
         }
+        */
     }
 }
 exports.updatePhase = updatePhase;
@@ -311,9 +313,11 @@ function isLinkable(kind) {
         (kind === typedoc_1.ReflectionKind.Enum) ||
         (kind === typedoc_1.ReflectionKind.TypeAlias);
 }
-function convertNodeToTypeLink(node, text, url) {
+function convertNodeToTypeLink(node, text, url, title) {
+    if (title === void 0) { title = null; }
     var linkDisplayText = unist.makeInlineCode(text);
     node.type = "link";
+    node.title = title;
     node.url = url;
     node.children = [linkDisplayText];
 }

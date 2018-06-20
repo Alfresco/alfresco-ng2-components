@@ -82,7 +82,7 @@ export function updatePhase(tree, pathname, aggData) {
             return;
         }
     
-        if (node.type === "inlineCode") {
+        /*if (node.type === "inlineCode") {
             console.log(`Link text: ${node.value}`);
             let link = resolveTypeLink(aggData, node.value);
 
@@ -90,7 +90,8 @@ export function updatePhase(tree, pathname, aggData) {
                 convertNodeToTypeLink(node, node.value, link);
             }
             
-        } else if (node.type === "link") {
+        } else */
+        if (node.type === "link") {
             if (node.children && (
                 (node.children[0].type === "inlineCode") ||
                 (node.children[0].type === "text")
@@ -101,7 +102,7 @@ export function updatePhase(tree, pathname, aggData) {
                     convertNodeToTypeLink(node, node.children[0].value, link);
                 }
             }
-        } else if ((node.type === "paragraph") || (node.type === "tableCell")) {
+        } else if ((node.children) && (node.type !== "heading")) { //((node.type === "paragraph") || (node.type === "tableCell")) {
             node.children.forEach((child, index) => {
                 if ((child.type === "text") || (child.type === "inlineCode")) {
                     let newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
@@ -110,11 +111,12 @@ export function updatePhase(tree, pathname, aggData) {
                     traverseMDTree(child);
                 }
             });
-        } else if (node.children) {
+        } /*else if (node.children) {
             node.children.forEach(child => {
                 traverseMDTree(child);
             });
         }
+        */
     }
 }
 
@@ -383,9 +385,10 @@ function isLinkable(kind: ReflectionKind) {
     (kind === ReflectionKind.TypeAlias);
 }
 
-function convertNodeToTypeLink(node, text, url) {
+function convertNodeToTypeLink(node, text, url, title = null) {
     let linkDisplayText = unist.makeInlineCode(text);
     node.type = "link";
+    node.title = title;
     node.url = url;
     node.children = [linkDisplayText];
 }

@@ -7,6 +7,7 @@ var remark = require("remark");
 var parse = require("remark-parse");
 var stringify = require("remark-stringify");
 var frontMatter = require("remark-frontmatter");
+var mdCompact = require("mdast-util-compact");
 
 
 // "Aggregate" data collected over the whole file set.
@@ -52,16 +53,16 @@ function updatePhase(filenames, aggData) {
 
     for (var i = 0; i < filenames.length; i++) {
         errorMessages = [];
-        var pathname = filenames[i]; // path.resolve(srcFolder, filenames[i]);
+        var pathname = filenames[i];
         
         if (program.verbose) {
-            console.log(pathname);
+            console.log("Reading " + pathname);
         }
         
         var src = fs.readFileSync(pathname);
         var tree = remark().use(frontMatter, ["yaml"]).parse(src);
 
-        var original = removeTextPosInfo(deepCopy(tree));
+        var original = minimiseTree(tree);
 
         var modified = false;
 
@@ -73,23 +74,24 @@ function updatePhase(filenames, aggData) {
             showErrors(pathname, errorMessages);
         }
 
-        tree = removeTextPosInfo(tree);
-
-        //*
-        console.log("Original:");
-        console.log(JSON.stringify(original));
-        console.log("Updated:");
-        console.log(JSON.stringify(tree));
-        /* */
+        tree = minimiseTree(tree);
        
         if (program.json) {
+            let filename = path.basename(pathname);
+
+            console.log(`\nFile "${filename} before processing:`);
+            console.log(JSON.stringify(original));
+            console.log(`\nFile "${filename} after processing:`);
             console.log(JSON.stringify(tree));
         }
         
         modified = !lodash.isEqual(tree, original);
 
         if (modified) {
-            console.log(`Modified: ${pathname}`);
+            if (program.verbose) {
+                console.log(`Modified: ${pathname}`);
+            }
+
             fs.writeFileSync(filenames[i], remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false, gfm: false}).stringify(tree));
         }
     }
@@ -104,8 +106,10 @@ function deepCopy(obj) {
 }
 
 
-function removeTextPosInfo(tree) {
-    return JSON.parse(JSON.stringify(tree, (key, value) => key === "position" ? undefined : value));
+function minimiseTree(tree) {
+    let minPropsTree = JSON.parse(JSON.stringify(tree, (key, value) => key === "position" ? undefined : value));
+    mdCompact(minPropsTree);
+    return minPropsTree;
 }
 
 
