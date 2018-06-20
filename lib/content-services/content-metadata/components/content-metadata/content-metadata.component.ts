@@ -21,7 +21,7 @@ import { Observable } from 'rxjs/Observable';
 import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -57,7 +57,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     preset: string;
 
-    componentInited: boolean = false;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
     disposableNodeUpdate: Subscription;
@@ -71,22 +70,27 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.disposableNodeUpdate =  this.cardViewUpdateService.itemUpdated$.switchMap(this.saveNode.bind(this)).subscribe(
-            updatedNode => {
-                Object.assign(this.node, updatedNode);
-                this.alfrescoApiService.nodeUpdated.next(this.node);
-            },
-            error => this.logService.error(error)
-        );
+        this.disposableNodeUpdate =  this.cardViewUpdateService.itemUpdated$
+            .switchMap(this.saveNode.bind(this))
+            .subscribe(
+                updatedNode => {
+                    Object.assign(this.node, updatedNode);
+                    this.alfrescoApiService.nodeUpdated.next(this.node);
+                },
+                error => this.logService.error(error)
+            );
 
-        this.componentInited = true;
+        this.loadProperties(this.node);
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const changedNode: MinimalNodeEntryEntity = changes['node'] && changes['node'].currentValue;
+        if (changes.node && !changes.node.firstChange) {
+            this.loadProperties(changes.node.currentValue);
+        }
+    }
 
-        if (!this.componentInited || (changedNode && changedNode !== this.node)) {
-            const node = changedNode || this.node;
+    private loadProperties(node: MinimalNodeEntryEntity) {
+        if (node) {
             this.basicProperties$ = this.contentMetadataService.getBasicProperties(node);
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
         }
