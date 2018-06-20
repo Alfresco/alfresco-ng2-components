@@ -73,6 +73,8 @@ export class SettingsService {
     /** @deprecated in 1.7.0 */
     public setProviders(providers: string) {
         this.logService.log(`SettingsService.aetProviders is deprecated. Use the app-config.json`);
-        this.storage.setItem(AppConfigValues.PROVIDERS, providers);
+        if (providers) {
+            this.storage.setItem(AppConfigValues.PROVIDERS, providers);
+        }
     }
 }
