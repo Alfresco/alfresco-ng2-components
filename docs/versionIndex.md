@@ -14,7 +14,7 @@ of components organized by ADF libraries.
 
 ## v2.4.0
 
-**Release:** Forthcoming<br/>
+**Released:** 2018-06-21 ([Release notes](https://community.alfresco.com/docs/DOC-7397))<br/>
 **APS compatible version:** v1.6.4+<br/>
 **ACS compatible version:** v5.2.3<br/>
 
@@ -30,7 +30,7 @@ of components organized by ADF libraries.
 -   [Buttons menu component](core/buttons-menu.component.md)
 -   [Empty content component](core/empty-content.component.md)
 -   [Error content component](core/error-content.component.md)
--   [Menu button model](core/menu-button.model.md)
+-   [Info drawer tab component](core/info-drawer-tab.component.md)
 -   [Node permission dialog service](content-services/node-permission-dialog.service.md)
 -   [Search check list component](content-services/search-check-list.component.md)
 -   [Search date range component](content-services/search-date-range.component.md)
