@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { AlfrescoApiService, PageTitleService } from '@alfresco/adf-core';
+import { AuthenticationService, AlfrescoApiService, PageTitleService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
 
     constructor(private pageTitleService: PageTitleService,
                 private alfrescoApiService: AlfrescoApiService,
+                private authenticationService: AuthenticationService,
                 private router: Router) {
     }
 
@@ -38,9 +39,14 @@ export class AppComponent implements OnInit {
 
         this.alfrescoApiService.getInstance().on('error', (error) => {
 
-            if (error.status === '404') {
+            if (error.status === 404) {
                 this.router.navigate(['/error', error.status]);
+            } else if (error.status === 401) {
+                if (!this.authenticationService.isLoggedIn()) {
+                    this.router.navigate(['/login']);
+                }
             }
+
         });
     }
 }
