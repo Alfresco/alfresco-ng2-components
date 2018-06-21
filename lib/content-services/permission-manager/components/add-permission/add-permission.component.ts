@@ -18,6 +18,7 @@
 import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
+import { NodesApiService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-add-permission',
@@ -43,7 +44,9 @@ export class AddPermissionComponent {
     currentNode: MinimalNodeEntryEntity;
     currentNodeRoles: string[];
 
-    constructor(private nodePermissionService: NodePermissionService) {
+    constructor(private nodePermissionService: NodePermissionService,
+                private nodeApiService: NodesApiService) {
+        this.nodeApiService.getNode(this.nodeId).subscribe((node) => this.currentNode = node);
     }
 
     onSelect(selection: MinimalNodeEntity[]) {

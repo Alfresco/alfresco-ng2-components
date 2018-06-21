@@ -23,7 +23,7 @@ import { MaterialModule } from '../material.module';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
 import { AddPermissionComponent } from './components/add-permission/add-permission.component';
 import { AddPermissionDialogComponent } from './components/add-permission/add-permission-dialog.component';
-import { DataTableModule, DataColumnModule } from '@alfresco/adf-core';
+import { DataTableModule, DataColumnModule, DirectiveModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
 import { NodePermissionService } from './services/node-permission.service';
 import { NoPermissionTemplateComponent } from './components/permission-list/no-permission.component';
@@ -40,7 +40,8 @@ import { SearchModule } from '../search/search.module';
         TranslateModule,
         DataTableModule,
         DataColumnModule,
-        SearchModule
+        SearchModule,
+        DirectiveModule
     ],
     declarations: [
         PermissionListComponent,
