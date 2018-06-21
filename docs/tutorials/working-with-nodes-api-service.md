@@ -8,7 +8,7 @@ To focus the description on the `NodesApiService`, we will develop on top of the
 [Alfresco Example Content Application](https://github.com/Alfresco/alfresco-content-app).
 If you don't have it already installed in your development environment then see the
 *how-to* description in
-[preparation of the development environment](./preparing-the-development-environment.md).
+[preparation of the development environment](./preparing-environment.md).
 
 When you have the Alfresco Example Content Application up and running, edit the `FileComponent`
 defined in `src/app/components/files/files.component.ts`. Change the  `onNodeDoubleClick` method

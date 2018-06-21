@@ -6,7 +6,7 @@ Level: Basic
 In this tutorial you are going to see how to create an ADF application from scratch, using the [Yeoman scaffolding tool](http://yeoman.io/). This is a "getting started" task that should enable you to start developing your own ADF application.
 
 ## Prerequisites
-Before any further task, be sure you executed the optional section described in [the preparation of the development environment](./preparing-environment.html), dedicated to the installation of the ADF Yeoman generator. This is a requested prerequisite to complete this tutorial with success.
+Before any further task, be sure you executed the optional section described in [the preparation of the development environment](./preparing-environment.md), dedicated to the installation of the ADF Yeoman generator. This is a requested prerequisite to complete this tutorial with success.
 
 ## Creating the ADF application
 The creation of a brand new application is straightforward using the [Yeoman generator](http://yeoman.io/). Open a terminal and execute the following command.

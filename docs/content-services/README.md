@@ -88,4 +88,4 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
+| [Search Widget interface](search-widget.interface.md) | Specifies required properties for [Search filter component](search-filter.component.md) widgets. | [Source](../../lib/content-services/search/search-widget.interface.ts) |
