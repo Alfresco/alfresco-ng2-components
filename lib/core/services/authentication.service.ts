@@ -56,6 +56,18 @@ export class AuthenticationService {
         return this.alfrescoApi.getInstance().isOauthConfiguration();
     }
 
+    isECMProvider(): boolean {
+        return this.alfrescoApi.getInstance().isEcmConfiguration();
+    }
+
+    isBPMProvider(): boolean {
+        return this.alfrescoApi.getInstance().isBpmConfiguration();
+    }
+
+    isALLProvider(): boolean {
+        return this.alfrescoApi.getInstance().isEcmBpmConfiguration();
+    }
+
     /**
      * Logs the user in.
      * @param username Username for the login
@@ -162,10 +174,13 @@ export class AuthenticationService {
      * @returns True if logged in, false otherwise
      */
     isEcmLoggedIn(): boolean {
-        if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
-            return false;
+        if (this.isECMProvider() || this.isALLProvider()) {
+            if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
+                return false;
+            }
+            return this.alfrescoApi.getInstance().isEcmLoggedIn();
         }
-        return this.alfrescoApi.getInstance().isEcmLoggedIn();
+        return false;
     }
 
     /**
@@ -173,10 +188,13 @@ export class AuthenticationService {
      * @returns True if logged in, false otherwise
      */
     isBpmLoggedIn(): boolean {
-        if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
-            return false;
+        if (this.isBPMProvider() || this.isALLProvider()) {
+            if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
+                return false;
+            }
+            return this.alfrescoApi.getInstance().isBpmLoggedIn();
         }
-        return this.alfrescoApi.getInstance().isBpmLoggedIn();
+        return false;
     }
 
     /**
