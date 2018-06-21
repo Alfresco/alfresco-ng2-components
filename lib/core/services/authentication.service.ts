@@ -112,8 +112,6 @@ export class AuthenticationService {
      * @returns Response event called when logout is complete
      */
     logout() {
-        this.alfrescoApi.getInstance().invalidateSession();
-
         return Observable.fromPromise(this.callApiLogout())
             .do(response => {
                 this.onLogout.next(response);
