@@ -220,6 +220,22 @@ describe('AuthenticationService', () => {
 
             expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
         });
+
+        it('[ECM] should return isECMProvider true', () => {
+            expect(authService.isECMProvider()).toBe(true);
+        });
+
+        it('[ECM] should return isBPMProvider false', () => {
+            expect(authService.isBPMProvider()).toBe(false);
+        });
+
+        it('[ECM] should return isALLProvider false', () => {
+            expect(authService.isALLProvider()).toBe(false);
+        });
+
+        it('[ECM] should return isBpmLoggedIn false', () => {
+            expect(authService.isBpmLoggedIn()).toBe(false);
+        });
     });
 
     describe('when the setting is BPM', () => {
@@ -316,6 +332,18 @@ describe('AuthenticationService', () => {
             authService.setRedirect(null);
 
             expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
+        });
+
+        it('[BPM] should return isECMProvider false', () => {
+            expect(authService.isECMProvider()).toBe(false);
+        });
+
+        it('[BPM] should return isBPMProvider true', () => {
+            expect(authService.isBPMProvider()).toBe(true);
+        });
+
+        it('[BPM] should return isALLProvider false', () => {
+            expect(authService.isALLProvider()).toBe(false);
         });
     });
 
@@ -440,6 +468,18 @@ describe('AuthenticationService', () => {
             authService.setRedirect(null);
 
             expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
+        });
+
+        it('[ALL] should return isECMProvider false', () => {
+            expect(authService.isECMProvider()).toBe(false);
+        });
+
+        it('[ALL] should return isBPMProvider false', () => {
+            expect(authService.isBPMProvider()).toBe(false);
+        });
+
+        it('[ALL] should return isALLProvider true', () => {
+            expect(authService.isALLProvider()).toBe(true);
         });
     });
 
