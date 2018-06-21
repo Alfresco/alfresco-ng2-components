@@ -74,7 +74,7 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
-    it('should init value from the field', () => {
+    it('should init value from the field', async(() => {
         widget.field.value = new UserProcessModel({
             id: 'people-id',
             firstName: 'John',
@@ -90,9 +90,34 @@ describe('PeopleWidgetComponent', () => {
 
         widget.ngOnInit();
         fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
+        });
+    }));
 
-        expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
-    });
+    it('should show the readonly value when the form is readonly', async(() => {
+        widget.field.value = new UserProcessModel({
+            id: 'people-id',
+            firstName: 'John',
+            lastName: 'Doe'
+        });
+        widget.field.readOnly = true;
+        widget.field.form.readOnly = true;
+
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
+
+        widget.ngOnInit();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
+            expect((element.querySelector('input') as HTMLInputElement).disabled).toBeTruthy();
+        });
+    }));
 
     it('should require form field to setup values on init', () => {
         widget.field.value = null;
