@@ -65,15 +65,12 @@ describe('AttachFormComponent', () => {
         });
     }));
 
-    it('should show the formPreview of the selected form', async(() => {
+    it('should show the adf-form of the selected form', async(() => {
         component.taskId = 1;
         component.formKey = 12;
         fixture.detectChanges();
-        const formContainer = fixture.debugElement.nativeElement.querySelector('.adf-form-container');
+        const formContainer = fixture.debugElement.nativeElement.querySelector('adf-form');
         fixture.whenStable().then(() => {
-            expect(element.querySelector('.mat-option')).toBeDefined();
-            const option = fixture.nativeElement.querySelector('.mat-option');
-            option.click();
             expect(formContainer).toBeDefined();
             expect(formContainer).not.toBeNull();
         });
