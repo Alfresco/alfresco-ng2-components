@@ -220,6 +220,16 @@ export class TaskListService {
     }
 
     /**
+     * Deletes a form from a task.
+     * @param taskId Task id related to form
+     * @returns Null response notifying when the operation is complete
+     */
+    deleteForm(taskId: string): Observable<TaskDetailsModel> {
+        return Observable.fromPromise(this.callApiDeleteForm(taskId))
+            .catch(err => this.handleError(err));
+    }
+
+    /**
      * Gives completed status to a task.
      * @param taskId ID of the target task
      * @returns Null response notifying when the operation is complete
@@ -351,6 +361,10 @@ export class TaskListService {
 
     private callApiDeleteTask(taskId: string) {
         return this.apiService.taskApi.deleteTask(taskId);
+    }
+
+    private callApiDeleteForm(taskId: string) {
+        return this.apiService.taskApi.removeForm(taskId);
     }
 
     private callApiTaskChecklist(taskId: string) {

@@ -54,7 +54,7 @@ describe('AttachFormComponent', () => {
 
     it('should call attachFormToATask if clicked on Complete Button', async(() => {
         component.taskId = 1;
-        component.formKey = 2;
+        component.formId = 2;
         spyOn(taskService, 'attachFormToATask').and.returnValue(Observable.of(true));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -67,7 +67,7 @@ describe('AttachFormComponent', () => {
 
     it('should show the adf-form of the selected form', async(() => {
         component.taskId = 1;
-        component.formKey = 12;
+        component.taskFormKey = 12;
         fixture.detectChanges();
         const formContainer = fixture.debugElement.nativeElement.querySelector('adf-form');
         fixture.whenStable().then(() => {

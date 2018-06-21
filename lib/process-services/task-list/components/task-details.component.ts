@@ -21,7 +21,6 @@ import {
     CardViewUpdateService,
     ClickNotification,
     LogService,
-    FormService,
     UpdateNotification,
     FormRenderingService,
     CommentsComponent
@@ -96,7 +95,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     /** Toggles rendering of the form title. */
     @Input()
-    showFormTitle: boolean = true;
+    showFormTitle: boolean = false;
 
     /** Toggles rendering of the `Complete` outcome button. */
     @Input()
@@ -174,6 +173,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     showAssignee: boolean = false;
+    showAttachForm: boolean = false;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
     public errorDialogRef: MatDialogRef<TemplateRef<any>>;
@@ -184,7 +184,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                 private authService: AuthenticationService,
                 private peopleProcessService: PeopleProcessService,
                 private formRenderingService: FormRenderingService,
-                private formService: FormService,
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,
                 private dialog: MatDialog) {
@@ -253,6 +252,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         if (clickNotification.target.key === 'assignee') {
             this.showAssignee = true;
         }
+        if (clickNotification.target.key === 'formName') {
+            this.showAttachForm = true;
+        }
     }
 
     /**
@@ -284,7 +286,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     isAssigned(): boolean {
-        return this.taskDetails.assignee ? true : false;
+        return !!this.taskDetails.assignee;
     }
 
     isAssignedToMe(): boolean {
@@ -344,11 +346,17 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         );
     }
 
-    onFormAttached() {
-        this.formService.getTaskForm(this.taskId)
-            .subscribe((res) => {
-                this.loadDetails(this.taskId);
-            }, error => this.logService.error('Could not load forms'));
+    onShowAttachForm() {
+        this.showAttachForm = true;
+    }
+
+    onCancelAttachForm() {
+        this.showAttachForm = false;
+    }
+
+    onCompleteAttachForm() {
+        this.showAttachForm = false;
+        this.loadDetails(this.taskId);
     }
 
     onFormContentClick(content: ContentLinkModel): void {
