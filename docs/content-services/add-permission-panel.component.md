@@ -30,7 +30,7 @@ Searches for people or groups to add to the current node permissions.
 
 ## Details
 
-This component uses a [Search component](../search.component.md) to retrieve the
+This component uses a [Search component](search.component.md) to retrieve the
 groups and people that could be added to the permission list of the current node.
 The `select` event is emitted when a result is clicked from the list.
 
