@@ -93,10 +93,10 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field) {
+            this.value = this.getDisplayName(this.field.value);
             if (this.field.readOnly) {
                 this.searchTerm.disable();
             }
-            this.value = this.getDisplayName(this.field.value);
             let params = this.field.params;
             if (params && params.restrictWithGroup) {
                 let restrictWithGroup = <GroupModel> params.restrictWithGroup;
