@@ -78,7 +78,18 @@ export class MDNav {
         }, index);
     }
 
+    link(test: (element: any) => boolean = () => true, index: number = 0): MDNav {
+        return this.find((h) => {
+            return h.type === "link" && test(h);
+        }, index);
+    }
 
+    links(test: (element: any) => boolean = () => true, index: number = 0): MDNav[] {
+        return this.findAll((h) => {
+            return h.type === "link" && test(h);
+        }, index);
+    }
+    
     list(test: (element: any) => boolean = () => true, index: number = 0): MDNav {
         return this.find((h) => {
             return h.type === "list" && test(h);
