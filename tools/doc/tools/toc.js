@@ -1,14 +1,20 @@
 var path = require("path");
+var fs = require("fs");
 
-//var remark = require("remark");
-var tocGenerator = require("mdast-util-toc");
+var remark = require("remark");
+//var tocGenerator = require("mdast-util-toc");
 var replaceSection = require("mdast-util-heading-range");
 
+var ejs = require("ejs");
+
 var unist = require("../unistHelpers");
+var mdNav = require("../mdNav");
 
 const contentsHeading = "Contents";
 const minHeadingsForToc = 8;
 const maxTocHeadingDepth = 3;
+
+var templateFolder = path.resolve("tools", "doc", "templates");
 
 module.exports = {
     "initPhase": initPhase,
@@ -83,10 +89,10 @@ function updatePhase(tree, pathname, aggData) {
     var numTocHeadings = establishContentsSection(tree);
 
     if (numTocHeadings >= minHeadingsForToc) {
-        var newToc = tocGenerator(tree, {heading: contentsHeading, maxDepth: 3});
+        var newToc = makeToc(tree); //tocGenerator(tree, {heading: contentsHeading, maxDepth: 3});
 
         replaceSection(tree, contentsHeading, function(before, oldSection, after) {
-            return [before, newToc.map, after];
+            return [before, newToc, after];
         });
     } else {
         // Otherwise, we don't need one, so remove any existing one.
@@ -96,4 +102,34 @@ function updatePhase(tree, pathname, aggData) {
     }
 
     return true;
+}
+
+
+function makeToc(tree) {
+    var nav = new mdNav.MDNav(tree);
+
+    var headings = nav.headings(h => 
+        (h.depth > 1) &&
+        (h.depth <= maxTocHeadingDepth) &&
+        !((h.children[0].type === "text") && (h.children[0].value === "Contents"))
+    );
+
+    var context = {headings: []};
+
+    headings.forEach(heading => {
+        context.headings.push({
+            "level": heading.item.depth - 2,
+            "title": heading.textValue,
+            "anchor": "#" + heading.textValue.toLowerCase().replace(/ /g, "-").replace(/[\.,]/g ,"")
+        })
+    });
+
+    var templateName = path.resolve(templateFolder, "toc.ejs");
+    var templateSource = fs.readFileSync(templateName, "utf8");
+    var template = ejs.compile(templateSource);
+
+    var mdText = template(context);
+    var newMD = remark().parse(mdText);
+
+    return newMD.children[0];
 }

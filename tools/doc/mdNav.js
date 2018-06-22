@@ -61,6 +61,13 @@ var MDNav = /** @class */ (function () {
             return h.type === "heading" && test(h);
         }, index);
     };
+    MDNav.prototype.headings = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.findAll(function (h) {
+            return h.type === "heading" && test(h);
+        }, index);
+    };
     MDNav.prototype.html = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
@@ -163,6 +170,28 @@ var MDNav = /** @class */ (function () {
         get: function () {
             if (this.item && this.item["value"]) {
                 return this.item.value;
+            }
+            else {
+                return "";
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDNav.prototype, "textValue", {
+        get: function () {
+            if (this.item) {
+                if (this.item["value"]) {
+                    return this.item.value;
+                }
+                else if (this.item.children &&
+                    (this.item.children.length > 0) &&
+                    (this.item.children[0].type === "text")) {
+                    return this.item.children[0].value;
+                }
+                else {
+                    return "";
+                }
             }
             else {
                 return "";
