@@ -75,6 +75,20 @@ var MDNav = /** @class */ (function () {
             return h.type === "html" && test(h);
         }, index);
     };
+    MDNav.prototype.link = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.find(function (h) {
+            return h.type === "link" && test(h);
+        }, index);
+    };
+    MDNav.prototype.links = function (test, index) {
+        if (test === void 0) { test = function () { return true; }; }
+        if (index === void 0) { index = 0; }
+        return this.findAll(function (h) {
+            return h.type === "link" && test(h);
+        }, index);
+    };
     MDNav.prototype.list = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
