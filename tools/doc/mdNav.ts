@@ -65,6 +65,13 @@ export class MDNav {
     }
 
 
+    headings(test: (element: any) => boolean = () => true, index: number = 0): MDNav[] {
+        return this.findAll((h) => {
+            return h.type === "heading" && test(h);
+        }, index);
+    }
+
+
     html(test: (element: any) => boolean = () => true, index: number = 0): MDNav {
         return this.find((h) => {
             return h.type === "html" && test(h);
@@ -156,6 +163,25 @@ export class MDNav {
     get value(): any {
         if (this.item && this.item["value"]) {
             return this.item.value;
+        } else {
+            return "";
+        }
+    }
+
+
+    get textValue() : string {
+        if (this.item) { 
+            if (this.item["value"]) {
+                return this.item.value;
+            } else if (
+                this.item.children &&
+                (this.item.children.length > 0) &&
+                (this.item.children[0].type === "text")
+            ){
+                return this.item.children[0].value;
+            } else {
+                return "";
+            }
         } else {
             return "";
         }
