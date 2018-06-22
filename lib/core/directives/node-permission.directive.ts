@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-input-rename  */
 
-import { ChangeDetectorRef, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2,  SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2,  SimpleChanges, SimpleChange } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { ContentService } from './../services/content.service';
 import { EXTENDIBLE_COMPONENT } from './../interface/injection.tokens';
@@ -52,9 +52,20 @@ export class NodePermissionDirective implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.nodes && !changes.nodes.firstChange) {
+        if (changes.nodes && this.isNodeChanged(changes.nodes)) {
             this.updateElement();
         }
+    }
+
+    private isNodeChanged(nodeChange: SimpleChange): boolean {
+        let isChanged = false;
+        if (nodeChange.previousValue && nodeChange.currentValue) {
+            isChanged = nodeChange.currentValue.id !== nodeChange.previousValue.id;
+        } else if (!nodeChange.previousValue) {
+            isChanged = nodeChange.previousValue !== nodeChange.currentValue;
+        }
+
+        return isChanged;
     }
 
     /**
