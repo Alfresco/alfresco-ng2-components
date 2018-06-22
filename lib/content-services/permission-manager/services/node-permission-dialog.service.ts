@@ -23,12 +23,14 @@ import { AddPermissionDialogComponent } from '../components/add-permission/add-p
 import { AddPermissionDialogData } from '../components/add-permission/add-permission-dialog-data.interface';
 import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { NodePermissionService } from './node-permission.service';
+import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 
 @Injectable()
 export class NodePermissionDialogService {
 
     constructor(private dialog: MatDialog,
-                private nodePermissionService: NodePermissionService) {
+                private nodePermissionService: NodePermissionService,
+                private contentService: ContentService) {
     }
 
     /**
@@ -72,8 +74,14 @@ export class NodePermissionDialogService {
      * @returns Node with updated permissions
      */
     updateNodePermissionByDialog(nodeId?: string, title?: string): Observable<MinimalNodeEntryEntity> {
-        return this.openAddPermissionDialog(nodeId, title).switchMap((selection) => {
-            return this.nodePermissionService.updateNodePermissions(nodeId, selection);
+        return this.contentService.getNode(nodeId, { include: ['allowableOperations'] }).switchMap((node) => {
+            if (this.contentService.hasPermission(node.entry, PermissionsEnum.UPDATEPERMISSIONS)) {
+                return this.openAddPermissionDialog(nodeId, title).switchMap((selection) => {
+                    return this.nodePermissionService.updateNodePermissions(nodeId, selection);
+                });
+            } else {
+                return Observable.throw('PERMISSION_MANAGER.ERROR.NOT-ALLOWED');
+            }
         });
     }
 }
