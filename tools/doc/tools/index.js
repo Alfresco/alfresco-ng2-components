@@ -9,6 +9,7 @@ var yaml = require("js-yaml");
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
 var searchLibraryRecursive = require("../libsearch");
+var mdNav = require("../mdNav");
 
 module.exports = {
     "initPhase": initPhase,
@@ -31,12 +32,6 @@ var maxBriefDescLength = 180;
 
 var adfLibNames = ["core", "content-services", "insights", "process-services"];
 
-/*
-var deprecatedIconURL = "docassets/images/DeprecatedIcon.png";
-var experimentalIconURL = "docassets/images/ExperimentalIcon.png";
-var internalIconURL = "docassets/images/InternalIcon.png"
-*/
-
 var statusIcons;
 
 function initPhase(aggData) {
@@ -47,8 +42,6 @@ function initPhase(aggData) {
     aggData.mdFileStatus = [];
     aggData.mdFilePath = [];
     searchLibraryRecursive(aggData.srcData, path.resolve(rootFolder));
-
-    //console.log(JSON.stringify(aggData.srcData));
 }
 
 
@@ -94,7 +87,6 @@ function readPhase(tree, pathname, aggData) {
 
 function aggPhase(aggData) {
     var sections = prepareIndexSections(aggData);
-    //console.log(JSON.stringify(sections));
 
     var indexFileText = fs.readFileSync(indexMdFilePath, "utf8");
     var indexFileTree = remark().parse(indexFileText);
@@ -112,7 +104,7 @@ function aggPhase(aggData) {
             return md;
         });
 
-        md = makeLibSectionMD(libSection, true);
+        var md = makeLibSectionMD(libSection, true);
 
         var subIndexFilePath = path.resolve(docsFolderPath, libName, "README.md");
         var subIndexText = fs.readFileSync(subIndexFilePath, "utf8");
@@ -257,7 +249,6 @@ function buildMDDocumentedTable(docItems, forSubFolder) {
     }
 
     return rows;
-    //return unist.makeTable([null, null, null, null], rows);
 }
 
 
@@ -271,7 +262,6 @@ function buildMDUndocumentedTable(docItems, forSubFolder) {
     }
 
     return rows;
-    //return unist.makeTable([null, null, null, null], rows);
 }
 
 
@@ -293,38 +283,18 @@ function makeMDDocumentedTableRow(docItem, forSubFolder) {
     var srcFileLink = unist.makeLink(unist.makeText("Source"), srcPath);
     var desc = docItem.briefDesc;
 
+    removeBriefDescLinks(desc);
+
     var linkCellItems = [mdFileLink];
-
-    /*
-    var finalDepIconURL = deprecatedIconURL;
-    var finalExIconURL = experimentalIconURL;
-    var finalIntIconURL = internalIconURL;
-
-    if (forSubFolder) {
-        finalDepIconURL = "../" + finalDepIconURL;
-        finalExIconURL = "../" + finalExIconURL;
-    }
-    */
 
     var pathPrefix = "";
 
+    
     if (forSubFolder) {
         pathPrefix = "../";
     }
 
     if (docItem.status) {
-        /*
-        if (docItem.status === "Deprecated") {
-            linkCellItems.push(unist.makeText(" "));
-            linkCellItems.push(unist.makeImage(finalDepIconURL, "Deprecated"));
-        } else if (docItem.status === "Experimental") {
-            linkCellItems.push(unist.makeText(" "));
-            linkCellItems.push(unist.makeImage(finalExIconURL, "Experimental"));
-        } else if (docItem.status === "Internal") {
-            linkCellItems.push(unist.makeText(" "));
-            linkCellItems.push(unist.makeImage(finalIntIconURL, "Internal"));
-        }
-        */
 
         if (statusIcons[docItem.status]) {
             linkCellItems.push(unist.makeText(" "));
@@ -386,12 +356,10 @@ function makeLibSectionMD(libSection, forSubFolder){
             ];
 
             if (classSection.documented.length > 0) {
-                //md.push(buildMDDocumentedSection(classSection.documented));
                 tableRows = tableRows.concat(buildMDDocumentedTable(classSection.documented, forSubFolder));
             }
 
             if (classSection.undocumented.length > 0) {
-                // md.push(buildMDUndocumentedSection(classSection.undocumented));
                 tableRows = tableRows.concat(buildMDUndocumentedTable(classSection.undocumented, forSubFolder));
             }
 
@@ -422,4 +390,16 @@ function buildGuideSection(guideJsonFilename, forSubFolder) {
     }
 
     return unist.makeListUnordered(listItems);
+}
+
+
+function removeBriefDescLinks(desc) {
+    var nav = new mdNav.MDNav(desc);
+
+    var links = nav.links();
+
+    links.forEach(link => {
+        link.item.type = "text";
+        link.item.value = link.item.children[0].value;
+    });
 }
