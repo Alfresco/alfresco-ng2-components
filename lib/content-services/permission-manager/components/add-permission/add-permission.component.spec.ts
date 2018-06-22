@@ -24,8 +24,8 @@ import { Observable } from 'rxjs/Observable';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { NodePermissionService } from '../../services/node-permission.service';
-/*tslint:disable:ban*/
-fdescribe('AddPermissionComponent', () => {
+
+describe('AddPermissionComponent', () => {
 
     let fixture: ComponentFixture<AddPermissionComponent>;
     let element: HTMLElement;
@@ -40,7 +40,7 @@ fdescribe('AddPermissionComponent', () => {
 
     beforeEach(() => {
         nodeApiService  = TestBed.get(NodesApiService);
-        spyOn(nodeApiService, 'getNode').and.returnValue(Observable.of({ entry : { id: 'fake-node'}}));
+        spyOn(nodeApiService, 'getNode').and.returnValue(Observable.of({ id: 'fake-node', allowableOperations: ['updatePermissions']}));
         fixture = TestBed.createComponent(AddPermissionComponent);
         element = fixture.nativeElement;
         nodePermissionService = TestBed.get(NodePermissionService);
@@ -70,12 +70,24 @@ fdescribe('AddPermissionComponent', () => {
         });
     }));
 
-    it('should emit a success event when the node is updated', async(() => {
+    it('should NOT enable the ADD button when a selection is sent but the user does not have the permissions', async(() => {
+        const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
+        addPermissionPanelComponent.select.emit(fakeAuthorityResults);
+        fixture.componentInstance.currentNode = {id: 'fake-node-id'};
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
+            expect(addButton.disabled).toBeTruthy();
+        });
+    }));
+
+    it('should emit a success event when the node is updated', (done) => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
         spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(Observable.of({ id: 'fake-node-id'}));
 
         fixture.componentInstance.success.subscribe((node) => {
             expect(node.id).toBe('fake-node-id');
+            done();
         });
 
         fixture.detectChanges();
@@ -84,14 +96,25 @@ fdescribe('AddPermissionComponent', () => {
             const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
             addButton.click();
         });
-    }));
+    });
 
-    it('should emit an error event when the node update fail', async(() => {
+    it('should NOT emit a success event when the user does not have permission to update the node', () => {
+        fixture.componentInstance.selectedItems = fakeAuthorityResults;
+        fixture.componentInstance.currentNode = { id: 'fake-node-id' };
+        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(Observable.of({ id: 'fake-node-id' }));
+
+        let spySuccess = spyOn(fixture.componentInstance, 'success');
+        fixture.componentInstance.applySelection();
+        expect(spySuccess).not.toHaveBeenCalled();
+    });
+
+    it('should emit an error event when the node update fail', (done) => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
         spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(Observable.throw({ error: 'errored'}));
 
         fixture.componentInstance.error.subscribe((error) => {
             expect(error.error).toBe('errored');
+            done();
         });
 
         fixture.detectChanges();
@@ -100,6 +123,6 @@ fdescribe('AddPermissionComponent', () => {
             const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
             addButton.click();
         });
-    }));
+    });
 
 });

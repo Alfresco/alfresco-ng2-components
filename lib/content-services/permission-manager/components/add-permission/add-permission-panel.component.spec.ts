@@ -23,8 +23,8 @@ import { Observable } from 'rxjs/Observable';
 import { fakeAuthorityListResult } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { DebugElement } from '@angular/core';
-/*tslint:disable:ban*/
-fdescribe('AddPermissionPanelComponent', () => {
+
+describe('AddPermissionPanelComponent', () => {
 
     let fixture: ComponentFixture<AddPermissionPanelComponent>;
     let component: AddPermissionPanelComponent;

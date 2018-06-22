@@ -28,8 +28,7 @@ import { AddPermissionDialogData } from './add-permission-dialog-data.interface'
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 
-/*tslint:disable:ban*/
-fdescribe('AddPermissionDialog', () => {
+describe('AddPermissionDialog', () => {
 
     let fixture: ComponentFixture<AddPermissionDialogComponent>;
     let element: HTMLElement;
