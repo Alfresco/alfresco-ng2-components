@@ -24,8 +24,8 @@ import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNode
          fakeNodeToRemovePermission, fakeNodeWithoutPermissions } from '../../mock/permission-list.component.mock';
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
 import { NodePermissionDialogService } from './node-permission-dialog.service';
-
-describe('NodePermissionService', () => {
+/*tslint:disable:ban*/
+fdescribe('NodePermissionService', () => {
 
     let service: NodePermissionService;
     let nodeService: NodesApiService;

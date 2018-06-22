@@ -23,8 +23,8 @@ import { Observable } from 'rxjs/Observable';
 
 const fakeNodeWithInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}};
 const fakeNodeNoInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : false}};
-
-describe('InheritPermissionDirective', () => {
+/*tslint:disable:ban*/
+fdescribe('InheritPermissionDirective', () => {
 
     let fixture: ComponentFixture<SimpleInheritedPermissionTestComponent>;
     let element: HTMLElement;

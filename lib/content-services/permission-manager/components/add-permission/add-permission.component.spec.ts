@@ -19,17 +19,18 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionComponent } from './add-permission.component';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, NodesApiService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { NodePermissionService } from '../../services/node-permission.service';
-
-describe('AddPermissionComponent', () => {
+/*tslint:disable:ban*/
+fdescribe('AddPermissionComponent', () => {
 
     let fixture: ComponentFixture<AddPermissionComponent>;
     let element: HTMLElement;
     let nodePermissionService: NodePermissionService;
+    let nodeApiService: NodesApiService;
 
     setupTestBed({
         imports: [
@@ -38,6 +39,8 @@ describe('AddPermissionComponent', () => {
     });
 
     beforeEach(() => {
+        nodeApiService  = TestBed.get(NodesApiService);
+        spyOn(nodeApiService, 'getNode').and.returnValue(Observable.of({ entry : { id: 'fake-node'}}));
         fixture = TestBed.createComponent(AddPermissionComponent);
         element = fixture.nativeElement;
         nodePermissionService = TestBed.get(NodePermissionService);
