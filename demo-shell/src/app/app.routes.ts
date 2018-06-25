@@ -50,6 +50,7 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
 import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -85,6 +86,10 @@ export const appRoutes: Routes = [
             {
                 path: 'home',
                 component: HomeComponent
+            },
+            {
+                path: 'node-selector',
+                component: ContentNodeSelectorComponent
             },
             {
                 path: 'settings-layout',

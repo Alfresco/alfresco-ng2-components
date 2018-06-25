@@ -416,7 +416,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (changes.node && changes.node.currentValue) {
                 this.data.loadPage(changes.node.currentValue);
                 this.onDataReady(changes.node.currentValue);
-            } else if (changes.rowFilter) {
+            } else if (changes.rowFilter && changes.rowFilter.currentValue !== changes.rowFilter.previousValue) {
                 this.data.setFilter(changes.rowFilter.currentValue);
                 if (this.currentFolderId) {
                     this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pagination.getValue()).catch(err => this.error.emit(err));

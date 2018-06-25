@@ -52,6 +52,7 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { PreviewService } from './services/preview.service';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
+import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({
@@ -106,7 +107,8 @@ import { NotificationsComponent } from './components/notifications/notifications
         FormLoadingComponent,
         BlobPreviewComponent,
         BreadcrumbDemoComponent,
-        NotificationsComponent
+        NotificationsComponent,
+        ContentNodeSelectorComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
