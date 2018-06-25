@@ -101,7 +101,7 @@ export class TaskListDemoComponent implements OnInit {
                     this.filterTasks(taskFilter);
                 }
         });
- 
+
     }
 
     filterTasks(taskFilter: any) {
