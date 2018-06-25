@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import {
     MatButtonModule,
     MatDatepickerModule,
+    MatTableModule,
     MatIconModule,
     MatInputModule,
     MatCheckboxModule,
@@ -37,6 +38,7 @@ import { CardViewDateItemComponent } from './components/card-view-dateitem/card-
 import { CardViewItemDispatcherComponent } from './components/card-view-item-dispatcher/card-view-item-dispatcher.component';
 import { CardViewMapItemComponent } from './components/card-view-mapitem/card-view-mapitem.component';
 import { CardViewTextItemComponent } from './components/card-view-textitem/card-view-textitem.component';
+import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
 
 @NgModule({
     imports: [
@@ -48,6 +50,7 @@ import { CardViewTextItemComponent } from './components/card-view-textitem/card-
         MatNativeDateModule,
         MatCheckboxModule,
         MatInputModule,
+        MatTableModule,
         MatIconModule,
         MatButtonModule,
         MatDatetimepickerModule,
@@ -59,6 +62,7 @@ import { CardViewTextItemComponent } from './components/card-view-textitem/card-
         CardViewDateItemComponent,
         CardViewMapItemComponent,
         CardViewTextItemComponent,
+        CardViewKeyValuePairsItemComponent,
         CardViewItemDispatcherComponent,
         CardViewContentProxyDirective
     ],
@@ -66,14 +70,16 @@ import { CardViewTextItemComponent } from './components/card-view-textitem/card-
         CardViewBoolItemComponent,
         CardViewDateItemComponent,
         CardViewMapItemComponent,
-        CardViewTextItemComponent
+        CardViewTextItemComponent,
+        CardViewKeyValuePairsItemComponent
     ],
     exports: [
         CardViewComponent,
         CardViewBoolItemComponent,
         CardViewDateItemComponent,
         CardViewMapItemComponent,
-        CardViewTextItemComponent
+        CardViewTextItemComponent,
+        CardViewKeyValuePairsItemComponent
     ]
 })
 export class CardViewModule {}

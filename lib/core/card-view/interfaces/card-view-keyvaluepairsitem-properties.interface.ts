@@ -15,19 +15,13 @@
  * limitations under the License.
  */
 
-export {
-    CardViewComponent,
-    CardViewBoolItemComponent,
-    CardViewDateItemComponent,
-    CardViewMapItemComponent,
-    CardViewTextItemComponent,
-    CardViewKeyValuePairsItemComponent
-} from './components/card-view.components';
+import { CardViewItemProperties } from './card-view-item-properties.interface';
 
-export * from './interfaces/card-view.interfaces';
-export * from './validators/card-view.validators';
-export * from './models/card-view.models';
-export * from './services/card-view.services';
-export * from './directives/card-view-content-proxy.directive';
+export interface CardViewKeyValuePairsItemType {
+    name: string;
+    value: string;
+}
 
-export * from './card-view.module';
+export interface CardViewKeyValuePairsItemProperties extends CardViewItemProperties {
+    value: CardViewKeyValuePairsItemType[];
+}
