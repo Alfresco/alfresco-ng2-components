@@ -1,0 +1,198 @@
+<main>
+    <h1>Object picker</h1>
+
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Plain picker</h2>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <label class="content-node-selector-demo-basic-label">
+                        dropdownHideMyFiles: {{dropdownHideMyFiles}}
+                    </label>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="content-node-selector-demo-basic-table">
+                <adf-content-node-selector-panel
+                    [currentFolderId]="'-root-'">
+                </adf-content-node-selector-panel>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Hide My files</h2>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <label class="content-node-selector-demo-basic-label">
+                        My Files site will be hided from dropdown
+                    </label>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="content-node-selector-demo-basic-table">
+                <adf-content-node-selector-panel
+                    [currentFolderId]="'-root-'"
+                    [dropdownHideMyFiles]="true">
+                </adf-content-node-selector-panel>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Custom Site List</h2>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <label class="content-node-selector-demo-basic-label">
+                        Adding a custom site list
+                    </label>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div>
+                <mat-list>
+                    <h3 mat-subheader>Add Site</h3>
+                    <form class="content-node-selector-demo-example-form">
+                        <mat-form-field>
+                            <label>Site Guid</label>
+                            <input matInput [(ngModel)]="customSideGuid" [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <label>Site Title</label>
+                            <input matInput [(ngModel)]="customSideTitle" [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                    </form>
+                    <button mat-button color="primary" (click)="onClickAddSite()">Add</button>
+                    <button mat-button color="primary" (click)="onClickResetSite()">Reset</button>
+
+                    <mat-divider></mat-divider>
+                    <h3 mat-subheader>Custom Sites Added</h3>
+                    <mat-list-item *ngFor="let customSite of customSites.list.entries">
+                        <mat-icon mat-list-icon>shopping_basket</mat-icon>
+                        <h4 mat-line>{{customSite.entry.title}}</h4>
+                        <p mat-line> {{customSite.entry.guid}} </p>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+
+
+            <div class="content-node-selector-demo-basic-table">
+                <adf-content-node-selector-panel
+                    [currentFolderId]="'-root-'"
+                    [dropdownSiteList]="customSites">
+                </adf-content-node-selector-panel>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h2>Row Filtering</h2>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <label class="content-node-selector-demo-basic-label">
+                            Will automatically filter the row on the list
+                        </label>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <mat-slide-toggle color="primary" [(ngModel)]="showFiles" (click)="recreateRowFilterFunction()">
+                    Show Files
+                </mat-slide-toggle>
+                <mat-slide-toggle color="primary" [(ngModel)]="showFolders" (click)="recreateRowFilterFunction()">
+                    Slide Folders
+                </mat-slide-toggle>
+
+                <div class="content-node-selector-demo-basic-table">
+                    <adf-content-node-selector-panel
+                        [rowFilter]="rowFilterFunction"
+                        [currentFolderId]="'-root-'">
+                    </adf-content-node-selector-panel>
+                </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h2>Custom Image Resolving</h2>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <label class="content-node-selector-demo-basic-label">
+                            A function to manage the way folder/file icons and thumbnails are resolved
+                        </label>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <mat-slide-toggle color="primary" (click)="recreateImageResolverFunction()">
+                    Add Custom Images Resolver
+                </mat-slide-toggle>
+
+                <div class="content-node-selector-demo-basic-table">
+                    <adf-content-node-selector-panel
+                        [imageResolver]="customImageResolver"
+                        [currentFolderId]="'-root-'">
+                    </adf-content-node-selector-panel>
+                </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Set Page Size</h2>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <label class="content-node-selector-demo-basic-label">
+                        Number of items shown per page in the list. actual page {{actualPageSize}}
+                    </label>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="content-node-selector-demo-basic-table">
+                <adf-content-node-selector-panel
+                    [currentFolderId]="'-root-'"
+                    [pageSize]="actualPageSize"
+                    >
+                </adf-content-node-selector-panel>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Is Valid Selection Function </h2>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <label class="content-node-selector-demo-basic-label">
+                        Function used to decide if the selected node has permission to be selected
+                    </label>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <label>Only folder starting with the letter 'a' or 'A' are valid selections</label>
+            <label>Actual Selection is : {{validSelection}}</label>
+            <div class="content-node-selector-demo-basic-table">
+                <adf-content-node-selector-panel
+                    (select)="onNodeSelect($event)"
+                    [isSelectionValid]="customIsValidFunction"
+                    [currentFolderId]="'-root-'">
+                </adf-content-node-selector-panel>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>BreadCrumb Transform Function </h2>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <label class="content-node-selector-demo-basic-label">
+                        Transformation to be performed on the chosen/folder node before building the breadcrumb UI
+                    </label>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <label>Folder starting with letter 'd' or 'D' won't be displayed in the breadcrumb dropdown</label>
+            <div class="content-node-selector-demo-basic-table">
+                <adf-content-node-selector-panel
+                    [breadcrumbTransform]="customBreadcrumbFunction"
+                    [currentFolderId]="'-root-'">
+                </adf-content-node-selector-panel>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</main>
