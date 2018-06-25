@@ -311,7 +311,7 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(err).toBeDefined();
-                    expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.getTicketBpm()).toBe(undefined);
                     done();
                 });
 
