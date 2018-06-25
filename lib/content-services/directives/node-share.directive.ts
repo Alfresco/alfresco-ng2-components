@@ -51,7 +51,8 @@ export class NodeSharedDirective implements OnChanges {
                 disableClose: true,
                 data: {
                     node: node,
-                    baseShareUrl: this.baseShareUrl
+                    baseShareUrl: this.baseShareUrl,
+                    elementRef: this.elementRef
                 }
             });
         } else {
