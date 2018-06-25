@@ -17,19 +17,16 @@
 
 import {
     AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
-    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation
+    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Subscription, Observable, Observer } from 'rxjs/Rx';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
-import { ThumbnailService } from '../../../services/thumbnail.service';
 
 import { ObjectDataRow } from '../../data/object-datarow.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
@@ -50,7 +47,7 @@ export enum DisplayMode {
     templateUrl: './datatable.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck {
+export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck, OnDestroy {
 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
@@ -66,6 +63,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     /** The rows that the datatable will show. */
     @Input()
     rows: any[] = [];
+
+    /** Define the sort order of the datatable. Possible values are :
+     * [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`]
+     */
+    @Input()
+    sorting: any[] = [];
+
+    /** The columns that the datatable will show. */
+    @Input()
+    columns: any[] = [];
 
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
@@ -144,6 +151,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     @Input()
     noPermission: boolean = false;
 
+    @Input()
+    rowMenuCacheEnabled = true;
+
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
     loadingTemplate: TemplateRef<any>;
@@ -154,17 +164,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
 
-    private schema: DataColumn[] = [];
-
     private differ: any;
     private rowMenuCache: object = {};
 
+    private subscriptions: Subscription[] = [];
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
+    private dataRowsChanged: Subscription;
 
     constructor(private elementRef: ElementRef,
-                differs: IterableDiffers,
-                private thumbnailService?: ThumbnailService) {
+                differs: IterableDiffers) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
@@ -172,6 +181,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     }
 
     ngAfterContentInit() {
+        if (this.columnList) {
+            this.subscriptions.push(
+                this.columnList.columns.changes.subscribe(() => {
+                    this.setTableSchema();
+                })
+            );
+        }
         this.setTableSchema();
     }
 
@@ -182,6 +198,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                 this.initTable();
             } else {
                 this.data = changes['data'].currentValue;
+                this.resetSelection();
             }
             return;
         }
@@ -199,6 +216,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             this.resetSelection();
             this.emitRowSelectionEvent('row-unselect', null);
         }
+
+        if (this.isPropertyChanged(changes['sorting'])) {
+            this.setTableSorting(changes['sorting'].currentValue);
+        }
     }
 
     ngDoCheck() {
@@ -213,7 +234,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     }
 
     convertToRowsData(rows: any []): ObjectDataRow[] {
-        return rows.map(row => new ObjectDataRow(row));
+        return rows.map(row => new ObjectDataRow(row, row.isSelected));
+    }
+
+    convertToDataSorting(sorting: any[]): DataSorting {
+        if (sorting && sorting.length > 0) {
+            return new DataSorting(sorting[0], sorting[1]);
+        }
     }
 
     private initAndSubscribeClickStream() {
@@ -225,6 +252,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
         this.singleClickStreamSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
+            this.handleRowSelection(event.value, <MouseEvent | KeyboardEvent> event.event);
             this.rowClick.emit(event);
             if (!event.defaultPrevented) {
                 this.elementRef.nativeElement.dispatchEvent(
@@ -258,14 +286,18 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private unsubscribeClickStream() {
         if (this.singleClickStreamSub) {
             this.singleClickStreamSub.unsubscribe();
+            this.singleClickStreamSub = null;
         }
         if (this.multiClickStreamSub) {
             this.multiClickStreamSub.unsubscribe();
+            this.multiClickStreamSub = null;
         }
     }
 
     private initTable() {
-        this.data = new ObjectDataTableAdapter(this.rows, this.schema);
+        this.data = new ObjectDataTableAdapter(this.rows, this.columns);
+        this.setTableSorting(this.sorting);
+        this.resetSelection();
         this.rowMenuCache = {};
     }
 
@@ -273,20 +305,40 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         return this.data === undefined || this.data === null;
     }
 
-    private setTableRows(rows) {
+    private setTableRows(rows: any[]) {
         if (this.data) {
+            this.resetSelection();
             this.data.setRows(this.convertToRowsData(rows));
         }
     }
 
     private setTableSchema() {
-        if (this.columnList && this.columnList.columns) {
-            this.schema = this.columnList.columns.map(c => <DataColumn> c);
+        let schema = [];
+        if (!this.columns || this.columns.length === 0) {
+            schema = this.getSchemaFromHtml();
+        } else {
+            schema = this.columns.concat(this.getSchemaFromHtml());
         }
 
-        if (this.data && this.schema && this.schema.length > 0) {
-            this.data.setColumns(this.schema);
+        this.columns = schema;
+
+        if (this.data && this.columns && this.columns.length > 0) {
+            this.data.setColumns(this.columns);
         }
+    }
+
+    private setTableSorting(sorting) {
+        if (this.data) {
+            this.data.setSorting(this.convertToDataSorting(sorting));
+        }
+    }
+
+    public getSchemaFromHtml(): any {
+        let schema = [];
+        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
+        }
+        return schema;
     }
 
     onRowClick(row: DataRow, e: MouseEvent) {
@@ -295,7 +347,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         }
 
         if (row) {
-            this.handleRowSelection(row, e);
             const dataRowEvent = new DataRowEvent(row, e, this);
             this.clickObserver.next(dataRowEvent);
         }
@@ -317,7 +368,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
             if (this.isMultiSelectionMode()) {
                 const modifier = e && (e.metaKey || e.ctrlKey);
-                const newValue = modifier ? !row.isSelected : true;
+                let newValue: boolean;
+                if (this.selection.length === 1) {
+                    newValue = !row.isSelected;
+                } else {
+                    newValue = modifier ? !row.isSelected : true;
+                }
                 const domEventName = newValue ? 'row-select' : 'row-unselect';
 
                 if (!modifier) {
@@ -335,7 +391,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             if (rows && rows.length > 0) {
                 rows.forEach(r => r.isSelected = false);
             }
-            this.selection.splice(0);
+            this.selection = [];
         }
         this.isSelectAllChecked = false;
     }
@@ -424,15 +480,14 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         this.emitRowSelectionEvent(domEventName, row);
     }
 
-    onImageLoadingError(event: Event, mimeType?: string) {
-
+    onImageLoadingError(event: Event, row: DataRow) {
         if (event) {
             let element = <any> event.target;
 
             if (this.fallbackThumbnail) {
                 element.src = this.fallbackThumbnail;
             } else {
-                element.src = this.thumbnailService.getMimeTypeIcon(mimeType);
+                element.src = row.imageErrorResolver(event);
             }
         }
     }
@@ -477,6 +532,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         if (!this.rowMenuCache[id]) {
             let event = new DataCellEvent(row, col, []);
             this.showRowActionsMenu.emit(event);
+            if (!this.rowMenuCacheEnabled) {
+                return event.value.actions;
+            }
             this.rowMenuCache[id] = event.value.actions;
         }
 
@@ -523,11 +581,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         }
     }
 
-    private selectRow(row: DataRow, value: boolean) {
+    selectRow(row: DataRow, value: boolean) {
         if (row) {
             row.isSelected = value;
             const idx = this.selection.indexOf(row);
-
             if (value) {
                 if (idx < 0) {
                     this.selection.push(row);
@@ -551,8 +608,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     }
 
     getSortableColumns() {
-        return this.data.getColumns().filter((currentColum) => {
-            return currentColum.sortable === true;
+        return this.data.getColumns().filter(column => {
+            return column.sortable === true;
         });
     }
 
@@ -584,5 +641,17 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             bubbles: true
         });
         this.elementRef.nativeElement.dispatchEvent(domEvent);
+    }
+
+    ngOnDestroy() {
+        this.unsubscribeClickStream();
+
+        this.subscriptions.forEach(s => s.unsubscribe());
+        this.subscriptions = [];
+
+        if (this.dataRowsChanged) {
+            this.dataRowsChanged.unsubscribe();
+            this.dataRowsChanged = null;
+        }
     }
 }

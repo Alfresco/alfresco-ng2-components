@@ -15,123 +15,341 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HostSettingsModule } from './host-settings.module';
-import { MaterialModule } from '../material.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HostSettingsComponent } from './host-settings.component';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
+import { AppConfigService } from '../app-config/app-config.service';
 
 describe('HostSettingsComponent', () => {
 
     let fixture: ComponentFixture<HostSettingsComponent>;
     let component: HostSettingsComponent;
+    let appConfigService: AppConfigService;
+    let element: any;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                FormsModule,
-                ReactiveFormsModule,
-                MaterialModule,
-                HttpClientModule,
-                HostSettingsModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(HostSettingsComponent);
         component = fixture.componentInstance;
+        appConfigService = TestBed.get(AppConfigService);
+        element = fixture.nativeElement;
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should emit an error when the ECM url inserted is wrong', (done) => {
-        fixture.detectChanges();
+    describe('Providers', () => {
 
-        component.error.subscribe((message: string) => {
-            expect(message).toEqual('CORE.HOST_SETTING.CS_URL_ERROR');
-            done();
+        beforeEach(() => {
+            appConfigService.config.providers = 'ECM';
+            appConfigService.config.authType = 'OAUTH';
+            appConfigService.config.oauth2 = {
+                host: 'http://localhost:6543',
+                redirectUri: '/',
+                silentLogin: false,
+                implicitFlow: true,
+                clientId: 'activiti',
+                scope: 'openid',
+                secret: ''
+            };
+
+            appConfigService.load();
+            fixture.detectChanges();
         });
 
-        const ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
-        ecmUrlInput.value = 'wrong_url';
-
-        const event: any = {};
-        event.target = ecmUrlInput;
-        component.onChangeECMHost(event);
-    });
-
-    it('should emit ecmHostChange when the ECM url inserted is correct', (done) => {
-        fixture.detectChanges();
-        const url = 'http://localhost:9999/ecm';
-        component.ecmHostChange.subscribe((message: string) => {
-            expect(message).toEqual(url);
-            done();
+        afterEach(() => {
+            fixture.destroy();
         });
 
-        const ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
-        ecmUrlInput.value = url;
+        it('should not show the providers select box if you have any provider', (done) => {
+            component.providers = ['BPM'];
+            component.ngOnInit();
 
-        const event: any = {};
-        event.target = ecmUrlInput;
-        component.onChangeECMHost(event);
-    });
+            fixture.detectChanges();
 
-    it('should emit an error when the BPM url inserted is wrong', (done) => {
-        fixture.detectChanges();
-
-        component.error.subscribe((message: string) => {
-            expect(message).toEqual('CORE.HOST_SETTING.PS_URL_ERROR');
-            done();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#adf-provider-selector')).toBeNull();
+                done();
+            });
         });
 
-        const bpmUrlInput: any = fixture.nativeElement.querySelector('#bpmHost');
-        bpmUrlInput.value = 'wrong_url';
+        it('should show the providers select box if you have any provider', (done) => {
+            component.providers = ['BPM', 'ECM'];
+            component.ngOnInit();
 
-        const event: any = {};
-        event.target = bpmUrlInput;
-        component.onChangeBPMHost(event);
-    });
+            fixture.detectChanges();
 
-    it('should emit bpmHostChange when the BPM url inserted is correct', (done) => {
-        fixture.detectChanges();
-        const url = 'http://localhost:9999/bpm';
-
-        component.ecmHostChange.subscribe((message: string) => {
-            expect(message).toEqual(url);
-            done();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#adf-provider-selector')).not.toBeNull();
+                done();
+            });
         });
 
-        const ecmUrlInput = fixture.nativeElement.querySelector('#bpmHost');
-        ecmUrlInput.value = url;
-
-        const event: any = {};
-        event.target = ecmUrlInput;
-        component.onChangeECMHost(event);
     });
 
-    it('should not render the ECM url config if setting provider is BPM', () => {
-        component.providers = 'BPM';
+    describe('BPM ', () => {
 
-        fixture.detectChanges();
+        let ecmUrlInput;
+        let bpmUrlInput;
 
-        const bpmUrlInput = fixture.nativeElement.querySelector('#bpmHost');
-        const ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
-        expect(ecmUrlInput).toEqual(null);
-        expect(bpmUrlInput).toBeDefined();
+        beforeEach(() => {
+            appConfigService.config.providers = 'BPM';
+            appConfigService.load();
+            fixture.detectChanges();
+            bpmUrlInput = element.querySelector('#bpmHost');
+            ecmUrlInput = element.querySelector('#ecmHost');
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should have a valid form when the url inserted is correct', (done) => {
+            const url = 'http://localhost:9999/bpm';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('VALID');
+                done();
+            });
+
+            component.form.valueChanges.subscribe((values) => {
+                expect(values.bpmHost).toEqual(url);
+            });
+
+            bpmUrlInput.value = url;
+            bpmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should have an invalid form when the inserted url is wrong', (done) => {
+            const url = 'wrong';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.bpmHost.hasError('pattern')).toBeTruthy();
+                done();
+            });
+
+            bpmUrlInput.value = url;
+            bpmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should not render the ECM url config if setting provider is BPM', () => {
+            expect(ecmUrlInput).toEqual(null);
+            expect(bpmUrlInput).toBeDefined();
+        });
+
     });
 
-    it('should hide the BPM url config if setting provider is ECM', () => {
-        component.providers = 'ECM';
+    describe('ECM ', () => {
 
-        fixture.detectChanges();
+        let ecmUrlInput;
+        let bpmUrlInput;
 
-        const ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
-        const bpmUrlInput = fixture.nativeElement.querySelector('#bpmHost');
-        expect(bpmUrlInput).toEqual(null);
-        expect(ecmUrlInput).toBeDefined();
+        beforeEach(() => {
+            appConfigService.config.providers = 'ECM';
+            appConfigService.load();
+            fixture.detectChanges();
+            bpmUrlInput = element.querySelector('#bpmHost');
+            ecmUrlInput = element.querySelector('#ecmHost');
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should have a valid form when the url inserted is correct', (done) => {
+            const url = 'http://localhost:9999/ecm';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('VALID');
+                done();
+            });
+
+            ecmUrlInput.value = url;
+            ecmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should have an invalid form when the url inserted is wrong', (done) => {
+            const url = 'wrong';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.ecmHost.hasError('pattern')).toBeTruthy();
+                done();
+            });
+
+            ecmUrlInput.value = url;
+            ecmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should not render the BPM url config if setting provider is BPM', () => {
+            expect(bpmUrlInput).toEqual(null);
+            expect(ecmUrlInput).toBeDefined();
+        });
     });
+
+    describe('ALL ', () => {
+
+        let ecmUrlInput;
+        let bpmUrlInput;
+
+        beforeEach(() => {
+            appConfigService.config.providers = 'ALL';
+            appConfigService.load();
+            fixture.detectChanges();
+            bpmUrlInput = element.querySelector('#bpmHost');
+            ecmUrlInput = element.querySelector('#ecmHost');
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should have a valid form when the BPM and ECM url inserted are correct', (done) => {
+            const urlEcm = 'http://localhost:9999/ecm';
+            const urlBpm = 'http://localhost:9999/bpm';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('VALID');
+                done();
+            });
+
+            ecmUrlInput.value = urlEcm;
+            bpmUrlInput.value = urlBpm;
+            ecmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should have an invalid form when one of the ECM url inserted is wrong', (done) => {
+            const url = 'wrong';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.ecmHost.hasError('pattern')).toBeTruthy();
+                done();
+            });
+
+            ecmUrlInput.value = url;
+            ecmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should have an invalid form when one of the BPM url inserted is wrong', (done) => {
+            const url = 'wrong';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.bpmHost.hasError('pattern')).toBeTruthy();
+                done();
+            });
+
+            bpmUrlInput.value = url;
+            bpmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should have an invalid form when both BPM and ECM url inserted are wrong', (done) => {
+            const url = 'wrong';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.bpmHost.hasError('pattern')).toBeTruthy();
+                done();
+            });
+
+            bpmUrlInput.value = url;
+            ecmUrlInput.value = url;
+            bpmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+    });
+
+    describe('OAUTH ', () => {
+
+        let bpmUrlInput;
+        let ecmUrlInput;
+        let oauthHostUrlInput;
+        let clientIdInput;
+
+        beforeEach(() => {
+            appConfigService.config.providers = 'ALL';
+            appConfigService.config.authType = 'OAUTH';
+            appConfigService.config.oauth2 = {
+                host: 'http://localhost:6543',
+                redirectUri: '/',
+                silentLogin: false,
+                implicitFlow: true,
+                clientId: 'activiti',
+                scope: 'openid',
+                secret: ''
+            };
+            appConfigService.load();
+            fixture.detectChanges();
+            bpmUrlInput = element.querySelector('#bpmHost');
+            ecmUrlInput = element.querySelector('#ecmHost');
+            oauthHostUrlInput = element.querySelector('#oauthHost');
+            clientIdInput = element.querySelector('#clientId');
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should have a valid form when the urls are correct', (done) => {
+            const urlBpm = 'http://localhost:9999/bpm';
+            const urlEcm = 'http://localhost:9999/bpm';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('VALID');
+                done();
+            });
+
+            ecmUrlInput.value = urlEcm;
+            ecmUrlInput.dispatchEvent(new Event('input'));
+
+            bpmUrlInput.value = urlBpm;
+            bpmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should have an invalid form when the url inserted is wrong', (done) => {
+            const url = 'wrong';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.bpmHost.hasError('pattern')).toBeTruthy();
+                done();
+            });
+
+            bpmUrlInput.value = url;
+            bpmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should have an invalid form when the host is wrong', (done) => {
+            const hostUrl = 'wrong';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.host.hasError('pattern')).toBeTruthy();
+                done();
+            });
+
+            oauthHostUrlInput.value = hostUrl;
+            oauthHostUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should have a required clientId an invalid form when the clientId is missing', (done) => {
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.clientId.hasError('required')).toBeTruthy();
+                done();
+            });
+
+            clientIdInput.value = '';
+            clientIdInput.dispatchEvent(new Event('input'));
+        });
+
+    });
+
 });

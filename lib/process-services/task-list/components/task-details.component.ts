@@ -177,7 +177,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     private peopleSearchObserver: Observer<UserProcessModel[]>;
     public errorDialogRef: MatDialogRef<TemplateRef<any>>;
 
-    peopleSearch$: Observable<UserProcessModel[]>;
+    peopleSearch: Observable<UserProcessModel[]>;
 
     constructor(private taskListService: TaskListService,
                 private authService: AuthenticationService,
@@ -189,7 +189,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
         this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
-        this.peopleSearch$ = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer).share();
+        this.peopleSearch = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
     ngOnInit() {

@@ -1,19 +1,59 @@
 # Version Index
 
-This file contains a list of components grouped according to the
-ADF version in which they were introduced. See the
-[main index page](README.md) for a list organized by ADF libraries.
-
-<!--history start-->
+Below are the details of all released versions of ADF since general
+availability (v2.0.0). See the [main index page](README.md) for a list
+of components organized by ADF libraries.
 
 ## Versions
 
+-   [v2.4.0](#v240)
 -   [v2.3.0](#v230)
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
+## v2.4.0
+
+**Released:** 2018-06-21 ([Release notes](https://community.alfresco.com/docs/DOC-7397))<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.3<br/>
+
+### Components added
+
+<!--v240 start-->
+
+-   [About component](core/about.component.md)
+-   [Add permission dialog component](content-services/add-permission-dialog.component.md)
+-   [Add permission panel component](content-services/add-permission-panel.component.md)
+-   [Add permission component](content-services/add-permission.component.md)
+-   [App config pipe](core/app-config.pipe.md)
+-   [Buttons menu component](core/buttons-menu.component.md)
+-   [Empty content component](core/empty-content.component.md)
+-   [Error content component](core/error-content.component.md)
+-   [Info drawer tab component](core/info-drawer-tab.component.md)
+-   [Node permission dialog service](content-services/node-permission-dialog.service.md)
+-   [Search check list component](content-services/search-check-list.component.md)
+-   [Search date range component](content-services/search-date-range.component.md)
+-   [Search filter service](content-services/search-filter.service.md)
+-   [Search number range component](content-services/search-number-range.component.md)
+-   [Search radio component](content-services/search-radio.component.md)
+-   [Search slider component](content-services/search-slider.component.md)
+-   [Search text component](content-services/search-text.component.md)
+-   [Sorting picker component](core/sorting-picker.component.md)
+
+<!--v240 end-->
+
+([Back to top](#versions))
+
 ## v2.3.0
+
+**Released:** 2018-04-17 ([Release notes](https://community.alfresco.com/docs/DOC-7347-adf-230-release-note))<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.3<br/>
+
+### Components added
+
+<!--v230 start-->
 
 -   [Comment content service](core/comment-content.service.md)
 -   [Custom resources service](content-services/custom-resources.service.md)
@@ -23,15 +63,40 @@ ADF version in which they were introduced. See the
 -   [Search chip list component](content-services/search-chip-list.component.md)
 -   [Search filter component](content-services/search-filter.component.md)
 -   [Search query builder service](content-services/search-query-builder.service.md)
+-   [Search sorting picker component](content-services/search-sorting-picker.component.md)
 -   [Sidenav layout component](core/sidenav-layout.component.md)
 -   [Upload version button component](content-services/upload-version-button.component.md)
 
+<!--v230 end-->
+
+([Back to top](#versions))
+
 ## v2.2.0
+
+**Released:** 2018-03-05 ([Release notes](https://community.alfresco.com/docs/DOC-7318-adf-220-release-note))<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.2<br/>
+
+### Components added
+
+<!--v220 start-->
 
 -   [Node download directive](content-services/node-download.directive.md)
 -   [Node lock directive](content-services/node-lock.directive.md)
 
+<!--v220 end-->
+
+([Back to top](#versions))
+
 ## v2.1.0
+
+**Released:** 2018-01-29 ([Release notes](https://community.alfresco.com/docs/DOC-7292-adf-210-release-note))<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.2<br/>
+
+### Components added
+
+<!--v210 start-->
 
 -   [Content metadata component](content-services/content-metadata.component.md)
 -   [Content node dialog service](content-services/content-node-dialog.service.md)
@@ -39,7 +104,19 @@ ADF version in which they were introduced. See the
 -   [Search configuration service](core/search-configuration.service.md)
 -   [Sidebar action menu component](core/sidebar-action-menu.component.md)
 
+<!--v210 end-->
+
+([Back to top](#versions))
+
 ## v2.0.0
+
+**Released:** 2017-12-04 ([Release notes](https://community.alfresco.com/docs/DOC-7244-adf-200-release-note))<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.2<br/>
+
+### Components added
+
+<!--v200 start-->
 
 -   [Accordion group component](core/accordion-group.component.md)
 -   [Accordion component](core/accordion.component.md)
@@ -59,6 +136,7 @@ ADF version in which they were introduced. See the
 -   [Bpm user model](core/bpm-user.model.md)
 -   [Bpm user service](core/bpm-user.service.md)
 -   [Breadcrumb component](content-services/breadcrumb.component.md)
+-   [Card item types service](core/card-item-types.service.md)
 -   [Card view update service](core/card-view-update.service.md)
 -   [Card view component](core/card-view.component.md)
 -   [Checklist component](process-services/checklist.component.md)
@@ -192,4 +270,6 @@ ADF version in which they were introduced. See the
 -   [Webscript component](content-services/webscript.component.md)
 -   [Widget component](insights/widget.component.md)
 
-<!--history end-->
+<!--v200 end-->
+
+([Back to top](#versions))

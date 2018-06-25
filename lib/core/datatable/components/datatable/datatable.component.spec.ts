@@ -15,19 +15,33 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SimpleChange, NO_ERRORS_SCHEMA, QueryList } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material';
-import { RouterTestingModule } from '@angular/router/testing';
-import { DataTableModule } from '../../datatable.module';
-import { MaterialModule } from '../../../material.module';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
-
 import { DataTableComponent } from './datatable.component';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
+import { DataColumnComponent } from '../../../data-column/data-column.component';
+
+class FakeDataRow implements DataRow {
+    isDropTarget = false;
+    isSelected = true;
+    hasValue(key: any) {
+        return true;
+    }
+    getValue() {
+        return '1';
+    }
+    imageErrorResolver() {
+        return './assets/images/ft_ic_miscellaneous.svg';
+    }
+}
 
 describe('DataTable', () => {
 
@@ -35,21 +49,57 @@ describe('DataTable', () => {
     let dataTable: DataTableComponent;
     let element: any;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                DataTableModule,
-                MaterialModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreTestingModule
+        ],
+        schemas: [ NO_ERRORS_SCHEMA ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
     });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should preserve the historical selection order', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ id: 0 }, { id: 1 }, { id: 2 }],
+            [ new ObjectDataColumn({ key: 'id' })]
+        );
+
+        const rows = dataTable.data.getRows();
+
+        dataTable.selectRow(rows[2], true);
+        dataTable.selectRow(rows[0], true);
+        dataTable.selectRow(rows[1], true);
+
+        const selection = dataTable.selection;
+        expect(selection[0].getValue('id')).toBe(2);
+        expect(selection[1].getValue('id')).toBe(0);
+        expect(selection[2].getValue('id')).toBe(1);
+    });
+
+    it('should update schema if columns change', fakeAsync(() => {
+
+        dataTable.columnList = new DataColumnListComponent();
+        dataTable.columnList.columns = new QueryList<DataColumnComponent>();
+        dataTable.data = new ObjectDataTableAdapter([], []);
+
+        spyOn(dataTable.data, 'setColumns').and.callThrough();
+
+        dataTable.ngAfterContentInit();
+        dataTable.columnList.columns.reset([new DataColumnComponent()]);
+        dataTable.columnList.columns.notifyOnChanges();
+
+        tick(100);
+
+        expect(dataTable.data.setColumns).toHaveBeenCalled();
+    }));
 
     it('should use the cardview style if cardview is true', () => {
         let newData = new ObjectDataTableAdapter(
@@ -189,6 +239,46 @@ describe('DataTable', () => {
         expect(element.querySelector('[data-automation-id="text_FAKE"]')).not.toBeNull();
     });
 
+    it('should set rows to the data when rows defined', () => {
+        const dataRows =
+            [
+                { name: 'test1' },
+                { name: 'test2' },
+                { name: 'test3' },
+                { name: 'test4' }
+            ];
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+        fixture.detectChanges();
+
+        const rows = dataTable.data.getRows();
+        expect(rows[0].getValue('name')).toEqual('test1');
+        expect(rows[1].getValue('name')).toEqual('test2');
+    });
+
+    it('should set custom sort order', () => {
+        const dataSortObj = new DataSorting('dummayName', 'asc');
+        const dataRows =
+            [
+                { name: 'test1' },
+                { name: 'test2' },
+                { name: 'test3' },
+                { name: 'test4' }
+            ];
+        dataTable.sorting = [ 'dummayName', 'asc' ];
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+        fixture.detectChanges();
+        const dataSort = dataTable.data.getSorting();
+        expect(dataSort).toEqual(dataSortObj);
+    });
+
     it('should reset selection on mode change', () => {
         spyOn(dataTable, 'resetSelection').and.callThrough();
 
@@ -213,25 +303,89 @@ describe('DataTable', () => {
         expect(dataTable.resetSelection).toHaveBeenCalled();
     });
 
-    it('should select only one row with [single] selection mode', () => {
+    it('should select the row where isSelected is true', () => {
+        dataTable.rows = [
+                { name: 'TEST1' },
+                { name: 'FAKE2' },
+                { name: 'TEST2', isSelected : true },
+                { name: 'FAKE2' }];
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+        fixture.detectChanges();
+        const rows = dataTable.data.getRows();
+        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[1].isSelected).toBeFalsy();
+        expect(rows[2].isSelected).toBeTruthy();
+        expect(rows[3].isSelected).toBeFalsy();
+    });
+
+    it('should not select any row when isSelected is not defined', () => {
+        const dataRows =
+            [
+                { name: 'TEST1' },
+                { name: 'FAKE2' },
+                { name: 'TEST2' }
+            ];
+        dataTable.data = new ObjectDataTableAdapter(dataRows,
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+        fixture.detectChanges();
+
+        const rows = dataTable.data.getRows();
+        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[1].isSelected).toBeFalsy();
+        expect(rows[2].isSelected).toBeFalsy();
+    });
+
+    it('should select only one row with [single] selection mode', (done) => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter(
             [
-                { name: '1' },
+                { name: '1', isSelected: true },
                 { name: '2' }
             ],
-            [ new ObjectDataColumn({ key: 'name'}) ]
+            [new ObjectDataColumn({ key: 'name' })]
         );
         const rows = dataTable.data.getRows();
 
         dataTable.ngOnChanges({});
-        dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeFalsy();
 
-        dataTable.onRowClick(rows[1], null);
-        expect(rows[0].isSelected).toBeFalsy();
-        expect(rows[1].isSelected).toBeTruthy();
+        dataTable.rowClick.subscribe((event) => {
+            expect(rows[0].isSelected).toBeFalsy();
+            expect(rows[1].isSelected).toBeTruthy();
+            done();
+        });
+
+        dataTable.onRowClick(rows[1], new MouseEvent('click'));
+    });
+
+    it('should select only one row with [single] selection mode and key modifier', (done) => {
+        dataTable.selectionMode = 'single';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1', isSelected: true },
+                { name: '2' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+        const rows = dataTable.data.getRows();
+
+        dataTable.ngOnChanges({});
+
+        dataTable.rowClick.subscribe((event) => {
+            expect(rows[0].isSelected).toBeFalsy();
+            expect(rows[1].isSelected).toBeTruthy();
+            done();
+        });
+
+        dataTable.onRowClick(rows[1], new MouseEvent('click', {
+            metaKey: true
+        }));
     });
 
     it('should select only one row with [single] selection mode pressing enter key', () => {
@@ -278,67 +432,67 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeTruthy();
     });
 
-    it('should not unselect the row with [single] selection mode', () => {
+    it('should NOT unselect the row with [single] selection mode', (done) => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter(
             [
-                { name: '1' },
+                { name: '1', isSelected: true },
                 { name: '2' }
             ],
-            [ new ObjectDataColumn({ key: 'name'}) ]
+            [new ObjectDataColumn({ key: 'name' })]
         );
         const rows = dataTable.data.getRows();
-
         dataTable.ngOnChanges({});
-        dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeFalsy();
 
+        dataTable.rowClick.subscribe((event) => {
+            expect(rows[0].isSelected).toBeTruthy();
+            expect(rows[1].isSelected).toBeFalsy();
+            done();
+        });
         dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeFalsy();
     });
 
-    it('should unselect the row with [multiple] selection mode and modifier key', () => {
+    it('should unselect the row with [multiple] selection mode and modifier key', (done) => {
         dataTable.selectionMode = 'multiple';
         dataTable.data = new ObjectDataTableAdapter(
-            [ { name: '1' } ],
-            [ new ObjectDataColumn({ key: 'name'}) ]
+            [{ name: '1', isSelected: true }],
+            [new ObjectDataColumn({ key: 'name' })]
         );
         const rows = dataTable.data.getRows();
+        rows[0].isSelected = true;
 
         dataTable.ngOnChanges({});
-        dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
+        dataTable.rowClick.subscribe(() => {
+            expect(rows[0].isSelected).toBeFalsy();
+            done();
+        });
 
-        dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
-
-        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
-        expect(rows[0].isSelected).toBeFalsy();
+        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() { } });
     });
 
-    it('should select multiple rows with [multiple] selection mode', () => {
+    it('should select multiple rows with [multiple] selection mode and modifier key', (done) => {
         dataTable.selectionMode = 'multiple';
         dataTable.data = new ObjectDataTableAdapter(
             [
-                { name: '1' },
+                { name: '1', isSelected: true },
                 { name: '2' }
             ],
-            [ new ObjectDataColumn({ key: 'name'}) ]
+            [new ObjectDataColumn({ key: 'name' })]
         );
         const rows = dataTable.data.getRows();
+        rows[0].isSelected = true;
 
         const event = new MouseEvent('click', {
             metaKey: true
         });
-
+        dataTable.selection.push(rows[0]);
         dataTable.ngOnChanges({});
-        dataTable.onRowClick(rows[0], event);
+        dataTable.rowClick.subscribe(() => {
+            expect(rows[0].isSelected).toBeTruthy();
+            expect(rows[1].isSelected).toBeTruthy();
+            done();
+        });
         dataTable.onRowClick(rows[1], event);
-
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeTruthy();
     });
 
     it('should put actions menu to the right by default', () => {
@@ -383,15 +537,6 @@ describe('DataTable', () => {
         expect(table.data).toBeUndefined();
         table.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
-    });
-
-    it('should load data table on onChange', () => {
-        let table = new DataTableComponent(null, null);
-        let data = new ObjectDataTableAdapter([], []);
-
-        expect(table.data).toBeUndefined();
-        table.ngOnChanges({'data': new SimpleChange('123', data, true)});
-        expect(table.data).toEqual(data);
     });
 
     it('should initialize with custom data', () => {
@@ -591,6 +736,22 @@ describe('DataTable', () => {
         expect(dataTable.isSelectAllChecked).toBeFalsy();
     });
 
+    it('should reset selection upon data rows change', () => {
+        let data = new ObjectDataTableAdapter([{}, {}, {}], []);
+
+        dataTable.data = data;
+        dataTable.multiselect = true;
+        dataTable.ngAfterContentInit();
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
+
+        expect(dataTable.selection.every(entry => entry.isSelected));
+
+        data.setRows([]);
+        fixture.detectChanges();
+
+        expect(dataTable.selection.every(entry => !entry.isSelected));
+    });
+
     it('should update rows on "select all" click', () => {
         let data = new ObjectDataTableAdapter([{}, {}, {}], []);
         let rows = data.getRows();
@@ -720,9 +881,9 @@ describe('DataTable', () => {
                 src: 'missing-image'
             }
         };
-
+        const row = new FakeDataRow();
         dataTable.fallbackThumbnail = '<fallback>';
-        dataTable.onImageLoadingError(event);
+        dataTable.onImageLoadingError(event, row);
         expect(event.target.src).toBe(dataTable.fallbackThumbnail);
     });
 
@@ -733,21 +894,10 @@ describe('DataTable', () => {
                 src: originalSrc
             }
         };
-
+        const row = new FakeDataRow();
         dataTable.fallbackThumbnail = null;
-        dataTable.onImageLoadingError(event);
+        dataTable.onImageLoadingError(event, row);
         expect(event.target.src).toBe('./assets/images/ft_ic_miscellaneous.svg' );
-    });
-
-    it('should replace image source with icon if fallback is not available and mimeType is provided', () => {
-        let event = <any> {
-            target: {
-                src: 'missing-image'
-            }
-        };
-
-        dataTable.onImageLoadingError(event, 'image/png');
-        expect(event.target.src).toBe('./assets/images/ft_ic_raster_image.svg');
     });
 
     it('should not get cell tooltip when row is not provided', () => {
@@ -785,20 +935,6 @@ describe('DataTable', () => {
         };
         const row = <DataRow> {};
         expect(dataTable.getCellTooltip(row, col)).toBeNull();
-    });
-
-    it('should cache the rows menu', () => {
-        let emitted = 0;
-        dataTable.showRowActionsMenu.subscribe(() => { emitted++; });
-
-        const column = <DataColumn> {};
-        const row = <DataRow>  { getValue: function (key: string) { return 'id'; } };
-
-        dataTable.getRowActions(row, column);
-        dataTable.getRowActions(row, column);
-        dataTable.getRowActions(row, column);
-
-        expect(emitted).toBe(1);
     });
 
     it('should reset the menu cache after rows change', () => {

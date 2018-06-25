@@ -22,51 +22,23 @@ import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
-import { MatExpansionModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { BasicPropertiesService } from '../../services/basic-properties.service';
-import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
-import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import {
-    CardViewBaseItemModel,
-    CardViewComponent,
-    CardViewUpdateService,
-    NodesApiService,
-    LogService
-} from '@alfresco/adf-core';
+import { CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService, LogService, setupTestBed } from '@alfresco/adf-core';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
-import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataComponent', () => {
+    let component: ContentMetadataComponent;
+    let fixture: ComponentFixture<ContentMetadataComponent>;
+    let node: MinimalNodeEntryEntity;
+    let folderNode: MinimalNodeEntryEntity;
+    let preset = 'custom-preset';
 
-    let component: ContentMetadataComponent,
-        fixture: ComponentFixture<ContentMetadataComponent>,
-        node: MinimalNodeEntryEntity,
-        folderNode: MinimalNodeEntryEntity,
-        preset = 'custom-preset';
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatExpansionModule,
-                MatButtonModule,
-                MatIconModule
-            ],
-            declarations: [
-                ContentMetadataComponent
-            ],
-            providers: [
-                ContentMetadataService,
-                BasicPropertiesService,
-                PropertyGroupTranslatorService,
-                PropertyDescriptorsService,
-                ContentMetadataConfigFactory,
-                NodesApiService,
-                { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        providers: [{ provide: LogService, useValue: { error: jasmine.createSpy('error') } }]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataComponent);
@@ -96,11 +68,9 @@ describe('ContentMetadataComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('Default input param values', () => {
-
         it('should have editable input param as false by default', () => {
             expect(component.editable).toBe(false);
         });
@@ -115,7 +85,6 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Folder', () => {
-
         it('should show the folder node', () => {
             component.expanded = false;
             fixture.detectChanges();
@@ -131,7 +100,6 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Saving', () => {
-
         it('should save the node on itemUpdate', () => {
             const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
                 updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
@@ -158,7 +126,7 @@ describe('ContentMetadataComponent', () => {
             updateService.update(property, 'updated-value');
 
             fixture.whenStable().then(() => {
-                expect(component.node).toBe(expectedNode);
+                expect(component.node).toEqual(expectedNode);
             });
         }));
 
@@ -179,9 +147,7 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Properties loading', () => {
-
-        let expectedNode,
-            contentMetadataService: ContentMetadataService;
+        let expectedNode, contentMetadataService: ContentMetadataService;
 
         beforeEach(() => {
             expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
@@ -267,22 +233,5 @@ describe('ContentMetadataComponent', () => {
                 expect(basicPropertiesComponent.displayEmpty).toBe(false);
             });
         }));
-
-        it('should be performed again if property updating occured, since the originally passed node has changed, so the previously calculated properties', () => {
-            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
-                updateService = fixture.debugElement.injector.get(CardViewUpdateService),
-                nodesApiService = TestBed.get(NodesApiService);
-
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => Observable.of(node));
-            spyOn(contentMetadataService, 'getBasicProperties');
-            component.ngOnChanges({ node: new SimpleChange(null, node, true) });
-            updateService.update(property, 'updated-value');
-
-            component.ngOnChanges({ expanded: new SimpleChange(false, true, false) });
-            component.ngOnChanges({ expanded: new SimpleChange(true, false, false) });
-            component.ngOnChanges({ expanded: new SimpleChange(false, true, false) });
-
-            expect(contentMetadataService.getBasicProperties).toHaveBeenCalledTimes(2);
-        });
     });
 });

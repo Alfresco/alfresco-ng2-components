@@ -15,24 +15,26 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-file-view',
-    templateUrl: 'file-view.component.html'
+    templateUrl: 'file-view.component.html',
+    styleUrls: ['file-view.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class FileViewComponent implements OnInit {
 
     nodeId: string = null;
 
-    constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private snackBar: MatSnackBar,
-        private apiService: AlfrescoApiService) {}
+    constructor(private router: Router,
+                private route: ActivatedRoute,
+                private snackBar: MatSnackBar,
+                private apiService: AlfrescoApiService) {
+    }
 
     ngOnInit() {
 
@@ -53,7 +55,7 @@ export class FileViewComponent implements OnInit {
         });
     }
 
-    uploadError(errorMessage: string) {
+    onUploadError(errorMessage: string) {
         this.snackBar.open(errorMessage, '', { duration: 4000 });
     }
 }

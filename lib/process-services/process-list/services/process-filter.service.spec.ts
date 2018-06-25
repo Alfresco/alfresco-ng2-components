@@ -16,11 +16,10 @@
  */
 
 import { async } from '@angular/core/testing';
-import { AlfrescoApi } from 'alfresco-js-api';
 import { mockError, fakeProcessFilters } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
-import { AlfrescoApiServiceMock, AlfrescoApiService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AlfrescoApiService, AppConfigService, StorageService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
@@ -28,7 +27,13 @@ describe('Process filter', () => {
 
     let service: ProcessFilterService;
     let apiService: AlfrescoApiService;
-    let alfrescoApi: AlfrescoApi;
+    let alfrescoApi: any;
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         apiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService() );

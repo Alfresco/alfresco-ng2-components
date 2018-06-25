@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
+import { TestBed } from '@angular/core/testing';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 declare let jasmine: any;
 
@@ -24,8 +26,12 @@ describe('TagService', () => {
 
     let service: TagService;
 
+    setupTestBed({
+        imports: [ContentTestingModule]
+    });
+
     beforeEach(() => {
-        service = new TagService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()), new LogService(new AppConfigService(null)));
+        service = TestBed.get(TagService);
     });
 
     beforeEach(() => {

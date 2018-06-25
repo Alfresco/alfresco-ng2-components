@@ -1,29 +1,8 @@
 {
   "name": "Alfresco-ADF-Angular-Demo",
   "description": "Demo shell for Alfresco Angular components",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "author": "Alfresco Software, Ltd.",
-  "scripts": {
-    "ng": "ng",
-    "prestart": "npm run validate-config",
-    "start": "npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --proxy-config proxy.conf.js --app dist --open",
-    "start:dev": " npm run lint && npm run server-versions && rimraf dist && npm run clean-lib-angular && concurrently \"ng serve --host 0.0.0.0 --disable-host-check --app dev --proxy-config proxy.conf.js --open\" \"npm run style:dev --watch\" \"npm run copy:dev\" ",
-    "start:dist": "npm run server-versions && rimraf dist && node --max_old_space_size=30000 node_modules/.bin/ng serve --prod --host 0.0.0.0 --disable-host-check --app dist --proxy-config proxy.conf.js -open",
-    "build": "npm run validate-config && npm run server-versions && rimraf dist && ng build --app dist",
-    "build:dev": "npm run validate-config && npm run lint && npm run style:dev && npm run server-versions && rimraf dist && ng build --app dev",
-    "build:dist": "npm run validate-config && npm run server-versions && rimraf dist && ng build --prod --app dist",
-    "style:dev": "npm run webpack -- --config  config/webpack.style.js --progress --profile --bail",
-    "copy:dev": "node ./config/dev-copy-watch.js",
-    "test": " ng test --single-run",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "validate-config": "ajv validate -s ../lib/core/app-config/schema.json -d ./src/app.config.json --errors=text --verbose",
-    "server-versions": "rimraf ./src/versions.json && npm list --depth=0 --json=true --prod=true > ./src/versions.json  || exit 0",
-    "clean": "rimraf dist node_modules typings",
-    "clean-lib-angular": "rimraf ../lib/node_modules/@angular",
-    "clean-lock": "rimraf package-lock.json",
-    "webpack": "node node_modules/webpack/bin/webpack.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
@@ -32,96 +11,11 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "license": "Apache-2.0",
-  "contributors": [
-    {
-      "name": "Denys Vuika",
-      "email": "denis.vuyka@gmail.com"
-    },
-    {
-      "name": "Mario Romano",
-      "email": "mario.romano83@gmail.com"
-    },
-    {
-      "name": "Will Abson",
-      "email": "will.abson@alfresco.com"
-    },
-    {
-      "name": "Eugenio Romano",
-      "email": "eugenio.romano@alfresco.com"
-    },
-    {
-      "name": "Maurizio Vitale",
-      "email": "maurizio.vitale@alfresco.com"
-    }
-  ],
   "keywords": [
     "ng2",
     "angular",
     "angular2",
     "alfresco"
   ],
-  "private": true,
-  "dependencies": {
-    "@alfresco/adf-content-services": "2.3.1",
-    "@alfresco/adf-core": "2.3.1",
-    "@alfresco/adf-insights": "2.3.1",
-    "@alfresco/adf-process-services": "2.3.1",
-    "@angular/animations": "5.1.1",
-    "@angular/cdk": "5.0.1",
-    "@angular/common": "5.1.1",
-    "@angular/compiler": "5.1.1",
-    "@angular/core": "5.1.1",
-    "@angular/flex-layout": "2.0.0-beta.12",
-    "@angular/forms": "5.1.1",
-    "@angular/http": "5.1.1",
-    "@angular/material": "5.0.1",
-    "@angular/platform-browser": "5.1.1",
-    "@angular/platform-browser-dynamic": "5.1.1",
-    "@angular/router": "5.1.1",
-    "@mat-datetimepicker/core": "1.0.4",
-    "@mat-datetimepicker/moment": "1.0.4",
-    "@ngx-translate/core": "9.1.1",
-    "alfresco-js-api": "2.3.1",
-    "chart.js": "2.5.0",
-    "classlist.js": "1.1.20150312",
-    "core-js": "2.4.1",
-    "custom-event-polyfill": "0.3.0",
-    "hammerjs": "2.0.8",
-    "intl": "1.2.5",
-    "minimatch": "3.0.4",
-    "moment": "2.20.1",
-    "moment-es6": "^1.0.0",
-    "ng2-charts": "1.6.0",
-    "pdfjs-dist": "2.0.265",
-    "raphael": "2.2.7",
-    "reflect-metadata": "0.1.10",
-    "rxjs": "5.5.2",
-    "web-animations-js": "2.3.1",
-    "zone.js": "0.8.14"
-  },
-  "devDependencies": {
-    "@angular/cli": "1.6.5",
-    "@angular/compiler-cli": "^5.2.0",
-    "@angular/language-service": "^5.2.0",
-    "@types/jasmine": "~2.8.3",
-    "@types/jasminewd2": "~2.0.2",
-    "@types/node": "~6.0.60",
-    "ajv-cli": "^3.0.0",
-    "codelyzer": "4.1.0",
-    "concurrently": "^3.5.1",
-    "cpx": "^1.5.0",
-    "jasmine-core": "~2.8.0",
-    "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~2.0.0",
-    "karma-chrome-launcher": "~2.2.0",
-    "karma-cli": "~1.0.1",
-    "karma-coverage-istanbul-reporter": "^1.2.1",
-    "karma-jasmine": "~1.1.0",
-    "karma-jasmine-html-reporter": "^0.2.2",
-    "protractor": "~5.1.2",
-    "rimraf": "^2.6.2",
-    "ts-node": "~4.1.0",
-    "tslint": "~5.9.1",
-    "typescript": "~2.5.3"
-  }
+  "private": true
 }

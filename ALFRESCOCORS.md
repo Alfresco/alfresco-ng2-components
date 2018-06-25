@@ -1,4 +1,4 @@
-### CORS solving strategies
+# CORS solving strategies
 
 The web client that we are building with the application development framework will be loaded from a different web server than the Alfresco Platform is running on.
 So we need to tell the Alfresco server that any request that comes in from this custom web client should be allowed access 

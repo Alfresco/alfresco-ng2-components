@@ -124,8 +124,8 @@ export let fakeForm = {
                 2: [
                     {
                         fieldType: 'RestFieldRepresentation',
-                        id: 'raduio',
-                        name: 'raduio',
+                        id: 'radio',
+                        name: 'radio',
                         type: 'radio-buttons',
                         value: null,
                         required: false,

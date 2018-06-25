@@ -22,7 +22,7 @@ eval projects=(
     "content-services"
     "process-services" )
 
-cd "$DIR/../lib"
+cd "$DIR/../"
 
 show_help() {
     echo "Usage: npm-publish.sh"
@@ -146,7 +146,7 @@ fi
 
 if $EXEC_BUILD == true; then
     echo "====== Build ADF ===== "
-    npm run build
+    npm run build-lib
 fi
 
 for PACKAGE in ${projects[@]}

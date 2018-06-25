@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, Compiler, ModuleWithComponentFactories, ComponentRef } from '@angular/core';
-import { SearchWidgetsModule } from './search-widgets.module';
+import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, ComponentFactoryResolver } from '@angular/core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchFilterService } from '../search-filter/search-filter.service';
 
 @Component({
     selector: 'adf-search-widget-container',
@@ -40,19 +40,23 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
     @Input()
     config: any;
 
-    private module: ModuleWithComponentFactories<SearchWidgetsModule>;
     private componentRef: ComponentRef<any>;
 
-    constructor(compiler: Compiler, private queryBuilder: SearchQueryBuilderService) {
-        this.module = compiler.compileModuleAndAllComponentsSync(SearchWidgetsModule);
+    constructor(
+        private searchFilterService: SearchFilterService,
+        private queryBuilder: SearchQueryBuilderService,
+        private componentFactoryResolver: ComponentFactoryResolver) {
     }
 
     ngOnInit() {
-        const factory = this.module.componentFactories.find(f => f.selector === this.selector);
-        if (factory) {
-            this.content.clear();
-            this.componentRef = this.content.createComponent(factory, 0);
-            this.setupWidget(this.componentRef);
+        const componentType = this.searchFilterService.widgets[this.selector];
+        if (componentType) {
+            const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
+            if (factory) {
+                this.content.clear();
+                this.componentRef = this.content.createComponent(factory, 0);
+                this.setupWidget(this.componentRef);
+            }
         }
     }
 

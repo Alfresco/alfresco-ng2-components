@@ -15,37 +15,32 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { MaterialModule } from '../../material.module';
-
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { LoginComponent } from '../components/login.component';
 import { LoginHeaderDirective } from './login-header.directive';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('LoginHeaderDirective', () => {
+    let fixture: ComponentFixture<LoginComponent>;
     let component: LoginComponent;
     let directive: LoginHeaderDirective;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                MaterialModule
-            ],
-            declarations: [
-                LoginHeaderDirective,
-                LoginComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
-        let fixture = TestBed.createComponent(LoginComponent);
+        fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
         directive = new LoginHeaderDirective(component);
     });
 
-    it('applies tempalate to Login component', () => {
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('applies template to Login component', () => {
         const template: any = 'test template';
         directive.template = template;
         directive.ngAfterContentInit();

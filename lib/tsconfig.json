@@ -25,10 +25,10 @@
             "@alfresco/adf-content-services": ["./content-services/"],
             "@alfresco/adf-core": ["./core/"],
             "@alfresco/adf-insights": ["./analytics"],
-            "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
-            "@angular/*": ["./node_modules/@angular/*"],
-            "@mat-datetimepicker/*": ["./node_modules/@mat-datetimepicker/*"],
-            "rxjs/*": ["./node_modules/rxjs/*"]
+            "alfresco-js-api": ["../node_modules/alfresco-js-api/"],
+            "@angular/*": ["../node_modules/@angular/*"],
+            "@mat-datetimepicker/*": ["../node_modules/@mat-datetimepicker/*"],
+            "rxjs/*": ["../node_modules/rxjs/*"]
         },
         "lib": [
             "es2016",

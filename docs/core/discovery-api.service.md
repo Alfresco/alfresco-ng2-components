@@ -12,12 +12,12 @@ Gets version and license information for Process Services and Content Services.
 
 ### Methods
 
--   `getBpmProductInfo(): any`<br/>
+-   **getBpmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets product information for Process Services.
-    -   **Returns** `any` - ProductVersionModel containing product details
--   `getEcmProductInfo(): any`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - ProductVersionModel containing product details
+-   **getEcmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets product information for Content Services.
-    -   **Returns** `any` - ProductVersionModel containing product details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - ProductVersionModel containing product details
 
 ## Details
 

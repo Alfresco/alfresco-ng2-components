@@ -38,6 +38,12 @@
       "YB": "YB"
     },
     "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "ページサイズセレクター",
+        "CURRENT_PAGE": "現在のページセレクター",
+        "PREVIOUS_PAGE": "[前のページ] ボタン",
+        "NEXT_PAGE": "[次のページ] ボタン"
+      },
       "ITEMS_RANGE": "表示中: {{ range }} / {{ total }} 件",
       "ITEMS_PER_PAGE": "1 ページのアイテム数",
       "CURRENT_PAGE": "ページ: {{ number }}",
@@ -176,7 +182,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "必須",
-      "USERNAME-MIN": "ユーザー名は {{ minLenght }} 文字以上でなければなりません。",
+      "USERNAME-MIN": "ユーザー名は {{ minLength }} 文字以上でなければなりません。",
       "PASSWORD-REQUIRED": "サインイン用のパスワードを入力してください",
       "LOGIN-ERROR-CREDENTIALS": "入力したユーザー名またはパスワードが間違っています",
       "LOGIN-ERROR-PROVIDERS": "プロバイダは必ず定義する必要があります",
@@ -201,6 +207,9 @@
         "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
         "SUBTITLE": ""
       }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "コンテンツの処理"
     }
   },
   "USER_PROFILE": {
@@ -261,6 +270,44 @@
       "CLOSE": "閉じる",
       "PLACEHOLDER": "パスワード",
       "ERROR": "パスワードが間違っています"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "エラーが発生しました。",
+      "DESCRIPTION": "何らかの問題がある可能性があります。",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "ホームへ戻る",
+        "ROUTE": "ホーム"
+      }
+    },
+    "403": {
+      "TITLE": "このサーバーにアクセスする権限がありません。",
+      "DESCRIPTION": "サーバー上のこのリソースにはアクセスできません。",
+      "SECONDARY_BUTTON": {
+        "TEXT": "問題の報告",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "ホームへ戻る",
+        "ROUTE": "ホーム"
+      }
+    },
+    "404": {
+      "TITLE": "エラーが発生しました。",
+      "DESCRIPTION": "お探しのページが見つかりませんでした。",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "ホームへ戻る",
+        "ROUTE": "ホーム"
+      }
     }
   }
 }

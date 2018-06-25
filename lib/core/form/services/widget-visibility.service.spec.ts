@@ -26,6 +26,11 @@ import {
     formValues
 } from '../../mock';
 import { WidgetVisibilityService } from './widget-visibility.service';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
@@ -35,12 +40,17 @@ describe('WidgetVisibilityService', () => {
     let booleanResult: boolean;
     let stubFormWithFields = new FormModel(fakeFormJson);
 
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
+
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                WidgetVisibilityService
-            ]
-        });
         service = TestBed.get(WidgetVisibilityService);
         jasmine.Ajax.install();
     });

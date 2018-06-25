@@ -25,7 +25,7 @@
                 {{comment.message}}
             </div>
             <div matLine id="comment-time" class="adf-comment-message-time">
-                {{transformDate(comment.created)}}
+                {{ comment.created | adfTimeAgo: currentLocale }}
             </div>
         </div>
     </mat-list-item>

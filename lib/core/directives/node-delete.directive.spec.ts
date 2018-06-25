@@ -16,10 +16,15 @@
  */
 
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDeleteDirective } from './node-delete.directive';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { TranslationService } from '../services/translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
 
 @Component({
     template: `
@@ -31,9 +36,10 @@ class TestComponent {
     selection = [];
 
     @ViewChild(NodeDeleteDirective)
-    deleteDirective;
+    deleteDirective: NodeDeleteDirective;
 
-    onDelete = jasmine.createSpy('onDelete');
+    onDelete(event) {
+    }
 }
 
 @Component({
@@ -47,7 +53,7 @@ class TestWithPermissionsComponent {
     selection = [];
 
     @ViewChild(NodeDeleteDirective)
-    deleteDirective;
+    deleteDirective: NodeDeleteDirective;
 
     onDelete = jasmine.createSpy('onDelete');
 }
@@ -65,14 +71,14 @@ class TestDeletePermanentComponent {
     selection = [];
 
     @ViewChild(NodeDeleteDirective)
-    deleteDirective;
+    deleteDirective: NodeDeleteDirective;
 
     permanent = true;
 
     onDelete = jasmine.createSpy('onDelete');
 }
 
-describe('NodeleteDirective', () => {
+describe('NodeDeleteDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let fixtureWithPermissions: ComponentFixture<TestWithPermissionsComponent>;
     let fixtureWithPermanentComponent: ComponentFixture<TestDeletePermanentComponent>;
@@ -84,52 +90,66 @@ describe('NodeleteDirective', () => {
     let componentWithPermanentDelete: TestDeletePermanentComponent;
     let alfrescoApi: AlfrescoApiService;
     let nodeApi;
+    let deleteNodeSpy: any;
+    let purgeDeletedNodeSpy: any;
+    let disposableDelete: any;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TestComponent,
-                TestWithPermissionsComponent,
-                TestDeletePermanentComponent
-            ]
-        })
-            .compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(TestComponent);
-                fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
-                fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            TestComponent,
+            TestWithPermissionsComponent,
+            TestDeletePermanentComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
-                component = fixture.componentInstance;
-                componentWithPermissions = fixtureWithPermissions.componentInstance;
-                componentWithPermanentDelete = fixtureWithPermanentComponent.componentInstance;
+    beforeEach(() => {
+        alfrescoApi = TestBed.get(AlfrescoApiService);
+        nodeApi = alfrescoApi.nodesApi;
+        deleteNodeSpy = spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
+        purgeDeletedNodeSpy = spyOn(nodeApi, 'purgeDeletedNode').and.returnValue(Promise.resolve());
 
-                element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
-                elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
-                elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
+        fixture = TestBed.createComponent(TestComponent);
+        fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
+        fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);
 
-                alfrescoApi = TestBed.get(AlfrescoApiService);
-                nodeApi = alfrescoApi.getInstance().nodes;
-            });
-    }));
+        component = fixture.componentInstance;
+        componentWithPermissions = fixtureWithPermissions.componentInstance;
+        componentWithPermanentDelete = fixtureWithPermanentComponent.componentInstance;
+
+        element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
+        elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
+        elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
+    });
+
+    afterEach(() => {
+        if (disposableDelete) {
+            disposableDelete.unsubscribe();
+        }
+        fixture.destroy();
+    });
 
     describe('Delete', () => {
 
         it('should do nothing if selection is empty', () => {
-            spyOn(nodeApi, 'deleteNode');
             component.selection = [];
 
             fixture.detectChanges();
             element.nativeElement.click();
 
-            expect(nodeApi.deleteNode).not.toHaveBeenCalled();
+            expect(deleteNodeSpy).not.toHaveBeenCalled();
         });
 
         it('should process node successfully', (done) => {
-            spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
-
             component.selection = <any> [{ entry: { id: '1', name: 'name1' } }];
 
-            component.deleteDirective.delete.subscribe((message) => {
+            disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.SINGULAR'
                 );
@@ -144,11 +164,11 @@ describe('NodeleteDirective', () => {
         });
 
         it('should notify failed node deletion', (done) => {
-            spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.reject('error'));
+            deleteNodeSpy.and.returnValue(Promise.reject('error'));
 
             component.selection = [{ entry: { id: '1', name: 'name1' } }];
 
-            component.deleteDirective.delete.subscribe((message) => {
+            disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.ERROR_SINGULAR'
                 );
@@ -163,14 +183,12 @@ describe('NodeleteDirective', () => {
         });
 
         it('should notify nodes deletion', (done) => {
-            spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
-
             component.selection = [
                 { entry: { id: '1', name: 'name1' } },
                 { entry: { id: '2', name: 'name2' } }
             ];
 
-            component.deleteDirective.delete.subscribe((message) => {
+            disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.PLURAL'
                 );
@@ -185,14 +203,14 @@ describe('NodeleteDirective', () => {
         });
 
         it('should notify failed nodes deletion', (done) => {
-            spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.reject('error'));
+            deleteNodeSpy.and.returnValue(Promise.reject('error'));
 
             component.selection = [
                 { entry: { id: '1', name: 'name1' } },
                 { entry: { id: '2', name: 'name2' } }
             ];
 
-            component.deleteDirective.delete.subscribe((message) => {
+            disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.ERROR_PLURAL'
                 );
@@ -207,7 +225,7 @@ describe('NodeleteDirective', () => {
         });
 
         it('should notify partial deletion when only one node is successful', (done) => {
-            spyOn(nodeApi, 'deleteNode').and.callFake((id) => {
+            deleteNodeSpy.and.callFake((id) => {
                 if (id === '1') {
                     return Promise.reject('error');
                 } else {
@@ -220,7 +238,7 @@ describe('NodeleteDirective', () => {
                 { entry: { id: '2', name: 'name2' } }
             ];
 
-            component.deleteDirective.delete.subscribe((message) => {
+            disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.PARTIAL_SINGULAR'
                 );
@@ -235,7 +253,7 @@ describe('NodeleteDirective', () => {
         });
 
         it('should notify partial deletion when some nodes are successful', (done) => {
-            spyOn(nodeApi, 'deleteNode').and.callFake((id) => {
+            deleteNodeSpy.and.callFake((id) => {
                 if (id === '1') {
                     return Promise.reject(null);
                 }
@@ -255,7 +273,7 @@ describe('NodeleteDirective', () => {
                 { entry: { id: '3', name: 'name3' } }
             ];
 
-            component.deleteDirective.delete.subscribe((message) => {
+            disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.PARTIAL_PLURAL'
                 );
@@ -269,36 +287,40 @@ describe('NodeleteDirective', () => {
             });
         });
 
-        it('should emit event when delete is done', fakeAsync(() => {
-            component.onDelete.calls.reset();
-            spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
-
+        it('should emit event when delete is done', (done) => {
             component.selection = <any> [{ entry: { id: '1', name: 'name1' } }];
-
             fixture.detectChanges();
+
             element.nativeElement.click();
-            tick();
+            fixture.detectChanges();
 
-            expect(component.onDelete).toHaveBeenCalled();
-        }));
+            disposableDelete = component.deleteDirective.delete.subscribe(() => {
+                done();
+            });
+        });
 
-        it('should disable the button if no node are selected', fakeAsync(() => {
+        it('should disable the button if no node are selected', (done) => {
             component.selection = [];
 
             fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(element.nativeElement.disabled).toEqual(true);
+                done();
+            });
+        });
 
-            expect(element.nativeElement.disabled).toEqual(true);
-        }));
-
-        it('should disable the button if selected node is null', fakeAsync(() => {
+        it('should disable the button if selected node is null', (done) => {
             component.selection = null;
 
             fixture.detectChanges();
 
-            expect(element.nativeElement.disabled).toEqual(true);
-        }));
+            fixture.whenStable().then(() => {
+                expect(element.nativeElement.disabled).toEqual(true);
+                done();
+            });
+        });
 
-        it('should enable the button if nodes are selected', fakeAsync(() => {
+        it('should enable the button if nodes are selected', (done) => {
             component.selection = [
                 { entry: { id: '1', name: 'name1' } },
                 { entry: { id: '2', name: 'name2' } },
@@ -307,10 +329,13 @@ describe('NodeleteDirective', () => {
 
             fixture.detectChanges();
 
-            expect(element.nativeElement.disabled).toEqual(false);
-        }));
+            fixture.whenStable().then(() => {
+                expect(element.nativeElement.disabled).toEqual(false);
+                done();
+            });
+        });
 
-        it('should not enable the button if adf-node-permission is present', fakeAsync(() => {
+        it('should not enable the button if adf-node-permission is present', (done) => {
             elementWithPermissions.nativeElement.disabled = false;
             componentWithPermissions.selection = [];
 
@@ -324,31 +349,32 @@ describe('NodeleteDirective', () => {
 
             fixtureWithPermissions.detectChanges();
 
-            expect(elementWithPermissions.nativeElement.disabled).toEqual(false);
-        }));
+            fixture.whenStable().then(() => {
+                expect(elementWithPermissions.nativeElement.disabled).toEqual(false);
+                done();
+            });
+        });
 
         describe('Permanent', () => {
 
-            it('should call the api with permamnet delete option if permanent directive input is true', fakeAsync(() => {
-                let deleteApi = spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
-
+            it('should call the api with permanent delete option if permanent directive input is true', (done) => {
                 fixtureWithPermanentComponent.detectChanges();
 
                 componentWithPermanentDelete.selection = [
-                    { entry: { id: '1', name: 'name1' }
+                    { entry: { id: '1', name: 'name1' } }
                 ];
 
                 fixtureWithPermanentComponent.detectChanges();
 
                 elementWithPermanentDelete.nativeElement.click();
-                tick();
 
-                expect(deleteApi).toHaveBeenCalledWith('1', { permanent: true });
-            }));
+                fixture.whenStable().then(() => {
+                    expect(deleteNodeSpy).toHaveBeenCalledWith('1', { permanent: true });
+                    done();
+                });
+            });
 
-            it('should call the traschan api if permanent directive input is true and the file is already in the trashcan ', fakeAsync(() => {
-                let deleteApi = spyOn(nodeApi, 'purgeDeletedNode').and.returnValue(Promise.resolve());
-
+            it('should call the trashcan api if permanent directive input is true and the file is already in the trashcan ', (done) => {
                 fixtureWithPermanentComponent.detectChanges();
 
                 componentWithPermanentDelete.selection = [
@@ -358,10 +384,12 @@ describe('NodeleteDirective', () => {
                 fixtureWithPermanentComponent.detectChanges();
 
                 elementWithPermanentDelete.nativeElement.click();
-                tick();
 
-                expect(deleteApi).toHaveBeenCalledWith('1');
-            }));
+                fixture.whenStable().then(() => {
+                    expect(purgeDeletedNodeSpy).toHaveBeenCalledWith('1');
+                    done();
+                });
+            });
 
         });
     });

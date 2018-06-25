@@ -15,19 +15,14 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '../../../material.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { TranslateLoaderService } from '../../../services/translate-loader.service';
-
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('CardViewMapItemComponent', () => {
     let service: CardViewUpdateService;
@@ -37,28 +32,9 @@ describe('CardViewMapItemComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                FormsModule,
-                NoopAnimationsModule,
-                MaterialModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                CardViewMapItemComponent
-            ],
-            providers: [
-                CardViewUpdateService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewMapItemComponent);
@@ -70,7 +46,6 @@ describe('CardViewMapItemComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     it('should render the default if the value is empty and displayEmpty is true', () => {
@@ -143,11 +118,12 @@ describe('CardViewMapItemComponent', () => {
         fixture.detectChanges();
         let value: any = element.querySelector('.adf-mapitem-clickable-value');
 
-        service.itemClicked$.subscribe((response) => {
+        let disposableUpdate = service.itemClicked$.subscribe((response) => {
             expect(response.target).not.toBeNull();
             expect(response.target.type).toEqual('map');
             expect(response.target.clickable).toBeTruthy();
             expect(response.target.displayValue).toEqual('fakeProcessName');
+            disposableUpdate.unsubscribe();
             done();
         });
 

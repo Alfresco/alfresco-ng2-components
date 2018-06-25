@@ -15,38 +15,33 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TestBed } from '@angular/core/testing';
 import { searchMockApi, mockError, fakeSearch } from '../mock/search.service.mock';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { CookieService } from './cookie.service';
 import { SearchService } from './search.service';
-import { TranslateLoaderService } from './translate-loader.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { TranslationService } from './translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
 
 describe('SearchService', () => {
 
     let service: SearchService;
     let apiService: AlfrescoApiService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                SearchService,
-                { provide: CookieService, useClass: CookieServiceMock }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: TranslationService, useClass: TranslationMock },
+            { provide: CookieService, useClass: CookieServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(SearchService);

@@ -19,7 +19,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { Component, DebugElement } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 
 import { DialogModule } from '../dialogs/dialog.module';
 import { NodeDownloadDirective } from './node-download.directive';
@@ -40,17 +40,22 @@ describe('NodeDownloadDirective', () => {
     let contentService;
     let dialogSpy;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DialogModule
-            ],
-            declarations: [
-                TestComponent,
-                NodeDownloadDirective
-            ]
-        });
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            DialogModule
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            // { provide: AppConfigService, useValue: AppConfigServiceMock },
+        ],
+        declarations: [
+            TestComponent,
+            NodeDownloadDirective
+        ]
+    });
 
+    beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.query(By.directive(NodeDownloadDirective));
@@ -90,6 +95,17 @@ describe('NodeDownloadDirective', () => {
         expect(contentService.getContentUrl).toHaveBeenCalledWith(node.entry.id, true);
     });
 
+    it('should download selected shared node as file', () => {
+        spyOn(contentService, 'getContentUrl');
+        const node = { entry: { nodeId: 'shared-node-id', isFile: true } };
+        component.selection = [node];
+
+        fixture.detectChanges();
+        element.triggerEventHandler('click', null);
+
+        expect(contentService.getContentUrl).toHaveBeenCalledWith(node.entry.nodeId, true);
+    });
+
     it('should download selected files nodes as zip', () => {
         const node1 = { entry: { id: 'node-1' } };
         const node2 = { entry: { id: 'node-2' } };
@@ -99,6 +115,17 @@ describe('NodeDownloadDirective', () => {
         element.triggerEventHandler('click', null);
 
         expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: [ 'node-1', 'node-2' ] });
+    });
+
+    it('should download selected shared files nodes as zip', () => {
+        const node1 = { entry: { nodeId: 'shared-node-1' } };
+        const node2 = { entry: { nodeId: 'shared-node-2' } };
+        component.selection = [node1, node2];
+
+        fixture.detectChanges();
+        element.triggerEventHandler('click', null);
+
+        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: [ 'shared-node-1', 'shared-node-2' ] });
     });
 
     it('should download selected folder node as zip', () => {

@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, forwardRef, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { PermissionsEnum  } from '@alfresco/adf-core';
+import { Component, forwardRef, Input, OnChanges, ViewEncapsulation, OnInit } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { UploadButtonComponent } from './upload-button.component';
 import { FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
@@ -29,31 +30,29 @@ import { FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class UploadVersionButtonComponent extends UploadButtonComponent implements OnChanges {
+export class UploadVersionButtonComponent extends UploadButtonComponent implements OnChanges, OnInit {
 
     /** (**Required**) The node to be versioned. */
     @Input()
     node: MinimalNodeEntryEntity;
 
-    ngOnChanges(changes: SimpleChanges) {
-        super.ngOnChanges(changes);
-
-        if (changes['acceptedFilesType']) {
-            const message = this.translateService.instant('FILE_UPLOAD.VERSION.MESSAGES.NO_ACCEPTED_FILE_TYPES');
-            this.logService.error(message);
-        }
-        this.acceptedFilesType = '.' + this.node.name.split('.').pop();
-    }
-
     protected createFileModel(file: File): FileModel {
-        const fileModel = super.createFileModel(file);
-        fileModel.options.newVersionBaseName = this.node.name;
+        const fileModel = super.createFileModel(file, this.rootFolderId, (file.webkitRelativePath || '').replace(/\/[^\/]*$/, ''), this.node.id);
 
         if (!this.isFileAcceptable(fileModel)) {
-            const message = this.translateService.instant('FILE_UPLOAD.VERSION.MESSAGES.INCOMPATIBLE_VERSION');
+            const message = this.translationService.instant('FILE_UPLOAD.VERSION.MESSAGES.INCOMPATIBLE_VERSION');
             this.error.emit(message);
         }
 
         return fileModel;
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        this.checkPermission();
+    }
+
+    checkPermission() {
+        this.permissionValue.next(this.nodeHasPermission(this.node, PermissionsEnum.UPDATE));
     }
 }

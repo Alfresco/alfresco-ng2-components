@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiServiceMock, AppConfigService, StorageService, ContentService, TranslationMock } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AppConfigService, StorageService, ContentService, setupTestBed, CoreModule, TranslationMock } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -27,6 +27,12 @@ describe('FolderActionsService', () => {
 
     let service: FolderActionsService;
     let documentListService: DocumentListService;
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);

@@ -29,7 +29,7 @@ import {
     Output
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProcessInstanceFilterRepresentation, Pagination } from 'alfresco-js-api';
+import { ProcessInstanceFilterRepresentation, Pagination, UserProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import {
     FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues
@@ -50,23 +50,22 @@ import {
     TaskDetailsComponent,
     TaskDetailsEvent,
     TaskFiltersComponent,
-    TaskListComponent,
-    TaskListService
+    TaskListComponent
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
-import {
-    DataSorting,
-    ObjectDataRow,
-    ObjectDataTableAdapter
-} from '@alfresco/adf-core';
 import { Subscription } from 'rxjs/Subscription';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
 import { PreviewService } from '../../services/preview.service';
+import { Location } from '@angular/common';
 
 const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
+
+const TASK_ROUTE = 0;
+const PROCESS_ROUTE = 1;
+const REPORT_ROUTE = 2;
 
 @Component({
     selector: 'app-process-service',
@@ -109,6 +108,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Input()
     appId: number = null;
 
+    filterSelected: object = null;
+
     @Output()
     changePageSize: EventEmitter<Pagination> = new EventEmitter();
 
@@ -135,36 +136,33 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     taskFilter: FilterRepresentationModel;
     report: any;
-    processFilter: ProcessInstanceFilterRepresentation;
-
-    sub: Subscription;
+    processFilter: UserProcessInstanceFilterRepresentation;
     blobFile: any;
     flag = true;
 
-    dataTasks: ObjectDataTableAdapter;
-    dataProcesses: ObjectDataTableAdapter;
     presetColoum = 'default';
-    showProcessPagination = false;
+
+    showTaskTab: boolean;
+    showProcessTab: boolean;
 
     fieldValidators = [
         ...FORM_FIELD_VALIDATORS,
         new DemoFieldValidator()
     ];
 
+    private subscriptions: Subscription[] = [];
+
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
                 private router: Router,
-                private taskListService: TaskListService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private appConfig: AppConfigService,
                 private preview: PreviewService,
                 formRenderingService: FormRenderingService,
                 formService: FormService,
+                private location: Location,
                 private preferenceService: UserPreferencesService) {
-        this.dataTasks = new ObjectDataTableAdapter();
-        this.dataTasks.setSorting(new DataSorting('created', 'desc'));
-
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
@@ -175,27 +173,26 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         // Uncomment this line to map 'custom_stencil_01' to local editor component
         formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
 
-        formService.formLoaded.subscribe((e: FormEvent) => {
-            this.logService.log(`Form loaded: ${e.form.id}`);
-        });
-
-        formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
-            this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
-        });
-
-        this.preferenceService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
-            this.paginationPageSize = pageSize;
-        });
-
-        formService.validateDynamicTableRow.subscribe(
-            (validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
-                const row: DynamicTableRow = validateDynamicTableRowEvent.row;
-                if (row && row.value && row.value.name === 'admin') {
-                    validateDynamicTableRowEvent.summary.isValid = false;
-                    validateDynamicTableRowEvent.summary.message = 'Sorry, wrong value. You cannot use "admin".';
-                    validateDynamicTableRowEvent.preventDefault();
+        this.subscriptions.push(
+            formService.formLoaded.subscribe((e: FormEvent) => {
+                this.logService.log(`Form loaded: ${e.form.id}`);
+            }),
+            formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
+                this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+            }),
+            this.preferenceService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
+                this.paginationPageSize = pageSize;
+            }),
+            formService.validateDynamicTableRow.subscribe(
+                (validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
+                    const row: DynamicTableRow = validateDynamicTableRowEvent.row;
+                    if (row && row.value && row.value.name === 'admin') {
+                        validateDynamicTableRowEvent.summary.isValid = false;
+                        validateDynamicTableRowEvent.summary.message = 'Sorry, wrong value. You cannot use "admin".';
+                        validateDynamicTableRowEvent.preventDefault();
+                    }
                 }
-            }
+            )
         );
 
         // Uncomment this block to see form event handling in action
@@ -211,8 +208,13 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         if (this.router.url.includes('processes')) {
             this.activeTab = this.tabs.processes;
         }
-        this.sub = this.route.params.subscribe(params => {
+        this.showProcessTab = this.activeTab === this.tabs.processes;
+        this.showTaskTab = this.activeTab === this.tabs.tasks;
+        this.route.params.subscribe(params => {
             const applicationId = params['appId'];
+
+            this.filterSelected = params['filterId'] ? { id: +params['filterId'] } : { index: 0 };
+
             if (applicationId && applicationId !== '0') {
                 this.appId = params['appId'];
             }
@@ -227,8 +229,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
-        this.taskListService.tasksList$.subscribe();
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     onTaskFilterClick(filter: FilterRepresentationModel): void {
@@ -241,8 +243,16 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onTabChange(event: any): void {
-        this.showProcessPagination = event.index === 1;
-        this.paginationPageSize = this.preferenceService.paginationSize;
+        const index = event.index;
+        if (index === TASK_ROUTE) {
+            this.showTaskTab = event.index === this.tabs.tasks;
+            this.relocateLocationToTask();
+        } else if (index === PROCESS_ROUTE) {
+            this.showProcessTab =  event.index === this.tabs.processes;
+            this.relocateLocationToProcess();
+        } else if (index === REPORT_ROUTE) {
+            this.relocateLocationToReport();
+        }
     }
 
     onChangePageSize(event: Pagination): void {
@@ -259,10 +269,12 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     applyTaskFilter(filter: FilterRepresentationModel) {
-        this.taskFilter = filter;
+        this.taskFilter = Object.assign({}, filter);
+
         if (filter && this.taskList) {
             this.taskList.hasCustomDataSource = false;
         }
+        this.relocateLocationToTask();
     }
 
     onStartTaskSuccess(event: any): void {
@@ -279,9 +291,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.currentTaskId = this.taskList.getCurrentId();
     }
 
-    onProcessFilterClick(event: ProcessInstanceFilterRepresentation): void {
+    onProcessFilterClick(event: UserProcessInstanceFilterRepresentation): void {
         this.processFilter = event;
         this.resetProcessPaginationPage();
+        this.relocateLocationToProcess();
     }
 
     resetProcessPaginationPage() {
@@ -293,7 +306,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onSuccessProcessList(event: any): void {
-        this.showProcessPagination = true;
         this.currentProcessInstanceId = this.processList.getCurrentId();
     }
 
@@ -329,19 +341,14 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     navigateStartProcess(): void {
-        this.resetProcessFilters();
-        this.reloadProcessFilters();
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
     navigateStartTask(): void {
-        this.resetTaskFilters();
-        this.reloadTaskFilters();
         this.currentTaskId = currentTaskIdNew;
     }
 
     onStartProcessInstance(instance: ProcessInstance): void {
-        this.showProcessPagination = false;
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
         this.activitiprocessfilter.selectRunningFilter();
@@ -367,14 +374,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     onFormCompleted(form): void {
         this.currentTaskId = null;
-        this.taskPage = this.taskListPagination.current - 1;
-        if (this.taskList) {
-            this.taskList.reload();
-        } else {
-            this.navigateToProcess();
+        if (this.taskListPagination) {
+            this.taskPage = this.taskListPagination.current - 1;
         }
-        if (this.processList) {
-            this.processList.reload();
+        if (!this.taskList) {
+            this.navigateToProcess();
         }
     }
 
@@ -382,8 +386,24 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.router.navigate([`/activiti/apps/${this.appId}/processes/`]);
     }
 
+    relocateLocationToProcess(): void {
+        this.location.go(`/activiti/apps/${this.appId || 0}/processes/${this.processFilter ? this.processFilter.id : 0}`);
+    }
+
+    relocateLocationToTask(): void {
+        this.location.go(`/activiti/apps/${this.appId || 0}/tasks/${this.taskFilter.id}`);
+    }
+
+    relocateLocationToReport(): void {
+        this.location.go(`/activiti/apps/${this.appId || 0}/report/`);
+    }
+
     onContentClick(content: any): void {
-        this.preview.showBlob(content.name, content.contentBlob);
+        if (content.contentBlob) {
+            this.preview.showBlob(content.name, content.contentBlob);
+        } else {
+            this.preview.showResource(content.sourceId.split(';')[0]);
+        }
     }
 
     onAuditClick(event: any) {
@@ -427,25 +447,17 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.activeTab = this.tabs.tasks;
 
         const taskId = event.value.id;
-        const processTaskDataRow = new ObjectDataRow({
+        const processTaskDataRow: any = {
             id: taskId,
             name: event.value.name || 'No name',
             created: event.value.created
-        });
+        };
         this.activitifilter.selectFilter(null);
         if (this.taskList) {
             this.taskList.setCustomDataSource([processTaskDataRow]);
             this.taskList.selectTask(taskId);
         }
         this.currentTaskId = taskId;
-    }
-
-    private resetProcessFilters(): void {
-        this.processFilter = null;
-    }
-
-    private resetTaskFilters(): void {
-        this.taskFilter = null;
     }
 
     private reloadProcessFilters(): void {

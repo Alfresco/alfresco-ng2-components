@@ -87,6 +87,11 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     ngOnInit() {
         if (this.target) {
             this.paginationSubscription = this.target.pagination.subscribe((pagination: PaginationModel) => {
+
+                if (pagination.count === 0 && !this.isFirstPage) {
+                    this.goPrevious();
+                }
+
                 this.pagination = pagination;
                 this.cdr.detectChanges();
             });

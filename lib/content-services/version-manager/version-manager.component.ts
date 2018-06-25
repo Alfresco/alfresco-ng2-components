@@ -18,44 +18,74 @@
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { VersionListComponent } from './version-list.component';
-import { AppConfigService, ContentService } from '@alfresco/adf-core';
+import { AppConfigService, ContentService, AlfrescoApiService } from '@alfresco/adf-core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
     selector: 'adf-version-manager',
     templateUrl: './version-manager.component.html',
     styleUrls: ['./version-manager.component.scss'],
+    animations: [
+        trigger('uploadToggle', [
+            state('open', style({ height: '175px', opacity: 1, visibility: 'visible' })),
+            state('close', style({ height: '0%', opacity: 0, visibility: 'hidden' })),
+            transition('open => close', [
+                style({ visibility: 'hidden' }),
+                animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')
+            ]),
+            transition('close => open', [
+                style({ visibility: 'visible' }),
+                animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')
+            ])
+        ])
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class VersionManagerComponent {
 
+    /** Target node to manage version history. */
     @Input()
     node: MinimalNodeEntryEntity;
 
+    /** Toggles showing/hiding of comments. */
     @Input()
     showComments = true;
 
+    /** Enable/disable downloading a version of the current node. */
     @Input()
     allowDownload = true;
 
+    /** Emitted when a file is uploaded successfully. */
     @Output()
     uploadSuccess = new EventEmitter();
 
+    /** Emitted when an error occurs during upload. */
     @Output()
     uploadError = new EventEmitter();
 
     @ViewChild('versionList')
     versionListComponent: VersionListComponent;
 
-    constructor(
-        config: AppConfigService,
-        private contentService: ContentService) {
-        this.showComments = config.get('adf-version-manager.allowComments', true);
-        this.allowDownload = config.get('adf-version-manager.allowDownload', true);
+    uploadState: string = 'close';
+
+    constructor(config: AppConfigService,
+                private contentService: ContentService,
+                private alfrescoApiService: AlfrescoApiService) {
     }
 
-    onUploadSuccess(event): void {
+    onUploadSuccess(event) {
+        this.alfrescoApiService.nodeUpdated.next(event.value.entry);
         this.versionListComponent.loadVersionHistory();
         this.uploadSuccess.emit(event);
+        this.uploadState = 'close';
+    }
+
+    onUploadCancel() {
+        this.uploadState = 'close';
+    }
+
+    toggleNewVersion() {
+        this.uploadState = this.uploadState === 'open' ? 'close' : 'open';
     }
 
     canUpdate(): boolean {

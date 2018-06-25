@@ -9,7 +9,18 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "允许删除",
       "SHOW_COMMENTS": "显示有关版本的注释",
-      "ALLOW_DOWNLOAD": "允许版本下载"
+      "ALLOW_DOWNLOAD": "允许版本下载",
+      "READ_ONLY": "只读"
+    },
+    "PERSONAL-FILES": "个人文件",
+    "WARN-MULTIPLE-UPLOADS": "针对多个上传显示警告。",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "无",
+        "ALL": "全部",
+        "FOLDER": "文件夹",
+        "DOCUMENT": "文档"
+      }
     }
   },
   "title": "欢迎使用",
@@ -32,6 +43,7 @@
     "APP_NAME": "ADF 演示应用程序",
     "HOME": "主页",
     "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "面包屑",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "登录",
     "CUSTOM_SOURCES": "自定义来源",
@@ -97,7 +109,13 @@
       "NEW_FOLDER": "新建文件夹",
       "EDIT_FOLDER": "编辑文件夹",
       "DOWNLOAD": "下载",
-      "DELETE": "删除"
+      "DELETE": "删除",
+      "FAVORITES": "添加到收藏夹",
+      "SHARE": "共享",
+      "THEME": "选择主题",
+      "SHOW_VERSION": "显示版本",
+      "HIDE_VERSION": "隐藏版本",
+      "LISTVIEW": "列表视图模式"
     },
     "ACTIONS": {
       "VERSIONS": "管理版本",

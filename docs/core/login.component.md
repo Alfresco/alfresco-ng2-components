@@ -14,6 +14,8 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 -   [Basic usage](#basic-usage)
 
+-   [Class members](#class-members)
+
     -   [Properties](#properties)
     -   [Events](#events)
 
@@ -25,6 +27,8 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
     -   [Customizing validation rules](#customizing-validation-rules)
     -   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
     -   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
+    -   [SSO login](#sso-login)
+    -   [Implicit Flow](#implicit-flow)
 
 -   [See Also](#see-also)
 
@@ -32,34 +36,35 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 ```html
 <adf-login 
-    providers="ECM"
     successRoute="/home">
 </adf-login>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| showRememberMe | `boolean` | `true` | Should the `Remember me` checkbox be shown? |
-| showLoginActions | `boolean` | `true` | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
-| needHelpLink | `string` | `''` | Sets the URL of the NEED HELP link in the footer. |
-| registerLink | `string` | `''` | Sets the URL of the REGISTER link in the footer. |
-| logoImageUrl | `string` | `'./assets/images/alfresco-logo.svg'` | Path to a custom logo image. |
-| backgroundImageUrl | `string` | `'./assets/images/background.svg'` | Path to a custom background image. |
-| copyrightText | `string` | `'\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.'` | The copyright text below the login box. |
-| providers | `string` |  | Possible valid values are ECM, BPM or ALL. By default, this component will log in only to ECM. If you want to log in in both systems then use ALL. There is also a way to call your Auth token API using the string "OAUTH" (supported only for BPM) |
-| fieldsValidation | `any` |  | Custom validation rules for the login form. |
+| -- | -- | -- | -- |
+| backgroundImageUrl | `string` | "./assets/images/background.svg" | Path to a custom background image. |
+| copyrightText | `string` | "© 2016 Alfresco Software, Inc. All Rights Reserved." | The copyright text below the login box. |
 | disableCsrf | `boolean` |  | Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. |
-| successRoute | `string` | `null` | Route to redirect to on successful login. |
+| fieldsValidation | `any` |  | Custom validation rules for the login form. |
+| logoImageUrl | `string` | "./assets/images/alfresco-logo.svg" | Path to a custom logo image. |
+| needHelpLink | `string` | "" | Sets the URL of the NEED HELP link in the footer. |
+| providers | `string` |  | **Deprecated:** 3.0.0 |
+| registerLink | `string` | "" | Sets the URL of the REGISTER link in the footer. |
+| showLoginActions | `boolean` | true | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
+| showRememberMe | `boolean` | true | Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly. |
+| successRoute | `string` |  null | Route to redirect to on successful login. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
+| -- | -- | -- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../lib/core/login/models/login-error.event.ts)`>` | Emitted when the login fails. |
+| executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../lib/core/login/models/login-submit.event.ts)`>` | Emitted when the login form is submitted. |
 | success | `EventEmitter<LoginSuccessEvent>` | Emitted when the login is successful. |
-| error | `EventEmitter<LoginErrorEvent>` | Emitted when the login fails. |
-| executeSubmit | `EventEmitter<LoginSubmitEvent>` | Emitted when the login form is submitted. |
 
 ## Details
 
@@ -69,7 +74,6 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 ```html
 <adf-login 
-    providers="ALL"
     (success)="mySuccessMethod($event)"
     (error)="myErrorMethod($event)">
 </adf-login>
@@ -92,7 +96,7 @@ export class AppComponent {
 
 ### Changing content
 
-You can replace the content of the header and footer of the Login component with
+You can replace the content of the header and footer of the [Login component](../core/login.component.md) with
 your own custom content, as shown in the examples below:
 
 ```html
@@ -268,6 +272,31 @@ export class MyCustomLogin {
     
 }
 ```
+
+### SSO login
+
+### Implicit Flow
+
+If the 'app.config.json' or you used the host-setting component to use the SSO Oauth the [login component](../core/login.component.md) will show only a button to login:
+
+```JSON
+    "authType" :"OAUTH",
+    "oauth2": {
+      "host": "http://localhost:30081/auth/realms/myrealm",
+      "clientId": "activiti",
+      "scope": "openid",
+      "secret": "",
+      "implicitFlow": true,
+      "silentLogin": false,
+      "redirectUri": "/",
+      "redirectUriLogout": "/logout"
+    },
+```
+
+![Login component](../docassets/images/sso-login.png)
+
+Note if the silentLogin property in the oauth2 configuration is true will not be possible to show the login page. with silentLogin true the application is automatically redirect to the 
+authorization server when is not logged-in
 
 Note that if you do not call `event.preventDefault()` then the default behaviour 
 will execute _after_ your custom code has completed.

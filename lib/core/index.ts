@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './about/index';
 export * from './viewer/index';
 export * from './userinfo/index';
 export * from './toolbar/index';
@@ -23,7 +24,6 @@ export * from './pagination/index';
 export * from './login/index';
 export * from './language-menu/index';
 export * from './info-drawer/index';
-export * from './sidebar/index';
 export * from './data-column/index';
 export * from './datatable/index';
 export * from './context-menu/index';
@@ -33,7 +33,9 @@ export * from './app-config/index';
 export * from './form/index';
 export * from './sidenav-layout/index';
 export * from './comments/index';
-
+export * from './buttons-menu/index';
+export * from './sorting-picker/index';
+export * from './templates/index';
 export * from './pipes/index';
 export * from './services/index';
 export * from './directives/index';
@@ -43,5 +45,6 @@ export * from './interface/index';
 export * from './models/index';
 export * from './events/index';
 export * from './mock/index';
+export * from './testing';
 
 export * from './core.module';

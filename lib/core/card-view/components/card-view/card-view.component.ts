@@ -24,12 +24,15 @@ import { CardViewItem } from '../../interfaces/card-view-item.interface';
     styleUrls: ['./card-view.component.scss']
 })
 export class CardViewComponent {
+    /** (**required**) Items to show in the card view. */
     @Input()
     properties: CardViewItem [];
 
+    /** Toggles whether or not the items can be edited. */
     @Input()
     editable: boolean;
 
+    /** Toggles whether or not to show empty items in non-editable mode. */
     @Input()
     displayEmpty: boolean = true;
 }

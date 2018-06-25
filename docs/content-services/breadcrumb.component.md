@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-12
+Last reviewed: 2018-06-08
 ---
 
 # Breadcrumb Component
@@ -19,23 +19,31 @@ Indicates the current position within a navigation hierarchy.
 </adf-breadcrumb>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| folderNode | `MinimalNodeEntryEntity` | `null` | Active node, builds UI based on folderNode.path.elements collection.  |
-| root | `string` | `null` | (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use an i18n resource key for the property value. |
-| rootId | `string` | `null` | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
-| target | `DocumentListComponent` |  | (optional) Document List component to operate with. The list will update when the breadcrumb is clicked. |
-| transform | `(node: any) => any` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
+| -- | -- | -- | -- |
+| folderNode | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  null | Active node, builds UI based on folderNode.path.elements collection. |
+| maxItems | `number` |  | Maximum number of nodes to display before wrapping them with a dropdown element. |
+| root | `string` |  null | (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use an i18n resource key for the property value. |
+| rootId | `string` |  null | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
+| target | [`DocumentListComponent`](../content-services/document-list.component.md) |  | (optional) [Document List component](../content-services/document-list.component.md) to operate with. The list will update when the breadcrumb is clicked. |
+| transform | `function` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| navigate | `EventEmitter<PathElementEntity>` | Emitted when the user clicks on a breadcrumb.  |
+| -- | -- | -- |
+| navigate | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PathElementEntity`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the user clicks on a breadcrumb. |
 
 ## Details
+
+The `maxItems` property sets the maximum number of "crumbs" in the breadcrumb trail. If
+the actual path contains more nodes than this then the earliest items in the path will be
+removed and kept in a menu as with the
+[Dropdown breadcrumb component](../content-services/dropdown-breadcrumb.component.md).
 
 ### Using the transform function
 
@@ -45,7 +53,7 @@ the list by altering the node's `path.elements` property.
 
 Below is an example of how you might do this with the
 [Content Node Selector component](content-node-selector.component.md). In this case, you pass the 
-transform function via the `breadcrumbTransform` property of `ContentNodeSelectorComponentData` during
+transform function via the `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) during
 initialization:
 
 ```ts
@@ -84,7 +92,7 @@ A transform function to remove the "Sites" folder from the path would look somet
 
 Below, the breadcrumb is shown before and after the transform function is applied:
 
-![Content Node Selector breadcrumbTransfrom before/after screenshot](../docassets/images/breadcrumbTransform.png)
+![Content Node Selector breadcrumbTransform before/after screenshot](../docassets/images/breadcrumbTransform.png)
 
 ## See also
 

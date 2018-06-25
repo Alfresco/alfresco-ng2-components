@@ -17,30 +17,77 @@
         </adf-search-widget-container>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel *ngIf="isFacetQueriesDefined" [expanded]="facetQueriesExpanded">
         <mat-expansion-panel-header>
-            <mat-panel-title>Facet Queries</mat-panel-title>
+            <mat-panel-title>{{ facetQueriesLabel | translate }}</mat-panel-title>
         </mat-expansion-panel-header>
+        <div class="facet-result-filter">
+            <mat-form-field>
+                <input
+                    matInput
+                    placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
+                    [(ngModel)]="responseFacetQueries.filterText">
+                <button *ngIf="responseFacetQueries.filterText"
+                    mat-button matSuffix mat-icon-button
+                    (click)="responseFacetQueries.filterText = ''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
         <div class="checklist">
             <ng-container *ngFor="let query of responseFacetQueries">
                 <mat-checkbox
-                    *ngIf="query.count > 0"
                     [checked]="query.$checked"
                     (change)="onFacetQueryToggle($event, query)">
                     {{ query.label }} ({{ query.count }})
                 </mat-checkbox>
             </ng-container>
         </div>
+        <div class="facet-buttons">
+            <button mat-icon-button
+                *ngIf="canResetSelectedQueries()"
+                title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
+                (click)="resetSelectedQueries()">
+                <mat-icon>clear</mat-icon>
+            </button>
+            <button mat-icon-button
+                *ngIf="responseFacetQueries.canShowLessItems"
+                title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}"
+                (click)="responseFacetQueries.showLessItems()">
+                <mat-icon>keyboard_arrow_up</mat-icon>
+            </button>
+            <button mat-icon-button
+                *ngIf="responseFacetQueries.canShowMoreItems"
+                title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}"
+                (click)="responseFacetQueries.showMoreItems()">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+        </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel
         *ngFor="let field of responseFacetFields"
-        [expanded]="field.$expanded"
+        [expanded]="field.expanded"
         (opened)="onFacetFieldExpanded(field)"
         (closed)="onFacetFieldCollapsed(field)">
         <mat-expansion-panel-header>
             <mat-panel-title>{{ field.label }}</mat-panel-title>
         </mat-expansion-panel-header>
+
+        <div class="facet-result-filter">
+            <mat-form-field>
+                <input
+                    matInput
+                    placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
+                    [(ngModel)]="field.buckets.filterText">
+                <button *ngIf="field.buckets.filterText"
+                    mat-button matSuffix mat-icon-button
+                    (click)="field.buckets.filterText = ''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+
         <div class="checklist">
             <mat-checkbox
                 *ngFor="let bucket of field.buckets"
@@ -48,6 +95,36 @@
                 (change)="onFacetToggle($event, field, bucket)">
                 {{ bucket.display || bucket.label }} ({{ bucket.count }})
             </mat-checkbox>
+        </div>
+
+        <div class="facet-buttons" *ngIf="field.buckets.fitsPage">
+            <button *ngIf="canResetSelectedBuckets(field)"
+                mat-button
+                color="primary"
+                (click)="resetSelectedBuckets(field)">
+                {{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}
+            </button>
+        </div>
+
+        <div class="facet-buttons" *ngIf="!field.buckets.fitsPage">
+            <button mat-icon-button
+                *ngIf="canResetSelectedBuckets(field)"
+                title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
+                (click)="resetSelectedBuckets(field)">
+                <mat-icon>clear</mat-icon>
+            </button>
+            <button mat-icon-button
+                *ngIf="field.buckets.canShowLessItems"
+                (click)="field.buckets.showLessItems()"
+                title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}">
+                <mat-icon>keyboard_arrow_up</mat-icon>
+            </button>
+            <button mat-icon-button
+                *ngIf="field.buckets.canShowMoreItems"
+                (click)="field.buckets.showMoreItems()"
+                title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
         </div>
     </mat-expansion-panel>
 

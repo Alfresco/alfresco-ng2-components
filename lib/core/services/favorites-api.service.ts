@@ -62,6 +62,12 @@ export class FavoritesApiService {
        return this.apiService.getInstance().core.favoritesApi;
     }
 
+    /**
+     * Gets the favorites for a user.
+     * @param personId ID of the user
+     * @param options Options supported by JSAPI
+     * @returns List of favorites
+     */
     getFavorites(personId: string, options?: any): Observable<NodePaging> {
         const { favoritesApi, handleError } = this;
         const defaultOptions = {

@@ -52,7 +52,8 @@ export class ShareDialogComponent implements OnInit {
                 this.sharedId = this.data.node.entry.properties['qshare:sharedId'];
                 this.isFileShared = true;
             } else {
-                this.createSharedLinks(this.data.node.entry.id);
+                this.isFileShared = false;
+                this.isDisabled = false;
             }
         }
     }
@@ -74,6 +75,7 @@ export class ShareDialogComponent implements OnInit {
         this.sharedLinksApiService.createSharedLinks(nodeId).subscribe((sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
+                    this.data.node.entry.properties['qshare:sharedId'] = this.sharedId;
                     this.isFileShared = true;
                     this.isDisabled = false;
                 }
@@ -86,6 +88,7 @@ export class ShareDialogComponent implements OnInit {
 
     deleteSharedLink(sharedId: string) {
         this.sharedLinksApiService.deleteSharedLink(sharedId).subscribe(() => {
+                this.data.node.entry.properties['qshare:sharedId'] = null;
                 this.isFileShared = false;
                 this.isDisabled = false;
             },

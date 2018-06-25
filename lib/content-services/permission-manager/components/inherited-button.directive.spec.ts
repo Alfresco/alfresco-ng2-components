@@ -17,8 +17,8 @@
 
 import { SimpleInheritedPermissionTestComponent } from '../../mock/inherited-permission.component.mock';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { PermissionManagerModule } from '../../index';
-import { NodesApiService } from '@alfresco/adf-core';
+import { InheritPermissionDirective } from './inherited-button.directive';
+import { NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 const fakeNodeWithInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}};
@@ -31,25 +31,21 @@ describe('InheritPermissionDirective', () => {
     let component: SimpleInheritedPermissionTestComponent;
     let nodeService: NodesApiService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                PermissionManagerModule
-            ],
-            declarations: [
-                SimpleInheritedPermissionTestComponent
-            ]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
-            component = fixture.componentInstance;
-            element = fixture.nativeElement;
-            nodeService = TestBed.get(NodesApiService);
-        });
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            InheritPermissionDirective,
+            SimpleInheritedPermissionTestComponent
+        ]
+    });
 
-    afterEach(async(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
+    beforeEach(async(() => {
+        fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+        nodeService = TestBed.get(NodesApiService);
     }));
 
     it('should be able to render the simple component', async(() => {

@@ -19,14 +19,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
-import { InputMaskDirective } from './text-mask.component';
 import { TextWidgetComponent } from './text.widget';
-
-import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
-import { MaterialModule } from '../../../../material.module';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TextWidgetComponent', () => {
 
@@ -34,23 +30,12 @@ describe('TextWidgetComponent', () => {
     let fixture: ComponentFixture<TextWidgetComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                TextWidgetComponent,
-                ErrorWidgetComponent,
-                InputMaskDirective
-            ],
-            providers: [
-                FormService,
-                EcmModelService,
-                ActivitiContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TextWidgetComponent);

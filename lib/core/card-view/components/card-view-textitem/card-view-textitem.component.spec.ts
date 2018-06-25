@@ -15,54 +15,27 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { TranslateLoaderService } from '../../../services/translate-loader.service';
-
 import { CardViewTextItemComponent } from './card-view-textitem.component';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('CardViewTextItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                FormsModule,
-                NoopAnimationsModule,
-                MatDatepickerModule,
-                MatIconModule,
-                MatInputModule,
-                MatNativeDateModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                CardViewTextItemComponent
-            ],
-            providers: [
-                CardViewUpdateService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
-        component.property = new CardViewTextItemModel ({
+        component.property = new CardViewTextItemModel({
             label: 'Text label',
             value: 'Lorem ipsum',
             key: 'textkey',
@@ -73,7 +46,6 @@ describe('CardViewTextItemComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('Rendering', () => {
@@ -91,7 +63,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should NOT render the default as value if the value is empty, editable is false and displayEmpty is false', () => {
-            component.property = new CardViewTextItemModel ({
+            component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
@@ -107,7 +79,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should render the default as value if the value is empty, editable is false and displayEmpty is true', () => {
-            component.property = new CardViewTextItemModel ({
+            component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
@@ -123,7 +95,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should render the default as value if the value is empty and editable true', () => {
-            component.property = new CardViewTextItemModel ({
+            component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
@@ -139,7 +111,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should NOT render the default as value if the value is empty, clickable is false and displayEmpty is false', () => {
-            component.property = new CardViewTextItemModel ({
+            component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
@@ -155,7 +127,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', () => {
-            component.property = new CardViewTextItemModel ({
+            component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
@@ -171,7 +143,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should render the default as value if the value is empty and clickable true', () => {
-            component.property = new CardViewTextItemModel ({
+            component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
@@ -186,7 +158,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should render the edit icon in case of clickable true and icon defined', () => {
-            component.property = new CardViewTextItemModel ({
+            component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
@@ -202,7 +174,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should not render the edit icon in case of clickable true and icon undefined', () => {
-            component.property = new CardViewTextItemModel ({
+            component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
@@ -216,7 +188,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should not render the edit icon in case of clickable false and icon defined', () => {
-            component.property = new CardViewTextItemModel ({
+            component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
@@ -342,10 +314,11 @@ describe('CardViewTextItemComponent', () => {
             const expectedText = 'changed text';
             fixture.detectChanges();
 
-            cardViewUpdateService.itemUpdated$.subscribe(
+            let disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
                 (updateNotification) => {
                     expect(updateNotification.target).toBe(component.property);
                     expect(updateNotification.changed).toEqual({ textkey: expectedText });
+                    disposableUpdate.unsubscribe();
                     done();
                 }
             );

@@ -20,7 +20,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormModule, CommentsModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { ProcessCommentsModule } from '../process-comments/process-comments.module';
 import { CardViewModule, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/adf-core';
@@ -36,14 +36,11 @@ import { ProcessInstanceTasksComponent } from './components/process-instance-tas
 import { ProcessInstanceListComponent } from './components/process-list.component';
 import { StartProcessInstanceComponent } from './components/start-process.component';
 
-import { ProcessService } from './services/process.service';
-import { ProcessFilterService } from './services/process-filter.service';
-
 @NgModule({
     imports: [
         CommonModule,
         DataTableModule,
-        FormModule,
+        CoreModule,
         TaskListModule,
         MaterialModule,
         FlexLayoutModule,
@@ -55,7 +52,6 @@ import { ProcessFilterService } from './services/process-filter.service';
         DataColumnModule,
         DirectiveModule,
         PeopleModule,
-        CommentsModule,
         ContentWidgetModule,
         ProcessCommentsModule
     ],
@@ -67,10 +63,6 @@ import { ProcessFilterService } from './services/process-filter.service';
         ProcessInstanceHeaderComponent,
         ProcessInstanceTasksComponent,
         StartProcessInstanceComponent
-    ],
-    providers: [
-        ProcessService,
-        ProcessFilterService
     ],
     exports: [
         ProcessInstanceListComponent,

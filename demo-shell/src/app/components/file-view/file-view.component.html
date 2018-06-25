@@ -13,7 +13,8 @@
             <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.VERSIONS' | translate">
                 <mat-card>
                     <mat-card-content>
-                        <adf-version-manager [node]="node" (uploadError)="uploadError($event)">
+                        <adf-version-manager [node]="node"
+                                             (uploadError)="uploadError($event)">
                         </adf-version-manager>
                     </mat-card-content>
                 </mat-card>
@@ -21,7 +22,7 @@
         </adf-info-drawer>
     </ng-template>
 
-    <adf-viewer [fileNodeId]="nodeId" [allowSidebar]="true" [sidebarTemplate]="sidebarTemplate">
+    <adf-viewer [nodeId]="nodeId" [allowSidebar]="true" [sidebarTemplate]="sidebarTemplate">
 
         <adf-viewer-toolbar-actions>
             <button mat-icon-button>

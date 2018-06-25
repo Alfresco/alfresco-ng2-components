@@ -18,12 +18,14 @@ Displays a dropdown menu to show and interact with the sites of the current user
  </adf-sites-dropdown>
 ```
 
+## Class members
+
 ### Properties
 
 | Attribute | Type | Default | Description |
 | --------- | ---- | ------- | ----------- |
 | hideMyFiles | boolean | false | Hide the "My Files" option added to the list by default |
-| siteList | [SitePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | null | A custom list of sites to be displayed by the dropdown. If no value is given, the sites of the current user are displayed by default. A list of objects only with properties 'title' and 'guid' is enough to be able to display the dropdown. |
+| siteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | null | A custom list of sites to be displayed by the dropdown. If no value is given, the sites of the current user are displayed by default. A list of objects only with properties 'title' and 'guid' is enough to be able to display the dropdown. |
 | placeholder | string | 'DROPDOWN.PLACEHOLDER_LABEL' | The placeholder text/the key from translation files for the placeholder text to be shown by default |
 | value | string | null | Id of the select site |
 | relations | string | null | A custom list of sites to be displayed by the dropdown. If no value is given, the sites of the current user are displayed by default. A list of objects only with properties 'title' and 'guid' is enough to be able to display the dropdown. |

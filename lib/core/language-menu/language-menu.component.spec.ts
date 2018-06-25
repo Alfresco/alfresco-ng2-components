@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { DirectiveModule } from '../directives/directive.module';
-import { MaterialModule } from '../material.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
-import { TranslateLoaderService } from '../services/translate-loader.service';
-
 import { LanguageMenuComponent } from './language-menu.component';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('LanguageMenuComponent', () => {
 
@@ -31,27 +27,9 @@ describe('LanguageMenuComponent', () => {
     let component: LanguageMenuComponent;
     let appConfig: AppConfigService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                HttpClientModule,
-                DirectiveModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                LanguageMenuComponent
-            ],
-            providers: [
-                AppConfigService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(LanguageMenuComponent);
@@ -59,12 +37,15 @@ describe('LanguageMenuComponent', () => {
         appConfig = TestBed.get(AppConfigService);
     });
 
-    it('should have the default language', () => {
-        fixture.detectChanges();
-        expect(component.languages).toEqual([{ key: 'en', label: 'English'}]);
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should fetch the languages from the app config if present', () => {
+        fixture.detectChanges();
+
+        expect(component.languages).toEqual([{ key: 'en', label: 'English' }]);
+
         appConfig.config.languages = [
             {
                 key: 'fake-key-1',
@@ -76,7 +57,7 @@ describe('LanguageMenuComponent', () => {
             }
         ];
 
-        fixture.detectChanges();
+        component.ngOnInit();
         expect(component.languages).toEqual([
             {
                 key: 'fake-key-1',

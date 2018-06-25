@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges, SimpleChange, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -29,61 +30,78 @@ import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
     host: { 'class': 'adf-content-metadata' },
     encapsulation: ViewEncapsulation.None
 })
-export class ContentMetadataComponent implements OnChanges, OnInit {
-
+export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
+    /** (required) The node entity to fetch metadata about */
     @Input()
     node: MinimalNodeEntryEntity;
 
+    /** Toggles whether the edit button should be shown */
     @Input()
     editable: boolean = false;
 
+    /** Toggles whether to display empty values in the card view */
     @Input()
     displayEmpty: boolean = false;
 
+    /** Toggles between expanded (ie, full information) and collapsed
+     * (ie, reduced information) in the display
+     */
     @Input()
     expanded: boolean = false;
 
+    /** The multi parameter of the underlying material expansion panel */
     @Input()
     multi = false;
 
+    /** Name of the metadata preset, which defines aspects and their properties */
     @Input()
     preset: string;
 
-    nodeHasBeenUpdated: boolean = false;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
+    disposableNodeUpdate: Subscription;
 
-    constructor(private contentMetadataService: ContentMetadataService,
-                private cardViewUpdateService: CardViewUpdateService,
-                private nodesApi: NodesApiService,
-                private logService: LogService,
-                private apiService: AlfrescoApiService) {}
+    constructor(
+        private contentMetadataService: ContentMetadataService,
+        private cardViewUpdateService: CardViewUpdateService,
+        private nodesApiService: NodesApiService,
+        private logService: LogService,
+        private alfrescoApiService: AlfrescoApiService
+    ) {}
 
     ngOnInit() {
-        this.cardViewUpdateService.itemUpdated$
+        this.disposableNodeUpdate =  this.cardViewUpdateService.itemUpdated$
             .switchMap(this.saveNode.bind(this))
             .subscribe(
-                (node) => {
-                    this.nodeHasBeenUpdated = true;
-                    this.node = node;
-                    this.apiService.nodeUpdated.next(node);
+                updatedNode => {
+                    Object.assign(this.node, updatedNode);
+                    this.alfrescoApiService.nodeUpdated.next(this.node);
                 },
                 error => this.logService.error(error)
             );
+
+        this.loadProperties(this.node);
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const nodeChange: SimpleChange = changes['node'];
-        if (nodeChange || this.nodeHasBeenUpdated) {
-            const node = nodeChange && nodeChange.currentValue || this.node;
-            this.nodeHasBeenUpdated = false;
+        if (changes.node && !changes.node.firstChange) {
+            this.loadProperties(changes.node.currentValue);
+        }
+    }
 
+    private loadProperties(node: MinimalNodeEntryEntity) {
+        if (node) {
             this.basicProperties$ = this.contentMetadataService.getBasicProperties(node);
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
         }
     }
 
     private saveNode({ changed: nodeBody }): Observable<MinimalNodeEntryEntity> {
-        return this.nodesApi.updateNode(this.node.id, nodeBody);
+        return this.nodesApiService.updateNode(this.node.id, nodeBody);
     }
+
+    ngOnDestroy() {
+        this.disposableNodeUpdate.unsubscribe();
+    }
+
 }

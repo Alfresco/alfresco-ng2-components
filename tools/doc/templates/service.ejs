@@ -1,0 +1,15 @@
+
+<% if (hasMethods) { %>
+### Methods
+
+<% methods.forEach(function(meth) { -%>
+- **<%= meth.name %>**<%- meth.signature %><% if (meth.returnsSomething) { %>: `<%- meth.returnType %>`<% } %><br/>
+  <%= meth.docText %>
+<% meth.params.forEach(function(param) { -%>
+   - *<%= param.name%>:* `<%- param.type %>`  - <% if (param.isOptional) { %>(Optional) <% } %><%= param.docText %>
+<% }) -%>
+<% if (meth.returnsSomething) { -%>
+   - **Returns** `<%- meth.returnType %>` - <%= meth.returnDocText %>
+<% } -%>
+<% }) -%>
+<% } %>

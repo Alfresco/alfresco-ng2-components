@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ContentChild, Input, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, ContentChild, Input, Output, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef, EventEmitter } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'adf-sidenav-layout',
@@ -36,15 +38,21 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @Input() hideSidenav = false;
     @Input() expandedSidenav = true;
 
+    @Output() expanded = new EventEmitter<boolean>();
+
     @ContentChild(SidenavLayoutHeaderDirective) headerDirective: SidenavLayoutHeaderDirective;
     @ContentChild(SidenavLayoutNavigationDirective) navigationDirective: SidenavLayoutNavigationDirective;
     @ContentChild(SidenavLayoutContentDirective) contentDirective: SidenavLayoutContentDirective;
+
+    private menuOpenStateSubject: BehaviorSubject<boolean>;
+    public menuOpenState$: Observable<boolean>;
 
     @ViewChild('container') container: any;
     @ViewChild('emptyTemplate') emptyTemplate: any;
 
     mediaQueryList: MediaQueryList;
-    isMenuMinimized;
+    _isMenuMinimized;
+
     templateContext = {
         toggleMenu: () => {},
         isMenuMinimized: () => this.isMenuMinimized
@@ -55,8 +63,14 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     }
 
     ngOnInit() {
+        const initialMenuState = !this.expandedSidenav;
+
+        this.menuOpenStateSubject = new BehaviorSubject<boolean>(initialMenuState);
+        this.menuOpenState$ = this.menuOpenStateSubject.asObservable();
+
         const stepOver = this.stepOver || SidenavLayoutComponent.STEP_OVER;
-        this.isMenuMinimized = !this.expandedSidenav;
+        this.isMenuMinimized = initialMenuState;
+
         this.mediaQueryList = this.mediaMatcher.matchMedia(`(max-width: ${stepOver}px)`);
         this.mediaQueryList.addListener(this.onMediaQueryChange);
     }
@@ -77,6 +91,16 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         }
 
         this.container.toggleMenu();
+        this.expanded.emit(!this.isMenuMinimized);
+    }
+
+    get isMenuMinimized() {
+        return this._isMenuMinimized;
+    }
+
+    set isMenuMinimized(menuState: boolean) {
+        this._isMenuMinimized = menuState;
+        this.menuOpenStateSubject.next(!menuState);
     }
 
     get isHeaderInside() {
@@ -97,5 +121,6 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     onMediaQueryChange() {
         this.isMenuMinimized = false;
+        this.expanded.emit(!this.isMenuMinimized);
     }
 }

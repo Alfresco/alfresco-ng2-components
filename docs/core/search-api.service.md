@@ -2,9 +2,11 @@
 
 Accesses the Content Services Search API.
 
-## Methods
+## Class members
 
-`search(query: any): Observable<NodePaging>`<br/>
+### Methods
+
+[`search(query: any): Observable<NodePaging>`](../../lib/content-services/document-list/models/document-library.model.ts)<br/>
 Searches the repository.
 
 ## Details

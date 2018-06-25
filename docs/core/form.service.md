@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Form service
 
 Implements Process Services form methods
@@ -50,84 +51,83 @@ class MyComponent {
 
 ### Methods
 
--   `parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel`  
-    Parses JSON data to create a corresponding Form model.  
+-   `parseForm(json: any, data?: `[`FormValues,`](../../lib/core/form/components/widgets/core/form-values.ts)` readOnly: boolean = false): `[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)  
+    Parses JSON data to create a corresponding [`Form`](../../lib/process-services/task-list/models/form.model.ts) model.  
     -   `json` - JSON to create the form
     -   `data` - (Optional) Values for the form fields
     -   `readOnly` - Should the form fields be read-only?
--   `createFormFromANode(formName: string): Observable<any>`  
-    Create a Form with a field for each metadata property.  
+-   `createFormFromANode(formName: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
+    Create a [`Form`](../../lib/process-services/task-list/models/form.model.ts) with a field for each metadata property.  
     -   `formName` - Name of the new form
--   `createForm(formName: string): Observable<any>`  
-    Create a Form.  
+-   `createForm(formName: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
+    Create a [`Form`](../../lib/process-services/task-list/models/form.model.ts).  
     -   `formName` - Name of the new form
--   `saveForm(formId: string, formModel: FormDefinitionModel): Observable<any>`  
+-   `saveForm(formId: string, formModel: FormDefinitionModel): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Saves a form.  
     -   `formId` - ID of the form to save 
     -   `formModel` - Model data for the form
--   `addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any>`  
-      
+-   `addFieldsToAForm(formId: string, formModel: FormDefinitionModel): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     -   `formId` - ID of the form
-    -   `formModel` - Form definition
--   `searchFrom(name: string): Observable<any>`  
+    -   `formModel` - [`Form`](../../lib/process-services/task-list/models/form.model.ts) definition
+-   `searchFrom(name: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Search for a form by name.  
     -   `name` - The form name to search for
--   `getForms(): Observable<any>`  
+-   `getForms(): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Gets all the forms.  
 
--   `getProcessDefinitions(): Observable<any>`  
+-   `getProcessDefinitions(): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Get Process Definitions  
 
--   `getProcessVarablesById(processInstanceId: string): Observable<any[]>`  
+-   `getProcessVarablesById(processInstanceId: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any[]>`  
     Get instance variables for a process.  
     -   `processInstanceId` - ID of the target process
--   `getTasks(): Observable<any>`  
+-   `getTasks(): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Gets all the tasks.  
 
--   `getTask(taskId: string): Observable<any>`  
+-   `getTask(taskId: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Gets a task.  
     -   `taskId` - Task Id
--   `saveTaskForm(taskId: string, formValues: FormValues): Observable<any>`  
-    Save Task Form.  
+-   `saveTaskForm(taskId: string, formValues: FormValues): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
+    Save Task [`Form`](../../lib/process-services/task-list/models/form.model.ts).  
     -   `taskId` - Task Id
-    -   `formValues` - Form Values
--   `completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any>`  
-    Complete Task Form  
+    -   `formValues` - [`Form`](../../lib/process-services/task-list/models/form.model.ts) Values
+-   `completeTaskForm(taskId: string, formValues: `[`FormValues,`](../../lib/core/form/components/widgets/core/form-values.ts)` outcome?: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
+    Complete Task [`Form`](../../lib/process-services/task-list/models/form.model.ts)  
     -   `taskId` - Task Id
-    -   `formValues` - Form Values
-    -   `outcome` - (Optional) Form Outcome
--   `getTaskForm(taskId: string): Observable<any>`  
-    Get Form related to a taskId  
+    -   `formValues` - [`Form`](../../lib/process-services/task-list/models/form.model.ts) Values
+    -   `outcome` - (Optional) [`Form`](../../lib/process-services/task-list/models/form.model.ts) Outcome
+-   `getTaskForm(taskId: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
+    Get [`Form`](../../lib/process-services/task-list/models/form.model.ts) related to a taskId  
     -   `taskId` - Task Id
--   `getFormDefinitionById(formId: string): Observable<any>`  
-    Get Form Definition  
-    -   `formId` - Form Id
--   `getFormDefinitionByName(name: string): Observable<any>`  
+-   `getFormDefinitionById(formId: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
+    Get [`Form`](../../lib/process-services/task-list/models/form.model.ts) Definition  
+    -   `formId` - [`Form`](../../lib/process-services/task-list/models/form.model.ts) Id
+-   `getFormDefinitionByName(name: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Returns form definition with a given name.  
     -   `name` - The form name
--   `getStartFormInstance(processId: string): Observable<any>`  
+-   `getStartFormInstance(processId: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Get start form instance for a given processId  
     -   `processId` - Process definition ID
--   `getProcessIntance(processId: string): Observable<any>`  
+-   `getProcessIntance(processId: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Gets a process instance.  
     -   `processId` - ID of the process to get
--   `getStartFormDefinition(processId: string): Observable<any>`  
+-   `getStartFormDefinition(processId: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Get start form definition for a given process  
     -   `processId` - Process definition ID
--   `getRestFieldValues(taskId: string, field: string): Observable<any>`  
+-   `getRestFieldValues(taskId: string, field: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Gets values of fields populated by a REST backend.  
     -   `taskId` - Task identifier
     -   `field` - Field identifier
--   `getRestFieldValuesByProcessId(processDefinitionId: string, field: string): Observable<any>`  
+-   `getRestFieldValuesByProcessId(processDefinitionId: string, field: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Gets values of fields populated by a REST backend using a process ID.  
     -   `processDefinitionId` - Process identifier
     -   `field` - Field identifier
--   `getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): Observable<any>`  
+-   `getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Gets column values of fields populated by a REST backend using a process ID.  
     -   `processDefinitionId` - Process identifier
     -   `field` - Field identifier
     -   `column` - (Optional) Column identifier
--   `getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any>`  
+-   `getRestFieldValuesColumn(taskId: string, field: string, column?: string): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Gets column values of fields populated by a REST backend.  
     -   `taskId` - Task identifier
     -   `field` - Field identifier
@@ -135,11 +135,11 @@ class MyComponent {
 -   `getUserProfileImageApi(userId: number): string`  
     Returns a URL for the profile picture of a user.  
     -   `userId` - ID of the target user
--   `getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]>`  
+-   [`getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]>`](../core/user-process.model.md)  
     Gets a list of workflow users.  
     -   `filter` - Filter to select specific users
     -   `groupId` - (Optional) Group ID for the search
--   `getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]>`  
+-   [`getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]>`](../../lib/core/form/components/widgets/core/group.model.ts)  
     Gets a list of groups in a workflow.  
     -   `filter` - Filter to select specific groups
     -   `groupId` - (Optional) Group ID for the search
@@ -152,6 +152,6 @@ class MyComponent {
 -   `toJsonArray(res: any): any`  
     Creates a JSON array representation of form data.  
     -   `res` - Object representing form data
--   `handleError(error: any): Observable<any>`  
+-   `handleError(error: any): `[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Reports an error message.  
     -   `error` - Data object with optional \`message\` and \`status\` fields for the error

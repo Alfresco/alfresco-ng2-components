@@ -19,15 +19,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { UserProcessModel } from '../../../../models';
 import { Observable } from 'rxjs/Observable';
-import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
-import { MaterialModule } from '../../../../material.module';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { EcmModelService } from './../../../services/ecm-model.service';
 import { PeopleWidgetComponent } from './people.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PeopleWidgetComponent', () => {
 
@@ -36,22 +35,12 @@ describe('PeopleWidgetComponent', () => {
     let element: HTMLElement;
     let formService: FormService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                PeopleWidgetComponent,
-                ErrorWidgetComponent
-            ],
-            providers: [
-                FormService,
-                EcmModelService,
-                ActivitiContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleWidgetComponent);
@@ -85,7 +74,7 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
-    it('should init value from the field', () => {
+    it('should init value from the field', async(() => {
         widget.field.value = new UserProcessModel({
             id: 'people-id',
             firstName: 'John',
@@ -101,9 +90,34 @@ describe('PeopleWidgetComponent', () => {
 
         widget.ngOnInit();
         fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
+        });
+    }));
 
-        expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
-    });
+    it('should show the readonly value when the form is readonly', async(() => {
+        widget.field.value = new UserProcessModel({
+            id: 'people-id',
+            firstName: 'John',
+            lastName: 'Doe'
+        });
+        widget.field.readOnly = true;
+        widget.field.form.readOnly = true;
+
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
+
+        widget.ngOnInit();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
+            expect((element.querySelector('input') as HTMLInputElement).disabled).toBeTruthy();
+        });
+    }));
 
     it('should require form field to setup values on init', () => {
         widget.field.value = null;
@@ -121,115 +135,6 @@ describe('PeopleWidgetComponent', () => {
         widget.field.params = { restrictWithGroup: { id: '<id>' } };
         widget.ngOnInit();
         expect(widget.groupId).toBe('<id>');
-    });
-
-    it('should fetch users by search term', () => {
-        let users: any = [{
-            id: 'people-id',
-            firstName: 'John',
-            lastName: 'Doe'
-        }, {
-            id: 'people-id2',
-            firstName: 'John',
-            lastName: 'Ping'
-        }];
-
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(
-            Observable.create(observer => {
-                observer.next(users);
-                observer.complete();
-            })
-        );
-        fixture.detectChanges();
-
-        let keyboardEvent = new KeyboardEvent('keypress');
-        let input = widget.input;
-        input.nativeElement.value = 'John';
-        widget.onKeyUp(keyboardEvent);
-
-        expect(formService.getWorkflowUsers).toHaveBeenCalledWith('John', widget.groupId);
-        expect(widget.users).toBe(users);
-    });
-
-    it('should fetch users by search term and group id', () => {
-        let users: any = [{
-            id: 'people-id',
-            firstName: 'John',
-            lastName: 'Doe'
-        }, {
-            id: 'people-id2',
-            firstName: 'John',
-            lastName: 'Ping'
-        }];
-
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(
-            Observable.create(observer => {
-                observer.next(users);
-                observer.complete();
-            })
-        );
-        fixture.detectChanges();
-
-        let keyboardEvent = new KeyboardEvent('keypress');
-        let input = widget.input;
-        input.nativeElement.value = 'John';
-        widget.groupId = '1001';
-        widget.onKeyUp(keyboardEvent);
-
-        expect(formService.getWorkflowUsers).toHaveBeenCalledWith('John', widget.groupId);
-        expect(widget.users).toBe(users);
-    });
-
-    it('should fetch users and show no popup', () => {
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(
-            Observable.create(observer => {
-                observer.next(null);
-                observer.complete();
-            })
-        );
-        fixture.detectChanges();
-
-        let keyboardEvent = new KeyboardEvent('keypress');
-        let input = widget.input;
-        input.nativeElement.value = 'user1';
-        widget.onKeyUp(keyboardEvent);
-
-        expect(formService.getWorkflowUsers).toHaveBeenCalledWith('user1', widget.groupId);
-        expect(widget.users).toEqual([]);
-    });
-
-    it('should require search term to fetch users', () => {
-        spyOn(formService, 'getWorkflowUsers').and.stub();
-
-        let keyboardEvent = new KeyboardEvent('keypress');
-        let input = widget.input;
-        input.nativeElement.value = null;
-        widget.onKeyUp(keyboardEvent);
-
-        expect(formService.getWorkflowUsers).not.toHaveBeenCalled();
-    });
-
-    it('should not fetch users due to constraint violation', () => {
-        spyOn(formService, 'getWorkflowUsers').and.stub();
-
-        let keyboardEvent = new KeyboardEvent('keypress');
-        (element.querySelector('input') as HTMLInputElement).value = '123';
-        widget.minTermLength = 4;
-        widget.onKeyUp(keyboardEvent);
-
-        expect(formService.getWorkflowUsers).not.toHaveBeenCalled();
-    });
-
-    it('should reset users when the input field is blank string', () => {
-        let fakeUser = new UserProcessModel({ id: '1', email: 'ffff@fff' });
-        widget.users.push(fakeUser);
-        fixture.detectChanges();
-
-        let keyboardEvent = new KeyboardEvent('keypress');
-        (element.querySelector('input') as HTMLInputElement).value = '';
-        widget.onKeyUp(keyboardEvent);
-
-        expect(widget.users).toEqual([]);
     });
 
     describe('when template is ready', () => {
@@ -289,6 +194,18 @@ describe('PeopleWidgetComponent', () => {
             });
         }));
 
+        it('should hide result list if input is empty', () => {
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            peopleHTMLElement.focus();
+            peopleHTMLElement.value = '';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).toBeNull();
+            });
+        });
     });
 
 });

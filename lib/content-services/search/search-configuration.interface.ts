@@ -19,18 +19,22 @@ import { FilterQuery } from './filter-query.interface';
 import { FacetQuery } from './facet-query.interface';
 import { FacetField } from './facet-field.interface';
 import { SearchCategory } from './search-category.interface';
+import { SearchSortingDefinition } from './search-sorting-definition.interface';
 
 export interface SearchConfiguration {
-    query?: {
-        categories: Array<SearchCategory>
-    };
-    limits?: {
-        permissionEvaluationTime?: number;
-        permissionEvaluationCount?: number;
-    };
+    include?: Array<string>;
+    fields?: Array<string>;
+    categories: Array<SearchCategory>;
     filterQueries?: Array<FilterQuery>;
-    facetQueries?: Array<FacetQuery>;
-    facetFields?: {
-        facets: Array<FacetField>
+    facetQueries?: {
+        label?: string;
+        pageSize?: number;
+        expanded?: boolean;
+        queries: Array<FacetQuery>;
+    };
+    facetFields?: Array<FacetField>;
+    sorting?: {
+        options: Array<SearchSortingDefinition>;
+        defaults: Array<SearchSortingDefinition>;
     };
 }

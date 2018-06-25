@@ -13,11 +13,14 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "No apps found",
+      "TITLE": "No Applications Found",
+      "SUBTITLE":"Create a new application that you want to easily find later",
       "TASK_APP_NAME": "Task App"
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "No Tasks Found",
+        "SUBTITLE":"Create a new task that you want to easily find later",
         "NONE": "No task lists found"
       }
     },
@@ -153,7 +156,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "NONE": "No process instances found",
+      "TITLE": "No Processes Found",
+      "SUBTITLE":"Create a new process that you want to easily find later",
       "SUMMARY": "{{total}} process instances found",
       "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
     },

@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { LogService } from '../services/log.service';
-import { SettingsService } from '../services/settings.service';
+import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import { Validators, FormGroup, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from '../services/storage.service';
-import { TranslationService } from '../services/translation.service';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 @Component({
     selector: 'adf-host-settings',
@@ -31,79 +31,227 @@ import { TranslationService } from '../services/translation.service';
     styleUrls: ['host-settings.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class HostSettingsComponent {
+export class HostSettingsComponent implements OnInit {
 
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 
-    ecmHost: string;
-    ecmHostTmp: string;
-    bpmHost: string;
-    bpmHostTmp: string;
-    urlFormControlEcm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
-    urlFormControlBpm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
-
-    /** Determines which configurations are shown. Possible valid values are "ECM", "BPM" or "ALL". */
     @Input()
-    providers: string = 'ALL';
+    providers: string[] = ['BPM', 'ECM', 'ALL'];
+
+    showSelectProviders = true;
+
+    form: FormGroup;
 
     /** Emitted when the URL is invalid. */
     @Output()
     error = new EventEmitter<string>();
 
-    /** Emitted when the ecm host URL is changed. */
+    /** Emitted when the ecm host URL is changed.
+     * @deprecated in 2.4.0
+     */
     @Output()
     ecmHostChange = new EventEmitter<string>();
 
-    /** Emitted when the bpm host URL is changed. */
+    @Output()
+    cancel = new EventEmitter<boolean>();
+
+    @Output()
+    success = new EventEmitter<boolean>();
+
+    /** Emitted when the bpm host URL is changed.
+     * @deprecated in 2.4.0
+     */
     @Output()
     bpmHostChange = new EventEmitter<string>();
 
-    constructor(private settingsService: SettingsService,
-                private storage: StorageService,
-                private logService: LogService,
-                private translationService: TranslationService) {
-        this.ecmHostTmp = this.ecmHost = storage.getItem('ecmHost') || this.settingsService.ecmHost;
-        this.bpmHostTmp = this.bpmHost = storage.getItem('bpmHost') || this.settingsService.bpmHost;
+    constructor(private formBuilder: FormBuilder,
+                private storageService: StorageService,
+                private alfrescoApiService: AlfrescoApiService,
+                private appConfig: AppConfigService) {
     }
 
-    public onChangeECMHost(event: any): void {
-        let value = (<HTMLInputElement> event.target).value.trim();
-        if (value && this.isValidUrl(value)) {
-            this.logService.info(`ECM host: ${value}`);
-            this.ecmHostTmp = value;
-            this.ecmHostChange.emit(value);
-        } else {
-            this.translationService.get('CORE.HOST_SETTING.CS_URL_ERROR').subscribe((message) => {
-                this.error.emit(message);
-            });
+    ngOnInit() {
+        if (this.providers.length === 1) {
+            this.showSelectProviders = false;
+        }
+
+        let providerSelected = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
+
+        const authType = this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC');
+
+        this.form = this.formBuilder.group({
+            providersControl: [providerSelected, Validators.required],
+            authType: authType
+        });
+
+        this.addFormGroups();
+
+        if (authType === 'OAUTH') {
+            this.addOAuthFormGroup();
+        }
+
+        this.form.get('authType').valueChanges.subscribe((value) => {
+            if (value === 'BASIC') {
+                this.form.removeControl('oauthConfig');
+            } else {
+                this.addOAuthFormGroup();
+            }
+        });
+
+        this.providersControl.valueChanges.subscribe(() => {
+            this.removeFormGroups();
+            this.addFormGroups();
+        });
+    }
+
+    private removeFormGroups() {
+        this.form.removeControl('bpmHost');
+        this.form.removeControl('ecmHost');
+    }
+
+    private addFormGroups() {
+        this.addBPMFormControl();
+        this.addECMFormControl();
+    }
+
+    private addOAuthFormGroup() {
+        const oauthFormGroup = this.createOAuthFormGroup();
+        this.form.addControl('oauthConfig', oauthFormGroup);
+    }
+
+    private addBPMFormControl() {
+        if ((this.isBPM() || this.isALL() || this.isOAUTH()) && !this.bpmHost) {
+            const bpmFormControl = this.createBPMFormControl();
+            this.form.addControl('bpmHost', bpmFormControl);
         }
     }
 
-    public onChangeBPMHost(event: any): void {
-        let value = (<HTMLInputElement> event.target).value.trim();
-        if (value && this.isValidUrl(value)) {
-            this.logService.info(`BPM host: ${value}`);
-            this.bpmHostTmp = value;
-            this.bpmHostChange.emit(value);
-        } else {
-            this.translationService.get('CORE.HOST_SETTING.PS_URL_ERROR').subscribe((message) => {
-                this.error.emit(message);
-            });
+    private addECMFormControl() {
+        if ((this.isECM() || this.isALL()) && !this.ecmHost) {
+            const ecmFormControl = this.createECMFormControl();
+            this.form.addControl('ecmHost', ecmFormControl);
         }
     }
 
-    public save(event: KeyboardEvent): void {
-        if (this.bpmHost !== this.bpmHostTmp) {
-            this.storage.setItem(`bpmHost`, this.bpmHostTmp);
-        }
-        if (this.ecmHost !== this.ecmHostTmp) {
-            this.storage.setItem(`ecmHost`, this.ecmHostTmp);
-        }
-        window.location.href = '/';
+    private createOAuthFormGroup(): AbstractControl {
+        let oauth = <OauthConfigModel> this.appConfig.get(AppConfigValues.OAUTHCONFIG, {});
+
+        return this.formBuilder.group({
+            host: [oauth.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
+            clientId: [oauth.clientId, Validators.required],
+            redirectUri: [oauth.redirectUri, Validators.required],
+            scope: [oauth.scope, Validators.required],
+            secret: oauth.secret,
+            silentLogin: oauth.silentLogin,
+            implicitFlow: oauth.implicitFlow
+        });
     }
 
-    isValidUrl(url: string) {
-        return /^(http|https):\/\/.*/.test(url);
+    private createBPMFormControl(): AbstractControl {
+        return new FormControl(this.appConfig.get<string>(AppConfigValues.BPMHOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+    }
+
+    private createECMFormControl(): AbstractControl {
+        return new FormControl(this.appConfig.get<string>(AppConfigValues.ECMHOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+    }
+
+    onCancel() {
+        this.cancel.emit(true);
+    }
+
+    onSubmit(values: any) {
+        this.storageService.setItem(AppConfigValues.PROVIDERS, values.providersControl);
+
+        if (this.isBPM()) {
+            this.saveBPMValues(values);
+        } else if (this.isECM()) {
+            this.saveECMValues(values);
+        } else if (this.isALL()) {
+            this.saveECMValues(values);
+            this.saveBPMValues(values);
+        }
+
+        if (this.isOAUTH()) {
+            this.saveOAuthValues(values);
+        }
+
+        this.storageService.setItem(AppConfigValues.AUTHTYPE, values.authType);
+
+        this.alfrescoApiService.reset();
+        this.alfrescoApiService.getInstance().invalidateSession();
+        this.success.emit(true);
+    }
+
+    private saveOAuthValues(values: any) {
+        this.storageService.setItem(AppConfigValues.OAUTHCONFIG, JSON.stringify(values.oauthConfig));
+    }
+
+    private saveBPMValues(values: any) {
+        this.storageService.setItem(AppConfigValues.BPMHOST, values.bpmHost);
+    }
+
+    private saveECMValues(values: any) {
+        this.storageService.setItem(AppConfigValues.ECMHOST, values.ecmHost);
+    }
+
+    isBPM(): boolean {
+        return this.providersControl.value === 'BPM';
+    }
+
+    isECM(): boolean {
+        return this.providersControl.value === 'ECM';
+    }
+
+    isALL(): boolean {
+        return this.providersControl.value === 'ALL';
+    }
+
+    isOAUTH(): boolean {
+        return this.form.get('authType').value === 'OAUTH';
+    }
+
+    get providersControl(): AbstractControl {
+        return this.form.get('providersControl');
+    }
+
+    get bpmHost(): AbstractControl {
+        return this.form.get('bpmHost');
+    }
+
+    get ecmHost(): AbstractControl {
+        return this.form.get('ecmHost');
+    }
+
+    get host(): AbstractControl {
+        return this.oauthConfig.get('host');
+    }
+
+    get clientId(): AbstractControl {
+        return this.oauthConfig.get('clientId');
+    }
+
+    get scope(): AbstractControl {
+        return this.oauthConfig.get('scope');
+    }
+
+    get secretId(): AbstractControl {
+        return this.oauthConfig.get('secretId');
+    }
+
+    get implicitFlow(): AbstractControl {
+        return this.oauthConfig.get('implicitFlow');
+    }
+
+    get silentLogin(): AbstractControl {
+        return this.oauthConfig.get('silentLogin');
+    }
+
+    get redirectUri(): AbstractControl {
+        return this.oauthConfig.get('redirectUri');
+    }
+
+    get oauthConfig(): AbstractControl {
+        return this.form.get('oauthConfig');
     }
 
 }

@@ -90,7 +90,7 @@ export class DocumentListService {
     }
 
     /**
-     * Move a node to destination node
+     * Moves a node to destination node.
      *
      * @param nodeId The id of the node to be moved
      * @param targetParentId The id of the folder where the node will be moved
@@ -102,7 +102,7 @@ export class DocumentListService {
     }
 
     /**
-     * Create a new folder in the path.
+     * Creates a new folder in the path.
      * @param name Folder name
      * @param parentId Parent folder ID
      * @returns Details of the created folder node
@@ -128,7 +128,7 @@ export class DocumentListService {
 
     /**
      * Gets a node via its node ID.
-     * @param nodeId
+     * @param nodeId ID of the target node
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */

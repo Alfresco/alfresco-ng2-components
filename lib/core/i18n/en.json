@@ -7,11 +7,11 @@
       "IMAGE_NOT_AVAILABLE": "Preview not available"
     },
     "FIELD": {
-      "LOCALSTORAGE" : "Local storage",
+      "LOCALSTORAGE": "Local storage",
       "SOURCE": "Select source from ",
       "SHOW_FILE": "Show",
       "DOWNLOAD_FILE": "Download",
-      "REMOVE_FILE":"Remove",
+      "REMOVE_FILE": "Remove",
       "UPLOAD": "UPLOAD",
       "REQUIRED": "*Required",
       "VALIDATOR": {
@@ -38,6 +38,12 @@
       "YB": "YB"
     },
     "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Page size selector",
+        "CURRENT_PAGE": "Current page selector",
+        "PREVIOUS_PAGE": "Previous page button",
+        "NEXT_PAGE": "Next page button"
+      },
       "ITEMS_RANGE": "Showing {{ range }} of {{ total }}",
       "ITEMS_PER_PAGE": "Items per page",
       "CURRENT_PAGE": "Page {{ number }}",
@@ -112,6 +118,12 @@
       "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
     "HOST_SETTINGS": {
+      "TYPE-AUTH": "Authentication type",
+      "BASIC": "Basic Auth",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "implicitFlow",
+      "PROVIDER": "Provider",
+      "REQUIRED": "The field is required",
       "CS_URL_ERROR": "Content Services address doesn't match the URL format",
       "PS_URL_ERROR": "Process Services address doesn't match the URL format",
       "TITLE": "Settings",
@@ -119,7 +131,11 @@
       "BP-HOST": "Process Services URL",
       "BACK": "Back",
       "APPLY": "APPLY",
-      "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL."
+      "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL.",
+      "REDIRECT": "Redirect Uri",
+      "SILENT": "Silent Login",
+      "SCOPE": "Scope",
+      "CLIENT": "ClientId"
     },
     "CARDVIEW": {
       "VALIDATORS": {
@@ -129,17 +145,17 @@
     },
     "METADATA": {
       "BASIC": {
-          "HEADER": "Properties",
-          "NAME": "Name",
-          "TITLE": "Title",
-          "DESCRIPTION": "Description",
-          "AUTHOR": "Author",
-          "MIMETYPE": "Mimetype",
-          "SIZE": "Size",
-          "CREATOR": "Creator",
-          "CREATED_DATE": "Created Date",
-          "MODIFIER": "Modifier",
-          "MODIFIED_DATE": "Modified Date"
+        "HEADER": "Properties",
+        "NAME": "Name",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "AUTHOR": "Author",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Size",
+        "CREATOR": "Creator",
+        "CREATED_DATE": "Created Date",
+        "MODIFIER": "Modifier",
+        "MODIFIED_DATE": "Modified Date"
       },
       "ACTIONS": {
         "EDIT": "Edit",
@@ -187,7 +203,8 @@
     "BUTTON": {
       "LOGIN": "SIGN IN",
       "CHECKING": "CHECKING",
-      "WELCOME": "WELCOME"
+      "WELCOME": "WELCOME",
+      "SSO": "SIGN IN SSO"
     },
     "ACTION": {
       "HELP": "NEED HELP?",
@@ -201,6 +218,9 @@
         "TITLE": "Drag and drop",
         "SUBTITLE": "to upload files"
       }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Content actions"
     }
   },
   "USER_PROFILE": {
@@ -252,8 +272,8 @@
         "PAGE": "Page {{ pageNum }}"
       },
       "METADATA": {
-          "MORE_INFORMATION": "More information",
-          "LESS_INFORMATION": "Less information"
+        "MORE_INFORMATION": "More information",
+        "LESS_INFORMATION": "Less information"
       }
     },
     "PDF_DIALOG": {
@@ -261,6 +281,44 @@
       "CLOSE": "Close",
       "PLACEHOLDER": "Password",
       "ERROR": "Password is wrong"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "We hit a problem.",
+      "DESCRIPTION": "Looks like something went wrong.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Back to home",
+        "ROUTE": "Home"
+      }
+    },
+    "403": {
+      "TITLE": "You don't have permission to access this server.",
+      "DESCRIPTION": "You're not allowed access to this resource on the server.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Report issue",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Back to home",
+        "ROUTE": "Home"
+      }
+    },
+    "404": {
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "We couldn’t find the page you were looking for.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Back to home",
+        "ROUTE": "Home"
+      }
     }
   }
 }

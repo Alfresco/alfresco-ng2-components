@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChartsModule } from 'ng2-charts';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DiagramsModule } from '../../diagram/diagram.module';
 import { Chart } from '../../diagram/models/chart/chart.model';
 import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
 import * as analyticMock from '../../mock';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
-import { AnalyticsProcessModule } from '../analytics-process.module';
+import { setupTestBed } from '@alfresco/adf-core';
+import { InsightsTestingModule } from '../../testing/insights.testing.module';
 
 declare let jasmine: any;
 
@@ -32,15 +31,9 @@ describe('AnalyticsGeneratorComponent', () => {
     let component: any;
     let fixture: ComponentFixture<AnalyticsGeneratorComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                ChartsModule,
-                DiagramsModule,
-                AnalyticsProcessModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [InsightsTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsGeneratorComponent);

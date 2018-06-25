@@ -17,11 +17,13 @@
 
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { MaterialModule } from './material.module';
+import { AboutModule } from './about/about.module';
 import { AppConfigModule } from './app-config/app-config.module';
 import { CardViewModule } from './card-view/card-view.module';
 import { CollapsableModule } from './collapsable/collapsable.module';
@@ -38,8 +40,9 @@ import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormModule } from './form/form.module';
 import { SidenavLayoutModule } from './sidenav-layout/sidenav-layout.module';
-import { SideBarActionModule } from './sidebar/sidebar-action.module';
 import { CommentsModule } from './comments/comments.module';
+import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
+import { TemplateModule } from './templates/template.module';
 
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
@@ -79,6 +82,7 @@ import { UploadService } from './services/upload.service';
 import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
 import { startupServiceFactory } from './services/startup-service-factory';
+import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -126,9 +130,9 @@ export function providers() {
 
 @NgModule({
     imports: [
+        AboutModule,
         ViewerModule,
         SidenavLayoutModule,
-        SideBarActionModule,
         PipeModule,
         CommonModule,
         DirectiveModule,
@@ -151,17 +155,20 @@ export function providers() {
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
+        ButtonsMenuModule,
+        TemplateModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient, LogService]
             }
-        })
+        }),
+        SortingPickerModule
     ],
     exports: [
+        AboutModule,
         ViewerModule,
-        SideBarActionModule,
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
@@ -185,7 +192,10 @@ export function providers() {
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
-        TranslateModule
+        TranslateModule,
+        ButtonsMenuModule,
+        TemplateModule,
+        SortingPickerModule
     ]
 })
 export class CoreModuleLazy {
@@ -193,8 +203,8 @@ export class CoreModuleLazy {
 
 @NgModule({
     imports: [
+        AboutModule,
         ViewerModule,
-        SideBarActionModule,
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
@@ -218,17 +228,20 @@ export class CoreModuleLazy {
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
+        ButtonsMenuModule,
+        TemplateModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient, LogService]
             }
-        })
+        }),
+        SortingPickerModule
     ],
     exports: [
+        AboutModule,
         ViewerModule,
-        SideBarActionModule,
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
@@ -252,7 +265,10 @@ export class CoreModuleLazy {
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
-        TranslateModule
+        TranslateModule,
+        ButtonsMenuModule,
+        TemplateModule,
+        SortingPickerModule
     ],
     providers: [
         ...providers(),

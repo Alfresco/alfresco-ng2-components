@@ -17,7 +17,7 @@
 
 import { Component, OnChanges, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material';
-import { PathElementEntity } from 'alfresco-js-api';
+import { PathElementEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { BreadcrumbComponent } from './breadcrumb.component';
 
 @Component({
@@ -31,31 +31,40 @@ import { BreadcrumbComponent } from './breadcrumb.component';
 })
 export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements OnChanges {
 
-    @ViewChild('select')
-    selectbox: MatSelect;
+    @ViewChild('dropdown')
+    dropdown: MatSelect;
 
     currentNode: PathElementEntity;
     previousNodes: PathElementEntity[];
 
     ngOnChanges(changes: SimpleChanges): void {
-        super.ngOnChanges(changes);
+        if (changes.folderNode) {
+            let node: MinimalNodeEntryEntity = null;
+            node = this.transform ? this.transform(changes.folderNode.currentValue) : changes.folderNode.currentValue;
+            this.route = this.parseRoute(node);
+        }
+
+        if (changes.transform) {
+            let node = this.transform ? this.transform(this.folderNode) : this.folderNode;
+            this.route = this.parseRoute(node);
+        }
         this.recalculateNodes();
     }
 
     /**
      * Calculate the current and previous nodes from the route array
      */
-    private recalculateNodes(): void {
+    protected recalculateNodes(): void {
         this.currentNode = this.route[this.route.length - 1];
         this.previousNodes = this.route.slice(0, this.route.length - 1).reverse();
     }
 
     /**
-     * Opens the selectbox overlay
+     * Opens the node picker menu
      */
     open(): void {
-        if (this.selectbox) {
-            this.selectbox.open();
+        if (this.dropdown) {
+            this.dropdown.open();
         }
     }
 

@@ -19,7 +19,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as throwEventMock from '../../mock/diagram/diagramThrow.mock';
 import { DiagramComponent } from './diagram.component';
-import { DiagramsModule } from '../diagram.module';
+import { setupTestBed } from '@alfresco/adf-core';
+import { InsightsTestingModule } from '../../testing/insights.testing.module';
 
 declare let jasmine: any;
 
@@ -29,25 +30,26 @@ describe('Diagrams throw', () => {
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
+    setupTestBed({
+        imports: [InsightsTestingModule]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [DiagramsModule]
-        }).compileComponents().then(() => {
-            jasmine.Ajax.install();
+        jasmine.Ajax.install();
 
-            fixture = TestBed.createComponent(DiagramComponent);
-            component = fixture.componentInstance;
-            element = fixture.nativeElement;
-            component.processInstanceId = '38399';
-            component.processDefinitionId = 'fakeprocess:24:38399';
-            component.metricPercentages = { startEvent: 0 };
+        fixture = TestBed.createComponent(DiagramComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+        component.processInstanceId = '38399';
+        component.processDefinitionId = 'fakeprocess:24:38399';
+        component.metricPercentages = { startEvent: 0 };
 
-            fixture.detectChanges();
-        });
+        fixture.detectChanges();
     }));
 
     afterEach(() => {
         component.success.unsubscribe();
+        fixture.destroy();
         jasmine.Ajax.uninstall();
     });
 

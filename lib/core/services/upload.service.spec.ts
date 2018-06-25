@@ -16,27 +16,25 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { FileModel, FileUploadOptions, FileUploadStatus } from '../models/file.model';
 import { AppConfigModule } from '../app-config/app-config.module';
 import { UploadService } from './upload.service';
 import { AppConfigService } from '../app-config/app-config.service';
+import { AlfrescoApiService } from './alfresco-api.service';
+
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
 describe('UploadService', () => {
     let service: UploadService;
+    let alfrescoApiService: AlfrescoApiService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule
-            ],
-            providers: [
-                UploadService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule, AppConfigModule]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);
@@ -48,6 +46,9 @@ describe('UploadService', () => {
         };
 
         service = TestBed.get(UploadService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        service.queue = [];
+        service.activeTask = null;
         jasmine.Ajax.install();
     });
 
@@ -85,8 +86,9 @@ describe('UploadService', () => {
     it('should make XHR done request after the file is added in the queue', (done) => {
         let emitter = new EventEmitter();
 
-        emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe(e => {
             expect(e.value).toBe('File uploaded');
+            emitterDisposable.unsubscribe();
             done();
         });
         let fileFake = new FileModel(
@@ -97,7 +99,7 @@ describe('UploadService', () => {
         service.uploadFilesInTheQueue(emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
+        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -110,8 +112,9 @@ describe('UploadService', () => {
     it('should make XHR error request after an error occur', (done) => {
         let emitter = new EventEmitter();
 
-        emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe(e => {
             expect(e.value).toBe('Error file uploaded');
+            emitterDisposable.unsubscribe();
             done();
         });
         let fileFake = new FileModel(
@@ -121,7 +124,7 @@ describe('UploadService', () => {
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
-            .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
+            .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 404,
@@ -133,10 +136,12 @@ describe('UploadService', () => {
     it('should make XHR abort request after the xhr abort is called', (done) => {
         let emitter = new EventEmitter();
 
-        emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe(e => {
             expect(e.value).toEqual('File aborted');
+            emitterDisposable.unsubscribe();
             done();
         });
+
         let fileFake = new FileModel(<File> { name: 'fake-name', size: 10 });
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
@@ -153,28 +158,39 @@ describe('UploadService', () => {
         service.uploadFilesInTheQueue(emitter);
 
         expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(false);
-        expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(true);
+        expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(false);
     });
 
-    it('If newVersionBaseName is set, name should be a param', () => {
+    it('If newVersion is set, name should be a param', () => {
+        let uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
+
         let emitter = new EventEmitter();
 
         const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, {
-            newVersion: true,
-            newVersionBaseName: 'name-under-test'
+            newVersion: true
         });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
-        expect(jasmine.Ajax.requests.mostRecent().params.has('name')).toBe(true);
-        expect(jasmine.Ajax.requests.mostRecent().params.get('name')).toBe('name-under-test');
+        expect(uploadFileSpy).toHaveBeenCalledWith({
+            name: 'fake-name',
+            size: 10
+        }, undefined, undefined, null, {
+            renditions: 'doclib',
+            include: [ 'allowableOperations' ],
+            overwrite: true,
+            majorVersion: undefined,
+            comment: undefined,
+            name: 'fake-name'
+        });
     });
 
     it('should use custom root folder ID given to the service', (done) => {
         let emitter = new EventEmitter();
 
-        emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe(e => {
             expect(e.value).toBe('File uploaded');
+            emitterDisposable.unsubscribe();
             done();
         });
         let filesFake = new FileModel(
@@ -185,7 +201,7 @@ describe('UploadService', () => {
         service.uploadFilesInTheQueue(emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true');
+        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true&include=allowableOperations');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({

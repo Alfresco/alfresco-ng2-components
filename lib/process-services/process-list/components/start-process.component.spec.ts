@@ -17,13 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatSelectModule
-} from '@angular/material';
-import { ActivitiContentService, AppConfigService, FormModule, FormService } from '@alfresco/adf-core';
+import { ActivitiContentService, AppConfigService, FormService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -37,6 +31,7 @@ import {
     testProcessDefinitions
 } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('StartFormComponent', () => {
 
@@ -50,38 +45,29 @@ describe('StartFormComponent', () => {
     let getStartFormDefinitionSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                FormModule,
-                MatButtonModule,
-                MatCardModule,
-                MatInputModule,
-                MatSelectModule
-            ],
-            declarations: [
-                StartProcessInstanceComponent
-            ],
-            providers: [
-                ActivitiContentService,
-                ProcessService,
-                FormService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
 
     beforeEach(() => {
         appConfig = TestBed.get(AppConfigService);
         activitiContentService = TestBed.get(ActivitiContentService);
         fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
-        processService = fixture.debugElement.injector.get(ProcessService);
-        formService = fixture.debugElement.injector.get(FormService);
+        processService = TestBed.get(ProcessService);
+        formService = TestBed.get(FormService);
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(Observable.of(testMultipleProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(Observable.of(newProcess));
         getStartFormDefinitionSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(Observable.of(taskFormMock));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of({ id: 1234 }));
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create instance of StartProcessInstanceComponent', () => {
@@ -99,8 +85,15 @@ describe('StartFormComponent', () => {
             });
 
             it('should enable start button when name and process filled out', async(() => {
-                component.selectedProcessDef = testProcessDefRepr;
+                spyOn(component, 'loadStartProcess').and.callThrough();
+
+                component.processDefinitionName = 'My Process 1';
+
+                let change = new SimpleChange(null, 123, true);
+                component.ngOnChanges({ 'appId': change });
+
                 fixture.detectChanges();
+
                 fixture.whenStable().then(() => {
                     let startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn.disabled).toBe(false);
@@ -174,13 +167,17 @@ describe('StartFormComponent', () => {
         describe('CS content connection', () => {
 
             it('alfrescoRepositoryName default configuration property', () => {
+                appConfig.config = Object.assign(appConfig.config, {
+                    'alfrescoRepositoryName': null
+                });
+
                 expect(component.getAlfrescoRepositoryName()).toBe('alfresco-1Alfresco');
             });
 
             it('alfrescoRepositoryName configuration property should be fetched', () => {
                 appConfig.config = Object.assign(appConfig.config, {
                     'alfrescoRepositoryName': 'alfresco-123'
-                };
+                });
 
                 expect(component.getAlfrescoRepositoryName()).toBe('alfresco-123Alfresco');
             });
@@ -190,7 +187,7 @@ describe('StartFormComponent', () => {
                 component.values = {};
                 component.values['file'] = {
                     isFile: true,
-                    name= 'example-file'
+                    name: 'example-file'
                 };
 
                 component.moveNodeFromCStoPS();
@@ -444,18 +441,17 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should emit start event when start select a process and add a name', async(() => {
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+        it('should emit start event when start select a process and add a name', (done) => {
+            let disposableStart = component.start.subscribe(() => {
+                disposableStart.unsubscribe();
+                done();
+            });
+
             component.selectedProcessDef = testProcessDefRepr;
             component.name = 'my:Process';
             component.startProcess();
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                let startButton = fixture.nativeElement.querySelector('#button-start');
-                startButton.click();
-                expect(startSpy).toHaveBeenCalled();
-            });
-        }));
+        });
 
         it('should not emit start event when start the process without select a process and name', () => {
             component.name = null;
@@ -482,17 +478,17 @@ describe('StartFormComponent', () => {
             expect(startSpy).not.toHaveBeenCalled();
         });
 
-        it('should able to start the process when the required fields are filled up', async(() => {
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+        it('should able to start the process when the required fields are filled up', (done) => {
             component.name = 'my:process1';
             component.selectedProcessDef = testProcessDefRepr;
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                let startButton = fixture.nativeElement.querySelector('#button-start');
-                startButton.click();
-                expect(startSpy).toHaveBeenCalled();
+
+            let disposableStart = component.start.subscribe(() => {
+                disposableStart.unsubscribe();
+                done();
             });
-        }));
+
+            component.startProcess();
+        });
 
         it('should return true if startFrom defined', async(() => {
             component.selectedProcessDef = testProcessDefRepr;

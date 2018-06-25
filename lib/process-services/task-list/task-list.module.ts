@@ -19,9 +19,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormModule, CommentsModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { ProcessCommentsModule } from '../process-comments/process-comments.module';
-import { CardViewModule, DataColumnModule, DataTableModule, DirectiveModule, InfoDrawerModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material.module';
@@ -44,20 +43,14 @@ import { TaskStandaloneComponent } from './components/task-standalone.component'
 
 @NgModule({
     imports: [
+        CoreModule,
         CommonModule,
-        CardViewModule,
-        DataTableModule,
-        DataColumnModule,
-        DirectiveModule,
-        FormModule,
         FlexLayoutModule,
-        InfoDrawerModule,
         MaterialModule,
         TranslateModule,
         FormsModule,
         ReactiveFormsModule,
         PeopleModule,
-        CommentsModule,
         ProcessCommentsModule,
         ContentWidgetModule
     ],

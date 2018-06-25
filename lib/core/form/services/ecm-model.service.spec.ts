@@ -15,10 +15,14 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { FormModel } from './../components/widgets/core/form.model';
 import { EcmModelService } from './ecm-model.service';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { TestBed } from '@angular/core/testing';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
@@ -26,16 +30,17 @@ describe('EcmModelService', () => {
 
     let service: EcmModelService;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                EcmModelService
-            ]
-        });
-        service = TestBed.get(EcmModelService);
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
     });
 
     beforeEach(() => {
+        service = TestBed.get(EcmModelService);
         jasmine.Ajax.install();
     });
 
@@ -91,7 +96,7 @@ describe('EcmModelService', () => {
         });
     });
 
-    it('Should create ECM types with a clean and preserv real name in the title', (done) => {
+    it('Should create ECM types with a clean and preserve real name in the title', (done) => {
 
         let typeName = 'typeTest:testName@#$*!';
         let cleanName = 'testName';
@@ -111,7 +116,7 @@ describe('EcmModelService', () => {
         });
     });
 
-    it('Should add propery to a type', (done) => {
+    it('Should add property to a type', (done) => {
 
         let typeName = 'typeTest';
         let formFields = {
@@ -151,7 +156,7 @@ describe('EcmModelService', () => {
         });
     });
 
-    it('Should add propery to a type and clean name type', (done) => {
+    it('Should add property to a type and clean name type', (done) => {
 
         let typeName = 'typeTest:testName@#$*!';
         let cleanName = 'testName';

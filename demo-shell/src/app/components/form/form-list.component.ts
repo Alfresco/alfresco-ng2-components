@@ -36,6 +36,8 @@ export class FormListComponent {
     storedData: any = {};
     restoredData: any = {};
 
+    showValidationIcon = false;
+
     constructor(private formService: FormService, private logService: LogService) {
         // Prevent default outcome actions
         formService.executeOutcome.subscribe(e => {

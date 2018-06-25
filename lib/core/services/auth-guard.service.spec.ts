@@ -17,16 +17,11 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-
-import { CookieServiceMock } from './../mock/cookie.service.mock';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { TranslateLoaderService } from './translate-loader.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('AuthGuardService', () => {
     let state;
@@ -35,27 +30,12 @@ describe('AuthGuardService', () => {
     let service: AuthGuard;
     let appConfigService: AppConfigService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                RouterTestingModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                AuthGuard,
-                AuthenticationService,
-                { provide: CookieService, useClass: CookieServiceMock }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
+        localStorage.clear();
         state = { url: '' };
         authService = TestBed.get(AuthenticationService);
         router = TestBed.get(Router);
@@ -72,6 +52,7 @@ describe('AuthGuardService', () => {
     }));
 
     it('if the alfresco js api is NOT logged in should canActivate be false', async(() => {
+        state.url = 'some-url';
         spyOn(router, 'navigate');
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
 
@@ -81,13 +62,31 @@ describe('AuthGuardService', () => {
 
     it('should set redirect url', async(() => {
         state.url = 'some-url';
+        appConfigService.config.loginRoute = 'login';
 
         spyOn(router, 'navigate');
-        spyOn(authService, 'setRedirectUrl');
+        spyOn(authService, 'setRedirect');
 
         service.canActivate(null, state);
 
-        expect(authService.setRedirectUrl).toHaveBeenCalledWith({ provider: 'ALL', url: 'some-url' });
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'ALL', url: 'some-url'
+        });
+        expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    }));
+
+    it('should set redirect url with query params', async(() => {
+        state.url = 'some-url;q=query';
+        appConfigService.config.loginRoute = 'login';
+
+        spyOn(router, 'navigate');
+        spyOn(authService, 'setRedirect');
+
+        service.canActivate(null, state);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'ALL', url: 'some-url;q=query'
+        });
         expect(router.navigate).toHaveBeenCalledWith(['/login']);
     }));
 
@@ -96,11 +95,26 @@ describe('AuthGuardService', () => {
         appConfigService.config.loginRoute = 'fakeLoginRoute';
 
         spyOn(router, 'navigate');
-        spyOn(authService, 'setRedirectUrl');
+        spyOn(authService, 'setRedirect');
 
         service.canActivate(null, state);
 
-        expect(authService.setRedirectUrl).toHaveBeenCalledWith({ provider: 'ALL', url: 'some-url' });
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'ALL', url: 'some-url'
+        });
         expect(router.navigate).toHaveBeenCalledWith(['/fakeLoginRoute']);
+    }));
+
+    it('should pass actual redirect when no state segments exists', async(() => {
+        state.url = '/';
+
+        spyOn(router, 'navigate');
+        spyOn(authService, 'setRedirect');
+
+        service.canActivate(null, state);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'ALL', url: '/'
+        });
     }));
 });

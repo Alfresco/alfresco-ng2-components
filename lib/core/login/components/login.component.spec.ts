@@ -19,15 +19,18 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { UserPreferencesService } from '../../services/user-preferences.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthenticationService } from '../../services/authentication.service';
-
-import { MaterialModule } from '../../material.module';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
 import { Observable } from 'rxjs/Observable';
+import { OauthConfigModel } from '../../models/oauth-config.model';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -36,6 +39,8 @@ describe('LoginComponent', () => {
     let authService: AuthenticationService;
     let router: Router;
     let userPreferences: UserPreferencesService;
+    let appConfigService: AppConfigService;
+    let alfrescoApiService: AlfrescoApiService;
 
     let usernameInput, passwordInput;
 
@@ -54,22 +59,11 @@ describe('LoginComponent', () => {
         return errorMessage;
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                MaterialModule
-            ],
-            declarations: [
-                LoginComponent
-            ],
-            providers: [
-                AuthenticationService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         fixture = TestBed.createComponent(LoginComponent);
 
         element = fixture.nativeElement;
@@ -77,14 +71,22 @@ describe('LoginComponent', () => {
         component.showRememberMe = true;
         component.showLoginActions = true;
 
-        usernameInput = element.querySelector('#username');
-        passwordInput = element.querySelector('#password');
-
         authService = TestBed.get(AuthenticationService);
         router = TestBed.get(Router);
         userPreferences = TestBed.get(UserPreferencesService);
+        appConfigService = TestBed.get(AppConfigService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
 
         fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            usernameInput = element.querySelector('#username');
+            passwordInput = element.querySelector('#password');
+        });
+    }));
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     function loginWithCredentials(username, password, providers: string = 'ECM') {
@@ -100,12 +102,12 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
     }
 
-    it('should be autocompelte off', () => {
+    it('should be autocompelete off', () => {
         expect(element.querySelector('#adf-login-form').getAttribute('autocomplete')).toBe('off');
     });
 
     it('should redirect to route on successful login', () => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket'}));
+        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
         spyOn(router, 'navigate');
@@ -114,15 +116,15 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to previous route state on successful login', () => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket'}));
+        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
-        authService.setRedirectUrl({ provider: 'ECM', url: 'redirect-url' } );
+        authService.setRedirect({ provider: 'ECM', url: 'some-route' });
 
-        spyOn(router, 'navigate');
+        spyOn(router, 'navigateByUrl');
 
         loginWithCredentials('fake-username', 'fake-password');
-        expect(router.navigate).toHaveBeenCalledWith(['redirect-url']);
+        expect(router.navigateByUrl).toHaveBeenCalledWith('some-route');
     });
 
     it('should update user preferences upon login', async(() => {
@@ -165,7 +167,7 @@ describe('LoginComponent', () => {
         });
 
         it('should be changed to the "welcome key" after a successful login attempt', () => {
-            spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket'}));
+            spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
             loginWithCredentials('fake-username', 'fake-password');
 
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.WELCOME');
@@ -388,62 +390,72 @@ describe('LoginComponent', () => {
         expect(element.querySelector('input[type="password"]').value).toEqual('fake-change-password');
     });
 
-    it('should return success event after the login have succeeded', async(() => {
+    it('should return success event after the login have succeeded', (done) => {
+        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
+
         component.providers = 'ECM';
         expect(component.isError).toBe(false);
 
         component.success.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(false);
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(false);
+                done();
+            });
         });
 
         loginWithCredentials('fake-username', 'fake-password');
 
-    }));
+    });
 
-    it('should return error with a wrong username', async(() => {
+    it('should return error with a wrong username', (done) => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            fixture.whenStable().then(() => {
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+                done();
+            });
         });
 
         loginWithCredentials('fake-wrong-username', 'fake-password');
-    }));
+    });
 
-    it('should return error with a wrong password', async(() => {
+    it('should return error with a wrong password', (done) => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+                done();
+            });
         });
 
         loginWithCredentials('fake-username', 'fake-wrong-password');
-    }));
+    });
 
-    it('should return error with a wrong username and password', async(() => {
+    it('should return error with a wrong username and password', (done) => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+                done();
+            });
         });
 
         loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
-    }));
+    });
 
-    it('should return CORS error when server CORS error occurs', async(() => {
+    it('should return CORS error when server CORS error occurs', (done) => {
         spyOn(authService, 'login').and.returnValue(Observable.throw({
             error: {
                 crossDomain: true,
@@ -454,14 +466,16 @@ describe('LoginComponent', () => {
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+                done();
+            });
         });
 
         loginWithCredentials('fake-username-CORS-error', 'fake-password');
-    }));
+    });
 
     it('should return CSRF error when server CSRF error occurs', async(() => {
         spyOn(authService, 'login')
@@ -509,7 +523,7 @@ describe('LoginComponent', () => {
 
             expect(component.isError).toBe(false);
             expect(event).toEqual(
-                new LoginSuccessEvent({type: 'type', ticket: 'ticket'}, 'fake-username', null)
+                new LoginSuccessEvent({ type: 'type', ticket: 'ticket' }, 'fake-username', null)
             );
         });
 
@@ -554,16 +568,61 @@ describe('LoginComponent', () => {
         expect(element.querySelector('#password').type).toEqual('password');
     });
 
-    it('should emit error event when the providers is undefined', async(() => {
-        component.error.subscribe((error) => {
+    it('should emit only the username and not the password as part of the executeSubmit', async(() => {
+        component.executeSubmit.subscribe((res) => {
             fixture.detectChanges();
 
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
-            expect(error).toEqual(new LoginErrorEvent('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS'));
+            expect(res.values.controls.username).toBeDefined('username mandatory');
+            expect(res.values.controls.username.value).toEqual('fake-username');
+            expect(res.values.controls.password).toBeUndefined('The password not not be part of the emitted values');
         });
 
-        loginWithCredentials('fake-username', 'fake-password', null);
+        loginWithCredentials('fake-username', 'fake-password');
     }));
+
+    describe('SSO', () => {
+
+        beforeEach(() => {
+            appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true };
+            appConfigService.load();
+            alfrescoApiService.reset();
+        });
+
+        it('should not show login username and password if SSO implicit flow is active', async(() => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#username')).toBeNull();
+                expect(element.querySelector('#password')).toBeNull();
+            });
+        }));
+
+        it('should not show the login base auth button', async(() => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#login-button')).toBeNull();
+            });
+        }));
+
+        it('should  show the login SSO button', async(() => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#login-button-sso')).toBeDefined();
+            });
+        }));
+
+    });
 });

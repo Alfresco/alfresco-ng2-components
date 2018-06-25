@@ -1,6 +1,6 @@
 <div class="container">
 
-    <mat-accordion class="adf-container-recent">
+    <mat-accordion *ngIf="showRecentFiles" class="adf-container-recent">
         <mat-expansion-panel  hideToggle="true">
             <mat-expansion-panel-header >
                 <mat-panel-title>
@@ -28,17 +28,20 @@
         </mat-expansion-panel>
     </mat-accordion>
 
-    <div class="adf-site-container-style" id="site-container">
+    <div *ngIf="showSitePicker" class="adf-site-container-style" id="site-container">
         <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" [relations]="'members'">
         </adf-sites-dropdown>
     </div>
+
     <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
         <adf-upload-drag-area fxFlex="1 1 auto"
                               [disabled]="disableDragArea"
-                              [parentId]="getDocumentListCurrentFolderId()"
+                              [acceptedFilesType]="getFileFiltering()"
+                              [rootFolderId]="getDocumentListCurrentFolderId()"
                               [versioning]="versioning"
                               [adf-node-permission]="'create'"
-                              [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []">
+                              [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
+                              (beginUpload)="onBeginUpload($event)">
             <div *ngIf="errorMessage" class="error-message">
                 <button (click)="resetError()" mat-icon-button>
                     <mat-icon>highlight_off</mat-icon>
@@ -49,7 +52,7 @@
                 <adf-toolbar-title fxFlex="0 1 auto">
                     <adf-breadcrumb fxShow fxHide.lt-sm="true"
                                     class="files-breadcrumb"
-                                    root="Personal Files"
+                                    root="APP.PERSONAL-FILES"
                                     [target]="documentList"
                                     [folderNode]="documentList.folderNode">
                     </adf-breadcrumb>
@@ -67,28 +70,31 @@
                         mat-icon-button
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}"
                         (click)="toogleGalleryView()">
-                        <mat-icon *ngIf="displayMode === 'list'" >view_comfy</mat-icon>
-                        <mat-icon *ngIf="displayMode === 'gallery'">list</mat-icon>
+                        <mat-icon *ngIf="displayMode === 'list'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}">view_comfy</mat-icon>
+                        <mat-icon *ngIf="displayMode === 'gallery'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.LISTVIEW' | translate }}">list</mat-icon>
                     </button>
                     <button
                         mat-icon-button
                         [disabled]="!canCreateContent(documentList.folderNode)"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
                         (error)="openSnackMessage($event)"
-                        [adf-create-folder]="getDocumentListCurrentFolderId()">
+                        [adf-create-folder]="getDocumentListCurrentFolderId()"
+                        matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
                             (error)="openSnackMessage($event)"
-                            [adf-edit-folder]="documentList.selection[0]?.entry">
+                            [adf-edit-folder]="documentList.selection[0]?.entry"
+                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}">
                         <mat-icon>create</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}"
-                            [adfNodeDownload]="documentList.selection">
+                            [adfNodeDownload]="documentList.selection"
+                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}">
                         <mat-icon>get_app</mat-icon>
                     </button>
                     <button mat-icon-button
@@ -96,13 +102,15 @@
                             [adf-nodes]="documentList.selection"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}"
                             (delete)="onDeleteActionSuccess($event)"
-                            [adf-delete]="documentList.selection">
+                            [adf-delete]="documentList.selection"
+                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}">
                         <mat-icon>delete</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!documentList.selection.length"
                             #favorite="adfFavorite"
-                            [adf-node-favorite]="documentList.selection">
+                            [adf-node-favorite]="documentList.selection"
+                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.FAVORITES' | translate }}">
                         <mat-icon>
                             {{ favorite.hasFavorites() ? 'star' :'star_border' }}
                         </mat-icon>
@@ -110,14 +118,15 @@
                     <button mat-icon-button
                             [disabled]="!documentList.selection.length"
                             [baseShareUrl]="baseShareUrl"
-                            [adf-share]="documentList.selection[0]">
+                            [adf-share]="documentList.selection[0]"
+                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHARE' | translate }}">
                         <mat-icon>
                             share
                         </mat-icon>
                     </button>
                 </div>
 
-                <button fxFlex="1 0 auto" mat-icon-button [matMenuTriggerFor]="themePicker">
+                <button fxFlex="1 0 auto" mat-icon-button [matMenuTriggerFor]="themePicker" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.THEME' | translate }}">
                     <mat-icon>format_color_fill</mat-icon>
                 </button>
 
@@ -129,8 +138,8 @@
                 </mat-menu>
 
                 <button mat-icon-button (click)="showVersions = !showVersions" class="adf-show-versions-button">
-                    <mat-icon *ngIf="!showVersions">chevron_left</mat-icon>
-                    <mat-icon *ngIf="showVersions">chevron_right</mat-icon>
+                    <mat-icon *ngIf="!showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHOW_VERSION' | translate }}">chevron_left</mat-icon>
+                    <mat-icon *ngIf="showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.HIDE_VERSION' | translate }}">chevron_right</mat-icon>
                 </button>
 
                 <adf-toolbar-divider fxFlex="0 0 auto" fxHide fxShow.lt-sm="true"></adf-toolbar-divider>
@@ -188,6 +197,10 @@
                 [display]="displayMode"
                 [node]="nodeResult"
                 [includeFields]="includeFields"
+                [sorting]="sorting"
+                [sortingMode]="sortingMode"
+                [showHeader]="showHeader"
+                [thumbnails]="thumbnails"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (ready)="emitReadyEvent($event)"
@@ -209,6 +222,7 @@
                         class="image-table-cell">
                     </data-column>
                     <data-column
+                        *ngIf="showNameColumn"
                         key="name"
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip"
@@ -266,6 +280,25 @@
                 </data-columns>
 
                 <content-actions>
+                    <!-- Conditional actions demo -->
+                    <content-action
+                        target="all"
+                        title="Action for 'custom' node"
+                        [disabled]="isCustomActionDisabled"
+                        (execute)="runCustomAction($event)">
+                    </content-action>
+                    <content-action
+                        icon="get_app"
+                        title="Download this file now!"
+                        handler="download"
+                        [visible]="canDownloadNode">
+                    </content-action>
+                    <content-action
+                        icon="get_app"
+                        title="Never see this action again"
+                        handler="download"
+                        [visible]="false">
+                    </content-action>
                     <!-- common actions -->
                     <content-action
                         icon="get_app"
@@ -320,7 +353,7 @@
                     </content-action>
                     <content-action
                         icon="settings_input_component"
-                        title="{{'DOCUMENT_LIST.ACTIONS.PERMISSION' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.PERMISSION"
                         permission="copy"
                         (error)="onContentActionError($event)"
                         (execute)="onPermissionRequested($event)">
@@ -345,7 +378,7 @@
                 (prevPage)="onPrevPage($event)">
             </adf-pagination>
             <adf-infinite-pagination
-                *ngIf="infiniteScrolling"
+                [hidden]="!infiniteScrolling"
                 [target]="documentList"
                 [loading]="documentList.infiniteLoading">
                 {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
@@ -353,29 +386,38 @@
         </adf-upload-drag-area>
 
         <adf-info-drawer-layout *ngIf="showVersions" class="adf-manage-versions-sidebar" fxFlex="0 0 auto">
-
             <div info-drawer-content>
-                <ng-container *ngIf="hasOneFileSelected();else choose_document_template">
-                    <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
-                        <adf-version-manager
-                            [node]="documentList.selection[0].entry"
-                            [showComments]="showVersionComments"
-                            [allowDownload]="allowVersionDownload">
-                        </adf-version-manager>
-                    </ng-container>
-                </ng-container>
-                <ng-template #choose_document_template>
-                    <div class="adf-manage-versions-empty">
-                        <mat-icon class="adf-manage-versions-empty-icon">face</mat-icon>
-                        {{'VERSION.CHOOSE_FILE' | translate}}
-                    </div>
-                </ng-template>
-                <ng-template #no_permission_to_versions>
-                    <div class="adf-manage-versions-no-permission">
-                        <mat-icon class="adf-manage-versions-no-permission-icon">warning</mat-icon>
-                        {{'VERSION.NO_PERMISSION' | translate}}
-                    </div>
-                </ng-template>
+
+                <adf-info-drawer [title]="'Details'">
+                    <adf-info-drawer-tab [label]="'Properties'">
+                        <adf-content-metadata-card
+                            [node]="documentList.selection[0].entry">
+                        </adf-content-metadata-card>
+                    </adf-info-drawer-tab>
+                    <adf-info-drawer-tab [label]="'Versions'">
+                        <ng-container *ngIf="hasOneFileSelected();else choose_document_template">
+                            <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
+                                <adf-version-manager
+                                    [node]="documentList.selection[0].entry"
+                                    [showComments]="showVersionComments"
+                                    [allowDownload]="allowVersionDownload">
+                                </adf-version-manager>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #choose_document_template>
+                            <div class="adf-manage-versions-empty">
+                                <mat-icon class="adf-manage-versions-empty-icon">face</mat-icon>
+                                {{'VERSION.CHOOSE_FILE' | translate}}
+                            </div>
+                        </ng-template>
+                        <ng-template #no_permission_to_versions>
+                            <div class="adf-manage-versions-no-permission">
+                                <mat-icon class="adf-manage-versions-no-permission-icon">warning</mat-icon>
+                                {{'VERSION.NO_PERMISSION' | translate}}
+                            </div>
+                        </ng-template>
+                    </adf-info-drawer-tab>
+                </adf-info-drawer>
             </div>
         </adf-info-drawer-layout>
     </div>
@@ -390,7 +432,7 @@
     </adf-start-process>
 </div>
 
-<div class="adf-content-service-settings">
+<div *ngIf="showSettingsPanel" class="adf-content-service-settings">
 
     <p>Current folder ID: {{ documentList.currentFolderId }}</p>
 
@@ -404,6 +446,12 @@
     </div>
 
     <div class="container">
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="showNameColumn">
+                Show Name Column
+            </mat-slide-toggle>
+        </section>
+
         <section>
             <mat-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">{{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' |
                 translate}}
@@ -435,13 +483,19 @@
         </section>
 
         <section>
+            <mat-slide-toggle [color]="'primary'" (click)="toggleThumbnails()" >{{'DOCUMENT_LIST.THUMBNAILS' |
+                translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
             <mat-slide-toggle [color]="'primary'" [(ngModel)]="versioning">
                 {{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="infiniteScrolling">
+            <mat-slide-toggle color="primary" (click)="onInfiniteScrolling()">
                 {{'DOCUMENT_LIST.ENABLE_INFINITE_SCROLL' | translate}}
             </mat-slide-toggle>
         </section>
@@ -455,6 +509,12 @@
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="allowVersionDownload">
                 {{'APP.ADF_VERSION_MANAGER.ALLOW_DOWNLOAD' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="warnOnMultipleUploads">
+                {{'APP.WARN-MULTIPLE-UPLOADS' | translate}}
             </mat-slide-toggle>
         </section>
 
@@ -487,7 +547,8 @@
                 [versioning]="versioning"
                 [adf-node-permission]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
-                (permissionEvent)="handlePermissionError($event)">
+                (permissionEvent)="handlePermissionError($event)"
+                (beginUpload)="onBeginUpload($event)">
             </adf-upload-button>
         </div>
         <div *ngIf="acceptedFilesTypeShow">

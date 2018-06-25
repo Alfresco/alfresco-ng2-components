@@ -16,6 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -30,12 +31,14 @@ import { UploadModule } from '../upload/upload.module';
         CommonModule,
         MaterialModule,
         TranslateModule,
-        UploadModule
+        UploadModule,
+        FormsModule
     ],
     exports: [
         VersionUploadComponent,
         VersionManagerComponent,
-        VersionListComponent
+        VersionListComponent,
+        FormsModule
     ],
     declarations: [
         VersionUploadComponent,

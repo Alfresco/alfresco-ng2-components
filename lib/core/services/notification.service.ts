@@ -17,34 +17,42 @@
 
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material';
+import { TranslationService } from './translation.service';
 
 @Injectable()
 export class NotificationService {
 
     static DEFAULT_DURATION_MESSAGE: number = 5000;
 
-    constructor(public snackbar: MatSnackBar) {
+    constructor(private snackBar: MatSnackBar,
+                private translationService: TranslationService) {
     }
 
     /**
-     * Opens a snackbar notification to show a message.
-     * @param message The message to show
+     * Opens a SnackBar notification to show a message.
+     * @param message The message (or resource key) to show.
      * @param millisecondsDuration Time before notification disappears after being shown
+     * @returns Information/control object for the SnackBar
      */
-    public openSnackMessage(message: string, millisecondsDuration?: number): MatSnackBarRef<any> {
-        return this.snackbar.open(message, null, {
+    openSnackMessage(message: string, millisecondsDuration?: number): MatSnackBarRef<any> {
+        const translatedMessage = this.translationService.instant(message);
+
+        return this.snackBar.open(translatedMessage, null, {
             duration: millisecondsDuration || NotificationService.DEFAULT_DURATION_MESSAGE
         });
     }
 
     /**
-     * Opens a snackbar notification with a message and a response button.
-     * @param message The message to show
+     * Opens a SnackBar notification with a message and a response button.
+     * @param message The message (or resource key) to show.
      * @param action Caption for the response button
      * @param millisecondsDuration Time before the notification disappears (unless the button is clicked)
+     * @returns Information/control object for the SnackBar
      */
-    public openSnackMessageAction(message: string, action: string, millisecondsDuration?: number): MatSnackBarRef<any> {
-        return this.snackbar.open(message, action, {
+    openSnackMessageAction(message: string, action: string, millisecondsDuration?: number): MatSnackBarRef<any> {
+        const translatedMessage = this.translationService.instant(message);
+
+        return this.snackBar.open(translatedMessage, action, {
             duration: millisecondsDuration || NotificationService.DEFAULT_DURATION_MESSAGE
         });
     }

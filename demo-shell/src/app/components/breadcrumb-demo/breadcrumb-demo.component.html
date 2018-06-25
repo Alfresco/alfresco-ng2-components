@@ -1,0 +1,83 @@
+<main>
+    <h1>Breadcrumb</h1>
+    <ul>
+        <li>Try creating and navigating long paths</li>
+        <li>Try resizing the browser width to ensure items are trimmed as expected</li>
+    </ul>
+
+    <h2>1. Standalone (fixed size)</h2>
+    <small>Component is used in the fixed-width layout</small>
+
+    <div class="breadcrumb-container-restricted">
+        <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+        </adf-breadcrumb>
+    </div>
+
+    <h2>2. Standalone (full width)</h2>
+    <small>Component fits the parent container width</small>
+
+    <div>
+        <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+        </adf-breadcrumb>
+    </div>
+
+    <h2>2.1 Standalone with Dropdown (full width)</h2>
+    <small>
+        Component fits the parent container width but is limited to 3 items to display at once.
+        It should automatically switch to the Dropdown mode if the path exceeds 3 nodes.
+    </small>
+
+    <div>
+        <adf-breadcrumb [maxItems]="3" root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+        </adf-breadcrumb>
+    </div>
+
+    <h2>3. Toolbar (standalone)</h2>
+    <small>Component used as a child of the Toolbar component</small>
+
+    <adf-toolbar>
+        <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+        </adf-breadcrumb>
+    </adf-toolbar>
+
+    <h2>4. Toolbar (title)</h2>
+    <small>Component is wrapped into the Toolbar Title component</small>
+
+    <adf-toolbar>
+        <adf-toolbar-title>
+            <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+            </adf-breadcrumb>
+        </adf-toolbar-title>
+    </adf-toolbar>
+
+    <h2>5. Toolbar with separators and buttons</h2>
+    <small>
+        Component is wrapped into the Toolbar Title component.
+        The toolbar also has separators and buttons that might provide impact on breadcrumb layout.
+        Buttons do nothing and are present for layout purposes.
+    </small>
+
+    <adf-toolbar class="full-content-toolbar">
+        <adf-toolbar-title fxFlex="0 1 auto">
+            <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+            </adf-breadcrumb>
+        </adf-toolbar-title>
+        <adf-toolbar-divider fxFlex="0 0 auto"></adf-toolbar-divider>
+        <div fxFlex="0 0 auto">
+            <button mat-icon-button aria-label="Create a new folder button">
+                <mat-icon>create_new_folder</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Edit node button">
+                <mat-icon>create</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Delete node icon button">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </adf-toolbar>
+
+    <div class="content">
+        <adf-document-list #documentList currentFolderId="-my-">
+        </adf-document-list>
+    </div>
+</main>

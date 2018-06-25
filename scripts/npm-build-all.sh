@@ -55,12 +55,12 @@ enable_testbrowser(){
 
 test_project() {
     echo "====== test project: $1 ====="
-    npm run test -- --component $1 --mode coverage || exit 1
+    npm run test-lib -- --component $1 --mode coverage || exit 1
 }
 
 debug_project() {
     echo "====== debug project: $1 ====="
-    npm run test-browser -- --component $1 || exit 1
+    npm run test-lib-browser -- --component $1 || exit 1
 }
 
 enable_fast_test() {
@@ -116,7 +116,7 @@ while [[ $1 == -* ]]; do
     esac
 done
 
-cd "$DIR/../lib/"
+cd "$DIR/../"
 
 if $EXEC_CLEAN == true; then
   echo "====== Clean components ====="
@@ -132,9 +132,9 @@ fi
 if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
   echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
   npm install $GIT_ISH --no-save
-  cd "$DIR/../lib/node_modules/alfresco-js-api"
+  cd "$DIR/../node_modules/alfresco-js-api"
   npm install
-  cd "$DIR/../lib/"
+  cd "$DIR/../"
 fi
 
 if $EXEC_VERSION_JSAPI == true; then
@@ -144,19 +144,17 @@ fi
 
 if $EXEC_BUILD == true; then
     echo "====== Build components ====="
-    npm run build || exit 1
+    npm run build-lib || exit 1
 fi
 
 if $EXEC_FAST_TEST == true; then
     echo "====== Test all components (fast option) ====="
-    npm run test || exit 1
+    npm run test-lib || exit 1
 fi
 
 if $RUN_TEST == true; then
-      DESTDIR="$DIR/../lib/"
-      cd $DESTDIR
       if $EXEC_SINGLE_TEST == true; then
-            cp -n "$DESTDIR/config/karma-test-shim.js" "$DESTDIR/$SINGLE_TEST/"
+            cp -n "$DIR/../lib/config/karma-test-shim.js" "$DIR/../lib/$SINGLE_TEST/"
             test_project $SINGLE_TEST
       else
        for PACKAGE in ${projects[@]}
@@ -167,10 +165,8 @@ if $RUN_TEST == true; then
 fi
 
 if $RUN_TESTBROWSER == true; then
-      DESTDIR="$DIR/../lib/"
-      cd $DESTDIR
       if $EXEC_SINGLE_TEST == true; then
-            cp -n "$DESTDIR/config/karma-test-shim.js" "$DESTDIR/$SINGLE_TEST/"
+            cp -n "$DIR/../lib/config/karma-test-shim.js" "$DIR/../lib/$SINGLE_TEST/"
             debug_project $SINGLE_TEST
       else
        for PACKAGE in ${projects[@]}

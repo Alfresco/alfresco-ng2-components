@@ -1,0 +1,16 @@
+<div class="adf-sidebar-action-menu">
+    <button *ngIf="isExpanded()" mat-raised-button class="adf-sidebar-action-menu-button" data-automation-id="create-button" [matMenuTriggerFor]="adfSidebarMenu">
+        <span *ngIf="title" class="adf-sidebar-action-menu-text">{{ title }}</span>
+        <ng-content select="[sidebar-menu-title-icon]"></ng-content>
+    </button>
+
+    <div *ngIf="!isExpanded()" class="adf-sidebar-action-menu-icon" [matMenuTriggerFor]="adfSidebarMenu">
+        <ng-content select="[sidebar-menu-expand-icon]"></ng-content>
+    </div>
+
+    <mat-menu #adfSidebarMenu="matMenu" class="adf-sidebar-action-menu-panel" [overlapTrigger]="false" yPosition="below">
+        <div class="adf-sidebar-action-menu-options" [style.width.px]="width">
+            <ng-content select="[sidebar-menu-options]"></ng-content>
+        </div>
+    </mat-menu>
+</div>

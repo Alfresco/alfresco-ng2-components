@@ -35,9 +35,21 @@ export class FolderCreateDirective {
     @Input('adf-create-folder')
     parentNodeId: string = DEFAULT_FOLDER_PARENT_ID;
 
-    /** Emitted when the create folder give error for example a folder with same name already exist */
+    /** Title of folder creation dialog. */
+    @Input()
+    title: string = null;
+
+    /** Type of node to create. */
+    @Input()
+    nodeType = 'cm:folder';
+
+    /** Emitted when an error occurs (eg, a folder with same name already exists). */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
+
+    /** Emitted when the folder is created successfully. */
+    @Output()
+    success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
     @HostListener('click', [ '$event' ])
     onClick(event) {
@@ -52,10 +64,10 @@ export class FolderCreateDirective {
 
     private get dialogConfig(): MatDialogConfig {
         const { DIALOG_WIDTH: width } = FolderCreateDirective;
-        const { parentNodeId } = this;
+        const { parentNodeId, title: createTitle, nodeType } = this;
 
         return {
-            data: { parentNodeId },
+            data: { parentNodeId, createTitle, nodeType },
             width: `${width}px`
         };
     }
@@ -66,6 +78,10 @@ export class FolderCreateDirective {
 
         dialogInstance.componentInstance.error.subscribe((error) => {
             this.error.emit(error);
+        });
+
+        dialogInstance.componentInstance.success.subscribe((node: MinimalNodeEntryEntity) => {
+            this.success.emit(node);
         });
 
         dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {

@@ -1,5 +1,8 @@
 @mixin adf-analytics-report-list-theme($theme) {
     $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent );
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
 
     .adf-analytics-report-list {
 
@@ -43,7 +46,7 @@
             position: relative;
             min-height: 200px;
             overflow: hidden;
-            background-color: #269abc;
+            background-color: mat-color($background, background);
             display: flex;
             flex-direction: column;
             cursor: pointer;
@@ -56,7 +59,7 @@
 
                 &-icon {
                     font-size: 70px;
-                    color: #168aac;
+                    color: mat-color($accent);
                     width: 1em;
                     height: 1em;
                     display: inline-block;
@@ -79,16 +82,16 @@
             }
 
             &-actions {
-                border-top: 1px solid rgba(0,0,0,.1);
+                border-top: 1px solid mat-color($foreground, divider);
                 padding: 8px;
                 box-sizing: border-box;
                 height: 40px;
 
                 &-icon {
-                    color: #e9f1f3;
+                    color: mat-color($primary, 50);
 
                     &:hover {
-                        color: #b7dfea;
+                        color: mat-color($primary, 100);
                     }
                 }
             }

@@ -4,7 +4,7 @@
             *ngFor="let label of searchFilter.selectedFacetQueries"
             [removable]="true"
             (remove)="searchFilter.unselectFacetQuery(label)">
-            {{ label }}
+            {{ label | translate }}
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
     </ng-container>
@@ -13,7 +13,7 @@
             *ngFor="let bucket of searchFilter.selectedBuckets"
             [removable]="true"
             (remove)="searchFilter.unselectFacetBucket(bucket)">
-            {{ bucket.display || bucket.label }}
+            {{ (bucket.display || bucket.label) | translate }}
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
     </ng-container>

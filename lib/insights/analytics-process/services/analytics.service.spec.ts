@@ -18,19 +18,20 @@
 import { TestBed } from '@angular/core/testing';
 import { fakeReportList } from '../../mock';
 import { AnalyticsService } from './analytics.service';
+import { setupTestBed } from '@alfresco/adf-core';
+import { InsightsTestingModule } from '../../testing/insights.testing.module';
 
 declare let jasmine: any;
 
-describe('Activiti Analytics Service', () => {
+describe('AnalyticsService', () => {
 
     let service: AnalyticsService;
 
+    setupTestBed({
+        imports: [InsightsTestingModule]
+    });
+
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                AnalyticsService
-            ]
-        });
         service = TestBed.get(AnalyticsService);
     });
 

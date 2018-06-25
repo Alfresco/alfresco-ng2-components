@@ -26,6 +26,7 @@ export abstract class CardViewBaseItemModel {
     clickable: boolean;
     icon?: string;
     validators?: CardViewItemValidator[];
+    data?: any;
 
     constructor(obj: CardViewItemProperties) {
         this.label = obj.label || '';
@@ -36,6 +37,7 @@ export abstract class CardViewBaseItemModel {
         this.clickable = !!obj.clickable;
         this.icon = obj.icon || '';
         this.validators = obj.validators || [];
+        this.data = obj.data || null;
     }
 
     isEmpty(): boolean {
@@ -48,7 +50,7 @@ export abstract class CardViewBaseItemModel {
         }
 
         return this.validators
-            .map((validator) => validator.isValid(newValue))
+            .map(validator => validator.isValid(newValue))
             .reduce((isValidUntilNow, isValid) => isValidUntilNow && isValid, true);
     }
 
@@ -57,8 +59,6 @@ export abstract class CardViewBaseItemModel {
             return [];
         }
 
-        return this.validators
-            .filter((validator) => !validator.isValid(value))
-            .map((validator) => validator.message);
+        return this.validators.filter(validator => !validator.isValid(value)).map(validator => validator.message);
     }
 }

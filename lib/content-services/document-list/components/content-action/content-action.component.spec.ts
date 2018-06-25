@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { ContentService } from '@alfresco/adf-core';
-import { DataTableModule } from '@alfresco/adf-core';
+import { ContentService, setupTestBed } from '@alfresco/adf-core';
 import { FileNode } from '../../../mock';
-import { DocumentListService } from '../../services/document-list.service';
-import { CustomResourcesService } from '../../services/custom-resources.service';
 import { ContentActionHandler } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
@@ -31,6 +28,7 @@ import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
 import { ContentActionModel } from './../../models/content-action.model';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentAction', () => {
 
@@ -42,23 +40,10 @@ describe('ContentAction', () => {
     let contentService: ContentService;
     let nodeActionsService: NodeActionsService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DataTableModule
-            ],
-            providers: [
-                DocumentListService,
-                CustomResourcesService
-            ],
-            declarations: [
-                DocumentListComponent
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
     beforeEach(() => {
         contentService = TestBed.get(ContentService);
@@ -94,6 +79,24 @@ describe('ContentAction', () => {
         expect(model.target).toBe(action.target);
         expect(model.title).toBe(action.title);
         expect(model.icon).toBe(action.icon);
+    });
+
+    it('should update visibility binding', () => {
+        let action = new ContentActionComponent(actionList, null, null);
+        action.target = 'document';
+        action.title = '<title>';
+        action.icon = '<icon>';
+
+        action.visible = true;
+        action.ngOnInit();
+        expect(action.documentActionModel.visible).toBeTruthy();
+
+        action.visible = false;
+        action.ngOnChanges({
+            'visible': new SimpleChange(true, false, false)
+        });
+
+        expect(action.documentActionModel.visible).toBeFalsy();
     });
 
     it('should get action handler from document actions service', () => {

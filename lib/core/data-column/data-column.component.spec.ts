@@ -15,18 +15,16 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { DataColumnComponent } from './data-column.component';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('DataColumnListComponent', () => {
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                DataColumnComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     it('should create the component', () => {
         const fixture = TestBed.createComponent(DataColumnComponent);
@@ -34,7 +32,7 @@ describe('DataColumnListComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('sould setup screen reader title for thumbnails', () => {
+    it('should setup screen reader title for thumbnails', () => {
         const component = new DataColumnComponent();
         component.key = '$thumbnail';
         expect(component.srTitle).toBeFalsy();

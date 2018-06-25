@@ -25,13 +25,13 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
-    AuthenticationService, AppConfigService, ContentService, TranslationService,
+    AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues
+    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues, InfinitePaginationComponent
 } from '@alfresco/adf-core';
 
-import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
+import { DocumentListComponent, PermissionStyleModel, UploadFilesEvent, ConfirmDialogComponent } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
@@ -54,9 +54,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showViewer = false;
     showVersions = false;
     displayMode = DisplayMode.List;
-    includeFields = ['isLocked', 'aspectNames'];
+    includeFields = ['isFavorite', 'isLocked', 'aspectNames'];
 
-    baseShareUrl = this.appConfig.get<string>('ecmHost') + '/preview/s/';
+    baseShareUrl = this.appConfig.get<string>(AppConfigValues.ECMHOST) + '/preview/s/';
 
     toolbarColor = 'default';
 
@@ -73,6 +73,24 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     formValues: FormValues = {};
 
     processId;
+
+    @Input()
+    sorting = ['name', 'asc'];
+
+    @Input()
+    sortingMode = 'client';
+
+    @Input()
+    showRecentFiles = true;
+
+    @Input()
+    showSitePicker = true;
+
+    @Input()
+    showSettingsPanel = true;
+
+    @Input()
+    showHeader = true;
 
     @Input()
     selectionMode = 'multiple';
@@ -119,6 +137,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     disableDragArea = false;
 
+    @Input()
+    showNameColumn = true;
+
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
 
@@ -146,10 +167,15 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('standardPagination')
     standardPagination: PaginationComponent;
 
+    @ViewChild(InfinitePaginationComponent)
+    infinitePaginationComponent: InfinitePaginationComponent;
+
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
     supportedPages: number[];
     currentSiteid = '';
+    warnOnMultipleUploads = false;
+    thumbnails = false;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -162,8 +188,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private translateService: TranslationService,
                 private router: Router,
                 private logService: LogService,
-                private preference: UserPreferencesService,
                 private appConfig: AppConfigService,
+                private preference: UserPreferencesService,
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
                 public authenticationService: AuthenticationService) {
@@ -186,6 +212,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return this.folderUpload;
     }
 
+    toggleThumbnails() {
+        this.thumbnails = !this.thumbnails;
+        this.documentList.reload();
+    }
+
     ngOnInit() {
         if (!this.pagination) {
             this.pagination = <Pagination>{
@@ -200,7 +231,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                     this.currentFolderId = params['id'];
                 }
 
-                if (params['mode']) {
+                if (params['mode'] && params['mode'] === DisplayMode.Gallery) {
                     this.displayMode = DisplayMode.Gallery;
                 }
             });
@@ -250,9 +281,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    onNavigationError(err: any) {
-        if (err) {
-            this.errorMessage = err.message || 'Navigation error';
+    onNavigationError(error: any) {
+        if (error) {
+            this.router.navigate(['/error', error.status]);
         }
     }
 
@@ -282,7 +313,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFolderChange($event) {
-        this.router.navigate(['/files', $event.value.id]);
+        this.router.navigate(['/files', $event.value.id, 'display', this.displayMode]);
     }
 
     handlePermissionError(event: any) {
@@ -346,9 +377,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private reloadForInfiniteScrolling() {
-        if (this.infiniteScrolling) {
-            this.documentList.skipCount = 0;
-        }
         this.documentList.reload();
     }
 
@@ -459,7 +487,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.turnedNextPage.emit(event);
     }
 
-    loadNextBatch(event: Pagination) {
+    loadNextBatch(event: Pagination): void {
         this.loadNext.emit(event);
     }
 
@@ -468,17 +496,63 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     toogleGalleryView(): void {
+        this.displayMode = this.displayMode === DisplayMode.List ? DisplayMode.Gallery : DisplayMode.List;
         const url = this
             .router
             .createUrlTree(['/files', this.currentFolderId, 'display', this.displayMode])
             .toString();
 
-        if (this.displayMode === DisplayMode.List) {
-            this.displayMode = DisplayMode.Gallery;
-            this.location.go(url);
-        } else {
-            this.displayMode = DisplayMode.List;
-            this.location.go(url);
+        this.location.go(url);
+    }
+
+    onInfiniteScrolling(): void {
+        this.infiniteScrolling = !this.infiniteScrolling;
+        this.infinitePaginationComponent.reset();
+        this.reloadForInfiniteScrolling();
+    }
+
+    canDownloadNode = (node: MinimalNodeEntity): boolean => {
+        if (node && node.entry && node.entry.name === 'custom') {
+            return true;
         }
+        return false;
+    }
+
+    onBeginUpload(event: UploadFilesEvent) {
+        if (this.warnOnMultipleUploads && event) {
+            const files = event.files || [];
+            if (files.length > 1) {
+                event.pauseUpload();
+
+                const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                    data: {
+                        title: 'Upload',
+                        message: `Are you sure you want to upload ${files.length} file(s)?`
+                    },
+                    minWidth: '250px'
+                });
+
+                dialogRef.afterClosed().subscribe(result => {
+                    if (result === true) {
+                        event.resumeUpload();
+                    }
+                });
+            }
+        }
+    }
+
+    isCustomActionDisabled = (node: MinimalNodeEntity): boolean => {
+        if (node && node.entry && node.entry.name === 'custom') {
+            return false;
+        }
+        return true;
+    }
+
+    runCustomAction(event) {
+        console.log(event);
+    }
+
+    getFileFiltering() {
+        return this.acceptedFilesTypeShow ? this.acceptedFilesType : '*';
     }
 }

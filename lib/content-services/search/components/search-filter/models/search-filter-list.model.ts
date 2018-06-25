@@ -1,0 +1,130 @@
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+export class SearchFilterList<T> implements Iterable<T> {
+
+    private filteredItems: T[] = [];
+    private _filterText: string = '';
+
+    items: T[] = [];
+    pageSize: number = 5;
+    currentPageSize: number = 5;
+
+    get filterText(): string {
+        return this._filterText;
+    }
+
+    set filterText(value: string) {
+        this._filterText = value;
+        this.applyFilter();
+    }
+
+    private _filter: (item: T) => boolean = () => true;
+
+    get filter(): (item: T) => boolean {
+        return this._filter;
+    }
+
+    set filter(value: (item: T) => boolean ) {
+        this._filter = value;
+        this.applyFilter();
+    }
+
+    private applyFilter() {
+        if (this.filter) {
+            this.filteredItems = this.items.filter(this.filter);
+        } else {
+            this.filteredItems = this.items;
+        }
+        this.currentPageSize = this.pageSize;
+    }
+
+    /** Returns visible portion of the items.  */
+    get visibleItems(): T[] {
+        return this.filteredItems.slice(0, this.currentPageSize);
+    }
+
+    /** Returns entire collection length including items not displayed on the page. */
+    get length(): number {
+        return this.items.length;
+    }
+
+    /** Detects whether more items can be displayed. */
+    get canShowMoreItems(): boolean {
+        return this.filteredItems.length > this.currentPageSize;
+    }
+
+    /** Detects whether less items can be displayed. */
+    get canShowLessItems(): boolean {
+        return this.currentPageSize > this.pageSize;
+    }
+
+    /** Detects whether content fits single page. */
+    get fitsPage(): boolean {
+        return this.pageSize >= this.filteredItems.length;
+    }
+
+    constructor(items: T[] = [], pageSize: number = 5) {
+        this.items = items;
+        this.filteredItems = items;
+        this.pageSize = pageSize;
+        this.currentPageSize = pageSize;
+    }
+
+    /** Display more items. */
+    showMoreItems() {
+        if (this.canShowMoreItems) {
+            this.currentPageSize += this.pageSize;
+        }
+    }
+
+    /** Display less items. */
+    showLessItems() {
+        if (this.canShowLessItems) {
+            this.currentPageSize -= this.pageSize;
+        }
+    }
+
+    /** Reset entire collection and page settings. */
+    clear() {
+        this.currentPageSize = this.pageSize;
+        this.items = [];
+        this.filteredItems = [];
+        this.filterText = '';
+    }
+
+    [Symbol.iterator](): Iterator<T> {
+        let pointer = 0;
+        let items = this.visibleItems;
+
+        return {
+            next(): IteratorResult<T> {
+                if (pointer < items.length) {
+                    return {
+                        done: false,
+                        value: items[pointer++]
+                    };
+                } else {
+                    return {
+                        done: true,
+                        value: null
+                    };
+                }
+            }
+        };
+    }
+}

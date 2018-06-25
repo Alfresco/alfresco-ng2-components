@@ -32,15 +32,19 @@ import { PerformSearchCallback } from '../../interfaces/perform-search-callback.
 
 export class PeopleSearchComponent implements OnInit {
 
+    /** Parameters for displaying the list. */
     @Input()
     results: Observable<UserProcessModel[]>;
 
+    /** Emitted when a search is performed with a new keyword. */
     @Output()
     searchPeople: EventEmitter<any> = new EventEmitter();
 
+    /** Emitted when a user is selected and the action button is clicked. */
     @Output()
     success: EventEmitter<UserProcessModel> = new EventEmitter<UserProcessModel>();
 
+    /** Emitted when the "close" button is clicked. */
     @Output()
     closeSearch = new EventEmitter();
 

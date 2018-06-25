@@ -57,4 +57,8 @@ export class CookieService {
             (expiration ? ';expires=' + expiration.toUTCString() : '') +
             (path ? `;path=${path}` : ';path=/');
     }
+
+    clear() {
+        /* placeholder for testing purposes */
+    }
 }

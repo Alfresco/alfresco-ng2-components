@@ -20,7 +20,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
-import { AnalyticsProcessModule } from '../analytics-process.module';
+import { setupTestBed } from '@alfresco/adf-core';
+import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { AnalyticsService } from '../services/analytics.service';
+import { Observable } from 'rxjs/Observable';
 
 declare let jasmine: any;
 
@@ -29,19 +32,21 @@ describe('AnalyticsReportParametersComponent', () => {
     let component: AnalyticsReportParametersComponent;
     let fixture: ComponentFixture<AnalyticsReportParametersComponent>;
     let element: HTMLElement;
+    let validForm = false;
+    let service: AnalyticsService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AnalyticsProcessModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [InsightsTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsReportParametersComponent);
+        service = TestBed.get(AnalyticsService);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
+        spyOn(component, 'isFormValid').and.callFake(() => {
+            return validForm;
+        });
         fixture.detectChanges();
     });
 
@@ -396,7 +401,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         describe('When the form is rendered correctly', () => {
-            let validForm: boolean = true;
+
             let values: any = {
                 dateRange: {
                     startDate: '2016-09-01', endDate: '2016-10-05'
@@ -438,19 +443,12 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     component.toggleParameters();
-                    component.reportId = '1';
-                    spyOn(component, 'isFormValid').and.callFake(() => {
-                        return validForm;
-                    });
                     fixture.detectChanges();
                 });
             }));
 
-            afterEach(() => {
-                validForm = true;
-            });
-
             it('Should be able to change the report title', (done) => {
+                spyOn(service, 'updateReport').and.returnValue(Observable.of(analyticParamsMock.reportDefParamStatus));
 
                 let title: HTMLElement = element.querySelector('h4');
                 title.click();
@@ -470,12 +468,6 @@ describe('AnalyticsReportParametersComponent', () => {
                     let titleChanged: HTMLElement = element.querySelector('h4');
                     expect(titleChanged.textContent.trim()).toEqual('FAKE_TEST_NAME');
                     done();
-                });
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: analyticParamsMock.reportDefParamStatus
                 });
             });
 
@@ -549,50 +541,73 @@ describe('AnalyticsReportParametersComponent', () => {
                 });
             }));
 
+            it('should render adf-buttons-menu component', async(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const buttonsMenuComponent = element.querySelector('adf-buttons-action-menu');
+                    expect(buttonsMenuComponent).not.toBeNull();
+                    expect(buttonsMenuComponent).toBeDefined();
+                });
+            }));
+
+            it('should render delete button', async(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const buttonsMenuComponent = element.querySelector('#delete-button');
+                    expect(buttonsMenuComponent).not.toBeNull();
+                    expect(buttonsMenuComponent).toBeDefined();
+                });
+            }));
+
             it('Should raise an event for report deleted', async(() => {
-                let deleteButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#delete-button');
+                fixture.detectChanges();
+                spyOn(component, 'deleteReport');
+                let deleteButton = fixture.debugElement.nativeElement.querySelector('#delete-button');
                 expect(deleteButton).toBeDefined();
                 expect(deleteButton).not.toBeNull();
-
                 component.deleteReportSuccess.subscribe((reportId) => {
                     expect(reportId).not.toBeNull();
                 });
-
                 deleteButton.click();
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json'
-                });
+                expect(component.deleteReport).toHaveBeenCalled();
             }));
 
             it('Should hide export button if the form is not valid', async(() => {
-                let exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
-                expect(exportButton).toBeDefined();
-                expect(exportButton).not.toBeNull();
-                validForm = false;
-
+                validForm = true;
                 fixture.detectChanges();
-
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    exportButton = <HTMLButtonElement> element.querySelector('#export-button');
-                    expect(exportButton).toBeNull();
+                    let exportButton = fixture.debugElement.nativeElement.querySelector('#export-button');
+                    expect(exportButton).toBeDefined();
+                    expect(exportButton).not.toBeNull();
+
+                    validForm = false;
+                    fixture.detectChanges();
+                    fixture.whenStable().then(() => {
+                        fixture.detectChanges();
+                        exportButton = fixture.debugElement.nativeElement.querySelector('#export-button');
+                        expect(exportButton).toBeNull();
+                    });
                 });
+
             }));
 
             it('Should hide save button if the form is not valid', async(() => {
-                let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
-                expect(saveButton).toBeDefined();
-                expect(saveButton).not.toBeNull();
-                validForm = false;
-
+                validForm = true;
                 fixture.detectChanges();
-
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    saveButton = <HTMLButtonElement> element.querySelector('#save-button');
-                    expect(saveButton).toBeNull();
+                    let saveButton = fixture.debugElement.nativeElement.querySelector('#save-button');
+                    expect(saveButton).toBeDefined();
+                    expect(saveButton).not.toBeNull();
+
+                    validForm = false;
+                    fixture.detectChanges();
+                    fixture.whenStable().then(() => {
+                        fixture.detectChanges();
+                        saveButton = fixture.debugElement.nativeElement.querySelector('#save-button');
+                        expect(saveButton).toBeNull();
+                    });
                 });
             }));
 
@@ -618,6 +633,5 @@ describe('AnalyticsReportParametersComponent', () => {
                 });
             }));
         });
-
     });
 });

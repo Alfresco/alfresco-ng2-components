@@ -26,21 +26,27 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
 
 export class TaskStandaloneComponent {
 
+    /** Name of the task. */
     @Input()
     taskName: string;
 
+    /** If true then Task completed message is shown and `Complete` and `Cancel` buttons are hidden. */
     @Input()
     isCompleted: boolean = false;
 
+    /** Toggles rendering of the `Complete` button. */
     @Input()
     hasCompletePermission: boolean = true;
 
+    /** Toggles rendering of the `Cancel` button. */
     @Input()
     hideCancelButton: boolean = true;
 
+    /** Emitted when the "Cancel" button is clicked. */
     @Output()
     cancel: EventEmitter<void> = new EventEmitter<void>();
 
+    /** Emitted when the form associated with the task is completed. */
     @Output()
     complete: EventEmitter<void> = new EventEmitter<void>();
 

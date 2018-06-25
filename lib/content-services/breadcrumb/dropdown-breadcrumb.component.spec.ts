@@ -18,10 +18,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DataTableModule } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
-import { CustomResourcesService, DocumentListComponent, DocumentListService } from '../document-list';
+import { DocumentListComponent } from '../document-list';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('DropdownBreadcrumb', () => {
 
@@ -29,126 +30,156 @@ describe('DropdownBreadcrumb', () => {
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DataTableModule
-            ],
-            declarations: [
-                DocumentListComponent,
-                DropdownBreadcrumbComponent
-            ],
-            providers: [
-                DocumentListService,
-                CustomResourcesService
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
-        }).compileComponents();
-    }));
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
-        component = fixture.componentInstance;
-
-        documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
+    setupTestBed({
+        imports: [ContentTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
+    beforeEach(async(() => {
+        fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
+        component = fixture.componentInstance;
+        documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
+    }));
+
+    afterEach(async(() => {
+        fixture.destroy();
+    }));
+
     function openSelect() {
-        const folderIcon = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-trigger"]'));
-        folderIcon.triggerEventHandler('click', null);
+        const folderIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="dropdown-breadcrumb-trigger"]');
+        folderIcon.click();
         fixture.detectChanges();
     }
 
     function triggerComponentChange(fakeNodeData) {
         const change = new SimpleChange(null, fakeNodeData, true);
-        component.ngOnChanges({'folderNode': change});
+        component.ngOnChanges({ 'folderNode': change });
         fixture.detectChanges();
     }
 
     function clickOnTheFirstOption() {
-        const option = fixture.debugElement.query(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
-        option.triggerEventHandler('click', null);
+        const option: any = document.querySelector('[id^="mat-option"]');
+        option.click();
     }
 
-    it('should display only the current folder name if there is no previous folders', () => {
-        fakeNodeWithCreatePermission.path.elements = [];
+    it('should display only the current folder name if there is no previous folders', (done) => {
+        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [];
 
-        triggerComponentChange(fakeNodeWithCreatePermission);
-        openSelect();
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
-        const currentFolder = fixture.debugElement.query(By.css('[data-automation-id="current-folder"]'));
-        const path = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-path"]'));
-        expect(path).toBeNull();
-        expect(currentFolder).not.toBeNull();
-        expect(currentFolder.nativeElement.innerText.trim()).toEqual('Test');
+        fixture.whenStable().then(() => {
+
+            openSelect();
+
+            const currentFolder = fixture.debugElement.query(By.css('[data-automation-id="current-folder"]'));
+            const path = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-path"]'));
+            expect(path).toBeNull();
+            expect(currentFolder).not.toBeNull();
+            expect(currentFolder.nativeElement.innerText.trim()).toEqual('Test');
+
+            done();
+        });
     });
 
-    it('should display only the path in the selectbox', () => {
-        fakeNodeWithCreatePermission.path.elements = [
+    it('should display only the path in the selectbox', (done) => {
+        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [
             { id: '1', name: 'Stark Industries' },
             { id: '2', name: 'User Homes' },
             { id: '3', name: 'J.A.R.V.I.S' }
         ];
 
-        triggerComponentChange(fakeNodeWithCreatePermission);
-        openSelect();
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
-        const path = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-path"]'));
-        const options = fixture.debugElement.queryAll(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
-        expect(path).not.toBeNull();
-        expect(options.length).toBe(3);
+        fixture.whenStable().then(() => {
+
+            openSelect();
+
+            const path = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-path"]'));
+            const options = fixture.debugElement.queryAll(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
+            expect(path).not.toBeNull();
+            expect(options.length).toBe(3);
+            done();
+        });
     });
 
-    it('should display the path in reverse order', () => {
-        fakeNodeWithCreatePermission.path.elements = [
+    it('should display the path in reverse order', (done) => {
+        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [
             { id: '1', name: 'Stark Industries' },
             { id: '2', name: 'User Homes' },
             { id: '3', name: 'J.A.R.V.I.S' }
         ];
 
-        triggerComponentChange(fakeNodeWithCreatePermission);
-        openSelect();
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
-        const options = fixture.debugElement.queryAll(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
-        expect(options.length).toBe(3);
-        expect(options[0].nativeElement.innerText.trim()).toBe('J.A.R.V.I.S');
-        expect(options[1].nativeElement.innerText.trim()).toBe('User Homes');
-        expect(options[2].nativeElement.innerText.trim()).toBe('Stark Industries');
+        fixture.whenStable().then(() => {
+
+            openSelect();
+
+            fixture.whenStable().then(() => {
+                const options = fixture.debugElement.queryAll(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
+                expect(options.length).toBe(3);
+                expect(options[0].nativeElement.innerText.trim()).toBe('J.A.R.V.I.S');
+                expect(options[1].nativeElement.innerText.trim()).toBe('User Homes');
+                expect(options[2].nativeElement.innerText.trim()).toBe('Stark Industries');
+                done();
+            });
+        });
     });
 
     it('should emit navigation event when clicking on an option', (done) => {
-        fakeNodeWithCreatePermission.path.elements = [{ id: '1', name: 'Stark Industries' }];
-        component.navigate.subscribe(val => {
-            expect(val).toEqual({ id: '1', name: 'Stark Industries' });
-            done();
+        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
+
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
+
+        fixture.whenStable().then(() => {
+
+            openSelect();
+
+            fixture.whenStable().then(() => {
+                component.navigate.subscribe(val => {
+                    expect(val).toEqual({ id: '1', name: 'Stark Industries' });
+                    done();
+                });
+
+                clickOnTheFirstOption();
+            });
         });
-
-        triggerComponentChange(fakeNodeWithCreatePermission);
-        openSelect();
-
-        clickOnTheFirstOption();
     });
 
-    it('should update document list  when clicking on an option', () => {
+    it('should update document list  when clicking on an option', (done) => {
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
         component.target = documentList;
-        fakeNodeWithCreatePermission.path.elements = [{ id: '1', name: 'Stark Industries' }];
-        triggerComponentChange(fakeNodeWithCreatePermission);
-        openSelect();
+        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
-        clickOnTheFirstOption();
+        fixture.whenStable().then(() => {
+            openSelect();
+            fixture.whenStable().then(() => {
 
-        expect(documentList.loadFolderByNodeId).toHaveBeenCalledWith('1');
+                clickOnTheFirstOption();
+
+                expect(documentList.loadFolderByNodeId).toHaveBeenCalledWith('1');
+                done();
+            });
+        });
     });
 
-    it('should open the selectbox when clicking on the folder icon', async(() => {
-        triggerComponentChange(fakeNodeWithCreatePermission);
-        spyOn(component.selectbox, 'open');
+    it('should open the selectbox when clicking on the folder icon', (done) => {
+        triggerComponentChange(JSON.parse(JSON.stringify(fakeNodeWithCreatePermission)));
+        spyOn(component.dropdown, 'open');
 
-        openSelect();
+        fixture.whenStable().then(() => {
+            openSelect();
 
-        expect(component.selectbox.open).toHaveBeenCalled();
-    }));
+            fixture.whenStable().then(() => {
+                expect(component.dropdown.open).toHaveBeenCalled();
+                done();
+            });
+        });
+    });
 });

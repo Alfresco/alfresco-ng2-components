@@ -86,8 +86,10 @@ export class NodeDownloadDirective {
     private downloadFile(node: MinimalNodeEntity) {
         if (node && node.entry) {
             const contentApi = this.apiService.getInstance().content;
+            // nodeId for Shared node
+            const id = (<any> node.entry).nodeId || node.entry.id;
 
-            const url = contentApi.getContentUrl(node.entry.id, true);
+            const url = contentApi.getContentUrl(id, true);
             const fileName = node.entry.name;
 
             this.download(url, fileName);

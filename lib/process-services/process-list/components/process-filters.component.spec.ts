@@ -22,40 +22,34 @@ import { FilterProcessRepresentationModel } from '../models/filter-process.model
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 
-describe('ActivitiFilters', () => {
+describe('ProcessFiltersComponent', () => {
 
     let filterList: ProcessFiltersComponent;
     let processFilterService: ProcessFilterService;
     let appsProcessService: AppsProcessService;
-
-    let fakeGlobalFilter = [];
-    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
-        name: 'FakeInvolvedTasks',
-        filter: { state: 'open', assignment: 'fake-involved' }
-    }));
-    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
-        name: 'FakeMyTasks',
-        filter: { state: 'open', assignment: 'fake-assignee' }
-    }));
-
-    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
-        name: 'Running',
-        filter: { state: 'open', assignment: 'fake-running' }
-    }));
-
-    let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
-        resolve(fakeGlobalFilter);
-    });
-
-    let mockErrorFilterList = {
-        error: 'wrong request'
-    };
-
-    let mockErrorFilterPromise = new Promise(function (resolve, reject) {
-        reject(mockErrorFilterList);
-    });
+    let fakeGlobalFilterPromise;
+    let mockErrorFilterPromise;
 
     beforeEach(() => {
+        fakeGlobalFilterPromise = Promise.resolve([
+            new FilterProcessRepresentationModel({
+                name: 'FakeInvolvedTasks',
+                filter: { state: 'open', assignment: 'fake-involved' }
+            }),
+            new FilterProcessRepresentationModel({
+                name: 'FakeMyTasks',
+                filter: { state: 'open', assignment: 'fake-assignee' }
+            }),
+            new FilterProcessRepresentationModel({
+                name: 'Running',
+                filter: { state: 'open', assignment: 'fake-running' }
+            })
+        ]);
+
+        mockErrorFilterPromise = Promise.reject({
+            error: 'wrong request'
+        });
+
         processFilterService = new ProcessFilterService(null);
         appsProcessService = new AppsProcessService(null, null);
         filterList = new ProcessFiltersComponent(processFilterService, appsProcessService);
@@ -98,12 +92,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should return the filter task list, filtered By Name', (done) => {
-
-        let fakeDeployedApplicationsPromise = new Promise(function (resolve, reject) {
-            resolve({  id: 1 });
-        });
-
-        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
+        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(Promise.resolve({ id: 1 })));
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test', true);

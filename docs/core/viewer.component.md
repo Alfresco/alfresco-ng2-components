@@ -14,9 +14,12 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
 -   [Basic usage](#basic-usage)
 
+-   [Class members](#class-members)
+
     -   [Properties](#properties)
     -   [Events](#events)
-    -   [Keyboard shortcuts](#keyboard-shortcuts)
+
+-   [Keyboard shortcuts](#keyboard-shortcuts)
 
 -   [Details](#details)
 
@@ -69,52 +72,55 @@ Note that if you have a URL which contains a shared link ID, you should extract 
 ID portion and use it with the `sharedLinkId` property rather than using the whole
 URL with `urlFile`.
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| urlFile | `string` | `''` | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
-| urlFileViewer | `string` | `null` | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
-| blobFile | `Blob` |  | Loads a Blob File  |
-| fileNodeId | `string` | `null` | Node Id of the file to load.  |
-| sharedLinkId | `string` | `null` | Shared link id (to display shared file).  |
-| overlayMode | `boolean` | `false` | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
-| showViewer | `boolean` | `true` | Hide or show the viewer  |
-| showToolbar | `boolean` | `true` | Hide or show the toolbar  |
-| displayName | `string` |  | Specifies the name of the file when it is not available from the URL.  |
-| allowGoBack | `boolean` | `true` | Allows `back` navigation  |
-| allowDownload | `boolean` | `true` | Toggles downloading.  |
-| allowPrint | `boolean` | `false` | Toggles printing.  |
-| allowShare | `boolean` | `false` | Toggles sharing.  |
-| allowFullScreen | `boolean` | `true` | Toggles the 'Full Screen' feature.  |
-| allowNavigate | `boolean` | `false` | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
-| canNavigateBefore | `boolean` | `true` | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled.  |
-| canNavigateNext | `boolean` | `true` | Toggles the next (">") button. Requires `allowNavigate` to be enabled.  |
-| allowSidebar | `boolean` | `false` | Toggles the sidebar.  |
-| allowThumbnails | `boolean` | `true` | Toggles PDF thumbnails.  |
-| showSidebar | `boolean` | `false` | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`.  |
-| sidebarPosition | `string` | `'right'` | The position of the sidebar. Can be `left` or `right`.  |
-| sidebarTemplate | `TemplateRef<any>` | `null` | The template for the sidebar. The template context contains the loaded node data.  |
-| thumbnailsTemplate | `TemplateRef<any>` | `null` | The template for the pdf thumbnails.  |
-| mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension).  |
-| fileName | `string` |  | Content filename.  |
-| downloadUrl | `string` | `null` | URL to download.  |
-| maxRetries | `number` | `5` | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
+| -- | -- | -- | -- |
+| allowDownload | `boolean` | true | Toggles downloading. |
+| allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
+| allowGoBack | `boolean` | true | Allows `back` navigation |
+| allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
+| allowPrint | `boolean` | false | Toggles printing. |
+| allowShare | `boolean` | false | Toggles sharing. |
+| allowSidebar | `boolean` | false | Toggles the sidebar. |
+| allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
+| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
+| canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
+| canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
+| displayName | `string` |  | Specifies the name of the file when it is not available from the URL. |
+| downloadUrl | `string` |  null | URL to download. |
+| fileName | `string` |  | Content filename. |
+| maxRetries | `number` | 5 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
+| mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
+| nodeId | `string` |  null | Node Id of the file to load. |
+| overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
+| sharedLinkId | `string` |  null | Shared link id (to display shared file). |
+| showSidebar | `boolean` | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
+| showToolbar | `boolean` | true | Hide or show the toolbar |
+| showViewer | `boolean` | true | Hide or show the viewer |
+| sidebarPosition | `string` | "right" | The position of the sidebar. Can be `left` or `right`. |
+| sidebarTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` |  null | The template for the sidebar. The template context contains the loaded node data. |
+| thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` |  null | The template for the pdf thumbnails. |
+| urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
+| urlFileViewer | `string` |  null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
+| fileNodeId |  |  | Node Id of the file to load. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| goBack | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Back' button.  |
-| download | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Download' button.  |
-| print | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Print' button.  |
-| share | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Share' button.  |
-| showViewerChange | `EventEmitter<boolean>` | Emitted when the viewer is shown or hidden.  |
-| extensionChange | `EventEmitter<string>` | Emitted when the filename extension changes.  |
-| navigateBefore | `EventEmitter<{}>` | Emitted when user clicks 'Navigate Before' ("&lt;") button.  |
-| navigateNext | `EventEmitter<{}>` | Emitted when user clicks 'Navigate Next' (">") button.  |
+| -- | -- | -- |
+| download | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Download' button. |
+| extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
+| goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
+| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
+| navigateNext | `EventEmitter<Object>` | Emitted when user clicks 'Navigate Next' (">") button. |
+| print | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Print' button. |
+| share | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Share' button. |
+| showViewerChange | `EventEmitter<boolean>` | Emitted when the viewer is shown or hidden. |
 
-### Keyboard shortcuts
+## Keyboard shortcuts
 
 | Name | Description |
 | ---- | ----------- |
@@ -177,7 +183,7 @@ You can provide custom file parameters, for example a value for the `mimeType` o
 
 ### Supported file formats
 
-The Viewer component consists of separate Views that handle particular types of type families based on either a file extension or a mime type:
+The [Viewer component](../core/viewer.component.md) consists of separate Views that handle particular types of type families based on either a file extension or a mime type:
 
 -   PDF View
     -   application/pdf
@@ -235,7 +241,7 @@ Configure your webpack-enabled application with the PDF.js library as follows.
 npm install pdfjs-dist
 ```
 
-2.  Update `vendors.ts` by appending the following code. This will enable the viewer component
+2.  Update `vendors.ts` by appending the following code. This will enable the [viewer component](../core/viewer.component.md)
     and compatibility mode for all browsers. It will also configure the web worker for the PDF.js
     library to render PDF files in the background:
 
@@ -259,7 +265,7 @@ new CopyWebpackPlugin([
 ])
 ```
 
-The Viewer component now should be able to display PDF files.
+The [Viewer component](../core/viewer.component.md) now should be able to display PDF files.
 
 ### Custom toolbar
 
@@ -303,7 +309,7 @@ The result should look like this:
 
 ### Custom sidebar
 
-The Viewer component also supports custom sidebar components and layouts.
+The [Viewer component](../core/viewer.component.md) also supports custom sidebar components and layouts.
 Set the `allowSidebar` property to `true` to enable this feature.
 
 The custom sidebar can be injected in two different ways:
@@ -422,7 +428,7 @@ You can enable a custom "More actions" menu by providing at least one action ins
 ### Extending the Viewer
 
 You can define your own custom handle to handle other file formats that are not yet supported by
-the Viewer component. Below is an example that shows how to use the `adf-viewer-extension`
+the [Viewer component](../core/viewer.component.md). Below is an example that shows how to use the `adf-viewer-extension`
 to handle 3D data files:
 
 ```html

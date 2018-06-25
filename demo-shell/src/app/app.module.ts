@@ -6,11 +6,12 @@ import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppConfigService, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService } from '@alfresco/adf-core';
 import { AppComponent } from './app.component';
 import { AdfModule } from './adf.module';
 import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/login/login.component';
+import { LogoutComponent } from './components/logout/logout.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
@@ -42,7 +43,6 @@ import { MetadataDialogAdapterComponent } from './components/files/metadata-dial
 import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
-import { DebugAppConfigService } from './services/debug-app-config.service';
 
 import { routing } from './app.routes';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -51,6 +51,8 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { PreviewService } from './services/preview.service';
+import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({
     imports: [
@@ -69,6 +71,7 @@ import { PreviewService } from './services/preview.service';
     declarations: [
         AppComponent,
         LoginComponent,
+        LogoutComponent,
         SettingsComponent,
         AppLayoutComponent,
         HomeComponent,
@@ -101,10 +104,12 @@ import { PreviewService } from './services/preview.service';
         FormLoadingComponent,
         DemoPermissionComponent,
         FormLoadingComponent,
-        BlobPreviewComponent
+        BlobPreviewComponent,
+        BreadcrumbDemoComponent,
+        NotificationsComponent
     ],
     providers: [
-        { provide: AppConfigService, useClass: DebugAppConfigService },
+        { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -123,11 +128,7 @@ import { PreviewService } from './services/preview.service';
         },
         PreviewService
     ],
-    entryComponents: [
-        VersionManagerDialogAdapterComponent,
-        MetadataDialogAdapterComponent
-    ],
+    entryComponents: [VersionManagerDialogAdapterComponent, MetadataDialogAdapterComponent],
     bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

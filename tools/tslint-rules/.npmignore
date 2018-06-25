@@ -1,0 +1,16 @@
+.idea
+
+coverage/
+node_modules
+temp/
+test/
+
+/.editorconfig
+/.travis.yml
+/gulpfile.js
+/.npmignore
+
+*.tgz
+
+/assets/
+local.log

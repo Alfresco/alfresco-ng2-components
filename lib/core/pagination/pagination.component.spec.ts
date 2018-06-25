@@ -15,17 +15,14 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Pagination } from 'alfresco-js-api';
-import { MaterialModule } from '../material.module';
-import { TranslateLoaderService } from '../services/translate-loader.service';
-import { TranslationService } from '../services/translation.service';
 import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './public-api';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 class FakePaginationInput implements Pagination {
     count: number = 25;
@@ -45,47 +42,19 @@ describe('PaginationComponent', () => {
     let fixture: ComponentFixture<PaginationComponent>;
     let component: PaginationComponent;
 
-    let changePageNumberSpy: jasmine.Spy;
-    let changePageSizeSpy: jasmine.Spy;
-    let nextPageSpy: jasmine.Spy;
-    let prevPageSpy: jasmine.Spy;
+    setupTestBed({
+        imports: [CoreTestingModule],
+        schemas: [ NO_ERRORS_SCHEMA ]
+    });
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                MaterialModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                PaginationComponent
-            ],
-            providers: [
-                TranslationService
-            ],
-            schemas: [ NO_ERRORS_SCHEMA ]
-        }).compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(PaginationComponent);
-                component = fixture.componentInstance;
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PaginationComponent);
+        component = fixture.componentInstance;
+    });
 
-                (<any> component).ngAfterViewInit = jasmine
-                    .createSpy('ngAfterViewInit').and
-                    .callThrough();
-
-                changePageNumberSpy = spyOn(component.changePageNumber, 'emit');
-                changePageSizeSpy = spyOn(component.changePageSize, 'emit');
-                nextPageSpy = spyOn(component.nextPage, 'emit');
-                prevPageSpy = spyOn(component.prevPage, 'emit');
-
-                fixture.detectChanges();
-            });
-    }));
+    afterEach(() => {
+        fixture.destroy();
+    });
 
     it('should have an "empty" class if no items present', () => {
         fixture.detectChanges();
@@ -165,6 +134,7 @@ describe('PaginationComponent', () => {
         });
 
         it('goes next', () => {
+            const nextPageSpy = spyOn(component.nextPage, 'emit');
             expect(component.current).toBe(3);
             component.goNext();
 
@@ -175,6 +145,7 @@ describe('PaginationComponent', () => {
         });
 
         it('goes previous', () => {
+            const prevPageSpy = spyOn(component.prevPage, 'emit');
             expect(component.current).toBe(3);
             component.goPrevious();
 
@@ -185,6 +156,7 @@ describe('PaginationComponent', () => {
         });
 
         it('changes page size', () => {
+            const changePageSizeSpy = spyOn(component.changePageSize, 'emit');
             expect(component.current).toBe(3);
             component.onChangePageSize(50);
 
@@ -195,6 +167,7 @@ describe('PaginationComponent', () => {
         });
 
         it('changes page number', () => {
+            const changePageNumberSpy = spyOn(component.changePageNumber, 'emit');
             expect(component.current).toBe(3);
             component.onChangePageNumber(5);
 
@@ -330,5 +303,30 @@ describe('PaginationComponent', () => {
             expect(component.current).toBe(2);
         });
 
+        it('should go to previous page if current page has 0 items', () => {
+            const customComponent = <PaginatedComponent> {
+                updatePagination() {},
+                pagination: new BehaviorSubject<Pagination>({})
+            };
+
+            component.target = customComponent;
+            component.ngOnInit();
+
+            customComponent.pagination.next({
+                count: 2,
+                skipCount: 5,
+                maxItems: 5
+            });
+
+            expect(component.current).toBe(2);
+
+            customComponent.pagination.next({
+                count: 0,
+                totalItems: 5,
+                maxItems: 5
+            });
+
+            expect(component.current).toBe(1);
+        });
     });
 });

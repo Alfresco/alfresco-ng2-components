@@ -15,42 +15,18 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
-import { async, TestBed } from '@angular/core/testing';
-import { MatIconRegistry } from '@angular/material';
-import { BrowserModule } from '@angular/platform-browser';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CookieServiceMock } from './../mock/cookie.service.mock';
-import { ContentService } from './content.service';
-import { CookieService } from './cookie.service';
+import { TestBed } from '@angular/core/testing';
 import { ThumbnailService } from './thumbnail.service';
-import { TranslateLoaderService } from './translate-loader.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('ThumbnailService', () => {
 
     let service: ThumbnailService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                BrowserModule,
-                HttpClientModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                ContentService,
-                { provide: CookieService, useClass: CookieServiceMock },
-                ThumbnailService,
-                MatIconRegistry
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         service = TestBed.get(ThumbnailService);

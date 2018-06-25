@@ -48,8 +48,8 @@ export class MyComponent implements OnInit {
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| context-menu-enabled | `boolean` | false |  |
-| context-menu | `any[]` |  |  |
+| context-menu-enabled | `boolean` | false | Is the menu enabled? |
+| context-menu | `any[]` |  | Items for the menu. |
 
 ## Details
 

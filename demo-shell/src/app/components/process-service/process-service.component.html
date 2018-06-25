@@ -1,13 +1,14 @@
 <mat-tab-group [(selectedIndex)]="activeTab" (selectedTabChange)="onTabChange($event)" data-automation-id="navigation-bar">
     <mat-tab id="tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
-        <div class="page-content">
+        <div class="page-content" *ngIf="showTaskTab">
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="adf-grid-item adf-tasks-menu" fxFlex.gt-md="225px">
                     <div class="adf-list-buttons">
-                        <adf-sidebar-action-menu [expanded]="true" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
+                        <adf-sidebar-action-menu [expanded]="true" [width]="205" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
                             <mat-icon sidebar-menu-title-icon >arrow_drop_down</mat-icon>
                                 <div sidebar-menu-options>
                                     <button mat-menu-item data-automation-id="btn-start-task" (click)="navigateStartTask()">
+                                        <mat-icon>assessment</mat-icon>
                                         <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_TASK' | translate}}</span>
                                     </button>
                                 </div>
@@ -16,18 +17,18 @@
                     <adf-accordion>
                         <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true"
                                              [headingIcon]="'assignment'">
-                            <adf-filters
-                                [filterParam]="{name:'MY tasks'}"
+                            <adf-task-filters
+                                [filterParam]="filterSelected"
                                 [appId]="appId"
                                 [hasIcon]="false"
                                 (filterClick)="onTaskFilterClick($event)"
                                 (success)="onSuccessTaskFilterList($event)"
                                 #activitifilter>
-                            </adf-filters>
+                            </adf-task-filters>
                         </adf-accordion-group>
                     </adf-accordion>
                 </div>
-                <div class="adf-grid-item adf-tasks-list" fxFlex.gt-md="335px" [ngClass.gt-md]="{'small-pagination': true}"
+                <div class="adf-grid-item adf-tasks-list" fxFlex.gt-md="380px" [ngClass.gt-md]="{'small-pagination': true}"
                      *ngIf="taskFilter && !isStartTaskMode()">
                     <adf-tasklist
                         [appId]="taskFilter?.appId"
@@ -39,7 +40,6 @@
                         [assignment]="taskFilter?.filter?.assignment"
                         [state]="taskFilter?.filter?.state"
                         [sort]="taskFilter?.filter?.sort"
-                        [data]="dataTasks"
                         [landingTaskId]="currentTaskId"
                         (rowClick)="onTaskRowClick($event)"
                         (success)="onSuccessTaskList($event)"
@@ -104,14 +104,15 @@
     </mat-tab>
     <mat-tab id="processes-header" href="#processes"
             label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
-        <div class="page-content">
+        <div class="page-content" *ngIf="showProcessTab">
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="adf-grid-item adf-processes-menu" fxFlex.gt-md="225px">
                     <div class="adf-list-buttons">
-                        <adf-sidebar-action-menu [expanded]="true" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
+                        <adf-sidebar-action-menu [expanded]="true" [width]="205" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
                             <mat-icon sidebar-menu-title-icon >arrow_drop_down</mat-icon>
                             <div sidebar-menu-options>
                                 <button mat-menu-item data-automation-id="btn-start-process" (click)="navigateStartProcess()">
+                                    <mat-icon>assessment</mat-icon>
                                     <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_PROCESS' | translate}}</span>
                                 </button>
                             </div>
@@ -130,7 +131,7 @@
                         </adf-accordion-group>
                     </adf-accordion>
                 </div>
-                <div class="adf-grid-item adf-processes-list adf-list" fxFlex.gt-md="335px" [ngClass.gt-md]="{'small-pagination': true}"
+                <div class="adf-grid-item adf-processes-list adf-list" fxFlex.gt-md="380px" [ngClass.gt-md]="{'small-pagination': true}"
                      *ngIf="processFilter && !isStartProcessMode()">
                     <adf-process-instance-list
                         #processList
@@ -142,7 +143,6 @@
                         [page]="processPage"
                         [size]="paginationPageSize"
                         [sort]="processFilter?.filter?.sort"
-                        [data]="dataProcesses"
                         (rowClick)="onProcessRowClick($event)"
                         (row-dblclick)="onProcessRowDblClick($event)"
                         (success)="onSuccessProcessList($event)">
@@ -155,7 +155,7 @@
 
                     </adf-process-instance-list>
                     <adf-pagination
-                        *ngIf="showProcessPagination"
+                        *ngIf="processList"
                         [target]="processList"
                         (changePageSize)="onChangePageSize($event)"
                         [supportedPageSizes]="supportedPages"
@@ -196,6 +196,7 @@
                         [appId]="appId"
                         [name]="defaultProcessName"
                         [processDefinitionName]="defaultProcessDefinitionName"
+                        (formContentClicked)="onContentClick($event)"
                         (start)="onStartProcessInstance($event)"
                         (cancel)="onCancelProcessInstance()">
                     </adf-start-process>

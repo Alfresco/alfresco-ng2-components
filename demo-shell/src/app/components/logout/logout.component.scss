@@ -1,0 +1,39 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.adf-logout-header-background {
+    overflow: hidden;
+}
+
+.adf-logout-section {
+    text-align: center;
+    padding-top: 60px;
+}
+
+.adf-logout-headline {
+
+    h1 {
+        font-size: 56px;
+        font-weight: 300;
+        line-height: 56px;
+        margin: 15px 5px;
+    }
+
+    h2 {
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 28px;
+        margin: 15px 0 25px 0;
+    }
+}
+
+.adf-logout-docs-button {
+    margin: 30px;
+}
+
+.adf-logout-login {
+    float: left;
+}

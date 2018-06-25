@@ -31,6 +31,12 @@ export class CommentContentService {
                 private logService: LogService) {
     }
 
+    /**
+     * Adds a comment to a node.
+     * @param nodeId ID of the target node
+     * @param message Text for the comment
+     * @returns Details of the comment added
+     */
     addNodeComment(nodeId: string, message: string): Observable<CommentModel> {
         return Observable.fromPromise(this.apiService.getInstance().core.commentsApi.addComment(nodeId, {content: message}))
             .map((response: any) => {
@@ -43,6 +49,11 @@ export class CommentContentService {
             }).catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets all comments that have been added to a node.
+     * @param nodeId ID of the target node
+     * @returns Details for each comment
+     */
     getNodeComments(nodeId: string): Observable<CommentModel[]> {
         return Observable.fromPromise(this.apiService.getInstance().core.commentsApi.getComments(nodeId))
             .map((response: any) => {

@@ -1,0 +1,38 @@
+<form [formGroup]="form" novalidate (ngSubmit)="apply(form.value, form.valid)">
+
+    <mat-form-field>
+        <input
+            matInput [formControl]="from" [errorStateMatcher]="matcher"
+            placeholder="{{ 'SEARCH.FILTER.RANGE.FROM' | translate }}"
+            autocomplete="off">
+        <mat-error *ngIf="from.hasError('pattern')">
+            {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
+        </mat-error>
+        <mat-error *ngIf="from.hasError('required')">
+            {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input
+            matInput [formControl]="to" [errorStateMatcher]="matcher"
+            placeholder="{{ 'SEARCH.FILTER.RANGE.TO' | translate }}"
+            autocomplete="off">
+        <mat-error *ngIf="to.hasError('pattern')">
+            {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
+        </mat-error>
+        <mat-error *ngIf="to.hasError('required')">
+            {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
+        </mat-error>
+    </mat-form-field>
+
+
+    <div class="facet-buttons">
+        <button mat-button color="primary" type="button" (click)="reset()">
+            {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
+        </button>
+        <button mat-button color="primary" type="submit" [disabled]="!form.valid">
+            {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
+        </button>
+    </div>
+</form>

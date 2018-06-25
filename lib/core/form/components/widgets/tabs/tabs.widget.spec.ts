@@ -15,21 +15,30 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { fakeFormJson } from '../../../../mock';
-import { MaterialModule } from '../../../../material.module';
+import { tick, fakeAsync, async, ComponentFixture, TestBed, flush } from '@angular/core/testing';
+import { fakeFormJson, TranslationMock } from '../../../../mock';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TabModel } from '../core/tab.model';
-import { WIDGET_DIRECTIVES } from '../index';
-import { MASK_DIRECTIVE } from '../index';
-import { FormFieldComponent } from './../../form-field/form-field.component';
-import { ContentWidgetComponent } from './../content/content.widget';
 import { TabsWidgetComponent } from './tabs.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslationService } from '../../../../services/translation.service';
 
 describe('TabsWidgetComponent', () => {
 
     let widget: TabsWidgetComponent;
+
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
         widget = new TabsWidgetComponent();
@@ -56,7 +65,7 @@ describe('TabsWidgetComponent', () => {
     });
 
     it('should remove invisible tabs', () => {
-        let fakeTab = new TabModel(null, {id: 'fake-tab-id', title: 'fake-tab-title'});
+        let fakeTab = new TabModel(null, { id: 'fake-tab-id', title: 'fake-tab-title' });
         fakeTab.isVisible = false;
         widget.tabs.push(fakeTab);
         widget.ngAfterContentChecked();
@@ -65,7 +74,7 @@ describe('TabsWidgetComponent', () => {
     });
 
     it('should leave visible tabs', () => {
-        let fakeTab = new TabModel(null, {id: 'fake-tab-id', title: 'fake-tab-title'});
+        let fakeTab = new TabModel(null, { id: 'fake-tab-id', title: 'fake-tab-title' });
         fakeTab.isVisible = true;
         widget.tabs.push(fakeTab);
         widget.ngAfterContentChecked();
@@ -84,59 +93,66 @@ describe('TabsWidgetComponent', () => {
         let fakeTabInvisible: TabModel;
 
         beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [ MaterialModule ],
-                declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
-            }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(TabsWidgetComponent);
-                tabWidgetComponent = fixture.componentInstance;
-                element = fixture.nativeElement;
+            fixture = TestBed.createComponent(TabsWidgetComponent);
+            tabWidgetComponent = fixture.componentInstance;
+            element = fixture.nativeElement;
 
-                fakeTabVisible = new TabModel(new FormModel(fakeFormJson), {
-                    id: 'tab-id-visible',
-                    title: 'tab-title-visible'
-                });
-                fakeTabVisible.isVisible = true;
-                fakeTabInvisible = new TabModel(new FormModel(fakeFormJson), {
-                    id: 'tab-id-invisible',
-                    title: 'tab-title-invisible'
-                });
-                fakeTabInvisible.isVisible = false;
-                tabWidgetComponent.tabs.push(fakeTabVisible);
-                tabWidgetComponent.tabs.push(fakeTabInvisible);
+            fakeTabVisible = new TabModel(new FormModel(fakeFormJson), {
+                id: 'tab-id-visible',
+                title: 'tab-title-visible'
             });
+            fakeTabVisible.isVisible = true;
+            fakeTabInvisible = new TabModel(new FormModel(fakeFormJson), {
+                id: 'tab-id-invisible',
+                title: 'tab-title-invisible'
+            });
+            fakeTabInvisible.isVisible = false;
+            tabWidgetComponent.tabs.push(fakeTabVisible);
+            tabWidgetComponent.tabs.push(fakeTabInvisible);
         }));
 
-        it('should show only visible tabs', () => {
+        it('should show only visible tabs', fakeAsync(() => {
             fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    expect(element.innerText).toContain('tab-title-visible');
-                });
-        });
 
-        it('should show tab when it became visible', async(() => {
+            tick(500);
+
+            expect(element.innerText).toContain('tab-title-visible');
+        }));
+
+        it('should show tab when it became visible', fakeAsync(() => {
+            fakeTabInvisible.isVisible = false;
+
             fixture.detectChanges();
+
+            tick(500);
+
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[1].isVisible = true;
+
+                tick(500);
+
+                flush();
+
                 fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.innerText).toContain('tab-title-invisible');
-                    });
+                expect(element.innerText).toContain('tab-title-invisible');
             });
             tabWidgetComponent.tabChanged(null);
         }));
 
-        it('should hide tab when it became not visible', async(() => {
+        it('should hide tab when it became not visible', fakeAsync(() => {
             fixture.detectChanges();
+
+            tick(500);
+
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[0].isVisible = false;
+
+                tick(500);
+
+                flush();
+
                 fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('innerText')).not.toContain('tab-title-visible');
-                    });
+                expect(element.querySelector('innerText')).not.toContain('tab-title-visible');
             });
             tabWidgetComponent.tabChanged(null);
         }));

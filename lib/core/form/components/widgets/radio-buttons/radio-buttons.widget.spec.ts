@@ -17,22 +17,28 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
-
-import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
-import { MaterialModule } from '../../../../material.module';
 import { ContainerModel } from '../core/container.model';
 import { FormFieldTypes } from '../core/form-field-types';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RadioButtonsWidgetComponent', () => {
 
     let formService: FormService;
     let widget: RadioButtonsWidgetComponent;
+
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         formService = new FormService(null, null, null);
@@ -134,20 +140,13 @@ describe('RadioButtonsWidgetComponent', () => {
         }];
 
         beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [ MaterialModule ],
-                declarations: [RadioButtonsWidgetComponent, ErrorWidgetComponent],
-                providers: [FormService, EcmModelService]
-            }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
-                radioButtonWidget = fixture.componentInstance;
-                element = fixture.nativeElement;
-            });
+            fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
+            radioButtonWidget = fixture.componentInstance;
+            element = fixture.nativeElement;
         }));
 
         afterEach(() => {
             fixture.destroy();
-            TestBed.resetTestingModule();
         });
 
         describe('and radioButton is populated via taskId', () => {

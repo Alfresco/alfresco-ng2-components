@@ -20,13 +20,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 
-import { FormModule } from '@alfresco/adf-core';
+import { FormModule, setupTestBed } from '@alfresco/adf-core';
 import { TaskListModule } from '../../task-list/task-list.module';
 
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess, exampleProcessNoName } from './../../mock';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceDetailsComponent } from './process-instance-details.component';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('ProcessInstanceDetailsComponent', () => {
 
@@ -35,21 +36,17 @@ describe('ProcessInstanceDetailsComponent', () => {
     let fixture: ComponentFixture<ProcessInstanceDetailsComponent>;
     let getProcessSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                FormModule,
-                TaskListModule
-            ],
-            declarations: [
-                ProcessInstanceDetailsComponent
-            ],
-            providers: [
-                ProcessService
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            ProcessTestingModule,
+            FormModule,
+            TaskListModule
+        ],
+        providers: [
+            ProcessService
+        ],
+        schemas: [NO_ERRORS_SCHEMA]
+    });
 
     beforeEach(() => {
 
@@ -139,7 +136,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
         describe('Diagram', () => {
 
-            it('should diagram button be enabled if the process is running', () => {
+            it('should diagram button be enabled if the process is running', async(() => {
                 component.processInstanceDetails = new ProcessInstance({
                     ended: null
                 });
@@ -150,9 +147,9 @@ describe('ProcessInstanceDetailsComponent', () => {
                     expect(diagramButton).not.toBeNull();
                     expect(diagramButton.nativeElement.disabled).toBe(false);
                 });
-            });
+            }));
 
-            it('should diagram button be enabled if the process is running', () => {
+            it('should diagram button be enabled if the process is running', async(() => {
                 component.processInstanceDetails = new ProcessInstance({
                     ended: new Date()
                 });
@@ -164,7 +161,7 @@ describe('ProcessInstanceDetailsComponent', () => {
                     expect(diagramButton).not.toBeNull();
                     expect(diagramButton.nativeElement.disabled).toBe(true);
                 });
-            });
+            }));
         });
     });
 });

@@ -23,7 +23,8 @@ import {
     DataTableAdapter,
     ObjectDataColumn,
     ObjectDataRow,
-    ObjectDataTableAdapter
+    ObjectDataTableAdapter,
+    EmptyCustomContentDirective
 } from '@alfresco/adf-core';
 import {
     AppConfigService,
@@ -60,6 +61,8 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
+    @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
+
     @ViewChild('dataTable') dataTable: DataTableComponent;
 
     /** The id of the app. */
@@ -84,11 +87,11 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     name: string;
 
-    /* The page number of the processes to fetch. */
+    /** The page number of the processes to fetch. */
     @Input()
     page: number = 0;
 
-    /* The page number processes to fetch. */
+    /** The number of processes to fetch in each page. */
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
@@ -100,18 +103,18 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     data: DataTableAdapter;
 
-    /* Toggles multiple row selection, renders checkboxes at the beginning of each row */
+    /** Toggles multiple row selection, which renders checkboxes at the beginning of each row */
     @Input()
     multiselect: boolean = false;
 
-    /* Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+    /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
      * multiple rows.
      */
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
-    /* Toggles default selection of the first row */
+    /** Toggles default selection of the first row */
     @Input()
     selectFirstRow: boolean = true;
 
@@ -131,6 +134,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     currentInstanceId: string;
     isLoading: boolean = true;
     layoutPresets = {};
+    sorting: any[] = ['created', 'desc'];
 
     pagination: BehaviorSubject<PaginationModel>;
 
@@ -170,8 +174,16 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
+            if (this.isSortChanged(changes)) {
+                this.sorting = this.sort ? this.sort.split('-') : this.sorting;
+            }
             this.reload();
         }
+    }
+
+    private isSortChanged(changes: SimpleChanges): boolean {
+        const actualSort = changes['sort'];
+        return actualSort && actualSort.currentValue && actualSort.currentValue !== actualSort.previousValue;
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {

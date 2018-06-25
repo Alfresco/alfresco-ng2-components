@@ -12,23 +12,23 @@ Gets details of the Process Services apps that are deployed for the user.
 
 ### Methods
 
--   `getApplicationDetailsById(appId: number = null): Observable<AppDefinitionRepresentation>`<br/>
+-   **getApplicationDetailsById**(appId: `number` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md)`>`<br/>
     Gets the details for a specific app ID number.
-    -   `appId: number = null` -  ID of the target app
-    -   **Returns** `Observable<AppDefinitionRepresentation>` - Details of the app
--   `getDeployedApplications(): Observable<AppDefinitionRepresentation[]>`<br/>
+    -   _appId:_ `number`  - ID of the target app
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md)`>` - Details of the app
+-   **getDeployedApplications**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md)`[]>`<br/>
     Gets a list of deployed apps for this user.
-    -   **Returns** `Observable<AppDefinitionRepresentation[]>` - The list of deployed apps
--   `getDeployedApplicationsByName(name: string = null): Observable<AppDefinitionRepresentation>`<br/>
-    Gets a list of deployed apps for this user, where the app name is \`name\`.
-    -   `name: string = null` -  Name of the app
-    -   **Returns** `Observable<AppDefinitionRepresentation>` - The list of deployed apps
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md)`[]>` - The list of deployed apps
+-   **getDeployedApplicationsByName**(name: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md)`>`<br/>
+    Gets a list of deployed apps for this user, where the app name is `name`.
+    -   _name:_ `string`  - Name of the app
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md)`>` - The list of deployed apps
 
 ## Details
 
 This service can be used to access the Process Services apps that are available
 to the current user. You can find more information about the
-returned `AppDefinitionRepresentation` class in the
+returned [`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md) class in the
 [Filter model page](../process-services/filter.model.md)
 and in the
 [Process Services Apps API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppsApi.md#getAppDefinitions).

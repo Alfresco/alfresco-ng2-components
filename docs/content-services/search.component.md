@@ -8,6 +8,23 @@ Last reviewed: 2018-04-13
 
 Searches items for supplied search terms. 
 
+## Contents
+
+-   [Basic usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+    -   [Events](#events)
+
+-   [Details](#details)
+
+    -   [Customise Search Results](#customise-search-results)
+    -   [Attach an input field to the search](#attach-an-input-field-to-the-search)
+    -   [Custom search configuration](#custom-search-configuration)
+
+-   [See Also](#see-also)
+
 ## Basic usage
 
 ```html
@@ -23,19 +40,19 @@ Searches items for supplied search terms.
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| displayWith | `function | null` |  null | Function that maps an option's value to its display value in the trigger. |
+| displayWith | `function \| null` |  null | Function that maps an option's value to its display value in the trigger. |
 | maxResults | `number` | 20 | Maximum number of results to show in the search. |
-| queryBody | `QueryBody` |  | **Deprecated:** in 2.1.0 |
+| queryBody | `QueryBody` |  | (**Deprecated:** in 2.1.0)  |
 | searchTerm | `string` | "" | Search term to use when executing the search. Updating this value will run a new search and update the results. |
 | skipResults | `number` | 0 | Number of results to skip from the results pagination. |
-| class | `` |  | CSS class for display. |
+| class |  |  | CSS class for display. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
-| resultLoaded | `EventEmitter<NodePaging>` | Emitted when search results have fully loaded. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when search results have fully loaded. |
 
 ## Details
 
@@ -113,7 +130,7 @@ However, you can use a more complex template if necessary:
 
 ### Attach an input field to the search
 
-You can also attach an input field to the search component via the `searchAutocomplete` property.
+You can also attach an input field to the [search component](../content-services/search.component.md) via the `searchAutocomplete` property.
 Export the search panel instance into a local template variable and bind that variable to the
 input's `searchAutocomplete` property. The example below demonstrates this with an
 instance called "search":
@@ -141,8 +158,8 @@ By doing this, you can get the results as the user types into the input text.
 You can get finer control over the parameters of a search by defining them in a custom
 [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
 object. The recommended way to do this is with a custom implementation of the
-[Search Configuration interface](../core/search-configuration.interface.md) (the `queryBody` parameter of the `Search component` is now deprecated). The ADF source provides a standard implementation of this
-interface, `SearchConfigurationService` that you can use as a base to adapt to your needs. See the
+[Search Configuration interface](../core/search-configuration.interface.md) (the `queryBody` parameter of the [`Search component`](../content-services/search.component.md) is now deprecated). The ADF source provides a standard implementation of this
+interface, [`SearchConfigurationService`](../core/search-configuration.service.md) that you can use as a base to adapt to your needs. See the
 [Search Configuration interface](../core/search-configuration.interface.md) page for full details of how to
 customize your search.
 

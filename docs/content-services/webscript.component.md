@@ -2,9 +2,25 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Webscript component
 
 Provides access to Webscript features.
+
+## Contents
+
+-   [Basic usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+    -   [Events](#events)
+
+-   [Details](#details)
+
+    -   [Webscript View HTML example](#webscript-view-html-example)
+    -   [Webscript View DATATABLE example](#webscript-view-datatable-example)
+    -   [Webscript View JSON example](#webscript-view-json-example)
 
 ## Basic usage
 
@@ -44,28 +60,30 @@ export class AppComponent {
 }
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| scriptPath | `string` |  | (required) Path to the webscript (as defined by webscript).  |
-| scriptArgs | `any` |  | Arguments to pass to the webscript.  |
-| showData | `boolean` | `true` | Toggles whether to show or hide the data.  |
-| contextRoot | `string` | `'alfresco'` | Path where the application is deployed  |
-| servicePath | `string` | `'service'` | Path that the webscript service is mapped to.  |
-| contentType | `string` | `'TEXT'` | Content type to interpret the data received from the webscript. Can be "JSON" , "HTML" , "DATATABLE" or "TEXT" |
+| -- | -- | -- | -- |
+| contentType | `string` | "TEXT" | Content type to interpret the data received from the webscript. Can be "JSON" , "HTML" , "DATATABLE" or "TEXT" |
+| contextRoot | `string` | "alfresco" | Path where the application is deployed |
+| scriptArgs | `any` |  | Arguments to pass to the webscript. |
+| scriptPath | `string` |  | (required) Path to the webscript (as defined by webscript). |
+| servicePath | `string` | "service" | Path that the webscript service is mapped to. |
+| showData | `boolean` | true | Toggles whether to show or hide the data. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| success | `EventEmitter<{}>` | Emitted when the operation succeeds. You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application. |
+| -- | -- | -- |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the operation succeeds. You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application. |
 
 ## Details
 
 ### Webscript View HTML example
 
-This sample demonstrates how to implement a Webscript component that renders the HTML contents that come from a webscript
+This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the HTML contents that come from a webscript
 This sample Web Scripts reside in your Alfresco Server. You can access the folder webscript here:
 
 `http://localhost:8080/alfresco/service/sample/folder/Company%20Home`
@@ -84,7 +102,7 @@ This sample Web Scripts reside in your Alfresco Server. You can access the folde
 
 ### Webscript View DATATABLE example
 
-This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
+This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the JSON contents that come from a webscript
 
 `http://localhost:8080/alfresco/service/sample/folder/DATATABLE`
 
@@ -141,7 +159,7 @@ that will render the following table
 
 ### Webscript View JSON example
 
-This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
+This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the JSON contents that come from a webscript
 This sample Web Scripts reside in your Alfresco Server. You can access the folder webscript here:
 
 `http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE`

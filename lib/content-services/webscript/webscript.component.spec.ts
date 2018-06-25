@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/adf-core';
-import { DataTableModule } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { WebscriptComponent } from './webscript.component';
 
 declare let jasmine: any;
@@ -28,27 +27,27 @@ describe('WebscriptComponent', () => {
     let fixture: ComponentFixture<WebscriptComponent>;
     let element: HTMLElement;
 
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            WebscriptComponent
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DataTableModule
-            ],
-            declarations: [
-                WebscriptComponent
-            ]
-        }).compileComponents().then(() => {
-            let appConfig: AppConfigService = TestBed.get(AppConfigService);
-            appConfig.config.ecmHost = 'http://localhost:9876/ecm';
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
-            fixture = TestBed.createComponent(WebscriptComponent);
-            component = fixture.componentInstance;
+        fixture = TestBed.createComponent(WebscriptComponent);
+        component = fixture.componentInstance;
 
-            element = fixture.nativeElement;
-            component = fixture.componentInstance;
-            component.scriptPath = 'fakePath';
-            component.showData = true;
-            fixture.detectChanges();
-        });
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        component.scriptPath = 'fakePath';
+        component.showData = true;
+        fixture.detectChanges();
     }));
 
     describe('View', () => {

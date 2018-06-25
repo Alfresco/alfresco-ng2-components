@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Filter model
 
 Contains classes related to filters in Process Services.
@@ -26,7 +27,7 @@ class AppDefinitionRepresentationModel {
 }
 
 class FilterParamsModel {
-    id: string;
+    id: number;
     name: string;
     index: number;
 }

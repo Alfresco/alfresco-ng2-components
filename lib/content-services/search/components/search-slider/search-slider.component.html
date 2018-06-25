@@ -1,0 +1,14 @@
+<mat-slider
+    [(value)]="value"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    [thumbLabel]="thumbLabel"
+    (change)="onChangedHandler($event)">
+</mat-slider>
+
+<div class="facet-buttons">
+    <button mat-button color="primary" (click)="reset()">
+        {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
+    </button>
+</div>

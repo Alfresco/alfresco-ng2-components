@@ -1,4 +1,4 @@
-<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="false" [expandedSidenav]="false">
+<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="false"[expandedSidenav]= "expandedSidenav" (expanded)="setState($event)">
 
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu="toggleMenu">
@@ -23,7 +23,7 @@
                 <button mat-icon-button [matMenuTriggerFor]="langMenu">
                     <mat-icon>language</mat-icon>
                 </button>
-                <mat-menu #langMenu="matMenu">
+                <mat-menu #langMenu="matMenu" class="adf-menu">
                     <adf-language-menu></adf-language-menu>
                 </mat-menu>
             </mat-toolbar>
@@ -37,7 +37,7 @@
                     <mat-icon matListIcon class="sidenav-menu-icon">{{link.icon}}</mat-icon>
                     <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">{{link.title | translate }}</div>
                 </a>
-                <a mat-list-item adf-logout class="adf-sidenav-link">
+                <a mat-list-item adf-logout [enabelRedirect]="enabelRedirect" redirectUri="/logout" class="adf-sidenav-link">
                     <mat-icon matListIcon class="sidenav-menu-icon">exit_to_app</mat-icon>
                     <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Logout</div>
                 </a>
@@ -52,3 +52,4 @@
     </adf-sidenav-layout-content>
 
 </adf-sidenav-layout>
+<app-log></app-log>

@@ -38,6 +38,12 @@
       "YB": "YB"
     },
     "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Selectiefunctie voor paginaformaat",
+        "CURRENT_PAGE": "Selectiefunctie voor huidige pagina",
+        "PREVIOUS_PAGE": "Knop Vorige pagina",
+        "NEXT_PAGE": "Knop Volgende pagina"
+      },
       "ITEMS_RANGE": "{{ range }} van {{ total }} wordt weergegeven",
       "ITEMS_PER_PAGE": "Items per pagina",
       "CURRENT_PAGE": "Pagina {{ number }}",
@@ -176,7 +182,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Vereist",
-      "USERNAME-MIN": "Uw gebruikersnaam moet uit minstens {{ minLenght }} tekens bestaan.",
+      "USERNAME-MIN": "Uw gebruikersnaam moet uit minstens {{ minLength }} tekens bestaan.",
       "PASSWORD-REQUIRED": "Voer uw wachtwoord in om u aan te melden",
       "LOGIN-ERROR-CREDENTIALS": "U hebt een onbekende gebruikersnaam of een onbekend wachtwoord ingevoerd",
       "LOGIN-ERROR-PROVIDERS": "De definitie van providers kan niet ongedaan worden gemaakt",
@@ -201,6 +207,9 @@
         "TITLE": "Slepen en neerzetten",
         "SUBTITLE": "om bestanden te uploaden"
       }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Content-acties"
     }
   },
   "USER_PROFILE": {
@@ -261,6 +270,44 @@
       "CLOSE": "Sluiten",
       "PLACEHOLDER": "Wachtwoord",
       "ERROR": "Wachtwoord is verkeerd"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Er is een fout opgetreden.",
+      "DESCRIPTION": "Er is waarschijnlijk iets fout gegaan.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Terug naar Home",
+        "ROUTE": "Home"
+      }
+    },
+    "403": {
+      "TITLE": "U hebt geen machtiging voor toegang tot deze server.",
+      "DESCRIPTION": "Het is u niet toegestaan toegang te krijgen tot deze resource op de server.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Probleem melden",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Terug naar Home",
+        "ROUTE": "Home"
+      }
+    },
+    "404": {
+      "TITLE": "Er is een fout opgetreden.",
+      "DESCRIPTION": "De pagina die u zoekt is niet gevonden.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Terug naar Home",
+        "ROUTE": "Home"
+      }
     }
   }
 }

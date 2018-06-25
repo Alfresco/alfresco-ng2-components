@@ -1,7 +1,7 @@
 ---
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-04-12
+Last reviewed: 2018-05-03
 ---
 
 # Custom Resources service
@@ -12,49 +12,49 @@ Manages Document List information that is specific to a user.
 
 ### Methods
 
--   `getRecentFiles(personId: string, pagination: PaginationModel): Observable<NodePaging>`<br/>
-    Gets files recently accessed by a user.
-    -   `personId: string` -  ID of the user
-    -   `pagination: PaginationModel` -  Specifies how to paginate the results
-    -   **Returns** `Observable<NodePaging>` - List of nodes for the recently used files
--   `loadFavorites(pagination: PaginationModel, includeFields: string[] = []): Observable<NodePaging>`<br/>
-    Gets favorite files for the current user.
-    -   `pagination: PaginationModel` -  Specifies how to paginate the results
-    -   `includeFields: string[] = []` -  List of data field names to include in the results
-    -   **Returns** `Observable<NodePaging>` - List of favorite files
--   `loadMemberSites(pagination: PaginationModel): Observable<NodePaging>`<br/>
-    Gets sites that the current user is a member of.
-    -   `pagination: PaginationModel` -  Specifies how to paginate the results
-    -   **Returns** `Observable<NodePaging>` - List of sites
--   `loadSites(pagination: PaginationModel): Observable<NodePaging>`<br/>
-    Gets all sites in the respository.
-    -   `pagination: PaginationModel` -  Specifies how to paginate the results
-    -   **Returns** `Observable<NodePaging>` - List of sites
--   `loadTrashcan(pagination: PaginationModel, includeFields: string[] = []): Observable<DeletedNodesPaging>`<br/>
-    Gets all items currently in the trash.
-    -   `pagination: PaginationModel` -  Specifies how to paginate the results
-    -   `includeFields: string[] = []` -  List of data field names to include in the results
-    -   **Returns** `Observable<DeletedNodesPaging>` - List of deleted items
--   `loadSharedLinks(pagination: PaginationModel, includeFields: string[] = []): Observable<NodePaging>`<br/>
-    Gets shared links for the current user.
-    -   `pagination: PaginationModel` -  Specifies how to paginate the results
-    -   `includeFields: string[] = []` -  List of data field names to include in the results
-    -   **Returns** `Observable<NodePaging>` - List of shared links
--   `isCustomSource(folderId: string): boolean`<br/>
-    Is the folder ID one of the well-known aliases?
-    -   `FolderId` -  Folder ID name to check
-    -   **Returns** `Observable<NodePaging>` - True if the ID is a well-known name, false otherwise
--   `loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[]): Observable<NodePaging>`<br/>
-    Gets a folder's contents.
-    -   `nodeId: string` -  ID of the target folder node
-    -   `pagination: PaginationModel` -  Specifies how to paginate the results
-    -   `includeFields: string[] = []` -  List of data field names to include in the results
-    -   **Returns** `Observable<NodePaging>` - List of items contained in the folder
--   `getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel): Observable<string[]>`<br/>
+-   **getCorrespondingNodeIds**(nodeId: `string` = `null`, pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>`<br/>
     Gets the contents of one of the well-known aliases in the form of node ID strings.
-    -   `nodeId: string` -  ID of the target folder node
-    -   `pagination: PaginationModel` -  Specifies how to paginate the results
-    -   **Returns** `Observable<string[]>` - List of node IDs
+    -   _nodeId:_ `string`  - ID of the target folder node
+    -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>` - List of node IDs
+-   **getRecentFiles**(personId: `string` = `null`, pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+    Gets files recently accessed by a user.
+    -   _personId:_ `string`  - ID of the user
+    -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of nodes for the recently used files
+-   **isCustomSource**(folderId: `string` = `null`): `boolean`<br/>
+    Is the folder ID one of the well-known aliases?
+    -   _folderId:_ `string`  - Folder ID name to check
+    -   **Returns** `boolean` - True if the ID is a well-known name, false otherwise
+-   **loadFavorites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+    Gets favorite files for the current user.
+    -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
+    -   _includeFields:_ `string[]`  - List of data field names to include in the results
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of favorite files
+-   **loadFolderByNodeId**(nodeId: `string` = `null`, pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`, includeFields: `string[]` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+    Gets a folder's contents.
+    -   _nodeId:_ `string`  - ID of the target folder node
+    -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
+    -   _includeFields:_ `string[]`  - List of data field names to include in the results
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of items contained in the folder
+-   **loadMemberSites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+    Gets sites that the current user is a member of.
+    -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of sites
+-   **loadSharedLinks**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+    Gets shared links for the current user.
+    -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
+    -   _includeFields:_ `string[]`  - List of data field names to include in the results
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of shared links
+-   **loadSites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+    Gets all sites in the respository.
+    -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of sites
+-   **loadTrashcan**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts) = `null`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DeletedNodesPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/DeletedNodesPaging.md)`>`<br/>
+    Gets all items currently in the trash.
+    -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
+    -   _includeFields:_ `string[]`  - List of data field names to include in the results
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DeletedNodesPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/DeletedNodesPaging.md)`>` - List of deleted items
 
 ## Details
 

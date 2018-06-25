@@ -44,7 +44,7 @@ export class AppDefinitionRepresentationModel {
 }
 
 export class FilterParamsModel {
-    id: string;
+    id: number;
     name: string;
     index: number;
 

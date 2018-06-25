@@ -1,0 +1,20 @@
+<div id="adf-buttons-menu" class="adf-buttons-menu" *ngIf="!isMenuEmpty">
+    <div *ngIf="isMobile()">
+        <button mat-icon-button [matMenuTriggerFor]="editReportMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #editReportMenu="matMenu" class="adf-buttons-menu-mobile">
+            <ng-content *ngTemplateOutlet="desktop">
+            </ng-content>
+        </mat-menu>
+    </div>
+
+    <div *ngIf="!isMobile()" class="adf-buttons-menu-desktop">
+        <ng-content *ngTemplateOutlet="desktop">
+        </ng-content>
+    </div>
+</div>
+
+<ng-template #desktop>
+    <ng-content></ng-content>
+</ng-template>

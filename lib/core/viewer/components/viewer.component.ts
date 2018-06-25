@@ -68,9 +68,16 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     blobFile: Blob;
 
+    /** @deprecated 2.4.0 use nodeId */
     /** Node Id of the file to load. */
     @Input()
-    fileNodeId: string = null;
+    set fileNodeId(nodeId: string) {
+        this.nodeId = nodeId;
+    }
+
+    /** Node Id of the file to load. */
+    @Input()
+    nodeId: string = null;
 
     /** Shared link id (to display shared file). */
     @Input()
@@ -202,7 +209,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     navigateNext = new EventEmitter();
 
-    showPdfThumbnails: boolean = false;
     viewerType = 'unknown';
     isLoading = false;
     node: MinimalNodeEntryEntity;
@@ -213,6 +219,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     otherMenu: any;
     extension: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
+
+    private cacheBusterNumber;
 
     private subscriptions: Subscription[] = [];
 
@@ -239,13 +247,13 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     isSourceDefined(): boolean {
-        return (this.urlFile || this.blobFile || this.fileNodeId || this.sharedLinkId) ? true : false;
+        return (this.urlFile || this.blobFile || this.nodeId || this.sharedLinkId) ? true : false;
     }
 
     ngOnInit() {
-        this.subscriptions = this.subscriptions.concat([
+        this.subscriptions.push(
             this.apiService.nodeUpdated.subscribe(node => this.onNodeUpdated(node))
-        ]);
+        );
     }
 
     ngOnDestroy() {
@@ -254,8 +262,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private onNodeUpdated(node: MinimalNodeEntryEntity) {
-        if (node && node.id === this.fileNodeId) {
-            this.setUpNodeFile(node);
+        if (node && node.id === this.nodeId) {
+            this.generateCacheBusterNumber();
+            this.isLoading = true;
+            this.setUpNodeFile(node).then(() => {
+                this.isLoading = false;
+            });
         }
     }
 
@@ -264,15 +276,20 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             if (!this.isSourceDefined()) {
                 throw new Error('A content source attribute value is missing.');
             }
+            this.isLoading = true;
+
             if (this.blobFile) {
                 this.setUpBlobData();
+                this.isLoading = false;
             } else if (this.urlFile) {
                 this.setUpUrlFile();
-            } else if (this.fileNodeId) {
-                this.isLoading = true;
-                this.apiService.nodesApi.getNodeInfo(this.fileNodeId).then(
+                this.isLoading = false;
+            } else if (this.nodeId) {
+                this.apiService.nodesApi.getNodeInfo(this.nodeId, { include: ['allowableOperations'] }).then(
                     (data: MinimalNodeEntryEntity) => {
-                        this.setUpNodeFile(data);
+                        this.setUpNodeFile(data).then(() => {
+                            this.isLoading = false;
+                        });
                     },
                     (error) => {
                         this.isLoading = false;
@@ -280,10 +297,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     }
                 );
             } else if (this.sharedLinkId) {
-                this.isLoading = true;
 
                 this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(details => {
                     this.setUpSharedLinkFile(details);
+                    this.isLoading = false;
                 });
             }
         }
@@ -291,7 +308,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private setUpBlobData() {
         this.displayName = this.getDisplayName('Unknown');
-        this.isLoading = true;
         this.mimeType = this.blobFile.type;
         this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
 
@@ -299,12 +315,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         // TODO: wrap blob into the data url and allow downloading
 
         this.extensionChange.emit(this.mimeType);
-        this.isLoading = false;
         this.scrollTop();
     }
 
     private setUpUrlFile() {
-        this.isLoading = true;
         let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
         this.displayName = this.getDisplayName(filenameFromUrl);
         this.extension = this.getFileExtension(filenameFromUrl);
@@ -319,14 +333,21 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this.extensionChange.emit(this.extension);
-        this.isLoading = false;
         this.scrollTop();
     }
 
-    private setUpNodeFile(data: MinimalNodeEntryEntity) {
-        this.mimeType = data.content.mimeType;
+    private async setUpNodeFile(data: MinimalNodeEntryEntity) {
+        let setupNode;
+
+        if (data.content) {
+            this.mimeType = data.content.mimeType;
+        }
+
         this.displayName = data.name;
+
         this.urlFileContent = this.apiService.contentApi.getContentUrl(data.id);
+        this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + this.cacheBusterNumber : this.urlFileContent;
+
         this.extension = this.getFileExtension(data.name);
 
         this.fileName = data.name;
@@ -338,14 +359,14 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         if (this.viewerType === 'unknown') {
-            this.displayNodeRendition(data.id);
-        } else {
-            this.isLoading = false;
+            setupNode = this.displayNodeRendition(data.id);
         }
 
         this.extensionChange.emit(this.extension);
         this.sidebarTemplateContext.node = data;
         this.scrollTop();
+
+        return setupNode;
     }
 
     private setUpSharedLinkFile(details: any) {
@@ -364,17 +385,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
         if (this.viewerType === 'unknown') {
             this.displaySharedLinkRendition(this.sharedLinkId);
-        } else {
-            this.isLoading = false;
         }
+
         this.extensionChange.emit(this.extension);
-        this.isLoading = false;
     }
 
     toggleSidebar() {
         this.showSidebar = !this.showSidebar;
-        if (this.showSidebar && this.fileNodeId) {
-            this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId)
+        if (this.showSidebar && this.nodeId) {
+            this.apiService.getInstance().nodes.getNodeInfo(this.nodeId, { include: ['allowableOperations'] })
                 .then((data: MinimalNodeEntryEntity) => {
                     this.sidebarTemplateContext.node = data;
                 });
@@ -590,8 +609,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private async displayNodeRendition(nodeId: string) {
-        this.isLoading = true;
-
         try {
             const rendition = await this.resolveRendition(nodeId, 'pdf');
             if (rendition) {
@@ -608,13 +625,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         } catch (err) {
             this.logService.error(err);
         }
-
-        this.isLoading = false;
     }
 
     private async displaySharedLinkRendition(sharedId: string) {
-        this.isLoading = true;
-
         try {
             const rendition = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf');
             if (rendition.entry.status.toString() === 'CREATED') {
@@ -633,8 +646,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.logService.error(error);
             }
         }
-
-        this.isLoading = false;
     }
 
     private async resolveRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
@@ -646,46 +657,50 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         if (!rendition) {
             renditionId = 'imgpreview';
             rendition = supported.list.entries.find(obj => obj.entry.id.toLowerCase() === renditionId);
+        }
 
-            if (!rendition) {
-                return null;
+        if (rendition) {
+            const status = rendition.entry.status.toString();
+
+            if (status === 'NOT_CREATED') {
+                try {
+                    await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId });
+                    rendition = await this.waitRendition(nodeId, renditionId, 0);
+                } catch (err) {
+                    this.logService.error(err);
+                }
             }
         }
 
-        const status = rendition.entry.status.toString();
-
-        if (status === 'CREATED') {
-            return rendition;
-        } else if (status === 'NOT_CREATED') {
-            try {
-                await this.apiService.renditionsApi.createRendition(nodeId, {id: renditionId});
-                return await this.waitRendition(nodeId, renditionId, 0);
-            } catch (err) {
-                this.logService.error(err);
-                return null;
-            }
-        }
+        return rendition;
     }
 
     private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
         const rendition = await this.apiService.renditionsApi.getRendition(nodeId, renditionId);
 
-        if (retries > this.maxRetries) {
-            return null;
-        }
+        if (this.maxRetries < retries) {
+            const status = rendition.entry.status.toString();
 
-        const status = rendition.entry.status.toString();
-
-        if (status === 'CREATED') {
-            return rendition;
-        } else {
-            retries += 1;
-            await this.wait(1000);
-            return await this.waitRendition(nodeId, renditionId, retries);
+            if (status === 'CREATED') {
+                return rendition;
+            } else {
+                retries += 1;
+                await this.wait(1000);
+                return await this.waitRendition(nodeId, renditionId, retries);
+            }
         }
     }
 
     private wait(ms: number): Promise<any> {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
+
+    getSideBarStyle(): string {
+        return this.sidebarPosition === 'left' ? 'adf-viewer__sidebar__left' : 'adf-viewer__sidebar__right';
+    }
+
+    private generateCacheBusterNumber() {
+        this.cacheBusterNumber = Date.now();
+    }
+
 }

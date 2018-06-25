@@ -2,13 +2,41 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # App Config service
 
 Supports app configuration settings, stored server side.
 
+## Class members
+
+### Methods
+
+-   **get**(key: `string` = `null`, defaultValue?: `T` = `null`): `T`<br/>
+    Gets the value of a named property.
+    -   _key:_ `string`  - Name of the property
+    -   _defaultValue:_ `T`  - (Optional) Value to return if the key is not found
+    -   **Returns** `T` - Value of the property
+-   **getLocationHostname**(): `string`<br/>
+    Gets the location.hostname property.
+    -   **Returns** `string` - Value of the property
+-   **getLocationPort**(prefix: `string` = `""`): `string`<br/>
+    Gets the location.port property.
+    -   _prefix:_ `string`  - Text added before port value
+    -   **Returns** `string` - Port with prefix
+-   **getLocationProtocol**(): `string`<br/>
+    Gets the location.protocol value.
+    -   **Returns** `string` - 
+-   **load**(): `Promise<any>`<br/>
+    Loads the config file.
+    -   **Returns** `Promise<any>` - Notification when loading is complete
+-   **select**(property: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Requests notification of a property value when it is loaded.
+    -   _property:_ `string`  - The desired property value
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Property value, when loaded
+
 ## Details
 
-The `AppConfigService` service provides support for loading and accessing global application configuration settings that you store on the server side in the form of a JSON file.
+The [`AppConfigService`](../core/app-config.service.md) service provides support for loading and accessing global application configuration settings that you store on the server side in the form of a JSON file.
 
 You may need this service when deploying your ADF-based application to production servers.
 
@@ -37,7 +65,7 @@ Example of the default settings file content:
 Please note that settings above are default ones coming with the server. 
 You can override the values in your custom `app.config.json` file if needed. 
 
-You can also change the path or name of the configuration file when importing the CoreModule in your main application.
+You can also change the path or name of the configuration file when importing the [`CoreModule`](../../lib/core/core.module.ts) in your main application.
 
 ```ts
 ...
@@ -53,7 +81,7 @@ You can also change the path or name of the configuration file when importing th
 export class AppModule { }
 ```
 
-Below is a simple example of using the AppConfigService in practice. 
+Below is a simple example of using the [`AppConfigService`](../core/app-config.service.md) in practice. 
 
 **app.component.ts**
 
@@ -75,17 +103,17 @@ export class AppComponent {
 }
 ```
 
-Your custom components can also benefit from the `AppConfigService`,
+Your custom components can also benefit from the [`AppConfigService`](../core/app-config.service.md),
 you can put an unlimited number of settings and optionally a nested JSON hierarchy.
 
 ### Variable substitution in configuration strings
 
-The `AppConfigService` also supports a limited set of variable substitutions to greatly simplify certain scenarios.
+The [`AppConfigService`](../core/app-config.service.md) also supports a limited set of variable substitutions to greatly simplify certain scenarios.
 
 ```json
 {
-    "ecmHost": "http://{hostname}:{port}/ecm",
-    "bpmHost": "http://{hostname}:{port}/bpm",
+    "ecmHost": "{protocol}//{hostname}:{port}/ecm",
+    "bpmHost": "{protocol}//{hostname}:{port}/bpm",
     "application": {
         "name": "Alfresco"
     }
@@ -96,14 +124,15 @@ The supported variables are:
 
 | Variable name | Runtime value |
 | ------------- | ------------- |
+| protocol | `location.protocol` |
 | hostname | `location.hostname` |
 | port | `location.port` |
 
 ## App Config onLoad Stream
+
 When the app config is loaded correctly an onChange event is sent with the whole set app config properties. This comes in handy when a component wants to react to some property change or interact with the app config when it's correctly loaded.
 
 ```ts
-
     appConfig.onLoad.subscribe((appConfig) => {
         console.log(appConfig); //this is the representation of the app-config
     });

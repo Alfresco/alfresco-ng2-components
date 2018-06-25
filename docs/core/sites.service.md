@@ -8,32 +8,40 @@ Last reviewed: 2018-03-21
 
 Accesses and manipulates sites from a Content Services repository.
 
-## Methods
+## Class members
 
--   `getSites(opts: any = {}): Observable<SitePaging>`  
-    Gets a list of all sites in the repository.  
-    -   `opts` - Options supported by JSAPI
--   `getSite(siteId: string, opts?: any): Observable<SiteEntry>`  
-    Gets the details for a site.  
-    -   `siteId` - ID of the target site
-    -   `opts` - (Optional) Options supported by JSAPI
--   `deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any>`  
-    Deletes a site.  
-    -   `siteId` - Site to delete
-    -   `permanentFlag` - True: deletion is permanent; False: site is moved to the trash
--   `getSiteContent(siteId: string): Observable<SiteEntry>`  
-    Gets a site's content.  
-    -   `siteId` - ID of the target site
--   `getSiteMembers(siteId: string): Observable<SiteEntry>`  
-    Gets a list of all a site's members.  
-    -   `siteId` - ID of the target site
--   `getEcmCurrentLoggedUserName(): string`  
-    Gets the username of the user currently logged into ACS.  
+### Methods
+
+-   **deleteSite**(siteId: `string` = `null`, permanentFlag: `boolean` = `true`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Deletes a site.
+    -   _siteId:_ `string`  - Site to delete
+    -   _permanentFlag:_ `boolean`  - True: deletion is permanent; False: site is moved to the trash
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response notifying when the operation is complete
+-   **getEcmCurrentLoggedUserName**(): `string`<br/>
+    Gets the username of the user currently logged into ACS.
+    -   **Returns** `string` - Username string
+-   **getSite**(siteId: `string` = `null`, opts?: `any` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>`<br/>
+    Gets the details for a site.
+    -   _siteId:_ `string`  - ID of the target site
+    -   _opts:_ `any`  - (Optional) Options supported by JSAPI
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>` - Information about the site
+-   **getSiteContent**(siteId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>`<br/>
+    Gets a site's content.
+    -   _siteId:_ `string`  - ID of the target site
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>` - Site content
+-   **getSiteMembers**(siteId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>`<br/>
+    Gets a list of all a site's members.
+    -   _siteId:_ `string`  - ID of the target site
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>` - Site members
+-   **getSites**(opts: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md)`>`<br/>
+    Gets a list of all sites in the repository.
+    -   _opts:_ `any`  - Options supported by JSAPI
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md)`>` - List of sites
 
 ## Details
 
 You can use `getSites` to get a list of all sites in the repository.
-The sites are returned as `Observable<SiteModel[]>` (see
+The sites are returned as [`Observable`](http://reactivex.io/documentation/observable.html)`<SiteModel[]>` (see
 [Site Model](site.model.md) for more information about this class).
 If you are only interested in a single site and you have its ID, you
 can use `getSite` to access it. Alternatively, you can use `getSiteContent`
