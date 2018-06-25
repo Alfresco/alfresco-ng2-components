@@ -93,7 +93,7 @@ export class TaskListDemoComponent implements OnInit {
             taskState: new FormControl(''),
             taskSort: new FormControl('')
         });
-        
+
         this.taskListForm.valueChanges
         .debounceTime(500)
             .subscribe(taskFilter => {
@@ -101,7 +101,7 @@ export class TaskListDemoComponent implements OnInit {
                     this.filterTasks(taskFilter);
                 }
         });
-        
+ 
     }
 
     filterTasks(taskFilter: any) {
