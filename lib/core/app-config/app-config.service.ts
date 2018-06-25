@@ -21,10 +21,23 @@ import { ObjectUtils } from '../utils/object-utils';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
+export enum AppConfigValues {
+    APP_CONFIG_LANGUAGES_KEY = 'languages',
+    PROVIDERS = 'providers',
+    OAUTHCONFIG = 'oauth2',
+    ECMHOST = 'ecmHost',
+    BPMHOST = 'bpmHost',
+    AUTHTYPE = 'authType',
+    CONTEXTROOTECM = 'contextRootEcm',
+    CONTEXTROOTBPM = 'contextRootBpm',
+    ALFRESCO_REPOSITORY_NAME = 'alfrescoRepositoryName',
+    LOG_LEVEL = 'logLevel',
+    LOGIN_ROUTE = 'loginRoute',
+    DISABLECSRF = 'disableCSRF'
+}
+
 @Injectable()
 export class AppConfigService {
-
-    static APP_CONFIG_LANGUAGES_KEY = 'languages';
 
     config: any = {
         application: {
@@ -44,10 +57,21 @@ export class AppConfigService {
         this.onLoad = this.onLoadSubject.asObservable();
     }
 
+    /**
+     * Requests notification of a property value when it is loaded.
+     * @param property The desired property value
+     * @returns Property value, when loaded
+     */
     select(property: string): Observable<any> {
         return this.onLoadSubject.map((config) => config[property]).distinctUntilChanged();
     }
 
+    /**
+     * Gets the value of a named property.
+     * @param key Name of the property
+     * @param defaultValue Value to return if the key is not found
+     * @returns Value of the property
+     */
     get<T>(key: string, defaultValue?: T): T {
         let result: any = ObjectUtils.getValue(this.config, key);
         if (typeof result === 'string') {
@@ -55,6 +79,7 @@ export class AppConfigService {
             map.set('hostname', this.getLocationHostname());
             map.set(':port', this.getLocationPort(':'));
             map.set('port', this.getLocationPort());
+            map.set('protocol', this.getLocationProtocol());
             result = this.formatString(result, map);
         }
         if (result === undefined) {
@@ -63,14 +88,34 @@ export class AppConfigService {
         return <T> result;
     }
 
+    /**
+     * Gets the location.protocol value.
+     */
+    getLocationProtocol(): string {
+        return location.protocol;
+    }
+
+    /**
+     * Gets the location.hostname property.
+     * @returns Value of the property
+     */
     getLocationHostname(): string {
         return location.hostname;
     }
 
+    /**
+     * Gets the location.port property.
+     * @param prefix Text added before port value
+     * @returns Port with prefix
+     */
     getLocationPort(prefix: string = ''): string {
         return location.port ? prefix + location.port : '';
     }
 
+    /**
+     * Loads the config file.
+     * @returns Notification when loading is complete
+     */
     load(): Promise<any> {
         return new Promise(resolve => {
             this.http.get('app.config.json').subscribe(

@@ -19,20 +19,27 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 
 import { By } from '@angular/platform-browser';
-import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
-import { MaterialModule } from '../../../../material.module';
 import { FormFieldOption } from '../core/form-field-option';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { TypeaheadWidgetComponent } from './typeahead.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TypeaheadWidgetComponent', () => {
 
     let formService: FormService;
     let widget: TypeaheadWidgetComponent;
+
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         formService = new FormService(null, null, null);
@@ -223,15 +230,9 @@ describe('TypeaheadWidgetComponent', () => {
         }, { id: '3', name: 'Fake Name 3' }];
 
         beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [MaterialModule],
-                declarations: [TypeaheadWidgetComponent, ErrorWidgetComponent],
-                providers: [ FormService, EcmModelService]
-            }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(TypeaheadWidgetComponent);
-                typeaheadWidgetComponent = fixture.componentInstance;
-                element = fixture.nativeElement;
-            });
+            fixture = TestBed.createComponent(TypeaheadWidgetComponent);
+            typeaheadWidgetComponent = fixture.componentInstance;
+            element = fixture.nativeElement;
         }));
 
         afterEach(() => {
@@ -261,7 +262,6 @@ describe('TypeaheadWidgetComponent', () => {
 
             afterEach(() => {
                 fixture.destroy();
-                TestBed.resetTestingModule();
             });
 
         });

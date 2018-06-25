@@ -1,106 +1,110 @@
 @mixin adf-app-layout-theme($theme) {
-  $primary: map-get($theme, primary);
-  $background: map-get($theme, background);
-  $foreground: map-get($theme, foreground);
-  $minimumAppWidth: 320px;
-  $toolbarHeight: 64px;
+    $primary: map-get($theme, primary);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $minimumAppWidth: 320px;
+    $toolbarHeight: 64px;
 
-
-   @media screen and ($mat-xsmall) {
-       app-search-bar {
-           width: 150px;
-       }
-   }
+    @media screen and ($mat-xsmall) {
+        app-search-bar {
+            width: 150px;
+        }
+    }
 
     @media screen and (max-width: 350px) {
-       app-search-bar {
-           width: 100px;
-       }
-   }
-
-   .adf-app-layout-toolbar {
-       z-index: 1001;
-       position: relative;
-       overflow: visible !important;
-   }
-
-  .adf-app-layout {
-    display: flex;
-    flex: 1;
-    min-width: $minimumAppWidth;
-    height: 100%;
-
-    .adf-nav-container {
-      display: block;
-      min-width: $minimumAppWidth;
-      height: 100%;
-    }
-
-    .adf-sidenav-linklist {
-      height: 100%;
-      overflow: auto;
-      padding-bottom: 8px;
-      box-sizing: border-box;
-    }
-
-    .adf-sidenav-link {
-
-      &.active {
-        color: mat-color($primary);
-      }
-
-      .sidenav-menu-icon {
-        margin-right: 20px;
-        font-size: 14px;
-      }
-
-      .sidenav-menu-label {
-        font-size: 14px;
-        white-space: nowrap;
-      }
-    }
-
-    .mat-nav-list .mat-list-item.adf-sidenav-link {
-      height: 40px;
-    }
-
-    &-user-profile {
-      margin-right: 10px;
-    }
-
-    &-menu-spacer {
-      flex: 1 1 auto;
-    }
-
-    &-toolbar {
-      height: $toolbarHeight;
-      line-height: $toolbarHeight;
-      overflow: hidden;
-
-      mat-toolbar-row {
-        height: $toolbarHeight;
-        align-items: stretch;
-        justify-content: space-between;
-      }
-
-      .adf-toolbar-link {
-        min-width: 0;
-        line-height: $toolbarHeight;
-
-        &.active {
-          background-color: rgba(0, 0, 0, .12);
+        app-search-bar {
+            width: 100px;
         }
-      }
     }
-  }
 
-  @media screen and  ($mat-small) {
-    .adf-userinfo-name {
-      display: none;
+    .adf-app-layout-toolbar {
+        z-index: 998;
+        position: relative;
+        overflow: visible !important;
     }
-  }
 
-  @media screen and ($mat-xsmall) {
-  }
+    .adf-menu {
+        padding-top: 55px;
+    }
 
+    .adf-app-layout {
+        display: flex;
+        flex: 1;
+        min-width: $minimumAppWidth;
+        height: 100%;
+
+        .adf-nav-container {
+            display: block;
+            min-width: $minimumAppWidth;
+            height: 100%;
+        }
+
+        .adf-sidenav-linklist {
+            height: 100%;
+            overflow: auto;
+            padding-bottom: 8px;
+            box-sizing: border-box;
+        }
+
+        .adf-sidenav-link {
+            &.active {
+                color: mat-color($primary);
+            }
+
+            .sidenav-menu-icon {
+                margin-right: 20px;
+                font-size: 14px;
+            }
+
+            .sidenav-menu-label {
+                font-size: 14px;
+                white-space: nowrap;
+            }
+        }
+
+        .mat-nav-list .mat-list-item.adf-sidenav-link {
+            height: 40px;
+        }
+
+        &-user-profile {
+            margin-right: 10px;
+        }
+
+        &-menu-spacer {
+            flex: 1 1 auto;
+        }
+
+        &-toolbar {
+            height: $toolbarHeight;
+            line-height: $toolbarHeight;
+            overflow: hidden;
+
+            mat-toolbar-row {
+                height: $toolbarHeight;
+                align-items: stretch;
+                justify-content: space-between;
+            }
+
+            .adf-toolbar-link {
+                min-width: 0;
+                line-height: $toolbarHeight;
+
+                &.active {
+                    background-color: rgba(0, 0, 0, 0.12);
+                }
+            }
+        }
+    }
+
+    @media screen and ($mat-small) {
+        .adf-userinfo-name {
+            display: none;
+        }
+
+        .adf-menu {
+            padding-top: 0px;
+        }
+    }
+
+    @media screen and ($mat-xsmall) {}
 }

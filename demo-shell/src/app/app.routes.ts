@@ -17,11 +17,12 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardBpm, AuthGuardEcm } from '@alfresco/adf-core';
+import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { HomeComponent } from './components/home/home.component';
+import { LogoutComponent } from './components/logout/logout.component';
 import { AboutComponent } from './components/about/about.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
@@ -47,13 +48,31 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
 import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
+import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
+    { path: 'logout', component: LogoutComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ], outlet: 'overlay' },
     { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
+    {
+        path: 'breadcrumb',
+        component: BreadcrumbDemoComponent,
+        canActivate: [AuthGuardEcm]
+    },
+    {
+        path: 'notifications',
+        component: AppLayoutComponent ,
+        children: [
+            {
+                path: '',
+                component: NotificationsComponent
+            }
+        ]
+    },
     {
         path: '',
         component: AppLayoutComponent,
@@ -126,7 +145,17 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardBpm]
             },
             {
+                path: 'activiti/apps/:appId/tasks/:filterId',
+                component: ProcessServiceComponent,
+                canActivate: [AuthGuardBpm]
+            },
+            {
                 path: 'activiti/apps/:appId/processes',
+                component: ProcessServiceComponent,
+                canActivate: [AuthGuardBpm]
+            },
+            {
+                path: 'activiti/apps/:appId/processes/:filterId',
                 component: ProcessServiceComponent,
                 canActivate: [AuthGuardBpm]
             },
@@ -135,7 +164,12 @@ export const appRoutes: Routes = [
                 component: ShowDiagramComponent,
                 canActivate: [AuthGuardBpm]
             },
-            // TODO: check if neeeded
+            {
+                path: 'activiti/apps/:appId/report',
+                component: ProcessServiceComponent,
+                canActivate: [AuthGuardBpm]
+            },
+            // TODO: check if needed
             {
                 path: 'activiti/appId/:appId',
                 component: ProcessServiceComponent,
@@ -185,9 +219,18 @@ export const appRoutes: Routes = [
             {
                 path: 'datatable-lazy',
                 loadChildren: 'app/components/lazy-loading/lazy-loading.module#LazyLoadingModule'
+            },
+            {
+                path: 'error/:id',
+                component: ErrorContentComponent
+            },
+            {
+                path: '**',
+                redirectTo: 'error/404'
             }
+
         ]
     }
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { initialNavigation: true });

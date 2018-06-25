@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation,
-    OnInit
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatSelect } from '@angular/material';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list';
 
@@ -70,6 +62,16 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     transform: (node) => any;
 
+    @ViewChild('dropdown')
+    dropdown: MatSelect;
+
+    /** Maximum number of nodes to display before wrapping them with a dropdown element.  */
+    @Input()
+    maxItems: number;
+
+    previousNodes: PathElementEntity[];
+    lastNodes: PathElementEntity[];
+
     route: PathElementEntity[] = [];
 
     get hasRoot(): boolean {
@@ -78,7 +80,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     /** Emitted when the user clicks on a breadcrumb. */
     @Output()
-    navigate: EventEmitter<PathElementEntity> = new EventEmitter<PathElementEntity>();
+    navigate = new EventEmitter<PathElementEntity>();
 
     ngOnInit() {
         this.transform = this.transform ? this.transform : null;
@@ -95,6 +97,28 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             let node = this.transform ? this.transform(this.folderNode) : this.folderNode;
             this.route = this.parseRoute(node);
         }
+        this.recalculateNodes();
+    }
+
+    protected recalculateNodes(): void {
+        if (this.maxItems && this.route.length > this.maxItems) {
+            this.lastNodes = this.route.slice(this.route.length - this.maxItems);
+            this.previousNodes = this.route.slice(0, this.route.length - this.maxItems);
+            this.previousNodes.reverse();
+        } else {
+            this.lastNodes = this.route;
+            this.previousNodes = null;
+        }
+    }
+
+    open(): void {
+        if (this.dropdown) {
+            this.dropdown.open();
+        }
+    }
+
+    hasPreviousNodes(): boolean {
+        return this.previousNodes ? true : false;
     }
 
     parseRoute(node: MinimalNodeEntryEntity): PathElementEntity[] {

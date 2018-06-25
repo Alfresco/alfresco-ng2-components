@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import moment from 'moment-es6';
-import { MaterialModule } from '../../../../../../material.module';
 import { FormFieldModel, FormModel } from '../../../index';
 import { DynamicTableColumn  } from './../../dynamic-table-column.model';
 import { DynamicTableRow  } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
-
 import { DateEditorComponent } from './date.editor';
+import { setupTestBed } from '../../../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DateEditorComponent', () => {
     let component: DateEditorComponent;
@@ -32,16 +33,12 @@ describe('DateEditorComponent', () => {
     let column: DynamicTableColumn;
     let table: DynamicTableModel;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                DateEditorComponent
-            ],
-            imports: [
-                MaterialModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DateEditorComponent);

@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # People list component
 
 Shows a list of users (people).
@@ -41,7 +42,7 @@ export class SomeComponent implements OnInit {
     }
 ```
 
-In the component template use the people list component:
+In the component template use the [people list component](../process-services/people-list.component.md):
 
 <!-- {% raw %} -->
 
@@ -68,19 +69,21 @@ In the component template use the people list component:
 
 <!-- {% endraw %} -->
 
-Note that the people list component is based on the
+Note that the [people list component](../process-services/people-list.component.md) is based on the
 [Datatable component](../core/datatable.component.md).
+
+## Class members
 
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| users | `any[]` |  | The array of user data used to populate the people list.  |
-| actions | `boolean` | `false` | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu.  |
+| -- | -- | -- | -- |
+| actions | `boolean` | false | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu. |
+| users | [`UserProcessModel`](../core/user-process.model.md)`[]` |  | The array of user data used to populate the people list. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| clickRow | `EventEmitter<any>` | Emitted when the user clicks a row in the people list. |
-| clickAction | `EventEmitter<UserEventModel>` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
+| -- | -- | -- |
+| clickAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserEventModel`](../../lib/process-services/task-list/models/user-event.model.ts)`>` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
+| clickRow | `EventEmitter<UserProcessModel>` | Emitted when the user clicks a row in the people list. |

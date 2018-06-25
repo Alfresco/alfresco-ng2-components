@@ -15,7 +15,7 @@ Restores deleted nodes to their original location.
     <button mat-icon-button
         location="/files"
         [adf-restore]="documentList.selection"
-        (restore)="documentList.reload()">
+        (restore)="onRestore($event)">
         <mat-icon>restore</mat-icon>
     </button>
 </adf-toolbar>
@@ -26,20 +26,38 @@ Restores deleted nodes to their original location.
 </adf-document-list>
 ```
 
+```ts
+    onRestore(restoreMessage: RestoreMessageModel) {
+        this.notificationService
+            .openSnackMessageAction(
+                restoreMessage.message,
+                restoreMessage.action
+            )
+            .onAction()
+            .subscribe(() => this.navigateLocation(restoreMessage.path));
+        this.documentList.reload();
+    }
+
+    navigateLocation(path: PathInfoEntity) {
+        const parent = path.elements[path.elements.length - 1];
+        this.router.navigate(['files/', parent.id]);
+    }
+```
+
 ## Class members
 
 ### Properties
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| location | `string` | "" | Path to restored node. |
+| location | `string` | "" | (**Deprecated:** 2.4.0 Path to restored node.)  |
 | adf-restore | `DeletedNodeEntry[]` |  | Array of deleted nodes to restore. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| restore | `EventEmitter<any>` | Emitted when restoration is complete. |
+| restore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`RestoreMessageModel`](../../lib/core/directives/node-restore.directive.ts)`>` | Emitted when restoration is complete. |
 
 ## Details
 

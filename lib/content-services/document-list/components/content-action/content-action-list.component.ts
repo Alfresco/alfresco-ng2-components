@@ -42,4 +42,15 @@ export class ContentActionListComponent {
         }
         return false;
     }
+
+    unregisterAction(action: ContentActionModel): boolean {
+        if (this.documentList && action) {
+            const idx = this.documentList.actions.indexOf(action);
+            if (idx >= 0) {
+                this.documentList.actions.splice(idx, 1);
+                return true;
+            }
+        }
+        return false;
+    }
 }

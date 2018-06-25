@@ -23,9 +23,33 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationService } from './notification.service';
+import { TranslationMock } from '../mock/translation.service.mock';
+import { TranslationService } from './translation.service';
+
+@Component({
+    template: '',
+    providers: [NotificationService]
+})
+class ProvidesNotificationServiceComponent {
+    constructor(public notificationService: NotificationService) {
+
+    }
+
+    sendMessage() {
+        let promise = this.notificationService.openSnackMessage('Test notification', 5000);
+        return promise;
+    }
+
+    sendMessageAction() {
+        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 5000);
+        return promise;
+    }
+
+}
 
 describe('NotificationService', () => {
     let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
+    let translationService: TranslationService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -39,15 +63,28 @@ describe('NotificationService', () => {
                 NotificationService,
                 MatSnackBar,
                 OVERLAY_PROVIDERS,
-                LiveAnnouncer
+                LiveAnnouncer,
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         });
 
-        TestBed.compileComponents();
+        translationService = TestBed.get(TranslationService);
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
+        fixture.detectChanges();
+    });
+
+    it('should translate messages', (done) => {
+        spyOn(translationService, 'instant').and.callThrough();
+
+        let promise = fixture.componentInstance.sendMessage();
+        promise.afterDismissed().subscribe(() => {
+            expect(translationService.instant).toHaveBeenCalled();
+            done();
+        });
+
         fixture.detectChanges();
     });
 
@@ -74,24 +111,3 @@ describe('NotificationService', () => {
     });
 
 });
-
-@Component({
-    template: '',
-    providers: [NotificationService]
-})
-class ProvidesNotificationServiceComponent {
-    constructor(public notificationService: NotificationService) {
-
-    }
-
-    sendMessage() {
-        let promise = this.notificationService.openSnackMessage('Test notification', 5000);
-        return promise;
-    }
-
-    sendMessageAction() {
-        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 5000);
-        return promise;
-    }
-
-}

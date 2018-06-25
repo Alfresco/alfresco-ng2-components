@@ -24,13 +24,14 @@ Displays and edits metadata related to a node.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| node | MinimalNodeEntryEntity | - | (**required**) The node entity to fetch metadata about |
-| displayEmpty | boolean | false | Toggles whether to display empty values in the card view |
-| readOnly | boolean | true | Toggles whether the edit button should be shown |
-| multi | boolean | false | The multi parameter of the underlying material expansion panel |
-| preset | string | "*" | Name of the metadata preset, which defines aspects and their properties |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| displayEmpty | `boolean` | false | Toggles whether to display empty values in the card view |
+| editable | `boolean` | false | Toggles whether the edit button should be shown |
+| expanded | `boolean` | false | Toggles between expanded (ie, full information) and collapsed (ie, reduced information) in the display |
+| multi | `boolean` | false | The multi parameter of the underlying material expansion panel |
+| node | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | (required) The node entity to fetch metadata about |
+| preset | `string` |  | Name of the metadata preset, which defines aspects and their properties |
 
 ## Details
 
@@ -44,7 +45,7 @@ properties.
 ### Application config presets
 
 You can define different presets for the metadata component or override the default presets in
-the `app.config.json` file. The **default** preset is "*" if not set, meaning the component
+the `app.config.json` file. The **default** preset is "\*" if not set, meaning the component
 will display every aspect and property of a node without filtering. 
 
 You can define as many extra presets as you need for your components.
@@ -89,7 +90,7 @@ just the `exif:exif` and `custom:aspect` aspects are whitelisted:
 ```
 
 You can further restrict the whitelist to specific properties of one or more aspects by using
-an array of property names in place of the "*" filter:
+an array of property names in place of the "\*" filter:
 
 ```json
 ...
@@ -190,24 +191,25 @@ A more complex config is shown in the example below:
     ]
   }
 ```
+
 The result of this config would be two accordion groups with the following properties:
 
-|GROUP-TITLE1-TRANSLATION-KEY|
-|---|
-|exif:param1|
-|exif:param2|
-|...|
-|exif:paramN|
-|kitten:custom1|
-|kitten:custom3|
-|owner:name|
-|kitten:name|
-|kitten:color|
+| GROUP-TITLE1-TRANSLATION-KEY |
+| ---------------------------- |
+| exif:param1 |
+| exif:param2 |
+| ... |
+| exif:paramN |
+| kitten:custom1 |
+| kitten:custom3 |
+| owner:name |
+| kitten:name |
+| kitten:color |
 
-|GROUP-TITLE2-TRANSLATION-KEY|
-|---|
-|kitten:favourite-food|
-|kitten:recommended-food|
+| GROUP-TITLE2-TRANSLATION-KEY |
+| ---------------------------- |
+| kitten:favourite-food |
+| kitten:recommended-food |
 
 ## What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect
 

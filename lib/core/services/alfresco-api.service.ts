@@ -17,18 +17,30 @@
 
 import { Injectable } from '@angular/core';
 import {
-    AlfrescoApi, ContentApi, FavoritesApi, NodesApi,
-    PeopleApi, RenditionsApi, SharedlinksApi, SitesApi,
-    VersionsApi, ClassesApi, SearchApi, GroupsApi, MinimalNodeEntryEntity
+    AlfrescoApi,
+    ContentApi,
+    FavoritesApi,
+    NodesApi,
+    PeopleApi,
+    RenditionsApi,
+    SharedlinksApi,
+    SitesApi,
+    VersionsApi,
+    ClassesApi,
+    SearchApi,
+    GroupsApi,
+    MinimalNodeEntryEntity
 } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs/Subject';
+import { OauthConfigModel } from '../models/oauth-config.model';
+
+/* tslint:disable:adf-file-name */
 
 @Injectable()
 export class AlfrescoApiService {
-
     /**
      * Publish/subscribe to events related to node updates.
      */
@@ -38,6 +50,14 @@ export class AlfrescoApiService {
 
     getInstance(): AlfrescoApi {
         return this.alfrescoApi;
+    }
+
+    get taskApi(): alfrescoApi.TaskApi {
+        return this.getInstance().activiti.taskApi;
+    }
+
+    get modelsApi(): alfrescoApi.ModelsApi {
+        return this.getInstance().activiti.modelsApi;
     }
 
     get contentApi(): ContentApi {
@@ -99,16 +119,41 @@ export class AlfrescoApiService {
     }
 
     protected initAlfrescoApi() {
-        this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
-            provider: this.storage.getItem('AUTH_TYPE'),
-            ticketEcm: this.storage.getItem('ticket-ECM'),
-            ticketBpm: this.storage.getItem('ticket-BPM'),
-            hostEcm: this.appConfig.get<string>('ecmHost'),
-            hostBpm: this.appConfig.get<string>('bpmHost'),
-            contextRootBpm: this.appConfig.get<string>('contextRootBpm'),
-            contextRoot: this.appConfig.get<string>('contextRootEcm'),
-            disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
-            oauth2: this.appConfig.get<any>('oauth2')
-        });
+        let oauth: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+        if (oauth) {
+            oauth.redirectUri = window.location.origin + (oauth.redirectUri || '/');
+            oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
+        }
+
+        const config = {
+            provider: this.getProvider(),
+            hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
+            hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
+            authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),
+            contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
+            contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
+            disableCsrf: this.getDisableCSRF(),
+            oauth2: oauth
+        };
+
+        if (this.alfrescoApi) {
+            this.alfrescoApi.configureJsApi(config);
+        } else {
+            this.alfrescoApi = <AlfrescoApi> new alfrescoApi(config);
+        }
+    }
+
+    // @deprecated 3.0.0 get only from app config
+    private getDisableCSRF(): boolean {
+        if (this.storage.getItem(AppConfigValues.DISABLECSRF) === 'true') {
+            return true;
+        } else {
+            return this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF);
+        }
+    }
+
+    // @deprecated 3.0.0 get only from app config
+    private getProvider() {
+        return this.storage.getItem(AppConfigValues.PROVIDERS) || this.appConfig.get<string>(AppConfigValues.PROVIDERS);
     }
 }

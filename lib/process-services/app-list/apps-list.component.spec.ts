@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { DebugElement, Component } from '@angular/core';
+import { DebugElement, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppsProcessService } from '@alfresco/adf-core';
+import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent } from './apps-list.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 describe('AppsListComponent', () => {
 
@@ -33,17 +33,9 @@ describe('AppsListComponent', () => {
     let service: AppsProcessService;
     let getAppsSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                TranslateModule
-            ],
-            declarations: [
-                AppsListComponent
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AppsListComponent);
@@ -251,9 +243,9 @@ describe('AppsListComponent', () => {
 @Component({
     template: `
     <adf-apps>
-        <adf-empty-list>
-            <div adf-empty-list-header class="adf-empty-list-header">No Apps</div>
-        </adf-empty-list>
+        <adf-empty-custom-content>
+            <p id="custom-id">No Apps</p>
+        </adf-empty-custom-content>
     </adf-apps>
        `
 })
@@ -263,24 +255,24 @@ class CustomEmptyAppListTemplateComponent {
 describe('Custom CustomEmptyAppListTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyAppListTemplateComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                AppsListComponent,
-                CustomEmptyAppListTemplateComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule],
+        declarations: [CustomEmptyAppListTemplateComponent],
+        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomEmptyAppListTemplateComponent);
-        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should render the custom no-apps template', async(() => {
+        fixture.detectChanges();
         fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
+            let title: any = fixture.debugElement.queryAll(By.css('#custom-id'));
             expect(title.length).toBe(1);
             expect(title[0].nativeElement.innerText).toBe('No Apps');
         });

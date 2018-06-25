@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Create Process Attachment component
 
 Displays Upload Component (Drag and Click) to upload the attachment to a specified process instance
@@ -18,15 +19,17 @@ Displays Upload Component (Drag and Click) to upload the attachment to a specifi
 </adf-create-process-attachment>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| processInstanceId | `string` |  | (required) The ID of the process instance to display.  |
+| -- | -- | -- | -- |
+| processInstanceId | `string` |  | (required) The ID of the process instance to display. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | `EventEmitter<any>` | Emitted when an error occurs while creating or uploading an attachment from the user within the component. |
-| success | `EventEmitter<any>` | Emitted when an attachment is successfully created or uploaded from within the component. |
+| -- | -- | -- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while creating or uploading an attachment from the user within the component. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an attachment is successfully created or uploaded from within the component. |

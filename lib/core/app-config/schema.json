@@ -273,9 +273,18 @@
             "description": "BPM host",
             "type": "string"
         },
+        "providers": {
+            "description": "This parameter can accept as value ECM BPM or ALL you can set it accordingly where you want log-in",
+            "type": "string",
+            "enum": [ "ECM", "BPM", "ALL"]
+        },
         "contextRootBpm": {
             "description": "The context root of the BPM host",
             "type": "string"
+        },
+        "disableCSRF": {
+            "description": "The context root of the BPM host",
+            "type": "boolean"
         },
         "application": {
             "description": "Application's global configuration",
@@ -365,7 +374,7 @@
                         "properties": {
                               "type": "array",
                               "items": {
-                                "enum": [ "assignee", "status", "priority", "dueDate", "category", "parentName", "created-by", "created", "id", "description", "formName" ]
+                                "enum": [ "assignee", "status", "priority", "dueDate", "category", "parentName", "created", "id", "description", "formName" ]
                               }
                         }
                     }
@@ -458,23 +467,189 @@
                 }
             }
         },
-        "oauth2": {
+        "authType": {
+          "description": "Kind of authentication BASIC or OAUTH, default value BASIC",
+          "type": "string",
+          "enum": [ "BASIC", "OAUTH" ]
+        },
+       "oauth2": {
           "description": "AUTH configuration parameters",
           "type": "object",
-          "required": [ "host", "clientId", "secret" ],
+          "required": [ "host", "clientId", "secret", "scope" ],
           "properties": {
               "host": { "type": "string" },
+              "silentLogin": { "type": "boolean" },
               "authPath": { "type": "string" },
               "clientId": { "type": "string" },
-              "secret": { "type": "string" }
+              "secret": { "type": "string" },
+              "redirectUri": { "type": "string" },
+              "redirectUriLogout": { "type": "string" },
+              "scope": { "type": "string" }
           }
         },
-        "adf-version-manager": {
-          "description": "Configuration parameters for Version Manager component",
+        "search": {
+          "description": "Search configuration parameters",
           "type": "object",
+          "required": [ "categories" ],
           "properties": {
-            "allowComments": { "type": "boolean" },
-            "allowDownload": { "type": "boolean" }
+            "include": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            },
+            "fields": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            },
+            "filterQueries": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [ "query" ],
+                "properties": {
+                  "query": { "type": "string" }
+                }
+              }
+            },
+            "facetFields": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [ "field", "mincount", "label" ],
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "This specifies the facet field."
+                  },
+                  "mincount": {
+                    "type": "number",
+                    "description": "This specifies the minimum count required for a facet field to be included in the response. The default value is 1."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "This specifies the label to include in place of the facet field."
+                  },
+                  "prefix": {
+                    "type": "string",
+                    "description": "This restricts the possible constraints to only indexed values with a specified prefix."
+                  },
+                  "limit": {
+                    "type": "number",
+                    "description": "Maximum number of results"
+                  },
+                  "pageSize": {
+                    "type": "number",
+                    "description": "Display page size"
+                  },
+                  "offset": { "type": "integer" }
+                }
+              }
+            },
+            "facetQueries": {
+              "type": "object",
+              "required": ["label", "queries"],
+              "properties": {
+                "label": {
+                  "description": "Category label text",
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "Default page size of the category",
+                  "type": "number"
+                },
+                "expanded": {
+                  "description": "Toggles expanded state of the category",
+                  "type": "boolean"
+                },
+                "queries": {
+                  "description": "List of custom facet queries",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [ "query", "label" ],
+                    "properties": {
+                      "query": { "type": "string" },
+                      "label": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            },
+            "categories": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [ "id", "name" ],
+                "properties": {
+                  "id": { "type": "string" },
+                  "name": { "type": "string" },
+                  "enabled": { "type": "boolean" },
+                  "expanded": { "type": "boolean" },
+                  "component": {
+                    "type": "object",
+                    "required": [ "selector", "settings" ],
+                    "properties": {
+                      "selector": {
+                        "description": "Unique component runtime identifier",
+                        "type": "string"
+                      },
+                      "settings": {
+                        "description": "Component-specific settings",
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "sorting": {
+              "description": "Sorting options and defaults",
+              "required": ["options"],
+              "properties": {
+                "options": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                      "description": "Sorting options available for users to choose from",
+                      "type": "object",
+                      "required": ["key", "label", "type", "field", "ascending"],
+                      "properties": {
+                        "key": { "type": "string" },
+                        "label": { "type": "string" },
+                        "type": { "type": "string" },
+                        "field": { "type": "string" },
+                        "ascending": { "type": "boolean" }
+                      }
+                    }
+                },
+                "defaults": {
+                  "description": "Predefined sorting to execute by default",
+                  "options": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": ["key", "label", "type", "field", "ascending"],
+                      "properties": {
+                        "key": { "type": "string" },
+                        "label": { "type": "string" },
+                        "type": { "type": "string" },
+                        "field": { "type": "string" },
+                        "ascending": { "type": "boolean" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
     }

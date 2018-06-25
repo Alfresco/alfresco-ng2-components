@@ -107,6 +107,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 private logService: LogService,
                 private contentService: ContentService,
                 private dialog: MatDialog) {
+
     }
 
     ngOnInit() {
@@ -130,8 +131,10 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         if (this.reportForm) {
             this.reportForm.reset();
         }
+
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
+            this.reportId = reportId.currentValue;
             this.getReportParams(reportId.currentValue);
         }
 
@@ -145,7 +148,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         let formBuilderGroup: any = {};
         parameters.forEach((param: ReportParameterDetailsModel) => {
             switch (param.type) {
-                case 'dateRange' :
+                case 'dateRange':
                     formBuilderGroup.dateRange = new FormGroup({}, Validators.required);
                     break;
                 case 'processDefinition':
@@ -348,10 +351,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         return this.action === 'Save';
     }
 
-    isFormValid() {
-        return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
-    }
-
     doExport(paramQuery: ReportQuery) {
         this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(
             (data: any) => {
@@ -384,5 +383,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     isParametersHide() {
         return this.hideParameters;
+    }
+
+    isFormValid() {
+        return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
     }
 }

@@ -17,93 +17,112 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Observable } from 'rxjs/Observable';
-
 import { ShareDialogComponent } from './share.dialog';
+import { ContentTestingModule } from '../testing/content.testing.module';
+import { SharedLinksApiService, setupTestBed } from '@alfresco/adf-core';
 
 describe('ShareDialogComponent', () => {
 
     let fixture: ComponentFixture<ShareDialogComponent>;
+    let spyCreate: any;
+    let spyDelete: any;
     let component: ShareDialogComponent;
-    let dialogRef;
+    let sharedLinksApiService: SharedLinksApiService;
+    const dialogRef = {
+        close: jasmine.createSpy('close')
+    };
 
     let data: any = {
-        node: { entry: { properties: { 'qshare:sharedId': 'example-link' }, name: 'example-name' } }
+        node: { entry: { properties: { 'qshare:sharedId': 'example-link' }, name: 'example-name' } },
         baseShareUrl: 'baseShareUrl-example'
     };
 
-    beforeEach(async(() => {
-        dialogRef = {
-            close: jasmine.createSpy('close')
-        };
-
-        TestBed.configureTestingModule({
-            imports: [
-                FormsModule,
-                ReactiveFormsModule,
-                BrowserDynamicTestingModule
-            ],
-            declarations: [
-                ShareDialogComponent
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: dialogRef },
-                {
-                    provide: MAT_DIALOG_DATA,
-                    useValue: data
-                }
-            ]
-        });
-
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [ShareDialogComponent] }
-        });
-
-        TestBed.compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        providers: [
+            { provide: MatDialogRef, useValue: dialogRef },
+            { provide: MAT_DIALOG_DATA, useValue: data }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ShareDialogComponent);
+        sharedLinksApiService = TestBed.get(SharedLinksApiService);
         component = fixture.componentInstance;
 
         fixture.detectChanges();
+
+        spyCreate = spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(Observable.of({ entry: { id: 'test-sharedId' } }));
+        spyDelete = spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(Observable.of({}));
     });
 
-    it('should init the dialog with the file name and baseShareUrl', () => {
-        expect(component.fileName).toBe('example-name');
-        expect(component.baseShareUrl).toBe('baseShareUrl-example');
-    });
+    it('should init the dialog with the file name and baseShareUrl', async(() => {
+        component.data = {
+            baseShareUrl: 'base-url/',
+            node: { entry: { properties: { 'qshare:sharedId': 'example-link' }, name: 'example-name' } }
+        };
+
+        component.ngOnInit();
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            expect(fixture.nativeElement.querySelector('#adf-share-link').value).toBe('base-url/example-link');
+        });
+    }));
 
     describe('public link creation', () => {
 
-        it('should not create the public link if it alredy present in the node', () => {
-            let spyCreate = spyOn(component, 'createSharedLinks').and.returnValue(Observable.of(''));
+        it('should not create the public link if it already present in the node', () => {
+            component.data = {
+                node: { entry: { properties: { 'qshare:sharedId': 'example-link' }, name: 'example-name' } }
+            };
 
             component.ngOnInit();
 
             expect(spyCreate).not.toHaveBeenCalled();
         });
 
-        it('should not create the public link if it alredy present in the node', () => {
+        it('should not create the public link if is not present in the node', () => {
             component.data = {
-                node: { entry: { name: 'example-name' } }
-                baseShareUrl: 'baseShareUrl-example'
-            };
-
-            let spyCreate = spyOn(component, 'createSharedLinks').and.returnValue(Observable.of(''));
-
-            data = {
-                node: { entry: { name: 'example-name' } }
+                node: { entry: { properties: {}, name: 'example-name' } },
                 baseShareUrl: 'baseShareUrl-example'
             };
 
             component.ngOnInit();
 
-            expect(spyCreate).toHaveBeenCalled();
+            expect(spyCreate).not.toHaveBeenCalled();
         });
+
+        it('should be able to delete the shared link', async(() => {
+            component.data = {
+                node: { entry: { name: 'example-name', properties: { 'qshare:sharedId': 'example-link' } } },
+                baseShareUrl: 'baseShareUrl-example'
+            };
+            component.ngOnInit();
+            fixture.detectChanges();
+            fixture.nativeElement.querySelector('#adf-share-toggle-input').click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(spyDelete).toHaveBeenCalled();
+                expect(component.data.node.entry.properties['qshare:sharedId']).toBeNull();
+            });
+        }));
+
+        it('should show the toggle disabled when the shareid property is null', async(() => {
+            component.data = {
+                node: { entry: { name: 'example-name', properties: { 'qshare:sharedId': null } } },
+                baseShareUrl: 'baseShareUrl-example'
+            };
+            component.ngOnInit();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(fixture.nativeElement.querySelector('#adf-share-toggle')).not.toBeNull();
+                expect(fixture.nativeElement.querySelector('#adf-share-toggle.mat-checked')).toBeNull();
+            });
+        }));
     });
 
 });

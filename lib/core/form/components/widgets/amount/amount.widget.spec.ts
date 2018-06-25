@@ -15,36 +15,24 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../../../../material.module';
-import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from './../core/form-field.model';
 import { AmountWidgetComponent } from './amount.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AmountWidgetComponent', () => {
 
     let widget: AmountWidgetComponent;
     let fixture: ComponentFixture<AmountWidgetComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                AmountWidgetComponent,
-                ErrorWidgetComponent
-            ],
-            providers: [
-                FormService,
-                EcmModelService,
-                ActivitiContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AmountWidgetComponent);
@@ -52,7 +40,7 @@ describe('AmountWidgetComponent', () => {
         widget = fixture.componentInstance;
     });
 
-    it('should setup currentcy from field', () => {
+    it('should setup currency from field', () => {
         const currency = 'UAH';
         widget.field = new FormFieldModel(null, {
             currency: currency

@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { NgZone, SimpleChange, Component } from '@angular/core';
+import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
-import { ProcessContentService } from '@alfresco/adf-core';
+import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 describe('ProcessAttachmentListComponent', () => {
 
@@ -32,32 +31,15 @@ describe('ProcessAttachmentListComponent', () => {
     let getProcessRelatedContentSpy: jasmine.Spy;
     let mockAttachment: any;
 
-    beforeEach(async(() => {
-        let zone = new NgZone({enableLongStackTrace: false});
-        TestBed.configureTestingModule({
-            imports: [
-                MatProgressSpinnerModule
-            ],
-            declarations: [
-                ProcessAttachmentListComponent
-            ],
-            providers: [
-                ProcessContentService,
-                { provide: NgZone, useValue: zone }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
     beforeEach(() => {
 
         fixture = TestBed.createComponent(ProcessAttachmentListComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ProcessContentService);
-
-        const translateService: TranslateService = TestBed.get(TranslateService);
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
 
         mockAttachment = {
             size: 2,
@@ -115,6 +97,7 @@ describe('ProcessAttachmentListComponent', () => {
     });
 
     afterEach(() => {
+        fixture.destroy();
         const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
 
         overlayContainers.forEach((overlayContainer) => {
@@ -161,7 +144,7 @@ describe('ProcessAttachmentListComponent', () => {
         });
     }));
 
-    it('should display all actions if attachements are not read only', async(() => {
+    it('should display all actions if attachments are not read only', async(() => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
@@ -317,16 +300,11 @@ class CustomEmptyTemplateComponent {
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                ProcessAttachmentListComponent,
-                CustomEmptyTemplateComponent
-            ],
-            imports: [
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule],
+        declarations: [CustomEmptyTemplateComponent],
+        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomEmptyTemplateComponent);

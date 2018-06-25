@@ -27,6 +27,7 @@ import { ContentNodeDialogService } from '../content-node-selector/content-node-
 })
 export class NodeLockDirective implements AfterViewInit {
 
+    /** Node to lock/unlock. */
     @Input('adf-node-lock')
     node: MinimalNodeEntryEntity;
 

@@ -16,20 +16,23 @@
  */
 
 import { async } from '@angular/core/testing';
-import {
-    fakeAppFilter,
-    fakeAppPromise,
-    fakeFilters
-} from '../../mock';
+import { fakeAppFilter, fakeAppPromise, fakeFilters } from '../../mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
-import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
 describe('Activiti Task filter Service', () => {
 
     let service: TaskFilterService;
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
+
     beforeEach(async(() => {
         service = new TaskFilterService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()), new LogService(new AppConfigService(null)));
         jasmine.Ajax.install();

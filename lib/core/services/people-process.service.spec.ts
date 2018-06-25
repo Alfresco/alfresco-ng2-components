@@ -18,6 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { UserProcessModel } from '../models';
 import { PeopleProcessService } from './people-process.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -41,12 +43,11 @@ describe('PeopleProcessService', () => {
 
     let service: PeopleProcessService;
 
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
+
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                PeopleProcessService
-            ]
-        });
         service = TestBed.get(PeopleProcessService);
     });
 

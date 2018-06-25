@@ -1,5 +1,5 @@
 <mat-list class="adf-version-list" *ngIf="!isLoading; else loading_template">
-    <mat-list-item *ngFor="let version of versions">
+    <mat-list-item *ngFor="let version of versions; let idx = index">
         <mat-icon mat-list-icon>insert_drive_file</mat-icon>
         <h4 mat-line class="adf-version-list-item-name">{{version.entry.name}}</h4>
         <p mat-line>
@@ -8,30 +8,39 @@
         </p>
         <p mat-line class="adf-version-list-item-comment" *ngIf="showComments">{{version.entry.versionComment}}</p>
 
-        <mat-menu #versionMenu="matMenu" yPosition="below" xPosition="before">
-            <button *ngIf="canUpdate()"
-                mat-menu-item
-                (click)="restore(version.entry.id)">
-                {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
-            </button>
-            <button *ngIf="allowDownload"
-                mat-menu-item
-                (click)="downloadVersion(version.entry.id)">
-                {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
-            </button>
-            <button *ngIf="canUpdate()"
-                (click)="deleteVersion(version.entry.id)"
-                mat-menu-item>
-                {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
-            </button>
-        </mat-menu>
+        <div *ngIf="showActions">
+            <mat-menu [id]="'adf-version-list-action-menu-'+idx"
+                      #versionMenu="matMenu" yPosition="below" xPosition="before">
+                <button
+                    [id]="'adf-version-list-action-restore-'+idx"
+                    [disabled]="!canUpdate()"
+                    mat-menu-item
+                    (click)="restore(version.entry.id)">
+                    {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
+                </button>
+                <button *ngIf="allowDownload"
+                        [id]="'adf-version-list-action-download-'+idx"
+                        mat-menu-item
+                        (click)="downloadVersion(version.entry.id)">
+                    {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
+                </button>
+                <button
+                    [disabled]="!canDelete()"
+                    [id]="'adf-version-list-action-delete-'+idx"
+                    (click)="deleteVersion(version.entry.id)"
+                    mat-menu-item>
+                    {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
+                </button>
+            </mat-menu>
 
-        <button mat-icon-button [matMenuTriggerFor]="versionMenu">
-            <mat-icon>more_vert</mat-icon>
-        </button>
+            <button mat-icon-button [matMenuTriggerFor]="versionMenu" [id]="'adf-version-list-action-menu-button-'+idx">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </div>
     </mat-list-item>
 </mat-list>
 
 <ng-template #loading_template>
-    <mat-progress-bar data-automation-id="version-history-loading-bar" mode="indeterminate" color="accent"></mat-progress-bar>
+    <mat-progress-bar data-automation-id="version-history-loading-bar" mode="indeterminate"
+                      color="accent"></mat-progress-bar>
 </ng-template>

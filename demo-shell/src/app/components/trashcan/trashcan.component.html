@@ -17,7 +17,7 @@
             <button
                 mat-icon-button
                 (selection-node-restored)="refresh()"
-                (restore)="documentList.reload()"
+                (restore)="onRestore($event)"
                 [adf-restore]="documentList.selection"
                 *ngIf="documentList.selection.length"
                 title="{{ 'TRASHCAN.ACTIONS.RESTORE' | translate }}">
@@ -29,7 +29,6 @@
     <div class="inner-layout__content">
 
         <adf-document-list #documentList
-                           [attr.class]="documentList.isEmpty() ? 'empty-list' : ''"
                            currentFolderId="-trashcan-"
                            selectionMode="multiple"
                            [multiselect]="true"
@@ -41,12 +40,12 @@
 
             <empty-folder-content>
                 <ng-template>
-                    <div class="empty-list__block">
-                        <mat-icon>delete</mat-icon>
-                        <p class="empty-list__title">{{ 'TRASHCAN.EMPTY_STATE.TITLE' | translate }}</p>
-                        <p class="empty-list__text">{{ 'TRASHCAN.EMPTY_STATE.FIRST_TEXT' | translate }}</p>
-                        <p class="empty-list__text">{{ 'TRASHCAN.EMPTY_STATE.SECOND_TEXT' | translate }}</p>
-                    </div>
+                    <adf-empty-content
+                        icon="delete"
+                        [title]="'TRASHCAN.EMPTY_STATE.TITLE'">
+                        <p class="adf-empty-content__text">{{ 'TRASHCAN.EMPTY_STATE.FIRST_TEXT' | translate }}</p>
+                        <p class="adf-empty-content__text">{{ 'TRASHCAN.EMPTY_STATE.SECOND_TEXT' | translate }}</p>
+                    </adf-empty-content>
                 </ng-template>
             </empty-folder-content>
 
@@ -78,7 +77,7 @@
                     key="archivedAt"
                     title="DOCUMENT_LIST.COLUMNS.DELETED_ON">
                     <ng-template let-value="value">
-                        <span title="{{ value | date:'medium' }}">{{ value | adfTimeAgo }}</span>
+                        <span title="{{ value | date:'medium' }}">{{ value | adfTimeAgo: currentLocale }}</span>
                     </ng-template>
                 </data-column>
 

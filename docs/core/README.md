@@ -11,6 +11,8 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [About component](about.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | This component allow you to have a general overview of the version of ADF installed and the status of the Content service and Process service. | [Source](../../lib/core/about/about.component.ts) |
+| [Buttons menu component](buttons-menu.component.md) | Displays buttons on a responsive menu.  | [Source](../../lib/core/buttons-menu/buttons-menu.component.ts) |
 | [Card view component](card-view.component.md) | Displays a configurable property list renderer. | [Source](../../lib/core/card-view/components/card-view/card-view.component.ts) |
 | [Accordion group component](accordion-group.component.md) | Adds a collapsible panel to an accordion menu. | [Source](../../lib/core/collapsable/accordion-group.component.ts) |
 | [Accordion component](accordion.component.md) | Creates a collapsible accordion menu. | [Source](../../lib/core/collapsable/accordion.component.ts) |
@@ -29,9 +31,12 @@ for more information about installing and using the source code.
 | [Login component](login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../../lib/core/login/components/login.component.ts) |
 | [Infinite pagination component](infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../../lib/core/pagination/infinite-pagination.component.ts) |
 | [Pagination component](pagination.component.md) | Adds pagination to the component it is used with. | [Source](../../lib/core/pagination/pagination.component.ts) |
-| [Host settings component](host-settings.component.md) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../../lib/core/settings/host-settings.component.ts) |
-| [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/sidebar/sidebar-action-menu.component.ts) |
+| [Host settings component](host-settings.component.md) ![Internal](../docassets/images/InternalIcon.png) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../../lib/core/settings/host-settings.component.ts) |
+| [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/sidenav-layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav layout component](sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../../lib/core/sidenav-layout/components/sidenav-layout/sidenav-layout.component.ts) |
+| [Sorting picker component](sorting-picker.component.md) | Selects from a set of predefined sorting definitions and directions. | [Source](../../lib/core/sorting-picker/sorting-picker.component.ts) |
+| [Empty content component](empty-content.component.md) | Provides a generic "Empty Content" placeholder for components. | [Source](../../lib/core/templates/empty-content/empty-content.component.ts) |
+| [Error content component](error-content.component.md) | Displays info about a specific error. | [Source](../../lib/core/templates/error-content/error-content.component.ts) |
 | [Toolbar divider component](toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../../lib/core/toolbar/toolbar-divider.component.ts) |
 | [Toolbar title component](toolbar-title.component.md) | Supplies custom HTML to be included in a Toolbar component title. | [Source](../../lib/core/toolbar/toolbar-title.component.ts) |
 | [Toolbar component](toolbar.component.md) | Simple container for headers, titles, actions and breadcrumbs. | [Source](../../lib/core/toolbar/toolbar.component.ts) |
@@ -77,6 +82,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Card item types service](card-item-types.service.md) | Maps type names to field component types for the Card View component. | [Source](../../lib/core/card-view/services/card-item-types.service.ts) |
 | [Card view update service](card-view-update.service.md) | Reports edits and clicks within fields of a Card View component. | [Source](../../lib/core/card-view/services/card-view-update.service.ts) |
 | [Activiti alfresco service](activiti-alfresco.service.md) | Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). | [Source](../../lib/core/form/services/activiti-alfresco.service.ts) |
 | [Form rendering service](form-rendering.service.md) | Maps an APS form field type string onto the corresponding form widget component type. | [Source](../../lib/core/form/services/form-rendering.service.ts) |
@@ -97,7 +103,7 @@ for more information about installing and using the source code.
 | [Discovery api service](discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../../lib/core/services/discovery-api.service.ts) |
 | [Favorites api service](favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../../lib/core/services/favorites-api.service.ts) |
 | [Highlight transform service](highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../../lib/core/services/highlight-transform.service.ts) |
-| [Log service](log.service.md) | Provide a log functionality for your ADF application. | [Source](../../lib/core/services/log.service.ts) |
+| [Log service](log.service.md) | Provides log functionality. | [Source](../../lib/core/services/log.service.ts) |
 | [Nodes api service](nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../../lib/core/services/nodes-api.service.ts) |
 | [Notification service](notification.service.md) | Shows a notification message with optional feedback. | [Source](../../lib/core/services/notification.service.ts) |
 | [Page title service](page-title.service.md) | Sets the page title. | [Source](../../lib/core/services/page-title.service.ts) |

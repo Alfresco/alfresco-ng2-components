@@ -38,6 +38,12 @@
       "YB": "YB"
     },
     "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Selector de tamaño de página",
+        "CURRENT_PAGE": "Selector de tamaño actual",
+        "PREVIOUS_PAGE": "Botón de página anterior",
+        "NEXT_PAGE": "Botón de página siguiente"
+      },
       "ITEMS_RANGE": "Mostrando {{ range }} de {{ total }}",
       "ITEMS_PER_PAGE": "Elementos por página",
       "CURRENT_PAGE": "Página {{ number }}",
@@ -176,7 +182,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Requerido",
-      "USERNAME-MIN": "Su nombre de usuario debe tener al menos {{ minLenght }} caracteres.",
+      "USERNAME-MIN": "Su nombre de usuario debe tener al menos {{ minLength }} caracteres.",
       "PASSWORD-REQUIRED": "Introduzca su contraseña para iniciar sesión",
       "LOGIN-ERROR-CREDENTIALS": "Ha introducido un nombre de usuario o contraseña desconocidos",
       "LOGIN-ERROR-PROVIDERS": "Los proveedores no pueden estar no definidos",
@@ -201,6 +207,9 @@
         "TITLE": "Arrastrar y soltar",
         "SUBTITLE": "para cargar ficheros"
       }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Acciones de contenido"
     }
   },
   "USER_PROFILE": {
@@ -261,6 +270,44 @@
       "CLOSE": "Cerrar",
       "PLACEHOLDER": "Contraseña",
       "ERROR": "La contraseña es incorrecta"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Se ha producido un error.",
+      "DESCRIPTION": "Parece que algo ha ido mal.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Volver al inicio",
+        "ROUTE": "Inicio"
+      }
+    },
+    "403": {
+      "TITLE": "No tiene permiso para acceder a este servidor.",
+      "DESCRIPTION": "No tiene permitido acceder a este recurso en el servidor.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Notificar problema",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Volver al inicio",
+        "ROUTE": "Inicio"
+      }
+    },
+    "404": {
+      "TITLE": "Se ha producido un error.",
+      "DESCRIPTION": "No hemos podido encontrar la página que busca.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Volver al inicio",
+        "ROUTE": "Inicio"
+      }
     }
   }
 }

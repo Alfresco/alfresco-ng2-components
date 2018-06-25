@@ -16,36 +16,22 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
-import { DataTableModule } from '@alfresco/adf-core';
-import { DocumentListService } from '../../services/document-list.service';
-import { CustomResourcesService } from '../../services/custom-resources.service';
+import { TestBed } from '@angular/core/testing';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentColumnList', () => {
 
     let documentList: DocumentListComponent;
     let actionList: ContentActionListComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DataTableModule
-            ],
-            declarations: [
-                DocumentListComponent
-            ],
-            providers: [
-                DocumentListService,
-                CustomResourcesService
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
     beforeEach(() => {
         documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);

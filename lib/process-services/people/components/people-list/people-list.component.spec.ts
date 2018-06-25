@@ -16,10 +16,11 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserProcessModel } from '@alfresco/adf-core';
+import { UserProcessModel, setupTestBed } from '@alfresco/adf-core';
 import { DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: 1,
@@ -33,17 +34,14 @@ describe('PeopleListComponent', () => {
     let peopleListComponent: PeopleListComponent;
     let fixture: ComponentFixture<PeopleListComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                PeopleListComponent
-            ]
-        }).compileComponents().then(() => {
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
-            fixture = TestBed.createComponent(PeopleListComponent);
-            peopleListComponent = fixture.componentInstance;
-            fixture.detectChanges();
-        });
+    beforeEach(async(() => {
+        fixture = TestBed.createComponent(PeopleListComponent);
+        peopleListComponent = fixture.componentInstance;
+        fixture.detectChanges();
     }));
 
     it('should emit row click event', (done) => {

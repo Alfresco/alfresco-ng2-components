@@ -38,6 +38,12 @@
       "YB": "YB"
     },
     "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Velger for sidestørrelse",
+        "CURRENT_PAGE": "Velger for gjeldende side",
+        "PREVIOUS_PAGE": "Knapp for forrige side",
+        "NEXT_PAGE": "Knapp for neste side"
+      },
       "ITEMS_RANGE": "Vis {{ range }} av {{ total }}",
       "ITEMS_PER_PAGE": "Elementer per side",
       "CURRENT_PAGE": "Side {{ number }}",
@@ -201,6 +207,9 @@
         "TITLE": "Dra og slipp",
         "SUBTITLE": "for å laste opp filer"
       }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Innholdshandlinger"
     }
   },
   "USER_PROFILE": {
@@ -261,6 +270,44 @@
       "CLOSE": "Lukk",
       "PLACEHOLDER": "Passord",
       "ERROR": "Passordet er feil"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Det oppstod en feil",
+      "DESCRIPTION": "Noe gikk galt.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden",
+        "ROUTE": "Hjem"
+      }
+    },
+    "403": {
+      "TITLE": "Du har ikke tillatelse for tilgang til denne serveren.",
+      "DESCRIPTION": "Du har ikke lov til å få tilgang til denne ressursen på serveren.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Rapporter problem",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden",
+        "ROUTE": "Hjem"
+      }
+    },
+    "404": {
+      "TITLE": "Det oppstod en feil.",
+      "DESCRIPTION": "Vi kunne ikke finne siden du så etter.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "",
+        "URL": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden",
+        "ROUTE": "Hjem"
+      }
     }
   }
 }

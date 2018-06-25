@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataColumn,
-    ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { DataRowEvent, DataTableAdapter, DataTableSchema, EmptyCustomContentDirective } from '@alfresco/adf-core';
 import {
-    AppConfigService, DataColumnListComponent, PaginationComponent, PaginatedComponent,
+    AppConfigService, PaginationComponent, PaginatedComponent,
     UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
 import {
     AfterContentInit, Component, ContentChild, EventEmitter,
@@ -36,11 +35,13 @@ import { TaskListService } from './../services/tasklist.service';
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.css']
 })
-export class TaskListComponent implements OnChanges, AfterContentInit, PaginatedComponent {
+export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
+
+    static PRESET_KEY = 'adf-task-list.presets';
+
+    @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
 
     requestNode: TaskQueryRequestRepresentationModel;
-
-    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     /** The id of the app. */
     @Input()
@@ -50,7 +51,9 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     @Input()
     processInstanceId: string;
 
-    /** The Definition Key of the process. */
+    /** The Definition Key of the process.
+     * @deprecated 2.4.0
+     */
     @Input()
     processDefinitionKey: string;
 
@@ -66,7 +69,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     @Input()
     assignment: string;
 
-    /** Define the sort order of the processes. Possible values are : `created-desc`,
+    /** Define the sort order of the tasks. Possible values are : `created-desc`,
      * `created-asc`, `due-desc`, `due-asc`
      */
     @Input()
@@ -84,6 +87,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
 
     /** Data source object that represents the number and the type of the columns that
      * you want to show.
+     * @deprecated 2.4.0
      */
     @Input()
     data: DataTableAdapter;
@@ -95,13 +99,13 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
-    /** Custom preset column schema in JSON format. */
-    @Input()
-    presetColumn: string;
-
     /** Toggles multiple row selection, renders checkboxes at the beginning of each row */
     @Input()
     multiselect: boolean = false;
+
+    /** Toggles default selection of the first row */
+    @Input()
+    selectFirstRow: boolean = true;
 
     /** Emitted when a task in the list is clicked */
     @Output()
@@ -121,7 +125,6 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
 
     currentInstanceId: string;
     selectedInstances: any[];
-    layoutPresets = {};
     pagination: BehaviorSubject<PaginationModel>;
 
     /** The page number of the tasks to fetch. */
@@ -132,7 +135,9 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
+    rows: any[] = [];
     isLoading: boolean = true;
+    sorting: any[] = ['created', 'desc'];
 
     /**
      * Toggles custom data source mode.
@@ -144,9 +149,9 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     hasCustomDataSource: boolean = false;
 
     constructor(private taskListService: TaskListService,
-                private appConfig: AppConfigService,
+                appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
-
+        super(appConfigService, TaskListComponent.PRESET_KEY, taskPresetsDefaultModel);
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;
         });
@@ -159,37 +164,35 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     }
 
     ngAfterContentInit() {
-        this.loadLayoutPresets();
-        this.setupSchema();
+        this.createDatatableSchema();
+        if (this.data && this.data.getColumns().length === 0) {
+            this.data.setColumns(this.columns);
+        }
+
         if (this.appId) {
             this.reload();
         }
     }
 
-    /**
-     * Setup html-based (html definitions) or code behind (data adapter) schema.
-     * If component is assigned with an empty data adater the default schema settings applied.
-     */
-    setupSchema(): void {
-        let schema = this.getSchema();
-        if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema);
-        } else if (this.data.getColumns().length === 0) {
-            this.data.setColumns(schema);
+    setCustomDataSource(rows: any[]): void {
+        if (rows) {
+            this.rows = rows;
+            this.hasCustomDataSource = true;
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
+            if (this.isSortChanged(changes)) {
+                this.sorting = this.sort ? this.sort.split('-') : this.sorting;
+            }
             this.reload();
         }
     }
 
-    setCustomDataSource(rows: ObjectDataRow[]): void {
-        if (this.data) {
-            this.data.setRows(rows);
-            this.hasCustomDataSource = true;
-        }
+    private isSortChanged(changes: SimpleChanges): boolean {
+        const actualSort = changes['sort'];
+        return actualSort && actualSort.currentValue && actualSort.currentValue !== actualSort.previousValue;
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
@@ -213,6 +216,8 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
         if (!this.hasCustomDataSource) {
             this.requestNode = this.createRequestNode();
             this.load(this.requestNode);
+        } else {
+            this.isLoading = false;
         }
     }
 
@@ -220,8 +225,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
         this.isLoading = true;
         this.loadTasksByState().subscribe(
             (tasks) => {
-                let instancesRow = this.createDataRow(tasks.data);
-                this.renderInstances(instancesRow);
+                this.rows = this.optimizeNames(tasks.data);
                 this.selectTask(this.landingTaskId);
                 this.success.emit(tasks);
                 this.isLoading = false;
@@ -244,56 +248,24 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     }
 
     /**
-     * Create an array of ObjectDataRow
-     * @param instances
-     */
-    private createDataRow(instances: any[]): ObjectDataRow[] {
-        let instancesRows: ObjectDataRow[] = [];
-        instances.forEach((row) => {
-            instancesRows.push(new ObjectDataRow(row));
-        });
-        return instancesRows;
-    }
-
-    /**
-     * Render the instances list
-     *
-     * @param instances
-     */
-    private renderInstances(instances: any[]) {
-        instances = this.optimizeNames(instances);
-        this.data.setRows(instances);
-    }
-
-    /**
      * Select the task given in input if present
      */
     selectTask(taskIdSelected: string): void {
         if (!this.isListEmpty()) {
-            let rows = this.data.getRows();
-            if (rows.length > 0) {
-                let dataRow;
-                if (taskIdSelected) {
-                    dataRow = rows.find((currentRow: any) => {
-                        return currentRow.getValue('id') === taskIdSelected;
-                    });
-
-                    if (!dataRow) {
-                        dataRow = rows[0];
-                    }
-                } else {
-                    dataRow = rows[0];
-                }
-
-                this.data.selectedRow = dataRow;
+            let dataRow = null;
+            if (taskIdSelected) {
+                dataRow = this.rows.find((currentRow: any) => {
+                    return currentRow['id'] === taskIdSelected;
+                });
+            }
+            if (!dataRow && this.selectFirstRow) {
+                dataRow = this.rows[0];
+            }
+            if (dataRow) {
                 dataRow.isSelected = true;
-                this.currentInstanceId = dataRow.getValue('id');
+                this.currentInstanceId = dataRow['id'];
             }
         } else {
-            if (this.data) {
-                this.data.selectedRow = null;
-            }
-
             this.currentInstanceId = null;
         }
     }
@@ -317,8 +289,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
      * Check if the list is empty
      */
     isListEmpty(): boolean {
-        return this.data === undefined ||
-            (this.data && this.data.getRows() && this.data.getRows().length === 0);
+        return !this.rows || this.rows.length === 0;
     }
 
     onRowClick(item: DataRowEvent) {
@@ -348,12 +319,14 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
      * Optimize name field
      * @param istances
      */
-    private optimizeNames(istances: any[]): any[] {
-        istances = istances.map(t => {
-            t.obj.name = t.obj.name || 'No name';
+    private optimizeNames(instances: any[]): any[] {
+        instances = instances.map(t => {
+            if (!t.name) {
+                t.name = 'No name';
+            }
             return t;
         });
-        return istances;
+        return instances;
     }
 
     private createRequestNode() {
@@ -372,41 +345,6 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
             start: 0
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
-    }
-
-    private loadLayoutPresets(): void {
-        const externalSettings = this.appConfig.get('adf-task-list.presets', null);
-
-        if (externalSettings) {
-            this.layoutPresets = Object.assign({}, taskPresetsDefaultModel, externalSettings);
-        } else {
-            this.layoutPresets = taskPresetsDefaultModel;
-        }
-    }
-
-    getSchema(): any {
-        let customSchemaColumns = [];
-        customSchemaColumns = this.getSchemaFromConfig(this.presetColumn).concat(this.getSchemaFromHtml());
-        if (customSchemaColumns.length === 0) {
-            customSchemaColumns = this.getDefaultLayoutPreset();
-        }
-        return customSchemaColumns;
-    }
-
-    getSchemaFromHtml(): any {
-        let schema = [];
-        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
-            schema = this.columnList.columns.map(c => <DataColumn> c);
-        }
-        return schema;
-    }
-
-    private getSchemaFromConfig(name: string): DataColumn[] {
-        return name ? (this.layoutPresets[name]).map(col => new ObjectDataColumn(col)) : [];
-    }
-
-    private getDefaultLayoutPreset(): DataColumn[] {
-        return (this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 
     updatePagination(params: PaginationModel) {

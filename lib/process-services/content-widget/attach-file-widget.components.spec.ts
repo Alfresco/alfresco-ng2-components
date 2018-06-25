@@ -25,14 +25,14 @@ import {
     FormService,
     ProcessContentService,
     ActivitiContentService,
-    ThumbnailService,
-    SitesService,
     FormFieldMetadata,
-    ContentService
+    ContentService,
+    setupTestBed
 } from '@alfresco/adf-core';
-import { ContentNodeDialogService, DocumentListService, CustomResourcesService } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService, ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 import { Observable } from 'rxjs/Observable';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 const fakeRepositoryListAnswer = [
     {
@@ -72,7 +72,10 @@ const definedSourceParams = {
 
 const fakeMinimalNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
     id: 'fake',
-    name: 'fake-name'
+    name: 'fake-name',
+    content: {
+        mimeType: 'application/pdf'
+    }
 };
 
 const fakePngAnswer = {
@@ -100,30 +103,19 @@ describe('AttachFileWidgetComponent', () => {
     let contentService: ContentService;
     let formService: FormService;
 
+    setupTestBed({
+        imports: [ProcessTestingModule, ContentNodeSelectorModule]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [AttachFileWidgetComponent],
-            providers: [
-                        FormService,
-                        ProcessContentService,
-                        ThumbnailService,
-                        ActivitiContentService,
-                        SitesService,
-                        DocumentListService,
-                        CustomResourcesService,
-                        ContentNodeDialogService,
-                        ContentService
-                    ]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(AttachFileWidgetComponent);
-            widget = fixture.componentInstance;
-            element = fixture.nativeElement;
-            activitiContentService = TestBed.get(ActivitiContentService);
-            contentNodeDialogService = TestBed.get(ContentNodeDialogService);
-            processContentService = TestBed.get(ProcessContentService);
-            contentService = TestBed.get(ContentService);
-            formService = TestBed.get(FormService);
-        });
+        fixture = TestBed.createComponent(AttachFileWidgetComponent);
+        widget = fixture.componentInstance;
+        element = fixture.nativeElement;
+        activitiContentService = TestBed.get(ActivitiContentService);
+        contentNodeDialogService = TestBed.get(ContentNodeDialogService);
+        processContentService = TestBed.get(ProcessContentService);
+        contentService = TestBed.get(ContentService);
+        formService = TestBed.get(FormService);
     }));
 
     afterEach(() => {
@@ -174,15 +166,15 @@ describe('AttachFileWidgetComponent', () => {
     }));
 
     it('should be able to upload files coming from content node selector', async(() => {
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(fakeRepositoryListAnswer));
+        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of(fakePngAnswer));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(Observable.of([fakeMinimalNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
         });
         widget.field.id = 'attach-file-attach';
         widget.field.params = <FormFieldMetadata> allSourceParams;
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(fakeRepositoryListAnswer));
-        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of(fakePngAnswer));
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(Observable.of([fakeMinimalNode]));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
@@ -191,8 +183,9 @@ describe('AttachFileWidgetComponent', () => {
             fixture.detectChanges();
             fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
             fixture.detectChanges();
-
-            expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+            });
         });
     }));
 

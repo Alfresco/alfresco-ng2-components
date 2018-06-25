@@ -30,6 +30,7 @@ export class VersionManagerDialogAdapterComponent {
 
     showComments = true;
     allowDownload = true;
+    readOnly = false;
 
     constructor(@Inject(MAT_DIALOG_DATA) data: any,
                 private snackBar: MatSnackBar,

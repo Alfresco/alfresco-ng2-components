@@ -2,7 +2,7 @@
 
     <button
         tabindex="0"
-        class="adf-dropdown-breadcumb-trigger"
+        class="adf-dropdown-breadcrumb-trigger"
         (click)="open()"
         data-automation-id="dropdown-breadcrumb-trigger">
         <mat-icon [class.isRoot]="!hasPreviousNodes()">folder</mat-icon>
@@ -10,7 +10,7 @@
     <mat-icon class="adf-dropdown-breadcrumb-item-chevron">chevron_right</mat-icon>
 
     <mat-select
-        #select
+        #dropdown
         *ngIf="hasPreviousNodes()"
         class="adf-dropdown-breadcrumb-path"
         tabindex="0"
@@ -22,7 +22,7 @@
             class="adf-dropdown-breadcrumb-path-option"
             tabindex="0"
             data-automation-class="dropdown-breadcrumb-path-option">
-            {{ node.name }}
+            {{ node.name | translate }}
         </mat-option>
     </mat-select>
 

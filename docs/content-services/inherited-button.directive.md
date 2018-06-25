@@ -1,7 +1,9 @@
 ---
 Added: v2.3.0
 Status: Active
+Last reviewed: 2018-06-08
 ---
+
 # Inherit Permission directive
 
 Update the current node by adding/removing the inherited permissions.
@@ -15,18 +17,22 @@ Update the current node by adding/removing the inherited permissions.
             (updated)="onUpdatedPermissions($node)">PERMISSION</button>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | nodeId where to add/remove inherited permissions  |
+| nodeId | `string` |  | ID of the node to add/remove inherited permissions |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| updated | `EventEmitter<MinimalNodeEntryEntity>` | Emitted when the node is updated. |
+| updated | [`EventEmitter<MinimalNodeEntryEntity>`](../content-services/document-library.model.md) | Emitted when the node is updated |
 
 ## Details
-This directive switches on/off the inheritance on the permission based on what is set on the node entity.
-So if the node has inherited permissions, this will remove them viceversa if the node does not have the inherited permission this will add them.
+
+This directive switches inheritance of permissions on or off depending on what is set in
+the node entity. So if the node has inherited permissions, this will remove them and
+vice versa. If the node does not have inherited permissions then this will add them.

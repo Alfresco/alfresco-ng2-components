@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { SitesService } from './sites.service';
-import { TranslateLoaderService } from './translate-loader.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -28,22 +27,9 @@ describe('Sites service', () => {
 
     let service;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                SitesService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);

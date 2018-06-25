@@ -29,7 +29,7 @@ import 'rxjs/observable/forkJoin';
     exportAs: 'adfFavorite'
 })
 export class NodeFavoriteDirective implements OnChanges {
-    private favorites: any[] = [];
+    favorites: any[] = [];
 
     /** Array of nodes to toggle as favorites. */
     @Input('adf-node-favorite')
@@ -37,6 +37,9 @@ export class NodeFavoriteDirective implements OnChanges {
 
     /** Emitted when the favorite setting is complete. */
     @Output() toggle: EventEmitter<any> = new EventEmitter();
+
+    /** Emitted when the favorite setting has fail. */
+    @Output() error: EventEmitter<any> = new EventEmitter();
 
     @HostListener('click')
     onClick() {
@@ -68,24 +71,30 @@ export class NodeFavoriteDirective implements OnChanges {
                 // shared files have nodeId
                 const id = selected.entry.nodeId || selected.entry.id;
 
-                return Observable.fromPromise(this.alfrescoApiService.getInstance().core.favoritesApi.removeFavoriteSite('-me-', id));
+                return Observable.fromPromise(this.alfrescoApiService.favoritesApi.removeFavoriteSite('-me-', id));
             });
 
-            Observable.forkJoin(batch).subscribe(() => {
-                this.favorites.map(selected => selected.entry.isFavorite = false);
-                this.toggle.emit();
-            });
+            Observable.forkJoin(batch).subscribe(
+                () => {
+                    this.favorites.map(selected => selected.entry.isFavorite = false);
+                    this.toggle.emit();
+                },
+                error => this.error.emit(error)
+            );
         }
 
         if (!every) {
             const notFavorite = this.favorites.filter((node) => !node.entry.isFavorite);
             const body: FavoriteBody[] = notFavorite.map((node) => this.createFavoriteBody(node));
 
-            Observable.fromPromise(this.alfrescoApiService.getInstance().core.favoritesApi.addFavorite('-me-', <any> body))
-                .subscribe(() => {
-                    notFavorite.map(selected => selected.entry.isFavorite = true);
-                    this.toggle.emit();
-                });
+            Observable.fromPromise(this.alfrescoApiService.favoritesApi.addFavorite('-me-', <any> body))
+                .subscribe(
+                    () => {
+                        notFavorite.map(selected => selected.entry.isFavorite = true);
+                        this.toggle.emit();
+                    },
+                    error => this.error.emit(error)
+                );
         }
     }
 
@@ -98,7 +107,9 @@ export class NodeFavoriteDirective implements OnChanges {
         const result = this.diff(selection, this.favorites);
         const batch = this.getProcessBatch(result);
 
-        Observable.forkJoin(batch).subscribe((data) => this.favorites.push(...data));
+        Observable.forkJoin(batch).subscribe((data) => {
+            this.favorites.push(...data);
+        });
     }
 
     hasFavorites(): boolean {
@@ -114,12 +125,19 @@ export class NodeFavoriteDirective implements OnChanges {
     }
 
     private getFavorite(selected: MinimalNodeEntity): Observable<any> {
-        const { name, isFile, isFolder } = selected.entry;
-        // shared files have nodeId
-        const id = (<any> selected).entry.nodeId || selected.entry.id;
+        const node = selected.entry;
 
-        const promise = this.alfrescoApiService.getInstance()
-            .core.favoritesApi.getFavorite('-me-', id);
+        // ACS 6.x with 'isFavorite' include
+        if (node && node.hasOwnProperty('isFavorite')) {
+            return Observable.of(selected);
+        }
+
+        // ACS 5.x and 6.x without 'isFavorite' include
+        const { name, isFile, isFolder } = node;
+        // shared files have nodeId
+        const id = node.nodeId || node.id;
+
+        const promise = this.alfrescoApiService.favoritesApi.getFavorite('-me-', id);
 
         return Observable.from(promise)
             .map(() => ({

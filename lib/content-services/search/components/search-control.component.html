@@ -1,15 +1,17 @@
 <div class="adf-search-container">
     <div *ngIf="isLoggedIn()" [@transitionMessages]="subscriptAnimationState" (@transitionMessages.done)="applySearchFocus($event)">
-        <a mat-icon-button
+        <button mat-icon-button
             *ngIf="expandable"
             id="adf-search-button"
             class="adf-search-button"
+            [title]="'SEARCH.BUTTON.TOOLTIP' | translate"
             (click)="toggleSearchBar($event)"
             (keyup.enter)="toggleSearchBar($event)">
-            <mat-icon aria-label="search button">search</mat-icon>
-        </a>
+            <mat-icon [attr.aria-label]="'SEARCH.BUTTON.ARIA-LABEL' | translate">search</mat-icon>
+        </button>
         <mat-form-field class="adf-input-form-field-divider">
             <input matInput #searchInput
+                [attr.aria-label]="'SEARCH.INPUT.ARIA-LABEL' | translate"
                 [type]="inputType"
                 [autocomplete]="getAutoComplete()"
                 id="adf-control-input"
@@ -43,7 +45,9 @@
                 (keyup.arrowup)="onRowArrowUp($event)"
                 class="adf-search-autocomplete-item"
                 (click)="elementClicked(item)"
-                (keyup.enter)="elementClicked(item)">
+                (keyup.enter)="elementClicked(item)"
+                (touchend)="elementClicked(item)">
+                <!-- This is a comment -->
                 <mat-icon mat-list-icon>
                     <img [src]="getMimeTypeIcon(item)" />
                 </mat-icon>

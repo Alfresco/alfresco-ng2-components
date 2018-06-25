@@ -16,16 +16,12 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CookieServiceMock } from './../mock/cookie.service.mock';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { TranslateLoaderService } from './translate-loader.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('AuthGuardService BPM', () => {
 
@@ -34,26 +30,12 @@ describe('AuthGuardService BPM', () => {
     let routerService: Router;
     let appConfigService: AppConfigService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                RouterTestingModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                AuthGuardBpm,
-                { provide: CookieService, useClass: CookieServiceMock }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
+        localStorage.clear();
         authService = TestBed.get(AuthenticationService);
         authGuard = TestBed.get(AuthGuardBpm);
         routerService = TestBed.get(Router);
@@ -62,7 +44,7 @@ describe('AuthGuardService BPM', () => {
 
     it('if the alfresco js api is logged in should canActivate be true', async(() => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
-        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : ''};
+        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(authGuard.canActivate(null, router)).toBeTruthy();
     }));
@@ -70,40 +52,72 @@ describe('AuthGuardService BPM', () => {
     it('if the alfresco js api is NOT logged in should canActivate be false', async(() => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         spyOn(routerService, 'navigate').and.stub();
-        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: '' };
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
         expect(authGuard.canActivate(null, router)).toBeFalsy();
     }));
 
     it('if the alfresco js api is NOT logged in should trigger a redirect event', async(() => {
+        appConfigService.config.loginRoute = 'login';
+
         spyOn(routerService, 'navigate');
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
-        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : ''};
+        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(authGuard.canActivate(null, router)).toBeFalsy();
         expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
     }));
 
     it('should set redirect url', async(() => {
-        spyOn(authService, 'setRedirectUrl').and.callThrough();
+        spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(routerService, 'navigate').and.stub();
         const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
         authGuard.canActivate(null, router);
 
-        expect(authService.setRedirectUrl).toHaveBeenCalledWith({provider: 'BPM', url: 'some-url' } );
-        expect(authService.getRedirectUrl('BPM')).toBe('some-url');
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'BPM', url: 'some-url'
+        });
+        expect(authService.getRedirect('BPM')).toEqual('some-url');
+    }));
+
+    it('should set redirect navigation commands with query params', async(() => {
+        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(routerService, 'navigate').and.stub();
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url;q=123' };
+
+        authGuard.canActivate(null, router);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'BPM', url: 'some-url;q=123'
+        });
+        expect(authService.getRedirect('BPM')).toEqual('some-url;q=123');
+    }));
+
+    it('should set redirect navigation commands with query params', async(() => {
+        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(routerService, 'navigate').and.stub();
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: '/' };
+
+        authGuard.canActivate(null, router);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'BPM', url: '/'
+        });
+        expect(authService.getRedirect('BPM')).toEqual('/');
     }));
 
     it('should get redirect url from config if there is one configured', async(() => {
         appConfigService.config.loginRoute = 'fakeLoginRoute';
-        spyOn(authService, 'setRedirectUrl').and.callThrough();
+        spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(routerService, 'navigate').and.stub();
         const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
         authGuard.canActivate(null, router);
 
-        expect(authService.setRedirectUrl).toHaveBeenCalledWith({provider: 'BPM', url: 'some-url' } );
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'BPM', url: 'some-url'
+        });
         expect(routerService.navigate).toHaveBeenCalledWith(['/fakeLoginRoute']);
     }));
 

@@ -1,12 +1,29 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-16
+Last reviewed: 2018-05-24
 ---
 
 # Process Instance List
 
 Renders a list containing all the process instances matched by the parameters specified.
+
+## Contents
+
+-   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
+
+    -   [Properties](#properties)
+    -   [Events](#events)
+
+-   [Details](#details)
+
+    -   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
+    -   [Pagination strategy](#pagination-strategy)
+    -   [Show custom template when processList is empty](#show-custom-template-when-processlist-is-empty)
+
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -15,34 +32,36 @@ Renders a list containing all the process instances matched by the parameters sp
 ```html
 <adf-process-instance-list
     [appId]="'1'"
-    [state]="'open'">
+    [state]="'all'">
 </adf-process-instance-list>
 ```
 
+## Class members
+
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| appId | number |  | The id of the app. |
-| processDefinitionKey | string |  | The processDefinitionKey of the process. |
-| presetColumn | string |  | Name of a custom schema to fetch from `app.config.json`. |
-| state | string |  | Define state of the processes. Possible values are `running`, `completed` and `all` |
-| sort | string |  | Define sort of the processes. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |
-| name | string |  | The name of the list. |
-| page | number | 0 | The page of the processes to fetch. |
-| size | number | 25 | The number of processes to fetch. |
-| data | DataTableAdapter |  | Data source to define the datatable. |
-| multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row. |
-| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| selectFirstRow | boolean | true | Toggles default selection of the first row. |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| appId | `number` |  | The id of the app. |
+| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
+| multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
+| name | `string` |  | The name of the list. |
+| page | `number` | 0 | The page number of the processes to fetch. |
+| presetColumn | `string` |  | Name of a custom schema to fetch from `app.config.json`. |
+| processDefinitionKey | `string` |  | The processDefinitionKey of the process. |
+| selectFirstRow | `boolean` | true | Toggles default selection of the first row |
+| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| size | `number` |  [`PaginationComponent`](../core/pagination.component.md).DEFAULT_PAGINATION.maxItems | The number of processes to fetch in each page. |
+| sort | `string` |  | Defines the sort ordering of the list. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc`. |
+| state | `string` |  | Defines the state of the processes. Possible values are `running`, `completed` and `all` |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| rowClick | `EventEmitter<string>` | Emitted when a row in the process list is clicked |
-| success | `EventEmitter<ProcessListModel>` | Emitted when the list of process instances has been loaded successfully from the server |
-| error | `EventEmitter<any>` | Emitted when an error is encountered loading the list of process instances from the server |
+| -- | -- | -- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
+| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
+| success | `EventEmitter<ProcessListModel>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 
@@ -73,7 +92,7 @@ You can define a custom schema for the list in the `app.config.json` file and ac
 ```html
 <adf-process-instance-list
     [appId]="'1'"
-    [state]="'open'"
+    [state]="'all'"
     [presetColumn]="'customSchema'">
 </adf-process-instance-list>
 ```
@@ -119,6 +138,22 @@ information defined in `app.config.json` as in the example below:
 </adf-process-instance-list>
 ```
 
+### Setting Sorting Order for the list
+
+you can pass sorting order as shown in the example below:
+
+```ts
+// Possible values are : `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |
+let sortParam = 'created-desc'; 
+```
+
+```html
+<adf-process-instance-list
+    [appId]="'1'"
+    [sort]="sortParam">
+</adf-process-instance-list>
+```
+
 <!-- {% endraw %} -->
 
 ### Pagination strategy
@@ -138,6 +173,18 @@ The Process Instance List also supports pagination:
     [supportedPageSizes]="supportedPages"
     #processListPagination>
 </adf-pagination>
+```
+
+### Show custom template when processList is empty
+
+You can add your own template or message as shown in the example below:
+
+```html
+<adf-process-instance-list>
+    <adf-empty-custom-content>
+        Your Content
+    </adf-empty-custom-content>
+<adf-process-instance-list>
 ```
 
 ## See also

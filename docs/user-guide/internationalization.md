@@ -14,7 +14,7 @@ fairly straightforward to maintain.
 -   [I18n concepts](#i18n-concepts)
 -   [ADF support for i18n](#adf-support-for-i18n)
 -   [Using the translate pipe](#using-the-translate-pipe)
--   [Adding your own messages](#adding-your-own-messages)
+-   [Adding and replacing messages](#adding-and-replacing-messages)
 -   [Interpolations](#interpolations)
 -   [Selecting the display language](#selecting-the-display-language)
 -   [Support for i18n within ADF components](#support-for-i18n-within-adf-components)
@@ -149,13 +149,34 @@ component's `.ts` file:
 
 <!-- {% endraw %} -->
 
-## Adding your own messages
+## Adding and replacing messages
 
 The built-in translations certainly won't cover everything you will need for
-your app but you can easily replace them with your own lists. This involves
-making copies of the existing lists in your app's folder and adding your
-own keys. See the [Translation service](../core/translation.service.md) page for
-full details and examples.
+your app but you can easily replace them with your own lists. This enables you
+to add new keys and also replace the text of existing keys with your own.
+
+To modify the default translations, you need to create local translation source files
+(en.json, fr.json, etc) within your application. The local files have the same basic
+hierarchical key:value structure as the built-in translations. You can add new keys to
+your local files to extend the default set or override a default translation by redefining
+an existing key with new message text. The default translations will be used for any keys
+that you don't explicitly override. For example, your local `en.json` might look like the
+following:
+
+```json
+{
+  "title": "my app",
+  "LOGIN": {
+     "LABEL": {
+        "LOGIN": "Custom Sign In"
+     }
+  }
+}
+```
+
+The [Translation service](../core/translation.service.md) page has full details
+of how to add custom translations, including the locations of the required files
+and code samples for enabling the new translations in your app.
 
 ## Interpolations
 

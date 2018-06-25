@@ -18,32 +18,35 @@
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { ElementRef } from '@angular/core';
-import { Injector } from '@angular/core';
-import { async, getTestBed, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { ViewerComponent } from '../components/viewer.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
-
-export class MockElementRef extends ElementRef {
-    constructor() {
-        super(null);
-    }
-}
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
 
 describe('ExtensionViewerDirective', () => {
-    let injector: Injector;
     let extensionViewerDirective: ViewerExtensionDirective;
 
+    class MockElementRef extends ElementRef {
+        constructor() {
+            super(null);
+        }
+    }
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: Location, useClass: SpyLocation },
+            ViewerExtensionDirective,
+            {provide: ElementRef, useClass: MockElementRef},
+            ViewerComponent
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                { provide: Location, useClass: SpyLocation },
-                ViewerExtensionDirective,
-                {provide: ElementRef, useClass: MockElementRef},
-                ViewerComponent
-            ]
-        });
-        injector = getTestBed();
-        extensionViewerDirective = injector.get(ViewerExtensionDirective);
+        extensionViewerDirective = TestBed.get(ViewerExtensionDirective);
         extensionViewerDirective.templateModel = {template: '', isVisible: false};
     }));
 

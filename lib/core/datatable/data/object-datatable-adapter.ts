@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-import { DatePipe } from '@angular/common';
-
-import { TimeAgoPipe } from '../../pipes';
 import { DataColumn } from './data-column.model';
 import { DataRow } from './data-row.model';
 import { ObjectDataRow } from './object-datarow.model';
 import { ObjectDataColumn } from './object-datacolumn.model';
 import { DataSorting } from './data-sorting.model';
 import { DataTableAdapter } from './datatable-adapter';
+import { Subject } from 'rxjs/Subject';
 
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
@@ -33,6 +31,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     private _columns: DataColumn[];
 
     selectedRow: DataRow;
+    rowsChanged: Subject<Array<DataRow>>;
 
     static generateSchema(data: any[]) {
         let schema = [];
@@ -78,6 +77,8 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                 this.sort(sortable[0].key, 'asc');
             }
         }
+
+        this.rowsChanged = new Subject<Array<DataRow>>();
     }
 
     getRows(): Array<DataRow> {
@@ -87,6 +88,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     setRows(rows: Array<DataRow>) {
         this._rows = rows || [];
         this.sort();
+        this.rowsChanged.next(this._rows);
     }
 
     getColumns(): Array<DataColumn> {
@@ -107,32 +109,9 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
 
         let value = row.getValue(col.key);
 
-        if (col.type === 'date') {
-            try {
-                return this.formatDate(col, value);
-            } catch (err) {
-                console.error(`Error parsing date ${value} to format ${col.format}`);
-            }
-        }
-
         if (col.type === 'icon') {
             const icon = row.getValue(col.key);
             return icon;
-        }
-
-        return value;
-    }
-
-    formatDate(col: DataColumn, value: any): string {
-        if (col.type === 'date') {
-            const format = col.format || 'medium';
-            if (format === 'timeAgo') {
-                const timeAgoPipe = new TimeAgoPipe();
-                return timeAgoPipe.transform(value);
-            } else {
-                const datePipe = new DatePipe('en-US');
-                return datePipe.transform(value, format);
-            }
         }
 
         return value;

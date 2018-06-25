@@ -1,10 +1,14 @@
 ---
 Added: v2.0.0
-Status: Active
+Status: Internal
+Last reviewed: 2018-06-13
 ---
+
 # Host settings component
 
 Validates the URLs for ACS and APS and saves them in the user's local storage
+
+**Note:** this is an internal component and is not meant to be used in production.
 
 ![Host settings](../docassets/images/host-settings-component.png)
 
@@ -12,19 +16,31 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 
 ```html
 <adf-host-settings>
-</adf-breadcrumb>
+</adf-host-settings>
 ```
+
+```ts
+@NgModule({
+ providers: [
+        { provide: AppConfigService, useClass: DebugAppConfigService },
+    ]
+)]
+```
+
+## Class members
 
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| providers | `string` | `'ALL'` | Determines which configurations are shown. Possible valid values are "ECM", "BPM" or "ALL".  |
+| -- | -- | -- | -- |
+| providers | `string[]` |  ['BPM', 'ECM', 'ALL'] | Tells the component which provider option are available. Possible valid values are "ECM" (Content), "BPM" (Process) , "ALL" (Content and Process), 'OAUTH2' SSO . |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | `EventEmitter<string>` | Emitted when the URL is invalid. |
-| ecmHostChange | `EventEmitter<string>` | Emitted when the ECM host url is changed. |
-| bpmHostChange | `EventEmitter<string>` | Emitted when the BPM host url is changed. |
+| -- | -- | -- |
+| bpmHostChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | (**Deprecated:** in 2.4.0) Emitted when the bpm host URL is changed. |
+| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` |  |
+| ecmHostChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | (**Deprecated:** in 2.4.0) Emitted when the ecm host URL is changed. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the URL is invalid. |
+| success | `EventEmitter<boolean>` |  |

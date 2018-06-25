@@ -9,7 +9,18 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Permitir eliminar",
       "SHOW_COMMENTS": "Mostrar comentarios en las versiones",
-      "ALLOW_DOWNLOAD": "Permitir descarga de la versión"
+      "ALLOW_DOWNLOAD": "Permitir descarga de la versión",
+      "READ_ONLY": "Solo lectura"
+    },
+    "PERSONAL-FILES": "Ficheros personales",
+    "WARN-MULTIPLE-UPLOADS": "Mostrar advertencia de múltiples cargas.",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "Ninguno",
+        "ALL": "Todos",
+        "FOLDER": "Carpeta",
+        "DOCUMENT": "Documento"
+      }
     }
   },
   "title": "Bienvenido",
@@ -32,6 +43,7 @@
     "APP_NAME": "Aplicación ADF Demo",
     "HOME": "Inicio",
     "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "Ruta de navegación",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Iniciar sesión",
     "CUSTOM_SOURCES": "Fuentes personalizadas",
@@ -97,7 +109,13 @@
       "NEW_FOLDER": "Nueva carpeta",
       "EDIT_FOLDER": "Editar carpeta",
       "DOWNLOAD": "Descargar",
-      "DELETE": "Eliminar"
+      "DELETE": "Eliminar",
+      "FAVORITES": "Añadir a Favoritos",
+      "SHARE": "Compartir",
+      "THEME": "Seleccionar un tema",
+      "SHOW_VERSION": "Mostrar versión",
+      "HIDE_VERSION": "Ocultar versión",
+      "LISTVIEW": "Modo de vista de lista"
     },
     "ACTIONS": {
       "VERSIONS": "Gestionar versiones",

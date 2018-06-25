@@ -21,27 +21,15 @@ import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
-import { MaterialModule } from './../../material.module';
-import { ToolbarModule } from '../../toolbar/toolbar.module';
+import { CoreModule } from '../../core.module';
 
 import { Observable } from 'rxjs/Observable';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { ImgViewerComponent } from './imgViewer.component';
-import { MediaPlayerComponent } from './mediaPlayer.component';
-import { PdfViewerComponent } from './pdfViewer.component';
-import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
-import { PdfThumbComponent } from './pdfViewer-thumb.component';
-import { TxtViewerComponent } from './txtViewer.component';
-import { UnknownFormatComponent } from './unknown-format/unknown-format.component';
-import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
-import { ViewerOpenWithComponent } from './viewer-open-with.component';
-import { ViewerSidebarComponent } from './viewer-sidebar.component';
-import { ViewerToolbarComponent } from './viewer-toolbar.component';
-import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.component';
 import { ViewerComponent } from './viewer.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import 'rxjs/add/observable/throw';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -53,7 +41,8 @@ import 'rxjs/add/observable/throw';
         </adf-viewer>
     `
 })
-class ViewerWithCustomToolbarComponent {}
+class ViewerWithCustomToolbarComponent {
+}
 
 @Component({
     selector: 'adf-viewer-container-toolbar-actions',
@@ -67,7 +56,8 @@ class ViewerWithCustomToolbarComponent {}
         </adf-viewer>
     `
 })
-class ViewerWithCustomToolbarActionsComponent {}
+class ViewerWithCustomToolbarActionsComponent {
+}
 
 @Component({
     selector: 'adf-viewer-container-sidebar',
@@ -79,7 +69,8 @@ class ViewerWithCustomToolbarActionsComponent {}
         </adf-viewer>
     `
 })
-class ViewerWithCustomSidebarComponent {}
+class ViewerWithCustomSidebarComponent {
+}
 
 @Component({
     selector: 'adf-viewer-container-open-with',
@@ -102,7 +93,8 @@ class ViewerWithCustomSidebarComponent {}
         </adf-viewer>
     `
 })
-class ViewerWithCustomOpenWithComponent {}
+class ViewerWithCustomOpenWithComponent {
+}
 
 @Component({
     selector: 'adf-viewer-container-more-actions',
@@ -125,7 +117,8 @@ class ViewerWithCustomOpenWithComponent {}
         </adf-viewer>
     `
 })
-class ViewerWithCustomMoreActionsComponent {}
+class ViewerWithCustomMoreActionsComponent {
+}
 
 describe('ViewerComponent', () => {
 
@@ -134,44 +127,30 @@ describe('ViewerComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                ToolbarModule,
-                MaterialModule,
-                FlexLayoutModule
-            ],
-            declarations: [
-                ViewerComponent,
-                PdfViewerComponent,
-                PdfThumbListComponent,
-                PdfThumbComponent,
-                TxtViewerComponent,
-                MediaPlayerComponent,
-                ImgViewerComponent,
-                UnknownFormatComponent,
-                ViewerSidebarComponent,
-                ViewerToolbarComponent,
-                ViewerOpenWithComponent,
-                ViewerMoreActionsComponent,
-                ViewerToolbarActionsComponent,
-                ViewerWithCustomToolbarComponent,
-                ViewerWithCustomSidebarComponent,
-                ViewerWithCustomOpenWithComponent,
-                ViewerWithCustomMoreActionsComponent,
-                ViewerWithCustomToolbarActionsComponent
-            ],
-            providers: [
-                {provide: RenditionsService, useValue: {
-                    getRendition: () => {
-                        return Observable.throw('throwed');
-                    }
-                }},
-                RenderingQueueServices,
-                { provide: Location, useClass: SpyLocation }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            ViewerWithCustomToolbarComponent,
+            ViewerWithCustomSidebarComponent,
+            ViewerWithCustomOpenWithComponent,
+            ViewerWithCustomMoreActionsComponent,
+            ViewerWithCustomToolbarActionsComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            {
+                provide: RenditionsService, useValue: {
+                getRendition: () => {
+                    return Observable.throw('throwed');
+                }
+            }
+            },
+            RenderingQueueServices,
+            { provide: Location, useClass: SpyLocation }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ViewerComponent);
@@ -196,14 +175,14 @@ describe('ViewerComponent', () => {
         component.ngOnChanges({});
         tick();
 
-        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id1');
+        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id1', {include: [ 'allowableOperations' ]});
         expect(component.displayName).toBe('file1');
 
         component.fileNodeId = 'id2';
         component.ngOnChanges({});
         tick();
 
-        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id2');
+        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id2', {include: [ 'allowableOperations' ]});
         expect(component.displayName).toBe('file2');
     }));
 
@@ -699,6 +678,28 @@ describe('ViewerComponent', () => {
                     expect(element.querySelector('adf-media-player')).not.toBeNull();
                 });
             }));
+
+            it('should node without content show unkonwn', async(() => {
+                const displayName = 'the-name';
+                const nodeDetails = { name: displayName, id: '12' };
+                const contentUrl = '/content/url/path';
+                const alfrescoApiInstanceMock = {
+                    nodes: { getNodeInfo: () => Promise.resolve(nodeDetails) },
+                    content: { getContentUrl: () => contentUrl }
+                };
+
+                component.fileNodeId = '12';
+                component.urlFile = null;
+                component.displayName = null;
+                spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
+
+                component.ngOnChanges(null);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
+                });
+            }));
+
         });
 
         describe('Events', () => {
@@ -717,7 +718,7 @@ describe('ViewerComponent', () => {
 
         describe('display name property override by urlFile', () => {
 
-            it('should displayName override the default name if is present and urlFile is set' , async(() => {
+            it('should displayName override the default name if is present and urlFile is set', async(() => {
                 component.urlFile = 'base/src/assets/fake-test-file.pdf';
                 component.displayName = 'test name';
                 fixture.detectChanges();
@@ -729,7 +730,7 @@ describe('ViewerComponent', () => {
                 });
             }));
 
-            it('should use the urlFile name if displayName is NOT set and urlFile is set' , async(() => {
+            it('should use the urlFile name if displayName is NOT set and urlFile is set', async(() => {
                 component.urlFile = 'base/src/assets/fake-test-file.pdf';
                 component.displayName = null;
                 fixture.detectChanges();
@@ -744,9 +745,9 @@ describe('ViewerComponent', () => {
 
         describe('display name property override by blobFile', () => {
 
-            it('should displayName override the name if is present and blobFile is set' , async(() => {
+            it('should displayName override the name if is present and blobFile is set', async(() => {
                 component.displayName = 'blob file display name';
-                component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
+                component.blobFile = new Blob(['This is my blob content'], { type: 'text/plain' });
                 fixture.detectChanges();
                 component.ngOnChanges(null);
 
@@ -756,9 +757,9 @@ describe('ViewerComponent', () => {
                 });
             }));
 
-            it('should show uknownn name if displayName is NOT set and blobFile is set' , async(() => {
+            it('should show uknownn name if displayName is NOT set and blobFile is set', async(() => {
                 component.displayName = null;
-                component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
+                component.blobFile = new Blob(['This is my blob content'], { type: 'text/plain' });
                 fixture.detectChanges();
                 component.ngOnChanges(null);
 

@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { AuthenticationService, ContentService  } from '../../services';
+import { TestBed } from '@angular/core/testing';
+import { AuthenticationService, ContentService, AlfrescoApiService  } from '../../services';
 import { fakeEcmUser } from '../../mock/ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
@@ -28,15 +31,14 @@ describe('EcmUserService', () => {
     let authService: AuthenticationService;
     let contentService: ContentService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                EcmUserService,
-                AuthenticationService,
-                ContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(EcmUserService);

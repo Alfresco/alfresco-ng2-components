@@ -13,7 +13,8 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "No se han encontrado aplicaciones",
+      "TITLE": "No se han encontrado aplicaciones",
+      "SUBTITLE": "Cree una nueva aplicación que desee encontrar fácilmente después",
       "TASK_APP_NAME": "Aplicación de tareas"
     },
     "LIST": {
@@ -153,7 +154,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "NONE": "No se ha encontrado instancias de procesos",
+      "TITLE": "No se han encontrado procesos",
+      "SUBTITLE": "Cree un nuevo proceso que desee encontrar fácilmente después",
       "SUMMARY": "Se han encontrado {{total}} instancias de procesos",
       "ERROR": "No se han podido cargar las instancias de procesos. Vuelva a intentarlo o comparta el mensaje siguiente con el equipo de TI: {{errorMessage}}"
     },

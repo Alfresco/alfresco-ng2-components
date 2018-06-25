@@ -18,7 +18,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LogService, StorageService } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-login',
@@ -30,17 +30,13 @@ export class LoginComponent implements OnInit {
     @ViewChild('alfrescologin')
     alfrescologin: any;
 
-    providers = 'ECM';
     customValidation: any;
 
     disableCsrf = false;
-    isECM = true;
-    isBPM = false;
     showFooter = true;
     customMinLength = 2;
 
     constructor(private router: Router,
-                private storage: StorageService,
                 private logService: LogService) {
         this.customValidation = {
             username: ['', Validators.compose([Validators.required, Validators.minLength(this.customMinLength)])],
@@ -52,25 +48,6 @@ export class LoginComponent implements OnInit {
         this.alfrescologin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
         this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', {minLength: this.customMinLength});
         this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
-
-        if (this.storage.hasItem('providers')) {
-            this.providers = this.storage.getItem('providers');
-        }
-
-        this.initProviders();
-    }
-
-    initProviders() {
-        if (this.providers === 'BPM') {
-            this.isECM = false;
-            this.isBPM = true;
-        } else if (this.providers === 'ECM') {
-            this.isECM = true;
-            this.isBPM = false;
-        } else if (this.providers === 'ALL') {
-            this.isECM = true;
-            this.isBPM = true;
-        }
     }
 
     onLogin($event) {
@@ -81,16 +58,6 @@ export class LoginComponent implements OnInit {
         this.logService.error($event);
     }
 
-    toggleECM() {
-        this.isECM = !this.isECM;
-        this.storage.setItem('providers', this.updateProvider());
-    }
-
-    toggleBPM() {
-        this.isBPM = !this.isBPM;
-        this.storage.setItem('providers', this.updateProvider());
-    }
-
     toggleCSRF() {
         this.disableCsrf = !this.disableCsrf;
     }
@@ -99,23 +66,8 @@ export class LoginComponent implements OnInit {
         this.showFooter = !this.showFooter;
     }
 
-    updateProvider() {
-        if (this.isBPM && this.isECM) {
-            this.providers = 'ALL';
-            return this.providers;
-        }
-
-        if (this.isECM) {
-            this.providers = 'ECM';
-            return this.providers;
-        }
-
-        if (this.isBPM) {
-            this.providers = 'BPM';
-            return this.providers;
-        }
-
-        this.providers = '';
-        return this.providers;
+    checkForm(event: any) {
+        const values = event.values;
+        this.logService.log(values);
     }
 }

@@ -18,6 +18,8 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbComponent } from './pdfViewer-thumb.component';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
 
 describe('PdfThumbComponent', () => {
 
@@ -26,27 +28,31 @@ describe('PdfThumbComponent', () => {
     const domSanitizer = {
         bypassSecurityTrustUrl: () => 'image-data'
     };
+    const width = 91;
+    const height = 119;
     const page = {
         id: 'pageId',
         getPage: jasmine.createSpy('getPage').and.returnValue(Promise.resolve({
-            getViewport: () => ({ height: 0, width: 0 }),
+            getViewport: () => ({ height: width, width: height }),
             render: jasmine.createSpy('render').and.returnValue(Promise.resolve())
-        }))
+        })),
+
+        getWidth: jasmine.createSpy('getWidth').and.returnValue(width),
+        getHeight: jasmine.createSpy('getHeight').and.returnValue(height)
     };
 
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: DomSanitizer, useValue: domSanitizer }
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                PdfThumbComponent
-            ],
-            providers: [
-                { provide: DomSanitizer, useValue: domSanitizer }
-            ]
-        }).compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(PdfThumbComponent);
-                component = fixture.componentInstance;
-            });
+        fixture = TestBed.createComponent(PdfThumbComponent);
+        component = fixture.componentInstance;
     }));
 
     it('should have resolve image data', (done) => {

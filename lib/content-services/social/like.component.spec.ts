@@ -17,50 +17,41 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LikeComponent } from './like.component';
+import { setupTestBed } from '../../core/testing';
+import { ContentTestingModule } from '../testing/content.testing.module';
+import { Observable } from 'rxjs/Observable';
 import { RatingService } from './services/rating.service';
-
-declare let jasmine: any;
 
 describe('Like component', () => {
 
     let component: any;
     let fixture: ComponentFixture<LikeComponent>;
     let element: HTMLElement;
+    let service: RatingService;
+
+    setupTestBed({
+        imports: [ContentTestingModule]
+    });
 
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ LikeComponent ],
-            providers: [ RatingService ]
-        }).compileComponents();
-    }));
+        service = TestBed.get(RatingService);
 
-    beforeEach(() => {
-        jasmine.Ajax.install();
+        spyOn(service, 'getRating').and.returnValue(Observable.of({
+            entry: {
+                id: 'likes',
+                aggregate: { numberOfRatings: 2 }
+            }
+        }));
+
         fixture = TestBed.createComponent(LikeComponent);
-
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         component.nodeId = 'test-id';
+        component.ngOnChanges();
         fixture.detectChanges();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
-
-    function simulateResponseWithLikes(numberOfRatings: number) {
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200, contentType: 'json',
-            responseText: {
-                entry: { id: 'likes', aggregate: { numberOfRatings } }
-            }
-        });
-    }
+    }));
 
     it('should load the likes by default on onChanges', async(() => {
-        component.ngOnChanges();
-
-        simulateResponseWithLikes(2);
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -69,7 +60,12 @@ describe('Like component', () => {
     }));
 
     it('should increase the number of likes when clicked', async(() => {
-        component.likesCounter = 2;
+        spyOn(service, 'postRating').and.returnValue(Observable.of({
+            entry: {
+                id: 'likes',
+                aggregate: { numberOfRatings: 3 }
+            }
+        }));
 
         let likeButton: any = element.querySelector('#adf-like-test-id');
         likeButton.click();
@@ -78,12 +74,11 @@ describe('Like component', () => {
             fixture.detectChanges();
             expect(element.querySelector('#adf-like-counter').innerHTML).toBe('3');
         });
-
-        simulateResponseWithLikes(3);
     }));
 
     it('should decrease the number of likes when clicked and is already liked', async(() => {
-        component.likesCounter = 2;
+        spyOn(service, 'deleteRating').and.returnValue(Observable.of('');
+
         component.isLike = true;
 
         let likeButton: any = element.querySelector('#adf-like-test-id');
@@ -94,6 +89,5 @@ describe('Like component', () => {
             expect(element.querySelector('#adf-like-counter').innerHTML).toBe('1');
         });
 
-        simulateResponseWithLikes(1);
     }));
 });

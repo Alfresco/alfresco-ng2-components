@@ -1,0 +1,113 @@
+{
+    "profiles": {
+        "default": [
+            "index",
+            "versionIndex",
+            "tutorialIndex",
+            "tsInfo",
+            "typeLinker",
+            "toc"
+        ],
+        "index": [
+            "index",
+            "versionIndex",
+            "tutorialIndex"
+        ],
+        "enhance": [
+            "tsInfo",
+            "typeLinker",
+            "toc"
+        ],
+        "dev": [
+            "toc"
+        ]
+    },
+    "statusIcons": {
+        "Deprecated": "docassets/images/DeprecatedIcon.png",
+        "Experimental": "docassets/images/ExperimentalIcon.png",
+        "Internal": "docassets/images/InternalIcon.png"
+    },
+    "externalNameLinks": {
+        "Blob": "https://developer.mozilla.org/en-US/docs/Web/API/Blob",
+        "Promise": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
+        "EventEmitter": "https://angular.io/api/core/EventEmitter",
+        "MatSnackBarRef": "https://material.angular.io/components/snack-bar/overview",
+        "TemplateRef": "https://angular.io/api/core/TemplateRef",
+        "Observable": "http://reactivex.io/documentation/observable.html",
+        "Subject": "http://reactivex.io/documentation/subject.html",
+        "AppDefinitionRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md",
+        "DeletedNodesPaging": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/DeletedNodesPaging.md",
+        "MinimalNodeEntity": "../content-services/document-library.model.md",
+        "MinimalNodeEntryEntity": "../content-services/document-library.model.md",
+        "NodeEntry": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md",
+        "RelatedContentRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md",
+        "SiteEntry": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md",
+        "SitePaging": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md"
+    },
+    "typeNameExceptions": {
+        "datatable.component": "DataTableComponent",
+        "tasklist.service": "TaskListService",
+        "text-mask.component": "InputMaskDirective",
+        "card-item-types.service": "CardItemTypeService",
+        "create-task-attachment.component": "AttachmentComponent",
+        "process-list.component": "ProcessInstanceListComponent"
+    },
+    "undocStoplist": [
+        "model",
+        "context-menu-holder",
+        "data-column-list",
+        "card-view-[a-z]+item",
+        "card-view-item-dispatcher",
+        "content-column",
+        "content-action-list",
+        "empty-folder-content",
+        "empty-list",
+        "loading-template",
+        "no-content-template",
+        "card-view-content-proxy",
+        "login-footer\\.directive",
+        "login-header\\.directive",
+        "no-task-detail-template",
+        "diagram",
+        "raphael",
+        "context-menu",
+        "alfresco-settings",
+        "\\.widget",
+        "[vV]iewer",
+        "translate-loader",
+        "search\\.service",
+        "mediaPlayer",
+        "unknown-format",
+        "cell",
+        "error.component",
+        "no-permission",
+        "form-custom",
+        "widget-visibility",
+        "card-item-types",
+        "dynamic-component",
+        "settings",
+        "file-uploading",
+        "version-upload",
+        "search-trigger",
+        "node-actions",
+        "content-node-selector.service",
+        "analytics",
+        "process-upload",
+        "properties-loader",
+        "property-descriptors",
+        "attach-file",
+        "attach-folder",
+        "task-upload",
+        "aspect-whitelist",
+        "basic-properties",
+        "content-metadata",
+        "empty-search-result",
+        "property-group",
+        "people-search-",
+        "people-selector",
+        "sidenav-layout-",
+        "layout-container",
+        "search-",
+        "empty-custom-content"
+    ]
+}

@@ -1,7 +1,7 @@
 {
   "rulesDirectory": [
     "node_modules/codelyzer",
-    "node_modules/adf-tslint-rules"
+    "./adf-tslint-rules"
   ],
   "rules": {
     "align": [
@@ -12,7 +12,13 @@
     "ban": [
       true,
       "eval",
-      {"name": ["fdescribe", "fit"], "message": "don't focus tests"}
+      {
+        "name": [
+          "fdescribe",
+          "fit"
+        ],
+        "message": "don't focus tests"
+      }
     ],
     "class-name": true,
     "comment-format": [

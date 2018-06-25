@@ -31,6 +31,10 @@
             }
         }
 
+        &__file-title {
+            text-align: center;
+        }
+
         &__display-name {
             font-size: 16px;
             opacity: 0.87;
@@ -40,7 +44,7 @@
             font-style: normal;
             font-stretch: normal;
 
-            max-width: 35ch;
+            max-width: 400px;
             text-overflow: ellipsis;
             overflow: hidden;
             display: inline-block;
@@ -83,6 +87,10 @@
             .adf-viewer-content {
                 @extend .full-screen;
                 flex: 1;
+
+                & > div {
+                    height: 0; // Firefox
+                }
             }
         }
 
@@ -136,10 +144,10 @@
             &__right {
                 border-left: 1px solid mat-color($foreground, text, 0.07);
             }
-    
+
             &__left {
                 border-right: 1px solid mat-color($foreground, text, 0.07);
-            }                
+            }
         }
 
         &__thumbnails {
@@ -163,6 +171,7 @@
             .adf-info-drawer-layout-content {
                 padding: 0;
                 height: 100%;
+                overflow: hidden;
             }
 
             .info-drawer-content {

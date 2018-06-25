@@ -15,42 +15,30 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { DataTableCellComponent } from '../components/datatable/datatable-cell.component';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
-import { DateCellComponent } from '../components/datatable/date-cell.component';
-import { FileSizeCellComponent } from '../components/datatable/filesize-cell.component';
-import { LocationCellComponent } from '../components/datatable/location-cell.component';
-import { MaterialModule } from '../../material.module';
 import { LoadingContentTemplateDirective } from './loading-template.directive';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('LoadingContentTemplateDirective', () => {
 
+    let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let directive: LoadingContentTemplateDirective;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                MaterialModule
-            ],
-            declarations: [
-                DataTableComponent,
-                DataTableCellComponent,
-                LocationCellComponent,
-                LoadingContentTemplateDirective,
-                DateCellComponent,
-                FileSizeCellComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
-        let fixture = TestBed.createComponent(DataTableComponent);
+        fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         directive = new LoadingContentTemplateDirective(dataTable);
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('applies template to the datatable', () => {

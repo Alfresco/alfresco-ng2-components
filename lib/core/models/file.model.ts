@@ -22,10 +22,12 @@ export interface FileUploadProgress {
 }
 
 export interface FileUploadOptions {
+    comment?: string;
     newVersion?: boolean;
-    newVersionBaseName?: string;
+    majorVersion?: boolean;
     parentId?: string;
     path?: string;
+    nodeType?: string;
 }
 
 export enum FileUploadStatus {
@@ -40,20 +42,19 @@ export enum FileUploadStatus {
 }
 
 export class FileModel {
-    readonly id: string;
     readonly name: string;
     readonly size: number;
     readonly file: File;
 
+    id: string;
     status: FileUploadStatus = FileUploadStatus.Pending;
     progress: FileUploadProgress;
     options: FileUploadOptions;
     data: any;
 
-    constructor(file: File, options?: FileUploadOptions) {
+    constructor(file: File, options?: FileUploadOptions, id?: string) {
         this.file = file;
-
-        this.id = this.generateId();
+        this.id = id;
         this.name = file.name;
         this.size = file.size;
         this.data = null;
@@ -66,14 +67,7 @@ export class FileModel {
 
         this.options = Object.assign({}, {
             newVersion: false
-        },                           options);
-    }
-
-    private generateId(): string {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
+        }, options);
     }
 
     get extension(): string {

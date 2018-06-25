@@ -10,7 +10,7 @@ Displays the version history of a node with the ability to upload a new version.
 
 ![Version Manager](../docassets/images/version-manager.png)
 
-![\#f03c15](https://placehold.it/15/f03c15/000000?text=+) `This component is still in experimental phase. It has several limitations which will be resolved soon.`
+`This component is still in experimental phase. It has several limitations which will be resolved soon.`
 
 ## Basic Usage
 
@@ -22,20 +22,22 @@ Displays the version history of a node with the ability to upload a new version.
 </adf-version-manager>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | --- | ----------- |
-| node | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | |The node you want to manage the version history of. |
-| showComments | `boolean` | true | Set this to false if version comments should not be displayed. |
-| allowDownload | `boolean` | true |  Toggles downloads of previous versions. Set this to false to not show the menu item for version download.  |
+| -- | -- | -- | -- |
+| allowDownload | `boolean` | true | Enable/disable downloading a version of the current node. |
+| node | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | Target node to manage version history. |
+| showComments | `boolean` | true | Toggles showing/hiding of comments. |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| uploadSuccess | Raised when the file is uploaded |
-| uploadError | Emitted when an error occurs.|
+| Name | Type | Description |
+| -- | -- | -- |
+| uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs during upload. |
+| uploadSuccess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a file is uploaded successfully. |
 
 ## Details
 

@@ -6,7 +6,12 @@
       "DOWNLOAD": "Download",
       "UPLOAD": {
         "TITLE": "Upload new version",
-        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it"
+        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it",
+        "MAJOR": "major changes (2.0)",
+        "MINOR": "minor changes (1.1)",
+        "COMMENT": "Leave a comment",
+        "ADD": "Add New Version",
+        "CANCEL": "Cancel"
       }
     },
     "CONFIRM_DELETE": {
@@ -72,7 +77,7 @@
     "SELECT_LOCATION": "Select Location"
   },
   "OPERATION": {
-    "SUCCES": {
+    "SUCCESS": {
       "CONTENT": {
         "COPY": "Copy successful",
         "MOVE": "Move successful"
@@ -155,6 +160,13 @@
   },
   "SEARCH": {
     "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Search",
+      "ARIA-LABEL": "Search button"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "Search input"
+    },
     "RESULTS": {
       "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
       "NONE": "No results found for {{searchTerm}}",
@@ -163,6 +175,29 @@
         "NAME": "Display name",
         "MODIFIED_BY": "Modified by",
         "MODIFIED_AT": "Modified at"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "Clear",
+        "APPLY": "Apply",
+        "CLEAR-ALL": "Clear all",
+        "SHOW-MORE": "Show more",
+        "SHOW-LESS": "Show less",
+        "FILTER-CATEGORY": "Filter category"
+      },
+      "RANGE": {
+        "FROM": "From",
+        "TO": "To",
+        "FROM-DATE": "From",
+        "TO-DATE": "To"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Required value",
+        "NO-DAYS": "No days selected.",
+        "INVALID-FORMAT": "Invalid Format",
+        "INVALID-DATE": "Invalid date. The date must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "The date is beyond the maximum date."
       }
     },
     "ICONS": {
@@ -231,11 +266,24 @@
     }
   },
   "PERMISSION_MANAGER": {
-      "PERMISSION_DISPLAY": {
-         "INHERITED" : "Inherited",
-         "AUTHORITY_ID" : "Authority ID",
-         "ROLE": "Role",
-         "LOCALLY_SET" : "Locally set"
-      }
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Inherited",
+      "AUTHORITY_ID": "Authority ID",
+      "ROLE": "Role",
+      "LOCALLY_SET": "Locally set",
+      "NO_PERMISSIONS": "No permissions"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Search",
+      "TYPE-MESSAGE": "Type something to start searching groups or people",
+      "NO-RESULT": "No result found for this search",
+      "ADD-ACTION": "ADD",
+      "CLOSE-ACTION": "CLOSE",
+      "BASE-DIALOG-TITLE": "Search a group or people to add...",
+      "EVERYONE" : "EVERYONE"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}"
+    }
   }
 }

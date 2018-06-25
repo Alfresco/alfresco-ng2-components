@@ -2,6 +2,7 @@
 Added: v2.1.0
 Status: Active
 ---
+
 # Search Configuration interface
 
 Provides fine control of parameters to a search.
@@ -26,7 +27,7 @@ described below.
 
 1.  Implement the service class
 
-    Create your own service class to implement the SearchConfigurationInterface. This defines the
+    Create your own service class to implement the [`SearchConfigurationInterface`](../core/search-configuration.interface.md). This defines the
     the `generateQueryBody` method that returns the QueryBody object. See the
     [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
     page in the Alfresco JS API for further details about the options this object provides.
@@ -83,7 +84,7 @@ described below.
         })
     ```
 
-    You also need to add the SearchService as a provider to avoid overriding the module instance. This component will have his own instance of the SearchService that will use the class you have provided
+    You also need to add the [`SearchService`](../../lib/core/services/search.service.ts) as a provider to avoid overriding the module instance. This component will have his own instance of the [`SearchService`](../../lib/core/services/search.service.ts) that will use the class you have provided
     as its configuration.
 
 ## See also

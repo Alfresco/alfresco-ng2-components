@@ -1,28 +1,38 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-07
 ---
+
 # Translation service
 
 Supports localisation.
 
-## Methods
+## Class members
 
--   `addTranslationFolder(name: string = '', path: string = '')`  
-    Adds a new folder of translation source files.  
-    -   `name` - Name for the translation provider
-    -   `path` - Path to the folder
--   `use(lang: string): Observable<any>`  
-    Sets the target language for translations.  
-    -   `lang` - Code name for the language
--   `get(key: string|Array<string>, interpolateParams?: Object): Observable<any>`  
-    Gets the translation for the supplied key.  
-    -   `key` - Key to translate
-    -   `interpolateParams` - (Optional) String(s) to be interpolated into the main message
--   `instant(key: string | Array<string>, interpolateParams?: Object): any`  
-    Directly returns the translation for the supplied key.  
-    -   `key` - Key to translate
-    -   `interpolateParams` - (Optional) String(s) to be interpolated into the main message
+### Methods
+
+-   **addTranslationFolder**(name: `string` = `""`, path: `string` = `""`)<br/>
+    Adds a new folder of translation source files.
+    -   _name:_ `string`  - Name for the translation provider
+    -   _path:_ `string`  - Path to the folder
+-   **get**(key: `string | Array<string>` = `null`, interpolateParams?: `Object` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string | any>`<br/>
+    Gets the translation for the supplied key.
+    -   _key:_ `string | Array<string>`  - Key to translate
+    -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string | any>` - Translated text
+-   **instant**(key: `string | Array<string>` = `null`, interpolateParams?: `Object` = `null`): `string | any`<br/>
+    Directly returns the translation for the supplied key.
+    -   _key:_ `string | Array<string>`  - Key to translate
+    -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
+    -   **Returns** `string | any` - Translated text
+-   **onTranslationChanged**(lang: `string` = `null`)<br/>
+    Triggers a notification callback when the translation language changes.
+    -   _lang:_ `string`  - The new language code
+-   **use**(lang: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Sets the target language for translations.
+    -   _lang:_ `string`  - Code name for the language
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Translations available for the language
 
 ## Details
 
@@ -61,7 +71,7 @@ general format of the path to this folder will be:
 
 `<app>/src/assets/my-translations/i18n`
 
-If you wanted English and French translations then you would copy the built-in
+If you wanted English and French translations then you would add
 `en.json` and `fr.json` files into the `i18n` folder and add your new keys:
 
     // en.json
@@ -74,6 +84,22 @@ If you wanted English and French translations then you would copy the built-in
         ...
       "WELCOME_MESSAGE": "Bienvenue !"
         ...
+
+The files follow the same hierarchical key:value JSON format as the built-in translations.
+You can add new keys to your local files or redefine existing keys but the built-in definitions
+will be used for any keys you don't explicitly define in your files. For example, `en.json` might
+look like the following:
+
+```json
+{
+  "title": "my app",
+  "LOGIN": {
+     "LABEL": {
+        "LOGIN": "Custom Sign In"
+     }
+  }
+}
+```
 
 To enable the new translations in your app, you also need to register them in your
 `app.module.ts` file. Import `TRANSLATION_PROVIDER` and add the path of your
@@ -119,10 +145,6 @@ ngOnInit() {
   ...
 ```
 
-The new translation files completely replace the built-in ones.
-If you want to continue using the built-in keys then you must add your new
-keys to copies of the existing files.
-
 Note: the `source` property points to the web application root. Ensure you have
 webpack correctly set up to copy all the i18n files at compile time.
 
@@ -138,7 +160,7 @@ You can register as many entries as you like.
 
 Depending on your application, you may want to have buttons or dropdown menus to allow language selection for the end users.
 
-You can use `TranslationService` to switch languages from your code based on input events of your choice:
+You can use [`TranslationService`](../core/translation.service.md) to switch languages from your code based on input events of your choice:
 
 ```ts
 class MyComponent {

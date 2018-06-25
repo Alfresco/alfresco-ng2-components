@@ -6,7 +6,12 @@
       "DOWNLOAD": "Last ned",
       "UPLOAD": {
         "TITLE": "Last opp ny versjon",
-        "TOOLTIP": "Begrensning: Du må laste opp en fil med samme navn for å opprette en ny versjon av den"
+        "TOOLTIP": "Begrensning: Du må laste opp en fil med samme navn for å opprette en ny versjon av den",
+        "MAJOR": "større endringer (2.0)",
+        "MINOR": "mindre endringer (1.1)",
+        "COMMENT": "Gi en kommentar",
+        "ADD": "Legg til ny versjon",
+        "CANCEL": "Avbryt"
       }
     },
     "CONFIRM_DELETE": {
@@ -72,7 +77,7 @@
     "SELECT_LOCATION": "Velg plassering"
   },
   "OPERATION": {
-    "SUCCES": {
+    "SUCCESS": {
       "CONTENT": {
         "COPY": "Er nå kopiert",
         "MOVE": "Er nå flyttet"
@@ -155,6 +160,13 @@
   },
   "SEARCH": {
     "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Søk",
+      "ARIA-LABEL": "Søkeknapp"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "Søkeinndata"
+    },
     "RESULTS": {
       "SUMMARY": "{{numResults}} resultater funnet for {{searchTerm}}",
       "NONE": "Ingen resultater funnet for {{searchTerm}}",
@@ -163,6 +175,29 @@
         "NAME": "Vis navn",
         "MODIFIED_BY": "Endret av",
         "MODIFIED_AT": "Endret"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "Fjern",
+        "APPLY": "Bruk",
+        "CLEAR-ALL": "Slett alle",
+        "SHOW-MORE": "Vis flere",
+        "SHOW-LESS": "Vis mindre",
+        "FILTER-CATEGORY": "Filtrer kategory"
+      },
+      "RANGE": {
+        "FROM": "Fra",
+        "TO": "Til",
+        "FROM-DATE": "Fra",
+        "TO-DATE": "Til"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Påkrevd verdi",
+        "NO-DAYS": "Ingen dager valgt.",
+        "INVALID-FORMAT": "Ugyldig format",
+        "INVALID-DATE": "Ugyldig dato. Datoen må være i formatet '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "Datoen er utover maksimumsdato."
       }
     },
     "ICONS": {
@@ -235,7 +270,20 @@
       "INHERITED": "Arvet",
       "AUTHORITY_ID": "Autoritets-ID",
       "ROLE": "Rolle",
-      "LOCALLY_SET": "Angitt lokalt"
+      "LOCALLY_SET": "Angitt lokalt",
+      "NO_PERMISSIONS": "Ingen tillatelser"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Søk",
+      "TYPE-MESSAGE": "Skriv inn tekst for å starte søk etter grupper eller personer",
+      "NO-RESULT": "Ingen resultater funnet for dette søket",
+      "ADD-ACTION": "Legg til",
+      "CLOSE-ACTION": "Lukk",
+      "BASE-DIALOG-TITLE": "Søk etter en gruppe eller personer å legge til...",
+      "EVERYONE": "Alle"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "Én eller flere av tillatelsene du har angitt, er allerede til stede: {{list}}"
     }
   }
 }

@@ -18,22 +18,41 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../app-config/app-config.service';
+import { TranslationService } from './translation.service';
 
 @Injectable()
 export class PageTitleService {
 
+    private originalTitle: string = '';
+    private translatedTitle: string = '';
+
     constructor(
         private titleService: Title,
-        private appConfig: AppConfigService) {}
+        private appConfig: AppConfigService,
+        private translationService: TranslationService) {
+        translationService.translate.onLangChange.subscribe(() => this.onLanguageChanged());
+    }
 
     /**
      * Sets the page title.
      * @param value The new title
      */
     setTitle(value: string = '') {
-        const name = this.appConfig.get('application.name') || 'Alfresco ADF Application';
-        const title = value ? `${value} - ${name}` : `${name}`;
+        this.originalTitle = value;
+        this.translatedTitle = this.translationService.instant(value);
 
+        this.updateTitle();
+    }
+
+    private onLanguageChanged() {
+        this.translatedTitle = this.translationService.instant(this.originalTitle);
+        this.updateTitle();
+    }
+
+    private updateTitle() {
+        const name = this.appConfig.get('application.name') || 'Alfresco ADF Application';
+
+        const title = this.translatedTitle ? `${this.translatedTitle} - ${name}` : `${name}`;
         this.titleService.setTitle(title);
     }
 }

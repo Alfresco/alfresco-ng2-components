@@ -132,7 +132,7 @@ while [[ $1  == -* ]]; do
     esac
 done
 
-cd "$DIR/../demo-shell"
+cd "$DIR/.."
 
 if $EXEC_CLEAN == true; then
   echo "====== Clean Demo shell ====="
@@ -143,13 +143,6 @@ fi
 if $EXEC_INSTALL == true; then
   echo "====== Install Demo shell ====="
   npm install
-fi
-
-if $EXEC_DEVELOP == true; then
-   echo "====== Install node_modules components ====="
-   cd "$DIR/../lib"
-   npm install
-   cd "$DIR/../demo-shell"
 fi
 
 if $EXEC_VERSION == true; then
@@ -172,29 +165,16 @@ if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
   npm install $GIT_ISH --no-save
   cd "$DIR/../demo-shell/node_modules/alfresco-js-api"
   npm install
-  if $EXEC_DEVELOP == true; then
-   cd "$DIR/../lib/"
-   npm install $GIT_ISH --no-save
-   cd "$DIR/../lib/node_modules/alfresco-js-api"
-   npm install
-  fi
-  cd "$DIR/../demo-shell"
 fi
 
 if $EXEC_VERSION_JSAPI == true; then
   echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
   npm install alfresco-js-api@${JSAPI_VERSION}
-  if $EXEC_DEVELOP == true; then
-   echo "====== Install node_modules components ====="
-   cd "$DIR/../lib/"
-   npm install alfresco-js-api@${JSAPI_VERSION} --no-save
-  fi
-  cd "$DIR/../demo-shell"
 fi
 
 if $EXEC_TEST == true; then
   echo "====== Demo shell Test ====="
-  npm install && npm run test
+  npm run test
 fi
 
 if $EXEC_E2E == true; then

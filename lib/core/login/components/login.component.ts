@@ -15,28 +15,26 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    TemplateRef,
-    ViewEncapsulation
+import { Component, ElementRef, EventEmitter,
+    Input, OnInit, Output, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { LogService } from '../../services/log.service';
-import { SettingsService } from '../../services/settings.service';
 import { TranslationService } from '../../services/translation.service';
 import { UserPreferencesService } from '../../services/user-preferences.service';
+import { SettingsService } from '../../services/settings.service';
 
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSubmitEvent } from '../models/login-submit.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
+import {
+    AppConfigService,
+    AppConfigValues
+} from '../../app-config/app-config.service';
+import { OauthConfigModel } from '../../models/oauth-config.model';
 
 enum LoginSteps {
     Landing = 0,
@@ -48,14 +46,20 @@ enum LoginSteps {
     selector: 'adf-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    host: { '(blur)': 'onBlur($event)' },
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        class: 'adf-login',
+        '(blur)': 'onBlur($event)'
+    }
 })
 export class LoginComponent implements OnInit {
-
     isPasswordShow: boolean = false;
 
-    /** Should the `Remember me` checkbox be shown? */
+    /**
+     * Should the `Remember me` checkbox be shown? When selected, this
+     * option will remember the logged-in user after the browser is closed
+     * to avoid logging in repeatedly.
+     */
     @Input()
     showRememberMe: boolean = true;
 
@@ -83,8 +87,8 @@ export class LoginComponent implements OnInit {
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
-    /** Possible valid values are ECM, BPM or ALL. By default, this component
-     * will log in only to ECM. If you want to log in in both systems then use ALL.
+    /** @deprecated 3.0.0 Possible valid values are ECM, BPM or ALL.
+     * deprecated in 3.0.0 use the providers property in the the app.config.json
      */
     @Input()
     providers: string;
@@ -93,7 +97,7 @@ export class LoginComponent implements OnInit {
     @Input()
     fieldsValidation: any;
 
-    /** Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. */
+    /** @depreated 3.0.0 Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. */
     @Input()
     disableCsrf: boolean;
 
@@ -113,6 +117,8 @@ export class LoginComponent implements OnInit {
     @Output()
     executeSubmit = new EventEmitter<LoginSubmitEvent>();
 
+    implicitFlow: boolean = false;
+
     form: FormGroup;
     isError: boolean = false;
     errorMsg: string;
@@ -131,23 +137,32 @@ export class LoginComponent implements OnInit {
      * Constructor
      * @param _fb
      * @param authService
-     * @param settingsService
      * @param translate
      */
-    constructor(private _fb: FormBuilder,
-                private authService: AuthenticationService,
-                private settingsService: SettingsService,
-                private translateService: TranslationService,
-                private logService: LogService,
-                private elementRef: ElementRef,
-                private router: Router,
-                private userPreferences: UserPreferencesService) {
+    constructor(
+        private _fb: FormBuilder,
+        private authService: AuthenticationService,
+        private translateService: TranslationService,
+        private logService: LogService,
+        private elementRef: ElementRef,
+        private router: Router,
+        private appConfig: AppConfigService,
+        private userPreferences: UserPreferencesService,
+        private settingsService: SettingsService
+    ) {
         this.initFormError();
         this.initFormFieldsMessages();
     }
 
     ngOnInit() {
-        if (this.hasCustomFiledsValidation()) {
+        if (this.authService.isOauth()) {
+            let oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+            if (oauth && oauth.implicitFlow) {
+                this.implicitFlow = true;
+            }
+        }
+
+        if (this.hasCustomFieldsValidation()) {
             this.form = this._fb.group(this.fieldsValidation);
         } else {
             this.initFormFieldsDefault();
@@ -162,17 +177,13 @@ export class LoginComponent implements OnInit {
      * @param event
      */
     onSubmit(values: any) {
-
-        if (!this.checkRequiredParams()) {
-            return false;
-        }
-
         this.settingsService.setProviders(this.providers);
         this.settingsService.csrfDisabled = this.disableCsrf;
 
         this.disableError();
-
-        const args = new LoginSubmitEvent(this.form);
+        const args = new LoginSubmitEvent({
+            controls: { username: this.form.controls.username }
+        });
         this.executeSubmit.emit(args);
 
         if (args.defaultPrevented) {
@@ -180,6 +191,10 @@ export class LoginComponent implements OnInit {
         } else {
             this.performLogin(values);
         }
+    }
+
+    implicitLogin() {
+        this.authService.ssoImplicitLogin();
     }
 
     /**
@@ -191,12 +206,15 @@ export class LoginComponent implements OnInit {
         for (let field in this.formError) {
             if (field) {
                 this.formError[field] = '';
-                let hasError = (this.form.controls[field].errors && data[field] !== '') ||
-                    (this.form.controls[field].dirty && !this.form.controls[field].valid);
+                let hasError =
+                    (this.form.controls[field].errors && data[field] !== '') ||
+                    (this.form.controls[field].dirty &&
+                        !this.form.controls[field].valid);
                 if (hasError) {
                     for (let key in this.form.controls[field].errors) {
                         if (key) {
-                            this.formError[field] += this._message[field][key] + '';
+                            this.formError[field] +=
+                                this._message[field][key] + '';
                         }
                     }
                 }
@@ -210,19 +228,24 @@ export class LoginComponent implements OnInit {
      */
     private performLogin(values: any) {
         this.actualLoginStep = LoginSteps.Checking;
-        this.authService.login(values.username, values.password, this.rememberMe)
+        this.authService
+            .login(values.username, values.password, this.rememberMe)
             .subscribe(
                 (token: any) => {
-                    const redirectUrl = this.authService.getRedirectUrl(this.providers);
+                    const redirectUrl = this.authService.getRedirect(
+                        this.providers
+                    );
 
                     this.actualLoginStep = LoginSteps.Welcome;
                     this.userPreferences.setStoragePrefix(values.username);
                     values.password = null;
-                    this.success.emit(new LoginSuccessEvent(token, values.username, null));
+                    this.success.emit(
+                        new LoginSuccessEvent(token, values.username, null)
+                    );
 
                     if (redirectUrl) {
-                        this.authService.setRedirectUrl(null);
-                        this.router.navigate([redirectUrl]);
+                        this.authService.setRedirect(null);
+                        this.router.navigateByUrl(redirectUrl);
                     } else if (this.successRoute) {
                         this.router.navigate([this.successRoute]);
                     }
@@ -241,36 +264,26 @@ export class LoginComponent implements OnInit {
      * Check and display the right error message in the UI
      */
     private displayErrorMessage(err: any): void {
-
-        if (err.error && err.error.crossDomain && err.error.message.indexOf('Access-Control-Allow-Origin') !== -1) {
+        if (
+            err.error &&
+            err.error.crossDomain &&
+            err.error.message.indexOf('Access-Control-Allow-Origin') !== -1
+        ) {
             this.errorMsg = err.error.message;
-        } else if (err.status === 403 && err.message.indexOf('Invalid CSRF-token') !== -1) {
+        } else if (
+            err.status === 403 &&
+            err.message.indexOf('Invalid CSRF-token') !== -1
+        ) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CSRF';
-        } else if (err.status === 403 && err.message.indexOf('The system is currently in read-only mode') !== -1) {
+        } else if (
+            err.status === 403 &&
+            err.message.indexOf('The system is currently in read-only mode') !==
+                -1
+        ) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ECM-LICENSE';
         } else {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
-
         }
-    }
-
-    /**
-     * Check the require parameter
-     */
-    private checkRequiredParams(): boolean {
-
-        let isAllParamPresent: boolean = true;
-
-        if (this.providers === undefined || this.providers === null || this.providers === '') {
-            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS';
-            this.enableError();
-            let messageProviders: any;
-            messageProviders = this.translateService.get(this.errorMsg);
-            this.error.emit(new LoginErrorEvent(messageProviders.value));
-            isAllParamPresent = false;
-        }
-
-        return isAllParamPresent;
     }
 
     /**
@@ -288,7 +301,12 @@ export class LoginComponent implements OnInit {
      * @param ruleId - i.e. required | minlength | maxlength
      * @param msg
      */
-    addCustomValidationError(field: string, ruleId: string, msg: string, params?: any) {
+    addCustomValidationError(
+        field: string,
+        ruleId: string,
+        msg: string,
+        params?: any
+    ) {
         if (params) {
             this.translateService.get(msg, params).subscribe((res: string) => {
                 this._message[field][ruleId] = res;
@@ -303,7 +321,10 @@ export class LoginComponent implements OnInit {
      */
     toggleShowPassword() {
         this.isPasswordShow = !this.isPasswordShow;
-        this.elementRef.nativeElement.querySelector('#password').type = this.isPasswordShow ? 'text' : 'password';
+        this.elementRef.nativeElement.querySelector('#password').type = this
+            .isPasswordShow
+            ? 'text'
+            : 'password';
     }
 
     /**
@@ -326,8 +347,8 @@ export class LoginComponent implements OnInit {
      */
     private initFormError() {
         this.formError = {
-            'username': '',
-            'password': ''
+            username: '',
+            password: ''
         };
     }
 
@@ -336,8 +357,8 @@ export class LoginComponent implements OnInit {
      */
     private initFormFieldsMessages() {
         this._message = {
-            'username': {},
-            'password': {}
+            username: {},
+            password: {}
         };
     }
 
@@ -346,17 +367,19 @@ export class LoginComponent implements OnInit {
      */
     private initFormFieldsMessagesDefault() {
         this._message = {
-            'username': {
-                'required': 'LOGIN.MESSAGES.USERNAME-REQUIRED'
+            username: {
+                required: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
             },
-            'password': {
-                'required': 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
+            password: {
+                required: 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
             }
         };
 
-        this.translateService.get('LOGIN.MESSAGES.USERNAME-MIN', { minLength: this.minLength }).subscribe((res: string) => {
-            this._message['username']['minlength'] = res;
-        });
+        this.translateService
+            .get('LOGIN.MESSAGES.USERNAME-MIN', { minLength: this.minLength })
+            .subscribe((res: string) => {
+                this._message['username']['minlength'] = res;
+            });
     }
 
     private initFormFieldsDefault() {
@@ -381,7 +404,7 @@ export class LoginComponent implements OnInit {
         this.isError = true;
     }
 
-    private hasCustomFiledsValidation(): boolean {
+    private hasCustomFieldsValidation(): boolean {
         return this.fieldsValidation !== undefined;
     }
 }

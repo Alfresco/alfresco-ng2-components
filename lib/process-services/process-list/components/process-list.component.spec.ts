@@ -15,17 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { Component, SimpleChange, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MatProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { By } from '@angular/platform-browser';
+
 import { ProcessInstanceListComponent } from './process-list.component';
 
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DataRowEvent, DataSorting, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 
 import { fakeProcessInstance, fakeProcessInstancesWithNoName } from '../../mock';
 import { ProcessService } from '../services/process.service';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('ProcessInstanceListComponent', () => {
 
@@ -68,45 +70,37 @@ describe('ProcessInstanceListComponent', () => {
             ]
         , fakeCutomSchema };
 
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatProgressSpinnerModule
-            ],
-            declarations: [ ProcessInstanceListComponent ],
-            providers: [
-                ProcessService
-            ]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(ProcessInstanceListComponent);
-            component = fixture.componentInstance;
-            appConfig = TestBed.get(AppConfigService);
-            service = fixture.debugElement.injector.get(ProcessService);
+        fixture = TestBed.createComponent(ProcessInstanceListComponent);
+        component = fixture.componentInstance;
+        appConfig = TestBed.get(AppConfigService);
+        service = TestBed.get(ProcessService);
 
-            getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstance));
-            appConfig.config = Object.assign(appConfig.config, {
-                'adf-process-list': {
-                    'presets': {
-                        'fakeCutomSchema': [
-                            {
-                                'key': 'fakeName',
-                                'type': 'text',
-                                'title': 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
-                                'sortable': true
-                            },
-                            {
-                                'key': 'fakeProcessName',
-                                'type': 'text',
-                                'title': 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
-                                'sortable': true
-                            }
-                        ]
+        getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstance));
+        appConfig.config['adf-process-list'] = {
+            'presets': {
+                'fakeCutomSchema': [
+                    {
+                        'key': 'fakeName',
+                        'type': 'text',
+                        'title': 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
+                        'sortable': true
+                    },
+                    {
+                        'key': 'fakeProcessName',
+                        'type': 'text',
+                        'title': 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
+                        'sortable': true
                     }
-                }
+                ]
             }
-        );
-
-        });
+        };
     }));
 
     it('should use the default schemaColumn as default', () => {
@@ -530,17 +524,11 @@ describe('CustomProcessListComponent', () => {
     let fixture: ComponentFixture<CustomProcessListComponent>;
     let component: CustomProcessListComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                ProcessInstanceListComponent,
-                CustomProcessListComponent
-            ],
-            providers: [
-                ProcessService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreModule.forRoot()],
+        declarations: [ProcessInstanceListComponent, CustomProcessListComponent],
+        providers: [ProcessService]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomProcessListComponent);
@@ -559,4 +547,41 @@ describe('CustomProcessListComponent', () => {
         expect(component.processList.data.getColumns()[2].title).toEqual('ADF_PROCESS_LIST.PROPERTIES.CREATED');
         expect(component.processList.data.getColumns().length).toEqual(3);
     });
+});
+
+@Component({
+    template: `
+    <adf-process-instance-list>
+        <adf-empty-content-holder>
+            <p id="custom-id"> No Process Instance</p>
+        </adf-empty-content-holder>
+    </adf-process-instance-list>
+       `
+})
+class EmptyTemplateComponent {
+}
+
+describe('Custom EmptyTemplateComponent', () => {
+    let fixture: ComponentFixture<EmptyTemplateComponent>;
+
+    setupTestBed({
+        imports: [ProcessTestingModule],
+        declarations: [EmptyTemplateComponent],
+        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(EmptyTemplateComponent);
+        fixture.detectChanges();
+    });
+
+    it('should render the custom template', async(() => {
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let title = fixture.debugElement.query(By.css('#custom-id'));
+            expect(title).not.toBeNull();
+            expect(title.nativeElement.innerText).toBe('No Process Instance');
+            expect(fixture.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
+        });
+    }));
 });

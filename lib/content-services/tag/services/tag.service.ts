@@ -23,6 +23,7 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class TagService {
 
+    /** Emitted when tag information is updated. */
     @Output()
     refresh = new EventEmitter();
 

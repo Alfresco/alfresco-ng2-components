@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { QueryBody } from 'alfresco-js-api';
-import { SearchService } from '@alfresco/adf-core';
+import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { ContentNodeSelectorService } from './content-node-selector.service';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 class SearchServiceMock {
     public query: QueryBody;
@@ -29,17 +30,15 @@ class SearchServiceMock {
 
 describe('ContentNodeSelectorService', () => {
 
-    let service: ContentNodeSelectorService,
-        search: SearchServiceMock;
+    let service: ContentNodeSelectorService;
+    let search: SearchServiceMock;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                ContentNodeSelectorService,
-                { provide: SearchService, useClass: SearchServiceMock }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        providers: [
+            { provide: SearchService, useClass: SearchServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(ContentNodeSelectorService);

@@ -23,7 +23,7 @@ import {
 import {
     ContentService, DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent,
     DisplayMode, ObjectDataColumn, PaginatedComponent, AppConfigService, DataColumnListComponent,
-    UserPreferencesService, PaginationModel
+    UserPreferencesService, PaginationModel, ThumbnailService
 } from '@alfresco/adf-core';
 
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
@@ -136,7 +136,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * override the default sorting detected by the component based on columns.
      */
     @Input()
-    sorting: string[];
+    sorting = ['name', 'asc'];
+
+    /** Defines sorting mode. Can be either `client` or `server`. */
+    @Input()
+    sortingMode = 'client';
 
     /** The inline style to apply to every row. See
      * the Angular NgStyle
@@ -231,8 +235,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private _pagination: BehaviorSubject<PaginationModel>;
     private layoutPresets = {};
-
-    private contextActionHandlerSubscription: Subscription;
+    private subscriptions: Subscription[] = [];
+    private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -240,7 +244,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private appConfig: AppConfigService,
                 private preferences: UserPreferencesService,
                 private customResourcesService: CustomResourcesService,
-                private contentService: ContentService) {
+                private contentService: ContentService,
+                private thumbnailService: ThumbnailService) {
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -329,8 +334,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnInit() {
+        this.rowMenuCache = {};
         this.loadLayoutPresets();
-        this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
+        this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, null, this.getDefaultSorting(), this.sortingMode);
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
@@ -342,12 +348,25 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.data.setImageResolver(this.imageResolver);
         }
 
-        this.contextActionHandlerSubscription = this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
+        this.subscriptions.push(
+            this.contextActionHandler.subscribe(val => this.contextActionCallback(val))
+        );
 
         this.enforceSingleClickNavigationForMobile();
     }
 
     ngAfterContentInit() {
+        if (this.columnList) {
+            this.subscriptions.push(
+                this.columnList.columns.changes.subscribe(() => {
+                    this.setTableSchema();
+                })
+            );
+        }
+        this.setTableSchema();
+    }
+
+    private setTableSchema() {
         let schema: DataColumn[] = [];
 
         if (this.hasCustomLayout) {
@@ -355,7 +374,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.documentListService, schema, this.getDefaultSorting());
+            this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, schema, this.getDefaultSorting(), this.sortingMode);
         } else if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }
@@ -368,6 +387,21 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     ngOnChanges(changes: SimpleChanges) {
         this.resetSelection();
+        if (this.data) {
+            this.data.thumbnails = this.thumbnails;
+
+        }
+        if (changes.sortingMode && !changes.sortingMode.firstChange && this.data) {
+            this.data.sortingMode = changes.sortingMode.currentValue;
+        }
+
+        if (changes.sorting && !changes.sorting.firstChange && this.data) {
+            const newValue = changes.sorting.currentValue;
+            if (newValue && newValue.length > 0) {
+                const [key, direction] = newValue;
+                this.data.setSorting(new DataSorting(key, direction));
+            }
+        }
 
         if (changes.folderNode && changes.folderNode.currentValue) {
             this.currentFolderId = changes.folderNode.currentValue.id;
@@ -380,9 +414,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.loadFolder();
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
-                if (changes.node.currentValue.list.pagination) {
-                    changes.node.currentValue.list.pagination.skipCount = 0;
-                }
                 this.data.loadPage(changes.node.currentValue);
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.rowFilter) {
@@ -415,9 +446,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
-        let target = null;
 
         if (node && node.entry) {
+            let target = null;
+
             if (node.entry.isFile) {
                 target = 'document';
             } else if (node.entry.isFolder) {
@@ -425,14 +457,29 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
 
             if (target) {
-                let actionsByTarget = this.actions.filter(entry => {
-                    return entry.target.toLowerCase() === target;
-                }).map(action => new ContentActionModel(action));
+                const actions = this.rowMenuCache[node.entry.id];
+                if (actions) {
+                    actions.forEach(action => {
+                        this.refreshAction(action, node);
+                    });
+                    return actions;
+                }
+
+                let actionsByTarget = this.actions
+                    .filter(entry => {
+                        const isVisible = (typeof entry.visible === 'function')
+                            ? entry.visible(node)
+                            : entry.visible;
+
+                        return isVisible && entry.target.toLowerCase() === target;
+                    })
+                    .map(action => new ContentActionModel(action));
 
                 actionsByTarget.forEach((action) => {
-                    this.disableActionsWithNoPermissions(node, action);
+                    this.refreshAction(action, node);
                 });
 
+                this.rowMenuCache[node.entry.id] = actionsByTarget;
                 return actionsByTarget;
             }
         }
@@ -440,10 +487,29 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return [];
     }
 
-    disableActionsWithNoPermissions(node: MinimalNodeEntity, action: ContentActionModel) {
-        if (action.permission && node.entry.allowableOperations && !this.contentService.hasPermission(node.entry, action.permission)) {
-            action.disabled = true;
+    private refreshAction(action: ContentActionModel, node: MinimalNodeEntity) {
+        action.disabled = this.isActionDisabled(action, node);
+        action.visible = this.isActionVisible(action, node);
+    }
+
+    private isActionVisible(action: ContentActionModel, node: MinimalNodeEntity): boolean {
+        if (typeof action.visible === 'function') {
+            return action.visible(node);
         }
+
+        return action.visible;
+    }
+
+    private isActionDisabled(action: ContentActionModel, node: MinimalNodeEntity): boolean {
+        if (typeof action.disabled === 'function') {
+            return action.disabled(node);
+        }
+
+        if (action.permission && action.disableWithNoPermission && !this.contentService.hasPermission(node.entry, action.permission)) {
+            return true;
+        }
+
+        return action.disabled;
     }
 
     @HostListener('contextmenu', ['$event'])
@@ -570,7 +636,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.noPermission = false;
     }
 
-    private onPageLoaded(nodePaging: NodePaging) {
+    onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
             this.data.loadPage(nodePaging, this.pagination.getValue().merge);
             this.loading = false;
@@ -738,6 +804,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updatePagination(pagination: PaginationModel) {
+        this.pagination.next(pagination);
         this.reload();
     }
 
@@ -770,10 +837,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnDestroy() {
-        if (this.contextActionHandlerSubscription) {
-            this.contextActionHandlerSubscription.unsubscribe();
-            this.contextActionHandlerSubscription = null;
-        }
+        this.subscriptions.forEach(s => s.unsubscribe());
+        this.subscriptions = [];
     }
 
     private handleError(err: any) {

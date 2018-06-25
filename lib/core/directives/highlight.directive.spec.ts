@@ -16,10 +16,12 @@
  */
 
 import { Component, ViewChildren } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HighlightTransformService } from '../services/highlight-transform.service';
 import { HighlightDirective } from './highlight.directive';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
 
 const template: string = `
 <div id="outerDiv1" adf-highlight adf-highlight-selector=".highlightable" adf-highlight-class="highlight-for-free-willy">
@@ -42,16 +44,14 @@ describe('HighlightDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TestComponent
-            ],
-            providers: [
-                HighlightTransformService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            TestComponent
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);

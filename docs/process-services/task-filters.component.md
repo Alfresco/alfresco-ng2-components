@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-07
 ---
+
 # Task Filters component
 
 Shows all available filters.
@@ -9,47 +11,43 @@ Shows all available filters.
 ## Basic Usage
 
 ```html
-<adf-filters></adf-filters>
+<adf-task-filters></adf-task-filters>
 ```
+
+## Class members
 
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| filterParam | `FilterParamsModel` |  | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
-| appId | `number` |  | Display filters available to the current user for the application with the specified ID.  |
-| appName | `string` |  | Display filters available to the current user for the application with the specified name.  |
-| hasIcon | `boolean` | `true` | Toggles display of the filter's icon.  |
+| -- | -- | -- | -- |
+| appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
+| appName | `string` |  | Display filters available to the current user for the application with the specified name. |
+| filterParam | [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts) |  | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
+| hasIcon | `boolean` | true | Toggles display of the filter's icon. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| filterClick | `EventEmitter<FilterRepresentationModel>` | Emitted when a filter in the list is clicked. |
+| -- | -- | -- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
+| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)`>` | Emitted when a filter in the list is clicked. |
 | success | `EventEmitter<any>` | Emitted when the list is loaded. |
-| error | `EventEmitter<any>` | Emitted when an error occurs during loading. |
 
 ## Details
 
-### How filter the activiti task filters
+### Filtering APS task filters
+
+Use the `filterParam` property to restrict the range of filters that are shown:
 
 ```html
-<adf-filters 
+<adf-task-filters 
    [filterParam]="{name:'My tasks'}">
-</adf-filters>
+</adf-task-filters>
 ```
 
-You can use inside the filterParam one of the properties from [FilterParamsModel](#filterparamsmodel) (see below).
+You can use properties from [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts)
+as the value of `filterParam` as shown in the table below:
 
-### FilterParamsModel
-
-```json
-{
-    "id": "number",
-    "name": "string",
-    "index": "number"
-}
-```
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -59,8 +57,9 @@ You can use inside the filterParam one of the properties from [FilterParamsModel
 
 ### How to create an accordion menu with the task filter
 
-The task filter often works well as an item in an accordion menu. See the [Accordion component](../core/accordion.component.md)
-page for an example of how to do set this up.
+The task filter often works well as an item in an accordion menu. See the
+[Accordion component](../core/accordion.component.md)
+page for an example of how to set this up.
 
 ## See also
 

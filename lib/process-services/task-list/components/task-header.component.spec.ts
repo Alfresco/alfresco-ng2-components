@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CardViewUpdateService, AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { BpmUserService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import {
@@ -32,6 +32,7 @@ import {
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('TaskHeaderComponent', () => {
 
@@ -55,19 +56,11 @@ describe('TaskHeaderComponent', () => {
         groups: []
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TaskHeaderComponent
-            ],
-            providers: [
-                TaskListService,
-                BpmUserService,
-                CardViewUpdateService,
-                AppConfigService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TaskHeaderComponent);
@@ -119,16 +112,6 @@ describe('TaskHeaderComponent', () => {
             expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT');
         });
 
-    }));
-
-    it('should display created-by', async(() => {
-        component.refreshData();
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-created-by"] .adf-property-value'));
-            expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
-        });
     }));
 
     it('should display priority', async(() => {
@@ -258,7 +241,7 @@ describe('TaskHeaderComponent', () => {
     }));
 
     it('should call the service\'s unclaim method on unclaiming', async(() => {
-        spyOn(service, 'unclaimTask');
+        spyOn(service, 'unclaimTask').and.returnValue(Observable.of(true));
         component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
         component.refreshData();
         fixture.detectChanges();

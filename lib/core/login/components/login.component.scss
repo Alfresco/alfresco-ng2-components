@@ -6,6 +6,10 @@
     $foreground: map-get($theme, foreground);
     $text-color-primary: mat-color($foreground, text);
 
+    .adf-login {
+        @include flex-column;
+    }
+
     .adf-login-content {
         background-size: cover;
         background-position: center;
@@ -114,7 +118,7 @@
         }
 
         .adf-alfresco-logo img {
-            max-height: 43px;
+            max-height: 58px;
         }
 
         .adf-login-button {

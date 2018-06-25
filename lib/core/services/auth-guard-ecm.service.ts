@@ -16,55 +16,50 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
-import { AlfrescoApiService } from './alfresco-api.service';
+import {
+    ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router
+} from '@angular/router';
 import { AuthenticationService } from './authentication.service';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 @Injectable()
 export class AuthGuardEcm implements CanActivate {
-    constructor(
-        private authService: AuthenticationService,
-        private apiService: AlfrescoApiService,
-        private router: Router,
-        private appConfig: AppConfigService) {
+    constructor(private authService: AuthenticationService,
+                private router: Router,
+                private appConfig: AppConfigService) {
     }
 
-    private get authApi() {
-        return this.apiService.getInstance().ecmAuth;
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        return this.checkLogin(state.url);
     }
 
-    private isLoggedIn(): Promise<boolean> {
-        if (!this.authApi.isLoggedIn()) {
-            return Promise.resolve(false);
-        }
-
-        return this.authApi
-            .validateTicket()
-            .then(() => true, () => false)
-            .catch(() => false);
-    }
-
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         return this.canActivate(route, state);
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    checkLogin(redirectUrl: string): boolean {
+        if (this.authService.isEcmLoggedIn()) {
+            return true;
+        }
 
-        return this.isLoggedIn().then(isLoggedIn => {
-            if (!isLoggedIn) {
-                this.authService.setRedirectUrl({ provider: 'ECM', url: state.url });
-                const pathToLogin = this.getRouteDestinationForLogin();
-                this.router.navigate(['/' + pathToLogin]);
-            }
+        if (!this.authService.isOauth() || this.isOAuthWithoutSilentLogin()) {
+            this.authService.setRedirect({ provider: 'ECM', url: redirectUrl });
+            const pathToLogin = this.getRouteDestinationForLogin();
+            this.router.navigate(['/' + pathToLogin]);
+        }
 
-            return isLoggedIn;
-        });
+        return false;
+    }
+
+    isOAuthWithoutSilentLogin() {
+        let oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+        return this.authService.isOauth() && oauth.silentLogin === false;
     }
 
     private getRouteDestinationForLogin(): string {
         return this.appConfig &&
-               this.appConfig.get<string>('loginRoute') ?
-                        this.appConfig.get<string>('loginRoute') : 'login';
+            this.appConfig.get<string>(AppConfigValues.LOGIN_ROUTE) ?
+            this.appConfig.get<string>(AppConfigValues.LOGIN_ROUTE) : 'login';
     }
 }

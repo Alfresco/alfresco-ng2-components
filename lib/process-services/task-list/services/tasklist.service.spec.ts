@@ -16,7 +16,7 @@
  */
 
 import { async } from '@angular/core/testing';
-import { UserProcessModel } from '@alfresco/adf-core';
+import { UserProcessModel, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import {
     fakeCompletedTaskList,
@@ -27,7 +27,6 @@ import {
     fakeRepresentationFilter2,
     fakeTaskDetails,
     fakeTaskList,
-    fakeTaskListDifferentProcessDefinitionKey,
     fakeTasksChecklist,
     fakeUser1,
     fakeUser2,
@@ -43,6 +42,12 @@ declare let jasmine: any;
 describe('Activiti TaskList Service', () => {
 
     let service: TaskListService;
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(async(() => {
         service = new TaskListService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService() ), new LogService(new AppConfigService(null)));
@@ -73,27 +78,6 @@ describe('Activiti TaskList Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeTaskList)
-            });
-        });
-
-        it('should return the task list filtered by processDefinitionKey', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(res => {
-                expect(res).toBeDefined();
-                expect(res.size).toEqual(2);
-                expect(res.start).toEqual(0);
-                expect(res.data).toBeDefined();
-                expect(res.data.length).toEqual(2);
-                expect(res.data[0].name).toEqual('FakeNameTask');
-                expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                expect(res.data[0].assignee.firstName).toEqual('firstName');
-                expect(res.data[0].assignee.lastName).toEqual('lastName');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeTaskListDifferentProcessDefinitionKey)
             });
         });
 

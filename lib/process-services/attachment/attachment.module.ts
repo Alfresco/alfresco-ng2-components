@@ -15,25 +15,19 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { DataColumnModule, DataTableModule, DirectiveModule } from '@alfresco/adf-core';
 
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 import { AttachmentComponent } from './create-task-attachment.component';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
-        DataColumnModule,
-        DataTableModule,
-        MaterialModule,
-        CommonModule,
-        TranslateModule,
-        DirectiveModule
+        CoreModule,
+        MaterialModule
     ],
     declarations: [
         TaskAttachmentListComponent,

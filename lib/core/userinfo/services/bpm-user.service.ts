@@ -36,8 +36,8 @@ export class BpmUserService {
     }
 
     /**
-     * get Current User information for BPM
-     * @param userName - the user name
+     * Gets information about the current user.
+     * @returns User information object
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.profileApi.getProfile())
@@ -45,6 +45,10 @@ export class BpmUserService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets the current user's profile image as a URL.
+     * @returns URL string
+     */
     getCurrentUserProfileImage(): string {
         return this.apiService.getInstance().activiti.profileApi.getProfilePictureUrl();
     }

@@ -20,13 +20,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
 import 'rxjs/add/operator/distinctUntilChanged';
 
 export enum UserPreferenceValues {
     PaginationSize = 'PAGINATION_SIZE',
-    DisableCSRF = 'DISABLE_CSRF',
     Locale = 'LOCALE',
     SupportedPageSizes = 'supportedPageSizes'
 }
@@ -40,29 +38,22 @@ export class UserPreferencesService {
         locale: 'en'
     };
 
-    private userPreferenceStatus: any = {
-        paginationSize: 25,
-        supportedPageSizes: [5, 10, 15, 20],
-        LOCALE: 'en'
-    };
+    private userPreferenceStatus: any = this.defaults;
 
     /**
      * @deprecated we are grouping every value changed on the user preference in a single stream : userPreferenceValue$
      */
     locale$: Observable<string>;
-    private localeSubject: BehaviorSubject<string> ;
+    private localeSubject: BehaviorSubject<string>;
 
     private onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
-    constructor(
-        public translate: TranslateService,
-        private appConfig: AppConfigService,
-        private storage: StorageService,
-        private apiService: AlfrescoApiService
-    ) {
+    constructor(public translate: TranslateService,
+                private appConfig: AppConfigService,
+                private storage: StorageService) {
         this.appConfig.onLoad.subscribe(this.initUserPreferenceStatus.bind(this));
-        this.localeSubject = new BehaviorSubject(this.defaults.locale);
+        this.localeSubject = new BehaviorSubject(this.userPreferenceStatus[UserPreferenceValues.Locale]);
         this.locale$ = this.localeSubject.asObservable();
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
@@ -70,11 +61,16 @@ export class UserPreferencesService {
 
     private initUserPreferenceStatus() {
         this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
-        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.appConfig.get('pagination.size', this.defaults.paginationSize);
+        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.paginationSize ?
+            this.paginationSize : this.appConfig.get('pagination.size', this.defaults.paginationSize);
         this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
-        this.userPreferenceStatus[UserPreferenceValues.DisableCSRF] = this.disableCSRF;
     }
 
+    /**
+     * Sets up a callback to notify when a property has changed.
+     * @param property The property to watch
+     * @returns Notification callback
+     */
     select(property: string): Observable<any> {
         return this.onChange.map((userPreferenceStatus) => userPreferenceStatus[property]).distinctUntilChanged();
     }
@@ -83,6 +79,7 @@ export class UserPreferencesService {
      * Gets a preference property.
      * @param property Name of the property
      * @param defaultValue Default to return if the property is not found
+     * @returns Preference property
      */
     get(property: string, defaultValue?: string): string {
         const key = this.getPropertyKey(property);
@@ -99,7 +96,9 @@ export class UserPreferencesService {
      * @param value New value for the property
      */
     set(property: string, value: any) {
-        if (!property) { return; }
+        if (!property) {
+            return;
+        }
         this.storage.setItem(
             this.getPropertyKey(property),
             value
@@ -108,7 +107,23 @@ export class UserPreferencesService {
         this.onChangeSubject.next(this.userPreferenceStatus);
     }
 
-    /** Gets the active storage prefix for preferences. */
+    /**
+     * Check if an item is present in the storage
+     * @param property Name of the property
+     */
+    hasItem(property: string) {
+        if (!property) {
+            return;
+        }
+        return this.storage.hasItem(
+            this.getPropertyKey(property)
+        );
+    }
+
+    /**
+     * Gets the active storage prefix for preferences.
+     * @returns Storage prefix
+     */
     getStoragePrefix(): string {
         return this.storage.getItem('USER_PROFILE') || 'GUEST';
     }
@@ -124,34 +139,18 @@ export class UserPreferencesService {
     /**
      * Gets the full property key with prefix.
      * @param property The property name
+     * @returns Property key
      */
     getPropertyKey(property: string): string {
         return `${this.getStoragePrefix()}__${property}`;
     }
 
-    /** Gets an array containing the available page sizes. */
+    /**
+     * Gets an array containing the available page sizes.
+     * @returns Array of page size values
+     */
     getDefaultPageSizes(): number[] {
         return this.defaults.supportedPageSizes;
-    }
-
-    /** Authorization type (can be "ECM", "BPM" or "ALL"). */
-    set authType(value: string) {
-        this.storage.setItem('AUTH_TYPE', value);
-        this.apiService.reset();
-    }
-
-    get authType(): string {
-        return this.storage.getItem('AUTH_TYPE') || 'ALL';
-    }
-
-    /** Prevents the CSRF Token from being submitted if true. Only valid for Process Services. */
-    set disableCSRF(value: boolean) {
-        this.set('DISABLE_CSRF', value);
-        this.apiService.reset();
-    }
-
-    get disableCSRF(): boolean {
-        return this.get('DISABLE_CSRF') === 'true';
     }
 
     /** Pagination size. */
@@ -174,7 +173,10 @@ export class UserPreferencesService {
         this.set('LOCALE', value);
     }
 
-    /** Gets the default locale. */
+    /**
+     * Gets the default locale.
+     * @returns Default locale language code
+     */
     public getDefaultLocale(): string {
         return this.appConfig.get<string>('locale') || this.translate.getBrowserLang() || 'en';
     }

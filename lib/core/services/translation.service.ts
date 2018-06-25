@@ -90,6 +90,10 @@ export class TranslationService {
         }
     }
 
+    /**
+     * Triggers a notification callback when the translation language changes.
+     * @param lang The new language code
+     */
     onTranslationChanged(lang: string): void {
         this.translate.onTranslationChange.next({
             lang: lang,
@@ -100,6 +104,7 @@ export class TranslationService {
     /**
      * Sets the target language for translations.
      * @param lang Code name for the language
+     * @returns Translations available for the language
      */
     use(lang: string): Observable<any> {
         this.customLoader.init(lang);
@@ -110,6 +115,7 @@ export class TranslationService {
      * Gets the translation for the supplied key.
      * @param key Key to translate
      * @param interpolateParams String(s) to be interpolated into the main message
+     * @returns Translated text
      */
     get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
         return this.translate.get(key, interpolateParams);
@@ -119,8 +125,9 @@ export class TranslationService {
      * Directly returns the translation for the supplied key.
      * @param key Key to translate
      * @param interpolateParams String(s) to be interpolated into the main message
+     * @returns Translated text
      */
     instant(key: string | Array<string>, interpolateParams?: Object): string | any {
-        return this.translate.instant(key, interpolateParams);
+        return key ? this.translate.instant(key, interpolateParams) : '';
     }
 }

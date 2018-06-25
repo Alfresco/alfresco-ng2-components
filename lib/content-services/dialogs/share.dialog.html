@@ -1,22 +1,22 @@
-<h1 mat-dialog-title id="adf-share-title" >{{ 'SHARE.TITLE' | translate }} {{fileName}}</h1>
+<h1 mat-dialog-title id="adf-share-title">{{ 'SHARE.TITLE' | translate }} {{fileName}}</h1>
 
 <mat-dialog-content>
     <span class="spacer"></span>
 
-    <mat-slide-toggle [checked]="isFileShared" [disabled]="isDisabled" (change)="onSlideShareChange($event)">
+    <mat-slide-toggle id="adf-share-toggle" [checked]="isFileShared" [disabled]="isDisabled"
+                      (change)="onSlideShareChange($event)">
         {{ 'SHARE.ACTIONS.SHARE' | translate }}
     </mat-slide-toggle>
 
     <span class="spacer"></span>
-
-    .
 
     <h2 *ngIf="isFileShared">{{ 'SHARE.DESCRIPTION' | translate }}</h2>
     <div *ngIf="isFileShared">{{ 'SHARE.ALERT' | translate }}</div>
 
     <form *ngIf="isFileShared">
         <mat-form-field class="full-width">
-            <input class="adf-share-link" matInput placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}" [value]="baseShareUrl + sharedId">
+            <input id="adf-share-link" lass="adf-share-link" matInput placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}"
+                   [value]="baseShareUrl + sharedId">
             <mat-icon matPrefix>link</mat-icon>
         </mat-form-field>
     </form>

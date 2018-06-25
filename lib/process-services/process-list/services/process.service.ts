@@ -35,9 +35,10 @@ export class ProcessService {
     }
 
     /**
-     * Get process instances for a filter and optionally a process definition.
+     * Gets process instances for a filter and optionally a process definition.
      * @param requestNode Filter for instances
      * @param processDefinitionKey Limits returned instances to a process definition
+     * @returns List of process instances
      */
     getProcessInstances(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel> {
         return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.processApi.getProcessInstances(requestNode))
@@ -53,8 +54,9 @@ export class ProcessService {
     }
 
     /**
-     * Fetches the Process Audit information as a pdf
+     * Fetches the Process Audit information as a PDF.
      * @param processId ID of the target process
+     * @returns Binary PDF data
      */
     fetchProcessAuditPdfById(processId: string): Observable<Blob> {
         return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.processApi.getProcessAuditPdf(processId))
@@ -62,8 +64,9 @@ export class ProcessService {
     }
 
     /**
-     * Fetches the Process Audit information in a json format.
+     * Fetches the Process Audit information in a JSON format.
      * @param processId ID of the target process
+     * @returns JSON data
      */
     fetchProcessAuditJsonById(processId: string): Observable<any> {
         return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.processApi.getProcessAuditJson(processId))
@@ -73,6 +76,7 @@ export class ProcessService {
     /**
      * Gets Process Instance metadata.
      * @param processInstanceId ID of the target process
+     * @returns Metadata for the instance
      */
     getProcess(processInstanceId: string): Observable<ProcessInstance> {
         return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.processApi.getProcessInstance(processInstanceId))
@@ -83,6 +87,7 @@ export class ProcessService {
      * Gets task instances for a process instance.
      * @param processInstanceId ID of the process instance
      * @param state Task state filter (can be "active" or "completed")
+     * @returns Array of task instance details
      */
     getProcessTasks(processInstanceId: string, state?: string): Observable<TaskDetailsModel[]> {
         let taskOpts = state ? {
@@ -103,6 +108,7 @@ export class ProcessService {
     /**
      * Gets process definitions associated with an app.
      * @param appId ID of a target app
+     * @returns Array of process definitions
      */
     getProcessDefinitions(appId?: number): Observable<ProcessDefinitionRepresentation[]> {
         let opts = appId ? {
@@ -126,6 +132,7 @@ export class ProcessService {
      * @param outcome Process outcome
      * @param startFormValues Values for the start form
      * @param variables Array of process instance variables
+     * @returns Details of the process instance just started
      */
     startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: FormValues, variables?: ProcessInstanceVariable[]): Observable<ProcessInstance> {
         let startRequest: any = {
@@ -151,6 +158,7 @@ export class ProcessService {
     /**
      * Cancels a process instance.
      * @param processInstanceId ID of process to cancel
+     * @returns Null response notifying when the operation is complete
      */
     cancelProcess(processInstanceId: string): Observable<void> {
         return Observable.fromPromise(
@@ -162,6 +170,7 @@ export class ProcessService {
     /**
      * Gets the variables for a process instance.
      * @param processInstanceId ID of the target process
+     * @returns Array of instance variable info
      */
     getProcessInstanceVariables(processInstanceId: string): Observable<ProcessInstanceVariable[]> {
         return Observable.fromPromise(
@@ -175,6 +184,7 @@ export class ProcessService {
      * Creates or updates variables for a process instance.
      * @param processInstanceId ID of the target process
      * @param variables Variables to update
+     * @returns Array of instance variable info
      */
     createOrUpdateProcessInstanceVariables(processInstanceId: string, variables: ProcessInstanceVariable[]): Observable<ProcessInstanceVariable[]> {
         return Observable.fromPromise(
@@ -187,6 +197,7 @@ export class ProcessService {
      * Deletes a variable for a process instance.
      * @param processInstanceId ID of the target process
      * @param variableName Name of the variable to delete
+     * @returns Null response notifying when the operation is complete
      */
     deleteProcessInstanceVariable(processInstanceId: string, variableName: string): Observable<void> {
         return Observable.fromPromise(

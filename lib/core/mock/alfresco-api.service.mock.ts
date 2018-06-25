@@ -16,8 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApi } from 'alfresco-js-api';
-import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from '../services/storage.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -29,23 +27,8 @@ export class AlfrescoApiServiceMock extends AlfrescoApiService {
     constructor(protected appConfig: AppConfigService,
                 protected storage: StorageService) {
         super(appConfig, storage);
-        this.initAlfrescoApi();
-    }
-
-    async reset() {
-        this.initAlfrescoApi();
-    }
-
-    protected initAlfrescoApi() {
-        this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
-            provider: this.storage.getItem('AUTH_TYPE'),
-            ticketEcm: this.storage.getItem('ticket-ECM'),
-            ticketBpm: this.storage.getItem('ticket-BPM'),
-            hostEcm: this.appConfig.get<string>('ecmHost'),
-            hostBpm: this.appConfig.get<string>('bpmHost'),
-            contextRoot: 'alfresco',
-            disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
-            oauth2: this.appConfig.get<any>('oauth2')
-        });
+        if (!this.alfrescoApi) {
+            this.initAlfrescoApi();
+        }
     }
 }

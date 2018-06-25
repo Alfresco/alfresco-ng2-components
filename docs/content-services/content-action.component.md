@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-06-08
 ---
+
 # Content Action component
 
 Adds options to a Document List actions menu for a particular content type.
@@ -12,12 +14,15 @@ Adds options to a Document List actions menu for a particular content type.
 
 -   [Basic Usage](#basic-usage)
 
+-   [Class members](#class-members)
+
     -   [Properties](#properties)
     -   [Events](#events)
 
 -   [Details](#details)
 
     -   [Examples](#examples)
+    -   [Conditional visibility](#conditional-visibility)
     -   [Customizing built-in actions](#customizing-built-in-actions)
     -   [Error, Permission and Success callbacks](#error-permission-and-success-callbacks)
 
@@ -76,31 +81,34 @@ export class MyView {
 }
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| title | `string` | `'Action'` | The title of the action as shown in the menu. If the title is a translation key the translation will be automatically showed.  |
-| icon | `string` |  | The name of the icon to display next to the menu command (can be left blank).  |
-| handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move".  |
-| target | `string` | [ContentActionTarget.All](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/content-services/document-list/models/content-action.model.ts) | Type of item that the action applies to. Can be one of the values provided by the enum : **All**, **Folder**, **Document**  |
-| permission | `string` |  | The permission type.  |
-| disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it?  |
-| disabled | `boolean` | `false` | Is the menu item disabled?  |
+| -- | -- | -- | -- |
+| disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it? |
+| disabled | `boolean \|Function` | false | Is the menu item disabled? |
+| handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move". |
+| icon | `string` |  | The name of the icon to display next to the menu command (can be left blank). |
+| permission | `string` |  | The permission type. |
+| target | `string` |  [`ContentActionTarget`](../../lib/content-services/document-list/models/content-action.model.ts).All | Type of item that the action applies to. Can be "document" or "folder" |
+| title | `string` | "Action" | The title of the action as shown in the menu. |
+| visible | `boolean \| Function` | true | Visibility state (see examples). |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| execute | `EventEmitter<{}>` | Emitted when the user selects the action from the menu. |
-| permissionEvent | `EventEmitter<{}>` | Emitted when a permission error occurs |
-| error | `EventEmitter<{}>` | Emitted when an error occurs during the action. Applies to copy and move actions. |
-| success | `EventEmitter<{}>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
+| -- | -- | -- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs during the action. Applies to copy and move actions. |
+| execute | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the user selects the action from the menu. |
+| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a permission error occurs |
+| success | `EventEmitter<Object>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
 
 ## Details
 
 The document actions are rendered on a dropdown menu for each items of content. You can use the
-`target` property to choose whether the action applies to folders , documents or both. (By default the actions arre applied to both)
+`target` property to choose whether the action applies to folders, documents or both. (By default the actions are applied to both)
 
 A number of built-in actions are defined to handle common use cases:
 
@@ -116,11 +124,11 @@ will trigger the same action.) You can also add your own handler by implementing
 `execute` event.
 
 Note that you can use _both_ a built-in handler and your own `execute`
-function in the same action. The `execute` function is passed a `NodeMinimalEntry` as its
+function in the same action. The `execute` function is passed a [`NodeMinimalEntry`](../../lib/content-services/document-list/models/document-library.model.ts) as its
 parameter (see the [Document Library model](document-library.model.md) page for more
 information) which contains full details of the item that the action is operating on. For
 example, with `handler="delete"` you could use `execute` to show a message with the name,
-type and other details of the item just deleted:
+type, and other details of the item just deleted:
 
 ```html
  <content-actions>
@@ -156,29 +164,28 @@ type and other details of the item just deleted:
 ### Examples
 
 #### System handler
-   
+
 This action simply execute one of the built-in actions described above:
 
-   ```html
-   <adf-document-list [contentActions]="true"...>
-       <content-actions>
-   
-           <content-action
-               target="document"
-               title="Download"
-               handler="download">
-           </content-action>
-   
-       </content-actions>
-   </adf-document-list>
-   ```
+```html
+<adf-document-list [contentActions]="true"...>
+    <content-actions>
+
+        <content-action
+            target="document"
+            title="Download"
+            handler="download">
+        </content-action>
+
+    </content-actions>
+</adf-document-list>
+```
 
 ![Download document action](../docassets/images/document-action-download.png)
 
 #### Custom handler
 
-If you specify a custom handler it will be executed at any click of the action:
-
+If you specify a custom handler it will be executed whenever the action is selected:
 
 ```html
 <adf-document-list [contentActions]="true"...>
@@ -193,7 +200,6 @@ If you specify a custom handler it will be executed at any click of the action:
 </adf-document-list>
 ```
 
-
 ```ts
 export class MyComponent {
 
@@ -206,11 +212,11 @@ export class MyComponent {
 
 #### System handler combined with custom handler
 
-If you specify both system handler and your own custom handler with
-`(execute)="myCustomActionAfterDelete($event)"`, your handler will run after a system handler completes 
-successfully. A system operation is considered successful if there are no permission or
-network-related errors for the system request. You can avoid permission errors simply by disabling
-an item for users who don't have permission to use it (set `disableWithNoPermission="true"`). 
+If you specify both a system handler and your own custom handler with
+`(execute)="myCustomActionAfterDelete($event)"`, your handler will run after the system handler
+completes successfully. A system operation is considered successful if there are no permission
+or network-related errors for the system request. You can avoid permission errors simply
+by disablingan item for users who don't have permission to use it (set `disableWithNoPermission="true"`). 
 
 ```html
 <adf-document-list ...>
@@ -276,7 +282,6 @@ export class MyComponent {
 
 ![Delete show notification message](../docassets/images/content-action-notification-message.png)
 
-
 #### Copy and move
 
 These actions show the destination chooser dialog for copy and move actions. By default,
@@ -317,6 +322,118 @@ allow the item being copied/moved to be the destination if it is itself a folder
 </adf-document-list>
 ```
 
+### Conditional visibility
+
+The `<content-action>` component allows you to control visibility with the help of the `visible` property and supports the following scenarios:
+
+-   direct value of `boolean` type
+-   binding to a property of the `Function` type that evaluates condition and returns `boolean` value
+
+#### Using direct boolean value
+
+```html
+<content-action
+    icon="get_app"
+    title="Never see this action again"
+    handler="download"
+    [visible]="false">
+</content-action>
+```
+
+#### Using a property of the Function type
+
+```html
+ <content-action
+    icon="get_app"
+    title="Download this file now!"
+    handler="download"
+    [visible]="canDownloadNode">
+</content-action>
+```
+
+The code above relies on the `canDownloadNode` property (of `Function` type) declared in
+your component class:
+
+```ts
+export class MyComponent {
+
+    canDownloadNode = (node: MinimalNodeEntity): boolean => {
+        if (node && node.entry && node.entry.name === 'For Sale.docx') {
+            return true;
+        }
+        return false;
+    }
+}
+```
+
+The code above checks the node name and evaluates to `true` only if the corresponding
+node is called "For Sale.docx". 
+
+Note that if you want to preserve `this` context within the evaluator function then
+the property should be declared as a lambda function:
+
+```ts
+funcName = (parameters): boolean => {
+    // implementation
+    return true;
+}
+```
+
+### Conditional disabled state
+
+Similar to `visible` property, it is possible to control the `disabled` state with the following scenarios:
+
+- direct value of `boolean` type
+- binding to a property of the `Function` type that evaluates condition and returns `boolean` value
+
+#### Using direct value of boolean type
+
+```html
+<content-action
+    target="all"
+    title="Action for 'custom' node"
+    [disabled]="true"
+    (execute)="runCustomAction($event)">
+</content-action>
+```
+
+#### Using a property of the Function type
+
+```html
+<content-action
+    target="all"
+    title="Action for 'custom' node"
+    [disabled]="isCustomActionDisabled"
+    (execute)="runCustomAction($event)">
+</content-action>
+```
+
+The code above relies on the `isCustomActionDisabled` property of a `Function` type declared at your component class level:
+
+```ts
+export class MyComponent {
+
+    isCustomActionDisabled = (node: MinimalNodeEntity): boolean => {
+        if (node && node.entry && node.entry.name === 'custom') {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+Code above checks the node name, and evaluates to `true` only if corresponding node is called "custom". 
+
+Please note that if you want to preserve `this` context within the evaluator function,
+its property should be declared as a lambda one:
+
+```ts
+funcName = (parameters): boolean => {
+    // implementation
+    return true;
+}
+```
+
 ### Customizing built-in actions
 
 The built-in actions are defined in the [Document Actions service](document-actions.service.md) and
@@ -335,13 +452,8 @@ Defining error, permission and success callbacks are pretty much the same as doi
 
 ![Copy/move document action](../docassets/images/document-action-copymove.png)
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-
-<!-- seealso start -->
-
 ## See also
 
 -   [Document list component](document-list.component.md)
 -   [Document actions service](document-actions.service.md)
 -   [Folder actions service](folder-actions.service.md)
-    <!-- seealso end -->

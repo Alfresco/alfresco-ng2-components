@@ -18,19 +18,21 @@ Shows all the information related to a task.
 </adf-task-header>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| formName | `string` | `null` | The name of the form.  |
-| taskDetails | `TaskDetailsModel` |  | (required) Details related to the task.  |
+| -- | -- | -- | -- |
+| formName | `string` |  null | The name of the form. |
+| taskDetails | [`TaskDetailsModel`](../process-services/task-details.model.md) |  | (required) Details related to the task. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| claim | `EventEmitter<any>` | Emitted when the task is claimed. |
-| unclaim | `EventEmitter<any>` | Emitted when the task is unclaimed (ie, requeued). |
+| -- | -- | -- |
+| claim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed. |
+| unclaim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is unclaimed (ie, requeued). |
 
 ## Details
 
@@ -39,19 +41,18 @@ The component populates an internal array of
 
 By default all properties are displayed:
 
-***assignee***, ***status***, ***priority***, ***dueDate***, ***category***, ***parentName***, ***created-by***, ***created***, ***id***, ***description***, ***formName***. 
+**_assignee_**, **_status_**, **_priority_**, **_dueDate_**, **_category_**, **_parentName_**, **_created_**, **_id_**, **_description_**, **_formName_**. 
 
 However, you can also choose which properties to show using a configuration in `app.config.json`:
 
 ```json
-
     "adf-task-header": {
       "presets": {
           "properties" : [ "assignee", "status", "priority", "parentName"]
       }
     },
-
 ```
+
 With this configuration, only the four listed properties will be shown.
 
 ## See also

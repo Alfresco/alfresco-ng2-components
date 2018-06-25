@@ -15,30 +15,35 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SettingsService, PageTitleService, StorageService, TranslationService } from '@alfresco/adf-core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { AuthenticationService, AlfrescoApiService, PageTitleService } from '@alfresco/adf-core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor(private settingsService: SettingsService,
-              private storage: StorageService,
-              translationService: TranslationService,
-              pageTitleService: PageTitleService,
-              route: ActivatedRoute) {
-    this.setProvider();
-    pageTitleService.setTitle();
-  }
-
-  private setProvider() {
-    if (this.storage.hasItem(`providers`)) {
-      this.settingsService.setProviders(this.storage.getItem(`providers`));
+    constructor(private pageTitleService: PageTitleService,
+                private alfrescoApiService: AlfrescoApiService,
+                private authenticationService: AuthenticationService,
+                private router: Router) {
     }
-  }
+
+    ngOnInit() {
+
+        this.pageTitleService.setTitle('title');
+
+        this.alfrescoApiService.getInstance().on('error', (error) => {
+            if (error.status === 401) {
+                if (!this.authenticationService.isLoggedIn()) {
+                    this.router.navigate(['/login']);
+                }
+            }
+
+        });
+    }
 }

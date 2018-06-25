@@ -8,52 +8,62 @@ Last reviewed: 2018-03-20
 
 Manages Process Instances, Process Variables, and Process Audit Log. 
 
-## Methods
+## Class members
 
--   `getProcessInstances(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel>`  
-    Get process instances for a filter and optionally a process definition.  
-    -   `requestNode` - Filter for instances
-    -   `processDefinitionKey` - (Optional) Limits returned instances to a process definition
--   `fetchProcessAuditPdfById(processId: string): Observable<Blob>`  
-    Fetches the Process Audit information as a pdf  
-    -   `processId` - ID of the target process
--   `fetchProcessAuditJsonById(processId: string): Observable<any>`  
-    Fetches the Process Audit information in a json format.  
-    -   `processId` - ID of the target process
--   `getProcess(processInstanceId: string): Observable<ProcessInstance>`  
-    Gets Process Instance metadata.  
-    -   `processInstanceId` - ID of the target process
--   `getProcessTasks(processInstanceId: string, state?: string): Observable<TaskDetailsModel[]>`  
-    Gets task instances for a process instance.  
-    -   `processInstanceId` - ID of the process instance
-    -   `state` - (Optional) Task state filter (can be "active" or "completed")
--   `getProcessDefinitions(appId?: number): Observable<ProcessDefinitionRepresentation[]>`  
-    Gets process definitions associated with an app.  
-    -   `appId` - (Optional) ID of a target app
--   `getProcessDefinitionVersions(appId?: number): Observable<ProcessDefinitionRepresentation[]>`  
-    Gets the versions of process definitions associated with an app.  
-    -   `appId` - (Optional) ID of a target app
--   `startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: FormValues, variables?: ProcessInstanceVariable[]): Observable<ProcessInstance>`  
-    Starts a process based on a process definition, name, form values or variables.  
-    -   `processDefinitionId` - Process definition ID
-    -   `name` - Process name
-    -   `outcome` - (Optional) Process outcome
-    -   `startFormValues` - (Optional) Values for the start form
-    -   `variables` - (Optional) Array of process instance variables
--   `cancelProcess(processInstanceId: string): Observable<void>`  
-    Cancels a process instance.  
-    -   `processInstanceId` - ID of process to cancel
--   `getProcessInstanceVariables(processInstanceId: string): Observable<ProcessInstanceVariable[]>`  
-    Gets the variables for a process instance.  
-    -   `processInstanceId` - ID of the target process
--   `createOrUpdateProcessInstanceVariables(processInstanceId: string, variables: ProcessInstanceVariable[]): Observable<ProcessInstanceVariable[]>`  
-    Creates or updates variables for a process instance.  
-    -   `processInstanceId` - ID of the target process
-    -   `variables` - Variables to update
--   `deleteProcessInstanceVariable(processInstanceId: string, variableName: string): Observable<void>`  
-    Deletes a variable for a process instance.  
-    -   `processInstanceId` - ID of the target process
-    -   `variableName` - Name of the variable to delete
+### Methods
+
+-   **cancelProcess**(processInstanceId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
+    Cancels a process instance.
+    -   _processInstanceId:_ `string`  - ID of process to cancel
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` - Null response notifying when the operation is complete
+-   **createOrUpdateProcessInstanceVariables**(processInstanceId: `string` = `null`, variables: [`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]>`<br/>
+    Creates or updates variables for a process instance.
+    -   _processInstanceId:_ `string`  - ID of the target process
+    -   _variables:_ [`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]`  - Variables to update
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]>` - Array of instance variable info
+-   **deleteProcessInstanceVariable**(processInstanceId: `string` = `null`, variableName: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
+    Deletes a variable for a process instance.
+    -   _processInstanceId:_ `string`  - ID of the target process
+    -   _variableName:_ `string`  - Name of the variable to delete
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` - Null response notifying when the operation is complete
+-   **fetchProcessAuditJsonById**(processId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Fetches the Process Audit information in a JSON format.
+    -   _processId:_ `string`  - ID of the target process
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - JSON data
+-   **fetchProcessAuditPdfById**(processId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>`<br/>
+    Fetches the Process Audit information as a PDF.
+    -   _processId:_ `string`  - ID of the target process
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary PDF data
+-   **getProcess**(processInstanceId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>`<br/>
+    Gets Process Instance metadata.
+    -   _processInstanceId:_ `string`  - ID of the target process
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>` - Metadata for the instance
+-   **getProcessDefinitions**(appId?: `number` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionRepresentation`](../../lib/process-services/process-list/models/process-definition.model.ts)`[]>`<br/>
+    Gets process definitions associated with an app.
+    -   _appId:_ `number`  - (Optional) ID of a target app
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionRepresentation`](../../lib/process-services/process-list/models/process-definition.model.ts)`[]>` - Array of process definitions
+-   **getProcessInstanceVariables**(processInstanceId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]>`<br/>
+    Gets the variables for a process instance.
+    -   _processInstanceId:_ `string`  - ID of the target process
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]>` - Array of instance variable info
+-   **getProcessInstances**(requestNode: [`ProcessFilterParamRepresentationModel`](../../lib/process-services/process-list/models/filter-process.model.ts) = `null`, processDefinitionKey?: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessListModel`](../../lib/process-services/process-list/models/process-list.model.ts)`>`<br/>
+    Gets process instances for a filter and optionally a process definition.
+    -   _requestNode:_ [`ProcessFilterParamRepresentationModel`](../../lib/process-services/process-list/models/filter-process.model.ts)  - Filter for instances
+    -   _processDefinitionKey:_ `string`  - (Optional) Limits returned instances to a process definition
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessListModel`](../../lib/process-services/process-list/models/process-list.model.ts)`>` - List of process instances
+-   **getProcessTasks**(processInstanceId: `string` = `null`, state?: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../process-services/task-details.model.md)`[]>`<br/>
+    Gets task instances for a process instance.
+    -   _processInstanceId:_ `string`  - ID of the process instance
+    -   _state:_ `string`  - (Optional) Task state filter (can be "active" or "completed")
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../process-services/task-details.model.md)`[]>` - Array of task instance details
+-   **startProcess**(processDefinitionId: `string` = `null`, name: `string` = `null`, outcome?: `string` = `null`, startFormValues?: [`FormValues`](../../lib/core/form/components/widgets/core/form-values.ts) = `null`, variables?: [`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>`<br/>
+    Starts a process based on a process definition, name, form values or variables.
+    -   _processDefinitionId:_ `string`  - Process definition ID
+    -   _name:_ `string`  - Process name
+    -   _outcome:_ `string`  - (Optional) Process outcome
+    -   _startFormValues:_ [`FormValues`](../../lib/core/form/components/widgets/core/form-values.ts)  - (Optional) Values for the start form
+    -   _variables:_ [`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]`  - (Optional) Array of process instance variables
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>` - Details of the process instance just started
 
 ## Details
 
@@ -97,7 +107,7 @@ this.processService.startProcess(processDefinitionId, name, outcome, startFormVa
 });
 ```
 
-A `ProcessInstance` object is returned for a successfully started process. This implements the
+A [`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts) object is returned for a successfully started process. This implements the
 [ProcessInstanceRepresentation interface](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/ProcessInstanceRepresentation.md).
 
 You can start the process with process variables instead of form field values using

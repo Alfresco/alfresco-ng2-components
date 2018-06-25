@@ -226,7 +226,7 @@ describe('FormComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formService, 'getFormDefinitionById').and.returnValue(Observable.of(fakeForm));
+        spyOn(formService, 'getFormDefinitionById').and.returnValue(Observable.of(JSON.parse(JSON.stringify(fakeForm))));
         const formId = '123';
 
         formComponent.formId = formId;
@@ -711,7 +711,7 @@ describe('FormComponent', () => {
 
         const nodeId = '<id>';
         let change = new SimpleChange(null, nodeId, false);
-        formComponent.ngOnChanges({'nodeId' : change});
+        formComponent.ngOnChanges({ 'nodeId': change });
 
         expect(nodeService.getNodeMetadata).toHaveBeenCalledWith(nodeId);
         expect(formComponent.loadFormFromActiviti).toHaveBeenCalled();
@@ -816,46 +816,44 @@ describe('FormComponent', () => {
     });
 
     it('should refresh form values when data is changed', () => {
-        formComponent.form = new FormModel(fakeForm);
+        formComponent.form = new FormModel(JSON.parse(JSON.stringify(fakeForm)));
         let formFields = formComponent.form.getFormFields();
 
         let labelField = formFields.find(field => field.id === 'label');
-        let radioField = formFields.find(field => field.id === 'raduio');
+        let radioField = formFields.find(field => field.id === 'radio');
         expect(labelField.value).toBe('empty');
-        expect(radioField.value).toBe('option_1');
+        expect(radioField.value).toBeNull();
 
         let formValues: any = {};
         formValues.label = {
             id: 'option_2',
             name: 'test2'
         };
-        formValues.raduio = { id: 'option_2', name: 'Option 2' };
+        formValues.radio = { id: 'option_2', name: 'Option 2' };
         let change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
         formComponent.ngOnChanges({ 'data': change });
 
         formFields = formComponent.form.getFormFields();
         labelField = formFields.find(field => field.id === 'label');
-        radioField = formFields.find(field => field.id === 'raduio');
+        radioField = formFields.find(field => field.id === 'radio');
         expect(labelField.value).toBe('option_2');
         expect(radioField.value).toBe('option_2');
     });
 
     it('should refresh radio buttons value when id is given to data', () => {
-        formComponent.form = new FormModel(fakeForm);
+        formComponent.form = new FormModel(JSON.parse(JSON.stringify(fakeForm)));
         let formFields = formComponent.form.getFormFields();
-        let radioFieldById = formFields.find(field => field.id === 'raduio');
-
-        expect(radioFieldById.value).toBe('option_2');
+        let radioFieldById = formFields.find(field => field.id === 'radio');
 
         let formValues: any = {};
-        formValues.raduio = 'option_3';
+        formValues.radio = 'option_3';
         let change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
         formComponent.ngOnChanges({ 'data': change });
 
         formFields = formComponent.form.getFormFields();
-        radioFieldById = formFields.find(field => field.id === 'raduio');
+        radioFieldById = formFields.find(field => field.id === 'radio');
         expect(radioFieldById.value).toBe('option_3');
     });
 });

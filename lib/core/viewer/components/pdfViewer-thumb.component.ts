@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -24,20 +24,23 @@ import { DomSanitizer } from '@angular/platform-browser';
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbComponent implements OnInit {
-    @Input('page') page: any = null;
+
+    @Input()
+    page: any = null;
 
     image$: Promise<string>;
 
-    constructor(
-        private element: ElementRef, private sanitizer: DomSanitizer) {}
+    constructor(private sanitizer: DomSanitizer) {}
 
     ngOnInit() {
         this.image$ = this.page.getPage().then((page) => this.getThumb(page));
     }
 
     private getThumb(page): Promise<string> {
-        const canvas = this.getCanvas();
         const viewport = page.getViewport(1);
+
+        const pageRatio = viewport.width / viewport.height;
+        const canvas = this.getCanvas(pageRatio);
         const scale = Math.min((canvas.height / viewport.height), (canvas.width / viewport.width));
 
         return page.render({
@@ -50,13 +53,10 @@ export class PdfThumbComponent implements OnInit {
         });
     }
 
-    private getCanvas(): HTMLCanvasElement {
-        const elementRect = this.element.nativeElement.getBoundingClientRect();
+    private getCanvas(pageRatio): HTMLCanvasElement {
         const canvas = document.createElement('canvas');
-
-        canvas.width = elementRect.width;
-        canvas.height = elementRect.height;
-
+        canvas.width = this.page.getWidth();
+        canvas.height = this.page.getHeight();
         return canvas;
     }
 }

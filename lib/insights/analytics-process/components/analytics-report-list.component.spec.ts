@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DiagramsModule } from '../../diagram/diagram.module';
-import { AnalyticsProcessModule } from '../analytics-process.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
+import { setupTestBed } from '@alfresco/adf-core';
+import { InsightsTestingModule } from '../../testing/insights.testing.module';
 
 declare let jasmine: any;
 
@@ -39,14 +39,9 @@ describe('AnalyticsReportListComponent', () => {
     let fixture: ComponentFixture<AnalyticsReportListComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DiagramsModule,
-                AnalyticsProcessModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [InsightsTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsReportListComponent);

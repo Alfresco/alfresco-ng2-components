@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
 
@@ -23,6 +23,7 @@ import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
     selector: 'adf-layout-container',
     templateUrl: './layout-container.component.html',
     styleUrls: ['./layout-container.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     animations: [ sidenavAnimation, contentAnimation ]
 })
 export class LayoutContainerComponent implements OnInit, OnDestroy {

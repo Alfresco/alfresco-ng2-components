@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-05-08
 ---
+
 # Accordion Group component
 
 Adds a collapsible panel to an accordion menu.
@@ -33,22 +35,24 @@ export class MyComponent implements OnInit {
 }
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| heading | `string` |  | Title heading for the group.  |
-| headingIcon | `string` |  | The material design icon.  |
-| headingIconTooltip | `string` |  | Tooltip message to be shown for headingIcon  |
-| hasAccordionIcon | `boolean` | `true` | Should the (expanded) accordion icon be shown?  |
-| isOpen | `boolean` |  | Is this group currently open?  |
-| isSelected | `boolean` |  | Is this group currently selected?  |
+| -- | -- | -- | -- |
+| hasAccordionIcon | `boolean` | true | Should the (expanded) accordion icon be shown? |
+| heading | `string` |  | Title heading for the group. |
+| headingIcon | `string` |  | The material design icon. |
+| headingIconTooltip | `string` |  | Tooltip message to be shown for headingIcon |
+| isOpen |  |  | Is this group currently open? |
+| isSelected |  |  | Is this group currently selected? |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| headingClick | `EventEmitter<any>` | Emitted when the heading is clicked. |
+| -- | -- | -- |
+| headingClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the heading is clicked. |
 
 ## Details
 

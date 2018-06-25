@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AccordionComponent } from './accordion.component';
+import { AfterViewInit , Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatExpansionPanel } from '@angular/material';
 
 @Component({
     selector: 'adf-accordion-group',
@@ -24,12 +24,14 @@ import { AccordionComponent } from './accordion.component';
     styleUrls: ['./accordion-group.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class AccordionGroupComponent implements OnDestroy {
+export class AccordionGroupComponent implements AfterViewInit {
     private _isOpen: boolean = false;
     private _isSelected: boolean = false;
 
     @ViewChild('contentWrapper')
-    contentWrapper: any;
+    contentWrapper: ElementRef;
+
+    @ViewChild('expansionPanel') expansionPanel: MatExpansionPanel;
 
     /** Title heading for the group. */
     @Input()
@@ -43,7 +45,7 @@ export class AccordionGroupComponent implements OnDestroy {
     @Input()
     headingIconTooltip: string;
 
-    /** Should the (expanded) accordion icon be shown? */
+   /** Should the (expanded) accordion icon be shown? */
     @Input()
     hasAccordionIcon: boolean = true;
 
@@ -55,9 +57,6 @@ export class AccordionGroupComponent implements OnDestroy {
     @Input()
     set isOpen(value: boolean) {
         this._isOpen = value;
-        if (value) {
-            this.accordion.closeOthers(this);
-        }
     }
 
     get isOpen() {
@@ -74,26 +73,33 @@ export class AccordionGroupComponent implements OnDestroy {
         return this._isSelected;
     }
 
-    constructor(private accordion: AccordionComponent) {
-        this.accordion.addGroup(this);
-    }
+    hasContent: boolean;
 
-    ngOnDestroy() {
-        this.accordion.removeGroup(this);
+    constructor() { }
+
+    ngAfterViewInit() {
+        this.hasContent = this.contentWrapper.nativeElement && this.contentWrapper.nativeElement.children.length > 0;
     }
 
     hasHeadingIcon() {
         return this.headingIcon ? true : false;
     }
 
-    toggleOpen(event: MouseEvent): void {
-        event.preventDefault();
-        this.isOpen = !this.isOpen;
+    onHeaderClick(): void {
         this.headingClick.emit(this.heading);
     }
 
-    getAccordionIcon(): string {
-        return this.isOpen ? 'expand_less' : 'expand_more';
+    isExpandable(event: any) {
+        if (!this.hasContent || !this.isOpen) {
+            this.expandPanel();
+        }
     }
 
+    expandPanel() {
+        this.expansionPanel.expanded = !this.expansionPanel.expanded;
+    }
+
+    toggleExpansion(): boolean {
+        return this.isOpen && this.isSelected;
+    }
 }

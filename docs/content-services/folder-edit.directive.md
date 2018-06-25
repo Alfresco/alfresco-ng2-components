@@ -13,7 +13,9 @@ Allows folders to be edited.
 ```html
 <adf-toolbar title="toolbar example">
     <button mat-icon-button
-            [adf-edit-folder]="documentList.selection[0]?.entry">
+            [adf-edit-folder]="documentList.selection[0]?.entry"
+            title="Title of the dialog"
+            (success)="doSomething($event)">
         <mat-icon>create</mat-icon>
     </button>
 </adf-toolbar>
@@ -29,15 +31,17 @@ Allows folders to be edited.
 
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
-| adf-edit-folder | `MinimalNodeEntryEntity` |  | Folder node to edit. |
+| adf-edit-folder | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | Folder node to edit. |
+| title | `string` |  null | Title of folder edit dialog. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
-| error | `EventEmitter<any>` | Emitted when an error occurs (for example a folder with same name already exists) |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs (eg, a folder with same name already exists). |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the folder has been edited successfully. |
 
 ## Details
 
-Pass this directive a folder to edit its name and description using a Folder Dialog component.
+Pass this directive a folder to edit its name and description using a [Folder Dialog component](../../lib/content-services/dialogs/folder.dialog.ts).
 If the data is valid then the dialog emits a `folderEdit` event when it closes.

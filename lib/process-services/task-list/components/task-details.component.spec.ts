@@ -17,22 +17,19 @@
 
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule, MatInputModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 
-import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '@alfresco/adf-core';
+import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormService, setupTestBed, BpmUserService } from '@alfresco/adf-core';
 import { CommentProcessService, LogService } from '@alfresco/adf-core';
 
-import { PeopleProcessService, UserProcessModel, AuthenticationService } from '@alfresco/adf-core';
+import { UserProcessModel } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
-import { PeopleSearchComponent } from '../../people';
 import { TaskDetailsComponent } from './task-details.component';
-import { DatePipe } from '@angular/common';
-
-declare let jasmine: any;
+import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { PeopleProcessService } from '@alfresco/adf-core';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: 'fake-id',
@@ -53,38 +50,25 @@ describe('TaskDetailsComponent', () => {
     let completeTaskSpy: jasmine.Spy;
     let logService: LogService;
     let commentProcessService: CommentProcessService;
+    let peopleProcessService: PeopleProcessService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                FormModule,
-                MatButtonModule,
-                MatInputModule
-            ],
-            declarations: [
-                TaskDetailsComponent,
-                PeopleSearchComponent
-            ],
-            providers: [
-                TaskListService,
-                PeopleProcessService,
-                CommentProcessService,
-                AuthenticationService,
-                DatePipe
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
-        }).compileComponents();
-
-        logService = TestBed.get(LogService);
-
-    }));
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ],
+        schemas: [NO_ERRORS_SCHEMA]
+    });
 
     beforeEach(() => {
+        logService = TestBed.get(LogService);
 
-        fixture = TestBed.createComponent(TaskDetailsComponent);
-        component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(TaskListService);
-        formService = fixture.debugElement.injector.get(FormService);
+        const userService: BpmUserService = TestBed.get(BpmUserService);
+        spyOn(userService, 'getCurrentUserInfo').and.returnValue(Observable.of({}));
+
+        service = TestBed.get(TaskListService);
+        spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of(noDataMock));
+
+        formService = TestBed.get(FormService);
 
         getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(Observable.of(taskDetailsMock));
         spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
@@ -94,14 +78,22 @@ describe('TaskDetailsComponent', () => {
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(Observable.of(tasksMock));
         assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(Observable.of(fakeUser));
         completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(Observable.of({}));
-        spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of(noDataMock));
-        commentProcessService = fixture.debugElement.injector.get(CommentProcessService);
+        commentProcessService = TestBed.get(CommentProcessService);
 
         spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of([
             {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
         ]));
+
+        fixture = TestBed.createComponent(TaskDetailsComponent);
+        peopleProcessService = TestBed.get(PeopleProcessService);
+        component = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        getTaskDetailsSpy.calls.reset();
+        fixture.destroy();
     });
 
     it('should load task details when taskId specified', () => {
@@ -191,8 +183,13 @@ describe('TaskDetailsComponent', () => {
 
     describe('change detection', () => {
 
-        let change = new SimpleChange('123', '456', true);
-        let nullChange = new SimpleChange('123', null, true);
+        let change;
+        let nullChange;
+
+        beforeEach(() => {
+            change = new SimpleChange('123', '456', true);
+            nullChange = new SimpleChange('123', null, true);
+        });
 
         beforeEach(async(() => {
             component.taskId = '123';
@@ -207,15 +204,21 @@ describe('TaskDetailsComponent', () => {
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('456');
         });
 
-        it('should NOT fetch new task details when empty changeset made', () => {
-            component.ngOnChanges({});
-            expect(getTaskDetailsSpy).not.toHaveBeenCalled();
-        });
+        it('should NOT fetch new task details when empty changeset made', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.ngOnChanges({});
+                expect(getTaskDetailsSpy).not.toHaveBeenCalled();
+            });
+        }));
 
-        it('should NOT fetch new task details when taskId changed to null', () => {
-            component.ngOnChanges({'taskId': nullChange});
-            expect(getTaskDetailsSpy).not.toHaveBeenCalled();
-        });
+        it('should NOT fetch new task details when taskId changed to null', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.ngOnChanges({'taskId': nullChange});
+                expect(getTaskDetailsSpy).not.toHaveBeenCalled();
+            });
+        }));
 
         it('should set a placeholder message when taskId changed to null', () => {
             component.ngOnChanges({'taskId': nullChange});
@@ -264,7 +267,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should show placeholder message if there is no next task', () => {
-            getTasksSpy.and.returnValue(Observable.of(noDataMock));
+            getTasksSpy.and.returnValue(Observable.of([]));
             component.onComplete();
             fixture.detectChanges();
             expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
@@ -410,16 +413,20 @@ describe('TaskDetailsComponent', () => {
             fixture.detectChanges();
         });
 
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('should return an observable with user search results', (done) => {
-            component.peopleSearch$.subscribe((users) => {
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.of([{
+                    id: 1,
+                    firstName: 'fake-test-1',
+                    lastName: 'fake-last-1',
+                    email: 'fake-test-1@test.com'
+                }, {
+                    id: 2,
+                    firstName: 'fake-test-2',
+                    lastName: 'fake-last-2',
+                    email: 'fake-test-2@test.com'
+                }]));
+
+            component.peopleSearch.subscribe((users) => {
                 expect(users.length).toBe(2);
                 expect(users[0].firstName).toBe('fake-test-1');
                 expect(users[0].lastName).toBe('fake-last-1');
@@ -428,46 +435,25 @@ describe('TaskDetailsComponent', () => {
                 done();
             });
             component.searchUser('fake-search-word');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    data: [{
-                        id: 1,
-                        firstName: 'fake-test-1',
-                        lastName: 'fake-last-1',
-                        email: 'fake-test-1@test.com'
-                    }, {
-                        id: 2,
-                        firstName: 'fake-test-2',
-                        lastName: 'fake-last-2',
-                        email: 'fake-test-2@test.com'
-                    }]
-                }
-            });
         });
 
         it('should return an empty list for not valid search', (done) => {
-            component.peopleSearch$.subscribe((users) => {
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.of([]));
+
+            component.peopleSearch.subscribe((users) => {
                 expect(users.length).toBe(0);
                 done();
             });
             component.searchUser('fake-search-word');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {}
-            });
         });
 
         it('should log error message when search fails', async(() => {
-            component.peopleSearch$.subscribe(() => {
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.throw(''));
+
+            component.peopleSearch.subscribe(() => {
                 expect(logService.error).toHaveBeenCalledWith('Could not load users');
             });
             component.searchUser('fake-search');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
         }));
 
         it('should assign task to user', () => {

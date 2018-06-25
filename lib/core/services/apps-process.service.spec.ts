@@ -18,19 +18,20 @@
 import { TestBed } from '@angular/core/testing';
 import { fakeApps } from '../mock/apps-service.mock';
 import { AppsProcessService } from './apps-process.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
-describe('Apps Service', () => {
+
+/* tslint:disable:adf-file-name */
+
+describe('AppsProcessService', () => {
 
     let service: AppsProcessService;
 
-    beforeEach((() => {
-        TestBed.configureTestingModule({
-            providers: [
-                AppsProcessService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         service = TestBed.get(AppsProcessService);

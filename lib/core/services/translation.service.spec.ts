@@ -22,6 +22,13 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TranslateLoaderService } from './translate-loader.service';
 import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
+import { LogService } from './log.service';
+import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigServiceMock } from '../mock/app-config.service.mock';
+import { UserPreferencesService } from './user-preferences.service';
+import { StorageService } from './storage.service';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
@@ -41,6 +48,11 @@ describe('TranslationService', () => {
                 })
             ],
             providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                LogService,
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                UserPreferencesService,
+                StorageService,
                 TranslationService,
                 {
                     provide: TRANSLATION_PROVIDER,
@@ -91,6 +103,12 @@ describe('TranslationService', () => {
             contentType: 'application/json',
             responseText: JSON.stringify({'TEST': 'This is a test', 'TEST2': 'This is another test'})
         });
+    });
+
+    it('should return empty string for missing key when getting instant translations', () => {
+        expect(translationService.instant(null)).toEqual('');
+        expect(translationService.instant('')).toEqual('');
+        expect(translationService.instant(undefined)).toEqual('');
     });
 
 });

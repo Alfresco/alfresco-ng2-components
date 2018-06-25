@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppsProcessService, TranslationService, EmptyListComponent } from '@alfresco/adf-core';
+import { AppsProcessService, TranslationService, EmptyCustomContentDirective } from '@alfresco/adf-core';
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -37,8 +37,8 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     public static DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
     public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
 
-    @ContentChild(EmptyListComponent)
-    emptyTemplate: EmptyListComponent;
+    @ContentChild(EmptyCustomContentDirective)
+    emptyCustomContent: EmptyCustomContentDirective;
 
     /** (**required**) Defines the layout of the apps. There are two possible
      * values, "GRID" and "LIST".
@@ -69,7 +69,7 @@ export class AppsListComponent implements OnInit, AfterContentInit {
 
     loading: boolean = false;
 
-    hasCustomEmptyListTemplate: boolean = false;
+    hasEmptyCustomContentTemplate: boolean = false;
 
     constructor(
         private appsProcessService: AppsProcessService,
@@ -90,8 +90,8 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     }
 
     ngAfterContentInit() {
-        if (this.emptyTemplate) {
-            this.hasCustomEmptyListTemplate = true;
+        if (this.emptyCustomContent) {
+            this.hasEmptyCustomContentTemplate = true;
         }
     }
 

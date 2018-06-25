@@ -89,7 +89,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     clone(date: Moment): Moment {
-        return date.clone();
+        return date.clone().locale(this.locale);
     }
 
     createDate(year: number, month: number, date: number): Moment {
@@ -97,33 +97,37 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     today(): Moment {
-        return moment();
+        return moment().locale(this.locale);
     }
 
     parse(value: any, parseFormat: any): Moment {
-        let m = moment(value, parseFormat, true);
-        if (!m.isValid()) {
-            m = moment(value, this.overrideDisplyaFormat);
-        }
-        if (m.isValid()) {
-            // if user omits year, it defaults to 2001, so check for that issue.
-            if (m.year() === 2001 && value.indexOf('2001') === -1) {
-                // if 2001 not actually in the value string, change to current year
-                const currentYear = new Date().getFullYear();
-                m.set('year', currentYear);
-                // if date is in the future, set previous year
-                if (m.isAfter(moment())) {
-                    m.set('year', currentYear - 1);
+
+        if (value && typeof value === 'string') {
+            let m = moment(value, parseFormat, this.locale, true);
+            if (!m.isValid()) {
+                // use strict parsing because Moment's parser is very forgiving, and this can lead to undesired behavior.
+                m = moment(value, this.overrideDisplyaFormat, this.locale, true);
+            }
+            if (m.isValid()) {
+                // if user omits year, it defaults to 2001, so check for that issue.
+                if (m.year() === 2001 && value.indexOf('2001') === -1) {
+                    // if 2001 not actually in the value string, change to current year
+                    const currentYear = new Date().getFullYear();
+                    m.set('year', currentYear);
+                    // if date is in the future, set previous year
+                    if (m.isAfter(moment())) {
+                        m.set('year', currentYear - 1);
+                    }
                 }
             }
             return m;
-        } else {
-            return null;
         }
+
+        return value ? moment(value).locale(this.locale) : null;
     }
 
     format(date: Moment, displayFormat: any): string {
-
+        date = this.clone(date);
         displayFormat = this.overrideDisplyaFormat ? this.overrideDisplyaFormat : displayFormat;
 
         if (date && date.format) {
@@ -150,6 +154,8 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     setLocale(locale: any): void {
+        super.setLocale(locale);
+
         this.localeData = moment.localeData(locale);
     }
 

@@ -6,7 +6,12 @@
       "DOWNLOAD": "Download",
       "UPLOAD": {
         "TITLE": "Utilizza nuova versione",
-        "TOOLTIP": "Limite: è necessario caricare un file con lo stesso nome per crearne una nuova versione."
+        "TOOLTIP": "Limite: è necessario caricare un file con lo stesso nome per crearne una nuova versione.",
+        "MAJOR": "modifiche maggiori (2.0)",
+        "MINOR": "modifiche minori (1.1)",
+        "COMMENT": "Lasciare un commento",
+        "ADD": "Aggiungi nuova versione",
+        "CANCEL": "Annulla"
       }
     },
     "CONFIRM_DELETE": {
@@ -72,14 +77,14 @@
     "SELECT_LOCATION": "Seleziona località"
   },
   "OPERATION": {
-    "SUCCES": {
+    "SUCCESS": {
       "CONTENT": {
-        "COPY": "Copia elemento eseguito correttamente",
-        "MOVE": "Sposta elemento eseguito correttamente"
+        "COPY": "Copia completata",
+        "MOVE": "Spostamento completato"
       },
       "FOLDER": {
-        "COPY": "Copia elemento eseguito correttamente",
-        "MOVE": "Sposta elemento eseguito correttamente"
+        "COPY": "Copia completata",
+        "MOVE": "Spostamento completato"
       }
     },
     "ERROR": {
@@ -155,6 +160,13 @@
   },
   "SEARCH": {
     "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Cerca",
+      "ARIA-LABEL": "Pulsante di ricerca"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "Stringa di ricerca"
+    },
     "RESULTS": {
       "SUMMARY": "Trovati {{numResults}} risultati per {{searchTerm}}",
       "NONE": "Nessun risultato trovato per {{searchTerm}}",
@@ -163,6 +175,29 @@
         "NAME": "Nome visualizzato",
         "MODIFIED_BY": "Modificato da",
         "MODIFIED_AT": "Modificato"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "Cancella",
+        "APPLY": "Applica",
+        "CLEAR-ALL": "Cancella tutto",
+        "SHOW-MORE": "Altro",
+        "SHOW-LESS": "Nascondi",
+        "FILTER-CATEGORY": "Filtra categoria"
+      },
+      "RANGE": {
+        "FROM": "Da",
+        "TO": "A",
+        "FROM-DATE": "Da",
+        "TO-DATE": "A"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Valore obbligatorio",
+        "NO-DAYS": "Nessun giorno selezionato.",
+        "INVALID-FORMAT": "Formato non valido.",
+        "INVALID-DATE": "Data non valida. La data deve essere nel formato '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "La data è successiva alla data massima."
       }
     },
     "ICONS": {
@@ -235,7 +270,20 @@
       "INHERITED": "Ereditato",
       "AUTHORITY_ID": "ID autorità",
       "ROLE": "Ruolo",
-      "LOCALLY_SET": "Impostato localmente"
+      "LOCALLY_SET": "Impostato localmente",
+      "NO_PERMISSIONS": "Nessuna autorizzazione"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Cerca",
+      "TYPE-MESSAGE": "Digita per iniziare a cercare gruppi o persone",
+      "NO-RESULT": "Nessun risultato trovato per la ricerca",
+      "ADD-ACTION": "Aggiungi",
+      "CLOSE-ACTION": "Chiudi",
+      "BASE-DIALOG-TITLE": "Cerca un gruppo o una persona da aggiungere...",
+      "EVERYONE": "Tutti"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "Uno o più autorizzazioni impostate sono già presenti: {{list}}"
     }
   }
 }

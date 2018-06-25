@@ -9,7 +9,18 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Tillat sletting",
       "SHOW_COMMENTS": "Vis kommentarer om versjoner",
-      "ALLOW_DOWNLOAD": "Tillat versjonsnedlasting"
+      "ALLOW_DOWNLOAD": "Tillat versjonsnedlasting",
+      "READ_ONLY": "Skrivebeskyttet"
+    },
+    "PERSONAL-FILES": "Personlige filer",
+    "WARN-MULTIPLE-UPLOADS": "Vis advarsel for flere opplastinger.",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "Ingen",
+        "ALL": "Alle",
+        "FOLDER": "Mappe",
+        "DOCUMENT": "Dokument"
+      }
     }
   },
   "title": "Velkommen",
@@ -32,6 +43,7 @@
     "APP_NAME": "ADF-demoprogam",
     "HOME": "Hjem",
     "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "Søkebane",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Logg på",
     "CUSTOM_SOURCES": "Tilpassede kilder",
@@ -97,7 +109,13 @@
       "NEW_FOLDER": "Ny mappe",
       "EDIT_FOLDER": "Rediger mappe",
       "DOWNLOAD": "Last ned",
-      "DELETE": "Slett"
+      "DELETE": "Slett",
+      "FAVORITES": "Legg til favoritter",
+      "SHARE": "Del",
+      "THEME": "Velg et tema",
+      "SHOW_VERSION": "Vis versjon",
+      "HIDE_VERSION": "Skjul versjon",
+      "LISTVIEW": "Listevisningsmodus"
     },
     "ACTIONS": {
       "VERSIONS": "Administrer versjoner",

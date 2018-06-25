@@ -2,9 +2,10 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # User Initial pipe
 
-Takes the name fields of a UserProcessModel object and extracts and formats the initials.
+Takes the name fields of a [`UserProcessModel`](../core/user-process.model.md) object and extracts and formats the initials.
 
 ## Basic Usage
 

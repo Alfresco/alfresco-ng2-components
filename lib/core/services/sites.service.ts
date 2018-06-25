@@ -32,6 +32,7 @@ export class SitesService {
     /**
      * Gets a list of all sites in the repository.
      * @param opts Options supported by JSAPI
+     * @returns List of sites
      */
     getSites(opts: any = {}): Observable<SitePaging> {
         const defaultOptions = {
@@ -47,6 +48,7 @@ export class SitesService {
      * Gets the details for a site.
      * @param siteId ID of the target site
      * @param opts Options supported by JSAPI
+     * @returns Information about the site
      */
     getSite(siteId: string, opts?: any): Observable<SiteEntry> {
         return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSite(siteId, opts))
@@ -57,6 +59,7 @@ export class SitesService {
      * Deletes a site.
      * @param siteId Site to delete
      * @param permanentFlag True: deletion is permanent; False: site is moved to the trash
+     * @returns Null response notifying when the operation is complete
      */
     deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any> {
         let options: any = {};
@@ -68,6 +71,7 @@ export class SitesService {
     /**
      * Gets a site's content.
      * @param siteId ID of the target site
+     * @returns Site content
      */
     getSiteContent(siteId: string): Observable<SiteEntry> {
         return this.getSite(siteId, { relations: ['containers'] });
@@ -76,6 +80,7 @@ export class SitesService {
     /**
      * Gets a list of all a site's members.
      * @param siteId ID of the target site
+     * @returns Site members
      */
     getSiteMembers(siteId: string): Observable<SiteEntry> {
         return this.getSite(siteId, { relations: ['members'] });
@@ -83,9 +88,10 @@ export class SitesService {
 
     /**
      * Gets the username of the user currently logged into ACS.
+     * @returns Username string
      */
     getEcmCurrentLoggedUserName(): string {
-        return this.apiService.getInstance().ecmAuth.username;
+        return this.apiService.getInstance().getEcmUsername();
     }
 
     private handleError(error: Response): any {

@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Create Task Attachment Component
 
 Displays Upload Component (Drag and Click) to upload the attachment to a specified task
@@ -18,15 +19,17 @@ Displays Upload Component (Drag and Click) to upload the attachment to a specifi
 </adf-create-task-attachment>
 ```
 
+## Class members
+
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| taskId | string | (**required**): The numeric ID of the task to display |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| taskId | `string` |  | (required) The numeric ID of the task to display. |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| error | Raised when the error occurred while creating/uploading the attachment by the user from within the component |
-| success | Raised when the attachment created/uploaded successfully from within the component |
+| Name | Type | Description |
+| -- | -- | -- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while creating or uploading an  attachment from the user within the component. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an attachment is created or uploaded successfully from within the component. |

@@ -1,18 +1,23 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-05-04
 ---
+
 # Bpm User service
 
 Gets information about the current Process Services user.
 
-## Methods
+## Class members
 
-`getCurrentUserInfo(): Observable<BpmUserModel>`<br/>
-Gets information about the current user.
+### Methods
 
-`getCurrentUserProfileImage(): string`<br/>
-Returns the current user's profile image as a URL.
+-   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../core/bpm-user.model.md)`>`<br/>
+    Gets information about the current user.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../core/bpm-user.model.md)`>` - User information object
+-   **getCurrentUserProfileImage**(): `string`<br/>
+    Gets the current user's profile image as a URL.
+    -   **Returns** `string` - URL string
 
 ## Details
 

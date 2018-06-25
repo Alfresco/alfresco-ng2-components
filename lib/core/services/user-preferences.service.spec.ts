@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { DirectiveModule } from '../directives/directive.module';
-
+import { TestBed } from '@angular/core/testing';
+import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { StorageService } from './storage.service';
-import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
-import { UserPreferenceValues } from './user-preferences.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('UserPreferencesService', () => {
 
@@ -34,24 +31,11 @@ describe('UserPreferencesService', () => {
     let storage: StorageService;
     let appConfig: AppConfigService;
     let translate: TranslateService;
+    let changeDisposable: any;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                DirectiveModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                UserPreferencesService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         appConfig = TestBed.get(AppConfigService);
@@ -64,6 +48,12 @@ describe('UserPreferencesService', () => {
         preferences = TestBed.get(UserPreferencesService);
         storage = TestBed.get(StorageService);
         translate = TestBed.get(TranslateService);
+    });
+
+    afterEach(() => {
+        if (changeDisposable) {
+            changeDisposable.unsubscribe();
+        }
     });
 
     it('should get default pagination from app config', () => {
@@ -148,25 +138,19 @@ describe('UserPreferencesService', () => {
         expect(preferences.locale).toBe('fake-store-locate');
     });
 
-    it('should stream the page size value when is set', async(() => {
+    it('should stream the page size value when is set', (done) => {
         preferences.paginationSize = 5;
-        preferences.onChange.subscribe((userPreferenceStatus) => {
+        changeDisposable = preferences.onChange.subscribe((userPreferenceStatus) => {
             expect(userPreferenceStatus.PAGINATION_SIZE).toBe(5);
+            done();
         });
-    }));
+    });
 
-    it('should stream the user preference status when changed', async(() => {
+    it('should stream the user preference status when changed', (done) => {
         preferences.set('propertyA', 'valueA');
-        preferences.onChange.subscribe((userPreferenceStatus) => {
+        changeDisposable = preferences.onChange.subscribe((userPreferenceStatus) => {
             expect(userPreferenceStatus.propertyA).toBe('valueA');
+            done();
         });
-    }));
-
-    it('should stream only the selected attribute changes when using select', async(() => {
-        preferences.disableCSRF = true;
-        preferences.select(UserPreferenceValues.DisableCSRF).subscribe((disableCSRFFlag) => {
-            expect(disableCSRFFlag).toBeTruthy();
-        });
-    }));
-
+    });
 });

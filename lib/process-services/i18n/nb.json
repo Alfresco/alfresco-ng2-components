@@ -13,7 +13,8 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "Ingen apper funnet",
+      "TITLE": "Ingen applikasjoner funnet",
+      "SUBTITLE": "Opprett en ny applikasjon som er lett å finne senere",
       "TASK_APP_NAME": "Oppgaveapp"
     },
     "LIST": {
@@ -153,7 +154,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "NONE": "Ingen prosesstilfeller funnet",
+      "TITLE": "Ingen prosesser funnet",
+      "SUBTITLE": "Opprett en ny prosess som er lett å finne senere",
       "SUMMARY": "{{total}} prosesstilfeller funnet",
       "ERROR": "Kan ikke laste inn prosesstilfeller. Prøv igjen, eller del følgende melding med IT-teamet: {{errorMessage}}"
     },

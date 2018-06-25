@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Logout directive
 
 Logs the user out when the decorated element is clicked.
@@ -11,6 +12,14 @@ Logs the user out when the decorated element is clicked.
 ```html
 <button adf-logout>Logout</button>
 ```
+
+### Properties
+
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| redirectUri | `string` |  'login' | Uri to be redirect after the logout |
+| enabelRedirect | `boolean` |  'true' | enable/disable redirect after logout |
+
 
 ## See also
 

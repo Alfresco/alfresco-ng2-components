@@ -16,29 +16,30 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { LogService } from './log.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { StorageService } from './storage.service';
 
 @Injectable()
 export class SettingsService {
 
-    constructor(
-        private appConfig: AppConfigService,
-        private logService: LogService,
-        private preferences: UserPreferencesService) {
+    constructor(private appConfig: AppConfigService,
+                private logService: LogService,
+                private storage: StorageService) {
     }
 
     /** @deprecated in 1.6.0 */
     public get ecmHost(): string {
         this.logService.log('SettingsService.ecmHost is deprecated. Use AppConfigService instead.');
-        return this.appConfig.get<string>('ecmHost');
+        return this.appConfig.get<string>(AppConfigValues.ECMHOST);
     }
 
     /** @deprecated in 1.7.0 */
     public set csrfDisabled(csrfDisabled: boolean) {
         this.logService.log(`SettingsService.csrfDisabled is deprecated. Use UserPreferencesService.disableCSRF instead.`);
-        this.preferences.disableCSRF = csrfDisabled;
+        if (csrfDisabled !== null && csrfDisabled !== undefined) {
+            this.storage.setItem(AppConfigValues.DISABLECSRF, csrfDisabled.toString());
+        }
     }
 
     /** @deprecated in 1.6.0 */
@@ -49,7 +50,7 @@ export class SettingsService {
     /** @deprecated in 1.6.0 */
     public get bpmHost(): string {
         this.logService.log('SettingsService.bpmHost is deprecated. Use AppConfigService instead.');
-        return this.appConfig.get<string>('bpmHost');
+        return this.appConfig.get<string>(AppConfigValues.BPMHOST);
     }
 
     /** @deprecated in 1.6.0 */
@@ -66,12 +67,14 @@ export class SettingsService {
     /** @deprecated in 1.7.0 */
     public getProviders(): string {
         this.logService.log(`SettingsService.getProviders is deprecated. Use UserPreferencesService.authType instead.`);
-        return this.preferences.authType;
+        return this.storage.getItem(AppConfigValues.PROVIDERS) || this.appConfig.get<string>(AppConfigValues.PROVIDERS);
     }
 
     /** @deprecated in 1.7.0 */
     public setProviders(providers: string) {
-        this.logService.log(`SettingsService.getProviders is deprecated. Use UserPreferencesService.authType instead.`);
-        this.preferences.authType = providers;
+        this.logService.log(`SettingsService.aetProviders is deprecated. Use the app-config.json`);
+        if (providers) {
+            this.storage.setItem(AppConfigValues.PROVIDERS, providers);
+        }
     }
 }

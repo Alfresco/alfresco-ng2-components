@@ -19,7 +19,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
-import { PdfThumbComponent } from './pdfViewer-thumb.component';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
 
 declare let PDFJS: any;
 
@@ -29,9 +30,9 @@ describe('PdfThumbListComponent', () => {
     let component: PdfThumbListComponent;
 
     const page = (id) => {
-        return  {
+        return {
             id,
-            getPage: () => Promise.resolve()
+            getPage: Promise.resolve()
         };
     };
 
@@ -39,45 +40,44 @@ describe('PdfThumbListComponent', () => {
         _currentPageNumber: null,
         set currentPageNumber(pageNum) {
             this._currentPageNumber = pageNum;
-            this.eventBus.dispatch('pagechange', { pageNumber:  pageNum });
+            this.eventBus.dispatch('pagechange', { pageNumber: pageNum });
         },
-        get currentPageNumber() { return this._currentPageNumber; },
+        get currentPageNumber() {
+            return this._currentPageNumber;
+        },
         pdfDocument: {
-            getPage: (pageNum) => Promise.resolve({})
+            getPage: (pageNum) => Promise.resolve({
+                getViewport: () => ({ height: 421, width: 335 }),
+                render: jasmine.createSpy('render').and.returnValue(Promise.resolve())
+            })
         },
         _pages: [
-             page(1), page(2), page(3), page(4),
-             page(5), page(6), page(7), page(8),
-             page(9), page(10), page(11), page(12),
-             page(13), page(14), page(15), page(16)
+            page(1), page(2), page(3), page(4),
+            page(5), page(6), page(7), page(8),
+            page(9), page(10), page(11), page(12),
+            page(13), page(14), page(15), page(16)
         ],
         eventBus: new PDFJS.EventBus()
     };
 
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule
-            ],
-            declarations: [
-                PdfThumbListComponent,
-                PdfThumbComponent
-            ]
-        })
-        .compileComponents()
-        .then(() => {
-            fixture = TestBed.createComponent(PdfThumbListComponent);
-            component = fixture.componentInstance;
+        fixture = TestBed.createComponent(PdfThumbListComponent);
+        component = fixture.componentInstance;
+        component.pdfViewer = viewerMock;
 
-            component.pdfViewer = viewerMock;
-
-            // provide scrollable container
-            fixture.nativeElement.style.display = 'block';
-            fixture.nativeElement.style.height = '700px';
-            fixture.nativeElement.style.overflow = 'scroll';
-            fixture.debugElement.query(By.css('.pdf-thumbnails__content'))
-                .nativeElement.style.height = '2000px';
-        });
+        // provide scrollable container
+        fixture.nativeElement.style.display = 'block';
+        fixture.nativeElement.style.height = '700px';
+        fixture.nativeElement.style.overflow = 'scroll';
+        fixture.debugElement.query(By.css('.pdf-thumbnails__content'))
+            .nativeElement.style.height = '2000px';
     }));
 
     it('should render initial rage of items', () => {
@@ -91,6 +91,7 @@ describe('PdfThumbListComponent', () => {
     });
 
     it('should render next range on scroll', () => {
+        component.currentHeight = 114;
         fixture.nativeElement.scrollTop = 700;
         fixture.detectChanges();
 

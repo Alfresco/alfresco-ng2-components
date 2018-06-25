@@ -6,7 +6,12 @@
       "DOWNLOAD": "Downloaden",
       "UPLOAD": {
         "TITLE": "Nieuwe versie uploaden",
-        "TOOLTIP": "Beperking: u moet een bestand met dezelfde naam uploaden om een nieuwe versie van het bestand te maken"
+        "TOOLTIP": "Beperking: u moet een bestand met dezelfde naam uploaden om een nieuwe versie van het bestand te maken",
+        "MAJOR": "belangrijke wijzigingen (2.0)",
+        "MINOR": "kleine wijzigingen (1.1)",
+        "COMMENT": "Opmerking toevoegen",
+        "ADD": "Nieuwe versie toevoegen",
+        "CANCEL": "Annuleren"
       }
     },
     "CONFIRM_DELETE": {
@@ -72,7 +77,7 @@
     "SELECT_LOCATION": "Locatie selecteren"
   },
   "OPERATION": {
-    "SUCCES": {
+    "SUCCESS": {
       "CONTENT": {
         "COPY": "Kopiëren geslaagd",
         "MOVE": "Verplaatsen geslaagd"
@@ -155,6 +160,13 @@
   },
   "SEARCH": {
     "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Zoeken",
+      "ARIA-LABEL": "Knop Zoeken"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "Invoer voor zoekopdracht"
+    },
     "RESULTS": {
       "SUMMARY": "{{numResults}} resultaat gevonden voor {{searchTerm}}",
       "NONE": "Geen resultaten gevonden voor {{searchTerm}}",
@@ -163,6 +175,29 @@
         "NAME": "Getoonde naam",
         "MODIFIED_BY": "Aangepast door",
         "MODIFIED_AT": "Aangepast op"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "Wissen",
+        "APPLY": "Toepassen",
+        "CLEAR-ALL": "Alles wissen",
+        "SHOW-MORE": "Meer weergeven",
+        "SHOW-LESS": "Minder weergeven",
+        "FILTER-CATEGORY": "Categorie filteren"
+      },
+      "RANGE": {
+        "FROM": "Van",
+        "TO": "Tot",
+        "FROM-DATE": "Van",
+        "TO-DATE": "Tot"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Vereiste waarde",
+        "NO-DAYS": "Geen dagen geselecteerd.",
+        "INVALID-FORMAT": "Ongeldige notatie",
+        "INVALID-DATE": "Ongeldige datum. De datum moet de volgende notatie hebben: '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "De datum ligt na de laatste datum."
       }
     },
     "ICONS": {
@@ -235,7 +270,20 @@
       "INHERITED": "Overgenomen",
       "AUTHORITY_ID": "Autoriteits-id",
       "ROLE": "Rol",
-      "LOCALLY_SET": "Lokaal ingesteld"
+      "LOCALLY_SET": "Lokaal ingesteld",
+      "NO_PERMISSIONS": "Geen machtigingen"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Zoeken",
+      "TYPE-MESSAGE": "Voer iets in om te beginnen met zoeken naar groepen of personen",
+      "NO-RESULT": "Geen resultaten gevonden voor deze zoekopdracht",
+      "ADD-ACTION": "Toevoegen",
+      "CLOSE-ACTION": "Sluiten",
+      "BASE-DIALOG-TITLE": "Een groep of personen zoeken om toe te voegen...",
+      "EVERYONE": "Iedereen"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "Een of meerdere machtigingen die u hebt ingesteld zijn al aanwezig: {{list}}"
     }
   }
 }

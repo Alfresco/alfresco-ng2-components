@@ -6,58 +6,65 @@ Last reviewed: 2018-04-16
 
 # Document List service
 
-Implements node operations used by the Document List component.
+Implements node operations used by the [Document List component](../content-services/document-list.component.md).
 
 ## Class members
 
 ### Methods
 
--   `copyNode(nodeId: string = null, targetParentId: string = null): any`<br/>
+-   **copyNode**(nodeId: `string` = `null`, targetParentId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Copy a node to destination node
-    -   `nodeId: string = null` -  The id of the node to be copied
-    -   `targetParentId: string = null` -  The id of the folder where the node will be copied
-    -   **Returns** `any` - NodeEntry for the copied node
--   `createFolder(name: string = null, parentId: string = null): Observable<MinimalNodeEntity>`<br/>
-    Create a new folder in the path.
-    -   `name: string = null` -  Folder name
-    -   `parentId: string = null` -  Parent folder ID
-    -   **Returns** `Observable<MinimalNodeEntity>` - Details of the created folder node
--   `deleteNode(nodeId: string = null): Observable<any>`<br/>
+    -   _nodeId:_ `string`  - The id of the node to be copied
+    -   _targetParentId:_ `string`  - The id of the folder where the node will be copied
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - NodeEntry for the copied node
+-   **createFolder**(name: `string` = `null`, parentId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntity`](../content-services/document-library.model.md)`>`<br/>
+    Creates a new folder in the path.
+    -   _name:_ `string`  - Folder name
+    -   _parentId:_ `string`  - Parent folder ID
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntity`](../content-services/document-library.model.md)`>` - Details of the created folder node
+-   **deleteNode**(nodeId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Deletes a node.
-    -   `nodeId: string = null` -  ID of the node to delete
-    -   **Returns** `Observable<any>` - Empty response when the operation is complete
--   `getDefaultMimeTypeIcon(): string`<br/>
+    -   _nodeId:_ `string`  - ID of the node to delete
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the operation is complete
+-   **getDefaultMimeTypeIcon**(): `string`<br/>
     Gets a default icon for MIME types with no specific icon.
     -   **Returns** `string` - Path to the icon file
--   `getDocumentThumbnailUrl(node: MinimalNodeEntity = null): string`<br/>
+-   **getDocumentThumbnailUrl**(node: [`MinimalNodeEntity`](../content-services/document-library.model.md) = `null`): `string`<br/>
     Get thumbnail URL for the given document node.
-    -   `node: MinimalNodeEntity = null` -  Node to get URL for.
+    -   _node:_ [`MinimalNodeEntity`](../content-services/document-library.model.md)  - Node to get URL for.
     -   **Returns** `string` - Thumbnail URL string
--   `getFolder(folder: string = null, opts?: any = null, includeFields: string[] =  []): Observable<NodePaging>`<br/>
+-   **getFolder**(folder: `string` = `null`, opts?: `any` = `null`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the folder node with the specified relative name path below the root node.
-    -   `folder: string = null` -  Path to folder.
-    -   `opts?: any = null` - (Optional) Options.
-    -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** `Observable<NodePaging>` - Details of the folder
--   `getFolderNode(nodeId: string = null, includeFields: string[] =  []): Promise<MinimalNodeEntryEntity>`<br/>
-    Gets a folder node via its node ID.
-    -   `nodeId: string = null` -  ID of the folder node
-    -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** `Promise<MinimalNodeEntryEntity>` - Details of the folder
--   `getMimeTypeIcon(mimeType: string = null): string`<br/>
+    -   _folder:_ `string`  - Path to folder.
+    -   _opts:_ `any`  - (Optional) Options.
+    -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - Details of the folder
+-   **getFolderNode**(nodeId: `string` = `null`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
+
+    -   _nodeId:_ `string`  - ID of the folder node
+    -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Details of the folder
+
+-   **getMimeTypeIcon**(mimeType: `string` = `null`): `string`<br/>
     Gets the icon that represents a MIME type.
-    -   `mimeType: string = null` -  MIME type to get the icon for
+    -   _mimeType:_ `string`  - MIME type to get the icon for
     -   **Returns** `string` - Path to the icon file
--   `hasPermission(node: any = null, permission: PermissionsEnum | string = null): boolean`<br/>
-    Checks if a node has the specified permission.
-    -   `node: any = null` -  Target node
-    -   `permission: PermissionsEnum | string = null` -  Permission level to query
+-   **getNode**(nodeId: `string` = `null`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+    Gets a node via its node ID.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
+-   **hasPermission**(node: `any` = `null`, permission: [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)` | string` = `null`): `boolean`<br/>
+
+    -   _node:_ `any`  - Target node
+    -   _permission:_ [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)` | string`  - Permission level to query
     -   **Returns** `boolean` - True if the node has the permission, false otherwise
--   `moveNode(nodeId: string = null, targetParentId: string = null): any`<br/>
-    Move a node to destination node
-    -   `nodeId: string = null` -  The id of the node to be moved
-    -   `targetParentId: string = null` -  The id of the folder where the node will be moved
-    -   **Returns** `any` - NodeEntry for the moved node
+
+-   **moveNode**(nodeId: `string` = `null`, targetParentId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Moves a node to destination node.
+    -   _nodeId:_ `string`  - The id of the node to be moved
+    -   _targetParentId:_ `string`  - The id of the folder where the node will be moved
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - NodeEntry for the moved node
 
 ## Details
 

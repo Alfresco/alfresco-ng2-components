@@ -42,6 +42,15 @@ export class FolderDialogComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the edit/create folder is successfully created/mmodified
+     */
+    @Output()
+    success: EventEmitter<any> = new EventEmitter<MinimalNodeEntryEntity>();
+
+    editTitle = 'CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE';
+    createTitle = 'CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE';
+    nodeType = 'cm:folder';
+
     constructor(
         private formBuilder: FormBuilder,
         private dialog: MatDialogRef<FolderDialogComponent>,
@@ -50,7 +59,13 @@ export class FolderDialogComponent implements OnInit {
         @Optional()
         @Inject(MAT_DIALOG_DATA)
         public data: any
-    ) {}
+    ) {
+        if (data) {
+            this.editTitle = data.editTitle || this.editTitle;
+            this.createTitle = data.createTitle || this.createTitle;
+            this.nodeType = data.nodeType || this.nodeType;
+        }
+    }
 
     get editing(): boolean {
         return !!this.data.folder;
@@ -105,8 +120,8 @@ export class FolderDialogComponent implements OnInit {
     }
 
     private create(): Observable<MinimalNodeEntryEntity> {
-        const { name, properties, nodesApi, data: { parentNodeId} } = this;
-        return nodesApi.createFolder(parentNodeId, { name, properties });
+        const { name, properties, nodeType, nodesApi, data: { parentNodeId} } = this;
+        return nodesApi.createFolder(parentNodeId, { name, properties, nodeType });
     }
 
     private edit(): Observable<MinimalNodeEntryEntity> {
@@ -121,7 +136,10 @@ export class FolderDialogComponent implements OnInit {
 
         (editing ? this.edit() : this.create())
             .subscribe(
-                (folder: MinimalNodeEntryEntity) => dialog.close(folder),
+                (folder: MinimalNodeEntryEntity) => {
+                    this.success.emit(folder);
+                    dialog.close(folder);
+                },
                 (error) => this.handleError(error)
             );
     }

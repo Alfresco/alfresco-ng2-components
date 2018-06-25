@@ -33,13 +33,14 @@ let minimatch: any = (<any> minimatch_).default || minimatch_;
 @Injectable()
 export class UploadService {
 
-    private queue: FileModel[] = [];
     private cache: { [key: string]: any } = {};
     private totalComplete: number = 0;
     private totalAborted: number = 0;
     private totalError: number = 0;
-    private activeTask: Promise<any> = null;
     private excludedFileList: String[] = [];
+
+    activeTask: Promise<any> = null;
+    queue: FileModel[] = [];
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
@@ -52,9 +53,8 @@ export class UploadService {
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
 
-    constructor(
-        protected apiService: AlfrescoApiService,
-        appConfigService: AppConfigService) {
+    constructor(protected apiService: AlfrescoApiService,
+                appConfigService: AppConfigService) {
         this.excludedFileList = <String[]> appConfigService.get('files.excluded');
     }
 
@@ -80,7 +80,7 @@ export class UploadService {
      * @returns Array of files that were not blocked from upload by the ignore list
      */
     addToQueue(...files: FileModel[]): FileModel[] {
-        const allowedFiles = files.filter(f => this.filterElement(f));
+        const allowedFiles = files.filter(currentFile => this.filterElement(currentFile));
         this.queue = this.queue.concat(allowedFiles);
         this.queueChanged.next(this.queue);
         return allowedFiles;
@@ -99,9 +99,9 @@ export class UploadService {
      * Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
      * @param emitter (Deprecated) Emitter to invoke on file status change
      */
-    uploadFilesInTheQueue(emitter: EventEmitter<any>): void {
+    uploadFilesInTheQueue(emitter?: EventEmitter<any>): void {
         if (!this.activeTask) {
-            let file = this.queue.find(f => f.status === FileUploadStatus.Pending);
+            let file = this.queue.find(currentFile => currentFile.status === FileUploadStatus.Pending);
             if (file) {
                 this.onUploadStarting(file);
 
@@ -157,27 +157,40 @@ export class UploadService {
      */
     getUploadPromise(file: FileModel) {
         let opts: any = {
-            renditions: 'doclib'
+            renditions: 'doclib',
+            include: ['allowableOperations']
         };
 
         if (file.options.newVersion === true) {
             opts.overwrite = true;
-            opts.majorVersion = true;
+            opts.majorVersion = file.options.majorVersion;
+            opts.comment = file.options.comment;
+            opts.name = file.name;
         } else {
             opts.autoRename = true;
         }
 
-        if (file.options.newVersionBaseName) {
-            opts.name = file.options.newVersionBaseName;
+        if (file.options.nodeType) {
+            opts.nodeType = file.options.nodeType;
         }
 
-        return this.apiService.getInstance().upload.uploadFile(
-            file.file,
-            file.options.path,
-            file.options.parentId,
-            null,
-            opts
-        );
+        if (file.id) {
+            return this.apiService.getInstance().upload.updateFile(
+                file.file,
+                file.options.path,
+                file.id,
+                file.file,
+                opts
+            );
+        } else {
+            return this.apiService.getInstance().upload.uploadFile(
+                file.file,
+                file.options.path,
+                file.options.parentId,
+                null,
+                opts
+            );
+        }
     }
 
     private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
@@ -189,15 +202,21 @@ export class UploadService {
         })
             .on('abort', () => {
                 this.onUploadAborted(file);
-                emitter.emit({ value: 'File aborted' });
+                if (emitter) {
+                    emitter.emit({ value: 'File aborted' });
+                }
             })
             .on('error', err => {
                 this.onUploadError(file, err);
-                emitter.emit({ value: 'Error file uploaded' });
+                if (emitter) {
+                    emitter.emit({ value: 'Error file uploaded' });
+                }
             })
             .on('success', data => {
                 this.onUploadComplete(file, data);
-                emitter.emit({ value: data });
+                if (emitter) {
+                    emitter.emit({ value: data });
+                }
             })
             .catch(err => {
                 throw err;

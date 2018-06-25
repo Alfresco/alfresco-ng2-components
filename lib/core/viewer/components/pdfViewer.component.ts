@@ -278,9 +278,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.pdfViewer._pages.forEach(function (currentPage) {
                 currentPage.update(newScale);
             });
-
-            this.pdfViewer.update();
         }
+
+        this.pdfViewer.update();
     }
 
     /**

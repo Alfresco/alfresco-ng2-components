@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Site model
 
 Provides information about a site in a Content Services repository.

@@ -36,10 +36,10 @@ export class FileUtils {
                         iterations.push(Promise.all(entries.map(entry => {
                             if (entry.isFile) {
                                 return new Promise(resolveFile => {
-                                    entry.file(function (f: File) {
+                                    entry.file(function (file: File) {
                                         files.push({
                                             entry: entry,
-                                            file: f,
+                                            file: file,
                                             relativeFolder: entry.fullPath.replace(/\/[^\/]*$/, '')
                                         });
                                         resolveFile();

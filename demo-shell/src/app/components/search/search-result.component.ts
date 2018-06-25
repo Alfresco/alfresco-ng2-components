@@ -15,54 +15,78 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional, ViewChild } from '@angular/core';
+import { Component, OnInit, Optional, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 import { SearchComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { UserPreferencesService, SearchService, SearchConfigurationService } from '@alfresco/adf-core';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-search-result-component',
     templateUrl: './search-result.component.html',
-    styleUrls: ['./search-result.component.scss']
+    styleUrls: ['./search-result.component.scss'],
+    providers: [SearchService, SearchQueryBuilderService]
 })
-export class SearchResultComponent implements OnInit {
+export class SearchResultComponent implements OnInit, OnDestroy {
 
-    @ViewChild('search')
-    search: SearchComponent;
+    @ViewChild('searchResult')
+    searchResult: SearchComponent;
 
     queryParamName = 'q';
     searchedWord = '';
     resultNodePageList: NodePaging;
+    pagination: Pagination;
     maxItems: number;
     skipCount = 0;
-    pagination: Pagination;
+
+    sorting = ['name', 'asc'];
+
+    private subscriptions: Subscription[] = [];
 
     constructor(public router: Router,
                 private preferences: UserPreferencesService,
                 private queryBuilder: SearchQueryBuilderService,
+                private searchConfiguration: SearchConfigurationService,
                 @Optional() private route: ActivatedRoute) {
         this.maxItems = this.preferences.paginationSize;
         queryBuilder.paging = {
-            maxItems: this.maxItems,
+            maxItems: this.preferences.paginationSize,
             skipCount: 0
         };
     }
 
     ngOnInit() {
+
+        this.sorting = this.getSorting();
+
+        this.subscriptions.push(
+            this.queryBuilder.updated.subscribe(() => {
+                this.sorting = this.getSorting();
+            })
+        );
+
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
-                this.queryBuilder.queryFragments['queryName'] = `cm:name:'${this.searchedWord}'`;
-                this.queryBuilder.update();
+                if (this.searchedWord) {
+                    const queryBody = this.searchConfiguration.generateQueryBody(this.searchedWord, 0, 100);
+
+                    this.queryBuilder.userQuery = queryBody.query.query;
+                    this.queryBuilder.update();
+                }
             });
         }
-        this.maxItems = this.preferences.paginationSize;
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     onSearchResultLoaded(nodePaging: NodePaging) {
         this.resultNodePageList = nodePaging;
-        this.pagination = nodePaging.list.pagination;
+        this.pagination = {...nodePaging.list.pagination };
     }
 
     onRefreshPagination(pagination: Pagination) {
@@ -77,6 +101,16 @@ export class SearchResultComponent implements OnInit {
     }
 
     onDeleteElementSuccess(element: any) {
-        this.search.reload();
+        this.searchResult.reload();
+    }
+
+    private getSorting(): string[] {
+        const primary = this.queryBuilder.getPrimarySorting();
+
+        if (primary) {
+            return [primary.key, primary.ascending ? 'asc' : 'desc'];
+        }
+
+        return ['name', 'asc'];
     }
 }

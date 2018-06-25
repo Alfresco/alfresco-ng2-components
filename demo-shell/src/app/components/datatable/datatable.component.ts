@@ -16,19 +16,44 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { LogService, DataColumn, DataRow } from '@alfresco/adf-core';
 import { DataCellEvent, DataRowActionEvent, DataSorting, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+
+export class FilteredDataAdapter extends ObjectDataTableAdapter {
+
+    filterValue = '';
+    filterKey = 'name';
+
+    getRows(): Array<DataRow> {
+        let rows = super.getRows();
+        const filter = (this.filterValue || '').trim().toLowerCase();
+
+        if (this.filterKey && filter) {
+            rows = rows.filter(row => {
+                const value = row.getValue(this.filterKey);
+                if (value !== undefined && value !== null) {
+                    const stringValue: string = value.toString().trim().toLowerCase();
+                    return stringValue.startsWith(filter);
+                }
+                return false;
+            });
+        }
+        return rows;
+    }
+
+    constructor(data?: any[], schema?: DataColumn[]) {
+        super(data, schema);
+    }
+}
 
 @Component({
     selector: 'app-datatable',
-    templateUrl: './datatable.component.html',
-    styleUrls: ['./datatable.component.scss']
+    templateUrl: './datatable.component.html'
 })
 export class DataTableComponent {
 
     multiselect = false;
-    data: ObjectDataTableAdapter;
+    data: FilteredDataAdapter;
 
     @Input()
     selectionMode = 'single';
@@ -41,16 +66,16 @@ export class DataTableComponent {
 
     private _imageUrl = 'http://placehold.it/140x100';
     private _createdBy: any = {
-        name: 'Denys Vuika',
-        email: 'denys.vuika@alfresco.com'
+        name: 'Administrator',
+        email: 'admin@alfresco.com'
     };
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+    constructor(private logService: LogService) {
         this.reset();
     }
 
     reset() {
-        this.data = new ObjectDataTableAdapter(
+        this.data = new FilteredDataAdapter(
             [
                 {
                     id: 1,
@@ -173,34 +198,5 @@ export class DataTableComponent {
 
     onRowDblClick(event) {
         this.logService.log(event);
-    }
-
-    getRowForNode() {
-        const opts: any = {
-            includeSource: true,
-            include: ['path', 'properties', 'allowableOperations', 'permissions']
-        };
-
-        Observable.fromPromise(this.apiService.getInstance().nodes
-            .getNodeInfo('-my-', opts)).subscribe((data) => {
-                this.logService.log('FUnNy');
-                this.logService.log(data);
-                // let objects = new ObjectDataTableAdapter([
-                //     {
-                //         id: data.id,
-                //         name: data.name,
-                //         createdBy: data.createdByUser.displayName,
-                //         createdOn: new Date(data.createdAt),
-                //         icon: 'material-icons://face'
-                //     }],
-                //     [
-                //         { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
-                //         { type: 'text', key: 'id', title: 'Id', sortable: true },
-                //         { type: 'text', key: 'createdOn', title: 'Created On', sortable: true },
-                //         { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-                //         { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true }
-                //     ]);
-                // this.data = objects;
-            });
     }
 }

@@ -29,16 +29,15 @@ import { ContextMenuService } from './context-menu.service';
     template: `
         <button mat-button [matMenuTriggerFor]="contextMenu"></button>
         <mat-menu #contextMenu="matMenu" class="context-menu">
-            <button
-                *ngFor="let link of links"
-                mat-menu-item
-                (click)="onMenuItemClick($event, link)"
-                [attr.disabled]="link.model?.disabled || undefined">
-                <mat-icon *ngIf="showIcons && link.model?.icon">
-                    {{ link.model?.icon }}
-                </mat-icon>
-                    {{ (link.title || link.model?.title) | translate}}
-            </button>
+            <ng-container *ngFor="let link of links">
+                <button *ngIf="link.model?.visible"
+                    mat-menu-item
+                    [disabled]="link.model?.disabled"
+                    (click)="onMenuItemClick($event, link)">
+                    <mat-icon *ngIf="showIcons && link.model?.icon">{{ link.model.icon }}</mat-icon>
+                    {{ (link.title || link.model?.title) | translate }}
+                </button>
+            </ng-container>
         </mat-menu>
     `
 })
@@ -47,9 +46,7 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
 
     private mouseLocation: { left: number, top: number } = {left: 0, top: 0};
     private menuElement = null;
-    private openSubscription: Subscription;
-    private closeSubscription: Subscription;
-    private contextSubscription: Subscription;
+    private subscriptions: Subscription[] = [];
     private contextMenuListenerFn: () => void;
 
     @Input()
@@ -68,7 +65,7 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         if (this.mdMenuElement) {
-            this.setPositionAfterCDKrecalculation();
+            this.updatePosition();
         }
     }
 
@@ -80,33 +77,36 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.contextSubscription = this.contextMenuService.show.subscribe(e => this.showMenu(e.event, e.obj));
+        this.subscriptions.push(
+            this.contextMenuService.show.subscribe(e => this.showMenu(e.event, e.obj)),
 
-        this.openSubscription = this.menuTrigger.onMenuOpen.subscribe(() => {
-            const container = this.overlayContainer.getContainerElement();
-            if (container) {
-                this.contextMenuListenerFn = this.renderer.listen(container, 'contextmenu', (e: Event) => {
-                    e.preventDefault();
-                });
-            }
-            this.menuElement = this.getContextMenuElement();
-        });
+            this.menuTrigger.onMenuOpen.subscribe(() => {
+                const container = this.overlayContainer.getContainerElement();
+                if (container) {
+                    this.contextMenuListenerFn = this.renderer.listen(container, 'contextmenu', (e: Event) => {
+                        e.preventDefault();
+                    });
+                }
+                this.menuElement = this.getContextMenuElement();
+            }),
 
-        this.closeSubscription = this.menuTrigger.onMenuClose.subscribe(() => {
-            this.menuElement = null;
-            if (this.contextMenuListenerFn) {
-                this.contextMenuListenerFn();
-            }
-        });
+            this.menuTrigger.onMenuClose.subscribe(() => {
+                this.menuElement = null;
+                if (this.contextMenuListenerFn) {
+                    this.contextMenuListenerFn();
+                }
+            })
+        );
     }
 
     ngOnDestroy() {
         if (this.contextMenuListenerFn) {
             this.contextMenuListenerFn();
         }
-        this.contextSubscription.unsubscribe();
-        this.openSubscription.unsubscribe();
-        this.closeSubscription.unsubscribe();
+
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
+
         this.menuElement = null;
     }
 
@@ -132,14 +132,8 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
         this.menuTrigger.openMenu();
 
         if (this.mdMenuElement) {
-            this.setPositionAfterCDKrecalculation();
+            this.updatePosition();
         }
-    }
-
-    setPositionAfterCDKrecalculation() {
-        setTimeout(() => {
-            this.setPosition();
-        }, 0);
     }
 
     get mdMenuElement() {
@@ -153,22 +147,24 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
         };
     }
 
-    private setPosition() {
-        if (this.mdMenuElement.clientWidth + this.mouseLocation.left > this.viewport.getViewportRect().width) {
-            this.menuTrigger.menu.xPosition = 'before';
-            this.mdMenuElement.parentElement.style.left = this.mouseLocation.left - this.mdMenuElement.clientWidth + 'px';
-        } else {
-            this.menuTrigger.menu.xPosition = 'after';
-            this.mdMenuElement.parentElement.style.left = this.locationCss().left;
-        }
+    private updatePosition() {
+        setTimeout(() => {
+            if (this.mdMenuElement.clientWidth + this.mouseLocation.left > this.viewport.getViewportRect().width) {
+                this.menuTrigger.menu.xPosition = 'before';
+                this.mdMenuElement.parentElement.style.left = this.mouseLocation.left - this.mdMenuElement.clientWidth + 'px';
+            } else {
+                this.menuTrigger.menu.xPosition = 'after';
+                this.mdMenuElement.parentElement.style.left = this.locationCss().left;
+            }
 
-        if (this.mdMenuElement.clientHeight + this.mouseLocation.top > this.viewport.getViewportRect().height) {
-            this.menuTrigger.menu.yPosition = 'above';
-            this.mdMenuElement.parentElement.style.top = this.mouseLocation.top - this.mdMenuElement.clientHeight + 'px';
-        } else {
-            this.menuTrigger.menu.yPosition = 'below';
-            this.mdMenuElement.parentElement.style.top = this.locationCss().top;
-        }
+            if (this.mdMenuElement.clientHeight + this.mouseLocation.top > this.viewport.getViewportRect().height) {
+                this.menuTrigger.menu.yPosition = 'above';
+                this.mdMenuElement.parentElement.style.top = this.mouseLocation.top - this.mdMenuElement.clientHeight + 'px';
+            } else {
+                this.menuTrigger.menu.yPosition = 'below';
+                this.mdMenuElement.parentElement.style.top = this.locationCss().top;
+            }
+        }, 0);
     }
 
     private getContextMenuElement() {

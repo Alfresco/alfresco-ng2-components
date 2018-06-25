@@ -22,8 +22,16 @@ import { MatTabChangeEvent } from '@angular/material';
     template: '<ng-template><ng-content></ng-content></ng-template>'
 })
 export class InfoDrawerTabComponent {
-    @Input('label') label: string = 'Main tab';
-    @ViewChild(TemplateRef) content: TemplateRef<any>;
+    /** The title of the tab. */
+    @Input()
+    label: string = 'Main tab';
+
+    /** Icon to render for the tab. */
+    @Input()
+    icon: string = null;
+
+    @ViewChild(TemplateRef)
+    content: TemplateRef<any>;
 }
 
 @Component({

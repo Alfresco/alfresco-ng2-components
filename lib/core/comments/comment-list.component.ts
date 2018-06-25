@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
 import { CommentModel } from '../models/comment.model';
 import { EcmUserService } from '../userinfo/services/ecm-user.service';
 import { PeopleProcessService } from '../services/people-process.service';
-import { DatePipe } from '@angular/common';
+import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 
 @Component({
     selector: 'adf-comment-list',
@@ -40,8 +40,14 @@ export class CommentListComponent {
 
     selectedComment: CommentModel;
 
-    constructor(private datePipe: DatePipe, public peopleProcessService: PeopleProcessService,
-                public ecmUserService: EcmUserService) {
+    currentLocale;
+
+    constructor(public peopleProcessService: PeopleProcessService,
+                public ecmUserService: EcmUserService,
+                public userPreferenceService: UserPreferencesService) {
+        userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
+            this.currentLocale = locale;
+        });
     }
 
     selectComment(comment: CommentModel): void {
@@ -76,23 +82,6 @@ export class CommentListComponent {
         } else {
             return this.peopleProcessService.getUserImage(user);
         }
-    }
-
-    transformDate(aDate: string): string {
-        let formattedDate: string;
-        let givenDate = Number.parseInt(this.datePipe.transform(aDate, 'yMMdd'));
-        let today = Number.parseInt(this.datePipe.transform(Date.now(), 'yMMdd'));
-        if (givenDate === today) {
-            formattedDate = 'Today, ' + this.datePipe.transform(aDate, 'hh:mm a');
-        } else {
-            let yesterday = Number.parseInt(this.datePipe.transform(Date.now() - 24 * 3600 * 1000, 'yMMdd'));
-            if (givenDate === yesterday) {
-                formattedDate = 'Yesterday, ' + this.datePipe.transform(aDate, 'hh:mm a');
-            } else {
-                formattedDate = this.datePipe.transform(aDate, 'MMM dd y, hh:mm a');
-            }
-        }
-        return formattedDate;
     }
 
     private isAContentUsers(user: any): boolean {

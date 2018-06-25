@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting, DataTableAdapter } from '@alfresco/adf-core';
-import { TimeAgoPipe } from '@alfresco/adf-core';
-import { DatePipe } from '@angular/common';
+import { DataColumn, DataRow, DataSorting, DataTableAdapter, ThumbnailService } from '@alfresco/adf-core';
 import { NodePaging } from 'alfresco-js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
@@ -28,6 +26,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     ERR_ROW_NOT_FOUND: string = 'Row not found';
     ERR_COL_NOT_FOUND: string = 'Column not found';
 
+    private _sortingMode: string;
     private sorting: DataSorting;
     private rows: DataRow[];
     private columns: DataColumn[];
@@ -39,12 +38,27 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
 
+    set sortingMode(value: string) {
+        let newValue = (value || 'client').toLowerCase();
+        if (newValue !== 'client' && newValue !== 'server') {
+            newValue = 'client';
+        }
+        this._sortingMode = newValue;
+    }
+
+    get sortingMode(): string {
+        return this._sortingMode;
+    }
+
     constructor(private documentListService: DocumentListService,
+                private thumbnailService: ThumbnailService,
                 schema: DataColumn[] = [],
-                sorting?: DataSorting) {
+                sorting?: DataSorting,
+                sortingMode: string = 'client') {
         this.rows = [];
         this.columns = schema || [];
         this.sorting = sorting;
+        this.sortingMode = sortingMode;
     }
 
     getRows(): Array<DataRow> {
@@ -76,16 +90,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         let value: any = row.getValue(col.key);
         if (dataRow.cache[col.key] !== undefined) {
             return dataRow.cache[col.key];
-        }
-
-        if (col.type === 'date') {
-            try {
-                const result = this.formatDate(col, value);
-                return dataRow.cacheValue(col.key, result);
-            } catch (err) {
-                console.error(`Error parsing date ${value} to format ${col.format}`);
-                return 'Error';
-            }
         }
 
         if (col.key === '$thumbnail') {
@@ -132,21 +136,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         return dataRow.cacheValue(col.key, value);
     }
 
-    formatDate(col: DataColumn, value: any): string {
-        if (col.type === 'date') {
-            const format = col.format || 'medium';
-            if (format === 'timeAgo') {
-                const timeAgoPipe = new TimeAgoPipe();
-                return timeAgoPipe.transform(value);
-            } else {
-                const datePipe = new DatePipe('en-US');
-                return datePipe.transform(value, format);
-            }
-        }
-
-        return value;
-    }
-
     getSorting(): DataSorting {
         return this.sorting;
     }
@@ -175,6 +164,10 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     private sortRows(rows: DataRow[], sorting: DataSorting) {
+        if (this.sortingMode === 'server') {
+            return;
+        }
+
         const options: Intl.CollatorOptions = {};
 
         if (sorting && sorting.key && rows && rows.length > 0) {
@@ -215,23 +208,25 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (page && page.list) {
             let data = page.list.entries;
             if (data && data.length > 0) {
-                rows = data.map(item => new ShareDataRow(item, this.documentListService, this.permissionsStyle));
+                rows = data.map(item => new ShareDataRow(item, this.documentListService, this.permissionsStyle, this.thumbnailService));
 
                 if (this.filter) {
                     rows = rows.filter(this.filter);
                 }
 
-                // Sort by first sortable or just first column
-                if (this.columns && this.columns.length > 0) {
-                    let sorting = this.getSorting();
-                    if (sorting) {
-                        this.sortRows(rows, sorting);
-                    } else {
-                        let sortable = this.columns.filter(c => c.sortable);
-                        if (sortable.length > 0) {
-                            this.sort(sortable[0].key, 'asc');
+                if (this.sortingMode !== 'server') {
+                    // Sort by first sortable or just first column
+                    if (this.columns && this.columns.length > 0) {
+                        let sorting = this.getSorting();
+                        if (sorting) {
+                            this.sortRows(rows, sorting);
                         } else {
-                            this.sort(this.columns[0].key, 'asc');
+                            let sortable = this.columns.filter(c => c.sortable);
+                            if (sortable.length > 0) {
+                                this.sort(sortable[0].key, 'asc');
+                            } else {
+                                this.sort(this.columns[0].key, 'asc');
+                            }
                         }
                     }
                 }

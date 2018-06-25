@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../services/user-preferences.service';
 
 @Component({
@@ -35,7 +35,7 @@ export class LanguageMenuComponent implements OnInit {
     }
 
     ngOnInit() {
-        const languagesCongifApp = this.appConfig.get<Array<any>>(AppConfigService.APP_CONFIG_LANGUAGES_KEY);
+        const languagesCongifApp = this.appConfig.get<Array<any>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
         if (languagesCongifApp) {
             this.languages = languagesCongifApp;
         }

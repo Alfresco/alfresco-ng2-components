@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Time Ago pipe
 
 Converts a recent past date into a number of days ago.

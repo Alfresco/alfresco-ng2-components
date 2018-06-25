@@ -124,13 +124,6 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     clickable: true
                 }
             ),
-            new CardViewTextItemModel(
-                {
-                    label: 'ADF_TASK_LIST.PROPERTIES.CREATED_BY',
-                    value: this.taskDetails.getFullName(),
-                    key: 'created-by'
-                }
-            ),
             new CardViewDateItemModel(
                 {
                     label: 'ADF_TASK_LIST.PROPERTIES.CREATED',

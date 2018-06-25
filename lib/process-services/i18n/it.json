@@ -13,7 +13,8 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "Nessuna app trovata",
+      "TITLE": "Nessuna applicazione trovata",
+      "SUBTITLE": "Creare una nuova applicazione per trovarla facilmente più tardi",
       "TASK_APP_NAME": "Applicazione compiti"
     },
     "LIST": {
@@ -153,7 +154,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "NONE": "Nessuna istanza di processo trovata",
+      "TITLE": "Nessun processo trovato",
+      "SUBTITLE": "Creare un nuovo processo per trovarlo facilmente più tardi",
       "SUMMARY": "{{total}} istanze di processo trovate",
       "ERROR": "Impossibile caricare le istanze di processo. Riprovare o condividere il messaggio seguente con il proprio team IT: {{errorMessage}}"
     },

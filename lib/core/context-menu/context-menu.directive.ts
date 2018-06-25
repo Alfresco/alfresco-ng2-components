@@ -25,9 +25,11 @@ import { ContextMenuService } from './context-menu.service';
     selector: '[adf-context-menu], [context-menu]'
 })
 export class ContextMenuDirective {
+    /** Items for the menu. */
     @Input('context-menu')
     links: any[];
 
+    /** Is the menu enabled? */
     @Input('context-menu-enabled')
     enabled: boolean = false;
 

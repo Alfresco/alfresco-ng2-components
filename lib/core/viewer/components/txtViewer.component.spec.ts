@@ -16,8 +16,10 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TxtViewerComponent } from './txtViewer.component';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
 
 describe('Text View component', () => {
 
@@ -25,11 +27,11 @@ describe('Text View component', () => {
     let fixture: ComponentFixture<TxtViewerComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [TxtViewerComponent]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TxtViewerComponent);

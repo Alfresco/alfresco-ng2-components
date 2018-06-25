@@ -16,11 +16,12 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentService, UploadService, TranslationService } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ContentService, UploadService, TranslationService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { UploadButtonComponent } from './upload-button.component';
 import { TranslationMock } from '@alfresco/adf-core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('UploadButtonComponent', () => {
 
@@ -49,18 +50,20 @@ describe('UploadButtonComponent', () => {
     let uploadService: UploadService;
     let contentService: ContentService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                UploadButtonComponent
-            ],
-            providers: [
-                UploadService,
-                ContentService,
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            UploadButtonComponent
+        ],
+        providers: [
+            UploadService,
+            ContentService,
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(UploadButtonComponent);
@@ -97,6 +100,22 @@ describe('UploadButtonComponent', () => {
         expect(compiled.querySelector('#uploadFolder')).toBeDefined();
     });
 
+    it('should disable uploadFolder button if disabled is true', () => {
+        component.disabled = true;
+        component.uploadFolders = true;
+        let compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#uploadFolder').getAttribute('disabled')).toBe('true');
+    });
+
+    it('should disable upload-single-file button if disabled is true', () => {
+        component.disabled = true;
+        component.multipleFiles = false;
+        let compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#upload-single-file').getAttribute('disabled')).toBe('true');
+    });
+
     it('should call uploadFile with the default root folder', () => {
         component.rootFolderId = '-root-';
         component.success = null;
@@ -125,6 +144,18 @@ describe('UploadButtonComponent', () => {
 
         component.onFilesAdded(fakeEvent);
         expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
+    });
+
+    it('should not call uploadFiles if rootFolderId is null', () => {
+        component.rootFolderId = null;
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, null, true) });
+
+        uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
+        fixture.detectChanges();
+
+        component.onFilesAdded(fakeEvent);
+        expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
     });
 
     it('should create a folder and emit an File uploaded event', (done) => {
@@ -307,6 +338,90 @@ describe('UploadButtonComponent', () => {
             component.uploadFiles(files);
 
             expect(addToQueueSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('uploadFiles permission', () => {
+        let fakeNodeWithNoPermission;
+
+        beforeEach(() => {
+            fakeNodeWithNoPermission = {
+                entry: {}
+            };
+        });
+
+        it('should not call uploadFiles for node without permission', () => {
+            component.rootFolderId = 'nodeId';
+
+            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeNodeWithNoPermission));
+            component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+
+            uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
+            fixture.detectChanges();
+
+            component.onFilesAdded(fakeEvent);
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
+        });
+
+        it('should not call uploadFiles when getNode fails', () => {
+            component.rootFolderId = 'nodeId';
+
+            spyOn(contentService, 'getNode').and.returnValue(Observable.throw('error'));
+            component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+
+            uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
+            fixture.detectChanges();
+
+            component.onFilesAdded(fakeEvent);
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
+        });
+
+        it('should emit an error message when getNode fails', (done) => {
+            component.rootFolderId = 'nodeId';
+
+            spyOn(contentService, 'getNode').and.returnValue(Observable.throw('error'));
+
+            component.error.subscribe((value) => {
+                expect(value).toBe('error');
+                done();
+            });
+
+            component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+            fixture.detectChanges();
+
+            component.onFilesAdded(fakeEvent);
+        });
+
+        it('should not call uploadFiles for node with other permissions', () => {
+            component.rootFolderId = 'nodeId';
+
+            fakeNodeWithNoPermission.entry.allowableOperations = ['other'];
+
+            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeNodeWithNoPermission));
+            component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+
+            uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
+            fixture.detectChanges();
+
+            component.onFilesAdded(fakeEvent);
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
+        });
+
+        it('should call uploadFiles when node has CREATE', () => {
+            component.rootFolderId = 'nodeId';
+
+            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+            component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+
+            uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
+            fixture.detectChanges();
+
+            component.onFilesAdded(fakeEvent);
+            expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalled();
         });
     });
 });

@@ -15,48 +15,23 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
-import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { By } from '@angular/platform-browser';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { setupTestBed } from '../../../testing/setupTestBed';
 import moment from 'moment-es6';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { TranslateLoaderService } from '../../../services/translate-loader.service';
-
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('CardViewDateItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewDateItemComponent>;
     let component: CardViewDateItemComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                MatDatepickerModule,
-                MatInputModule,
-                MatNativeDateModule,
-                MatNativeDatetimeModule,
-                MatDatetimepickerModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                CardViewDateItemComponent
-            ],
-            providers: [
-                CardViewUpdateService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewDateItemComponent);
@@ -73,7 +48,6 @@ describe('CardViewDateItemComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     it('should render the label and value', () => {
@@ -89,7 +63,7 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should NOT render the default as value if the value is empty, editable:false and displayEmpty is false', () => {
-        component.property = new CardViewDateItemModel ({
+        component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: '',
             key: 'datekey',
@@ -107,7 +81,7 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should render the default as value if the value is empty, editable:false and displayEmpty is true', () => {
-        component.property = new CardViewDateItemModel ({
+        component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: '',
             key: 'datekey',
@@ -125,7 +99,7 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should render the default as value if the value is empty and editable:true', () => {
-        component.property = new CardViewDateItemModel ({
+        component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: '',
             key: 'datekey',
@@ -202,15 +176,16 @@ describe('CardViewDateItemComponent', () => {
         const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
         fixture.detectChanges();
 
-        cardViewUpdateService.itemUpdated$.subscribe(
+        let disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
             (updateNotification) => {
                 expect(updateNotification.target).toBe(component.property);
-                expect(updateNotification.changed).toEqual({datekey: expectedDate.toDate()});
+                expect(updateNotification.changed).toEqual({ datekey: expectedDate.toDate() });
+                disposableUpdate.unsubscribe();
                 done();
             }
         );
 
-        component.onDateChanged({value: expectedDate});
+        component.onDateChanged({ value: expectedDate });
     });
 
     it('should update the propery\'s value after a succesful update attempt', async(() => {
@@ -220,7 +195,7 @@ describe('CardViewDateItemComponent', () => {
         const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
         fixture.detectChanges();
 
-        component.onDateChanged({value: expectedDate});
+        component.onDateChanged({ value: expectedDate });
 
         fixture.whenStable().then(
             (updateNotification) => {

@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 
-import { PipeModule } from '@alfresco/adf-core';
+import { PipeModule, CoreModule } from '@alfresco/adf-core';
 
 import { SearchTriggerDirective } from './components/search-trigger.directive';
 
@@ -31,6 +31,13 @@ import { EmptySearchResultComponent } from './components/empty-search-result.com
 import { SearchWidgetContainerComponent } from './components/search-widget-container/search-widget-container.component';
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { SearchChipListComponent } from './components/search-chip-list/search-chip-list.component';
+import { SearchTextComponent } from './components/search-text/search-text.component';
+import { SearchRadioComponent } from './components/search-radio/search-radio.component';
+import { SearchSliderComponent } from './components/search-slider/search-slider.component';
+import { SearchNumberRangeComponent } from './components/search-number-range/search-number-range.component';
+import { SearchCheckListComponent } from './components/search-check-list/search-check-list.component';
+import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
+import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     SearchComponent,
@@ -43,6 +50,7 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
 
 @NgModule({
     imports: [
+        CoreModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -52,14 +60,34 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     ],
     declarations: [
         ...ALFRESCO_SEARCH_DIRECTIVES,
-        SearchWidgetContainerComponent
+        SearchWidgetContainerComponent,
+        SearchTextComponent,
+        SearchRadioComponent,
+        SearchSliderComponent,
+        SearchNumberRangeComponent,
+        SearchCheckListComponent,
+        SearchDateRangeComponent,
+        SearchSortingPickerComponent
     ],
     exports: [
         ...ALFRESCO_SEARCH_DIRECTIVES,
-        SearchWidgetContainerComponent
+        SearchWidgetContainerComponent,
+        SearchTextComponent,
+        SearchRadioComponent,
+        SearchSliderComponent,
+        SearchNumberRangeComponent,
+        SearchCheckListComponent,
+        SearchDateRangeComponent,
+        SearchSortingPickerComponent
     ],
     entryComponents: [
-        SearchWidgetContainerComponent
+        SearchWidgetContainerComponent,
+        SearchTextComponent,
+        SearchRadioComponent,
+        SearchSliderComponent,
+        SearchNumberRangeComponent,
+        SearchCheckListComponent,
+        SearchDateRangeComponent
     ]
 })
 export class SearchModule {}

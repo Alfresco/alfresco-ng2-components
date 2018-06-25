@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # User Process model
 
 Represents a Process Services user.

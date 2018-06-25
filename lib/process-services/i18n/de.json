@@ -13,7 +13,8 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "Keine Anwendungen gefunden",
+      "TITLE": "Keine Anwendungen gefunden",
+      "SUBTITLE": "Erstellen Sie eine neue Anwendung, die sich später leicht wiederfinden lässt",
       "TASK_APP_NAME": "Aufgabenanwendung"
     },
     "LIST": {
@@ -153,7 +154,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "NONE": "Keine Prozessinstanzen gefunden",
+      "TITLE": "Keine Prozesse gefunden",
+      "SUBTITLE": "Erstellen Sie einen neuen Prozess, der sich später leicht wiederfinden lässt",
       "SUMMARY": "{{total}} Prozessinstanzen gefunden",
       "ERROR": "Prozessesinstanzen konnten nicht geladen werden. Versuchen Sie es noch einmal oder geben Sie die folgende Meldung an Ihr IT-Team weiter: {{errorMessage}}"
     },

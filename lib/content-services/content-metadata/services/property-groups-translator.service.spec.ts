@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
 import { Property, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import {
@@ -25,25 +25,30 @@ import {
     CardViewFloatItemModel,
     LogService,
     CardViewBoolItemModel,
-    CardViewDatetimeItemModel
+    CardViewDatetimeItemModel,
+    setupTestBed
 } from '@alfresco/adf-core';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('PropertyGroupTranslatorService', () => {
 
-    let service: PropertyGroupTranslatorService,
-        propertyGroups: OrganisedPropertyGroup[],
-        propertyGroup: OrganisedPropertyGroup,
-        property: Property,
-        propertyValues: { [key: string]: any };
+    let service: PropertyGroupTranslatorService;
+    let propertyGroups: OrganisedPropertyGroup[];
+    let propertyGroup: OrganisedPropertyGroup;
+    let property: Property;
+    let propertyValues: { [key: string]: any };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                PropertyGroupTranslatorService,
-                { provide: LogService, useValue: { error: () => {} }}
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ContentTestingModule],
+        providers: [
+            {
+                provide: LogService, useValue: {
+                error: () => {
+                }
+            }
+            }
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(PropertyGroupTranslatorService);
@@ -56,10 +61,12 @@ describe('PropertyGroupTranslatorService', () => {
             mandatory: false,
             multiValued: false
         };
+
         propertyGroup = {
             title: 'Faro Automated Solutions',
             properties: [property]
         };
+
         propertyGroups = [];
     });
 
@@ -78,14 +85,14 @@ describe('PropertyGroupTranslatorService', () => {
                 mandatory: false,
                 multiValued: false
             },
-            {
-                name: 'FAS:ALOY',
-                title: 'title',
-                dataType: 'd:text',
-                defaultValue: 'defaultValue',
-                mandatory: false,
-                multiValued: false
-            }];
+                {
+                    name: 'FAS:ALOY',
+                    title: 'title',
+                    dataType: 'd:text',
+                    defaultValue: 'defaultValue',
+                    mandatory: false,
+                    multiValued: false
+                }];
             propertyGroups.push(propertyGroup);
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
@@ -136,7 +143,10 @@ describe('PropertyGroupTranslatorService', () => {
             property.title = 'The Faro Plague';
             property.dataType = 'daemonic:scorcher';
             property.defaultValue = 'Daemonic beast';
-            propertyGroups.push(propertyGroup);
+
+            propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
+
+            propertyGroups.push(Object.assign({}, propertyGroup));
 
             service.translateToCardViewGroups(propertyGroups, propertyValues);
             expect(logService.error).toHaveBeenCalledWith('Unknown type for mapping: daemonic:scorcher');
@@ -147,7 +157,12 @@ describe('PropertyGroupTranslatorService', () => {
             property.title = 'The Faro Plague';
             property.dataType = 'daemonic:scorcher';
             property.defaultValue = 'Daemonic beast';
-            propertyGroups.push(propertyGroup);
+            propertyGroups.push({
+                title: 'Faro Automated Solutions',
+                properties: [property]
+            });
+
+            propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
 
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
             const cardViewProperty: CardViewTextItemModel = <CardViewTextItemModel> cardViewGroup[0].properties[0];

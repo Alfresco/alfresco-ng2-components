@@ -17,6 +17,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 -   [Details](#details)
 
+    -   [Conditional visibility](#conditional-visibility)
     -   [Automatic column header translation](#automatic-column-header-translation)
     -   [Custom tooltips](#custom-tooltips)
     -   [Column Template](#column-template)
@@ -55,9 +56,21 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 ## Details
 
+### Conditional visibility
+
+You can use `ngIf` directives to provide conditional visibility support for the columns:
+
+```html
+<data-column
+    *nfIg="showNameColumn"
+    key="name"
+    title="MY.RESOURCE.KEY">
+</data-column>
+```
+
 ### Automatic column header translation
 
-You can use i18n resource keys with DataColumn `title` property.
+You can use i18n resource keys with [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) `title` property.
 The component will automatically check the corresponding i18n resources and fetch corresponding value.
 
 ```html
@@ -110,9 +123,9 @@ Every cell in the DataTable component is bound to the dynamic data context conta
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| data | [DataTableAdapter](datatable-adapter.interface.md) | Data adapter instance. |
-| row | [DataRow](datatable-adapter.interface.md) | Current data row instance. |
-| col | [DataColumn](datatable-adapter.interface.md) | Current data column instance. |
+| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) | Data adapter instance. |
+| row | [`DataRow`](../../lib/core/datatable/data/data-row.model.ts) | Current data row instance. |
+| col | [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) | Current data column instance. |
 
 You can use all three properties to gain full access to underlying data from within your custom templates. 
 In order to wire HTML templates with the data context you will need defining a variable that is bound to `$implicit` like shown below:
@@ -125,7 +138,7 @@ In order to wire HTML templates with the data context you will need defining a v
 
 The format of naming is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want to bind template data context to.
 
-Getting a cell value from the underlying DataTableAdapter:
+Getting a cell value from the underlying [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts):
 
 ```ts
 context.data.getValue(entry.row, entry.col);

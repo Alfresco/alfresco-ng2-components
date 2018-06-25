@@ -15,261 +15,110 @@
  * limitations under the License.
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { async, TestBed } from '@angular/core/testing';
+import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
 import { AuthenticationService } from './authentication.service';
-
-class RouterProvider {
-    navigate: Function = jasmine.createSpy('RouterProviderNavigate');
-}
-
-class AlfrescoApiServiceProvider {
-    private settings: any = {
-        validateTicket: true,
-        isLoggedIn: true
-    };
-
-    constructor(settings: any = {}) {
-        Object.assign(this.settings, settings);
-    }
-
-    getInstance() {
-        return {
-            ecmAuth: this.ecmAuth
-        };
-    }
-
-    private get ecmAuth() {
-        return {
-            validateTicket: this.validateTicket.bind(this),
-            isLoggedIn: this.isLoggedIn.bind(this)
-        };
-    }
-
-    private validateTicket() {
-        const { validateTicket } = this.settings;
-
-        return validateTicket
-            ? Promise.resolve('Valid!')
-            : Promise.reject('Invalid');
-    }
-
-    private isLoggedIn() {
-        return this.settings.isLoggedIn;
-    }
-}
-
-class AuthenticationServiceProvider {
-    setRedirectUrl: Function = jasmine.createSpy('setRedirectUrl');
-}
-
-class TestConfig {
-    router: any;
-    guard: any;
-    auth: any;
-
-    private settings: any = {
-        validateTicket: true,
-        isLoggedIn: true
-    };
-
-    constructor(settings: any = {}) {
-        Object.assign(this.settings, settings);
-
-        TestBed.configureTestingModule({
-            providers: [
-                this.routerProvider,
-                this.alfrescoApiServiceProvider,
-                this.authenticationProvider,
-                AuthGuardEcm
-            ]
-        });
-
-        inject([ AuthGuardEcm, Router, AuthenticationService ], (guard: AuthGuardEcm, router: Router, auth: AuthenticationService) => {
-            this.guard = guard;
-            this.router = router;
-            this.auth = auth;
-        })();
-    }
-
-    private get routerProvider() {
-        return {
-            provide: Router,
-            useValue: new RouterProvider()
-        };
-    }
-
-    private get authenticationProvider() {
-        return {
-            provide: AuthenticationService,
-            useValue: new AuthenticationServiceProvider()
-        };
-    }
-
-    private get alfrescoApiServiceProvider () {
-        const { validateTicket, isLoggedIn } = this.settings;
-
-        return {
-            provide: AlfrescoApiService,
-            useValue: new AlfrescoApiServiceProvider({
-                validateTicket,
-                isLoggedIn
-            })
-        };
-    }
-
-    get navigateSpy() {
-        return this.router.navigate;
-    }
-}
+import { RouterStateSnapshot, Router } from '@angular/router';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('AuthGuardService ECM', () => {
-    describe('user is not logged in', () => {
-        beforeEach(async(() => {
-            this.test = new TestConfig({
-                isLoggedIn: false
-            });
 
-            const { guard, router } = this.test;
+    let authGuard: AuthGuardEcm;
+    let authService: AuthenticationService;
+    let routerService: Router;
+    let appConfigService: AppConfigService;
 
-            guard.canActivate(null, { url: '' }).then((activate) => {
-                this.activate = activate;
-                this.navigateSpy = router.navigate;
-            });
-        }));
-
-        it('does not allow route to activate', () => {
-            expect(this.activate).toBe(false);
-        });
-
-        it('redirects to /login', () => {
-            expect(this.navigateSpy).toHaveBeenCalledWith([ '/login' ]);
-        });
+    setupTestBed({
+        imports: [CoreTestingModule]
     });
 
-    describe('user is logged in but ticket is invalid', () => {
-        beforeEach(async(() => {
-            this.test = new TestConfig({
-                isLoggedIn: true,
-                validateTicket: false
-            });
-
-            const { guard, router } = this.test;
-
-            guard.canActivate(null, { url: '' }).then((activate) => {
-                this.activate = activate;
-                this.navigateSpy = router.navigate;
-            });
-        }));
-
-        it('does not allow route to activate', () => {
-            expect(this.activate).toBe(false);
-        });
-
-        it('redirects to /login', () => {
-            expect(this.navigateSpy).toHaveBeenCalledWith([ '/login' ]);
-        });
+    beforeEach(() => {
+        localStorage.clear();
+        authService = TestBed.get(AuthenticationService);
+        authGuard = TestBed.get(AuthGuardEcm);
+        routerService = TestBed.get(Router);
+        appConfigService = TestBed.get(AppConfigService);
     });
 
-    describe('user is logged in and ticket is valid', () => {
-        beforeEach(async(() => {
-            this.test = new TestConfig({
-                isLoggedIn: true,
-                validateTicket: true
-            });
+    it('if the alfresco js api is logged in should canActivate be true', async(() => {
+        spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
+        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
-            const { guard, router } = this.test;
+        expect(authGuard.canActivate(null, router)).toBeTruthy();
+    }));
 
-            guard.canActivate(null, { url: '' }).then((activate) => {
-                this.activate = activate;
-                this.navigateSpy = router.navigate;
-            });
-        }));
+    it('if the alfresco js api is NOT logged in should canActivate be false', async(() => {
+        spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
+        spyOn(routerService, 'navigate').and.stub();
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
-        it('allows route to activate', () => {
-            expect(this.activate).toBe(true);
+        expect(authGuard.canActivate(null, router)).toBeFalsy();
+    }));
+
+    it('if the alfresco js api is NOT logged in should trigger a redirect event', async(() => {
+        appConfigService.config.loginRoute = 'login';
+
+        spyOn(routerService, 'navigate');
+        spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
+        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
+
+        expect(authGuard.canActivate(null, router)).toBeFalsy();
+        expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
+    }));
+
+    it('should set redirect navigation commands', async(() => {
+        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(routerService, 'navigate').and.stub();
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
+
+        authGuard.canActivate(null, router);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'ECM', url: 'some-url'
         });
+        expect(authService.getRedirect('ECM')).toEqual('some-url');
+    }));
 
-        it('does not redirect', () => {
-            expect(this.navigateSpy).not.toHaveBeenCalled();
+    it('should set redirect navigation commands with query params', async(() => {
+        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(routerService, 'navigate').and.stub();
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url;q=123' };
+
+        authGuard.canActivate(null, router);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'ECM', url: 'some-url;q=123'
         });
-    });
+        expect(authService.getRedirect('ECM')).toEqual('some-url;q=123');
+    }));
 
-    describe('redirect url', () => {
-        beforeEach(async(() => {
-            this.test = new TestConfig({
-                isLoggedIn: false
-            });
+    it('should set redirect navigation commands with query params', async(() => {
+        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(routerService, 'navigate').and.stub();
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: '/' };
 
-            const { guard, auth } = this.test;
+        authGuard.canActivate(null, router);
 
-            guard.canActivate(null, { url: 'some-url' }).then((activate) => {
-                this.auth = auth;
-            });
-        }));
-
-        it('should set redirect url', () => {
-            expect(this.auth.setRedirectUrl).toHaveBeenCalledWith({ provider: 'ECM', url: 'some-url' });
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'ECM', url: '/'
         });
-    });
+        expect(authService.getRedirect('ECM')).toEqual('/');
+    }));
 
-    describe('canActivateChild', () => {
-        describe('user is not logged in', () => {
-            beforeEach(async(() => {
-                this.test = new TestConfig({
-                    isLoggedIn: false
-                });
+    it('should get redirect url from config if there is one configured', async(() => {
+        appConfigService.config.loginRoute = 'fakeLoginRoute';
+        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(routerService, 'navigate').and.stub();
+        const router: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
-                const { guard } = this.test;
+        authGuard.canActivate(null, router);
 
-                guard.canActivateChild(null, { url: '' }).then((activate) => {
-                    this.activate = activate;
-                });
-            }));
-
-            it('should not allow route to activate', () => {
-                expect(this.activate).toBe(false);
-            });
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'ECM', url: 'some-url'
         });
+        expect(routerService.navigate).toHaveBeenCalledWith(['/fakeLoginRoute']);
+    }));
 
-        describe('user is logged in but ticket is invalid', () => {
-            beforeEach(async(() => {
-                this.test = new TestConfig({
-                    isLoggedIn: true,
-                    validateTicket: false
-                });
-
-                const { guard } = this.test;
-
-                guard.canActivateChild(null, { url: '' }).then((activate) => {
-                    this.activate = activate;
-                });
-            }));
-
-            it('should not allow route to activate', () => {
-                expect(this.activate).toBe(false);
-            });
-        });
-
-        describe('user is logged in and ticket is valid', () => {
-            beforeEach(async(() => {
-                this.test = new TestConfig({
-                    isLoggedIn: true,
-                    validateTicket: true
-                });
-
-                const { guard } = this.test;
-
-                guard.canActivateChild(null, { url: '' }).then((activate) => {
-                    this.activate = activate;
-                });
-            }));
-
-            it('should allow route to activate', () => {
-                expect(this.activate).toBe(true);
-            });
-        });
-    });
 });

@@ -26,8 +26,6 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## Class members
-
 ### Properties
 
 | Name | Type | Default value | Description |
@@ -47,7 +45,7 @@ export class MyComponent implements OnInit {
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | nodeUpdated | `Subject<MinimalNodeEntryEntity>` | Emitted when a node updates. |
 
 ## Details

@@ -16,7 +16,8 @@
  */
 
 import { Component } from '@angular/core';
-import { LogService } from '@alfresco/adf-core';
+import { LogService, } from '@alfresco/adf-core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-settings',
@@ -24,10 +25,19 @@ import { LogService } from '@alfresco/adf-core';
 })
 export class SettingsComponent {
 
-    constructor(public logService: LogService) {
+    constructor(private router: Router,
+                public logService: LogService) {
     }
 
     onError(error: string) {
         this.logService.log(error);
+    }
+
+    onCancel() {
+        this.router.navigate(['/login']);
+    }
+
+    onSuccess() {
+        this.router.navigate(['/login']);
     }
 }
