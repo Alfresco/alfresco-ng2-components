@@ -74,6 +74,11 @@ Defining properties from Typescript:
         key: 'mental-stability',
         default: 0.0
     }),
+    new CardViewKeyValuePairsItemModel({
+        label: 'Variables',
+        value: [],
+        key: 'key-value-pairs'
+    }),
     ...
 ]
 ```
@@ -99,6 +104,7 @@ You define the property list, the [`CardViewComponent`](../core/card-view.compon
 -   [**CardViewBoolItemModel**](#card-bool-item) - _for bool items (checkbox)_
 -   [**CardViewIntItemModel**](#card-int-item) - _for integer items_
 -   [**CardViewFloatItemModel**](#card-float-item) - _for float items_
+-   [**CardViewKeyValuePairsItemModel**](#card-key-values-pairs-item) - _for key-value-pairs items_
 
 Each of these types implements the [Card View Item interface](card-view-item.interface.md):
 
@@ -286,6 +292,23 @@ const floatItemProperty = new CardViewFloatItemModel(options);
 | default | float |  | The default value to display if the value is empty |
 | displayValue\* | float |  | The value to display |
 | editable | boolean | false | Toggles whether the item is editable |
+
+#### Card Key Value Pairs Item
+
+[`CardViewKeyValuePairsItemModel`](../../lib/core/card-view/models/card-view-keyvaluepairs.model.ts) is a property type for key-value properties.
+
+```ts
+const keyValuePairsItemProperty = new CardViewKeyValuePairsItemModel(options);
+```
+
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| key\* | string |  | Identifying key (important when editing the item) |
+| editable | boolean | false | Toggles whether the item is editable |
+| value\* | `[{ name: '', value: '' }, ...]` |  | The original data value for the item |
+
+
 
 ## See also
 
