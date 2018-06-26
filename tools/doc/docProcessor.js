@@ -169,7 +169,14 @@ program
 .option("-p, --profile [profileName]", "Select named config profile", "default")
 .option("-j, --json", "Output JSON data for Markdown syntax tree")
 .option("-v, --verbose", "Log doc files as they are processed")
+.option("-t, --timing", "Output time taken for run")
 .parse(process.argv);
+
+var startTime;
+
+if (program.timing) {
+    startTime = process.hrtime();
+}
 
 var sourcePath;
 
@@ -224,5 +231,7 @@ aggPhase(aggData);
 console.log("Updating Markdown files...");
 updatePhase(files, aggData);
 
-
-
+if (program.timing) {
+    var endTime = process.hrtime(startTime);
+    console.log(`Run complete in ${endTime[0]} sec`);
+}
