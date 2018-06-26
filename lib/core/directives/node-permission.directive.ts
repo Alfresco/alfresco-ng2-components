@@ -52,20 +52,9 @@ export class NodePermissionDirective implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.nodes && this.isNodeChanged(changes.nodes)) {
+        if (changes.nodes && !changes.nodes.firstChange) {
             this.updateElement();
         }
-    }
-
-    private isNodeChanged(nodeChange: SimpleChange): boolean {
-        let isChanged = false;
-        if (nodeChange.previousValue && nodeChange.currentValue) {
-            isChanged = nodeChange.currentValue.id !== nodeChange.previousValue.id;
-        } else if (!nodeChange.previousValue) {
-            isChanged = nodeChange.previousValue !== nodeChange.currentValue;
-        }
-
-        return isChanged;
     }
 
     /**
