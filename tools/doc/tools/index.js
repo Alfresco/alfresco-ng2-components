@@ -281,7 +281,7 @@ function makeMDDocumentedTableRow(docItem, forSubFolder) {
     }
 
     var srcFileLink = unist.makeLink(unist.makeText("Source"), srcPath);
-    var desc = docItem.briefDesc;
+    var desc = JSON.parse(JSON.stringify(docItem.briefDesc));
 
     removeBriefDescLinks(desc);
 

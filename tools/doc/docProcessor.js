@@ -25,12 +25,15 @@ function initPhase(aggData) {
 }
 
 
-function readPhase(filenames, aggData) {
+function readPhase(filenames, mdCache, aggData) {
     for (var i = 0; i < filenames.length; i++) {
-        var pathname = filenames[i];//path.resolve(srcFolder, filenames[i]);
+        var pathname = filenames[i];
         
-        var src = fs.readFileSync(pathname);
-        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
+        if (program.verbose) {
+            console.log("Reading " + pathname);
+        }
+
+        tree = mdCache[pathname];
 
         toolList.forEach(toolName => {
             toolModules[toolName].readPhase(tree, pathname, aggData);
@@ -48,7 +51,7 @@ function aggPhase(aggData) {
 }
 
 
-function updatePhase(filenames, aggData) {
+function updatePhase(filenames, mdCache, aggData) {
     var errorMessages;
 
     for (var i = 0; i < filenames.length; i++) {
@@ -59,9 +62,7 @@ function updatePhase(filenames, aggData) {
             console.log("Reading " + pathname);
         }
         
-        var src = fs.readFileSync(pathname);
-        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
-
+        var tree = mdCache[pathname];
         var original = minimiseTree(tree);
 
         var modified = false;
@@ -164,6 +165,21 @@ function getAllDocFilePaths(docFolder, files) {
 }
 
 
+function initMdCache(filenames) {
+    var mdCache = {};
+
+    for (var i = 0; i < filenames.length; i++) {
+        var pathname = filenames[i];//path.resolve(srcFolder, filenames[i]);
+        
+        var src = fs.readFileSync(pathname);
+        //var tree = remark().use(frontMatter, ["yaml"]).parse(src);
+        mdCache[pathname] = remark().use(frontMatter, ["yaml"]).parse(src);
+    }
+
+    return mdCache;
+}
+
+
 program
 .usage("[options] <source>")
 .option("-p, --profile [profileName]", "Select named config profile", "default")
@@ -213,23 +229,25 @@ if (sourceInfo.isDirectory()) {
 }
 
 files = files.filter(filename => 
+    (filename !== undefined) &&
     (path.extname(filename) === ".md") &&
     (filename !== "README.md")
 );
 
-//files.forEach(element => console.log(element));
+
+var mdCache = initMdCache(files);
 
 console.log("Initialising...");
 initPhase(aggData);
 
 console.log("Analysing Markdown files...");
-readPhase(files, aggData);
+readPhase(files, mdCache, aggData);
 
 console.log("Computing aggregate data...");
 aggPhase(aggData);
 
 console.log("Updating Markdown files...");
-updatePhase(files, aggData);
+updatePhase(files, mdCache, aggData);
 
 if (program.timing) {
     var endTime = process.hrtime(startTime);
