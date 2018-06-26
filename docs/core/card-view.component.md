@@ -79,6 +79,12 @@ Defining properties from Typescript:
         value: [],
         key: 'key-value-pairs'
     }),
+    new CardViewSelectItemModel({
+        label: 'Select box',
+        value: 'one',
+        options$: of([{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }]),
+        key: 'select'
+    }),
     ...
 ]
 ```
@@ -105,6 +111,7 @@ You define the property list, the [`CardViewComponent`](../core/card-view.compon
 -   [**CardViewIntItemModel**](#card-int-item) - _for integer items_
 -   [**CardViewFloatItemModel**](#card-float-item) - _for float items_
 -   [**CardViewKeyValuePairsItemModel**](#card-key-values-pairs-item) - _for key-value-pairs items_
+-   [**CardViewSelectItemModel**](#card-select-item) - _for select items_
 
 Each of these types implements the [Card View Item interface](card-view-item.interface.md):
 
@@ -307,6 +314,23 @@ const keyValuePairsItemProperty = new CardViewKeyValuePairsItemModel(options);
 | key\* | string |  | Identifying key (important when editing the item) |
 | editable | boolean | false | Toggles whether the item is editable |
 | value\* | `[{ name: '', value: '' }, ...]` |  | The original data value for the item |
+
+
+#### Card Select Item
+
+[`CardViewSelectItemModel`](../../lib/core/card-view/models/card-view-selectitem.model.ts) is a property type for select properties.
+
+```ts
+const selectItemProperty = new CardViewSelectItemModel(options);
+```
+
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| key\* | string |  | Identifying key (important when editing the item) |
+| editable | boolean | false | Toggles whether the item is editable |
+| value | string |  | The original data value for the item |
+| options$\* | Observable<CardViewSelectItemOption[]> |  | The original data value for the item |
 
 
 
