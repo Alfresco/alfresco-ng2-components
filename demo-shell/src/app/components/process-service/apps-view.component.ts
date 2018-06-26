@@ -15,43 +15,25 @@
  * limitations under the License.
  */
 
-import { Component, OnDestroy } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppDefinitionRepresentationModel } from '@alfresco/adf-process-services';
 
 @Component({
     selector: 'app-process-list-view',
-    templateUrl: './apps-view.component.html'
+    templateUrl: './apps-view.component.html',
+    styleUrls: ['./apps-view.component.scss']
 })
-export class AppsViewComponent implements OnDestroy {
+export class AppsViewComponent {
+
+    public static LAYOUT_LIST = 'LIST';
+    public static LAYOUT_GRID = 'GRID';
 
     layoutType = 'GRID';
     presetColumn = 'apps-list';
     actions: any;
-    private routeSub: Subscription;
 
-    constructor(private router: Router) {
-        this.routeSub = this.router.events.subscribe(event => {
-            if (event instanceof NavigationEnd) {
-                this.fetchInfoFromUrl(event.url);
-            }
-        });
-
-        const routerState = this.router.routerState.snapshot;
-        this.fetchInfoFromUrl(routerState.url);
-    }
-
-    ngOnDestroy() {
-        this.routeSub.unsubscribe();
-    }
-
-    fetchInfoFromUrl(url: string) {
-        const parts = url.split('/');
-        if (parts.length > 2) {
-            this.layoutType = parts[3].toUpperCase();
-        }
-    }
+    constructor(private router: Router) { }
 
     onAppClicked(app: AppDefinitionRepresentationModel) {
         this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);
@@ -69,5 +51,9 @@ export class AppsViewComponent implements OnDestroy {
         const app = event.detail.value.obj;
         const id = app.id;
         this.router.navigate(['/activiti/apps', id || 0, 'tasks']);
+    }
+
+    toggleAppsView(event: any) {
+        this.layoutType = event && event.checked ? AppsViewComponent.LAYOUT_LIST : AppsViewComponent.LAYOUT_GRID;
     }
 }

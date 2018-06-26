@@ -1,6 +1,7 @@
 @import './app/components/app-layout/app-layout.component.scss';
 @import './app/components/files/files.component.scss';
 @import './app/components/login/login.component.scss';
+@import './app/components/process-service/apps-view.component.scss';
 @import './app/components/process-service/process-service.component.scss';
 
 
@@ -23,6 +24,7 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include adf-file-component-theme($theme);
 @include adf-login-component-theme($theme);
 @include adf-process-service-component-theme($theme);
+@include adf-apps-view-component-theme($theme);
 
 
 @include adf-content-services-theme($theme);

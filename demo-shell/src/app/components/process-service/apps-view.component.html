@@ -1,3 +1,11 @@
+<section class="adf-apps-toggle">
+    <mat-slide-toggle
+        id="appSwitch"
+        [color]="'primary'"
+        (change)="toggleAppsView($event)" class="toggle-view">
+      <div class="toggle-title">List</div>
+    </mat-slide-toggle>
+</section>
 <adf-apps
     [layoutType]="layoutType"
     [presetColumn]="presetColumn"

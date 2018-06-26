@@ -1,0 +1,19 @@
+@mixin adf-apps-view-component-theme($theme){
+
+.adf-apps-toggle {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+
+  .toggle-view {
+    margin: 15px;
+    margin-bottom: 0px;
+  }
+
+  .toggle-title {
+    font-size: 14px;
+    color: mat-color($primary);
+  }
+}
