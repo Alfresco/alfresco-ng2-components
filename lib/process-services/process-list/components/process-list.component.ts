@@ -225,8 +225,9 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
     selectFirst() {
         if (this.selectFirstRow) {
             if (!this.isListEmpty()) {
-                let row = this.rows[0];
-                this.currentInstanceId = row['id'];
+                let dataRow = this.rows[0];
+                dataRow.isSelected = true;
+                this.currentInstanceId = dataRow['id'];
             } else {
                 this.currentInstanceId = null;
             }
