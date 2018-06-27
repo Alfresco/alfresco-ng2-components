@@ -140,6 +140,7 @@ export class HostSettingsComponent implements OnInit {
             host: [oauth.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
             clientId: [oauth.clientId, Validators.required],
             redirectUri: [oauth.redirectUri, Validators.required],
+            redirectUriLogout: [oauth.redirectUriLogout],
             scope: [oauth.scope, Validators.required],
             secret: oauth.secret,
             silentLogin: oauth.silentLogin,
@@ -248,6 +249,10 @@ export class HostSettingsComponent implements OnInit {
 
     get redirectUri(): AbstractControl {
         return this.oauthConfig.get('redirectUri');
+    }
+
+    get redirectUriLogout(): AbstractControl {
+        return this.oauthConfig.get('redirectUriLogout');
     }
 
     get oauthConfig(): AbstractControl {
