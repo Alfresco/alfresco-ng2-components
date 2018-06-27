@@ -21,8 +21,9 @@ import { InheritPermissionDirective } from './inherited-button.directive';
 import { NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
-const fakeNodeWithInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}};
-const fakeNodeNoInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : false}};
+const fakeNodeWithInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}, allowableOperations: ['updatePermissions']};
+const fakeNodeNoInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : false}, allowableOperations: ['updatePermissions']};
+const fakeNodeWithInheritNoPermission: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}};
 
 describe('InheritPermissionDirective', () => {
 
@@ -92,6 +93,21 @@ describe('InheritPermissionDirective', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(element.querySelector('#update-notification')).toBeNull();
+        });
+    }));
+
+    it('should not update the node when node has no permission', async(() => {
+        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithInheritNoPermission));
+        let spyUpdateNode = spyOn(nodeService, 'updateNode');
+        component.updatedNode = true;
+        fixture.detectChanges();
+        const buttonPermission: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#sample-button-permission');
+        expect(buttonPermission).not.toBeNull();
+        expect(element.querySelector('#update-notification')).not.toBeNull();
+        buttonPermission.click();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(spyUpdateNode).not.toHaveBeenCalled();
         });
     }));
 
