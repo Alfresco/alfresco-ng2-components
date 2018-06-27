@@ -42,8 +42,6 @@ export class CardViewSelectItemComponent implements OnChanges {
 
     ngOnChanges(): void {
         this.value = this.property.value;
-
-        this.property.displayValue.subscribe(console.log);
     }
 
     isEditable(): boolean {
