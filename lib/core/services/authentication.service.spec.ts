@@ -22,6 +22,7 @@ import { CookieService } from './cookie.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { UserRepresentation } from 'alfresco-js-api';
 
 declare let jasmine: any;
 
@@ -348,6 +349,18 @@ describe('AuthenticationService', () => {
 
         it('[BPM] should return isALLProvider false', () => {
             expect(authService.isALLProvider()).toBe(false);
+        });
+
+        it('[BPM] should be able to retrieve current logged in user', (done) => {
+            spyOn(apiService.getInstance().activiti.profileApi, 'getProfile').and.returnValue(
+                Promise.resolve((<UserRepresentation> {
+                    email: 'fake-email'
+                })));
+
+            authService.getBpmLoggedUser().subscribe((fakeUser) => {
+                expect(fakeUser.email).toBe('fake-email');
+                done();
+            });
         });
     });
 

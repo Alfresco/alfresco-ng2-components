@@ -44,6 +44,7 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
+import { UserRepresentation } from 'alfresco-js-api';
 
 @Component({
     selector: 'adf-task-details',
@@ -179,6 +180,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     peopleSearch: Observable<UserProcessModel[]>;
 
+    currentLoggedUser: UserRepresentation;
+
     constructor(private taskListService: TaskListService,
                 private authService: AuthenticationService,
                 private peopleProcessService: PeopleProcessService,
@@ -199,6 +202,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
         this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
         this.cardViewUpdateService.itemClicked$.subscribe(this.clickTaskDetails.bind(this));
+
+        this.authService.getBpmLoggedUser().subscribe((user: UserRepresentation) => {
+            this.currentLoggedUser = user;
+        });
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -285,8 +292,22 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         return this.taskDetails.assignee ? true : false;
     }
 
+    private hasEmailAddress(): boolean {
+        return this.taskDetails.assignee.email ? true : false;
+    }
+
     isAssignedToMe(): boolean {
-        return this.isAssigned() ? this.taskDetails.assignee.email === this.authService.getBpmUsername() : false;
+        return this.isAssigned() && this.hasEmailAddress() ?
+                    this.isEmailEqual(this.taskDetails.assignee.email, this.currentLoggedUser.email) :
+                    this.isExternalIdEqual(this.taskDetails.assignee.externalId, this.currentLoggedUser.externalId);
+    }
+
+    private isEmailEqual(assigneeMail, currentLoggedEmail): boolean {
+        return assigneeMail.toLocaleLowerCase() === currentLoggedEmail.toLocaleLowerCase();
+    }
+
+    private isExternalIdEqual(assigneeExternalId, currentUserExternalId): boolean {
+        return assigneeExternalId.toLocaleLowerCase() === currentUserExternalId.toLocaleLowerCase();
     }
 
     isCompleteButtonEnabled(): boolean {

@@ -26,6 +26,7 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { UserRepresentation } from 'alfresco-js-api';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
@@ -226,6 +227,10 @@ export class AuthenticationService {
      */
     getRedirect(provider: string): string {
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
+    }
+
+    getBpmLoggedUser(): Observable<UserRepresentation> {
+        return Observable.fromPromise(this.alfrescoApi.getInstance().activiti.profileApi.getProfile());
     }
 
     private hasValidRedirection(provider: string): boolean {
