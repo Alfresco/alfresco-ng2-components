@@ -24,3 +24,4 @@ export * from './card-view-intitem.model';
 export * from './card-view-mapitem.model';
 export * from './card-view-textitem.model';
 export * from './card-view-keyvaluepairs.model';
+export * from './card-view-selectitem.model';
