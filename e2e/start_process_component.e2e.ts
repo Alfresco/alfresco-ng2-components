@@ -44,7 +44,7 @@ import dateFormat = require('dateformat');
 import AlfrescoApi = require('alfresco-js-api-node');
 import fs = require('fs');
 
-fdescribe('Start Process Component', () => {
+describe('Start Process Component', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let adfNavigationBarPage = new AdfNavigationBarPage();
