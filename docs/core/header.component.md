@@ -3,11 +3,13 @@ Added: v2.4.0
 Status: Active
 ---
 
-#Header component 
+## Header component 
 
 Reuseble header for Alfresco applications
 
 ## Basic usage
+
+```html
 <adf-layout-header 
     title="title" 
     logo="logo.png" 
@@ -17,15 +19,16 @@ Reuseble header for Alfresco applications
     <app-search-bar fxFlex="0 1 auto"></app-search-bar>
     <app-theme-picker></app-theme-picker>
 <adf-layout>
+```
 
 ## Class members
 
 ### Properties
-| Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| title | string | | Title of the application
-| logo | string| | Path to an image file for the application logo. Is optional.
-| color | string | | Primary color for the header
+| Name | Type | Description |
+| -- | -- | -- |
+| title | string |  Title of the application
+| logo | string| Path to an image file for the application logo. Is optional.
+| color | string | Primary color for the header
 
 ### Events
 | Name | Type | Description |
