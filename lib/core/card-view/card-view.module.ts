@@ -25,7 +25,8 @@ import {
     MatIconModule,
     MatInputModule,
     MatCheckboxModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
 } from '@angular/material';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -39,6 +40,7 @@ import { CardViewItemDispatcherComponent } from './components/card-view-item-dis
 import { CardViewMapItemComponent } from './components/card-view-mapitem/card-view-mapitem.component';
 import { CardViewTextItemComponent } from './components/card-view-textitem/card-view-textitem.component';
 import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
+import { CardViewSelectItemComponent } from './components/card-view-selectitem/card-view-selectitem.component';
 
 @NgModule({
     imports: [
@@ -52,6 +54,7 @@ import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyva
         MatInputModule,
         MatTableModule,
         MatIconModule,
+        MatSelectModule,
         MatButtonModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule
@@ -63,6 +66,7 @@ import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyva
         CardViewMapItemComponent,
         CardViewTextItemComponent,
         CardViewKeyValuePairsItemComponent,
+        CardViewSelectItemComponent,
         CardViewItemDispatcherComponent,
         CardViewContentProxyDirective
     ],
@@ -71,6 +75,7 @@ import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyva
         CardViewDateItemComponent,
         CardViewMapItemComponent,
         CardViewTextItemComponent,
+        CardViewSelectItemComponent,
         CardViewKeyValuePairsItemComponent
     ],
     exports: [
@@ -79,6 +84,7 @@ import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyva
         CardViewDateItemComponent,
         CardViewMapItemComponent,
         CardViewTextItemComponent,
+        CardViewSelectItemComponent,
         CardViewKeyValuePairsItemComponent
     ]
 })
