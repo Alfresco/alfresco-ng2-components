@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-input-rename  */
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
-import { NodesApiService } from '@alfresco/adf-core';
+import { NodesApiService, ContentService, PermissionsEnum } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Directive({
@@ -38,15 +38,20 @@ export class InheritPermissionDirective {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private nodeService: NodesApiService) {
+    constructor(private nodeService: NodesApiService,
+                private contentService: ContentService) {
     }
 
     onInheritPermissionClicked() {
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
-            const nodeBody = { permissions: { isInheritanceEnabled: !node.permissions.isInheritanceEnabled } };
-            this.nodeService.updateNode(this.nodeId, nodeBody, { include: ['permissions'] }).subscribe((nodeUpdated: MinimalNodeEntryEntity) => {
-                this.updated.emit(nodeUpdated);
-            }, (error) => this.error.emit(error));
+            if (this.contentService.hasPermission(node, PermissionsEnum.UPDATEPERMISSIONS)) {
+                const nodeBody = { permissions: { isInheritanceEnabled: !node.permissions.isInheritanceEnabled } };
+                this.nodeService.updateNode(this.nodeId, nodeBody, { include: ['permissions'] }).subscribe((nodeUpdated: MinimalNodeEntryEntity) => {
+                    this.updated.emit(nodeUpdated);
+                }, (error) => this.error.emit(error));
+            } else {
+                this.error.emit('PERMISSION_MANAGER.ERROR.NOT-ALLOWED');
+            }
         });
     }
 

@@ -18,6 +18,7 @@
 import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
+import { NodesApiService, ContentService, PermissionsEnum } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-add-permission',
@@ -43,22 +44,32 @@ export class AddPermissionComponent {
     currentNode: MinimalNodeEntryEntity;
     currentNodeRoles: string[];
 
-    constructor(private nodePermissionService: NodePermissionService) {
+    constructor(private nodePermissionService: NodePermissionService,
+                private nodeApiService: NodesApiService,
+                private contentService: ContentService) {
+        this.nodeApiService.getNode(this.nodeId).subscribe((node) => this.currentNode = node);
     }
 
     onSelect(selection: MinimalNodeEntity[]) {
         this.selectedItems = selection;
     }
 
+    isAddEnabled(): boolean {
+        return this.contentService.hasPermission(this.currentNode, PermissionsEnum.UPDATEPERMISSIONS) &&
+                this.selectedItems.length !== 0;
+    }
+
     applySelection() {
-        this.nodePermissionService.updateNodePermissions(this.nodeId, this.selectedItems)
-            .subscribe(
-                (node) => {
-                    this.success.emit(node);
-                },
-                (error) => {
-                    this.error.emit(error);
-                });
+        if (this.contentService.hasPermission(this.currentNode, PermissionsEnum.UPDATEPERMISSIONS)) {
+            this.nodePermissionService.updateNodePermissions(this.nodeId, this.selectedItems)
+                .subscribe(
+                    (node) => {
+                        this.success.emit(node);
+                    },
+                    (error) => {
+                        this.error.emit(error);
+                    });
+        }
     }
 
 }
