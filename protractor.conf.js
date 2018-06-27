@@ -23,7 +23,11 @@ exports.config = {
         browserName: 'chrome',
         chromeOptions: {
             prefs: {
-                'credentials_enable_service': false
+                'credentials_enable_service': false,
+                'download': {
+                    'prompt_for_download': false,
+                    'default_directory': './e2e/downloads/',
+                }
             },
             args: ['--incognito', '--headless']
         }
