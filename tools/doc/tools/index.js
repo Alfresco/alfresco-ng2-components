@@ -45,7 +45,16 @@ function initPhase(aggData) {
 }
 
 
-function readPhase(tree, pathname, aggData) {
+function readPhase(mdCache, aggData) {
+    var pathnames = Object.keys(mdCache);
+
+    pathnames.forEach(pathname => {
+        getFileData(mdCache[pathname].mdTree, pathname, aggData);
+    });
+}
+
+
+function getFileData(tree, pathname, aggData) {
     var itemName = path.basename(pathname, ".md");
 
     // Look for the first paragraph in the file by skipping other items.

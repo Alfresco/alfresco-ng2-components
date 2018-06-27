@@ -25,22 +25,10 @@ function initPhase(aggData) {
 }
 
 
-function readPhase(filenames, mdCache, aggData) {
-    for (var i = 0; i < filenames.length; i++) {
-        var pathname = filenames[i];
-        
-        if (program.verbose) {
-            console.log("Reading " + pathname);
-        }
-
-        tree = mdCache[pathname];
-
-        toolList.forEach(toolName => {
-            toolModules[toolName].readPhase(tree, pathname, aggData);
-        });
-    }
-
-    //console.log(JSON.stringify(aggData.mdFileData));
+function readPhase(mdCache, aggData) {
+    toolList.forEach(toolName => {
+        toolModules[toolName].readPhase(mdCache, aggData);
+    });
 }
 
 
@@ -51,7 +39,8 @@ function aggPhase(aggData) {
 }
 
 
-function updatePhase(filenames, mdCache, aggData) {
+function updatePhase(mdCache, aggData) {
+    var filenames = Object.keys(mdCache);
     var errorMessages;
 
     for (var i = 0; i < filenames.length; i++) {
@@ -62,7 +51,7 @@ function updatePhase(filenames, mdCache, aggData) {
             console.log("Reading " + pathname);
         }
         
-        var tree = mdCache[pathname];
+        var tree = mdCache[pathname].mdTree;
         var original = minimiseTree(tree);
 
         var modified = false;
@@ -169,11 +158,11 @@ function initMdCache(filenames) {
     var mdCache = {};
 
     for (var i = 0; i < filenames.length; i++) {
-        var pathname = filenames[i];//path.resolve(srcFolder, filenames[i]);
-        
+        var pathname = filenames[i];
+        mdCache[pathname] = {};
+
         var src = fs.readFileSync(pathname);
-        //var tree = remark().use(frontMatter, ["yaml"]).parse(src);
-        mdCache[pathname] = remark().use(frontMatter, ["yaml"]).parse(src);
+        mdCache[pathname].mdTree = remark().use(frontMatter, ["yaml"]).parse(src);
     }
 
     return mdCache;
@@ -241,13 +230,13 @@ console.log("Initialising...");
 initPhase(aggData);
 
 console.log("Analysing Markdown files...");
-readPhase(files, mdCache, aggData);
+readPhase(mdCache, aggData);
 
 console.log("Computing aggregate data...");
 aggPhase(aggData);
 
 console.log("Updating Markdown files...");
-updatePhase(files, mdCache, aggData);
+updatePhase(mdCache, aggData);
 
 if (program.timing) {
     var endTime = process.hrtime(startTime);

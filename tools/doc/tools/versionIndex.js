@@ -35,7 +35,16 @@ function initPhase(aggData) {
 }
 
 
-function readPhase(tree, pathname, aggData) {
+function readPhase(mdCache, aggData) {
+    var pathnames = Object.keys(mdCache);
+
+    pathnames.forEach(pathname => {
+        getFileData(mdCache[pathname].mdTree, pathname, aggData);
+    });
+}
+
+
+function getFileData(tree, pathname, aggData) {
     var compName = pathname;
     var angNameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))/;
 
