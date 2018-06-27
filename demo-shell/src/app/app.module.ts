@@ -109,7 +109,7 @@ import { ReportIssueComponent } from './components/report-issue/report-issue.com
         BlobPreviewComponent,
         BreadcrumbDemoComponent,
         NotificationsComponent,
-        ContentNodeSelectorComponent
+        ContentNodeSelectorComponent,
         ReportIssueComponent
     ],
     providers: [
