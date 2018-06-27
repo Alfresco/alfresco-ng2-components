@@ -15,48 +15,48 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ContentServicesPage = require('./pages/adf/contentServicesPage.js');
-var PaginationPage = require('./pages/adf/paginationPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
+import PaginationPage = require('./pages/adf/paginationPage.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var FolderModel = require('./models/ACS/folderModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import FolderModel = require('./models/ACS/folderModel.js');
 
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-var NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-var QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
+import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
 
-var TestConfig = require('./test.config.js');
-var Util = require('./util/util.js');
+import TestConfig = require('./test.config.js');
+import Util = require('./util/util.js');
 
 xdescribe('Pagination - returns to previous page when current is empty', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var contentServicesPage = new ContentServicesPage();
-    var paginationPage = new PaginationPage();
+    let adfLoginPage = new AdfLoginPage();
+    let contentServicesPage = new ContentServicesPage();
+    let paginationPage = new PaginationPage();
 
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
-    var folderModel = new FolderModel({'name': 'folderOne'});
+    let folderModel = new FolderModel({'name': 'folderOne'});
 
-    var retryNumber = 30;
-    var fileNames = [], nrOfFiles = 6;
-    var lastFile = 'newFile6.txt';
+    let retryNumber = 30;
+    let fileNames = [], nrOfFiles = 6;
+    let lastFile = 'newFile6.txt';
 
-    var itemsPerPage = {
+    let itemsPerPage = {
         five: '5',
-        fiveValue: 5,
+        fiveValue: 5
     };
 
-    var files = {
+    let files = {
         base: 'newFile',
         extension: '.txt'
     };
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, files.base, files.extension);
 
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
@@ -78,10 +78,10 @@ xdescribe('Pagination - returns to previous page when current is empty', () => {
 
     });
 
-    afterAll(function (done) {
+    afterAll((done) => {
         NodesAPI.deleteContent(acsUser, folderModel.id, () => {
             done();
-        })
+        });
     });
 
     it('Pagination - returns to previous page when current is empty', () => {

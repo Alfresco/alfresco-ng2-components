@@ -15,41 +15,41 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ContentServicesPage = require('./pages/adf/contentServicesPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var FolderModel = require('./models/ACS/folderModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import FolderModel = require('./models/ACS/folderModel.js');
 
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-var NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-var QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
+import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
 
-var TestConfig = require('./test.config.js');
-var Util = require('./util/util.js');
+import TestConfig = require('./test.config.js');
+import Util = require('./util/util.js');
 
 xdescribe('Enable infinite scrolling', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var contentServicesPage = new ContentServicesPage();
+    let adfLoginPage = new AdfLoginPage();
+    let contentServicesPage = new ContentServicesPage();
 
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
-    var folderModel = new FolderModel({ 'name': 'folderOne' });
+    let folderModel = new FolderModel({ 'name': 'folderOne' });
 
-    var retryNumber = 30;
-    var fileNames = [], nrOfFiles = 30;
-    var fileNum = 0;
+    let retryNumber = 30;
+    let fileNames = [], nrOfFiles = 30;
+    let fileNum = 0;
 
-    var files = {
+    let files = {
         base: 'newFile',
         extension: '.txt'
     };
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, files.base, files.extension);
 
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser)

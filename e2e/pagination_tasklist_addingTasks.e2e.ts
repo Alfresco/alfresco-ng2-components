@@ -15,45 +15,45 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var TasksPage = require('./pages/adf/process_services/tasksPage.js');
-var PaginationPage = require('./pages/adf/paginationPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import TasksPage = require('./pages/adf/process_services/tasksPage.js');
+import PaginationPage = require('./pages/adf/paginationPage.js');
 
-var apps = require('./restAPI/APS/reusableActions/apps');
-var CONSTANTS = require('./util/constants');
+import apps = require('./restAPI/APS/reusableActions/apps');
+import CONSTANTS = require('./util/constants');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
 
 xdescribe('Items per page set to 15 and adding of tasks', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var processServicesPage = new ProcessServicesPage();
-    var taskPage = new TasksPage();
-    var paginationPage = new PaginationPage();
+    let adfLoginPage = new AdfLoginPage();
+    let processServicesPage = new ProcessServicesPage();
+    let taskPage = new TasksPage();
+    let paginationPage = new PaginationPage();
 
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth, processUserModel;
-    var app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    var currentPage = 1, nrOfTasks = 25, appDetails, totalPages = 2;
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth, processUserModel;
+    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    let currentPage = 1, nrOfTasks = 25, appDetails, totalPages = 2;
 
-    var itemsPerPage = {
+    let itemsPerPage = {
         fifteen: '15',
         fifteenValue: 15
     };
 
-    afterAll(function (done) {
+    afterAll((done) => {
         apps.cleanupApp(basicAuth, appDetails)
             .then(() => {
-                return users.cleanupTenant(basicAuthAdmin, processUserModel.tenantId)
+                return users.cleanupTenant(basicAuthAdmin, processUserModel.tenantId);
             })
             .then(() => {
                 done();
-            })
+            });
     });
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         users.createTenantAndUser(basicAuthAdmin)
             .then(function (user) {
                 processUserModel = user;
@@ -61,8 +61,8 @@ xdescribe('Items per page set to 15 and adding of tasks', () => {
                 apps.importPublishDeployApp(basicAuth, app.file_location)
                     .then(function (resultApp) {
                         appDetails = resultApp;
-                        var arr = [];
-                        for (var i = 0; i < nrOfTasks; i++) {
+                        let arr = [];
+                        for (let i = 0; i < nrOfTasks; i++) {
                             arr.push(apps.startProcess(basicAuth, resultApp));
                         }
 

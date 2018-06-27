@@ -15,37 +15,37 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
-var AdfAnalyticsPage = require('./pages/adf/process_services/analyticsPage');
-var AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var AdfAppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
-var TestConfig = require('./test.config.js');
-var TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
-var UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
-var Tenant = require('./models/APS/Tenant');
-var User = require('./models/APS/User');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import AdfAnalyticsPage = require('./pages/adf/process_services/analyticsPage');
+import AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import AdfAppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
+import TestConfig = require('./test.config.js');
+import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
+import Tenant = require('./models/APS/Tenant');
+import User = require('./models/APS/User');
 
 describe('Create smoke test for analytics', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var adfNavigationBarPage = new AdfNavigationBarPage();
-    var adfAppNavigationBarPage = new AdfAppNavigationBarPage();
-    var adfAnalyticsPage = new AdfAnalyticsPage();
-    var adfProcessServicesPage = new AdfProcessServicesPage();
-    var tenantsAPI = new TenantsAPI();
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var tenantId, procUserModel;
-    var reportTitle = 'New Title';
+    let adfLoginPage = new AdfLoginPage();
+    let adfNavigationBarPage = new AdfNavigationBarPage();
+    let adfAppNavigationBarPage = new AdfAppNavigationBarPage();
+    let adfAnalyticsPage = new AdfAnalyticsPage();
+    let adfProcessServicesPage = new AdfProcessServicesPage();
+    let tenantsAPI = new TenantsAPI();
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let tenantId, procUserModel;
+    let reportTitle = 'New Title';
 
-    beforeAll(function (done) {
+    beforeAll((done) => {
         protractor.promise.all([
             tenantsAPI.createTenant(basicAuthAdmin, new Tenant())
                 .then(function (result) {
                     tenantId = JSON.parse(result.responseBody).id;
                     procUserModel = new User({ tenantId: tenantId });
-                    return new UserAPI().createUser(basicAuthAdmin, procUserModel)
+                    return new UserAPI().createUser(basicAuthAdmin, procUserModel);
                 })
         ]).then(() => {
             adfLoginPage.loginToProcessServicesUsingUserModel(procUserModel);
@@ -54,7 +54,7 @@ describe('Create smoke test for analytics', () => {
         });
     });
 
-    afterAll(function (done) {
+    afterAll((done) => {
         tenantsAPI.deleteTenant(basicAuthAdmin, tenantId.toString())
             .then(() => {
                 done();

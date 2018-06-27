@@ -15,30 +15,30 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var TrashcanPage = require('./pages/adf/trashcanPage.js');
-var PaginationPage = require('./pages/adf/paginationPage.js');
-var NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import TrashcanPage = require('./pages/adf/trashcanPage.js');
+import PaginationPage = require('./pages/adf/paginationPage.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var FolderModel = require('./models/ACS/folderModel.js');
-var FilesModel = require('./models/ACS/filesModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import FolderModel = require('./models/ACS/folderModel.js');
+import FilesModel = require('./models/ACS/filesModel.js');
 
-var NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-var QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
+import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 
-var TestConfig = require('./test.config.js');
-var Util = require('./util/util.js');
-var retryNumber = 100;
+import TestConfig = require('./test.config.js');
+import Util = require('./util/util.js');
+let retryNumber = 100;
 
 xdescribe('Trashcan - Pagination', () => {
-    var pagination = {
+    let pagination = {
         base: 'newFile',
-        extension: '.txt',
+        extension: '.txt'
     };
 
-    var itemsPerPage = {
+    let itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -47,24 +47,24 @@ xdescribe('Trashcan - Pagination', () => {
         fifteenValue: 15,
         twenty: '20',
         twentyValue: 20,
-        default: '25',
+        default: '25'
     };
 
-    var adfLoginPage = new AdfLoginPage();
-    var trashcanPage = new TrashcanPage();
-    var paginationPage = new PaginationPage();
-    var navigationBarPage = new NavigationBarPage();
+    let adfLoginPage = new AdfLoginPage();
+    let trashcanPage = new TrashcanPage();
+    let paginationPage = new PaginationPage();
+    let navigationBarPage = new NavigationBarPage();
 
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
-    var newFolderModel = new FolderModel({'name': 'newFolder'});
-    var fileNames = [], nrOfFiles = 20, currentPage = 1;
-    var filesModel = new FilesModel();
+    let newFolderModel = new FolderModel({'name': 'newFolder'});
+    let fileNames = [], nrOfFiles = 20, currentPage = 1;
+    let filesModel = new FilesModel();
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         fileNames = Util.generateSeqeunceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
 
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
@@ -92,7 +92,7 @@ xdescribe('Trashcan - Pagination', () => {
                             res();
                         });
                     });
-                };
+                }
 
                 return filesModel.getFiles().reduce((acc, item) => {
                     return acc.then(() => a(item));
@@ -101,7 +101,7 @@ xdescribe('Trashcan - Pagination', () => {
             })
             .then(() => {
                 done();
-            })
+            });
     });
 
     it('[C272811] 20 Items per page', () => {
@@ -156,9 +156,3 @@ xdescribe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 });
-
-
-
-
-
-

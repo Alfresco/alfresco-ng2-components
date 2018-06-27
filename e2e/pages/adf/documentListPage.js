@@ -302,8 +302,7 @@ module.exports = Page.create({
             var multipleUploads = element(by.cssContainingText("div[ng-reflect-klass='file-dialog'] div[class='title'] ", "uploads complete"));
 
             dialogUpload.count().then(function(count) {
-                console.log(count);
-                if (count == 1) {
+                if (count === 1) {
                     Util.waitUntilElementIsVisible(singleUpload);
                 }
                 else if (count > 1) {
@@ -749,7 +748,6 @@ module.exports = Page.create({
             var firstFolder = element(by.xpath("//img[not (contains(@src, 'folder.svg'))]/../../../../td/div/div[(contains(@data-automation-id, 'date_'))]"));
 
             var todaysDate = Util.getCrtDateLongFormat();
-            console.log("date:" + todaysDate);
 
             Util.waitUntilElementIsVisible(firstFolder);
             Util.waitUntilElementIsVisible(this.documentList);
@@ -766,7 +764,6 @@ module.exports = Page.create({
             var firstFile = element(by.xpath("//img[not (contains(@src, 'folder.svg'))]/../../../../td/div/div[(contains(@data-automation-id, 'date_'))]"));
 
             var todaysDate = Util.getCrtDateLongFormat();
-            console.log("date:" + todaysDate);
 
             Util.waitUntilElementIsVisible(firstFile);
             Util.waitUntilElementIsVisible(this.documentList);

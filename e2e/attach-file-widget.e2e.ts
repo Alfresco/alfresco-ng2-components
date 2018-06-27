@@ -15,48 +15,48 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var TasksPage = require('./pages/adf/process_services/tasksPage.js');
-var ViewerPage = require('./pages/adf/viewerPage.js');
-var UsingWidget = require('./pages/adf/process_services/widgets/usingWidget.js');
-var ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import TasksPage = require('./pages/adf/process_services/tasksPage.js');
+import ViewerPage = require('./pages/adf/viewerPage.js');
+import UsingWidget = require('./pages/adf/process_services/widgets/usingWidget.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 
-var UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
-var CONSTANTS = require('./util/constants');
-var AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
-var TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
-var RuntimeAppDefinitionAPI = require('./restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
+import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
+import CONSTANTS = require('./util/constants');
+import AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
+import RuntimeAppDefinitionAPI = require('./restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
 
-var Tenant = require('./models/APS/Tenant');
-var AppDefinition = require('./models/APS/AppDefinition');
-var FileModel = require('./models/ACS/fileModel.js');
-var User = require('./models/APS/User');
-var AppPublish = require('./models/APS/AppPublish');
+import Tenant = require('./models/APS/Tenant');
+import AppDefinition = require('./models/APS/AppDefinition');
+import FileModel = require('./models/ACS/fileModel.js');
+import User = require('./models/APS/User');
+import AppPublish = require('./models/APS/AppPublish');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
 
 xdescribe('Start Task - Task App', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var viewerPage = new ViewerPage();
-    var usingWidget = new UsingWidget();
-    var processServicesPage = new ProcessServicesPage();
-    var taskPage = new TasksPage();
+    let adfLoginPage = new AdfLoginPage();
+    let viewerPage = new ViewerPage();
+    let usingWidget = new UsingWidget();
+    let processServicesPage = new ProcessServicesPage();
+    let taskPage = new TasksPage();
 
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth, processUserModel;
-    var app = resources.Files.WIDGETS_SMOKE_TEST;
-    var appModel, modelId;
-    var tasks = ['View file'];
-    var pdfFile = new FileModel({'name': resources.Files.ADF_DOCUMENTS.PDF.file_name});
-    var appFilds = app.form_fields;
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth, processUserModel;
+    let app = resources.Files.WIDGETS_SMOKE_TEST;
+    let appModel, modelId;
+    let tasks = ['View file'];
+    let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    let appFilds = app.form_fields;
 
-    beforeAll(function (done) {
+    beforeAll((done) => {
         new TenantsAPI().createTenant(basicAuthAdmin, new Tenant())
             .then(function (result) {
-                return new UserAPI().createUser(basicAuthAdmin, processUserModel = new User({tenantId: JSON.parse(result.responseBody).id}));
+                return new UserAPI().createUser(basicAuthAdmin, processUserModel = new User({ tenantId: JSON.parse(result.responseBody).id }));
             })
             .then(function (response) {
                 basicAuth = new BasicAuthorization(processUserModel.email, processUserModel.password);
@@ -71,20 +71,20 @@ xdescribe('Start Task - Task App', () => {
                 return new AppDefinitionsAPI().publishApp(basicAuth, appModel.id.toString(), new AppPublish());
             })
             .then(function (response) {
-                return new RuntimeAppDefinitionAPI().deployApp(basicAuth, new AppDefinition({id: appModel.id.toString()}));
+                return new RuntimeAppDefinitionAPI().deployApp(basicAuth, new AppDefinition({ id: appModel.id.toString() }));
             })
             .then(function (response) {
                 done();
             });
     });
 
-    afterAll(function (done) {
+    afterAll((done) => {
         return new TenantsAPI().deleteTenant(basicAuthAdmin, processUserModel.tenantId.toString())
             .then(function (result) {
                 done();
             })
             .catch(function (error) {
-                console.log('Failed with error: ', error);
+                // console.log('Failed with error: ', error);
             });
     });
 
@@ -106,4 +106,3 @@ xdescribe('Start Task - Task App', () => {
     });
 
 });
-

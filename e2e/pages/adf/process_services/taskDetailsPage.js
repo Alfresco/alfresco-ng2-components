@@ -90,9 +90,9 @@ var TaskDetailsPage = function () {
     this.selectActivityTab = function () {
         Util.waitUntilElementIsVisible(activityTab);
         activityTab.getAttribute('aria-selected').then(function (check) {
-            if (check == 'false') {
+            if (check === 'false') {
                 activityTab.click();
-                expect(activityTab.getAttribute('aria-selected')=="true");
+                expect(activityTab.getAttribute('aria-selected')==="true");
             }
         });
         return this;
@@ -101,9 +101,9 @@ var TaskDetailsPage = function () {
     this.selectDetailsTab = function () {
         Util.waitUntilElementIsVisible(detailsTab);
         detailsTab.getAttribute('aria-selected').then(function (check) {
-            if (check == 'false') {
+            if (check === 'false') {
                 detailsTab.click();
-                expect(detailsTab.getAttribute('aria-selected')=="true");
+                expect(detailsTab.getAttribute('aria-selected')==="true");
             }
         });
         return this;

@@ -368,7 +368,7 @@ var LoginPage = function (){
     this.enableFooter = function (){
         Util.waitUntilElementIsVisible(footerSwitch);
         footerSwitch.getAttribute('class').then(function (check) {
-            if (check == 'mat-slide-toggle mat-primary'){
+            if (check === 'mat-slide-toggle mat-primary'){
                 footerSwitch.click();
                 expect(footerSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
             }
@@ -382,7 +382,7 @@ var LoginPage = function (){
     this.disableFooter = function (){
         Util.waitUntilElementIsVisible(footerSwitch);
         footerSwitch.getAttribute('class').then(function (check) {
-            if (check =='mat-slide-toggle mat-primary mat-checked'){
+            if (check ==='mat-slide-toggle mat-primary mat-checked'){
                 footerSwitch.click();
                 expect(footerSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
             }

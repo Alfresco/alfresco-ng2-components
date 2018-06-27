@@ -15,40 +15,40 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var PaginationPage = require('./pages/adf/paginationPage.js');
-var ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-var ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import PaginationPage = require('./pages/adf/paginationPage.js');
+import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
+import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
 
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
-var apps = require('./restAPI/APS/reusableActions/apps');
-var users = require('./restAPI/APS/reusableActions/users');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
+import apps = require('./restAPI/APS/reusableActions/apps');
+import users = require('./restAPI/APS/reusableActions/users');
 
 xdescribe('Test Process List - Pagination when adding processes', () => {
 
-    var itemsPerPage = {
+    let itemsPerPage = {
         fifteen: '15',
         fifteenValue: 15
     };
 
-    var adfLoginPage = new AdfLoginPage();
-    var processServicesPage = new ProcessServicesPage();
-    var paginationPage = new PaginationPage();
-    var processFiltersPage = new ProcessFiltersPage();
-    var processDetailsPage = new ProcessDetailsPage();
+    let adfLoginPage = new AdfLoginPage();
+    let processServicesPage = new ProcessServicesPage();
+    let paginationPage = new PaginationPage();
+    let processFiltersPage = new ProcessFiltersPage();
+    let processDetailsPage = new ProcessDetailsPage();
 
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth;
-    var processUserModel;
-    var app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    var nrOfProcesses = 25;
-    var page, totalPages, appDetails;
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth;
+    let processUserModel;
+    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    let nrOfProcesses = 25;
+    let page, totalPages, appDetails;
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         users.createTenantAndUser(basicAuthAdmin)
             .then(function (user) {
                 processUserModel = user;
@@ -56,8 +56,8 @@ xdescribe('Test Process List - Pagination when adding processes', () => {
                 apps.importPublishDeployApp(basicAuth, app.file_location)
                     .then(function (resultApp) {
                         appDetails = resultApp;
-                        var arr = [];
-                        for (var i = 0; i < nrOfProcesses; i++) {
+                        let arr = [];
+                        for (let i = 0; i < nrOfProcesses; i++) {
                             arr.push(apps.startProcess(basicAuth, resultApp));
                         }
 
@@ -72,15 +72,14 @@ xdescribe('Test Process List - Pagination when adding processes', () => {
             });
     });
 
-
-    afterAll(function (done) {
+    afterAll((done) => {
         apps.cleanupApp(basicAuth, appDetails)
             .then(() => {
-                return users.cleanupTenant(basicAuthAdmin, processUserModel.tenantId)
+                return users.cleanupTenant(basicAuthAdmin, processUserModel.tenantId);
             })
             .then(() => {
                 done();
-            })
+            });
     });
 
     it('[C261046] Items per page set to 15 and adding of processes', () => {
@@ -113,9 +112,3 @@ xdescribe('Test Process List - Pagination when adding processes', () => {
         paginationPage.checkPreviousPageButtonIsEnabled();
     });
 });
-
-
-
-
-
-

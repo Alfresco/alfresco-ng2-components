@@ -15,35 +15,35 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var TasksPage = require('./pages/adf/process_services/tasksPage.js');
-var PaginationPage = require('./pages/adf/paginationPage.js');
-var NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import TasksPage = require('./pages/adf/process_services/tasksPage.js');
+import PaginationPage = require('./pages/adf/paginationPage.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
-var CONSTANTS = require('./util/constants');
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import CONSTANTS = require('./util/constants');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-var users = require('./restAPI/APS/reusableActions/users');
-var apps = require('./restAPI/APS/reusableActions/apps');
+import users = require('./restAPI/APS/reusableActions/users');
+import apps = require('./restAPI/APS/reusableActions/apps');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
 
-xdescribe('Task List Pagination', () =>{
+xdescribe('Task List Pagination', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var processServicesPage = new ProcessServicesPage();
-    var taskPage = new TasksPage();
-    var paginationPage = new PaginationPage();
-    var navigationBarPage = new NavigationBarPage();
+    let adfLoginPage = new AdfLoginPage();
+    let processServicesPage = new ProcessServicesPage();
+    let taskPage = new TasksPage();
+    let paginationPage = new PaginationPage();
+    let navigationBarPage = new NavigationBarPage();
 
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth, processUserModel, processUserModel1;
-    var app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    var currentPage = 1, nrOfTasks = 20, appDetails, totalPages;
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth, processUserModel, processUserModel1;
+    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    let currentPage = 1, nrOfTasks = 20, appDetails, totalPages;
 
-    var itemsPerPage = {
+    let itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -52,11 +52,10 @@ xdescribe('Task List Pagination', () =>{
         fifteenValue: 15,
         twenty: '20',
         twentyValue: 20,
-        default: '25',
+        default: '25'
     };
 
-
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         users.createTenantAndUser(basicAuthAdmin)
             .then(function (user) {
                 users.createTenantAndUser(basicAuthAdmin)
@@ -68,12 +67,12 @@ xdescribe('Task List Pagination', () =>{
                 apps.importPublishDeployApp(basicAuth, app.file_location)
                     .then(function (resultApp) {
                         appDetails = resultApp;
-                        var arr = [];
-                        for (var i = 0; i < nrOfTasks; i++) {
+                        let arr = [];
+                        for (let i = 0; i < nrOfTasks; i++) {
                             arr.push(apps.startProcess(basicAuth, resultApp));
                         }
 
-                        Promise.all(arr).then(() =>{
+                        Promise.all(arr).then(() => {
                             done();
                         });
                     })
@@ -83,7 +82,7 @@ xdescribe('Task List Pagination', () =>{
             });
     });
 
-    it('Pagination at first 20 started tasks', () =>{
+    it('Pagination at first 20 started tasks', () => {
         adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
@@ -97,7 +96,7 @@ xdescribe('Task List Pagination', () =>{
         navigationBarPage.clickLogoutButton();
     });
 
-    it('Items per page set to 5', () =>{
+    it('Items per page set to 5', () => {
         adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
@@ -128,7 +127,7 @@ xdescribe('Task List Pagination', () =>{
         navigationBarPage.clickLogoutButton();
     });
 
-    it('Items per page set to 10', () =>{
+    it('Items per page set to 10', () => {
         adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
@@ -148,7 +147,7 @@ xdescribe('Task List Pagination', () =>{
         navigationBarPage.clickLogoutButton();
     });
 
-    it('Items per page set to 15', () =>{
+    it('Items per page set to 15', () => {
         adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
@@ -167,7 +166,7 @@ xdescribe('Task List Pagination', () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    it('[C261006] Page number dropdown', () =>{
+    it('[C261006] Page number dropdown', () => {
         currentPage = 1;
         totalPages = 2;
         processServicesPage.goToProcessServices().goToTaskApp();
@@ -210,7 +209,7 @@ xdescribe('Task List Pagination', () =>{
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('Pagination in an empty task list', () =>{
+    it('Pagination in an empty task list', () => {
         adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel1);
         processServicesPage.goToProcessServices().goToTaskApp();
         paginationPage.checkPaginationIsNotDisplayed();

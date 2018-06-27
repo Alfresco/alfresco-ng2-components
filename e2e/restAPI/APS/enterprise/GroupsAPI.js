@@ -95,7 +95,7 @@ var GroupsAPI = function () {
             request.del(options)
                 .on('response', function (response) {
                     resolve(response);
-                    console.info("Delete user from group response:", response.statusCode, response.statusMessage);
+                    // console.info("Delete user from group response:", response.statusCode, response.statusMessage);
                 })
                 .on('error', function (err) {
                     resolve(err);

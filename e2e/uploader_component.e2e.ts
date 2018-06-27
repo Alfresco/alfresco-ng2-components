@@ -15,66 +15,66 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ContentServicesPage = require('./pages/adf/contentServicesPage.js');
-var UploadDialog = require('./pages/adf/dialog/uploadDialog.js');
-var UploadToggles = require('./pages/adf/dialog/uploadToggles.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
+import UploadDialog = require('./pages/adf/dialog/uploadDialog.js');
+import UploadToggles = require('./pages/adf/dialog/uploadToggles.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var FileModel = require('./models/ACS/fileModel.js');
-var FolderModel = require('./models/ACS/folderModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import FileModel = require('./models/ACS/fileModel.js');
+import FolderModel = require('./models/ACS/folderModel.js');
 
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-var NodesAPI = require('./restAPI/ACS/NodesAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
 
 xdescribe('Test Uploader component', () => {
 
-    var contentServicesPage = new ContentServicesPage();
-    var uploadDialog = new UploadDialog();
-    var uploadToggles = new UploadToggles();
-    var adfLoginPage = new AdfLoginPage();
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let contentServicesPage = new ContentServicesPage();
+    let uploadDialog = new UploadDialog();
+    let uploadToggles = new UploadToggles();
+    let adfLoginPage = new AdfLoginPage();
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
-    var firstPdfFileModel = new FileModel({
+    let firstPdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     });
-    var docxFileModel = new FileModel({
+    let docxFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
         'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
-    var pdfFileModel = new FileModel({'name': resources.Files.ADF_DOCUMENTS.PDF.file_name});
-    var pngFileModel = new FileModel({
+    let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    let pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-    var largeFile = new FileModel({
+    let largeFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
         'location': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
     });
-    var fileWithSpecificSize = new FileModel({
+    let fileWithSpecificSize = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_400B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT_400B.file_location
     });
-    var emptyFile = new FileModel({
+    let emptyFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
-    var folderOne = new FolderModel({
+    let folderOne = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_location
     });
-    var uploadedFileInFolder = new FileModel({'name': resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_name});
-    var filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
-    var filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
+    let uploadedFileInFolder = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_name });
+    let filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
+    let filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
             .then(() => {
                 adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -82,7 +82,7 @@ xdescribe('Test Uploader component', () => {
             })
             .then(() => {
                 return protractor.promise.all([
-                    NodesAPI.uploadFileViaAPI(acsUser, firstPdfFileModel, '-my-', false),
+                    NodesAPI.uploadFileViaAPI(acsUser, firstPdfFileModel, '-my-', false)
                 ]);
             });
         done();
@@ -205,7 +205,7 @@ xdescribe('Test Uploader component', () => {
         contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
         pdfFileModel.setVersion('1');
         contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
-        uploadDialog.fileIsUploaded(pdfFileModel.name)
+        uploadDialog.fileIsUploaded(pdfFileModel.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
         contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.getVersionName());
         contentServicesPage.deleteContent(pdfFileModel.name).checkContentIsNotDisplayed(pdfFileModel.name);
@@ -226,25 +226,39 @@ xdescribe('Test Uploader component', () => {
 
     it('16. The files uploaded before closing the upload dialog box are not displayed anymore in the upload box', () => {
         contentServicesPage.uploadFile(docxFileModel.location).checkContentIsDisplayed(docxFileModel.name);
+
         uploadDialog.fileIsUploaded(docxFileModel.name);
+
         contentServicesPage.uploadFile(pngFileModel.location).checkContentIsDisplayed(pngFileModel.name);
+
         uploadDialog.fileIsUploaded(pngFileModel.name).fileIsUploaded(docxFileModel.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+
         contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
+
         uploadDialog.fileIsUploaded(pdfFileModel.name).fileIsNotDisplayedInDialog(pngFileModel.name).fileIsNotDisplayedInDialog(docxFileModel.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.deleteContents([docxFileModel.name, pngFileModel.name, pdfFileModel.name]).checkContentsAreNotDisplayed([docxFileModel.name, pngFileModel.name, pdfFileModel.name]);
+
+        contentServicesPage.deleteContents([docxFileModel.name, pngFileModel.name, pdfFileModel.name])
+            .checkContentsAreNotDisplayed([docxFileModel.name, pngFileModel.name, pdfFileModel.name]);
     });
 
     it('18. Upload files on the same time', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
+
         uploadToggles.enableMultipleFileUpload();
+
         contentServicesPage.uploadMultipleFile(filesLocation).checkContentsAreDisplayed(filesName);
+
         uploadDialog.filesAreUploaded(filesName);
+
         expect(uploadDialog.getTitleText()).toEqual('Uploaded 4 / 4');
+
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+
         contentServicesPage.deleteContents(filesName).checkContentsAreNotDisplayed(filesName);
+
         uploadToggles.disableMultipleFileUpload();
     });
 

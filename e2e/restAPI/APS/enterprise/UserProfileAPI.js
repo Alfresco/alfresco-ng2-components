@@ -28,7 +28,7 @@ var UserProfileAPI = function () {
     var uri = url(requestBase.getBaseURL(CONSTANTS.APPLICATION.ADF_APS), '/profile-picture');
 
     this.changeProfilePicture = function (auth, filePath) {
-        // console.info('[ REST API ] Change profile picture", filePath, 'for user', auth.user, auth.password);
+        // // console.info('[ REST API ] Change profile picture", filePath, 'for user', auth.user, auth.password);
         var absoluteFilePath = path.join(TestConfig.main.rootPath + filePath);
 
         var options = {
@@ -48,11 +48,11 @@ var UserProfileAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info("Change profile picture response:", data.toString());
+                        // console.info("Change profile picture response:", data.toString());
                     });
                 })
                 .on('error', function (err) {
-                    console.info("Change profile picture Error:", err);
+                    // console.info("Change profile picture Error:", err);
                     reject(err);
                 });
         });

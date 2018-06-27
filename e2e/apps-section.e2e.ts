@@ -15,29 +15,29 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
-var CONSTANTS = require('./util/constants');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import CONSTANTS = require('./util/constants');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
-var apps = require('./restAPI/APS/reusableActions/apps');
-var users = require('./restAPI/APS/reusableActions/users');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
+import apps = require('./restAPI/APS/reusableActions/apps');
+import users = require('./restAPI/APS/reusableActions/users');
 
 xdescribe('Attachment list', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var navigationBarPage = new NavigationBarPage();
-    var processServicesPage = new ProcessServicesPage();
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth;
-    var processUserModel;
-    var app = resources.Files.APP_WITH_PROCESSES;
+    let adfLoginPage = new AdfLoginPage();
+    let navigationBarPage = new NavigationBarPage();
+    let processServicesPage = new ProcessServicesPage();
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth;
+    let processUserModel;
+    let app = resources.Files.APP_WITH_PROCESSES;
 
-    beforeAll(function (done) {
+    beforeAll((done) => {
         users.createTenantAndUser(basicAuthAdmin)
             .then(function (user) {
                 processUserModel = user;
@@ -47,6 +47,7 @@ xdescribe('Attachment list', () => {
                         adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
                         done();
                     })
+
                     .catch(function (error) {
                         done.fail('Create test precondition failed: ' + error);
                     });
@@ -62,12 +63,3 @@ xdescribe('Attachment list', () => {
     });
 
 });
-
-
-
-
-
-
-
-
-

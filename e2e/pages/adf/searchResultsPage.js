@@ -104,7 +104,7 @@ var SearchResultsPage = function () {
     this.sortByOrder = function(sortOrder) {
         Util.waitUntilElementIsVisible(element(sortArrowLocator));
         return element(sortArrowLocator).getText().then(function (result) {
-            if(sortOrder==true) {
+            if(sortOrder===true) {
                 if(result !== 'arrow_upward') {
                         element(sortArrowLocator).click();
                 };

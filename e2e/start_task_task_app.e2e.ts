@@ -15,52 +15,52 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var TasksPage = require('./pages/adf/process_services/tasksPage.js');
-var AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import TasksPage = require('./pages/adf/process_services/tasksPage.js');
+import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
 
-var CONSTANTS = require('./util/constants');
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import CONSTANTS = require('./util/constants');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-var UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
-var TaskAPI = require('./restAPI/APS/enterprise/TaskAPI');
-var FormModelsAPI = require('./restAPI/APS/enterprise/FormModelsAPI.js');
-var AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
-var TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
+import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
+import TaskAPI = require('./restAPI/APS/enterprise/TaskAPI');
+import FormModelsAPI = require('./restAPI/APS/enterprise/FormModelsAPI.js');
+import AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
+import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
 
-var User = require('./models/APS/User');
-var Tenant = require('./models/APS/Tenant');
-var Task = require('./models/APS/Task');
-var TaskModel = require('./models/APS/TaskModel.js');
-var FormModel = require('./models/APS/FormModel.js');
-var FileModel = require('./models/ACS/fileModel.js');
+import User = require('./models/APS/User');
+import Tenant = require('./models/APS/Tenant');
+import Task = require('./models/APS/Task');
+import TaskModel = require('./models/APS/TaskModel.js');
+import FormModel = require('./models/APS/FormModel.js');
+import FileModel = require('./models/ACS/fileModel.js');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
 
-var dateFormat = require('dateformat');
+import dateFormat = require('dateformat');
 
-xdescribe("Start Task - Task App", () => {
+xdescribe('Start Task - Task App', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var processServicesPage = new ProcessServicesPage();
-    var attachmentListPage = new AttachmentListPage();
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth, processUserModel, assigneeUserModel;
-    var app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    var formTextField = app.form_fields.form_fieldId;
-    var formFieldValue = "First value ";
-    var taskPage = new TasksPage();
-    var taskModel, formModel;
-    var firstComment = "comm1", firstChecklist = "checklist1";
-    var tasks = ["Modifying task", "Information box", "No form", "Not Created", "Refreshing form", "Assignee task", "Attach File"];
-    var jpgFile = new FileModel({
-        "location": resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        "name": resources.Files.ADF_DOCUMENTS.JPG.file_name
+    let adfLoginPage = new AdfLoginPage();
+    let processServicesPage = new ProcessServicesPage();
+    let attachmentListPage = new AttachmentListPage();
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth, processUserModel, assigneeUserModel;
+    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    let formTextField = app.form_fields.form_fieldId;
+    let formFieldValue = 'First value ';
+    let taskPage = new TasksPage();
+    let taskModel, formModel;
+    let firstComment = 'comm1', firstChecklist = 'checklist1';
+    let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
+    let jpgFile = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         new TenantsAPI().createTenant(basicAuthAdmin, new Tenant())
             .then(function (result) {
                 new UserAPI().createUser(basicAuthAdmin, assigneeUserModel = new User({ tenantId: JSON.parse(result.responseBody).id }));
@@ -75,13 +75,13 @@ xdescribe("Start Task - Task App", () => {
             });
     });
 
-    afterAll(function (done) {
+    afterAll((done) => {
         return new TenantsAPI().deleteTenant(basicAuthAdmin, processUserModel.tenantId.toString())
             .then(function (result) {
                 done();
             })
             .catch(function (error) {
-                console.log('Failed with error: ', error);
+                // console.log('Failed with error: ', error);
             });
     });
 
@@ -117,7 +117,7 @@ xdescribe("Start Task - Task App", () => {
                 expect(taskPage.usingTaskDetails().getTitle()).toEqual('Activities');
             })
             .then(() => {
-                return TaskAPI.tasksQuery(basicAuth, new Task({ sort: 'created-desc' }))
+                return TaskAPI.tasksQuery(basicAuth, new Task({ sort: 'created-desc' }));
             })
             .then(function (response) {
                 taskModel = new TaskModel(JSON.parse(response.responseBody).data[0]);
@@ -127,18 +127,18 @@ xdescribe("Start Task - Task App", () => {
                 expect(taskPage.usingTaskDetails().getDescription()).toEqual(taskModel.getDescription());
                 expect(taskPage.usingTaskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
                 expect(taskPage.usingTaskDetails().getCategory())
-                    .toEqual(taskModel.getCategory() == null ? CONSTANTS.TASKDETAILS.NO_CATEGORY : taskModel.getCategory());
+                    .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASKDETAILS.NO_CATEGORY : taskModel.getCategory());
                 expect(taskPage.usingTaskDetails().getDueDate())
-                    .toEqual(taskModel.getDueDate() == null ? CONSTANTS.TASKDETAILS.NO_DATE : taskModel.getDueDate());
+                    .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASKDETAILS.NO_DATE : taskModel.getDueDate());
                 expect(taskPage.usingTaskDetails().getParentName())
-                    .toEqual(taskModel.getParentTaskName() == null ? CONSTANTS.TASKDETAILS.NO_PARENT : taskModel.getParentTaskName());
+                    .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASKDETAILS.NO_PARENT : taskModel.getParentTaskName());
                 expect(taskPage.usingTaskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
                 return new FormModelsAPI().getForm(basicAuth, taskModel.getFormKey());
             })
             .then(function (response) {
                 formModel = new FormModel(JSON.parse(response.responseBody));
                 expect(taskPage.usingTaskDetails().getFormName())
-                    .toEqual(formModel.getName() == null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
+                    .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
             });
     });
 
@@ -203,6 +203,6 @@ xdescribe("Start Task - Task App", () => {
             .then(() => {
                 attachmentListPage.clickAttachFileButton(jpgFile.location);
                 attachmentListPage.checkFileIsAttached(jpgFile.name);
-            })
+            });
     });
 });

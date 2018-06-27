@@ -15,31 +15,31 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var DataTablePage = require('./pages/adf/dataTablePage.js');
-var TestConfig = require('./test.config.js');
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import DataTablePage = require('./pages/adf/dataTablePage.js');
+import TestConfig = require('./test.config.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
 
-xdescribe('Test Datatable component - selection', () =>{
+xdescribe('Test Datatable component - selection', () => {
 
-    var dataTablePage = new DataTablePage();
-    var adfLoginPage = new AdfLoginPage();
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let dataTablePage = new DataTablePage();
+    let adfLoginPage = new AdfLoginPage();
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser);
         adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
         dataTablePage.goToDatatable();
         done();
     });
 
-    it('1. Data Table Selection Modes', () =>{
+    it('1. Data Table Selection Modes', () => {
         dataTablePage.selectRow('2');
         dataTablePage.checkRowIsSelected('2');
         dataTablePage.getNumberOfSelectedRows().then(function (result) {
@@ -63,7 +63,7 @@ xdescribe('Test Datatable component - selection', () =>{
         dataTablePage.checkNoRowIsSelected();
     });
 
-    it('2. Data Table allows the multiselection of rows', () =>{
+    it('2. Data Table allows the multiselection of rows', () => {
         dataTablePage.clickMultiSelect();
         dataTablePage.clickCheckbox('1');
         dataTablePage.checkRowIsChecked('1');
@@ -76,7 +76,7 @@ xdescribe('Test Datatable component - selection', () =>{
         dataTablePage.checkRowIsChecked('1');
     });
 
-    it('3. Can select all in data table', () =>{
+    it('3. Can select all in data table', () => {
         dataTablePage.checkAllRows();
         dataTablePage.checkRowIsChecked('1');
         dataTablePage.checkRowIsChecked('2');

@@ -56,7 +56,7 @@ exports.uploadFile = function (chooseFileButton, inputElement, filePath) {
      }*/
 
     // need to wait for input to be present, could be visible or not
-    console.info("Path: " + absolutePath);
+    // // console.info("Path: " + absolutePath);
     inputElement.sendKeys(absolutePath);
 };
 
@@ -368,10 +368,10 @@ exports.getProcessDefinitions = function (appID, user, password, callback) {
 exports.fileExists = function (filePath, retry) {
     var found = false;
     while(!found && retry > 0) {
-        console.log('RETRY:', retry);
+        // console.log('RETRY:', retry);
         found = fs.existsSync(filePath);
-        console.log('FOUND:', found);
-        console.log('Path:', filePath)
+        // console.log('FOUND:', found);
+        // console.log('Path:', filePath)
         retry--;
     }
     return found ;
@@ -775,8 +775,8 @@ exports.getRunTimeAppDefinitions = function (user, password, callback) {
  * @returns modified String
  */
 exports.replaceAll = function (originalString, find, replace) {
-    console.info("Original string: '" + originalString.toString() + "'");
-    console.info("Find string: '" + find + "' and replace it with: '" + replace + "'");
+    // console.info("Original string: '" + originalString.toString() + "'");
+    // console.info("Find string: '" + find + "' and replace it with: '" + replace + "'");
     return originalString.toString().replace(new RegExp((find), 'g'), replace);
 };
 
@@ -794,10 +794,10 @@ exports.deleteDirFilesByPattern = function (dirPath, pattern) {
             var match = file.match(new RegExp((pattern)));
             if (match !== null) {
                 var filePath = path.join(dirPath, file);
-                console.log("File '" + filePath + "' was found. Pending deletion...");
+                // console.log("File '" + filePath + "' was found. Pending deletion...");
                 fs.unlink(filePath, function (err) {
                     if (err) throw err;
-                    console.info("File '" + filePath + "' was deleted successfully!");
+                    // console.info("File '" + filePath + "' was deleted successfully!");
                 });
             }
         });

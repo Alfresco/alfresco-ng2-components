@@ -15,30 +15,30 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ContentServicesPage = require('./pages/adf/contentServicesPage.js');
-var PaginationPage = require('./pages/adf/paginationPage.js');
-var NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
+import PaginationPage = require('./pages/adf/paginationPage.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var FolderModel = require('./models/ACS/folderModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import FolderModel = require('./models/ACS/folderModel.js');
 
-var NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-var QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
+import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 
-var TestConfig = require('./test.config.js');
-var Util = require('./util/util.js');
-var retryNumber = 100;
+import TestConfig = require('./test.config.js');
+import Util = require('./util/util.js');
+let retryNumber = 100;
 
 xdescribe('Test Document List - Pagination', function () {
-    var pagination = {
+    let pagination = {
         base: 'newFile',
         secondSetBase: 'secondSet',
-        extension: '.txt',
+        extension: '.txt'
     };
 
-    var itemsPerPage = {
+    let itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -47,25 +47,25 @@ xdescribe('Test Document List - Pagination', function () {
         fifteenValue: 15,
         twenty: '20',
         twentyValue: 20,
-        default: '25',
+        default: '25'
     };
 
-    var adfLoginPage = new AdfLoginPage();
-    var contentServicesPage = new ContentServicesPage();
-    var paginationPage = new PaginationPage();
-    var navigationBarPage = new NavigationBarPage();
+    let adfLoginPage = new AdfLoginPage();
+    let contentServicesPage = new ContentServicesPage();
+    let paginationPage = new PaginationPage();
+    let navigationBarPage = new NavigationBarPage();
 
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
-    var newFolderModel = new FolderModel({'name': 'newFolder'});
-    var fileNames = [], nrOfFiles = 20, currentPage = 1, secondSetOfFiles, secondSetNumber = 25;
-    var folderTwoModel = new FolderModel({'name': 'folderTwo'});
-    var folderThreeModel = new FolderModel({'name': 'folderThree'});
+    let newFolderModel = new FolderModel({'name': 'newFolder'});
+    let fileNames = [], nrOfFiles = 20, currentPage = 1, secondSetOfFiles, secondSetNumber = 25;
+    let folderTwoModel = new FolderModel({'name': 'folderTwo'});
+    let folderThreeModel = new FolderModel({'name': 'folderThree'});
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         fileNames = Util.generateSeqeunceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
         secondSetOfFiles = Util.generateSeqeunceFiles(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
 
@@ -92,10 +92,10 @@ xdescribe('Test Document List - Pagination', function () {
             });
     });
 
-    afterAll(function (done) {
+    afterAll((done) => {
         NodesAPI.deleteContent(acsUser, newFolderModel.id, function () {
             done();
-        })
+        });
     });
 
     it('[C260062] Default pagination settings', function () {
@@ -276,33 +276,33 @@ xdescribe('Test Document List - Pagination', function () {
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         contentServicesPage.getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) == JSON.stringify(fileNames)).toEqual(true);
+            expect(JSON.stringify(list) === JSON.stringify(fileNames)).toEqual(true);
         });
         contentServicesPage.sortByName(false);
         contentServicesPage.getAllRowsNameColumn().then(function (list) {
             fileNames.reverse();
-            expect(JSON.stringify(list) == JSON.stringify(fileNames)).toEqual(true);
+            expect(JSON.stringify(list) === JSON.stringify(fileNames)).toEqual(true);
         });
 
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         contentServicesPage.getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) == JSON.stringify(fileNames.slice(15, 20))).toEqual(true);
+            expect(JSON.stringify(list) === JSON.stringify(fileNames.slice(15, 20))).toEqual(true);
         });
 
         paginationPage.clickOnNextPage();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         contentServicesPage.getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) == JSON.stringify(fileNames.slice(10, 15))).toEqual(true);
+            expect(JSON.stringify(list) === JSON.stringify(fileNames.slice(10, 15))).toEqual(true);
         });
 
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         contentServicesPage.getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) == JSON.stringify(fileNames.slice(10, 20))).toEqual(true);
+            expect(JSON.stringify(list) === JSON.stringify(fileNames.slice(10, 20))).toEqual(true);
         });
     });
 
@@ -373,8 +373,3 @@ xdescribe('Test Document List - Pagination', function () {
         });
     });
 });
-
-
-
-
-

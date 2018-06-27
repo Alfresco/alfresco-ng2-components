@@ -32,7 +32,7 @@ var ProcessInstancesAPI = function () {
     var uri = url(requestBase.getBaseURL(CONSTANTS.APPLICATION.ADF_APS), '/process-instances');
 
     this.startProcessInstance = function (auth, processInstanceData) {
-        // console.info('[ REST API ] Start process instance", processInstanceData);
+        // // console.info('[ REST API ] Start process instance", processInstanceData);
         var options = {
             url: url(uri),
             json: true,
@@ -57,7 +57,7 @@ var ProcessInstancesAPI = function () {
     };
 
     this.getProcessInstance = function (auth, processInstanceId) {
-        // console.info('[ REST API ] Get processInstance info for the given processInstanceId: " + processInstanceId);
+        // // console.info('[ REST API ] Get processInstance info for the given processInstanceId: " + processInstanceId);
 
         var options = {
             url: url(uri, processInstanceId),
@@ -82,7 +82,7 @@ var ProcessInstancesAPI = function () {
     };
 
     this.getProcessComments = function (auth, processInstanceId) {
-        // console.info('[ REST API ] Get processInstance comments for the given processInstanceId:" + processInstanceId);
+        // // console.info('[ REST API ] Get processInstance comments for the given processInstanceId:" + processInstanceId);
 
         var options = {
             url: url(uri, processInstanceId, '/comments'),
@@ -98,7 +98,7 @@ var ProcessInstancesAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Get process instance id:', processInstanceId, 'comments response:', data.toString());
+                        // console.info('Get process instance id:', processInstanceId, 'comments response:', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -108,7 +108,7 @@ var ProcessInstancesAPI = function () {
     };
 
     this.addProcessComment = function (auth, processInstanceId, commentRequestData) {
-        // console.info('[ REST API ] Add comment to the processInstanceId:" + processInstanceId);
+        // // console.info('[ REST API ] Add comment to the processInstanceId:" + processInstanceId);
 
         var options = {
             url: url(uri, processInstanceId, '/comments'),
@@ -126,7 +126,7 @@ var ProcessInstancesAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Add comment to process instance id:', processInstanceId, ', response:', data.toString());
+                        // console.info('Add comment to process instance id:', processInstanceId, ', response:', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -136,7 +136,7 @@ var ProcessInstancesAPI = function () {
     };
 
     this.attachContent = function (auth, processInstanceId, relatedContentData) {
-        // console.info('[ REST API ] Attach existing content to ProcessInstance Id: ", processInstanceId);
+        // // console.info('[ REST API ] Attach existing content to ProcessInstance Id: ", processInstanceId);
 
         var options = {
             url: url(uri, processInstanceId, '/content'),
@@ -154,7 +154,7 @@ var ProcessInstancesAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Attach existing content to process instance id: ', processInstanceId, ' response: ', data.toString());
+                        // console.info('Attach existing content to process instance id: ', processInstanceId, ' response: ', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -164,11 +164,11 @@ var ProcessInstancesAPI = function () {
     };
 
     this.uploadContent = function (auth, processInstanceId, filePath, isRelatedContent) {
-        // console.info('[ REST API ] Upload Document to ProcessInstance Id: ", processInstanceId, " Document filePath: ", filePath);
+        // // console.info('[ REST API ] Upload Document to ProcessInstance Id: ", processInstanceId, " Document filePath: ", filePath);
         var absoluteFilePath = path.join(TestConfig.main.rootPath + filePath);
 
         var options = {
-            url: url(uri, processInstanceId, '/raw-content', (typeof isRelatedContent == "undefined")? '' : '?isRelatedContent=' + isRelatedContent),
+            url: url(uri, processInstanceId, '/raw-content', (typeof isRelatedContent === "undefined")? '' : '?isRelatedContent=' + isRelatedContent),
             headers: requestBase.requestHeaders(auth),
             formData: {
                 file: fs.createReadStream(absoluteFilePath)
@@ -183,7 +183,7 @@ var ProcessInstancesAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Upload Document to process instance id: ', processInstanceId, ' response: ', data.toString());
+                        // console.info('Upload Document to process instance id: ', processInstanceId, ' response: ', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -193,10 +193,10 @@ var ProcessInstancesAPI = function () {
     };
 
     this.getContentListForProcessInstance = function (auth, processInstanceId, isRelatedContent) {
-        // console.info('[ REST API ] Get attached content list for processInstanceId : ", processInstanceId);
+        // // console.info('[ REST API ] Get attached content list for processInstanceId : ", processInstanceId);
 
         var options = {
-            url: url(uri, processInstanceId, '/content', (typeof isRelatedContent == "undefined")? '' : '?isRelatedContent=' + isRelatedContent),
+            url: url(uri, processInstanceId, '/content', (typeof isRelatedContent === "undefined")? '' : '?isRelatedContent=' + isRelatedContent),
             headers: requestBase.requestHeaders(auth)
         };
 
@@ -209,7 +209,7 @@ var ProcessInstancesAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Get attached content list for process instance id: ', processInstanceId, ' response: ', data.toString());
+                        // console.info('Get attached content list for process instance id: ', processInstanceId, ' response: ', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -227,7 +227,7 @@ var ProcessInstancesAPI = function () {
      * @type - customType or candidate
      */
     this.getInvolvedIdentitybyType = function (auth, processInstanceId, family, identityId, type) {
-        // console.info('[ REST API ] Get involved user from ProcessInstance:', processInstanceId, 'by family, identityId and type');
+        // // console.info('[ REST API ] Get involved user from ProcessInstance:', processInstanceId, 'by family, identityId and type');
 
         var options = {
             url: url(uri, processInstanceId, '/identitylinks', family, identityId, type),
@@ -244,10 +244,10 @@ var ProcessInstancesAPI = function () {
                             responseMessage: response.statusMessage
                         });
                     });
-                    console.info('Get involved user from ProcessInstance:', processInstanceId, 'by family, identityId and type response:', data.toString());
+                    // console.info('Get involved user from ProcessInstance:', processInstanceId, 'by family, identityId and type response:', data.toString());
                 })
                 .on('error', function (err) {
-                    console.info('Get involved user from ProcessInstance:', processInstanceId, 'by family, identityId and type error:', err);
+                    // console.info('Get involved user from ProcessInstance:', processInstanceId, 'by family, identityId and type error:', err);
                     reject(err);
                 });
         });
@@ -260,7 +260,7 @@ var ProcessInstancesAPI = function () {
      * @variableName - {String}
      */
     this.getVariableByName = function (auth, processInstanceId, variableName) {
-        // console.info('[ REST API ] Get ProcessInstance Variables for processInstanceId:', processInstanceId,' by variable name:', variableName);
+        // // console.info('[ REST API ] Get ProcessInstance Variables for processInstanceId:', processInstanceId,' by variable name:', variableName);
 
         var options = {
             url: url(uri, processInstanceId, '/variables', variableName),
@@ -277,10 +277,10 @@ var ProcessInstancesAPI = function () {
                             responseMessage: response.statusMessage
                         });
                     });
-                    console.info('Get ProcessInstance Variables for processInstanceId:', processInstanceId, 'by variable name:', variableName,'response:', data.toString());
+                    // console.info('Get ProcessInstance Variables for processInstanceId:', processInstanceId, 'by variable name:', variableName,'response:', data.toString());
                 })
                 .on('error', function (err) {
-                    console.info('Get ProcessInstance Variables for processInstanceId:', processInstanceId, 'by variable name:', variableName,'error:', err);
+                    // console.info('Get ProcessInstance Variables for processInstanceId:', processInstanceId, 'by variable name:', variableName,'error:', err);
                     reject(err);
                 });
         });
@@ -293,7 +293,7 @@ var ProcessInstancesAPI = function () {
      * @variableName - {String}
      */
     this.deleteVariableByName = function (auth, processInstanceId, variableName) {
-        // console.info('[ REST API ] Delete ProcessInstance Variables for processInstanceId: ', processInstanceId, 'by variable name:', variableName);
+        // // console.info('[ REST API ] Delete ProcessInstance Variables for processInstanceId: ', processInstanceId, 'by variable name:', variableName);
 
         var options = {
             url: url(uri, processInstanceId, 'variables', variableName),
@@ -304,10 +304,10 @@ var ProcessInstancesAPI = function () {
             request.del(options)
                 .on('response', function (response) {
                     resolve(response);
-                    console.info('Delete ProcessInstance Variables for processInstanceId:', processInstanceId, 'by variable name:', variableName,'successfully');
+                    // console.info('Delete ProcessInstance Variables for processInstanceId:', processInstanceId, 'by variable name:', variableName,'successfully');
                 })
                 .on('error', function (err) {
-                    console.info('Delete ProcessInstance Variables for processInstanceId:', processInstanceId, 'by variable name:', variableName,'error: ', err);
+                    // console.info('Delete ProcessInstance Variables for processInstanceId:', processInstanceId, 'by variable name:', variableName,'error: ', err);
                     reject(err);
                 });
         });
@@ -322,7 +322,7 @@ var ProcessInstancesAPI = function () {
      * @returns {Promise}
      */
     this.addProcessInstanceVariable = function (auth, processInstanceId, requestBody) {
-        // console.info('[ REST API ] Add variable for process instanceId: " , processInstanceId);
+        // // console.info('[ REST API ] Add variable for process instanceId: " , processInstanceId);
         var options = {
             url: url(uri, processInstanceId, '/variables'),
             json: true,
@@ -338,7 +338,7 @@ var ProcessInstancesAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Add variable for process instanceId:', processInstanceId, 'response:', data.toString());
+                        // console.info('Add variable for process instanceId:', processInstanceId, 'response:', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -354,7 +354,7 @@ var ProcessInstancesAPI = function () {
      * @returns {Promise}
      */
     this.getListOfProcessInstanceVariables = function (auth, processInstanceId) {
-        // console.info('[ REST API ] Get list of variables for processInstanceId: ",processInstanceId);
+        // // console.info('[ REST API ] Get list of variables for processInstanceId: ",processInstanceId);
         var options = {
             url: url(uri, processInstanceId, '/variables'),
             headers: requestBase.requestHeaders(auth)
@@ -368,7 +368,7 @@ var ProcessInstancesAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Get list of variables for processInstanceId:', processInstanceId, 'response:', data.toString());
+                        // console.info('Get list of variables for processInstanceId:', processInstanceId, 'response:', data.toString());
                     });
                 })
                 .on('error', function (err) {

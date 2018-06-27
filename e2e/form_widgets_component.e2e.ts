@@ -15,50 +15,50 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var TasksPage = require('./pages/adf/process_services/tasksPage.js');
-var UsingWidget = require('./pages/adf/process_services/widgets/usingWidget.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import TasksPage = require('./pages/adf/process_services/tasksPage.js');
+import UsingWidget = require('./pages/adf/process_services/widgets/usingWidget.js');
 
-var CONSTANTS = require('./util/constants');
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import CONSTANTS = require('./util/constants');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-var UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
-var TaskAPI = require('./restAPI/APS/enterprise/TaskAPI');
-var AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
-var RuntimeAppDefinitionAPI = require('./restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
-var TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
-var FormModelsAPI = require('./restAPI/APS/enterprise/FormModelsAPI.js');
+import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
+import TaskAPI = require('./restAPI/APS/enterprise/TaskAPI');
+import AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
+import RuntimeAppDefinitionAPI = require('./restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
+import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
+import FormModelsAPI = require('./restAPI/APS/enterprise/FormModelsAPI.js');
 
-var FormDefinitionModel = require('./models/APS/FormDefinitionModel.js');
-var TaskModel = require('./models/APS/TaskModel.js');
-var FormModel = require('./models/APS/FormModel.js');
-var User = require('./models/APS/User');
-var Tenant = require('./models/APS/Tenant');
-var AppPublish = require('./models/APS/AppPublish');
-var AppDefinition = require('./models/APS/AppDefinition');
-var Task = require('./models/APS/Task');
+import FormDefinitionModel = require('./models/APS/FormDefinitionModel.js');
+import TaskModel = require('./models/APS/TaskModel.js');
+import FormModel = require('./models/APS/FormModel.js');
+import User = require('./models/APS/User');
+import Tenant = require('./models/APS/Tenant');
+import AppPublish = require('./models/APS/AppPublish');
+import AppDefinition = require('./models/APS/AppDefinition');
+import Task = require('./models/APS/Task');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
 
-var formInstance = new FormDefinitionModel();
+let formInstance = new FormDefinitionModel();
 
 xdescribe('Form widgets', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var processServicesPage = new ProcessServicesPage();
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth, processUserModel;
-    var app = resources.Files.WIDGETS_SMOKE_TEST;
-    var appFilds = app.form_fields;
-    var taskPage = new TasksPage();
-    var appModel, modelId;
-    var taskModel, formModel;
-    var newTask = 'First task';
-    var usingWidget = new UsingWidget();
+    let adfLoginPage = new AdfLoginPage();
+    let processServicesPage = new ProcessServicesPage();
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth, processUserModel;
+    let app = resources.Files.WIDGETS_SMOKE_TEST;
+    let appFilds = app.form_fields;
+    let taskPage = new TasksPage();
+    let appModel, modelId;
+    let taskModel, formModel;
+    let newTask = 'First task';
+    let usingWidget = new UsingWidget();
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         new TenantsAPI().createTenant(basicAuthAdmin, new Tenant())
             .then(function (result) {
                 return new UserAPI().createUser(basicAuthAdmin, processUserModel = new User({ tenantId: JSON.parse(result.responseBody).id }));
@@ -83,13 +83,13 @@ xdescribe('Form widgets', () => {
             });
     });
 
-    afterAll(function (done) {
+    afterAll((done) => {
         return new TenantsAPI().deleteTenant(basicAuthAdmin, processUserModel.tenantId.toString())
             .then(function (result) {
                 done();
             })
             .catch(function (error) {
-                console.log('Failed with error: ', error);
+                // console.log('Failed with error: ', error);
             });
     });
 
@@ -114,7 +114,7 @@ xdescribe('Form widgets', () => {
             .then(function (response) {
                 formModel = new FormModel(JSON.parse(response.responseBody));
                 expect(taskPage.usingTaskDetails().getFormName())
-                    .toEqual(formModel.getName() == null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
+                    .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
             })
             .then(() => {
                 return new FormModelsAPI().getFormModel(basicAuth, formModel.modelId.toString());
@@ -205,7 +205,7 @@ xdescribe('Form widgets', () => {
     });
 
     it('Check checkbox, radiobuttons widgets - label, value and displayed', () => {
-        var radioOption = 1;
+        let radioOption = 1;
 
         expect(taskPage.usingFormFields().getFieldLabel(appFilds.checkbox_id))
             .toContain(formInstance.getWidgetBy('id', appFilds.checkbox_id).name);
@@ -235,4 +235,3 @@ xdescribe('Form widgets', () => {
     });
 
 });
-

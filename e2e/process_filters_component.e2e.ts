@@ -15,57 +15,57 @@
  * limitations under the License.
  */
 
-var TestConfig = require('./test.config.js');
-var CONSTANTS = require('./util/constants');
-var resources = require('./util/resources.js');
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
-var AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var AdfStartProcessPage = require('./pages/adf/process_services/startProcessPage.js');
-var AdfProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-var AdfAppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
-var AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import TestConfig = require('./test.config.js');
+import CONSTANTS = require('./util/constants');
+import resources = require('./util/resources.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import AdfStartProcessPage = require('./pages/adf/process_services/startProcessPage.js');
+import AdfProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
+import AdfAppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
+import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-var UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
-var RuntimeAppDefinitionAPI = require('./restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
-var ModelsAPI = require('./restAPI/APS/enterprise/ModelsAPI');
-var AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
-var TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
+import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
+import RuntimeAppDefinitionAPI = require('./restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
+import ModelsAPI = require('./restAPI/APS/enterprise/ModelsAPI');
+import AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
+import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
 
-var User = require('./models/APS/User');
-var AppPublish = require('./models/APS/AppPublish');
-var AppDefinition = require('./models/APS/AppDefinition');
-var Tenant = require('./models/APS/Tenant');
+import User = require('./models/APS/User');
+import AppPublish = require('./models/APS/AppPublish');
+import AppDefinition = require('./models/APS/AppDefinition');
+import Tenant = require('./models/APS/Tenant');
 
 xdescribe('Process Filters Test', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var adfNavigationBarPage = new AdfNavigationBarPage();
-    var adfProcessServicesPage = new AdfProcessServicesPage();
-    var adfStartProcessPage = new AdfStartProcessPage();
-    var adfProcessFiltersPage = new AdfProcessFiltersPage();
-    var adfAppNavigationBarPage = new AdfAppNavigationBarPage();
-    var adfProcessDetailsPage = new AdfProcessDetailsPage();
-    var app = resources.Files.APP_WITH_DATE_FIELD_FORM;
-    var appId, modelId, response, procUserModel, basicAuth, tenantId;
+    let adfLoginPage = new AdfLoginPage();
+    let adfNavigationBarPage = new AdfNavigationBarPage();
+    let adfProcessServicesPage = new AdfProcessServicesPage();
+    let adfStartProcessPage = new AdfStartProcessPage();
+    let adfProcessFiltersPage = new AdfProcessFiltersPage();
+    let adfAppNavigationBarPage = new AdfAppNavigationBarPage();
+    let adfProcessDetailsPage = new AdfProcessDetailsPage();
+    let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
+    let appId, modelId, response, procUserModel, basicAuth, tenantId;
     // REST API
-    var appUtils = new AppDefinitionsAPI();
-    var runtimeAppDefAPI = new RuntimeAppDefinitionAPI();
-    var modelUtils = new ModelsAPI();
-    var tenantsAPI = new TenantsAPI();
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var processTitle = {
+    let appUtils = new AppDefinitionsAPI();
+    let runtimeAppDefAPI = new RuntimeAppDefinitionAPI();
+    let modelUtils = new ModelsAPI();
+    let tenantsAPI = new TenantsAPI();
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let processTitle = {
         running: 'Test_running',
         completed: 'Test_completed'
     };
-    var processFilter = {
+    let processFilter = {
         running: 'Running',
         all: 'All',
         completed: 'Completed'
     };
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         tenantsAPI.createTenant(basicAuthAdmin, new Tenant())
             .then(function (result) {
                 tenantId = JSON.parse(result.responseBody).id;
@@ -74,10 +74,10 @@ xdescribe('Process Filters Test', () => {
             })
             .then(function (result) {
                 basicAuth = new BasicAuthorization(procUserModel.email, procUserModel.password);
-                return appUtils.importApp(basicAuth, app.file_location)
+                return appUtils.importApp(basicAuth, app.file_location);
             })
             .then(function (result) {
-                console.info('Import app result: ', result);
+                // console.info('Import app result: ', result);
                 response = JSON.parse(result.responseBody);
                 appId = response.id;
                 modelId = response.definition.models[0].id;
@@ -86,14 +86,14 @@ xdescribe('Process Filters Test', () => {
                 return appUtils.getAppDefinition(basicAuth, appId.toString());
             })
             .then(function (result) {
-                console.info('Get app definition result: ', result);
+                // console.info('Get app definition result: ', result);
                 expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
                 expect(JSON.parse(result.responseBody).id).toEqual(appId);
 
                 return appUtils.publishApp(basicAuth, appId.toString(), new AppPublish());
             })
             .then(function (result) {
-                console.info('Publish app result: ', result);
+                // console.info('Publish app result: ', result);
                 expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
                 response = JSON.parse(result.responseBody).appDefinition;
                 expect(response.id).toEqual(appId);
@@ -102,7 +102,7 @@ xdescribe('Process Filters Test', () => {
                 return runtimeAppDefAPI.deployApp(basicAuth, new AppDefinition({id: appId.toString()}));
             })
             .then(function (result) {
-                console.info('Deploy app result: ', result.statusCode + ' ' + result.statusMessage);
+                // console.info('Deploy app result: ', result.statusCode + ' ' + result.statusMessage);
                 expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
             })
             .then(() => {
@@ -111,15 +111,15 @@ xdescribe('Process Filters Test', () => {
             });
     });
 
-    afterAll(function (done) {
+    afterAll((done) => {
         modelUtils.deleteModel(basicAuth, appId)
             .then(function (result) {
-                console.info('Delete app result: ', result.statusCode + ' ' + result.statusMessage);
+                // console.info('Delete app result: ', result.statusCode + ' ' + result.statusMessage);
                 expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
                 return modelUtils.deleteModel(basicAuth, modelId);
             })
             .then(function (result) {
-                console.info('Delete process result: ', result.statusCode + ' ' + result.statusMessage);
+                // console.info('Delete process result: ', result.statusCode + ' ' + result.statusMessage);
                 expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
             })
             .then(() => {

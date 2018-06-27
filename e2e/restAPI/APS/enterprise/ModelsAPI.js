@@ -41,10 +41,10 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.getModels = function (auth, includePermissions) {
-        // console.info('[ REST API ] List models (process, form, decision rule or app)');
+        // // console.info('[ REST API ] List models (process, form, decision rule or app)');
 
         var options = {
-            url: url(uri,  (typeof includePermissions == "undefined")? '' : '?includePermissions=' + includePermissions),
+            url: url(uri,  (typeof includePermissions === "undefined")? '' : '?includePermissions=' + includePermissions),
             headers: requestBase.requestHeaders(auth)
         };
 
@@ -57,7 +57,7 @@ var ModelsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('List models response:', data.toString());
+                        // console.info('List models response:', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -75,7 +75,7 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.createModel = function (auth, modelRepresentation) {
-        // console.info('[ REST API ] Create new model with representation:', modelRepresentation);
+        // // console.info('[ REST API ] Create new model with representation:', modelRepresentation);
 
         var options = {
             url: url(uri),
@@ -93,7 +93,7 @@ var ModelsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Create new model response: ', data.toString());
+                        // console.info('Create new model response: ', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -110,7 +110,7 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.getAppDefinitionModels = function (auth) {
-        // console.info('[ REST API ] List process definition models shared with the current user');
+        // // console.info('[ REST API ] List process definition models shared with the current user');
 
         var options = {
             url: url(baseUrl, '/models-for-app-definition'),
@@ -126,7 +126,7 @@ var ModelsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('List process definition models response:', data.toString());
+                        // console.info('List process definition models response:', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -145,8 +145,8 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.deleteModel = function (auth, modelId, queryParameters) {
-        // console.info('[ REST API ] Delete model by modelId:', modelId);
-        var params = (typeof queryParameters == "undefined") ? '?cascade=true&deleteRuntimeApp=true' : apiUtils.buildQueryParams(queryParameters);
+        // // console.info('[ REST API ] Delete model by modelId:', modelId);
+        var params = (typeof queryParameters === "undefined") ? '?cascade=true&deleteRuntimeApp=true' : apiUtils.buildQueryParams(queryParameters);
         var options = {
             url: url(uri, modelId, params),
             headers: requestBase.requestHeaders(auth)
@@ -156,7 +156,7 @@ var ModelsAPI = function () {
             request.del(options)
                 .on('response', function (response) {
                     resolve(response);
-                    console.info('Delete model by modelId:', modelId, 'successfully');
+                    // console.info('Delete model by modelId:', modelId, 'successfully');
                 })
                 .on('error', function (err) {
                     reject(err);
@@ -172,7 +172,7 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.getModel= function (auth, modelId) {
-        // console.info('[ REST API ] Get model', modelId);
+        // // console.info('[ REST API ] Get model', modelId);
 
         var options = {
             url: url(uri, modelId),
@@ -188,7 +188,7 @@ var ModelsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Get models', modelId, 'response:', data.toString());
+                        // console.info('Get models', modelId, 'response:', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -207,7 +207,7 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.updateModel= function (auth, modelId, updatedModel) {
-        // console.info('[ REST API ] Update model', modelId);
+        // // console.info('[ REST API ] Update model', modelId);
 
         var options = {
             url: url(uri, modelId),
@@ -225,7 +225,7 @@ var ModelsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Update model', modelId, 'response:', data.toString());
+                        // console.info('Update model', modelId, 'response:', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -243,7 +243,7 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.getModelContent = function (auth, modelId) {
-        // console.info('[ REST API ] Get model content:", modelId);
+        // // console.info('[ REST API ] Get model content:", modelId);
 
         var options = {
             url: url(uri, modelId, '/editor/json'),
@@ -263,7 +263,7 @@ var ModelsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Get model content response:', body.toString());
+                        // console.info('Get model content response:', body.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -282,7 +282,7 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.validateModelContent = function (auth, modelId, values) {
-        // console.info('[ REST API ] Validate model', modelId, 'content.');
+        // // console.info('[ REST API ] Validate model', modelId, 'content.');
 
         var options = {
             url: url(uri, modelId, '/editor/validate'),
@@ -299,7 +299,7 @@ var ModelsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Validate model', modelId, 'content response:', data.toString());
+                        // console.info('Validate model', modelId, 'content response:', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -318,7 +318,7 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.newModelVersion = function (auth, modelId, filePath) {
-        // console.info('[ REST API ] Create a new version for model:', modelId);
+        // // console.info('[ REST API ] Create a new version for model:', modelId);
 
         var absoluteFilePath = path.join(TestConfig.main.rootPath, filePath);
 
@@ -339,7 +339,7 @@ var ModelsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Create a new version for model:', modelId, 'response:', data.toString());
+                        // console.info('Create a new version for model:', modelId, 'response:', data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -357,7 +357,7 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.getThumbnail = function (auth, modelId) {
-        // console.info('[ REST API ] Get model\'s', modelId, 'thumbnail image');
+        // // console.info('[ REST API ] Get model\'s', modelId, 'thumbnail image');
 
         var options = {
             url: url(uri, modelId, '/thumbnail'),
@@ -380,11 +380,11 @@ var ModelsAPI = function () {
                             responseMessage: response.statusMessage,
                             responseHeaders: response.headers
                         });
-                        console.info('Get model\'s', modelId, 'thumbnail image response:', base64);
+                        // console.info('Get model\'s', modelId, 'thumbnail image response:', base64);
                     });
                 })
                 .on('error', function (err) {
-                    console.info('Get model\'s', modelId, 'thumbnail image error:', err);
+                    // console.info('Get model\'s', modelId, 'thumbnail image error:', err);
                     reject(err);
                 });
         });
@@ -398,7 +398,7 @@ var ModelsAPI = function () {
      * @returns {Promise}
      */
     this.importProcessModel = function (auth, xmlFilePath) {
-        // console.info('[ REST API ] Import process model");
+        // // console.info('[ REST API ] Import process model");
 
         var absoluteFilePath = path.join(TestConfig.main.rootPath, xmlFilePath);
 
@@ -419,7 +419,7 @@ var ModelsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info("Import process model response:" + data.toString());
+                        // console.info("Import process model response:" + data.toString());
                     });
                 })
                 .on('error', function (err) {
