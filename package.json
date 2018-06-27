@@ -28,7 +28,7 @@
     "test": "ng test --single-run",
     "lint": "ng lint",
     "wd:update": "webdriver-manager update --gecko=false --versions.chrome=2.38",
-    "e2e-lib": "npm run lint-e2e && npm run wd:update && protractor protractor.conf.js",
+    "e2e-lib": "npm run lint-e2e && npm run wd:update && protractor ./protractor.conf.js",
     "e2e": "ng e2e --app dist --deleteOutputPath=false",
     "server-versions": "rimraf ./demo-shell/src/versions.json && npm list --depth=0 --json=true --prod=true > ./demo-shell/src/versions.json  || exit 0",
     "clean": "rimraf dist ./node_modules typings",

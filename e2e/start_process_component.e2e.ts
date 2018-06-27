@@ -47,7 +47,7 @@ import FileModel = require('./models/ACS/fileModel.js');
 
 import dateFormat = require('dateformat');
 
-xdescribe('Test Start Process Component', () => {
+describe('Test Start Process Component', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let adfNavigationBarPage = new AdfNavigationBarPage();

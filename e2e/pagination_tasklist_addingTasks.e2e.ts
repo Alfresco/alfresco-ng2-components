@@ -22,11 +22,12 @@ import PaginationPage = require('./pages/adf/paginationPage.js');
 
 import apps = require('./restAPI/APS/reusableActions/apps');
 import CONSTANTS = require('./util/constants');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 
-xdescribe('Items per page set to 15 and adding of tasks', () => {
+describe('Items per page set to 15 and adding of tasks', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let processServicesPage = new ProcessServicesPage();
