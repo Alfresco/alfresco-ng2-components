@@ -31,7 +31,7 @@ import TestConfig = require('./test.config.js');
 import Util = require('./util/util.js');
 let retryNumber = 100;
 
-xdescribe('Test Document List - Pagination', function () {
+describe('Test Document List - Pagination', function () {
     let pagination = {
         base: 'newFile',
         secondSetBase: 'secondSet',
