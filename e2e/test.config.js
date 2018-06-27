@@ -57,6 +57,12 @@ module.exports = {
          * The protocol where the app runs. 
          * @config main.protocol {String} 
          */
+        protocol: "http",
+
+        /** 
+         * The protocol where the app runs. 
+         * @config main.protocol {String} 
+         */
         host: HOST,
 
         /** 

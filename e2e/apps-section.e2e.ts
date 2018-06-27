@@ -27,7 +27,7 @@ import resources = require('./util/resources.js');
 import apps = require('./restAPI/APS/reusableActions/apps');
 import users = require('./restAPI/APS/reusableActions/users');
 
-xdescribe('Attachment list', () => {
+describe('Attachment list', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let navigationBarPage = new NavigationBarPage();

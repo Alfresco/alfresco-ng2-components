@@ -25,7 +25,7 @@ import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 
 import AdfSettingsPage = require('./pages/adf/settingsPage.js');
 
-xdescribe('Test Login component', () => {
+describe('Test Login component', () => {
 
     let adfSettingsPage = new AdfSettingsPage();
     let adfProcessServicesPage = new AdfProcessServicesPage();

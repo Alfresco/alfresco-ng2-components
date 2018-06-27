@@ -34,7 +34,7 @@ import resources = require('./util/resources.js');
 import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
 import Tenant = require('./models/APS/Tenant');
 
-xdescribe('Test User Info component', () => {
+describe('Test User Info component', () => {
 
     let adfSettingsPage = new AdfSettingsPage();
     let adfLoginPage = new AdfLoginPage();

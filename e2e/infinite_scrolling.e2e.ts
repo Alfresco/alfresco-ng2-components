@@ -28,7 +28,7 @@ import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
 import TestConfig = require('./test.config.js');
 import Util = require('./util/util.js');
 
-xdescribe('Enable infinite scrolling', () => {
+describe('Enable infinite scrolling', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let contentServicesPage = new ContentServicesPage();

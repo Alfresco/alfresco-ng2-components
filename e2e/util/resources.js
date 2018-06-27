@@ -26,7 +26,7 @@ var exports = module.exports = {};
 exports.Files = {
 
     APP_WITH_DATE_FIELD_FORM: {
-        file_location: "/e2e/resources/apps/TestDate.zip",
+        file_location: "/resources/apps/TestDate.zip",
         title: "TestDate",
         process_title: "TestDateField",
         id: -1,
@@ -37,7 +37,7 @@ exports.Files = {
     },
 
     APP_WITH_PROCESSES:{
-        file_location:"/e2e/resources/apps/App_with_processes.zip",
+        file_location:"/resources/apps/App_with_processes.zip",
         title: "App_with_processes",
         description: "Description for app",
         process_se_name: "process_with_se",
@@ -45,7 +45,7 @@ exports.Files = {
     },
 
     SIMPLE_APP: {
-        file_location: "/e2e/resources/Simple App.zip",
+        file_location: "/resources/Simple App.zip",
         title: "Simple App",
         id: -18,
         process_definitions: null,
@@ -53,7 +53,7 @@ exports.Files = {
     },
 
     SIMPLE_APP_WITH_USER_FORM: {
-        file_location: "/e2e/resources/apps/Simple App with User Form.zip",
+        file_location: "/resources/apps/Simple App with User Form.zip",
         title: "Simple App with User Form",
         processName: "Simple Process",
         processDiagramFileLocation: '/resources/apps/SimpleAppWithUserForm.png',
@@ -69,7 +69,7 @@ exports.Files = {
     },
 
     WIDGETS_SMOKE_TEST: {
-        file_location: "/e2e/resources/apps/Widgets smoke test.zip",
+        file_location: "/resources/apps/Widgets smoke test.zip",
         formName: "Widgets smoke test",
         form_fields: {
             text_id: "text",
@@ -106,15 +106,15 @@ exports.Files = {
             last_page_number: "8"
         },
         PDF_B: {
-            file_location: "/e2e/resources/adf/allFileTypes/b_file_supported.pdf",
+            file_location: "/resources/adf/allFileTypes/b_file_supported.pdf",
             file_name: "b_file_supported.pdf"
         },
         PDF_C: {
-            file_location: "/e2e/resources/adf/allFileTypes/c_file_supported.pdf",
+            file_location: "/resources/adf/allFileTypes/c_file_supported.pdf",
             file_name: "c_file_supported.pdf"
         },
         PDF_D: {
-            file_location: "/e2e/resources/adf/allFileTypes/d_file_supported.pdf",
+            file_location: "/resources/adf/allFileTypes/d_file_supported.pdf",
             file_name: "d_file_supported.pdf"
         },
         PDF_ALL: {
@@ -122,76 +122,76 @@ exports.Files = {
             file_name: "pdf_all_properties.pdf"
         },
         LARGE_FILE:{
-            file_location: "/e2e/resources/adf/BigFile.zip",
+            file_location: "/resources/adf/BigFile.zip",
             file_name: "BigFile.zip"
         },
         EXCEL: {
-            file_location: "/e2e/resources/adf/allFileTypes/a_excel_file.xlsx",
+            file_location: "/resources/adf/allFileTypes/a_excel_file.xlsx",
             file_name: "a_excel_file.xlsx"
         },
         DOCX: {
-            file_location: "/e2e/resources/adf/allFileTypes/a_file_unsupported.docx",
+            file_location: "/resources/adf/allFileTypes/a_file_unsupported.docx",
             file_name: "a_file_unsupported.docx"
         },
         FOLDER_ONE: {
-            folder_location: "/e2e/resources/adf/folderOne",
+            folder_location: "/resources/adf/folderOne",
             folder_name: "folderOne"
         },
         FILE_INSIDE_FOLDER_ONE: {
-            file_location: "/e2e/resources/adf/folderOne/share_profile_pic.png",
+            file_location: "/resources/adf/folderOne/share_profile_pic.png",
             file_name: "share_profile_pic.png"
         },
         JPG: {
-            file_location: "/e2e/resources/adf/allFileTypes/a_jpg_file.jpg",
+            file_location: "/resources/adf/allFileTypes/a_jpg_file.jpg",
             file_name: "a_jpg_file.jpg"
         },
         MP4: {
-            file_location: "/e2e/resources/adf/allFileTypes/a_mp4_file.mp4",
+            file_location: "/resources/adf/allFileTypes/a_mp4_file.mp4",
             file_name: "a_mp4_file.mp4"
         },
         PNG: {
-            file_location: "/e2e/resources/adf/allFileTypes/a_png_file.png",
+            file_location: "/resources/adf/allFileTypes/a_png_file.png",
             file_name: "a_png_file.png"
         },
         PPT: {
-            file_location: "/e2e/resources/adf/allFileTypes/a_ppt_file.pptx",
+            file_location: "/resources/adf/allFileTypes/a_ppt_file.pptx",
             file_name: "a_ppt_file.pptx",
             first_page_text: "PPTX test file"
         },
         TEST: {
-            file_location: "/e2e/resources/adf/allFileTypes/testExtension.test",
+            file_location: "/resources/adf/allFileTypes/testExtension.test",
             file_name: "testExtension.test"
         },
         TXT: {
-            file_location: "/e2e/resources/adf/allFileTypes/a_txt_file.rtf",
+            file_location: "/resources/adf/allFileTypes/a_txt_file.rtf",
             file_name: "a_txt_file.rtf"
         },
         TXT_400B: {
-            file_location: "/e2e/resources/adf/allFileTypes/file400Bytes.txt",
+            file_location: "/resources/adf/allFileTypes/file400Bytes.txt",
             file_name: "file400Bytes.txt"
         },
         TXT_0B: {
-            file_location: "/e2e/resources/adf/allFileTypes/zeroBytesFile.txt",
+            file_location: "/resources/adf/allFileTypes/zeroBytesFile.txt",
             file_name: "zeroBytesFile.txt"
         },
         ZIP: {
-            file_location: "/e2e/resources/adf/allFileTypes/a_zip_file.mp4.zip",
+            file_location: "/resources/adf/allFileTypes/a_zip_file.mp4.zip",
             file_name: "a_zip_file.mp4.zip"
         },
 
         PAGES:{
-            file_location: "/e2e/resources/adf/allFileTypes/file_unsupported.pages",
+            file_location: "/resources/adf/allFileTypes/file_unsupported.pages",
             file_name: "file_unsupported.pages"
         },
     },
 
     PROFILE_IMAGES: {
         ECM: {
-            file_location: "/e2e/resources/adf/share_profile_pic.jpg",
+            file_location: "/resources/adf/share_profile_pic.jpg",
             file_name: "share_profile_pic.jpg"
         },
         BPM: {
-            file_location: "/e2e/resources/adf/activiti_profile_pic.png",
+            file_location: "/resources/adf/activiti_profile_pic.png",
             file_name: "activiti_profile_pic.png"
         },
     }

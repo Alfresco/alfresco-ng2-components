@@ -37,7 +37,7 @@ import AppPublish = require('./models/APS/AppPublish');
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 
-xdescribe('Start Task - Task App', () => {
+describe('Start Task - Task App', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let viewerPage = new ViewerPage();

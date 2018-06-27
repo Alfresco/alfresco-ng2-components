@@ -44,7 +44,7 @@ import resources = require('./util/resources.js');
 
 let formInstance = new FormDefinitionModel();
 
-xdescribe('Form widgets', () => {
+describe('Form widgets', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let processServicesPage = new ProcessServicesPage();
