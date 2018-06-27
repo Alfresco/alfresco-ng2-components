@@ -55,6 +55,8 @@ export class AppLayoutComponent implements OnInit {
 
     expandedSidenav = false;
 
+    hideSidenav = false;
+
     enabelRedirect = true;
 
     ngOnInit() {

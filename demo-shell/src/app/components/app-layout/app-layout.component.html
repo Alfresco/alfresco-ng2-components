@@ -1,9 +1,9 @@
-<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="false"[expandedSidenav]= "expandedSidenav" (expanded)="setState($event)">
+<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="hideSidenav" [expandedSidenav]= "expandedSidenav" (expanded)="setState($event)">
 
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu="toggleMenu">
             <mat-toolbar color="primary" class="adf-app-layout-toolbar mat-elevation-z6">
-                <button mat-icon-button (click)="toggleMenu()">
+                <button mat-icon-button (click)="toggleMenu()" *ngIf="!hideSidenav">
                     <mat-icon>menu</mat-icon>
                 </button>
 
