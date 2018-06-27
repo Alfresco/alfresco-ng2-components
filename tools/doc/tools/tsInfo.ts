@@ -40,6 +40,17 @@ let undocMethodNames = {
 };
 
 
+export function processDocs(mdCache, aggData, errorMessages) {
+    initPhase(aggData);
+    
+    var pathnames = Object.keys(mdCache);
+
+    pathnames.forEach(pathname => {
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+    });
+}
+
+
 class PropInfo {
     name: string;
     type: string;
@@ -258,7 +269,7 @@ class ComponentInfo {
 }
 
 
-export function initPhase(aggData) {
+function initPhase(aggData) {
     nameExceptions = aggData.config.typeNameExceptions;
 
     let app = new Application({
@@ -276,15 +287,9 @@ export function initPhase(aggData) {
 }
 
 
-export function readPhase(tree, pathname, aggData) {
-}
 
 
-export function aggPhase(aggData) {
-}
-
-
-export function updatePhase(tree, pathname, aggData, errorMessages) {
+function updateFile(tree, pathname, aggData, errorMessages) {
     let compName = angNameToClassName(path.basename(pathname, ".md"));
     let classRef = aggData.projData.findReflectionByName(compName);
 

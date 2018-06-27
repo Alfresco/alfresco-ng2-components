@@ -18,6 +18,14 @@ var nameExceptions;
 var undocMethodNames = {
     "ngOnChanges": 1
 };
+function processDocs(mdCache, aggData, errorMessages) {
+    initPhase(aggData);
+    var pathnames = Object.keys(mdCache);
+    pathnames.forEach(function (pathname) {
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+    });
+}
+exports.processDocs = processDocs;
 var PropInfo = /** @class */ (function () {
     function PropInfo(rawProp) {
         var _this = this;
@@ -189,14 +197,7 @@ function initPhase(aggData) {
     }));
     aggData.projData = app.convert(sources);
 }
-exports.initPhase = initPhase;
-function readPhase(tree, pathname, aggData) {
-}
-exports.readPhase = readPhase;
-function aggPhase(aggData) {
-}
-exports.aggPhase = aggPhase;
-function updatePhase(tree, pathname, aggData, errorMessages) {
+function updateFile(tree, pathname, aggData, errorMessages) {
     var compName = angNameToClassName(path.basename(pathname, ".md"));
     var classRef = aggData.projData.findReflectionByName(compName);
     if (!classRef) {
@@ -232,7 +233,6 @@ function updatePhase(tree, pathname, aggData, errorMessages) {
     }
     return true;
 }
-exports.updatePhase = updatePhase;
 function initialCap(str) {
     return str[0].toUpperCase() + str.substr(1);
 }

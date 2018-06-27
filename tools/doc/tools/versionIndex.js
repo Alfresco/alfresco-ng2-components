@@ -14,10 +14,7 @@ var ngHelpers = require("../ngHelpers");
 
 
 module.exports = {
-    "initPhase": initPhase,
-    "readPhase": readPhase,
-    "aggPhase": aggPhase,
-    "updatePhase": updatePhase
+    "processDocs": processDocs
 }
 
 var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
@@ -30,6 +27,14 @@ var initialVersion = "v2.0.0";
 
 var templateFolder = path.resolve("tools", "doc", "templates");
 
+
+function processDocs(mdCache, aggData, errorMessages) {
+    initPhase(aggData);
+    readPhase(mdCache, aggData);
+    aggPhase(aggData);
+}
+
+
 function initPhase(aggData) {
     aggData.versions = { "v2.0.0":[] };
 }
@@ -39,7 +44,7 @@ function readPhase(mdCache, aggData) {
     var pathnames = Object.keys(mdCache);
 
     pathnames.forEach(pathname => {
-        getFileData(mdCache[pathname].mdTree, pathname, aggData);
+        getFileData(mdCache[pathname].mdInTree, pathname, aggData);
     });
 }
 
@@ -129,9 +134,4 @@ function aggPhase(aggData) {
     }
 
     fs.writeFileSync(histFilePath, remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false, gfm: false}).stringify(histFileTree));
-}
-
-
-function updatePhase(tree, pathname, aggData) {
-    return false;
 }

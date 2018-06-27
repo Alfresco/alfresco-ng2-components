@@ -12,10 +12,7 @@ var searchLibraryRecursive = require("../libsearch");
 var mdNav = require("../mdNav");
 
 module.exports = {
-    "initPhase": initPhase,
-    "readPhase": readPhase,
-    "aggPhase": aggPhase,
-    "updatePhase": updatePhase
+    "processDocs": processDocs
 }
 
 var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
@@ -34,6 +31,14 @@ var adfLibNames = ["core", "content-services", "insights", "process-services"];
 
 var statusIcons;
 
+
+function processDocs(mdCache, aggData, _errorMessages) {
+    initPhase(aggData);
+    readPhase(mdCache, aggData);
+    aggPhase(aggData);
+}
+
+
 function initPhase(aggData) {
     statusIcons = aggData.config["statusIcons"] || {};
     aggData.stoplist = makeStoplist(aggData.config);    
@@ -49,7 +54,7 @@ function readPhase(mdCache, aggData) {
     var pathnames = Object.keys(mdCache);
 
     pathnames.forEach(pathname => {
-        getFileData(mdCache[pathname].mdTree, pathname, aggData);
+        getFileData(mdCache[pathname].mdInTree, pathname, aggData);
     });
 }
 
@@ -155,11 +160,6 @@ function aggPhase(aggData) {
     fs.writeFileSync(subIndexFilePath, subIndexText);
 
     //fs.writeFileSync(indexMdFilePath, remark().stringify(indexFileTree));
-}
-
-
-function updatePhase(tree, pathname, aggData) {
-    return false;
 }
 
 
@@ -410,5 +410,6 @@ function removeBriefDescLinks(desc) {
     links.forEach(link => {
         link.item.type = "text";
         link.item.value = link.item.children[0].value;
+        link.item.children = null;
     });
 }

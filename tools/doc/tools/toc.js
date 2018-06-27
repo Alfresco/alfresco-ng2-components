@@ -17,15 +17,18 @@ const maxTocHeadingDepth = 3;
 var templateFolder = path.resolve("tools", "doc", "templates");
 
 module.exports = {
-    "initPhase": initPhase,
-    "readPhase": readPhase,
-    "aggPhase": aggPhase,
-    "updatePhase": updatePhase
+    "processDocs": processDocs
 }
 
-function initPhase(aggData) {}
-function readPhase(tree, pathname, aggData) {}
-function aggPhase(aggData) {}
+
+function processDocs(mdCache, aggData, errorMessages) {
+    var pathnames = Object.keys(mdCache);
+
+    pathnames.forEach(pathname => {
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+    });
+}
+
 
 
 // Find an existing Contents section or add a new empty one if needed.
@@ -80,7 +83,11 @@ function establishContentsSection(mdTree) {
     return numTocHeadings;
 }
 
-function updatePhase(tree, pathname, aggData) {
+
+
+
+
+function updateFile(tree, pathname, _aggData, _errorMessages) {
     if (path.basename(pathname, ".md").match(/README|versionIndex/)) {
         return false;
     }

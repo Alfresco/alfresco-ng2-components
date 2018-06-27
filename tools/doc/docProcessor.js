@@ -18,6 +18,7 @@ var configFileName = "doctool.config.json";
 var defaultFolder = path.resolve("docs");
 
 
+/*
 function initPhase(aggData) {
     toolList.forEach(toolName => {
         toolModules[toolName].initPhase(aggData);
@@ -37,35 +38,29 @@ function aggPhase(aggData) {
         toolModules[toolName].aggPhase(aggData);
     });
 }
-
+*/
 
 function updatePhase(mdCache, aggData) {
-    var filenames = Object.keys(mdCache);
     var errorMessages;
 
-    for (var i = 0; i < filenames.length; i++) {
+    toolList.forEach(toolName => {
         errorMessages = [];
-        var pathname = filenames[i];
-        
-        if (program.verbose) {
-            console.log("Reading " + pathname);
-        }
-        
-        var tree = mdCache[pathname].mdTree;
-        var original = minimiseTree(tree);
+        console.log(`Tool: ${toolName}`);
+        toolModules[toolName].processDocs(mdCache, aggData, errorMessages);
 
-        var modified = false;
-
-        toolList.forEach(toolName => {
-            modified |= toolModules[toolName].updatePhase(tree, pathname, aggData, errorMessages);
-        });
-        
         if (errorMessages.length > 0) {
             showErrors(pathname, errorMessages);
         }
+    });
 
-        tree = minimiseTree(tree);
-       
+    var filenames = Object.keys(mdCache);
+    
+
+    for (var i = 0; i < filenames.length; i++) {
+        var pathname = filenames[i];
+        var tree = mdCache[pathname].mdOutTree;
+        var original = mdCache[pathname].mdInTree;
+
         if (program.json) {
             let filename = path.basename(pathname);
 
@@ -74,10 +69,8 @@ function updatePhase(mdCache, aggData) {
             console.log(`\nFile "${filename}" after processing:`);
             console.log(JSON.stringify(tree));
         }
-        
-        modified = !lodash.isEqual(tree, original);
 
-        if (modified) {
+        if (!lodash.isEqual(tree, original)) {
             if (program.verbose) {
                 console.log(`Modified: ${pathname}`);
             }
@@ -162,7 +155,9 @@ function initMdCache(filenames) {
         mdCache[pathname] = {};
 
         var src = fs.readFileSync(pathname);
-        mdCache[pathname].mdTree = remark().use(frontMatter, ["yaml"]).parse(src);
+        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
+        mdCache[pathname].mdInTree = minimiseTree(tree);
+        mdCache[pathname].mdOutTree = minimiseTree(tree);
     }
 
     return mdCache;
@@ -226,6 +221,7 @@ files = files.filter(filename =>
 
 var mdCache = initMdCache(files);
 
+/*
 console.log("Initialising...");
 initPhase(aggData);
 
@@ -234,6 +230,7 @@ readPhase(mdCache, aggData);
 
 console.log("Computing aggregate data...");
 aggPhase(aggData);
+*/
 
 console.log("Updating Markdown files...");
 updatePhase(mdCache, aggData);
