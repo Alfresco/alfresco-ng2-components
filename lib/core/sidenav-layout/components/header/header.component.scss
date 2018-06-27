@@ -1,0 +1,83 @@
+@mixin  adf-header-layout-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $background: map-get($theme, background);
+
+    adf-layout-header .mat-toolbar-single-row {
+
+        color: mat-color($primary, default-contrast) !important;
+        padding: 0 24px;
+
+        .adf-app-logo {
+            height: 28px;
+            width: 28px;
+            padding-right: 8px;
+            padding-left: 16px;
+        }
+
+        .adf-header-delimiter {
+            height: 24px;
+            width: 2px;
+            background-color: mat-color($primary, default-contrast);
+            margin-right: 16px;
+        }
+
+        .adf-userinfo-container {
+            flex-direction: row;
+            padding: 0;
+        }
+
+        .adf-userinfo-name{
+            padding-right: 8px;
+        }
+
+        @media screen and ($mat-xsmall) {
+            .adf-header-delimiter,
+            .adf-app-layout-user-profile,
+            .adf-app-logo,
+            .adf-app-title {
+                display: none;
+            }
+        }
+    }
+
+   .adf-sidenav-linklist .adf-app-layout-user-profile {
+        display: none;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        padding-left: 16px;
+
+        .adf-userinfo-name-right {
+            justify-content: flex-end;
+        }
+
+        .adf-userinfo-button-profile{
+            margin-right: 20px;
+        }
+
+        .adf-userinfo-menu_button {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            line-height: 20px;
+        }
+
+        .adf-userinfo-pic {
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+            line-height: 24px;
+        }
+
+        @media screen and ($mat-xsmall) {
+            display: block;
+            margin-right: 0;
+
+            .adf-userinfo-name {
+                display: block;
+            }
+        }
+    }
+}
+
+

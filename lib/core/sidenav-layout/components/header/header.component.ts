@@ -15,6 +15,23 @@
  * limitations under the License.
  */
 
-export * from './components/sidenav-layout/sidenav-layout.component';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-export * from './layout.module';
+@Component({
+    selector: 'adf-layout-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss']
+})
+
+export class HeaderLayoutComponent {
+
+    @Input() title: string;
+    @Input() logo?: string;
+    @Input() color: string;
+    @Output() toggled = new EventEmitter<boolean>();
+    expanded = false;
+
+    toggleMenu() {
+        this.toggled.emit(!this.expanded);
+    }
+}
