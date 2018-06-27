@@ -109,7 +109,7 @@ import { NotificationsComponent } from './components/notifications/notifications
         BlobPreviewComponent,
         BreadcrumbDemoComponent,
         NotificationsComponent,
-        ContentNodeSelectorComponent
+        ContentNodeSelectorComponent,
         TaskListDemoComponent
     ],
     providers: [
