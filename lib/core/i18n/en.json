@@ -133,6 +133,7 @@
       "APPLY": "APPLY",
       "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL.",
       "REDIRECT": "Redirect Uri",
+      "REDIRECT_LOGOUT": "Redirect Uri Logout",
       "SILENT": "Silent Login",
       "SCOPE": "Scope",
       "CLIENT": "ClientId"
