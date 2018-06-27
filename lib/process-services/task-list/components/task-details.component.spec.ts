@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormService, setupTestBed, BpmUserService } from '@alfresco/adf-core';
-import { CommentProcessService, LogService } from '@alfresco/adf-core';
+import { CommentProcessService, LogService, AuthenticationService } from '@alfresco/adf-core';
 
 import { UserProcessModel } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -51,6 +51,7 @@ describe('TaskDetailsComponent', () => {
     let logService: LogService;
     let commentProcessService: CommentProcessService;
     let peopleProcessService: PeopleProcessService;
+    let authService: AuthenticationService;
 
     setupTestBed({
         imports: [
@@ -79,6 +80,9 @@ describe('TaskDetailsComponent', () => {
         assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(Observable.of(fakeUser));
         completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(Observable.of({}));
         commentProcessService = TestBed.get(CommentProcessService);
+
+        authService = TestBed.get(AuthenticationService);
+        spyOn(authService, 'getBpmLoggedUser').and.returnValue(Observable.of({ email: 'fake-email'}));
 
         spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of([
             {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
