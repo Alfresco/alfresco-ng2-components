@@ -160,4 +160,10 @@ describe('SearchNumberRangeComponent', () => {
         component.from = new FormControl(123, component.validators);
         expect(component.from.hasError('required')).toBe(false);
     });
+
+    it('should throw error if "from" value is a negative value', () => {
+        component.ngOnInit();
+        component.from = new FormControl(-100, component.validators);
+        expect(component.from.hasError('min')).toBe(true);
+    });
 });
