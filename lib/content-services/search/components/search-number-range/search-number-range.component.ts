@@ -79,15 +79,14 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             map.set('TO', model.to);
 
             const value = this.formatString(this.format, map);
-            const query = `${this.field}:${value}`;
 
-            this.context.queryFragments[this.id] = query;
+            this.context.queryFragments[this.id] = `${this.field}:${value}`;
             this.context.update();
         }
     }
 
     private formatString(str: string, map: Map<string, string>): string {
-        let result  = str;
+        let result = str;
 
         map.forEach((value, key) => {
             const expr = new RegExp('{' + key + '}', 'gm');
