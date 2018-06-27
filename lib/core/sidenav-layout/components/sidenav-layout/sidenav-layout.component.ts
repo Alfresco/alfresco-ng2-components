@@ -37,6 +37,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @Input() stepOver: number;
     @Input() hideSidenav = false;
     @Input() expandedSidenav = true;
+    @Input() title: string;
 
     @Output() expanded = new EventEmitter<boolean>();
 

@@ -31,7 +31,7 @@ import { ContextMenuModule } from './context-menu/context-menu.module';
 import { DataColumnModule } from './data-column/data-column.module';
 import { DataTableModule } from './datatable/datatable.module';
 import { InfoDrawerModule } from './info-drawer/info-drawer.module';
-import { LanguageMenuModule } from './language-menu/language-menu.module';
+// import { LanguageMenuModule } from './language-menu/language-menu.module';
 import { LoginModule } from './login/login.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { HostSettingsModule } from './settings/host-settings.module';
@@ -39,7 +39,7 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormModule } from './form/form.module';
-import { SidenavLayoutModule } from './sidenav-layout/sidenav-layout.module';
+import { LayoutModule as SidenavLayoutModule } from './sidenav-layout/layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
 import { TemplateModule } from './templates/template.module';
@@ -132,6 +132,7 @@ export function providers() {
     imports: [
         AboutModule,
         ViewerModule,
+        UserInfoModule,
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
@@ -140,7 +141,6 @@ export function providers() {
         ReactiveFormsModule,
         HttpClientModule,
         HostSettingsModule,
-        UserInfoModule,
         MaterialModule,
         AppConfigModule,
         PaginationModule,
@@ -151,7 +151,7 @@ export function providers() {
         FormModule,
         CommentsModule,
         LoginModule,
-        LanguageMenuModule,
+        // LanguageMenuModule,
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
@@ -169,6 +169,7 @@ export function providers() {
     exports: [
         AboutModule,
         ViewerModule,
+        UserInfoModule,
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
@@ -177,7 +178,6 @@ export function providers() {
         ReactiveFormsModule,
         HttpClientModule,
         HostSettingsModule,
-        UserInfoModule,
         MaterialModule,
         AppConfigModule,
         PaginationModule,
@@ -188,7 +188,7 @@ export function providers() {
         FormModule,
         CommentsModule,
         LoginModule,
-        LanguageMenuModule,
+        // LanguageMenuModule,
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
@@ -205,6 +205,7 @@ export class CoreModuleLazy {
     imports: [
         AboutModule,
         ViewerModule,
+        UserInfoModule,
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
@@ -213,7 +214,6 @@ export class CoreModuleLazy {
         ReactiveFormsModule,
         HttpClientModule,
         HostSettingsModule,
-        UserInfoModule,
         MaterialModule,
         AppConfigModule,
         PaginationModule,
@@ -224,7 +224,7 @@ export class CoreModuleLazy {
         FormModule,
         CommentsModule,
         LoginModule,
-        LanguageMenuModule,
+        // LanguageMenuModule,
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
@@ -242,6 +242,7 @@ export class CoreModuleLazy {
     exports: [
         AboutModule,
         ViewerModule,
+        UserInfoModule,
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
@@ -250,7 +251,6 @@ export class CoreModuleLazy {
         ReactiveFormsModule,
         HttpClientModule,
         HostSettingsModule,
-        UserInfoModule,
         MaterialModule,
         AppConfigModule,
         PaginationModule,
@@ -261,7 +261,7 @@ export class CoreModuleLazy {
         FormModule,
         CommentsModule,
         LoginModule,
-        LanguageMenuModule,
+        // LanguageMenuModule,
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,

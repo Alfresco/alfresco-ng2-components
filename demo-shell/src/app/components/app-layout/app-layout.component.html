@@ -1,5 +1,5 @@
-<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="false"[expandedSidenav]= "expandedSidenav" (expanded)="setState($event)">
-
+<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="false"[expandedSidenav]= "expandedSidenav" [title] ="title | translate" (expanded)="setState($event)">
+<!--
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu="toggleMenu">
             <mat-toolbar color="primary" class="adf-app-layout-toolbar mat-elevation-z6">
@@ -19,6 +19,8 @@
                     [menuPositionY]="'above'">
                 </adf-userinfo>
 
+
+
                 <app-theme-picker></app-theme-picker>
                 <button mat-icon-button [matMenuTriggerFor]="langMenu">
                     <mat-icon>language</mat-icon>
@@ -28,7 +30,8 @@
                 </mat-menu>
             </mat-toolbar>
         </ng-template>
-    </adf-sidenav-layout-header>
+
+    </adf-sidenav-layout-header> -->
 
     <adf-sidenav-layout-navigation>
         <ng-template let-isMenuMinimized="isMenuMinimized">
@@ -53,3 +56,4 @@
 
 </adf-sidenav-layout>
 <app-log></app-log>
+

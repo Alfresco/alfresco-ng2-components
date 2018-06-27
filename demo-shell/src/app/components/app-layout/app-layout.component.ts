@@ -53,6 +53,7 @@ export class AppLayoutComponent implements OnInit {
     ];
 
     expandedSidenav = false;
+    title = 'APP_LAYOUT.APP_NAME';
 
     enabelRedirect = true;
 

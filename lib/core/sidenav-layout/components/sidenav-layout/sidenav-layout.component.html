@@ -3,6 +3,10 @@
         <ng-container class="adf-sidenav-layout-outer-header" *ngTemplateOutlet="headerTemplate; context:templateContext"></ng-container>
     </ng-container>
 
+    <adf-layout-header [title] ="title" (toggled)="toggleMenu()">
+
+    </adf-layout-header>
+
     <adf-layout-container #container
         [sidenavMin]="sidenavMin"
         [sidenavMax]="sidenavMax"

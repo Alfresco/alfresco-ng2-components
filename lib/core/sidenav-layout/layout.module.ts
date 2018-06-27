@@ -23,13 +23,20 @@ import { SidenavLayoutHeaderDirective } from './directives/sidenav-layout-header
 import { SidenavLayoutNavigationDirective } from './directives/sidenav-layout-navigation.directive';
 import { SidenavLayoutComponent } from './components/sidenav-layout/sidenav-layout.component';
 import { LayoutContainerComponent } from './components/layout-container/layout-container.component';
+import { HeaderLayoutComponent } from './components/header/header.component';
 import { SidebarActionMenuComponent, SidebarMenuDirective,
     SidebarMenuExpandIconDirective, SidebarMenuTitleIconDirective } from './components/sidebar-action/sidebar-action-menu.component';
+import { UserInfoModule } from './../userinfo/userinfo.module';
+import { ThemePickerModule } from './../../../demo-shell/src/app/components/theme-picker/theme-picker';
+import { LanguageMenuModule } from './../language-menu/language-menu.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        UserInfoModule,
+        ThemePickerModule,
+        LanguageMenuModule
     ],
     exports: [
         SidenavLayoutHeaderDirective,
@@ -40,7 +47,8 @@ import { SidebarActionMenuComponent, SidebarMenuDirective,
         SidebarActionMenuComponent,
         SidebarMenuDirective,
         SidebarMenuExpandIconDirective,
-        SidebarMenuTitleIconDirective
+        SidebarMenuTitleIconDirective,
+        HeaderLayoutComponent
     ],
     declarations: [
         SidenavLayoutHeaderDirective,
@@ -51,7 +59,8 @@ import { SidebarActionMenuComponent, SidebarMenuDirective,
         SidebarActionMenuComponent,
         SidebarMenuDirective,
         SidebarMenuExpandIconDirective,
-        SidebarMenuTitleIconDirective
+        SidebarMenuTitleIconDirective,
+        HeaderLayoutComponent
     ]
 })
-export class SidenavLayoutModule {}
+export class LayoutModule {}

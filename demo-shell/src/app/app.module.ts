@@ -42,8 +42,6 @@ import { VersionManagerDialogAdapterComponent } from './components/files/version
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
 import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 
-import { ThemePickerModule } from './components/theme-picker/theme-picker';
-
 import { routing } from './app.routes';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
@@ -62,7 +60,6 @@ import { NotificationsComponent } from './components/notifications/notifications
         routing,
         FormsModule,
         MaterialModule,
-        ThemePickerModule,
         FlexLayoutModule,
         ChartsModule,
         HttpClientModule,
