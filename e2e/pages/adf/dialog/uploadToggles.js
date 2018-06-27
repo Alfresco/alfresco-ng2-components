@@ -83,7 +83,7 @@ var UploadToggles = function () {
         Util.waitUntilElementIsPresent(toggle);
         var finalToggleButton = toggle.element(toggleButton);
         finalToggleButton.getAttribute('class').then(function (value) {
-            if (value.indexOf('mat-checked')==-1) {
+            if (value.indexOf('mat-checked')===-1) {
                 finalToggleButton.click();
             }
         });

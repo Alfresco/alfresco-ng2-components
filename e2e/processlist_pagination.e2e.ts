@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var PaginationPage = require('./pages/adf/paginationPage.js');
-var ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-var ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
-var NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import PaginationPage = require('./pages/adf/paginationPage.js');
+import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
+import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
-var apps = require('./restAPI/APS/reusableActions/apps');
-var users = require('./restAPI/APS/reusableActions/users');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
+import apps = require('./restAPI/APS/reusableActions/apps');
+import users = require('./restAPI/APS/reusableActions/users');
 
-var Util = require('./util/util.js');
+import Util = require('./util/util.js');
 
 xdescribe('Test Process List - Pagination', function () {
 
-    var itemsPerPage = {
+    let itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -42,27 +42,27 @@ xdescribe('Test Process List - Pagination', function () {
         fifteenValue: 15,
         twenty: '20',
         twentyValue: 20,
-        default: '25',
+        default: '25'
     };
 
-    var processFilterRunning = 'Running';
+    let processFilterRunning = 'Running';
 
-    var adfLoginPage = new AdfLoginPage();
-    var processServicesPage = new ProcessServicesPage();
-    var paginationPage = new PaginationPage();
-    var processFiltersPage = new ProcessFiltersPage();
-    var processDetailsPage = new ProcessDetailsPage();
-    var navigationBarPage = new NavigationBarPage();
+    let adfLoginPage = new AdfLoginPage();
+    let processServicesPage = new ProcessServicesPage();
+    let paginationPage = new PaginationPage();
+    let processFiltersPage = new ProcessFiltersPage();
+    let processDetailsPage = new ProcessDetailsPage();
+    let navigationBarPage = new NavigationBarPage();
 
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth;
-    var processUserModel, secondUserModel;
-    var app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    var nrOfProcesses = 20;
-    var page, totalPages, processNameBase = 'process';
-    var processNames = Util.generateSeqeunceFiles(10, nrOfProcesses + 9, processNameBase, '');
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth;
+    let processUserModel, secondUserModel;
+    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    let nrOfProcesses = 20;
+    let page, totalPages, processNameBase = 'process';
+    let processNames = Util.generateSeqeunceFiles(10, nrOfProcesses + 9, processNameBase, '');
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         users.createTenantAndUser(basicAuthAdmin)
             .then(function (user) {
                 users.createTenantAndUser(basicAuthAdmin)
@@ -73,8 +73,8 @@ xdescribe('Test Process List - Pagination', function () {
                 basicAuth = new BasicAuthorization(user.email, user.password);
                 apps.importPublishDeployApp(basicAuth, app.file_location)
                     .then(function (resultApp) {
-                        var arr = [];
-                        for (var i = 0; i < nrOfProcesses; i++) {
+                        let arr = [];
+                        for (let i = 0; i < nrOfProcesses; i++) {
                             arr.push(apps.startProcess(basicAuth, resultApp, processNames[i]));
                         }
 
@@ -357,18 +357,12 @@ xdescribe('Test Process List - Pagination', function () {
         processFiltersPage.sortByName(true);
         processFiltersPage.waitForTableBody();
         processFiltersPage.getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) == JSON.stringify(processNames)).toEqual(true);
+            expect(JSON.stringify(list) === JSON.stringify(processNames)).toEqual(true);
         });
         processFiltersPage.sortByName(false);
         processFiltersPage.getAllRowsNameColumn().then(function (list) {
             processNames.reverse();
-            expect(JSON.stringify(list) == JSON.stringify(processNames)).toEqual(true);
+            expect(JSON.stringify(list) === JSON.stringify(processNames)).toEqual(true);
         });
     });
 });
-
-
-
-
-
-

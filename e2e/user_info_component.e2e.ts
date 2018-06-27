@@ -15,47 +15,47 @@
  * limitations under the License.
  */
 
-var AdfSettingsPage = require('./pages/adf/settingsPage.js');
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var UserInfoDialog = require('./pages/adf/dialog/userInfoDialog.js');
-var NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import AdfSettingsPage = require('./pages/adf/settingsPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import UserInfoDialog = require('./pages/adf/dialog/userInfoDialog.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var FileModel = require('./models/ACS/fileModel.js');
-var User = require('./models/APS/User');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import FileModel = require('./models/ACS/fileModel.js');
+import User = require('./models/APS/User');
 
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-var UserProfileAPI = require('./restAPI/APS/enterprise/UserProfileAPI.js');
-var UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import UserProfileAPI = require('./restAPI/APS/enterprise/UserProfileAPI.js');
+import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
-var TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
-var Tenant = require('./models/APS/Tenant');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
+import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
+import Tenant = require('./models/APS/Tenant');
 
 xdescribe('Test User Info component', () => {
 
-    var adfSettingsPage = new AdfSettingsPage();
-    var adfLoginPage = new AdfLoginPage();
-    var navigationBarPage = new NavigationBarPage();
-    var userInfoDialog = new UserInfoDialog();
-    var adminACSUserModel = new AcsUserModel({
+    let adfSettingsPage = new AdfSettingsPage();
+    let adfLoginPage = new AdfLoginPage();
+    let navigationBarPage = new NavigationBarPage();
+    let userInfoDialog = new UserInfoDialog();
+    let adminACSUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
-    var acsAvatarFileModel = new FileModel({
+    let acsAvatarFileModel = new FileModel({
         'name': resources.Files.PROFILE_IMAGES.ECM.file_name,
         'location': resources.Files.PROFILE_IMAGES.ECM.file_location
     });
-    var apsAvatarFileModel = new FileModel({
+    let apsAvatarFileModel = new FileModel({
         'name': resources.Files.PROFILE_IMAGES.BPM.file_name,
         'location': resources.Files.PROFILE_IMAGES.BPM.file_location
     });
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth, contentUserModel, processUserModel, retry = 20;
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth, contentUserModel, processUserModel, retry = 20;
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         new TenantsAPI().createTenant(basicAuthAdmin, new Tenant())
             .then(function (result) {
                 return new UserAPI().createUser(basicAuthAdmin, processUserModel = new User({ tenantId: JSON.parse(result.responseBody).id }));
@@ -73,9 +73,8 @@ xdescribe('Test User Info component', () => {
             })
             .then(() => {
                 done();
-            })
+            });
     });
-
 
     it('1. Enable Process Services and Content Services ', () => {
         adfLoginPage.goToLoginPage();
@@ -140,7 +139,7 @@ xdescribe('Test User Info component', () => {
     });
 
     it('4. Enable Process Services and Content Services ', () => {
-        var flow = protractor.promise.controlFlow();
+        let flow = protractor.promise.controlFlow();
         flow.execute(() => {
             PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
             PeopleAPI.getAvatarViaAPI(retry, contentUserModel, '-me-', function (result) {

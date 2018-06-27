@@ -15,99 +15,100 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var SearchDialog = require('./pages/adf/dialog/searchDialog.js');
-var ContentServicesPage = require('./pages/adf/contentServicesPage.js');
-var SearchResultPage = require('./pages/adf/searchResultsPage.js');
-var filePreviewPage = require('./pages/adf/filePreviewPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import SearchDialog = require('./pages/adf/dialog/searchDialog.js');
+import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
+import SearchResultPage = require('./pages/adf/searchResultsPage.js');
+import filePreviewPage = require('./pages/adf/filePreviewPage.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var FolderModel = require('./models/ACS/folderModel.js');
-var FileModel = require('./models/ACS/fileModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import FolderModel = require('./models/ACS/folderModel.js');
+import FileModel = require('./models/ACS/fileModel.js');
 
-var NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-var QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
+import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 
-var TestConfig = require('./test.config.js');
-var Util = require('./util/util.js');
-var retryNumber = 100;
-var resources = require('./util/resources.js');
+import TestConfig = require('./test.config.js');
+import Util = require('./util/util.js');
+import resources = require('./util/resources.js');
 
-xdescribe('Test Search component - Search Page', () =>{
-    var search = {
+let retryNumber = 100;
+
+xdescribe('Test Search component - Search Page', () => {
+    let search = {
         active: {
             base: 'newFile',
             firstFile: 'newFile14.txt',
             secondFile: 'newFile15.txt',
-            extension: '.txt',
+            extension: '.txt'
         },
         no_permission: {
             noPermFile: 'Meetings',
-            noPermFolder: 'Meeting Notes',
+            noPermFolder: 'Meeting Notes'
         }
     };
 
-    var adfLoginPage = new AdfLoginPage();
-    var contentServicesPage = new ContentServicesPage();
-    var searchDialog = new SearchDialog();
-    var searchResultPage = new SearchResultPage();
+    let adfLoginPage = new AdfLoginPage();
+    let contentServicesPage = new ContentServicesPage();
+    let searchDialog = new SearchDialog();
+    let searchResultPage = new SearchResultPage();
 
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
-    var emptyFolderModel = new FolderModel({'name': 'emptyFolder'});
-    var firstFileModel = new FileModel({'name': resources.Files.ADF_DOCUMENTS.PDF.file_name});
-    var newFolderModel = new FolderModel({'name': 'newFolder'});
-    var fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
+    let emptyFolderModel = new FolderModel({ 'name': 'emptyFolder' });
+    let firstFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    let newFolderModel = new FolderModel({ 'name': 'newFolder' });
+    let fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, search.active.base, search.active.extension);
         adminFileNames = Util.generateSeqeunceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
 
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(() =>{
+            .then(() => {
                 return adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
             })
-            .then(() =>{
+            .then(() => {
                 return protractor.promise.all([
                     NodesAPI.uploadFolderViaAPI(acsUser, emptyFolderModel, '-my-'),
                     NodesAPI.uploadFolderViaAPI(acsUser, newFolderModel, '-my-')
                 ]);
             })
-            .then(() =>{
+            .then(() => {
                 return protractor.promise.all([
                     NodesAPI.createEmptyFilesViaAPI(acsUser, fileNames, newFolderModel.id),
                     NodesAPI.createEmptyFilesViaAPI(adminUserModel, adminFileNames, newFolderModel.id),
-                    NodesAPI.uploadFileViaAPI(acsUser, firstFileModel, '-my-', false),
+                    NodesAPI.uploadFileViaAPI(acsUser, firstFileModel, '-my-', false)
                 ]);
             })
             .then(function (data) {
-                QueriesAPI.getNodes(retryNumber, acsUser, 'term=nothing*&rootNodeId=-root-', nrOfFiles + adminNrOfFiles, () =>{
+                QueriesAPI.getNodes(retryNumber, acsUser, 'term=nothing*&rootNodeId=-root-', nrOfFiles + adminNrOfFiles, () => {
                     done();
                 });
             });
 
     });
 
-    afterAll(function (done) {
-        NodesAPI.deleteContent(acsUser, newFolderModel.id, () =>{
-            NodesAPI.deleteContent(acsUser, emptyFolderModel.id, () =>{
+    afterAll((done) => {
+        NodesAPI.deleteContent(acsUser, newFolderModel.id, () => {
+            NodesAPI.deleteContent(acsUser, emptyFolderModel.id, () => {
                 done();
             });
-        })
+        });
     });
 
-    it('1. \'No results found searching for\' message is displayed on Search Page', () =>{
+    it('1. \'No results found searching for\' message is displayed on Search Page', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter('nonexistent');
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('2. File previewer is displayed', () =>{
+    it('2. File previewer is displayed', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(firstFileModel.name);
@@ -119,7 +120,7 @@ xdescribe('Test Search component - Search Page', () =>{
         filePreviewPage.closePreviewWithButton();
     });
 
-    it('3. Only the searched file is displayed', () =>{
+    it('3. Only the searched file is displayed', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.firstFile);
@@ -127,7 +128,7 @@ xdescribe('Test Search component - Search Page', () =>{
         expect(searchResultPage.numberOfResultsDisplayed()).toBe(1);
     });
 
-    it('4. Folder content is displayed', () =>{
+    it('4. Folder content is displayed', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(emptyFolderModel.name);
@@ -139,7 +140,7 @@ xdescribe('Test Search component - Search Page', () =>{
         });
     });
 
-    it('5. Delete a file from the Search Results Page', () =>{
+    it('5. Delete a file from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.firstFile);
@@ -153,7 +154,7 @@ xdescribe('Test Search component - Search Page', () =>{
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('6. Delete a folder from the Search Results Page', () =>{
+    it('6. Delete a folder from the Search Results Page', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(emptyFolderModel.name);
         searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
@@ -166,7 +167,7 @@ xdescribe('Test Search component - Search Page', () =>{
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('8. Sort content ascending by name.', () =>{
+    it('8. Sort content ascending by name.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -176,7 +177,7 @@ xdescribe('Test Search component - Search Page', () =>{
         });
     });
 
-    it('9. Sort content descending by name.', () =>{
+    it('9. Sort content descending by name.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -186,7 +187,7 @@ xdescribe('Test Search component - Search Page', () =>{
         });
     });
 
-    xit('10. Sort content ascending by author.', () =>{
+    xit('10. Sort content ascending by author.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -196,7 +197,7 @@ xdescribe('Test Search component - Search Page', () =>{
         });
     });
 
-    xit('11. Sort content descending by author.', () =>{
+    xit('11. Sort content descending by author.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -206,7 +207,7 @@ xdescribe('Test Search component - Search Page', () =>{
         });
     });
 
-    xit('12. Sort content ascending by created date.', () =>{
+    xit('12. Sort content ascending by created date.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -216,7 +217,7 @@ xdescribe('Test Search component - Search Page', () =>{
         });
     });
 
-    xit('13. Sort content descending by created date.', () =>{
+    xit('13. Sort content descending by created date.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -226,7 +227,7 @@ xdescribe('Test Search component - Search Page', () =>{
         });
     });
 
-    it('14. Try to delete a file without rights from the Search Results Page', () =>{
+    it('14. Try to delete a file without rights from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.no_permission.noPermFile);
@@ -239,7 +240,7 @@ xdescribe('Test Search component - Search Page', () =>{
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
     });
 
-    it('15. Try to delete a folder without rights from the Search Results Page', () =>{
+    it('15. Try to delete a folder without rights from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.no_permission.noPermFolder);
@@ -252,5 +253,3 @@ xdescribe('Test Search component - Search Page', () =>{
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
     });
 });
-
-

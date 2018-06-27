@@ -89,7 +89,7 @@ var TenantsAPI = function () {
                             responseBody += data;
                         }).
                         on('end', function (){
-                            console.info("Get tenants response: ", responseBody.toString());
+                            // console.info("Get tenants response: ", responseBody.toString());
                             resolve({
                                 responseBody: responseBody.toString(),
                                 statusCode: response.statusCode,

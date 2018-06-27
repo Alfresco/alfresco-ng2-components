@@ -104,7 +104,7 @@ var ContentList = function () {
     this.sortByColumn = function(sortOrder, locator) {
         Util.waitUntilElementIsVisible(element(locator));
         return element(locator).getAttribute('class').then(function (result) {
-            if(sortOrder==true) {
+            if(sortOrder===true) {
                 if(!result.includes('sorted-asc')) {
                     if(result.includes('sorted-desc') ||result.includes('sortable')) {
                         element(locator).click();
@@ -193,10 +193,10 @@ var ContentList = function () {
                 if(lastValue!==undefined) {
                     var currentMom = new Date(text);
                     var lastMom = new Date(lastValue);
-                    if(sortOrder == true && currentMom.getTime()<lastMom.getTime()) {
+                    if(sortOrder === true && currentMom.getTime()<lastMom.getTime()) {
                         sorted = false;
                     };
-                    if(sortOrder == false && currentMom.getTime()>lastMom.getTime()) {
+                    if(sortOrder === false && currentMom.getTime()>lastMom.getTime()) {
                         sorted = false;
                     };
                 };
@@ -225,10 +225,10 @@ var ContentList = function () {
         }).then(function () {
             var sortedList = initialList;
             sortedList = sortedList.sort();
-            if(sortOrder==false) {
+            if(sortOrder===false) {
                 sortedList = sortedList.reverse();
             }
-            deferred.fulfill(initialList.toString() == sortedList.toString());
+            deferred.fulfill(initialList.toString() === sortedList.toString());
         });
         return deferred.promise;
     };

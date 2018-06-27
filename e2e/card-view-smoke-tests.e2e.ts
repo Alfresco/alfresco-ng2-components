@@ -15,39 +15,39 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ContentServicesPage = require('./pages/adf/contentServicesPage.js');
-var AdfViewerPage = require('./pages/adf/viewerPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
+import AdfViewerPage = require('./pages/adf/viewerPage.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var FileModel = require('./models/ACS/fileModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import FileModel = require('./models/ACS/fileModel.js');
 
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-var NodesAPI = require('./restAPI/ACS/NodesAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
-var dateFormat = require('dateformat');
-var CONSTANTS = require('./util/constants');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
+import dateFormat = require('dateformat');
+import CONSTANTS = require('./util/constants');
 
 xdescribe('Metadata component', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var contentServicesPage = new ContentServicesPage();
-    var adfViewerPage = new AdfViewerPage();
-    var cardViewPage;
+    let adfLoginPage = new AdfLoginPage();
+    let contentServicesPage = new ContentServicesPage();
+    let adfViewerPage = new AdfViewerPage();
+    let cardViewPage;
 
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
-    var pdfFileModel = new FileModel({
+    let pdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_ALL.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF_ALL.file_location
     });
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
             .then(() => {
                 adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -58,7 +58,7 @@ xdescribe('Metadata component', () => {
             })
             .then(() => {
                 done();
-            })
+            });
     });
 
     it('Properties', () => {

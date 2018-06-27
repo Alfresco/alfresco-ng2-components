@@ -52,11 +52,11 @@ function read(initialFile) {
     return new Promise(function(resolve, reject) {
         fs.readFile(initialFile, function(err, file) {
             if(err) {
-                console.log('read error', err);
+                //console.log('read error', err);
                 reject(err);
             }
 
-            console.log('read success', file);
+            // console.log('read success', file);
             resolve(file);
         })
     })
@@ -71,7 +71,7 @@ function write(file, uri, header) {
             }
             var json_data = JSON.parse(body);
 
-            console.log('write success', json_data);
+            // console.log('write success', json_data);
             resolve(body);
         });
     });
@@ -115,7 +115,7 @@ exports.getAvatarViaAPI = function (retry, requestUserModel, personId, callback)
         request.get({url: uri, headers: RequestCoreAPI.requestHeaders(requestUserModel)}, function (error, httpResponse, body) {
             retry--;
             var statusCode = httpResponse.statusCode;
-            console.log("status code: " + statusCode);
+            // console.log("status code: " + statusCode);
             if(statusCode!="200" && retry>0) {
                 run();
             }

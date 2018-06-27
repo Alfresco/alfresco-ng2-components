@@ -20,7 +20,7 @@ var BasicAuthorization = function (user, password) {
     this.password = password;
 
     this.displayCredentials = function () {
-        console.info("Basic Authorization: " + user + "(" + password + ")");
+        // console.info("Basic Authorization: " + user + "(" + password + ")");
     }
 };
 

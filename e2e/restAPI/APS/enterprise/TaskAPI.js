@@ -32,7 +32,7 @@ var TaskAPI = function () {
     var uri = url(requestBase.getBaseURL(CONSTANTS.APPLICATION.ADF_APS), '/tasks');
 
     this.tasksQuery = function (auth, tasksQuery) {
-        // console.info('[ REST API ] Query tasks using:', tasksQuery);
+        // // console.info('[ REST API ] Query tasks using:', tasksQuery);
 
         let options = {
             url: url(uri, '/query'),
@@ -49,7 +49,7 @@ var TaskAPI = function () {
                             responseBody += data;
                         }).
                         on('end', function (){
-                            // console.info('Query tasks response', responseBody.toString());
+                            // // console.info('Query tasks response', responseBody.toString());
                             resolve({
                                 responseBody: responseBody.toString(),
                                 statusCode: response.statusCode,
@@ -71,7 +71,7 @@ var TaskAPI = function () {
      * @returns {Promise}
      */
     this.getTaskComments = function (auth, taskId) {
-        // console.info('[ REST API ] Get comments for taskId:", taskId);
+        // // console.info('[ REST API ] Get comments for taskId:", taskId);
 
         var options = {
             url: url(uri, taskId, '/comments'),
@@ -81,7 +81,7 @@ var TaskAPI = function () {
             request.get(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Get task comments response (taskId:', taskId, '):', data.toString());
+                        // console.info('Get task comments response (taskId:', taskId, '):', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -104,7 +104,7 @@ var TaskAPI = function () {
      * @returns {Promise}
      */
     this.addTaskComment = function (auth, taskId, taskCommentModel) {
-        // console.info('[ REST API ] Add comment for taskId:", taskId);
+        // // console.info('[ REST API ] Add comment for taskId:", taskId);
 
         var options = {
             url: url(uri, taskId, '/comments'),
@@ -116,7 +116,7 @@ var TaskAPI = function () {
             request.post(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Add task comment response (taskId:', taskId, '):', data.toString());
+                        // console.info('Add task comment response (taskId:', taskId, '):', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -138,7 +138,7 @@ var TaskAPI = function () {
      * @returns {Promise}
      */
     this.getTaskContent = function (auth, taskId) {
-        // console.info('[ REST API ] Get content list for taskId:", taskId);
+        // // console.info('[ REST API ] Get content list for taskId:", taskId);
 
         var options = {
             url: url(uri, taskId, '/content'),
@@ -148,7 +148,7 @@ var TaskAPI = function () {
             request.get(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Get task content list response (taskId: ' + taskId + '):', data.toString());
+                        // console.info('Get task content list response (taskId: ' + taskId + '):', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -172,7 +172,7 @@ var TaskAPI = function () {
      * @returns {Promise}
      */
     this.uploadTaskContent = function (auth, taskId, filePath, isRelatedContent = true) {
-        // console.info('[ REST API ] Upload content to taskId:", taskId);
+        // // console.info('[ REST API ] Upload content to taskId:", taskId);
         var absoluteFilePath = path.join(TestConfig.main.rootPath + filePath);
 
         var options = {
@@ -186,7 +186,7 @@ var TaskAPI = function () {
             request.post(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Upload content response (taskId: ' + taskId + '):', data.toString());
+                        // console.info('Upload content response (taskId: ' + taskId + '):', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -208,7 +208,7 @@ var TaskAPI = function () {
      * @contentData - JSON containing the content data (name, source, sourceId etc)
      */
     this.attachTaskContent = function (auth, taskId, contentData, isRelatedContent = true) {
-        // console.info('[ REST API ] Attach content to taskId:", taskId);
+        // // console.info('[ REST API ] Attach content to taskId:", taskId);
 
         var options = {
             url: url(uri, taskId, '/content') + '?isRelatedContent=' + isRelatedContent,
@@ -220,7 +220,7 @@ var TaskAPI = function () {
             request.post(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Attach content response (taskId: ' + taskId + '):', data.toString());
+                        // console.info('Attach content response (taskId: ' + taskId + '):', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -235,7 +235,7 @@ var TaskAPI = function () {
     };
 
     this.getTask = function (auth, taskId) {
-        // console.info('[ REST API ] Get task details for taskId:', taskId);
+        // // console.info('[ REST API ] Get task details for taskId:', taskId);
 
         let options = {
             url: url(uri, taskId),
@@ -249,7 +249,7 @@ var TaskAPI = function () {
                         responseBody += data;
                     }).
                     on('end', function () {
-                        console.info('Get task details response:', responseBody.toString());
+                        // console.info('Get task details response:', responseBody.toString());
                         resolve({
                             responseBody: responseBody.toString(),
                             statusCode: response.statusCode,
@@ -264,7 +264,7 @@ var TaskAPI = function () {
     };
 
     this.updateTask = function (auth, taskId, taskData) {
-        // console.info('[ REST API ] Update taskId:', taskId);
+        // // console.info('[ REST API ] Update taskId:', taskId);
 
         let options = {
             url: url(uri, taskId),
@@ -276,7 +276,7 @@ var TaskAPI = function () {
             request.put(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Update task response:', data.toString());
+                        // console.info('Update task response:', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -291,7 +291,7 @@ var TaskAPI = function () {
     };
 
     this.deleteTask = function (auth, taskId) {
-        // console.info('[ REST API ] Delete task:", taskId);
+        // // console.info('[ REST API ] Delete task:", taskId);
 
         var options = {
             url: url(uri, taskId),
@@ -316,7 +316,7 @@ var TaskAPI = function () {
      * @userIdentifier - userId and user email
      */
     this.assignTask = function (auth, taskId, userIdentifier) {
-        // console.info('[ REST API ] Assign task:", taskId);
+        // // console.info('[ REST API ] Assign task:", taskId);
 
         var options = {
             url: url(uri, taskId, '/action/assign'),
@@ -328,7 +328,7 @@ var TaskAPI = function () {
             request.put(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Assign task response:', data.toString());
+                        // console.info('Assign task response:', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -350,7 +350,7 @@ var TaskAPI = function () {
      * @formId - {Number}
      */
     this.attachFormToTask = function (auth, taskId, formId) {
-        // console.info('[ REST API ] Attach formId', formId, 'to taskId:', taskId);
+        // // console.info('[ REST API ] Attach formId', formId, 'to taskId:', taskId);
 
         let options = {
             url: url(uri, taskId, '/action/attach-form'),
@@ -376,7 +376,7 @@ var TaskAPI = function () {
      * @taskId - {Number}
      */
     this.removeFormFromTask = function (auth, taskId) {
-        // console.info('[ REST API ] Remove form from taskId:', taskId);
+        // // console.info('[ REST API ] Remove form from taskId:', taskId);
 
         var options = {
             url: url(uri, taskId, '/action/remove-form'),
@@ -400,7 +400,7 @@ var TaskAPI = function () {
      * @taskId - {Number}
      */
     this.claimTask = function (auth, taskId) {
-        // console.info('[ REST API ] Claim task:", taskId);
+        // // console.info('[ REST API ] Claim task:", taskId);
 
         var options = {
             url: url(uri, taskId, '/action/claim'),
@@ -424,7 +424,7 @@ var TaskAPI = function () {
      * @taskId - {Number}
      */
     this.unclaimTask = function (auth, taskId) {
-        // console.info('[ REST API ] Unclaim taskId:", taskId);
+        // // console.info('[ REST API ] Unclaim taskId:", taskId);
 
         let options = {
             url: url(uri, taskId, '/action/unclaim'),
@@ -448,7 +448,7 @@ var TaskAPI = function () {
     * @taskId - {Number}
     */
     this.completeTask = function (auth, taskId) {
-        // console.info('[ REST API ] Complete task:", taskId);
+        // // console.info('[ REST API ] Complete task:", taskId);
 
         var options = {
             url: url(uri, taskId, '/action/complete'),
@@ -473,7 +473,7 @@ var TaskAPI = function () {
      * @userIdentifier - userId and user email
      */
     this.delegateTask = function (auth, taskId, userIdentifier) {
-        // console.info('[ REST API ] Delegate taskId:", taskId);
+        // // console.info('[ REST API ] Delegate taskId:", taskId);
 
         let options = {
             url: url(uri, taskId, '/action/delegate'),
@@ -500,7 +500,7 @@ var TaskAPI = function () {
      * @userIdentifier - userId and user email
      */
     this.involveUserWithTask = function (auth, taskId, userIdentifier) {
-        // console.info('[ REST API ] Involve user with taskId:", taskId);
+        // // console.info('[ REST API ] Involve user with taskId:", taskId);
 
         let options = {
             url: url(uri, taskId, '/action/involve'),
@@ -527,7 +527,7 @@ var TaskAPI = function () {
      * @userIdentifier - userId and user email
      */
     this.removeInvolvedUserFromTask = function (auth, taskId, userIdentifier) {
-        // console.info('[ REST API ] Remove involved user from taskId:", taskId);
+        // // console.info('[ REST API ] Remove involved user from taskId:", taskId);
 
         let options = {
             url: url(uri, taskId, '/action/remove-involved'),
@@ -553,7 +553,7 @@ var TaskAPI = function () {
      * @taskId - {Number}
      */
     this.resolveTask = function (auth, taskId) {
-        // console.info('[ REST API ] Resolve taskId:", taskId);
+        // // console.info('[ REST API ] Resolve taskId:", taskId);
 
         let options = {
             url: url(uri, taskId, '/action/resolve'),
@@ -578,7 +578,7 @@ var TaskAPI = function () {
      * @groupId - {Number}
      */
     this.involveGroupWithTask = function (auth, taskId, groupId) {
-        // console.info('[ REST API ] Involve groupId", groupId, "with taskId", taskId);
+        // // console.info('[ REST API ] Involve groupId", groupId, "with taskId", taskId);
 
         let options = {
             url: url(uri, taskId, '/groups', groupId),
@@ -603,7 +603,7 @@ var TaskAPI = function () {
      * @groupId - {Number}
      */
     this.removeInvolvedGroupFromTask = function (auth, taskId, groupId) {
-        // console.info('[ REST API ] Remove involved groupId", groupId, "from taskId", taskId);
+        // // console.info('[ REST API ] Remove involved groupId", groupId, "from taskId", taskId);
 
         let options = {
             url: url(uri, taskId, '/groups', groupId),
@@ -628,7 +628,7 @@ var TaskAPI = function () {
      * @variableList - list of variables
      */
     this.addVariableListToTask = function (auth, taskId, variableList) {
-        // console.info('[ REST API ] Add variable list to taskId:", taskId);
+        // // console.info('[ REST API ] Add variable list to taskId:", taskId);
 
         let options = {
             url: url(uri, taskId, '/variables'),
@@ -640,7 +640,7 @@ var TaskAPI = function () {
             request.post(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Add variable list to task', taskId, 'response:', data.toString());
+                        // console.info('Add variable list to task', taskId, 'response:', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -662,7 +662,7 @@ var TaskAPI = function () {
      * @queryParameters - object containing variable scope
      */
     this.getTaskVariables = function (auth, taskId, queryParameters) {
-        // console.info('[ REST API ] Get variable list from taskId:", taskId);
+        // // console.info('[ REST API ] Get variable list from taskId:", taskId);
         let options = {
             url: url(uri, taskId, '/variables', apiUtils.buildQueryParams(queryParameters)),
             headers: requestBase.requestHeaders(auth)
@@ -671,7 +671,7 @@ var TaskAPI = function () {
             request.get(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Get variable list from task', taskId, 'response:', data.toString());
+                        // console.info('Get variable list from task', taskId, 'response:', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -694,7 +694,7 @@ var TaskAPI = function () {
      * @queryParameters - object containing variable scope
      */
     this.getTaskVariable = function (auth, taskId, variableName, queryParameters) {
-        // console.info('[ REST API ] Get variable', variableName, 'from task:', taskId);
+        // // console.info('[ REST API ] Get variable', variableName, 'from task:', taskId);
         let options = {
             url: url(uri, taskId, '/variables', variableName, apiUtils.buildQueryParams(queryParameters)),
             headers: requestBase.requestHeaders(auth)
@@ -703,7 +703,7 @@ var TaskAPI = function () {
             request.get(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Get variable', variableName, 'from taskId', taskId, 'response:', data.toString());
+                        // console.info('Get variable', variableName, 'from taskId', taskId, 'response:', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -726,7 +726,7 @@ var TaskAPI = function () {
      * @variableData - json containing data to be updated
      */
     this.updateTaskVariable = function (auth, taskId, variableName, variableData) {
-        // console.info('[ REST API ] Update variable', variableName, 'from task:', taskId);
+        // // console.info('[ REST API ] Update variable', variableName, 'from task:', taskId);
         let options = {
             url: url(uri, taskId, '/variables', variableName),
             headers: requestBase.requestHeaders(auth),
@@ -737,7 +737,7 @@ var TaskAPI = function () {
             request.put(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Update variable', variableName, 'from taskId', taskId, 'response:', data.toString());
+                        // console.info('Update variable', variableName, 'from taskId', taskId, 'response:', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -758,7 +758,7 @@ var TaskAPI = function () {
      * @taskId - {Number}
      */
     this.auditTask = function (auth, taskId) {
-        // console.info('[ REST API ] Audit taskId:', taskId);
+        // // console.info('[ REST API ] Audit taskId:', taskId);
 
         let options = {
             url: url(uri, taskId, '/audit'),
@@ -768,7 +768,7 @@ var TaskAPI = function () {
             request.get(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Audit task response:', data.toString());
+                        // console.info('Audit task response:', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -789,7 +789,7 @@ var TaskAPI = function () {
      * @tasksFilter - json containing various filters
      */
     this.filterTasks = function (auth, tasksFilter) {
-        // console.info('[ REST API ] Filter tasks using:', tasksFilter);
+        // // console.info('[ REST API ] Filter tasks using:', tasksFilter);
 
         let options = {
             url: url(uri, '/filter'),
@@ -810,7 +810,7 @@ var TaskAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info('Filter tasks response:', responseBody.toString());
+                        // console.info('Filter tasks response:', responseBody.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -826,7 +826,7 @@ var TaskAPI = function () {
      * @taskRepresentation - json containing task data
      */
     this.createStandaloneTask = function (auth, taskRepresentation) {
-        // console.info('[ REST API ] Create a standalone task');
+        // // console.info('[ REST API ] Create a standalone task');
 
         let options = {
             url: uri,
@@ -838,7 +838,7 @@ var TaskAPI = function () {
             request.post(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        // console.info('Create task response:', data.toString());
+                        // // console.info('Create task response:', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,
@@ -859,7 +859,7 @@ var TaskAPI = function () {
      * @taskId - parent task Id
      */
     this.createChecklistTask = function (auth, parentTaskId, taskRepresentation) {
-        // console.info('[ REST API ] Create checklist task for parent taskId:', parentTaskId);
+        // // console.info('[ REST API ] Create checklist task for parent taskId:', parentTaskId);
 
         let options = {
             url: url(uri, parentTaskId, '/checklist'),
@@ -871,7 +871,7 @@ var TaskAPI = function () {
             request.post(options)
                 .on('response', function (response) {
                     response.on('data', function (data) {
-                        console.info('Create checklist task for parent taskId', parentTaskId, 'response:', data.toString());
+                        // console.info('Create checklist task for parent taskId', parentTaskId, 'response:', data.toString());
                         resolve({
                             responseBody: data.toString(),
                             statusCode: response.statusCode,

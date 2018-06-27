@@ -15,38 +15,38 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var TasksPage = require('./pages/adf/process_services/tasksPage.js');
-var PaginationPage = require('./pages/adf/paginationPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import TasksPage = require('./pages/adf/process_services/tasksPage.js');
+import PaginationPage = require('./pages/adf/paginationPage.js');
 
-var apps = require('./restAPI/APS/reusableActions/apps');
-var CONSTANTS = require('./util/constants');
+import apps = require('./restAPI/APS/reusableActions/apps');
+import CONSTANTS = require('./util/constants');
 
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
-var users = require('./restAPI/APS/reusableActions/users');
-var taskAPI = require('./restAPI/APS/enterprise/TaskAPI');
-var StandaloneTask = require('./models/APS/StandaloneTask');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import users = require('./restAPI/APS/reusableActions/users');
+import taskAPI = require('./restAPI/APS/enterprise/TaskAPI');
+import StandaloneTask = require('./models/APS/StandaloneTask');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
-var Util = require('./util/util.js');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
+import Util = require('./util/util.js');
 
-xdescribe('Task List Pagination - Sorting', () =>{
+xdescribe('Task List Pagination - Sorting', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var processServicesPage = new ProcessServicesPage();
-    var taskPage = new TasksPage();
-    var paginationPage = new PaginationPage();
+    let adfLoginPage = new AdfLoginPage();
+    let processServicesPage = new ProcessServicesPage();
+    let taskPage = new TasksPage();
+    let paginationPage = new PaginationPage();
 
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth, processUserModel;
-    var app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    var nrOfTasks = 20, appDetails;
-    var taskNameBase = 'Task';
-    var taskNames = Util.generateSeqeunceFiles(10, nrOfTasks + 9, taskNameBase, '');
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth, processUserModel;
+    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    let nrOfTasks = 20, appDetails;
+    let taskNameBase = 'Task';
+    let taskNames = Util.generateSeqeunceFiles(10, nrOfTasks + 9, taskNameBase, '');
 
-    var itemsPerPage = {
+    let itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -55,7 +55,7 @@ xdescribe('Task List Pagination - Sorting', () =>{
         twentyValue: 20
     };
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         users.createTenantAndUser(basicAuthAdmin)
             .then(function (user) {
                 processUserModel = user;
@@ -63,12 +63,12 @@ xdescribe('Task List Pagination - Sorting', () =>{
                 apps.importPublishDeployApp(basicAuth, app.file_location)
                     .then(function (resultApp) {
                         appDetails = resultApp;
-                        var arr = [];
-                        for (var i = 0; i < nrOfTasks; i++) {
+                        let arr = [];
+                        for (let i = 0; i < nrOfTasks; i++) {
                             arr.push(taskAPI.createStandaloneTask(basicAuth, new StandaloneTask({name: taskNames[i]})));
                         }
 
-                        Promise.all(arr).then(() =>{
+                        Promise.all(arr).then(() => {
                             done();
                         });
                     })
@@ -78,17 +78,17 @@ xdescribe('Task List Pagination - Sorting', () =>{
             });
     });
 
-    afterAll(function (done) {
+    afterAll((done) => {
         apps.cleanupApp(basicAuth, appDetails)
-            .then(() =>{
-                return users.cleanupTenant(basicAuthAdmin, processUserModel.tenantId)
+            .then(() => {
+                return users.cleanupTenant(basicAuthAdmin, processUserModel.tenantId);
             })
-            .then(() =>{
+            .then(() => {
                 done();
-            })
+            });
     });
 
-    it('[C260308] Sorting by Name', () =>{
+    it('[C260308] Sorting by Name', () => {
         adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
@@ -98,15 +98,13 @@ xdescribe('Task List Pagination - Sorting', () =>{
         taskPage.usingFiltersPage().sortByName(true);
         taskPage.usingTasksListPage().waitForTableBody();
         taskPage.usingFiltersPage().getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) == JSON.stringify(taskNames)).toEqual(true);
+            expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
         });
         taskPage.usingFiltersPage().sortByName(false);
         taskPage.usingFiltersPage().getAllRowsNameColumn().then(function (list) {
             taskNames.reverse();
-            expect(JSON.stringify(list) == JSON.stringify(taskNames)).toEqual(true);
+            expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
         });
     });
 
 });
-
-

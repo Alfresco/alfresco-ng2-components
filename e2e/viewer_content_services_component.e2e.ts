@@ -15,71 +15,71 @@
  * limitations under the License.
  */
 
-var Util = require('./util/util.js');
-var TestConfig = require('./test.config.js');
-var AdfLoginPage = require('./pages/adf/loginPage');
-var AdfContentServicesPage = require('./pages/adf/contentServicesPage');
-var AdfViewerPage = require('./pages/adf/viewerPage.js');
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
+import Util = require('./util/util.js');
+import TestConfig = require('./test.config.js');
+import AdfLoginPage = require('./pages/adf/loginPage');
+import AdfContentServicesPage = require('./pages/adf/contentServicesPage');
+import AdfViewerPage = require('./pages/adf/viewerPage.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
 
-var resources = require('./util/resources.js');
-var NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import resources = require('./util/resources.js');
+import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 
-var path = require('path');
-var FileModel = require('./models/ACS/fileModel.js');
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
+import path = require('path');
+import FileModel = require('./models/ACS/fileModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
 
 xdescribe('Test Content Services Viewer', () => {
 
-    var acsUser = new AcsUserModel();
-    var adfViewerPage = new AdfViewerPage();
-    var adfContentServicesPage = new AdfContentServicesPage();
-    var adfLoginPage = new AdfLoginPage();
-    var adminUserModel = new AcsUserModel({
+    let acsUser = new AcsUserModel();
+    let adfViewerPage = new AdfViewerPage();
+    let adfContentServicesPage = new AdfContentServicesPage();
+    let adfLoginPage = new AdfLoginPage();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
 
-    var defaultHeight;
-    var defaultWidth;
-    var zoomedInHeight;
-    var zoomedInWidth;
-    var scaledHeight;
-    var scaledWidth;
-    var zoomedOutHeight;
-    var zoomedOutWidth;
+    let defaultHeight;
+    let defaultWidth;
+    let zoomedInHeight;
+    let zoomedInWidth;
+    let scaledHeight;
+    let scaledWidth;
+    let zoomedOutHeight;
+    let zoomedOutWidth;
 
-    var pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
-    var jpgFile = new FileModel({
+    let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    let jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
-    var mp4File = new FileModel({
+    let mp4File = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.MP4.file_location,
         'name': resources.Files.ADF_DOCUMENTS.MP4.file_name
     });
-    var pagesFile = new FileModel({
+    let pagesFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.PAGES.file_location,
         'name': resources.Files.ADF_DOCUMENTS.PAGES.file_name
     });
-    var pptFile = new FileModel({
+    let pptFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.PPT.file_location,
         'name': resources.Files.ADF_DOCUMENTS.PPT.file_name,
         'firstPageText': resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });
 
-    var downloadDir = browser.downloadDir ? browser.downloadDir : '';
+    let downloadDir = browser.downloadDir ? browser.downloadDir : '';
 
-    var downloadedPdfFile = path.join(downloadDir, pdfFile.name);
-    var downloadedJpgFile = path.join(downloadDir, jpgFile.name);
-    var downloadedMp4File = path.join(downloadDir, mp4File.name);
-    var downloadedPagesFile = path.join(downloadDir, pagesFile.name);
+    let downloadedPdfFile = path.join(downloadDir, pdfFile.name);
+    let downloadedJpgFile = path.join(downloadDir, jpgFile.name);
+    let downloadedMp4File = path.join(downloadDir, mp4File.name);
+    let downloadedPagesFile = path.join(downloadDir, pagesFile.name);
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
             .then(() => {
-                console.log('User name: ' + acsUser.getId() + 'pass: ' + acsUser.getPassword());
+                // console.log('User name: ' + acsUser.getId() + 'pass: ' + acsUser.getPassword());
                 adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
                 adfContentServicesPage.goToDocumentList();
             })
@@ -93,14 +93,14 @@ xdescribe('Test Content Services Viewer', () => {
 
                     NodesAPI.uploadFileViaAPI(acsUser, pagesFile, '-my-', false),
 
-                    NodesAPI.uploadFileViaAPI(acsUser, pptFile, '-my-', false)])
+                    NodesAPI.uploadFileViaAPI(acsUser, pptFile, '-my-', false)]);
             })
             .then(() => {
                 done();
             });
     });
 
-    afterAll(function (done) {
+    afterAll((done) => {
         NodesAPI.deleteContent(acsUser, pdfFile.getId(), () => {
             done();
         });
@@ -149,39 +149,40 @@ xdescribe('Test Content Services Viewer', () => {
         adfViewerPage.enterPage(pdfFile.lastPageNumber);
         adfViewerPage.checkFileContent(pdfFile.lastPageNumber, pdfFile.lastPageText);
         adfViewerPage.checkPageSelectorInputIsDisplayed(pdfFile.lastPageNumber);
+
         adfViewerPage.canvasHeight().then(function (value) {
-            defaultHeight = parseInt(value);
+            defaultHeight = parseInt(value, 10);
         });
         adfViewerPage.canvasWidth().then(function (value) {
-            defaultWidth = parseInt(value);
+            defaultWidth = parseInt(value, 10);
         });
         adfViewerPage.clickZoomInButton();
         adfViewerPage.canvasHeight().then(function (value) {
-            zoomedInHeight = parseInt(value);
+            zoomedInHeight = parseInt(value, 10);
             expect(zoomedInHeight).toBeGreaterThan(defaultHeight);
         });
         adfViewerPage.canvasWidth().then(function (value) {
-            zoomedInWidth = parseInt(value);
+            zoomedInWidth = parseInt(value, 10);
             expect(zoomedInWidth).toBeGreaterThan(defaultWidth);
         });
         adfViewerPage.clickScalePageButton();
         adfViewerPage.canvasHeight().then(function (value) {
-            scaledHeight = parseInt(value);
+            scaledHeight = parseInt(value, 10);
             expect(scaledHeight).toEqual(defaultHeight);
         });
         adfViewerPage.canvasWidth().then(function (value) {
-            scaledWidth = parseInt(value);
+            scaledWidth = parseInt(value, 10);
             expect(scaledWidth).toEqual(defaultWidth);
         });
         adfViewerPage.clickZoomOutButton();
         adfViewerPage.canvasHeight().then(function (value) {
-            zoomedOutHeight = parseInt(value);
+            zoomedOutHeight = parseInt(value, 10);
             expect(zoomedOutHeight).toBeLessThan(defaultHeight);
         });
         adfViewerPage.canvasWidth().then(function (value) {
-            zoomedOutWidth = parseInt(value);
+            zoomedOutWidth = parseInt(value, 10);
             expect(zoomedOutWidth).toBeLessThan(defaultWidth);
-        })
+        });
     });
 
     it('3. Use viewer toolbar', () => {
@@ -224,7 +225,6 @@ xdescribe('Test Content Services Viewer', () => {
         adfViewerPage.checkScalePageButtonIsDisplayed();
         adfViewerPage.clickCloseButton();
     });
-
 
     it('6. Open viewer fot an unsupported file', () => {
         adfViewerPage.viewFile(pagesFile.name);

@@ -45,7 +45,7 @@ var FormModel = function () {
                         responseBody += data;
                     }).
                     on('end', function (){
-                        console.info("List form models response:", responseBody.toString());
+                        // console.info("List form models response:", responseBody.toString());
                         resolve({
                             responseBody: responseBody.toString(),
                             statusCode: response.statusCode,

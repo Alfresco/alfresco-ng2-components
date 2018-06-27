@@ -77,7 +77,7 @@ var APIUtils = function () {
             data = data[nestedDataValue];
         }
         for (var i = 0; i < data.length; i++) {
-            if (data[i][key] == value) {
+            if (data[i][key] === value) {
                 searchedValue = data[i][searchedKey];
                 break;
             }
@@ -117,7 +117,7 @@ var APIUtils = function () {
             })
             .join('&');
 
-        return (typeof queryParams == "undefined") ? '' : '?' + searchParams;
+        return (typeof queryParams === "undefined") ? '' : '?' + searchParams;
     };
 
 

@@ -15,37 +15,37 @@
  * limitations under the License.
  */
 
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-var NodesAPI = require('./restAPI/ACS/NodesAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var FileModel = require('./models/ACS/fileModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import FileModel = require('./models/ACS/fileModel.js');
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var TagPage = require('./pages/adf/tagPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import TagPage = require('./pages/adf/tagPage.js');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
-var Util = require('./util/util.js');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
+import Util = require('./util/util.js');
 
-xdescribe("Tag component", () => {
+xdescribe('Tag component', () => {
 
-    var adfLoginPage = new AdfLoginPage();
-    var tagPage = new TagPage();
+    let adfLoginPage = new AdfLoginPage();
+    let tagPage = new TagPage();
 
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
-    var pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
-    var sameTag = Util.generateRandomStringToLowerCase();
-    var tagList = [Util.generateRandomStringToLowerCase(), Util.generateRandomStringToLowerCase()];
-    var uppercaseTag = Util.generateRandomStringToUpperCase();
-    var digitsTag = Util.generateRandomStringDigits();
-    var nonLatinTag = Util.generateRandomStringNonLatin();
+    let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    let sameTag = Util.generateRandomStringToLowerCase();
+    let tagList = [Util.generateRandomStringToLowerCase(), Util.generateRandomStringToLowerCase()];
+    let uppercaseTag = Util.generateRandomStringToUpperCase();
+    let digitsTag = Util.generateRandomStringDigits();
+    let nonLatinTag = Util.generateRandomStringNonLatin();
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
             .then(NodesAPI.uploadFileViaAPI(acsUser, pdfFileModel, '-my-', false))
             .then(adfLoginPage.loginToContentServicesUsingUserModel(acsUser))
@@ -107,6 +107,3 @@ xdescribe("Tag component", () => {
         tagPage.checkTagIsDisplayedInTagListContentServices(nonLatinTag);
     });
 });
-
-
-

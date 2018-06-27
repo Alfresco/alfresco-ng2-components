@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
-var TestConfig = require('./test.config.js');
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-var CONSTANTS = require('./util/constants');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import TestConfig = require('./test.config.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import CONSTANTS = require('./util/constants');
 
 xdescribe('Test Theming component', () => {
 
-    var adfNavigationBarPage = new AdfNavigationBarPage();
-    var adfLoginPage = new AdfLoginPage();
-    var adminUserModel = new AcsUserModel({
+    let adfNavigationBarPage = new AdfNavigationBarPage();
+    let adfLoginPage = new AdfLoginPage();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
-    var acsUser = new AcsUserModel();
+    let acsUser = new AcsUserModel();
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
             .then(done());
     });

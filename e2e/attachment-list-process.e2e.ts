@@ -15,37 +15,37 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-var AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
-var FileModel = require('./models/ACS/fileModel.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
+import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
+import FileModel = require('./models/ACS/fileModel.js');
 
-var BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
-var apps = require('./restAPI/APS/reusableActions/apps');
-var users = require('./restAPI/APS/reusableActions/users');
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
+import apps = require('./restAPI/APS/reusableActions/apps');
+import users = require('./restAPI/APS/reusableActions/users');
 
 xdescribe('Attachment list', function () {
 
-    var adfLoginPage = new AdfLoginPage();
-    var processServicesPage = new ProcessServicesPage();
-    var attachmentListPage = new AttachmentListPage();
-    var processFiltersPage = new ProcessFiltersPage();
+    let adfLoginPage = new AdfLoginPage();
+    let processServicesPage = new ProcessServicesPage();
+    let attachmentListPage = new AttachmentListPage();
+    let processFiltersPage = new ProcessFiltersPage();
 
-    var basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    var basicAuth;
-    var processUserModel;
-    var app = resources.Files.APP_WITH_PROCESSES;
-    var jpgFile = new FileModel({
+    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    let basicAuth;
+    let processUserModel;
+    let app = resources.Files.APP_WITH_PROCESSES;
+    let jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
-    var pdfFile = new FileModel({'name': resources.Files.ADF_DOCUMENTS.PDF.file_name});
+    let pdfFile = new FileModel({'name': resources.Files.ADF_DOCUMENTS.PDF.file_name});
 
-    beforeAll(function (done) {
+    beforeAll((done) => {
         users.createTenantAndUser(basicAuthAdmin)
             .then(function (user) {
                 processUserModel = user;
@@ -85,11 +85,3 @@ xdescribe('Attachment list', function () {
         attachmentListPage.checkFileIsAttached(pdfFile.name);
     });
 });
-
-
-
-
-
-
-
-

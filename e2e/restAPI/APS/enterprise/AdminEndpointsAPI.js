@@ -68,7 +68,7 @@ var AdminEndpointsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info("Create basic authentication response: ", data.toString());
+                        // console.info("Create basic authentication response: ", data.toString());
                     });
                 })
                 .on('error', function (err) {
@@ -95,7 +95,7 @@ var AdminEndpointsAPI = function () {
                             statusCode: response.statusCode,
                             responseMessage: response.statusMessage
                         });
-                        console.info("Create tenant enpoint response: ", data.toString());
+                        // console.info("Create tenant enpoint response: ", data.toString());
                     });
                 })
                 .on('error', function (err) {

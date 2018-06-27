@@ -15,24 +15,25 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var SearchDialog = require('./pages/adf/dialog/searchDialog.js');
-var ContentServicesPage = require('./pages/adf/contentServicesPage.js');
-var filePreviewPage = require('./pages/adf/filePreviewPage.js');
-var SearchResultPage = require('./pages/adf/searchResultsPage.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import SearchDialog = require('./pages/adf/dialog/searchDialog.js');
+import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
+import filePreviewPage = require('./pages/adf/filePreviewPage.js');
+import SearchResultPage = require('./pages/adf/searchResultsPage.js');
 
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var FileModel = require('./models/ACS/fileModel.js');
-var FolderModel = require('./models/ACS/folderModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import FileModel = require('./models/ACS/fileModel.js');
+import FolderModel = require('./models/ACS/folderModel.js');
 
-var NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-var SearchAPI = require('./restAPI/ACS/SearchAPI.js');
+import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import SearchAPI = require('./restAPI/ACS/SearchAPI.js');
 
-var TestConfig = require('./test.config.js');
-var resources = require('./util/resources.js');
-var Util = require('./util/util.js');
-var retryNumber = 30;
+import TestConfig = require('./test.config.js');
+import resources = require('./util/resources.js');
+import Util = require('./util/util.js');
+
+let retryNumber = 30;
 
 xdescribe('Test Search component - Search Bar', function () {
 
@@ -41,33 +42,33 @@ xdescribe('Test Search component - Search Bar', function () {
             firstChar: 'x',
             secondChar: 'y',
             thirdChar: 'z',
-            name: 'nonexistent',
+            name: 'nonexistent'
         },
         active: {
             base: 'newFile',
-            extension: '.txt',
+            extension: '.txt'
         }
     };
 
-    var adfLoginPage = new AdfLoginPage();
-    var contentServicesPage = new ContentServicesPage();
-    var searchDialog = new SearchDialog();
-    var searchResultPage = new SearchResultPage();
+    let adfLoginPage = new AdfLoginPage();
+    let contentServicesPage = new ContentServicesPage();
+    let searchDialog = new SearchDialog();
+    let searchResultPage = new SearchResultPage();
 
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
-    var firstFileModel = new FileModel({
+    let firstFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'shortName': resources.Files.ADF_DOCUMENTS.PDF.short_file_name
     });
-    var firstFolderModel = new FolderModel({'name': 'folderOne', 'shortName': 'folde'});
-    var secondFolder = new FolderModel({'name': 'nameFolderOne', 'shortName': 'name'});
-    var thirdFolder = new FolderModel({'name': 'nameFolderTwo'});
+    let firstFolderModel = new FolderModel({ 'name': 'folderOne', 'shortName': 'folde' });
+    let secondFolder = new FolderModel({ 'name': 'nameFolderOne', 'shortName': 'name' });
+    let thirdFolder = new FolderModel({ 'name': 'nameFolderTwo' });
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser).then(function () {
             return protractor.promise.all([
                 NodesAPI.uploadFileViaAPI(acsUser, firstFileModel, '-my-', false),
@@ -84,11 +85,11 @@ xdescribe('Test Search component - Search Bar', function () {
                         contentServicesPage.goToDocumentList();
                         done();
                     });
-            })
+            });
         });
     });
 
-    afterAll(function (done) {
+    afterAll((done) => {
         NodesAPI.deleteContent(acsUser, firstFileModel.id, function () {
             NodesAPI.deleteContent(acsUser, firstFolderModel.id, function () {
                 done();
@@ -223,7 +224,7 @@ xdescribe('Test Search component - Search Bar', function () {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().enterText(secondFolder.shortName);
         searchDialog.resultTableContainsRow(secondFolder.name).resultTableContainsRow(thirdFolder.name);
-        var names = [];
+        let names = [];
         searchDialog.getAllRowsValues().then(function (array) {
             names = array;
         });
@@ -243,5 +244,3 @@ xdescribe('Test Search component - Search Bar', function () {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
     });
 });
-
-

@@ -15,40 +15,40 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var AdfContentServicesPage = require('./pages/adf/contentServicesPage.js');
-var AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-var AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
-var TestConfig = require('./test.config.js');
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import AdfContentServicesPage = require('./pages/adf/contentServicesPage.js');
+import AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import TestConfig = require('./test.config.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 
-var AdfSettingsPage = require('./pages/adf/settingsPage.js');
+import AdfSettingsPage = require('./pages/adf/settingsPage.js');
 
 xdescribe('Test Login component', () => {
 
-    var adfSettingsPage = new AdfSettingsPage();
-    var adfProcessServicesPage = new AdfProcessServicesPage();
-    var adfNavigationBarPage = new AdfNavigationBarPage();
-    var adfContentServicesPage = new AdfContentServicesPage();
-    var adfLoginPage = new AdfLoginPage();
-    var adminUserModel = new AcsUserModel({
+    let adfSettingsPage = new AdfSettingsPage();
+    let adfProcessServicesPage = new AdfProcessServicesPage();
+    let adfNavigationBarPage = new AdfNavigationBarPage();
+    let adfContentServicesPage = new AdfContentServicesPage();
+    let adfLoginPage = new AdfLoginPage();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
-    var adminUser = new AcsUserModel({
+    let adminUser = new AcsUserModel({
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
 
-    var error_messages = {
+    let errorMessages = {
         username: 'Your username needs to be at least 2 characters.',
         invalid_credentials: 'You\'ve entered an unknown username or password',
         password: 'Enter your password to sign in',
         required: 'Required'
     };
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         PeopleAPI.createUserViaAPI(adminUserModel, adminUser);
         adfSettingsPage.setProviderEcmBpm();
         done();
@@ -58,13 +58,12 @@ xdescribe('Test Login component', () => {
         adfLoginPage.checkUsernameInactive();
         adfLoginPage.checkSignInButtonIsDisabled();
         adfLoginPage.enterUsername('A');
-        adfLoginPage.checkUsernameTooltip(error_messages.username);
+        adfLoginPage.checkUsernameTooltip(errorMessages.username);
         adfLoginPage.clearUsername();
-        adfLoginPage.checkUsernameTooltip(error_messages.required);
+        adfLoginPage.checkUsernameTooltip(errorMessages.required);
         adfLoginPage.checkUsernameHighlighted();
         adfLoginPage.checkSignInButtonIsDisabled();
     });
-
 
     it('2. Enter Password to sign in', () => {
         adfLoginPage.checkPasswordInactive();
@@ -72,7 +71,7 @@ xdescribe('Test Login component', () => {
         adfLoginPage.enterPassword('A');
         adfLoginPage.checkPasswordTooltipIsNotVisible();
         adfLoginPage.clearPassword();
-        adfLoginPage.checkPasswordTooltip(error_messages.password);
+        adfLoginPage.checkPasswordTooltip(errorMessages.password);
         adfLoginPage.checkPasswordHighlighted();
         adfLoginPage.checkSignInButtonIsDisabled();
     });
@@ -80,7 +79,7 @@ xdescribe('Test Login component', () => {
     it('3. Username must be at least 2 characters long', () => {
         adfLoginPage.checkSignInButtonIsDisabled();
         adfLoginPage.enterUsername('A');
-        adfLoginPage.checkUsernameTooltip(error_messages.username);
+        adfLoginPage.checkUsernameTooltip(errorMessages.username);
         adfLoginPage.enterUsername('AB');
         adfLoginPage.checkUsernameTooltipIsNotVisible();
         adfLoginPage.checkSignInButtonIsDisabled();
@@ -102,7 +101,7 @@ xdescribe('Test Login component', () => {
         adfLoginPage.enterPassword('test');
         adfLoginPage.checkSignInButtonIsEnabled();
         adfLoginPage.clickSignInButton();
-        adfLoginPage.checkLoginError(error_messages.invalid_credentials);
+        adfLoginPage.checkLoginError(errorMessages.invalid_credentials);
         adfLoginPage.clearUsername();
         adfLoginPage.clearPassword();
     });

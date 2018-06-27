@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-var AdfLoginPage = require('./pages/adf/loginPage.js');
-var DataTablePage = require('./pages/adf/dataTablePage.js');
-var AcsUserModel = require('./models/ACS/acsUserModel.js');
-var PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-var TestConfig = require('./test.config.js');
+import AdfLoginPage = require('./pages/adf/loginPage.js');
+import DataTablePage = require('./pages/adf/dataTablePage.js');
+import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
+import TestConfig = require('./test.config.js');
 
 xdescribe('Test Datatable component', () => {
 
-    var dataTablePage = new DataTablePage();
-    var adfLoginPage = new AdfLoginPage();
-    var acsUser = new AcsUserModel();
-    var adminUserModel = new AcsUserModel({
+    let dataTablePage = new DataTablePage();
+    let adfLoginPage = new AdfLoginPage();
+    let acsUser = new AcsUserModel();
+    let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
 
-    beforeAll(function (done) {
+    beforeAll( (done) => {
         PeopleAPI.createUserViaAPI(adminUserModel, acsUser);
         adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
         dataTablePage.goToDatatable();
