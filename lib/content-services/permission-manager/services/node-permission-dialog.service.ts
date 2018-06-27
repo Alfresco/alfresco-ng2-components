@@ -21,7 +21,7 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { AddPermissionDialogComponent } from '../components/add-permission/add-permission-dialog.component';
 import { AddPermissionDialogData } from '../components/add-permission/add-permission-dialog-data.interface';
-import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, Node } from 'alfresco-js-api';
 import { NodePermissionService } from './node-permission.service';
 import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 
@@ -39,21 +39,27 @@ export class NodePermissionDialogService {
      * @param title Dialog title
      * @returns Node with updated permissions
      */
-    openAddPermissionDialog(nodeId: string, title?: string): Observable<MinimalNodeEntity[]> {
-        const confirm = new Subject<MinimalNodeEntity[]>();
+    openAddPermissionDialog(node: Node, title?: string): Observable<MinimalNodeEntity[]> {
+        if (this.contentService.hasPermission(node, PermissionsEnum.UPDATEPERMISSIONS)) {
+            const confirm = new Subject<MinimalNodeEntity[]>();
 
-        confirm.subscribe({
-            complete: this.close.bind(this)
-        });
+            confirm.subscribe({
+                complete: this.close.bind(this)
+            });
 
-        const data: AddPermissionDialogData = {
-            nodeId: nodeId,
-            title: title,
-            confirm : confirm
-        };
+            const data: AddPermissionDialogData = {
+                nodeId: node.id,
+                title: title,
+                confirm: confirm
+            };
 
-        this.openDialog(data, 'adf-add-permission-dialog', '630px');
-        return confirm;
+            this.openDialog(data, 'adf-add-permission-dialog', '630px');
+            return confirm;
+        } else {
+            let errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
+            errors.message = 'PERMISSION_MANAGER.ERROR.NOT-ALLOWED';
+            return Observable.throw(errors);
+        }
     }
 
     private openDialog(data: any, currentPanelClass: string, chosenWidth: string) {
@@ -75,13 +81,9 @@ export class NodePermissionDialogService {
      */
     updateNodePermissionByDialog(nodeId?: string, title?: string): Observable<MinimalNodeEntryEntity> {
         return this.contentService.getNode(nodeId, { include: ['allowableOperations'] }).switchMap((node) => {
-            if (this.contentService.hasPermission(node.entry, PermissionsEnum.UPDATEPERMISSIONS)) {
-                return this.openAddPermissionDialog(nodeId, title).switchMap((selection) => {
-                    return this.nodePermissionService.updateNodePermissions(nodeId, selection);
-                });
-            } else {
-                return Observable.throw('PERMISSION_MANAGER.ERROR.NOT-ALLOWED');
-            }
+            return this.openAddPermissionDialog(node.entry, title).switchMap((selection) => {
+                return this.nodePermissionService.updateNodePermissions(nodeId, selection);
+            });
         });
     }
 }
