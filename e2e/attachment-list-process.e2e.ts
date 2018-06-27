@@ -28,7 +28,7 @@ import resources = require('./util/resources.js');
 import apps = require('./restAPI/APS/reusableActions/apps');
 import users = require('./restAPI/APS/reusableActions/users');
 
-xdescribe('Attachment list', function () {
+describe('Attachment list', function () {
 
     let adfLoginPage = new AdfLoginPage();
     let processServicesPage = new ProcessServicesPage();

@@ -20,8 +20,8 @@ var Util = require('../../../util/util.js');
 
 var UploadDialog = function () {
 
-    var closeButton = element(by.css("footer[class*='upload-dialog__actions'] button"));
-    var dialog = element(by.css("div[class*='upload-dialog']"));
+    var closeButton = element.all((by.css("footer[class*='upload-dialog__actions'] button"))).first();
+    var dialog = element.all(by.css("div[class*='upload-dialog']")).first();
     var minimizedDialog = element(by.css("div[class*='upload-dialog--minimized']"));
     var uploadedStatusIcon = by.css("mat-icon[class*='status--done']");
     var cancelledStatusIcon = by.css("div[class*='status--cancelled']");
@@ -64,7 +64,7 @@ var UploadDialog = function () {
     };
 
     this.getRowsName = function (content) {
-        var row = element(by.css("div[class*='uploading-row'] span[title='" + content +"']"));
+        var row = element.all(by.css("div[class*='uploading-row'] span[title='" + content +"']")).first();
         Util.waitUntilElementIsVisible(row);
         return row;
     };

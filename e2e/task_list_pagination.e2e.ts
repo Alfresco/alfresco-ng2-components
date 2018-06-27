@@ -30,7 +30,7 @@ import apps = require('./restAPI/APS/reusableActions/apps');
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 
-xdescribe('Task List Pagination', () => {
+describe('Task List Pagination', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let processServicesPage = new ProcessServicesPage();

@@ -21,6 +21,7 @@ var RequestCoreAPI = require('./RequestUtil/RequestCoreAPI');
 var url = require('url-join');
 var path = require('path');
 var fs = require('fs');
+var TestConfig = require('../../test.config');
 
 var peopleBaseUrl = 'people';
 
@@ -35,23 +36,23 @@ exports.createUserViaAPI = function (requestUserModel, createAcsUserModel) {
 
     var uri = url(RequestCoreAPI.getBaseURL(), peopleBaseUrl);
 
-     return new Promise(function (resolve, reject) {
-         request.post({url: uri, headers: RequestCoreAPI.requestHeaders(requestUserModel), json: createAcsUserModel})
-             .on('data', function (data) {
-                 // console.log('Upload successful!  Server responded with:', data.toString());
-                 resolve(data.toString());
-             })
-             .on('error', function (err) {
-                 // console.log('Upload unsuccessful!  Server responded with:', err);
-                 reject(err);
-             });
-     });
+    return new Promise(function (resolve, reject) {
+        request.post({url: uri, headers: RequestCoreAPI.requestHeaders(requestUserModel), json: createAcsUserModel})
+            .on('data', function (data) {
+                // console.log('Upload successful!  Server responded with:', data.toString());
+                resolve(data.toString());
+            })
+            .on('error', function (err) {
+                // console.log('Upload unsuccessful!  Server responded with:', err);
+                reject(err);
+            });
+    });
 };
 
 function read(initialFile) {
-    return new Promise(function(resolve, reject) {
-        fs.readFile(initialFile, function(err, file) {
-            if(err) {
+    return new Promise(function (resolve, reject) {
+        fs.readFile(initialFile, function (err, file) {
+            if (err) {
                 //console.log('read error', err);
                 reject(err);
             }
@@ -87,7 +88,7 @@ function write(file, uri, header) {
  */
 exports.updateAvatarViaAPI = function (requestUserModel, fileModel, personId) {
 
-    var absolutePath = path.resolve(path.join(__dirname, fileModel.getLocation()));
+    var absolutePath = path.resolve(path.join(TestConfig.main.rootPath, fileModel.getLocation()));
     var uri = url(RequestCoreAPI.getBaseURL(), peopleBaseUrl, personId, "avatar");
     // console.debug("Update avatar via API: fileName=" + fileModel.getName() + " uri=" + uri + " auth=" + requestUserModel.id + " password: " + requestUserModel.password);
 
@@ -95,7 +96,7 @@ exports.updateAvatarViaAPI = function (requestUserModel, fileModel, personId) {
     allHeaders['Content-Type'] = 'application/octet-stream';
 
     return read(absolutePath)
-        .then(function(file) {
+        .then(function (file) {
             return write(file, uri, allHeaders);
         });
 };
@@ -109,22 +110,26 @@ exports.updateAvatarViaAPI = function (requestUserModel, fileModel, personId) {
  */
 exports.getAvatarViaAPI = function (retry, requestUserModel, personId, callback) {
     var uri = url(RequestCoreAPI.getBaseURL(), peopleBaseUrl, personId, "avatar");
+
     // console.debug("Get avatar via API: uri= " + uri + " auth=" + requestUserModel.id + " password: " + requestUserModel.password);
 
     function run() {
-        request.get({url: uri, headers: RequestCoreAPI.requestHeaders(requestUserModel)}, function (error, httpResponse, body) {
+        request.get({
+            url: uri,
+            headers: RequestCoreAPI.requestHeaders(requestUserModel)
+        }, function (error, httpResponse, body) {
             retry--;
             var statusCode = httpResponse.statusCode;
             // console.log("status code: " + statusCode);
-            if(statusCode!="200" && retry>0) {
+            if (statusCode != "200" && retry > 0) {
                 run();
             }
-            else
-            if( typeof callback === 'function'){
+            else if (typeof callback === 'function') {
                 callback.apply(null);
             }
         });
     }
+
     run();
 };
 
@@ -139,7 +144,7 @@ exports.deleteAvatarViaAPI = function (requestUserModel, personId, callback) {
 
     var uri = url(RequestCoreAPI.getBaseURL(), peopleBaseUrl, personId, "avatar");
 
-    request.del({ url: uri, headers: RequestCoreAPI.requestHeaders(requestUserModel) }, function(error, response, body) {
+    request.del({url: uri, headers: RequestCoreAPI.requestHeaders(requestUserModel)}, function (error, response, body) {
         if (error) {
             return console.error('delete failed:', error);
         }
