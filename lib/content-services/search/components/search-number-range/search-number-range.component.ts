@@ -55,7 +55,8 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
         this.validators = Validators.compose([
             Validators.required,
-            Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+            Validators.pattern(/^-?(0|[1-9]\d*)?$/),
+            Validators.min(0)
         ]);
 
         this.from = new FormControl('', this.validators);
@@ -86,7 +87,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     }
 
     private formatString(str: string, map: Map<string, string>): string {
-        let result = str;
+        let result  = str;
 
         map.forEach((value, key) => {
             const expr = new RegExp('{' + key + '}', 'gm');
