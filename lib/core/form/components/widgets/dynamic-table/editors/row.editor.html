@@ -16,7 +16,13 @@
                     [column]="column">
                 </adf-date-editor>
                 </div>
-
+                <div *ngSwitchCase="'Datetime'">
+                    <adf-datetime-editor
+                        [table]="table"
+                        [row]="row"
+                        [column]="column">
+                    </adf-datetime-editor>
+                </div>
                 <div *ngSwitchCase="'Boolean'">
                 <adf-boolean-editor
                     [table]="table"
