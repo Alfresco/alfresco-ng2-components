@@ -27,14 +27,11 @@ import { MatSelectChange } from '@angular/material';
     templateUrl: './card-view-selectitem.component.html'
 })
 export class CardViewSelectItemComponent implements OnChanges {
-    @Input()
-    property: CardViewSelectItemModel;
+    @Input() property: CardViewSelectItemModel<string>;
 
-    @Input()
-    editable: boolean = false;
+    @Input() editable: boolean = false;
 
-    @Input()
-    options$: Observable<CardViewSelectItemOption[]>;
+    @Input() options$: Observable<CardViewSelectItemOption<string>[]>;
 
     value: string;
 
@@ -48,7 +45,7 @@ export class CardViewSelectItemComponent implements OnChanges {
         return this.editable && this.property.editable;
     }
 
-    getOptions(): Observable<CardViewSelectItemOption[]> {
+    getOptions(): Observable<CardViewSelectItemOption<string>[]> {
         return this.options$ || this.property.options$;
     }
 

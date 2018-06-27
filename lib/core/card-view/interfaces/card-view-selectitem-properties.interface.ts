@@ -18,12 +18,12 @@
 import { CardViewItemProperties } from './card-view-item-properties.interface';
 import { Observable } from 'rxjs/Observable';
 
-export interface CardViewSelectItemOption {
+export interface CardViewSelectItemOption<T> {
     label: string;
-    key: any;
+    key: T;
 }
 
-export interface CardViewSelectItemProperties extends CardViewItemProperties {
+export interface CardViewSelectItemProperties<T> extends CardViewItemProperties {
     value: string;
-    options$: Observable<CardViewSelectItemOption[]>;
+    options$: Observable<CardViewSelectItemOption<T>[]>;
 }

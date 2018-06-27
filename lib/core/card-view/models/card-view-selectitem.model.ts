@@ -23,11 +23,11 @@ import { Observable } from 'rxjs/Observable';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-export class CardViewSelectItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
+export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'select';
-    options$: Observable<CardViewSelectItemOption[]>;
+    options$: Observable<CardViewSelectItemOption<T>[]>;
 
-    constructor(obj: CardViewSelectItemProperties) {
+    constructor(obj: CardViewSelectItemProperties<T>) {
         super(obj);
 
         this.options$ = obj.options$;
@@ -35,8 +35,8 @@ export class CardViewSelectItemModel extends CardViewBaseItemModel implements Ca
 
     get displayValue() {
         return this.options$.pipe(
-            switchMap((options) => {
-                const option = options.find((o) => o.key === this.value);
+            switchMap(options => {
+                const option = options.find(o => o.key === this.value);
                 return of(option ? option.label : '');
             })
         );
