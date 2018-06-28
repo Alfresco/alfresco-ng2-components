@@ -108,56 +108,6 @@ describe('Start Process Component', () => {
         adfNavigationBarPage.clickProcessServicesButton();
         done();
 
-        // tenantsAPI.createTenant(basicAuthAdmin, new Tenant());
-        // .then(function (result) {
-        //     tenantId = JSON.parse(result.responseBody).id;
-        //     procUserModel = new User({ tenantId: tenantId });
-        //     return new UserAPI().createUser(basicAuthAdmin, procUserModel);
-        // })
-        // .then(function (result) {
-        //     basicAuth1 = new BasicAuthorization(procUserModel.email, procUserModel.password);
-        //     secondProcUserModel = new User({ tenantId: tenantId });
-        //     return new UserAPI().createUser(basicAuthAdmin, secondProcUserModel);
-        // })
-        //     .then(function (result) {
-        //         basicAuth2 = new BasicAuthorization(secondProcUserModel.email, secondProcUserModel.password);
-        //         return appUtils.importApp(basicAuth2, app.file_location);
-        //     })
-        //     .then(function (result) {
-        //         // console.info('Import app result: ', result);
-        //         let response = JSON.parse(result.responseBody);
-        //         appId = response.id;
-        //         modelId = response.definition.models[0].id;
-        //         secondModelId = response.definition.models[1].id;
-        //         expect(result['statusCode']).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-        //
-        //         return appUtils.getAppDefinition(basicAuth2, appId.toString());
-        //     })
-        //     .then(function (result) {
-        //         // console.info('Get app definition result: ', result);
-        //         expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-        //         expect(JSON.parse(result.responseBody).id).toEqual(appId);
-        //
-        //         return appUtils.publishApp(basicAuth2, appId.toString(), new AppPublish());
-        //     })
-        //     .then(function (result) {
-        //         // console.info('Publish app result: ', result);
-        //         expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-        //         let response = JSON.parse(result.responseBody).appDefinition;
-        //         expect(response.id).toEqual(appId);
-        //         expect(response.name).toEqual(app.title);
-        //
-        //         return runtimeAppDefAPI.deployApp(basicAuth2, new AppDefinition({ id: appId.toString() }));
-        //     })
-        //     .then(function (result) {
-        //         // console.info('Deploy app result: ', result.statusCode + ' ' + result.statusMessage);
-        //         // expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-        //     })
-        //     .then(() => {
-        //         adfLoginPage.loginToProcessServicesUsingUserModel(procUserModel);
-        //         adfNavigationBarPage.clickProcessServicesButton();
-        //         done();
-        //     });
     });
 
     afterAll(async (done) => {
@@ -170,28 +120,6 @@ describe('Start Process Component', () => {
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
 
         done();
-       // modelUtils.deleteModel(basicAuth2, appId)
-            // .then(function (result) {
-            //     // console.info('Delete app result: ', result.statusCode + ' ' + result.statusMessage);
-            //     expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-            //
-            //     return modelUtils.deleteModel(basicAuth2, secondModelId);
-            // })
-            // .then(() => {
-            //
-            //     return modelUtils.deleteModel(basicAuth2, modelId);
-            // })
-            // .then(function (result) {
-            //     // console.info('Delete process result: ', result.statusCode + ' ' + result.statusMessage);
-            //     expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-            // })
-            // .then(() => {
-            //     tenantsAPI.deleteTenant(basicAuthAdmin, tenantId);
-            //     done();
-            // })
-            // .catch(function (error) {
-            //     // console.log('Failed with error: ', error);
-            // });
     });
 
     it('Check start a process without a process model included', () => {
@@ -315,32 +243,44 @@ describe('Start Process Component', () => {
 
     it('Add a file in the attachment list using the button', () => {
         adfNavigationBarPage.clickProcessServicesButton();
+
         adfProcessServicesPage.checkApsContainer();
         adfProcessServicesPage.goToApp(app.title);
+
         adfAppNavigationBarPage.clickProcessButton();
+
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
+
         adfStartProcessPage.enterProcessName('Attach File');
         adfStartProcessPage.selectFromProcessDropdown('process_with_se');
         adfStartProcessPage.clickFormStartProcessButton();
+
         adfProcessFiltersPage.clickRunningFilterButton();
         adfProcessFiltersPage.selectFromProcessList('Attach File');
+
         attachmentListPage.clickAttachFileButton(jpgFile.location);
         attachmentListPage.checkFileIsAttached(jpgFile.name);
     });
 
     it('Click Show Diagram', () => {
         adfNavigationBarPage.clickProcessServicesButton();
+
         adfProcessServicesPage.checkApsContainer();
         adfProcessServicesPage.goToApp(app.title);
+
         adfAppNavigationBarPage.clickProcessButton();
+
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
+
         adfStartProcessPage.enterProcessName('Show Diagram');
         adfStartProcessPage.selectFromProcessDropdown('process_with_se');
         adfStartProcessPage.clickFormStartProcessButton();
+
         adfProcessFiltersPage.clickRunningFilterButton();
         adfProcessFiltersPage.selectFromProcessList('Show Diagram');
+
         adfProcessDetailsPage.clickShowDiagram();
     });
 

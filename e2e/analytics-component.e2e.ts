@@ -21,44 +21,44 @@ import AdfAnalyticsPage = require('./pages/adf/process_services/analyticsPage');
 import AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import AdfAppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
 import TestConfig = require('./test.config.js');
-import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
-import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
 import Tenant = require('./models/APS/Tenant');
 import User = require('./models/APS/User');
 
-describe('Create smoke test for analytics', () => {
+import AlfrescoApi = require('alfresco-js-api-node');
+
+fdescribe('Create smoke test for analytics', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let adfNavigationBarPage = new AdfNavigationBarPage();
     let adfAppNavigationBarPage = new AdfAppNavigationBarPage();
     let adfAnalyticsPage = new AdfAnalyticsPage();
     let adfProcessServicesPage = new AdfProcessServicesPage();
-    let tenantsAPI = new TenantsAPI();
-    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    let tenantId, procUserModel;
+    let tenantId;
     let reportTitle = 'New Title';
 
-    beforeAll((done) => {
-        protractor.promise.all([
-            tenantsAPI.createTenant(basicAuthAdmin, new Tenant())
-                .then(function (result) {
-                    tenantId = JSON.parse(result.responseBody).id;
-                    procUserModel = new User({ tenantId: tenantId });
-                    return new UserAPI().createUser(basicAuthAdmin, procUserModel);
-                })
-        ]).then(() => {
-            adfLoginPage.loginToProcessServicesUsingUserModel(procUserModel);
-        }).then(() => {
-            done();
+    beforeAll(async (done) => {
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
         });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+
+        tenantId = newTenant.id;
+        let procUserModel = new User({ tenantId: tenantId });
+
+        let userOne = await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
+
+        adfLoginPage.loginToProcessServicesUsingUserModel(procUserModel);
+
+        done();
     });
 
-    afterAll((done) => {
-        tenantsAPI.deleteTenant(basicAuthAdmin, tenantId.toString())
-            .then(() => {
-                done();
-            });
+    afterAll(async (done) => {
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        done();
     });
 
     it('Change name from Process Definition Heat Map', () => {

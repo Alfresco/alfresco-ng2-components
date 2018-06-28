@@ -27,7 +27,7 @@ import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 
-describe('Items per page set to 15 and adding of tasks', () => {
+xdescribe('Items per page set to 15 and adding of tasks', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let processServicesPage = new ProcessServicesPage();

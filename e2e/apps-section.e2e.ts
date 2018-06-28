@@ -54,7 +54,7 @@ describe('Attachment list', () => {
             });
     });
 
-    it('[C260198]Publish on ADF side', () => {
+    it('[C260198] Publish on ADF side', () => {
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         expect(processServicesPage.getAppIconType(app.title)).toEqual('ac_unit');
