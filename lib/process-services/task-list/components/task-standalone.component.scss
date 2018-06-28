@@ -2,7 +2,7 @@
 
     $config: mat-typography-config();
     $background: map-get($theme, background);
-    
+
     .adf {
         &-message-card {
             width: 60%;
@@ -13,7 +13,7 @@
               }
         }
         &-no-form-message-container {
-            height:256px;
+            height: 256px;
             width: 100%;
             display: table;
         }
@@ -37,8 +37,9 @@
             margin: auto;
             width: fit-content !important;
         }
-        &-no-form-mat-card-actions {
-            text-align: right;
+        &-no-form-mat-card-actions.mat-card-actions {
+            display: flex;
+            justify-content: space-between;
             & .mat-button {
                 text-transform: uppercase;
                 border-radius: 5px;
