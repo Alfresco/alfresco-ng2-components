@@ -29,7 +29,7 @@ import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
 import TestConfig = require('./test.config.js');
 import Util = require('./util/util.js');
 
-describe('Pagination - returns to previous page when current is empty', () => {
+xdescribe('Pagination - returns to previous page when current is empty', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let contentServicesPage = new ContentServicesPage();

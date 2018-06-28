@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import AdfSettingsPage = require('./pages/adf/settingsPage.js');
 import AdfLoginPage = require('./pages/adf/loginPage.js');
 import UserInfoDialog = require('./pages/adf/dialog/userInfoDialog.js');
@@ -125,13 +124,19 @@ describe('Test User Info component', () => {
 
     it('3. Enable Process Services and disable Content Services ', () => {
         navigationBarPage.clickLoginButton();
+
         adfSettingsPage.setProviderBpm();
+
         adfLoginPage.login(processUserModel.email, processUserModel.password);
+
         navigationBarPage.clickUserProfile();
+
         userInfoDialog.dialogIsDisplayed().contentServicesTabIsNotDisplayed().processServicesTabIsNotDisplayed();
+
         expect(userInfoDialog.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
         expect(userInfoDialog.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
         expect(userInfoDialog.getProcessEmail()).toEqual(processUserModel.email);
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();

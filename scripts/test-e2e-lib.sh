@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/../"
 
 show_help() {
-    echo "Usage: ./scripts/test-e2e-lib.sh -host adfdev.envalfresco.com -u admin -p admin -e admin"
+    echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
     echo ""
     echo "-u or --username"
     echo "-p or --password"
