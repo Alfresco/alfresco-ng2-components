@@ -19,7 +19,6 @@ import AdfLoginPage = require('./pages/adf/loginPage.js');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 import CONSTANTS = require('./util/constants');
 
 import TestConfig = require('./test.config.js');
@@ -27,36 +26,39 @@ import resources = require('./util/resources.js');
 import apps = require('./restAPI/APS/reusableActions/apps');
 import users = require('./restAPI/APS/reusableActions/users');
 
+import AlfrescoApi = require('alfresco-js-api-node');
+
 describe('Attachment list', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let navigationBarPage = new NavigationBarPage();
     let processServicesPage = new ProcessServicesPage();
-    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    let basicAuth;
-    let processUserModel;
     let app = resources.Files.APP_WITH_PROCESSES;
 
-    beforeAll((done) => {
-        users.createTenantAndUser(basicAuthAdmin)
-            .then(function (user) {
-                processUserModel = user;
-                basicAuth = new BasicAuthorization(user.email, user.password);
-                apps.importPublishDeployApp(basicAuth, app.file_location)
-                    .then(function () {
-                        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
-                        done();
-                    })
+    beforeAll(async (done) => {
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
 
-                    .catch(function (error) {
-                        done.fail('Create test precondition failed: ' + error);
-                    });
-            });
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        let user = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(user.email, user.password);
+
+        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+
+        await adfLoginPage.loginToProcessServicesUsingUserModel(user);
+
+        done();
     });
 
     it('[C260198] Publish on ADF side', () => {
         navigationBarPage.clickProcessServicesButton();
+
         processServicesPage.checkApsContainer();
+
         expect(processServicesPage.getAppIconType(app.title)).toEqual('ac_unit');
         expect(processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
         expect(processServicesPage.getDescription(app.title)).toEqual('Description for app');

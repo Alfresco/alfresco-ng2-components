@@ -26,7 +26,7 @@ import User = require('./models/APS/User');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 
-describe('Create smoke test for analytics', () => {
+describe('Analytics Smoke Test', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let adfNavigationBarPage = new AdfNavigationBarPage();

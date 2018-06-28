@@ -21,21 +21,19 @@ import ViewerPage = require('./pages/adf/viewerPage.js');
 import UsingWidget = require('./pages/adf/process_services/widgets/usingWidget.js');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 
-import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
 import CONSTANTS = require('./util/constants');
-import AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
-import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
-import RuntimeAppDefinitionAPI = require('./restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
 
 import Tenant = require('./models/APS/Tenant');
-import AppDefinition = require('./models/APS/AppDefinition');
 import FileModel = require('./models/ACS/fileModel.js');
 import User = require('./models/APS/User');
 import AppPublish = require('./models/APS/AppPublish');
 
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
+
+import users = require('./restAPI/APS/reusableActions/users');
+import apps = require('./restAPI/APS/reusableActions/apps');
+import AlfrescoApi = require('alfresco-js-api-node');
 
 describe('Start Task - Task App', () => {
 
@@ -45,54 +43,52 @@ describe('Start Task - Task App', () => {
     let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
 
-    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    let basicAuth, processUserModel;
+    let alfrescoJsApi, processUserModel, appModel, modelId;
     let app = resources.Files.WIDGETS_SMOKE_TEST;
-    let appModel, modelId;
-    let tasks = ['View file'];
     let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     let appFilds = app.form_fields;
 
-    beforeAll((done) => {
-        new TenantsAPI().createTenant(basicAuthAdmin, new Tenant())
-            .then(function (result) {
-                return new UserAPI().createUser(basicAuthAdmin, processUserModel = new User({ tenantId: JSON.parse(result.responseBody).id }));
-            })
-            .then(function (response) {
-                basicAuth = new BasicAuthorization(processUserModel.email, processUserModel.password);
-                return new AppDefinitionsAPI().importApp(basicAuth, app.file_location);
-            })
-            .then(function (response) {
-                appModel = JSON.parse(response.responseBody);
-                modelId = appModel.definition.models[0].id;
-                return appModel.id;
-            })
-            .then(() => {
-                return new AppDefinitionsAPI().publishApp(basicAuth, appModel.id.toString(), new AppPublish());
-            })
-            .then(function (response) {
-                return new RuntimeAppDefinitionAPI().deployApp(basicAuth, new AppDefinition({ id: appModel.id.toString() }));
-            })
-            .then(function (response) {
-                done();
-            });
+    beforeAll(async (done) => {
+        this. alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+
+        await adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
+        done();
     });
 
-    afterAll((done) => {
-        return new TenantsAPI().deleteTenant(basicAuthAdmin, processUserModel.tenantId.toString())
-            .then(function (result) {
-                done();
-            })
-            .catch(function (error) {
-                // console.log('Failed with error: ', error);
-            });
+    afterAll(async (done) => {
+        this. alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await users.createTenantAndUser(this.alfrescoJsApi, processUserModel.tenantId);
+
+        done();
     });
 
     it('[C274690] Task List attachment - View file', () => {
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[0]).addForm(app.formName).clickStartButton()
+
+        taskPage.createNewTask()
+            .addName('View file')
+            .addForm(app.formName)
+            .clickStartButton()
             .then(() => {
                 usingWidget.usingAttachFileWidget().attachFile(appFilds.attachfile_id, pdfFile.location);
                 usingWidget.usingAttachFileWidget().checkFileIsAttached(appFilds.attachfile_id, pdfFile.name);
@@ -101,7 +97,7 @@ describe('Start Task - Task App', () => {
                 viewerPage.checkFileContent('1', pdfFile.firstPageText);
                 viewerPage.checkCloseButtonIsDisplayed();
                 viewerPage.clickCloseButton();
-                taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]);
+                taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList('View file');
             });
     });
 

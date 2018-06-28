@@ -18,24 +18,31 @@
 import AdfLoginPage = require('./pages/adf/loginPage.js');
 import DataTablePage = require('./pages/adf/dataTablePage.js');
 import TestConfig = require('./test.config.js');
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
 
-xdescribe('Test Datatable component - selection', () => {
+import AlfrescoApi = require('alfresco-js-api-node');
+
+describe('Test Datatable component - selection', () => {
 
     let dataTablePage = new DataTablePage();
     let adfLoginPage = new AdfLoginPage();
     let acsUser = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminEmail,
-        'password': TestConfig.adf.adminPassword
-    });
 
-    beforeAll( (done) => {
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser);
+    beforeAll(async (done) => {
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
         adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+
         dataTablePage.goToDatatable();
+
         done();
     });
 
