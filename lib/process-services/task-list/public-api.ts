@@ -24,6 +24,7 @@ export * from './components/task-details.component';
 export * from './components/task-audit.directive';
 export * from './components/start-task.component';
 export * from './components/task-standalone.component';
+export * from './components/attach-form.component';
 
 export * from './services/tasklist.service';
 export * from './services/process-upload.service';

@@ -160,9 +160,12 @@ describe('TaskDetailsComponent', () => {
 
     it('should not display task standalone component when the task have an associated form', async(() => {
         component.taskId = '123';
+        component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+        component.taskDetails.formKey = '10';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).toBeDefined();
             expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
         });
     }));
