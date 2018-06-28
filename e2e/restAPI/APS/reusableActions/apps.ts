@@ -15,20 +15,24 @@
  * limitations under the License.
  */
 
-let AppDefinitionAPI = require('../../../restAPI/APS/enterprise/AppDefinitionsAPI');
-let RuntimeAppDefinitionAPI = require('../../../restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
-let FormModelAPI = require('../../../restAPI/APS/enterprise/FormModelsAPI');
-let ProcessDefinitionsAPI = require('../../../restAPI/APS/enterprise/ProcessDefinitionsAPI');
-let ProcessInstanceAPI = require('../../../restAPI/APS/enterprise/ProcessInstancesAPI');
-let ModelsAPI = require('../../../restAPI/APS/enterprise/ModelsAPI');
+import AppDefinitionAPI = require('../../../restAPI/APS/enterprise/AppDefinitionsAPI');
+import RuntimeAppDefinitionAPI = require('../../../restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
+import FormModelAPI = require('../../../restAPI/APS/enterprise/FormModelsAPI');
+import ProcessDefinitionsAPI = require('../../../restAPI/APS/enterprise/ProcessDefinitionsAPI');
+import ProcessInstanceAPI = require('../../../restAPI/APS/enterprise/ProcessInstancesAPI');
+import ModelsAPI = require('../../../restAPI/APS/enterprise/ModelsAPI');
 
-let ProcessInstance = require('../../../models/APS/ProcessInstance');
-let AppPublish = require('../../../models/APS/AppPublish');
-let AppDefinition = require('../../../models/APS/AppDefinition');
+import TestConfig = require('../../../test.config.js');
+import fs = require('fs');
+import path = require('path');
 
-let APIUtil = require('../../../restAPI/APIUtil');
+import ProcessInstance = require('../../../models/APS/ProcessInstance');
+import AppPublish = require('../../../models/APS/AppPublish');
+import AppDefinition = require('../../../models/APS/AppDefinition');
 
-let CONSTANTS = require('../../../util/constants.js');
+import APIUtil = require('../../../restAPI/APIUtil');
+
+import CONSTANTS = require('../../../util/constants.js');
 let RESPONSE_STATUS_OK = CONSTANTS.HTTP_RESPONSE_STATUS.OK;
 
 /**
@@ -38,27 +42,18 @@ let RESPONSE_STATUS_OK = CONSTANTS.HTTP_RESPONSE_STATUS.OK;
  * @param appFileLocation - app file location
  * @returns {*|Promise.<T>|!Thenable.<R>} - app json
  */
-module.exports.importPublishDeployApp = function(auth, appFileLocation) {
-    let appUtils = new AppDefinitionAPI();
-    let app;
-    return appUtils.importApp(auth, appFileLocation)
-        .then(function(result) {
-            response = JSON.parse(result.responseBody);
-            app = response;
-            expect(result['statusCode']).toEqual(RESPONSE_STATUS_OK.CODE);
-            return appUtils.publishApp(auth, app.id.toString(), new AppPublish());
-        })
-        .then(function(result) {
-            expect(result.statusCode).toEqual(RESPONSE_STATUS_OK.CODE);
-            return new RuntimeAppDefinitionAPI().deployApp(auth, new AppDefinition({id: app.id}));
-        })
-        .then(function(result) {
-            expect(result.statusCode).toEqual(RESPONSE_STATUS_OK.CODE);
-            return app;
-        })
-        .catch(function(error) {
-            console.error('Failed with error: ', error);
-        });
+module.exports.importPublishDeployApp = async (alfrescoJsApi, appFileLocation) => {
+
+    let pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
+    let file = fs.createReadStream(pathFile);
+
+    let appCreated = await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+
+    let publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+
+    await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+
+    return appCreated;
 };
 
 /**
@@ -85,7 +80,7 @@ module.exports.startProcess = function(auth, app, processName) {
             response = JSON.parse(result.responseBody);
             processDefinitionId = apiUtil.retrieveValueByKeyValuePair(response.data, 'deploymentId', deploymentId, 'id');
 
-            var params = { processDefinitionId: processDefinitionId };
+            let params = { processDefinitionId: processDefinitionId };
             if (typeof processName !== 'undefined') {
                 params.name = processName;
             }
@@ -127,5 +122,3 @@ module.exports.cleanupApp = function(auth, app) {
             console.error('Failed with error: ', error);
         });
 };
-
-

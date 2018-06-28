@@ -31,8 +31,8 @@ var SettingsPage = function () {
         text: "BPM"
     };
     var ecm = {
-      option: element(by.xpath("//SPAN[@class='mat-option-text'][contains(text(),'ECM') and not (contains(text(),'and'))]")),
-      text: "ECM"
+        option: element(by.xpath("//SPAN[@class='mat-option-text'][contains(text(),'ECM') and not (contains(text(),'and'))]")),
+        text: "ECM"
     };
     var oauth = {
         option: element(by.xpath("//SPAN[@class='mat-option-text'][contains(text(),'OAUTH')]")),
@@ -42,7 +42,7 @@ var SettingsPage = function () {
     var ecmText = element(by.css("input[data-automation-id*='ecmHost']"));
     var bpmText = element(by.css("input[data-automation-id*='bpmHost']"));
     var authHostText = element(by.css("input[id='oauthHost']"));
-    var silentLoginToggle= element(by.css("mat-slide-toggle[name='silentLogin'] div[class='mat-slide-toggle-thumb']"));
+    var silentLoginToggle = element(by.css("mat-slide-toggle[name='silentLogin'] div[class='mat-slide-toggle-thumb']"));
     var silentLoginEnabled = element(by.css("mat-slide-toggle[class*='mat-checked'][name='silentLogin'] div[class='mat-slide-toggle-thumb']"));
     var backButton = element(by.cssContainingText("span[class='mat-button-wrapper']", "Back"));
     var applyButton = element(by.css("button[data-automation-id*='host-button']"));
@@ -64,7 +64,7 @@ var SettingsPage = function () {
         Util.waitUntilElementIsVisible(option);
         option.click();
         return expect(selectedOption.getText()).toEqual(selected);
-     };
+    };
 
     /**
      * Sets provider as ECM and BPM

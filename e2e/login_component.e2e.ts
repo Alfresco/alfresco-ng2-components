@@ -19,9 +19,9 @@ import AdfLoginPage = require('./pages/adf/loginPage.js');
 import AdfContentServicesPage = require('./pages/adf/contentServicesPage.js');
 import AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
+
 import TestConfig = require('./test.config.js');
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 
 import AdfSettingsPage = require('./pages/adf/settingsPage.js');
 
@@ -36,10 +36,6 @@ describe('Test Login component', () => {
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
-    let adminUser = new AcsUserModel({
-        'id': TestConfig.adf.adminEmail,
-        'password': TestConfig.adf.adminPassword
-    });
 
     let errorMessages = {
         username: 'Your username needs to be at least 2 characters.',
@@ -49,7 +45,6 @@ describe('Test Login component', () => {
     };
 
     beforeAll( (done) => {
-        PeopleAPI.createUserViaAPI(adminUserModel, adminUser);
         adfSettingsPage.setProviderEcmBpm();
         done();
     });
@@ -130,7 +125,7 @@ describe('Test Login component', () => {
     it('8. Login to Process Services with Content Services disabled', () => {
         adfLoginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderBpm();
-        adfLoginPage.login(adminUser.id, adminUser.password);
+        adfLoginPage.login(adminUserModel.id, adminUserModel.password);
         adfNavigationBarPage.clickProcessServicesButton();
         adfProcessServicesPage.checkApsContainer();
         adfNavigationBarPage.clickContentServicesButton();
@@ -150,7 +145,7 @@ describe('Test Login component', () => {
     it('10. Able to login to both Content Services and Process Services', () => {
         adfLoginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderEcmBpm();
-        adfLoginPage.login(adminUser.id, adminUser.password);
+        adfLoginPage.login(adminUserModel.id, adminUserModel.password);
         adfNavigationBarPage.clickProcessServicesButton();
         adfProcessServicesPage.checkApsContainer();
         adfNavigationBarPage.clickContentServicesButton();

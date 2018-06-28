@@ -22,13 +22,14 @@ import AdfViewerPage = require('./pages/adf/viewerPage.js');
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
 import FileModel = require('./models/ACS/fileModel.js');
 
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 import dateFormat = require('dateformat');
 import CONSTANTS = require('./util/constants');
+
+import AlfrescoApi = require('alfresco-js-api-node');
+import path = require('path');
+import fs = require('fs');
 
 xdescribe('Metadata component', () => {
 
@@ -38,34 +39,51 @@ xdescribe('Metadata component', () => {
     let cardViewPage;
 
     let acsUser = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminEmail,
-        'password': TestConfig.adf.adminPassword
-    });
+
     let pdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_ALL.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF_ALL.file_location
     });
 
-    beforeAll( (done) => {
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(() => {
-                adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
-                return contentServicesPage.goToDocumentList();
-            })
-            .then(() => {
-                return NodesAPI.uploadFileViaAPI(acsUser, pdfFileModel, '-my-', false);
-            })
-            .then(() => {
-                done();
-            });
+    beforeAll(async (done) => {
+
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        contentServicesPage.goToDocumentList();
+
+        let pathFile = path.join(TestConfig.main.rootPath + resources.Files.ADF_DOCUMENTS.PDF_ALL.file_location);
+        let file = fs.createReadStream(pathFile);
+
+        let pdfUploadedFile = await this.alfrescoJsApi.nodes.addNode('-my-', {
+            'name': pdfFileModel.name,
+            'nodeType': 'cm:content'
+        }, {}, {
+            filedata: file
+        });
+
+        Object.assign(pdfFileModel, pdfUploadedFile.entry);
+
+        done();
     });
 
     it('Properties', () => {
         adfViewerPage.viewFile(pdfFileModel.name);
+
         cardViewPage = adfViewerPage.clickInfoButton();
         adfViewerPage.checkInfoSideBarIsDisplayed();
         cardViewPage.clickOnPropertiesTab();
+
         expect(cardViewPage.getTitle()).toEqual(CONSTANTS.METADATA.TITLE);
         expect(cardViewPage.getActiveTab()).toEqual(CONSTANTS.METADATA.PROPERTY_TAB);
         expect(cardViewPage.getExpandedAspectName()).toEqual(CONSTANTS.METADATA.DEFAULT_ASPECT);
@@ -75,10 +93,9 @@ xdescribe('Metadata component', () => {
         expect(cardViewPage.getModifier()).toEqual(pdfFileModel.getCreatedByUser().displayName);
         expect(cardViewPage.getModifiedDate()).toEqual(dateFormat(pdfFileModel.createdAt, CONSTANTS.METADATA.DATAFORMAT));
         expect(cardViewPage.getMimetypeName()).toEqual(pdfFileModel.getContent().mimeTypeName);
-        expect(cardViewPage.getSize()).toEqual(pdfFileModel.getContent().getSizeInBytes());
-        expect(cardViewPage.getDescription()).toEqual(pdfFileModel.getProperties().getDescription());
-        expect(cardViewPage.getAuthor()).toEqual(pdfFileModel.getProperties().getAuthor());
-        expect(cardViewPage.getTitleProperty()).toEqual(pdfFileModel.getProperties().getTitle());
+        expect(cardViewPage.getSize()).toEqual(pdfFileModel.getContent().sizeInBytes);
+        expect(cardViewPage.getAuthor()).toEqual(pdfFileModel.createdByUser);
+
         cardViewPage.editIconIsDisplayed();
         cardViewPage.informationButtonIsDisplayed();
         expect(cardViewPage.getInformationButtonText()).toEqual(CONSTANTS.METADATA.MORE_INFO_BUTTON);
