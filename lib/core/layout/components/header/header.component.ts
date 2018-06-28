@@ -26,7 +26,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class HeaderLayoutComponent {
 
     @Input() title: string;
-    @Input() logo?: string;
+    @Input() logo: string = '../assets/logo.png';
     @Input() color: string;
     @Output() toggled = new EventEmitter<boolean>();
     expanded = false;

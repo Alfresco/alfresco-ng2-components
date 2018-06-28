@@ -60,15 +60,7 @@ describe('HeaderLayoutComponent', () => {
         expect(toolbar.getAttribute('color') === null).toBeFalsy;
     });
 
-    it('should not display img element if a logo path was not set', () => {
-        component.logo = '';
-        fixture.detectChanges();
-
-        const logo = fixture.debugElement.query(By.css('.adf-app-logo'));
-        expect(logo).toBeNull;
-    });
-
-    it('should display img element with the expected src if a logo path is set', () => {
+    it('should display default logo img element with the expected src if a logo path is set', () => {
         component.logo = 'logo.png';
         fixture.detectChanges();
 
