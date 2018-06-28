@@ -1,0 +1,30 @@
+<div class="adf-attach-form">
+    <mat-card>
+        <mat-card-content>
+            <div class="adf-no-form-message-container">
+                <mat-card-title class="mat-card-title">
+                    <h4 class="adf-form-title">{{ 'ADF_TASK_LIST.ATTACH_FORM.SELECT_FORM' | translate }}</h4>
+                </mat-card-title>
+                <div class="adf-attach-form-row">
+                    <mat-form-field class="adf-grid-full-width">
+                        <mat-select id="form_id" [(ngModel)]="formKey">
+                            <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <adf-form
+                    [formId]="formKey"
+                    [readOnly]="true"
+                    [disableCompleteButton]="true"
+                    [showRefreshButton]="false">
+                </adf-form>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions class="adf-no-form-mat-card-actions">
+            <button mat-button id="adf-no-form-cancel-button" (click)="onCancelButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL' | translate }}</button>
+            <button mat-button id="adf-no-form-attach-form-button" color="primary" (click)="onAttachFormButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ATTACHFORM' | translate }}</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

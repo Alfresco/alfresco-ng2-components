@@ -25,6 +25,7 @@ This component can be used when there is no form attached to a task.
 | hideCancelButton | `boolean` | true | Toggles rendering of the `Cancel` button. |
 | isCompleted | `boolean` | false | If true then Task completed message is shown and `Complete` and `Cancel` buttons are hidden. |
 | taskName | `string` |  | Name of the task. |
+| taskId | `number` |  | Id of the task. |
 
 ### Events
 

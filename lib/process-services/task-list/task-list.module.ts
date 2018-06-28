@@ -40,6 +40,7 @@ import { TaskFiltersComponent } from './components/task-filters.component';
 import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
 import { TaskStandaloneComponent } from './components/task-standalone.component';
+import { AttachFormComponent } from './components/attach-form.component';
 
 @NgModule({
     imports: [
@@ -63,7 +64,8 @@ import { TaskStandaloneComponent } from './components/task-standalone.component'
         ChecklistComponent,
         TaskHeaderComponent,
         StartTaskComponent,
-        TaskStandaloneComponent
+        TaskStandaloneComponent,
+        AttachFormComponent
     ],
     providers: [
         TaskListService,
@@ -80,7 +82,8 @@ import { TaskStandaloneComponent } from './components/task-standalone.component'
         ChecklistComponent,
         TaskHeaderComponent,
         StartTaskComponent,
-        TaskStandaloneComponent
+        TaskStandaloneComponent,
+        AttachFormComponent
     ]
 })
 export class TaskListModule {

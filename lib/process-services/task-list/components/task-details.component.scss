@@ -74,10 +74,12 @@ adf-task-header.assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-property
             flex-grow: 1;
 
             & ::ng-deep .adf-form-debug-container {
-                padding: 20px 0 0 0;
+                display: flex;
+                flex-direction: column;
+                padding: 20px 0;
 
                 .mat-slide-toggle {
-                    float: right;
+                    margin-left: auto;
 
                     & + div {
                         background-color: black;
