@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var fs = require("fs");
 var typedoc_1 = require("typedoc");
+var ProgressBar = require("progress");
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
 var includedNodeTypes = [
@@ -16,8 +17,15 @@ var externalNameLinks;
 function processDocs(mdCache, aggData, errorMessages) {
     initPhase(aggData);
     var pathnames = Object.keys(mdCache);
+    var progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
+        total: pathnames.length,
+        width: 50,
+        clear: true
+    });
     pathnames.forEach(function (pathname) {
         updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        progress.tick();
+        progress.render();
     });
 }
 exports.processDocs = processDocs;

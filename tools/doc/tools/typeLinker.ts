@@ -18,6 +18,8 @@ import {
  } from "typedoc";
 import { CommentTag } from "typedoc/dist/lib/models";
 
+import * as ProgressBar from "progress";
+
 import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
 import { match } from "minimatch";
@@ -39,8 +41,16 @@ export function processDocs(mdCache, aggData, errorMessages) {
 
     var pathnames = Object.keys(mdCache);
 
+    let progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
+        total: pathnames.length,
+        width: 50,
+        clear: true
+    });
+
     pathnames.forEach(pathname => {
         updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        progress.tick();
+        progress.render();
     });
 }
 

@@ -47,10 +47,6 @@ function updatePhase(mdCache, aggData) {
         errorMessages = [];
         console.log(`Tool: ${toolName}`);
         toolModules[toolName].processDocs(mdCache, aggData, errorMessages);
-
-        if (errorMessages.length > 0) {
-            showErrors(pathname, errorMessages);
-        }
     });
 
     var filenames = Object.keys(mdCache);
@@ -93,17 +89,6 @@ function minimiseTree(tree) {
     let minPropsTree = JSON.parse(JSON.stringify(tree, (key, value) => key === "position" ? undefined : value));
     mdCompact(minPropsTree);
     return minPropsTree;
-}
-
-
-function showErrors(filename, errorMessages) {
-    console.log(filename);
-
-    errorMessages.forEach(message => {
-        console.log("    " + message);
-    });
-
-    console.log("");
 }
 
 

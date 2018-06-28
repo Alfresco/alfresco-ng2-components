@@ -40,16 +40,32 @@ let undocMethodNames = {
 };
 
 
-export function processDocs(mdCache, aggData, errorMessages) {
+export function processDocs(mdCache, aggData, _errorMessages) {
     initPhase(aggData);
     
-    var pathnames = Object.keys(mdCache);
+    let pathnames = Object.keys(mdCache);
+    let internalErrors;
 
     pathnames.forEach(pathname => {
-        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        internalErrors = [];
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, internalErrors);
+
+        if (internalErrors.length > 0) {
+            showErrors(pathname, internalErrors);
+        }
     });
 }
 
+
+function showErrors(filename, errorMessages) {
+    console.log(filename);
+
+    errorMessages.forEach(message => {
+        console.log("    " + message);
+    });
+
+    console.log("");
+}
 
 class PropInfo {
     name: string;

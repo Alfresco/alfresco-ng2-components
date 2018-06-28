@@ -18,14 +18,26 @@ var nameExceptions;
 var undocMethodNames = {
     "ngOnChanges": 1
 };
-function processDocs(mdCache, aggData, errorMessages) {
+function processDocs(mdCache, aggData, _errorMessages) {
     initPhase(aggData);
     var pathnames = Object.keys(mdCache);
+    var internalErrors;
     pathnames.forEach(function (pathname) {
-        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        internalErrors = [];
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, internalErrors);
+        if (internalErrors.length > 0) {
+            showErrors(pathname, internalErrors);
+        }
     });
 }
 exports.processDocs = processDocs;
+function showErrors(filename, errorMessages) {
+    console.log(filename);
+    errorMessages.forEach(function (message) {
+        console.log("    " + message);
+    });
+    console.log("");
+}
 var PropInfo = /** @class */ (function () {
     function PropInfo(rawProp) {
         var _this = this;
