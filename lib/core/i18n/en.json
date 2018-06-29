@@ -307,7 +307,7 @@
       "DESCRIPTION": "You're not allowed access to this resource on the server.",
       "SECONDARY_BUTTON": {
         "TEXT": "Report issue",
-        "URL": ""
+        "URL": "report-issue"
       },
       "RETURN_BUTTON": {
         "TEXT": "Back to home",
