@@ -24,15 +24,13 @@ import AcsUserModel = require('./models/ACS/acsUserModel.js');
 import FolderModel = require('./models/ACS/folderModel.js');
 import FilesModel = require('./models/ACS/filesModel.js');
 
-import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-
 import TestConfig = require('./test.config.js');
 import Util = require('./util/util.js');
-let retryNumber = 100;
 
-xdescribe('Trashcan - Pagination', () => {
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UploadActions } from './actions/ACS/upload.actions';
+
+fdescribe('Trashcan - Pagination', () => {
     let pagination = {
         base: 'newFile',
         extension: '.txt'
@@ -61,47 +59,36 @@ xdescribe('Trashcan - Pagination', () => {
         'password': TestConfig.adf.adminPassword
     });
     let newFolderModel = new FolderModel({'name': 'newFolder'});
-    let fileNames = [], nrOfFiles = 20, currentPage = 1;
+    let nrOfFiles = 20, currentPage = 1;
     let filesModel = new FilesModel();
 
-    beforeAll( (done) => {
-        fileNames = Util.generateSeqeunceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
+    beforeAll(async (done) => {
+        let uploadActions = new UploadActions();
 
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(() => {
-                return adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
-            })
-            .then(function () {
-                return NodesAPI.uploadFolderViaAPI(acsUser, newFolderModel, '-my-');
-            })
-            .then(function () {
-                return NodesAPI.createEmptyFilesViaAPI(acsUser, fileNames, newFolderModel.id);
-            })
-            .then(function (body) {
-                filesModel.setFiles(body.list.entries);
-                return new Promise(function (res, rej) {
-                    QueriesAPI.getNodes(retryNumber, acsUser, 'term=newFile*&rootNodeId=-root-', nrOfFiles, function () {
-                        res();
-                    });
-                });
-            })
-            .then(function () {
-                function a(item) {
-                    return new Promise(function (res, rej) {
-                        NodesAPI.deleteContent(acsUser, item.id, () => {
-                            res();
-                        });
-                    });
-                }
+        let fileNames = Util.generateSeqeunceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
 
-                return filesModel.getFiles().reduce((acc, item) => {
-                    return acc.then(() => a(item));
-                }, Promise.resolve());
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
 
-            })
-            .then(() => {
-                done();
-            });
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+        let folderUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+
+        let emptyFiles = await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
+
+        emptyFiles.list.entries.forEach( (node) => {
+            this.alfrescoJsApi.node.deleteNode(node.entry.id);
+        });
+
+        done();
     });
 
     it('[C272811] 20 Items per page', () => {

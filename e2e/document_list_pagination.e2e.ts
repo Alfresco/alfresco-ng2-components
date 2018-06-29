@@ -23,12 +23,12 @@ import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
 import FolderModel = require('./models/ACS/folderModel.js');
 
-import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-
 import TestConfig = require('./test.config.js');
 import Util = require('./util/util.js');
+
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UploadActions } from './actions/ACS/upload.actions';
+
 let retryNumber = 100;
 
 describe('Test Document List - Pagination', function () {
@@ -60,42 +60,38 @@ describe('Test Document List - Pagination', function () {
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
-    let newFolderModel = new FolderModel({'name': 'newFolder'});
+    let newFolderModel = new FolderModel({ 'name': 'newFolder' });
     let fileNames = [], nrOfFiles = 20, currentPage = 1, secondSetOfFiles, secondSetNumber = 25;
-    let folderTwoModel = new FolderModel({'name': 'folderTwo'});
-    let folderThreeModel = new FolderModel({'name': 'folderThree'});
+    let folderTwoModel = new FolderModel({ 'name': 'folderTwo' });
+    let folderThreeModel = new FolderModel({ 'name': 'folderThree' });
 
-    beforeAll( (done) => {
+    beforeAll(async (done) => {
+        let uploadActions = new UploadActions();
+
         fileNames = Util.generateSeqeunceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
         secondSetOfFiles = Util.generateSeqeunceFiles(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
 
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(function () {
-                return adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
-            })
-            .then(function () {
-                NodesAPI.uploadFolderViaAPI(acsUser, folderThreeModel, '-my-');
-                return NodesAPI.uploadFolderViaAPI(acsUser, newFolderModel, '-my-');
-            })
-            .then(function () {
-                return NodesAPI.createEmptyFilesViaAPI(acsUser, fileNames, newFolderModel.id);
-            })
-            .then(function () {
-                return NodesAPI.createEmptyFilesViaAPI(acsUser, secondSetOfFiles, folderThreeModel.id);
-            })
-            .then(function (data) {
-                return QueriesAPI.getNodes(retryNumber, acsUser, 'term=newFile*&rootNodeId=-root-', nrOfFiles, function () {
-                });
-            })
-            .then(function (res) {
-                done();
-            });
-    });
-
-    afterAll((done) => {
-        NodesAPI.deleteContent(acsUser, newFolderModel.id, function () {
-            done();
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
         });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+        let folderThreeUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, folderThreeModel.name, '-my-');
+        let newFolderUploadeModel = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+
+        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, newFolderUploadeModel.entry.id);
+
+        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, folderThreeUploadedModel.entry.id);
+
+        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        done();
     });
 
     it('[C260062] Default pagination settings', function () {

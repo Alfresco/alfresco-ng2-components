@@ -17,12 +17,15 @@
 
 import AdfLoginPage = require('./pages/adf/loginPage.js');
 import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
+
 import TestConfig = require('./test.config.js');
+
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 import CONSTANTS = require('./util/constants');
 
-xdescribe('Test Theming component', () => {
+import AlfrescoApi = require('alfresco-js-api-node');
+
+describe('Test Theming component', () => {
 
     let adfNavigationBarPage = new AdfNavigationBarPage();
     let adfLoginPage = new AdfLoginPage();
@@ -32,9 +35,17 @@ xdescribe('Test Theming component', () => {
     });
     let acsUser = new AcsUserModel();
 
-    beforeAll( (done) => {
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(done());
+    beforeAll(async (done) => {
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        done();
     });
 
     it('Theming component', () => {

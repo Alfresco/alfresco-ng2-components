@@ -22,15 +22,14 @@ import AcsUserModel = require('./models/ACS/acsUserModel.js');
 import FileModel = require('./models/ACS/fileModel.js');
 import FolderModel = require('./models/ACS/folderModel.js');
 
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
-
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 import Util = require('./util/util.js');
 
-xdescribe('Test DocumentList component', () => {
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UploadActions } from './actions/ACS/upload.actions';
+
+describe('Test DocumentList component', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let contentServicesPage = new ContentServicesPage();
@@ -40,7 +39,7 @@ xdescribe('Test DocumentList component', () => {
         'id': TestConfig.adf.adminEmail,
         'password': TestConfig.adf.adminPassword
     });
-    let pdfFileModel = new FileModel({'name': resources.Files.ADF_DOCUMENTS.PDF.file_name});
+    let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     let docxFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
         'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
@@ -49,8 +48,8 @@ xdescribe('Test DocumentList component', () => {
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
-    let folderOneModel = new FolderModel({'name': 'folderOne'});
-    let folderTwoModel = new FolderModel({'name': 'folderTwo'});
+    let folderOneModel = new FolderModel({ 'name': 'folderOne' + Util.generateRandomString() });
+    let folderTwoModel = new FolderModel({ 'name': 'folderTwo' + Util.generateRandomString() });
 
     let retryNumber = 30;
     let rootFolder = 'APP.PERSONAL-FILES', userHomes = 'User Homes', rootFolderName = 'Personal Files';
@@ -68,35 +67,40 @@ xdescribe('Test DocumentList component', () => {
         test: 'document'
     };
 
-    beforeAll( (done) => {
+    beforeAll(async (done) => {
+        let uploadActions = new UploadActions();
+
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, files.base, files.extension);
         adminFileNames = Util.generateSeqeunceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, files.base, files.extension);
 
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(() => {
-                adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
-                return contentServicesPage.goToDocumentList();
-            })
-            .then(() => {
-                return protractor.promise.all([
-                    NodesAPI.uploadFileViaAPI(acsUser, pdfFileModel, '-my-', false),
-                    NodesAPI.uploadFileViaAPI(acsUser, docxFileModel, '-my-', false),
-                    NodesAPI.uploadFileViaAPI(acsUser, testFileModel, '-my-', false),
-                    NodesAPI.uploadFolderViaAPI(acsUser, folderOneModel, '-my-')
-                ]);
-            })
-            .then(() => {
-                return protractor.promise.all([
-                    NodesAPI.createEmptyFilesViaAPI(acsUser, fileNames, folderOneModel.id),
-                    NodesAPI.createEmptyFilesViaAPI(adminUserModel, adminFileNames, folderOneModel.id)
-                ]);
-            })
-            .then(function (data) {
-                QueriesAPI.getNodes(retryNumber, acsUser, 'term=nothing*&rootNodeId=-root-', nrOfFiles + adminNrOfFiles, () => {
-                    done();
-                });
-            });
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
 
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+        await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');
+        await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
+
+        let uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderOneModel.name, '-my-');
+
+        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, uploadedFolder.entry.id);
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, adminFileNames, uploadedFolder.entry.id);
+
+        contentServicesPage.goToDocumentList();
+
+        done();
     });
 
     it('1. File has tooltip', () => {
@@ -110,8 +114,8 @@ xdescribe('Test DocumentList component', () => {
 
     it('4. Sort content ascending by name.', () => {
         contentServicesPage.doubleClickRow(folderOneModel.name).checkContentIsDisplayed(files.firstFile);
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(folderOneModel.name);
-        expect(contentServicesPage.getCurrentFolderID()).toContain(folderOneModel.id);
+        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
+        expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
         contentServicesPage.sortAndCheckListIsOrderedByName(true).then(function (result) {
             expect(result).toEqual(true);
         });
@@ -160,12 +164,12 @@ xdescribe('Test DocumentList component', () => {
     });
 
     it('12. Navigate to parent folder via breadcrumbs.', () => {
-        contentServicesPage.navigateToFolderViaBreadcrumbs(folderOneModel.name);
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(folderOneModel.name);
-        expect(contentServicesPage.getCurrentFolderID()).toContain(folderOneModel.id);
+        contentServicesPage.navigateToFolderViaBreadcrumbs(uploadedFolder.entry.name);
+        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
+        expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
         Util.refreshBrowser();
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(folderOneModel.name);
-        expect(contentServicesPage.getCurrentFolderID()).toContain(folderOneModel.id);
+        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
+        expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
     });
 
     it('13. Navigate to root folder via breadcrumbs.', () => {

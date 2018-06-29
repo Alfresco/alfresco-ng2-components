@@ -44,6 +44,11 @@ import resources = require('./util/resources.js');
 
 let formInstance = new FormDefinitionModel();
 
+import AlfrescoApi = require('alfresco-js-api-node');
+
+import users = require('./restAPI/APS/reusableActions/users');
+import { AppsActions } from './actions/APS/apps.actions';
+
 describe('Form widgets', () => {
 
     let adfLoginPage = new AdfLoginPage();
@@ -57,40 +62,38 @@ describe('Form widgets', () => {
     let taskModel, formModel;
     let newTask = 'First task';
     let usingWidget = new UsingWidget();
+    let procUserModel;
 
-    beforeAll( (done) => {
-        new TenantsAPI().createTenant(basicAuthAdmin, new Tenant())
-            .then(function (result) {
-                return new UserAPI().createUser(basicAuthAdmin, processUserModel = new User({ tenantId: JSON.parse(result.responseBody).id }));
-            })
-            .then(function (response) {
-                basicAuth = new BasicAuthorization(processUserModel.email, processUserModel.password);
-                return new AppDefinitionsAPI().importApp(basicAuth, app.file_location);
-            })
-            .then(function (response) {
-                appModel = JSON.parse(response.responseBody);
-                modelId = appModel.definition.models[0].id;
-                return appModel.id;
-            })
-            .then(() => {
-                return new AppDefinitionsAPI().publishApp(basicAuth, appModel.id.toString(), new AppPublish());
-            })
-            .then(function (response) {
-                return new RuntimeAppDefinitionAPI().deployApp(basicAuth, new AppDefinition({ id: appModel.id.toString() }));
-            })
-            .then(function (response) {
-                done();
-            });
+    beforeAll(async (done) => {
+        let appsActions = new AppsActions();
+
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+        await appsActions.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+
+        done();
     });
 
-    afterAll((done) => {
-        return new TenantsAPI().deleteTenant(basicAuthAdmin, processUserModel.tenantId.toString())
-            .then(function (result) {
-                done();
-            })
-            .catch(function (error) {
-                // console.log('Failed with error: ', error);
-            });
+    afterAll(async (done) => {
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(procUserModel.tenantId);
+
+        done();
     });
 
     it('Check text, multiline widgets - label, value and displayed', () => {
