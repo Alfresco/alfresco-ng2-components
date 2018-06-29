@@ -18,6 +18,7 @@ var configFileName = "doctool.config.json";
 var defaultFolder = path.resolve("docs");
 
 
+/*
 function initPhase(aggData) {
     toolList.forEach(toolName => {
         toolModules[toolName].initPhase(aggData);
@@ -25,19 +26,10 @@ function initPhase(aggData) {
 }
 
 
-function readPhase(filenames, aggData) {
-    for (var i = 0; i < filenames.length; i++) {
-        var pathname = filenames[i];//path.resolve(srcFolder, filenames[i]);
-        
-        var src = fs.readFileSync(pathname);
-        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
-
-        toolList.forEach(toolName => {
-            toolModules[toolName].readPhase(tree, pathname, aggData);
-        });
-    }
-
-    //console.log(JSON.stringify(aggData.mdFileData));
+function readPhase(mdCache, aggData) {
+    toolList.forEach(toolName => {
+        toolModules[toolName].readPhase(mdCache, aggData);
+    });
 }
 
 
@@ -46,36 +38,25 @@ function aggPhase(aggData) {
         toolModules[toolName].aggPhase(aggData);
     });
 }
+*/
 
-
-function updatePhase(filenames, aggData) {
+function updatePhase(mdCache, aggData) {
     var errorMessages;
 
-    for (var i = 0; i < filenames.length; i++) {
+    toolList.forEach(toolName => {
         errorMessages = [];
+        console.log(`Tool: ${toolName}`);
+        toolModules[toolName].processDocs(mdCache, aggData, errorMessages);
+    });
+
+    var filenames = Object.keys(mdCache);
+    
+
+    for (var i = 0; i < filenames.length; i++) {
         var pathname = filenames[i];
-        
-        if (program.verbose) {
-            console.log("Reading " + pathname);
-        }
-        
-        var src = fs.readFileSync(pathname);
-        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
+        var tree = mdCache[pathname].mdOutTree;
+        var original = mdCache[pathname].mdInTree;
 
-        var original = minimiseTree(tree);
-
-        var modified = false;
-
-        toolList.forEach(toolName => {
-            modified |= toolModules[toolName].updatePhase(tree, pathname, aggData, errorMessages);
-        });
-        
-        if (errorMessages.length > 0) {
-            showErrors(pathname, errorMessages);
-        }
-
-        tree = minimiseTree(tree);
-       
         if (program.json) {
             let filename = path.basename(pathname);
 
@@ -84,10 +65,8 @@ function updatePhase(filenames, aggData) {
             console.log(`\nFile "${filename}" after processing:`);
             console.log(JSON.stringify(tree));
         }
-        
-        modified = !lodash.isEqual(tree, original);
 
-        if (modified) {
+        if (!lodash.isEqual(tree, original)) {
             if (program.verbose) {
                 console.log(`Modified: ${pathname}`);
             }
@@ -110,17 +89,6 @@ function minimiseTree(tree) {
     let minPropsTree = JSON.parse(JSON.stringify(tree, (key, value) => key === "position" ? undefined : value));
     mdCompact(minPropsTree);
     return minPropsTree;
-}
-
-
-function showErrors(filename, errorMessages) {
-    console.log(filename);
-
-    errorMessages.forEach(message => {
-        console.log("    " + message);
-    });
-
-    console.log("");
 }
 
 
@@ -164,12 +132,36 @@ function getAllDocFilePaths(docFolder, files) {
 }
 
 
+function initMdCache(filenames) {
+    var mdCache = {};
+
+    for (var i = 0; i < filenames.length; i++) {
+        var pathname = filenames[i];
+        mdCache[pathname] = {};
+
+        var src = fs.readFileSync(pathname);
+        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
+        mdCache[pathname].mdInTree = minimiseTree(tree);
+        mdCache[pathname].mdOutTree = minimiseTree(tree);
+    }
+
+    return mdCache;
+}
+
+
 program
 .usage("[options] <source>")
 .option("-p, --profile [profileName]", "Select named config profile", "default")
 .option("-j, --json", "Output JSON data for Markdown syntax tree")
 .option("-v, --verbose", "Log doc files as they are processed")
+.option("-t, --timing", "Output time taken for run")
 .parse(process.argv);
+
+var startTime;
+
+if (program.timing) {
+    startTime = process.hrtime();
+}
 
 var sourcePath;
 
@@ -206,23 +198,29 @@ if (sourceInfo.isDirectory()) {
 }
 
 files = files.filter(filename => 
+    (filename !== undefined) &&
     (path.extname(filename) === ".md") &&
     (filename !== "README.md")
 );
 
-//files.forEach(element => console.log(element));
 
+var mdCache = initMdCache(files);
+
+/*
 console.log("Initialising...");
 initPhase(aggData);
 
 console.log("Analysing Markdown files...");
-readPhase(files, aggData);
+readPhase(mdCache, aggData);
 
 console.log("Computing aggregate data...");
 aggPhase(aggData);
+*/
 
 console.log("Updating Markdown files...");
-updatePhase(files, aggData);
+updatePhase(mdCache, aggData);
 
-
-
+if (program.timing) {
+    var endTime = process.hrtime(startTime);
+    console.log(`Run complete in ${endTime[0]} sec`);
+}
