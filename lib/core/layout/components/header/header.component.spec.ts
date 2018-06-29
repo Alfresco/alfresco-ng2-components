@@ -20,82 +20,88 @@ import { HeaderLayoutComponent } from './header.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
-// import { ComponentFactory, ComponentFactoryResolver, Injector, Input } from '@angular/core';
-// import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { LayoutModule } from '../..';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { ComponentFactoryResolver, Injector, ComponentFactory } from '@angular/core';
 
 describe('HeaderLayoutComponent', () => {
     let fixture: ComponentFixture<HeaderLayoutComponent>;
     let component: HeaderLayoutComponent;
-    setupTestBed({
-        imports: [CoreTestingModule]
+
+    describe('Input parameters', () => {
+        setupTestBed({
+            imports: [CoreTestingModule]
+        });
+
+        beforeEach(() => {
+            fixture = TestBed.createComponent(HeaderLayoutComponent);
+            component = fixture.componentInstance;
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should create instance of HeaderLayoutComponent', () => {
+            expect(fixture.componentInstance instanceof HeaderLayoutComponent).toBe(true, 'should create HeaderLayoutComponent');
+        });
+
+        it('title element should been displayed', () => {
+            const titleElement = fixture.debugElement.query(By.css('.adf-app-title'));
+            expect(titleElement === null).toBeFalsy;
+        });
+
+        it('should show TEST TITLE', () => {
+            component.title = 'TEST TITLE';
+            fixture.detectChanges();
+
+            const titleElement = fixture.nativeElement.querySelector('.adf-app-title');
+            expect(titleElement.innerText).toEqual('TEST TITLE');
+        });
+
+        it('color attribute should be present on mat-toolbar', () => {
+            const toolbar = fixture.nativeElement.querySelector('mat-toolbar');
+
+            expect(toolbar.getAttribute('color') === null).toBeFalsy;
+        });
+
+        it('should display default logo img element with the expected src if a logo path is set', () => {
+            component.logo = 'logo.png';
+            fixture.detectChanges();
+
+            const logo = fixture.nativeElement.querySelector('.adf-app-logo');
+            const src = logo.getAttribute('src');
+            expect(logo === null).toBeFalsy;
+            expect(src).toEqual('logo.png');
+        });
     });
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(HeaderLayoutComponent);
-        component = fixture.componentInstance;
+    describe('Template tranclusion', () => {
+        let factory: ComponentFactory<HeaderLayoutComponent>;
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+              declarations: [],
+              imports: [ LayoutModule]
+            })
+            .overrideModule(BrowserDynamicTestingModule, {
+              set: {
+                entryComponents: [ HeaderLayoutComponent ]
+              }
+            })
+            .compileComponents();
+
+            const resolver = <ComponentFactoryResolver>TestBed.get(ComponentFactoryResolver, null);
+            factory = resolver.resolveComponentFactory(HeaderLayoutComponent);
+          }));
+
+        it('should transclude the provided nodes into the component', () => {
+            const tnode = document.createTextNode('Test text');
+            const componentRef = factory.create(Injector.NULL, [[ tnode ]]);
+            const header = componentRef.location.nativeElement;
+            expect(header.textContent === 'Test text');
+          });
     });
 
-    afterEach(() => {
-        fixture.destroy();
-    });
 
-    it('should create instance of HeaderLayoutComponent', () => {
-        expect(fixture.componentInstance instanceof HeaderLayoutComponent).toBe(true, 'should create HeaderLayoutComponent');
-    });
 
-    it('title element should been displayed', () => {
-        const titleElement = fixture.debugElement.query(By.css('.adf-app-title'));
-        expect(titleElement === null).toBeFalsy;
-    });
-
-    it('should show TEST TITLE', () => {
-        component.title = 'TEST TITLE';
-        fixture.detectChanges();
-
-        const titleElement = fixture.nativeElement.querySelector('.adf-app-title');
-        expect(titleElement.innerText).toEqual('TEST TITLE');
-    });
-
-    it('color attribute should be present on mat-toolbar', () => {
-        const toolbar = fixture.nativeElement.querySelector('mat-toolbar');
-
-        expect(toolbar.getAttribute('color') === null).toBeFalsy;
-    });
-
-    it('should display default logo img element with the expected src if a logo path is set', () => {
-        component.logo = 'logo.png';
-        fixture.detectChanges();
-
-        const logo = fixture.nativeElement.querySelector('.adf-app-logo');
-        const src = logo.getAttribute('src');
-        expect(logo === null).toBeFalsy;
-        expect(src).toEqual('logo.png');
-    });
 });
-
-// describe('Template tranclusion', () => {
-//     let factory: ComponentFactory<HeaderLayoutComponent>;
-//     beforeEach(async(() => {
-//         TestBed.configureTestingModule({
-//           declarations: [],
-//           imports: [ LayoutModule, MaterialModule ]
-//         })
-//         .overrideModule(BrowserDynamicTestingModule, {
-//           set: {
-//             entryComponents: [ HeaderLayoutComponent ]
-//           }
-//         })
-//         .compileComponents();
-
-//         const resolver = <ComponentFactoryResolver>TestBed.get(ComponentFactoryResolver, null);
-//         factory = resolver.resolveComponentFactory(HeaderLayoutComponent);
-//       }));
-
-//       it('should transclude the provided nodes into the component', () => {
-//         const tnode = document.createTextNode('Test text');
-//         const componentRef = factory.create(Injector.NULL, [[ tnode ]]);
-//         const header = componentRef.location.nativeElement.querySelector('adf-layout-header');
-//         expect(header.textContent === 'Test text');
-//       });
-
-// });
