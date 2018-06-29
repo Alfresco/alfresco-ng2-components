@@ -48,7 +48,7 @@ describe('HeaderLayoutComponent', () => {
 
         it('title element should been displayed', () => {
             const titleElement = fixture.debugElement.query(By.css('.adf-app-title'));
-            expect(titleElement === null).toBeFalsy;
+            expect(titleElement === null).toBeFalsy();
         });
 
         it('should show TEST TITLE', () => {
@@ -60,48 +60,48 @@ describe('HeaderLayoutComponent', () => {
         });
 
         it('color attribute should be present on mat-toolbar', () => {
-            const toolbar = fixture.nativeElement.querySelector('mat-toolbar');
+            component.color = 'primary';
+            fixture.detectChanges();
 
-            expect(toolbar.getAttribute('color') === null).toBeFalsy;
+            const toolbar = fixture.nativeElement.querySelector('mat-toolbar');
+            expect(toolbar.getAttribute('ng-reflect-color') === null).toBeFalsy();
+            expect(toolbar.getAttribute('ng-reflect-color')).toEqual('primary');
         });
 
-        it('should display default logo img element with the expected src if a logo path is set', () => {
+        it('should display the img element with the expected src if a logo path is set', () => {
             component.logo = 'logo.png';
             fixture.detectChanges();
 
             const logo = fixture.nativeElement.querySelector('.adf-app-logo');
             const src = logo.getAttribute('src');
-            expect(logo === null).toBeFalsy;
+            expect(logo === null).toBeFalsy();
             expect(src).toEqual('logo.png');
         });
     });
+});
 
-    describe('Template tranclusion', () => {
-        let factory: ComponentFactory<HeaderLayoutComponent>;
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-              declarations: [],
-              imports: [ LayoutModule]
-            })
-            .overrideModule(BrowserDynamicTestingModule, {
-              set: {
-                entryComponents: [ HeaderLayoutComponent ]
-              }
-            })
-            .compileComponents();
+describe('Template tranclusion', () => {
+    let factory: ComponentFactory<HeaderLayoutComponent>;
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+          declarations: [],
+          imports: [ LayoutModule]
+        })
+        .overrideModule(BrowserDynamicTestingModule, {
+          set: {
+            entryComponents: [ HeaderLayoutComponent ]
+          }
+        })
+        .compileComponents();
 
-            const resolver = <ComponentFactoryResolver>TestBed.get(ComponentFactoryResolver, null);
-            factory = resolver.resolveComponentFactory(HeaderLayoutComponent);
-          }));
+        const resolver = <ComponentFactoryResolver> TestBed.get(ComponentFactoryResolver, null);
+        factory = resolver.resolveComponentFactory(HeaderLayoutComponent);
+      }));
 
-        it('should transclude the provided nodes into the component', () => {
-            const tnode = document.createTextNode('Test text');
-            const componentRef = factory.create(Injector.NULL, [[ tnode ]]);
-            const header = componentRef.location.nativeElement;
-            expect(header.textContent === 'Test text');
-          });
-    });
-
-
-
+    it('should transclude the provided nodes into the component', () => {
+        const tnode = document.createTextNode('Test text');
+        const componentRef = factory.create(Injector.NULL, [[ tnode ]]);
+        const header = componentRef.location.nativeElement;
+        expect(header.textContent === 'Test text');
+      });
 });
