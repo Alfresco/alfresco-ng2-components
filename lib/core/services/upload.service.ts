@@ -187,7 +187,7 @@ export class UploadService {
                 file.file,
                 file.options.path,
                 file.options.parentId,
-                null,
+                file.options,
                 opts
             );
         }
