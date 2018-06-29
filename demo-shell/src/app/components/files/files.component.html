@@ -428,7 +428,9 @@
 <div *ngIf="processId">
     <adf-start-process
         [values]="formValues"
-        [appId]="processId">
+        [appId]="processId"
+        (start)="closeStartProcess()"
+        (cancel)="closeStartProcess()">
     </adf-start-process>
 </div>
 
