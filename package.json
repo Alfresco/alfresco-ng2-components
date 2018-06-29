@@ -1,7 +1,7 @@
 {
   "name": "alfresco-components",
   "description": "Alfresco Angular components",
-  "version": "2.4.0",
+  "version": "2.5.0-beta1",
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
@@ -55,10 +55,10 @@
     "process services"
   ],
   "dependencies": {
-    "@alfresco/adf-content-services": "2.4.0",
-    "@alfresco/adf-core": "2.4.0",
-    "@alfresco/adf-insights": "2.4.0",
-    "@alfresco/adf-process-services": "2.4.0",
+    "@alfresco/adf-content-services": "2.5.0-beta1",
+    "@alfresco/adf-core": "2.5.0-beta1",
+    "@alfresco/adf-insights": "2.5.0-beta1",
+    "@alfresco/adf-process-services": "2.5.0-beta1",
     "@angular/animations": "5.1.1",
     "@angular/cdk": "5.0.1",
     "@angular/common": "5.1.1",
@@ -76,7 +76,7 @@
     "@mat-datetimepicker/moment": "1.0.4",
     "@ngx-translate/core": "9.1.1",
     "@nrwl/schematics": "^1.0.3",
-    "alfresco-js-api": "2.4.0",
+    "alfresco-js-api": "2.5.0-beta1",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
     "core-js": "2.4.1",
