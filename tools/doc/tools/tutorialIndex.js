@@ -11,10 +11,10 @@ var unist = require("../unistHelpers");
 var tutFolder = path.resolve("docs", "tutorials");
 var templateFolder = path.resolve("tools", "doc", "templates");
 var userGuideFolder = path.resolve("docs", "user-guide");
-function initPhase(aggData) { }
-exports.initPhase = initPhase;
-function readPhase(tree, pathname, aggData) { }
-exports.readPhase = readPhase;
+function processDocs(tree, pathname, aggData, errorMessages) {
+    aggPhase(aggData);
+}
+exports.processDocs = processDocs;
 function aggPhase(aggData) {
     var indexDocData = getIndexDocData();
     var templateName = path.resolve(templateFolder, "tutIndex.ejs");
@@ -33,11 +33,6 @@ function aggPhase(aggData) {
     });
     fs.writeFileSync(tutIndexFile, remark().use(frontMatter, { type: 'yaml', fence: '---' }).data("settings", { paddedTable: false, gfm: false }).stringify(tutIndexMD));
 }
-exports.aggPhase = aggPhase;
-function updatePhase(tree, pathname, aggData) {
-    return false;
-}
-exports.updatePhase = updatePhase;
 function getIndexDocData() {
     var indexFile = path.resolve(userGuideFolder, "summary.json");
     var summaryArray = JSON.parse(fs.readFileSync(indexFile, "utf8"));

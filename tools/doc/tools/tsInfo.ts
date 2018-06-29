@@ -40,6 +40,33 @@ let undocMethodNames = {
 };
 
 
+export function processDocs(mdCache, aggData, _errorMessages) {
+    initPhase(aggData);
+    
+    let pathnames = Object.keys(mdCache);
+    let internalErrors;
+
+    pathnames.forEach(pathname => {
+        internalErrors = [];
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, internalErrors);
+
+        if (internalErrors.length > 0) {
+            showErrors(pathname, internalErrors);
+        }
+    });
+}
+
+
+function showErrors(filename, errorMessages) {
+    console.log(filename);
+
+    errorMessages.forEach(message => {
+        console.log("    " + message);
+    });
+
+    console.log("");
+}
+
 class PropInfo {
     name: string;
     type: string;
@@ -258,7 +285,7 @@ class ComponentInfo {
 }
 
 
-export function initPhase(aggData) {
+function initPhase(aggData) {
     nameExceptions = aggData.config.typeNameExceptions;
 
     let app = new Application({
@@ -276,15 +303,9 @@ export function initPhase(aggData) {
 }
 
 
-export function readPhase(tree, pathname, aggData) {
-}
 
 
-export function aggPhase(aggData) {
-}
-
-
-export function updatePhase(tree, pathname, aggData, errorMessages) {
+function updateFile(tree, pathname, aggData, errorMessages) {
     let compName = angNameToClassName(path.basename(pathname, ".md"));
     let classRef = aggData.projData.findReflectionByName(compName);
 

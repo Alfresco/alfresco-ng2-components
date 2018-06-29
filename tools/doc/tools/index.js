@@ -12,10 +12,7 @@ var searchLibraryRecursive = require("../libsearch");
 var mdNav = require("../mdNav");
 
 module.exports = {
-    "initPhase": initPhase,
-    "readPhase": readPhase,
-    "aggPhase": aggPhase,
-    "updatePhase": updatePhase
+    "processDocs": processDocs
 }
 
 var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
@@ -34,6 +31,14 @@ var adfLibNames = ["core", "content-services", "insights", "process-services"];
 
 var statusIcons;
 
+
+function processDocs(mdCache, aggData, _errorMessages) {
+    initPhase(aggData);
+    readPhase(mdCache, aggData);
+    aggPhase(aggData);
+}
+
+
 function initPhase(aggData) {
     statusIcons = aggData.config["statusIcons"] || {};
     aggData.stoplist = makeStoplist(aggData.config);    
@@ -45,7 +50,16 @@ function initPhase(aggData) {
 }
 
 
-function readPhase(tree, pathname, aggData) {
+function readPhase(mdCache, aggData) {
+    var pathnames = Object.keys(mdCache);
+
+    pathnames.forEach(pathname => {
+        getFileData(mdCache[pathname].mdInTree, pathname, aggData);
+    });
+}
+
+
+function getFileData(tree, pathname, aggData) {
     var itemName = path.basename(pathname, ".md");
 
     // Look for the first paragraph in the file by skipping other items.
@@ -146,11 +160,6 @@ function aggPhase(aggData) {
     fs.writeFileSync(subIndexFilePath, subIndexText);
 
     //fs.writeFileSync(indexMdFilePath, remark().stringify(indexFileTree));
-}
-
-
-function updatePhase(tree, pathname, aggData) {
-    return false;
 }
 
 
@@ -281,7 +290,7 @@ function makeMDDocumentedTableRow(docItem, forSubFolder) {
     }
 
     var srcFileLink = unist.makeLink(unist.makeText("Source"), srcPath);
-    var desc = docItem.briefDesc;
+    var desc = JSON.parse(JSON.stringify(docItem.briefDesc));
 
     removeBriefDescLinks(desc);
 
@@ -401,5 +410,6 @@ function removeBriefDescLinks(desc) {
     links.forEach(link => {
         link.item.type = "text";
         link.item.value = link.item.children[0].value;
+        link.item.children = null;
     });
 }
