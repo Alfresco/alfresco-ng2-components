@@ -28,10 +28,9 @@ import dateFormat = require('dateformat');
 import CONSTANTS = require('./util/constants');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import path = require('path');
-import fs = require('fs');
+import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Metadata component', () => {
+describe('Metadata component', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let contentServicesPage = new ContentServicesPage();
@@ -46,6 +45,7 @@ xdescribe('Metadata component', () => {
     });
 
     beforeAll(async (done) => {
+        let uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -62,15 +62,7 @@ xdescribe('Metadata component', () => {
 
         contentServicesPage.goToDocumentList();
 
-        let pathFile = path.join(TestConfig.main.rootPath + resources.Files.ADF_DOCUMENTS.PDF_ALL.file_location);
-        let file = fs.createReadStream(pathFile);
-
-        let pdfUploadedFile = await this.alfrescoJsApi.nodes.addNode('-my-', {
-            'name': pdfFileModel.name,
-            'nodeType': 'cm:content'
-        }, {}, {
-            filedata: file
-        });
+        let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
 
         Object.assign(pdfFileModel, pdfUploadedFile.entry);
 

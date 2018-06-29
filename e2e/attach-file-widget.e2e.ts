@@ -49,7 +49,7 @@ describe('Start Task - Task App', () => {
     let appFilds = app.form_fields;
 
     beforeAll(async (done) => {
-        this. alfrescoJsApi = new AlfrescoApi({
+        this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: TestConfig.adf.url
         });
@@ -68,14 +68,14 @@ describe('Start Task - Task App', () => {
     });
 
     afterAll(async (done) => {
-        this. alfrescoJsApi = new AlfrescoApi({
+        this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: TestConfig.adf.url
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        await users.createTenantAndUser(this.alfrescoJsApi, processUserModel.tenantId);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
 
         done();
     });

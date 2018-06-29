@@ -21,12 +21,11 @@ import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
 import FolderModel = require('./models/ACS/folderModel.js');
 
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
-
 import TestConfig = require('./test.config.js');
 import Util = require('./util/util.js');
+
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UploadActions } from './actions/ACS/upload.actions';
 
 describe('Enable infinite scrolling', () => {
 
@@ -49,26 +48,31 @@ describe('Enable infinite scrolling', () => {
         extension: '.txt'
     };
 
-    beforeAll( (done) => {
+    beforeAll(async (done) => {
+        let uploadActions = new UploadActions();
+
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        contentServicesPage.goToDocumentList();
+
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, files.base, files.extension);
 
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(() => {
-                adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
-                return contentServicesPage.goToDocumentList();
-            })
-            .then(() => {
-                return NodesAPI.uploadFolderViaAPI(acsUser, folderModel, '-my-');
-            })
-            .then(() => {
-                return NodesAPI.createEmptyFilesViaAPI(acsUser, fileNames, folderModel.id);
-            })
-            .then(function (data) {
-                QueriesAPI.getNodes(retryNumber, acsUser, 'term=nothing*&rootNodeId=-root-', nrOfFiles, () => {
-                    done();
-                });
-            });
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
+        let folderUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, folderModel.name, '-my-');
+
+        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
+
+        done();
     });
 
     it('Enable infinite scrolling', () => {
