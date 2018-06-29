@@ -6,17 +6,19 @@
     adf-layout-header .mat-toolbar-single-row {
 
         color: mat-color($primary, default-contrast) !important;
-        padding: 0 24px;
+        position: relative;
+        padding: 0 24px 0 0;
 
-        button {
-            width: 24px;
-            margin-right: 16px;
+        .adf-menu-icon {
+            position: relative;
+            margin-left: 14px;
         }
 
         .adf-app-logo {
+            position: relative;
             height: 28px;
             width: 28px;
-            margin-right: 8px;
+            margin-right: 9px;
         }
 
         .adf-header-delimiter {

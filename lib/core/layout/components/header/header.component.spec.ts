@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { HeaderLayoutComponent } from './header.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
+// import { ComponentFactory, ComponentFactoryResolver, Injector, Input } from '@angular/core';
+// import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 describe('HeaderLayoutComponent', () => {
     let fixture: ComponentFixture<HeaderLayoutComponent>;
@@ -70,3 +72,30 @@ describe('HeaderLayoutComponent', () => {
         expect(src).toEqual('logo.png');
     });
 });
+
+// describe('Template tranclusion', () => {
+//     let factory: ComponentFactory<HeaderLayoutComponent>;
+//     beforeEach(async(() => {
+//         TestBed.configureTestingModule({
+//           declarations: [],
+//           imports: [ LayoutModule, MaterialModule ]
+//         })
+//         .overrideModule(BrowserDynamicTestingModule, {
+//           set: {
+//             entryComponents: [ HeaderLayoutComponent ]
+//           }
+//         })
+//         .compileComponents();
+
+//         const resolver = <ComponentFactoryResolver>TestBed.get(ComponentFactoryResolver, null);
+//         factory = resolver.resolveComponentFactory(HeaderLayoutComponent);
+//       }));
+
+//       it('should transclude the provided nodes into the component', () => {
+//         const tnode = document.createTextNode('Test text');
+//         const componentRef = factory.create(Injector.NULL, [[ tnode ]]);
+//         const header = componentRef.location.nativeElement.querySelector('adf-layout-header');
+//         expect(header.textContent === 'Test text');
+//       });
+
+// });
