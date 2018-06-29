@@ -195,6 +195,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
         this.peopleSearch = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer).share();
+        this.authService.getBpmLoggedUser().subscribe((user: UserRepresentation) => {
+            this.currentLoggedUser = user;
+        });
     }
 
     ngOnInit() {
@@ -204,10 +207,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
         this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
         this.cardViewUpdateService.itemClicked$.subscribe(this.clickTaskDetails.bind(this));
-
-        this.authService.getBpmLoggedUser().subscribe((user: UserRepresentation) => {
-            this.currentLoggedUser = user;
-        });
     }
 
     ngOnChanges(changes: SimpleChanges): void {
