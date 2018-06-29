@@ -15,12 +15,12 @@ const templateFolder = path.resolve("tools", "doc", "templates");
 const userGuideFolder = path.resolve("docs", "user-guide");
 
 
-export function initPhase(aggData) {}
+export function processDocs(tree, pathname, aggData, errorMessages) {
+    aggPhase(aggData);
+}
 
-export function readPhase(tree, pathname, aggData) {}
 
-
-export function aggPhase(aggData) {
+function aggPhase(aggData) {
     let indexDocData = getIndexDocData();
 
     let templateName = path.resolve(templateFolder, "tutIndex.ejs");
@@ -45,10 +45,6 @@ export function aggPhase(aggData) {
     fs.writeFileSync(tutIndexFile, remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false, gfm: false}).stringify(tutIndexMD));
 }
 
-
-export function updatePhase(tree, pathname, aggData) {
-    return false;
-}
 
 
 function getIndexDocData() {

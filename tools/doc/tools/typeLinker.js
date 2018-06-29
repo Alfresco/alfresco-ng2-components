@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var fs = require("fs");
 var typedoc_1 = require("typedoc");
+var ProgressBar = require("progress");
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
 var includedNodeTypes = [
@@ -13,6 +14,21 @@ var includedNodeTypes = [
 var docFolder = path.resolve("docs");
 var adfLibNames = ["core", "content-services", "insights", "process-services"];
 var externalNameLinks;
+function processDocs(mdCache, aggData, errorMessages) {
+    initPhase(aggData);
+    var pathnames = Object.keys(mdCache);
+    var progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
+        total: pathnames.length,
+        width: 50,
+        clear: true
+    });
+    pathnames.forEach(function (pathname) {
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        progress.tick();
+        progress.render();
+    });
+}
+exports.processDocs = processDocs;
 function initPhase(aggData) {
     externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
@@ -36,13 +52,7 @@ function initPhase(aggData) {
     });
     //console.log(JSON.stringify(aggData.nameLookup));
 }
-exports.initPhase = initPhase;
-function readPhase(tree, pathname, aggData) { }
-exports.readPhase = readPhase;
-function aggPhase(aggData) {
-}
-exports.aggPhase = aggPhase;
-function updatePhase(tree, pathname, aggData) {
+function updateFile(tree, pathname, aggData, errorMessages) {
     traverseMDTree(tree);
     return true;
     function traverseMDTree(node) {
@@ -86,7 +96,6 @@ function updatePhase(tree, pathname, aggData) {
         */
     }
 }
-exports.updatePhase = updatePhase;
 var SplitNameNode = /** @class */ (function () {
     function SplitNameNode(key, value) {
         if (key === void 0) { key = ""; }

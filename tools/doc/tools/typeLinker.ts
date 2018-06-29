@@ -18,6 +18,8 @@ import {
  } from "typedoc";
 import { CommentTag } from "typedoc/dist/lib/models";
 
+import * as ProgressBar from "progress";
+
 import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
 import { match } from "minimatch";
@@ -34,7 +36,26 @@ const adfLibNames = ["core", "content-services", "insights", "process-services"]
 
 let externalNameLinks;
 
-export function initPhase(aggData) {
+export function processDocs(mdCache, aggData, errorMessages) {
+    initPhase(aggData);
+
+    var pathnames = Object.keys(mdCache);
+
+    let progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
+        total: pathnames.length,
+        width: 50,
+        clear: true
+    });
+
+    pathnames.forEach(pathname => {
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        progress.tick();
+        progress.render();
+    });
+}
+
+
+function initPhase(aggData) {
     externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
@@ -64,15 +85,10 @@ export function initPhase(aggData) {
     //console.log(JSON.stringify(aggData.nameLookup));
 }
 
-export function readPhase(tree, pathname, aggData) {}
 
 
-export function aggPhase(aggData) {
 
-}
-
-
-export function updatePhase(tree, pathname, aggData) {
+function updateFile(tree, pathname, aggData, errorMessages) {
     traverseMDTree(tree);
     return true;
 
