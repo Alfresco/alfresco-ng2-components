@@ -31,5 +31,50 @@
     <div data-automation-id="notification-action-output">
         {{ actionOutput }}
     </div>
+    <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                        <h3>Custom Configuration</h3>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+    
+
+    <form [formGroup]="configForm">
+        <mat-form-field>
+            <input matInput class="form-control" formControlName="announcementMessage" placeholder="Announcement Message" >
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select class="form-control" formControlName="direction" placeholder="Direction">
+                    <mat-option *ngFor="let direction of directions" [value]="direction.value">
+                        {{ direction.title }}
+                    </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="number" class="form-control" formControlName="duration" placeholder="Duration" >
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select class="form-control" formControlName="horizontalPosition" placeholder="Horizontal Position">
+                <mat-option *ngFor="let horizontalPosition of horizontalPositions" [value]="horizontalPosition.value">
+                    {{ horizontalPosition.title }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select class="form-control" formControlName="verticalPosition" placeholder="Vertical Position">
+                <mat-option *ngFor="let verticalPosition of verticalPositions" [value]="verticalPosition.value">{{ verticalPosition.title }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        
+    </form>
+
+    <button mat-icon-button (click)="sendCustomConfig()">
+        <mat-icon>send</mat-icon>
+    </button>
+
+</mat-expansion-panel>
+</mat-accordion>
 
 </div>

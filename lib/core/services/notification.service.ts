@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material';
 import { TranslationService } from './translation.service';
 
 @Injectable()
@@ -34,12 +34,21 @@ export class NotificationService {
      * @param millisecondsDuration Time before notification disappears after being shown
      * @returns Information/control object for the SnackBar
      */
-    openSnackMessage(message: string, millisecondsDuration?: number): MatSnackBarRef<any> {
+    openSnackMessage(message: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
+
         const translatedMessage = this.translationService.instant(message);
 
-        return this.snackBar.open(translatedMessage, null, {
-            duration: millisecondsDuration || NotificationService.DEFAULT_DURATION_MESSAGE
-        });
+        if (config) {
+            if (typeof config === 'object') {
+                return this.snackBar.open(translatedMessage, null, config);
+            } else {
+                return this.snackBar.open(translatedMessage, null, {
+                    duration: config || NotificationService.DEFAULT_DURATION_MESSAGE
+                });
+            }
+        } else {
+            return this.snackBar.open(translatedMessage);
+        }
     }
 
     /**
@@ -49,11 +58,20 @@ export class NotificationService {
      * @param millisecondsDuration Time before the notification disappears (unless the button is clicked)
      * @returns Information/control object for the SnackBar
      */
-    openSnackMessageAction(message: string, action: string, millisecondsDuration?: number): MatSnackBarRef<any> {
+    openSnackMessageAction(message: string, action: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
+
         const translatedMessage = this.translationService.instant(message);
 
-        return this.snackBar.open(translatedMessage, action, {
-            duration: millisecondsDuration || NotificationService.DEFAULT_DURATION_MESSAGE
-        });
+        if (config) {
+            if (typeof config === 'object') {
+                return this.snackBar.open(translatedMessage, action, config);
+            } else {
+                return this.snackBar.open(translatedMessage, action, {
+                    duration: config || NotificationService.DEFAULT_DURATION_MESSAGE
+                });
+            }
+        } else {
+            return this.snackBar.open(translatedMessage, action);
+        }
     }
 }

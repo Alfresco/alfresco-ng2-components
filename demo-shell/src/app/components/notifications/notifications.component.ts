@@ -15,20 +15,83 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '@alfresco/adf-core';
+import { MatSnackBarConfig } from '@angular/material';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     templateUrl: './notifications.component.html',
     styleUrls: ['./notifications.component.scss']
 })
-export class NotificationsComponent {
+export class NotificationsComponent implements OnInit {
 
     message = 'I ♥️ ADF';
     withAction = false;
     actionOutput = '';
 
-    constructor(private notificationService: NotificationService) {}
+    configForm: FormGroup;
+
+    snackBarConfig: MatSnackBarConfig = new MatSnackBarConfig();
+
+    directions = [
+        {value: 'ltr', title: 'Left to right'},
+        {value: 'rtl', title: 'Right to left'}
+    ];
+
+    horizontalPositions = [
+        {value: 'start', title: 'Start'},
+        {value: 'center', title: 'Center'},
+        {value: 'end', title: 'End'},
+        {value: 'left', title: 'Left'},
+        {value: 'right', title: 'Right'}
+    ];
+
+    verticalPositions = [
+        {value: 'top', title: 'Top'},
+        {value: 'bottom', title: 'Bottom'}
+    ];
+
+    constructor(private notificationService: NotificationService,
+                private formBuilder: FormBuilder) { }
+
+    ngOnInit() {
+        this.configForm = this.formBuilder.group({
+            announcementMessage: new FormControl(''),
+            direction: new FormControl(''),
+            horizontalPosition: new FormControl(''),
+            verticalPosition: new FormControl(''),
+            duration: new FormControl('')
+        });
+
+        this.configForm.valueChanges
+        .subscribe(configFormValues =>
+            this.setSnackBarConfig(configFormValues)
+        );
+        
+    }
+
+    setSnackBarConfig(configFormValues: any) {
+
+        if (configFormValues.announcementMessage) {
+            this.snackBarConfig.announcementMessage = configFormValues.announcementMessage;
+        }
+        if (configFormValues.direction) {
+            this.snackBarConfig.direction = configFormValues.direction;
+
+        }
+        if (configFormValues.duration) {
+            this.snackBarConfig.duration = configFormValues.duration;
+
+        }
+        if (configFormValues.horizontalPosition) {
+            this.snackBarConfig.horizontalPosition = configFormValues.horizontalPosition;
+        }
+        if (configFormValues.verticalPosition) {
+            this.snackBarConfig.verticalPosition = configFormValues.verticalPosition;
+        }
+        
+    }
 
     send() {
         this.actionOutput = '';
@@ -41,6 +104,22 @@ export class NotificationsComponent {
                     .subscribe(() => this.actionOutput = 'Action clicked');
             } else {
                 this.notificationService.openSnackMessage(this.message);
+            }
+        }
+    }
+
+    sendCustomConfig() {
+        this.actionOutput = '';
+        console.log(this.snackBarConfig);
+
+        if (this.message) {
+            if (this.withAction) {
+                this.notificationService
+                    .openSnackMessageAction(this.message, 'Some action', this.snackBarConfig )
+                    .onAction()
+                    .subscribe(() => this.actionOutput = 'Action clicked');
+            } else {
+                this.notificationService.openSnackMessage(this.message, this.snackBarConfig);
             }
         }
     }
