@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
-import FileModel = require('./models/ACS/fileModel.js');
+import LoginPage = require('./pages/adf/loginPage');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
+import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
+import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage');
+import FileModel = require('./models/ACS/fileModel');
 
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
-import apps = require('./restAPI/APS/reusableActions/apps');
-import users = require('./restAPI/APS/reusableActions/users');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
+
 import AlfrescoApi = require('alfresco-js-api-node');
+import { UsersActions } from './actions/users.actions';
+import { AppsActions } from './actions/APS/apps.actions';
 
 describe('Attachment list', () => {
 
@@ -43,6 +44,9 @@ describe('Attachment list', () => {
     let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
 
     beforeAll(async (done) => {
+        let users = new UsersActions();
+        let appsActions = new AppsActions();
+
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: TestConfig.adf.url

@@ -14,20 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import AdfSettingsPage = require('./pages/adf/settingsPage.js');
-import LoginPage = require('./pages/adf/loginPage.js');
-import UserInfoDialog = require('./pages/adf/dialog/userInfoDialog.js');
-import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import AdfSettingsPage = require('./pages/adf/settingsPage');
+import LoginPage = require('./pages/adf/loginPage');
+import UserInfoDialog = require('./pages/adf/dialog/userInfoDialog');
+import NavigationBarPage = require('./pages/adf/navigationBarPage');
 
-import AcsUserModel = require('./models/ACS/acsUserModel.js');
-import FileModel = require('./models/ACS/fileModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel');
+import FileModel = require('./models/ACS/fileModel');
 import User = require('./models/APS/User');
 
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-import UserProfileAPI = require('./restAPI/APS/enterprise/UserProfileAPI.js');
+import PeopleAPI = require('./restAPI/ACS/PeopleAPI');
+import UserProfileAPI = require('./restAPI/APS/enterprise/UserProfileAPI');
 
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
 import Tenant = require('./models/APS/Tenant');
 
 import AlfrescoApi = require('alfresco-js-api-node');

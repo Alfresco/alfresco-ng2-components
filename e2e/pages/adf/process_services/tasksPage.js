@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-var Util = require('../../../util/util.js');
-var StartTaskDialog = require('./dialog/startTaskDialog.js');
-var FormFields = require('./formFields.js');
-var TaskDetails = require('./taskDetailsPage.js');
-var FiltersPage = require('./filtersPage.js');
-var ChecklistDialog = require('./dialog/createChecklistDialog.js');
-var TasksListPage = require('./tasksListPage.js');
+var Util = require('../../../util/util');
+var StartTaskDialog = require('./dialog/startTaskDialog');
+var FormFields = require('./formFields');
+var TaskDetails = require('./taskDetailsPage');
+var FiltersPage = require('./filtersPage');
+var ChecklistDialog = require('./dialog/createChecklistDialog');
+var TasksListPage = require('./tasksListPage');
 
 var TasksPage = function () {
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields.js');
+var FormFields = require('../formFields');
 var TestConfig = require('../../../../test.config');
 var path = require('path');
 var Util = require('../../../../util/util');

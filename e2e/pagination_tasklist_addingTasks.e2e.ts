@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import TasksPage = require('./pages/adf/process_services/tasksPage.js');
-import PaginationPage = require('./pages/adf/paginationPage.js');
+import LoginPage = require('./pages/adf/loginPage');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
+import TasksPage = require('./pages/adf/process_services/tasksPage');
+import PaginationPage = require('./pages/adf/paginationPage');
 
 import CONSTANTS = require('./util/constants');
 
@@ -26,8 +26,8 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
 
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
 
 describe('Items per page set to 15 and adding of tasks', () => {
 

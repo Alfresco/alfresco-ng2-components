@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import Util = require('./util/util.js');
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
+import Util = require('./util/util');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
 import CONSTANTS = require('./util/constants');
-import LoginPage = require('./pages/adf/loginPage.js');
-import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import AdfStartProcessPage = require('./pages/adf/process_services/startProcessPage.js');
-import AdfProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
-import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
-import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
+import LoginPage = require('./pages/adf/loginPage');
+import NavigationBarPage = require('./pages/adf/navigationBarPage');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
+import AdfStartProcessPage = require('./pages/adf/process_services/startProcessPage');
+import AdfProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
+import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage');
+import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
+import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage');
 import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 import path = require('path');
 
@@ -35,10 +35,10 @@ import ProcessInstancesAPI = require('./restAPI/APS/enterprise/ProcessInstancesA
 import User = require('./models/APS/User');
 import AppPublish = require('./models/APS/AppPublish');
 import AppDefinition = require('./models/APS/AppDefinition');
-import ProcessModel = require('./models/APS/ProcessModel.js');
+import ProcessModel = require('./models/APS/ProcessModel');
 import Tenant = require('./models/APS/Tenant');
 
-import FileModel = require('./models/ACS/fileModel.js');
+import FileModel = require('./models/ACS/fileModel');
 import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');

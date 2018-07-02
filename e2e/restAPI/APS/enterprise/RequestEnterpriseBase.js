@@ -17,7 +17,7 @@
 
 var url = require('url-join');
 var APIUtils = require('../../../restAPI/APIUtil');
-let CONSTANTS = require('../../../util/constants.js');
+let CONSTANTS = require('../../../util/constants');
 
 var RequestEnterpriseBase = function () {
     var apiUtils = new APIUtils();

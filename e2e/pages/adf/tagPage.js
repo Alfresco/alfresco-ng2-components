@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-var TestConfig = require('../../test.config.js');
-var Util = require('../../util/util.js');
-var ContentList = require('./dialog/contentList.js');
+var TestConfig = require('../../test.config');
+var Util = require('../../util/util');
+var ContentList = require('./dialog/contentList');
 
 var TagPage = function () {
 

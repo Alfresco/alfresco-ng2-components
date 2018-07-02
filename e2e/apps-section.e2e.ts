@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import LoginPage = require('./pages/adf/loginPage');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
+import NavigationBarPage = require('./pages/adf/navigationBarPage');
 
 import CONSTANTS = require('./util/constants');
 
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
 import apps = require('./restAPI/APS/reusableActions/apps');
-import users = require('./restAPI/APS/reusableActions/users');
 
 import AlfrescoApi = require('alfresco-js-api-node');
+import { UsersActions } from './actions/users.actions';
+import { AppsActions } from './actions/APS/apps.actions';
 
 describe('Attachment list', () => {
 
@@ -36,6 +37,9 @@ describe('Attachment list', () => {
     let app = resources.Files.APP_WITH_PROCESSES;
 
     beforeAll(async (done) => {
+        let appsActions = new AppsActions();
+        let users = new UsersActions();
+
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: TestConfig.adf.url

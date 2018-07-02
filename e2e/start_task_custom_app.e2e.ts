@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import TasksPage = require('./pages/adf/process_services/tasksPage.js');
-import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
+import LoginPage = require('./pages/adf/loginPage');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
+import TasksPage = require('./pages/adf/process_services/tasksPage');
+import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage');
 import CONSTANTS = require('./util/constants');
-
-import ModelsAPI = require('./restAPI/APS/enterprise/ModelsAPI');
 
 import Task = require('./models/APS/Task');
 import Tenant = require('./models/APS/Tenant');
@@ -33,8 +31,8 @@ import TaskModel = require('./models/APS/TaskModel');
 import FormModel = require('./models/APS/FormModel');
 import FileModel = require('./models/ACS/fileModel');
 
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
 
 import dateFormat = require('dateformat');
 
@@ -54,7 +52,6 @@ describe('Start Task - Custom App', () => {
     let taskPage = new TasksPage();
     let firstComment = 'comm1', firstChecklist = 'checklist1';
     let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
-    let modelUtils = new ModelsAPI();
     let appModel;
     let jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,

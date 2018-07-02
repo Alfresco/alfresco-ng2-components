@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-var Util = require('../../../util/util.js');
-var ContentList = require('../dialog/contentList.js');
+var Util = require('../../../util/util');
+var ContentList = require('../dialog/contentList');
 
 var FiltersPage = function () {
 

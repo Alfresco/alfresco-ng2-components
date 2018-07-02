@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import TestConfig = require('./test.config.js');
+import TestConfig = require('./test.config');
 import CONSTANTS = require('./util/constants');
-import resources = require('./util/resources.js');
-import LoginPage = require('./pages/adf/loginPage.js');
-import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import AdfStartProcessPage = require('./pages/adf/process_services/startProcessPage.js');
-import AdfProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
-import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
+import resources = require('./util/resources');
+import LoginPage = require('./pages/adf/loginPage');
+import NavigationBarPage = require('./pages/adf/navigationBarPage');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
+import AdfStartProcessPage = require('./pages/adf/process_services/startProcessPage');
+import AdfProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
+import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage');
+import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';

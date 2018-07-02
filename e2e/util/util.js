@@ -23,9 +23,9 @@ var fs = require('fs');
 var FormData = require('form-data');
 var path = require('path');
 var EC = protractor.ExpectedConditions;
-var TestConfig = require('../test.config.js');
+var TestConfig = require('../test.config');
 var moment = require('moment');
-var CONSTANTS = require('./constants.js');
+var CONSTANTS = require('./constants');
 
 /**
  * Provides utility methods used throughout the testing framework.
@@ -35,30 +35,6 @@ var CONSTANTS = require('./constants.js');
 
 // Dynamically load http or https library based on protocol chosen
 var apiRequest = TestConfig.main.protocol !== 'http' ? https : http;
-
-/**
- * Uploads a file to the server using the input parameter and the file location.
- *
- * @param chooseFileButton {protractor.Element}
- * @param inputElement {protractor.Element}
- * @param filePath  {String}
- * @method uploadFile
- */
-exports.uploadFile = function (chooseFileButton, inputElement, filePath) {
-    var absolutePath = path.join(TestConfig.main.rootPath + filePath);
-    var remote = require('selenium-webdriver/remote');
-    browser.setFileDetector(new remote.FileDetector);
-
-    this.waitUntilElementIsVisible(chooseFileButton);
-    // following if condition is not needed for Chorme or FF browser
-    /*if (browser.browserName != "internet explorer") {
-     chooseFileButton.click();
-     }*/
-
-    // need to wait for input to be present, could be visible or not
-    // // console.info("Path: " + absolutePath);
-    inputElement.sendKeys(absolutePath);
-};
 
 /**
  * creates an absolute path string if multiple file uploads are required
@@ -312,127 +288,6 @@ exports.arrayContainsArray = function (superset, subset) {
     }
     return subset.every(function (value) {
         return (superset.indexOf(value) >= 0);
-    });
-};
-
-
-/**
- * Gets the process definitions within an app specified by it's ID. On the callback the response is available as JSON.
- *
- * @param appID {String}
- * @param user {String}
- * @param password {String}
- * @param callback
- * @method getProcessDefinitions
- */
-exports.getProcessDefinitions = function (appID, user, password, callback) {
-    // console.debug("Getting process definitions via API: appID=" + appID + " user=" + user + " password=" + password);
-
-    var options = {
-        host: TestConfig.main.host,
-        port: TestConfig.main.port,
-        path: TestConfig.main.apiContextRoot +
-        '/api/enterprise/process-definitions' + ((appID) ? '?appDefinitionId=' + appID : ''),
-        method: 'GET',
-        rejectUnauthorized: TestConfig.main.rejectUnauthorized,
-
-        headers: {
-            'Authorization': TestConfig.main.basic_authorization(user, password),
-            'Content-Type': 'application/json',
-            'Accept': "application/json"
-        }
-    };
-
-    var req = apiRequest.request(options, function (response) {
-        response.setEncoding('utf8');
-    });
-
-    req.on('response', function (response) {
-
-        var data = "";
-
-        response.on('data', function (chunk) {
-            data += chunk;
-        });
-
-        response.on('end', function () {
-            var json_data = JSON.parse(data);
-            callback(json_data);
-        });
-
-    });
-
-    req.end();
-};
-
-exports.fileExists = function (filePath, retry) {
-    var found = false;
-    while(!found && retry > 0) {
-        // console.log('RETRY:', retry);
-        found = fs.existsSync(filePath);
-        // console.log('FOUND:', found);
-        // console.log('Path:', filePath)
-        retry--;
-    }
-    return found ;
-}
-
-/**
- * Upload file using API
- *
- * @param filePath
- * @param appUrl
- * @param auth
- * @param callback
- * @method uploadFileViaAPI
- */
-exports.uploadFileViaAPI = function (filePath, appUrl, auth, callback) {
-    // console.debug("Upload file via API: filePath=" + filePath + " appUrl=" + appUrl + " auth=" + JSON.stringify(auth));
-
-    var absolutePath = path.join(TestConfig.main.rootPath + filePath);
-
-    var pathSplit = absolutePath.split("/");
-    var fileName = pathSplit[pathSplit.length - 1];
-
-    var form = new FormData();
-    form.append('filename', fileName);
-    form.append('file', fs.createReadStream(absolutePath));
-
-    // form.submit doesn't seem to work (server complains that request is not a multipart request)
-    form.getLength(function (err, length) {
-        var headers = {'Authorization': TestConfig.main.basic_authorization(auth.id, auth.pass)};
-        headers['Content-Length'] = length;
-        headers['Content-Type'] = form.getHeaders()['content-type'];
-
-        var request = apiRequest.request({
-            host: TestConfig.main.host,
-            port: TestConfig.main.port,
-            path: TestConfig.main.apiContextRoot + appUrl,
-            headers: headers,
-            method: 'post',
-            rejectUnauthorized: TestConfig.main.rejectUnauthorized
-        });
-
-        form.pipe(request);
-
-        request.on('response', function (response) {
-            var data = "";
-
-            response.on('data', function (chunk) {
-                data += chunk;
-            });
-
-            response.on('end', function () {
-                if (callback) {
-                    if (data.length > 0) {
-                        return callback(JSON.parse(data), response.statusCode);
-                    } else {
-                        return callback(response.statusCode);
-                    }
-                }
-            });
-        });
-
     });
 };
 
@@ -715,94 +570,6 @@ exports.pressDownArrowAndEnter = function() {
     browser.actions().sendKeys(protractor.Key.ARROW_DOWN).sendKeys(protractor.Key.ENTER).perform();
 };
 
-
-/**
- * Gets the run time app definitions for the current user. On the callback the response is available as JSON.
- *
- * @param user {String}
- * @param password {String}
- * @param callback
- * @method getRunTimeAppDefinitions
- */
-exports.getRunTimeAppDefinitions = function (user, password, callback) {
-    // console.debug("Getting runtime-app-definitions for current user" + " user=" + user + " password=" + password);
-
-    var options = {
-        host: TestConfig.main.host,
-        port: TestConfig.main.port,
-        path: TestConfig.main.apiContextRoot +
-        '/api/enterprise/runtime-app-definitions',
-        method: 'GET',
-        rejectUnauthorized: TestConfig.main.rejectUnauthorized,
-
-        headers: {
-            'Authorization': TestConfig.main.basic_authorization(user, password),
-            'Content-Type': 'application/json',
-            'Accept': "application/json"
-        }
-    };
-
-    var req = apiRequest.request(options, function (response) {
-        response.setEncoding('utf8');
-    });
-
-    req.on('response', function (response) {
-
-        var data = "";
-
-        response.on('data', function (chunk) {
-            data += chunk;
-        });
-
-        response.on('end', function () {
-            var json_data = JSON.parse(data);
-            callback(json_data);
-        });
-
-    });
-
-    req.end();
-
-};
-
-
-/**
- * Replace all occurrences of a pattern, in a String
- *
- * @param originalString - String that will be changed
- * @param find - searched String
- * @param replace - replace with String
- * @returns modified String
- */
-exports.replaceAll = function (originalString, find, replace) {
-    // console.info("Original string: '" + originalString.toString() + "'");
-    // console.info("Find string: '" + find + "' and replace it with: '" + replace + "'");
-    return originalString.toString().replace(new RegExp((find), 'g'), replace);
-};
-
-/**
- * Delete all files with a certain pattern in the name, from a directory
- *
- * @param dirPath - directory absolute path
- * @param pattern - file name pattern
- */
-exports.deleteDirFilesByPattern = function (dirPath, pattern) {
-    // get all file names in the directory
-    fs.readdir(dirPath, function (err, fileNames) {
-        if (err) throw err;
-        fileNames.forEach(function (file) {
-            var match = file.match(new RegExp((pattern)));
-            if (match !== null) {
-                var filePath = path.join(dirPath, file);
-                // console.log("File '" + filePath + "' was found. Pending deletion...");
-                fs.unlink(filePath, function (err) {
-                    if (err) throw err;
-                    // console.info("File '" + filePath + "' was deleted successfully!");
-                });
-            }
-        });
-    });
-};
 
 /**
  * Verify file exists

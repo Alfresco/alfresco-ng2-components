@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-var Util = require('../../../util/util.js');
-var TasksPage = require('./tasksPage.js');
+var Util = require('../../../util/util');
+var TasksPage = require('./tasksPage');
 
 var AppNavigationBarPage = function () {
 

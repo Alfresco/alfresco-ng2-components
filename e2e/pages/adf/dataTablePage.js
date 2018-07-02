@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-var TestConfig = require('../../test.config.js');
-var Util = require('../../util/util.js');
+var TestConfig = require('../../test.config');
+var Util = require('../../util/util');
 
 var DataTablePage = function () {
 

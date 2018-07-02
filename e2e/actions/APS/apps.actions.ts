@@ -1,6 +1,6 @@
 import path = require('path');
 import fs = require('fs');
-import TestConfig = require('../../test.config.js');
+import TestConfig = require('../../test.config');
 import AppPublish = require('../../models/APS/AppPublish');
 
 export class AppsActions {

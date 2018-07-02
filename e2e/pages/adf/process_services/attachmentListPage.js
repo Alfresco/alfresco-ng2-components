@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-var Util = require('../../../util/util.js');
+var Util = require('../../../util/util');
 var TestConfig = require('../../../test.config');
 var path = require('path');
 

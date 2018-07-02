@@ -16,8 +16,8 @@
  */
 
 var Page = require('astrolabe').Page;
-var Util = require('../../util/util.js');
-var documentList = require('./documentListPage.js');
+var Util = require('../../util/util');
+var documentList = require('./documentListPage');
 
 var pdfTitleFromSearch = element(by.css("span[id='adf-viewer-display-name']"));
 var textLayer = element(by.css("div[class='textLayer']"));

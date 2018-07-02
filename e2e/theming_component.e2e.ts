@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import LoginPage = require('./pages/adf/loginPage');
+import NavigationBarPage = require('./pages/adf/navigationBarPage');
 
-import TestConfig = require('./test.config.js');
+import TestConfig = require('./test.config');
 
-import AcsUserModel = require('./models/ACS/acsUserModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel');
 import CONSTANTS = require('./util/constants');
 
 import AlfrescoApi = require('alfresco-js-api-node');

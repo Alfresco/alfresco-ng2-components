@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-var FormDefinitionFieldModel = require('./FormDefinitionFieldModel.js');
+var FormDefinitionFieldModel = require('./FormDefinitionFieldModel');
 
 var FormDefinitionModel = function (fields) {
 

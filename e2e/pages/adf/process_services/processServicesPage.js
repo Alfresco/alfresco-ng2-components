@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-var Util = require('../../../util/util.js');
-var AppNavigationBarPage = require('./appNavigationBarPage.js');
+var Util = require('../../../util/util');
+var AppNavigationBarPage = require('./appNavigationBarPage');
 
 var ProcessServicesPage = function(){
 

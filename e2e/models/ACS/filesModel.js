@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-var FileModel = require('./fileModel.js');
+var FileModel = require('./fileModel');
 
 var FilesModel = function () {
 

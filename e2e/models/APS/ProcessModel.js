@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-var ProcessCreatedByModel = require('./ProcessCreatedByModel.js');
+var ProcessCreatedByModel = require('./ProcessCreatedByModel');
 
 var ProcessModel = function (details) {
 

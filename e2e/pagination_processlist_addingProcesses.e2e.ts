@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import PaginationPage = require('./pages/adf/paginationPage.js');
-import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
+import LoginPage = require('./pages/adf/loginPage');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
+import PaginationPage = require('./pages/adf/paginationPage');
+import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
+import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
 
 import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';

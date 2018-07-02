@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import SearchDialog = require('./pages/adf/dialog/searchDialog.js');
-import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
-import SearchResultPage = require('./pages/adf/searchResultsPage.js');
-import filePreviewPage = require('./pages/adf/filePreviewPage.js');
+import LoginPage = require('./pages/adf/loginPage');
+import SearchDialog = require('./pages/adf/dialog/searchDialog');
+import ContentServicesPage = require('./pages/adf/contentServicesPage');
+import SearchResultPage = require('./pages/adf/searchResultsPage');
+import filePreviewPage = require('./pages/adf/filePreviewPage');
 
-import AcsUserModel = require('./models/ACS/acsUserModel.js');
-import FolderModel = require('./models/ACS/folderModel.js');
-import FileModel = require('./models/ACS/fileModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel');
+import FolderModel = require('./models/ACS/folderModel');
+import FileModel = require('./models/ACS/fileModel');
 
-import TestConfig = require('./test.config.js');
-import Util = require('./util/util.js');
-import resources = require('./util/resources.js');
+import TestConfig = require('./test.config');
+import Util = require('./util/util');
+import resources = require('./util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
