@@ -24,7 +24,6 @@ import FileModel = require('./models/ACS/fileModel');
 import User = require('./models/APS/User');
 
 import PeopleAPI = require('./restAPI/ACS/PeopleAPI');
-import UserProfileAPI = require('./restAPI/APS/enterprise/UserProfileAPI');
 
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');

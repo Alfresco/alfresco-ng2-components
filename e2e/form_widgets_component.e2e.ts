@@ -101,19 +101,19 @@ describe('Form widgets', () => {
             .then(() => {
                 return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
             })
-            .then(function (taskModel) {
-                return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(taskModel.getFormKey());
+            .then(function (response) {
+                return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response.getFormKey());
             })
-            .then(function (formModel) {
+            .then(function (response) {
                 expect(taskPage.usingTaskDetails().getFormName())
-                    .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
+                    .toEqual(response.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : response.getName());
             })
             .then(() => {
                 return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(taskModel.getFormKey());
             })
             .then(function (response) {
-                formInstance.setFields(JSON.parse(response.responseBody).formDefinition.fields);
-                formInstance.setAllWidgets(JSON.parse(response.responseBody).formDefinition.fields);
+                formInstance.setFields(responseformDefinition.fields);
+                formInstance.setAllWidgets(response.formDefinition.fields);
                 return formInstance;
             })
             .then(() => {

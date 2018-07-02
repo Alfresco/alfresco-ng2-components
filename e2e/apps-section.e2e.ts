@@ -23,7 +23,6 @@ import CONSTANTS = require('./util/constants');
 
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
-import apps = require('./restAPI/APS/reusableActions/apps');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from './actions/users.actions';
@@ -37,7 +36,7 @@ describe('Attachment list', () => {
     let app = resources.Files.APP_WITH_PROCESSES;
 
     beforeAll(async (done) => {
-        let appsActions = new AppsActions();
+        let apps = new AppsActions();
         let users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({

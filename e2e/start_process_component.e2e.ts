@@ -28,9 +28,6 @@ import AppNavigationBarPage = require('./pages/adf/process_services/appNavigatio
 import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
 import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage');
 import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
-import path = require('path');
-
-import ProcessInstancesAPI = require('./restAPI/APS/enterprise/ProcessInstancesAPI');
 
 import User = require('./models/APS/User');
 import AppPublish = require('./models/APS/AppPublish');
@@ -193,19 +190,18 @@ describe('Start Process Component', () => {
             .then(() => {
                 adfProcessDetailsPage.getId()
                     .then(function (result) {
-                        return new ProcessInstancesAPI().getProcessInstance(basicAuth2, result);
+                        return this.alfrescoJsApi.activiti.processApi.getProcessInstance(result);
                     })
                     .then(function (response) {
-                        processModel = new ProcessModel(JSON.parse(response.responseBody));
                         expect(adfProcessDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESSSTATUS.RUNNING);
                         expect(adfProcessDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESSENDDATE);
                         expect(adfProcessDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESSCATEGORY);
                         expect(adfProcessDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESSBUSINESSKEY);
-                        expect(adfProcessDetailsPage.getCreatedBy()).toEqual(processModel.getStartedBy().getEntireName());
+                        expect(adfProcessDetailsPage.getCreatedBy()).toEqual(response.getStartedBy().getEntireName());
                         expect(adfProcessDetailsPage.getCreated()).toEqual(dateFormat(CONSTANTS.PROCESSDATEFORMAT));
-                        expect(adfProcessDetailsPage.getId()).toEqual(processModel.getId());
+                        expect(adfProcessDetailsPage.getId()).toEqual(response.getId());
                         expect(adfProcessDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESSDESCRIPTION);
-                        expect(adfProcessDetailsPage.checkProcessTitleIsDisplayed()).toEqual(processModel.getName());
+                        expect(adfProcessDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.getName());
                     });
             });
     });
