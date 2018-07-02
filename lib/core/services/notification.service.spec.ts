@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /*tslint:disable:ban*/
+
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { OVERLAY_PROVIDERS, OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
@@ -35,8 +37,13 @@ class ProvidesNotificationServiceComponent {
 
     }
 
+    sendMessageWithoutConfig() {
+        let promise = this.notificationService.openSnackMessage('Test notification');
+        return promise;
+    }
+
     sendMessage() {
-        let promise = this.notificationService.openSnackMessage('Test notification', 5000);
+        let promise = this.notificationService.openSnackMessage('Test notification', 1000);
         return promise;
     }
 
@@ -45,8 +52,13 @@ class ProvidesNotificationServiceComponent {
         return promise;
     }
 
+    sendMessageActionWithoutConfig() {
+        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn');
+        return promise;
+    }
+
     sendMessageAction() {
-        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 5000);
+        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
         return promise;
     }
 
@@ -57,7 +69,7 @@ class ProvidesNotificationServiceComponent {
 
 }
 
-describe('NotificationService', () => {
+fdescribe('NotificationService', () => {
     let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
     let translationService: TranslationService;
 
@@ -109,6 +121,17 @@ describe('NotificationService', () => {
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
+    it('should open a message notification bar without custom configuration',  async((done) => {
+        let promise = fixture.componentInstance.sendMessageWithoutConfig();
+        promise.afterDismissed().subscribe(() => {
+            done();
+        });
+
+        fixture.detectChanges();
+
+        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+    }));
+
     it('should open a message notification bar with custom configuration', async((done) => {
         let promise = fixture.componentInstance.sendCustomMessage();
         promise.afterDismissed().subscribe(() => {
@@ -133,6 +156,17 @@ describe('NotificationService', () => {
 
     it('should open a message notification bar with action and custom configuration', async((done) => {
         let promise = fixture.componentInstance.sendCustomMessageAction();
+        promise.afterDismissed().subscribe(() => {
+            done();
+        });
+
+        fixture.detectChanges();
+
+        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+    }));
+
+    it('should open a message notification bar with action and no custom configuration',  async((done) => {
+        let promise = fixture.componentInstance.sendMessageActionWithoutConfig();
         promise.afterDismissed().subscribe(() => {
             done();
         });
