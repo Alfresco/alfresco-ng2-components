@@ -57,3 +57,4 @@ import { HeaderLayoutComponent } from './components/header/header.component';
     ]
 })
 export class LayoutModule {}
+export { LayoutModule as SidenavLayoutModule };
