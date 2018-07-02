@@ -198,7 +198,10 @@
         "supportedPageSizes": [ 5, 10, 15, 20 ]
     },
     "files": {
-        "excluded": [".DS_Store", "desktop.ini", ".git"]
+        "excluded": [".DS_Store", "desktop.ini", ".git"],
+        "match-options": {
+          "nocase": true
+        }
     },
     "logLevel": "trace",
     "activiti": {

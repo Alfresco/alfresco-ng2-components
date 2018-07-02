@@ -61,6 +61,9 @@ The configuration of this service is saved in the `app.config.json` file
 The example below shows how to filter out the : '.git', '.DS_Store' and 'desktop.ini' files.
 Each element of the ignore list is a glob pattern string, so you could exclude all the `.txt`
 files, for example, by adding a `*.txt` pattern to the list.
+There is also the possibility to add some more option to how perform the check via the `match-options` parameter.
+For example in this case we have added the ignore case so `*.TXT` will match all the txt files ignoring the case for the extension.
+For more information about the options available please check [minimatch](https://www.npmjs.com/package/minimatch#options) documentation.
 
 **app.config.json**
 
@@ -72,7 +75,10 @@ files, for example, by adding a `*.txt` pattern to the list.
         "name": "Alfresco"
     },
     "files": {
-          "excluded": [".DS_Store", "desktop.ini", ".git", "*.txt"]
+          "excluded": [".DS_Store", "desktop.ini", ".git", "*.txt"],
+          "match-options": {
+            "nocase": true
+          }
     }
 }
 ```
