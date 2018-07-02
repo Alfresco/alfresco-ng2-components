@@ -68,7 +68,7 @@ export class NotificationsComponent implements OnInit {
         .subscribe(configFormValues =>
             this.setSnackBarConfig(configFormValues)
         );
-        
+
     }
 
     setSnackBarConfig(configFormValues: any) {
@@ -90,7 +90,7 @@ export class NotificationsComponent implements OnInit {
         if (configFormValues.verticalPosition) {
             this.snackBarConfig.verticalPosition = configFormValues.verticalPosition;
         }
-        
+
     }
 
     send() {
