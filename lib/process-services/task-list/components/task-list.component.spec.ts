@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/*tslint:disable:ban */
+
 import { Component, SimpleChange, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -188,6 +190,32 @@ describe('TaskListComponent', () => {
 
         component.ngAfterContentInit();
         component.ngOnChanges({ 'state': state, 'processInstanceId': processInstanceId, 'assignment': assignment });
+        fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeGlobalTask)
+        });
+    });
+
+    it('should return the filtered task list by processDefinitionId', (done) => {
+        let state = new SimpleChange(null, 'open', true);
+        let processDefinitionId = new SimpleChange(null, 'fakeprocessDefinitionId', true);
+        let assignment = new SimpleChange(null, 'fake-assignee', true);
+
+        component.success.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.rows).toBeDefined();
+            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('nameFake1');
+            expect(component.rows[0]['processDefinitionId']).toEqual('myprocess:1:4');
+            done();
+        });
+
+        component.ngAfterContentInit();
+        component.ngOnChanges({ 'state': state, 'processDefinitionId': processDefinitionId, 'assignment': assignment });
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
