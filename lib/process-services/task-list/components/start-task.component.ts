@@ -26,6 +26,8 @@ import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
+import { FormFieldModel } from '../../../core/form/components/widgets/core/form-field.model';
+import { FormModel } from '../../../core/form/components/widgets/core/form.model';
 
 @Component({
     selector: 'adf-start-task',
@@ -68,6 +70,8 @@ export class StartTaskComponent implements OnInit {
 
     dateError: boolean;
 
+    field: FormFieldModel;
+
     /**
      * Constructor
      * @param auth
@@ -81,6 +85,7 @@ export class StartTaskComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.field = new FormFieldModel(new FormModel(), {id: 'fakeId', value: 'fakeValue', placeholder: 'Assignee'});
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
