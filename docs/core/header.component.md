@@ -27,13 +27,14 @@ Reuseble header for Alfresco applications
 | Name | Type | Description |
 | -- | -- | -- |
 | title | string |  Title of the application
-| logo | string| Path to an image file for the application logo. Is optional.
+| logo | string| Path to an image file for the application logo.
 | color | string | Primary color for the header
+| showSidenavToggle | boolean | Signals if the sidenav button will be displayed in the header or not. By default is true.
 
 ### Events
 | Name | Type | Description |
 | -- | -- | -- |
-| toggled | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the menu toggle 
+| clicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when click on sidenav button
 
 ## Details
 This component displays a customizable header which can be reused. The left side of the header (title, button) and the primary color for the header can be configured via input parameters. 
