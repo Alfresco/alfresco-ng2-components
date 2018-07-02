@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import AdfSettingsPage = require('./pages/adf/settingsPage.js');
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import UserInfoDialog = require('./pages/adf/dialog/userInfoDialog.js');
 import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
@@ -36,7 +36,7 @@ import { UsersActions } from './actions/users.actions';
 describe('Test User Info component', () => {
 
     let adfSettingsPage = new AdfSettingsPage();
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();
     let userInfoDialog = new UserInfoDialog();
     let processUserModel, contentUserModel;
@@ -77,9 +77,9 @@ describe('Test User Info component', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(contentUserModel);
 
-        adfLoginPage.goToLoginPage();
+        loginPage.goToLoginPage();
         adfSettingsPage.setProviderEcmBpm();
-        adfLoginPage.login(contentUserModel.id, contentUserModel.password);
+        loginPage.login(contentUserModel.id, contentUserModel.password);
 
         done();
     });
@@ -115,7 +115,7 @@ describe('Test User Info component', () => {
     it('2. Enable Content Services and disable Process Services ', () => {
         navigationBarPage.clickLoginButton();
         adfSettingsPage.setProviderEcm();
-        adfLoginPage.login(contentUserModel.id, contentUserModel.password);
+        loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
         userInfoDialog.dialogIsDisplayed().contentServicesTabIsNotDisplayed().processServicesTabIsNotDisplayed();
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
@@ -133,7 +133,7 @@ describe('Test User Info component', () => {
 
         adfSettingsPage.setProviderBpm();
 
-        adfLoginPage.login(processUserModel.email, processUserModel.password);
+        loginPage.login(processUserModel.email, processUserModel.password);
 
         navigationBarPage.clickUserProfile();
 
@@ -159,7 +159,7 @@ describe('Test User Info component', () => {
 
         navigationBarPage.clickLoginButton();
         adfSettingsPage.setProviderEcm();
-        adfLoginPage.login(contentUserModel.id, contentUserModel.password);
+        loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
         userInfoDialog.checkACSProfileImage();
         userInfoDialog.APSProfileImageNotDisplayed();
@@ -174,7 +174,7 @@ describe('Test User Info component', () => {
         await users.changeProfilePictureAps(this.alfrescoJsApi, apsAvatarFileModel.getLocation());
 
         adfSettingsPage.setProviderBpm();
-        adfLoginPage.login(processUserModel.email, processUserModel.password);
+        loginPage.login(processUserModel.email, processUserModel.password);
         navigationBarPage.clickUserProfile();
         userInfoDialog.checkAPSProfileImage();
         userInfoDialog.ACSProfileImageNotDisplayed();
@@ -186,7 +186,7 @@ describe('Test User Info component', () => {
         navigationBarPage.clickLoginButton();
         PeopleAPI.deleteAvatarViaAPI(contentUserModel, '-me-');
         adfSettingsPage.setProviderEcm();
-        adfLoginPage.login(contentUserModel.id, contentUserModel.password);
+        loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();

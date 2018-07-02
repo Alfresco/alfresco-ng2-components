@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
 import AdfViewerPage = require('./pages/adf/viewerPage.js');
 
@@ -32,7 +32,7 @@ import { UploadActions } from './actions/ACS/upload.actions';
 
 describe('Metadata component', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let adfViewerPage = new AdfViewerPage();
     let cardViewPage;
@@ -58,7 +58,7 @@ describe('Metadata component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.goToDocumentList();
 

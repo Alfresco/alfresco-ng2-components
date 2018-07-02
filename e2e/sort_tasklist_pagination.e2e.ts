@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import TasksPage = require('./pages/adf/process_services/tasksPage.js');
 import PaginationPage = require('./pages/adf/paginationPage.js');
@@ -32,7 +32,7 @@ import { UsersActions } from './actions/users.actions';
 
 describe('Task List Pagination - Sorting', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
     let paginationPage = new PaginationPage();
@@ -72,7 +72,7 @@ describe('Task List Pagination - Sorting', () => {
             this.alfrescoJsApi.activiti.taskApi.createNewTask({name: taskNames[i]});
         }
 
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
 
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
@@ -31,7 +31,7 @@ import { UploadActions } from './actions/ACS/upload.actions';
 
 describe('Test DocumentList component', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
 
     let acsUser = new AcsUserModel();
@@ -84,7 +84,7 @@ describe('Test DocumentList component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
         await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
-import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
 import TestConfig = require('./test.config.js');
 
@@ -27,8 +27,8 @@ import AlfrescoApi = require('alfresco-js-api-node');
 
 describe('Test Theming component', () => {
 
-    let adfNavigationBarPage = new AdfNavigationBarPage();
-    let adfLoginPage = new AdfLoginPage();
+    let navigationBarPage = new NavigationBarPage();
+    let loginPage = new LoginPage();
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
@@ -49,29 +49,29 @@ describe('Test Theming component', () => {
     });
 
     it('Theming component', () => {
-        adfLoginPage.goToLoginPage();
-        adfLoginPage.waitForElements();
-        adfLoginPage.getShowPasswordIconColor().then(function (value) {
+        loginPage.goToLoginPage();
+        loginPage.waitForElements();
+        loginPage.getShowPasswordIconColor().then(function (value) {
             expect(value).toEqual(CONSTANTS.THEMING.DEFAULT_PASSWORD_ICON_COLOR);
         });
-        adfLoginPage.getSignInButtonColor().then(function (value) {
+        loginPage.getSignInButtonColor().then(function (value) {
             expect(value).toEqual(CONSTANTS.THEMING.DEFAULT_LOGIN_BUTTON_COLOR);
         });
-        adfLoginPage.getBackgroundColor().then(function (value) {
+        loginPage.getBackgroundColor().then(function (value) {
             expect(value).toEqual(CONSTANTS.THEMING.DEFAULT_BACKGROUND_COLOR);
         });
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
-        adfNavigationBarPage.clickThemeButton();
-        adfNavigationBarPage.clickOnSpecificThemeButton(CONSTANTS.THEMING.PINK_BLUE_DARK);
-        adfNavigationBarPage.clickLoginButton();
-        adfLoginPage.waitForElements();
-        adfLoginPage.enterUsername(acsUser.email);
-        adfLoginPage.enterPassword(acsUser.password);
-        expect(adfLoginPage.getShowPasswordIconColor()).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_PASSWORD_ICON_COLOR);
-        adfLoginPage.getSignInButtonColor().then(function (value) {
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        navigationBarPage.clickThemeButton();
+        navigationBarPage.clickOnSpecificThemeButton(CONSTANTS.THEMING.PINK_BLUE_DARK);
+        navigationBarPage.clickLoginButton();
+        loginPage.waitForElements();
+        loginPage.enterUsername(acsUser.email);
+        loginPage.enterPassword(acsUser.password);
+        expect(loginPage.getShowPasswordIconColor()).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_PASSWORD_ICON_COLOR);
+        loginPage.getSignInButtonColor().then(function (value) {
             expect(value).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_LOGIN_BUTTON_COLOR);
         });
-        adfLoginPage.getBackgroundColor().then(function (value) {
+        loginPage.getBackgroundColor().then(function (value) {
             expect(value).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_BACKGROUND_COLOR);
         });
     });

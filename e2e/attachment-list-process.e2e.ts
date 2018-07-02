@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
 import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
@@ -29,7 +29,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 
 describe('Attachment list', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let attachmentListPage = new AttachmentListPage();
     let processFiltersPage = new ProcessFiltersPage();
@@ -56,7 +56,7 @@ describe('Attachment list', () => {
 
         await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        await adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

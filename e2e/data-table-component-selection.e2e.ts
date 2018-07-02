@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import DataTablePage = require('./pages/adf/dataTablePage.js');
 import TestConfig = require('./test.config.js');
 
@@ -26,7 +26,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 describe('Test Datatable component - selection', () => {
 
     let dataTablePage = new DataTablePage();
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let acsUser = new AcsUserModel();
 
     beforeAll(async (done) => {
@@ -39,7 +39,7 @@ describe('Test Datatable component - selection', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         dataTablePage.goToDatatable();
 

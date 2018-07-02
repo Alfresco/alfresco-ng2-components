@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import TasksPage = require('./pages/adf/process_services/tasksPage.js');
 import UsingWidget = require('./pages/adf/process_services/widgets/usingWidget.js');
@@ -51,7 +51,7 @@ import { AppsActions } from './actions/APS/apps.actions';
 
 describe('Form widgets', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     let basicAuth, processUserModel;
@@ -97,7 +97,7 @@ describe('Form widgets', () => {
     });
 
     it('Check text, multiline widgets - label, value and displayed', () => {
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToApp(appModel.name)
             .clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);

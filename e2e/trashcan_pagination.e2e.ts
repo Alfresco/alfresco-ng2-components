@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import TrashcanPage = require('./pages/adf/trashcanPage.js');
 import PaginationPage = require('./pages/adf/paginationPage.js');
 import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
@@ -48,7 +48,7 @@ describe('Trashcan - Pagination', () => {
         default: '25'
     };
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let trashcanPage = new TrashcanPage();
     let paginationPage = new PaginationPage();
     let navigationBarPage = new NavigationBarPage();
@@ -76,7 +76,7 @@ describe('Trashcan - Pagination', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 

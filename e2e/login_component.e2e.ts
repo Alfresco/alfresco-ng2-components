@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import AdfContentServicesPage = require('./pages/adf/contentServicesPage.js');
-import AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
 import TestConfig = require('./test.config.js');
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
@@ -28,10 +28,10 @@ import AdfSettingsPage = require('./pages/adf/settingsPage.js');
 describe('Test Login component', () => {
 
     let adfSettingsPage = new AdfSettingsPage();
-    let adfProcessServicesPage = new AdfProcessServicesPage();
-    let adfNavigationBarPage = new AdfNavigationBarPage();
+    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let adfContentServicesPage = new AdfContentServicesPage();
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
@@ -50,107 +50,107 @@ describe('Test Login component', () => {
     });
 
     it('1. Username Required', () => {
-        adfLoginPage.checkUsernameInactive();
-        adfLoginPage.checkSignInButtonIsDisabled();
-        adfLoginPage.enterUsername('A');
-        adfLoginPage.checkUsernameTooltip(errorMessages.username);
-        adfLoginPage.clearUsername();
-        adfLoginPage.checkUsernameTooltip(errorMessages.required);
-        adfLoginPage.checkUsernameHighlighted();
-        adfLoginPage.checkSignInButtonIsDisabled();
+        loginPage.checkUsernameInactive();
+        loginPage.checkSignInButtonIsDisabled();
+        loginPage.enterUsername('A');
+        loginPage.checkUsernameTooltip(errorMessages.username);
+        loginPage.clearUsername();
+        loginPage.checkUsernameTooltip(errorMessages.required);
+        loginPage.checkUsernameHighlighted();
+        loginPage.checkSignInButtonIsDisabled();
     });
 
     it('2. Enter Password to sign in', () => {
-        adfLoginPage.checkPasswordInactive();
-        adfLoginPage.checkSignInButtonIsDisabled();
-        adfLoginPage.enterPassword('A');
-        adfLoginPage.checkPasswordTooltipIsNotVisible();
-        adfLoginPage.clearPassword();
-        adfLoginPage.checkPasswordTooltip(errorMessages.password);
-        adfLoginPage.checkPasswordHighlighted();
-        adfLoginPage.checkSignInButtonIsDisabled();
+        loginPage.checkPasswordInactive();
+        loginPage.checkSignInButtonIsDisabled();
+        loginPage.enterPassword('A');
+        loginPage.checkPasswordTooltipIsNotVisible();
+        loginPage.clearPassword();
+        loginPage.checkPasswordTooltip(errorMessages.password);
+        loginPage.checkPasswordHighlighted();
+        loginPage.checkSignInButtonIsDisabled();
     });
 
     it('3. Username must be at least 2 characters long', () => {
-        adfLoginPage.checkSignInButtonIsDisabled();
-        adfLoginPage.enterUsername('A');
-        adfLoginPage.checkUsernameTooltip(errorMessages.username);
-        adfLoginPage.enterUsername('AB');
-        adfLoginPage.checkUsernameTooltipIsNotVisible();
-        adfLoginPage.checkSignInButtonIsDisabled();
-        adfLoginPage.clearUsername();
+        loginPage.checkSignInButtonIsDisabled();
+        loginPage.enterUsername('A');
+        loginPage.checkUsernameTooltip(errorMessages.username);
+        loginPage.enterUsername('AB');
+        loginPage.checkUsernameTooltipIsNotVisible();
+        loginPage.checkSignInButtonIsDisabled();
+        loginPage.clearUsername();
     });
 
     it('4. Login button is enabled', () => {
-        adfLoginPage.enterUsername(adminUserModel.id);
-        adfLoginPage.checkSignInButtonIsDisabled();
-        adfLoginPage.enterPassword('a');
-        adfLoginPage.checkSignInButtonIsEnabled();
-        adfLoginPage.clearUsername(adminUserModel.id);
-        adfLoginPage.clearPassword();
+        loginPage.enterUsername(adminUserModel.id);
+        loginPage.checkSignInButtonIsDisabled();
+        loginPage.enterPassword('a');
+        loginPage.checkSignInButtonIsEnabled();
+        loginPage.clearUsername(adminUserModel.id);
+        loginPage.clearPassword();
     });
 
     it('5. You have entered an invalid username or password', () => {
-        adfLoginPage.checkSignInButtonIsDisabled();
-        adfLoginPage.enterUsername('test');
-        adfLoginPage.enterPassword('test');
-        adfLoginPage.checkSignInButtonIsEnabled();
-        adfLoginPage.clickSignInButton();
-        adfLoginPage.checkLoginError(errorMessages.invalid_credentials);
-        adfLoginPage.clearUsername();
-        adfLoginPage.clearPassword();
+        loginPage.checkSignInButtonIsDisabled();
+        loginPage.enterUsername('test');
+        loginPage.enterPassword('test');
+        loginPage.checkSignInButtonIsEnabled();
+        loginPage.clickSignInButton();
+        loginPage.checkLoginError(errorMessages.invalid_credentials);
+        loginPage.clearUsername();
+        loginPage.clearPassword();
     });
 
     it('6. Password field is crypted', () => {
-        adfLoginPage.checkSignInButtonIsDisabled();
-        adfLoginPage.enterPassword('test');
-        adfLoginPage.showPassword();
-        adfLoginPage.checkPasswordIsShown('test');
-        adfLoginPage.hidePassword();
-        adfLoginPage.checkPasswordIsHidden();
-        adfLoginPage.clearPassword();
+        loginPage.checkSignInButtonIsDisabled();
+        loginPage.enterPassword('test');
+        loginPage.showPassword();
+        loginPage.checkPasswordIsShown('test');
+        loginPage.hidePassword();
+        loginPage.checkPasswordIsHidden();
+        loginPage.clearPassword();
     });
 
     it('7. Remember  Need Help? and Register are displayed and hidden', () => {
-        adfLoginPage.enableFooter();
-        adfLoginPage.checkRememberIsDisplayed();
-        adfLoginPage.checkNeedHelpIsDisplayed();
-        adfLoginPage.checkRegisterDisplayed();
-        adfLoginPage.disableFooter();
-        adfLoginPage.checkRememberIsNotDisplayed();
-        adfLoginPage.checkNeedHelpIsNotDisplayed();
-        adfLoginPage.checkRegisterIsNotDisplayed();
+        loginPage.enableFooter();
+        loginPage.checkRememberIsDisplayed();
+        loginPage.checkNeedHelpIsDisplayed();
+        loginPage.checkRegisterDisplayed();
+        loginPage.disableFooter();
+        loginPage.checkRememberIsNotDisplayed();
+        loginPage.checkNeedHelpIsNotDisplayed();
+        loginPage.checkRegisterIsNotDisplayed();
     });
 
     it('8. Login to Process Services with Content Services disabled', () => {
-        adfLoginPage.checkSignInButtonIsDisabled();
+        loginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderBpm();
-        adfLoginPage.login(adminUserModel.id, adminUserModel.password);
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfNavigationBarPage.clickContentServicesButton();
-        adfLoginPage.waitForElements();
+        loginPage.login(adminUserModel.id, adminUserModel.password);
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        navigationBarPage.clickContentServicesButton();
+        loginPage.waitForElements();
     });
 
     it('9. Login to Content Services with Process Services disabled', () => {
-        adfLoginPage.checkSignInButtonIsDisabled();
+        loginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderEcm();
-        adfLoginPage.login(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
-        adfNavigationBarPage.clickContentServicesButton();
+        loginPage.login(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
+        navigationBarPage.clickContentServicesButton();
         adfContentServicesPage.checkAcsContainer();
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfLoginPage.waitForElements();
+        navigationBarPage.clickProcessServicesButton();
+        loginPage.waitForElements();
     });
 
     it('10. Able to login to both Content Services and Process Services', () => {
-        adfLoginPage.checkSignInButtonIsDisabled();
+        loginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderEcmBpm();
-        adfLoginPage.login(adminUserModel.id, adminUserModel.password);
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfNavigationBarPage.clickContentServicesButton();
+        loginPage.login(adminUserModel.id, adminUserModel.password);
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        navigationBarPage.clickContentServicesButton();
         adfContentServicesPage.checkAcsContainer();
-        adfNavigationBarPage.clickLoginButton();
-        adfLoginPage.waitForElements();
+        navigationBarPage.clickLoginButton();
+        loginPage.waitForElements();
     });
 });

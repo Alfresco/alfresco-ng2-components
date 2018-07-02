@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import PaginationPage = require('./pages/adf/paginationPage.js');
 import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
@@ -47,7 +47,7 @@ describe('Test Process List - Pagination', function () {
 
     let processFilterRunning = 'Running';
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let paginationPage = new PaginationPage();
     let processFiltersPage = new ProcessFiltersPage();
@@ -81,7 +81,7 @@ describe('Test Process List - Pagination', function () {
             await apps.startProcess(this.alfrescoJsApi, resultApp);
         }
 
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });
@@ -92,7 +92,7 @@ describe('Test Process List - Pagination', function () {
         paginationPage.checkPaginationIsNotDisplayed();
         navigationBarPage.clickLogoutButton();
 
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         totalPages = 1;
         page = 1;
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
@@ -141,7 +141,7 @@ describe('Test Process List - Pagination', function () {
 
         navigationBarPage.clickLogoutButton();
         page = 1;
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
@@ -185,7 +185,7 @@ describe('Test Process List - Pagination', function () {
 
         navigationBarPage.clickLogoutButton();
         page = 1;
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
@@ -216,7 +216,7 @@ describe('Test Process List - Pagination', function () {
         paginationPage.checkPreviousPageButtonIsDisabled();
 
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
@@ -284,7 +284,7 @@ describe('Test Process List - Pagination', function () {
 
         navigationBarPage.clickLogoutButton();
         page = 1;
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilterRunning);

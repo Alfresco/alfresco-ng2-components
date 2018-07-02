@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
 import PaginationPage = require('./pages/adf/paginationPage.js');
 
@@ -30,7 +30,7 @@ import { UploadActions } from './actions/ACS/upload.actions';
 
 describe('Pagination - returns to previous page when current is empty', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let paginationPage = new PaginationPage();
 
@@ -67,7 +67,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.goToDocumentList();
 
