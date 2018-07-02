@@ -411,8 +411,8 @@ describe('Custom CustomEmptyAppListTemplateComponent', () => {
 
 @Component({
     template: `
-    <adf-apps #appList>
-        <data-columns>
+    <adf-apps class="adf-apps" #appList>
+        <data-columns class="data-columns">
             <data-column key="name" title="ADF_APPS_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
             <data-column key="deploymentId" title="ADF_APPS_LIST.PROPERTIES.ID"></data-column>
             <data-column key="action" title="Action"></data-column>
@@ -431,8 +431,10 @@ describe('CustomAppsListComponent', () => {
     let component: CustomAppsListComponent;
 
     setupTestBed({
-        imports: [CoreModule],
-        declarations: [AppsListComponent, CustomAppsListComponent]
+        imports: [ProcessTestingModule],
+        declarations: [CustomAppsListComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+
     });
 
     beforeEach(() => {
@@ -445,11 +447,13 @@ describe('CustomAppsListComponent', () => {
         expect(component instanceof CustomAppsListComponent).toBe(true, 'should create CustomAppsListComponent');
     });
 
-    it('should fetch custom schemaColumn from html', () => {
+    it('should render the applist', async(() => {
         fixture.detectChanges();
-        expect(component.appList.columnList).toBeDefined();
-        expect(component.appList.columns[0]['title']).toEqual('ADF_APPS_LIST.PROPERTIES.NAME');
-        expect(component.appList.columns[1]['title']).toEqual('ADF_APPS_LIST.PROPERTIES.ID');
-        expect(component.appList.columns.length).toEqual(3);
-    });
+        fixture.whenStable().then(() => {
+            let adfApps: any = fixture.debugElement.queryAll(By.css('.adf-apps'));
+            let dataColumns: any = fixture.debugElement.queryAll(By.css('.data-columns'));
+            expect(adfApps).toBeDefined();
+            expect(dataColumns).toBeDefined();
+        });
+    }));
 });
