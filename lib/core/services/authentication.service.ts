@@ -26,6 +26,7 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { UserRepresentation } from 'alfresco-js-api';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
@@ -54,6 +55,18 @@ export class AuthenticationService {
 
     isOauth(): boolean {
         return this.alfrescoApi.getInstance().isOauthConfiguration();
+    }
+
+    isECMProvider(): boolean {
+        return this.alfrescoApi.getInstance().isEcmConfiguration();
+    }
+
+    isBPMProvider(): boolean {
+        return this.alfrescoApi.getInstance().isBpmConfiguration();
+    }
+
+    isALLProvider(): boolean {
+        return this.alfrescoApi.getInstance().isEcmBpmConfiguration();
     }
 
     /**
@@ -112,8 +125,6 @@ export class AuthenticationService {
      * @returns Response event called when logout is complete
      */
     logout() {
-        this.alfrescoApi.getInstance().invalidateSession();
-
         return Observable.fromPromise(this.callApiLogout())
             .do(response => {
                 this.onLogout.next(response);
@@ -164,10 +175,13 @@ export class AuthenticationService {
      * @returns True if logged in, false otherwise
      */
     isEcmLoggedIn(): boolean {
-        if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
-            return false;
+        if (this.isECMProvider() || this.isALLProvider()) {
+            if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
+                return false;
+            }
+            return this.alfrescoApi.getInstance().isEcmLoggedIn();
         }
-        return this.alfrescoApi.getInstance().isEcmLoggedIn();
+        return false;
     }
 
     /**
@@ -175,10 +189,13 @@ export class AuthenticationService {
      * @returns True if logged in, false otherwise
      */
     isBpmLoggedIn(): boolean {
-        if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
-            return false;
+        if (this.isBPMProvider() || this.isALLProvider()) {
+            if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
+                return false;
+            }
+            return this.alfrescoApi.getInstance().isBpmLoggedIn();
         }
-        return this.alfrescoApi.getInstance().isBpmLoggedIn();
+        return false;
     }
 
     /**
@@ -210,6 +227,10 @@ export class AuthenticationService {
      */
     getRedirect(provider: string): string {
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
+    }
+
+    getBpmLoggedUser(): Observable<UserRepresentation> {
+        return Observable.fromPromise(this.alfrescoApi.getInstance().activiti.profileApi.getProfile());
     }
 
     private hasValidRedirection(provider: string): boolean {

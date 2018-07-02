@@ -19,7 +19,9 @@ import { Injectable, Type } from '@angular/core';
 import { CardViewDateItemComponent } from '../components/card-view-dateitem/card-view-dateitem.component';
 import { CardViewMapItemComponent } from '../components/card-view-mapitem/card-view-mapitem.component';
 import { CardViewTextItemComponent } from '../components/card-view-textitem/card-view-textitem.component';
+import { CardViewSelectItemComponent } from '../components/card-view-selectitem/card-view-selectitem.component';
 import { CardViewBoolItemComponent } from '../components/card-view-boolitem/card-view-boolitem.component';
+import { CardViewKeyValuePairsItemComponent } from '../components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
 import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services/dynamic-component-mapper.service';
 
 @Injectable()
@@ -29,11 +31,13 @@ export class CardItemTypeService extends DynamicComponentMapper {
 
     protected types: { [key: string]: DynamicComponentResolveFunction } = {
         'text': DynamicComponentResolver.fromType(CardViewTextItemComponent),
+        'select': DynamicComponentResolver.fromType(CardViewSelectItemComponent),
         'int': DynamicComponentResolver.fromType(CardViewTextItemComponent),
         'float': DynamicComponentResolver.fromType(CardViewTextItemComponent),
         'date': DynamicComponentResolver.fromType(CardViewDateItemComponent),
         'datetime': DynamicComponentResolver.fromType(CardViewDateItemComponent),
         'bool': DynamicComponentResolver.fromType(CardViewBoolItemComponent),
-        'map': DynamicComponentResolver.fromType(CardViewMapItemComponent)
+        'map': DynamicComponentResolver.fromType(CardViewMapItemComponent),
+        'keyvaluepairs': DynamicComponentResolver.fromType(CardViewKeyValuePairsItemComponent)
     };
 }

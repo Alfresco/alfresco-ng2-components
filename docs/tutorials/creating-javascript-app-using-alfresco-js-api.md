@@ -20,11 +20,11 @@ The only prerequisite of this tutorial is that an instance of Alfresco Content S
 but its simplicity allows us to focus more on the development of the environment setup.
 
 If you don't have an instance of Alfresco Content Services up and running, see
-[Preparing the development environment](./preparing-the-development-environment.html)
+[Preparing the development environment](./preparing-environment.md)
 to learn how to set it up.
 
 You will need the `npm` client to download the requested Node libraries (also explained in
-[Preparing the development environment](./preparing-the-development-environment.html)).
+[Preparing the development environment](./preparing-environment.md)).
 
 ## Creating the JavaScript application
 

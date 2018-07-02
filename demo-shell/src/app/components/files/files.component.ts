@@ -474,6 +474,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     }
 
+    closeStartProcess() {
+        this.processId = null;
+    }
+
     onChangePageSize(event: Pagination): void {
         this.preference.paginationSize = event.maxItems;
         this.changedPageSize.emit(event);

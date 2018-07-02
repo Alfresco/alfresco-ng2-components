@@ -283,7 +283,8 @@
       "EVERYONE" : "EVERYONE"
     },
     "ERROR": {
-      "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}"
+      "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}",
+      "NOT-ALLOWED": "You are not allowed to change permissions"
     }
   }
 }

@@ -22,6 +22,7 @@ import { CookieService } from './cookie.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { UserRepresentation } from 'alfresco-js-api';
 
 declare let jasmine: any;
 
@@ -129,6 +130,7 @@ describe('AuthenticationService', () => {
         it('should require remember me set for ECM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(true);
             spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(authService, 'isECMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
             spyOn(apiService, 'getInstance').and.callThrough();
 
@@ -139,6 +141,7 @@ describe('AuthenticationService', () => {
         it('should not require cookie service enabled for ECM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(false);
             spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(authService, 'isECMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
             spyOn(apiService, 'getInstance').and.callThrough();
 
@@ -220,6 +223,22 @@ describe('AuthenticationService', () => {
 
             expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
         });
+
+        it('[ECM] should return isECMProvider true', () => {
+            expect(authService.isECMProvider()).toBe(true);
+        });
+
+        it('[ECM] should return isBPMProvider false', () => {
+            expect(authService.isBPMProvider()).toBe(false);
+        });
+
+        it('[ECM] should return isALLProvider false', () => {
+            expect(authService.isALLProvider()).toBe(false);
+        });
+
+        it('[ECM] should return isBpmLoggedIn false', () => {
+            expect(authService.isBpmLoggedIn()).toBe(false);
+        });
     });
 
     describe('when the setting is BPM', () => {
@@ -233,6 +252,7 @@ describe('AuthenticationService', () => {
         it('should require remember me set for BPM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(true);
             spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(authService, 'isBPMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
             spyOn(apiService, 'getInstance').and.callThrough();
 
@@ -243,6 +263,7 @@ describe('AuthenticationService', () => {
         it('should not require cookie service enabled for BPM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(false);
             spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(authService, 'isBPMProvider').and.returnValue(true);
             spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isBpmLoggedIn()).toBeFalsy();
@@ -291,7 +312,7 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(err).toBeDefined();
-                    expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.getTicketBpm()).toBe(undefined);
                     done();
                 });
 
@@ -316,6 +337,30 @@ describe('AuthenticationService', () => {
             authService.setRedirect(null);
 
             expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
+        });
+
+        it('[BPM] should return isECMProvider false', () => {
+            expect(authService.isECMProvider()).toBe(false);
+        });
+
+        it('[BPM] should return isBPMProvider true', () => {
+            expect(authService.isBPMProvider()).toBe(true);
+        });
+
+        it('[BPM] should return isALLProvider false', () => {
+            expect(authService.isALLProvider()).toBe(false);
+        });
+
+        it('[BPM] should be able to retrieve current logged in user', (done) => {
+            spyOn(apiService.getInstance().activiti.profileApi, 'getProfile').and.returnValue(
+                Promise.resolve((<UserRepresentation> {
+                    email: 'fake-email'
+                })));
+
+            authService.getBpmLoggedUser().subscribe((fakeUser) => {
+                expect(fakeUser.email).toBe('fake-email');
+                done();
+            });
         });
     });
 
@@ -440,6 +485,18 @@ describe('AuthenticationService', () => {
             authService.setRedirect(null);
 
             expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
+        });
+
+        it('[ALL] should return isECMProvider false', () => {
+            expect(authService.isECMProvider()).toBe(false);
+        });
+
+        it('[ALL] should return isBPMProvider false', () => {
+            expect(authService.isBPMProvider()).toBe(false);
+        });
+
+        it('[ALL] should return isALLProvider true', () => {
+            expect(authService.isALLProvider()).toBe(true);
         });
     });
 

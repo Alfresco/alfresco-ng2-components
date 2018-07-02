@@ -40,6 +40,33 @@ let undocMethodNames = {
 };
 
 
+export function processDocs(mdCache, aggData, _errorMessages) {
+    initPhase(aggData);
+    
+    let pathnames = Object.keys(mdCache);
+    let internalErrors;
+
+    pathnames.forEach(pathname => {
+        internalErrors = [];
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, internalErrors);
+
+        if (internalErrors.length > 0) {
+            showErrors(pathname, internalErrors);
+        }
+    });
+}
+
+
+function showErrors(filename, errorMessages) {
+    console.log(filename);
+
+    errorMessages.forEach(message => {
+        console.log("    " + message);
+    });
+
+    console.log("");
+}
+
 class PropInfo {
     name: string;
     type: string;
@@ -59,7 +86,7 @@ class PropInfo {
         this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
         this.defaultValue = rawProp.defaultValue || "";
         this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
-        this.type = rawProp.type ? rawProp.type.toString() : "";
+        this.type = rawProp.type ? rawProp.type.toString().replace(/\s/g, "") : "";
         this.type = this.type.replace(/\|/, "\\|");
 
         this.isDeprecated = rawProp.comment && rawProp.comment.hasTag("deprecated");
@@ -113,7 +140,7 @@ class ParamInfo {
 
     constructor(rawParam: ParameterReflection) {
         this.name = rawParam.name;
-        this.type = rawParam.type.toString();
+        this.type = rawParam.type.toString().replace(/\s/g, "");
         this.defaultValue = rawParam.defaultValue;
         this.docText = rawParam.comment ? rawParam.comment.text : "";
         this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
@@ -148,7 +175,7 @@ class MethodSigInfo {
     constructor(rawSig: SignatureReflection) {
         this.errorMessages = [];
         this.name = rawSig.name;
-        this.returnType = rawSig.type ? rawSig.type.toString() : "";
+        this.returnType = rawSig.type ? rawSig.type.toString().replace(/\s/g, "") : "";
         this.returnsSomething = this.returnType != "void";
 
         if (rawSig.hasComment()) {
@@ -258,7 +285,7 @@ class ComponentInfo {
 }
 
 
-export function initPhase(aggData) {
+function initPhase(aggData) {
     nameExceptions = aggData.config.typeNameExceptions;
 
     let app = new Application({
@@ -276,15 +303,9 @@ export function initPhase(aggData) {
 }
 
 
-export function readPhase(tree, pathname, aggData) {
-}
 
 
-export function aggPhase(aggData) {
-}
-
-
-export function updatePhase(tree, pathname, aggData, errorMessages) {
+function updateFile(tree, pathname, aggData, errorMessages) {
     let compName = angNameToClassName(path.basename(pathname, ".md"));
     let classRef = aggData.projData.findReflectionByName(compName);
 
@@ -316,7 +337,7 @@ export function updatePhase(tree, pathname, aggData, errorMessages) {
         let mdText = template(compData);
         mdText = mdText.replace(/^ +\|/mg, "|");
 
-        let newSection = remark().data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;
+        let newSection = remark().parse(mdText.trim()).children;
 
         replaceSection(tree, "Class members", (before, section, after) => {
             newSection.unshift(before);

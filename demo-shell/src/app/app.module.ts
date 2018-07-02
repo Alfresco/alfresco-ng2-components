@@ -52,7 +52,9 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { PreviewService } from './services/preview.service';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
+import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 
 @NgModule({
     imports: [
@@ -106,7 +108,9 @@ import { NotificationsComponent } from './components/notifications/notifications
         FormLoadingComponent,
         BlobPreviewComponent,
         BreadcrumbDemoComponent,
-        NotificationsComponent
+        NotificationsComponent,
+        ContentNodeSelectorComponent,
+        ReportIssueComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
@@ -128,7 +132,10 @@ import { NotificationsComponent } from './components/notifications/notifications
         },
         PreviewService
     ],
-    entryComponents: [VersionManagerDialogAdapterComponent, MetadataDialogAdapterComponent],
+    entryComponents: [
+        VersionManagerDialogAdapterComponent,
+        MetadataDialogAdapterComponent
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

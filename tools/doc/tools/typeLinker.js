@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var fs = require("fs");
 var typedoc_1 = require("typedoc");
+var ProgressBar = require("progress");
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
 var includedNodeTypes = [
@@ -13,6 +14,21 @@ var includedNodeTypes = [
 var docFolder = path.resolve("docs");
 var adfLibNames = ["core", "content-services", "insights", "process-services"];
 var externalNameLinks;
+function processDocs(mdCache, aggData, errorMessages) {
+    initPhase(aggData);
+    var pathnames = Object.keys(mdCache);
+    var progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
+        total: pathnames.length,
+        width: 50,
+        clear: true
+    });
+    pathnames.forEach(function (pathname) {
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        progress.tick();
+        progress.render();
+    });
+}
+exports.processDocs = processDocs;
 function initPhase(aggData) {
     externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
@@ -36,26 +52,23 @@ function initPhase(aggData) {
     });
     //console.log(JSON.stringify(aggData.nameLookup));
 }
-exports.initPhase = initPhase;
-function readPhase(tree, pathname, aggData) { }
-exports.readPhase = readPhase;
-function aggPhase(aggData) {
-}
-exports.aggPhase = aggPhase;
-function updatePhase(tree, pathname, aggData) {
+function updateFile(tree, pathname, aggData, errorMessages) {
     traverseMDTree(tree);
     return true;
     function traverseMDTree(node) {
         if (!includedNodeTypes.includes(node.type)) {
             return;
         }
-        if (node.type === "inlineCode") {
-            var link = resolveTypeLink(aggData, node.value);
+        /*if (node.type === "inlineCode") {
+            console.log(`Link text: ${node.value}`);
+            let link = resolveTypeLink(aggData, node.value);
+
             if (link) {
                 convertNodeToTypeLink(node, node.value, link);
             }
-        }
-        else if (node.type === "link") {
+            
+        } else */
+        if (node.type === "link") {
             if (node.children && ((node.children[0].type === "inlineCode") ||
                 (node.children[0].type === "text"))) {
                 var link = resolveTypeLink(aggData, node.children[0].value);
@@ -64,7 +77,7 @@ function updatePhase(tree, pathname, aggData) {
                 }
             }
         }
-        else if ((node.type === "paragraph")) {
+        else if ((node.children) && (node.type !== "heading")) {
             node.children.forEach(function (child, index) {
                 if ((child.type === "text") || (child.type === "inlineCode")) {
                     var newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
@@ -75,15 +88,14 @@ function updatePhase(tree, pathname, aggData) {
                 }
                 var _a;
             });
-        }
-        else if (node.children) {
-            node.children.forEach(function (child) {
+        } /*else if (node.children) {
+            node.children.forEach(child => {
                 traverseMDTree(child);
             });
         }
+        */
     }
 }
-exports.updatePhase = updatePhase;
 var SplitNameNode = /** @class */ (function () {
     function SplitNameNode(key, value) {
         if (key === void 0) { key = ""; }
@@ -310,9 +322,11 @@ function isLinkable(kind) {
         (kind === typedoc_1.ReflectionKind.Enum) ||
         (kind === typedoc_1.ReflectionKind.TypeAlias);
 }
-function convertNodeToTypeLink(node, text, url) {
+function convertNodeToTypeLink(node, text, url, title) {
+    if (title === void 0) { title = null; }
     var linkDisplayText = unist.makeInlineCode(text);
     node.type = "link";
+    node.title = title;
     node.url = url;
     node.children = [linkDisplayText];
 }

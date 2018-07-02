@@ -133,11 +133,17 @@
       "APPLY": "APPLY",
       "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL.",
       "REDIRECT": "Redirect Uri",
+      "REDIRECT_LOGOUT": "Redirect Uri Logout",
       "SILENT": "Silent Login",
       "SCOPE": "Scope",
       "CLIENT": "ClientId"
     },
     "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Add new",
+        "NAME": "Name",
+        "VALUE": "Value"
+      },
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Use a number format",
         "INT_VALIDATION_ERROR": "Use an integer format"
@@ -301,7 +307,7 @@
       "DESCRIPTION": "You're not allowed access to this resource on the server.",
       "SECONDARY_BUTTON": {
         "TEXT": "Report issue",
-        "URL": ""
+        "URL": "report-issue"
       },
       "RETURN_BUTTON": {
         "TEXT": "Back to home",

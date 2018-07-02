@@ -5,7 +5,7 @@
    <button mat-button
           id="adf-add-permission-action-button"
           class="adf-permission-action"
-          [disabled]="selectedItems?.length === 0"
+          [disabled]="!isAddEnabled()"
           (click)="applySelection()">
      {{'PERMISSION_MANAGER.ADD-PERMISSION.ADD-ACTION' | translate}}
     </button>

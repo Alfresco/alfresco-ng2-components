@@ -36,9 +36,10 @@ module.exports = {
         };
     },
 
-    makeLink: function (caption, url) {
+    makeLink: function (caption, url, title = null) {
         return {
             "type": "link",
+            "title": title,
             "url": url,
             "children": [ caption ]
         };

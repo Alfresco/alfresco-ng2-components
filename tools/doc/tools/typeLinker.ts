@@ -18,6 +18,8 @@ import {
  } from "typedoc";
 import { CommentTag } from "typedoc/dist/lib/models";
 
+import * as ProgressBar from "progress";
+
 import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
 import { match } from "minimatch";
@@ -32,31 +34,28 @@ const includedNodeTypes = [
 const docFolder = path.resolve("docs");
 const adfLibNames = ["core", "content-services", "insights", "process-services"];
 
-
-<<<<<<< HEAD
-const externalTypes = {
-    'Blob': 'https://developer.mozilla.org/en-US/docs/Web/API/Blob',
-    'EventEmitter': 'https://angular.io/api/core/EventEmitter',
-    'MatSnackBarRef': 'https://material.angular.io/components/snack-bar/overview',
-    'TemplateRef': 'https://angular.io/api/core/TemplateRef',
-    'Observable': 'http://reactivex.io/documentation/observable.html',
-    'Subject': 'http://reactivex.io/documentation/subject.html',
-    'AppDefinitionRepresentation': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md',
-    'DeletedNodesPaging': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/DeletedNodesPaging.md',
-    'MinimalNodeEntity': '../content-services/document-library.model.md',
-    'MinimalNodeEntryEntity': '../content-services/document-library.model.md',
-    'NodeEntry': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md',
-    'ProcessInstanceFilterRepresentation': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md',
-    'RelatedContentRepresentation': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md',
-    'SiteEntry': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md',
-    'SitePaging': 'https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md'
-};
-
-=======
 let externalNameLinks;
->>>>>>> [ADF-3150] Moved config to doctools.config.json and removed obsolete scripts
 
-export function initPhase(aggData) {
+export function processDocs(mdCache, aggData, errorMessages) {
+    initPhase(aggData);
+
+    var pathnames = Object.keys(mdCache);
+
+    let progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
+        total: pathnames.length,
+        width: 50,
+        clear: true
+    });
+
+    pathnames.forEach(pathname => {
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        progress.tick();
+        progress.render();
+    });
+}
+
+
+function initPhase(aggData) {
     externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
@@ -86,15 +85,10 @@ export function initPhase(aggData) {
     //console.log(JSON.stringify(aggData.nameLookup));
 }
 
-export function readPhase(tree, pathname, aggData) {}
 
 
-export function aggPhase(aggData) {
 
-}
-
-
-export function updatePhase(tree, pathname, aggData) {
+function updateFile(tree, pathname, aggData, errorMessages) {
     traverseMDTree(tree);
     return true;
 
@@ -104,14 +98,16 @@ export function updatePhase(tree, pathname, aggData) {
             return;
         }
     
-        if (node.type === "inlineCode") {
+        /*if (node.type === "inlineCode") {
+            console.log(`Link text: ${node.value}`);
             let link = resolveTypeLink(aggData, node.value);
 
             if (link) {
                 convertNodeToTypeLink(node, node.value, link);
             }
             
-        } else if (node.type === "link") {
+        } else */
+        if (node.type === "link") {
             if (node.children && (
                 (node.children[0].type === "inlineCode") ||
                 (node.children[0].type === "text")
@@ -122,7 +118,7 @@ export function updatePhase(tree, pathname, aggData) {
                     convertNodeToTypeLink(node, node.children[0].value, link);
                 }
             }
-        } else if ((node.type === "paragraph")) {
+        } else if ((node.children) && (node.type !== "heading")) { //((node.type === "paragraph") || (node.type === "tableCell")) {
             node.children.forEach((child, index) => {
                 if ((child.type === "text") || (child.type === "inlineCode")) {
                     let newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
@@ -131,11 +127,12 @@ export function updatePhase(tree, pathname, aggData) {
                     traverseMDTree(child);
                 }
             });
-        } else if (node.children) {
+        } /*else if (node.children) {
             node.children.forEach(child => {
                 traverseMDTree(child);
             });
         }
+        */
     }
 }
 
@@ -404,9 +401,10 @@ function isLinkable(kind: ReflectionKind) {
     (kind === ReflectionKind.TypeAlias);
 }
 
-function convertNodeToTypeLink(node, text, url) {
+function convertNodeToTypeLink(node, text, url, title = null) {
     let linkDisplayText = unist.makeInlineCode(text);
     node.type = "link";
+    node.title = title;
     node.url = url;
     node.children = [linkDisplayText];
 }
