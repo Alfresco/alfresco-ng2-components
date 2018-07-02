@@ -6,7 +6,7 @@ Last reviewed: 2018-03-19
 
 # Login component
 
-Authenticates to Alfresco Content Services and Alfresco Process Services.
+Authenticates to Alfresco Content Services and or Alfresco Process Services.
 
 ![Login component](../docassets/images/custom-footer.png)
 
