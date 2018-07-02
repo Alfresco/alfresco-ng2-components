@@ -45,7 +45,7 @@ describe('Attachment list', () => {
 
     beforeAll(async (done) => {
         let users = new UsersActions();
-        let appsActions = new AppsActions();
+        let apps = new AppsActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
