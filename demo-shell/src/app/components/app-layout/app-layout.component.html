@@ -2,7 +2,7 @@
 
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu="toggleMenu">
-            <adf-layout-header title="{{ 'APP_LAYOUT.APP_NAME' | translate}}" color="primary" (toggled)=toggleMenu($event)>
+            <adf-layout-header title="{{ 'APP_LAYOUT.APP_NAME' | translate}}" color="primary" (clicked)=toggleMenu($event)>
 
             <div class="adf-app-layout-menu-spacer"></div>
 
