@@ -38,6 +38,7 @@ export class UploadService {
     private totalAborted: number = 0;
     private totalError: number = 0;
     private excludedFileList: String[] = [];
+    private matchingOptions: any = null;
 
     activeTask: Promise<any> = null;
     queue: FileModel[] = [];
@@ -56,6 +57,7 @@ export class UploadService {
     constructor(protected apiService: AlfrescoApiService,
                 appConfigService: AppConfigService) {
         this.excludedFileList = <String[]> appConfigService.get('files.excluded');
+        this.matchingOptions = appConfigService.get('files.match-options');
     }
 
     /**
@@ -90,7 +92,7 @@ export class UploadService {
         let isAllowed = true;
 
         if (this.excludedFileList) {
-            isAllowed = this.excludedFileList.filter(expr => minimatch(file.name, expr)).length === 0;
+            isAllowed = this.excludedFileList.filter(expr => minimatch(file.name, expr, this.matchingOptions)).length === 0;
         }
         return isAllowed;
     }

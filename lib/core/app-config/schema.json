@@ -318,6 +318,56 @@
                     "description": "File exclusions",
                     "type": "array",
                     "items": { "type": "string" }
+                },
+                "match-options": {
+                  "description": "Minimatch plugin option that will be applied for the check. By default all the options are false",
+                  "type": "object",
+                  "properties": {
+                    "debug": {
+                      "description": "Dump a ton of stuff to stderr",
+                      "type": ["boolean", "null"]
+                    },
+                    "nobrace": {
+                      "description": "Do not expand {a,b} and {1..3} brace sets.",
+                      "type": ["boolean", "null"]
+                    },
+                    "noglobstar": {
+                      "description": "Disable ** matching against multiple folder names.",
+                      "type": ["boolean", "null"]
+                    },
+                    "dot": {
+                      "description": "Allow patterns to match filenames starting with a period, even if the pattern does not explicitly have a period in that spot.",
+                      "type": ["boolean", "null"]
+                    },
+                    "noext": {
+                      "description": "Disable 'extglob' style patterns like +(a|b).",
+                      "type": ["boolean", "null"]
+                    },
+                    "nocase": {
+                      "description": "Perform a case-insensitive match.",
+                      "type": ["boolean", "null"]
+                    },
+                    "nonull": {
+                      "description": "When a match is not found by minimatch.match, return a list containing the pattern itself if this option is set. When not set, an empty list is returned if there are no matches.",
+                      "type": ["boolean", "null"]
+                    },
+                    "matchBase": {
+                      "description": "If set, then patterns without slashes will be matched against the basename of the path if it contains slashes.",
+                      "type": ["boolean", "null"]
+                    },
+                    "nocomment": {
+                      "description": "Suppress the behavior of treating # at the start of a pattern as a comment.",
+                      "type": ["boolean", "null"]
+                    },
+                    "nonegate": {
+                      "description": "Suppress the behavior of treating a leading ! character as negation.",
+                      "type": ["boolean", "null"]
+                    },
+                    "flipNegate": {
+                      "description": "Returns from negate expressions the same as if they were not negated.",
+                      "type": ["boolean", "null"]
+                    }
+                  }
                 }
             }
         },
