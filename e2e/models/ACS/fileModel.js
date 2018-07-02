@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util.js');
-var resources = require('../../util/resources.js');
-var CreatedByModel = require('./createdByModel.js');
-var ContentModel = require('./contentModel.js');
-var ContentPropertiesModel = require('./contentProperties.js');
+var Util = require('../../util/util');
+var resources = require('../../util/resources');
+var CreatedByModel = require('./createdByModel');
+var ContentModel = require('./contentModel');
+var ContentPropertiesModel = require('./contentProperties');
 
 var FileModel = function (details) {
 

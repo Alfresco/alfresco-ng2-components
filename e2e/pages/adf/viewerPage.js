@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util.js');
-var CardViewPage = require('./cardViewPage.js');
+var Util = require('../../util/util');
+var CardViewPage = require('./cardViewPage');
 
 var ViewerToolbarPage = function () {
 

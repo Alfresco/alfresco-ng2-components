@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-var Util = require('../../../util/util.js');
-var ContentList = require('../dialog/contentList.js');
-var StartProcessPage = require('./startProcessPage.js');
+var Util = require('../../../util/util');
+var ContentList = require('../dialog/contentList');
+var StartProcessPage = require('./startProcessPage');
 
 var ProcessFiltersPage = function () {
 

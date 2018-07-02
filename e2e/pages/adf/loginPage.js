@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util.js');
-var TestConfig = require('../../test.config.js');
-var AdfSettingsPage = require('./settingsPage.js');
+var Util = require('../../util/util');
+var TestConfig = require('../../test.config');
+var AdfSettingsPage = require('./settingsPage');
 
 var LoginPage = function (){
 

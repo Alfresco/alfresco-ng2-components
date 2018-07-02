@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-var TaskAssigneeModel = require('./TaskAssigneeModel.js');
+var TaskAssigneeModel = require('./TaskAssigneeModel');
 
 var TaskModel = function (details) {
 

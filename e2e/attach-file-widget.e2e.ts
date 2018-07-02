@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import TasksPage = require('./pages/adf/process_services/tasksPage.js');
-import ViewerPage = require('./pages/adf/viewerPage.js');
-import UsingWidget = require('./pages/adf/process_services/widgets/usingWidget.js');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import LoginPage = require('./pages/adf/loginPage');
+import TasksPage = require('./pages/adf/process_services/tasksPage');
+import ViewerPage = require('./pages/adf/viewerPage');
+import UsingWidget = require('./pages/adf/process_services/widgets/usingWidget');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
 
 import CONSTANTS = require('./util/constants');
 
 import Tenant = require('./models/APS/Tenant');
-import FileModel = require('./models/ACS/fileModel.js');
+import FileModel = require('./models/ACS/fileModel');
 import User = require('./models/APS/User');
 import AppPublish = require('./models/APS/AppPublish');
 
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
 
-import users = require('./restAPI/APS/reusableActions/users');
-import apps = require('./restAPI/APS/reusableActions/apps');
+import { AppsActions } from './actions/APS/apps.actions';
 import AlfrescoApi = require('alfresco-js-api-node');
+import { UsersActions } from './actions/users.actions';
 
 describe('Start Task - Task App', () => {
 
@@ -49,6 +49,9 @@ describe('Start Task - Task App', () => {
     let appFilds = app.form_fields;
 
     beforeAll(async (done) => {
+        let users = new UsersActions();
+        let appsActions = new AppsActions();
+
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: TestConfig.adf.url

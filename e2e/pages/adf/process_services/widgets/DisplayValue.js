@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields.js');
+var FormFields = require('../formFields');
 
 var DisplayValue = function () {
 

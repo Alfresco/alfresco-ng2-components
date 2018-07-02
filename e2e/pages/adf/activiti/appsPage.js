@@ -16,7 +16,7 @@
  */
 
 var Page = require('astrolabe').Page;
-var Util = require('../../../util/util.js');
+var Util = require('../../../util/util');
 
 /**
  * Provides activiti

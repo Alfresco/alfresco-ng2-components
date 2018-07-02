@@ -17,7 +17,7 @@
 
 var url = require('url-join');
 var APIUtils = require('../../../restAPI/APIUtil');
-var CONSTANTS = require('../../../util/constants.js');
+var CONSTANTS = require('../../../util/constants');
 
 var ACMBaseURL = '/alfresco/versions/1';
 

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util.js');
-var ContentList = require('./dialog/contentList.js');
-var DatatablePage = require('./dataTablePage.js');
+var Util = require('../../util/util');
+var ContentList = require('./dialog/contentList');
+var DatatablePage = require('./dataTablePage');
 
 var SearchResultsPage = function () {
 

@@ -16,7 +16,7 @@
  */
 
 var Page = require('astrolabe').Page;
-var Util = require('../../util/util.js');
+var Util = require('../../util/util');
 
 var contentServices = element(by.css("a[data-automation-id='files'] span"));
 var siteList = element(by.css("md-select[class*='dropdown-list']"));

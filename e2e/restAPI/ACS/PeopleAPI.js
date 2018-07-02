@@ -25,29 +25,6 @@ var TestConfig = require('../../test.config');
 
 var peopleBaseUrl = 'people';
 
-/**
- * Create person using API
- *
- * @param requestUserModel {User that makes the request}
- * @param createAcsUserModel {User that is created}
- * @method createUserViaAPI
- */
-exports.createUserViaAPI = function (requestUserModel, createAcsUserModel) {
-
-    var uri = url(RequestCoreAPI.getBaseURL(), peopleBaseUrl);
-
-    return new Promise(function (resolve, reject) {
-        request.post({url: uri, headers: RequestCoreAPI.requestHeaders(requestUserModel), json: createAcsUserModel})
-            .on('data', function (data) {
-                // console.log('Upload successful!  Server responded with:', data.toString());
-                resolve(data.toString());
-            })
-            .on('error', function (err) {
-                // console.log('Upload unsuccessful!  Server responded with:', err);
-                reject(err);
-            });
-    });
-};
 
 function read(initialFile) {
     return new Promise(function (resolve, reject) {

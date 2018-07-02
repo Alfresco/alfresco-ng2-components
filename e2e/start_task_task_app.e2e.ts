@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import TasksPage = require('./pages/adf/process_services/tasksPage.js');
-import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
+import LoginPage = require('./pages/adf/loginPage');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
+import TasksPage = require('./pages/adf/process_services/tasksPage');
+import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage');
 
 import CONSTANTS = require('./util/constants');
 
 import User = require('./models/APS/User');
 import Tenant = require('./models/APS/Tenant');
 import Task = require('./models/APS/Task');
-import TaskModel = require('./models/APS/TaskModel.js');
-import FormModel = require('./models/APS/FormModel.js');
-import FileModel = require('./models/ACS/fileModel.js');
+import TaskModel = require('./models/APS/TaskModel');
+import FormModel = require('./models/APS/FormModel');
+import FileModel = require('./models/ACS/fileModel');
 
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
 
 import dateFormat = require('dateformat');
 

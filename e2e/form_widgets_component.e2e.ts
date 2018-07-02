@@ -15,46 +15,36 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import TasksPage = require('./pages/adf/process_services/tasksPage.js');
-import UsingWidget = require('./pages/adf/process_services/widgets/usingWidget.js');
+import LoginPage = require('./pages/adf/loginPage');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
+import TasksPage = require('./pages/adf/process_services/tasksPage');
+import UsingWidget = require('./pages/adf/process_services/widgets/usingWidget');
 
 import CONSTANTS = require('./util/constants');
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
-import TaskAPI = require('./restAPI/APS/enterprise/TaskAPI');
-import AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
-import RuntimeAppDefinitionAPI = require('./restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
-import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
-import FormModelsAPI = require('./restAPI/APS/enterprise/FormModelsAPI.js');
-
-import FormDefinitionModel = require('./models/APS/FormDefinitionModel.js');
-import TaskModel = require('./models/APS/TaskModel.js');
-import FormModel = require('./models/APS/FormModel.js');
+import FormDefinitionModel = require('./models/APS/FormDefinitionModel');
+import TaskModel = require('./models/APS/TaskModel');
+import FormModel = require('./models/APS/FormModel');
 import User = require('./models/APS/User');
 import Tenant = require('./models/APS/Tenant');
 import AppPublish = require('./models/APS/AppPublish');
 import AppDefinition = require('./models/APS/AppDefinition');
 import Task = require('./models/APS/Task');
 
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
 
 let formInstance = new FormDefinitionModel();
 
 import AlfrescoApi = require('alfresco-js-api-node');
-
-import users = require('./restAPI/APS/reusableActions/users');
 import { AppsActions } from './actions/APS/apps.actions';
+import { UsersActions } from './actions/users.actions';
 
 describe('Form widgets', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
-    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    let basicAuth, processUserModel;
+    let processUserModel;
     let app = resources.Files.WIDGETS_SMOKE_TEST;
     let appFilds = app.form_fields;
     let taskPage = new TasksPage();
@@ -65,6 +55,7 @@ describe('Form widgets', () => {
     let procUserModel;
 
     beforeAll(async (done) => {
+        let users = new UsersActions();
         let appsActions = new AppsActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -108,19 +99,17 @@ describe('Form widgets', () => {
                 expect(taskPage.usingTaskDetails().getTitle()).toEqual('Activities');
             })
             .then(() => {
-                return TaskAPI.tasksQuery(basicAuth, new Task({ sort: 'created-desc' }));
+                return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
             })
-            .then(function (response) {
-                taskModel = new TaskModel(JSON.parse(response.responseBody).data[0]);
-                return new FormModelsAPI().getForm(basicAuth, taskModel.getFormKey());
+            .then(function (taskModel) {
+                return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(taskModel.getFormKey());
             })
-            .then(function (response) {
-                formModel = new FormModel(JSON.parse(response.responseBody));
+            .then(function (formModel) {
                 expect(taskPage.usingTaskDetails().getFormName())
                     .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
             })
             .then(() => {
-                return new FormModelsAPI().getFormModel(basicAuth, formModel.modelId.toString());
+                return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(taskModel.getFormKey());
             })
             .then(function (response) {
                 formInstance.setFields(JSON.parse(response.responseBody).formDefinition.fields);

@@ -61,66 +61,6 @@ var APIUtils = function () {
         return baseUrl;
     };
 
-    /**
-     * Search value in JSON data
-     * @param data {String} - JSON object
-     * @param key {String} - JSON key - value pair to be matched (e.g id: 1234)
-     * @param value {String}
-     * @param searchedKey {String} - searchedKey to get value for (e.g appDefId)
-     * @param nestedDataValue {String} - nested JSON key
-     * @method getValueByKeyValuePair
-     */
-    this.getValueByKeyValuePair = function (data, key, value, searchedKey, nestedDataValue) {
-        var searchedValue;
-
-        if (nestedDataValue !== null) {
-            data = data[nestedDataValue];
-        }
-        for (var i = 0; i < data.length; i++) {
-            if (data[i][key] === value) {
-                searchedValue = data[i][searchedKey];
-                break;
-            }
-        }
-        return searchedValue;
-    };
-
-
-    /**
-     * Search value in JSON data
-     *
-     * @param json_data {String} - JSON object
-     * @param key {String} - JSON key - value pair to be matched (e.g id: 1234)
-     * @param value {String}
-     * @param searchedKey {String} - searchedKey to get value for (e.g appDefId)
-     */
-    this.retrieveValueByKeyValuePair = function (json_data, key, value, searchedKey) {
-        var details = json_data.find(function (item) {
-            if (typeof item[key] === 'undefined') {
-                return undefined;
-            }
-            return item[key] === value;
-        });
-        return (typeof details === 'undefined') ? undefined : details[searchedKey];
-    };
-
-    /**
-     * Build API query parameters string
-     *
-     * @param queryParams - query parameters object
-     * @returns a string with all parameters appended
-     */
-    this.buildQueryParams = function (queryParams) {
-        var searchParams = Object.keys(queryParams || {})
-            .map(function (key) {
-                return encodeURIComponent(key) + '=' + encodeURIComponent(queryParams[key]);
-            })
-            .join('&');
-
-        return (typeof queryParams === "undefined") ? '' : '?' + searchParams;
-    };
-
-
 };
 
 module.exports = APIUtils;

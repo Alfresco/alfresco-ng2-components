@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
+import LoginPage = require('./pages/adf/loginPage');
+import ContentServicesPage = require('./pages/adf/contentServicesPage');
 
-import AcsUserModel = require('./models/ACS/acsUserModel.js');
-import FileModel = require('./models/ACS/fileModel.js');
-import FolderModel = require('./models/ACS/folderModel.js');
+import AcsUserModel = require('./models/ACS/acsUserModel');
+import FileModel = require('./models/ACS/fileModel');
+import FolderModel = require('./models/ACS/folderModel');
 
-import TestConfig = require('./test.config.js');
-import resources = require('./util/resources.js');
-import Util = require('./util/util.js');
+import TestConfig = require('./test.config');
+import resources = require('./util/resources');
+import Util = require('./util/util');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';

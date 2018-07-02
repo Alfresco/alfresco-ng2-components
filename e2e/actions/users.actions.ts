@@ -1,6 +1,6 @@
 import Tenant = require('../models/APS/Tenant');
 import User = require('../models/APS/User');
-import TestConfig = require('../test.config.js');
+import TestConfig = require('../test.config');
 import path = require('path');
 import fs = require('fs');
 

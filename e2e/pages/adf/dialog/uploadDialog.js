@@ -16,7 +16,7 @@
  */
 
 
-var Util = require('../../../util/util.js');
+var Util = require('../../../util/util');
 
 var UploadDialog = function () {
 

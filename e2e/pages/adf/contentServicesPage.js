@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util.js');
-var ContentList = require('./dialog/contentList.js');
-var CreateFolderDialog = require('./dialog/createFolderDialog.js');
+var Util = require('../../util/util');
+var ContentList = require('./dialog/contentList');
+var CreateFolderDialog = require('./dialog/createFolderDialog');
 var path = require('path');
-var TestConfig = require('../../test.config.js');
+var TestConfig = require('../../test.config');
 
 var ContentServicesPage = function (){
 

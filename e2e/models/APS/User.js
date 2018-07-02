@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util.js');
+var Util = require('../../util/util');
 
 /**
  * Create User JSON Object
@@ -25,7 +25,7 @@ var Util = require('../../util/util.js');
  */
 
 var User = function (details) {
-    
+
     this.email = Util.generateRandomEmail();
     this.firstName = Util.generateRandomString();
     this.lastName = Util.generateRandomString();

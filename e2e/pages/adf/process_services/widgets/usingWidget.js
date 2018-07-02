@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-var MultilineText = require('./MultilineText.js');
-var Header = require('./Header.js');
-var DisplayText = require('./DisplayText.js');
-var AttachFile = require('./AttachFile.js');
-var DisplayValue = require('./DisplayValue.js');
-var RadioButtons = require('./RadioButtons.js');
-var Hyperlink = require('./Hyperlink.js');
-var Dropdown = require('./Dropdown.js');
-var DynamicTable = require('./DynamicTable.js');
+var MultilineText = require('./MultilineText');
+var Header = require('./Header');
+var DisplayText = require('./DisplayText');
+var AttachFile = require('./AttachFile');
+var DisplayValue = require('./DisplayValue');
+var RadioButtons = require('./RadioButtons');
+var Hyperlink = require('./Hyperlink');
+var Dropdown = require('./Dropdown');
+var DynamicTable = require('./DynamicTable');
 
 var UsingWidget = function () {
 
