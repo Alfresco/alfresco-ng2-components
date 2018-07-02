@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
 import UploadDialog = require('./pages/adf/dialog/uploadDialog.js');
 import UploadToggles = require('./pages/adf/dialog/uploadToggles.js');
@@ -38,7 +38,7 @@ describe('Test Uploader component', () => {
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();
     let uploadToggles = new UploadToggles();
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let acsUser = new AcsUserModel();
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
@@ -91,7 +91,7 @@ describe('Test Uploader component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.goToDocumentList();
 

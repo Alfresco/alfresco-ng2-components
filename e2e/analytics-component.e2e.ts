@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
-import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
-import AdfAnalyticsPage = require('./pages/adf/process_services/analyticsPage');
-import AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
-import AdfAppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import AnalyticsPage = require('./pages/adf/process_services/analyticsPage');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
 import TestConfig = require('./test.config.js');
 import Tenant = require('./models/APS/Tenant');
 import User = require('./models/APS/User');
@@ -28,11 +28,11 @@ import AlfrescoApi = require('alfresco-js-api-node');
 
 describe('Analytics Smoke Test', () => {
 
-    let adfLoginPage = new AdfLoginPage();
-    let adfNavigationBarPage = new AdfNavigationBarPage();
-    let adfAppNavigationBarPage = new AdfAppNavigationBarPage();
-    let adfAnalyticsPage = new AdfAnalyticsPage();
-    let adfProcessServicesPage = new AdfProcessServicesPage();
+    let loginPage = new LoginPage();
+    let navigationBarPage = new NavigationBarPage();
+    let appNavigationBarPage = new AppNavigationBarPage();
+    let analyticsPage = new AnalyticsPage();
+    let processServicesPage = new ProcessServicesPage();
     let tenantId;
     let reportTitle = 'New Title';
 
@@ -51,7 +51,7 @@ describe('Analytics Smoke Test', () => {
 
         let userOne = await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
 
-        adfLoginPage.loginToProcessServicesUsingUserModel(procUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(procUserModel);
 
         done();
     });
@@ -62,13 +62,13 @@ describe('Analytics Smoke Test', () => {
     });
 
     it('Change name from Process Definition Heat Map', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp('Task App');
-        adfAppNavigationBarPage.clickReportsButton();
-        adfAnalyticsPage.checkNoReportMessage();
-        adfAnalyticsPage.getReport('Process definition heat map');
-        adfAnalyticsPage.changeReportTitle(reportTitle);
-        expect(adfAnalyticsPage.getReportTitle()).toEqual(reportTitle);
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp('Task App');
+        appNavigationBarPage.clickReportsButton();
+        analyticsPage.checkNoReportMessage();
+        analyticsPage.getReport('Process definition heat map');
+        analyticsPage.changeReportTitle(reportTitle);
+        expect(analyticsPage.getReportTitle()).toEqual(reportTitle);
     });
 });

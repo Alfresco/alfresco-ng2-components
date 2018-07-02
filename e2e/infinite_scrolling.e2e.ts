@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
 
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
@@ -29,7 +29,7 @@ import { UploadActions } from './actions/ACS/upload.actions';
 
 describe('Enable infinite scrolling', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
 
     let acsUser = new AcsUserModel();
@@ -60,7 +60,7 @@ describe('Enable infinite scrolling', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.goToDocumentList();
 

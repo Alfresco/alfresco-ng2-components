@@ -19,12 +19,12 @@ import Util = require('./util/util.js');
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 import CONSTANTS = require('./util/constants');
-import AdfLoginPage = require('./pages/adf/loginPage.js');
-import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
-import AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import AdfStartProcessPage = require('./pages/adf/process_services/startProcessPage.js');
 import AdfProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-import AdfAppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
+import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
 import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
 import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
 import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
@@ -47,12 +47,12 @@ import path = require('path');
 
 describe('Start Process Component', () => {
 
-    let adfLoginPage = new AdfLoginPage();
-    let adfNavigationBarPage = new AdfNavigationBarPage();
-    let adfProcessServicesPage = new AdfProcessServicesPage();
+    let loginPage = new LoginPage();
+    let navigationBarPage = new NavigationBarPage();
+    let processServicesPage = new ProcessServicesPage();
     let adfStartProcessPage = new AdfStartProcessPage();
     let adfProcessFiltersPage = new AdfProcessFiltersPage();
-    let adfAppNavigationBarPage = new AdfAppNavigationBarPage();
+    let appNavigationBarPage = new AppNavigationBarPage();
     let adfProcessDetailsPage = new AdfProcessDetailsPage();
     let attachmentListPage = new AttachmentListPage();
     let app = resources.Files.APP_WITH_PROCESSES;
@@ -105,8 +105,8 @@ describe('Start Process Component', () => {
 
         await this.alfrescoJsApiUserTwo.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
-        adfLoginPage.loginToProcessServicesUsingUserModel(procUserModel);
-        adfNavigationBarPage.clickProcessServicesButton();
+        loginPage.loginToProcessServicesUsingUserModel(procUserModel);
+        navigationBarPage.clickProcessServicesButton();
         done();
 
     });
@@ -124,30 +124,30 @@ describe('Start Process Component', () => {
     });
 
     it('Check start a process without a process model included', () => {
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp('Task App');
-        adfAppNavigationBarPage.clickProcessButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp('Task App');
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.checkNoProcessMessage();
     });
 
     it('Check Start Process within Task App', () => {
-        adfLoginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp('Task App');
-        adfAppNavigationBarPage.clickProcessButton();
+        loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp('Task App');
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         expect(adfStartProcessPage.getDefaultName()).toEqual('My Default Name');
     });
 
     it('Name of the process is required', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.selectFromProcessDropdown('process_without_se');
@@ -156,10 +156,10 @@ describe('Start Process Component', () => {
     });
 
     it('Process Definition is required and cancel button is clicked', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp('Task App');
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp('Task App');
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.selectFromProcessDropdown('Choose one...');
@@ -169,10 +169,10 @@ describe('Start Process Component', () => {
     });
 
     it('Check Start Process within an app without a start event', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.selectFromProcessDropdown('process_without_se');
@@ -181,10 +181,10 @@ describe('Start Process Component', () => {
     });
 
     xit('Start a process within an app with a start event', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.enterProcessName('Test');
@@ -211,10 +211,10 @@ describe('Start Process Component', () => {
     });
 
     it('Add a comment on an active process', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.enterProcessName('Comment Process');
@@ -227,10 +227,10 @@ describe('Start Process Component', () => {
     });
 
     it('Click Audit Log button', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.enterProcessName('Audit Log');
@@ -243,12 +243,12 @@ describe('Start Process Component', () => {
     });
 
     it('Add a file in the attachment list using the button', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
+        navigationBarPage.clickProcessServicesButton();
 
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
 
-        adfAppNavigationBarPage.clickProcessButton();
+        appNavigationBarPage.clickProcessButton();
 
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
@@ -265,12 +265,12 @@ describe('Start Process Component', () => {
     });
 
     it('Click Show Diagram', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
+        navigationBarPage.clickProcessServicesButton();
 
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
 
-        adfAppNavigationBarPage.clickProcessButton();
+        appNavigationBarPage.clickProcessButton();
 
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
@@ -286,10 +286,10 @@ describe('Start Process Component', () => {
     });
 
     it('Click on an active task', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.enterProcessName('Active Task');
@@ -302,10 +302,10 @@ describe('Start Process Component', () => {
     });
 
     it('Click Cancel process button', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.enterProcessName('Cancel Process');
@@ -320,10 +320,10 @@ describe('Start Process Component', () => {
     });
 
     it('Add a comment on a complete process', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.enterProcessName('Comment Process 2');
@@ -339,10 +339,10 @@ describe('Start Process Component', () => {
     });
 
     it('Cannot attach a file on a completed process', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.enterProcessName('File');

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import SearchDialog = require('./pages/adf/dialog/searchDialog.js');
 import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
 import filePreviewPage = require('./pages/adf/filePreviewPage.js');
@@ -25,19 +25,16 @@ import AcsUserModel = require('./models/ACS/acsUserModel.js');
 import FileModel = require('./models/ACS/fileModel.js');
 import FolderModel = require('./models/ACS/folderModel.js');
 
-import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-import SearchAPI = require('./restAPI/ACS/SearchAPI.js');
-
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 import Util = require('./util/util.js');
 
-let retryNumber = 30;
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Test Search component - Search Bar', function () {
+describe('Test Search component - Search Bar', function () {
 
-    search = {
+    let search = {
         inactive: {
             firstChar: 'x',
             secondChar: 'y',
@@ -50,7 +47,7 @@ xdescribe('Test Search component - Search Bar', function () {
         }
     };
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let searchDialog = new SearchDialog();
     let searchResultPage = new SearchResultPage();
@@ -68,34 +65,41 @@ xdescribe('Test Search component - Search Bar', function () {
     let secondFolder = new FolderModel({ 'name': 'nameFolderOne', 'shortName': 'name' });
     let thirdFolder = new FolderModel({ 'name': 'nameFolderTwo' });
 
-    beforeAll( (done) => {
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser).then(function () {
-            return protractor.promise.all([
-                NodesAPI.uploadFileViaAPI(acsUser, firstFileModel, '-my-', false),
-                NodesAPI.uploadFolderViaAPI(acsUser, firstFolderModel, '-my-', false),
-                NodesAPI.uploadFolderViaAPI(acsUser, secondFolder, '-my-', false),
-                NodesAPI.uploadFolderViaAPI(acsUser, thirdFolder, '-my-', false),
-                NodesAPI.getNode(retryNumber, acsUser, firstFileModel.id, function () {
-                })
-            ]).then(function () {
-                NodesAPI.getNode(retryNumber, acsUser, firstFolderModel.id, function () {
-                }),
-                    SearchAPI.search(100, acsUser, 4, SearchAPI.recentFiles(acsUser.getId()), function () {
-                        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
-                        contentServicesPage.goToDocumentList();
-                        done();
-                    });
-            });
+    beforeAll(async (done) => {
+        let uploadActions = new UploadActions();
+
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
         });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+        let firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
+        Object.assign(firstFileModel, firstFileUploaded.entry);
+
+        await uploadActions.uploadFolder(this.alfrescoJsApi, firstFolderModel.name, '-my-');
+        await uploadActions.uploadFolder(this.alfrescoJsApi, secondFolder.name, '-my-');
+        await uploadActions.uploadFolder(this.alfrescoJsApi, thirdFolder.name, '-my-');
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        contentServicesPage.goToDocumentList();
+
+        done();
     });
 
-    afterAll((done) => {
-        NodesAPI.deleteContent(acsUser, firstFileModel.id, function () {
-            NodesAPI.deleteContent(acsUser, firstFolderModel.id, function () {
-                done();
-            });
-        });
-    });
+    // afterAll((done) => {
+    //     NodesAPI.deleteContent(acsUser, firstFileModel.id, function () {
+    //         NodesAPI.deleteContent(acsUser, firstFolderModel.id, function () {
+    //             done();
+    //         });
+    //     });
+    // });
 
     it('1. Search bar is visible', function () {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();

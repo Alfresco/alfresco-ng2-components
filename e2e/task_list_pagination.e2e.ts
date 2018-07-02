@@ -15,31 +15,30 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import TasksPage = require('./pages/adf/process_services/tasksPage.js');
 import PaginationPage = require('./pages/adf/paginationPage.js');
 import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
 import CONSTANTS = require('./util/constants');
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
-
-import users = require('./restAPI/APS/reusableActions/users');
-import apps = require('./restAPI/APS/reusableActions/apps');
 
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 
+import AlfrescoApi = require('alfresco-js-api-node');
+import { AppsActions } from './actions/APS/apps.actions';
+import { UsersActions } from './actions/users.actions';
+
 describe('Task List Pagination', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
     let paginationPage = new PaginationPage();
     let navigationBarPage = new NavigationBarPage();
 
-    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    let basicAuth, processUserModel, processUserModel1;
+    let processUserModel, processUserModel1;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let currentPage = 1, nrOfTasks = 20, appDetails, totalPages;
 
@@ -55,35 +54,35 @@ describe('Task List Pagination', () => {
         default: '25'
     };
 
-    beforeAll( (done) => {
-        users.createTenantAndUser(basicAuthAdmin)
-            .then(function (user) {
-                users.createTenantAndUser(basicAuthAdmin)
-                    .then(function (response) {
-                        processUserModel1 = response;
-                    });
-                processUserModel = user;
-                basicAuth = new BasicAuthorization(user.email, user.password);
-                apps.importPublishDeployApp(basicAuth, app.file_location)
-                    .then(function (resultApp) {
-                        appDetails = resultApp;
-                        let arr = [];
-                        for (let i = 0; i < nrOfTasks; i++) {
-                            arr.push(apps.startProcess(basicAuth, resultApp));
-                        }
+    beforeAll(async (done) => {
+        let apps = new AppsActions();
+        let users = new UsersActions();
 
-                        Promise.all(arr).then(() => {
-                            done();
-                        });
-                    })
-                    .catch(function (error) {
-                        done.fail('Create test precondition failed: ' + error);
-                    });
-            });
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+        let resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+
+        for (let i = 0; i < nrOfTasks; i++) {
+            await apps.startProcess(this.alfrescoJsApi, resultApp);
+        }
+
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
+        done();
+
     });
 
     it('Pagination at first 20 started tasks', () => {
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
@@ -97,7 +96,7 @@ describe('Task List Pagination', () => {
     });
 
     it('Items per page set to 5', () => {
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.five);
@@ -120,7 +119,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
@@ -128,7 +127,7 @@ describe('Task List Pagination', () => {
     });
 
     it('Items per page set to 10', () => {
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
@@ -140,7 +139,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
@@ -148,7 +147,7 @@ describe('Task List Pagination', () => {
     });
 
     it('Items per page set to 15', () => {
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
@@ -160,7 +159,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
@@ -210,7 +209,7 @@ describe('Task List Pagination', () => {
     });
 
     it('Pagination in an empty task list', () => {
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel1);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         paginationPage.checkPaginationIsNotDisplayed();
     });

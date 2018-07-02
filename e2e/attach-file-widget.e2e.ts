@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import TasksPage = require('./pages/adf/process_services/tasksPage.js');
 import ViewerPage = require('./pages/adf/viewerPage.js');
 import UsingWidget = require('./pages/adf/process_services/widgets/usingWidget.js');
@@ -37,7 +37,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 
 describe('Start Task - Task App', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let viewerPage = new ViewerPage();
     let usingWidget = new UsingWidget();
     let processServicesPage = new ProcessServicesPage();
@@ -62,7 +62,7 @@ describe('Start Task - Task App', () => {
 
         await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        await adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

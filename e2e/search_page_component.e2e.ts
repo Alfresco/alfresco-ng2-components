@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import SearchDialog = require('./pages/adf/dialog/searchDialog.js');
 import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
 import SearchResultPage = require('./pages/adf/searchResultsPage.js');
@@ -25,17 +25,14 @@ import AcsUserModel = require('./models/ACS/acsUserModel.js');
 import FolderModel = require('./models/ACS/folderModel.js');
 import FileModel = require('./models/ACS/fileModel.js');
 
-import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-import QueriesAPI = require('./restAPI/ACS/QueriesAPI.js');
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-
 import TestConfig = require('./test.config.js');
 import Util = require('./util/util.js');
 import resources = require('./util/resources.js');
 
-let retryNumber = 100;
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Test Search component - Search Page', () => {
+describe('Test Search component - Search Page', () => {
     let search = {
         active: {
             base: 'newFile',
@@ -49,7 +46,7 @@ xdescribe('Test Search component - Search Page', () => {
         }
     };
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let searchDialog = new SearchDialog();
     let searchResultPage = new SearchResultPage();
@@ -64,42 +61,49 @@ xdescribe('Test Search component - Search Page', () => {
     let newFolderModel = new FolderModel({ 'name': 'newFolder' });
     let fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
 
-    beforeAll( (done) => {
+    beforeAll(async (done) => {
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, search.active.base, search.active.extension);
         adminFileNames = Util.generateSeqeunceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
 
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(() => {
-                return adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
-            })
-            .then(() => {
-                return protractor.promise.all([
-                    NodesAPI.uploadFolderViaAPI(acsUser, emptyFolderModel, '-my-'),
-                    NodesAPI.uploadFolderViaAPI(acsUser, newFolderModel, '-my-')
-                ]);
-            })
-            .then(() => {
-                return protractor.promise.all([
-                    NodesAPI.createEmptyFilesViaAPI(acsUser, fileNames, newFolderModel.id),
-                    NodesAPI.createEmptyFilesViaAPI(adminUserModel, adminFileNames, newFolderModel.id),
-                    NodesAPI.uploadFileViaAPI(acsUser, firstFileModel, '-my-', false)
-                ]);
-            })
-            .then(function (data) {
-                QueriesAPI.getNodes(retryNumber, acsUser, 'term=nothing*&rootNodeId=-root-', nrOfFiles + adminNrOfFiles, () => {
-                    done();
-                });
-            });
+        let uploadActions = new UploadActions();
 
-    });
-
-    afterAll((done) => {
-        NodesAPI.deleteContent(acsUser, newFolderModel.id, () => {
-            NodesAPI.deleteContent(acsUser, emptyFolderModel.id, () => {
-                done();
-            });
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
         });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+        await uploadActions.uploadFolder(this.alfrescoJsApi, emptyFolderModel.name, '-my-');
+        let newFolderModelUploaded =  await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+
+        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, newFolderModelUploaded.entry.id);
+
+        let firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
+        Object.assign(firstFileModel, firstFileUploaded.entry);
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, adminFileNames, newFolderModelUploaded.entry.id);
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        contentServicesPage.goToDocumentList();
+
+        done();
     });
+
+    // afterAll((done) => {
+    //     NodesAPI.deleteContent(acsUser, newFolderModel.id, () => {
+    //         NodesAPI.deleteContent(acsUser, emptyFolderModel.id, () => {
+    //             done();
+    //         });
+    //     });
+    // });
 
     it('1. \'No results found searching for\' message is displayed on Search Page', () => {
         contentServicesPage.goToDocumentList();

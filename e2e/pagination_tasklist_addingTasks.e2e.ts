@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import TasksPage = require('./pages/adf/process_services/tasksPage.js');
 import PaginationPage = require('./pages/adf/paginationPage.js');
@@ -31,7 +31,7 @@ import resources = require('./util/resources.js');
 
 describe('Items per page set to 15 and adding of tasks', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
     let paginationPage = new PaginationPage();
@@ -66,7 +66,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
             await apps.startProcess(this.alfrescoJsApi, resultApp);
         }
 
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

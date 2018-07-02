@@ -18,12 +18,12 @@
 import TestConfig = require('./test.config.js');
 import CONSTANTS = require('./util/constants');
 import resources = require('./util/resources.js');
-import AdfLoginPage = require('./pages/adf/loginPage.js');
-import AdfNavigationBarPage = require('./pages/adf/navigationBarPage.js');
-import AdfProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
+import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
+import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import AdfStartProcessPage = require('./pages/adf/process_services/startProcessPage.js');
 import AdfProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-import AdfAppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
+import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
 import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
 
 import AlfrescoApi = require('alfresco-js-api-node');
@@ -32,12 +32,12 @@ import { UsersActions } from './actions/users.actions';
 
 describe('Process Filters Test', () => {
 
-    let adfLoginPage = new AdfLoginPage();
-    let adfNavigationBarPage = new AdfNavigationBarPage();
-    let adfProcessServicesPage = new AdfProcessServicesPage();
+    let loginPage = new LoginPage();
+    let navigationBarPage = new NavigationBarPage();
+    let processServicesPage = new ProcessServicesPage();
     let adfStartProcessPage = new AdfStartProcessPage();
     let adfProcessFiltersPage = new AdfProcessFiltersPage();
-    let adfAppNavigationBarPage = new AdfAppNavigationBarPage();
+    let appNavigationBarPage = new AppNavigationBarPage();
     let adfProcessDetailsPage = new AdfProcessDetailsPage();
 
     let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
@@ -70,25 +70,25 @@ describe('Process Filters Test', () => {
 
         await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        await adfLoginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
 
         done();
     });
 
     it('Navigate to Running filter', () => {
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.checkApsContainer();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.enterProcessName(processTitle.completed);
         adfStartProcessPage.selectFromProcessDropdown(app.process_title);
         adfStartProcessPage.clickFormStartProcessButton();
         adfProcessDetailsPage.clickCancelProcessButton();
-        adfNavigationBarPage.clickProcessServicesButton();
-        adfProcessServicesPage.goToApp(app.title);
-        adfAppNavigationBarPage.clickProcessButton();
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.goToApp(app.title);
+        appNavigationBarPage.clickProcessButton();
         adfProcessFiltersPage.clickCreateProcessButton();
         adfProcessFiltersPage.clickNewProcessDropdown();
         adfStartProcessPage.enterProcessName(processTitle.running);

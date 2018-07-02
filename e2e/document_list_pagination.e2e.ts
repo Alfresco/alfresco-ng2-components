@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ContentServicesPage = require('./pages/adf/contentServicesPage.js');
 import PaginationPage = require('./pages/adf/paginationPage.js');
 import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
@@ -50,7 +50,7 @@ describe('Test Document List - Pagination', function () {
         default: '25'
     };
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let paginationPage = new PaginationPage();
     let navigationBarPage = new NavigationBarPage();
@@ -89,7 +89,7 @@ describe('Test Document List - Pagination', function () {
 
         await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, folderThreeUploadedModel.entry.id);
 
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
@@ -127,13 +127,13 @@ describe('Test Document List - Pagination', function () {
         paginationPage.checkPreviousPageButtonIsDisabled();
 
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260069] 5 Items per page', function () {
@@ -182,13 +182,13 @@ describe('Test Document List - Pagination', function () {
         });
 
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260067] 10 Items per page', function () {
@@ -218,13 +218,13 @@ describe('Test Document List - Pagination', function () {
         });
 
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
         currentPage = 1;
     });
 
@@ -256,7 +256,7 @@ describe('Test Document List - Pagination', function () {
         });
 
         navigationBarPage.clickLogoutButton();
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);

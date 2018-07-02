@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import PaginationPage = require('./pages/adf/paginationPage.js');
 import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
@@ -37,7 +37,7 @@ describe('Test Process List - Pagination when adding processes', () => {
         fifteenValue: 15
     };
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let paginationPage = new PaginationPage();
     let processFiltersPage = new ProcessFiltersPage();
@@ -71,7 +71,7 @@ describe('Test Process List - Pagination when adding processes', () => {
             await apps.startProcess(this.alfrescoJsApi, resultApp);
         }
 
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

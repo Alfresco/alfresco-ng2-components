@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage.js');
 import TasksPage = require('./pages/adf/process_services/tasksPage.js');
 import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
@@ -44,7 +44,7 @@ import { UsersActions } from './actions/users.actions';
 
 describe('Start Task - Custom App', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let attachmentListPage = new AttachmentListPage();
     let processUserModel, assigneeUserModel;
@@ -88,7 +88,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('Modifying task', () => {
-        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[0])

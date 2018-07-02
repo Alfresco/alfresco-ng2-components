@@ -18,7 +18,7 @@
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
 import FileModel = require('./models/ACS/fileModel.js');
 
-import AdfLoginPage = require('./pages/adf/loginPage.js');
+import LoginPage = require('./pages/adf/loginPage.js');
 import TagPage = require('./pages/adf/tagPage.js');
 
 import TestConfig = require('./test.config.js');
@@ -30,7 +30,7 @@ import { UploadActions } from './actions/ACS/upload.actions';
 
 describe('Tag component', () => {
 
-    let adfLoginPage = new AdfLoginPage();
+    let loginPage = new LoginPage();
     let tagPage = new TagPage();
 
     let acsUser = new AcsUserModel();
@@ -59,7 +59,7 @@ describe('Tag component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
 
