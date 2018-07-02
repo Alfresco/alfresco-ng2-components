@@ -17,25 +17,28 @@
 
 import Util = require('./util/util.js');
 import TestConfig = require('./test.config.js');
-import AdfLoginPage = require('./pages/adf/loginPage');
-import AdfContentServicesPage = require('./pages/adf/contentServicesPage');
-import AdfViewerPage = require('./pages/adf/viewerPage.js');
+
+import LoginPage = require('./pages/adf/loginPage');
+import ContentServicesPage = require('./pages/adf/contentServicesPage');
+import ViewerPage = require('./pages/adf/viewerPage.js');
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
 
 import resources = require('./util/resources.js');
-import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 
 import path = require('path');
 import FileModel = require('./models/ACS/fileModel.js');
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
 
-xdescribe('Test Content Services Viewer', () => {
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UploadActions } from './actions/ACS/upload.actions';
+
+fdescribe('Test Content Services Viewer', () => {
 
     let acsUser = new AcsUserModel();
-    let adfViewerPage = new AdfViewerPage();
-    let adfContentServicesPage = new AdfContentServicesPage();
-    let adfLoginPage = new AdfLoginPage();
+    let viewerPage = new ViewerPage();
+    let contentServicesPage = new ContentServicesPage();
+    let loginPage = new LoginPage();
+
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
@@ -76,182 +79,194 @@ xdescribe('Test Content Services Viewer', () => {
     let downloadedMp4File = path.join(downloadDir, mp4File.name);
     let downloadedPagesFile = path.join(downloadDir, pagesFile.name);
 
-    beforeAll( (done) => {
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(() => {
-                // console.log('User name: ' + acsUser.getId() + 'pass: ' + acsUser.getPassword());
-                adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
-                adfContentServicesPage.goToDocumentList();
-            })
-            .then(() => {
-                return protractor.promise.all([
-                    NodesAPI.uploadFileViaAPI(acsUser, pdfFile, '-my-', false),
+    beforeAll(async (done) => {
+        let uploadActions = new UploadActions();
 
-                    NodesAPI.uploadFileViaAPI(acsUser, jpgFile, '-my-', false),
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
 
-                    NodesAPI.uploadFileViaAPI(acsUser, mp4File, '-my-', false),
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-                    NodesAPI.uploadFileViaAPI(acsUser, pagesFile, '-my-', false),
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-                    NodesAPI.uploadFileViaAPI(acsUser, pptFile, '-my-', false)]);
-            })
-            .then(() => {
-                done();
-            });
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        contentServicesPage.goToDocumentList();
+
+        let pdfFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
+        Object.assign(pdfFile, pdfFileUploaded.entry);
+
+        let jpgFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFile.location, jpgFile.name, '-my-');
+        Object.assign(jpgFile, jpgFileUploaded.entry);
+
+        let mp4FileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, mp4File.location, mp4File.name, '-my-');
+        Object.assign(mp4File, mp4FileUploaded.entry);
+
+        let pptFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pptFile.location, pptFile.name, '-my-');
+        Object.assign(pptFile, pptFileUploaded.entry);
+
+        let pagesFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pagesFile.location, pagesFile.name, '-my-');
+        Object.assign(pagesFile, pagesFileUploaded.entry);
+
+        done();
     });
 
-    afterAll((done) => {
-        NodesAPI.deleteContent(acsUser, pdfFile.getId(), () => {
-            done();
-        });
-
-        NodesAPI.deleteContent(acsUser, jpgFile.getId(), () => {
-            done();
-        });
-
-        NodesAPI.deleteContent(acsUser, mp4File.getId(), () => {
-            done();
-        });
-
-        NodesAPI.deleteContent(acsUser, pagesFile.getId(), () => {
-            done();
-        });
-
-        NodesAPI.deleteContent(acsUser, pptFile.getId(), () => {
-            done();
-        });
-    });
+    // afterAll((done) => {
+    //     NodesAPI.deleteContent(acsUser, pdfFile.getId(), () => {
+    //         done();
+    //     });
+    //
+    //     NodesAPI.deleteContent(acsUser, jpgFile.getId(), () => {
+    //         done();
+    //     });
+    //
+    //     NodesAPI.deleteContent(acsUser, mp4File.getId(), () => {
+    //         done();
+    //     });
+    //
+    //     NodesAPI.deleteContent(acsUser, pagesFile.getId(), () => {
+    //         done();
+    //     });
+    //
+    //     NodesAPI.deleteContent(acsUser, pptFile.getId(), () => {
+    //         done();
+    //     });
+    // });
 
     it('1. Open viewer for a .pdf file', () => {
-        adfContentServicesPage.checkAcsContainer();
-        adfViewerPage.viewFile(pdfFile.name);
-        adfViewerPage.checkFileContent('1', pdfFile.firstPageText);
-        adfViewerPage.checkCloseButtonIsDisplayed();
-        adfViewerPage.checkFileThumbnailIsDisplayed();
-        adfViewerPage.checkFileNameIsDisplayed(pdfFile.name);
-        adfViewerPage.checkDownloadButtonIsDisplayed();
-        adfViewerPage.checkInfoButtonIsDisplayed();
-        adfViewerPage.checkPreviousPageButtonIsDisplayed();
-        adfViewerPage.checkNextPageButtonIsDisplayed();
-        adfViewerPage.checkPageSelectorInputIsDisplayed('1');
-        adfViewerPage.checkZoomInButtonIsDisplayed();
-        adfViewerPage.checkZoomOutButtonIsDisplayed();
-        adfViewerPage.checkScalePageButtonIsDisplayed();
+        contentServicesPage.checkAcsContainer();
+        viewerPage.viewFile(pdfFile.name);
+        viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        viewerPage.checkCloseButtonIsDisplayed();
+        viewerPage.checkFileThumbnailIsDisplayed();
+        viewerPage.checkFileNameIsDisplayed(pdfFile.name);
+        viewerPage.checkDownloadButtonIsDisplayed();
+        viewerPage.checkInfoButtonIsDisplayed();
+        viewerPage.checkPreviousPageButtonIsDisplayed();
+        viewerPage.checkNextPageButtonIsDisplayed();
+        viewerPage.checkPageSelectorInputIsDisplayed('1');
+        viewerPage.checkZoomInButtonIsDisplayed();
+        viewerPage.checkZoomOutButtonIsDisplayed();
+        viewerPage.checkScalePageButtonIsDisplayed();
     });
 
     it('2. Use viewer pagination', () => {
-        adfViewerPage.clickNextPageButton();
-        adfViewerPage.checkFileContent('2', pdfFile.secondPageText);
-        adfViewerPage.checkPageSelectorInputIsDisplayed('2');
-        adfViewerPage.clickPreviousPageButton();
-        adfViewerPage.checkFileContent('1', pdfFile.firstPageText);
-        adfViewerPage.checkPageSelectorInputIsDisplayed('1');
-        adfViewerPage.enterPage(pdfFile.lastPageNumber);
-        adfViewerPage.checkFileContent(pdfFile.lastPageNumber, pdfFile.lastPageText);
-        adfViewerPage.checkPageSelectorInputIsDisplayed(pdfFile.lastPageNumber);
+        viewerPage.clickNextPageButton();
+        viewerPage.checkFileContent('2', pdfFile.secondPageText);
+        viewerPage.checkPageSelectorInputIsDisplayed('2');
+        viewerPage.clickPreviousPageButton();
+        viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        viewerPage.checkPageSelectorInputIsDisplayed('1');
+        viewerPage.enterPage(pdfFile.lastPageNumber);
+        viewerPage.checkFileContent(pdfFile.lastPageNumber, pdfFile.lastPageText);
+        viewerPage.checkPageSelectorInputIsDisplayed(pdfFile.lastPageNumber);
 
-        adfViewerPage.canvasHeight().then(function (value) {
+        viewerPage.canvasHeight().then(function (value) {
             defaultHeight = parseInt(value, 10);
         });
-        adfViewerPage.canvasWidth().then(function (value) {
+        viewerPage.canvasWidth().then(function (value) {
             defaultWidth = parseInt(value, 10);
         });
-        adfViewerPage.clickZoomInButton();
-        adfViewerPage.canvasHeight().then(function (value) {
+        viewerPage.clickZoomInButton();
+        viewerPage.canvasHeight().then(function (value) {
             zoomedInHeight = parseInt(value, 10);
             expect(zoomedInHeight).toBeGreaterThan(defaultHeight);
         });
-        adfViewerPage.canvasWidth().then(function (value) {
+        viewerPage.canvasWidth().then(function (value) {
             zoomedInWidth = parseInt(value, 10);
             expect(zoomedInWidth).toBeGreaterThan(defaultWidth);
         });
-        adfViewerPage.clickScalePageButton();
-        adfViewerPage.canvasHeight().then(function (value) {
+        viewerPage.clickScalePageButton();
+        viewerPage.canvasHeight().then(function (value) {
             scaledHeight = parseInt(value, 10);
             expect(scaledHeight).toEqual(defaultHeight);
         });
-        adfViewerPage.canvasWidth().then(function (value) {
+        viewerPage.canvasWidth().then(function (value) {
             scaledWidth = parseInt(value, 10);
             expect(scaledWidth).toEqual(defaultWidth);
         });
-        adfViewerPage.clickZoomOutButton();
-        adfViewerPage.canvasHeight().then(function (value) {
+        viewerPage.clickZoomOutButton();
+        viewerPage.canvasHeight().then(function (value) {
             zoomedOutHeight = parseInt(value, 10);
             expect(zoomedOutHeight).toBeLessThan(defaultHeight);
         });
-        adfViewerPage.canvasWidth().then(function (value) {
+        viewerPage.canvasWidth().then(function (value) {
             zoomedOutWidth = parseInt(value, 10);
             expect(zoomedOutWidth).toBeLessThan(defaultWidth);
         });
     });
 
     it('3. Use viewer toolbar', () => {
-        adfViewerPage.clickDownloadButton();
-        adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsDisplayed();
-        adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsNotDisplayed();
+        viewerPage.clickDownloadButton();
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsNotDisplayed();
         expect(Util.fileExists(downloadedPdfFile, 10)).toBe(true);
-        adfViewerPage.clickCloseButton();
+        viewerPage.clickCloseButton();
     });
 
     it('4. Open viewer for a .jpg file', () => {
-        adfViewerPage.viewFile(jpgFile.name);
-        adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsDisplayed();
-        adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsNotDisplayed();
-        adfViewerPage.checkDownloadButtonIsDisplayed();
-        adfViewerPage.clickDownloadButton();
-        adfViewerPage.checkFileThumbnailIsDisplayed();
-        adfViewerPage.checkFileNameIsDisplayed(jpgFile.name);
+        viewerPage.viewFile(jpgFile.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsNotDisplayed();
+        viewerPage.checkDownloadButtonIsDisplayed();
+        viewerPage.clickDownloadButton();
+        viewerPage.checkFileThumbnailIsDisplayed();
+        viewerPage.checkFileNameIsDisplayed(jpgFile.name);
         expect(Util.fileExists(downloadedJpgFile, 10)).toBe(true);
-        adfViewerPage.clickCloseButton();
+        viewerPage.clickCloseButton();
     });
 
     it('5. Open viewer for a .ppt file converted to .pdf', () => {
-        adfViewerPage.viewFile(pptFile.name);
-        adfViewerPage.checkFileContent('1', pptFile.firstPageText);
-        adfViewerPage.checkCloseButtonIsDisplayed();
-        adfViewerPage.checkFileThumbnailIsDisplayed();
-        adfViewerPage.checkFileNameIsDisplayed(pptFile.name);
-        adfViewerPage.checkDownloadButtonIsDisplayed();
-        adfViewerPage.checkInfoButtonIsDisplayed();
-        adfViewerPage.checkPreviousPageButtonIsDisplayed();
-        adfViewerPage.checkNextPageButtonIsDisplayed();
-        adfViewerPage.checkPageSelectorInputIsDisplayed('1');
-        adfViewerPage.checkZoomInButtonIsDisplayed();
-        adfViewerPage.checkZoomOutButtonIsDisplayed();
-        adfViewerPage.checkScalePageButtonIsDisplayed();
-        adfViewerPage.clickCloseButton();
+        viewerPage.viewFile(pptFile.name);
+        viewerPage.checkFileContent('1', pptFile.firstPageText);
+        viewerPage.checkCloseButtonIsDisplayed();
+        viewerPage.checkFileThumbnailIsDisplayed();
+        viewerPage.checkFileNameIsDisplayed(pptFile.name);
+        viewerPage.checkDownloadButtonIsDisplayed();
+        viewerPage.checkInfoButtonIsDisplayed();
+        viewerPage.checkPreviousPageButtonIsDisplayed();
+        viewerPage.checkNextPageButtonIsDisplayed();
+        viewerPage.checkPageSelectorInputIsDisplayed('1');
+        viewerPage.checkZoomInButtonIsDisplayed();
+        viewerPage.checkZoomOutButtonIsDisplayed();
+        viewerPage.checkScalePageButtonIsDisplayed();
+        viewerPage.clickCloseButton();
     });
 
     it('6. Open viewer fot an unsupported file', () => {
-        adfViewerPage.viewFile(pagesFile.name);
-        adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsDisplayed();
-        adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsNotDisplayed();
-        adfViewerPage.checkFileThumbnailIsDisplayed();
-        adfViewerPage.checkDownloadButtonIsDisplayed();
-        adfViewerPage.clickDownloadButton();
+        viewerPage.viewFile(pagesFile.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsNotDisplayed();
+        viewerPage.checkFileThumbnailIsDisplayed();
+        viewerPage.checkDownloadButtonIsDisplayed();
+        viewerPage.clickDownloadButton();
         expect(Util.fileExists(downloadedPagesFile, 10)).toBe(true);
-        adfViewerPage.checkFileNameIsDisplayed(pagesFile.name);
-        adfViewerPage.clickCloseButton();
+        viewerPage.checkFileNameIsDisplayed(pagesFile.name);
+        viewerPage.clickCloseButton();
     });
 
     it('7. Open viewer for a .mp4 file', () => {
-        adfViewerPage.viewFile(mp4File.name);
-        adfViewerPage.checkMediaPlayerContainerIsDisplayed();
-        adfViewerPage.clickDownloadButton();
+        viewerPage.viewFile(mp4File.name);
+        viewerPage.checkMediaPlayerContainerIsDisplayed();
+        viewerPage.clickDownloadButton();
         expect(Util.fileExists(downloadedMp4File, 10)).toBe(true);
-        adfViewerPage.checkFileThumbnailIsDisplayed();
-        adfViewerPage.checkFileNameIsDisplayed(mp4File.name);
-        adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsDisplayed();
-        adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsNotDisplayed();
-        adfViewerPage.checkDownloadButtonIsDisplayed();
-        adfViewerPage.clickCloseButton();
+        viewerPage.checkFileThumbnailIsDisplayed();
+        viewerPage.checkFileNameIsDisplayed(mp4File.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsNotDisplayed();
+        viewerPage.checkDownloadButtonIsDisplayed();
+        viewerPage.clickCloseButton();
     });
 });

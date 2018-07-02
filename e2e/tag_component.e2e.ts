@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
-import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
-
 import AcsUserModel = require('./models/ACS/acsUserModel.js');
 import FileModel = require('./models/ACS/fileModel.js');
 
@@ -28,7 +25,10 @@ import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 import Util = require('./util/util.js');
 
-xdescribe('Tag component', () => {
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UploadActions } from './actions/ACS/upload.actions';
+
+describe('Tag component', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let tagPage = new TagPage();
@@ -45,11 +45,27 @@ xdescribe('Tag component', () => {
     let digitsTag = Util.generateRandomStringDigits();
     let nonLatinTag = Util.generateRandomStringNonLatin();
 
-    beforeAll( (done) => {
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(NodesAPI.uploadFileViaAPI(acsUser, pdfFileModel, '-my-', false))
-            .then(adfLoginPage.loginToContentServicesUsingUserModel(acsUser))
-            .then(done());
+    beforeAll(async (done) => {
+        let uploadActions = new UploadActions();
+
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+
+        Object.assign(pdfFileModel, pdfUploadedFile.entry);
+
+        done();
     });
 
     it('Tag node ID', () => {

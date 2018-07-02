@@ -25,20 +25,12 @@ import AdfStartProcessPage = require('./pages/adf/process_services/startProcessP
 import AdfProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
 import AdfAppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage.js');
 import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
-import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
-import RuntimeAppDefinitionAPI = require('./restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
-import ModelsAPI = require('./restAPI/APS/enterprise/ModelsAPI');
-import AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
-import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
+import AlfrescoApi = require('alfresco-js-api-node');
+import { AppsActions } from './actions/APS/apps.actions';
+import { UsersActions } from './actions/users.actions';
 
-import User = require('./models/APS/User');
-import AppPublish = require('./models/APS/AppPublish');
-import AppDefinition = require('./models/APS/AppDefinition');
-import Tenant = require('./models/APS/Tenant');
-
-xdescribe('Process Filters Test', () => {
+describe('Process Filters Test', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let adfNavigationBarPage = new AdfNavigationBarPage();
@@ -47,14 +39,10 @@ xdescribe('Process Filters Test', () => {
     let adfProcessFiltersPage = new AdfProcessFiltersPage();
     let adfAppNavigationBarPage = new AdfAppNavigationBarPage();
     let adfProcessDetailsPage = new AdfProcessDetailsPage();
+
     let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
     let appId, modelId, response, procUserModel, basicAuth, tenantId;
-    // REST API
-    let appUtils = new AppDefinitionsAPI();
-    let runtimeAppDefAPI = new RuntimeAppDefinitionAPI();
-    let modelUtils = new ModelsAPI();
-    let tenantsAPI = new TenantsAPI();
-    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
     let processTitle = {
         running: 'Test_running',
         completed: 'Test_completed'
@@ -65,69 +53,26 @@ xdescribe('Process Filters Test', () => {
         completed: 'Completed'
     };
 
-    beforeAll( (done) => {
-        tenantsAPI.createTenant(basicAuthAdmin, new Tenant())
-            .then(function (result) {
-                tenantId = JSON.parse(result.responseBody).id;
-                procUserModel = new User({tenantId: tenantId});
-                return new UserAPI().createUser(basicAuthAdmin, procUserModel);
-            })
-            .then(function (result) {
-                basicAuth = new BasicAuthorization(procUserModel.email, procUserModel.password);
-                return appUtils.importApp(basicAuth, app.file_location);
-            })
-            .then(function (result) {
-                // console.info('Import app result: ', result);
-                response = JSON.parse(result.responseBody);
-                appId = response.id;
-                modelId = response.definition.models[0].id;
-                expect(result['statusCode']).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
+    beforeAll(async (done) => {
+        let apps = new AppsActions();
+        let users = new UsersActions();
 
-                return appUtils.getAppDefinition(basicAuth, appId.toString());
-            })
-            .then(function (result) {
-                // console.info('Get app definition result: ', result);
-                expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-                expect(JSON.parse(result.responseBody).id).toEqual(appId);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
 
-                return appUtils.publishApp(basicAuth, appId.toString(), new AppPublish());
-            })
-            .then(function (result) {
-                // console.info('Publish app result: ', result);
-                expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-                response = JSON.parse(result.responseBody).appDefinition;
-                expect(response.id).toEqual(appId);
-                expect(response.name).toEqual(app.title);
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-                return runtimeAppDefAPI.deployApp(basicAuth, new AppDefinition({id: appId.toString()}));
-            })
-            .then(function (result) {
-                // console.info('Deploy app result: ', result.statusCode + ' ' + result.statusMessage);
-                expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-            })
-            .then(() => {
-                adfLoginPage.loginToProcessServicesUsingUserModel(procUserModel);
-                done();
-            });
-    });
+        let user = await users.createTenantAndUser(this.alfrescoJsApi);
 
-    afterAll((done) => {
-        modelUtils.deleteModel(basicAuth, appId)
-            .then(function (result) {
-                // console.info('Delete app result: ', result.statusCode + ' ' + result.statusMessage);
-                expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-                return modelUtils.deleteModel(basicAuth, modelId);
-            })
-            .then(function (result) {
-                // console.info('Delete process result: ', result.statusCode + ' ' + result.statusMessage);
-                expect(result.statusCode).toEqual(CONSTANTS.HTTP_RESPONSE_STATUS_CODE.OK);
-            })
-            .then(() => {
-                tenantsAPI.deleteTenant(basicAuthAdmin, tenantId.toString());
-            })
-            .then(function (result) {
-                done();
-            });
+        await this.alfrescoJsApi.login(user.email, user.password);
+
+        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+
+        await adfLoginPage.loginToProcessServicesUsingUserModel(user);
+
+        done();
     });
 
     it('Navigate to Running filter', () => {

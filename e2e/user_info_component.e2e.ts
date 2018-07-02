@@ -25,13 +25,13 @@ import User = require('./models/APS/User');
 
 import PeopleAPI = require('./restAPI/ACS/PeopleAPI.js');
 import UserProfileAPI = require('./restAPI/APS/enterprise/UserProfileAPI.js');
-import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
-import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
 import Tenant = require('./models/APS/Tenant');
+
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UsersActions } from './actions/users.actions';
 
 describe('Test User Info component', () => {
 
@@ -39,6 +39,8 @@ describe('Test User Info component', () => {
     let adfLoginPage = new AdfLoginPage();
     let navigationBarPage = new NavigationBarPage();
     let userInfoDialog = new UserInfoDialog();
+    let processUserModel, contentUserModel;
+
     let adminACSUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
@@ -51,34 +53,38 @@ describe('Test User Info component', () => {
         'name': resources.Files.PROFILE_IMAGES.BPM.file_name,
         'location': resources.Files.PROFILE_IMAGES.BPM.file_location
     });
-    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    let basicAuth, contentUserModel, processUserModel, retry = 20;
 
-    beforeAll( (done) => {
-        new TenantsAPI().createTenant(basicAuthAdmin, new Tenant())
-            .then(function (result) {
-                return new UserAPI().createUser(basicAuthAdmin, processUserModel = new User({ tenantId: JSON.parse(result.responseBody).id }));
-            })
-            .then(() => {
-                contentUserModel = new AcsUserModel({
-                    'id': processUserModel.email,
-                    'password': processUserModel.password,
-                    'firstName': processUserModel.firstName,
-                    'lastName': processUserModel.lastName,
-                    'email': processUserModel.email
-                });
-                basicAuth = new BasicAuthorization(processUserModel.email, processUserModel.password);
-                return PeopleAPI.createUserViaAPI(adminACSUserModel, contentUserModel);
-            })
-            .then(() => {
-                done();
-            });
-    });
+    beforeAll(async (done) => {
+        let users = new UsersActions();
 
-    it('1. Enable Process Services and Content Services ', () => {
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ALL',
+            hostEcm: TestConfig.adf.url,
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        contentUserModel = new AcsUserModel({
+            'id': processUserModel.email,
+            'password': processUserModel.password,
+            'firstName': processUserModel.firstName,
+            'lastName': processUserModel.lastName,
+            'email': processUserModel.email
+        });
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(contentUserModel);
+
         adfLoginPage.goToLoginPage();
         adfSettingsPage.setProviderEcmBpm();
         adfLoginPage.login(contentUserModel.id, contentUserModel.password);
+
+        done();
+    });
+
+    it('1. Enable Process Services and Content Services ', () => {
         navigationBarPage.clickUserProfile();
         userInfoDialog.dialogIsDisplayed().contentServicesTabIsDisplayed().processServicesTabIsDisplayed();
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
@@ -147,7 +153,7 @@ describe('Test User Info component', () => {
         let flow = protractor.promise.controlFlow();
         flow.execute(() => {
             PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
-            PeopleAPI.getAvatarViaAPI(retry, contentUserModel, '-me-', function (result) {
+            PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function (result) {
             });
         });
 
@@ -160,9 +166,12 @@ describe('Test User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('5. The profile picture is changed from APS', () => {
+    it('5. The profile picture is changed from APS', async () => {
+        let users = new UsersActions();
         navigationBarPage.clickLoginButton();
-        new UserProfileAPI().changeProfilePicture(basicAuth, apsAvatarFileModel.getLocation());
+
+        await this.alfrescoJsApi.login(contentUserModel.email, contentUserModel.password);
+        await users.changeProfilePictureAps(this.alfrescoJsApi, apsAvatarFileModel.getLocation());
 
         adfSettingsPage.setProviderBpm();
         adfLoginPage.login(processUserModel.email, processUserModel.password);

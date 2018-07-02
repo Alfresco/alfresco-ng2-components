@@ -22,16 +22,16 @@ import ProcessFiltersPage = require('./pages/adf/process_services/processFilters
 import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
 import NavigationBarPage = require('./pages/adf/navigationBarPage.js');
 
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
-
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
-import apps = require('./restAPI/APS/reusableActions/apps');
-import users = require('./restAPI/APS/reusableActions/users');
 
 import Util = require('./util/util.js');
 
-xdescribe('Test Process List - Pagination', function () {
+import AlfrescoApi = require('alfresco-js-api-node');
+import { AppsActions } from './actions/APS/apps.actions';
+import { UsersActions } from './actions/users.actions';
+
+describe('Test Process List - Pagination', function () {
 
     let itemsPerPage = {
         five: '5',
@@ -54,39 +54,36 @@ xdescribe('Test Process List - Pagination', function () {
     let processDetailsPage = new ProcessDetailsPage();
     let navigationBarPage = new NavigationBarPage();
 
-    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    let basicAuth;
-    let processUserModel, secondUserModel;
+    let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let nrOfProcesses = 20;
     let page, totalPages, processNameBase = 'process';
     let processNames = Util.generateSeqeunceFiles(10, nrOfProcesses + 9, processNameBase, '');
 
-    beforeAll( (done) => {
-        users.createTenantAndUser(basicAuthAdmin)
-            .then(function (user) {
-                users.createTenantAndUser(basicAuthAdmin)
-                    .then(function (response) {
-                        secondUserModel = response;
-                    });
-                processUserModel = user;
-                basicAuth = new BasicAuthorization(user.email, user.password);
-                apps.importPublishDeployApp(basicAuth, app.file_location)
-                    .then(function (resultApp) {
-                        let arr = [];
-                        for (let i = 0; i < nrOfProcesses; i++) {
-                            arr.push(apps.startProcess(basicAuth, resultApp, processNames[i]));
-                        }
+    beforeAll(async (done) => {
+        let apps = new AppsActions();
+        let users = new UsersActions();
 
-                        Promise.all(arr).then(function () {
-                            adfLoginPage.loginToProcessServicesUsingUserModel(secondUserModel);
-                            done();
-                        });
-                    })
-                    .catch(function (error) {
-                        done.fail('Create test precondition failed: ' + error);
-                    });
-            });
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+        let resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+
+        for (let i = 0; i < nrOfProcesses; i++) {
+            await apps.startProcess(this.alfrescoJsApi, resultApp);
+        }
+
+        adfLoginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
+        done();
     });
 
     it('[C261042] Default pagination', function () {
