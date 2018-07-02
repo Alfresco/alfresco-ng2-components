@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-layout-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss']
+    styleUrls: ['./header.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    host: { 'class': 'adf-layout-header' }
 })
 
 export class HeaderLayoutComponent {
@@ -28,10 +30,10 @@ export class HeaderLayoutComponent {
     @Input() title: string;
     @Input() logo: string = '../assets/logo.png';
     @Input() color: string;
-    @Output() toggled = new EventEmitter<boolean>();
-    expanded = false;
+    @Input() showSidenavToggle: boolean = true;
+    @Output() clicked = new EventEmitter<any>();
 
     toggleMenu() {
-        this.toggled.emit(!this.expanded);
+        this.clicked.emit(true);
     }
 }

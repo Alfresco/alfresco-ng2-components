@@ -21,8 +21,8 @@ import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
 import { LayoutModule } from '../..';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { ComponentFactoryResolver, Injector, ComponentFactory } from '@angular/core';
+import { Component } from '@angular/core';
+import { MaterialModule } from './../../../material.module';
 
 describe('HeaderLayoutComponent', () => {
     let fixture: ComponentFixture<HeaderLayoutComponent>;
@@ -77,31 +77,48 @@ describe('HeaderLayoutComponent', () => {
             expect(logo === null).toBeFalsy();
             expect(src).toEqual('logo.png');
         });
+
+        it('test click on sidenav button', () => {
+            component.showSidenavToggle = true;
+            fixture.detectChanges();
+            spyOn(component.clicked, 'emit');
+            const button = fixture.nativeElement.querySelector('.adf-menu-icon');
+
+            button.dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+            expect(component.clicked.emit).toHaveBeenCalledWith(true);
+        });
+
+        it('if showSidenavToggle is false the button menu should not be displayed', () => {
+            component.showSidenavToggle = false;
+            fixture.detectChanges();
+
+            const button = fixture.nativeElement.querySelector('.adf-menu-icon');
+            expect(button === null).toBeTruthy();
+        });
     });
-});
 
-describe('Template tranclusion', () => {
-    let factory: ComponentFactory<HeaderLayoutComponent>;
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-          declarations: [],
-          imports: [ LayoutModule]
+    describe('Template tranclusion', () => {
+
+        @Component({
+            selector: 'adf-test-layout-header',
+            template: `<adf-layout-header title="test" color="primary"><p>Test text<p></adf-layout-header>`
         })
-        .overrideModule(BrowserDynamicTestingModule, {
-          set: {
-            entryComponents: [ HeaderLayoutComponent ]
-          }
-        })
-        .compileComponents();
+        class HeaderLayoutTesterComponent {}
 
-        const resolver = <ComponentFactoryResolver> TestBed.get(ComponentFactoryResolver, null);
-        factory = resolver.resolveComponentFactory(HeaderLayoutComponent);
-      }));
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+              declarations: [HeaderLayoutTesterComponent],
+              imports: [ LayoutModule, MaterialModule ]
+            })
+            .compileComponents();
+          }));
 
-    it('should transclude the provided nodes into the component', () => {
-        const tnode = document.createTextNode('Test text');
-        const componentRef = factory.create(Injector.NULL, [[ tnode ]]);
-        const header = componentRef.location.nativeElement;
-        expect(header.textContent === 'Test text');
-      });
+        it('should transclude the provided nodes into the component', () => {
+            const hostFixture = TestBed.createComponent(HeaderLayoutTesterComponent);
+            hostFixture.detectChanges();
+            const innerText = hostFixture.nativeElement.querySelector('mat-toolbar>p').innerText;
+            expect(innerText).toEqual('Test text');
+        });
+    });
 });
