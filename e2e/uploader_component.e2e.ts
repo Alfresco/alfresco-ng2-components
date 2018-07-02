@@ -30,7 +30,10 @@ import NodesAPI = require('./restAPI/ACS/NodesAPI.js');
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 
-xdescribe('Test Uploader component', () => {
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UploadActions } from './actions/ACS/upload.actions';
+
+describe('Test Uploader component', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();
@@ -74,17 +77,28 @@ xdescribe('Test Uploader component', () => {
     let filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
     let filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
-    beforeAll( (done) => {
-        PeopleAPI.createUserViaAPI(adminUserModel, acsUser)
-            .then(() => {
-                adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
-                return contentServicesPage.goToDocumentList();
-            })
-            .then(() => {
-                return protractor.promise.all([
-                    NodesAPI.uploadFileViaAPI(acsUser, firstPdfFileModel, '-my-', false)
-                ]);
-            });
+    beforeAll(async (done) => {
+        let uploadActions = new UploadActions();
+
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+        adfLoginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        contentServicesPage.goToDocumentList();
+
+        let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
+
+        Object.assign(pdfFileModel, pdfUploadedFile.entry);
+
         done();
     });
 

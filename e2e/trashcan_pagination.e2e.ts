@@ -30,7 +30,7 @@ import Util = require('./util/util.js');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-fdescribe('Trashcan - Pagination', () => {
+describe('Trashcan - Pagination', () => {
     let pagination = {
         base: 'newFile',
         extension: '.txt'

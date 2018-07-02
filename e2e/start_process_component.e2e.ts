@@ -43,6 +43,7 @@ import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import fs = require('fs');
+import path = require('path');
 
 describe('Start Process Component', () => {
 

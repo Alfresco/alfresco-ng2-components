@@ -21,13 +21,7 @@ import TasksPage = require('./pages/adf/process_services/tasksPage.js');
 import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
 import CONSTANTS = require('./util/constants');
 
-import UserAPI = require('./restAPI/APS/enterprise/UsersAPI');
-import RuntimeAppDefinitionAPI = require('./restAPI/APS/enterprise/RuntimeAppDefinitionAPI');
-import TaskAPI = require('./restAPI/APS/enterprise/TaskAPI');
-import FormModelsAPI = require('./restAPI/APS/enterprise/FormModelsAPI.js');
-import AppDefinitionsAPI = require('./restAPI/APS/enterprise/AppDefinitionsAPI');
 import ModelsAPI = require('./restAPI/APS/enterprise/ModelsAPI');
-import TenantsAPI = require('./restAPI/APS/enterprise/TenantsAPI');
 
 import Task = require('./models/APS/Task');
 import Tenant = require('./models/APS/Tenant');
@@ -35,24 +29,25 @@ import User = require('./models/APS/User');
 import AppDefinition = require('./models/APS/AppDefinition');
 import AppPublish = require('./models/APS/AppPublish');
 
-import TaskModel = require('./models/APS/TaskModel.js');
-import FormModel = require('./models/APS/FormModel.js');
-import FileModel = require('./models/ACS/fileModel.js');
-
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
+import TaskModel = require('./models/APS/TaskModel');
+import FormModel = require('./models/APS/FormModel');
+import FileModel = require('./models/ACS/fileModel');
 
 import TestConfig = require('./test.config.js');
 import resources = require('./util/resources.js');
 
 import dateFormat = require('dateformat');
 
-xdescribe('Start Task - Custom App', () => {
+import AlfrescoApi = require('alfresco-js-api-node');
+import { AppsActions } from './actions/APS/apps.actions';
+import { UsersActions } from './actions/users.actions';
+
+describe('Start Task - Custom App', () => {
 
     let adfLoginPage = new AdfLoginPage();
     let processServicesPage = new ProcessServicesPage();
     let attachmentListPage = new AttachmentListPage();
-    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    let basicAuth, processUserModel, assigneeUserModel;
+    let processUserModel, assigneeUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let formTextField = app.form_fields.form_fieldId;
     let formFieldValue = 'First value ';
@@ -66,54 +61,30 @@ xdescribe('Start Task - Custom App', () => {
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
-    beforeAll( (done) => {
-        new TenantsAPI().createTenant(basicAuthAdmin, new Tenant())
-            .then(function (result) {
-                new UserAPI().createUser(basicAuthAdmin, assigneeUserModel = new User({tenantId: JSON.parse(result.responseBody).id}));
-                return new UserAPI().createUser(basicAuthAdmin, processUserModel = new User({tenantId: JSON.parse(result.responseBody).id}));
-            })
-            .then(function (response) {
-                basicAuth = new BasicAuthorization(processUserModel.email, processUserModel.password);
-                return new AppDefinitionsAPI().importApp(basicAuth, app.file_location);
-            })
-            .then(function (response) {
-                appModel = JSON.parse(response.responseBody);
-                modelId = appModel.definition.models[0].id;
-                return appModel.id;
-            })
-            .then(() => {
-                return new AppDefinitionsAPI().publishApp(basicAuth, appModel.id.toString(), new AppPublish());
-            })
-            .then(function (response) {
-                return new RuntimeAppDefinitionAPI().deployApp(basicAuth, new AppDefinition({id: appModel.id.toString()}));
-            })
-            .then(() => {
-                done();
-            });
-    });
+    beforeAll(async (done) => {
+        let apps = new AppsActions();
+        let users = new UsersActions();
 
-    afterAll(function (done) {
-        modelUtils.deleteModel(basicAuth, appModel.id.toString())
-            .then(function (result) {
-                return modelUtils.deleteModel(basicAuth, modelId.toString());
-            })
-            .then(function (result) {
-                return new FormModelsAPI().getFormModels(basicAuth);
-            })
-            .then(function (result) {
-                let response = JSON.parse(result.responseBody);
-                formId = response.data[0].id;
-                return modelUtils.deleteModel(basicAuth, formId.toString());
-            })
-            .then(function (result) {
-                return new TenantsAPI().deleteTenant(basicAuthAdmin, processUserModel.tenantId.toString());
-            })
-            .then(function (result) {
-                done();
-            })
-            .catch(function (error) {
-                // console.log('Failed with error: ', error);
-            });
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+
+        assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+
+        processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+        await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+
+        appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+
+        done();
     });
 
     it('Modifying task', () => {
@@ -139,7 +110,7 @@ xdescribe('Start Task - Custom App', () => {
             });
     });
 
-    it('Information box', () => {
+    xit('Information box', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
@@ -148,10 +119,10 @@ xdescribe('Start Task - Custom App', () => {
                 expect(taskPage.usingTaskDetails().getTitle()).toEqual('Activities');
             })
             .then(() => {
-                return TaskAPI.tasksQuery(basicAuth, new Task({sort: 'created-desc'}));
+                return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
             })
-            .then(function (response) {
-                taskModel = new TaskModel(JSON.parse(response.responseBody).data[0]);
+            .then((response) => {
+                let taskModel = new TaskModel(response.data[0]);
                 taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
                 expect(taskPage.usingTaskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), CONSTANTS.TASKDATAFORMAT));
                 expect(taskPage.usingTaskDetails().getId()).toEqual(taskModel.getId());
@@ -164,10 +135,10 @@ xdescribe('Start Task - Custom App', () => {
                 expect(taskPage.usingTaskDetails().getParentName())
                     .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASKDETAILS.NO_PARENT : taskModel.getParentTaskName());
                 expect(taskPage.usingTaskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
-                return new FormModelsAPI().getForm(basicAuth, taskModel.getFormKey());
+
+                return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(taskModel.getFormKey());
             })
-            .then(function (response) {
-                formModel = new FormModel(JSON.parse(response.responseBody));
+            .then((formModel) => {
                 expect(taskPage.usingTaskDetails().getFormName())
                     .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
             });
