@@ -367,7 +367,36 @@ describe('UploadDragAreaComponent', () => {
 
             addToQueueSpy.and.callFake((fileList) => {
                 expect(fileList.name).toBe('file');
-                expect(fileList.options.path).toBe('/pippo');
+                expect(fileList.options.path).toBe('pippo/');
+            });
+
+            let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+                detail: {
+                    data: getFakeShareDataRow(),
+                    files: [fakeItem]
+                }
+            });
+
+            component.onUploadFiles(fakeCustomEvent);
+        }));
+
+        it('should upload a folder to a specific target folder when dropped onto one', async(() => {
+
+            let fakeItem = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                name: 'file-fake.png',
+                relativeFolder: '/super',
+                file: (callbackFile) => {
+                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    callbackFile(fileFake);
+                }
+            };
+
+            addToQueueSpy.and.callFake((fileList) => {
+                expect(fileList.name).toBe('file');
+                expect(fileList.options.path).toBe('pippo/super');
             });
 
             let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
