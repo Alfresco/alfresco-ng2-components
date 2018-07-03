@@ -31,7 +31,7 @@ export * from './collapsable/index';
 export * from './card-view/index';
 export * from './app-config/index';
 export * from './form/index';
-export * from './sidenav-layout/index';
+export * from './layout/index';
 export * from './comments/index';
 export * from './buttons-menu/index';
 export * from './sorting-picker/index';
