@@ -36,7 +36,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
 
-xdescribe('Start Task - Custom App', () => {
+describe('Start Task - Custom App', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();

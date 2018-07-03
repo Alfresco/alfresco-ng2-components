@@ -32,14 +32,14 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Test Search component - Search Bar', function () {
+describe('Test Search component - Search Bar', function () {
 
     let search = {
         inactive: {
             firstChar: 'x',
             secondChar: 'y',
             thirdChar: 'z',
-            name: 'nonexistent'
+            name: Util.generateRandomString()
         },
         active: {
             base: 'newFile',
@@ -57,7 +57,10 @@ xdescribe('Test Search component - Search Bar', function () {
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'shortName': resources.Files.ADF_DOCUMENTS.PDF.short_file_name
     });
-    let firstFolderModel = new FolderModel({ 'name': 'folderOne', 'shortName': 'folde' });
+
+    let randomPrefix = Util.generateRandomString();
+
+    let firstFolderModel = new FolderModel({ 'name': randomPrefix + 'folderOne', 'shortName': randomPrefix });
     let secondFolder = new FolderModel({ 'name': 'nameFolderOne', 'shortName': 'name' });
     let thirdFolder = new FolderModel({ 'name': 'nameFolderTwo' });
 

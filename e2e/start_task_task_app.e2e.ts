@@ -39,7 +39,7 @@ import { UsersActions } from './actions/users.actions';
 import fs = require('fs');
 import path = require('path');
 
-xdescribe('Start Task - Task App', () => {
+describe('Start Task - Task App', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();

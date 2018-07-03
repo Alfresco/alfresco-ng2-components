@@ -93,12 +93,9 @@ xdescribe('Form widgets', () => {
                 return alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
             })
             .then((response) => {
-                console.log('1' + JSON.stringify(response.data[0].formKey));
                 return alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response.data[0].formKey);
             })
             .then((response) => {
-                console.log('response' + JSON.stringify(response));
-
                 expect(taskPage.usingTaskDetails().getFormName())
                     .toEqual(response.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : response.getName());
             })

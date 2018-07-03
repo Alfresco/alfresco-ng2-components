@@ -29,7 +29,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
 
-xdescribe('Process Filters Test', () => {
+describe('Process Filters Test', () => {
 
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();

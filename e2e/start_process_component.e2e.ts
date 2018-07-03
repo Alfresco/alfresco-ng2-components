@@ -39,7 +39,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import fs = require('fs');
 import path = require('path');
 
-xdescribe('Start Process Component', () => {
+describe('Start Process Component', () => {
 
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();

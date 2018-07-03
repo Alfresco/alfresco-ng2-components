@@ -25,7 +25,7 @@ import CONSTANTS = require('./util/constants');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 
-xdescribe('Test Theming component', () => {
+describe('Test Theming component', () => {
 
     let navigationBarPage = new NavigationBarPage();
     let loginPage = new LoginPage();

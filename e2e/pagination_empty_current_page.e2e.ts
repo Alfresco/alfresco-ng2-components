@@ -28,7 +28,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Pagination - returns to previous page when current is empty', () => {
+describe('Pagination - returns to previous page when current is empty', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
@@ -62,10 +62,6 @@ xdescribe('Pagination - returns to previous page when current is empty', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        contentServicesPage.goToDocumentList();
-
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, files.base, files.extension);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -74,35 +70,47 @@ xdescribe('Pagination - returns to previous page when current is empty', () => {
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
 
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        contentServicesPage.goToDocumentList();
+
         done();
     });
 
     it('Pagination - returns to previous page when current is empty', () => {
-        contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(folderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
+
         paginationPage.selectItemsPerPage(itemsPerPage.five);
+
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
+
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
+
         contentServicesPage.getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
         });
+
         paginationPage.clickOnNextPage();
+
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
+
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+
         contentServicesPage.getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
         });
+
         contentServicesPage.deleteContent(lastFile);
         contentServicesPage.checkContentIsNotDisplayed(lastFile);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
+
         contentServicesPage.getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
         });
