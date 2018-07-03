@@ -1,0 +1,54 @@
+@mixin  adf-header-layout-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $background: map-get($theme, background);
+
+    adf-layout-header .mat-toolbar-single-row {
+
+        color: mat-color($primary, default-contrast) !important;
+        position: relative;
+        padding: 0 24px 0 0;
+
+        .adf-menu-icon {
+            position: relative;
+            margin-left: 14px;
+        }
+
+        .adf-app-logo {
+            position: relative;
+            height: 28px;
+            width: 28px;
+            margin-right: 6px;
+            margin-left: 3px;
+        }
+
+        .adf-header-delimiter {
+            height: 24px;
+            width: 2px;
+            background-color: mat-color($primary, default-contrast);
+            margin-right: 16px;
+        }
+
+        .adf-app-layout-user-profile {
+            margin-right: 16px;
+        }
+
+        .adf-userinfo-container {
+            flex-direction: row;
+            padding: 0;
+        }
+
+        .adf-userinfo-name{
+            padding-right: 8px;
+        }
+
+        @media screen and ($mat-xsmall) {
+            .adf-app-logo,
+            .adf-app-title {
+                display: none;
+            }
+        }
+    }
+}
+
+
