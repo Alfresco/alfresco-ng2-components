@@ -16,7 +16,7 @@
  */
 
 import { AppsProcessService, AppConfigService, DataTableSchema, TranslationService, EmptyCustomContentDirective } from '@alfresco/adf-core';
-import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild } from '@angular/core';
+import { AfterContentInit, ContentChild, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { AppDefinitionRepresentationModel } from '../task-list';
@@ -28,7 +28,7 @@ import { IconModel } from './icon.model';
     templateUrl: 'apps-list.component.html',
     styleUrls: ['./apps-list.component.scss']
 })
-export class AppsListComponent extends DataTableSchema implements OnInit, AfterContentInit {
+export class AppsListComponent extends DataTableSchema implements OnInit, OnChanges, AfterContentInit {
 
     public static LAYOUT_LIST: string = 'LIST';
     public static LAYOUT_GRID: string = 'GRID';
@@ -51,10 +51,6 @@ export class AppsListComponent extends DataTableSchema implements OnInit, AfterC
     /** Provides a way to filter the apps to show. */
     @Input()
     filtersAppId: any[];
-
-    /* Toggles multiple row selection, renders checkboxes at the beginning of each row */
-    @Input()
-    multiselect: boolean = false;
 
     /* Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
@@ -108,12 +104,17 @@ export class AppsListComponent extends DataTableSchema implements OnInit, AfterC
 
         this.apps$.subscribe((app: any) => {
             this.appList.push(app);
-            if (this.isList()) {
-                this.setDataRows(this.appList);
-            }
         });
         this.iconsMDL = new IconModel();
         this.load();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.isPropertyChanged(changes['layoutType'])) {
+            if (this.isList()) {
+                this.setDataRows(this.appList);
+            }
+        }
     }
 
     ngAfterContentInit() {
@@ -121,6 +122,10 @@ export class AppsListComponent extends DataTableSchema implements OnInit, AfterC
         if (this.emptyCustomContent) {
             this.hasEmptyCustomContentTemplate = true;
         }
+    }
+
+    isPropertyChanged(property: SimpleChange): boolean {
+        return property && property.currentValue ? true : false;
     }
 
     private load() {
