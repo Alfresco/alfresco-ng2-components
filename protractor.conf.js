@@ -5,12 +5,23 @@ const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const jasmineReporters = require('jasmine-reporters');
 
+console.log(0);
+
 const projectRoot = path.resolve(__dirname);
 
 const width = 1366;
 const height = 768;
 
 var HOST = process.env.URL_HOST_ADF;
+var BROWSER_RUN = process.env.BROWSER_RUN;
+
+var args_options = [];
+
+if (BROWSER_RUN === 'true') {
+    args_options = ['--incognito'];
+} else {
+    args_options = ['--incognito', '--headless'];
+}
 
 exports.config = {
     allScriptsTimeout: 60000,
@@ -29,7 +40,7 @@ exports.config = {
                     'default_directory': './e2e/downloads/',
                 }
             },
-            args: ['--incognito', '--headless']
+            args: args_options
         }
     },
 
