@@ -25,7 +25,6 @@ import { ShareDialogComponent } from '../dialogs/share.dialog';
     selector: '[adf-share]'
 })
 export class NodeSharedDirective implements OnChanges {
-    
 
     /** Node to share. */
     // tslint:disable-next-line:no-input-rename
