@@ -61,7 +61,9 @@ var LoginPage = function (){
      */
     this.enterUsername = function (username){
         Util.waitUntilElementIsVisible(txtUsername);
+        txtUsername.sendKeys('');
         txtUsername.clear();
+        browser.driver.sleep(500);
         txtUsername.sendKeys(username);
     };
 
@@ -72,6 +74,7 @@ var LoginPage = function (){
      */
     this.enterPassword = function (password){
         Util.waitUntilElementIsVisible(txtPassword);
+        browser.driver.sleep(500);
         txtPassword.clear();
         txtPassword.sendKeys(password);
     };
@@ -226,6 +229,7 @@ var LoginPage = function (){
     this.loginToContentServicesUsingUserModel = function (userModel) {
         adfSettingsPage.setProviderEcm();
         this.waitForElements();
+
         this.login(userModel.getId(), userModel.getPassword());
     };
 

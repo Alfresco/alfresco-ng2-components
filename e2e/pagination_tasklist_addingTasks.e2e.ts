@@ -38,7 +38,7 @@ xdescribe('Items per page set to 15 and adding of tasks', () => {
 
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let currentPage = 1, nrOfTasks = 25, appDetails, totalPages = 2;
+    let currentPage = 1, nrOfTasks = 25, totalPages = 2;
 
     let itemsPerPage = {
         fifteen: '15',

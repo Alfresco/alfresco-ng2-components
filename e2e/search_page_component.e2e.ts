@@ -52,10 +52,6 @@ xdescribe('Test Search component - Search Page', () => {
     let searchResultPage = new SearchResultPage();
 
     let acsUser = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminEmail,
-        'password': TestConfig.adf.adminPassword
-    });
     let emptyFolderModel = new FolderModel({ 'name': 'emptyFolder' });
     let firstFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     let newFolderModel = new FolderModel({ 'name': 'newFolder' });

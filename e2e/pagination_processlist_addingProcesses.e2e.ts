@@ -21,8 +21,6 @@ import PaginationPage = require('./pages/adf/paginationPage');
 import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
 import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
 
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
-
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
 
@@ -43,12 +41,10 @@ xdescribe('Test Process List - Pagination when adding processes', () => {
     let processFiltersPage = new ProcessFiltersPage();
     let processDetailsPage = new ProcessDetailsPage();
 
-    let basicAuthAdmin = new BasicAuthorization(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    let basicAuth;
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let nrOfProcesses = 25;
-    let page, totalPages, appDetails;
+    let page, totalPages;
 
     beforeAll(async (done) => {
         let apps = new AppsActions();

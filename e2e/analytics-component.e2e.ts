@@ -49,7 +49,7 @@ describe('Analytics Smoke Test', () => {
         tenantId = newTenant.id;
         let procUserModel = new User({ tenantId: tenantId });
 
-        let userOne = await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
+        await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
 
         loginPage.loginToProcessServicesUsingUserModel(procUserModel);
 

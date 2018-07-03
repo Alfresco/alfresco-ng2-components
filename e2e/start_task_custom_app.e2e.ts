@@ -23,12 +23,8 @@ import CONSTANTS = require('./util/constants');
 
 import Task = require('./models/APS/Task');
 import Tenant = require('./models/APS/Tenant');
-import User = require('./models/APS/User');
-import AppDefinition = require('./models/APS/AppDefinition');
-import AppPublish = require('./models/APS/AppPublish');
 
 import TaskModel = require('./models/APS/TaskModel');
-import FormModel = require('./models/APS/FormModel');
 import FileModel = require('./models/ACS/fileModel');
 
 import TestConfig = require('./test.config');

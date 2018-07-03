@@ -53,10 +53,6 @@ xdescribe('Test Search component - Search Bar', function () {
     let searchResultPage = new SearchResultPage();
 
     let acsUser = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminEmail,
-        'password': TestConfig.adf.adminPassword
-    });
     let firstFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'shortName': resources.Files.ADF_DOCUMENTS.PDF.short_file_name

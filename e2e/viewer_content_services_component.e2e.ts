@@ -21,7 +21,6 @@ import TestConfig = require('./test.config');
 import LoginPage = require('./pages/adf/loginPage');
 import ContentServicesPage = require('./pages/adf/contentServicesPage');
 import ViewerPage = require('./pages/adf/viewerPage');
-import AcsUserModel = require('./models/ACS/acsUserModel');
 
 import resources = require('./util/resources');
 
@@ -32,17 +31,12 @@ import AcsUserModel = require('./models/ACS/acsUserModel');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-fdescribe('Test Content Services Viewer', () => {
+xdescribe('Test Content Services Viewer', () => {
 
     let acsUser = new AcsUserModel();
     let viewerPage = new ViewerPage();
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
-
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminUser,
-        'password': TestConfig.adf.adminPassword
-    });
 
     let defaultHeight;
     let defaultWidth;
@@ -241,7 +235,7 @@ fdescribe('Test Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('6. Open viewer fot an unsupported file', () => {
+    it('6. Open viewer for an unsupported file', () => {
         viewerPage.viewFile(pagesFile.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();

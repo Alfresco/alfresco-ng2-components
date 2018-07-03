@@ -22,7 +22,6 @@ import AttachmentListPage = require('./pages/adf/process_services/attachmentList
 
 import CONSTANTS = require('./util/constants');
 
-import User = require('./models/APS/User');
 import Tenant = require('./models/APS/Tenant');
 import Task = require('./models/APS/Task');
 import TaskModel = require('./models/APS/TaskModel');

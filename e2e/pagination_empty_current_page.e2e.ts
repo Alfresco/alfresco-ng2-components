@@ -35,10 +35,6 @@ xdescribe('Pagination - returns to previous page when current is empty', () => {
     let paginationPage = new PaginationPage();
 
     let acsUser = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminEmail,
-        'password': TestConfig.adf.adminPassword
-    });
     let folderModel = new FolderModel({'name': 'folderOne'});
 
     let fileNames = [], nrOfFiles = 6;

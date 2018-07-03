@@ -21,13 +21,11 @@ import NavigationBarPage = require('./pages/adf/navigationBarPage');
 
 import AcsUserModel = require('./models/ACS/acsUserModel');
 import FileModel = require('./models/ACS/fileModel');
-import User = require('./models/APS/User');
 
 import PeopleAPI = require('./restAPI/ACS/PeopleAPI');
 
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
-import Tenant = require('./models/APS/Tenant');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from './actions/users.actions';
@@ -39,11 +37,6 @@ xdescribe('Test User Info component', () => {
     let navigationBarPage = new NavigationBarPage();
     let userInfoDialog = new UserInfoDialog();
     let processUserModel, contentUserModel;
-
-    let adminACSUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminUser,
-        'password': TestConfig.adf.adminPassword
-    });
     let acsAvatarFileModel = new FileModel({
         'name': resources.Files.PROFILE_IMAGES.ECM.file_name,
         'location': resources.Files.PROFILE_IMAGES.ECM.file_location

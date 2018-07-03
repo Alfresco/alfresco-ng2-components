@@ -27,16 +27,12 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Enable infinite scrolling', () => {
+describe('Enable infinite scrolling', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
 
     let acsUser = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminEmail,
-        'password': TestConfig.adf.adminPassword
-    });
     let folderModel = new FolderModel({ 'name': 'folderOne' });
 
     let fileNames = [], nrOfFiles = 30;

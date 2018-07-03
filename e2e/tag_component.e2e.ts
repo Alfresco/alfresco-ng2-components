@@ -34,10 +34,6 @@ xdescribe('Tag component', () => {
     let tagPage = new TagPage();
 
     let acsUser = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminUser,
-        'password': TestConfig.adf.adminPassword
-    });
     let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     let sameTag = Util.generateRandomStringToLowerCase();
     let tagList = [Util.generateRandomStringToLowerCase(), Util.generateRandomStringToLowerCase()];

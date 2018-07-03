@@ -16,7 +16,6 @@
  */
 
 import TestConfig = require('./test.config');
-import CONSTANTS = require('./util/constants');
 import resources = require('./util/resources');
 import LoginPage = require('./pages/adf/loginPage');
 import NavigationBarPage = require('./pages/adf/navigationBarPage');
@@ -41,7 +40,6 @@ xdescribe('Process Filters Test', () => {
     let adfProcessDetailsPage = new AdfProcessDetailsPage();
 
     let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
-    let appId, modelId, response, procUserModel, basicAuth, tenantId;
 
     let processTitle = {
         running: 'Test_running',

@@ -27,12 +27,9 @@ import AdfProcessFiltersPage = require('./pages/adf/process_services/processFilt
 import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage');
 import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
 import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage');
-import BasicAuthorization = require('./restAPI/httpRequest/BasicAuthorization');
 
 import User = require('./models/APS/User');
 import AppPublish = require('./models/APS/AppPublish');
-import AppDefinition = require('./models/APS/AppDefinition');
-import ProcessModel = require('./models/APS/ProcessModel');
 import Tenant = require('./models/APS/Tenant');
 
 import FileModel = require('./models/ACS/fileModel');
@@ -53,8 +50,7 @@ xdescribe('Start Process Component', () => {
     let adfProcessDetailsPage = new AdfProcessDetailsPage();
     let attachmentListPage = new AttachmentListPage();
     let app = resources.Files.APP_WITH_PROCESSES;
-    let appId, modelId, secondModelId, processModel, procUserModel, secondProcUserModel, basicAuth1,
-        basicAuth2, tenantId;
+    let appId, procUserModel, secondProcUserModel, tenantId;
 
     let auditLogFile = path.join('./e2e/download/', 'Audit.pdf');
 
@@ -77,8 +73,8 @@ xdescribe('Start Process Component', () => {
         procUserModel = new User({ tenantId: tenantId });
         secondProcUserModel = new User({ tenantId: tenantId });
 
-        let userOne = await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
-        let userTwo = await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(secondProcUserModel);
+        await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
+        await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(secondProcUserModel);
 
         this.alfrescoJsApiUserTwo = new AlfrescoApi({
             provider: 'BPM',
@@ -91,10 +87,6 @@ xdescribe('Start Process Component', () => {
         let file = fs.createReadStream(pathFile);
 
         let appCreated = await this.alfrescoJsApiUserTwo.activiti.appsApi.importAppDefinition(file);
-
-        appId = appCreated.id;
-        modelId = appCreated.definition.models[0].id;
-        secondModelId = appCreated.definition.models[1].id;
 
         appId = appCreated.id;
 

@@ -23,10 +23,7 @@ import ProcessServicesPage = require('./pages/adf/process_services/processServic
 
 import CONSTANTS = require('./util/constants');
 
-import Tenant = require('./models/APS/Tenant');
 import FileModel = require('./models/ACS/fileModel');
-import User = require('./models/APS/User');
-import AppPublish = require('./models/APS/AppPublish');
 
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
@@ -43,10 +40,10 @@ describe('Start Task - Task App', () => {
     let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
 
-    let alfrescoJsApi, processUserModel, appModel, modelId;
+    let processUserModel;
     let app = resources.Files.WIDGETS_SMOKE_TEST;
     let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
-    let appFilds = app.form_fields;
+    let appFields = app.form_fields;
 
     beforeAll(async (done) => {
         let users = new UsersActions();
@@ -93,8 +90,8 @@ describe('Start Task - Task App', () => {
             .addForm(app.formName)
             .clickStartButton()
             .then(() => {
-                usingWidget.usingAttachFileWidget().attachFile(appFilds.attachfile_id, pdfFile.location);
-                usingWidget.usingAttachFileWidget().checkFileIsAttached(appFilds.attachfile_id, pdfFile.name);
+                usingWidget.usingAttachFileWidget().attachFile(appFields.attachfile_id, pdfFile.location);
+                usingWidget.usingAttachFileWidget().checkFileIsAttached(appFields.attachfile_id, pdfFile.name);
 
                 usingWidget.usingAttachFileWidget().viewFile(pdfFile.name);
                 viewerPage.checkFileContent('1', pdfFile.firstPageText);

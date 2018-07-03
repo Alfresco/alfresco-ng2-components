@@ -29,16 +29,12 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Test DocumentList component', () => {
+describe('Test DocumentList component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
 
     let acsUser = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminEmail,
-        'password': TestConfig.adf.adminPassword
-    });
     let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     let docxFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
@@ -84,8 +80,6 @@ xdescribe('Test DocumentList component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
         await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');
         await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
@@ -97,6 +91,8 @@ xdescribe('Test DocumentList component', () => {
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, adminFileNames, uploadedFolder.entry.id);
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.goToDocumentList();
 
@@ -157,33 +153,42 @@ xdescribe('Test DocumentList component', () => {
     });
 
     it('11. Navigate to child folder via breadcrumbs.', () => {
-        contentServicesPage.navigateToFolderViaBreadcrumbs(rootFolder);
-        contentServicesPage.doubleClickEntireRow(userHomes).doubleClickEntireRow(acsUser.getId()).checkContentIsDisplayed(folderOneModel.name)
-            .doubleClickRow(folderOneModel.name).checkContentIsDisplayed(folderTwoModel.name).doubleClickRow(folderTwoModel.name);
+        contentServicesPage.navigateToFolderViaBreadcrumbs(acsUser.getId());
+
+        contentServicesPage
+            .checkContentIsDisplayed(folderOneModel.name)
+            .doubleClickRow(folderOneModel.name)
+            .checkContentIsDisplayed(folderTwoModel.name)
+            .doubleClickRow(folderTwoModel.name);
+
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(folderTwoModel.name);
     });
 
     it('12. Navigate to parent folder via breadcrumbs.', () => {
         contentServicesPage.navigateToFolderViaBreadcrumbs(uploadedFolder.entry.name);
+
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
+
         expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
+
         Util.refreshBrowser();
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
         expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
     });
 
-    it('13. Navigate to root folder via breadcrumbs.', () => {
-        contentServicesPage.navigateToFolderViaBreadcrumbs(rootFolder);
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(rootFolderName);
-    });
+    it('13. Each known extension has it s own icon.', () => {
+        contentServicesPage.navigateToFolderViaBreadcrumbs(acsUser.getId());
 
-    it('17. Each known extension has it s own icon.', () => {
-        contentServicesPage.doubleClickEntireRow(userHomes).doubleClickEntireRow(acsUser.getId());
         contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
         contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
         contentServicesPage.checkContentIsDisplayed(testFileModel.name);
         contentServicesPage.checkIconColumn(pdfFileModel.name, extensions.pdf);
         contentServicesPage.checkIconColumn(docxFileModel.name, extensions.docx);
         contentServicesPage.checkIconColumn(testFileModel.name, extensions.test);
+    });
+
+    it('14. Navigate to root folder via breadcrumbs.', () => {
+        contentServicesPage.navigateToFolderViaBreadcrumbs(rootFolder);
+        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(rootFolderName);
     });
 });

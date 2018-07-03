@@ -29,10 +29,6 @@ xdescribe('Test Theming component', () => {
 
     let navigationBarPage = new NavigationBarPage();
     let loginPage = new LoginPage();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminUser,
-        'password': TestConfig.adf.adminPassword
-    });
     let acsUser = new AcsUserModel();
 
     beforeAll(async (done) => {

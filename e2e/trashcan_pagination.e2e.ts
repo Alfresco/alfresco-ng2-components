@@ -22,7 +22,6 @@ import NavigationBarPage = require('./pages/adf/navigationBarPage');
 
 import AcsUserModel = require('./models/ACS/acsUserModel');
 import FolderModel = require('./models/ACS/folderModel');
-import FilesModel = require('./models/ACS/filesModel');
 
 import TestConfig = require('./test.config');
 import Util = require('./util/util');
@@ -54,13 +53,8 @@ xdescribe('Trashcan - Pagination', () => {
     let navigationBarPage = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminEmail,
-        'password': TestConfig.adf.adminPassword
-    });
     let newFolderModel = new FolderModel({'name': 'newFolder'});
-    let nrOfFiles = 20, currentPage = 1;
-    let filesModel = new FilesModel();
+    let nrOfFiles = 20;
 
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();

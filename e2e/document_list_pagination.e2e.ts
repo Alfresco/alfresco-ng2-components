@@ -29,7 +29,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Test Document List - Pagination', function () {
+describe('Test Document List - Pagination', function () {
     let pagination = {
         base: 'newFile',
         secondSetBase: 'secondSet',
@@ -54,10 +54,6 @@ xdescribe('Test Document List - Pagination', function () {
     let navigationBarPage = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminEmail,
-        'password': TestConfig.adf.adminPassword
-    });
     let newFolderModel = new FolderModel({ 'name': 'newFolder' });
     let fileNames = [], nrOfFiles = 20, currentPage = 1, secondSetOfFiles, secondSetNumber = 25;
     let folderTwoModel = new FolderModel({ 'name': 'folderTwo' });
@@ -316,7 +312,7 @@ xdescribe('Test Document List - Pagination', function () {
         contentServicesPage.checkPaginationIsNotDisplayed();
     });
 
-    it('[C260071] Items per page when having 25 files', function () {
+    xit('[C260071] Items per page when having 25 files', function () {
         currentPage = 1;
         contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(folderThreeModel.name);

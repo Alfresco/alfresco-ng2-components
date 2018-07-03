@@ -38,9 +38,9 @@ xdescribe('Task List Pagination', () => {
     let paginationPage = new PaginationPage();
     let navigationBarPage = new NavigationBarPage();
 
-    let processUserModel, processUserModel1;
+    let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let currentPage = 1, nrOfTasks = 20, appDetails, totalPages;
+    let currentPage = 1, nrOfTasks = 20, totalPages;
 
     let itemsPerPage = {
         five: '5',

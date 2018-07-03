@@ -38,7 +38,7 @@ xdescribe('Task List Pagination - Sorting', () => {
     let paginationPage = new PaginationPage();
 
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let nrOfTasks = 20, appDetails, processUserModel;
+    let nrOfTasks = 20, processUserModel;
     let taskNameBase = 'Task';
     let taskNames = Util.generateSeqeunceFiles(10, nrOfTasks + 9, taskNameBase, '');
 
