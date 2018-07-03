@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { SharedLinksApiService } from '@alfresco/adf-core';
 import { SharedLinkEntry } from 'alfresco-js-api';
@@ -33,7 +33,6 @@ export class ShareDialogComponent implements OnInit {
 
     fileName: string;
     baseShareUrl: string;
-    elementRef: ElementRef;
 
     isFileShared: boolean = false;
     isDisabled: boolean = false;
@@ -48,7 +47,6 @@ export class ShareDialogComponent implements OnInit {
         if (this.data.node && this.data.node.entry) {
             this.fileName = this.data.node.entry.name;
             this.baseShareUrl = this.data.baseShareUrl;
-            this.elementRef = this.data.elementRef;
 
             if (this.data.node.entry.properties && this.data.node.entry.properties['qshare:sharedId']) {
                 this.sharedId = this.data.node.entry.properties['qshare:sharedId'];
@@ -62,7 +60,6 @@ export class ShareDialogComponent implements OnInit {
 
     cancelShare() {
         this.dialogRef.close(false);
-        this.elementRef.nativeElement.disabled = false;
     }
 
     onSlideShareChange(event: any) {

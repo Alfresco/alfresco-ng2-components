@@ -25,6 +25,7 @@ import { ShareDialogComponent } from '../dialogs/share.dialog';
     selector: '[adf-share]'
 })
 export class NodeSharedDirective implements OnChanges {
+    
 
     /** Node to share. */
     // tslint:disable-next-line:no-input-rename
@@ -45,14 +46,12 @@ export class NodeSharedDirective implements OnChanges {
 
     shareNode(node: MinimalNodeEntity) {
         if (node.entry && node.entry.isFile) {
-            this.setDisableAttribute(true);
             this.dialog.open(ShareDialogComponent, {
                 width: '600px',
                 disableClose: true,
                 data: {
                     node: node,
-                    baseShareUrl: this.baseShareUrl,
-                    elementRef: this.elementRef
+                    baseShareUrl: this.baseShareUrl
                 }
             });
         } else {

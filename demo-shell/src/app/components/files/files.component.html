@@ -116,7 +116,7 @@
                         </mat-icon>
                     </button>
                     <button mat-icon-button
-                            [disabled]="!documentList.selection.length"
+                            disabled
                             [baseShareUrl]="baseShareUrl"
                             [adf-share]="documentList.selection[0]"
                             matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHARE' | translate }}">
