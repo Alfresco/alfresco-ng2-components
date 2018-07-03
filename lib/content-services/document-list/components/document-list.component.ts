@@ -562,7 +562,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 handlerSub = Observable.of(true);
             }
 
-            if (typeof action.execute === 'function') {
+            if (typeof action.execute === 'function' && handlerSub) {
                 handlerSub.subscribe(() => {
                     action.execute(node);
                 });
