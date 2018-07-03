@@ -27,7 +27,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Enable infinite scrolling', () => {
+xdescribe('Enable infinite scrolling', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
@@ -39,7 +39,6 @@ describe('Enable infinite scrolling', () => {
     });
     let folderModel = new FolderModel({ 'name': 'folderOne' });
 
-    let retryNumber = 30;
     let fileNames = [], nrOfFiles = 30;
     let fileNum = 0;
 

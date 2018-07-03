@@ -32,7 +32,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Test Search component - Search Bar', function () {
+xdescribe('Test Search component - Search Bar', function () {
 
     let search = {
         inactive: {

@@ -28,7 +28,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Tag component', () => {
+xdescribe('Tag component', () => {
 
     let loginPage = new LoginPage();
     let tagPage = new TagPage();

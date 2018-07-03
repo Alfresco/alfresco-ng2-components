@@ -29,7 +29,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Test DocumentList component', () => {
+xdescribe('Test DocumentList component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
@@ -51,7 +51,7 @@ describe('Test DocumentList component', () => {
     let folderOneModel = new FolderModel({ 'name': 'folderOne' + Util.generateRandomString() });
     let folderTwoModel = new FolderModel({ 'name': 'folderTwo' + Util.generateRandomString() });
 
-    let retryNumber = 30;
+    let uploadedFolder;
     let rootFolder = 'APP.PERSONAL-FILES', userHomes = 'User Homes', rootFolderName = 'Personal Files';
     let fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
 
@@ -90,7 +90,7 @@ describe('Test DocumentList component', () => {
         await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');
         await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
 
-        let uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderOneModel.name, '-my-');
+        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderOneModel.name, '-my-');
 
         await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, uploadedFolder.entry.id);
 

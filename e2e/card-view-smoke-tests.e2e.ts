@@ -30,7 +30,7 @@ import CONSTANTS = require('./util/constants');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Metadata component', () => {
+xdescribe('Metadata component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();

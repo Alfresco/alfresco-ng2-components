@@ -28,7 +28,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Pagination - returns to previous page when current is empty', () => {
+xdescribe('Pagination - returns to previous page when current is empty', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
@@ -41,7 +41,6 @@ describe('Pagination - returns to previous page when current is empty', () => {
     });
     let folderModel = new FolderModel({'name': 'folderOne'});
 
-    let retryNumber = 30;
     let fileNames = [], nrOfFiles = 6;
     let lastFile = 'newFile6.txt';
 

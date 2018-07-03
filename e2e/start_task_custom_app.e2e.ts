@@ -77,8 +77,6 @@ describe('Start Task - Custom App', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
-
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         done();
