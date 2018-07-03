@@ -22,7 +22,7 @@ import TestConfig = require('./test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 
-describe('Test Datatable component', () => {
+xdescribe('Test Datatable component', () => {
 
     let dataTablePage = new DataTablePage();
     let loginPage = new LoginPage();

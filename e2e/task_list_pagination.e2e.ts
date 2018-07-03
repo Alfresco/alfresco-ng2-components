@@ -208,7 +208,7 @@ describe('Task List Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('Pagination in an empty task list', () => {
+    xit('Pagination in an empty task list', () => {
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         paginationPage.checkPaginationIsNotDisplayed();

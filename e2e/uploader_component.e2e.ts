@@ -30,7 +30,7 @@ import resources = require('./util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Test Uploader component', () => {
+xdescribe('Test Uploader component', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();

@@ -40,7 +40,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
 
-describe('Form widgets', () => {
+xdescribe('Form widgets', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();

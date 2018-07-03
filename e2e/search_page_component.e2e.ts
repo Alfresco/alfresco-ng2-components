@@ -32,7 +32,7 @@ import resources = require('./util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Test Search component - Search Page', () => {
+xdescribe('Test Search component - Search Page', () => {
     let search = {
         active: {
             base: 'newFile',
@@ -96,14 +96,6 @@ describe('Test Search component - Search Page', () => {
 
         done();
     });
-
-    // afterAll((done) => {
-    //     NodesAPI.deleteContent(acsUser, newFolderModel.id, () => {
-    //         NodesAPI.deleteContent(acsUser, emptyFolderModel.id, () => {
-    //             done();
-    //         });
-    //     });
-    // });
 
     it('1. \'No results found searching for\' message is displayed on Search Page', () => {
         contentServicesPage.goToDocumentList();
