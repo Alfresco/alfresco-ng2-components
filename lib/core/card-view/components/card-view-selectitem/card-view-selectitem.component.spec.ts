@@ -87,6 +87,15 @@ describe('CardViewSelectItemComponent', () => {
             expect(selectBox).not.toBeNull();
         });
 
+        it('should not have label twice', () => {
+            component.ngOnChanges();
+            component.editable = true;
+            fixture.detectChanges();
+
+            const label = fixture.debugElement.query(By.css('[data-automation-class="select-box"] .mat-form-field-label'));
+            expect(label).toBeNull();
+        });
+
         it('should update property on input blur', async(() => {
             spyOn(cardViewUpdateService, 'update');
 
