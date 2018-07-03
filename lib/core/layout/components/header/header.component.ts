@@ -28,7 +28,7 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
 export class HeaderLayoutComponent {
 
     @Input() title: string;
-    @Input() logo: string = '../assets/logo.png';
+    @Input() logo: string = './assets/logo.png';
     @Input() color: string;
     @Input() showSidenavToggle: boolean = true;
     @Output() clicked = new EventEmitter<any>();
