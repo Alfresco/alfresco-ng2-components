@@ -67,7 +67,7 @@ export class DemoPermissionComponent implements OnInit {
             this.displayPermissionComponent.reload();
         },
             (error) => {
-                this.showErrorMessage(error);
+                this.showErrorMessage(error.message);
             });
     }
 
