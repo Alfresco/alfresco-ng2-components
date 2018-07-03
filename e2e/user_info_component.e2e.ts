@@ -32,7 +32,7 @@ import Tenant = require('./models/APS/Tenant');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from './actions/users.actions';
 
-describe('Test User Info component', () => {
+xdescribe('Test User Info component', () => {
 
     let adfSettingsPage = new AdfSettingsPage();
     let loginPage = new LoginPage();

@@ -29,7 +29,7 @@ import { UsersActions } from './actions/users.actions';
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
 
-describe('Items per page set to 15 and adding of tasks', () => {
+xdescribe('Items per page set to 15 and adding of tasks', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();

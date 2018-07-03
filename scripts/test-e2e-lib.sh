@@ -53,6 +53,7 @@ while [[ $1 == -* ]]; do
     esac
 done
 
+rm -rf ./e2e/downloads/
 
 export URL_HOST_ADF=$HOST
 export USERNAME_ADF=$USERNAME
@@ -60,13 +61,10 @@ export PASSWORD_ADF=$PASSWORD
 export EMAIL_ADF=$EMAIL
 export BROWSER_RUN=$BROWSER_RUN
 
-
-
-if $SINGLE_TEST == true; then
+if [[  $SINGLE_TEST == "true" ]]; then
   echo "====== Single test run $NAME_TEST ====="
   npm run e2e-lib -- --specs ./e2e/$NAME_TEST
 else
   npm run e2e-lib
 fi
-
 

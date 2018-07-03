@@ -23,6 +23,8 @@ if (BROWSER_RUN === 'true') {
     args_options = ['--incognito', '--headless'];
 }
 
+var downloadFolder = path.join(__dirname,'e2e/downloads');
+
 exports.config = {
     allScriptsTimeout: 60000,
 
@@ -37,7 +39,7 @@ exports.config = {
                 'credentials_enable_service': false,
                 'download': {
                     'prompt_for_download': false,
-                    'default_directory': './e2e/downloads/',
+                    'default_directory': downloadFolder
                 }
             },
             args: args_options

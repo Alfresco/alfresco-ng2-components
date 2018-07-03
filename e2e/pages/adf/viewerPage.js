@@ -61,7 +61,7 @@ var ViewerToolbarPage = function () {
         var fileView = element(by.xpath("//div[@class='document-list-container']//span[@title='" + fileName +"']"));
         Util.waitUntilElementIsVisible(fileView);
         fileView.click();
-        browser.actions().doubleClick(fileView).perform();
+        browser.actions().sendKeys(protractor.Key.ENTER).perform();
     };
 
     this.checkCloseButtonIsDisplayed = function () {

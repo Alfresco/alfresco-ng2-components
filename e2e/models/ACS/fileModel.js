@@ -101,7 +101,6 @@ var FileModel = function (details) {
         return this.properties;
     };
 
-
     this.update = function(details) {
         Object.assign(this, {
             createdByUser: new CreatedByModel(details.createdByUser),

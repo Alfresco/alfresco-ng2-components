@@ -92,11 +92,11 @@ xdescribe('Test DocumentList component', () => {
 
         uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderOneModel.name, '-my-');
 
-        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, uploadedFolder.entry.id);
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, uploadedFolder.entry.id);
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, adminFileNames, uploadedFolder.entry.id);
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, adminFileNames, uploadedFolder.entry.id);
 
         contentServicesPage.goToDocumentList();
 

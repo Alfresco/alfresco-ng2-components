@@ -69,7 +69,7 @@ xdescribe('Enable infinite scrolling', () => {
 
         let folderUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, folderModel.name, '-my-');
 
-        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
 
         done();
     });

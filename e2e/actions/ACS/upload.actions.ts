@@ -4,19 +4,24 @@ import TestConfig = require('../../test.config');
 
 export class UploadActions {
 
-    uploadFile(alfrescoJsApi, fileLocation, fileName, parentFolderId) {
+    async uploadFile(alfrescoJsApi, fileLocation, fileName, parentFolderId) {
+
         let pathFile = path.join(TestConfig.main.rootPath + fileLocation);
         let file = fs.createReadStream(pathFile);
 
-        return alfrescoJsApi.nodes.addNode(parentFolderId, {
-            'name': fileName,
-            'nodeType': 'cm:content'
-        }, {}, {
-            filedata: file
-        });
+        return alfrescoJsApi.upload.uploadFile(
+            file,
+            '',
+            parentFolderId,
+            null,
+            {
+                'name': fileName,
+                'nodeType': 'cm:content'
+            }
+        );
     }
 
-    createEmptyFilesViaAPI(alfrescoJsApi, emptyFileNames: string[], parentFolderId) {
+    async createEmptyFiles(alfrescoJsApi, emptyFileNames: string[], parentFolderId) {
         let filesRequest = [];
 
         for (let i = 0; i < emptyFileNames.length; i++) {
@@ -31,7 +36,7 @@ export class UploadActions {
         });
     }
 
-    uploadFolder(alfrescoJsApi, folderName, parentFolderId) {
+    async uploadFolder(alfrescoJsApi, folderName, parentFolderId) {
         return alfrescoJsApi.nodes.addNode(parentFolderId, {
             'name': folderName,
             'nodeType': 'cm:folder'

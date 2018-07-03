@@ -82,7 +82,7 @@ xdescribe('Trashcan - Pagination', () => {
 
         let folderUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
-        let emptyFiles = await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
+        let emptyFiles = await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
 
         emptyFiles.list.entries.forEach( (node) => {
             this.alfrescoJsApi.node.deleteNode(node.entry.id);

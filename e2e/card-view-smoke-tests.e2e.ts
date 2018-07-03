@@ -30,7 +30,7 @@ import CONSTANTS = require('./util/constants');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Metadata component', () => {
+describe('Metadata component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
@@ -45,6 +45,7 @@ xdescribe('Metadata component', () => {
     });
 
     beforeAll(async (done) => {
+
         let uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -58,18 +59,19 @@ xdescribe('Metadata component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        contentServicesPage.goToDocumentList();
-
         let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
 
         Object.assign(pdfFileModel, pdfUploadedFile.entry);
+
+        pdfFileModel.update( pdfUploadedFile.entry);
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
 
     it('Properties', () => {
+        contentServicesPage.navigateToDocumentList();
         adfViewerPage.viewFile(pdfFileModel.name);
 
         cardViewPage = adfViewerPage.clickInfoButton();
@@ -85,8 +87,8 @@ xdescribe('Metadata component', () => {
         expect(cardViewPage.getModifier()).toEqual(pdfFileModel.getCreatedByUser().displayName);
         expect(cardViewPage.getModifiedDate()).toEqual(dateFormat(pdfFileModel.createdAt, CONSTANTS.METADATA.DATAFORMAT));
         expect(cardViewPage.getMimetypeName()).toEqual(pdfFileModel.getContent().mimeTypeName);
-        expect(cardViewPage.getSize()).toEqual(pdfFileModel.getContent().sizeInBytes);
-        expect(cardViewPage.getAuthor()).toEqual(pdfFileModel.createdByUser);
+        expect(cardViewPage.getSize()).toEqual(pdfFileModel.getContent().getSizeInBytes());
+        expect(cardViewPage.getAuthor()).toEqual(pdfFileModel.properties['cm:author']);
 
         cardViewPage.editIconIsDisplayed();
         cardViewPage.informationButtonIsDisplayed();

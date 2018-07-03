@@ -81,14 +81,14 @@ xdescribe('Test Search component - Search Page', () => {
         await uploadActions.uploadFolder(this.alfrescoJsApi, emptyFolderModel.name, '-my-');
         let newFolderModelUploaded =  await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
-        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, fileNames, newFolderModelUploaded.entry.id);
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderModelUploaded.entry.id);
 
         let firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        await uploadActions.createEmptyFilesViaAPI(this.alfrescoJsApi, adminFileNames, newFolderModelUploaded.entry.id);
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, adminFileNames, newFolderModelUploaded.entry.id);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
