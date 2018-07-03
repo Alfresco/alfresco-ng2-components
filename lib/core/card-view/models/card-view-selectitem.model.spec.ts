@@ -21,7 +21,7 @@ import { CardViewSelectItemProperties } from '../interfaces/card-view.interfaces
 import { of } from 'rxjs/observable/of';
 
 describe('CardViewSelectItemModel', () => {
-    let properties: CardViewSelectItemProperties;
+    let properties: CardViewSelectItemProperties<string>;
     const mockData = [{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }, { key: 'three', label: 'Three' }];
 
     beforeEach(() => {
