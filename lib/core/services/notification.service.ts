@@ -31,7 +31,7 @@ export class NotificationService {
     /**
      * Opens a SnackBar notification to show a message.
      * @param message The message (or resource key) to show.
-     * @param millisecondsDuration Time before notification disappears after being shown
+     * @param config Time before notification disappears after being shown or MatSnackBarConfig object
      * @returns Information/control object for the SnackBar
      */
     openSnackMessage(message: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
@@ -55,7 +55,7 @@ export class NotificationService {
      * Opens a SnackBar notification with a message and a response button.
      * @param message The message (or resource key) to show.
      * @param action Caption for the response button
-     * @param millisecondsDuration Time before the notification disappears (unless the button is clicked)
+     * @param config Time before notification disappears after being shown or MatSnackBarConfig object
      * @returns Information/control object for the SnackBar
      */
     openSnackMessageAction(message: string, action: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
