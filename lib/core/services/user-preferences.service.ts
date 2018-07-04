@@ -61,7 +61,7 @@ export class UserPreferencesService {
 
     private initUserPreferenceStatus() {
         this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
-        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.paginationSize ?
+        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = !!this.paginationSize ?
             this.paginationSize : this.appConfig.get('pagination.size', this.defaults.paginationSize);
         this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
     }
@@ -159,7 +159,7 @@ export class UserPreferencesService {
     }
 
     get paginationSize(): number {
-        return Number(this.get('PAGINATION_SIZE')) || this.defaults.paginationSize;
+        return Number(this.get('PAGINATION_SIZE'));
     }
 
     /** Current locale setting. */
