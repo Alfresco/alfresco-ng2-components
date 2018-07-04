@@ -26,6 +26,7 @@ import Tenant = require('./models/APS/Tenant');
 
 import TaskModel = require('./models/APS/TaskModel');
 import FileModel = require('./models/ACS/fileModel');
+import FormModel = require('./models/APS/FormModel');
 
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
@@ -38,6 +39,7 @@ import { UsersActions } from './actions/users.actions';
 
 describe('Start Task - Custom App', () => {
 
+    let TASKDATAFORMAT = 'mmm dd yyyy';
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let attachmentListPage = new AttachmentListPage();
@@ -101,7 +103,7 @@ describe('Start Task - Custom App', () => {
             });
     });
 
-    xit('Information box', () => {
+    it('Information box', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
@@ -115,7 +117,8 @@ describe('Start Task - Custom App', () => {
             .then((response) => {
                 let taskModel = new TaskModel(response.data[0]);
                 taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
-                expect(taskPage.usingTaskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), CONSTANTS.TASKDATAFORMAT));
+
+                expect(taskPage.usingTaskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASKDATAFORMAT));
                 expect(taskPage.usingTaskDetails().getId()).toEqual(taskModel.getId());
                 expect(taskPage.usingTaskDetails().getDescription()).toEqual(taskModel.getDescription());
                 expect(taskPage.usingTaskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
@@ -127,9 +130,10 @@ describe('Start Task - Custom App', () => {
                     .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASKDETAILS.NO_PARENT : taskModel.getParentTaskName());
                 expect(taskPage.usingTaskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
 
-                return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(taskModel.getFormKey());
+                return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response.data[0].id);
             })
-            .then((formModel) => {
+            .then((response) => {
+                let formModel = new FormModel(response);
                 expect(taskPage.usingTaskDetails().getFormName())
                     .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
             });

@@ -52,7 +52,7 @@ describe('Attachment list', () => {
 
         await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        loginPage.loginToProcessServicesUsingUserModel(user);
 
         done();
     });

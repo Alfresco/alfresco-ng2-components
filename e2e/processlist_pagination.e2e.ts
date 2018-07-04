@@ -31,7 +31,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
 
-xdescribe('Test Process List - Pagination', function () {
+describe('Test Process List - Pagination', function () {
 
     let itemsPerPage = {
         five: '5',
@@ -86,29 +86,31 @@ xdescribe('Test Process List - Pagination', function () {
         done();
     });
 
-    it('[C261042] Default pagination', function () {
+    xit('[C261042] Default pagination', function () {
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.checkNoContentMessage();
         paginationPage.checkPaginationIsNotDisplayed();
         navigationBarPage.clickLogoutButton();
-
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        totalPages = 1;
+
         page = 1;
+        totalPages = 1;
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.clickRunningFilterButton();
+        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
         processDetailsPage.checkProcessTitleIsDisplayed();
         processFiltersPage.waitForTableBody();
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
+
+        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
         expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C261043] Items per page set to 15', function () {
+    xit('[C261043] Items per page set to 15', function () {
         page = 1;
         totalPages = 2;
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
@@ -152,7 +154,7 @@ xdescribe('Test Process List - Pagination', function () {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    it('[C261044] Items per page set to 10', function () {
+    xit('[C261044] Items per page set to 10', function () {
         page = 1;
         totalPages = 2;
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
@@ -342,7 +344,7 @@ xdescribe('Test Process List - Pagination', function () {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C261048] Sorting by Name', function () {
+    xit('[C261048] Sorting by Name', function () {
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilterRunning);

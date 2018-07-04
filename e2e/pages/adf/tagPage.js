@@ -45,16 +45,20 @@ var TagPage = function () {
 
     this.insertNodeId = function (nodeId) {
         Util.waitUntilElementIsVisible(insertNodeId);
-        return insertNodeId.sendKeys(nodeId);
+        insertNodeId.sendKeys(nodeId);
+        browser.driver.sleep(200);
+        insertNodeId.sendKeys(' ')
+        browser.driver.sleep(200);
+        insertNodeId.sendKeys(protractor.Key.BACK_SPACE);
     };
 
-    this.addNewTagInput = function(tag) {
+    this.addNewTagInput = function (tag) {
         Util.waitUntilElementIsVisible(newTagInput);
         newTagInput.sendKeys(tag);
         return this;
     };
 
-    this.addTag = function(tag){
+    this.addTag = function (tag) {
         this.addNewTagInput(tag);
         Util.waitUntilElementIsVisible(addTagButton);
         Util.waitUntilElementIsClickable(addTagButton);
@@ -63,57 +67,57 @@ var TagPage = function () {
         return this;
     };
 
-    this.getNewTagInput = function() {
+    this.getNewTagInput = function () {
         Util.waitUntilElementIsVisible(newTagInput);
         return newTagInput.getAttribute('value');
     };
 
-    this.getNewTagPlaceholder = function() {
+    this.getNewTagPlaceholder = function () {
         Util.waitUntilElementIsVisible(newTagInput);
         return newTagInput.getAttribute("placeholder");
     };
 
-    this.addTagButtonIsEnabled = function() {
+    this.addTagButtonIsEnabled = function () {
         Util.waitUntilElementIsVisible(addTagButton);
         return addTagButton.isEnabled();
     };
 
-    this.checkTagIsDisplayedInTagList = function(tagName) {
+    this.checkTagIsDisplayedInTagList = function (tagName) {
         var tag = element(by.cssContainingText("div[id*='tag_name']", tagName));
-        Util.waitUntilElementIsVisible(tag);
+        return Util.waitUntilElementIsVisible(tag);
     };
 
-    this.checkTagIsNotDisplayedInTagList = function(tagName) {
+    this.checkTagIsNotDisplayedInTagList = function (tagName) {
         var tag = element(by.cssContainingText("div[id*='tag_name']", tagName));
-        Util.waitUntilElementIsNotOnPage(tag);
+        return Util.waitUntilElementIsNotOnPage(tag);
     };
 
-    this.checkTagListIsEmpty = function() {
+    this.checkTagListIsEmpty = function () {
         Util.waitUntilElementIsNotOnPage(tagListRow);
     };
 
-    this.checkTagIsDisplayedInTagListByNodeId = function(tagName) {
+    this.checkTagIsDisplayedInTagListByNodeId = function (tagName) {
         var tag = element(by.cssContainingText("span[id*='tag_name']", tagName));
-        Util.waitUntilElementIsVisible(tag);
+        return Util.waitUntilElementIsVisible(tag);
     };
 
-    this.checkTagListByNodeIdIsEmpty = function() {
-        Util.waitUntilElementIsNotOnPage(tagListByNodeIdRow);
+    this.checkTagListByNodeIdIsEmpty = function () {
+        return Util.waitUntilElementIsNotOnPage(tagListByNodeIdRow);
     };
 
-    this.checkTagIsDisplayedInTagListContentServices = function(tagName) {
+    this.checkTagIsDisplayedInTagListContentServices = function (tagName) {
         var tag = element(by.cssContainingText("div[class='adf-list-tag'][id*='tag_name']", tagName));
-        Util.waitUntilElementIsVisible(tag);
+        return Util.waitUntilElementIsVisible(tag);
     };
 
-    this.getErrorMessage = function() {
+    this.getErrorMessage = function () {
         Util.waitUntilElementIsPresent(errorMessage);
         return errorMessage.getText();
     };
 
     this.checkTagListIsOrderedAscending = function () {
         var deferred = protractor.promise.defer();
-        new ContentList().checkListIsSorted(false, tagListRowLocator).then(function(result) {
+        new ContentList().checkListIsSorted(false, tagListRowLocator).then(function (result) {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -121,7 +125,7 @@ var TagPage = function () {
 
     this.checkTagListByNodeIdIsOrderedAscending = function () {
         var deferred = protractor.promise.defer();
-        new ContentList().checkListIsSorted(false, tagListByNodeIdRowLocator).then(function(result) {
+        new ContentList().checkListIsSorted(false, tagListByNodeIdRowLocator).then(function (result) {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -129,7 +133,7 @@ var TagPage = function () {
 
     this.checkTagListContentServicesIsOrderedAscending = function () {
         var deferred = protractor.promise.defer();
-        new ContentList().checkListIsSorted(false, tagListContentServicesRowLocator).then(function(result) {
+        new ContentList().checkListIsSorted(false, tagListContentServicesRowLocator).then(function (result) {
             deferred.fulfill(result);
         });
         return deferred.promise;

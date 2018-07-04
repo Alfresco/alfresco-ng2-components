@@ -22,7 +22,8 @@ var https = require('https');
 var fs = require('fs');
 var FormData = require('form-data');
 var path = require('path');
-var EC = protractor.ExpectedConditions;
+
+var until = protractor.ExpectedConditions;
 var TestConfig = require('../test.config');
 var moment = require('moment');
 var CONSTANTS = require('./constants');
@@ -108,7 +109,7 @@ exports.generateRandomString = function (length) {
     for (var i = 0; i < length; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-    return text + Date.now();
+    return text;
 };
 
 exports.generatePasswordString = function (length) {
@@ -116,19 +117,17 @@ exports.generatePasswordString = function (length) {
     var text = "";
     var possibleUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var possibleLowerCase = "abcdefghijklmnopqrstuvwxyz";
-    var lowerCaseLimit = Math.floor(length/2);
+    var lowerCaseLimit = Math.floor(length / 2);
 
-    for (var i = 0; i < lowerCaseLimit; i++)
-    {
+    for (var i = 0; i < lowerCaseLimit; i++) {
         text += possibleLowerCase.charAt(Math.floor(Math.random() * possibleLowerCase.length));
     }
 
-    for (var i = 0; i < length - lowerCaseLimit; i++)
-    {
+    for (var i = 0; i < length - lowerCaseLimit; i++) {
         text += possibleUpperCase.charAt(Math.floor(Math.random() * possibleUpperCase.length));
     }
 
-    return text + Date.now();
+    return text;
 };
 
 /**
@@ -146,7 +145,7 @@ exports.generateRandomStringDigits = function (length) {
     for (var i = 0; i < length; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-    return text + Date.now();
+    return text;
 };
 
 /**
@@ -164,7 +163,7 @@ exports.generateRandomStringNonLatin = function (length) {
     for (var i = 0; i < length; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-    return text + Date.now();
+    return text;
 };
 
 /**
@@ -192,7 +191,6 @@ exports.generateRandomStringToUpperCase = function (length) {
 };
 
 
-
 /**
  * Generates a sequence of files with name: baseName + index + extension (e.g.) baseName1.txt, baseName2.txt, ...
  *
@@ -205,8 +203,8 @@ exports.generateRandomStringToUpperCase = function (length) {
  */
 exports.generateSeqeunceFiles = function (startIndex, endIndex, baseName, extension) {
     var fileNames = [];
-    for(var i =startIndex; i<= endIndex; i++) {
-        fileNames.push(baseName+i+extension);
+    for (var i = startIndex; i <= endIndex; i++) {
+        fileNames.push(baseName + i + extension);
     }
     return fileNames;
 };
@@ -324,9 +322,7 @@ exports.prepareFieldDndOnForm = function (script) {
  */
 exports.waitUntilUrlIsShowed = function (urlToWait, timeout) {
 
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
     browser.wait(function () {
         return browser.getCurrentUrl().then(function (url) {
             return (url.indexOf(TestConfig.main.host + urlToWait.toString()) !== -1);
@@ -334,26 +330,8 @@ exports.waitUntilUrlIsShowed = function (urlToWait, timeout) {
     });
 };
 
-/**
- * Wait for element
- *
- exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
-    if (!timeout) {
-        timeout = 20000;
-    }
-
-    browser.wait(function () {
-        return elementToCheck.isPresent();
-    }, timeout);
-    browser.wait(function () {
-        return elementToCheck.isDisplayed();
-    }, timeout);
-};*/
-
 exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
 
     this.waitUntilElementIsPresent(elementToCheck, timeout);
 
@@ -372,9 +350,7 @@ exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
 };
 
 exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
 
     var isPresent = false;
     browser.wait(function () {
@@ -394,10 +370,7 @@ exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
  * Click element
  */
 exports.clickElement = function (elementToClick, timeout) {
-
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
 
     waitUntilElementIsVisible(elementToClick, timeout);
     elementToClick.click();
@@ -407,10 +380,7 @@ exports.clickElement = function (elementToClick, timeout) {
  * Type in  element
  */
 exports.typeElement = function (elementToType, valueToType, timeout) {
-
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
 
     waitUntilElementIsVisible(elementToType, timeout);
     elementToType.clear().sendKeys(valueToType);
@@ -421,13 +391,10 @@ exports.typeElement = function (elementToType, valueToType, timeout) {
  * Wait for element to have value
  */
 exports.waitUntilElementHasValue = function (elementToCheck, elementValue, timeout) {
-
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
 
     browser.wait(function () {
-        return EC.textToBePresentInElementValue(elementToCheck, elementValue);
+        return until.textToBePresentInElementValue(elementToCheck, elementValue);
 
     }, timeout);
 };
@@ -436,13 +403,10 @@ exports.waitUntilElementHasValue = function (elementToCheck, elementValue, timeo
  * Wait for element to be clickable
  */
 exports.waitUntilElementIsClickable = function (elementToCheck, timeout) {
-
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
 
     browser.wait(function () {
-        return EC.elementToBeClickable(elementToCheck);
+        return until.elementToBeClickable(elementToCheck);
 
     }, timeout);
 };
@@ -451,10 +415,7 @@ exports.waitUntilElementIsClickable = function (elementToCheck, timeout) {
  * Wait for element to not be visibile
  */
 exports.waitUntilElementIsNotVisible = function (elementToCheck, timeout) {
-
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
 
     return browser.wait(function () {
         return elementToCheck.isPresent().then(function (present) {
@@ -465,9 +426,7 @@ exports.waitUntilElementIsNotVisible = function (elementToCheck, timeout) {
 
 exports.waitUntilElementIsNotDisplayed = function (elementToCheck, timeout) {
 
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
 
     return browser.wait(function () {
         return elementToCheck.isDisplayed().then(function (present) {
@@ -481,13 +440,10 @@ exports.waitUntilElementIsNotDisplayed = function (elementToCheck, timeout) {
  */
 exports.waitUntilElementIsStale = function (elementToCheck, timeout) {
 
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
 
     browser.wait(function () {
-        return EC.stalenessOf(elementToCheck);
-
+        return until.stalenessOf(elementToCheck);
     }, timeout);
 };
 
@@ -495,24 +451,18 @@ exports.waitUntilElementIsStale = function (elementToCheck, timeout) {
  * Wait for element to not be visibile
  */
 exports.waitUntilElementIsNotOnPage = function (elementToCheck, timeout) {
-    var EC = protractor.ExpectedConditions;
-    if (!timeout) {
-        timeout = 20000;
-    }
+    timeout = timeout || 20000;
 
     return browser.wait(function () {
-        return browser.wait(EC.not(EC.visibilityOf(elementToCheck)));
+        return browser.wait(until.not(until.visibilityOf(elementToCheck)));
     }, timeout);
 };
 
 exports.waitUntilElementIsOnPage = function (elementToCheck, timeout) {
-    var EC = protractor.ExpectedConditions;
-    if (!timeout) {
-        timeout = 50000;
-    }
+    timeout = timeout || 20000;
 
     return browser.wait(function () {
-        return browser.wait(EC.visibilityOf(elementToCheck));
+        return browser.wait(until.visibilityOf(elementToCheck));
     }, timeout);
 };
 
@@ -556,17 +506,17 @@ exports.waitForPage = function () {
     })
 };
 
-exports.openNewTabInBrowser = function() {
+exports.openNewTabInBrowser = function () {
     browser.driver.executeScript("window.open('about: blank', '_blank');");
 };
 
-exports.switchToWindowHandler = function(number) {
+exports.switchToWindowHandler = function (number) {
     browser.driver.getAllWindowHandles().then(function (handles) {
         browser.driver.switchTo().window(handles[number]);
     });
 };
 
-exports.pressDownArrowAndEnter = function() {
+exports.pressDownArrowAndEnter = function () {
     browser.actions().sendKeys(protractor.Key.ARROW_DOWN).sendKeys(protractor.Key.ENTER).perform();
 };
 
@@ -577,19 +527,19 @@ exports.pressDownArrowAndEnter = function() {
  * @param retries - number of retries
  * @returns - true if file is found, false otherwise
  */
-exports.fileExists = function(filePath, retries) {
+exports.fileExists = function (filePath, retries) {
     var tries = 0;
-    return new Promise(function(resolve, reject) {
-        var checkExist = setInterval(function() {
+    return new Promise(function (resolve, reject) {
+        var checkExist = setInterval(function () {
             fs.stat(filePath, function (error, stats) {
-                tries ++;
+                tries++;
 
-                if(error && tries === retries) {
+                if (error && tries === retries) {
                     clearInterval(checkExist);
                     resolve(false);
                 }
 
-                if(!error) {
+                if (!error) {
                     clearInterval(checkExist);
                     resolve(true);
                 }

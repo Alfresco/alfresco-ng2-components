@@ -28,7 +28,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Tag component', () => {
+describe('Tag component', () => {
 
     let loginPage = new LoginPage();
     let tagPage = new TagPage();
@@ -55,11 +55,11 @@ xdescribe('Tag component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
 
         Object.assign(pdfFileModel, pdfUploadedFile.entry);
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
@@ -79,9 +79,12 @@ xdescribe('Tag component', () => {
         tagPage.goToTagPage();
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[0]);
+
+        Util.refreshBrowser();
+        tagPage.insertNodeId(pdfFileModel.id);
+
         tagPage.checkTagIsDisplayedInTagList(tagList[0]);
         tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[0]);
-        tagPage.checkTagIsDisplayedInTagListContentServices(tagList[0]);
     });
 
     it('Tag name already exists', () => {
@@ -101,19 +104,31 @@ xdescribe('Tag component', () => {
         tagPage.checkTagListContentServicesIsOrderedAscending();
     });
 
-    it('Tag text field', () => {
+    xit('Tag text field', () => {
         tagPage.goToTagPage();
         tagPage.insertNodeId(pdfFileModel.id);
+
         tagPage.addTag(uppercaseTag);
+        Util.refreshBrowser();
+        tagPage.insertNodeId(pdfFileModel.id);
+
         tagPage.checkTagIsDisplayedInTagList(uppercaseTag.toLowerCase());
         tagPage.checkTagIsDisplayedInTagListByNodeId(uppercaseTag.toLowerCase());
         tagPage.checkTagIsDisplayedInTagListContentServices(uppercaseTag.toLowerCase());
         tagPage.checkTagIsNotDisplayedInTagList(uppercaseTag);
+
         tagPage.addTag(digitsTag);
+        Util.refreshBrowser();
+        tagPage.insertNodeId(pdfFileModel.id);
+
         tagPage.checkTagIsDisplayedInTagList(digitsTag);
         tagPage.checkTagIsDisplayedInTagListByNodeId(digitsTag);
         tagPage.checkTagIsDisplayedInTagListContentServices(digitsTag);
+
         tagPage.addTag(nonLatinTag);
+        Util.refreshBrowser();
+        tagPage.insertNodeId(pdfFileModel.id);
+
         tagPage.checkTagIsDisplayedInTagList(nonLatinTag);
         tagPage.checkTagIsDisplayedInTagListByNodeId(nonLatinTag);
         tagPage.checkTagIsDisplayedInTagListContentServices(nonLatinTag);

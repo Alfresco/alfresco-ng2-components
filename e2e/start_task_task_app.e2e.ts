@@ -41,6 +41,7 @@ import path = require('path');
 
 describe('Start Task - Task App', () => {
 
+    let TASKDATAFORMAT = 'mmm dd yyyy';
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let attachmentListPage = new AttachmentListPage();
@@ -108,7 +109,7 @@ describe('Start Task - Task App', () => {
             });
     });
 
-    xit('Information box', () => {
+    it('Information box', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
@@ -122,7 +123,7 @@ describe('Start Task - Task App', () => {
             .then((response) => {
                 let taskModel = new TaskModel(response.data[0]);
                 taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
-                expect(taskPage.usingTaskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), CONSTANTS.TASKDATAFORMAT));
+                expect(taskPage.usingTaskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASKDATAFORMAT));
                 expect(taskPage.usingTaskDetails().getId()).toEqual(taskModel.getId());
                 expect(taskPage.usingTaskDetails().getDescription()).toEqual(taskModel.getDescription());
                 expect(taskPage.usingTaskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
@@ -133,10 +134,10 @@ describe('Start Task - Task App', () => {
                 expect(taskPage.usingTaskDetails().getParentName())
                     .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASKDETAILS.NO_PARENT : taskModel.getParentTaskName());
                 expect(taskPage.usingTaskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
-                return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(taskModel.getFormKey());
+                return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response.data[0].id);
             })
             .then(function (response) {
-                formModel = new FormModel(JSON.parse(response.responseBody));
+                formModel = new FormModel(response);
                 expect(taskPage.usingTaskDetails().getFormName())
                     .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
             });

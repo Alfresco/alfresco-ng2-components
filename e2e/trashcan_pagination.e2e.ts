@@ -29,7 +29,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Trashcan - Pagination', () => {
+describe('Trashcan - Pagination', () => {
     let pagination = {
         base: 'newFile',
         extension: '.txt'
@@ -85,20 +85,25 @@ xdescribe('Trashcan - Pagination', () => {
         done();
     });
 
-    it('[C272811] 20 Items per page', () => {
+    xit('[C272811] 20 Items per page', () => {
         navigationBarPage.clickTrashcanButton();
+
         trashcanPage.waitForTableBody();
+
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
+
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();
+
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
         expect(trashcanPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C276742] 15 Items per page', () => {
+    xit('[C276742] 15 Items per page', () => {
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
@@ -111,7 +116,7 @@ xdescribe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C276743] 10 Items per page', () => {
+    xit('[C276743] 10 Items per page', () => {
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
@@ -124,7 +129,7 @@ xdescribe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C276744] 5 Items per page', () => {
+    xit('[C276744] 5 Items per page', () => {
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.five);

@@ -241,7 +241,7 @@ describe('Test Search component - Search Bar', () => {
         });
     });
 
-    it('11. The search bar gets closed when clicking on another browser tab', () => {
+    xit('11. The search bar gets closed when clicking on another browser tab', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog.clickOnSearchIcon().enterText(secondFolder.shortName);

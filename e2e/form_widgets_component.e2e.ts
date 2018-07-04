@@ -34,7 +34,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
 
-xdescribe('Form widgets', () => {
+describe('Form widgets', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
@@ -73,7 +73,7 @@ xdescribe('Form widgets', () => {
 
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(procUserModel.tenantId);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
 
         done();
     });
@@ -92,19 +92,12 @@ xdescribe('Form widgets', () => {
             .then(() => {
                 return alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
             })
-            .then((response) => {
-                return alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response.data[0].formKey);
+            .then( (response) => {
+                return alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response.data[0].id);
             })
-            .then((response) => {
-                expect(taskPage.usingTaskDetails().getFormName())
-                    .toEqual(response.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : response.getName());
-            })
-            .then(() => {
-                return alfrescoJsApi.activiti.taskFormsApi.getTaskForm(taskModel.getFormKey());
-            })
-            .then((response) => {
-                formInstance.setFields(responseformDefinition.fields);
-                formInstance.setAllWidgets(response.formDefinition.fields);
+            .then((formDefinition) => {
+                formInstance.setFields(formDefinition.fields);
+                formInstance.setAllWidgets(formDefinition.fields);
                 return formInstance;
             })
             .then(() => {

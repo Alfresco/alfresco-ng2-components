@@ -75,25 +75,38 @@ describe('Process Filters Test', () => {
 
     it('Navigate to Running filter', () => {
         navigationBarPage.clickProcessServicesButton();
+
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
+
         appNavigationBarPage.clickProcessButton();
+
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
+
         startProcessPage.enterProcessName(processTitle.completed);
         startProcessPage.selectFromProcessDropdown(app.process_title);
         startProcessPage.clickFormStartProcessButton();
+
         processDetailsPage.clickCancelProcessButton();
         navigationBarPage.clickProcessServicesButton();
+
         processServicesPage.goToApp(app.title);
+
         appNavigationBarPage.clickProcessButton();
+
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
+
         startProcessPage.enterProcessName(processTitle.running);
         startProcessPage.selectFromProcessDropdown(app.process_title);
         startProcessPage.clickFormStartProcessButton();
+
         processFiltersPage.checkFilterIsHighlighted(processFilter.running);
         processFiltersPage.selectFromProcessList(processTitle.running);
+
+        browser.driver.sleep(500);
+
         processDetailsPage.checkProcessDetailsCard();
     });
 

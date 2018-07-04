@@ -31,7 +31,7 @@ import AcsUserModel = require('./models/ACS/acsUserModel');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-xdescribe('Test Content Services Viewer', () => {
+describe('Test Content Services Viewer', () => {
 
     let acsUser = new AcsUserModel();
     let viewerPage = new ViewerPage();
@@ -66,7 +66,7 @@ xdescribe('Test Content Services Viewer', () => {
         'firstPageText': resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });
 
-    let downloadDir = browser.downloadDir ? browser.downloadDir : '';
+    let downloadDir = path.join(__dirname, '/downloads');
 
     let downloadedPdfFile = path.join(downloadDir, pdfFile.name);
     let downloadedJpgFile = path.join(downloadDir, jpgFile.name);
@@ -87,10 +87,6 @@ xdescribe('Test Content Services Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        contentServicesPage.goToDocumentList();
-
         let pdfFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
         Object.assign(pdfFile, pdfFileUploaded.entry);
 
@@ -105,6 +101,10 @@ xdescribe('Test Content Services Viewer', () => {
 
         let pagesFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pagesFile.location, pagesFile.name, '-my-');
         Object.assign(pagesFile, pagesFileUploaded.entry);
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        contentServicesPage.goToDocumentList();
 
         done();
     });
@@ -218,7 +218,7 @@ xdescribe('Test Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('5. Open viewer for a .ppt file converted to .pdf', () => {
+    xit('5. Open viewer for a .ppt file converted to .pdf', () => {
         viewerPage.viewFile(pptFile.name);
         viewerPage.checkFileContent('1', pptFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();
