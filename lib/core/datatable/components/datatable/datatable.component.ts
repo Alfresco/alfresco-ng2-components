@@ -161,6 +161,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     isSelectAllChecked: boolean = false;
     selection = new Array<DataRow>();
 
+    /** This array of fake rows fix the flex layout for the gallery view */
+    fakeRows = [];
+
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
 
@@ -188,6 +191,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 })
             );
         }
+        this.datatableLayoutFix();
         this.setTableSchema();
     }
 
@@ -219,6 +223,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
         if (this.isPropertyChanged(changes['sorting'])) {
             this.setTableSorting(changes['sorting'].currentValue);
+        }
+
+        if (this.isPropertyChanged(changes['display'])) {
+            this.datatableLayoutFix();
         }
     }
 
@@ -652,6 +660,18 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         if (this.dataRowsChanged) {
             this.dataRowsChanged.unsubscribe();
             this.dataRowsChanged = null;
+        }
+    }
+
+    datatableLayoutFix() {
+        const maxGalleryRows = 25;
+
+        if (this.display === 'gallery') {
+            for (let i = 0; i < maxGalleryRows; i++) {
+               this.fakeRows.push('');
+            }
+        } else {
+            this.fakeRows = [];
         }
     }
 }

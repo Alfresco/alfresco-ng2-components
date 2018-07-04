@@ -42,7 +42,6 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-
     </div>
 
     <div class="adf-datatable-body">
@@ -190,6 +189,9 @@
                     </ng-template>
                     <ng-content select="adf-empty-list"></ng-content>
                 </div>
+            </div>
+            <div *ngFor="let row of fakeRows"
+                 class="adf-datatable-row adf-datatable-row-empty-card">
             </div>
         </ng-container>
         <div *ngIf="!loading && noPermission"
