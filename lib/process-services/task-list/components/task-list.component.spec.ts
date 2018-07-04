@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/*tslint:disable:ban */
-
 import { Component, SimpleChange, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
