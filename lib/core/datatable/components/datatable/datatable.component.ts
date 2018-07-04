@@ -160,7 +160,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     isSelectAllChecked: boolean = false;
     selection = new Array<DataRow>();
-    
+
     /** This array of fake rows fix the flex layout for the gallery view */
     fakeRows = [];
 
