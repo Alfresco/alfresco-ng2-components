@@ -56,12 +56,23 @@ describe('UserPreferencesService', () => {
         }
     });
 
-    it('should get default pagination from app config', () => {
-        appConfig.config.pagination.size = 0;
-        expect(preferences.defaults.paginationSize).toBe(defaultPaginationSize);
+    it('should return default pagination value', (done) => {
+        changeDisposable = preferences.onChange.subscribe((pagination) => {
+            expect(pagination.paginationSize).toBe(defaultPaginationSize);
+            expect(pagination.supportedPageSizes).toEqual(supportedPaginationSize);
+            done();
+        });
     });
 
-    it('should return supported page sizes defined in the app config', () => {
+    it('should get paginationSize and supported page sizes from app config', (done) => {
+        changeDisposable = preferences.onChange.subscribe((pagination) => {
+            expect(pagination.PAGINATION_SIZE).toBe(10);
+            expect(pagination.supportedPageSizes).toEqual(supportedPaginationSize);
+            done();
+        });
+    });
+
+    it('should return default supported page sizes', () => {
         const supportedPages = preferences.getDefaultPageSizes();
         expect(supportedPages).toEqual(supportedPaginationSize);
     });
@@ -108,11 +119,6 @@ describe('UserPreferencesService', () => {
     it('should store custom pagination settings for default prefix', () => {
         preferences.paginationSize = 5;
         expect(preferences.paginationSize).toBe(5);
-    });
-
-    it('should return default paginationSize value', () => {
-        preferences.set('PAGINATION_SIZE', 0);
-        expect(preferences.paginationSize).toBe(defaultPaginationSize);
     });
 
     it('should return as default locale the app.config locate as first', () => {
