@@ -20,10 +20,10 @@ import resources = require('./util/resources');
 import LoginPage = require('./pages/adf/loginPage');
 import NavigationBarPage = require('./pages/adf/navigationBarPage');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
-import AdfStartProcessPage = require('./pages/adf/process_services/startProcessPage');
-import AdfProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
+import StartProcessPage = require('./pages/adf/process_services/startProcessPage');
+import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
 import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage');
-import AdfProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
+import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
@@ -34,10 +34,10 @@ describe('Process Filters Test', () => {
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();
     let processServicesPage = new ProcessServicesPage();
-    let adfStartProcessPage = new AdfStartProcessPage();
-    let adfProcessFiltersPage = new AdfProcessFiltersPage();
+    let startProcessPage = new StartProcessPage();
+    let processFiltersPage = new ProcessFiltersPage();
     let appNavigationBarPage = new AppNavigationBarPage();
-    let adfProcessDetailsPage = new AdfProcessDetailsPage();
+    let processDetailsPage = new ProcessDetailsPage();
 
     let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
 
@@ -78,37 +78,37 @@ describe('Process Filters Test', () => {
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
         appNavigationBarPage.clickProcessButton();
-        adfProcessFiltersPage.clickCreateProcessButton();
-        adfProcessFiltersPage.clickNewProcessDropdown();
-        adfStartProcessPage.enterProcessName(processTitle.completed);
-        adfStartProcessPage.selectFromProcessDropdown(app.process_title);
-        adfStartProcessPage.clickFormStartProcessButton();
-        adfProcessDetailsPage.clickCancelProcessButton();
+        processFiltersPage.clickCreateProcessButton();
+        processFiltersPage.clickNewProcessDropdown();
+        startProcessPage.enterProcessName(processTitle.completed);
+        startProcessPage.selectFromProcessDropdown(app.process_title);
+        startProcessPage.clickFormStartProcessButton();
+        processDetailsPage.clickCancelProcessButton();
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.goToApp(app.title);
         appNavigationBarPage.clickProcessButton();
-        adfProcessFiltersPage.clickCreateProcessButton();
-        adfProcessFiltersPage.clickNewProcessDropdown();
-        adfStartProcessPage.enterProcessName(processTitle.running);
-        adfStartProcessPage.selectFromProcessDropdown(app.process_title);
-        adfStartProcessPage.clickFormStartProcessButton();
-        adfProcessFiltersPage.checkFilterIsHighlighted(processFilter.running);
-        adfProcessFiltersPage.selectFromProcessList(processTitle.running);
-        adfProcessDetailsPage.checkProcessDetailsCard();
+        processFiltersPage.clickCreateProcessButton();
+        processFiltersPage.clickNewProcessDropdown();
+        startProcessPage.enterProcessName(processTitle.running);
+        startProcessPage.selectFromProcessDropdown(app.process_title);
+        startProcessPage.clickFormStartProcessButton();
+        processFiltersPage.checkFilterIsHighlighted(processFilter.running);
+        processFiltersPage.selectFromProcessList(processTitle.running);
+        processDetailsPage.checkProcessDetailsCard();
     });
 
     it('Navigate to All filter', () => {
-        adfProcessFiltersPage.clickAllFilterButton();
-        adfProcessFiltersPage.checkFilterIsHighlighted(processFilter.all);
-        adfProcessFiltersPage.selectFromProcessList(processTitle.running);
-        adfProcessFiltersPage.selectFromProcessList(processTitle.completed);
-        adfProcessDetailsPage.checkProcessDetailsCard();
+        processFiltersPage.clickAllFilterButton();
+        processFiltersPage.checkFilterIsHighlighted(processFilter.all);
+        processFiltersPage.selectFromProcessList(processTitle.running);
+        processFiltersPage.selectFromProcessList(processTitle.completed);
+        processDetailsPage.checkProcessDetailsCard();
     });
 
     it('Navigate to Completed filter', () => {
-        adfProcessFiltersPage.clickCompletedFilterButton();
-        adfProcessFiltersPage.checkFilterIsHighlighted(processFilter.completed);
-        adfProcessFiltersPage.selectFromProcessList(processTitle.completed);
-        adfProcessDetailsPage.checkProcessDetailsCard();
+        processFiltersPage.clickCompletedFilterButton();
+        processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
+        processFiltersPage.selectFromProcessList(processTitle.completed);
+        processDetailsPage.checkProcessDetailsCard();
     });
 });

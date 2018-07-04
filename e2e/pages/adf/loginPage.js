@@ -238,7 +238,7 @@ var LoginPage = function (){
      * @method goToLoginPage 
      */
      this.goToLoginPage = function (){ 
-         browser.driver.get(TestConfig.adf.url + TestConfig.adf.port);
+         browser.driver.get(TestConfig.adf.url + TestConfig.adf.port+'/login');
      };
 
     /**

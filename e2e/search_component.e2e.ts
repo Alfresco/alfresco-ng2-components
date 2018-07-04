@@ -32,7 +32,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Test Search component - Search Bar', function () {
+describe('Test Search component - Search Bar', () => {
 
     let search = {
         inactive: {
@@ -93,45 +93,45 @@ describe('Test Search component - Search Bar', function () {
     });
 
     // afterAll((done) => {
-    //     NodesAPI.deleteContent(acsUser, firstFileModel.id, function () {
-    //         NodesAPI.deleteContent(acsUser, firstFolderModel.id, function () {
+    //     NodesAPI.deleteContent(acsUser, firstFileModel.id, () => {
+    //         NodesAPI.deleteContent(acsUser, firstFolderModel.id, () => {
     //             done();
     //         });
     //     });
     // });
 
-    it('1. Search bar is visible', function () {
+    it('1. Search bar is visible', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon().checkSearchBarIsNotVisible().checkSearchIconIsVisible();
     });
 
-    it('2. Add input and close', function () {
+    it('2. Add input and close', () => {
         searchDialog.checkSearchIconIsVisible().clickOnSearchIcon().enterText(firstFolderModel.shortName);
         searchDialog.clickOnSearchIcon().checkSearchBarIsNotVisible().checkSearchIconIsVisible();
         contentServicesPage.checkAcsContainer();
     });
 
-    it('3. Search for content that doesn\'t exist', function () {
+    it('3. Search for content that doesn\'t exist', () => {
         searchDialog.checkSearchBarIsNotVisible().clickOnSearchIcon().checkNoResultMessageIsNotDisplayed()
             .enterText(search.inactive.name).checkNoResultMessageIsDisplayed();
         searchDialog.clearText();
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('4. Existing folder and file are displayed in search suggestion when typing only the first 4 letters', function () {
+    it('4. Existing folder and file are displayed in search suggestion when typing only the first 4 letters', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.shortName);
 
         searchDialog.resultTableContainsRow(firstFolderModel.name);
 
-        searchDialog.getSpecificRowsHighlightName(firstFolderModel.name).then(function (text) {
+        searchDialog.getSpecificRowsHighlightName(firstFolderModel.name).then((text) => {
             expect(text).toEqual(firstFolderModel.shortName);
         });
-        searchDialog.getSpecificRowsAuthor(firstFolderModel.name).then(function (text) {
+        searchDialog.getSpecificRowsAuthor(firstFolderModel.name).then((text) => {
             expect(text).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
         });
-        searchDialog.getSpecificRowsCompleteName(firstFolderModel.name).then(function (text) {
+        searchDialog.getSpecificRowsCompleteName(firstFolderModel.name).then((text) => {
             expect(text).toEqual(firstFolderModel.name);
         });
         searchDialog.clearText();
@@ -139,30 +139,30 @@ describe('Test Search component - Search Bar', function () {
 
         searchDialog.clickOnSearchIcon().enterText(firstFileModel.shortName);
         searchDialog.resultTableContainsRow(firstFileModel.name);
-        searchDialog.getSpecificRowsHighlightName(firstFileModel.name).then(function (text) {
+        searchDialog.getSpecificRowsHighlightName(firstFileModel.name).then((text) => {
             expect(text).toEqual(firstFileModel.shortName);
         });
-        searchDialog.getSpecificRowsAuthor(firstFileModel.name).then(function (text) {
+        searchDialog.getSpecificRowsAuthor(firstFileModel.name).then((text) => {
             expect(text).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
         });
-        searchDialog.getSpecificRowsCompleteName(firstFileModel.name).then(function (text) {
+        searchDialog.getSpecificRowsCompleteName(firstFileModel.name).then((text) => {
             expect(text).toEqual(firstFileModel.name);
         });
         searchDialog.clearText();
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('5. Existing folder and file are displayed in search suggestion', function () {
+    it('5. Existing folder and file are displayed in search suggestion', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.name);
         searchDialog.resultTableContainsRow(firstFolderModel.name);
-        searchDialog.getSpecificRowsHighlightName(firstFolderModel.name).then(function (text) {
+        searchDialog.getSpecificRowsHighlightName(firstFolderModel.name).then((text) => {
             expect(text).toEqual(firstFolderModel.name);
         });
-        searchDialog.getSpecificRowsAuthor(firstFolderModel.name).then(function (text) {
+        searchDialog.getSpecificRowsAuthor(firstFolderModel.name).then((text) => {
             expect(text).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
         });
-        searchDialog.getSpecificRowsCompleteName(firstFolderModel.name).then(function (text) {
+        searchDialog.getSpecificRowsCompleteName(firstFolderModel.name).then((text) => {
             expect(text).toEqual(firstFolderModel.name);
         });
         searchDialog.clearText();
@@ -170,13 +170,13 @@ describe('Test Search component - Search Bar', function () {
 
         searchDialog.clickOnSearchIcon().enterText(firstFileModel.name);
         searchDialog.resultTableContainsRow(firstFileModel.name);
-        searchDialog.getSpecificRowsHighlightName(firstFileModel.name).then(function (text) {
+        searchDialog.getSpecificRowsHighlightName(firstFileModel.name).then((text) => {
             expect(text).toEqual(firstFileModel.name);
         });
-        searchDialog.getSpecificRowsAuthor(firstFileModel.name).then(function (text) {
+        searchDialog.getSpecificRowsAuthor(firstFileModel.name).then((text) => {
             expect(text).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
         });
-        searchDialog.getSpecificRowsCompleteName(firstFileModel.name).then(function (text) {
+        searchDialog.getSpecificRowsCompleteName(firstFileModel.name).then((text) => {
             expect(text).toEqual(firstFileModel.name);
         });
 
@@ -184,12 +184,12 @@ describe('Test Search component - Search Bar', function () {
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('6. Folder content is displayed when clicking on existing folder', function () {
+    it('6. Folder content is displayed when clicking on existing folder', () => {
         searchDialog.clickOnSearchIcon().enterText(firstFolderModel.shortName);
         searchDialog.resultTableContainsRow(firstFolderModel.name);
         searchDialog.clickOnSpecificRow(firstFolderModel.name);
         contentServicesPage.checkAcsContainer().waitForTableBody();
-        contentServicesPage.currentFolderName().then(function (result) {
+        contentServicesPage.currentFolderName().then((result) => {
             expect(result).toEqual(firstFolderModel.name);
         });
         contentServicesPage.goToDocumentList();
@@ -197,53 +197,59 @@ describe('Test Search component - Search Bar', function () {
         searchDialog.checkSearchIconIsVisible().clickOnSearchIcon().checkSearchBarIsVisible();
         searchDialog.enterText(firstFileModel.name).resultTableContainsRow(firstFileModel.name);
         searchDialog.clickOnSpecificRow(firstFileModel.name);
-        filePreviewPage.getPDFTitleFromSearch().then(function (title) {
+        filePreviewPage.getPDFTitleFromSearch().then((title) => {
             expect(title).toEqual(firstFileModel.name);
         });
         filePreviewPage.closePreviewWithButton();
     });
 
-    it('7. Non-existent folder is not displayed in search page', function () {
+    it('7. Non-existent folder is not displayed in search page', () => {
         searchDialog.checkSearchIconIsVisible().clickOnSearchIcon();
         searchDialog.enterTextAndPressEnter(search.inactive.name);
         searchResultPage.checkNoResultMessageIsDisplayed();
         contentServicesPage.goToDocumentList();
     });
 
-    it('8. Existing folder is displayed in search page', function () {
+    it('8. Existing folder is displayed in search page', () => {
         searchDialog.clickOnSearchIcon();
         searchDialog.enterTextAndPressEnter(firstFolderModel.name);
         searchResultPage.checkContentIsDisplayed(firstFolderModel.name);
     });
 
-    it('9. Existing file is displayed in search page', function () {
+    it('9. Existing file is displayed in search page', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon();
         searchDialog.enterTextAndPressEnter(firstFileModel.name);
         searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
 
-    it('10. A folder is selected from search bar using arrows', function () {
+    it('10. A folder is selected from search bar using arrows', () => {
         contentServicesPage.goToDocumentList();
+
         searchDialog.clickOnSearchIcon().enterText(secondFolder.shortName);
         searchDialog.resultTableContainsRow(secondFolder.name).resultTableContainsRow(thirdFolder.name);
+
         let names = [];
-        searchDialog.getAllRowsValues().then(function (array) {
+        searchDialog.getAllRowsValues().then((array) => {
             names = array;
         });
         Util.pressDownArrowAndEnter();
+
         contentServicesPage.checkAcsContainer();
-        contentServicesPage.currentFolderName().then(function (result) {
+        contentServicesPage.currentFolderName().then((result) => {
             expect(result).toEqual(names[0]);
         });
     });
 
-    it('11. The search bar gets closed when clicking on another browser tab', function () {
+    it('11. The search bar gets closed when clicking on another browser tab', () => {
         contentServicesPage.goToDocumentList();
+
         searchDialog.clickOnSearchIcon().enterText(secondFolder.shortName);
         searchDialog.resultTableContainsRow(secondFolder.name).resultTableContainsRow(thirdFolder.name);
+
         Util.openNewTabInBrowser();
         Util.switchToWindowHandler(0);
+
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
     });
 });

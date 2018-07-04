@@ -78,7 +78,6 @@ describe('Task List Pagination', () => {
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
-
     });
 
     it('Pagination at first 20 started tasks', () => {

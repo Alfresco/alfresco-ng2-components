@@ -41,35 +41,41 @@ describe('Test Theming component', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
+        loginPage.goToLoginPage();
+        loginPage.waitForElements();
+
         done();
     });
 
-    it('Theming component', () => {
-        loginPage.goToLoginPage();
-        loginPage.waitForElements();
-        loginPage.getShowPasswordIconColor().then(function (value) {
-            expect(value).toEqual(CONSTANTS.THEMING.DEFAULT_PASSWORD_ICON_COLOR);
-        });
-        loginPage.getSignInButtonColor().then(function (value) {
-            expect(value).toEqual(CONSTANTS.THEMING.DEFAULT_LOGIN_BUTTON_COLOR);
-        });
-        loginPage.getBackgroundColor().then(function (value) {
-            expect(value).toEqual(CONSTANTS.THEMING.DEFAULT_BACKGROUND_COLOR);
-        });
+    it('Theming component', async () => {
+        let passwordIconColor = await loginPage.getShowPasswordIconColor();
+
+        expect(passwordIconColor).toEqual(CONSTANTS.THEMING.DEFAULT_PASSWORD_ICON_COLOR);
+
+        let signInButtonColor = await loginPage.getSignInButtonColor();
+
+        expect(signInButtonColor).toEqual(CONSTANTS.THEMING.DEFAULT_LOGIN_BUTTON_COLOR);
+
+        let backgroundColor = await loginPage.getBackgroundColor();
+        expect(backgroundColor).toEqual(CONSTANTS.THEMING.DEFAULT_BACKGROUND_COLOR);
+
         loginPage.loginToContentServicesUsingUserModel(acsUser);
+
         navigationBarPage.clickThemeButton();
         navigationBarPage.clickOnSpecificThemeButton(CONSTANTS.THEMING.PINK_BLUE_DARK);
         navigationBarPage.clickLoginButton();
+
         loginPage.waitForElements();
         loginPage.enterUsername(acsUser.email);
         loginPage.enterPassword(acsUser.password);
+
         expect(loginPage.getShowPasswordIconColor()).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_PASSWORD_ICON_COLOR);
-        loginPage.getSignInButtonColor().then(function (value) {
-            expect(value).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_LOGIN_BUTTON_COLOR);
-        });
-        loginPage.getBackgroundColor().then(function (value) {
-            expect(value).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_BACKGROUND_COLOR);
-        });
+
+        let signInButtonNewColor = await loginPage.getSignInButtonColor();
+        expect(signInButtonNewColor).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_LOGIN_BUTTON_COLOR);
+
+        let backgroundNewColor = await loginPage.getBackgroundColor();
+        expect(backgroundNewColor).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_BACKGROUND_COLOR);
     });
 
 });
