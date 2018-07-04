@@ -29,13 +29,10 @@
             display: flex;
 
             width: 100%;
-            flex-direction: row;
-            justify-content: space-between;
 
-            &:after {
-                content: "";
-                flex: auto;
-            }
+            justify-content: space-evenly;
+            align-content: flex-start;
+            align-items: flex-start;
 
             .adf-datatable-row {
                 transition: all 0.3s ease;
@@ -56,6 +53,14 @@
 
                 @include mat-elevation-transition;
                 @include mat-overridable-elevation(2);
+            }
+
+            .adf-datatable-row-empty-card {
+                height: 0 !important;
+                padding-top: 0;
+                padding-bottom: 0;
+                margin-top: 0;
+                margin-bottom: 0;
             }
 
             .is-selected {
