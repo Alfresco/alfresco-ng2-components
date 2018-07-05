@@ -50,7 +50,10 @@ export class AuthenticationService {
      * @returns True if logged in, false otherwise
      */
     isLoggedIn(): boolean {
-        return !!this.alfrescoApi.getInstance().isLoggedIn();
+            if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
+                return false;
+            }
+            return this.alfrescoApi.getInstance().isLoggedIn();
     }
 
     isOauth(): boolean {
