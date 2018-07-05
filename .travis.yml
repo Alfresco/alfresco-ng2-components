@@ -70,6 +70,7 @@ jobs:
           script: ./scripts/test-e2e-bc.sh
         - # Test expors
           script: npm run test-export
+          if: tag =~ .*beta.*
         - stage: Update Apps dependencies
         - # Test Update generator-ng2-alfresco-app
           if: tag =~ .*beta.*
