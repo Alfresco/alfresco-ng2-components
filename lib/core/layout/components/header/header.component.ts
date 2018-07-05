@@ -20,15 +20,12 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
 @Component({
     selector: 'adf-layout-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-layout-header' }
+    host: { class: 'adf-layout-header' }
 })
-
 export class HeaderLayoutComponent {
-
     @Input() title: string;
-    @Input() logo: string = './assets/logo.png';
+    @Input() logo: string = './assets/images/logo.png';
     @Input() color: string;
     @Input() showSidenavToggle: boolean = true;
     @Output() clicked = new EventEmitter<any>();
