@@ -71,6 +71,6 @@ if [[  $SINGLE_TEST == "true" ]]; then
   echo "====== Single test run $NAME_TEST ====="
   npm run e2e-lib -- --specs ./e2e/$NAME_TEST
 else
-  npm run e2e-li
+  npm run e2e-lib
 fi
 
