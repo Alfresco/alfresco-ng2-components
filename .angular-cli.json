@@ -192,7 +192,7 @@
   ],
   "e2e": {
     "protractor": {
-      "config": "./demo-shell/protractor-demo-shell.conf.js"
+      "config": "./protractor.conf.js"
     }
   },
   "lint": [

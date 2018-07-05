@@ -374,10 +374,8 @@ Script to run e2e test
 |-b or --browser |browser run the test in the browsrwer (No headless mode)|
 |-s or --spec |spec run a single test file|
 |-host or --host | host against to run the test|
+|-proxy or --proxy | proxy Back end URL to use |
 
-    echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
-
-    
 ## Examples
 
 ```sh
@@ -403,3 +401,8 @@ if the test in a subfolder in e2e you need to add the subfolder in the path:
 ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin --spec ./core/filenam.e2e.ts
 ```
 
+Use a different backend
+
+```sh
+./scripts/test-e2e-lib.sh -host localhost:42000 -proxy adf.domain.com  -u admin -p admin -e admin
+```
