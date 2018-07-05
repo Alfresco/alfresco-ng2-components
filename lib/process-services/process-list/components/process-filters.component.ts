@@ -78,15 +78,16 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let appId = changes['appId'];
+        const appId = changes['appId'];
+        const appName = changes['appName'];
+        const filter = changes['filterParam'];
+
         if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.getFiltersByAppId(appId.currentValue);
-            return;
-        }
-        let appName = changes['appName'];
-        if (appName && appName.currentValue) {
+        } else if (appName && appName.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
-            return;
+        } else if (filter && filter.currentValue !== filter.previousValue) {
+            this.selectProcessFilter(filter.currentValue);
         }
     }
 

@@ -196,4 +196,13 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.getCurrentFilter()).toBe(filter);
     });
 
+    it ('should select current process filter', () => {
+        spyOn(filterList, 'selectProcessFilter').and.stub();
+        const filterParam = 2;
+
+        let change = new SimpleChange(null, filterParam, true);
+        filterList.ngOnChanges({ 'filterParam': change });
+
+        expect(filterList.selectProcessFilter).toHaveBeenCalledWith(filterParam);
+    });
 });
