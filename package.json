@@ -29,7 +29,7 @@
     "lint": "ng lint",
     "wd:update": "webdriver-manager update --gecko=false --versions.chrome=2.40",
     "e2e": "ng e2e --app dist --deleteOutputPath=false -specs ./demo-shell/e2e/*.*",
-    "e2e-lib": "ng e2e --app dist --deleteOutputPath=false --port=4200 --proxy-config ./e2e/proxy.conf.js",
+    "e2e-lib": "ng e2e --app dev --deleteOutputPath=false --port=4200 --proxy-config ./e2e/proxy.conf.js",
     "server-versions": "rimraf ./demo-shell/src/versions.json && npm list --depth=0 --json=true --prod=true > ./demo-shell/src/versions.json  || exit 0",
     "clean": "rimraf dist ./node_modules typings",
     "clean-lock": "rimraf package-lock.json",
