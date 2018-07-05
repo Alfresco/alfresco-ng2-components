@@ -1,0 +1,16 @@
+<div class="main-content">
+    <h1>CardView Component</h1>
+
+    <mat-card class="card-view">
+        <adf-card-view
+            [properties]="properties"
+            [editable]="true">
+        </adf-card-view>
+    </mat-card>
+
+    <div class="console" #console>
+        <h3>Changes log:</h3>
+        <p *ngFor="let log of logs">{{ log }}</p>
+    </div>
+
+</div>
