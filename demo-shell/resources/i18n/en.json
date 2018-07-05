@@ -55,6 +55,7 @@
     "NODE-SELECTOR": "Node Selector",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Breadcrumb",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
     "CUSTOM_SOURCES": "Custom Sources",
