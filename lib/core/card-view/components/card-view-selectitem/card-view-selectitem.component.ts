@@ -24,7 +24,8 @@ import { MatSelectChange } from '@angular/material';
 
 @Component({
     selector: 'adf-card-view-selectitem',
-    templateUrl: './card-view-selectitem.component.html'
+    templateUrl: './card-view-selectitem.component.html',
+    styleUrls: ['./card-view-selectitem.component.scss']
 })
 export class CardViewSelectItemComponent implements OnChanges {
     @Input() property: CardViewSelectItemModel<string>;
