@@ -58,11 +58,11 @@ export class NotificationService {
 
         const translatedMessage = this.translationService.instant(message);
 
-            if (typeof config === 'number') {
-                config = {
-                    duration: config
-                };
-            }
+        if (typeof config === 'number') {
+            config = {
+                duration: config
+            };
+        }
 
         return this.snackBar.open(translatedMessage, action, config);
     }
