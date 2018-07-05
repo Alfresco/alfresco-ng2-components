@@ -34,21 +34,17 @@ export class NotificationService {
      * @param config Time before notification disappears after being shown or MatSnackBarConfig object
      * @returns Information/control object for the SnackBar
      */
-    openSnackMessage(message: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
+    openSnackMessage(message: string, config: number | MatSnackBarConfig = NotificationService.DEFAULT_DURATION_MESSAGE): MatSnackBarRef<any> {
 
         const translatedMessage = this.translationService.instant(message);
 
-        if (config) {
-            if (typeof config === 'object') {
-                return this.snackBar.open(translatedMessage, null, config);
-            } else {
-                return this.snackBar.open(translatedMessage, null, {
-                    duration: config || NotificationService.DEFAULT_DURATION_MESSAGE
-                });
-            }
-        } else {
-            return this.snackBar.open(translatedMessage);
+        if (typeof config === 'number') {
+            config = {
+                duration: config
+            };
         }
+
+        return this.snackBar.open(translatedMessage, null, config);
     }
 
     /**
@@ -58,20 +54,16 @@ export class NotificationService {
      * @param config Time before notification disappears after being shown or MatSnackBarConfig object
      * @returns Information/control object for the SnackBar
      */
-    openSnackMessageAction(message: string, action: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
+    openSnackMessageAction(message: string, action: string, config: number | MatSnackBarConfig = NotificationService.DEFAULT_DURATION_MESSAGE): MatSnackBarRef<any> {
 
         const translatedMessage = this.translationService.instant(message);
 
-        if (config) {
-            if (typeof config === 'object') {
-                return this.snackBar.open(translatedMessage, action, config);
-            } else {
-                return this.snackBar.open(translatedMessage, action, {
-                    duration: config || NotificationService.DEFAULT_DURATION_MESSAGE
-                });
+            if (typeof config === 'number') {
+                config = {
+                    duration: config
+                };
             }
-        } else {
-            return this.snackBar.open(translatedMessage, action);
-        }
+
+        return this.snackBar.open(translatedMessage, action, config);
     }
 }

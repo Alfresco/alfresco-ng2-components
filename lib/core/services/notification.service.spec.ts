@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /*tslint:disable:ban*/
-
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { OVERLAY_PROVIDERS, OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
@@ -69,7 +67,7 @@ class ProvidesNotificationServiceComponent {
 
 }
 
-fdescribe('NotificationService', () => {
+describe('NotificationService', () => {
     let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
     let translationService: TranslationService;
 
