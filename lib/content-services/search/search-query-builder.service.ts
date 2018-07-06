@@ -55,27 +55,17 @@ export class SearchQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    constructor(appConfig: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
-        this.config = appConfig.get<SearchConfiguration>('search');
+    constructor(private appConfig: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
         this.resetToDefaults();
     }
 
     resetToDefaults() {
-        if (this.config) {
-            this.categories =
-                (this.config.categories || [])
-                    .filter(category => category.enabled)
-                    .map(category => { return { ...category }; });
-
-            this.filterQueries =
-                (this.config.filterQueries || [])
-                    .map(query => { return {...query}; });
-
-            if (this.config.sorting) {
-                this.sorting =
-                    (this.config.sorting.defaults || [])
-                        .map(sorting => { return { ...sorting }; });
-            }
+        const template = this.appConfig.get<SearchConfiguration>('search');
+        if (template) {
+            this.config = JSON.parse(JSON.stringify(template));
+            this.categories = this.config.categories;
+            this.filterQueries = this.config.filterQueries;
+            this.sorting = this.config.sorting.defaults;
         }
     }
 
