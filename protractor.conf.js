@@ -12,6 +12,8 @@ const height = 768;
 
 var HOST = process.env.URL_HOST_ADF;
 
+var downloadFolder = path.join(__dirname,'\\downloads');
+
 exports.config = {
     allScriptsTimeout: 60000,
 
@@ -26,7 +28,8 @@ exports.config = {
                 'credentials_enable_service': false,
                 'download': {
                     'prompt_for_download': false,
-                    'default_directory': './e2e/downloads/',
+                    'directory_upgrade': true,
+                    'default_directory': downloadFolder
                 }
             },
             args: ['--incognito', '--headless']
