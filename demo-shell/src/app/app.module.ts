@@ -52,6 +52,7 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { PreviewService } from './services/preview.service';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
+import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
@@ -112,7 +113,8 @@ import { CardViewComponent } from './components/card-view/card-view.component';
         NotificationsComponent,
         CardViewComponent,
         ContentNodeSelectorComponent,
-        ReportIssueComponent
+        ReportIssueComponent,
+        TaskListDemoComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production

@@ -1,0 +1,83 @@
+<div class="task-list-demo-inputs">
+
+     <form [formGroup]="taskListForm">
+        <mat-form-field>
+            <mat-label>App Id</mat-label>
+                <input 
+                matInput
+                class="form-control" 
+                [formControl]="taskAppId">
+                <mat-error *ngIf="taskAppId.hasError('required')">
+                    {{ 'TASK_LIST_DEMO.APP_ID_REQUIRED_ERROR' | translate }}
+                </mat-error>
+                <mat-error *ngIf="taskAppId.hasError('pattern')">
+                    {{ 'TASK_LIST_DEMO.APP_ID_TYPE_ERROR' | translate }}
+                </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Task Name</mat-label>
+            <input 
+            matInput 
+            class="form-control" 
+            [formControl]="taskName">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>ProcessDefinitionId</mat-label>
+            <input 
+            matInput 
+            class="form-control" 
+            [formControl]="taskProcessDefinitionId">
+            <mat-hint>SimpleProcess:1:2</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+                <mat-label>Assignment</mat-label>
+                <mat-select 
+                class="form-control" 
+                [formControl]="taskAssignment">
+                 <mat-option *ngFor="let assignmentOption of assignmentOptions" [value]="assignmentOption.value">{{ assignmentOption.title }}</mat-option>
+                </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+                <mat-label>State</mat-label>
+                <mat-select 
+                class="form-control" 
+                [formControl]="taskState">
+                    <mat-option *ngFor="let stateOption of stateOptions" [value]="stateOption.value">{{ stateOption.title }}</mat-option>
+                </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+                <mat-label>Sort</mat-label>
+                <mat-select 
+                class="form-control" 
+                [formControl]="taskSort">
+                    <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOptions.value">{{ sortOption.title }}</mat-option>
+                </mat-select>
+        </mat-form-field>
+
+        <div class="adf-reset-button">
+            <button mat-raised-button (click)="resetTaskForm()">Reset</button>
+        </div>
+    </form>
+</div>
+
+<div>
+    <adf-tasklist
+        [appId]="appId" 
+        [name]="name" 
+        [processDefinitionId]="processDefinitionId" 
+        [assignment]="assignment" 
+        [state]="state" 
+        [sort]="sort"
+        #taskList>
+    </adf-tasklist>
+    
+    <adf-pagination 
+        [target]="taskList">
+    </adf-pagination>
+</div>
+
