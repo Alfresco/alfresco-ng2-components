@@ -5,8 +5,6 @@ const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const jasmineReporters = require('jasmine-reporters');
 
-console.log(0);
-
 const projectRoot = path.resolve(__dirname);
 
 const width = 1366;
