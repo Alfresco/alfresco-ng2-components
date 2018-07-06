@@ -32,7 +32,7 @@
                      *ngIf="taskFilter && !isStartTaskMode()">
                     <adf-tasklist
                         [appId]="taskFilter?.appId"
-                        [presetColumn]="presetColoum"
+                        [presetColumn]="presetColumn"
                         [page]="taskPage"
                         [size]="paginationPageSize"
                         [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
@@ -138,7 +138,7 @@
                         *ngIf="processFilter?.filter" [appId]="processFilter?.appId"
                         [processDefinitionKey]="processFilter?.filter?.processDefinitionKey"
                         [name]="processFilter?.filter?.name"
-                        [presetColumn]="presetColoum"
+                        [presetColumn]="presetColumn"
                         [state]="processFilter?.filter?.state"
                         [page]="processPage"
                         [size]="paginationPageSize"
