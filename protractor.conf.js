@@ -5,14 +5,25 @@ const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const jasmineReporters = require('jasmine-reporters');
 
+console.log(0);
+
 const projectRoot = path.resolve(__dirname);
 
 const width = 1366;
 const height = 768;
 
 var HOST = process.env.URL_HOST_ADF;
+var BROWSER_RUN = process.env.BROWSER_RUN;
 
-var downloadFolder = path.join(__dirname,'\\downloads');
+var args_options = [];
+
+if (BROWSER_RUN === 'true') {
+    args_options = ['--incognito'];
+} else {
+    args_options = ['--incognito', '--headless'];
+}
+
+var downloadFolder = path.join(__dirname,'e2e/downloads');
 
 exports.config = {
     allScriptsTimeout: 60000,
@@ -28,11 +39,10 @@ exports.config = {
                 'credentials_enable_service': false,
                 'download': {
                     'prompt_for_download': false,
-                    'directory_upgrade': true,
                     'default_directory': downloadFolder
                 }
             },
-            args: ['--incognito', '--headless']
+            args: args_options
         }
     },
 
@@ -81,11 +91,11 @@ exports.config = {
 
         function disableCSSAnimation() {
             var css = '* {' +
-                '-webkit-transition-duration: 0s !important;' +
-                'transition-duration: 0s !important;' +
-                '-webkit-animation-duration: 0s !important;' +
-                'animation-duration: 0s !important;' +
-                '}',
+                    '-webkit-transition-duration: 0s !important;' +
+                    'transition-duration: 0s !important;' +
+                    '-webkit-animation-duration: 0s !important;' +
+                    'animation-duration: 0s !important;' +
+                    '}',
                 head = document.head || document.getElementsByTagName('head')[0],
                 style = document.createElement('style');
 

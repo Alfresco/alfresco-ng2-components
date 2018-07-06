@@ -53,7 +53,7 @@ describe('Attachment list action menu for processes', () => {
         name: resources.Files.ADF_DOCUMENTS.PDF.file_name
     });
 
-    let downloadedJpgFile = path.join(__dirname, '\\downloads', jpgFile.name);
+    let downloadedJpgFile = path.join(__dirname, 'downloads', jpgFile.name);
     let tenantId, appId;
     let processName = {
         active: 'Active Process',
