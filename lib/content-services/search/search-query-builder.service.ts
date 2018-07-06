@@ -63,7 +63,7 @@ export class SearchQueryBuilderService {
         const template = this.appConfig.get<SearchConfiguration>('search');
         if (template) {
             this.config = JSON.parse(JSON.stringify(template));
-            this.categories = this.config.categories || [];
+            this.categories = (this.config.categories || []).filter(category => category.enabled);
             this.filterQueries = this.config.filterQueries || [];
             if (this.config.sorting) {
                 this.sorting = this.config.sorting.defaults || [];
