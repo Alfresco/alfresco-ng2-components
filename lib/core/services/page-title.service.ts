@@ -31,6 +31,7 @@ export class PageTitleService {
         private appConfig: AppConfigService,
         private translationService: TranslationService) {
         translationService.translate.onLangChange.subscribe(() => this.onLanguageChanged());
+        translationService.translate.onTranslationChange.subscribe(() => this.onLanguageChanged());
     }
 
     /**
