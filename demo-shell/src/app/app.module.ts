@@ -56,6 +56,7 @@ import { TaskListDemoComponent } from './components/task-list-demo/task-list-dem
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
+import { CardViewComponent } from './components/card-view/card-view.component';
 
 @NgModule({
     imports: [
@@ -110,6 +111,7 @@ import { ReportIssueComponent } from './components/report-issue/report-issue.com
         BlobPreviewComponent,
         BreadcrumbDemoComponent,
         NotificationsComponent,
+        CardViewComponent,
         ContentNodeSelectorComponent,
         ReportIssueComponent,
         TaskListDemoComponent

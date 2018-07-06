@@ -51,6 +51,7 @@ import { BlobPreviewComponent } from './components/blob-preview/blob-preview.com
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { CardViewComponent } from './components/card-view/card-view.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 
@@ -73,6 +74,16 @@ export const appRoutes: Routes = [
             {
                 path: '',
                 component: NotificationsComponent
+            }
+        ]
+    },
+    {
+        path: 'card-view',
+        component: AppLayoutComponent ,
+        children: [
+            {
+                path: '',
+                component: CardViewComponent
             }
         ]
     },

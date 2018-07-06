@@ -57,6 +57,7 @@
     "BREADCRUMB": "Breadcrumb",
     "NOTIFICATIONS": "Notifications",
     "TASK_LIST": "Task List",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
     "CUSTOM_SOURCES": "Custom Sources",
