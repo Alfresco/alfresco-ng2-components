@@ -181,29 +181,29 @@ var ContentList = function () {
      * @param sortOrder: 'true' if the list is expected to be sorted ascendant and 'false' for descendant
      * @return sorted : 'true' if the list is sorted as expected and 'false' if it isn't
      */
-    this.checkListIsOrderedByCreatedColumn = function(sortOrder) {
+    this.checkListIsOrderedByCreatedColumn = function (sortOrder) {
         var deferred = protractor.promise.defer();
         var lastValue;
         var sorted = true;
 
-        element.all(createdColumn).map(function(element) {
-           return element.getText();
+        element.all(createdColumn).map(function (element) {
+            return element.getText();
         }).then(function (texts) {
             texts.forEach(function (text) {
-                if(lastValue!==undefined) {
-                    var currentMom = new Date(text);
-                    var lastMom = new Date(lastValue);
-                    if(sortOrder === true && currentMom.getTime()<lastMom.getTime()) {
+                if (lastValue !== undefined) {
+                    var currentDate = new Date(text);
+                    var lastDate = new Date(lastValue);
+                    if (sortOrder === true && currentDate.getTime() < lastDate.getTime()) {
                         sorted = false;
-                    };
-                    if(sortOrder === false && currentMom.getTime()>lastMom.getTime()) {
+                    }
+                    if (sortOrder === false && currentDate.getTime() > lastDate.getTime()) {
                         sorted = false;
-                    };
-                };
+                    }
+                }
                 lastValue = text;
             });
+             deferred.fulfill(sorted);
         });
-        deferred.fulfill(sorted);
         return deferred.promise;
     };
 
