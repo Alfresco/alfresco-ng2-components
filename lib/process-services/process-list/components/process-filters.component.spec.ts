@@ -196,13 +196,25 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.getCurrentFilter()).toBe(filter);
     });
 
-    it ('should select current process filter', () => {
-        spyOn(filterList, 'selectProcessFilter').and.stub();
-        const filterParam = 2;
+    it ('should select current process filter', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
 
-        let change = new SimpleChange(null, filterParam, true);
-        filterList.ngOnChanges({ 'filterParam': change });
+        expect(filterList.currentFilter).toBeUndefined();
 
-        expect(filterList.selectProcessFilter).toHaveBeenCalledWith(filterParam);
+        const selectedFilter = new FilterProcessRepresentationModel({
+            name: 'FakeMyTasks',
+            filter: { state: 'open', assignment: 'fake-assignee' }
+        });
+
+        filterList.success.subscribe(() => {
+            filterList.selectProcessFilter(selectedFilter);
+            expect(filterList.currentFilter.name).toEqual('FakeMyTasks');
+            done();
+        });
+
+        filterList.ngOnInit();
     });
 });
