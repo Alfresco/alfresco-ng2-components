@@ -66,6 +66,7 @@ describe('Test Theming component', () => {
         navigationBarPage.clickLoginButton();
 
         loginPage.waitForElements();
+
         loginPage.enterUsername(acsUser.email);
         loginPage.enterPassword(acsUser.password);
 

@@ -336,7 +336,7 @@ exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
     this.waitUntilElementIsPresent(elementToCheck, timeout);
 
     var isDisplayed = false;
-    browser.wait(function () {
+    return browser.wait(function () {
         elementToCheck.isDisplayed().then(
             function () {
                 isDisplayed = true;

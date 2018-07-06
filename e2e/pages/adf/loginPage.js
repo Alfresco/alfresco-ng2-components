@@ -49,9 +49,18 @@ var LoginPage = function (){
      * @type protractor.Element
      * */
     this.waitForElements = function (){
-        Util.waitUntilElementIsVisible(txtUsername);
-        Util.waitUntilElementIsVisible(txtPassword);
-        return expect(browser.getCurrentUrl()).toEqual(loginURL);
+        var deferred = protractor.promise.defer();
+
+        Util.waitUntilElementIsVisible(txtUsername).then(()=>{
+            Util.waitUntilElementIsVisible(txtPassword).then(()=>{
+                deferred.fulfill();
+            },()=>{
+                deferred.rejected();
+            })
+        });
+
+        return deferred.promise;
+
     };
 
     /**
@@ -269,24 +278,36 @@ var LoginPage = function (){
     };
 
     this.getShowPasswordIconColor = function (){
+        var deferred = protractor.promise.defer();
+
         Util.waitUntilElementIsVisible(showPassword);
-        return showPassword.getCssValue("color").then(function (value) {
-            return value;
+        showPassword.getCssValue('color').then(function (value) {
+            deferred.fulfill(value);
         });
+
+        return deferred.promise;
     };
 
     this.getSignInButtonColor = function (){
+        var deferred = protractor.promise.defer();
+
         Util.waitUntilElementIsVisible(signInButton);
-        return signInButton.getCssValue("color").then(function (value) {
-            return value;
+        signInButton.getCssValue("color").then(function (value) {
+            deferred.fulfill(value);
         });
+
+        return deferred.promise;
     };
 
     this.getBackgroundColor = function (){
+        var deferred = protractor.promise.defer();
+
         Util.waitUntilElementIsVisible(cardBackground);
-        return cardBackground.getCssValue("color").then(function (value) {
-            return value;
+        cardBackground.getCssValue("color").then(function (value) {
+            deferred.fulfill(value);
         });
+
+        return deferred.promise;
     };
 
     /**
