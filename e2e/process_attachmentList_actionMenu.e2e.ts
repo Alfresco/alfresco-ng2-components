@@ -35,8 +35,7 @@ import { UsersActions } from './actions/users.actions';
 import { AppsActions } from './actions/APS/apps.actions.ts';
 import FileModel = require('./models/ACS/fileModel.js');
 
-/*tslint:disable:ban*/
-fdescribe('Attachment list action menu for processes', () => {
+describe('Attachment list action menu for processes', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();

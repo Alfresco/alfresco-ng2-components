@@ -547,3 +547,16 @@ exports.fileExists = function (filePath, retries) {
         }, 1000);
     });
 };
+
+/**
+ * Drag & Drop a file to the server using the file location.
+ *
+ * @method dragAndDropFile
+ */
+exports.dragAndDropFile = function (dragElem, dropElem, filePath) {
+    var absolutePath = path.join(TestConfig.main.rootPath + filePath);
+    var remote = require('../../node_modules/selenium-webdriver/remote');
+    browser.setFileDetector(new remote.FileDetector);
+    dragElem.sendKeys(absolutePath);
+    browser.driver.sleep(2000);
+};
