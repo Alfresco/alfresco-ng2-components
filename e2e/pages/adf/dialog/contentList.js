@@ -60,6 +60,7 @@ var ContentList = function () {
         var deferred = protractor.promise.defer();
         Util.waitUntilElementIsVisible(element(locator));
         var initialList = [];
+
         element.all(locator).each(function(element) {
             element.getText().then(function(text) {
                 if(text !== '') {
@@ -69,6 +70,7 @@ var ContentList = function () {
         }).then(function () {
             deferred.fulfill(initialList);
         });
+
         return deferred.promise;
     };
 

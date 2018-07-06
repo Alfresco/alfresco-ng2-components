@@ -123,19 +123,19 @@ describe('Test DocumentList component', () => {
         });
     });
 
-    it('6. Sort content ascending by author.', () => {
+    xit('6. Sort content ascending by author.', () => {
         contentServicesPage.sortAndCheckListIsOrderedByAuthor(true).then((result) => {
             expect(result).toEqual(true);
         });
     });
 
-    it('7. Sort content descending by author.', () => {
+    xit('7. Sort content descending by author.', () => {
         contentServicesPage.sortAndCheckListIsOrderedByAuthor(false).then((result) => {
             expect(result).toEqual(true);
         });
     });
 
-    it('8. Sort content ascending by created date.', () => {
+    xit('8. Sort content ascending by created date.', () => {
         contentServicesPage
             .sortAndCheckListIsOrderedByCreated(true)
             .then((result) => {
@@ -143,7 +143,7 @@ describe('Test DocumentList component', () => {
             });
     });
 
-    it('9. Sort content descending by created date.', () => {
+    xit('9. Sort content descending by created date.', () => {
         contentServicesPage.sortAndCheckListIsOrderedByCreated(false).then((result) => {
             expect(result).toEqual(true);
         });

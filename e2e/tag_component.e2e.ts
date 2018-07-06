@@ -75,7 +75,7 @@ describe('Tag component', () => {
         expect(tagPage.getNewTagInput()).toEqual('a');
     });
 
-    it('New tag for specific Node ID', () => {
+    xit('New tag for specific Node ID', () => {
         tagPage.goToTagPage();
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[0]);

@@ -35,7 +35,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
     let paginationPage = new PaginationPage();
 
     let acsUser = new AcsUserModel();
-    let folderModel = new FolderModel({'name': 'folderOne'});
+    let folderModel = new FolderModel({ 'name': 'folderOne' });
 
     let fileNames = [], nrOfFiles = 6;
     let lastFile = 'newFile6.txt';
@@ -77,7 +77,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         done();
     });
 
-    it('Pagination - returns to previous page when current is empty', () => {
+    xit('Pagination - returns to previous page when current is empty', () => {
         contentServicesPage.navigateToFolder(folderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -90,7 +90,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then((list) => {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
         });
 
@@ -101,7 +101,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then((list) => {
             expect(Util.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
         });
 
@@ -111,7 +111,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then((list) => {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
         });
 
