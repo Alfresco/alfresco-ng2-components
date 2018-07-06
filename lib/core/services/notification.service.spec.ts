@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /*tslint:disable:ban */
-
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { OVERLAY_PROVIDERS, OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
@@ -69,7 +67,7 @@ class ProvidesNotificationServiceComponent {
 
 }
 
-fdescribe('NotificationService', () => {
+describe('NotificationService', () => {
     let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
     let translationService: TranslationService;
 
@@ -121,7 +119,7 @@ fdescribe('NotificationService', () => {
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
-    fit('should open a message notification bar without custom configuration',  (done) => {
+    it('should open a message notification bar without custom configuration',  (done) => {
         let promise = fixture.componentInstance.sendMessageWithoutConfig();
         promise.afterDismissed().subscribe(() => {
             done();
@@ -165,7 +163,7 @@ fdescribe('NotificationService', () => {
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     }));
 
-    fit('should open a message notification bar with action and no custom configuration',  (done) => {
+    it('should open a message notification bar with action and no custom configuration',  (done) => {
         let promise = fixture.componentInstance.sendMessageActionWithoutConfig();
         promise.afterDismissed().subscribe(() => {
             done();
