@@ -52,6 +52,7 @@ Renders a list containing all the tasks matched by the parameters specified.
 | name | `string` |  | Name of the tasklist. |
 | page | `number` | 0 | The page number of the tasks to fetch. |
 | processDefinitionKey | `string` |  | (**Deprecated:** 2.4.0) The Definition Key of the process. |
+| processDefinitionId | `string` |  | The Definition Id of the process. |
 | processInstanceId | `string` |  | The Instance Id of the process. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
