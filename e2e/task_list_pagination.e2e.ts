@@ -38,7 +38,7 @@ describe('Task List Pagination', () => {
     let paginationPage = new PaginationPage();
     let navigationBarPage = new NavigationBarPage();
 
-    let processUserModel;
+    let processUserModel, processUserModelEmpty;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let currentPage = 1, nrOfTasks = 20, totalPages;
 
@@ -66,6 +66,7 @@ describe('Task List Pagination', () => {
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+        processUserModelEmpty = await users.createTenantAndUser(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
@@ -81,7 +82,6 @@ describe('Task List Pagination', () => {
     });
 
     it('Pagination at first 20 started tasks', () => {
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
@@ -91,11 +91,9 @@ describe('Task List Pagination', () => {
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
-        navigationBarPage.clickLogoutButton();
     });
 
     it('Items per page set to 5', () => {
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.five);
@@ -117,16 +115,13 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        navigationBarPage.clickLogoutButton();
     });
 
     it('Items per page set to 10', () => {
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
@@ -137,16 +132,13 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        navigationBarPage.clickLogoutButton();
     });
 
     it('Items per page set to 15', () => {
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
@@ -157,8 +149,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
@@ -208,7 +199,8 @@ describe('Task List Pagination', () => {
     });
 
     it('Pagination in an empty task list', () => {
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModelEmpty);
+
         processServicesPage.goToProcessServices().goToTaskApp();
         paginationPage.checkPaginationIsNotDisplayed();
     });

@@ -47,19 +47,10 @@ describe('Test Theming component', () => {
         done();
     });
 
-    xit('Theming component', () => {
-        loginPage.getShowPasswordIconColor().then((passwordIconColor) => {
-            expect(passwordIconColor).toEqual(CONSTANTS.THEMING.DEFAULT_PASSWORD_ICON_COLOR);
-        })
-
-
-        loginPage.getSignInButtonColor().then((signInButtonColor) => {
-            expect(signInButtonColor).toEqual(CONSTANTS.THEMING.DEFAULT_LOGIN_BUTTON_COLOR);
-        })
-
-        loginPage.getBackgroundColor().then((backgroundColor) => {
-            expect(backgroundColor).toEqual(CONSTANTS.THEMING.DEFAULT_BACKGROUND_COLOR);
-        })
+    it('Theming component', () => {
+        expect(loginPage.getShowPasswordIconColor()).toEqual(CONSTANTS.THEMING.DEFAULT_PASSWORD_ICON_COLOR);
+        expect(loginPage.getSignInButtonColor()).toEqual(CONSTANTS.THEMING.DEFAULT_LOGIN_BUTTON_COLOR);
+        expect(loginPage.getBackgroundColor()).toEqual(CONSTANTS.THEMING.DEFAULT_BACKGROUND_COLOR);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -71,17 +62,9 @@ describe('Test Theming component', () => {
         loginPage.enterUsername(acsUser.email);
         loginPage.enterPassword(acsUser.password);
 
-        loginPage.getShowPasswordIconColor().then((ShowPasswordColor) => {
-            expect(ShowPasswordColor).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_PASSWORD_ICON_COLOR);
-        })
-
-        loginPage.getSignInButtonColor().then((signInButtonNewColor) => {
-            expect(signInButtonNewColor).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_LOGIN_BUTTON_COLOR);
-        })
-
-        loginPage.getBackgroundColor().then((backgroundNewColor) => {
-            expect(backgroundNewColor).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_BACKGROUND_COLOR);
-        })
+        expect(loginPage.getShowPasswordIconColor()).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_PASSWORD_ICON_COLOR);
+        expect(loginPage.getSignInButtonColor()).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_LOGIN_BUTTON_COLOR);
+        expect(loginPage.getBackgroundColor()).toEqual(CONSTANTS.THEMING.PINK_BLUE_DARK_BACKGROUND_COLOR);
     });
 
 });

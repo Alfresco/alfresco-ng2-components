@@ -43,7 +43,7 @@ var PaginationPage = function () {
         itemsPerPageDropdown.click();
         Util.waitUntilElementIsVisible(pageSelectorDropDown);
 
-        var itemsPerPage = element(by.cssContainingText(".mat-menu-item", item));
+        var itemsPerPage = element.all(by.cssContainingText(".mat-menu-item", item)).first();
         Util.waitUntilElementIsClickable(itemsPerPage);
         Util.waitUntilElementIsVisible(itemsPerPage);
         itemsPerPage.click();
@@ -89,7 +89,7 @@ var PaginationPage = function () {
     };
 
     this.clickOnPageDropdownOption = function (item) {
-        Util.waitUntilElementIsVisible(element(pageDropDownOptions));
+        Util.waitUntilElementIsVisible(element.all(pageDropDownOptions).first());
         var option = element(by.cssContainingText("div[class*='mat-menu-content'] button", item));
         Util.waitUntilElementIsVisible(option);
         option.click();
@@ -98,7 +98,7 @@ var PaginationPage = function () {
 
     this.getPageDropdownOptions = function() {
         var deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(element(pageDropDownOptions));
+        Util.waitUntilElementIsVisible(element.all(pageDropDownOptions).first());
         var initialList = [];
         element.all(pageDropDownOptions).each(function(element) {
             element.getText().then(function(text) {

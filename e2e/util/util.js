@@ -233,7 +233,7 @@ exports.generateRandomInt = function (min, max) {
 exports.generateRandomEmail = function (length) {
     length = typeof length !== 'undefined' ? length : 5;
     var email = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     for (var i = 0; i < length; i++)
         email += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -365,7 +365,7 @@ exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
             }
         );
         return isPresent;
-    }, waitTimeout, 'Element is not present ');
+    }, waitTimeout, 'Element is not present ' + elementToCheck.locator());
 };
 
 /**
@@ -395,9 +395,7 @@ exports.typeElement = function (elementToType, valueToType, timeout) {
 exports.waitUntilElementHasValue = function (elementToCheck, elementValue, timeout) {
     var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    browser.wait(() => {
-        return until.textToBePresentInElementValue(elementToCheck, elementValue);
-    }, waitTimeout, 'Element doesn\'t have a value');
+    browser.wait(until.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, 'Element doesn\'t have a value ' + elementToCheck.locator());
 };
 
 /*
@@ -406,9 +404,9 @@ exports.waitUntilElementHasValue = function (elementToCheck, elementValue, timeo
 exports.waitUntilElementIsClickable = function (elementToCheck, timeout) {
     var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    browser.wait(() => {
+    return browser.wait(() => {
         return until.elementToBeClickable(elementToCheck);
-    }, waitTimeout, 'Element is not Clickable');
+    }, waitTimeout, 'Element is not Clickable' + elementToCheck.locator());
 };
 
 /*
@@ -421,7 +419,7 @@ exports.waitUntilElementIsNotVisible = function (elementToCheck, timeout) {
         return elementToCheck.isPresent().then(function (present) {
             return !present;
         })
-    }, waitTimeout, 'Element is not in Visible');
+    }, waitTimeout, 'Element is not in Visible ' + elementToCheck.locator());
 };
 
 exports.waitUntilElementIsNotDisplayed = function (elementToCheck, timeout) {
@@ -431,7 +429,7 @@ exports.waitUntilElementIsNotDisplayed = function (elementToCheck, timeout) {
         return elementToCheck.isDisplayed().then(function (present) {
             return !present;
         })
-    }, waitTimeout, 'Element is not in dysplayed');
+    }, waitTimeout, 'Element is not in dysplayed ' + elementToCheck.locator());
 };
 
 /*
@@ -440,9 +438,7 @@ exports.waitUntilElementIsNotDisplayed = function (elementToCheck, timeout) {
 exports.waitUntilElementIsStale = function (elementToCheck, timeout) {
     var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    browser.wait(() => {
-        return until.stalenessOf(elementToCheck);
-    }, waitTimeout, 'Element is not in stale');
+    return browser.wait(until.stalenessOf(elementToCheck), waitTimeout, 'Element is not in stale ' + elementToCheck.locator());
 };
 
 /*
@@ -453,15 +449,13 @@ exports.waitUntilElementIsNotOnPage = function (elementToCheck, timeout) {
 
     return browser.wait(() => {
         return browser.wait(until.not(until.visibilityOf(elementToCheck)));
-    }, waitTimeout, 'Element is not in the page');
+    }, waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
 };
 
 exports.waitUntilElementIsOnPage = function (elementToCheck, timeout) {
     waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    return browser.wait(() => {
-        return browser.wait(until.visibilityOf(elementToCheck));
-    }, timeout);
+    return browser.wait(browser.wait(until.visibilityOf(elementToCheck)), timeout);
 };
 
 /*
