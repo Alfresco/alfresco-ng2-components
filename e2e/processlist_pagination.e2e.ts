@@ -90,8 +90,6 @@ describe('Test Process List - Pagination', function () {
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.checkNoContentMessage();
         paginationPage.checkPaginationIsNotDisplayed();
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         page = 1;
         totalPages = 1;
@@ -141,9 +139,7 @@ describe('Test Process List - Pagination', function () {
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsEnabled();
 
-        navigationBarPage.clickLogoutButton();
         page = 1;
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
@@ -185,9 +181,7 @@ describe('Test Process List - Pagination', function () {
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsEnabled();
 
-        navigationBarPage.clickLogoutButton();
         page = 1;
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
@@ -217,8 +211,6 @@ describe('Test Process List - Pagination', function () {
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
 
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
@@ -284,9 +276,7 @@ describe('Test Process List - Pagination', function () {
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsEnabled();
 
-        navigationBarPage.clickLogoutButton();
         page = 1;
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilterRunning);

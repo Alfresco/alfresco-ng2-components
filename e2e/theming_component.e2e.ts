@@ -47,7 +47,7 @@ describe('Test Theming component', () => {
         done();
     });
 
-    it('Theming component', () => {
+    xit('Theming component', () => {
         expect(loginPage.getShowPasswordIconColor()).toEqual(CONSTANTS.THEMING.DEFAULT_PASSWORD_ICON_COLOR);
         expect(loginPage.getSignInButtonColor()).toEqual(CONSTANTS.THEMING.DEFAULT_LOGIN_BUTTON_COLOR);
         expect(loginPage.getBackgroundColor()).toEqual(CONSTANTS.THEMING.DEFAULT_BACKGROUND_COLOR);

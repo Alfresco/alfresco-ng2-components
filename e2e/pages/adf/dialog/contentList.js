@@ -58,7 +58,7 @@ var ContentList = function () {
 
     this.getAllRowsColumnValues = function(locator) {
         var deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(element(locator));
+        Util.waitUntilElementIsVisible(element.all(locator).first());
         var initialList = [];
 
         element.all(locator).each(function(element) {

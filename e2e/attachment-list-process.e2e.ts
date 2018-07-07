@@ -60,12 +60,12 @@ describe('Attachment list', () => {
 
         await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });
 
-    it('[C277296]Attach a file to task app - process list', function () {
+    it('[C277296] Attach a file to task app - process list', function () {
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.startProcess().selectFromProcessDropdown(app.process_se_name).clickFormStartProcessButton();
         processFiltersPage.clickRunningFilterButton();
@@ -77,7 +77,7 @@ describe('Attachment list', () => {
         attachmentListPage.checkFileIsAttached(pdfFile.name);
     });
 
-    it('[C277299]Attach a file to custom app - process list', function () {
+    it('[C277299] Attach a file to custom app - process list', function () {
         processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
         processFiltersPage.startProcess().selectFromProcessDropdown(app.process_se_name).clickFormStartProcessButton();
         processFiltersPage.clickRunningFilterButton();

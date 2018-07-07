@@ -105,8 +105,6 @@ describe('Process Filters Test', () => {
         processFiltersPage.checkFilterIsHighlighted(processFilter.running);
         processFiltersPage.selectFromProcessList(processTitle.running);
 
-        browser.driver.sleep(500);
-
         processDetailsPage.checkProcessDetailsCard();
     });
 

@@ -348,7 +348,7 @@ exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
             }
         );
         return isDisplayed;
-    }, waitTimeout, 'Element is not visible ');
+    }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
 };
 
 exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {

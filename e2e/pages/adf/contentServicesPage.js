@@ -31,7 +31,7 @@ var ContentServicesPage = function (){
     var currentFolder = element(by.css("div[class*='adf-breadcrumb-item active'] div"));
     var createFolderButton = element(by.cssContainingText("mat-icon", "create_new_folder"));
     var activeBreadcrumb = element(by.css("div[class*='active']"));
-    var folderID = element(by.css("div[class*='settings'] p"));
+    var folderID = element.all(by.css("div[class*='settings'] p")).first();
     var tooltip = by.css("div[class*='--text full-width'] span");
     var uploadFileButton = element(by.css("input[data-automation-id='upload-single-file']"));
     var uploadMultipleFileButton = element(by.css("input[data-automation-id='upload-multiple-files']"));
