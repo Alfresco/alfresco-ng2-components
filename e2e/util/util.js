@@ -28,6 +28,8 @@ var TestConfig = require('../test.config');
 var moment = require('moment');
 var CONSTANTS = require('./constants');
 
+
+var DEFAULT_TIMEOUT = 20000;
 /**
  * Provides utility methods used throughout the testing framework.
  *
@@ -41,7 +43,7 @@ var apiRequest = TestConfig.main.protocol !== 'http' ? https : http;
  * creates an absolute path string if multiple file uploads are required
  */
 exports.uploadParentFolder = function (filePath) {
-    var parentFolder = path.resolve(path.join(__dirname, "test"));
+    var parentFolder = path.resolve(path.join(__dirname, 'test'));
     var absolutePath = path.resolve(path.join(parentFolder, filePath));
 
     return absolutePath;
@@ -73,8 +75,8 @@ exports.refreshBrowser = function () {
  */
 exports.getCrtDateLongFormat = function () {
     var currentDate = new Date();
-    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
 
     currentDate = months[currentDate.getMonth()] + ' ' + currentDate.getDate() + ', ' + (currentDate.getYear() + 1900);
@@ -103,8 +105,8 @@ exports.getCrtDateInFormat = function (dateFormat) {
  */
 exports.generateRandomString = function (length) {
     length = typeof length !== 'undefined' ? length : 8;
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var text = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     for (var i = 0; i < length; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -114,9 +116,9 @@ exports.generateRandomString = function (length) {
 
 exports.generatePasswordString = function (length) {
     length = typeof length !== 'undefined' ? length : 8;
-    var text = "";
-    var possibleUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var possibleLowerCase = "abcdefghijklmnopqrstuvwxyz";
+    var text = '';
+    var possibleUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var possibleLowerCase = 'abcdefghijklmnopqrstuvwxyz';
     var lowerCaseLimit = Math.floor(length / 2);
 
     for (var i = 0; i < lowerCaseLimit; i++) {
@@ -139,8 +141,8 @@ exports.generatePasswordString = function (length) {
  */
 exports.generateRandomStringDigits = function (length) {
     length = typeof length !== 'undefined' ? length : 8;
-    var text = "";
-    var possible = "0123456789";
+    var text = '';
+    var possible = '0123456789';
 
     for (var i = 0; i < length; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -157,8 +159,8 @@ exports.generateRandomStringDigits = function (length) {
  */
 exports.generateRandomStringNonLatin = function (length) {
     length = typeof length !== 'undefined' ? length : 3;
-    var text = "";
-    var possible = "密码你好𠮷";
+    var text = '';
+    var possible = '密码你好𠮷';
 
     for (var i = 0; i < length; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -230,13 +232,13 @@ exports.generateRandomInt = function (min, max) {
  */
 exports.generateRandomEmail = function (length) {
     length = typeof length !== 'undefined' ? length : 5;
-    var email = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    var email = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
     for (var i = 0; i < length; i++)
         email += possible.charAt(Math.floor(Math.random() * possible.length));
 
-    email += "@activiti.test.com";
+    email += '@activiti.test.com';
     return email.toLowerCase();
 };
 
@@ -252,7 +254,7 @@ exports.generateRandomDateFormat = function () {
     var month = Math.floor(Math.random() * (12 - 1) + 1);
     var year = Math.floor(Math.random() * (2100 - 1990) + 1990);
 
-    return day + "." + month + "." + year;
+    return day + '.' + month + '.' + year;
 };
 
 /**
@@ -263,12 +265,12 @@ exports.generateRandomDateFormat = function () {
  */
 exports.generateRandomDate = function () {
     var day = Math.floor(Math.random() * (29 - 1) + 1);
-    if (day < 10) day = "0" + day;
+    if (day < 10) day = '0' + day;
     var month = Math.floor(Math.random() * (12 - 1) + 1);
-    if (month < 10) month = "0" + month;
+    if (month < 10) month = '0' + month;
     var year = Math.floor(Math.random() * (2100 - 1990) + 1990);
 
-    return day + "-" + month + "-" + year;
+    return day + '-' + month + '-' + year;
 };
 
 /**
@@ -321,24 +323,24 @@ exports.prepareFieldDndOnForm = function (script) {
  * Wait for url
  */
 exports.waitUntilUrlIsShowed = function (urlToWait, timeout) {
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    timeout = timeout || 20000;
-    browser.wait(function () {
+    browser.wait(() => {
         return browser.getCurrentUrl().then(function (url) {
             return (url.indexOf(TestConfig.main.host + urlToWait.toString()) !== -1);
-        }, timeout)
+        }, waitTimeout, urlToWait + 'is not showed');
     });
 };
 
 exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
-    timeout = timeout || 20000;
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
     this.waitUntilElementIsPresent(elementToCheck, timeout);
 
     var isDisplayed = false;
     return browser.wait(function () {
         elementToCheck.isDisplayed().then(
-            function () {
+            () => {
                 isDisplayed = true;
             },
             function (err) {
@@ -346,16 +348,16 @@ exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
             }
         );
         return isDisplayed;
-    }, timeout);
+    }, waitTimeout, 'Element is not visible ');
 };
 
 exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
-    timeout = timeout || 20000;
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
     var isPresent = false;
-    browser.wait(function () {
+    browser.wait(() => {
         elementToCheck.isPresent().then(
-            function () {
+            () => {
                 isPresent = true;
             },
             function (err) {
@@ -363,14 +365,14 @@ exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
             }
         );
         return isPresent;
-    }, timeout);
+    }, waitTimeout, 'Element is not present ');
 };
 
 /**
  * Click element
  */
 exports.clickElement = function (elementToClick, timeout) {
-    timeout = timeout || 20000;
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
     waitUntilElementIsVisible(elementToClick, timeout);
     elementToClick.click();
@@ -380,7 +382,7 @@ exports.clickElement = function (elementToClick, timeout) {
  * Type in  element
  */
 exports.typeElement = function (elementToType, valueToType, timeout) {
-    timeout = timeout || 20000;
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
     waitUntilElementIsVisible(elementToType, timeout);
     elementToType.clear().sendKeys(valueToType);
@@ -391,77 +393,73 @@ exports.typeElement = function (elementToType, valueToType, timeout) {
  * Wait for element to have value
  */
 exports.waitUntilElementHasValue = function (elementToCheck, elementValue, timeout) {
-    timeout = timeout || 20000;
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    browser.wait(function () {
+    browser.wait(() => {
         return until.textToBePresentInElementValue(elementToCheck, elementValue);
-
-    }, timeout);
+    }, waitTimeout, 'Element doesn\'t have a value');
 };
 
 /*
  * Wait for element to be clickable
  */
 exports.waitUntilElementIsClickable = function (elementToCheck, timeout) {
-    timeout = timeout || 20000;
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    browser.wait(function () {
+    browser.wait(() => {
         return until.elementToBeClickable(elementToCheck);
-
-    }, timeout);
+    }, waitTimeout, 'Element is not Clickable');
 };
 
 /*
  * Wait for element to not be visibile
  */
 exports.waitUntilElementIsNotVisible = function (elementToCheck, timeout) {
-    timeout = timeout || 20000;
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    return browser.wait(function () {
+    return browser.wait(() => {
         return elementToCheck.isPresent().then(function (present) {
             return !present;
         })
-    }, timeout);
+    }, waitTimeout, 'Element is not in Visible');
 };
 
 exports.waitUntilElementIsNotDisplayed = function (elementToCheck, timeout) {
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    timeout = timeout || 20000;
-
-    return browser.wait(function () {
+    return browser.wait(() => {
         return elementToCheck.isDisplayed().then(function (present) {
             return !present;
         })
-    }, timeout);
+    }, waitTimeout, 'Element is not in dysplayed');
 };
 
 /*
  * Wait for element to not be visibile
  */
 exports.waitUntilElementIsStale = function (elementToCheck, timeout) {
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    timeout = timeout || 20000;
-
-    browser.wait(function () {
+    browser.wait(() => {
         return until.stalenessOf(elementToCheck);
-    }, timeout);
+    }, waitTimeout, 'Element is not in stale');
 };
 
 /*
  * Wait for element to not be visibile
  */
 exports.waitUntilElementIsNotOnPage = function (elementToCheck, timeout) {
-    timeout = timeout || 20000;
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    return browser.wait(function () {
+    return browser.wait(() => {
         return browser.wait(until.not(until.visibilityOf(elementToCheck)));
-    }, timeout);
+    }, waitTimeout, 'Element is not in the page');
 };
 
 exports.waitUntilElementIsOnPage = function (elementToCheck, timeout) {
-    timeout = timeout || 20000;
+    waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    return browser.wait(function () {
+    return browser.wait(() => {
         return browser.wait(until.visibilityOf(elementToCheck));
     }, timeout);
 };
@@ -471,7 +469,6 @@ exports.waitUntilElementIsOnPage = function (elementToCheck, timeout) {
  * @param URL is url navigating to
  */
 exports.waitUntilTopMessageIsNotVisible = function (URL) {
-
     this.waitUntilUrlIsShowed(URL);
     this.waitUntilElementIsNotVisible(element(by.css("div[ng-click='dismissAlert()'] > i[class='glyphicon glyphicon-ok']")));
     this.waitUntilElementIsNotOnPage(element(by.css("div[class='alert fadein ng-animate info-remove ng-hide-add ng-hide info-remove-active ng-hide-add-active']")));
@@ -484,7 +481,6 @@ exports.waitUntilTopMessageIsNotVisible = function (URL) {
  * @param URL is url navigating to
  */
 exports.waitUntilTopErrorMessageIsNotVisible = function (URL) {
-
     this.waitUntilUrlIsShowed(URL);
     this.waitUntilElementIsNotVisible(element(by.css("div[ng-click='dismissAlert()'] > i[class='glyphicon glyphicon-remove']")));
     this.waitUntilElementIsNotOnPage(element(by.css("div[class='alert fadein ng-animate error-remove ng-hide-add ng-hide error-remove-active ng-hide-add-active']")));
@@ -497,9 +493,9 @@ exports.waitUntilTopErrorMessageIsNotVisible = function (URL) {
 exports.waitForPage = function () {
     browser.wait(function () {
         var deferred = protractor.promise.defer();
-        browser.executeScript("return document.readyState").then(function (text) {
+        browser.executeScript('return document.readyState').then(function (text) {
             deferred.fulfill(function (text) {
-                return text === "complete";
+                return text === 'complete';
             });
         });
         return deferred.promise;
@@ -530,7 +526,7 @@ exports.pressDownArrowAndEnter = function () {
 exports.fileExists = function (filePath, retries) {
     var tries = 0;
     return new Promise(function (resolve, reject) {
-        var checkExist = setInterval(function () {
+        var checkExist = setInterval(() => {
             fs.stat(filePath, function (error, stats) {
                 tries++;
 
