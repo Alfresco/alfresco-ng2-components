@@ -218,7 +218,7 @@ var ContentList = function () {
      */
     this.checkListIsSorted = function(sortOrder, locator) {
         var deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(element(locator));
+        Util.waitUntilElementIsVisible(element.all(locator).first());
         var initialList = [];
         element.all(locator).each(function(element) {
             element.getText().then(function(text) {

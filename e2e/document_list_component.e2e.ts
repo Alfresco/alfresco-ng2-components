@@ -112,41 +112,27 @@ describe('Test DocumentList component', () => {
         contentServicesPage.doubleClickRow(folderOneModel.name).checkContentIsDisplayed(files.firstFile);
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
         expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
-        contentServicesPage.sortAndCheckListIsOrderedByName(true).then((result) => {
-            expect(result).toEqual(true);
-        });
+        expect(contentServicesPage.sortAndCheckListIsOrderedByName(true)).toEqual(true);
     });
 
     it('5. Sort content descending by name.', () => {
-        contentServicesPage.sortAndCheckListIsOrderedByName(false).then((result) => {
-            expect(result).toEqual(true);
-        });
+        expect(contentServicesPage.sortAndCheckListIsOrderedByName(false)).toEqual(true);
     });
 
-    xit('6. Sort content ascending by author.', () => {
-        contentServicesPage.sortAndCheckListIsOrderedByAuthor(true).then((result) => {
-            expect(result).toEqual(true);
-        });
+    it('6. Sort content ascending by author.', () => {
+        expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor(true)).toEqual(true);
     });
 
-    xit('7. Sort content descending by author.', () => {
-        contentServicesPage.sortAndCheckListIsOrderedByAuthor(false).then((result) => {
-            expect(result).toEqual(true);
-        });
+    it('7. Sort content descending by author.', () => {
+        expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor(false)).toEqual(true);
     });
 
-    xit('8. Sort content ascending by created date.', () => {
-        contentServicesPage
-            .sortAndCheckListIsOrderedByCreated(true)
-            .then((result) => {
-                expect(result).toEqual(true);
-            });
+    it('8. Sort content ascending by created date.', () => {
+        expect(contentServicesPage.sortAndCheckListIsOrderedByCreated(true)).toEqual(true);
     });
 
-    xit('9. Sort content descending by created date.', () => {
-        contentServicesPage.sortAndCheckListIsOrderedByCreated(false).then((result) => {
-            expect(result).toEqual(true);
-        });
+    it('9. Sort content descending by created date.', () => {
+        expect(contentServicesPage.sortAndCheckListIsOrderedByCreated(false)).toEqual(true);
     });
 
     it('10. File can be uploaded in a new created folder.', () => {
