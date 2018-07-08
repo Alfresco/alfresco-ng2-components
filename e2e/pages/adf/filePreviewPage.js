@@ -156,7 +156,7 @@ module.exports = Page.create({
      */
     checkText: {
         value: function (pageNumber, text) {
-            var allPages = element(by.css("div[class='canvasWrapper'] > canvas"));
+            var allPages = element.all(by.css("div[class='canvasWrapper'] > canvas")).first();
             var pageLoaded = element(by.css("div[id='pageContainer" + pageNumber + "'][data-loaded='true']"));
             var textLayerLoaded = element(by.css("div[id='pageContainer" + pageNumber + "'] div[class='textLayer'] > div"));
             var specificText = element(by.cssContainingText("div[id='pageContainer" + pageNumber + "'] div[class='textLayer'] > div", text));
@@ -234,7 +234,7 @@ module.exports = Page.create({
      */
     closePreviewWithEsc: {
         value: function (fileName) {
-            var filePreview = element(by.css("div[class='canvasWrapper'] > canvas"));
+            var filePreview = element.all(by.css("div[class='canvasWrapper'] > canvas")).first();
 
             browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
             documentList.checkItemInDocList(fileName);
@@ -300,7 +300,7 @@ module.exports = Page.create({
      */
     checkCanvasWidth: {
         value: function () {
-            return element(by.css("div[class='canvasWrapper'] > canvas")).getAttribute("width").then(function(width) {
+            return element.all(by.css("div[class='canvasWrapper'] > canvas")).first().getAttribute("width").then(function(width) {
                 return width;
             });
         }
@@ -312,7 +312,7 @@ module.exports = Page.create({
      */
     checkCanvasHeight: {
         value: function () {
-            return element(by.css("div[class='canvasWrapper'] > canvas")).getAttribute("height").then(function(height) {
+            return element.all(by.css("div[class='canvasWrapper'] > canvas")).first().getAttribute("height").then(function(height) {
                 return height;
             });
         }
@@ -324,7 +324,7 @@ module.exports = Page.create({
      */
     zoomIn: {
         value: function () {
-            var canvasLayer = element(by.css("div[class='canvasWrapper'] > canvas"));
+            var canvasLayer = element.all(by.css("div[class='canvasWrapper'] > canvas")).first();
             var textLayer = element(by.css("div[id*='pageContainer'] div[class='textLayer'] > div"));
 
             Util.waitUntilElementIsVisible(canvasLayer);
@@ -373,7 +373,7 @@ module.exports = Page.create({
      */
     actualSize: {
         value: function () {
-            var canvasLayer = element(by.css("div[class='canvasWrapper'] > canvas"));
+            var canvasLayer = element.all(by.css("div[class='canvasWrapper'] > canvas")).first();
             var textLayer = element(by.css("div[id*='pageContainer'] div[class='textLayer'] > div"));
 
             Util.waitUntilElementIsVisible(canvasLayer);
@@ -430,7 +430,7 @@ module.exports = Page.create({
      */
     zoomOut: {
         value: function () {
-            var canvasLayer = element(by.css("div[class='canvasWrapper'] > canvas"));
+            var canvasLayer = element.all(by.css("div[class='canvasWrapper'] > canvas")).first();
             var textLayer = element(by.css("div[id*='pageContainer'] div[class='textLayer'] > div"));
 
             Util.waitUntilElementIsVisible(canvasLayer);

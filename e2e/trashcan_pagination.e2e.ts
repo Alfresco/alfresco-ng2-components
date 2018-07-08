@@ -53,7 +53,7 @@ describe('Trashcan - Pagination', () => {
     let navigationBarPage = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
-    let newFolderModel = new FolderModel({'name': 'newFolder'});
+    let newFolderModel = new FolderModel({ 'name': 'newFolder' });
     let nrOfFiles = 20;
 
     beforeAll(async (done) => {
@@ -70,29 +70,31 @@ describe('Trashcan - Pagination', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         let folderUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
         let emptyFiles = await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
-
-        emptyFiles.list.entries.forEach( (node) => {
-            this.alfrescoJsApi.node.deleteNode(node.entry.id);
+        await emptyFiles.list.entries.forEach(async (node) => {
+            await this.alfrescoJsApi.node.deleteNode(node.entry.id).then(() => {
+            }, () => {
+                this.alfrescoJsApi.node.deleteNode(node.entry.id);
+            })
         });
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
 
-    xit('[C272811] 20 Items per page', () => {
+    it('[C272811] 20 Items per page', () => {
         navigationBarPage.clickTrashcanButton();
 
         trashcanPage.waitForTableBody();
 
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
 
-        trashcanPage.waitForTableBody();
+        trashcanPage.waitForTableBody()
         trashcanPage.waitForPagination();
 
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
@@ -103,7 +105,7 @@ describe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    xit('[C276742] 15 Items per page', () => {
+    it('[C276742] 15 Items per page', () => {
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
@@ -116,7 +118,7 @@ describe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    xit('[C276743] 10 Items per page', () => {
+    it('[C276743] 10 Items per page', () => {
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
@@ -129,7 +131,7 @@ describe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    xit('[C276744] 5 Items per page', () => {
+    it('[C276744] 5 Items per page', () => {
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.five);
@@ -141,4 +143,5 @@ describe('Trashcan - Pagination', () => {
         paginationPage.checkNextPageButtonIsEnabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
-});
+})
+;

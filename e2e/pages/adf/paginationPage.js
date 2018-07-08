@@ -39,8 +39,10 @@ var PaginationPage = function () {
         Util.waitUntilElementIsClickable(itemsPerPageDropdown);
         browser.actions().mouseMove(itemsPerPageDropdown).perform();
         Util.waitUntilElementIsVisible(itemsPerPageDropdown);
-        Util.waitUntilElementIsClickable(itemsPerPageDropdown);
-        itemsPerPageDropdown.click();
+        Util.waitUntilElementIsClickable(itemsPerPageDropdown).then(()=>{
+            browser.driver.sleep(2000);
+            itemsPerPageDropdown.click();
+        });
         Util.waitUntilElementIsVisible(pageSelectorDropDown);
 
         var itemsPerPage = element.all(by.cssContainingText(".mat-menu-item", item)).first();
@@ -56,7 +58,9 @@ var PaginationPage = function () {
     };
 
     this.getCurrentItemsPerPage = function () {
-        Util.waitUntilElementIsVisible(itemsPerPage);
+        Util.waitUntilElementIsVisible(itemsPerPage).then(()=>{
+            console.log(2 + ' itemsPerPage.getText()' );
+        });
         return itemsPerPage.getText();
     };
 

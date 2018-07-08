@@ -37,7 +37,7 @@ var ViewerToolbarPage = function () {
     var mediaContainer = element(by.css("adf-media-player[class='adf-media-player ng-star-inserted']"));
     var unsupportedFileContainer  = element(by.cssContainingText('.label','Document preview could not be loaded'));
     var allPages = element.all(by.css("div[class='canvasWrapper'] > canvas")).first();
-    var pageCanvas = element(by.css("div[class='canvasWrapper']"));
+    var pageCanvas = element.all(by.css("div[class='canvasWrapper']")).first();
 
     this.canvasHeight = function () {
         var deferred = protractor.promise.defer();
