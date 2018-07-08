@@ -58,9 +58,7 @@ var PaginationPage = function () {
     };
 
     this.getCurrentItemsPerPage = function () {
-        Util.waitUntilElementIsVisible(itemsPerPage).then(()=>{
-            console.log(2 + ' itemsPerPage.getText()' );
-        });
+        Util.waitUntilElementIsVisible(itemsPerPage);
         return itemsPerPage.getText();
     };
 

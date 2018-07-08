@@ -79,7 +79,7 @@ describe('Trashcan - Pagination', () => {
             await this.alfrescoJsApi.node.deleteNode(node.entry.id).then(() => {
             }, () => {
                 this.alfrescoJsApi.node.deleteNode(node.entry.id);
-            })
+            });
         });
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -94,7 +94,7 @@ describe('Trashcan - Pagination', () => {
 
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
 
-        trashcanPage.waitForTableBody()
+        trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();
 
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
