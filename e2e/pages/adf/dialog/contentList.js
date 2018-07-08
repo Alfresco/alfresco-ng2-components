@@ -37,7 +37,7 @@ var ContentList = function () {
     var table = element(by.css("div[class*='upload-border']"));
 
     this.getRowsName = function (content) {
-        var row = element(by.xpath("//div[@class='document-list-container']//span[@title='" + content +"']"));
+        var row = element(by.xpath("//div[@class='document-list-container']//span[@title='" + content + "']"));
         Util.waitUntilElementIsVisible(row);
         return row;
     };
@@ -52,20 +52,21 @@ var ContentList = function () {
         return element.all(rows).count();
     };
 
-    this.getAllRowsNameColumn = function() {
+    this.getAllRowsNameColumn = function () {
         return this.getAllRowsColumnValues(nameColumn);
     };
 
-    this.getAllRowsColumnValues = function(locator) {
+    this.getAllRowsColumnValues = function (locator) {
         var deferred = protractor.promise.defer();
         Util.waitUntilElementIsVisible(element.all(locator).first());
         var initialList = [];
 
-        element.all(locator).each(function(element) {
-            element.getText().then(function(text) {
-                if(text !== '') {
+        element.all(locator).each(function (element) {
+            element.getText().then(function (text) {
+                if (text !== '') {
                     initialList.push(text);
-                };
+                }
+                ;
             });
         }).then(function () {
             deferred.fulfill(initialList);
@@ -97,26 +98,26 @@ var ContentList = function () {
         Util.waitUntilElementIsVisible(downloadContent);
     };
 
-    this.clickOnActionMenu = function(content) {
+    this.clickOnActionMenu = function (content) {
         this.getRowByRowName(content).element(optionButton).click();
         Util.waitUntilElementIsVisible(actionMenu);
         return this;
     };
 
-    this.sortByColumn = function(sortOrder, locator) {
+    this.sortByColumn = function (sortOrder, locator) {
         Util.waitUntilElementIsVisible(element(locator));
         return element(locator).getAttribute('class').then(function (result) {
-            if(sortOrder===true) {
-                if(!result.includes('sorted-asc')) {
-                    if(result.includes('sorted-desc') ||result.includes('sortable')) {
+            if (sortOrder === true) {
+                if (!result.includes('sorted-asc')) {
+                    if (result.includes('sorted-desc') || result.includes('sortable')) {
                         element(locator).click();
                     }
                 }
             }
             else {
-                if(result.includes('sorted-asc')) {
+                if (result.includes('sorted-asc')) {
                     element(locator).click();
-                } else if(result.includes('sortable')) {
+                } else if (result.includes('sortable')) {
                     element(locator).click();
                     element(locator).click();
                 }
@@ -131,7 +132,7 @@ var ContentList = function () {
      *
      * @param sortOrder: 'true' to sort the list ascendant and 'false' for descendant
      */
-    this.sortByName = function(sortOrder) {
+    this.sortByName = function (sortOrder) {
         this.sortByColumn(sortOrder, nameColumnHeader);
     };
 
@@ -140,7 +141,7 @@ var ContentList = function () {
      *
      * @param sortOrder: 'true' to sort the list ascendant and 'false' for descendant
      */
-    this.sortByAuthor = function(sortOrder) {
+    this.sortByAuthor = function (sortOrder) {
         this.sortByColumn(sortOrder, createdByColumnHeader);
     };
 
@@ -149,7 +150,7 @@ var ContentList = function () {
      *
      * @param sortOrder: 'true' to sort the list ascendant and 'false' for descendant
      */
-    this.sortByCreated = function(sortOrder) {
+    this.sortByCreated = function (sortOrder) {
         this.sortByColumn(sortOrder, createdColumnHeader);
     };
 
@@ -159,7 +160,7 @@ var ContentList = function () {
      * @param sortOrder: 'true' if the list is expected to be sorted ascendant and 'false' for descendant
      * @return sorted : 'true' if the list is sorted as expected and 'false' if it isn't
      */
-    this.checkListIsOrderedByNameColumn = function(sortOrder) {
+    this.checkListIsOrderedByNameColumn = function (sortOrder) {
         var deferred = protractor.promise.defer();
         deferred.fulfill(this.checkListIsSorted(sortOrder, nameColumn));
         return deferred.promise;
@@ -171,7 +172,7 @@ var ContentList = function () {
      * @param sortOrder: 'true' if the list is expected to be sorted ascendant and 'false' for descendant
      * @return sorted : 'true' if the list is sorted as expected and 'false' if it isn't
      */
-    this.checkListIsOrderedByAuthorColumn = function(sortOrder) {
+    this.checkListIsOrderedByAuthorColumn = function (sortOrder) {
         var deferred = protractor.promise.defer();
         deferred.fulfill(this.checkListIsSorted(sortOrder, createdByColumn));
         return deferred.promise;
@@ -204,7 +205,7 @@ var ContentList = function () {
                 }
                 lastValue = text;
             });
-             deferred.fulfill(sorted);
+            deferred.fulfill(sorted);
         });
         return deferred.promise;
     };
@@ -216,18 +217,18 @@ var ContentList = function () {
      * @param locator: locator for column
      * @return 'true' if the list is sorted as expected and 'false' if it isn't
      */
-    this.checkListIsSorted = function(sortOrder, locator) {
+    this.checkListIsSorted = function (sortOrder, locator) {
         var deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(element.all(locator).first());
+        Util.waitUntilElementIsVisible(element.all(locator).first(), 50000);
         var initialList = [];
-        element.all(locator).each(function(element) {
-            element.getText().then(function(text) {
+        element.all(locator).each(function (element) {
+            element.getText().then(function (text) {
                 initialList.push(text);
             });
         }).then(function () {
             var sortedList = initialList;
             sortedList = sortedList.sort();
-            if(sortOrder===false) {
+            if (sortOrder === false) {
                 sortedList = sortedList.reverse();
             }
             deferred.fulfill(initialList.toString() === sortedList.toString());
@@ -276,7 +277,7 @@ var ContentList = function () {
     };
 
     this.checkContentIsNotDisplayed = function (content) {
-        Util.waitUntilElementIsNotVisible(element(by.css("span[title='" + content +"']")));
+        Util.waitUntilElementIsNotVisible(element(by.css("span[title='" + content + "']")));
         return this;
     };
 
@@ -293,7 +294,7 @@ var ContentList = function () {
     this.checkIconColumn = function (file, extension) {
         var row = this.getRowByRowName(file);
         Util.waitUntilElementIsVisible(row);
-        Util.waitUntilElementIsVisible(row.element(by.css("div[class*='--image'] img[alt*='" + extension +"']")));
+        Util.waitUntilElementIsVisible(row.element(by.css("div[class*='--image'] img[alt*='" + extension + "']")));
     };
 
 };
