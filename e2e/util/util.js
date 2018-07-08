@@ -338,12 +338,13 @@ exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
     this.waitUntilElementIsPresent(elementToCheck, timeout);
 
     var isDisplayed = false;
-    return browser.wait(function () {
+    return browser.wait(() => {
         elementToCheck.isDisplayed().then(
             () => {
                 isDisplayed = true;
             },
-            function (err) {
+            (err) => {
+                console.log('Element is not visible ' + elementToCheck.locator());
                 isDisplayed = false;
             }
         );
@@ -360,7 +361,7 @@ exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
             () => {
                 isPresent = true;
             },
-            function (err) {
+            (err) => {
                 isPresent = false;
             }
         );
