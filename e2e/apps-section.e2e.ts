@@ -76,7 +76,7 @@ describe('Modify applications', () => {
         processServicesPage.checkApsContainer();
 
         expect(processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.UNIT);
-        expect(processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
+        expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
         expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
 
         await apps.importNewAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, firstApp.id);
@@ -86,7 +86,7 @@ describe('Modify applications', () => {
         processServicesPage.checkApsContainer();
 
         expect(processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.FAVORITE);
-        expect(processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
+        expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
         expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
