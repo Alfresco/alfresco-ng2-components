@@ -18,14 +18,14 @@
                                     {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}
                                 </mat-error>
                                 <mat-error *ngIf="taskName.hasError('maxlength')">
-                                    {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
+                                    {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxTaskNameLength } }}
                                 </mat-error>
                         </mat-form-field>
                     </div>
 
                     <div class="adf-grid-full-width adf-grid-row">
                         <mat-form-field class="adf-grid-full-width adf-grid-column">
-                            <label></label>
+                            <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
                             <textarea 
                                 matInput 
                                 class="adf-grid-full-width form-control" 
@@ -69,7 +69,7 @@
                                         class="form-control"
                                         formControlName="taskModelFormKey" >
                                         <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
-                                        <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
+                                        <mat-option *ngFor="let form of forms$ | async" [value]="form.id">{{ form.name }}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -95,7 +95,7 @@
                         color="primary" 
                         mat-button 
                         [disabled]="!isFormValid() || dateError" 
-                        (click)="start()" 
+                        (click)="saveTask()" 
                         id="button-start">
                         {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
                     </button>

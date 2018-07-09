@@ -489,6 +489,10 @@
             ]
         }
     },
+    "adf-start-task": {
+        "name": "ADF_TASK_LIST.START_TASK.DEFAULT_NAME",
+        "maxTaskNameLength": 255
+    },
     "adf-start-process": {
         "name": "My Default Name",
         "processDefinitionName": "My default process def name"
