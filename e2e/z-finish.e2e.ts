@@ -40,31 +40,32 @@ describe('Save screenshot at the end', () => {
                 hostEcm: TestConfig.adf.url
             });
 
-            alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-            let folder = await alfrescoJsApi.nodes.addNode('-my-', {
-                'name': 'Screenshot-e2e-' + buildNumber,
-                'nodeType': 'cm:folder'
-            }, {}, {});
-
             let files = fs.readdirSync(path.join(__dirname, '../e2e-output/screenshots'));
 
-            for (const fileName of files) {
+            if (files && files.length > 0) {
+                alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-                let pathFile = path.join(__dirname, '../e2e-output/screenshots', fileName);
-                let file = fs.createReadStream(pathFile);
+                let folder = await alfrescoJsApi.nodes.addNode('-my-', {
+                    'name': 'Screenshot-e2e-' + buildNumber,
+                    'nodeType': 'cm:folder'
+                }, {}, {});
 
-                await  alfrescoJsApi.upload.uploadFile(
-                    file,
-                    '',
-                    folder.entry.id,
-                    null,
-                    {
-                        'name': file.name,
-                        'nodeType': 'cm:content'
-                    }
-                );
+                for (const fileName of files) {
 
+                    let pathFile = path.join(__dirname, '../e2e-output/screenshots', fileName);
+                    let file = fs.createReadStream(pathFile);
+
+                    await  alfrescoJsApi.upload.uploadFile(
+                        file,
+                        '',
+                        folder.entry.id,
+                        null,
+                        {
+                            'name': file.name,
+                            'nodeType': 'cm:content'
+                        }
+                    );
+                }
             }
         }
 
