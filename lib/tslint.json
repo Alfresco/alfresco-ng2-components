@@ -1,46 +1,47 @@
 {
-    "rulesDirectory": [
-        "../node_modules/codelyzer",
-        "../tools/tslint-rules/"
+  "rulesDirectory": [
+    "../node_modules/codelyzer",
+    "../tools/tslint-rules/"
+  ],
+  "rules": {
+    "align": [
+      true,
+      "parameters",
+      "statements"
     ],
-    "rules": {
-        "align": [
-            true,
-            "parameters",
-            "statements"
-        ],
-        "ban": [
-          true,
-          "eval"
-        ],
-        "class-name": true,
-        "comment-format": [
-            true,
-            "check-space"
-        ],
-        "curly": true,
-        "eofline": true,
-        "forin": true,
+    "ban": [
+      true,
+      "eval",
+      "fdescribe"
+    ],
+    "class-name": true,
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "curly": true,
+    "eofline": true,
+    "forin": true,
     "import-blacklist": [
       true,
       "rxjs",
       "rxjs/Rx"
     ],
     "import-spacing": true,
-        "indent": [
-            true,
-            "spaces"
-        ],
-        "interface-name": false,
-        "jsdoc-format": true,
-        "label-position": true,
-        "max-line-length": [
-            true,
-            180
-        ],
-        "member-access": false,
-        "member-ordering": [
-            true,
+    "indent": [
+      true,
+      "spaces"
+    ],
+    "interface-name": false,
+    "jsdoc-format": true,
+    "label-position": true,
+    "max-line-length": [
+      true,
+      180
+    ],
+    "member-access": false,
+    "member-ordering": [
+      true,
       {
         "order": [
           "static-field",
@@ -49,121 +50,133 @@
           "instance-method"
         ]
       }
-        ],
-        "no-any": false,
-        "no-arg": true,
-        "no-bitwise": false,
-        "no-conditional-assignment": true,
-        "no-consecutive-blank-lines": true,
-        "no-construct": true,
-        "no-constructor-vars": false,
-        "no-debugger": true,
-        "no-duplicate-super": true,
-        "no-duplicate-variable": true,
-        "no-empty": false,
-        "no-eval": true,
-        "no-inferrable-types": false,
-        "no-internal-module": true,
-        "no-require-imports": false,
-        "no-shadowed-variable": true,
-        "no-switch-case-fall-through": true,
-        "no-trailing-whitespace": true,
-        "no-unused-expression": true,
-        "no-var-keyword": true,
-        "no-var-requires": true,
-        "object-literal-sort-keys": false,
-        "one-line": [
-            true,
-            "check-open-brace",
-            "check-catch",
-            "check-else",
-            "check-whitespace"
-        ],
-        "quotemark": [
-            true,
-            "single",
-            "avoid-escape"
-        ],
-        "radix": true,
-        "semicolon": [
-          true,
-          "always"
-        ],
-        "switch-default": true,
-        "trailing-comma": [
-            true,
-            {
-                "multiline": "never",
-                "singleline": "never"
-            }
-        ],
-        "triple-equals": [
-            true,
-            "allow-null-check"
-        ],
-        "typedef": false,
-        "typedef-whitespace": [
-            true,
-            {
-                "call-signature": "nospace",
-                "index-signature": "nospace",
-                "parameter": "nospace",
-                "property-declaration": "nospace",
-                "variable-declaration": "nospace"
-            }
-        ],
-        "use-strict": false,
-        "variable-name": [
-            true,
-            "check-format",
-            "allow-leading-underscore",
-            "ban-keywords"
-        ],
-        "callable-types": true,
-        "import-blacklist": [
-            true,
-            "rxjs"
-        ],
-        "import-spacing": true,
-        "interface-over-type-literal": true,
-        "member-access": false,
-        "no-empty-interface": true,
-        "no-string-literal": false,
-        "no-string-throw": true,
-        "prefer-const": false,
-        "unified-signatures": true,
-        "whitespace": [
-            true,
-            "check-branch",
-            "check-decl",
-            "check-operator",
-            "check-separator",
-            "check-typecast",
-            "check-type",
-            "check-typecast",
-            "check-module"
-        ],
-        "component-selector": [
-            true,
-            "element",
-            "adf",
-            "kebab-case"
-        ],
-      "naming-convention": [
-        {"type": "enumMember", "format": "PascalCase"}
-      ],
-      "ordered-imports": false,
-        "use-input-property-decorator": true,
-        "use-output-property-decorator": true,
-        "use-host-property-decorator": false,
-        "use-life-cycle-interface": true,
-        "use-pipe-transform-interface": true,
-        "component-class-suffix": true,
-        "directive-class-suffix": true,
-        "adf-file-name": true,
-        "adf-class-name": true,
-        "adf-prefix-name": true,
-        "no-input-rename": true,
-        "no-output-rename": true
-    }
+    ],
+    "no-any": false,
+    "no-arg": true,
+    "no-bitwise": false,
+    "no-conditional-assignment": true,
+    "no-consecutive-blank-lines": true,
+    "no-console": [
+      true,
+      "log",
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
+    "no-construct": true,
+    "no-constructor-vars": false,
+    "no-debugger": true,
+    "no-duplicate-super": true,
+    "no-duplicate-variable": true,
+    "no-empty": false,
+    "no-eval": true,
+    "no-inferrable-types": false,
+    "no-internal-module": true,
+    "no-require-imports": false,
+    "no-shadowed-variable": true,
+    "no-switch-case-fall-through": true,
+    "no-trailing-whitespace": true,
+    "no-unused-expression": true,
+    "no-var-keyword": true,
+    "no-var-requires": true,
+    "object-literal-sort-keys": false,
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape"
+    ],
+    "radix": true,
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "switch-default": true,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "never",
+        "singleline": "never"
+      }
+    ],
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "typedef": false,
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      }
+    ],
+    "use-strict": false,
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-leading-underscore",
+      "ban-keywords"
+    ],
+    "callable-types": true,
+    "import-blacklist": [
+      true,
+      "rxjs"
+    ],
+    "import-spacing": true,
+    "interface-over-type-literal": true,
+    "member-access": false,
+    "no-empty-interface": true,
+    "no-string-literal": false,
+    "no-string-throw": true,
+    "prefer-const": false,
+    "unified-signatures": true,
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-typecast",
+      "check-type",
+      "check-typecast",
+      "check-module"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "adf",
+      "kebab-case"
+    ],
+    "naming-convention": [
+      {
+        "type": "enumMember",
+        "format": "PascalCase"
+      }
+    ],
+    "ordered-imports": false,
+    "use-input-property-decorator": true,
+    "use-output-property-decorator": true,
+    "use-host-property-decorator": false,
+    "use-life-cycle-interface": true,
+    "use-pipe-transform-interface": true,
+    "component-class-suffix": true,
+    "directive-class-suffix": true,
+    "adf-file-name": true,
+    "adf-class-name": true,
+    "adf-prefix-name": true,
+    "no-input-rename": true,
+    "no-output-rename": true
+  }
 }
