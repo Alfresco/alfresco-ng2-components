@@ -23,47 +23,52 @@ import fs = require('fs');
 import path = require('path');
 
 let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
+let saveScreenshot = process.env.SAVE_SCREENSHOT;
 
 describe('Save screenshot at the end', () => {
 
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();
 
-        if (!buildNumber) {
-            buildNumber = Date.now();
+        if (saveScreenshot === 'true') {
+            if (!buildNumber) {
+                buildNumber = Date.now();
+            }
+
+            let alfrescoJsApi = new AlfrescoApi({
+                provider: 'ECM',
+                hostEcm: TestConfig.adf.url
+            });
+
+            alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            let folder = await alfrescoJsApi.nodes.addNode('-my-', {
+                'name': 'Screenshot-e2e-' + buildNumber,
+                'nodeType': 'cm:folder'
+            }, {}, {});
+
+            let files = fs.readdirSync(path.join(__dirname, '../e2e-output/screenshots'));
+
+            for (const fileName of files) {
+
+                let pathFile = path.join(__dirname, '../e2e-output/screenshots', fileName);
+                let file = fs.createReadStream(pathFile);
+
+                await  alfrescoJsApi.upload.uploadFile(
+                    file,
+                    '',
+                    folder.entry.id,
+                    null,
+                    {
+                        'name': file.name,
+                        'nodeType': 'cm:content'
+                    }
+                );
+
+            }
         }
 
-        let alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: TestConfig.adf.url
-        });
-
-        alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-        let folder = await alfrescoJsApi.nodes.addNode('-my-', {
-            'name': 'Screenshot-e2e-' + buildNumber,
-            'nodeType': 'cm:folder'
-        }, {}, {});
-
-        let files = fs.readdirSync(path.join(__dirname, '../e2e-output/screenshots'));
-
-        for (const fileName of files) {
-
-            let pathFile = path.join(__dirname, '../e2e-output/screenshots', fileName);
-            let file = fs.createReadStream(pathFile);
-
-            await  alfrescoJsApi.upload.uploadFile(
-                file,
-                '',
-                folder.entry.id,
-                null,
-                {
-                    'name': file.name,
-                    'nodeType': 'cm:content'
-                }
-            );
-
-        }
+        done();
     });
 
     fit('screenshot need it', () => {

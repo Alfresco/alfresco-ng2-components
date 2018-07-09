@@ -14,6 +14,7 @@ show_help() {
     echo "-s or --spec run a single test file"
     echo "-p or --proxy proxy Back end URL to use"
     echo "-host or --host URL of the Front end to test"
+    echo "-save  save the error screenshot in the remote env"
     echo "-h or --help"
 }
 
@@ -43,6 +44,9 @@ set_browser(){
 set_proxy(){
     PROXY=$1
 }
+set_save_screenshot(){
+    SAVE_SCREENSHOT=true
+}
 
 while [[ $1 == -* ]]; do
     case "$1" in
@@ -52,6 +56,7 @@ while [[ $1 == -* ]]; do
       -e|--email)  set_email $2; shift 2;;
       -b|--browser)  set_browser; shift;;
       -s|--spec)  set_test $2; shift 2;;
+      -save)   set_save_screenshot; shift;;
       -proxy|--proxy)  set_proxy $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
@@ -67,6 +72,7 @@ export PASSWORD_ADF=$PASSWORD
 export EMAIL_ADF=$EMAIL
 export BROWSER_RUN=$BROWSER_RUN
 export PROXY_HOST_ADF=$PROXY
+export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 
 if [[  $SINGLE_TEST == "true" ]]; then
   echo "====== Single test run $NAME_TEST ====="
