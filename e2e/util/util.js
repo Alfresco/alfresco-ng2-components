@@ -335,13 +335,37 @@ exports.waitUntilUrlIsShowed = function (urlToWait, timeout) {
 exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
     var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, 'Element is not visible ' + elementToCheck.locator());
+    this.waitUntilElementIsPresent(elementToCheck, timeout);
+
+    var isDisplayed = false;
+    return browser.wait(() => {
+        elementToCheck.isDisplayed().then(
+            () => {
+                isDisplayed = true;
+            },
+            (err) => {
+                isDisplayed = false;
+            }
+        );
+        return isDisplayed;
+    }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
 };
 
 exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
     var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
+    var isPresent = false;
+    return browser.wait(() => {
+        elementToCheck.isPresent().then(
+            () => {
+                isPresent = true;
+            },
+            (err) => {
+                isPresent = false;
+            }
+        );
+        return isPresent;
+    }, waitTimeout, 'Element is not present ' + elementToCheck.locator());
 };
 
 /**
