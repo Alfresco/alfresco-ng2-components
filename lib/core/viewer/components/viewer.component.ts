@@ -679,7 +679,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
 
-        let  intervalId = setInterval(() => {
+        let intervalId = setInterval(() => {
             this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition) => {
                 const status = rendition.entry.status.toString();
                 if (status === 'CREATED') {
@@ -695,7 +695,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     clearInterval(intervalId);
                     return rendition;
                 }
-            },()=>{
+            }, () => {
                 this.viewerType = 'error_in_creation';
             });
         }, 1000)
