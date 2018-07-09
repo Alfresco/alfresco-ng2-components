@@ -99,48 +99,48 @@ describe('Test DocumentList component', () => {
         done();
     });
 
-    fit('1. File has tooltip', () => {
+    it('1. File has tooltip', () => {
         expect(contentServicesPage.getTooltip(pdfFileModel.name)).toEqual(pdfFileModel.name);
     });
 
-    fit('2. Folder has tooltip', () => {
+    it('2. Folder has tooltip', () => {
         expect(contentServicesPage.getTooltip(folderOneModel.name)).toEqual(folderOneModel.name);
         expect(contentServicesPage.getBreadcrumbTooltip(rootFolderName)).toEqual(rootFolderName);
     });
 
-    fit('4. Sort content ascending by name.', () => {
+    it('4. Sort content ascending by name.', () => {
         contentServicesPage.doubleClickRow(folderOneModel.name).checkContentIsDisplayed(files.firstFile);
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
         expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
         expect(contentServicesPage.sortAndCheckListIsOrderedByName(true)).toEqual(true);
     });
 
-    fit('5. Sort content descending by name.', () => {
+    it('5. Sort content descending by name.', () => {
         expect(contentServicesPage.sortAndCheckListIsOrderedByName(false)).toEqual(true);
     });
 
-    fit('6. Sort content ascending by author.', () => {
+    it('6. Sort content ascending by author.', () => {
         expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor(true)).toEqual(true);
     });
 
-    fit('7. Sort content descending by author.', () => {
+    it('7. Sort content descending by author.', () => {
         expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor(false)).toEqual(true);
     });
 
-    fit('8. Sort content ascending by created date.', () => {
+    it('8. Sort content ascending by created date.', () => {
         expect(contentServicesPage.sortAndCheckListIsOrderedByCreated(true)).toEqual(true);
     });
 
-    fit('9. Sort content descending by created date.', () => {
+    it('9. Sort content descending by created date.', () => {
         expect(contentServicesPage.sortAndCheckListIsOrderedByCreated(false)).toEqual(true);
     });
 
-    fit('10. File can be uploaded in a new created folder.', () => {
+    it('10. File can be uploaded in a new created folder.', () => {
         contentServicesPage.createNewFolder(folderTwoModel.name).checkContentIsDisplayed(folderTwoModel.name);
         contentServicesPage.doubleClickRow(folderTwoModel.name).checkEmptyFolderMessageIsDisplayed();
     });
 
-    fit('11. Navigate to child folder via breadcrumbs.', () => {
+    it('11. Navigate to child folder via breadcrumbs.', () => {
         contentServicesPage.navigateToFolderViaBreadcrumbs(acsUser.getId());
 
         contentServicesPage
@@ -152,7 +152,7 @@ describe('Test DocumentList component', () => {
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(folderTwoModel.name);
     });
 
-    fit('12. Navigate to parent folder via breadcrumbs.', () => {
+    it('12. Navigate to parent folder via breadcrumbs.', () => {
         contentServicesPage.navigateToFolderViaBreadcrumbs(uploadedFolder.entry.name);
 
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
@@ -164,7 +164,7 @@ describe('Test DocumentList component', () => {
         expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
     });
 
-    fit('13. Each known extension has it s own icon.', () => {
+    it('13. Each known extension has it s own icon.', () => {
         contentServicesPage.navigateToFolderViaBreadcrumbs(acsUser.getId());
 
         contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
@@ -175,7 +175,7 @@ describe('Test DocumentList component', () => {
         contentServicesPage.checkIconColumn(testFileModel.name, extensions.test);
     });
 
-    fit('14. Navigate to root folder via breadcrumbs.', () => {
+    it('14. Navigate to root folder via breadcrumbs.', () => {
         contentServicesPage.navigateToFolderViaBreadcrumbs(rootFolder);
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(rootFolderName);
     });
