@@ -22,7 +22,7 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
 import { LayoutModule } from '../..';
 import { Component } from '@angular/core';
-import { MaterialModule } from './../../../material.module';
+import { AppConfigModule } from '../../../app-config/app-config.module';
 
 describe('HeaderLayoutComponent', () => {
     let fixture: ComponentFixture<HeaderLayoutComponent>;
@@ -107,11 +107,13 @@ describe('HeaderLayoutComponent', () => {
         class HeaderLayoutTesterComponent {}
 
         beforeEach(async(() => {
+
             TestBed.configureTestingModule({
               declarations: [HeaderLayoutTesterComponent],
-              imports: [ LayoutModule, MaterialModule ]
+              imports: [ LayoutModule, AppConfigModule ]
             })
             .compileComponents();
+
           }));
 
         it('should transclude the provided nodes into the component', () => {
