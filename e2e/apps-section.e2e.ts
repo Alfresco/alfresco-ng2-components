@@ -20,6 +20,7 @@ import ProcessServicesPage = require('./pages/adf/process_services/processServic
 import NavigationBarPage = require('./pages/adf/navigationBarPage');
 
 import CONSTANTS = require('./util/constants');
+import Util = require('./util/util');
 
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
@@ -28,15 +29,17 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from './actions/users.actions';
 import { AppsActions } from './actions/APS/apps.actions';
 
-describe('Attachment list', () => {
+describe('Modify applications', () => {
 
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();
     let processServicesPage = new ProcessServicesPage();
     let app = resources.Files.APP_WITH_PROCESSES;
+    let replacingApp = resources.Files.WIDGETS_SMOKE_TEST;
+    let apps = new AppsActions();
+    let firstApp;
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
         let users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -50,7 +53,7 @@ describe('Attachment list', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        firstApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
@@ -62,9 +65,29 @@ describe('Attachment list', () => {
 
         processServicesPage.checkApsContainer();
 
-        expect(processServicesPage.getAppIconType(app.title)).toEqual('ac_unit');
+        expect(processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.UNIT);
         expect(processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
-        expect(processServicesPage.getDescription(app.title)).toEqual('Description for app');
+        expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
+    });
+
+    it('[C260213] Replacing on ADF side', async () => {
+        navigationBarPage.clickProcessServicesButton();
+
+        processServicesPage.checkApsContainer();
+
+        expect(processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.UNIT);
+        expect(processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
+        expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
+
+        await apps.importNewAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, firstApp.id);
+
+        Util.refreshBrowser();
+
+        processServicesPage.checkApsContainer();
+
+        expect(processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.FAVORITE);
+        expect(processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
+        expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
 });

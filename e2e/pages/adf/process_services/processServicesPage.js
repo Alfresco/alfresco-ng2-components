@@ -74,12 +74,10 @@ var ProcessServicesPage = function(){
         return iconType.getText();
     };
 
-    this.getBackgroundColor = function(applicationName) {
+    this.getBackgroundColor = async function(applicationName) {
         var app = element(by.css("mat-card[title='" + applicationName +"']"));
         Util.waitUntilElementIsVisible(app);
-        return app.getCssValue("color").then(function (value) {
-            return value;
-        });
+        return await app.getCssValue("background-color");
     };
 
     this.getDescription = function(applicationName) {

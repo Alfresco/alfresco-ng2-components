@@ -19,6 +19,20 @@ export class AppsActions {
         return appCreated;
     }
 
+    async importNewAppDefinitionPublishDeployApp(alfrescoJsApi, appFileLocation, modelId) {
+
+        let pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
+        let file = fs.createReadStream(pathFile);
+
+        let appCreated = await alfrescoJsApi.activiti.appsApi.importNewAppDefinition(modelId, file);
+
+        let publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+
+        let published = await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+
+        return appCreated;
+    }
+
     async startProcess(alfrescoJsApi, app, processName) {
 
         let appDefinitionsList = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
