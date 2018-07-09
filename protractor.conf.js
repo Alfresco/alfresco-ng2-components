@@ -72,9 +72,10 @@ exports.config = {
         screenshotPath: `${projectRoot}/e2e-output/screenshots/`
     }],
 
-    onComplete() {
-        if(!buildNumber){
-            buildNumber = Date.now();;
+    onComplete: async () => {
+        if (!buildNumber) {
+            buildNumber = Date.now();
+            ;
         }
 
         var alfrescoJsApi = new AlfrescoApi({
@@ -85,16 +86,17 @@ exports.config = {
         console.log('Upload Errors in Screenshot-e2e-' + buildNumber);
         alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        alfrescoJsApi.nodes.addNode('-my-', {
+        await alfrescoJsApi.nodes.addNode('-my-', {
             'name': 'Screenshot-e2e-' + buildNumber,
             'nodeType': 'cm:folder'
         }, {}, {}).then((folder) => {
             fs.readdir('./e2e-output/screenshots', (err, files) => {
-                files.forEach(fileName => {
+                files.forEach(async (fileName) => {
+
                     let pathFile = path.join('./e2e-output/screenshots/' + fileName);
                     let file = fs.createReadStream(pathFile);
 
-                    alfrescoJsApi.upload.uploadFile(
+                    await  alfrescoJsApi.upload.uploadFile(
                         file,
                         '',
                         folder.entry.id,
