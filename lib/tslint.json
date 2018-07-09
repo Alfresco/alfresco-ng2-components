@@ -11,8 +11,7 @@
         ],
         "ban": [
           true,
-          "eval",
-          "fdescribe"
+          "eval"
         ],
         "class-name": true,
         "comment-format": [
@@ -56,15 +55,6 @@
         "no-bitwise": false,
         "no-conditional-assignment": true,
         "no-consecutive-blank-lines": true,
-        "no-console": [
-            true,
-            "log",
-            "debug",
-            "info",
-            "time",
-            "timeEnd",
-            "trace"
-        ],
         "no-construct": true,
         "no-constructor-vars": false,
         "no-debugger": true,
