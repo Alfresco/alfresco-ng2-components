@@ -75,7 +75,7 @@ describe('Tag component', () => {
         expect(tagPage.getNewTagInput()).toEqual('a');
     });
 
-    xit('New tag for specific Node ID', () => {
+    it('New tag for specific Node ID', () => {
         tagPage.goToTagPage();
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[0]);
@@ -104,33 +104,31 @@ describe('Tag component', () => {
         tagPage.checkTagListContentServicesIsOrderedAscending();
     });
 
-    xit('Tag text field', () => {
+    it('Tag text field', () => {
         tagPage.goToTagPage();
+
         tagPage.insertNodeId(pdfFileModel.id);
 
         tagPage.addTag(uppercaseTag);
-        Util.refreshBrowser();
-        tagPage.insertNodeId(pdfFileModel.id);
 
         tagPage.checkTagIsDisplayedInTagList(uppercaseTag.toLowerCase());
         tagPage.checkTagIsDisplayedInTagListByNodeId(uppercaseTag.toLowerCase());
-        tagPage.checkTagIsDisplayedInTagListContentServices(uppercaseTag.toLowerCase());
+
         tagPage.checkTagIsNotDisplayedInTagList(uppercaseTag);
 
-        tagPage.addTag(digitsTag);
-        Util.refreshBrowser();
         tagPage.insertNodeId(pdfFileModel.id);
+        tagPage.addTag(digitsTag);
 
         tagPage.checkTagIsDisplayedInTagList(digitsTag);
         tagPage.checkTagIsDisplayedInTagListByNodeId(digitsTag);
-        tagPage.checkTagIsDisplayedInTagListContentServices(digitsTag);
 
+        tagPage.insertNodeId(pdfFileModel.id)
         tagPage.addTag(nonLatinTag);
-        Util.refreshBrowser();
-        tagPage.insertNodeId(pdfFileModel.id);
 
         tagPage.checkTagIsDisplayedInTagList(nonLatinTag);
         tagPage.checkTagIsDisplayedInTagListByNodeId(nonLatinTag);
-        tagPage.checkTagIsDisplayedInTagListContentServices(nonLatinTag);
+
+        browser.driver.sleep(1000);
+        Util.refreshBrowser();
     });
 });
