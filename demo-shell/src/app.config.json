@@ -520,5 +520,8 @@
     "sideNav": {
       "expandedSidenav": true,
       "preserveState": true
+    },
+    "adf-header": {
+      "logoPath" : ""
     }
 }

@@ -16,6 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { AppConfigService } from '../../../app-config/app-config.service';
 
 @Component({
     selector: 'adf-layout-header',
@@ -23,7 +24,9 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-layout-header' }
 })
+
 export class HeaderLayoutComponent {
+
     @Input() title: string;
     @Input() logo: string = './assets/images/logo.png';
     @Input() color: string;
@@ -32,5 +35,13 @@ export class HeaderLayoutComponent {
 
     toggleMenu() {
         this.clicked.emit(true);
+    }
+
+    constructor(private config: AppConfigService) {
+        const logoPath = this.config.get<string>('adf-header.logoPath');
+
+        if (logoPath) {
+            this.logo = logoPath;
+        }
     }
 }
