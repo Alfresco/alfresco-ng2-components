@@ -78,6 +78,7 @@
                         [disabled]="!canCreateContent(documentList.folderNode)"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
                         (error)="openSnackMessage($event)"
+                        (success)="documentList.reload()"
                         [adf-create-folder]="getDocumentListCurrentFolderId()"
                         matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}">
                         <mat-icon>create_new_folder</mat-icon>
