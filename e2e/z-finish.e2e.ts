@@ -71,7 +71,7 @@ describe('Save screenshot at the end', () => {
         done();
     });
 
-    fit('screenshot need it', () => {
+    it('screenshot need it', () => {
         expect(true).toEqual(true);
     });
 });
