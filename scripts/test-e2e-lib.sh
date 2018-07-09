@@ -59,6 +59,7 @@ while [[ $1 == -* ]]; do
 done
 
 rm -rf ./e2e/downloads/
+rm -rf ./e2e-output/screenshots/
 
 export URL_HOST_ADF=$HOST
 export USERNAME_ADF=$USERNAME

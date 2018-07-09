@@ -12,6 +12,11 @@ const height = 768;
 
 var HOST = process.env.URL_HOST_ADF;
 var BROWSER_RUN = process.env.BROWSER_RUN;
+var buildNumber = process.env.TRAVIS_BUILD_NUMBER;
+
+const AlfrescoApi = require('alfresco-js-api-node');
+const TestConfig = require('./e2e/test.config');
+const fs = require('fs');
 
 var args_options = [];
 
@@ -21,7 +26,7 @@ if (BROWSER_RUN === 'true') {
     args_options = ['--incognito', '--headless'];
 }
 
-var downloadFolder = path.join(__dirname,'e2e/downloads');
+var downloadFolder = path.join(__dirname, 'e2e/downloads');
 
 exports.config = {
     allScriptsTimeout: 60000,
@@ -66,6 +71,43 @@ exports.config = {
         htmlReportDir: `${projectRoot}/e2e-output/html-report/`,
         screenshotPath: `${projectRoot}/e2e-output/screenshots/`
     }],
+
+    onComplete() {
+        if(!buildNumber){
+            buildNumber = Date.now();;
+        }
+
+        var alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
+
+        console.log('Upload Errors in Screenshot-e2e-' + buildNumber);
+        alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        alfrescoJsApi.nodes.addNode('-my-', {
+            'name': 'Screenshot-e2e-' + buildNumber,
+            'nodeType': 'cm:folder'
+        }, {}, {}).then((folder) => {
+            fs.readdir('./e2e-output/screenshots', (err, files) => {
+                files.forEach(fileName => {
+                    let pathFile = path.join('./e2e-output/screenshots/' + fileName);
+                    let file = fs.createReadStream(pathFile);
+
+                    alfrescoJsApi.upload.uploadFile(
+                        file,
+                        '',
+                        folder.entry.id,
+                        null,
+                        {
+                            'name': file.name,
+                            'nodeType': 'cm:content'
+                        }
+                    );
+                });
+            })
+        })
+    },
 
     onPrepare() {
         require('ts-node').register({
