@@ -85,7 +85,7 @@ export class StartTaskComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.field = new FormFieldModel(new FormModel(), {id: 'fakeId', value: 'fakeValue', placeholder: 'Assignee'});
+        this.field = new FormFieldModel(new FormModel(), {id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee'});
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
@@ -113,6 +113,10 @@ export class StartTaskComponent implements OnInit {
                         this.logService.error('An error occurred while creating new task');
                     });
         }
+    }
+
+    getAssigneeId(userId) {
+        this.assigneeId = userId;
     }
 
     private attachForm(taskId: string, formKey: number): Observable<any> {
