@@ -80,9 +80,6 @@ describe('Tag component', () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[0]);
 
-        Util.refreshBrowser();
-        tagPage.insertNodeId(pdfFileModel.id);
-
         tagPage.checkTagIsDisplayedInTagList(tagList[0]);
         tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[0]);
     });
@@ -127,8 +124,5 @@ describe('Tag component', () => {
 
         tagPage.checkTagIsDisplayedInTagList(nonLatinTag);
         tagPage.checkTagIsDisplayedInTagListByNodeId(nonLatinTag);
-
-        browser.driver.sleep(1000);
-        Util.refreshBrowser();
     });
 });
