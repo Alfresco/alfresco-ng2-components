@@ -52,24 +52,9 @@ export class AppsListComponent extends DataTableSchema implements OnInit, OnChan
     @Input()
     filtersAppId: any[];
 
-    /* Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
-     * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
-     * multiple rows.
-     */
-    @Input()
-    selectionMode: string = 'single'; // none|single|multiple
-
     /** Emitted when an app entry is clicked. */
     @Output()
     appClick: EventEmitter<AppDefinitionRepresentationModel> = new EventEmitter<AppDefinitionRepresentationModel>();
-
-    /** Emitted when a row in the app list is clicked. */
-    @Output()
-    rowClick: EventEmitter<any> = new EventEmitter<any>();
-
-    /** Emitted when rows are selected/unselected */
-    @Output()
-    rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
 
     /** Emitted when an error occurs. */
     @Output()
@@ -81,7 +66,6 @@ export class AppsListComponent extends DataTableSchema implements OnInit, OnChan
     currentApp: AppDefinitionRepresentationModel;
 
     appList: AppDefinitionRepresentationModel[] = [];
-    selectedApps: any[];
 
     private iconsMDL: IconModel;
 
@@ -275,24 +259,14 @@ export class AppsListComponent extends DataTableSchema implements OnInit, OnChan
     onRowClick(event: any): void {
         const item = event.value;
         const app = item.obj;
-        this.rowClick.emit(app);
-    }
-
-    onRowSelect(event: CustomEvent): void {
-        this.selectedApps = [...event.detail.selection];
-        this.rowsSelected.emit(this.selectedApps);
-    }
-
-    onRowUnselect(event: CustomEvent): void {
-        this.selectedApps = [...event.detail.selection];
-        this.rowsSelected.emit(this.selectedApps);
+        this.appClick.emit(app);
     }
 
     onRowKeyUp(event: CustomEvent): void {
         if (event.detail.keyboardEvent.key === 'Enter') {
             const app = event.detail.row.obj;
             event.preventDefault();
-            this.rowClick.emit(app);
+            this.appClick.emit(app);
         }
     }
 

@@ -323,7 +323,7 @@ describe('AppsListComponent', () => {
             });
             const rowEvent = new DataRowEvent(row, null);
 
-            component.rowClick.subscribe(a => {
+            component.appClick.subscribe(a => {
                 expect(a).toBeDefined();
                 done();
             });
@@ -342,7 +342,7 @@ describe('AppsListComponent', () => {
 
             spyOn(keyEvent, 'preventDefault').and.callFake(() => prevented = true);
 
-            component.rowClick.subscribe((a: any) => {
+            component.appClick.subscribe((a: any) => {
                 expect(a.deploymentId).toEqual('4158');
                 expect(prevented).toBeTruthy();
                 done();
@@ -360,7 +360,7 @@ describe('AppsListComponent', () => {
                 }
             });
 
-            component.rowClick.subscribe(() => triggered = true);
+            component.appClick.subscribe(() => triggered = true);
             component.onRowKeyUp(keyEvent);
 
             fixture.whenStable().then(() => {

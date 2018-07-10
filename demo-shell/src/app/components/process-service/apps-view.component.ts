@@ -47,12 +47,6 @@ export class AppsViewComponent {
         this.actions = [{ key: 'tasks', icon: 'assignment', label: 'View Task' }];
     }
 
-    onRowDoubleClick(event: any) {
-        const app = event.detail.value.obj;
-        const id = app.id;
-        this.router.navigate(['/activiti/apps', id || 0, 'tasks']);
-    }
-
     toggleAppsView(event: any) {
         this.layoutType = event && event.checked ? AppsViewComponent.LAYOUT_LIST : AppsViewComponent.LAYOUT_GRID;
     }

@@ -3,9 +3,6 @@
         <adf-datatable #dataTable
             [rows]="appList"
             [columns]="columns"
-            [selectionMode]="selectionMode"
-            (row-select)="onRowSelect($event)"
-            (row-unselect)="onRowUnselect($event)"
             (rowClick)="onRowClick($event)"
             (row-keyup)="onRowKeyUp($event)">
         </adf-datatable>
