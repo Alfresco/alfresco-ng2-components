@@ -35,7 +35,7 @@ export class AttachFormComponent implements OnChanges {
     taskId;
 
     @Input()
-    taskFormKey;
+    formKey;
 
     @Output()
     cancelAttachForm: EventEmitter<void> = new EventEmitter<void>();
