@@ -18,8 +18,9 @@
 import LoginPage = require('./pages/adf/loginPage');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
 import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
-import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage');
 import FileModel = require('./models/ACS/fileModel');
+import { AttachmentListPage } from './pages/adf/process_services/attachmentListPage';
+
 
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
@@ -43,7 +44,7 @@ describe('Attachment list', () => {
     });
     let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
 
-    beforeAll(async (done) => {
+    beforeAll(async(done) => {
         let users = new UsersActions();
         let apps = new AppsActions();
 
