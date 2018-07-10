@@ -186,7 +186,7 @@
     "tslint": "5.9.1",
     "tslint-loader": "3.5.3",
     "typedoc": "^0.11.1",
-    "typescript": "2.6.1",
+    "typescript": "2.9.2",
     "uglifyjs-webpack-plugin": "1.1.6",
     "url-join": "^4.0.0",
     "webpack-bundle-analyzer": "2.9.0",

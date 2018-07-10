@@ -77,7 +77,7 @@ export class TxtViewerComponent implements OnChanges {
                 resolve();
             };
 
-            reader.onerror = (error: ErrorEvent) => {
+            reader.onerror = (error: any) => {
                 reject(error);
             };
 
