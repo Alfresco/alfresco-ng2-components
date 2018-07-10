@@ -704,7 +704,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     });
                 }
             }, 1000);
-
         });
     }
 
