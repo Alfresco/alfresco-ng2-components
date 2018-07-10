@@ -168,6 +168,15 @@
                             <adf-txt-viewer [urlFile]="urlFileContent" [blobFile]="blobFile"></adf-txt-viewer>
                         </ng-container>
 
+                        <ng-container *ngSwitchCase="'in_creation'">
+                                    <div class="adf-viewer__loading-screen" fxFlex="1 1 auto">
+                                        <h2>{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
+                                        <div>
+                                            <mat-spinner></mat-spinner>
+                                        </div>
+                                    </div>
+                        </ng-container>
+
                         <ng-container *ngSwitchCase="'custom'">
                             <span class="adf-viewer-custom-content" *ngFor="let extensionTemplate of extensionTemplates">
                                 <ng-template *ngIf="extensionTemplate.isVisible" [ngTemplateOutlet]="extensionTemplate.template" [ngTemplateOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">

@@ -45,6 +45,7 @@ var TagPage = function () {
 
     this.insertNodeId = function (nodeId) {
         Util.waitUntilElementIsVisible(insertNodeId);
+        insertNodeId.clear();
         insertNodeId.sendKeys(nodeId);
         browser.driver.sleep(200);
         insertNodeId.sendKeys(' ')
