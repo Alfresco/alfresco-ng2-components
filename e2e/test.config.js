@@ -45,7 +45,9 @@ module.exports = {
         /**
          * main admin password
          */
-        adminPassword: PASSWORD
+        adminPassword: PASSWORD,
+
+        rootPath: './e2e/'
     },
 
     adf_acs: {

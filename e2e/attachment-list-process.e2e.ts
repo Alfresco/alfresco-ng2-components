@@ -18,7 +18,7 @@
 import LoginPage = require('./pages/adf/loginPage');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
 import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
-import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage');
+import { AttachmentListPage } from './pages/adf/process_services/attachmentListPage';
 import FileModel = require('./models/ACS/fileModel');
 
 import TestConfig = require('./test.config');
@@ -41,9 +41,9 @@ describe('Attachment list', () => {
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
-    let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    let pdfFile = new FileModel({'name': resources.Files.ADF_DOCUMENTS.PDF.file_name});
 
-    beforeAll(async (done) => {
+    beforeAll(async(done) => {
         let users = new UsersActions();
         let apps = new AppsActions();
 
