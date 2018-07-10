@@ -275,9 +275,9 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
      * @param instances
      */
     private optimizeNames(instances: any[]): any[] {
-        instances = instances.map(t => {
-            t.name = this.getProcessNameOrDescription(t, 'medium');
-            return t;
+        instances = instances.map(instance => {
+            instance.name = this.getProcessNameOrDescription(instance, 'medium');
+            return instance;
         });
         return instances;
     }
