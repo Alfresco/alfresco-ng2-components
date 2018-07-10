@@ -181,6 +181,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     currentSiteid = '';
     warnOnMultipleUploads = false;
     thumbnails = false;
+    enableCustomPermissionMessage = false;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;

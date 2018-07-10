@@ -329,6 +329,13 @@ var ContentServicesPage = function () {
         return this;
     };
 
+    this.enableCustomPermissionMessage = function () {
+        var customPermissionMessage = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
+        Util.waitUntilElementIsVisible(customPermissionMessage);
+        customPermissionMessage.click();
+        return this;
+    };
+
     this.clickLoadMoreButton = function () {
         Util.waitUntilElementIsVisible(loadMoreButton);
         Util.waitUntilElementIsClickable(loadMoreButton);

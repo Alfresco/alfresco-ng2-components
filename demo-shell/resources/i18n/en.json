@@ -24,6 +24,7 @@
     },
     "PERSONAL-FILES": "Personal Files",
     "WARN-MULTIPLE-UPLOADS": "Display warning for multiple uploads.",
+    "CUSTOM-PERMISSION-MESSAGE": "Enable custom permission message",
     "SEARCH": {
       "RADIO": {
         "NONE": "None",

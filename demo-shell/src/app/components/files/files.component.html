@@ -208,6 +208,11 @@
                 (preview)="showFile($event)"
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)">
+                <no-permission-content *ngIf="enableCustomPermissionMessage">
+                    <ng-template>
+                    <h1>Cris you don't have permissions</h1>
+                    </ng-template>
+                </no-permission-content>
                 <empty-folder-content *ngIf="disableDragArea">
                     <ng-template>
                         <div class="adf-empty_template">
@@ -520,6 +525,12 @@
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="warnOnMultipleUploads">
                 {{'APP.WARN-MULTIPLE-UPLOADS' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="enableCustomPermissionMessage">
+                {{'APP.CUSTOM-PERMISSION-MESSAGE' | translate}}
             </mat-slide-toggle>
         </section>
 
