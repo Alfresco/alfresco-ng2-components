@@ -19,7 +19,8 @@ var undocMethodNames = {
     "ngOnChanges": 1
 };
 function processDocs(mdCache, aggData, _errorMessages) {
-    initPhase(aggData);
+    //initPhase(aggData);
+    nameExceptions = aggData.config.typeNameExceptions;
     var pathnames = Object.keys(mdCache);
     var internalErrors;
     pathnames.forEach(function (pathname) {

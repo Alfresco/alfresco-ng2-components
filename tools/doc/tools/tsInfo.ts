@@ -41,7 +41,9 @@ let undocMethodNames = {
 
 
 export function processDocs(mdCache, aggData, _errorMessages) {
-    initPhase(aggData);
+    //initPhase(aggData);
+    
+    nameExceptions = aggData.config.typeNameExceptions;
     
     let pathnames = Object.keys(mdCache);
     let internalErrors;

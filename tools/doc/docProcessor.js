@@ -9,6 +9,7 @@ var stringify = require("remark-stringify");
 var frontMatter = require("remark-frontmatter");
 var mdCompact = require("mdast-util-compact");
 
+var tdoc = require("typedoc");
 
 // "Aggregate" data collected over the whole file set.
 var aggData = {};
@@ -17,6 +18,11 @@ var toolsFolderName = "tools";
 var configFileName = "doctool.config.json";
 var defaultFolder = path.resolve("docs");
 
+var libFolders = ["core", "content-services", "process-services", "insights"];
+
+var excludePatterns = [
+    "**/*.spec.ts"
+];
 
 /*
 function initPhase(aggData) {
@@ -149,6 +155,25 @@ function initMdCache(filenames) {
 }
 
 
+function initSourceInfo(aggData) {
+    //nameExceptions = aggData.config.typeNameExceptions;
+
+    let app = new tdoc.Application({
+        exclude: excludePatterns,
+        ignoreCompilerErrors: true,
+        experimentalDecorators: true,
+        tsconfig: "tsconfig.json"
+    });
+
+    let sources = app.expandInputFiles(libFolders.map(folder => {
+        return path.resolve("lib", folder);
+    }));    
+    
+    aggData.projData = app.convert(sources);
+}
+
+
+
 program
 .usage("[options] <source>")
 .option("-p, --profile [profileName]", "Select named config profile", "default")
@@ -205,6 +230,9 @@ files = files.filter(filename =>
 
 
 var mdCache = initMdCache(files);
+
+console.log("Parsing source files...");
+initSourceInfo(aggData);
 
 /*
 console.log("Initialising...");
