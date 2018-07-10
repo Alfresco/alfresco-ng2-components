@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /*tslint:disable:ban */
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
@@ -28,7 +30,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { taskDetailsMock } from '../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
 
-describe('StartTaskComponent', () => {
+fdescribe('StartTaskComponent', () => {
 
     let component: StartTaskComponent;
     let fixture: ComponentFixture<StartTaskComponent>;
