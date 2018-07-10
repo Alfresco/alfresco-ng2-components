@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService, UserPreferencesService, UserProcessModel } from '@alfresco/adf-core';
+import { LogService, UserPreferencesService, UserProcessModel, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
@@ -26,8 +26,6 @@ import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
-import { FormFieldModel } from '../../../core/form/components/widgets/core/form-field.model';
-import { FormModel } from '../../../core/form/components/widgets/core/form.model';
 
 @Component({
     selector: 'adf-start-task',
