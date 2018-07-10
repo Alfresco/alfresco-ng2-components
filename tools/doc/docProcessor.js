@@ -11,6 +11,9 @@ var mdCompact = require("mdast-util-compact");
 
 var tdoc = require("typedoc");
 
+var ngHelpers = require("./ngHelpers");
+var si = require("./SourceInfoClasses");
+
 // "Aggregate" data collected over the whole file set.
 var aggData = {};
 
@@ -155,10 +158,8 @@ function initMdCache(filenames) {
 }
 
 
-function initSourceInfo(aggData) {
-    //nameExceptions = aggData.config.typeNameExceptions;
-
-    let app = new tdoc.Application({
+function initSourceInfo(aggData, mdCache) {
+    var app = new tdoc.Application({
         exclude: excludePatterns,
         ignoreCompilerErrors: true,
         experimentalDecorators: true,
@@ -170,7 +171,21 @@ function initSourceInfo(aggData) {
     }));    
     
     aggData.projData = app.convert(sources);
+
+    aggData.classInfo = {};
+
+    var mdFiles = Object.keys(mdCache);
+
+    mdFiles.forEach(mdFile => {
+        var className = ngHelpers.ngNameToClassName(path.basename(mdFile, ".md"), aggData.config.typeNameExceptions);
+        var classRef = aggData.projData.findReflectionByName(className);
+
+        if (classRef) {
+           aggData.classInfo[className] = new si.ComponentInfo(classRef); 
+        }
+    });
 }
+
 
 
 
@@ -232,7 +247,7 @@ files = files.filter(filename =>
 var mdCache = initMdCache(files);
 
 console.log("Parsing source files...");
-initSourceInfo(aggData);
+initSourceInfo(aggData, mdCache);
 
 /*
 console.log("Initialising...");
