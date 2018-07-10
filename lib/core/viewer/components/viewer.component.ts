@@ -698,7 +698,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             }, () => {
                 this.viewerType = 'error_in_creation';
             });
-        }, 1000)
+        }, 1000);
     }
 
     getSideBarStyle(): string {
