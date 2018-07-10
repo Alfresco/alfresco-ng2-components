@@ -648,7 +648,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private async resolveRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
+    private async resolveRendition(nodeId: string, renditionId: string) {
         renditionId = renditionId.toLowerCase();
 
         const supported = await this.apiService.renditionsApi.getRenditions(nodeId);
@@ -679,26 +679,29 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
 
-        let intervalId = setInterval(() => {
-            this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition) => {
-                const status = rendition.entry.status.toString();
-                if (status === 'CREATED') {
+        return new Promise((resolve, reject) => {
+            let intervalId = setInterval(() => {
+                this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition) => {
+                    const status = rendition.entry.status.toString();
+                    if (status === 'CREATED') {
 
-                    if (renditionId === 'pdf') {
-                        this.viewerType = 'pdf';
-                    } else if (renditionId === 'imgpreview') {
-                        this.viewerType = 'image';
+                        if (renditionId === 'pdf') {
+                            this.viewerType = 'pdf';
+                        } else if (renditionId === 'imgpreview') {
+                            this.viewerType = 'image';
+                        }
+
+                        this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
+
+                        clearInterval(intervalId);
+                        return resolve(rendition);
                     }
-
-                    this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
-
-                    clearInterval(intervalId);
-                    return rendition;
-                }
-            }, () => {
-                this.viewerType = 'error_in_creation';
-            });
-        }, 1000);
+                }, () => {
+                    this.viewerType = 'error_in_creation';
+                    return reject();
+                });
+            }, 1000);
+        });
     }
 
     getSideBarStyle(): string {
