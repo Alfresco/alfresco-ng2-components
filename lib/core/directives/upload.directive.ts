@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-input-rename  */
 
-import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { FileInfo, FileUtils } from '../utils/file-utils';
 
 @Directive({
@@ -57,7 +57,7 @@ export class UploadDirective implements OnInit, OnDestroy {
     private upload: HTMLInputElement;
     private element: HTMLElement;
 
-    constructor(private el: ElementRef, private renderer: Renderer, private ngZone: NgZone) {
+    constructor(private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone) {
         this.element = el.nativeElement;
     }
 
