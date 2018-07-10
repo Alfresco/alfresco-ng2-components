@@ -26,7 +26,7 @@ import StartProcessPage = require('./pages/adf/process_services/startProcessPage
 import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
 import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage');
 import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
-import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage');
+import {AttachmentListPage} from './pages/adf/process_services/attachmentListPage';
 
 import User = require('./models/APS/User');
 import AppPublish = require('./models/APS/AppPublish');
