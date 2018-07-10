@@ -19,7 +19,7 @@ import LoginPage = require('./pages/adf/loginPage');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
 import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
 import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage.js');
-import AttachmentListPage = require('./pages/adf/process_services/attachmentListPage.js');
+import {AttachmentListPage} from './pages/adf/process_services/attachmentListPage';
 import ViewerPage = require('./pages/adf/viewerPage.js');
 
 import CONSTANTS = require('./util/constants');
@@ -31,9 +31,9 @@ import Util = require('./util/util.js');
 import path = require('path');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UsersActions } from './actions/users.actions';
-import { AppsActions } from './actions/APS/apps.actions.ts';
-import FileModel = require('./models/ACS/fileModel.js');
+import {UsersActions} from './actions/users.actions';
+import {AppsActions} from './actions/APS/apps.actions';
+import FileModel = require('./models/ACS/fileModel');
 
 describe('Attachment list action menu for processes', () => {
 
@@ -47,10 +47,6 @@ describe('Attachment list action menu for processes', () => {
     let jpgFile = new FileModel({
         location: resources.Files.ADF_DOCUMENTS.JPG.file_location,
         name: resources.Files.ADF_DOCUMENTS.JPG.file_name
-    });
-    let pdfFile = new FileModel({
-        location: resources.Files.ADF_DOCUMENTS.PDF.file_location,
-        name: resources.Files.ADF_DOCUMENTS.PDF.file_name
     });
 
     let downloadedJpgFile = path.join(__dirname, 'downloads', jpgFile.name);
@@ -189,17 +185,6 @@ describe('Attachment list action menu for processes', () => {
         attachmentListPage.removeFile(jpgFile.name);
         attachmentListPage.checkFileIsRemoved(jpgFile.name);
         attachmentListPage.checkEmptyAttachmentList();
-    });
-
-    it('[C277298] Drag and drop file - ProcessList', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.selectFromProcessList(processName.dragDrop);
-
-        attachmentListPage.checkEmptyAttachmentList();
-        attachmentListPage.dragAndDropAttachment(jpgFile.location, jpgFile.name);
-        attachmentListPage.dragAndDropAttachment(pdfFile.location, pdfFile.name);
     });
 
 });
