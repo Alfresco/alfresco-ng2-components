@@ -218,7 +218,7 @@ describe('Test Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    xit('5. Open viewer for a .ppt file converted to .pdf', () => {
+    it('5. Open viewer for a .ppt file converted to .pdf', () => {
         viewerPage.viewFile(pptFile.name);
         viewerPage.checkFileContent('1', pptFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();
