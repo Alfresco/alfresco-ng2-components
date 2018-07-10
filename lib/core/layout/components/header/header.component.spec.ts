@@ -24,6 +24,7 @@ import { LayoutModule } from '../..';
 import { Component } from '@angular/core';
 import { MaterialModule } from './../../../material.module';
 
+
 describe('HeaderLayoutComponent', () => {
     let fixture: ComponentFixture<HeaderLayoutComponent>;
     let component: HeaderLayoutComponent;
@@ -42,16 +43,16 @@ describe('HeaderLayoutComponent', () => {
             fixture.destroy();
         });
 
-        it('should create instance of HeaderLayoutComponent', () => {
+        it('1. should create instance of HeaderLayoutComponent', () => {
             expect(fixture.componentInstance instanceof HeaderLayoutComponent).toBe(true, 'should create HeaderLayoutComponent');
         });
 
-        it('title element should been displayed', () => {
+        it('2. title element should been displayed', () => {
             const titleElement = fixture.debugElement.query(By.css('.adf-app-title'));
             expect(titleElement === null).toBeFalsy();
         });
 
-        it('should show TEST TITLE', () => {
+        it('3. should show TEST TITLE', () => {
             component.title = 'TEST TITLE';
             fixture.detectChanges();
 
@@ -59,7 +60,7 @@ describe('HeaderLayoutComponent', () => {
             expect(titleElement.innerText).toEqual('TEST TITLE');
         });
 
-        it('color attribute should be present on mat-toolbar', () => {
+        it('4. color attribute should be present on mat-toolbar', () => {
             component.color = 'primary';
             fixture.detectChanges();
 
@@ -68,7 +69,7 @@ describe('HeaderLayoutComponent', () => {
             expect(toolbar.getAttribute('ng-reflect-color')).toEqual('primary');
         });
 
-        it('should display the img element with the expected src if a logo path is set', () => {
+        it('5. should display the img element with the expected src if a logo path is set', () => {
             component.logo = 'logo.png';
             fixture.detectChanges();
 
@@ -78,7 +79,7 @@ describe('HeaderLayoutComponent', () => {
             expect(src).toEqual('logo.png');
         });
 
-        it('test click on sidenav button', () => {
+        it('6. test click on sidenav button', () => {
             component.showSidenavToggle = true;
             fixture.detectChanges();
             spyOn(component.clicked, 'emit');
@@ -89,7 +90,15 @@ describe('HeaderLayoutComponent', () => {
             expect(component.clicked.emit).toHaveBeenCalledWith(true);
         });
 
-        it('if showSidenavToggle is false the button menu should not be displayed', () => {
+        it('7. if showSidenavToggle is true the button menu should be displayed', () => {
+            component.showSidenavToggle = true;
+            fixture.detectChanges();
+
+            const button = fixture.nativeElement.querySelector('.adf-menu-icon');
+            expect(button === null).toBeFalsy();
+        });
+
+        it('8. if showSidenavToggle is false the button menu should  not be displayed', () => {
             component.showSidenavToggle = false;
             fixture.detectChanges();
 

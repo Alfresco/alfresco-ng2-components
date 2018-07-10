@@ -7,11 +7,12 @@
 
         color: mat-color($primary, default-contrast) !important;
         position: relative;
-        padding: 0 24px 0 0;
+        padding: 0 24px;
 
         .adf-menu-icon {
             position: relative;
-            margin-left: 14px;
+            margin-left: -11px;
+            margin-right: 3px;
         }
 
         .adf-app-logo {
@@ -19,7 +20,6 @@
             height: 28px;
             width: 28px;
             margin-right: 6px;
-            margin-left: 3px;
         }
 
         .adf-header-delimiter {
