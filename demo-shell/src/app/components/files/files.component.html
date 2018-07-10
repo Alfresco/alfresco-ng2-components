@@ -279,7 +279,7 @@
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
                         key="createdAt"
                         type="date"
-                        [format]="enableMediumTimeFormat ? 'medium' : 'timeAgo'"
+                        format="timeAgo"
                         class="desktop-only">
                     </data-column>
 
@@ -531,12 +531,6 @@
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="enableCustomPermissionMessage">
                 {{'APP.CUSTOM-PERMISSION-MESSAGE' | translate}}
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="enableMediumTimeFormat" id="enableMediumTimeFormat">
-                {{'APP.MEDIUM-TIME-FORMAT' | translate}}
             </mat-slide-toggle>
         </section>
 
