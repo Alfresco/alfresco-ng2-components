@@ -88,6 +88,18 @@ var ProcessServicesPage = function(){
         return description.getText();
     };
 
+    this.checkAppIsNotDisplayed = function(applicationName) {
+        var app = element(by.css("mat-card[title='" + applicationName +"']"));
+        Util.waitUntilElementIsNotOnPage(app);
+        return new AppNavigationBarPage();
+    };
+
+    this.checkAppIsDisplayed = function(applicationName) {
+        var app = element(by.css("mat-card[title='" + applicationName +"']"));
+        Util.waitUntilElementIsVisible(app);
+        return new AppNavigationBarPage();
+    };
+
 };
 
 module.exports = ProcessServicesPage;
