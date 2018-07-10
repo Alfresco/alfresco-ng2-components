@@ -67,12 +67,44 @@ describe('AttachFormComponent', () => {
 
     it('should show the adf-form of the selected form', async(() => {
         component.taskId = 1;
-        component.taskFormKey = 12;
+        component.formKey = 12;
         fixture.detectChanges();
         const formContainer = fixture.debugElement.nativeElement.querySelector('adf-form');
         fixture.whenStable().then(() => {
             expect(formContainer).toBeDefined();
             expect(formContainer).not.toBeNull();
+        });
+    }));
+
+    it('should remove form if it is present', async(() => {
+        component.taskId = 1;
+        component.formId = 10;
+        component.formKey = 12;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(element.querySelector('#adf-no-form-remove-button')).toBeDefined();
+            const el = fixture.nativeElement.querySelector('#adf-no-form-remove-button');
+            el.click();
+            expect(component.formId).toBeNull();
+        });
+    }));
+
+    it('should change form with another one', async(() => {
+        component.taskId = 1;
+        component.formId = 4;
+        component.formKey = 12;
+
+        const form = fixture.nativeElement.querySelector('#form_id');
+        expect(form).toBeDefined();
+        form.click();
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const option = fixture.nativeElement.querySelector('#mat-option-0');
+            expect(option).toBeDefined();
+            option.click();
+
+            expect(component.formId).toBe(10001);
         });
     }));
 });

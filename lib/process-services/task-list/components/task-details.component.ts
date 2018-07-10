@@ -21,7 +21,6 @@ import {
     CardViewUpdateService,
     ClickNotification,
     LogService,
-    FormService,
     UpdateNotification,
     FormRenderingService,
     CommentsComponent
@@ -188,7 +187,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                 private authService: AuthenticationService,
                 private peopleProcessService: PeopleProcessService,
                 private formRenderingService: FormRenderingService,
-                private formService: FormService,
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,
                 private dialog: MatDialog) {

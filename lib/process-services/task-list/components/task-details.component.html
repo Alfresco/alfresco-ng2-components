@@ -50,7 +50,7 @@
                 </adf-task-standalone>
                 <adf-attach-form *ngIf="showAttachForm"
                                  [taskId]="taskDetails.id"
-                                 [taskFormKey]="taskDetails.formKey"
+                                 [formKey]="taskDetails.formKey"
                                  (cancelAttachForm)="onCancelAttachForm()"
                                  (completeAttachForm)="onCompleteAttachForm()">
                 </adf-attach-form>
