@@ -35,13 +35,13 @@ import { DropActions } from '../actions/drop.actions';
 
 import path = require('path');
 
-fdescribe('Drag and drop - User permission', () => {
+describe('Drag and drop - User permission', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();
     let uploadToggles = new UploadToggles();
     let loginPage = new LoginPage();
-    let acsUser = new AcsUserModel();
+    let acsUser;
     let navigationBarPage = new NavigationBarPage();
     let notificationPage = new NotificationPage();
 
@@ -55,110 +55,142 @@ fdescribe('Drag and drop - User permission', () => {
         'location': resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(() => {
         let uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
         });
+    });
+
+    beforeEach(async (done) => {
+        acsUser = new AcsUserModel();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        contentServicesPage.goToDocumentList();
-
         done();
     });
 
-    it('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with limited permissions', () => {
-        contentServicesPage.checkDandDIsDisplayed();
+    describe('limited permissions', () => {
 
-        let dragAndDrop = new DropActions();
-        let dragAndDropArea = element(by.css('adf-upload-drag-area div'));
+        beforeEach(async (done) => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
-        dragAndDrop.dropFolder(dragAndDropArea, folder.location);
+            contentServicesPage.goToDocumentList();
 
-        contentServicesPage.checkContentIsDisplayed(emptyFile.name);
-        contentServicesPage.checkContentIsDisplayed(folder.name);
+            done();
+        });
 
-        contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+        it('[C212861] Should not be allowed to Drag and drop a file/folder in a restricted user folder with limited permissions', () => {
+            contentServicesPage.checkDandDIsDisplayed();
 
-        dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
-        dragAndDrop.dropFolder(dragAndDropArea, folder.location);
+            let dragAndDrop = new DropActions();
+            let dragAndDropArea = element(by.css('adf-upload-drag-area div'));
 
-        let fileInTheUploadedFolder = 'share_profile_pic.png';
+            dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
+            dragAndDrop.dropFolder(dragAndDropArea, folder.location);
 
-        uploadDialog.fileIsError(emptyFile.name);
-        uploadDialog.fileIsError(fileInTheUploadedFolder);
+            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
+            contentServicesPage.checkContentIsDisplayed(folder.name);
 
-        contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
-        contentServicesPage.checkContentIsNotDisplayed(folder.name);
+            contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+
+            dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
+            dragAndDrop.dropFolder(dragAndDropArea, folder.location);
+
+            let fileInTheUploadedFolder = 'share_profile_pic.png';
+
+            uploadDialog.fileIsError(emptyFile.name);
+            uploadDialog.fileIsError(fileInTheUploadedFolder);
+
+            contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
+            contentServicesPage.checkContentIsNotDisplayed(folder.name);
+        });
+
+        it('Should not be allowed to upload a file in a restricted user folder with limited permissions', () => {
+            navigationBarPage.clickLoginButton();
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+            contentServicesPage.goToDocumentList();
+
+            contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
+
+            uploadDialog.fileIsUploaded(emptyFile.name);
+
+            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+
+            contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+
+            contentServicesPage.uploadFile(emptyFile.location);
+
+            notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+        });
+
+        it('Should not be allowed to upload a folder in a restricted user folder with limited permissions', () => {
+            uploadToggles.enableFolderUpload();
+
+            contentServicesPage.uploadFolder(folder.location).checkContentIsDisplayed(folder.name);
+
+            let fileInTheUploadedFolder = 'share_profile_pic.png';
+
+            uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
+
+            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+
+            contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+
+            uploadToggles.enableFolderUpload();
+
+            contentServicesPage.uploadFolder(folder.location);
+
+            notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+        });
     });
 
-    it('[C260130] Should be allowed to Drag and drop a file/folder in a folder a user with full permissions', () => {
-        navigationBarPage.clickLoginButton();
+    describe('full permissions', () => {
 
-        loginPage.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        beforeEach(async (done) => {
+            loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        contentServicesPage.goToDocumentList();
+            contentServicesPage.goToDocumentList();
 
-        contentServicesPage.checkDandDIsDisplayed();
+            done();
+        });
 
-        let dragAndDrop = new DropActions();
+        it('[C260130] Should be allowed to Drag and drop a file/folder in a restricted user folder with full permissions', () => {
+            contentServicesPage.checkDandDIsDisplayed();
 
-        let dragAndDropArea = element(by.css('adf-upload-drag-area div'));
+            let dragAndDrop = new DropActions();
 
-        dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
-        dragAndDrop.dropFolder(dragAndDropArea, folder.location);
+            let dragAndDropArea = element(by.css('adf-upload-drag-area div'));
 
-        let fileInTheUploadedFolder = 'share_profile_pic.png';
+            dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
+            dragAndDrop.dropFolder(dragAndDropArea, folder.location);
 
-        uploadDialog.fileIsUploaded(emptyFile.name);
-        uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
-    });
+            let fileInTheUploadedFolder = 'share_profile_pic.png';
 
-    it('Should not be allowed to upload a file in a folder with limited permissions', () => {
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+            uploadDialog.fileIsUploaded(emptyFile.name);
+            uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
+        });
 
-        contentServicesPage.goToDocumentList();
+        it('Should be allowed to upload a file in a restricted user folder with full permissions', () => {
+            contentServicesPage.uploadFile(emptyFile.location);
 
-        contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
+            uploadDialog.fileIsUploaded(emptyFile.name);
+        });
 
-        uploadDialog.fileIsUploaded(emptyFile.name);
+        it('Should be allowed to upload a folder in a restricted user folder with full permissions', () => {
+            uploadToggles.enableFolderUpload();
 
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+            contentServicesPage.uploadFolder(folder.location);
 
-        contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+            let fileInTheUploadedFolder = 'share_profile_pic.png';
 
-        contentServicesPage.uploadFile(emptyFile.location);
-
-        notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
-    });
-
-    it('Should not be allowed to upload a folder in a folder with limited permissions', () => {
-        contentServicesPage.goToDocumentList();
-
-        uploadToggles.enableFolderUpload();
-
-        contentServicesPage.uploadFolder(folder.location).checkContentIsDisplayed(folder.name);
-
-        let fileInTheUploadedFolder = 'share_profile_pic.png';
-
-        uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
-
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
-        contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
-
-        contentServicesPage.uploadFolder(folder.location);
-
-        notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
+        });
     });
 });
