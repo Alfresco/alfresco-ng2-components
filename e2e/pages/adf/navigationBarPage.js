@@ -27,6 +27,7 @@ var NavigationBarPage = function (){
     var themeButton = element(by.css("button[data-automation-id='theme menu']"));
     var themeMenuContent = element(by.css("div[class*='mat-menu-panel']"));
     var logoutButton = element(by.css("a[adf-logout]"));
+    var cardViewButton = element(by.cssContainingText(".sidenav-menu-label","CardView"));
 
     /**
      * Click Content Services Button
@@ -35,7 +36,7 @@ var NavigationBarPage = function (){
     this.clickContentServicesButton = function (){
             Util.waitUntilElementIsVisible(contentServicesButton);
             contentServicesButton.click();
-        };
+    };
 
     /**
      * Click Process Services Button
@@ -85,6 +86,15 @@ var NavigationBarPage = function (){
     this.clickLogoutButton = function(){
         Util.waitUntilElementIsVisible(logoutButton);
         logoutButton.click();
+    };
+
+      /**
+     * Click Card View Button
+     * @method clickCardViewButton
+     */
+    this.clickCardViewButton = function(){
+        Util.waitUntilElementIsVisible(cardViewButton);
+        cardViewButton.click();
     };
 
 };
