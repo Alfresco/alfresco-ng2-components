@@ -41,7 +41,7 @@ export class AttachFormComponent implements OnChanges {
     cancelAttachForm: EventEmitter<void> = new EventEmitter<void>();
 
     @Output()
-    completeAttachForm: EventEmitter<void> = new EventEmitter<void>();
+    success: EventEmitter<void> = new EventEmitter<void>();
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
@@ -61,12 +61,14 @@ export class AttachFormComponent implements OnChanges {
 
     onRemoveButtonClick(): void {
         this.taskService.deleteForm(this.taskId).subscribe(
-            res => this.completeAttachForm.emit(),
+            () => {
+                this.formId = null;
+                this.success.emit();
+            },
             (err) => {
                 this.error.emit(err);
                 this.logService.error('An error occurred while trying to delete the form');
             });
-
     }
 
     onAttachFormButtonClick(): void {
@@ -98,8 +100,11 @@ export class AttachFormComponent implements OnChanges {
     private attachForm(taskId: string, formId: number) {
         if (taskId && formId) {
             this.taskService.attachFormToATask(taskId, formId)
-                .subscribe((res) => {
-                    this.completeAttachForm.emit();
+                .subscribe(() => {
+                    this.success.emit();
+                }, (err) => {
+                    this.error.emit(err);
+                    this.logService.error('Could not attach form');
                 });
         }
     }
