@@ -27,7 +27,7 @@ import {
 
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 function getFakeShareDataRow(allowableOperations = ['delete', 'update', 'create']) {
     return {

@@ -22,7 +22,7 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 
 describe('CardViewSelectItemComponent', () => {
 

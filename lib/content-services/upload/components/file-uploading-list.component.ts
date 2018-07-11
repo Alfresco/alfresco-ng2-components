@@ -17,7 +17,8 @@
 
 import { FileModel, FileUploadStatus, NodesApiService, TranslationService, UploadService } from '@alfresco/adf-core';
 import { Component, ContentChild, Input, Output, TemplateRef, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-file-uploading-list',
@@ -77,7 +78,7 @@ export class FileUploadingListComponent {
             .filter((file) => file.status === FileUploadStatus.Complete)
             .map((file) => this.deleteNode(file));
 
-        Observable.forkJoin(...deletedFiles)
+        forkJoin(...deletedFiles)
             .subscribe((files: FileModel[]) => {
                 const errors = files
                     .filter((file) => file.status === FileUploadStatus.Error);
@@ -122,14 +123,16 @@ export class FileUploadingListComponent {
 
         return this.nodesApi
             .deleteNode(id, { permanent: true })
-            .map(() => {
-                file.status = FileUploadStatus.Deleted;
-                return file;
-            })
-            .catch((error) => {
-                file.status = FileUploadStatus.Error;
-                return Observable.of(file);
-            });
+            .pipe(
+                map(() => {
+                    file.status = FileUploadStatus.Deleted;
+                    return file;
+                }),
+                catchError(() => {
+                    file.status = FileUploadStatus.Error;
+                    return of(file);
+                })
+            );
     }
 
     private notifyError(...files: FileModel[]) {

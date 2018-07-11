@@ -42,8 +42,9 @@ import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
+import { debounceTime } from 'rxjs/operators';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -245,7 +246,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         // this.disableDragArea = false;
-        this.uploadService.fileUploadComplete.asObservable().debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
+        this.uploadService.fileUploadComplete.asObservable()
+            .pipe(debounceTime(300))
+            .subscribe(value => this.onFileUploadEvent(value));
         this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
         this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));

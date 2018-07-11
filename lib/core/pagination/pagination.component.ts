@@ -23,7 +23,7 @@ import {
 import { Pagination } from 'alfresco-js-api';
 import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
 import { UserPreferencesService } from '../services/user-preferences.service';
 

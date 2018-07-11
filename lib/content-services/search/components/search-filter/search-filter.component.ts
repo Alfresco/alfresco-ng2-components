@@ -24,6 +24,7 @@ import { ResponseFacetQueryList } from './models/response-facet-query-list.model
 import { FacetQuery } from '../../facet-query.interface';
 import { FacetField } from '../../facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-filter',

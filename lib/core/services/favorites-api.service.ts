@@ -17,9 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { NodePaging } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, of } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class FavoritesApiService {
@@ -69,7 +70,6 @@ export class FavoritesApiService {
      * @returns List of favorites
      */
     getFavorites(personId: string, options?: any): Observable<NodePaging> {
-        const { favoritesApi, handleError } = this;
         const defaultOptions = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
@@ -77,16 +77,12 @@ export class FavoritesApiService {
             include: [ 'properties', 'allowableOperations' ]
         };
         const queryOptions = Object.assign(defaultOptions, options);
-        const promise = favoritesApi
+        const promise = this.favoritesApi
             .getFavorites(personId, queryOptions)
             .then(this.remapFavoritesData);
 
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
-    }
-
-    private handleError(error): Observable<any> {
-        return Observable.of(error);
+        return from(promise).pipe(
+            catchError(err => of(err))
+        );
     }
 }

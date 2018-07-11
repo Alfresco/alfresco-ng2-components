@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { ProcessContentService } from '../../../services/process-content.service';
 import { FormFieldTypes } from '../core/form-field-types';
@@ -189,7 +189,7 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should show the list file after upload a new content', async(() => {
-            spyOn(contentService, 'createTemporaryRawRelatedContent').and.returnValue(Observable.of(fakePngAnswer));
+            spyOn(contentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakePngAnswer));
 
             uploadWidgetComponent.field.params.multiple = false;
             fixture.detectChanges();
@@ -204,11 +204,11 @@ describe('UploadWidgetComponent', () => {
         it('should update the form after deleted a file', async(() => {
             spyOn(contentService, 'createTemporaryRawRelatedContent').and.callFake((file) => {
                 if (file.name === 'file-fake.png') {
-                    return Observable.of(fakePngAnswer);
+                    return of(fakePngAnswer);
                 }
 
                 if (file.name === 'file-fake.jpg') {
-                    return Observable.of(fakeJpgAnswer);
+                    return of(fakeJpgAnswer);
                 }
             });
 
@@ -232,11 +232,11 @@ describe('UploadWidgetComponent', () => {
         it('should set has field value all the files uploaded', async(() => {
             spyOn(contentService, 'createTemporaryRawRelatedContent').and.callFake((file) => {
                 if (file.name === 'file-fake.png') {
-                    return Observable.of(fakePngAnswer);
+                    return of(fakePngAnswer);
                 }
 
                 if (file.name === 'file-fake.jpg') {
-                    return Observable.of(fakeJpgAnswer);
+                    return of(fakeJpgAnswer);
                 }
             });
 
@@ -380,8 +380,8 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should emit form content clicked event on icon click', (done) => {
-            spyOn(contentService, 'getContentPreview').and.returnValue(Observable.of(new Blob()));
-            spyOn(contentService, 'getFileRawContent').and.returnValue(Observable.of(new Blob()));
+            spyOn(contentService, 'getContentPreview').and.returnValue(of(new Blob()));
+            spyOn(contentService, 'getFileRawContent').and.returnValue(of(new Blob()));
 
             formServiceInstance.formContentClicked.subscribe((content: any) => {
                 expect(content.name).toBe(fakeJpgAnswer.name);

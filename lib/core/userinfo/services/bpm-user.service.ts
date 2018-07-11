@@ -17,11 +17,11 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { BpmUserModel } from '../models/bpm-user.model';
-import 'rxjs/add/observable/throw';
+import { map, catchError } from 'rxjs/operators';
 
 /**
  *
@@ -40,9 +40,11 @@ export class BpmUserService {
      * @returns User information object
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.profileApi.getProfile())
-            .map((data) => <BpmUserModel> data)
-            .catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.profileApi.getProfile())
+            .pipe(
+                map((data) => <BpmUserModel> data),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**

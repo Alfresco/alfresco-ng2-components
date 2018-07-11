@@ -21,7 +21,7 @@ import {
     CanActivateChild, RouterStateSnapshot, Router
 } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 

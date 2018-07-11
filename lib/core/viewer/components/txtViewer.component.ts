@@ -18,7 +18,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
-import 'rxjs/add/operator/toPromise';
 
 @Component({
     selector: 'adf-txt-viewer',

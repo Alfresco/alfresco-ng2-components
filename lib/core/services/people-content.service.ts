@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, of } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import 'rxjs/add/observable/fromPromise';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class PeopleContentService {
@@ -35,12 +35,11 @@ export class PeopleContentService {
      * @returns User information
      */
     getPerson(personId: string): Observable<any> {
-        const { peopleApi, handleError } = this;
-        const promise = peopleApi.getPerson(personId);
+        const promise = this.peopleApi.getPerson(personId);
 
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
+        return from(promise).pipe(
+            catchError(err => of(err))
+        );
     }
 
     /**
@@ -49,9 +48,5 @@ export class PeopleContentService {
      */
     getCurrentPerson(): Observable<any> {
         return this.getPerson('-me-');
-    }
-
-    private handleError(error): Observable<any> {
-        return Observable.of(error);
     }
 }

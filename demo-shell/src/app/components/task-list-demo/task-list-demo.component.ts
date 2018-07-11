@@ -19,6 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     templateUrl: './task-list-demo.component.html',
@@ -113,7 +114,9 @@ export class TaskListDemoComponent implements OnInit {
         });
 
         this.taskListForm.valueChanges
-        .debounceTime(500)
+            .pipe(
+                debounceTime(500)
+            )
             .subscribe(taskFilter => {
                 if (this.isFormValid()) {
                     this.filterTasks(taskFilter);

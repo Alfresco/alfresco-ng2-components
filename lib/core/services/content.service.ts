@@ -24,6 +24,7 @@ import { PermissionsEnum } from '../models/permissions.enum';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ContentService {
@@ -152,9 +153,10 @@ export class ContentService {
      * @returns Content data
      */
     getNodeContent(nodeId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId).then((dataContent) => {
-            return dataContent;
-        })).catch(this.handleError);
+        return from(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -166,15 +168,17 @@ export class ContentService {
      */
     createFolder(relativePath: string, name: string, parentId?: string): Observable<NodeEntry> {
         return from(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
-            .do(data => {
-                this.folderCreated.next(<FolderCreatedEvent> {
-                    relativePath: relativePath,
-                    name: name,
-                    parentId: parentId,
-                    node: data
-                });
-            })
-            .catch(err => this.handleError(err));
+            .pipe(
+                tap(data => {
+                    this.folderCreated.next(<FolderCreatedEvent> {
+                        relativePath: relativePath,
+                        name: name,
+                        parentId: parentId,
+                        node: data
+                    });
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -184,7 +188,7 @@ export class ContentService {
      * @returns Details of the folder
      */
     getNode(nodeId: string, opts?: any): Observable<NodeEntry> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.getNode(nodeId, opts));
+        return from(this.apiService.getInstance().nodes.getNode(nodeId, opts));
     }
 
     /**

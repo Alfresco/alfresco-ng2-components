@@ -17,13 +17,9 @@
 
 import { Injectable } from '@angular/core';
 import { RenditionEntry, RenditionPaging } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, interval } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/concatMap';
-import 'rxjs/add/operator/combineAll';
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/takeWhile';
+import { concatMap, switchMap, takeWhile } from 'rxjs/operators';
 
 /**
  * @deprecated
@@ -79,36 +75,40 @@ export class RenditionsService {
 
     /** @deprecated */
     getRendition(nodeId: string, encoding: string): Observable<RenditionEntry> {
-        return Observable.fromPromise(this.apiService.renditionsApi.getRendition(nodeId, encoding));
+        return from(this.apiService.renditionsApi.getRendition(nodeId, encoding));
     }
 
     /** @deprecated */
     getRenditionsListByNodeId(nodeId: string): Observable<RenditionPaging> {
-        return Observable.fromPromise(this.apiService.renditionsApi.getRenditions(nodeId));
+        return from(this.apiService.renditionsApi.getRenditions(nodeId));
     }
 
     /** @deprecated */
     createRendition(nodeId: string, encoding: string): Observable<{}> {
-        return Observable.fromPromise(this.apiService.renditionsApi.createRendition(nodeId, {id: encoding}));
+        return from(this.apiService.renditionsApi.createRendition(nodeId, {id: encoding}));
     }
 
     /** @deprecated */
     convert(nodeId: string, encoding: string, pollingInterval: number = 1000, retries: number = 5) {
         return this.createRendition(nodeId, encoding)
-            .concatMap(() => this.pollRendition(nodeId, encoding, pollingInterval, retries));
+            .pipe(
+                concatMap(() => this.pollRendition(nodeId, encoding, pollingInterval, retries))
+            );
     }
 
     /** @deprecated */
-    private pollRendition(nodeId: string, encoding: string, interval: number = 1000, retries: number = 5) {
+    private pollRendition(nodeId: string, encoding: string, intervalSize: number = 1000, retries: number = 5) {
         let attempts = 0;
-        return Observable.interval(interval)
-            .switchMap(() => this.getRendition(nodeId, encoding))
-            .takeWhile((data) => {
-                attempts += 1;
-                if (attempts > retries) {
-                    return false;
-                }
-                return (data.entry.status.toString() !== 'CREATED');
-            });
+        return interval(intervalSize)
+            .pipe(
+                switchMap(() => this.getRendition(nodeId, encoding)),
+                takeWhile((data) => {
+                    attempts += 1;
+                    if (attempts > retries) {
+                        return false;
+                    }
+                    return (data.entry.status.toString() !== 'CREATED');
+                })
+            );
     }
 }

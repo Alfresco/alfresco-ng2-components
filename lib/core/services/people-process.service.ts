@@ -21,6 +21,7 @@ import { Observable, from } from 'rxjs';
 import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class PeopleProcessService {
@@ -37,9 +38,11 @@ export class PeopleProcessService {
      */
     getWorkflowUsers(taskId?: string, searchWord?: string): Observable<UserProcessModel[]> {
         let option = { excludeTaskId: taskId, filter: searchWord };
-        return Observable.fromPromise(this.getWorkflowUserApi(option))
-            .map((response: any) => <UserProcessModel[]> response.data || [])
-            .catch(err => this.handleError(err));
+        return from(this.getWorkflowUserApi(option))
+            .pipe(
+                map((response: any) => <UserProcessModel[]> response.data || []),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -60,7 +63,9 @@ export class PeopleProcessService {
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
         let node = {userId: idToInvolve};
         return from<UserProcessModel[]>(this.involveUserToTaskApi(taskId, node))
-            .catch(err => this.handleError(err));
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -72,7 +77,9 @@ export class PeopleProcessService {
     removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
         let node = {userId: idToRemove};
         return from<UserProcessModel[]>(this.removeInvolvedUserFromTaskApi(taskId, node))
-            .catch(err => this.handleError(err));
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     private getWorkflowUserApi(options: any) {

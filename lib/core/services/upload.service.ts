@@ -17,7 +17,7 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import * as minimatch_ from 'minimatch';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { AppConfigService } from '../app-config/app-config.service';
 import {
     FileUploadCompleteEvent,

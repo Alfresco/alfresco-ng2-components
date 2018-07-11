@@ -25,7 +25,7 @@ import {
     setupTestBed
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 
@@ -88,7 +88,7 @@ xdescribe('AttachFolderWidgetComponent', () => {
     });
 
     it('should show the folder selected by content node', async(() => {
-        spyOn(contentNodeDialogService, 'openFolderBrowseDialogBySite').and.returnValue(Observable.of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFolderBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
             type: 'select-folder',
@@ -104,7 +104,7 @@ xdescribe('AttachFolderWidgetComponent', () => {
     }));
 
     it('should show the folder selected by content node opening on a configured folder', async(() => {
-        spyOn(contentNodeDialogService, 'openFolderBrowseDialogByFolderId').and.returnValue(Observable.of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFolderBrowseDialogByFolderId').and.returnValue(of([fakeMinimalNode]));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
             type: 'select-folder',
@@ -121,7 +121,7 @@ xdescribe('AttachFolderWidgetComponent', () => {
     }));
 
     it('should retrieve the node information on init', async(() => {
-        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeMinimalNode));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeMinimalNode));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
             type: 'select-folder',
@@ -136,7 +136,7 @@ xdescribe('AttachFolderWidgetComponent', () => {
     }));
 
     it('should remove the folder via the remove button', async(() => {
-        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeMinimalNode));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeMinimalNode));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
             type: 'select-folder',

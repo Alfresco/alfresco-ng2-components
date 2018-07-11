@@ -32,7 +32,6 @@ import {
     switchMap,
     tap
 } from 'rxjs/operators';
-import 'rxjs/add/observable/empty';
 
 @Component({
     selector: 'people-widget',

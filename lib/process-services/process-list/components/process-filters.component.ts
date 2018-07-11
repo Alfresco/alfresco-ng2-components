@@ -21,6 +21,7 @@ import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresent
 import { Observable } from 'rxjs/Observable';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './../services/process-filter.service';
+import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-process-instance-filters',

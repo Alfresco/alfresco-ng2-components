@@ -17,8 +17,9 @@
 
 import { UserProcessModel } from '@alfresco/adf-core';
 import { Component, EventEmitter, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-people-search',
@@ -55,9 +56,12 @@ export class PeopleSearchComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {
-        this.filteredResults$ = this.results.map((users) => {
-            return users.filter(user => user.id !== this.selectedUser.id);
-        });
+        this.filteredResults$ = this.results
+            .pipe(
+                map((users) => {
+                    return users.filter(user => user.id !== this.selectedUser.id);
+                })
+            );
         this.performSearch = this.performSearchCallback.bind(this);
     }
 

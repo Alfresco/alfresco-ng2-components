@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { UserProcessModel } from '@alfresco/adf-core';
 
 export type PerformSearchCallback = (searchWord: string) => Observable<UserProcessModel[]>;

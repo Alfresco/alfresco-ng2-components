@@ -24,7 +24,7 @@ import { DocumentActionsService } from '../../services/document-actions.service'
 import { FolderActionsService } from '../../services/folder-actions.service';
 import { ContentActionModel, ContentActionTarget } from './../../models/content-action.model';
 import { ContentActionListComponent } from './content-action-list.component';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'content-action',
