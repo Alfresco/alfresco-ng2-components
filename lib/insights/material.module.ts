@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MAT_PLACEHOLDER_GLOBAL_OPTIONS, MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
+    MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
     MatChipsModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
     MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
     MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
@@ -35,9 +35,6 @@ export function modules() {
 }
 
 @NgModule({
-    providers: [
-        {provide: MAT_PLACEHOLDER_GLOBAL_OPTIONS, useValue: { float: 'never' }}
-    ],
     imports: modules(),
     exports: modules()
 })
