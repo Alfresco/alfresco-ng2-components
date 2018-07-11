@@ -137,6 +137,10 @@ exports.Files = {
             folder_location: "/resources/adf/folderOne",
             folder_name: "folderOne"
         },
+        FOLDER_EXCLUDED: {
+            folder_location: "/resources/adf/folderExcluded",
+            folder_name: "folderExcluded"
+        },
         FILE_INSIDE_FOLDER_ONE: {
             file_location: "/resources/adf/folderOne/share_profile_pic.png",
             file_name: "share_profile_pic.png"
@@ -178,10 +182,13 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/a_zip_file.mp4.zip",
             file_name: "a_zip_file.mp4.zip"
         },
-
         PAGES:{
             file_location: "/resources/adf/allFileTypes/file_unsupported.pages",
             file_name: "file_unsupported.pages"
+        },
+        INI:{
+            file_location: "/resources/adf/allFileTypes/desktop.ini",
+            file_name: "desktop.ini"
         },
     },
 

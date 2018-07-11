@@ -25,7 +25,7 @@ import AcsUserModel = require('./models/ACS/acsUserModel');
 
 import AdfSettingsPage = require('./pages/adf/settingsPage');
 
-describe('Test Login component', () => {
+describe('Login component', () => {
 
     let adfSettingsPage = new AdfSettingsPage();
     let processServicesPage = new ProcessServicesPage();

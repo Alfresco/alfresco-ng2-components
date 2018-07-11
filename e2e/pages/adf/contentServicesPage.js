@@ -40,6 +40,7 @@ var ContentServicesPage = function (){
     var contentServicesURL = TestConfig.adf.url + TestConfig.adf.port + "/files";
     var loadMoreButton = element(by.css("button[data-automation-id='adf-infinite-pagination-button']"));
     var emptyPagination = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
+    var dragAndDrop = element(by.css("adf-upload-drag-area div"));
 
     /**
      * Check Document List is displayed
@@ -330,6 +331,10 @@ var ContentServicesPage = function (){
 
     this.checkPaginationIsNotDisplayed = function (){
         Util.waitUntilElementIsVisible(emptyPagination);
+    };
+
+    this.checkDandDIsDisplayed = function (){
+        Util.waitUntilElementIsVisible(dragAndDrop);
     };
 
 };
