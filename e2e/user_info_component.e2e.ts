@@ -30,7 +30,7 @@ import resources = require('./util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from './actions/users.actions';
 
-describe('Test User Info component', () => {
+describe('User Info component', () => {
 
     let adfSettingsPage = new AdfSettingsPage();
     let loginPage = new LoginPage();

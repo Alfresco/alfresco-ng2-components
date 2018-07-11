@@ -3,6 +3,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "$DIR/../"
 BROWSER_RUN=false
+DEVELOPMENT=false
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
@@ -12,7 +13,8 @@ show_help() {
     echo "-e or --email"
     echo "-b or --browser run the test in the browsrwer (No headless mode)"
     echo "-s or --spec run a single test file"
-    echo "-p or --proxy proxy Back end URL to use"
+    echo "-proxy or --proxy proxy Back end URL to use only possibel to use with -dev option"
+    echo "-dev or --dev run it against local development environment it will deploy on localhost:4200 the current version of your branch"
     echo "-host or --host URL of the Front end to test"
     echo "-save  save the error screenshot in the remote env"
     echo "-h or --help"
@@ -44,8 +46,13 @@ set_browser(){
 set_proxy(){
     PROXY=$1
 }
+
 set_save_screenshot(){
     SAVE_SCREENSHOT=true
+}
+
+set_development(){
+    DEVELOPMENT=true
 }
 
 while [[ $1 == -* ]]; do
@@ -55,6 +62,7 @@ while [[ $1 == -* ]]; do
       -p|--password)  set_password $2; shift 2;;
       -e|--email)  set_email $2; shift 2;;
       -b|--browser)  set_browser; shift;;
+      -dev|--dev)  set_development; shift;;
       -s|--spec)  set_test $2; shift 2;;
       -save)   set_save_screenshot; shift;;
       -proxy|--proxy)  set_proxy $2; shift 2;;
@@ -74,10 +82,28 @@ export BROWSER_RUN=$BROWSER_RUN
 export PROXY_HOST_ADF=$PROXY
 export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 
-if [[  $SINGLE_TEST == "true" ]]; then
-  echo "====== Single test run $NAME_TEST ====="
-  npm run e2e-lib -- --specs ./e2e/$NAME_TEST
+
+if [[  $DEVELOPMENT == "true" ]]; then
+  echo "====== Run against local development  ====="
+  if [[  $SINGLE_TEST == "true" ]]; then
+    echo "====== Single test run $NAME_TEST ====="
+    npm run e2e-lib -- --specs ./e2e/$NAME_TEST
+  else
+    npm run e2e-lib
+  fi
 else
-  npm run e2e-lib
+  if [[  $SINGLE_TEST == "true" ]]; then
+   npm install --save-dev jasmine2-protractor-utils -g
+    echo "====== Single test run $NAME_TEST ====="
+     webdriver-manager update --gecko=false --versions.chrome=2.38
+     protractor protractor.conf.js  --specs ./e2e/$NAME_TEST
+  else
+     webdriver-manager update --gecko=false --versions.chrome=2.38
+     protractor protractor.conf.js
+  fi
 fi
+
+
+
+
 

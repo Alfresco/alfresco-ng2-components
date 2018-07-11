@@ -31,7 +31,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
 
-describe('Test Process List - Pagination', function () {
+describe('Process List - Pagination', function () {
 
     let itemsPerPage = {
         five: '5',

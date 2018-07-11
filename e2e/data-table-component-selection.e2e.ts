@@ -22,7 +22,7 @@ import TestConfig = require('./test.config');
 import AcsUserModel = require('./models/ACS/acsUserModel');
 import AlfrescoApi = require('alfresco-js-api-node');
 
-describe('Test Datatable component - selection', () => {
+describe('Datatable component - selection', () => {
 
     let dataTablePage = new DataTablePage();
     let loginPage = new LoginPage();

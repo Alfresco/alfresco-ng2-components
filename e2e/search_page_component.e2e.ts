@@ -32,7 +32,7 @@ import resources = require('./util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Test Search component - Search Page', () => {
+describe('Search component - Search Page', () => {
     let search = {
         active: {
             base: Util.generateRandomString(3),

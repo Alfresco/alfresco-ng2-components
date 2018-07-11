@@ -5,6 +5,7 @@ workspace.xml
 .idea/
 dist/
 e2e-output/
+e2e/downloads/
 ng2-components/coverage/
 !systemjs.config.js
 demo-shell-ng2/app/components/router/
