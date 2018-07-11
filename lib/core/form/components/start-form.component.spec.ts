@@ -242,7 +242,7 @@ describe('StartFormComponent', () => {
                 const formFields = component.form.getFormFields();
                 const labelField = formFields.find(field => field.id === 'date');
                 const dateWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
-                const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-input-infix> .adf-label');
+                const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-form-field-infix> .adf-label');
                 expect(dateWidget).toBeDefined();
                 expect(labelField.type).toBe('date');
                 expect(dateLabelElement.innerText).toBe('date (D-M-YYYY)');
@@ -289,9 +289,9 @@ describe('StartFormComponent', () => {
                 fixture.detectChanges();
                 const formFieldsWidget = fixture.debugElement.nativeElement.querySelector('form-field');
                 const inputElement = fixture.debugElement.nativeElement.querySelector('.adf-input');
-                const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.mat-input-infix > .adf-label');
+                const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix > .adf-label');
                 const dateElement = fixture.debugElement.nativeElement.querySelector('#billdate');
-                const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-input-infix> .adf-label');
+                const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-form-field-infix> .adf-label');
                 const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
                 const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
                 expect(formFieldsWidget).toBeDefined();
