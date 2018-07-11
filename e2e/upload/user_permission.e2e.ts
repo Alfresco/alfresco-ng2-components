@@ -35,7 +35,7 @@ import { DropActions } from '../actions/drop.actions';
 
 import path = require('path');
 
-fdescribe('Upload - User permission', () => {
+describe('Upload - User permission', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();

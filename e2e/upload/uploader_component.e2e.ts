@@ -31,7 +31,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { DropActions } from "../actions/drop.actions";
 
-fdescribe('Upload component', () => {
+describe('Upload component', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();
@@ -238,7 +238,7 @@ fdescribe('Upload component', () => {
         uploadToggles.disableExtensionFilter();
     });
 
-    fit('[C274687] Should upload with drag and drop only the extension filter allowed when Enable extension filter is enabled', () => {
+    it('[C274687] Should upload with drag and drop only the extension filter allowed when Enable extension filter is enabled', () => {
         uploadToggles.enableExtensionFilter().addExtension('.docx');
 
         let dragAndDrop = new DropActions();
