@@ -33,7 +33,7 @@ import { DropActions } from '../actions/drop.actions';
 
 import path = require('path');
 
-describe('Upload component - Excluded Files', () => {
+fdescribe('Upload component - Excluded Files', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();

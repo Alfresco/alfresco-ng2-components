@@ -35,19 +35,30 @@ import { DropActions } from '../actions/drop.actions';
 
 import path = require('path');
 
-describe('Upload - User permission', () => {
+fdescribe('Upload - User permission', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();
     let uploadToggles = new UploadToggles();
     let loginPage = new LoginPage();
     let acsUser;
+    let acsUserTwo;
     let navigationBarPage = new NavigationBarPage();
     let notificationPage = new NotificationPage();
 
     let emptyFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+    });
+
+    let pngFile = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+    });
+
+    let pdfFile = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
     let folder = new FolderModel({
@@ -193,4 +204,46 @@ describe('Upload - User permission', () => {
             uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
         });
     });
+
+    describe('multiple users', () => {
+
+        beforeEach(async (done) => {
+            acsUserTwo = new AcsUserModel();
+
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUserTwo);
+
+            contentServicesPage.goToDocumentList();
+
+            done();
+        });
+
+        it('[C260175] Should two different user upload files in the proper User Home', () => {
+            contentServicesPage.uploadFile(emptyFile.location);
+
+            uploadDialog.fileIsUploaded(emptyFile.name);
+
+            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
+
+            navigationBarPage.clickLoginButton();
+            loginPage.loginToContentServicesUsingUserModel(acsUserTwo);
+            contentServicesPage.goToDocumentList();
+
+            contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
+
+            contentServicesPage.uploadFile(pngFile.location);
+
+            contentServicesPage.checkContentIsDisplayed(pngFile.name);
+
+            navigationBarPage.clickLoginButton();
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
+
+            contentServicesPage.uploadFile(pdfFile.location);
+
+            contentServicesPage.checkContentIsDisplayed(pdfFile.name);
+        });
+    });
+
 });

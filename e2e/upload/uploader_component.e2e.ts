@@ -29,8 +29,9 @@ import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
+import { DropActions } from "../actions/drop.actions";
 
-describe('Uploader component', () => {
+fdescribe('Upload component', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();
@@ -70,7 +71,12 @@ describe('Uploader component', () => {
         'name': resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_location
     });
+    let folderTwo = new FolderModel({
+        'name': resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_location
+    });
     let uploadedFileInFolder = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_name });
+    let uploadedFileInFolderTwo = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_name });
     let filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
     let filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
@@ -222,7 +228,7 @@ describe('Uploader component', () => {
         uploadToggles.disableMultipleFileUpload();
     });
 
-    it('[C260171] Enable extension filter', () => {
+    it('[C260171] Should upload only the extension filter allowed when Enable extension filter is enabled', () => {
         uploadToggles.enableExtensionFilter().addExtension('.docx');
         contentServicesPage.uploadFile(docxFileModel.location).checkContentIsDisplayed(docxFileModel.name);
         uploadDialog.removeUploadedFile(docxFileModel.name).fileIsCancelled(docxFileModel.name);
@@ -232,7 +238,25 @@ describe('Uploader component', () => {
         uploadToggles.disableExtensionFilter();
     });
 
-    it('12. Upload same file twice', () => {
+    fit('[C274687] Should upload with drag and drop only the extension filter allowed when Enable extension filter is enabled', () => {
+        uploadToggles.enableExtensionFilter().addExtension('.docx');
+
+        let dragAndDrop = new DropActions();
+        let dragAndDropArea = element(by.css('adf-upload-drag-area div'));
+
+        dragAndDrop.dropFile(dragAndDropArea, docxFileModel.location);
+        contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+
+        uploadDialog.removeUploadedFile(docxFileModel.name).fileIsCancelled(docxFileModel.name);
+        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+
+        dragAndDrop.dropFile(dragAndDropArea, largeFile.location);
+        contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
+        uploadDialog.dialogIsNotDisplayed();
+        uploadToggles.disableExtensionFilter();
+    });
+
+    it('[C279920] Upload same file twice', () => {
         contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
         pdfFileModel.setVersion('1');
         contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.getVersionName());
@@ -304,7 +328,7 @@ describe('Uploader component', () => {
         uploadToggles.disableMultipleFileUpload();
     });
 
-    xit('Enable max size and set it to 400', () => {
+    xit('[C279919] Enable max size and set it to 400', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         uploadToggles.enableMaxSize().addMaxSize('400');
@@ -334,10 +358,37 @@ describe('Uploader component', () => {
         uploadToggles.disableMaxSize();
     });
 
-    xit('[C272797] 21. Set max size to 1 and disable it', () => {
+    xit('[C272797] Set max size to 1 and disable it', () => {
         uploadToggles.enableMaxSize().addMaxSize('1');
         uploadToggles.disableMaxSize();
         contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsDisplayed(fileWithSpecificSize.name);
         uploadDialog.fileIsUploaded(fileWithSpecificSize.name).clickOnCloseButton().dialogIsNotDisplayed();
     });
+
+    it('[C91318] Should Enable/Disable upload button when change the disable property', () => {
+        uploadToggles.clickCheckboxDisableUpload();
+        expect(contentServicesPage.uploadButtonIsEnabled()).toBeFalsy();
+
+        uploadToggles.clickCheckboxDisableUpload();
+        expect(contentServicesPage.uploadButtonIsEnabled()).toBeTruthy();
+    });
+
+    it('[C279882] Should be possible Upload a folder in a folder', () => {
+        uploadToggles.enableFolderUpload();
+        contentServicesPage.uploadFolder(folderOne.location).checkContentIsDisplayed(folderOne.name);
+        uploadDialog.fileIsUploaded(uploadedFileInFolder.name);
+
+        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+        contentServicesPage.doubleClickRow(folderOne.name).checkContentIsDisplayed(uploadedFileInFolder.name);
+
+        uploadToggles.enableFolderUpload();
+        contentServicesPage.uploadFolder(folderTwo.location).checkContentIsDisplayed(folderTwo.name);
+        uploadDialog.fileIsUploaded(uploadedFileInFolderTwo.name);
+
+        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+        contentServicesPage.doubleClickRow(folderTwo.name).checkContentIsDisplayed(uploadedFileInFolderTwo.name);
+
+        uploadToggles.disableFolderUpload();
+    });
+
 });

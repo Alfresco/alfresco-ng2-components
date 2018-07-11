@@ -27,6 +27,7 @@ var UploadToggles = function () {
     var versioningToggle = element(by.cssContainingText("span[class*='toggle-content']", "Enable versioning"));
     var extensionAcceptedField = element(by.css("input[data-automation-id='accepted-files-type']"));
     var maxSizeField = element(by.css("input[data-automation-id='max-files-size']"));
+    var disableUploadCheckbox = element(by.css("[id='adf-disable-upload']"));
 
     this.enableMultipleFileUpload = function () {
         this.enableToggle(multipleFileUploadToggle);
@@ -76,6 +77,10 @@ var UploadToggles = function () {
     this.disableVersioning = function () {
         this.disableToggle(versioningToggle);
         return this;
+    };
+
+    this.clickCheckboxDisableUpload = function () {
+        return disableUploadCheckbox.click();
     };
 
     this.enableToggle = function (toggle) {
