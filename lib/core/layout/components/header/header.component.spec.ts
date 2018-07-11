@@ -24,7 +24,6 @@ import { LayoutModule } from '../..';
 import { Component } from '@angular/core';
 import { MaterialModule } from './../../../material.module';
 
-
 describe('HeaderLayoutComponent', () => {
     let fixture: ComponentFixture<HeaderLayoutComponent>;
     let component: HeaderLayoutComponent;
