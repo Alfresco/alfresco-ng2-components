@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentService, UploadService, TranslationService, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
 import { TranslationMock } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -120,7 +120,7 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-root-';
         component.success = null;
 
-        spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
@@ -135,7 +135,7 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-my-';
         component.success = null;
 
-        spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
@@ -161,8 +161,8 @@ describe('UploadButtonComponent', () => {
     it('should create a folder and emit an File uploaded event', (done) => {
         component.rootFolderId = '-my-';
 
-        spyOn(contentService, 'createFolder').and.returnValue(Observable.of(true));
-        spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        spyOn(contentService, 'createFolder').and.returnValue(of(true));
+        spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         fixture.detectChanges();
@@ -353,7 +353,7 @@ describe('UploadButtonComponent', () => {
         it('should not call uploadFiles for node without permission', () => {
             component.rootFolderId = 'nodeId';
 
-            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeNodeWithNoPermission));
+            spyOn(contentService, 'getNode').and.returnValue(of(fakeNodeWithNoPermission));
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
             uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
@@ -367,7 +367,7 @@ describe('UploadButtonComponent', () => {
         it('should not call uploadFiles when getNode fails', () => {
             component.rootFolderId = 'nodeId';
 
-            spyOn(contentService, 'getNode').and.returnValue(Observable.throw('error'));
+            spyOn(contentService, 'getNode').and.returnValue(throwError('error'));
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
             uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
@@ -399,7 +399,7 @@ describe('UploadButtonComponent', () => {
 
             fakeNodeWithNoPermission.entry.allowableOperations = ['other'];
 
-            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeNodeWithNoPermission));
+            spyOn(contentService, 'getNode').and.returnValue(of(fakeNodeWithNoPermission));
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
             uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
@@ -413,7 +413,7 @@ describe('UploadButtonComponent', () => {
         it('should call uploadFiles when node has CREATE', () => {
             component.rootFolderId = 'nodeId';
 
-            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+            spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
             uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');

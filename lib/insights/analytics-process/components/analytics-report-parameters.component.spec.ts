@@ -23,7 +23,7 @@ import { AnalyticsReportParametersComponent } from '../components/analytics-repo
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { AnalyticsService } from '../services/analytics.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 declare let jasmine: any;
 

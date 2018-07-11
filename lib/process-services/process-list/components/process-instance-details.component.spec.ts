@@ -18,7 +18,7 @@
 import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 import { FormModule, setupTestBed } from '@alfresco/adf-core';
 import { TaskListModule } from '../../task-list/task-list.module';
@@ -54,7 +54,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ProcessService);
 
-        getProcessSpy = spyOn(service, 'getProcess').and.returnValue(Observable.of(exampleProcess));
+        getProcessSpy = spyOn(service, 'getProcess').and.returnValue(of(exampleProcess));
     });
 
     it('should not load task details when no processInstanceId is specified', () => {
@@ -79,7 +79,7 @@ describe('ProcessInstanceDetailsComponent', () => {
     }));
 
     it('should display default details when the process instance has no name', async(() => {
-        getProcessSpy = getProcessSpy.and.returnValue(Observable.of(exampleProcessNoName));
+        getProcessSpy = getProcessSpy.and.returnValue(of(exampleProcessNoName));
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
         fixture.whenStable().then(() => {

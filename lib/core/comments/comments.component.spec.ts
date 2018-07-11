@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { CommentProcessService } from '../services/comment-process.service';
 import { CommentsComponent } from './comments.component';
 import { CommentContentService } from '../services/comment-content.service';
@@ -48,24 +48,24 @@ describe('CommentsComponent', () => {
         commentProcessService = fixture.debugElement.injector.get(CommentProcessService);
         commentContentService = fixture.debugElement.injector.get(CommentContentService);
 
-        addContentCommentSpy = spyOn(commentContentService, 'addNodeComment').and.returnValue(Observable.of({
+        addContentCommentSpy = spyOn(commentContentService, 'addNodeComment').and.returnValue(of({
             id: 123,
             message: 'Test Comment',
             createdBy: {id: '999'}
         }));
 
-        getContentCommentsSpy = spyOn(commentContentService, 'getNodeComments').and.returnValue(Observable.of([
+        getContentCommentsSpy = spyOn(commentContentService, 'getNodeComments').and.returnValue(of([
             {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
         ]));
 
-        getProcessCommentsSpy = spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of([
+        getProcessCommentsSpy = spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([
             {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
         ]));
-        addProcessCommentSpy = spyOn(commentProcessService, 'addTaskComment').and.returnValue(Observable.of({
+        addProcessCommentSpy = spyOn(commentProcessService, 'addTaskComment').and.returnValue(of({
             id: 123,
             message: 'Test Comment',
             createdBy: {id: '999'}
@@ -128,7 +128,7 @@ describe('CommentsComponent', () => {
 
     it('should not display comments when the task has no comments', async(() => {
         component.taskId = '123';
-        getProcessCommentsSpy.and.returnValue(Observable.of([]));
+        getProcessCommentsSpy.and.returnValue(of([]));
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.nativeElement.querySelector('#comment-container')).toBeNull();

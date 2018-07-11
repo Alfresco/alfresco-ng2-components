@@ -19,7 +19,7 @@ import {
     AlfrescoApiService, AuthenticationService, ContentService,
     SettingsService, LogService, ThumbnailService
 } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { NodePaging, DocumentListService } from '../document-list';
 import { PageNode } from './document-library.model.mock';
 

@@ -19,7 +19,7 @@ import { DebugElement, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent } from './apps-list.component';

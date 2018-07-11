@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { TagService } from './services/tag.service';
 import { TagListComponent } from '././tag-list.component';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('TagList', () => {
@@ -55,7 +55,7 @@ describe('TagList', () => {
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
         tagService = TestBed.get(TagService);
-        spyOn(tagService, 'getAllTheTags').and.returnValue(Observable.of(dataTag));
+        spyOn(tagService, 'getAllTheTags').and.returnValue(of(dataTag));
 
         fixture = TestBed.createComponent(TagListComponent);
 

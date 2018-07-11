@@ -19,12 +19,11 @@ import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { Subject, of } from 'rxjs';
 
 import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { FolderEditDirective } from './folder-edit.directive';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { Subject } from 'rxjs/Subject';
 
 @Component({
     template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
@@ -72,7 +71,7 @@ describe('FolderEditDirective', () => {
         node = { entry: { id: 'folderId' } };
 
         dialogRefMock = {
-            afterClosed: val =>  Observable.of(val),
+            afterClosed: val =>  of(val),
             componentInstance: {
                 error: new Subject<any>(),
                 success: new Subject<MinimalNodeEntryEntity>()
@@ -83,7 +82,7 @@ describe('FolderEditDirective', () => {
     });
 
     xit('should emit folderEdit event when input value is not undefined', (done) => {
-        spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(node));
+        spyOn(dialogRefMock, 'afterClosed').and.returnValue(of(node));
 
         contentService.folderEdit.subscribe((val) => {
             expect(val).toBe(node);
@@ -95,7 +94,7 @@ describe('FolderEditDirective', () => {
     });
 
     it('should not emit folderEdit event when input value is undefined', () => {
-        spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(null));
+        spyOn(dialogRefMock, 'afterClosed').and.returnValue(of(null));
         spyOn(contentService.folderEdit, 'next');
 
         fixture.detectChanges();

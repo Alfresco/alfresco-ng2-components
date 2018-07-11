@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 import { TaskDetailsModel } from '../../task-list';
 
@@ -50,7 +50,7 @@ describe('ProcessInstanceTasksComponent', () => {
         component = fixture.componentInstance;
         service = TestBed.get(ProcessService);
 
-        spyOn(service, 'getProcessTasks').and.returnValue(Observable.of([new TaskDetailsModel(taskDetailsMock)]));
+        spyOn(service, 'getProcessTasks').and.returnValue(of([new TaskDetailsModel(taskDetailsMock)]));
     });
 
     afterEach(() => {

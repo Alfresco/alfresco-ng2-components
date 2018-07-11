@@ -25,7 +25,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { OauthConfigModel } from '../../models/oauth-config.model';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
@@ -107,7 +107,7 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to route on successful login', () => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
+        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
         spyOn(router, 'navigate');
@@ -116,7 +116,7 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to previous route state on successful login', () => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
+        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
         authService.setRedirect({ provider: 'ECM', url: 'some-route' });
@@ -167,7 +167,7 @@ describe('LoginComponent', () => {
         });
 
         it('should be changed to the "welcome key" after a successful login attempt', () => {
-            spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
+            spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
             loginWithCredentials('fake-username', 'fake-password');
 
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.WELCOME');
@@ -391,7 +391,7 @@ describe('LoginComponent', () => {
     });
 
     it('should return success event after the login have succeeded', (done) => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
+        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
 
         component.providers = 'ECM';
         expect(component.isError).toBe(false);
