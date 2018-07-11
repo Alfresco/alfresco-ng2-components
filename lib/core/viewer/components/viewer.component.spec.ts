@@ -592,6 +592,41 @@ describe('ViewerComponent', () => {
             }));
         });
 
+        describe('error handling', () => {
+
+            it('should show unknown view when node file not found', async(() => {
+                spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo')
+                    .and.returnValue(Promise.reject({}));
+
+                component.nodeId = 'the-node-id-of-the-file-to-preview';
+                component.urlFile = null;
+                component.mimeType = null;
+
+                component.ngOnChanges(null);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
+                });
+            }));
+
+            it('should show unknown view when sharedLink file not found', async(() => {
+                spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
+                    .and.returnValue(Promise.reject({}));
+
+                component.sharedLinkId = 'the-Shared-Link-id';
+                component.urlFile = null;
+                component.mimeType = null;
+
+                component.ngOnChanges(null);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
+                });
+
+            }));
+
+        });
+
         describe('MimeType handling', () => {
 
             it('should display a PDF file identified by mimetype when the filename has no extension', async(() => {

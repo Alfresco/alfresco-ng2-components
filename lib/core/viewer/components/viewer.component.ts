@@ -298,10 +298,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 );
             } else if (this.sharedLinkId) {
 
-                this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(details => {
-                    this.setUpSharedLinkFile(details);
-                    this.isLoading = false;
-                });
+                this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
+                    details => {
+                        this.setUpSharedLinkFile(details);
+                        this.isLoading = false;
+                    },
+                    () => {
+                        this.isLoading = false;
+                        this.logService.error('This sharedLink does not exist');
+                    });
             }
         }
     }
