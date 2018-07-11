@@ -21,7 +21,8 @@ import {
     MatChipsModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
     MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
     MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
-    MatTooltipModule, MatMenuModule
+    MatTooltipModule, MatMenuModule,
+    MAT_LABEL_GLOBAL_OPTIONS
 } from '@angular/material';
 
 export function modules() {
@@ -36,6 +37,9 @@ export function modules() {
 
 @NgModule({
     imports: modules(),
-    exports: modules()
+    exports: modules(),
+    providers: [
+        { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'never' }}
+    ]
 })
 export class MaterialModule {}

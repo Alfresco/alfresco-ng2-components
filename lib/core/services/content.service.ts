@@ -18,17 +18,12 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ContentApi, MinimalNodeEntryEntity, Node, NodeEntry } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject, from } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ContentService {
@@ -169,8 +164,8 @@ export class ContentService {
      * @param parentId Node ID of parent folder
      * @returns Information about the new folder
      */
-    createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
+    createFolder(relativePath: string, name: string, parentId?: string): Observable<NodeEntry> {
+        return from(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
             .do(data => {
                 this.folderCreated.next(<FolderCreatedEvent> {
                     relativePath: relativePath,

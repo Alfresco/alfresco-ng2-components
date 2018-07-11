@@ -17,12 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from } from 'rxjs';
 import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class PeopleProcessService {
@@ -61,7 +59,7 @@ export class PeopleProcessService {
      */
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
         let node = {userId: idToInvolve};
-        return Observable.fromPromise(this.involveUserToTaskApi(taskId, node))
+        return from<UserProcessModel[]>(this.involveUserToTaskApi(taskId, node))
             .catch(err => this.handleError(err));
     }
 
@@ -73,7 +71,7 @@ export class PeopleProcessService {
      */
     removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
         let node = {userId: idToRemove};
-        return Observable.fromPromise(this.removeInvolvedUserFromTaskApi(taskId, node))
+        return from<UserProcessModel[]>(this.removeInvolvedUserFromTaskApi(taskId, node))
             .catch(err => this.handleError(err));
     }
 
