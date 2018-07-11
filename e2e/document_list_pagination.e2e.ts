@@ -29,7 +29,7 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Test Document List - Pagination', function () {
+describe('Document List - Pagination', function () {
     let pagination = {
         base: 'newFile',
         secondSetBase: 'secondSet',
@@ -256,7 +256,7 @@ describe('Test Document List - Pagination', function () {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    it('[C91320] Pagination when the content is sorted', function () {
+    xit('[C91320] Pagination when the content is sorted', function () {
         contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(newFolderModel.name);
         contentServicesPage.checkAcsContainer();

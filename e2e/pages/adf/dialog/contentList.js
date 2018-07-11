@@ -277,7 +277,7 @@ var ContentList = function () {
     };
 
     this.checkContentIsNotDisplayed = function (content) {
-        Util.waitUntilElementIsNotVisible(element(by.css("span[title='" + content + "']")));
+        Util.waitUntilElementIsNotVisible(element(by.css("adf-document-list span[title='" + content + "']")));
         return this;
     };
 

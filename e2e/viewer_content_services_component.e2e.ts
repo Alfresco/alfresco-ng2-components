@@ -31,7 +31,7 @@ import AcsUserModel = require('./models/ACS/acsUserModel');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
-describe('Test Content Services Viewer', () => {
+describe('Content Services Viewer', () => {
 
     let acsUser = new AcsUserModel();
     let viewerPage = new ViewerPage();

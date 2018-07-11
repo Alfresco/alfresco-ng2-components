@@ -19,7 +19,7 @@ var Util = require('../../util/util');
 var TestConfig = require('../../test.config');
 var AdfSettingsPage = require('./settingsPage');
 
-var LoginPage = function (){
+var LoginPage = function () {
 
     var loginURL = TestConfig.adf.url + TestConfig.adf.port + "/login";
     var txtUsername = element(by.css("input[id='username']"));
@@ -48,13 +48,13 @@ var LoginPage = function (){
      * @property waitForElements
      * @type protractor.Element
      * */
-    this.waitForElements = function (){
+    this.waitForElements = function () {
         var deferred = protractor.promise.defer();
 
-        Util.waitUntilElementIsVisible(txtUsername).then(()=>{
-            Util.waitUntilElementIsVisible(txtPassword).then(()=>{
+        Util.waitUntilElementIsVisible(txtUsername).then(() => {
+            Util.waitUntilElementIsVisible(txtPassword).then(() => {
                 deferred.fulfill();
-            },()=>{
+            }, () => {
                 deferred.rejected();
             })
         });
@@ -68,7 +68,7 @@ var LoginPage = function (){
      * @method enterUsername
      * @param {String} username
      */
-    this.enterUsername = function (username){
+    this.enterUsername = function (username) {
         Util.waitUntilElementIsVisible(txtUsername);
         txtUsername.sendKeys('');
         txtUsername.clear();
@@ -81,7 +81,7 @@ var LoginPage = function (){
      * @method enterPassword
      * @param {String} password
      */
-    this.enterPassword = function (password){
+    this.enterPassword = function (password) {
         Util.waitUntilElementIsVisible(txtPassword);
         browser.driver.sleep(500);
         txtPassword.clear();
@@ -93,7 +93,7 @@ var LoginPage = function (){
      * @method clearUsername
      * @param {String} username
      */
-    this.clearUsername = function(){
+    this.clearUsername = function () {
         Util.waitUntilElementIsVisible(txtUsername);
         txtUsername.click().clear();
     };
@@ -103,12 +103,12 @@ var LoginPage = function (){
      * @method clearPassword
      * @param {String} password
      */
-    this.clearPassword = function (){
+    this.clearPassword = function () {
         Util.waitUntilElementIsVisible(txtPassword);
-        txtPassword.getAttribute('value').then(function (value){
+        txtPassword.getAttribute('value').then(function (value) {
             for (var i = value.length; i >= 0; i--) {
                 txtPassword.sendKeys(protractor.Key.BACK_SPACE);
-                }
+            }
         });
     };
 
@@ -117,7 +117,7 @@ var LoginPage = function (){
      * @method checkUsernameTooltip
      * @param {String} message
      */
-    this.checkUsernameTooltip = function (message){
+    this.checkUsernameTooltip = function (message) {
         Util.waitUntilElementIsVisible(usernameTooltip);
     };
 
@@ -126,7 +126,7 @@ var LoginPage = function (){
      * @method checkPasswordTooltip
      * @param {String} message
      */
-    this.checkPasswordTooltip = function (message){
+    this.checkPasswordTooltip = function (message) {
         Util.waitUntilElementIsVisible(passwordTooltip);
     };
 
@@ -135,7 +135,7 @@ var LoginPage = function (){
      * @method checkLoginError
      * @param {String} message
      */
-    this.checkLoginError = function (message){
+    this.checkLoginError = function (message) {
         Util.waitUntilElementIsVisible(loginTooltip);
         expect(loginTooltip.getText()).toEqual(message);
     };
@@ -144,23 +144,23 @@ var LoginPage = function (){
      * checks username field is inactive
      * @method checkUsernameInactive
      */
-    this.checkUsernameInactive = function (){
+    this.checkUsernameInactive = function () {
         Util.waitUntilElementIsVisible(usernameInactive);
     },
 
-    /**
-     * checks password field is inactive
-     * @method checkPasswordInactive
-     */
-    this.checkPasswordInactive = function (){
-        Util.waitUntilElementIsVisible(passwordInactive);
-    };
+        /**
+         * checks password field is inactive
+         * @method checkPasswordInactive
+         */
+        this.checkPasswordInactive = function () {
+            Util.waitUntilElementIsVisible(passwordInactive);
+        };
 
     /**
      * checks username field is highlighted
      * @method checkUsernameHighlighted
      */
-    this.checkUsernameHighlighted = function (){
+    this.checkUsernameHighlighted = function () {
         adfLogo.click();
         Util.waitUntilElementIsVisible(usernameHighlighted);
     };
@@ -169,7 +169,7 @@ var LoginPage = function (){
      * checks password field is highlighted
      * @method checkPasswordHighlighted
      */
-    this.checkPasswordHighlighted = function (){
+    this.checkPasswordHighlighted = function () {
         adfLogo.click();
         Util.waitUntilElementIsVisible(passwordHighlighted);
     };
@@ -178,7 +178,7 @@ var LoginPage = function (){
      * check Username tooltip is not visible
      * @method checkUsernameTooltipIsNotVisible
      */
-    this.checkUsernameTooltipIsNotVisible = function (){
+    this.checkUsernameTooltipIsNotVisible = function () {
         Util.waitUntilElementIsNotVisible(usernameTooltip);
     };
 
@@ -186,7 +186,7 @@ var LoginPage = function (){
      * checks password tooltip is not visible
      * @method checkPasswordTooltipIsNotVisible
      */
-    this.checkPasswordTooltipIsNotVisible = function (){
+    this.checkPasswordTooltipIsNotVisible = function () {
         Util.waitUntilElementIsNotVisible(passwordTooltip);
     };
 
@@ -194,7 +194,7 @@ var LoginPage = function (){
      * checks sign in button is enabled
      * @method checkSignInButtonIsEnabled
      */
-    this.checkSignInButtonIsEnabled = function (){
+    this.checkSignInButtonIsEnabled = function () {
         Util.waitUntilElementIsVisible(signInButton);
         expect(signInButton.isEnabled()).toBe(true);
     };
@@ -203,7 +203,7 @@ var LoginPage = function (){
      * Logs into adf using default host config
      * @method defaultLogin
      */
-    this.defaultLogin = function (){
+    this.defaultLogin = function () {
         browser.driver.get(TestConfig.adf.url + TestConfig.adf.login);
         this.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     };
@@ -212,7 +212,7 @@ var LoginPage = function (){
      * Logs into adf using userModel
      * @method loginUsingUserModel
      */
-    this.loginUsingUserModel = function (userModel){
+    this.loginUsingUserModel = function (userModel) {
         browser.driver.get(TestConfig.adf.url + TestConfig.adf.login);
         this.waitForElements();
         this.login(userModel.getId(), userModel.getPassword());
@@ -222,14 +222,14 @@ var LoginPage = function (){
      * Logs into ADF using userModel - only Process Services enabled
      * @method loginUsingUserModel
      */
-    this.loginToProcessServicesUsingUserModel = function (userModel){
+    this.loginToProcessServicesUsingUserModel = function (userModel) {
         adfSettingsPage.setProviderBpm();
         this.waitForElements();
         this.login(userModel.email, userModel.password);
     };
 
 
-    this.loginToProcessServicesUsingDefaultUser = function (){
+    this.loginToProcessServicesUsingDefaultUser = function () {
         adfSettingsPage.setProviderBpm();
         this.waitForElements();
         this.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -242,19 +242,26 @@ var LoginPage = function (){
         this.login(userModel.getId(), userModel.getPassword());
     };
 
+    this.loginToContentServices = function (username, password) {
+        adfSettingsPage.setProviderEcm();
+        this.waitForElements();
+
+        this.login(username, password);
+    };
+
     /** 
      * Go to adf login page 
      * @method goToLoginPage 
      */
-     this.goToLoginPage = function (){ 
-         browser.driver.get(TestConfig.adf.url + TestConfig.adf.port+'/login');
-     };
+    this.goToLoginPage = function () {
+        browser.driver.get(TestConfig.adf.url + TestConfig.adf.port + '/login');
+    };
 
     /**
      * checks sign in button is disabled
      * @method checkSignInButtonIsDisabled
      */
-    this.checkSignInButtonIsDisabled = function (){
+    this.checkSignInButtonIsDisabled = function () {
         Util.waitUntilElementIsVisible(signInButton);
         expect(signInButton.isEnabled()).toBe(false);
     };
@@ -263,7 +270,7 @@ var LoginPage = function (){
      * clicks the sign in button
      * @method clickSignInButton
      */
-    this.clickSignInButton = function (){
+    this.clickSignInButton = function () {
         Util.waitUntilElementIsVisible(signInButton);
         signInButton.click();
     };
@@ -272,12 +279,12 @@ var LoginPage = function (){
      * clicks icon to show password
      * @method showPassword
      */
-    this.showPassword = function (){
+    this.showPassword = function () {
         Util.waitUntilElementIsVisible(showPassword);
         showPassword.click();
     };
 
-    this.getShowPasswordIconColor = function (){
+    this.getShowPasswordIconColor = function () {
         var deferred = protractor.promise.defer();
 
         Util.waitUntilElementIsVisible(showPassword);
@@ -288,7 +295,7 @@ var LoginPage = function (){
         return deferred.promise;
     };
 
-    this.getSignInButtonColor = function (){
+    this.getSignInButtonColor = function () {
         var deferred = protractor.promise.defer();
 
         Util.waitUntilElementIsVisible(signInButton);
@@ -299,7 +306,7 @@ var LoginPage = function (){
         return deferred.promise;
     };
 
-    this.getBackgroundColor = function (){
+    this.getBackgroundColor = function () {
         var deferred = protractor.promise.defer();
 
         Util.waitUntilElementIsVisible(cardBackground);
@@ -314,7 +321,7 @@ var LoginPage = function (){
      * clicks icon to hide password
      * @method hidePassword
      */
-    this.hidePassword = function (){
+    this.hidePassword = function () {
         Util.waitUntilElementIsVisible(hidePassword);
         hidePassword.click();
     };
@@ -324,7 +331,7 @@ var LoginPage = function (){
      * @method checkPasswordIsShown
      * @param password
      */
-    this.checkPasswordIsShown = function (password){
+    this.checkPasswordIsShown = function (password) {
         txtPassword.getAttribute('value').then(function (text) {
             expect(text).toEqual(password);
         });
@@ -334,7 +341,7 @@ var LoginPage = function (){
      * checks if password is hidden
      * @method checkPasswordIsHidden
      */
-    this.checkPasswordIsHidden = function (){
+    this.checkPasswordIsHidden = function () {
         Util.waitUntilElementIsVisible(txtPassword);
     };
 
@@ -342,7 +349,7 @@ var LoginPage = function (){
      * checks 'Remember me' is displayed
      * @method checkRememberIsDisplayed
      */
-    this.checkRememberIsDisplayed = function (){
+    this.checkRememberIsDisplayed = function () {
         Util.waitUntilElementIsVisible(rememberMe);
     };
 
@@ -350,7 +357,7 @@ var LoginPage = function (){
      * checks 'Remember me' is not displayed
      * @method checkRememberIsNotDisplayed
      */
-    this.checkRememberIsNotDisplayed = function (){
+    this.checkRememberIsNotDisplayed = function () {
         Util.waitUntilElementIsNotVisible(rememberMe);
     };
 
@@ -358,7 +365,7 @@ var LoginPage = function (){
      * checks 'Need help' is Displayed
      * @method checkNeedHelpIsDisplayed
      */
-    this.checkNeedHelpIsDisplayed = function (){
+    this.checkNeedHelpIsDisplayed = function () {
         Util.waitUntilElementIsVisible(needHelp);
     };
 
@@ -366,7 +373,7 @@ var LoginPage = function (){
      * checks 'Need Help' is not displayed
      * @method checkNeedHelpIsNotDisplayed
      */
-    this.checkNeedHelpIsNotDisplayed = function (){
+    this.checkNeedHelpIsNotDisplayed = function () {
         Util.waitUntilElementIsNotVisible(needHelp);
     };
 
@@ -374,7 +381,7 @@ var LoginPage = function (){
      * checks 'Register' is displayed
      * @method checkRegisterDisplayed
      */
-    this.checkRegisterDisplayed = function (){
+    this.checkRegisterDisplayed = function () {
         Util.waitUntilElementIsVisible(register);
     };
 
@@ -382,7 +389,7 @@ var LoginPage = function (){
      * checks 'Register' is not displayed
      * @method checkRegisterIsNotDisplayed
      */
-    this.checkRegisterIsNotDisplayed = function (){
+    this.checkRegisterIsNotDisplayed = function () {
         Util.waitUntilElementIsNotVisible(register);
     };
 
@@ -390,10 +397,10 @@ var LoginPage = function (){
      * enables footer switch
      * @method enableFooter
      */
-    this.enableFooter = function (){
+    this.enableFooter = function () {
         Util.waitUntilElementIsVisible(footerSwitch);
         footerSwitch.getAttribute('class').then(function (check) {
-            if (check === 'mat-slide-toggle mat-primary'){
+            if (check === 'mat-slide-toggle mat-primary') {
                 footerSwitch.click();
                 expect(footerSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
             }
@@ -404,10 +411,10 @@ var LoginPage = function (){
      * disables footer switch
      * @method disableFooter
      */
-    this.disableFooter = function (){
+    this.disableFooter = function () {
         Util.waitUntilElementIsVisible(footerSwitch);
         footerSwitch.getAttribute('class').then(function (check) {
-            if (check ==='mat-slide-toggle mat-primary mat-checked'){
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
                 footerSwitch.click();
                 expect(footerSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
             }

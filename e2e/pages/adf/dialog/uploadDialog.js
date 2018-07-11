@@ -25,6 +25,7 @@ var UploadDialog = function () {
     var minimizedDialog = element(by.css("div[class*='upload-dialog--minimized']"));
     var uploadedStatusIcon = by.css("mat-icon[class*='status--done']");
     var cancelledStatusIcon = by.css("div[class*='status--cancelled']");
+    var errorStatusIcon = by.css("div[class*='status--error']");
     var cancelWhileUploadingIcon = by.css("mat-icon[class*='adf-file-uploading-row__action adf-file-uploading-row__action--cancel']");
     var rowByRowName = by.xpath("ancestor::adf-file-uploading-list-row");
     var title = element(by.css("span[class*='upload-dialog__title']"));
@@ -75,6 +76,11 @@ var UploadDialog = function () {
 
     this.fileIsUploaded = function (content) {
         Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(uploadedStatusIcon));
+        return this;
+    };
+
+    this.fileIsError = function (content) {
+        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(errorStatusIcon));
         return this;
     };
 
