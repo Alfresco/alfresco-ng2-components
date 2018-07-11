@@ -102,11 +102,12 @@ describe('Modify applications', () => {
 
         processServicesPage.checkApsContainer();
 
-        processServicesPage.checkAppIsDisplayed(app.title);
+        processServicesPage.checkAppIsDisplayed(app.title).then( () => console.log('App is displayed'));
 
-        console.log("Before deleting the app");
-
-        await modelActions.deleteEntireModel(this.alfrescoJsApi, firstApp.id).then( () => console.log("Right after deleting the app"));
+        console.log('Before deleting the app');
+        browser.controlFlow().execute( () => {
+            return modelActions.deleteEntireModel(this.alfrescoJsApi, firstApp.id).then( () => console.log('Right after deleting the app'));
+        });
 
         Util.refreshBrowser();
 

@@ -90,14 +90,12 @@ var ProcessServicesPage = function(){
 
     this.checkAppIsNotDisplayed = function(applicationName) {
         var app = element(by.css("mat-card[title='" + applicationName +"']"));
-        Util.waitUntilElementIsNotOnPage(app);
-        return new AppNavigationBarPage();
+        return Util.waitUntilElementIsNotOnPage(app);
     };
 
     this.checkAppIsDisplayed = function(applicationName) {
         var app = element(by.css("mat-card[title='" + applicationName +"']"));
-        Util.waitUntilElementIsVisible(app);
-        return new AppNavigationBarPage();
+        return Util.waitUntilElementIsVisible(app);
     };
 
 };
