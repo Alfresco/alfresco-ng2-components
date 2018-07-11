@@ -35,7 +35,7 @@ import { DropActions } from '../actions/drop.actions';
 
 import path = require('path');
 
-describe('Drag and drop - User permission', () => {
+describe('Upload - User permission', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();
@@ -71,14 +71,14 @@ describe('Drag and drop - User permission', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
         done();
     });
 
     describe('limited permissions', () => {
 
         beforeEach(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-
             contentServicesPage.goToDocumentList();
 
             done();
@@ -110,7 +110,7 @@ describe('Drag and drop - User permission', () => {
             contentServicesPage.checkContentIsNotDisplayed(folder.name);
         });
 
-        it('Should not be allowed to upload a file in a restricted user folder with limited permissions', () => {
+        it('[C279915] Should not be allowed to upload a file in a restricted user folder with limited permissions', () => {
             navigationBarPage.clickLoginButton();
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -130,7 +130,7 @@ describe('Drag and drop - User permission', () => {
             notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
-        it('Should not be allowed to upload a folder in a restricted user folder with limited permissions', () => {
+        it('[C279916] Should not be allowed to upload a folder in a restricted user folder with limited permissions', () => {
             uploadToggles.enableFolderUpload();
 
             contentServicesPage.uploadFolder(folder.location).checkContentIsDisplayed(folder.name);
@@ -177,13 +177,13 @@ describe('Drag and drop - User permission', () => {
             uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
         });
 
-        it('Should be allowed to upload a file in a restricted user folder with full permissions', () => {
+        it('[C279917] Should be allowed to upload a file in a restricted user folder with full permissions', () => {
             contentServicesPage.uploadFile(emptyFile.location);
 
             uploadDialog.fileIsUploaded(emptyFile.name);
         });
 
-        it('Should be allowed to upload a folder in a restricted user folder with full permissions', () => {
+        it('[C279918] Should be allowed to upload a folder in a restricted user folder with full permissions', () => {
             uploadToggles.enableFolderUpload();
 
             contentServicesPage.uploadFolder(folder.location);
