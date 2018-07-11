@@ -17,6 +17,7 @@
 
 import LoginPage = require('./pages/adf/loginPage');
 import ContentServicesPage = require('./pages/adf/contentServicesPage');
+import NavigationBarPage = require('./pages/adf/navigationBarPage');
 
 import AcsUserModel = require('./models/ACS/acsUserModel');
 import FileModel = require('./models/ACS/fileModel');
@@ -31,10 +32,11 @@ import { UploadActions } from './actions/ACS/upload.actions';
 
 import ErrorPage = require('./pages/adf/documentListErrorPage');
 
-fdescribe('PERMISSION MESSAGE', () => {
+fdescribe('[C217334] - Document List - Permission Message', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
+    let navBar = new NavigationBarPage();
     let errorPage = new ErrorPage();
     let acsUser = new AcsUserModel();
     let uploadedFolder;
@@ -48,6 +50,7 @@ fdescribe('PERMISSION MESSAGE', () => {
             hostEcm: TestConfig.adf.url
         });
         let siteName = `PRIVATE_TEST_SITE_${Util.generateRandomString()}`;
+        let folderName = `MEESEEKS_${Util.generateRandomString()}`;
         let privateSiteBody: SiteBody = { visibility: 'PRIVATE' , title: siteName};
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -56,7 +59,7 @@ fdescribe('PERMISSION MESSAGE', () => {
 
         privateSite = await this.alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
 
-        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderOneModel.name, privateSite.entry.guid);
+        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, privateSite.entry.guid);
 
         done();
     });
@@ -67,23 +70,14 @@ fdescribe('PERMISSION MESSAGE', () => {
         done();
     });
 
-    it('1. Folder is not allowed when navigating via url', () => {
+    it('1. Error message displayed without permissions', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
         browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
         expect(errorPage.getErrorCode()).toBe('403');
         expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
-    xit('2. Custom error message is showed', () => {
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.enableCustomPermissionMessage();
-        // contentServicesPage.selectSite(privateSite.entry.guid);
-        expect(errorPage.getErrorCode()).toBe('403');
-        expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
-    });
-
-    it('3. Folder is not allowed when navigating via url', () => {
+    xit('2. Custom error message is displayed', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.enableCustomPermissionMessage();
@@ -91,12 +85,11 @@ fdescribe('PERMISSION MESSAGE', () => {
         expect(errorPage.getErrorCode()).toBe('Cris you don\'t have permissions');
     });
 
-    xit('4. Folder is not allowed when navigating via url', () => {
+    it('3. Message is translated', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
-        navBar.changeLanguageTo('ITALIAN');
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.enableCustomPermissionMessage();
+        navBar.openLanguageMenu();
+        navBar.chooseLanguage('Italian');
         browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-        expect(errorPage.getErrorCode()).toBe('Cris you don\'t have permissions');
+        expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
     });
 });
