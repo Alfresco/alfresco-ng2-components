@@ -3,7 +3,7 @@
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
     "loginRoute": "login",
-    "providers": "ECM",
+    "providers": "ALL",
     "contextRootBpm": "activiti-app",
     "authType" : "BASIC",
     "oauth2": {
