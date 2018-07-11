@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable */
+
 import LoginPage = require('./pages/adf/loginPage');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
 import NavigationBarPage = require('./pages/adf/navigationBarPage');
@@ -102,7 +104,9 @@ describe('Modify applications', () => {
 
         processServicesPage.checkAppIsDisplayed(app.title);
 
-        await modelActions.deleteEntireModel(this.alfrescoJsApi, firstApp.id);
+        console.log("Before deleting the app");
+
+        await modelActions.deleteEntireModel(this.alfrescoJsApi, firstApp.id).then( () => console.log("Right after deleting the app"));
 
         Util.refreshBrowser();
 
