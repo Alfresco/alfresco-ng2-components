@@ -21,7 +21,7 @@ var CreateFolderDialog = require('./dialog/createFolderDialog');
 var path = require('path');
 var TestConfig = require('../../test.config');
 
-var ContentServicesPage = function (){
+var ContentServicesPage = function () {
 
     var contentList = new ContentList();
     var createFolderDialog = new CreateFolderDialog();
@@ -40,17 +40,18 @@ var ContentServicesPage = function (){
     var contentServicesURL = TestConfig.adf.url + TestConfig.adf.port + "/files";
     var loadMoreButton = element(by.css("button[data-automation-id='adf-infinite-pagination-button']"));
     var emptyPagination = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
+    var dragAndDrop = element(by.css("adf-upload-drag-area div"));
 
     /**
      * Check Document List is displayed
      * @method checkAcsContainer
      */
-    this.checkAcsContainer = function (){
+    this.checkAcsContainer = function () {
         Util.waitUntilElementIsVisible(uploadBorder);
         return this;
     };
 
-    this.waitForTableBody = function (){
+    this.waitForTableBody = function () {
         Util.waitUntilElementIsVisible(tableBody);
     };
 
@@ -58,14 +59,14 @@ var ContentServicesPage = function (){
      * Go to Document List Page
      * @method goToDocumentList
      * */
-    this.goToDocumentList = function() {
+    this.goToDocumentList = function () {
         Util.waitUntilElementIsVisible(contentServices);
         Util.waitUntilElementIsClickable(contentServices);
         contentServices.click();
         this.checkAcsContainer();
     };
 
-    this.navigateToDocumentList = function() {
+    this.navigateToDocumentList = function () {
         browser.driver.get(contentServicesURL);
         this.checkAcsContainer();
     };
@@ -74,7 +75,7 @@ var ContentServicesPage = function (){
         return contentList.getAllDisplayedRows();
     };
 
-    this.currentFolderName = function() {
+    this.currentFolderName = function () {
         var deferred = protractor.promise.defer();
         Util.waitUntilElementIsVisible(currentFolder);
         currentFolder.getText().then(function (result) {
@@ -88,7 +89,7 @@ var ContentServicesPage = function (){
     };
 
     this.getBreadcrumbTooltip = function (content) {
-        return element(by.css("nav[data-automation-id='breadcrumb'] div[title='" +content +"']")).getAttribute('title');
+        return element(by.css("nav[data-automation-id='breadcrumb'] div[title='" + content + "']")).getAttribute('title');
     };
 
     this.getAllRowsNameColumn = function () {
@@ -130,7 +131,7 @@ var ContentServicesPage = function (){
     this.sortAndCheckListIsOrderedByName = function (sortOrder) {
         this.sortByName(sortOrder);
         var deferred = protractor.promise.defer();
-        contentList.checkListIsOrderedByNameColumn(sortOrder).then(function(result) {
+        contentList.checkListIsOrderedByNameColumn(sortOrder).then(function (result) {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -145,7 +146,7 @@ var ContentServicesPage = function (){
     this.sortAndCheckListIsOrderedByAuthor = function (sortOrder) {
         this.sortByAuthor(sortOrder);
         var deferred = protractor.promise.defer();
-        contentList.checkListIsOrderedByAuthorColumn(sortOrder).then(function(result) {
+        contentList.checkListIsOrderedByAuthorColumn(sortOrder).then(function (result) {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -160,7 +161,7 @@ var ContentServicesPage = function (){
     this.sortAndCheckListIsOrderedByCreated = function (sortOrder) {
         this.sortByCreated(sortOrder);
         var deferred = protractor.promise.defer();
-        contentList.checkListIsOrderedByCreatedColumn(sortOrder).then(function(result) {
+        contentList.checkListIsOrderedByCreatedColumn(sortOrder).then(function (result) {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -195,7 +196,7 @@ var ContentServicesPage = function (){
     };
 
     this.checkContentsAreDisplayed = function (content) {
-        for( i=0; i < content.length; i++) {
+        for (i = 0; i < content.length; i++) {
             this.checkContentIsDisplayed(content[i]);
         }
         return this;
@@ -207,7 +208,7 @@ var ContentServicesPage = function (){
     };
 
     this.checkContentsAreNotDisplayed = function (content) {
-        for( i=0; i < content.length; i++) {
+        for (i = 0; i < content.length; i++) {
             this.checkContentIsNotDisplayed(content[i]);
         }
         return this;
@@ -220,7 +221,7 @@ var ContentServicesPage = function (){
 
     this.navigateToFolderViaBreadcrumbs = function (folder) {
         contentList.tableIsLoaded();
-        var  breadcrumb = element(by.css("a[data-automation-id='breadcrumb_"+ folder +"']"));
+        var breadcrumb = element(by.css("a[data-automation-id='breadcrumb_" + folder + "']"));
         Util.waitUntilElementIsVisible(breadcrumb);
         breadcrumb.click();
         contentList.tableIsLoaded();
@@ -232,7 +233,7 @@ var ContentServicesPage = function (){
         return activeBreadcrumb.getAttribute("title");
     };
 
-    this.getCurrentFolderID = function() {
+    this.getCurrentFolderID = function () {
         Util.waitUntilElementIsVisible(folderID);
         return folderID.getText();
     };
@@ -252,9 +253,10 @@ var ContentServicesPage = function (){
     this.uploadMultipleFile = function (files) {
         Util.waitUntilElementIsVisible(uploadMultipleFileButton);
         var allFiles = path.resolve(path.join(TestConfig.main.rootPath, files[0]));
-        for(var i =1; i< files.length; i++) {
+        for (var i = 1; i < files.length; i++) {
             allFiles = allFiles + "\n" + path.resolve(path.join(TestConfig.main.rootPath, files[i]));
-        };
+        }
+        ;
         uploadMultipleFileButton.sendKeys(allFiles);
         Util.waitUntilElementIsVisible(uploadMultipleFileButton);
         return this;
@@ -282,11 +284,15 @@ var ContentServicesPage = function (){
         return uploadFolderButton.getAttribute("title");
     };
 
-     this.checkUploadButton = function () {
-         Util.waitUntilElementIsVisible(uploadFileButton);
-         Util.waitUntilElementIsClickable(uploadFileButton);
-         return this;
-     };
+    this.checkUploadButton = function () {
+        Util.waitUntilElementIsVisible(uploadFileButton);
+        Util.waitUntilElementIsClickable(uploadFileButton);
+        return this;
+    };
+
+    this.uploadButtonIsEnabled = function () {
+        return uploadFileButton.isEnabled()
+    };
 
     this.deleteContent = function (content) {
         contentList.deleteContent(content);
@@ -294,17 +300,18 @@ var ContentServicesPage = function (){
     };
 
     this.deleteContents = function (content) {
-        for( i=0; i<content.length; i++) {
+        for (i = 0; i < content.length; i++) {
             this.deleteContent(content[i]);
             this.checkContentIsNotDisplayed(content[i]);
-        };
+        }
+        ;
         return this;
     };
 
-    this.getErrorMessage = function() {
+    this.getErrorMessage = function () {
         Util.waitUntilElementIsVisible(errorSnackBar);
         var deferred = protractor.promise.defer();
-        errorSnackBar.getText().then( function (text) {
+        errorSnackBar.getText().then(function (text) {
             deferred.fulfill(text);
         });
         return deferred.promise;
@@ -328,8 +335,12 @@ var ContentServicesPage = function (){
         return this;
     };
 
-    this.checkPaginationIsNotDisplayed = function (){
+    this.checkPaginationIsNotDisplayed = function () {
         Util.waitUntilElementIsVisible(emptyPagination);
+    };
+
+    this.checkDandDIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(dragAndDrop);
     };
 
 };
