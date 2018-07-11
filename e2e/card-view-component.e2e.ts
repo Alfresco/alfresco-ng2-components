@@ -25,7 +25,7 @@
  import CardViewPageComponent = require('./pages/adf/cardViewPageComponent');
  import Util = require('./util/util');
 
- describe('A suite', () => {
+ describe('CardView Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const cardViewPageComponent = new CardViewPageComponent();
