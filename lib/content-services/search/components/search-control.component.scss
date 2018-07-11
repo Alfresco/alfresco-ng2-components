@@ -33,7 +33,7 @@
         }
 
         &-search-result-autocomplete {
-            @include mat-menu-base(2);
+            // @include mat-menu-base(2);
             transform-origin: top left;
             transform:translateX(-40px);
             position: absolute;
