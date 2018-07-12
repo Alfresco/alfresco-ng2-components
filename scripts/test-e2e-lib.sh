@@ -96,10 +96,10 @@ else
    npm install --save-dev jasmine2-protractor-utils -g
     echo "====== Single test run $NAME_TEST ====="
      webdriver-manager update --gecko=false --versions.chrome=2.38
-     protractor protractor.conf.js  --specs ./e2e/$NAME_TEST
+     ./node_modules/protractor/bin/protractor  protractor.conf.js  --specs ./e2e/$NAME_TEST
   else
      webdriver-manager update --gecko=false --versions.chrome=2.38
-     protractor protractor.conf.js
+     ./node_modules/protractor/bin/protractor protractor.conf.js
   fi
 fi
 
