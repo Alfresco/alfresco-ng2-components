@@ -43,7 +43,7 @@ describe('Modify applications', () => {
     let modelActions = new ModelsActions();
     let firstApp, appVersionToBeDeleted;
 
-    beforeAll(async (done) => {
+    beforeAll(async(done) => {
         let users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -75,34 +75,36 @@ describe('Modify applications', () => {
         expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
-    it('[C260213] Should a new version of the app be displayed on dashboard when is replaced by importing another app in APS', async () => {
+    it('[C260213] Should a new version of the app be displayed on dashboard when is replaced by importing another app in APS', async() => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
 
         expect(processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.UNIT);
-        expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
+        expect(processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
         expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
 
-        await apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, firstApp.id);
+        browser.controlFlow().execute(() => {
+            return apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, firstApp.id);
+        });
 
         Util.refreshBrowser();
 
         processServicesPage.checkApsContainer();
 
         expect(processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.FAVORITE);
-        expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
+        expect(processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
         expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
-    it('[C260220] Should the app not be displayed on dashboard after it was deleted in APS', async () => {
+    it('[C260220] Should the app not be displayed on dashboard after it was deleted in APS', async() => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
 
         processServicesPage.checkAppIsDisplayed(app.title);
 
-        browser.controlFlow().execute( () => {
+        browser.controlFlow().execute(() => {
             return modelActions.deleteEntireModel(this.alfrescoJsApi, firstApp.id);
         });
 
@@ -112,29 +114,35 @@ describe('Modify applications', () => {
         processServicesPage.checkAppIsNotDisplayed(app.title);
     });
 
-    it('[C260220] Should the penultimate version of an app be displayed on dashboard when the last version is deleted in APS', async () => {
+    it('[C260220] Should the penultimate version of an app be displayed on dashboard when the last version is deleted in APS', async() => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
 
         processServicesPage.checkAppIsDisplayed(appTobeDeleted.title);
-        expect(await processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
+        expect(processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
 
-        await apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, appVersionToBeDeleted.id);
+        browser.controlFlow().execute(() => {
+            return apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, appVersionToBeDeleted.id);
+        });
 
         Util.refreshBrowser();
 
-        expect(await processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
+        processServicesPage.getBackgroundColor(appTobeDeleted.title);
 
-        await modelActions.deleteVersionModel(this.alfrescoJsApi, appVersionToBeDeleted.id);
-        await modelActions.deleteVersionModel(this.alfrescoJsApi, appVersionToBeDeleted.id);
-        await apps.publishDeployApp(this.alfrescoJsApi, appVersionToBeDeleted.id);
+        expect(processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
+
+        browser.controlFlow().execute(async() => {
+            await modelActions.deleteVersionModel(this.alfrescoJsApi, appVersionToBeDeleted.id);
+            await modelActions.deleteVersionModel(this.alfrescoJsApi, appVersionToBeDeleted.id);
+            await apps.publishDeployApp(this.alfrescoJsApi, appVersionToBeDeleted.id);
+        });
 
         Util.refreshBrowser();
 
         processServicesPage.checkApsContainer();
         processServicesPage.checkAppIsDisplayed(appTobeDeleted.title);
-        expect(await processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
+        expect(processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
     });
 
 });
