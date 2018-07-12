@@ -19,7 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, TemplateRef, QueryList } from '@a
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AlfrescoApiService, DataColumnListComponent, DataColumnComponent } from '@alfresco/adf-core';
 import { DataColumn, DataTableComponent } from '@alfresco/adf-core';
-import { Observable, Subject, of, throwError } from 'rxjs';
+import { Subject, of, throwError } from 'rxjs';
 import { FileNode, FolderNode } from '../../mock';
 import {
     fakeNodeAnswerWithNOEntries,
@@ -1225,7 +1225,7 @@ describe('DocumentList', () => {
     });
 
     xit('should emit error when fetch recent fails on search call', (done) => {
-        spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(Observable.throw('error'));
+        spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(throwError('error'));
 
         let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');

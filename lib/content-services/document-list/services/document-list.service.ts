@@ -22,7 +22,7 @@ import {
 
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity,  NodeEntry, NodePaging } from 'alfresco-js-api';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
@@ -209,6 +209,6 @@ export class DocumentListService {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

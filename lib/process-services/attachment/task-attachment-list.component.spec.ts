@@ -18,7 +18,7 @@
 import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
@@ -109,7 +109,7 @@ describe('TaskAttachmentList', () => {
 
     it('should emit an error when an error occurs loading attachments', () => {
         let emitSpy = spyOn(component.error, 'emit');
-        getTaskRelatedContentSpy.and.returnValue(Observable.throw({}));
+        getTaskRelatedContentSpy.and.returnValue(throwError({}));
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         expect(emitSpy).toHaveBeenCalled();

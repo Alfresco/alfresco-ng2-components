@@ -20,7 +20,7 @@ import { async, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material';
 import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { FolderDialogComponent } from './folder.dialog';
-import { Observable, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 
@@ -144,7 +144,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should not call dialog to close if submit fails', () => {
-            spyOn(nodesApi, 'updateNode').and.returnValue(Observable.throw('error'));
+            spyOn(nodesApi, 'updateNode').and.returnValue(throwError('error'));
             spyOn(component, 'handleError').and.callFake(val => val);
 
             component.submit();
@@ -253,7 +253,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should not call dialog to close if submit fails', () => {
-            spyOn(nodesApi, 'createFolder').and.returnValue(Observable.throw('error'));
+            spyOn(nodesApi, 'createFolder').and.returnValue(throwError('error'));
             spyOn(component, 'handleError').and.callFake(val => val);
 
             component.form.controls['name'].setValue('name');
@@ -276,7 +276,7 @@ describe('FolderDialogComponent', () => {
                     done();
                 });
 
-                spyOn(nodesApi, 'createFolder').and.returnValue(Observable.throw(error));
+                spyOn(nodesApi, 'createFolder').and.returnValue(throwError(error));
 
                 component.form.controls['name'].setValue('name');
                 component.form.controls['description'].setValue('description');
@@ -294,7 +294,7 @@ describe('FolderDialogComponent', () => {
                     done();
                 });
 
-                spyOn(nodesApi, 'createFolder').and.returnValue(Observable.throw(error));
+                spyOn(nodesApi, 'createFolder').and.returnValue(throwError(error));
 
                 component.form.controls['name'].setValue('name');
                 component.form.controls['description'].setValue('description');

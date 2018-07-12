@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
@@ -43,6 +43,6 @@ export class DiagramsService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

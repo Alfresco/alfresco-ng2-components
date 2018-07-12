@@ -19,7 +19,7 @@ import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
-import { Observable, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 
@@ -111,7 +111,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should emit an error when an error occurs loading attachments', () => {
         let emitSpy = spyOn(component.error, 'emit');
-        getProcessRelatedContentSpy.and.returnValue(Observable.throw({}));
+        getProcessRelatedContentSpy.and.returnValue(throwError({}));
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         expect(emitSpy).toHaveBeenCalled();

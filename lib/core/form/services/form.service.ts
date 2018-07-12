@@ -19,7 +19,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { UserProcessModel } from '../../models';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, from, of } from 'rxjs';
+import { Observable, Subject, from, of, throwError } from 'rxjs';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from './../components/widgets/core/content-link.model';
 import { GroupModel } from './../components/widgets/core/group.model';
@@ -538,6 +538,6 @@ export class FormService {
                 error.status ? `${error.status} - ${error.statusText}` : FormService.GENERIC_ERROR_MESSAGE;
         }
         this.logService.error(errMsg);
-        return Observable.throw(errMsg);
+        return throwError(errMsg);
     }
 }

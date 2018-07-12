@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ContentApi, MinimalNodeEntryEntity, Node, NodeEntry } from 'alfresco-js-api';
-import { Observable, Subject, from } from 'rxjs';
+import { Observable, Subject, from, throwError } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -239,6 +239,6 @@ export class ContentService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

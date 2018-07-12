@@ -19,7 +19,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { RatingBody } from 'alfresco-js-api';
-import { Observable, from } from 'rxjs';
+import { from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
@@ -74,6 +74,6 @@ export class RatingService {
 
     private handleError(error: Response): any {
         console.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

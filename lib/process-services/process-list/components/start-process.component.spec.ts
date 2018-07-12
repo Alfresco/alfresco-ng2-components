@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiContentService, AppConfigService, FormService, setupTestBed } from '@alfresco/adf-core';
-import { Observable, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
@@ -421,7 +421,7 @@ describe('StartFormComponent', () => {
         it('should throw error event when process cannot be started', async(() => {
             let errorSpy = spyOn(component.error, 'error');
             let error = { message: 'My error' };
-            startProcessSpy = startProcessSpy.and.returnValue(Observable.throw(error));
+            startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
             component.selectedProcessDef = testProcessDefRepr;
             component.startProcess();
             fixture.whenStable().then(() => {
@@ -430,7 +430,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should indicate an error to the user if process cannot be started', async(() => {
-            startProcessSpy = startProcessSpy.and.returnValue(Observable.throw({}));
+            startProcessSpy = startProcessSpy.and.returnValue(throwError({}));
             component.selectedProcessDef = testProcessDefRepr;
             component.startProcess();
             fixture.whenStable().then(() => {

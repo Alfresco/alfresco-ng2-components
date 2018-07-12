@@ -18,7 +18,7 @@
 import { MatDialog } from '@angular/material';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ContentService } from '@alfresco/adf-core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
 import { DataColumn, SitesService, TranslationService, PermissionsEnum } from '@alfresco/adf-core';
@@ -142,7 +142,7 @@ export class ContentNodeDialogService {
             return select;
         } else {
             let errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
-            return Observable.throw(errors);
+            return throwError(errors);
         }
     }
 

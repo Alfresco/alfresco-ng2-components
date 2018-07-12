@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { FormService } from './../../../../../services/form.service';
 import { FormFieldModel, FormModel } from './../../../core/index';
 import { DynamicTableColumnOption  } from './../../dynamic-table-column-option.model';
@@ -145,7 +145,7 @@ describe('DropdownEditorComponent', () => {
         const error = 'error';
 
         spyOn(formService, 'getRestFieldValuesColumn').and.returnValue(
-            Observable.throw(error)
+            throwError(error)
         );
         spyOn(component, 'handleError').and.stub();
 
@@ -161,7 +161,7 @@ describe('DropdownEditorComponent', () => {
         const error = 'error';
 
         spyOn(formService, 'getRestFieldValuesColumnByProcessId').and.returnValue(
-            Observable.throw(error)
+            throwError(error)
         );
         spyOn(component, 'handleError').and.stub();
 

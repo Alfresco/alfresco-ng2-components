@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, FormValues } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
@@ -234,6 +234,6 @@ export class ProcessService {
     }
 
     private handleProcessError(error: any) {
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

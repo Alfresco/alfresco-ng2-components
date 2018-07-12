@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from, forkJoin } from 'rxjs';
+import { Observable, from, forkJoin, throwError } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { map, catchError } from 'rxjs/operators';
 
@@ -197,6 +197,6 @@ export class ProcessFilterService {
     }
 
     private handleProcessError(error: any) {
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

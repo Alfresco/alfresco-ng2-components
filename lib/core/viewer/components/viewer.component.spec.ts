@@ -23,7 +23,7 @@ import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { CoreModule } from '../../core.module';
 
-import { Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
@@ -142,7 +142,7 @@ describe('ViewerComponent', () => {
             {
                 provide: RenditionsService, useValue: {
                 getRendition: () => {
-                    return Observable.throw('throwed');
+                    return throwError('throwed');
                 }
             }
             },

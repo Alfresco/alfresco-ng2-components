@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { ContentService } from '../../services/content.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -73,7 +73,7 @@ export class EcmUserService {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
 }

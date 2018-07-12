@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { startTaskMock } from '../../mock';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskListService } from '../services/tasklist.service';
@@ -343,7 +343,7 @@ describe('StartTaskComponent', () => {
 
     it('should emit error when there is an error while creating task', () => {
         let errorSpy = spyOn(component.error, 'emit');
-        spyOn(service, 'createNewTask').and.returnValue(Observable.throw({}));
+        spyOn(service, 'createNewTask').and.returnValue(throwError({}));
         let createTaskButton = <HTMLElement> element.querySelector('#button-start');
         component.startTaskmodel.name = 'fake-name';
         fixture.detectChanges();

@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AppDefinitionRepresentation } from 'alfresco-js-api';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { map, catchError } from 'rxjs/operators';
@@ -69,7 +69,7 @@ export class AppsProcessService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
 }

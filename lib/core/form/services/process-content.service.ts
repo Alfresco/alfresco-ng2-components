@@ -19,7 +19,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import { RelatedContentRepresentation } from 'alfresco-js-api';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
@@ -203,7 +203,7 @@ export class ProcessContentService {
                 error.status ? `${error.status} - ${error.statusText}` : ProcessContentService.GENERIC_ERROR_MESSAGE;
         }
         this.logService.error(errMsg);
-        return Observable.throw(errMsg);
+        return throwError(errMsg);
     }
 
 }

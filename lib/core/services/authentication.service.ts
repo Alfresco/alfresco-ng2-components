@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, Subject, from } from 'rxjs';
+import { Observable, Subject, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
@@ -252,6 +252,6 @@ export class AuthenticationService {
      */
     handleError(error: any): Observable<any> {
         this.logService.error('Error when logging in', error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, AppConfigService, UploadService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class ProcessUploadService extends UploadService {
@@ -39,7 +39,7 @@ export class ProcessUploadService extends UploadService {
     }
 
     private handleError(error: any) {
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
 }

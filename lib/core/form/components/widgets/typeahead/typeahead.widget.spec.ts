@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 import { By } from '@angular/platform-browser';
 import { FormService } from '../../../services/form.service';
@@ -99,7 +99,7 @@ describe('TypeaheadWidgetComponent', () => {
             restUrl: 'whateverURL'
         });
         const err = 'Error';
-        spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.throw(err));
+        spyOn(formService, 'getRestFieldValues').and.returnValue(throwError(err));
         spyOn(widget, 'handleError').and.stub();
 
         widget.ngOnInit();
@@ -121,7 +121,7 @@ describe('TypeaheadWidgetComponent', () => {
             restUrl: 'whateverURL'
         });
         const err = 'Error';
-        spyOn(formService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.throw(err));
+        spyOn(formService, 'getRestFieldValuesByProcessId').and.returnValue(throwError(err));
         spyOn(widget, 'handleError').and.stub();
 
         widget.ngOnInit();

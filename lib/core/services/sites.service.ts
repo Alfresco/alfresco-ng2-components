@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SitePaging, SiteEntry } from 'alfresco-js-api';
 import { catchError } from 'rxjs/operators';
@@ -101,6 +101,6 @@ export class SitesService {
 
     private handleError(error: Response): any {
         console.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

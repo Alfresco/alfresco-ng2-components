@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, of, from } from 'rxjs';
+import { Observable, of, from, throwError } from 'rxjs';
 import { AlfrescoApiService, SearchService, NodesApiService, TranslationService } from '@alfresco/adf-core';
 import { QueryBody, MinimalNodeEntryEntity, MinimalNodeEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
 import { switchMap, map } from 'rxjs/operators';
@@ -86,7 +86,7 @@ export class NodePermissionService {
         if (duplicatedPermissions.length > 0) {
             const list = duplicatedPermissions.map((permission) => 'authority -> ' + permission.authorityId + ' / role -> ' + permission.name).join(', ');
             const duplicatePermissionMessage: string = this.translation.instant('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION',  {list});
-            return Observable.throw(duplicatePermissionMessage);
+            return throwError(duplicatePermissionMessage);
         }
         permissionBody.permissions.locallySet = node.permissions.locallySet ? node.permissions.locallySet.concat(permissionList) : permissionList;
         return this.nodeService.updateNode(node.id, permissionBody);

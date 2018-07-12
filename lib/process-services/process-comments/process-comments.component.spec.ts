@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { CommentProcessService, setupTestBed } from '@alfresco/adf-core';
 
@@ -57,7 +57,7 @@ describe('ProcessCommentsComponent', () => {
 
     it('should emit an error when an error occurs loading comments', () => {
         let emitSpy = spyOn(component.error, 'emit');
-        getCommentsSpy.and.returnValue(Observable.throw({}));
+        getCommentsSpy.and.returnValue(throwError({}));
 
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });

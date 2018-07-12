@@ -18,7 +18,7 @@
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { ParameterValueModel } from '../../diagram/models/report/parameterValue.model';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import { BarChart } from '../../diagram/models/chart/barChart.model';
@@ -270,7 +270,7 @@ export class AnalyticsService {
 
     private handleError(error: Response) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
     toJson(res: any) {

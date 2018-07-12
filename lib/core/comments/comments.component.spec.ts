@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { CommentProcessService } from '../services/comment-process.service';
 import { CommentsComponent } from './comments.component';
 import { CommentContentService } from '../services/comment-content.service';
@@ -92,7 +92,7 @@ describe('CommentsComponent', () => {
 
     it('should emit an error when an error occurs loading comments', () => {
         let emitSpy = spyOn(component.error, 'emit');
-        getProcessCommentsSpy.and.returnValue(Observable.throw({}));
+        getProcessCommentsSpy.and.returnValue(throwError({}));
 
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'taskId': change});
@@ -291,7 +291,7 @@ describe('CommentsComponent', () => {
 
         it('should emit an error when an error occurs adding the comment', () => {
             let emitSpy = spyOn(component.error, 'emit');
-            addProcessCommentSpy.and.returnValue(Observable.throw({}));
+            addProcessCommentSpy.and.returnValue(throwError({}));
             component.message = 'Test comment';
             component.add();
             expect(emitSpy).toHaveBeenCalled();
@@ -379,7 +379,7 @@ describe('CommentsComponent', () => {
 
         it('should emit an error when an error occurs adding the comment', () => {
             let emitSpy = spyOn(component.error, 'emit');
-            addContentCommentSpy.and.returnValue(Observable.throw({}));
+            addContentCommentSpy.and.returnValue(throwError({}));
             component.message = 'Test comment';
             component.add();
             expect(emitSpy).toHaveBeenCalled();

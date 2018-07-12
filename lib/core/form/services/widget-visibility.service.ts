@@ -19,7 +19,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment-es6';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
@@ -261,6 +261,6 @@ export class WidgetVisibilityService {
 
     private handleError(err) {
         this.logService.error('Error while performing a call');
-        return Observable.throw('Error while performing a call - Server error');
+        return throwError('Error while performing a call - Server error');
     }
 }

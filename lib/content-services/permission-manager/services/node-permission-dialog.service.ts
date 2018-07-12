@@ -17,7 +17,7 @@
 
 import { MatDialog } from '@angular/material';
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, throwError } from 'rxjs';
 import { AddPermissionDialogComponent } from '../components/add-permission/add-permission-dialog.component';
 import { AddPermissionDialogData } from '../components/add-permission/add-permission-dialog-data.interface';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, Node } from 'alfresco-js-api';
@@ -58,7 +58,7 @@ export class NodePermissionDialogService {
         } else {
             let errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
             errors.message = 'PERMISSION_MANAGER.ERROR.NOT-ALLOWED';
-            return Observable.throw(errors);
+            return throwError(errors);
         }
     }
 

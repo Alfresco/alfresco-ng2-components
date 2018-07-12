@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { CommentModel } from '../models/comment.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LogService } from '../services/log.service';
@@ -76,7 +76,7 @@ export class CommentContentService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
 }

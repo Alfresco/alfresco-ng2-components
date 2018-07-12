@@ -19,7 +19,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import { AlfrescoApi, MinimalNodeEntryEntity, RelatedContentRepresentation } from 'alfresco-js-api';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
 import { map, catchError } from 'rxjs/operators';
@@ -141,6 +141,6 @@ export class ActivitiContentService {
                 error.status ? `${error.status} - ${error.statusText}` : ActivitiContentService.GENERIC_ERROR_MESSAGE;
         }
         this.logService.error(errMsg);
-        return Observable.throw(errMsg);
+        return throwError(errMsg);
     }
 }

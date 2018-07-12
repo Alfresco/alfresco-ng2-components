@@ -381,7 +381,7 @@ describe('UploadButtonComponent', () => {
         it('should emit an error message when getNode fails', (done) => {
             component.rootFolderId = 'nodeId';
 
-            spyOn(contentService, 'getNode').and.returnValue(Observable.throw('error'));
+            spyOn(contentService, 'getNode').and.returnValue(throwError('error'));
 
             component.error.subscribe((value) => {
                 expect(value).toBe('error');

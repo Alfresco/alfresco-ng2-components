@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TagPaging } from 'alfresco-js-api';
 
@@ -94,6 +94,6 @@ export class TagService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

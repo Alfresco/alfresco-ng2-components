@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, from } from 'rxjs';
+import { Observable, forkJoin, from, throwError } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { map, catchError } from 'rxjs/operators';
 
@@ -215,7 +215,7 @@ export class TaskFilterService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
 }
