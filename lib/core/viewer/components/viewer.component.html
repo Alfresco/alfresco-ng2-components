@@ -28,7 +28,7 @@
                         (click)="onNavigateBeforeClick()">
                         <mat-icon>navigate_before</mat-icon>
                     </button>
-                    <img class="adf-viewer__mimeicon" [src]="mimeType | adfMimeTypeIcon">
+                    <img class="adf-viewer__mimeicon" [src]="mimeType | adfMimeTypeIcon " data-automation-id="file-thumbnail">
                     <span class="adf-viewer__display-name" id="adf-viewer-display-name">{{ displayName }}</span>
                     <button
                         *ngIf="allowNavigate && canNavigateNext"
@@ -42,7 +42,7 @@
 
                 <ng-content select="adf-viewer-toolbar-actions"></ng-content>
 
-                <ng-container *ngIf="mnuOpenWith">
+                <ng-container *ngIf="mnuOpenWith" data-automation-id='toolbar-custom-btn'>
                     <button
                         mat-button
                         [matMenuTriggerFor]="mnuOpenWith"
@@ -161,7 +161,7 @@
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'media'">
-                            <adf-media-player [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile" [nameFile]="displayName"></adf-media-player>
+                            <adf-media-player id="adf-mdedia-player" [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile" [nameFile]="displayName"></adf-media-player>
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'text'">
