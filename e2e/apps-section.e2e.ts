@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
-
 import LoginPage = require('./pages/adf/loginPage');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
 import NavigationBarPage = require('./pages/adf/navigationBarPage');
@@ -67,7 +65,7 @@ describe('Modify applications', () => {
         done();
     });
 
-    it('[C260198] Publish app on ADF side', () => {
+    it('[C260198] Should the app be displayed on dashboard when is deployed on APS', () => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
@@ -77,7 +75,7 @@ describe('Modify applications', () => {
         expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
-    it('[C260213] Replacing app on ADF side', async () => {
+    it('[C260213] Should a new version of the app be displayed on dashboard when is replaced by importing another app in APS', async () => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
@@ -97,16 +95,15 @@ describe('Modify applications', () => {
         expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
-    it('[C260220] Permanent delete app on ADF side', async () => {
+    it('[C260220] Should the app not be displayed on dashboard after it was deleted in APS', async () => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
 
-        processServicesPage.checkAppIsDisplayed(app.title).then( () => console.log('App is displayed'));
+        processServicesPage.checkAppIsDisplayed(app.title);
 
-        console.log('Before deleting the app');
         browser.controlFlow().execute( () => {
-            return modelActions.deleteEntireModel(this.alfrescoJsApi, firstApp.id).then( () => console.log('Right after deleting the app'));
+            return modelActions.deleteEntireModel(this.alfrescoJsApi, firstApp.id);
         });
 
         Util.refreshBrowser();
@@ -115,7 +112,7 @@ describe('Modify applications', () => {
         processServicesPage.checkAppIsNotDisplayed(app.title);
     });
 
-    it('[C260220] Delete version of an app on ADF side', async () => {
+    it('[C260220] Should the penultimate version of an app be displayed on dashboard when the last version is deleted in APS', async () => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
