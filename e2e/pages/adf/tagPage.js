@@ -68,6 +68,21 @@ var TagPage = function () {
         return this;
     };
 
+    this.deleteTagFromTagListByNodeId = function () {
+        var deleteChip = element(by.css('button[id=\'tag_delete_0\']'));
+        Util.waitUntilElementIsVisible(deleteChip);
+        deleteChip.click();
+        return this;
+    };
+
+
+    this.deleteTagFromTagList = function () {
+        var deleteChip = element(by.xpath('//*[@id="tag_delete_0"]/mat-icon'));
+        Util.waitUntilElementIsVisible(deleteChip);
+        deleteChip.click();
+        return this;
+    };
+
     this.getNewTagInput = function () {
         Util.waitUntilElementIsVisible(newTagInput);
         return newTagInput.getAttribute('value');
@@ -93,13 +108,18 @@ var TagPage = function () {
         return Util.waitUntilElementIsNotOnPage(tag);
     };
 
-    this.checkTagListIsEmpty = function () {
-        Util.waitUntilElementIsNotOnPage(tagListRow);
+    this.checkTagIsNotDisplayedInTagListByNodeId = function (tagName) {
+        var tag = element(by.cssContainingText("span[id*='tag_name']", tagName));
+        return Util.waitUntilElementIsNotOnPage(tag);
     };
 
     this.checkTagIsDisplayedInTagListByNodeId = function (tagName) {
         var tag = element(by.cssContainingText("span[id*='tag_name']", tagName));
         return Util.waitUntilElementIsVisible(tag);
+    };
+
+    this.checkTagListIsEmpty = function () {
+        Util.waitUntilElementIsNotOnPage(tagListRow);
     };
 
     this.checkTagListByNodeIdIsEmpty = function () {
