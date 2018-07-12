@@ -31,6 +31,7 @@ var NavigationBarPage = function () {
     var logoutButton = element(by.css("a[adf-logout]"));
     var cardViewButton = element(by.cssContainingText(".sidenav-menu-label", "CardView"));
     var languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
+    var appTitle = element(by.css('.adf-app-title'));
 
     /**
      * Click Content Services Button
@@ -123,9 +124,10 @@ var NavigationBarPage = function () {
         buttonLanguage.click();
     };
 
-    this.openLanguageMenu= function() {
+    this.openLanguageMenu = function () {
         Util.waitUntilElementIsVisible(languageMenuButton);
         languageMenuButton.click();
+        Util.waitUntilElementIsVisible(appTitle);
     };
 };
 
