@@ -32,7 +32,7 @@ import { UploadActions } from './actions/ACS/upload.actions';
 
 import ErrorPage = require('./pages/adf/documentListErrorPage');
 
-fdescribe('[C217334] - Document List - Permission Message', () => {
+describe('[C217334] - Document List - Permission Message', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
