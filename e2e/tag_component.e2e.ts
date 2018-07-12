@@ -35,6 +35,7 @@ describe('Tag component', () => {
 
     let acsUser = new AcsUserModel();
     let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    let deleteFile = new FileModel({ 'name': 'deleteFile.id' });
     let sameTag = Util.generateRandomStringToLowerCase();
     let tagList = [Util.generateRandomStringToLowerCase(), Util.generateRandomStringToLowerCase()];
     let uppercaseTag = Util.generateRandomStringToUpperCase();
@@ -57,14 +58,18 @@ describe('Tag component', () => {
 
         let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
 
+        let uploadedDeleteFile = await uploadActions.uploadFile(this.alfrescoJsApi, deleteFile.location, deleteFile.name, '-my-');
+
         Object.assign(pdfFileModel, pdfUploadedFile.entry);
+
+        Object.assign(deleteFile, uploadedDeleteFile.entry);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
 
-    it('Tag node ID', () => {
+    it('[C260374] Tag node ID', () => {
         tagPage.goToTagPage();
         expect(tagPage.getNodeId()).toEqual('');
         expect(tagPage.getNewTagPlaceholder()).toEqual('New Tag');
@@ -75,7 +80,7 @@ describe('Tag component', () => {
         expect(tagPage.getNewTagInput()).toEqual('a');
     });
 
-    it('New tag for specific Node ID', () => {
+    it('[C268151] New tag for specific Node ID', () => {
         tagPage.goToTagPage();
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[0]);
@@ -84,7 +89,7 @@ describe('Tag component', () => {
         tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[0]);
     });
 
-    it('Tag name already exists', () => {
+    it('[C260377] Tag name already exists', () => {
         tagPage.goToTagPage();
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(sameTag);
@@ -93,7 +98,7 @@ describe('Tag component', () => {
         expect(tagPage.getErrorMessage()).toEqual('Tag already exists');
     });
 
-    it('Multiple tags', () => {
+    it('[C260378] Multiple tags', () => {
         tagPage.goToTagPage();
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.checkTagListIsOrderedAscending();
@@ -101,7 +106,7 @@ describe('Tag component', () => {
         tagPage.checkTagListContentServicesIsOrderedAscending();
     });
 
-    it('Tag text field', () => {
+    it('[C91326] Tag text field', () => {
         tagPage.goToTagPage();
 
         tagPage.insertNodeId(pdfFileModel.id);
@@ -124,5 +129,36 @@ describe('Tag component', () => {
 
         tagPage.checkTagIsDisplayedInTagList(nonLatinTag);
         tagPage.checkTagIsDisplayedInTagListByNodeId(nonLatinTag);
+    });
+
+
+    it('[C260375] Delete tag', () => {
+        let deleteTag = Util.generateRandomStringToUpperCase();
+
+        tagPage.goToTagPage();
+
+        tagPage.insertNodeId(deleteFile.id);
+
+        tagPage.addTag(deleteTag);
+
+        tagPage.checkTagIsDisplayedInTagList(deleteTag.toLowerCase());
+        tagPage.checkTagIsDisplayedInTagListByNodeId(deleteTag.toLowerCase());
+
+        tagPage.deleteTagFromTagListByNodeId();
+
+        tagPage.checkTagIsNotDisplayedInTagList(deleteTag.toLowerCase());
+        tagPage.checkTagIsNotDisplayedInTagListByNodeId(deleteTag.toLowerCase());
+
+        tagPage.insertNodeId(deleteFile.id);
+
+        tagPage.addTag(deleteTag);
+
+        tagPage.checkTagIsDisplayedInTagList(deleteTag.toLowerCase());
+        tagPage.checkTagIsDisplayedInTagListByNodeId(deleteTag.toLowerCase());
+
+        tagPage.deleteTagFromTagList();
+
+        tagPage.checkTagIsNotDisplayedInTagList(deleteTag.toLowerCase());
+        tagPage.checkTagIsNotDisplayedInTagListByNodeId(deleteTag.toLowerCase());
     });
 });

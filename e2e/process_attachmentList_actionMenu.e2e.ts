@@ -129,7 +129,7 @@ describe('Attachment list action menu for processes', () => {
         attachmentListPage.checkFileIsRemoved(jpgFile.name);
     });
 
-    it('[C279886Edit] Option menu functionality - Completed Process', () => {
+    it('[C279886] Option menu functionality - Completed Process', () => {
         processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
