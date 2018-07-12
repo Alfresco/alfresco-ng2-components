@@ -42,6 +42,11 @@ var ContentServicesPage = function () {
     var emptyPagination = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
     var dragAndDrop = element(by.css("adf-upload-drag-area div"));
 
+    var nameHeader = element(by.css('div[data-automation-id="auto_id_name"] > span'));
+    var sizeHeader = element(by.css('div[data-automation-id="auto_id_content.sizeInBytes"] > span'));
+    var createdByHeader = element(by.css('div[data-automation-id="auto_id_createdByUser.displayName"] > span'));
+    var createdHeader = element(by.css('div[data-automation-id="auto_id_createdAt"] > span'));
+
     /**
      * Check Document List is displayed
      * @method checkAcsContainer
@@ -304,8 +309,7 @@ var ContentServicesPage = function () {
         for (i = 0; i < content.length; i++) {
             this.deleteContent(content[i]);
             this.checkContentIsNotDisplayed(content[i]);
-        }
-        ;
+        };
         return this;
     };
 
@@ -336,6 +340,13 @@ var ContentServicesPage = function () {
         return this;
     };
 
+    this.enableMediumTimeFormat = function () {
+        var mediumTimeFormat = element(by.css('#enableMediumTimeFormat');
+        Util.waitUntilElementIsVisible(mediumTimeFormat);
+        mediumTimeFormat.click();
+        return this;
+    };
+
     this.clickLoadMoreButton = function () {
         Util.waitUntilElementIsVisible(loadMoreButton);
         Util.waitUntilElementIsClickable(loadMoreButton);
@@ -345,6 +356,29 @@ var ContentServicesPage = function () {
 
     this.checkPaginationIsNotDisplayed = function () {
         Util.waitUntilElementIsVisible(emptyPagination);
+    };
+
+    this.getDocumentListRowNumber = function() {
+        let documentList = element(by.css('adf-upload-drag-area adf-document-list'));
+        Util.waitUntilElementIsVisible(documentList);
+        let actualRows = $$('adf-upload-drag-area adf-document-list .adf-datatable-row').count();
+        return actualRows;
+    };
+
+    this.checkColumnNameHeader = function() {
+        Util.waitUntilElementIsVisible(nameHeader);
+    };
+
+    this.checkColumnSizeHeader = function() {
+        Util.waitUntilElementIsVisible(sizeHeader);
+    };
+
+    this.checkColumnCreatedByHeader = function() {
+        Util.waitUntilElementIsVisible(createdByHeader);
+    };
+
+    this.checkColumnCreatedHeader = function() {
+        Util.waitUntilElementIsVisible(createdHeader);
     };
 
     this.checkDandDIsDisplayed = function () {

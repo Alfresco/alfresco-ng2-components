@@ -32,15 +32,23 @@ import { UploadActions } from './actions/ACS/upload.actions';
 
 import ErrorPage = require('./pages/adf/documentListErrorPage');
 
-describe('[C217334] - Document List - Permission Message', () => {
+fdescribe('[C260110] - Document List - Custom column type', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let navBar = new NavigationBarPage();
     let errorPage = new ErrorPage();
     let acsUser = new AcsUserModel();
-    let uploadedFolder;
-    let privateSite;
+    let uploadedFolder, folderName;
+    let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    let docxFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
+    });
+    let testFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+    });
 
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();
@@ -49,41 +57,40 @@ describe('[C217334] - Document List - Permission Message', () => {
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
         });
-        let siteName = `PRIVATE_TEST_SITE_${Util.generateRandomString()}`;
-        let folderName = `MEESEEKS_${Util.generateRandomString()}`;
-        let privateSiteBody: SiteBody = { visibility: 'PRIVATE' , title: siteName};
+
+        folderName = `MEESEEKS_${Util.generateRandomString()}_LOOK_AT_ME`;
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        privateSite = await this.alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, privateSite.entry.guid);
+        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+        await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+        await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');
+        await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
 
         done();
     });
 
-    it('1. Error message displayed without permissions', () => {
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-        expect(errorPage.getErrorCode()).toBe('403');
-        expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
-    });
-
-    xit('2. Custom error message is displayed', () => {
+    it('1. Checks that only the files and folders of the users are showed', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
-        contentServicesPage.enableCustomPermissionMessage();
-        browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-        expect(errorPage.getErrorCode()).toBe('Cris you don\'t have permissions');
+        contentServicesPage.checkContentIsDisplayed(folderName);
+        contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+        contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+        contentServicesPage.checkContentIsDisplayed(testFileModel.name);
+        expect(contentServicesPage.getDocumentListRowNumber()).toBe(5);
     });
 
-    it('3. Message is translated', () => {
+    it('2. All columns are showed', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
-        navBar.openLanguageMenu();
-        navBar.chooseLanguage('Italian');
-        browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-        expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.checkColumnNameHeader();
+        contentServicesPage.checkColumnSizeHeader();
+        contentServicesPage.checkColumnCreatedByHeader();
+        contentServicesPage.checkColumnCreatedHeader();
     });
+
 });
