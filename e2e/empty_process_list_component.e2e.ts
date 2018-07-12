@@ -28,7 +28,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
 
-xdescribe('Process Filters Test', () => {
+describe('Process Filters Test', () => {
 
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();
@@ -63,7 +63,7 @@ xdescribe('Process Filters Test', () => {
         done();
     });
 
-    it('1. Navigate to Process List on App A and check that there are no processes', () => {
+    it('[C260494] Should find zero processes when the app A has no processes', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
@@ -72,7 +72,7 @@ xdescribe('Process Filters Test', () => {
         expect(processListPage.checkProcessDetailsMessagee()).toEqual('No process details found');
     });
 
-    it('2. Navigate to Process List on App A and create new process', () => {
+    it('[C260494] Should return a list with processes when a process is created in App A', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
@@ -86,7 +86,7 @@ xdescribe('Process Filters Test', () => {
         processDetailsPage.checkProcessDetailsCard();
     });
 
-    it('3. Navigate to Process List on App B and check that there are no processes', () => {
+    it('[C260494] Should find zero processes when the app B has no processes', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
@@ -95,7 +95,7 @@ xdescribe('Process Filters Test', () => {
         expect(processListPage.checkProcessDetailsMessagee()).toEqual('No process details found');
     });
 
-    it('4. Navigate to Process List on App B and create new process', () => {
+    it('[C260494] Should return a list with processes when a process is created in App B', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
