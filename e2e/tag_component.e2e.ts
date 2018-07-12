@@ -124,13 +124,12 @@ describe('Tag component', () => {
         tagPage.checkTagIsDisplayedInTagList(digitsTag);
         tagPage.checkTagIsDisplayedInTagListByNodeId(digitsTag);
 
-        tagPage.insertNodeId(pdfFileModel.id)
+        tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(nonLatinTag);
 
         tagPage.checkTagIsDisplayedInTagList(nonLatinTag);
         tagPage.checkTagIsDisplayedInTagListByNodeId(nonLatinTag);
     });
-
 
     it('[C260375] Delete tag', () => {
         let deleteTag = Util.generateRandomStringToUpperCase();

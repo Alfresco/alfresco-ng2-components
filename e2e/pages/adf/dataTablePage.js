@@ -30,6 +30,7 @@ var DataTablePage = function () {
     var list = element.all(by.css("div[class*=adf-datatable-row]"));
     var addRow = element(by.xpath("//span[contains(text(),'Add row')]/.."));
     var replaceRows = element(by.xpath("//span[contains(text(),'Replace rows')]/.."));
+    var reset = element(by.xpath("//span[contains(text(),'Reset to default')]/.."));
     var replaceColumns = element(by.xpath("//span[contains(text(),'Replace columns')]/.."));
     var loadNode = element(by.xpath("//span[contains(text(),'Load Node')]/.."));
     var createdOnColumn = element(by.css("div[data-automation-id='auto_id_createdOn']"));
@@ -47,8 +48,8 @@ var DataTablePage = function () {
      * @param rowNumber
      */
     this.getRowByRowNumber = function (rowNumber) {
-        Util.waitUntilElementIsVisible(element(by.css("div[data-automation-id='text_" + rowNumber +"']")));
-        return element(by.css("div[data-automation-id='text_" + rowNumber +"']"));
+        Util.waitUntilElementIsVisible(element(by.css("div[data-automation-id='text_" + rowNumber + "']")));
+        return element(by.css("div[data-automation-id='text_" + rowNumber + "']"));
     };
 
     /**
@@ -61,19 +62,26 @@ var DataTablePage = function () {
     };
 
     /**
-    * Click multiselect option
-    * @property clickMultiSelect
-    * */
+     * Click multiselect option
+     * */
     this.clickMultiSelect = function () {
         Util.waitUntilElementIsVisible(multiSelect);
         multiSelect.click();
     };
 
     /**
-    * Click specific checkbox in row
-    * @method clickCheckbox
-    * @param {String} row number
-    */
+     * Click reset option
+     * */
+    this.clickReset = function () {
+        Util.waitUntilElementIsVisible(reset);
+        reset.click();
+    };
+
+    /**
+     * Click specific checkbox in row
+     * @method clickCheckbox
+     * @param {String} row number
+     */
     this.clickCheckbox = function (rowNumber) {
         var checkbox = this.getRowByRowNumber(rowNumber).element(by.xpath("ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label"));
         Util.waitUntilElementIsVisible(checkbox);
@@ -81,29 +89,29 @@ var DataTablePage = function () {
     };
 
     /**
-    * Select a specific row
-    * @method selectRow
-    * @param {String} row number
-    */
+     * Select a specific row
+     * @method selectRow
+     * @param {String} row number
+     */
     this.selectRow = function (rowNumber) {
         return this.getRowByRowNumber(rowNumber).click();
     };
 
     /**
-    * Select a specific row using command key
-    * @method selectRow
-    * @param {String} row number
-    */
+     * Select a specific row using command key
+     * @method selectRow
+     * @param {String} row number
+     */
     this.selectRowWithKeyboard = function (rowNumber) {
         var row = this.getRowByRowNumber(rowNumber);
         browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     };
 
     /**
-    * Select a specific selection mode
-    * @method selectSelectionMode
-    * @param {String} selection mode
-    */
+     * Select a specific selection mode
+     * @method selectSelectionMode
+     * @param {String} selection mode
+     */
     this.selectSelectionMode = function (selectionMode) {
         var selectMode = element(by.cssContainingText("span[class='mat-option-text']", selectionMode));
         selectionButton.click();
@@ -112,29 +120,29 @@ var DataTablePage = function () {
     };
 
     /**
-    * Check if a specific row is selected
-    * @method checkRowIsSelected
-    * @param {String} row number
-    */
+     * Check if a specific row is selected
+     * @method checkRowIsSelected
+     * @param {String} row number
+     */
     this.checkRowIsSelected = function (rowNumber) {
         var isRowSelected = this.getRowByRowNumber(rowNumber).element(by.xpath("ancestor::div[contains(@class, 'is-selected')]"));
         Util.waitUntilElementIsVisible(isRowSelected);
     };
 
     /**
-    * Check if a specific row is not selected
-    * @method checkRowIsNotSelected
-    * @param {String} row number
-    */
+     * Check if a specific row is not selected
+     * @method checkRowIsNotSelected
+     * @param {String} row number
+     */
     this.checkRowIsNotSelected = function (rowNumber) {
         var isRowSelected = this.getRowByRowNumber(rowNumber).element(by.xpath("ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]"));
         Util.waitUntilElementIsNotOnPage(isRowSelected);
     };
 
     /**
-    * Check no row is selected
-    * @method checkNoRowIsSelected
-    */
+     * Check no row is selected
+     * @method checkNoRowIsSelected
+     */
     this.checkNoRowIsSelected = function () {
         Util.waitUntilElementIsNotOnPage(selectedRowNumber);
     };
@@ -145,19 +153,19 @@ var DataTablePage = function () {
     };
 
     /**
-    * Check specfic row is checked
-    * @method checkRowIsChecked
-    * @param {String} row number
-    */
+     * Check specfic row is checked
+     * @method checkRowIsChecked
+     * @param {String} row number
+     */
     this.checkRowIsChecked = function (rowNumber) {
         Util.waitUntilElementIsVisible(this.getRowCheckbox(rowNumber));
     };
 
     /**
-    * Check specfic row is not checked
-    * @method checkRowIsNotChecked
-    * @param {String} row number
-    */
+     * Check specfic row is not checked
+     * @method checkRowIsNotChecked
+     * @param {String} row number
+     */
     this.checkRowIsNotChecked = function (rowNumber) {
         Util.waitUntilElementIsNotOnPage(this.getRowCheckbox(rowNumber));
     };
@@ -188,10 +196,10 @@ var DataTablePage = function () {
     };
 
     /**
-    * replace rows
-    * @method replaceRows
-    * @param {String} id
-    */
+     * replace rows
+     * @method replaceRows
+     * @param {String} id
+     */
     this.replaceRows = function (id) {
         var rowID = this.getRowByRowNumber(id);
         Util.waitUntilElementIsVisible(rowID);
@@ -200,9 +208,9 @@ var DataTablePage = function () {
     };
 
     /**
-    * replace columns
-    * @method replaceColumns
-    */
+     * replace columns
+     * @method replaceColumns
+     */
     this.replaceColumns = function () {
         Util.waitUntilElementIsVisible(replaceColumns);
         replaceColumns.click();
@@ -210,9 +218,9 @@ var DataTablePage = function () {
     };
 
     /**
-    * check the nodeID is the same with the userHome folder's ID
-    * @method replaceColumns
-    */
+     * check the nodeID is the same with the userHome folder's ID
+     * @method replaceColumns
+     */
     this.checkLoadNode = function (userHome) {
         var nodeId = element(by.css("div[data-automation-id*='" + userHome + "']"));
 
@@ -221,7 +229,7 @@ var DataTablePage = function () {
         Util.waitUntilElementIsVisible(nodeId, 10000);
     };
 
-    this.navigateToContent = function(content) {
+    this.navigateToContent = function (content) {
         var row = this.getRowByRowName(content);
         Util.waitUntilElementIsPresent(row);
         row.click();
@@ -242,8 +250,14 @@ var DataTablePage = function () {
         return this.getRowsName(content).element(rowByRowName);
     };
 
-    this.waitForTableBody = function (){
+    this.waitForTableBody = function () {
         Util.waitUntilElementIsVisible(tableBody);
+    };
+
+    this.insertFilter = function (filterText) {
+        var inputFilter = element(by.xpath("//*[@id=\"adf-datatable-filter-input\"]"));
+        inputFilter.clear();
+        return inputFilter.sendKeys(filterText);
     };
 
 };
