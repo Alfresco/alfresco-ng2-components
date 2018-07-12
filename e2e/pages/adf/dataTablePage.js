@@ -77,7 +77,6 @@ var DataTablePage = function () {
         reset.click();
     };
 
-
     /**
      * Click specific checkbox in row
      * @method clickCheckbox
