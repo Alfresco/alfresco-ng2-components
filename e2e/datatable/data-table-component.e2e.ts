@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage.js');
-import DataTablePage = require('./pages/adf/dataTablePage.js');
-import AcsUserModel = require('./models/ACS/acsUserModel.js');
-import TestConfig = require('./test.config.js');
+import LoginPage = require('../pages/adf/loginPage.js');
+import DataTablePage = require('../pages/adf/dataTablePage.js');
+import AcsUserModel = require('../models/ACS/acsUserModel.js');
+import TestConfig = require('../test.config.js');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 
@@ -45,8 +45,8 @@ describe('Datatable component', () => {
         done();
     });
 
-    it('1. DataTable allows extra rows to be added', () => {
-        dataTablePage.getNumberOfRows().then(function (result) {
+    it('[C91314] Should be possible add new row to the table', () => {
+        dataTablePage.getNumberOfRows().then((result) => {
             dataTablePage.addRow();
             expect(dataTablePage.getNumberOfRows()).toEqual(result + 1);
             dataTablePage.addRow();
@@ -54,12 +54,20 @@ describe('Datatable component', () => {
         });
     });
 
-    it('2. Data Table can replace rows', () => {
+    it('[C260039] Should be possible replace rows', () => {
         dataTablePage.replaceRows(1);
     });
 
-    it('3. Data Table can replace columns', () => {
+    it('[C260041] Should be possible replace columns', () => {
         dataTablePage.replaceColumns();
+    });
+
+    it('[C277314] Should filter the table rows when the input filter is passed', () => {
+        expect(dataTablePage.getNumberOfRows()).toEqual(5);
+        dataTablePage.insertFilter('Name');
+        expect(dataTablePage.getNumberOfRows()).toEqual(4);
+        dataTablePage.insertFilter('I');
+        expect(dataTablePage.getNumberOfRows()).toEqual(2);
     });
 
 });
