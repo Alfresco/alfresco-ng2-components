@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage');
-import DataTablePage = require('./pages/adf/dataTablePage');
-import TestConfig = require('./test.config');
+import LoginPage = require('../pages/adf/loginPage');
+import DataTablePage = require('../pages/adf/dataTablePage');
+import TestConfig = require('../test.config');
 
-import AcsUserModel = require('./models/ACS/acsUserModel');
+import AcsUserModel = require('../models/ACS/acsUserModel');
 import AlfrescoApi = require('alfresco-js-api-node');
 
 describe('Datatable component - selection', () => {
@@ -45,15 +45,15 @@ describe('Datatable component - selection', () => {
         done();
     });
 
-    it('1. Data Table Selection Modes', () => {
+    it('[C213258] Should be possible change the selection modes when change the selectionMode property', () => {
         dataTablePage.selectRow('2');
         dataTablePage.checkRowIsSelected('2');
-        dataTablePage.getNumberOfSelectedRows().then(function (result) {
+        dataTablePage.getNumberOfSelectedRows().then((result) => {
             expect(result).toEqual(1);
         });
         dataTablePage.selectRow('3');
         dataTablePage.checkRowIsSelected('3');
-        dataTablePage.getNumberOfSelectedRows().then(function (result) {
+        dataTablePage.getNumberOfSelectedRows().then((result) => {
             expect(result).toEqual(1);
         });
         dataTablePage.selectSelectionMode('Multiple');
@@ -69,7 +69,7 @@ describe('Datatable component - selection', () => {
         dataTablePage.checkNoRowIsSelected();
     });
 
-    it('2. Data Table allows the multiselection of rows', () => {
+    it('[C260059] Should be possible select multiple row when multiselect is true', () => {
         dataTablePage.clickMultiSelect();
         dataTablePage.clickCheckbox('1');
         dataTablePage.checkRowIsChecked('1');
@@ -82,11 +82,20 @@ describe('Datatable component - selection', () => {
         dataTablePage.checkRowIsChecked('1');
     });
 
-    it('3. Can select all in data table', () => {
+    it('[C260058] Should be possible select all the rows when multiselect is true', () => {
         dataTablePage.checkAllRows();
         dataTablePage.checkRowIsChecked('1');
         dataTablePage.checkRowIsChecked('2');
         dataTablePage.checkRowIsChecked('3');
         dataTablePage.checkRowIsChecked('4');
+    });
+
+    it('[C277262] Should be possible reset the selected row when click on the reset button', () => {
+        dataTablePage.checkRowIsChecked('1');
+        dataTablePage.checkRowIsChecked('2');
+        dataTablePage.checkRowIsChecked('3');
+        dataTablePage.checkRowIsChecked('4');
+        dataTablePage.clickReset();
+        dataTablePage.checkNoRowIsSelected();
     });
 });

@@ -21,7 +21,6 @@ import ProcessFiltersPage = require('./pages/adf/process_services/processFilters
 import FileModel = require('./models/ACS/fileModel');
 import { AttachmentListPage } from './pages/adf/process_services/attachmentListPage';
 
-
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
 
