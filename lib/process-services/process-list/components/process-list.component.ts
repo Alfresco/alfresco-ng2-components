@@ -154,7 +154,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         this.loadLayoutPresets();
         this.setupSchema();
 
-        if (this.appId) {
+        if (this.appId != null) {
             this.reload();
         }
     }

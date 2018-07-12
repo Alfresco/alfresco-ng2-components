@@ -59,6 +59,7 @@ import { ReportIssueComponent } from './components/report-issue/report-issue.com
 import { CardViewComponent } from './components/card-view/card-view.component';
 import { HeaderDataComponent } from './components/header-data/header-data.component';
 import { HeaderDataService } from './components/header-data/header-data.service';
+
 @NgModule({
     imports: [
         BrowserModule,
