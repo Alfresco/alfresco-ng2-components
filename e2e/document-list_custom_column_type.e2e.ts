@@ -18,28 +18,25 @@
 import LoginPage = require('./pages/adf/loginPage');
 import ContentServicesPage = require('./pages/adf/contentServicesPage');
 import NavigationBarPage = require('./pages/adf/navigationBarPage');
-
 import AcsUserModel = require('./models/ACS/acsUserModel');
 import FileModel = require('./models/ACS/fileModel');
 import FolderModel = require('./models/ACS/folderModel');
-
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
 import Util = require('./util/util');
-
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
-
 import ErrorPage = require('./pages/adf/documentListErrorPage');
+import moment from 'moment-es6';
 
-fdescribe('[C260110] - Document List - Custom column type', () => {
+describe('[C260110] - Document List - Custom column type', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let navBar = new NavigationBarPage();
     let errorPage = new ErrorPage();
     let acsUser = new AcsUserModel();
-    let uploadedFolder, folderName;
+    let uploadedFolder, folderName, createdDate;
     let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     let docxFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
@@ -69,8 +66,8 @@ fdescribe('[C260110] - Document List - Custom column type', () => {
         uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
         await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
         await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');
-        await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
-
+        let file = await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
+        createdDate = moment(file.createdAt).format('ll');
         done();
     });
 
@@ -93,4 +90,18 @@ fdescribe('[C260110] - Document List - Custom column type', () => {
         contentServicesPage.checkColumnCreatedHeader();
     });
 
+    it('3. The date is showed with timeAgo', () => {
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        let dateValue = contentServicesPage.getColumnValueForRow(testFileModel.name, 'Created');
+        expect(dateValue).toBe('a few seconds ago');
+    });
+
+    it('4. The date is showed with date type', () => {
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.enableMediumTimeFormat();
+        let dateValue = contentServicesPage.getColumnValueForRow(testFileModel.name, 'Created');
+        expect(dateValue).toContain(createdDate);
+    });
 });
