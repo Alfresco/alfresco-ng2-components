@@ -1,0 +1,19 @@
+<% if ((typeof sig.comment !== "undefined") && (typeof sig.comment.shortText !== "undefined")) { -%>
+    summary: <%- sig.comment.shortText %>
+<% } -%>
+    syntax:
+<% if ((typeof sig.parameters !== "undefined") && (sig.parameters.length > 0)) { -%>
+      parameters:
+<% sig.parameters.forEach((param) => { -%>
+        - id: <%= param.name %>
+          type: <%- param.type.name %>
+<% if (param.comment) { -%>
+          description: <%- param.comment.text %> 
+<% } -%>
+<% }) -%>
+<% } -%>
+      return:
+        type: <%= sig.type.name %>
+<% if ((typeof sig.comment !== "undefined") && (typeof sig.comment.returns !== "undefined")) { -%>
+        summary: <%- sig.comment.returns %>
+<% } -%>

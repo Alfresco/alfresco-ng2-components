@@ -1,0 +1,27 @@
+items:
+  - uid: <%= name %>
+    name: <%= name %>
+    fullName: <%= name %>
+<%_ if (typeof children !== "undefined") { -%>
+    children:
+<%_ children.forEach((child) => { -%>
+        - <%= name %>.<%= child.name %>
+<% }) -%>
+<% } -%>
+    langs: typeScript
+    type: <%= kindString.toLowerCase() %>
+<%_ if (typeof children !== "undefined") { -%>
+<%_ children.forEach((child) => { -%>
+<%_ if ((child.kindString === "Constructor") || (child.kindString === "Method")) { -%>
+<%_ child.signatures.forEach((sig) => { -%>
+  - uid: <%= name %>.<%= child.name %>
+    name: <%= child.name %>
+    type: <%= child.kindString.toLowerCase() %>
+<%- include("methodSig", {sig: sig}); -%>
+<% }); %>
+<% } else if (child.kindString === "Property") { -%>
+  - uid: <%= name %>.<%= child.name %>
+<%- include("property", {child: child}); -%>
+<% } -%>
+<% }) -%>
+<% } -%>

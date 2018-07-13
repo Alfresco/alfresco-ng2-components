@@ -1,0 +1,11 @@
+    name: <%= child.name %>
+    type: <%= child.kindString.toLowerCase() %>
+<%_ if (typeof child.comment !== "undefined") { -%>
+    summary: <%- child.comment.shortText %>
+<%_ } -%>
+    syntax:
+      return:
+        type: <%- child.type.name %>
+<%_ if (child.defaultValue) { -%>
+        defaultValue: <%- child.defaultValue %>
+<% } -%>
