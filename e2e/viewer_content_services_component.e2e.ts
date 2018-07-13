@@ -122,7 +122,7 @@ describe('Content Services Viewer', () => {
         });
     });*/
 
-    it('[C260038] Open viewer for a .pdf file', () => {
+    it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', () => {
         contentServicesPage.checkAcsContainer();
 
         viewerPage.viewFile(pdfFile.name);
@@ -143,7 +143,7 @@ describe('Content Services Viewer', () => {
         viewerPage.checkScalePageButtonIsDisplayed();
     });
 
-    it('[C260040] Check pagination for a .pdf file', () => {
+    it('[C260040] Should be able to change pages and zoom when .pdf file is open', () => {
         viewerPage.clickNextPageButton();
         viewerPage.checkFileContent('2', pdfFile.secondPageText);
         viewerPage.checkPageSelectorInputIsDisplayed('2');
@@ -166,7 +166,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('3. C260042 : Check viewer toolbar', () => {
+    it('[C260042] Should be able to download, open full-screen and Info container from the Viewer', () => {
         viewerPage.viewFile(jpgFile.name);
         viewerPage.checkImgContainerIsDisplayed();
 
@@ -181,7 +181,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('4. C260052 : Open viewer for a .jpg file', () => {
+    it('[C260052] Should display image, toolbar and pagination when opening a .jpg file', () => {
         viewerPage.viewFile(jpgFile.name);
         viewerPage.checkImgContainerIsDisplayed();
 
@@ -199,7 +199,7 @@ describe('Content Services Viewer', () => {
         viewerPage.checkScaleImgButtonIsDisplayed();
     });
 
-    it('5. C260483 : Check pagination for a .jpg file', () => {
+    it('[C260483] Should be able to zoom and rotate image when .jpg file is open', () => {
         zoom = viewerPage.getZoom();
         viewerPage.clickZoomInButton();
         viewerPage.checkZoomedIn(zoom);
@@ -220,7 +220,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('6. Open viewer for a .ppt file converted to .pdf', () => {
+    it('[C279922] Open viewer for a .ppt file', () => {
         viewerPage.viewFile(pptFile.name);
         viewerPage.checkFileContent('1', pptFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();
@@ -237,7 +237,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('6. C260053 - Open viewer for a .docx file', () => {
+    it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', () => {
         contentServicesPage.checkAcsContainer();
 
         viewerPage.viewFile(docxFile.name);
@@ -257,7 +257,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('7. C260054 - Open viewer for an unsupported file', () => {
+    it('[C260054] Should display "Preview couldn\'t be loaded" and viewer toolbar when opening an unsupported file', () => {
         viewerPage.viewFile(pagesFile.name);
 
         viewerPage.checkCloseButtonIsDisplayed();
@@ -271,7 +271,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('8. C260056 - Open viewer for a media file', () => {
+    it('[C260056] Should display video and viewer toolbar when opening a media file', () => {
         viewerPage.viewFile(mp4File.name);
 
         viewerPage.checkMediaPlayerContainerIsDisplayed();

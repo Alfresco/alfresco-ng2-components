@@ -19,27 +19,27 @@ var Util = require('../../util/util');
 
 var ViewerToolbarPage = function () {
 
-    var closeButton = element(by.css("button[data-automation-id='toolbar-back']"));
+    var closeButton = element(by.css("button[data-automation-id='adf-toolbar-back']"));
     var fileName = element(by.id('adf-viewer-display-name'));
-    var downloadButton = element(by.css("button[data-automation-id='toolbar-download'] > span > mat-icon"));
-    var infoButton = element(by.css("button[data-automation-id='toolbar-sidebar']"));
+    var downloadButton = element(by.css("button[data-automation-id='adf-toolbar-download'] > span > mat-icon"));
+    var infoButton = element(by.css("button[data-automation-id='adf-toolbar-sidebar']"));
     var previousPageButton = element(by.id('viewer-previous-page-button'));
     var nextPageButton = element(by.id('viewer-next-page-button'));
     var zoomInButton = element(by.id('viewer-zoom-in-button'));
     var zoomOutButton = element(by.id('viewer-zoom-out-button'));
     var scalePageButton = element(by.id('viewer-scale-page-button'));
     var pdfContainer = element(by.id('viewer-pdf-container'));
-    var fullScreenButton = element(by.css("button[data-automation-id='toolbar-fullscreen']"));
+    var fullScreenButton = element(by.css("button[data-automation-id='adf-toolbar-fullscreen']"));
     var rotateLeft = element(by.css("button[id='viewer-rotate-left-button']"));
     var rotateRight = element(by.css("button[id='viewer-rotate-right-button']"));
     var scaleImg = element(by.css("button[id='viewer-reset-button']"));
-    var customBtn = element(by.css("data-automation-id='toolbar-custom-btn'"));
-    var fileThumbnail = element(by.css("img[data-automation-id='file-thumbnail']"));
-    var pageSelectorInput = element(by.css("input[data-automation-id='page-selector']"));
-    var imgContainer = element(by.css("div[data-automation-id='image-container']"));
+    var customBtn = element(by.css("data-automation-id='adf-toolbar-custom-btn'"));
+    var fileThumbnail = element(by.css("img[data-automation-id='adf-file-thumbnail']"));
+    var pageSelectorInput = element(by.css("input[data-automation-id='adf-page-selector']"));
+    var imgContainer = element(by.css("div[data-automation-id='adf-image-container']"));
     var mediaContainer = element(by.css("adf-media-player[class='adf-media-player ng-star-inserted']"));
     var allPages = element.all(by.css("div[class='canvasWrapper'] > canvas")).first();
-    var percentage = element(by.css("div[data-automation-id='page-scale'"));
+    var percentage = element(by.css("div[data-automation-id='adf-page-scale'"));
 
     this.viewFile = function (fileName) {
         var fileView = element(by.xpath("//div[@class='document-list-container']//span[@title='" + fileName +"']"));
