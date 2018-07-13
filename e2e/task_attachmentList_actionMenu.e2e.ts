@@ -35,7 +35,7 @@ import {UsersActions} from './actions/users.actions';
 import {AppsActions} from './actions/APS/apps.actions';
 import FileModel = require('./models/ACS/fileModel');
 
-fdescribe('Attachment list action menu for tasks', () => {
+describe('Attachment list action menu for tasks', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
