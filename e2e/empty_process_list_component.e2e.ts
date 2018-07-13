@@ -70,36 +70,21 @@ describe('Empty Process List Test', () => {
         processServicesPage.goToApp(appA.title).clickProcessButton();
         expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
         expect(processListPage.checkProcessDetailsMessagee()).toEqual('No process details found');
-    });
 
-    it('[C260494] Should return a list with processes when a process is created in App A', () => {
-        loginPage.loginToProcessServicesUsingUserModel(user);
-        navigationBarPage.clickProcessServicesButton();
-        processServicesPage.checkApsContainer();
-        processServicesPage.goToApp(appA.title).clickProcessButton();
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
         processListPage.openProcessDropdown();
         processListPage.selectProcessDropdown(1);
         processListPage.startProcess();
         expect(processFiltersPage.numberOfProcessRows()).toEqual(1);
-        processDetailsPage.checkProcessDetailsCard();
-    });
 
-    it('[C260494] Should find zero processes when the app B has no processes', () => {
-        loginPage.loginToProcessServicesUsingUserModel(user);
+        processDetailsPage.checkProcessDetailsCard();
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(appB.title).clickProcessButton();
         expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
         expect(processListPage.checkProcessDetailsMessagee()).toEqual('No process details found');
-    });
 
-    it('[C260494] Should return a list with processes when a process is created in App B', () => {
-        loginPage.loginToProcessServicesUsingUserModel(user);
-        navigationBarPage.clickProcessServicesButton();
-        processServicesPage.checkApsContainer();
-        processServicesPage.goToApp(appB.title).clickProcessButton();
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
         processListPage.openProcessDropdown();

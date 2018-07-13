@@ -18,7 +18,7 @@ var args_options = [];
 if (BROWSER_RUN === 'true') {
     args_options = ['--incognito', '--window-size=1366,768'];
 } else {
-    args_options = ['--incognito', '--headless', '--window-size=1366,768'];
+    args_options = ['--incognito', '--window-size=1366,768'];
 }
 
 var downloadFolder = path.join(__dirname, 'e2e/downloads');
