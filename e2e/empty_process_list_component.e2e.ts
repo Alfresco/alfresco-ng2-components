@@ -63,7 +63,7 @@ describe('Empty Process List Test', () => {
         done();
     });
 
-    it('[C260494] Should find zero processes when the app A has no processes', () => {
+    it('[C260494] Should add process to list when a process is created', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
