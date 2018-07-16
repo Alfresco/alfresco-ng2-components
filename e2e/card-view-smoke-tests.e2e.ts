@@ -63,7 +63,7 @@ describe('Metadata component', () => {
 
         Object.assign(pdfFileModel, pdfUploadedFile.entry);
 
-        pdfFileModel.update( pdfUploadedFile.entry);
+        pdfFileModel.update(pdfUploadedFile.entry);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 

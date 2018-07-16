@@ -19,23 +19,29 @@ import LoginPage = require('../pages/adf/loginPage');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import UserInfoDialog = require('../pages/adf/dialog/userInfoDialog');
 
 import TestConfig = require('../test.config');
 import AcsUserModel = require('../models/ACS/acsUserModel');
 
 import AdfSettingsPage = require('../pages/adf/settingsPage');
+import AlfrescoApi = require('alfresco-js-api-node');
 
 describe('Login component', () => {
 
     let adfSettingsPage = new AdfSettingsPage();
     let processServicesPage = new ProcessServicesPage();
     let navigationBarPage = new NavigationBarPage();
+    let userInfoDialog = new UserInfoDialog();
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
+
+    let userA = new AcsUserModel();
+    let userB = new AcsUserModel();
 
     let errorMessages = {
         username: 'Your username needs to be at least 2 characters.',
@@ -44,7 +50,18 @@ describe('Login component', () => {
         required: 'Required'
     };
 
-    beforeAll( (done) => {
+    beforeAll(async (done) => {
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ALL',
+            hostEcm: TestConfig.adf.url,
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(userA);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(userB);
+
         adfSettingsPage.setProviderEcmBpm();
         done();
     });
@@ -152,5 +169,57 @@ describe('Login component', () => {
         contentServicesPage.checkAcsContainer();
         navigationBarPage.clickLoginButton();
         loginPage.waitForElements();
+    });
+
+    it('[C277754] Should the user be redirect to the login page when the Content Service session expire', () => {
+        adfSettingsPage.setProviderEcmBpm();
+        loginPage.login(adminUserModel.id, adminUserModel.password);
+        browser.executeScript('window.localStorage.removeItem("ticket-ECM");').then(() => {
+            browser.get(TestConfig.adf.url + '/files');
+            loginPage.waitForElements();
+        });
+
+    });
+
+    it('[C279931] Should the user be redirect to the login page when the Process Service session expire', () => {
+        adfSettingsPage.setProviderEcmBpm();
+        loginPage.login(adminUserModel.id, adminUserModel.password);
+        browser.executeScript('window.localStorage.removeItem("ticket-BPM");').then(() => {
+            browser.get(TestConfig.adf.url + '/activiti');
+            loginPage.waitForElements();
+        });
+    });
+
+    it('[C279930] Should a user still be logged-in when open a new tab', () => {
+        adfSettingsPage.setProviderEcmBpm();
+        loginPage.login(adminUserModel.id, adminUserModel.password);
+
+        browser.executeScript('return window.open(arguments[0], "_blank")', '');
+
+        browser.getAllWindowHandles().then((handles) => {
+            var secondWindow = handles[1];
+            browser.ignoreSynchronization = true;
+            browser.switchTo().window(secondWindow).then(() => {
+                browser.get(TestConfig.adf.url + '/activiti');
+                processServicesPage.checkApsContainer();
+                browser.get(TestConfig.adf.url + '/files');
+                contentServicesPage.checkAcsContainer();
+            });
+        });
+    });
+
+    it('[C276746] Login with two different users', () => {
+        adfSettingsPage.setProviderEcmBpm();
+        loginPage.loginToContentServicesUsingUserModel(userA);
+        navigationBarPage.clickUserProfile();
+        expect(userInfoDialog.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
+        expect(userInfoDialog.getContentEmail()).toEqual(userA.email);
+
+
+        adfSettingsPage.setProviderEcmBpm();
+        loginPage.loginToContentServicesUsingUserModel(userB);
+        navigationBarPage.clickUserProfile();
+        expect(userInfoDialog.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
+        expect(userInfoDialog.getContentEmail()).toEqual(userB.email);
     });
 });
