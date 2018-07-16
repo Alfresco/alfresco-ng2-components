@@ -2,8 +2,8 @@ items:
   - uid: <%= name %>
     name: <%= name %>
     fullName: <%= name %>
-<%_ if (typeof children !== "undefined") { -%>
     children:
+<%_ if (typeof children !== "undefined") { -%>
 <%_ children.forEach((child) => { -%>
         - <%= name %>.<%= child.name %>
 <% }) -%>
@@ -21,7 +21,14 @@ items:
 <% }); %>
 <% } else if (child.kindString === "Property") { -%>
   - uid: <%= name %>.<%= child.name %>
+    name: <%= child.name %>
+    type: <%= child.kindString.toLowerCase() %>
 <%- include("property", {child: child}); -%>
+<% } else if ((child.kindString === "Accessor") && (typeof child.getSignature !== "undefined")) { -%>
+  - uid: <%= name %>.<%= child.name %>
+    name: <%= child.name %>
+    type: <%= child.kindString.toLowerCase() %>
+<%- include("property", {child: child.getSignature}); -%>
 <% } -%>
 <% }) -%>
 <% } -%>

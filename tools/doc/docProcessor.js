@@ -1,7 +1,9 @@
 var fs = require("fs");
 var path = require("path");
+
 var program = require("commander");
 var lodash = require("lodash");
+var jsyaml = require("js-yaml");
 
 var remark = require("remark");
 var parse = require("remark-parse");
@@ -20,6 +22,7 @@ var aggData = {};
 var toolsFolderName = "tools";
 var configFileName = "doctool.config.json";
 var defaultFolder = path.resolve("docs");
+var yamlFolder = path.resolve("docs", "sourceinfo");
 
 var libFolders = ["core", "content-services", "process-services", "insights"];
 
@@ -27,27 +30,6 @@ var excludePatterns = [
     "**/*.spec.ts"
 ];
 
-/*
-function initPhase(aggData) {
-    toolList.forEach(toolName => {
-        toolModules[toolName].initPhase(aggData);
-    });
-}
-
-
-function readPhase(mdCache, aggData) {
-    toolList.forEach(toolName => {
-        toolModules[toolName].readPhase(mdCache, aggData);
-    });
-}
-
-
-function aggPhase(aggData) {
-    toolList.forEach(toolName => {
-        toolModules[toolName].aggPhase(aggData);
-    });
-}
-*/
 
 function updatePhase(mdCache, aggData) {
     var errorMessages;
@@ -158,6 +140,19 @@ function initMdCache(filenames) {
 }
 
 
+function getSourceInfo(infoFolder) {
+    var sourceInfo = {};
+
+    var yamlFiles = fs.readdirSync(infoFolder);
+
+    yamlFiles.forEach(file => {
+        var yamlText = fs.readFileSync(path.resolve(infoFolder, file), "utf8");
+        var yaml = jsyaml.safeLoad(yamlText);
+        sou
+    });
+}
+
+
 function initSourceInfo(aggData, mdCache) {
     var app = new tdoc.Application({
         exclude: excludePatterns,
@@ -172,17 +167,30 @@ function initSourceInfo(aggData, mdCache) {
     
     aggData.projData = app.convert(sources);
 
+
     aggData.classInfo = {};
 
     var mdFiles = Object.keys(mdCache);
 
     mdFiles.forEach(mdFile => {
+        /*
         var className = ngHelpers.ngNameToClassName(path.basename(mdFile, ".md"), aggData.config.typeNameExceptions);
         var classRef = aggData.projData.findReflectionByName(className);
+*/
 
+        var className = ngHelpers.ngNameToClassName(path.basename(mdFile, ".md"), aggData.config.typeNameExceptions);
+        var yamlText = fs.readFileSync(path.resolve(infoFolder, className + ".yml"), "utf8");
+        var yaml = jsyaml.safeLoad(yamlText);
+
+        if (yaml) {
+            aggData.classInfo[className] = new si.ComponentInfo(yaml);
+        }
+/*
         if (classRef) {
            aggData.classInfo[className] = new si.ComponentInfo(classRef); 
         }
+        */
+
     });
 }
 

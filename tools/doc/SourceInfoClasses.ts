@@ -4,6 +4,8 @@ import {
     ParameterReflection,
     ReflectionKind,
  } from "typedoc";
+import { find } from "shelljs";
+import { isUndefined } from "util";
 
 
 let undocMethodNames = {
@@ -23,6 +25,7 @@ export class PropInfo {
 
     errorMessages: string[];
 
+    /*
     constructor(rawProp: DeclarationReflection) {
         this.errorMessages = [];
         this.name = rawProp.name;
@@ -67,6 +70,59 @@ export class PropInfo {
             });
         }
     }
+    */
+
+    constructor(sourceData) {
+        this.errorMessages = [];
+
+        this.name = sourceData.name;
+        this.docText = sourceData.summary;
+        this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
+        this.defaultValue = sourceData.syntax["return"].defaultValue;
+        this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
+        this.type = sourceData.syntax["return"].type;
+        this.type = this.type.replace(/\|/, "\\|");
+        
+        if (sourceData.tags) {
+            let depTag = sourceData.tags.find(tag => tag.name === "deprecated");
+            
+            if (depTag) {
+                this.isDeprecated = true;
+                    this.docText = "(**Deprecated:** " + depTag.text.replace(/[\n\r]+/g, " ").trim() + ") " + this.docText;
+            }
+        }
+
+        this.isInput = false;
+        this.isOutput = false;
+
+        if (sourceData.decorators) {
+            sourceData.decorators.forEach(dec => {
+                //console.log(dec);
+                if (dec.name === "Input") {
+                    this.isInput = true;
+                    
+                    if (dec.arguments) {
+                        let bindingName = dec.arguments["bindingPropertyName"];
+                        
+                        if (bindingName && (bindingName !== ""))
+                            this.name = bindingName.replace(/['"]/g, "");
+                    }
+                    
+                    if (!this.docText && !this.isDeprecated) {
+                        this.errorMessages.push(`Warning: Input "${sourceData.name}" has no doc text.`);
+                    }
+                }
+
+                if (dec.name === "Output") {
+                    this.isOutput = true;
+
+                    if (!this.docText && !this.isDeprecated) {
+                        this.errorMessages.push(`Warning: Output "${sourceData.name}" has no doc text.`);
+                    }
+                }
+            });
+        }
+    }
 
     get errors() {
         return this.errorMessages;
@@ -82,6 +138,7 @@ export class ParamInfo {
     combined: string;
     isOptional: boolean;
 
+    /*
     constructor(rawParam: ParameterReflection) {
         this.name = rawParam.name;
         this.type = rawParam.type.toString().replace(/\s/g, "");
@@ -89,6 +146,34 @@ export class ParamInfo {
         this.docText = rawParam.comment ? rawParam.comment.text : "";
         this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
         this.isOptional = rawParam.flags.isOptional;
+
+        this.combined = this.name;
+
+        if (this.isOptional)
+            this.combined += "?";
+
+        this.combined += `: \`${this.type}\``;
+        
+        if (this.defaultValue !== "")
+            this.combined += ` = \`${this.defaultValue}\``;
+    }
+    */
+
+    constructor(sourceData) {
+        this.name = sourceData.id;
+        this.type = sourceData.type.toString().replace(/\s/g, "");
+        this.defaultValue = sourceData.defaultValue;
+        this.docText = sourceData.description.replace(/[\n\r]+/g, " ").trim();
+
+        this.isOptional = false;
+
+        if (sourceData.flags) {
+            let flag = sourceData.flags.find(flag => flag.name === "isOptional");
+
+            if (flag) {
+                this.isOptional = true;
+            }
+        }
 
         this.combined = this.name;
 
@@ -116,6 +201,7 @@ export class MethodSigInfo {
     errorMessages: string[];
 
 
+    /*
     constructor(rawSig: SignatureReflection) {
         this.errorMessages = [];
         this.name = rawSig.name;
@@ -161,6 +247,59 @@ export class MethodSigInfo {
 
         this.signature = "(" + paramStrings.join(", ") + ")";
     }
+*/
+
+    constructor(sourceData) {
+        this.errorMessages = [];
+
+        this.name = sourceData.name;
+
+        this.docText = sourceData.summary.replace(/[\n\r]+/g, " ").trim();
+
+        if (!this.docText) {
+            this.errorMessages.push(`Warning: method "${sourceData.name}" has no doc text.`);
+        }
+
+        this.returnType = sourceData["return"].type.replace(/\s/g, "");
+        this.returnsSomething = this.returnType && (this.returnType !== "void");
+        this.returnDocText = sourceData["return"].summary;
+
+        if (this.returnDocText.toLowerCase() === "nothing") {
+            this.returnsSomething = false;
+        }
+
+        if (this.returnsSomething && !this.returnDocText) {
+            this.errorMessages.push(`Warning: Return value of method "${sourceData.name}" has no doc text.`);
+        }
+
+        this.isDeprecated = false;
+
+        if (sourceData.tags) {
+            let depTag = sourceData.tags.find(tag => tag.name === "deprecated");
+            
+            if (depTag) {
+                this.isDeprecated = true;
+                    this.docText = "(**Deprecated:** " + depTag.text.replace(/[\n\r]+/g, " ").trim() + ") " + this.docText;
+            }
+        }
+
+        this.params = [];
+        let paramStrings = [];
+
+        if (sourceData.parameters) {
+            sourceData.parameters.forEach(rawParam => {
+                if (!rawParam.description) {
+                    this.errorMessages.push(`Warning: parameter "${rawParam.name}" of method "${sourceData.name}" has no doc text.`);
+                }
+
+                let param = new ParamInfo(rawParam);
+                this.params.push(param);
+                paramStrings.push(param.combined);
+            });
+        }
+
+        this.signature = "(" + paramStrings.join(", ") + ")";
+    }
 
     get errors() {
         return this.errorMessages;
@@ -175,6 +314,7 @@ export class ComponentInfo {
     hasOutputs: boolean;
     hasMethods: boolean;
 
+    /*
     constructor(classRef: DeclarationReflection) {
         let props = classRef.getChildrenByKind(ReflectionKind.Property);
         let accessors = classRef.getChildrenByKind(ReflectionKind.Accessor);
@@ -208,6 +348,39 @@ export class ComponentInfo {
 
         this.hasMethods = methods.length > 0;
     }
+*/
+
+    constructor(sourceData) {
+        this.hasInputs = false;
+        this.hasOutputs = false;
+        this.hasMethods = false;
+
+        sourceData.items.forEach(item => {
+            switch(item.type) {
+                case "property":
+                    var prop = new PropInfo(item);
+                    this.properties.push(prop);
+
+                    if (prop.isInput) {
+                        this.hasInputs = true;
+                    }
+
+                    if (prop.isOutput) {
+                        this.hasOutputs = true;
+                    }
+                    break;
+                
+                case "method":
+                    this.methods.push(new MethodSigInfo(item));
+                    this.hasMethods = true;
+                    break;
+
+                default:
+                    break;
+            }
+        });
+    }
+
 
     get errors() {
         let combinedErrors = [];

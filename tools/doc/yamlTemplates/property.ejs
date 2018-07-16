@@ -1,11 +1,23 @@
-    name: <%= child.name %>
-    type: <%= child.kindString.toLowerCase() %>
-<%_ if (typeof child.comment !== "undefined") { -%>
-    summary: <%- child.comment.shortText %>
-<%_ } -%>
+    summary: <%- (typeof child.comment !== "undefined") ? child.comment.shortText : "" %>
+    tags:
+<%_ if ((typeof child.comment !== "undefined") && (typeof child.comment.tags !== "undefined")) { -%>
+<% child.comment.tags.forEach(tag => { -%>
+      - name: <%= tag.tag %>
+        text: <%- tag.text %>
+<%_ }) -%>
+<% } -%>
+    decorators:
+<%_ if (typeof child.decorators !== "undefined") { -%>
+<% child.decorators.forEach(dec => { -%>
+      - name: <%= dec.name %>
+        arguments:
+<% Object.keys(dec.arguments).forEach(argName => { -%>
+          - id: <%= argName %>
+            value: <%- dec.arguments[argName] %>
+<% }) %>
+<%_ }) -%>
+<% } -%>
     syntax:
       return:
-        type: <%- child.type.name %>
-<%_ if (child.defaultValue) { -%>
+        type: <%- include("type", {type: child.type}).trim() %>
         defaultValue: <%- child.defaultValue %>
-<% } -%>
