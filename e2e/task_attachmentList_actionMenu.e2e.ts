@@ -31,8 +31,8 @@ import path = require('path');
 import fs = require('fs');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import {UsersActions} from './actions/users.actions';
-import {AppsActions} from './actions/APS/apps.actions';
+import { UsersActions } from './actions/users.actions';
+import { AppsActions } from './actions/APS/apps.actions';
 import FileModel = require('./models/ACS/fileModel');
 
 describe('Attachment list action menu for tasks', () => {

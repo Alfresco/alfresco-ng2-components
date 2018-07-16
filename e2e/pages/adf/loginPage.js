@@ -39,6 +39,7 @@ var LoginPage = function () {
     var needHelp = element(by.css("div[id='adf-login-action-left']"));
     var register = element(by.css("div[id='adf-login-action-right']"));
     var footerSwitch = element(by.id("switch4"));
+    var rememberMeSwitch = element(by.id("adf-toogle-show-rememberme"));
     var userPicture = element(by.id("userinfo_container"));
     var cardBackground = element(by.css("mat-card[class*='adf-login-card']"));
     var adfSettingsPage = new AdfSettingsPage();
@@ -276,6 +277,14 @@ var LoginPage = function () {
     };
 
     /**
+     * clicks the remember me checkbox
+     */
+    this.clickRememberMe = function () {
+        Util.waitUntilElementIsVisible(rememberMe);
+        rememberMe.click();
+    };
+
+    /**
      * clicks icon to show password
      * @method showPassword
      */
@@ -417,6 +426,33 @@ var LoginPage = function () {
             if (check === 'mat-slide-toggle mat-primary mat-checked') {
                 footerSwitch.click();
                 expect(footerSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * disables RememberMe
+     */
+    this.disableRememberMe = function () {
+        Util.waitUntilElementIsVisible(rememberMeSwitch);
+        rememberMeSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                rememberMeSwitch.click();
+                expect(rememberMeSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables footer switch
+     * @method enableFooter
+     */
+    this.enableRememberMe = function () {
+        Util.waitUntilElementIsVisible(rememberMeSwitch);
+        rememberMeSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                rememberMeSwitch.click();
+                expect(rememberMeSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
             }
         })
     };

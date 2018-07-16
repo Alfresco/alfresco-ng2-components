@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
 
     disableCsrf = false;
     showFooter = true;
+    showRememberMe = true;
     customMinLength = 2;
 
     constructor(private router: Router,
@@ -64,6 +65,10 @@ export class LoginComponent implements OnInit {
 
     toggleFooter() {
         this.showFooter = !this.showFooter;
+    }
+
+    toggleRemamberme() {
+        this.showRememberMe = !this.showRememberMe;
     }
 
     checkForm(event: any) {

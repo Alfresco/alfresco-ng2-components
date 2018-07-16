@@ -73,7 +73,7 @@ describe('Process Filters Test', () => {
         done();
     });
 
-    it('Navigate to Running filter', () => {
+    xit('Navigate to Running filter', () => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();

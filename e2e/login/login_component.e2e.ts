@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage');
-import AdfContentServicesPage = require('./pages/adf/contentServicesPage');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
-import NavigationBarPage = require('./pages/adf/navigationBarPage');
+import LoginPage = require('../pages/adf/loginPage');
+import ContentServicesPage = require('../pages/adf/contentServicesPage');
+import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import NavigationBarPage = require('../pages/adf/navigationBarPage');
 
-import TestConfig = require('./test.config');
-import AcsUserModel = require('./models/ACS/acsUserModel');
+import TestConfig = require('../test.config');
+import AcsUserModel = require('../models/ACS/acsUserModel');
 
-import AdfSettingsPage = require('./pages/adf/settingsPage');
+import AdfSettingsPage = require('../pages/adf/settingsPage');
 
 describe('Login component', () => {
 
     let adfSettingsPage = new AdfSettingsPage();
     let processServicesPage = new ProcessServicesPage();
     let navigationBarPage = new NavigationBarPage();
-    let adfContentServicesPage = new AdfContentServicesPage();
+    let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
@@ -49,7 +49,7 @@ describe('Login component', () => {
         done();
     });
 
-    it('1. Username Required', () => {
+    it('[C260036] Username Required', () => {
         loginPage.checkUsernameInactive();
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterUsername('A');
@@ -60,7 +60,7 @@ describe('Login component', () => {
         loginPage.checkSignInButtonIsDisabled();
     });
 
-    it('2. Enter Password to sign in', () => {
+    it('[C260043] Enter Password to sign in', () => {
         loginPage.checkPasswordInactive();
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterPassword('A');
@@ -71,7 +71,7 @@ describe('Login component', () => {
         loginPage.checkSignInButtonIsDisabled();
     });
 
-    it('3. Username must be at least 2 characters long', () => {
+    it('[C260044] Username must be at least 2 characters long', () => {
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterUsername('A');
         loginPage.checkUsernameTooltip(errorMessages.username);
@@ -81,7 +81,7 @@ describe('Login component', () => {
         loginPage.clearUsername();
     });
 
-    it('4. Login button is enabled', () => {
+    it('[C260045] Login button is enabled', () => {
         loginPage.enterUsername(adminUserModel.id);
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterPassword('a');
@@ -90,7 +90,7 @@ describe('Login component', () => {
         loginPage.clearPassword();
     });
 
-    it('5. You have entered an invalid username or password', () => {
+    it('[C260046] You have entered an invalid username or password', () => {
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterUsername('test');
         loginPage.enterPassword('test');
@@ -101,7 +101,7 @@ describe('Login component', () => {
         loginPage.clearPassword();
     });
 
-    it('6. Password field is crypted', () => {
+    it('[C260047] Password field is crypted', () => {
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterPassword('test');
         loginPage.showPassword();
@@ -111,7 +111,7 @@ describe('Login component', () => {
         loginPage.clearPassword();
     });
 
-    it('7. Remember  Need Help? and Register are displayed and hidden', () => {
+    it('[C260048] Remember  Need Help? and Register are displayed and hidden', () => {
         loginPage.enableFooter();
         loginPage.checkRememberIsDisplayed();
         loginPage.checkNeedHelpIsDisplayed();
@@ -122,7 +122,7 @@ describe('Login component', () => {
         loginPage.checkRegisterIsNotDisplayed();
     });
 
-    it('8. Login to Process Services with Content Services disabled', () => {
+    it('[C260049] Login to Process Services with Content Services disabled', () => {
         loginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
@@ -132,24 +132,24 @@ describe('Login component', () => {
         loginPage.waitForElements();
     });
 
-    it('9. Login to Content Services with Process Services disabled', () => {
+    it('[C260050] Login to Content Services with Process Services disabled', () => {
         loginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderEcm();
         loginPage.login(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
         navigationBarPage.clickContentServicesButton();
-        adfContentServicesPage.checkAcsContainer();
+        contentServicesPage.checkAcsContainer();
         navigationBarPage.clickProcessServicesButton();
         loginPage.waitForElements();
     });
 
-    it('10. Able to login to both Content Services and Process Services', () => {
+    it('[C260051] Able to login to both Content Services and Process Services', () => {
         loginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         navigationBarPage.clickContentServicesButton();
-        adfContentServicesPage.checkAcsContainer();
+        contentServicesPage.checkAcsContainer();
         navigationBarPage.clickLoginButton();
         loginPage.waitForElements();
     });

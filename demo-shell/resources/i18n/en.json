@@ -189,7 +189,8 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Login footer"
+    "LOGIN_FOOTER": "Login footer",
+    "SHOW_REMEMBERME": "Show Remember me"
   },
   "SEARCH": {
     "RESULTS": "Search results",

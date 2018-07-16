@@ -19,6 +19,15 @@
             {{ 'LOGIN.LOGIN_FOOTER'| translate }}
         </mat-slide-toggle>
     </p>
+    <p class="toggle">
+        <mat-slide-toggle
+            id="adf-toogle-show-rememberme"
+            [color]="'primary'"
+            (change)="toggleRemamberme()"
+            [checked]="showFooter">
+            {{ 'LOGIN.SHOW_REMEMBERME'| translate }}
+        </mat-slide-toggle>
+    </p>
 </div>
 
 <!--SETTING BUTTON-->
@@ -32,7 +41,7 @@
     [fieldsValidation]="customValidation"
     [disableCsrf]="disableCsrf"
     [showLoginActions]="showFooter"
-    [showRememberMe]="showFooter"
+    [showRememberMe]="showFooter && showRememberMe"
     (executeSubmit)="checkForm($event)"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
     (success)="onLogin($event)"
@@ -56,7 +65,9 @@
                 {{ 'LOGIN.LOGIN_FOOTER'| translate }}
             </mat-slide-toggle>
         </p>
-        <button type="button" mat-raised-button color="accent" class="mobile-setting-button" routerLink="/settings" data-automation-id="settings">{{ 'APP_LAYOUT.SETTINGS'| translate }}</button>
+        <button type="button" mat-raised-button color="accent" class="mobile-setting-button" routerLink="/settings"
+                data-automation-id="settings">{{ 'APP_LAYOUT.SETTINGS'| translate }}
+        </button>
 
     </div>
 </adf-login>
