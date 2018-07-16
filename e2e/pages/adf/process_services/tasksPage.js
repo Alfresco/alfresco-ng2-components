@@ -32,6 +32,7 @@ var TasksPage = function () {
     var checklistContainer = by.css("div[class*='checklist-menu']");
     var taskTitle = "h2[class='activiti-task-details__header'] span";
     var rows = by.css("div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[class*='adf-data-table-cell']");
+    var completeButtonNoForm = element(by.id("adf-no-form-complete-button"));
 
 
     this.createNewTask = function () {
@@ -104,8 +105,13 @@ var TasksPage = function () {
         return this;
     };
 
-    this.getAllDisplayedRows= function(){
+    this.getAllDisplayedRows = function(){
         return element.all(rows).count();
+    };
+
+    this.completeTaskNoForm = function () {
+        Util.waitUntilElementIsClickable(completeButtonNoForm);
+        completeButtonNoForm.click();
     };
 
 };
