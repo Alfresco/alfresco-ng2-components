@@ -28,20 +28,7 @@ import AdfSettingsPage = require('../pages/adf/settingsPage');
 import AlfrescoApi = require('alfresco-js-api-node');
 
 import Util = require('../util/util');
-import { UploadActions } from "../actions/ACS/upload.actions";
-
-let origFn = browser.driver.controlFlow().execute;
-
-browser.driver.controlFlow().execute = function () {
-    let args = arguments;
-    let delay =  20;
-
-    origFn.call(browser.driver.controlFlow(), function () {
-        return protractor.promise.delayed(delay);
-    });
-
-    return origFn.apply(browser.driver.controlFlow(), args);
-};
+import { UploadActions } from '../actions/ACS/upload.actions';
 
 describe('Login component', () => {
 
@@ -262,35 +249,4 @@ describe('Login component', () => {
         loginPage.checkLoginImgURL('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
     });
 
-    it('[C260088] Sould be re-redirect to the request URL after login when try to access to a protect URL ', () => {
-        let uploadActions = new UploadActions();
-
-        let uploadedFolder;
-        let folderName = Util.generateRandomString();
-
-        adfSettingsPage.setProviderEcmBpm();
-        loginPage.login(adminUserModel.id, adminUserModel.password);
-
-        browser.controlFlow().execute(async () => {
-            uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
-
-            browser.get(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-
-            navigationBarPage.clickLogoutButton();
-
-            browser.driver.sleep(200);
-
-            browser.get(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-
-            loginPage.waitForElements();
-            loginPage.enterUsername(adminUserModel.id);
-            loginPage.enterPassword(adminUserModel.password);
-            loginPage.clickSignInButton();
-
-            browser.getCurrentUrl().then((actualUrl) => {
-                expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-            });
-        });
-
-    });
 });
