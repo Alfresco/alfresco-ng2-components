@@ -47,6 +47,27 @@
             </mat-form-field>
         </ng-container>
     </p>
+
+    <p class="toggle">
+        <mat-slide-toggle
+            id="adf-toogle-logo"
+            [color]="'primary'"
+            (change)="toggleLogo()"
+            [checked]="customLogoImage">
+            {{ 'LOGIN.CUSTOM_LOGO'| translate }}
+        </mat-slide-toggle>
+    </p>
+    <p class="toggle">
+        <ng-container *ngIf="customLogoImage">
+            <mat-form-field floatPlaceholder="float">
+                <input matInput
+                       placeholder="Custom success Logo URL"
+                       [(ngModel)]="customLogoImageURL"
+                       data-automation-id="adf-url-logo">
+            </mat-form-field>
+        </ng-container>
+    </p>
+
 </div>
 
 <!--SETTING BUTTON-->
@@ -58,6 +79,7 @@
 <adf-login
     #alfrescologin
     [successRoute]="customSuccessRouteURI"
+    [logoImageUrl]="customLogoImageURL"
     [fieldsValidation]="customValidation"
     [disableCsrf]="disableCsrf"
     [showLoginActions]="showFooter"

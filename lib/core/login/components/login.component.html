@@ -13,7 +13,7 @@
                                              ngFor [ngForOf]="[data]"
                                              [ngForTemplate]="headerTemplate">
                                 </ng-template>
-                                <img *ngIf="!headerTemplate" class="adf-img-logo" [src]="logoImageUrl"
+                                <img *ngIf="!headerTemplate" id="adf-login-img-logo" class="adf-img-logo" [src]="logoImageUrl"
                                      alt="{{'LOGIN.LOGO' | translate }}">
                             </div>
                         </mat-card-title>

@@ -191,7 +191,8 @@
     "PROCESS_SERVICES": "Process Services",
     "LOGIN_FOOTER": "Login footer",
     "SHOW_REMEMBERME": "Show Remember me",
-    "SHOW_SUCCESS_ROUTE": "Show success route"
+    "SHOW_SUCCESS_ROUTE": "Show success route",
+    "CUSTOM_LOGO" : "Custom Logo"
   },
   "SEARCH": {
     "RESULTS": "Search results",

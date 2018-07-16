@@ -24,7 +24,9 @@ var LoginPage = function () {
     var loginURL = TestConfig.adf.url + TestConfig.adf.port + "/login";
     var txtUsername = element(by.css("input[id='username']"));
     var txtPassword = element(by.css("input[id='password']"));
+    var logoImg = element(by.css("img[id='adf-login-img-logo']"));
     var successRouteTxt = element(by.css("input[data-automation-id='adf-success-route']"));
+    var logoTxt = element(by.css("input[data-automation-id='adf-url-logo']"));
     var usernameTooltip = element(by.css("span[data-automation-id='username-error']"));
     var passwordTooltip = element(by.css("span[data-automation-id='password-required']"));
     var loginTooltip = element(by.css("span[class='login-error-message']"));
@@ -42,9 +44,11 @@ var LoginPage = function () {
     var footerSwitch = element(by.id("switch4"));
     var rememberMeSwitch = element(by.id("adf-toogle-show-rememberme"));
     var successRouteSwitch = element(by.id("adf-toogle-show-successRoute"));
+    var logoSwitch = element(by.id("adf-toogle-logo"));
     var userPicture = element(by.id("userinfo_container"));
     var cardBackground = element(by.css("mat-card[class*='adf-login-card']"));
     var adfSettingsPage = new AdfSettingsPage();
+
 
     /**
      * Provides the longer wait required
@@ -141,6 +145,16 @@ var LoginPage = function () {
     this.checkLoginError = function (message) {
         Util.waitUntilElementIsVisible(loginTooltip);
         expect(loginTooltip.getText()).toEqual(message);
+    };
+
+    /**
+     * checks login error tooltips
+     * @method checkLoginError
+     * @param {String} message
+     */
+    this.checkLoginImgURL = function (url) {
+        Util.waitUntilElementIsVisible(logoImg);
+        expect(logoImg.getAttribute('src')).toEqual(url);
     };
 
     /**
@@ -459,7 +473,6 @@ var LoginPage = function () {
         })
     };
 
-
     /**
      * disables successRouteSwitch
      */
@@ -487,6 +500,33 @@ var LoginPage = function () {
         })
     };
 
+    /**
+     * disables successRouteSwitch
+     */
+    this.disableLogowitch = function () {
+        Util.waitUntilElementIsVisible(logoSwitch);
+        logoSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                logoSwitch.click();
+                expect(logoSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables successRouteSwitch
+     * @method enableFooter
+     */
+    this.enableLogoSwitch = function () {
+        Util.waitUntilElementIsVisible(rememberMeSwitch);
+        logoSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                logoSwitch.click();
+                expect(logoSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
     this.enterSuccessRoute = function (route) {
         Util.waitUntilElementIsVisible(successRouteTxt);
         successRouteTxt.sendKeys('');
@@ -495,6 +535,13 @@ var LoginPage = function () {
         successRouteTxt.sendKeys(route);
     };
 
+    this.enterLogo = function (logo) {
+        Util.waitUntilElementIsVisible(logoTxt);
+        logoTxt.sendKeys('');
+        logoTxt.clear();
+        browser.driver.sleep(500);
+        logoTxt.sendKeys(logo);
+    };
 
     /**
      * logs in with a valid user

@@ -62,11 +62,11 @@ describe('Login component', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(userA);
         await this.alfrescoJsApi.core.peopleApi.addPerson(userB);
 
-        adfSettingsPage.setProviderEcmBpm();
         done();
     });
 
     it('[C260036] Username Required', () => {
+        loginPage.goToLoginPage();
         loginPage.checkUsernameInactive();
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterUsername('A');
@@ -78,6 +78,7 @@ describe('Login component', () => {
     });
 
     it('[C260043] Enter Password to sign in', () => {
+        loginPage.goToLoginPage();
         loginPage.checkPasswordInactive();
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterPassword('A');
@@ -89,6 +90,7 @@ describe('Login component', () => {
     });
 
     it('[C260044] Username must be at least 2 characters long', () => {
+        loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterUsername('A');
         loginPage.checkUsernameTooltip(errorMessages.username);
@@ -99,6 +101,7 @@ describe('Login component', () => {
     });
 
     it('[C260045] Login button is enabled', () => {
+        loginPage.goToLoginPage();
         loginPage.enterUsername(adminUserModel.id);
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterPassword('a');
@@ -108,6 +111,7 @@ describe('Login component', () => {
     });
 
     it('[C260046] You have entered an invalid username or password', () => {
+        loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterUsername('test');
         loginPage.enterPassword('test');
@@ -119,6 +123,7 @@ describe('Login component', () => {
     });
 
     it('[C260047] Password field is crypted', () => {
+        loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterPassword('test');
         loginPage.showPassword();
@@ -129,6 +134,7 @@ describe('Login component', () => {
     });
 
     it('[C260048] Remember  Need Help? and Register are displayed and hidden', () => {
+        loginPage.goToLoginPage();
         loginPage.enableFooter();
         loginPage.checkRememberIsDisplayed();
         loginPage.checkNeedHelpIsDisplayed();
@@ -140,6 +146,7 @@ describe('Login component', () => {
     });
 
     it('[C260049] Login to Process Services with Content Services disabled', () => {
+        loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
@@ -150,6 +157,7 @@ describe('Login component', () => {
     });
 
     it('[C260050] Login to Content Services with Process Services disabled', () => {
+        loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderEcm();
         loginPage.login(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
@@ -160,6 +168,7 @@ describe('Login component', () => {
     });
 
     it('[C260051] Able to login to both Content Services and Process Services', () => {
+        adfSettingsPage.setProviderEcmBpm();
         loginPage.checkSignInButtonIsDisabled();
         adfSettingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
@@ -228,5 +237,12 @@ describe('Login component', () => {
         navigationBarPage.clickUserProfile();
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
         expect(userInfoDialog.getContentEmail()).toEqual(userB.email);
+    });
+
+    it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', () => {
+        adfSettingsPage.setProviderEcmBpm();
+        loginPage.enableLogoSwitch();
+        loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
+        loginPage.checkLoginImgURL('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
     });
 });
