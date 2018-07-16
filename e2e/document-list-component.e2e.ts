@@ -28,7 +28,7 @@ import ErrorPage = require('./pages/adf/documentListErrorPage');
 import FileModel = require('./models/ACS/fileModel');
 import moment from 'moment-es6';
 
-fdescribe('Document List Component', () => {
+describe('Document List Component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
