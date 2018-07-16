@@ -55,9 +55,7 @@ export class TaskStandaloneComponent {
     complete: EventEmitter<void> = new EventEmitter<void>();
 
     @Output()
-    formAttached: EventEmitter<void> = new EventEmitter<void>();
-
-    showAttachForm: boolean = false;
+    showAttachForm: EventEmitter<void> = new EventEmitter<void>();
 
     constructor() { }
 
@@ -82,15 +80,6 @@ export class TaskStandaloneComponent {
     }
 
     onShowAttachForm() {
-        this.showAttachForm = true;
-    }
-
-    onCancelAttachForm() {
-        this.showAttachForm = false;
-    }
-
-    onCompleteAttachForm() {
-        this.showAttachForm = false;
-        this.formAttached.emit();
+        this.showAttachForm.emit();
     }
 }

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { LogService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnInit, OnChanges, Output } from '@angular/core';
+import { FormService, LogService } from '@alfresco/adf-core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { Form } from '../models/form.model';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -26,44 +26,53 @@ import { TaskListService } from './../services/tasklist.service';
     styleUrls: ['./attach-form.component.scss']
 })
 
-export class AttachFormComponent implements OnInit, OnChanges {
+export class AttachFormComponent implements OnChanges {
     constructor(private taskService: TaskListService,
-                private logService: LogService) { }
+                private logService: LogService,
+                private formService: FormService) { }
 
-    /** The id of the task whose details we are asking for. */
     @Input()
     taskId;
 
-    /** Emitted when the "Cancel" button is clicked. */
+    @Input()
+    formKey;
+
     @Output()
     cancelAttachForm: EventEmitter<void> = new EventEmitter<void>();
 
-    /** Emitted when the form associated with the form task is attached. */
     @Output()
-    completeAttachForm: EventEmitter<void> = new EventEmitter<void>();
+    success: EventEmitter<void> = new EventEmitter<void>();
 
-    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
     forms: Form[];
 
-    formKey: number;
-
-    ngOnInit() {
-        this.loadFormsTask();
-    }
+    formId: number;
 
     ngOnChanges() {
         this.loadFormsTask();
+        this.onFormAttached();
     }
 
     onCancelButtonClick(): void {
         this.cancelAttachForm.emit();
     }
 
+    onRemoveButtonClick(): void {
+        this.taskService.deleteForm(this.taskId).subscribe(
+            () => {
+                this.formId = null;
+                this.success.emit();
+            },
+            (err) => {
+                this.error.emit(err);
+                this.logService.error('An error occurred while trying to delete the form');
+            });
+    }
+
     onAttachFormButtonClick(): void {
-        this.attachForm(this.taskId, this.formKey);
+        this.attachForm(this.taskId, this.formId);
     }
 
     private loadFormsTask(): void {
@@ -76,11 +85,26 @@ export class AttachFormComponent implements OnInit, OnChanges {
             });
     }
 
-    private attachForm(taskId: string, formKey: number) {
-        if (taskId && formKey) {
-            this.taskService.attachFormToATask(taskId, formKey)
-                .subscribe((res) => {
-                    this.completeAttachForm.emit();
+    private onFormAttached() {
+        this.formService.getTaskForm(this.taskId)
+            .subscribe((res) => {
+                this.formService.getFormDefinitionByName(res.name).subscribe((formDef) => {
+                    this.formId = formDef;
+                });
+            }, (err) => {
+                this.error.emit(err);
+                this.logService.error('Could not load forms');
+            });
+    }
+
+    private attachForm(taskId: string, formId: number) {
+        if (taskId && formId) {
+            this.taskService.attachFormToATask(taskId, formId)
+                .subscribe(() => {
+                    this.success.emit();
+                }, (err) => {
+                    this.error.emit(err);
+                    this.logService.error('Could not attach form');
                 });
         }
     }
