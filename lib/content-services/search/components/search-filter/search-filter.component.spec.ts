@@ -25,7 +25,7 @@ import { ResponseFacetField } from '../../response-facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 
-describe('SearchSettingsComponent', () => {
+describe('SearchFilterComponent', () => {
 
     let component: SearchFilterComponent;
     let queryBuilder: SearchQueryBuilderService;
@@ -196,6 +196,17 @@ describe('SearchSettingsComponent', () => {
 
     it('should fetch facet queries from response payload', () => {
         component.responseFacetQueries = new ResponseFacetQueryList();
+
+        queryBuilder.config = {
+            categories: [],
+            facetQueries: {
+                queries: [
+                    { label: 'q1', query: 'query1' },
+                    { label: 'q2', query: 'query2' }
+                ]
+            }
+        };
+
         const queries = [
             { label: 'q1', query: 'query1', count: 1 },
             { label: 'q2', query: 'query2', count: 1 }
@@ -217,6 +228,13 @@ describe('SearchSettingsComponent', () => {
     it('should not fetch facet queries from response payload', () => {
         component.responseFacetQueries = new ResponseFacetQueryList();
 
+        queryBuilder.config = {
+            categories: [],
+            facetQueries: {
+                queries: []
+            }
+        };
+
         const data = {
             list: {
                 context: {
@@ -233,6 +251,16 @@ describe('SearchSettingsComponent', () => {
     it('should restore checked state for new response facet queries', () => {
         component.selectedFacetQueries = ['q3'];
         component.responseFacetQueries = new ResponseFacetQueryList();
+
+        queryBuilder.config = {
+            categories: [],
+            facetQueries: {
+                queries: [
+                    { label: 'q1', query: 'query1' },
+                    { label: 'q2', query: 'query2' }
+                ]
+            }
+        };
 
         const queries = [
             { label: 'q1', query: 'query1', count: 1 },
@@ -257,6 +285,16 @@ describe('SearchSettingsComponent', () => {
         component.selectedFacetQueries = ['q2'];
         component.responseFacetQueries = new ResponseFacetQueryList();
 
+        queryBuilder.config = {
+            categories: [],
+            facetQueries: {
+                queries: [
+                    { label: 'q1', query: 'query1' },
+                    { label: 'q2', query: 'query2' }
+                ]
+            }
+        };
+
         const queries = [
             { label: 'q1', query: 'query1', count: 1 },
             { label: 'q2', query: 'query2', count: 1 }
@@ -278,6 +316,17 @@ describe('SearchSettingsComponent', () => {
 
     it('should fetch facet fields from response payload', () => {
         component.responseFacetFields = [];
+
+        queryBuilder.config = {
+            categories: [],
+            facetFields: [
+                { label: 'f1', field: 'f1' },
+                { label: 'f2', field: 'f2' }
+            ],
+            facetQueries: {
+                queries: []
+            }
+        };
 
         const fields: any = [
             { label: 'f1', buckets: [] },
@@ -302,6 +351,17 @@ describe('SearchSettingsComponent', () => {
             { label: 'f2', buckets: [], expanded: true }
         ];
 
+        queryBuilder.config = {
+            categories: [],
+            facetFields: [
+                { label: 'f1', field: 'f1' },
+                { label: 'f2', field: 'f2' }
+            ],
+            facetQueries: {
+                queries: []
+            }
+        };
+
         const fields = [
             { label: 'f1', buckets: [] },
             { label: 'f2', buckets: [] }
@@ -324,6 +384,17 @@ describe('SearchSettingsComponent', () => {
     it('should restore checked buckets for new response facet fields', () => {
         const bucket1 = { label: 'b1', $field: 'f1', count: 1, filterQuery: 'q1' };
         const bucket2 = { label: 'b2', $field: 'f2', count: 1, filterQuery: 'q2' };
+
+        queryBuilder.config = {
+            categories: [],
+            facetFields: [
+                { label: 'f1', field: 'f1' },
+                { label: 'f2', field: 'f2' }
+            ],
+            facetQueries: {
+                queries: []
+            }
+        };
 
         component.selectedBuckets = [bucket2];
         component.responseFacetFields = <any> [
@@ -351,6 +422,17 @@ describe('SearchSettingsComponent', () => {
     it('should reset queries and fields on empty response payload', () => {
         component.responseFacetQueries = new ResponseFacetQueryList([<any> {}, <any> {}]);
         component.responseFacetFields = [<any> {}, <any> {}];
+
+        queryBuilder.config = {
+            categories: [],
+            facetFields: [
+                { label: 'f1', field: 'f1' },
+                { label: 'f2', field: 'f2' }
+            ],
+            facetQueries: {
+                queries: []
+            }
+        };
 
         const data = {
             list: {
