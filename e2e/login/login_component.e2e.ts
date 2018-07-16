@@ -181,6 +181,14 @@ describe('Login component', () => {
 
     });
 
+    it('[C279932] Should successRoute property change the landing page when the user Login', () => {
+        adfSettingsPage.setProviderEcmBpm();
+        loginPage.enableSuccessRouteSwitch();
+        loginPage.enterSuccessRoute('activiti');
+        loginPage.login(adminUserModel.id, adminUserModel.password);
+        processServicesPage.checkApsContainer();
+    });
+
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', () => {
         adfSettingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
@@ -197,7 +205,7 @@ describe('Login component', () => {
         browser.executeScript('return window.open(arguments[0], "_blank")', '');
 
         browser.getAllWindowHandles().then((handles) => {
-            var secondWindow = handles[1];
+            let secondWindow = handles[1];
             browser.ignoreSynchronization = true;
             browser.switchTo().window(secondWindow).then(() => {
                 browser.get(TestConfig.adf.url + '/activiti');
@@ -214,7 +222,6 @@ describe('Login component', () => {
         navigationBarPage.clickUserProfile();
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
         expect(userInfoDialog.getContentEmail()).toEqual(userA.email);
-
 
         adfSettingsPage.setProviderEcmBpm();
         loginPage.loginToContentServicesUsingUserModel(userB);

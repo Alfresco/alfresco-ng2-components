@@ -24,6 +24,7 @@ var LoginPage = function () {
     var loginURL = TestConfig.adf.url + TestConfig.adf.port + "/login";
     var txtUsername = element(by.css("input[id='username']"));
     var txtPassword = element(by.css("input[id='password']"));
+    var successRouteTxt = element(by.css("input[data-automation-id='adf-success-route']"));
     var usernameTooltip = element(by.css("span[data-automation-id='username-error']"));
     var passwordTooltip = element(by.css("span[data-automation-id='password-required']"));
     var loginTooltip = element(by.css("span[class='login-error-message']"));
@@ -40,6 +41,7 @@ var LoginPage = function () {
     var register = element(by.css("div[id='adf-login-action-right']"));
     var footerSwitch = element(by.id("switch4"));
     var rememberMeSwitch = element(by.id("adf-toogle-show-rememberme"));
+    var successRouteSwitch = element(by.id("adf-toogle-show-successRoute"));
     var userPicture = element(by.id("userinfo_container"));
     var cardBackground = element(by.css("mat-card[class*='adf-login-card']"));
     var adfSettingsPage = new AdfSettingsPage();
@@ -456,6 +458,43 @@ var LoginPage = function () {
             }
         })
     };
+
+
+    /**
+     * disables successRouteSwitch
+     */
+    this.disableSuccessRouteSwitch = function () {
+        Util.waitUntilElementIsVisible(successRouteSwitch);
+        successRouteSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                successRouteSwitch.click();
+                expect(successRouteSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables successRouteSwitch
+     * @method enableFooter
+     */
+    this.enableSuccessRouteSwitch = function () {
+        Util.waitUntilElementIsVisible(rememberMeSwitch);
+        successRouteSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                successRouteSwitch.click();
+                expect(successRouteSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
+    this.enterSuccessRoute = function (route) {
+        Util.waitUntilElementIsVisible(successRouteTxt);
+        successRouteTxt.sendKeys('');
+        successRouteTxt.clear();
+        browser.driver.sleep(500);
+        successRouteTxt.sendKeys(route);
+    };
+
 
     /**
      * logs in with a valid user

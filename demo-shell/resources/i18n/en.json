@@ -96,7 +96,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (with checkboxes)",
-    "THUMBNAILS" :"Enable Thumbnails",
+    "THUMBNAILS": "Enable Thumbnails",
     "MULTIPLE_FILE_UPLOAD": "Multiple File Upload",
     "FOLDER_UPLOAD": "Folder upload",
     "CUSTOM_FILTER": "Custom extensions filter",
@@ -190,7 +190,8 @@
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN_FOOTER": "Login footer",
-    "SHOW_REMEMBERME": "Show Remember me"
+    "SHOW_REMEMBERME": "Show Remember me",
+    "SHOW_SUCCESS_ROUTE": "Show success route"
   },
   "SEARCH": {
     "RESULTS": "Search results",

@@ -24,9 +24,28 @@
             id="adf-toogle-show-rememberme"
             [color]="'primary'"
             (change)="toggleRemamberme()"
-            [checked]="showFooter">
+            [checked]="showRememberMe">
             {{ 'LOGIN.SHOW_REMEMBERME'| translate }}
         </mat-slide-toggle>
+    </p>
+    <p class="toggle">
+        <mat-slide-toggle
+            id="adf-toogle-show-successRoute"
+            [color]="'primary'"
+            (change)="toggleSuccessRoute()"
+            [checked]="customSuccessRoute">
+            {{ 'LOGIN.SHOW_SUCCESS_ROUTE'| translate }}
+        </mat-slide-toggle>
+    </p>
+    <p class="toggle">
+        <ng-container *ngIf="customSuccessRoute">
+            <mat-form-field floatPlaceholder="float">
+                <input matInput
+                       placeholder="Custom success route"
+                       [(ngModel)]="customSuccessRouteURI"
+                       data-automation-id="adf-success-route">
+            </mat-form-field>
+        </ng-container>
     </p>
 </div>
 
@@ -38,6 +57,7 @@
 
 <adf-login
     #alfrescologin
+    [successRoute]="customSuccessRouteURI"
     [fieldsValidation]="customValidation"
     [disableCsrf]="disableCsrf"
     [showLoginActions]="showFooter"
