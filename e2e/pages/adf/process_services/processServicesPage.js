@@ -77,9 +77,7 @@ var ProcessServicesPage = function(){
     this.getBackgroundColor = function(applicationName) {
         var app = element(by.css("mat-card[title='" + applicationName +"']"));
         Util.waitUntilElementIsVisible(app);
-        return app.getCssValue("color").then(function (value) {
-            return value;
-        });
+        return app.getCssValue("background-color");
     };
 
     this.getDescription = function(applicationName) {
@@ -88,6 +86,16 @@ var ProcessServicesPage = function(){
         var description = app.element(descriptionLocator);
         Util.waitUntilElementIsVisible(description);
         return description.getText();
+    };
+
+    this.checkAppIsNotDisplayed = function(applicationName) {
+        var app = element(by.css("mat-card[title='" + applicationName +"']"));
+        return Util.waitUntilElementIsNotOnPage(app);
+    };
+
+    this.checkAppIsDisplayed = function(applicationName) {
+        var app = element(by.css("mat-card[title='" + applicationName +"']"));
+        return Util.waitUntilElementIsVisible(app);
     };
 
 };
