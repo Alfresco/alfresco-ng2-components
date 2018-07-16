@@ -65,11 +65,15 @@ var ContentServicesPage = function () {
      * @method goToDocumentList
      * */
     this.goToDocumentList = function () {
+        this.clickOnContentServices();
+        this.checkAcsContainer();
+    };
+
+    this.clickOnContentServices = function () {
         Util.waitUntilElementIsVisible(contentServices);
         Util.waitUntilElementIsClickable(contentServices);
         contentServices.click();
-        this.checkAcsContainer();
-    };
+    }
 
     this.navigateToDocumentList = function () {
         browser.driver.get(contentServicesURL);
