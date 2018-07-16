@@ -159,7 +159,7 @@ fdescribe('Document List Component', () => {
         });
     });
 
-    it('should show the spinner on loading', async (done) => {
+    it('[C260121] - should show the spinner on loading', async (done) => {
         let acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
