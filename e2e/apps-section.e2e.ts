@@ -114,7 +114,7 @@ describe('Modify applications', () => {
         processServicesPage.checkAppIsNotDisplayed(app.title);
     });
 
-    it('[C260220] Should the penultimate version of an app be displayed on dashboard when the last version is deleted in APS', async() => {
+    it('[C260215] Should the penultimate version of an app be displayed on dashboard when the last version is deleted in APS', async() => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
