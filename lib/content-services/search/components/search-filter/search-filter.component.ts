@@ -207,11 +207,18 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const context = data.list.context;
 
         if (context) {
-            const facetQueries = (context.facetQueries || []).map(query => {
-                query.label = this.translationService.instant(query.label);
-                query.$checked = this.selectedFacetQueries.includes(query.label);
-                return query;
-            });
+            const configFacetQueries = this.queryBuilder.config.facetQueries.queries || [];
+            const facetQueries = configFacetQueries
+                .map(config => {
+                    const query = (context.facetQueries || []).find(fQuery => fQuery.label === config.label);
+                    if (!query) {
+                        return null;
+                    }
+                    query.label = this.translationService.instant(query.label);
+                    query.$checked = this.selectedFacetQueries.includes(query.label);
+                    return query;
+                })
+                .filter(query => query);
 
             this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.facetQueriesPageSize);
 
@@ -219,8 +226,14 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 .filter(field => field.expanded)
                 .map(field => field.label);
 
-            this.responseFacetFields = (context.facetsFields || []).map(
-                field => {
+            const configFacetFields = this.queryBuilder.config.facetFields || [];
+            this.responseFacetFields = configFacetFields.map(
+                configField => {
+                    const field = (context.facetsFields || []).find(f => f.label === configField.label);
+                    if (!field) {
+                        return null;
+                    }
+
                     const settings = this.queryBuilder.getFacetField(field.label);
 
                     let fallbackPageSize = this.DEFAULT_PAGE_SIZE;
@@ -261,7 +274,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                     field.buckets = bucketList;
                     return field;
                 }
-            );
+            ).filter(entry => entry);
         } else {
             this.responseFacetQueries = new ResponseFacetQueryList([], this.facetQueriesPageSize);
             this.responseFacetFields = [];
