@@ -52,38 +52,6 @@ describe('SearchFilterComponent', () => {
         expect(component.onDataLoaded).toHaveBeenCalledWith(data);
     });
 
-    it('should update category model on expand', () => {
-        const category: any = { expanded: false };
-
-        component.onCategoryExpanded(category);
-
-        expect(category.expanded).toBeTruthy();
-    });
-
-    it('should update category model on collapse', () => {
-        const category: any = { expanded: true };
-
-        component.onCategoryCollapsed(category);
-
-        expect(category.expanded).toBeFalsy();
-    });
-
-    it('should update facet field model on expand', () => {
-        const field: any = { expanded: false };
-
-        component.onFacetFieldExpanded(field);
-
-        expect(field.expanded).toBeTruthy();
-    });
-
-    it('should update facet field model on collapse', () => {
-        const field: any = { expanded: true };
-
-        component.onFacetFieldCollapsed(field);
-
-        expect(field.expanded).toBeFalsy();
-    });
-
     it('should update bucket model and query builder on facet toggle', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
@@ -160,38 +128,6 @@ describe('SearchFilterComponent', () => {
         expect(queryBuilder.filterQueries.length).toBe(0);
 
         expect(queryBuilder.update).toHaveBeenCalled();
-    });
-
-    it('should allow facetQueries when defined in configuration', () => {
-        component.queryBuilder.config = {
-            categories: [],
-            facetQueries: {
-                queries: [
-                    { label: 'q1', query: 'query1' }
-                ]
-            }
-        };
-
-        expect(component.isFacetQueriesDefined).toBe(true);
-    });
-
-    it('should not allow facetQueries when not defined in configuration', () => {
-        component.queryBuilder.config = {
-            categories: []
-        };
-
-        expect(component.isFacetQueriesDefined).toBe(false);
-    });
-
-    it('should not allow facetQueries when queries are not defined in configuration', () => {
-        component.queryBuilder.config = {
-            categories: [],
-            facetQueries: {
-                queries: []
-            }
-        };
-
-        expect(component.isFacetQueriesDefined).toBe(false);
     });
 
     it('should fetch facet queries from response payload', () => {
@@ -525,12 +461,12 @@ describe('SearchFilterComponent', () => {
 
     it('should allow to reset selected queries', () => {
         component.selectedFacetQueries = ['q1', 'q2'];
-        expect(component.canResetSelectedQueries()).toBeTruthy();
+        expect(component.canResetSelectedQueries).toBeTruthy();
     });
 
     it('should not allow to reset selected queries when nothing selected', () => {
         component.selectedFacetQueries = [];
-        expect(component.canResetSelectedQueries()).toBeFalsy();
+        expect(component.canResetSelectedQueries).toBeFalsy();
     });
 
     it('should reset selected queries', () => {

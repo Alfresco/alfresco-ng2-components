@@ -21,10 +21,9 @@ import { SearchService, TranslationService } from '@alfresco/adf-core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { ResponseFacetField } from '../../response-facet-field.interface';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
-import { SearchCategory } from '../../search-category.interface';
-import { ResponseFacetQuery } from '../../response-facet-query.interface';
 import { ResponseFacetQueryList } from './models/response-facet-query-list.model';
-import { SearchFilterList } from './models/search-filter-list.model';
+import { FacetQuery } from '../../facet-query.interface';
+// import { SearchFilterList } from './models/search-filter-list.model';
 
 @Component({
     selector: 'adf-search-filter',
@@ -38,20 +37,18 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private DEFAULT_PAGE_SIZE = 5;
 
     isAlive = true;
-    selectedFacetQueries: string[] = [];
-    selectedBuckets: FacetFieldBucket[] = [];
-    responseFacetQueries: ResponseFacetQueryList;
-    responseFacetFields: ResponseFacetField[] = [];
+    responseFacetQueries: ResponseFacetQueryList = null;
+    responseFacetFields: ResponseFacetField[] = null;
 
     facetQueriesLabel: string = 'Facet Queries';
     facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesExpanded = false;
 
+    canResetSelectedQueries = false;
+
     constructor(public queryBuilder: SearchQueryBuilderService,
                 private searchService: SearchService,
                 private translationService: TranslationService) {
-        this.responseFacetQueries = new ResponseFacetQueryList();
-
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || this.DEFAULT_PAGE_SIZE;
@@ -60,9 +57,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
         this.queryBuilder.updated
             .takeWhile(() => this.isAlive)
-            .subscribe(query => {
-            this.queryBuilder.execute();
-        });
+            .subscribe(() => {
+                this.queryBuilder.execute();
+            });
     }
 
     ngOnInit() {
@@ -70,9 +67,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.queryBuilder.executed
                 .takeWhile(() => this.isAlive)
                 .subscribe(data => {
-                this.onDataLoaded(data);
-                this.searchService.dataLoaded.next(data);
-            });
+                    this.onDataLoaded(data);
+                    this.searchService.dataLoaded.next(data);
+                });
         }
     }
 
@@ -80,49 +77,22 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
        this.isAlive = false;
     }
 
-    get isFacetQueriesDefined() {
-        return this.queryBuilder.hasFacetQueries;
-    }
-
-    onCategoryExpanded(category: SearchCategory) {
-        category.expanded = true;
-    }
-
-    onCategoryCollapsed(category: SearchCategory) {
-        category.expanded = false;
-    }
-
-    onFacetFieldExpanded(field: ResponseFacetField) {
-        field.expanded = true;
-    }
-
-    onFacetFieldCollapsed(field: ResponseFacetField) {
-        field.expanded = false;
-    }
-
-    onFacetQueryToggle(event: MatCheckboxChange, query: ResponseFacetQuery) {
-        const facetQuery = this.queryBuilder.getFacetQuery(query.label);
+    onFacetQueryToggle(event: MatCheckboxChange, facetQuery: FacetQuery) {
+        facetQuery.checked = event.checked;
 
         if (event.checked) {
-            query.$checked = true;
-            this.selectedFacetQueries.push(facetQuery.label);
-
-            if (facetQuery) {
-                this.queryBuilder.addFilterQuery(facetQuery.query);
-            }
+            this.queryBuilder.addUserFacetQuery(facetQuery);
+            this.canResetSelectedQueries = true;
         } else {
-            query.$checked = false;
-            this.selectedFacetQueries = this.selectedFacetQueries.filter(selectedQuery => selectedQuery !== query.label);
-
-            if (facetQuery) {
-                this.queryBuilder.removeFilterQuery(facetQuery.query);
-            }
+            this.queryBuilder.removeUserFacetQuery(facetQuery);
+            this.canResetSelectedQueries = this.responseFacetQueries.items.some(item => item.checked);
         }
 
         this.queryBuilder.update();
     }
 
     onFacetToggle(event: MatCheckboxChange, field: ResponseFacetField, bucket: FacetFieldBucket) {
+        /*
         if (event.checked) {
             bucket.$checked = true;
             this.selectedBuckets.push({ ...bucket });
@@ -140,22 +110,11 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
 
         this.queryBuilder.update();
-    }
-
-    unselectFacetQuery(label: string, reloadQuery: boolean = true) {
-        const facetQuery = this.queryBuilder.getFacetQuery(label);
-        if (facetQuery) {
-            this.queryBuilder.removeFilterQuery(facetQuery.query);
-        }
-
-        this.selectedFacetQueries = this.selectedFacetQueries.filter(selectedQuery => selectedQuery !== label);
-
-        if (reloadQuery) {
-            this.queryBuilder.update();
-        }
+        */
     }
 
     unselectFacetBucket(bucket: FacetFieldBucket, reloadQuery: boolean = true) {
+        /*
         if (bucket) {
             const idx = this.selectedBuckets.findIndex(
                 selectedBucket => selectedBucket.$field === bucket.$field && selectedBucket.label === bucket.label
@@ -172,17 +131,16 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 this.queryBuilder.update();
             }
         }
-    }
-
-    canResetSelectedQueries(): boolean {
-        return this.selectedFacetQueries && this.selectedFacetQueries.length > 0;
+        */
     }
 
     resetSelectedQueries() {
-        if (this.canResetSelectedQueries()) {
-            this.selectedFacetQueries.forEach(query => {
-                this.unselectFacetQuery(query, false);
-            });
+        if (this.canResetSelectedQueries) {
+            for (let query of this.responseFacetQueries.items) {
+                query.checked = false;
+                this.queryBuilder.removeUserFacetQuery(query);
+            }
+            this.canResetSelectedQueries = false;
             this.queryBuilder.update();
         }
     }
@@ -203,9 +161,38 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
+    private getFacetQueryMap(context: any): { [key: string]: any } {
+        const result = {};
+
+        (context.facetQueries || []).forEach(query => {
+            result[query.label] = query;
+        });
+
+        return result;
+    }
+
     onDataLoaded(data: any) {
         const context = data.list.context;
 
+        if (context) {
+            const responseQueries = this.getFacetQueryMap(context);
+
+            if (!this.responseFacetQueries) {
+                const facetQueries = (this.queryBuilder.config.facetQueries.queries || [])
+                    .map(query => {
+                        const queryResult = responseQueries[query.label];
+                        return <FacetQuery> {
+                            ...query,
+                            label: this.translationService.instant(query.label),
+                            count: queryResult.count
+                        };
+                    });
+
+                this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.facetQueriesPageSize);
+            }
+        }
+
+        /*
         if (context) {
             const configFacetQueries = this.queryBuilder.config.facetQueries.queries || [];
             const facetQueries = configFacetQueries
@@ -279,5 +266,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.responseFacetQueries = new ResponseFacetQueryList([], this.facetQueriesPageSize);
             this.responseFacetFields = [];
         }
+        */
     }
 }

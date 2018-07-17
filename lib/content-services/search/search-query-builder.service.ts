@@ -40,6 +40,7 @@ export class SearchQueryBuilderService {
     filterQueries: FilterQuery[] = [];
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: Array<SearchSortingDefinition> = [];
+    protected userFacetQueries: FacetQuery[] = [];
 
     get userQuery(): string {
         return this._userQuery;
@@ -71,6 +72,24 @@ export class SearchQueryBuilderService {
         }
     }
 
+    addUserFacetQuery(query: FacetQuery) {
+        if (query) {
+            const existing = this.userFacetQueries.find(facetQuery => facetQuery.label === query.label);
+            if (existing) {
+                existing.query = query.query;
+            } else {
+                this.userFacetQueries.push({ ...query });
+            }
+        }
+    }
+
+    removeUserFacetQuery(query: FacetQuery) {
+        if (query) {
+            this.userFacetQueries = this.userFacetQueries
+                .filter(facetQuery => facetQuery.label !== query.label);
+        }
+    }
+
     addFilterQuery(query: string): void {
         if (query) {
             const existing = this.filterQueries.find(filterQuery => filterQuery.query === query);
@@ -89,7 +108,10 @@ export class SearchQueryBuilderService {
 
     getFacetQuery(label: string): FacetQuery {
         if (label && this.hasFacetQueries) {
-            return this.config.facetQueries.queries.find(query => query.label === label);
+            const result = this.config.facetQueries.queries.find(query => query.label === label);
+            if (result) {
+                return { ...result };
+            }
         }
         return null;
     }
@@ -97,7 +119,10 @@ export class SearchQueryBuilderService {
     getFacetField(label: string): FacetField {
         if (label) {
             const fields = this.config.facetFields || [];
-            return fields.find(field => field.label === label);
+            const result = fields.find(field => field.label === label);
+            if (result) {
+                return { ...result };
+            }
         }
         return null;
     }
@@ -208,9 +233,16 @@ export class SearchQueryBuilderService {
             }
         });
 
-        const result = [this.userQuery, query]
+        let result = [this.userQuery, query]
             .filter(entry => entry)
             .join(' AND ');
+
+        if (this.userFacetQueries && this.userFacetQueries.length > 0) {
+            const combined = this.userFacetQueries
+                .map(userQuery => userQuery.query)
+                .join(' OR ');
+            result += ` AND (${combined})`;
+        }
 
         return result;
     }

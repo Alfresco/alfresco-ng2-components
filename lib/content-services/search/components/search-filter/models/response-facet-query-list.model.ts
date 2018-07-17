@@ -15,18 +15,15 @@
  * limitations under the License.
  */
 
-import { ResponseFacetQuery } from '../../../facet-query.interface';
+import { ResponseFacetQuery, FacetQuery } from '../../../facet-query.interface';
 import { SearchFilterList } from './search-filter-list.model';
 
-export class ResponseFacetQueryList extends SearchFilterList<ResponseFacetQuery> {
-    constructor(items: ResponseFacetQuery[] = [], pageSize: number = 5) {
+export class ResponseFacetQueryList extends SearchFilterList<FacetQuery> {
+    constructor(items: FacetQuery[] = [], pageSize: number = 5) {
         super(
             items
                 .filter(item => {
                     return item.count > 0;
-                })
-                .map(item => {
-                    return <ResponseFacetQuery> { ...item };
                 }),
             pageSize
         );

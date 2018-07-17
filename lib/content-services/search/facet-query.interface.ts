@@ -16,8 +16,11 @@
  */
 
 export interface FacetQuery {
-    query: string;
     label: string;
+    query: string;
+
+    checked?: boolean;
+    count?: number;
 }
 
 export interface ResponseFacetQuery {
