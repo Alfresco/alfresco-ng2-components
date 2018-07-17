@@ -115,4 +115,15 @@ describe('AccordionGroupComponent', () => {
         header.click();
     }));
 
+    it('should expand if panel is not open and is clicked', () => {
+        component.isSelected = true;
+        component.isOpen = false;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
+            selectElement.click();
+            expect(component.expansionPanel.expanded).toBe(true);
+        });
+    });
 });
