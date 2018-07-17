@@ -61,13 +61,13 @@ describe('CardView Component', () => {
 
     describe('key-value pair ', () => {
 
-        it('[] Should the label be present', () => {
+        it('[C279937] Should the label be present', () => {
             let label = element(by.xpath('div[data-automation-id="card-key-value-pairs-label-key-value-pairs"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
 
-        it('[C279898] Should be possible key-value pair properties', () => {
+        it('[C279898] Should be possible edit key-value pair properties', () => {
             cardViewPageComponent.clickOnAddButton();
             cardViewPageComponent.setName('testName');
             cardViewPageComponent.setValue('testValue');
@@ -83,7 +83,7 @@ describe('CardView Component', () => {
 
     describe('Selectbox', () => {
 
-        it('[] Should the label be present', () => {
+        it('[C279939] Should the label be present', () => {
             let label = element(by.xpath('div[data-automation-id="card-select-label-select"]'));
 
             Util.waitUntilElementIsPresent(label);
@@ -100,13 +100,13 @@ describe('CardView Component', () => {
 
     describe('Text', () => {
 
-        it('[] Should the label be present', () => {
+        it('[C279937] Should the label be present', () => {
             let label = element(by.xpath('div[data-automation-id="card-textitem-label-name"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
 
-        it('[] Should be present a default value', () => {
+        it('[C279943] Should be present a default value', () => {
             expect(cardViewPageComponent.getTextFieldText()).toBe('Spock');
         });
 
@@ -119,7 +119,7 @@ describe('CardView Component', () => {
             expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Text Item] - example');
         });
 
-        it('[] Should be possible undo text item modify when click on the clear button', () => {
+        it('[C279944] Should be possible undo text item modify when click on the clear button', () => {
             cardViewPageComponent
                 .clickOnTextField()
                 .enterTextField('example')
@@ -131,17 +131,17 @@ describe('CardView Component', () => {
 
     describe('Int', () => {
 
-        it('[] Should the label be present', () => {
+        it('[C279940] Should the label be present', () => {
             let label = element(by.xpath('div[data-automation-id="card-textitem-label-int"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
 
-        it('[] Should be present a default value', () => {
+        it('[C279945] Should be present a default value', () => {
             expect(cardViewPageComponent.getIntFieldText()).toBe('213');
         });
 
-        it('[] Should be possible edit int item', () => {
+        it('[C279946] Should be possible edit int item', () => {
             cardViewPageComponent
                 .clickOnIntField()
                 .enterIntField('99999')
@@ -150,7 +150,7 @@ describe('CardView Component', () => {
             expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 99999');
         });
 
-        it('[] Should not be possible add string value to the int item', () => {
+        it('[C279947] Should not be possible add string value to the int item', () => {
             cardViewPageComponent
                 .clickOnIntField()
                 .enterIntField('string value')
@@ -159,7 +159,7 @@ describe('CardView Component', () => {
             expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
-        it('[] Should not be possible add float value to the int item', () => {
+        it('[C279948] Should not be possible add float value to the int item', () => {
             cardViewPageComponent
                 .clickOnIntField()
                 .enterIntField('0.22')
@@ -168,7 +168,7 @@ describe('CardView Component', () => {
             expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
-        it('[] Should not be possible have an empty value', () => {
+        it('[C279949] Should not be possible have an empty value', () => {
             cardViewPageComponent
                 .clickOnIntField()
                 .enterIntField('')
@@ -177,7 +177,7 @@ describe('CardView Component', () => {
             expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
-        it('[] Should return an error when the value is > 2147483647', () => {
+        it('[C279950] Should return an error when the value is > 2147483647', () => {
             cardViewPageComponent
                 .clickOnIntField()
                 .enterIntField('214748367')
@@ -193,7 +193,7 @@ describe('CardView Component', () => {
             expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
-        it('[] Should be possible undo item item modify when click on the clear button', () => {
+        it('[C279951] Should be possible undo item modify when click on the clear button', () => {
             cardViewPageComponent
                 .clickOnIntField()
                 .enterIntField('999')
@@ -205,17 +205,17 @@ describe('CardView Component', () => {
 
     describe('Float', () => {
 
-        it('[] Should the label be present', () => {
+        it('[C279941] Should the label be present', () => {
             let label = element(by.xpath('div[data-automation-id="card-textitem-label-float"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
 
-        it('[] Should be present a default value', () => {
+        it('[C279952] Should be present a default value', () => {
             expect(cardViewPageComponent.getFloatFieldText()).toBe('9.9');
         });
 
-        it('[] Should be possible edit float item', () => {
+        it('[C279953] Should be possible edit float item', () => {
             cardViewPageComponent
                 .clickOnFloatField()
                 .enterFloatField('77.33')
@@ -224,7 +224,7 @@ describe('CardView Component', () => {
             expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Float Item] - 77.33');
         });
 
-        it('[] Should not be possible add string value to the float item', () => {
+        it('[C279954] Should not be possible add string value to the float item', () => {
             cardViewPageComponent
                 .clickOnFloatField()
                 .enterFloatField('string value')
@@ -233,7 +233,7 @@ describe('CardView Component', () => {
             expect(cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
         });
 
-        it('[] Should be possible undo item item modify when click on the clear button', () => {
+        it('[C279955] Should be possible undo item item modify when click on the clear button', () => {
             cardViewPageComponent
                 .clickOnFloatField()
                 .enterFloatField('77.33')
@@ -242,7 +242,7 @@ describe('CardView Component', () => {
             expect(cardViewPageComponent.getFloatFieldText()).toBe('9.9');
         });
 
-        it('[] Should not be possible have an empty value', () => {
+        it('[C279956] Should not be possible have an empty value', () => {
             cardViewPageComponent
                 .clickOnFloatField()
                 .enterFloatField('')
@@ -255,13 +255,13 @@ describe('CardView Component', () => {
 
     describe('Boolean', () => {
 
-        it('[] Should the label be present', () => {
+        it('[C279942] Should the label be present', () => {
             let label = element(by.xpath('div[data-automation-id="card-boolean-label-boolean"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
 
-        it('[] Should be possible edit the checkbox value when click on it', () => {
+        it('[C279957] Should be possible edit the checkbox value when click on it', () => {
             cardViewPageComponent.checkboxClick();
 
             expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Boolean Item] - false');
@@ -272,7 +272,7 @@ describe('CardView Component', () => {
         });
     });
 
-    it('[] Should not be possible edit any parameter when editable property is false', () => {
+    it('[C279936] Should not be possible edit any parameter when editable property is false', () => {
         cardViewPageComponent.disableEdit();
 
         let editIconText = element(by.xpath('mat-icon[data-automation-id="card-textitem-edit-icon-name"]'));
