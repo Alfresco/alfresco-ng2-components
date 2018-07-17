@@ -532,7 +532,7 @@ var LoginPage = function () {
         successRouteTxt.sendKeys('');
         successRouteTxt.clear();
         browser.driver.sleep(500);
-        successRouteTxt.sendKeys(route);
+        return successRouteTxt.sendKeys(route);
     };
 
     this.enterLogo = function (logo) {
@@ -540,7 +540,7 @@ var LoginPage = function () {
         logoTxt.sendKeys('');
         logoTxt.clear();
         browser.driver.sleep(500);
-        logoTxt.sendKeys(logo);
+        return logoTxt.sendKeys(logo);
     };
 
     /**
@@ -553,7 +553,7 @@ var LoginPage = function () {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        Util.waitUntilElementIsVisible(userPicture);
+        return Util.waitUntilElementIsVisible(userPicture);
     };
 
 };

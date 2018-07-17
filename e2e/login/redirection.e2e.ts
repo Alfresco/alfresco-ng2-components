@@ -124,7 +124,7 @@ describe('Login component', () => {
 
             navigationBarPage.clickLogoutButton();
 
-            browser.driver.sleep(200);
+            browser.driver.sleep(1000);
 
             browser.get(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
 

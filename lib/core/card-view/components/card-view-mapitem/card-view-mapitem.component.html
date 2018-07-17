@@ -1,4 +1,4 @@
-<div class="adf-property-label" *ngIf="showProperty()">{{ property.label | translate }}</div>
+<div [attr.data-automation-id]="'card-mapitem-label-' + property.key" class="adf-property-label" *ngIf="showProperty()">{{ property.label | translate }}</div>
 <div class="adf-property-value">
     <div>
         <span *ngIf="!isClickable(); else elseBlock" [attr.data-automation-id]="'card-mapitem-value-' + property.key">

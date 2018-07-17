@@ -338,6 +338,13 @@
                         title="DOCUMENT_LIST.ACTIONS.METADATA"
                         (execute)="onManageMetadata($event)">
                     </content-action>
+                    <content-action
+                        icon="settings_input_component"
+                        title="DOCUMENT_LIST.ACTIONS.PERMISSION"
+                        permission="copy"
+                        (error)="onContentActionError($event)"
+                        (execute)="onPermissionRequested($event)">
+                    </content-action>
                     <!-- document actions -->
                     <content-action
                         icon="storage"
@@ -346,6 +353,7 @@
                         (execute)="onManageVersions($event)">
                     </content-action>
                     <content-action
+                        target="document" 
                         *ngIf="authenticationService.isBpmLoggedIn()"
                         icon="play_arrow"
                         target="document" 
@@ -353,13 +361,7 @@
                         (execute)="startProcesAction($event)">
                     </content-action>
                     <content-action
-                        icon="settings_input_component"
-                        title="DOCUMENT_LIST.ACTIONS.PERMISSION"
-                        permission="copy"
-                        (error)="onContentActionError($event)"
-                        (execute)="onPermissionRequested($event)">
-                    </content-action>
-                    <content-action
+                        target="document" 
                         icon="lock"
                         permission="lock"
                         handler="lock"

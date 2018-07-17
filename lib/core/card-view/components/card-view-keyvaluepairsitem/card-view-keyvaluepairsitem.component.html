@@ -1,9 +1,9 @@
-<div class="adf-property-label">{{ property.label | translate }}</div>
+<div [attr.data-automation-id]="'card-key-value-pairs-label-' + property.key" class="adf-property-label">{{ property.label | translate }}</div>
 <div class="adf-property-value">
 
     <div *ngIf="isEditable()">
         {{ 'CORE.CARDVIEW.KEYVALUEPAIRS.ADD' | translate }}
-        <button (click)="add()" mat-icon-button class="card-view__key-value-pairs__add-btn">
+        <button (click)="add()" mat-icon-button class="card-view__key-value-pairs__add-btn" [attr.data-automation-id]="'card-key-value-pairs-button-' + property.key">
             <mat-icon>add</mat-icon>
         </button>
     </div>
