@@ -70,7 +70,7 @@ describe('Metadata component', () => {
         done();
     });
 
-    it('Properties', () => {
+    it('[C245652] Properties', () => {
         contentServicesPage.navigateToDocumentList();
         adfViewerPage.viewFile(pdfFileModel.name);
 
@@ -96,7 +96,7 @@ describe('Metadata component', () => {
         expect(cardViewPage.getInformationIconText()).toEqual(CONSTANTS.METADATA.ARROW_DOWN);
     });
 
-    it('Information button', () => {
+    it('[C272769] Information button', () => {
         contentServicesPage.navigateToDocumentList();
         adfViewerPage.viewFile(pdfFileModel.name);
         cardViewPage = adfViewerPage.clickInfoButton();
@@ -108,17 +108,7 @@ describe('Metadata component', () => {
         expect(cardViewPage.getInformationIconText()).toEqual(CONSTANTS.METADATA.ARROW_UP);
     });
 
-    it('Versions', () => {
-        contentServicesPage.navigateToDocumentList();
-        adfViewerPage.viewFile(pdfFileModel.name);
-        cardViewPage = adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsDisplayed();
-        cardViewPage.clickOnVersionsTab().checkUploadVersionsButtonIsDisplayed();
-        expect(cardViewPage.getActiveTab()).toEqual(CONSTANTS.METADATA.VERSIONS_TAB);
-        cardViewPage.checkVersionIsDisplayed(pdfFileModel.name);
-    });
-
-    it('Info icon', () => {
+    it('[C270952] Info icon', () => {
         contentServicesPage.navigateToDocumentList();
         adfViewerPage.viewFile(pdfFileModel.name);
         cardViewPage = adfViewerPage.clickInfoButton();
