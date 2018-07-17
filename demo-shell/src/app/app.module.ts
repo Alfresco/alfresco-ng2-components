@@ -57,7 +57,8 @@ import { ContentNodeSelectorComponent } from './components/content-node-selector
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { CardViewComponent } from './components/card-view/card-view.component';
-
+import { HeaderDataComponent } from './components/header-data/header-data.component';
+import { HeaderDataService } from './components/header-data/header-data.service';
 @NgModule({
     imports: [
         BrowserModule,
@@ -114,7 +115,8 @@ import { CardViewComponent } from './components/card-view/card-view.component';
         CardViewComponent,
         ContentNodeSelectorComponent,
         ReportIssueComponent,
-        TaskListDemoComponent
+        TaskListDemoComponent,
+        HeaderDataComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
@@ -134,7 +136,8 @@ import { CardViewComponent } from './components/card-view/card-view.component';
                 source: 'resources/lazy-loading'
             }
         },
-        PreviewService
+        PreviewService,
+        HeaderDataService
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
