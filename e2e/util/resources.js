@@ -129,6 +129,14 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/a_excel_file.xlsx",
             file_name: "a_excel_file.xlsx"
         },
+        DOCX_SUPPORTED: {
+            file_location: "/resources/adf/allFileTypes/a_file_supported.docx",
+            file_name: "a_file_supported.docx",
+            first_page_text: "A Journey into Test Frameworks",
+            second_page_text: "After looking into Spock’s GitHub",
+            last_page_text: "and provide feedback. The main advantages being the readability of the te",
+            last_page_number: "8"
+        },
         DOCX: {
             file_location: "/resources/adf/allFileTypes/a_file_unsupported.docx",
             file_name: "a_file_unsupported.docx"
@@ -197,7 +205,7 @@ exports.Files = {
         INI:{
             file_location: "/resources/adf/allFileTypes/desktop.ini",
             file_name: "desktop.ini"
-        },
+        }
     },
 
     PROFILE_IMAGES: {
@@ -208,7 +216,7 @@ exports.Files = {
         BPM: {
             file_location: "/resources/adf/activiti_profile_pic.png",
             file_name: "activiti_profile_pic.png"
-        },
+        }
     }
 
 };
