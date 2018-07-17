@@ -2,7 +2,7 @@
 
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu="toggleMenu">
-            <adf-layout-header title="{{ 'APP_LAYOUT.APP_NAME' | translate}}" color="primary" (clicked)=toggleMenu($event)>
+            <adf-layout-header [title]="title | translate" [logo]="logo" [showSidenavToggle]="showMenu" [color]="color" (clicked)=toggleMenu($event) >
 
             <div class="adf-app-layout-menu-spacer"></div>
 
@@ -43,7 +43,7 @@
         </ng-template>
     </adf-sidenav-layout-navigation>
 
-    <adf-sidenav-layout-content>
+    <adf-sidenav-layout-content >
         <ng-template>
             <router-outlet></router-outlet>
         </ng-template>

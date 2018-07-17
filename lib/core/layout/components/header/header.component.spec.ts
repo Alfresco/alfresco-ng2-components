@@ -89,7 +89,15 @@ describe('HeaderLayoutComponent', () => {
             expect(component.clicked.emit).toHaveBeenCalledWith(true);
         });
 
-        it('if showSidenavToggle is false the button menu should not be displayed', () => {
+        it('if showSidenavToggle is true the button menu should be displayed', () => {
+            component.showSidenavToggle = true;
+            fixture.detectChanges();
+
+            const button = fixture.nativeElement.querySelector('.adf-menu-icon');
+            expect(button === null).toBeFalsy();
+        });
+
+        it('if showSidenavToggle is false the button menu should  not be displayed', () => {
             component.showSidenavToggle = false;
             fixture.detectChanges();
 

@@ -1,0 +1,15 @@
+.content {
+    padding: 10px;
+    .mat-card {
+        padding: 16px 24px;
+        max-width: 100% !important;
+        max-height: 100% !important;
+
+        .mat-form-field, input, select {
+            display: block;
+            width: 100%;
+            height: 30px;
+            margin-bottom: 20px;
+        }
+    }
+}

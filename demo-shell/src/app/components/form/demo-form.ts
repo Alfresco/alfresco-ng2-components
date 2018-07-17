@@ -1214,7 +1214,7 @@ export class DemoForm {
                                 'readOnly': false,
                                 'overrideId': false,
                                 'colspan': 1,
-                                'placeholder': null,
+                                'placeholder': '10',
                                 'minLength': 0,
                                 'maxLength': 0,
                                 'minValue': null,
