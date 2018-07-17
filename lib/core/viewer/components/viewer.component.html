@@ -28,7 +28,7 @@
                         (click)="onNavigateBeforeClick()">
                         <mat-icon>navigate_before</mat-icon>
                     </button>
-                    <img class="adf-viewer__mimeicon" [src]="mimeType | adfMimeTypeIcon " data-automation-id="adf-file-thumbnail">
+                    <img class="adf-viewer__mimeicon" [src]="mimeType | adfMimeTypeIcon" data-automation-id="adf-file-thumbnail">
                     <span class="adf-viewer__display-name" id="adf-viewer-display-name">{{ displayName }}</span>
                     <button
                         *ngIf="allowNavigate && canNavigateNext"

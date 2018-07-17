@@ -285,27 +285,27 @@ describe('ViewerComponent', () => {
         describe('Toolbar', () => {
 
             it('should render fullscreen button', () => {
-                expect(element.querySelector('[data-automation-id="toolbar-fullscreen"]')).toBeDefined();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-fullscreen"]')).toBeDefined();
             });
 
             it('should not render fullscreen button', () => {
                 component.allowFullScreen = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-fullscreen"]')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-fullscreen"]')).toBeNull();
             });
 
             it('should render default download button', () => {
                 component.allowDownload = true;
 
-                expect(element.querySelector('[data-automation-id="toolbar-download"]')).toBeDefined();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-download"]')).toBeDefined();
             });
 
             it('should not render default download button', () => {
                 component.allowDownload = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-download"]')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-download"]')).toBeNull();
             });
 
             it('should invoke download action with the toolbar button', () => {
@@ -313,7 +313,7 @@ describe('ViewerComponent', () => {
                 spyOn(component, 'downloadContent').and.stub();
                 fixture.detectChanges();
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-download"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-download"]') as HTMLButtonElement;
                 button.click();
 
                 expect(component.downloadContent).toHaveBeenCalled();
@@ -327,7 +327,7 @@ describe('ViewerComponent', () => {
                     expect(e).not.toBeNull();
                 });
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-download"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-download"]') as HTMLButtonElement;
                 button.click();
             }));
 
@@ -335,14 +335,14 @@ describe('ViewerComponent', () => {
                 component.allowPrint = true;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-print"]')).toBeDefined();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-print"]')).toBeDefined();
             });
 
             it('should not render default print button', () => {
                 component.allowPrint = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-print"]')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-print"]')).toBeNull();
             });
 
             it('should invoke print action with the toolbar button', () => {
@@ -351,7 +351,7 @@ describe('ViewerComponent', () => {
 
                 spyOn(component, 'printContent').and.stub();
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-print"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-print"]') as HTMLButtonElement;
                 button.click();
 
                 expect(component.printContent).toHaveBeenCalled();
@@ -365,7 +365,7 @@ describe('ViewerComponent', () => {
                     expect(e).not.toBeNull();
                 });
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-print"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-print"]') as HTMLButtonElement;
                 button.click();
             }));
 
@@ -373,14 +373,14 @@ describe('ViewerComponent', () => {
                 component.allowShare = true;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-share"]')).toBeDefined();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-share"]')).toBeDefined();
             });
 
             it('should not render default share button', () => {
                 component.allowShare = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-share"]')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-share"]')).toBeNull();
             });
 
             it('should invoke share action with the toolbar button', () => {
@@ -389,7 +389,7 @@ describe('ViewerComponent', () => {
 
                 spyOn(component, 'shareContent').and.stub();
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-share"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-share"]') as HTMLButtonElement;
                 button.click();
 
                 expect(component.shareContent).toHaveBeenCalled();
@@ -403,7 +403,7 @@ describe('ViewerComponent', () => {
                     expect(e).not.toBeNull();
                 });
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-share"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-share"]') as HTMLButtonElement;
                 button.click();
             }));
 
