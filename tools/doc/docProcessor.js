@@ -154,6 +154,7 @@ function getSourceInfo(infoFolder) {
 
 
 function initSourceInfo(aggData, mdCache) {
+
     var app = new tdoc.Application({
         exclude: excludePatterns,
         ignoreCompilerErrors: true,
@@ -191,6 +192,19 @@ function initSourceInfo(aggData, mdCache) {
         }
         */
 
+    });
+}
+
+
+function initClassInfo(aggData) {
+    var yamlFilenames = fs.readdirSync(path.resolve(infoFolder));
+
+    aggData.classInfo = {};
+
+    yamlFilenames.forEach(yamlFilename => {
+        var classYamlText = fs.readFileSync(path.resolve(infoFolder, yamlFilename), "utf8");
+        var classYaml = jsyaml.safeLoad(classYamlText);
+        aggData.classInfo[classYaml.name] = new si.ComponentInfo(yaml);
     });
 }
 
@@ -254,8 +268,10 @@ files = files.filter(filename =>
 
 var mdCache = initMdCache(files);
 
-console.log("Parsing source files...");
-initSourceInfo(aggData, mdCache);
+console.log("Loading source data...");
+//initSourceInfo(aggData, mdCache);
+
+initClassInfo(aggData);
 
 /*
 console.log("Initialising...");

@@ -313,6 +313,8 @@ export class ComponentInfo {
     hasInputs: boolean;
     hasOutputs: boolean;
     hasMethods: boolean;
+    sourcePath: string;
+    sourceLine: number;
 
     /*
     constructor(classRef: DeclarationReflection) {
@@ -355,6 +357,9 @@ export class ComponentInfo {
         this.hasOutputs = false;
         this.hasMethods = false;
 
+        this.sourcePath = sourceData.source.path;
+        this.sourceLine = sourceData.source.line;
+        
         sourceData.items.forEach(item => {
             switch(item.type) {
                 case "property":

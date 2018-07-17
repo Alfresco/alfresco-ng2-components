@@ -284,6 +284,8 @@ var ComponentInfo = /** @class */ (function () {
         this.hasInputs = false;
         this.hasOutputs = false;
         this.hasMethods = false;
+        this.sourcePath = sourceData.source.path;
+        this.sourceLine = sourceData.source.line;
         sourceData.items.forEach(function (item) {
             switch (item.type) {
                 case "property":

@@ -11,7 +11,7 @@
 <% if ((typeof sig.parameters !== "undefined") && (sig.parameters.length > 0)) { -%>
 <% sig.parameters.forEach((param) => { -%>
         - id: <%= param.name %>
-          type: <%- param.type.name %>
+          type: <%- include("type", {type: param.type}).trim() %>
           description: <%- param.comment ? param.comment.text : "" %>
           defaultValue: <%- (typeof param.defaultValue !== "undefined") ? param.defaultValue : "" %>
           flags:
@@ -24,5 +24,5 @@
 <% }) -%>
 <% } -%>
       return:
-        type: <%= sig.type.name %>
+        type: <%- include("type", {type: sig.type}).trim() %>
         summary: <%- ((typeof sig.comment !== "undefined") && (typeof sig.comment.returns !== "undefined")) ? sig.comment.returns : "" %>

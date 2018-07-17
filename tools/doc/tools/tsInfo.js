@@ -92,10 +92,12 @@ function updateFile(tree, pathname, aggData, errorMessages) {
     }
     return true;
 }
-function initialCap(str) {
+/*
+function initialCap(str: string) {
     return str[0].toUpperCase() + str.substr(1);
 }
-/*
+
+
 function angNameToClassName(rawName: string) {
     if (nameExceptions[rawName])
         return nameExceptions[rawName];

@@ -2,6 +2,9 @@ items:
   - uid: <%= name %>
     name: <%= name %>
     fullName: <%= name %>
+    source:
+      path: <%= sources[0].fileName %>
+      startLine: <%= sources[0].line %>
     children:
 <%_ if (typeof children !== "undefined") { -%>
 <%_ children.forEach((child) => { -%>
