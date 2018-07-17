@@ -16,12 +16,9 @@
  */
 
 export interface FacetQuery {
-    query: string;
     label: string;
-}
+    query: string;
 
-export interface ResponseFacetQuery {
-    label?: string;
-    filterQuery?: string;
+    checked?: boolean;
     count?: number;
 }

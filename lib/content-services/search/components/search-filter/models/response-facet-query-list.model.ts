@@ -15,23 +15,20 @@
  * limitations under the License.
  */
 
-import { ResponseFacetQuery } from '../../../facet-query.interface';
+import { FacetQuery } from '../../../facet-query.interface';
 import { SearchFilterList } from './search-filter-list.model';
 
-export class ResponseFacetQueryList extends SearchFilterList<ResponseFacetQuery> {
-    constructor(items: ResponseFacetQuery[] = [], pageSize: number = 5) {
+export class ResponseFacetQueryList extends SearchFilterList<FacetQuery> {
+    constructor(items: FacetQuery[] = [], pageSize: number = 5) {
         super(
             items
                 .filter(item => {
                     return item.count > 0;
-                })
-                .map(item => {
-                    return <ResponseFacetQuery> { ...item };
                 }),
             pageSize
         );
 
-        this.filter = (query: ResponseFacetQuery) => {
+        this.filter = (query: FacetQuery) => {
             if (this.filterText && query.label) {
                 const pattern = (this.filterText || '').toLowerCase();
                 const label = query.label.toLowerCase();

@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+import { SearchFilterList } from './components/search-filter/models/search-filter-list.model';
+import { FacetFieldBucket } from './facet-field-bucket.interface';
+
 export interface FacetField {
     field: string;
     label: string;
@@ -23,6 +26,8 @@ export interface FacetField {
     offset?: number;
     prefix?: string;
 
+    buckets?: SearchFilterList<FacetFieldBucket>;
     pageSize?: number;
-    $checked?: boolean;
+    currentPageSize?: number;
+    checked?: boolean;
 }
