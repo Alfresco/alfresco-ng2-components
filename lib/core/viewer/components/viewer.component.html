@@ -11,7 +11,7 @@
                 <adf-toolbar-title>
                     <button *ngIf="allowGoBack"
                         class="adf-viewer-close-button"
-                        data-automation-id="toolbar-back"
+                        data-automation-id="adf-toolbar-back"
                         mat-icon-button
                         title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
                         (click)="onBackButtonClick()">
@@ -22,17 +22,17 @@
                 <div fxFlex="1 1 auto" class="adf-viewer__file-title">
                     <button
                         *ngIf="allowNavigate && canNavigateBefore"
-                        data-automation-id="toolbar-pref-file"
+                        data-automation-id="adf-toolbar-pref-file"
                         mat-icon-button
                         title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
                         (click)="onNavigateBeforeClick()">
                         <mat-icon>navigate_before</mat-icon>
                     </button>
-                    <img class="adf-viewer__mimeicon" [src]="mimeType | adfMimeTypeIcon">
+                    <img class="adf-viewer__mimeicon" [src]="mimeType | adfMimeTypeIcon " data-automation-id="adf-file-thumbnail">
                     <span class="adf-viewer__display-name" id="adf-viewer-display-name">{{ displayName }}</span>
                     <button
                         *ngIf="allowNavigate && canNavigateNext"
-                        data-automation-id="toolbar-next-file"
+                        data-automation-id="adf-toolbar-next-file"
                         mat-icon-button
                         title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
                         (click)="onNavigateNextClick()">
@@ -42,11 +42,11 @@
 
                 <ng-content select="adf-viewer-toolbar-actions"></ng-content>
 
-                <ng-container *ngIf="mnuOpenWith">
+                <ng-container *ngIf="mnuOpenWith" data-automation-id='adf-toolbar-custom-btn'>
                     <button
                         mat-button
                         [matMenuTriggerFor]="mnuOpenWith"
-                        data-automation-id="toolbar-open-with">
+                        data-automation-id="adf-toolbar-open-with">
                         <span>{{ 'ADF_VIEWER.ACTIONS.OPEN_WITH' | translate }}</span>
                         <mat-icon>arrow_drop_down</mat-icon>
                     </button>
@@ -61,7 +61,7 @@
                     *ngIf="allowDownload"
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}"
-                    data-automation-id="toolbar-download"
+                    data-automation-id="adf-toolbar-download"
                     (click)="downloadContent()">
                     <mat-icon>file_download</mat-icon>
                 </button>
@@ -70,7 +70,7 @@
                     *ngIf="allowPrint"
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.PRINT' | translate }}"
-                    data-automation-id="toolbar-print"
+                    data-automation-id="adf-toolbar-print"
                     (click)="printContent()">
                     <mat-icon>print</mat-icon>
                 </button>
@@ -79,7 +79,7 @@
                     *ngIf="allowShare"
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.SHARE' | translate }}"
-                    data-automation-id="toolbar-share"
+                    data-automation-id="adf-toolbar-share"
                     (click)="shareContent()">
                     <mat-icon>share</mat-icon>
                 </button>
@@ -88,7 +88,7 @@
                     *ngIf="viewerType !== 'media' && allowFullScreen"
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
-                    data-automation-id="toolbar-fullscreen"
+                    data-automation-id="adf-toolbar-fullscreen"
                     (click)="enterFullScreen()">
                     <mat-icon>fullscreen</mat-icon>
                 </button>
@@ -98,7 +98,7 @@
                         mat-icon-button
                         [matMenuTriggerFor]="mnuMoreActions"
                         title="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}"
-                        data-automation-id="toolbar-more-actions">
+                        data-automation-id="adf-toolbar-more-actions">
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #mnuMoreActions="matMenu" [overlapTrigger]="false">
@@ -112,7 +112,7 @@
                     <button
                         mat-icon-button
                         title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
-                        data-automation-id="toolbar-sidebar"
+                        data-automation-id="adf-toolbar-sidebar"
                         [color]="showSidebar ? 'accent' : 'default'"
                         (click)="toggleSidebar($event)">
                         <mat-icon>info_outline</mat-icon>
@@ -161,7 +161,7 @@
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'media'">
-                            <adf-media-player [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile" [nameFile]="displayName"></adf-media-player>
+                            <adf-media-player id="adf-mdedia-player" [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile" [nameFile]="displayName"></adf-media-player>
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'text'">

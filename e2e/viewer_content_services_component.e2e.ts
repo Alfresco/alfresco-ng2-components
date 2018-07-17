@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import Util = require('./util/util');
 import TestConfig = require('./test.config');
 
 import LoginPage = require('./pages/adf/loginPage');
@@ -24,7 +23,6 @@ import ViewerPage = require('./pages/adf/viewerPage');
 
 import resources = require('./util/resources');
 
-import path = require('path');
 import FileModel = require('./models/ACS/fileModel');
 import AcsUserModel = require('./models/ACS/acsUserModel');
 
@@ -37,17 +35,14 @@ describe('Content Services Viewer', () => {
     let viewerPage = new ViewerPage();
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
-
-    let defaultHeight;
-    let defaultWidth;
-    let zoomedInHeight;
-    let zoomedInWidth;
-    let scaledHeight;
-    let scaledWidth;
-    let zoomedOutHeight;
-    let zoomedOutWidth;
+    let zoom;
 
     let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    let docxFile = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location,
+        'name': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
+        'firstPageText': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.first_page_text
+    });
     let jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
@@ -66,13 +61,6 @@ describe('Content Services Viewer', () => {
         'firstPageText': resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });
 
-    let downloadDir = path.join(__dirname, '/downloads');
-
-    let downloadedPdfFile = path.join(downloadDir, pdfFile.name);
-    let downloadedJpgFile = path.join(downloadDir, jpgFile.name);
-    let downloadedMp4File = path.join(downloadDir, mp4File.name);
-    let downloadedPagesFile = path.join(downloadDir, pagesFile.name);
-
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();
 
@@ -89,6 +77,9 @@ describe('Content Services Viewer', () => {
 
         let pdfFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
         Object.assign(pdfFile, pdfFileUploaded.entry);
+
+        let docxFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, docxFile.location, docxFile.name, '-my-');
+        Object.assign(docxFile, docxFileUploaded.entry);
 
         let jpgFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFile.location, jpgFile.name, '-my-');
         Object.assign(jpgFile, jpgFileUploaded.entry);
@@ -109,116 +100,127 @@ describe('Content Services Viewer', () => {
         done();
     });
 
-    // afterAll((done) => {
-    //     NodesAPI.deleteContent(acsUser, pdfFile.getId(), () => {
-    //         done();
-    //     });
-    //
-    //     NodesAPI.deleteContent(acsUser, jpgFile.getId(), () => {
-    //         done();
-    //     });
-    //
-    //     NodesAPI.deleteContent(acsUser, mp4File.getId(), () => {
-    //         done();
-    //     });
-    //
-    //     NodesAPI.deleteContent(acsUser, pagesFile.getId(), () => {
-    //         done();
-    //     });
-    //
-    //     NodesAPI.deleteContent(acsUser, pptFile.getId(), () => {
-    //         done();
-    //     });
-    // });
+    /*afterAll((done) => {
+        NodesAPI.deleteContent(acsUser, pdfFile.getId(), () => {
+            done();
+        });
 
-    it('1. Open viewer for a .pdf file', () => {
+        NodesAPI.deleteContent(acsUser, jpgFile.getId(), () => {
+            done();
+        });
+
+        NodesAPI.deleteContent(acsUser, mp4File.getId(), () => {
+            done();
+        });
+
+        NodesAPI.deleteContent(acsUser, pagesFile.getId(), () => {
+            done();
+        });
+
+        NodesAPI.deleteContent(acsUser, pptFile.getId(), () => {
+            done();
+        });
+    });*/
+
+    it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', () => {
         contentServicesPage.checkAcsContainer();
+
         viewerPage.viewFile(pdfFile.name);
+
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.checkFileThumbnailIsDisplayed();
         viewerPage.checkFileNameIsDisplayed(pdfFile.name);
+        viewerPage.checkFileThumbnailIsDisplayed();
         viewerPage.checkDownloadButtonIsDisplayed();
+        viewerPage.checkFullScreenButtonIsDisplayed();
         viewerPage.checkInfoButtonIsDisplayed();
         viewerPage.checkPreviousPageButtonIsDisplayed();
         viewerPage.checkNextPageButtonIsDisplayed();
         viewerPage.checkPageSelectorInputIsDisplayed('1');
+        viewerPage.checkPercentageIsDisplayed();
         viewerPage.checkZoomInButtonIsDisplayed();
         viewerPage.checkZoomOutButtonIsDisplayed();
         viewerPage.checkScalePageButtonIsDisplayed();
     });
 
-    it('2. Use viewer pagination', () => {
+    it('[C260040] Should be able to change pages and zoom when .pdf file is open', () => {
         viewerPage.clickNextPageButton();
         viewerPage.checkFileContent('2', pdfFile.secondPageText);
         viewerPage.checkPageSelectorInputIsDisplayed('2');
+
         viewerPage.clickPreviousPageButton();
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.checkPageSelectorInputIsDisplayed('1');
-        viewerPage.enterPage(pdfFile.lastPageNumber);
-        viewerPage.checkFileContent(pdfFile.lastPageNumber, pdfFile.lastPageText);
-        viewerPage.checkPageSelectorInputIsDisplayed(pdfFile.lastPageNumber);
 
-        viewerPage.canvasHeight().then(function (value) {
-            defaultHeight = parseInt(value, 10);
-        });
-        viewerPage.canvasWidth().then(function (value) {
-            defaultWidth = parseInt(value, 10);
-        });
+        viewerPage.clearPageNumber();
+        viewerPage.checkPageSelectorInputIsDisplayed('');
+
+        zoom = viewerPage.getZoom();
         viewerPage.clickZoomInButton();
-        viewerPage.canvasHeight().then(function (value) {
-            zoomedInHeight = parseInt(value, 10);
-            expect(zoomedInHeight).toBeGreaterThan(defaultHeight);
-        });
-        viewerPage.canvasWidth().then(function (value) {
-            zoomedInWidth = parseInt(value, 10);
-            expect(zoomedInWidth).toBeGreaterThan(defaultWidth);
-        });
-        viewerPage.clickScalePageButton();
-        viewerPage.canvasHeight().then(function (value) {
-            scaledHeight = parseInt(value, 10);
-            expect(scaledHeight).toEqual(defaultHeight);
-        });
-        viewerPage.canvasWidth().then(function (value) {
-            scaledWidth = parseInt(value, 10);
-            expect(scaledWidth).toEqual(defaultWidth);
-        });
-        viewerPage.clickZoomOutButton();
-        viewerPage.canvasHeight().then(function (value) {
-            zoomedOutHeight = parseInt(value, 10);
-            expect(zoomedOutHeight).toBeLessThan(defaultHeight);
-        });
-        viewerPage.canvasWidth().then(function (value) {
-            zoomedOutWidth = parseInt(value, 10);
-            expect(zoomedOutWidth).toBeLessThan(defaultWidth);
-        });
-    });
+        viewerPage.checkZoomedIn(zoom);
 
-    it('3. Use viewer toolbar', () => {
-        viewerPage.clickDownloadButton();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsNotDisplayed();
-        expect(Util.fileExists(downloadedPdfFile, 10)).toBe(true);
+        zoom = viewerPage.getZoom();
+        viewerPage.clickZoomOutButton();
+        viewerPage.checkZoomedOut(zoom);
+
         viewerPage.clickCloseButton();
     });
 
-    it('4. Open viewer for a .jpg file', () => {
+    it('[C260042] Should be able to download, open full-screen and Info container from the Viewer', () => {
         viewerPage.viewFile(jpgFile.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsNotDisplayed();
+        viewerPage.checkImgContainerIsDisplayed();
+
+        viewerPage.checkFullScreenButtonIsDisplayed();
+        viewerPage.clickFullScreenButton();
+
+        viewerPage.exitFullScreen();
+
         viewerPage.checkDownloadButtonIsDisplayed();
         viewerPage.clickDownloadButton();
-        viewerPage.checkFileThumbnailIsDisplayed();
-        viewerPage.checkFileNameIsDisplayed(jpgFile.name);
-        expect(Util.fileExists(downloadedJpgFile, 10)).toBe(true);
+
         viewerPage.clickCloseButton();
     });
 
-    it('5. Open viewer for a .ppt file converted to .pdf', () => {
+    it('[C260052] Should display image, toolbar and pagination when opening a .jpg file', () => {
+        viewerPage.viewFile(jpgFile.name);
+        viewerPage.checkImgContainerIsDisplayed();
+
+        viewerPage.checkCloseButtonIsDisplayed();
+        viewerPage.checkFileNameIsDisplayed(jpgFile.name);
+        viewerPage.checkFileThumbnailIsDisplayed();
+        viewerPage.checkDownloadButtonIsDisplayed();
+        viewerPage.checkFullScreenButtonIsDisplayed();
+        viewerPage.checkInfoButtonIsDisplayed();
+        viewerPage.checkZoomInButtonIsDisplayed();
+        viewerPage.checkZoomOutButtonIsDisplayed();
+        viewerPage.checkPercentageIsDisplayed();
+        viewerPage.checkRotateLeftButtonIsDisplayed();
+        viewerPage.checkRotateRightButtonIsDisplayed();
+        viewerPage.checkScaleImgButtonIsDisplayed();
+    });
+
+    it('[C260483] Should be able to zoom and rotate image when .jpg file is open', () => {
+        zoom = viewerPage.getZoom();
+        viewerPage.clickZoomInButton();
+        viewerPage.checkZoomedIn(zoom);
+
+        zoom = viewerPage.getZoom();
+        viewerPage.clickZoomOutButton();
+        viewerPage.checkZoomedOut(zoom);
+
+        viewerPage.clickRotateLeftButton();
+        viewerPage.checkRotation('transform: scale(1, 1) rotate(-90deg) translate(0px, 0px);');
+
+        viewerPage.clickScaleImgButton();
+        viewerPage.checkRotation('transform: scale(1, 1) rotate(0deg) translate(0px, 0px);');
+
+        viewerPage.clickRotateRightButton();
+        viewerPage.checkRotation('transform: scale(1, 1) rotate(90deg) translate(0px, 0px);');
+
+        viewerPage.clickCloseButton();
+    });
+
+    it('[C279922] Open viewer for a .ppt file', () => {
         viewerPage.viewFile(pptFile.name);
         viewerPage.checkFileContent('1', pptFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();
@@ -235,32 +237,53 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('6. Open viewer for an unsupported file', () => {
-        viewerPage.viewFile(pagesFile.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsNotDisplayed();
+    it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', () => {
+        contentServicesPage.checkAcsContainer();
+
+        viewerPage.viewFile(docxFile.name);
+
+        viewerPage.checkFileContent('1', docxFile.firstPageText);
+        viewerPage.checkCloseButtonIsDisplayed();
         viewerPage.checkFileThumbnailIsDisplayed();
+        viewerPage.checkFileNameIsDisplayed(docxFile.name);
         viewerPage.checkDownloadButtonIsDisplayed();
-        viewerPage.clickDownloadButton();
-        expect(Util.fileExists(downloadedPagesFile, 10)).toBe(true);
-        viewerPage.checkFileNameIsDisplayed(pagesFile.name);
+        viewerPage.checkInfoButtonIsDisplayed();
+        viewerPage.checkPreviousPageButtonIsDisplayed();
+        viewerPage.checkNextPageButtonIsDisplayed();
+        viewerPage.checkPageSelectorInputIsDisplayed('1');
+        viewerPage.checkZoomInButtonIsDisplayed();
+        viewerPage.checkZoomOutButtonIsDisplayed();
+        viewerPage.checkScalePageButtonIsDisplayed();
         viewerPage.clickCloseButton();
     });
 
-    it('7. Open viewer for a .mp4 file', () => {
+    it('[C260054] Should display "Preview couldn\'t be loaded" and viewer toolbar when opening an unsupported file', () => {
+        viewerPage.viewFile(pagesFile.name);
+
+        viewerPage.checkCloseButtonIsDisplayed();
+        viewerPage.checkFileNameIsDisplayed(pagesFile.name);
+        viewerPage.checkFileThumbnailIsDisplayed();
+        viewerPage.checkDownloadButtonIsDisplayed();
+        viewerPage.checkInfoButtonIsDisplayed();
+
+        viewerPage.checkZoomInButtonIsNotDisplayed();
+
+        viewerPage.clickCloseButton();
+    });
+
+    it('[C260056] Should display video and viewer toolbar when opening a media file', () => {
         viewerPage.viewFile(mp4File.name);
+
         viewerPage.checkMediaPlayerContainerIsDisplayed();
-        viewerPage.clickDownloadButton();
-        expect(Util.fileExists(downloadedMp4File, 10)).toBe(true);
+        viewerPage.checkCloseButtonIsDisplayed();
         viewerPage.checkFileThumbnailIsDisplayed();
         viewerPage.checkFileNameIsDisplayed(mp4File.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsNotDisplayed();
         viewerPage.checkDownloadButtonIsDisplayed();
+        viewerPage.checkInfoButtonIsDisplayed();
+        viewerPage.checkFullScreenButtonIsNotDisplayed();
+
+        viewerPage.checkZoomInButtonIsNotDisplayed();
+
         viewerPage.clickCloseButton();
     });
 });
