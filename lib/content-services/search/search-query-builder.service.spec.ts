@@ -212,7 +212,7 @@ describe('SearchQueryBuilder', () => {
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const field = builder.getFacetField('Missing');
 
-        expect(field).toBeUndefined();
+        expect(field).toBeFalsy();
     });
 
     xit('should build query and raise an event on update', async () => {

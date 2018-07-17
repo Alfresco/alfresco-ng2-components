@@ -21,6 +21,5 @@ export interface FacetFieldBucket {
     label: string;
     filterQuery: string;
 
-    $checked?: boolean;
-    $field?: string;
+    checked?: boolean;
 }

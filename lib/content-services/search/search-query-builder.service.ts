@@ -26,6 +26,7 @@ import { SearchConfiguration } from './search-configuration.interface';
 import { FacetQuery } from './facet-query.interface';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
 import { FacetField } from './facet-field.interface';
+import { FacetFieldBucket } from './facet-field-bucket.interface';
 
 @Injectable()
 export class SearchQueryBuilderService {
@@ -40,6 +41,9 @@ export class SearchQueryBuilderService {
     filterQueries: FilterQuery[] = [];
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: Array<SearchSortingDefinition> = [];
+
+    protected userFacetQueries: FacetQuery[] = [];
+    protected userFacetBuckets: FacetFieldBucket[] = [];
 
     get userQuery(): string {
         return this._userQuery;
@@ -65,9 +69,45 @@ export class SearchQueryBuilderService {
             this.config = JSON.parse(JSON.stringify(template));
             this.categories = (this.config.categories || []).filter(category => category.enabled);
             this.filterQueries = this.config.filterQueries || [];
+            this.userFacetBuckets = [];
+            this.userFacetQueries = [];
             if (this.config.sorting) {
                 this.sorting = this.config.sorting.defaults || [];
             }
+        }
+    }
+
+    addUserFacetQuery(query: FacetQuery) {
+        if (query) {
+            const existing = this.userFacetQueries.find(facetQuery => facetQuery.label === query.label);
+            if (existing) {
+                existing.query = query.query;
+            } else {
+                this.userFacetQueries.push({ ...query });
+            }
+        }
+    }
+
+    removeUserFacetQuery(query: FacetQuery) {
+        if (query) {
+            this.userFacetQueries = this.userFacetQueries
+                .filter(facetQuery => facetQuery.label !== query.label);
+        }
+    }
+
+    addUserFacetBucket(bucket: FacetFieldBucket) {
+        if (bucket) {
+            const existing = this.userFacetBuckets.find(facetBucket => facetBucket.label === bucket.label);
+            if (!existing) {
+                this.userFacetBuckets.push(bucket);
+            }
+        }
+    }
+
+    removeUserFacetBucket(bucket: FacetFieldBucket) {
+        if (bucket) {
+            this.userFacetBuckets = this.userFacetBuckets
+                .filter(facetBucket => facetBucket.label !== bucket.label);
         }
     }
 
@@ -89,7 +129,10 @@ export class SearchQueryBuilderService {
 
     getFacetQuery(label: string): FacetQuery {
         if (label && this.hasFacetQueries) {
-            return this.config.facetQueries.queries.find(query => query.label === label);
+            const result = this.config.facetQueries.queries.find(query => query.label === label);
+            if (result) {
+                return { ...result };
+            }
         }
         return null;
     }
@@ -97,7 +140,10 @@ export class SearchQueryBuilderService {
     getFacetField(label: string): FacetField {
         if (label) {
             const fields = this.config.facetFields || [];
-            return fields.find(field => field.label === label);
+            const result = fields.find(field => field.label === label);
+            if (result) {
+                return { ...result };
+            }
         }
         return null;
     }
@@ -175,7 +221,7 @@ export class SearchQueryBuilderService {
         return false;
     }
 
-    private get sort(): RequestSortDefinitionInner[] {
+    protected get sort(): RequestSortDefinitionInner[] {
         return this.sorting.map(def => {
             return {
                 type: def.type,
@@ -185,7 +231,7 @@ export class SearchQueryBuilderService {
         });
     }
 
-    private get facetQueries(): FacetQuery[] {
+    protected get facetQueries(): FacetQuery[] {
         if (this.hasFacetQueries) {
             return this.config.facetQueries.queries.map(query => {
                 return <FacetQuery> { ...query };
@@ -195,7 +241,7 @@ export class SearchQueryBuilderService {
         return null;
     }
 
-    private getFinalQuery(): string {
+    protected getFinalQuery(): string {
         let query = '';
 
         this.categories.forEach(facet => {
@@ -208,14 +254,28 @@ export class SearchQueryBuilderService {
             }
         });
 
-        const result = [this.userQuery, query]
+        let result = [this.userQuery, query]
             .filter(entry => entry)
             .join(' AND ');
+
+        if (this.userFacetQueries && this.userFacetQueries.length > 0) {
+            const combined = this.userFacetQueries
+                .map(userQuery => userQuery.query)
+                .join(' OR ');
+            result += ` AND (${combined})`;
+        }
+
+        if (this.userFacetBuckets && this.userFacetBuckets.length > 0) {
+            const combined = this.userFacetBuckets
+                .map(bucket => bucket.filterQuery)
+                .join(' OR ');
+            result += ` AND (${combined})`;
+        }
 
         return result;
     }
 
-    private get facetFields(): RequestFacetFields {
+    protected get facetFields(): RequestFacetFields {
         const facetFields = this.config.facetFields;
 
         if (facetFields && facetFields.length > 0) {
