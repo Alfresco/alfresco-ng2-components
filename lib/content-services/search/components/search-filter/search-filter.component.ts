@@ -45,6 +45,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     facetQueriesExpanded = false;
     canResetSelectedQueries = false;
 
+    selectedFacetQueries: Array<FacetQuery> = [];
+    selectedBuckets: Array<FacetFieldBucket> = [];
+
     constructor(public queryBuilder: SearchQueryBuilderService,
                 private searchService: SearchService,
                 private translationService: TranslationService) {
@@ -78,32 +81,79 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     onToggleFacetQuery(event: MatCheckboxChange, facetQuery: FacetQuery) {
         if (event && facetQuery) {
-            facetQuery.checked = event.checked;
-
             if (event.checked) {
-                this.queryBuilder.addUserFacetQuery(facetQuery);
-                this.canResetSelectedQueries = true;
+                this.selectFacetQuery(facetQuery);
             } else {
-                this.queryBuilder.removeUserFacetQuery(facetQuery);
-                if (this.responseFacetQueries) {
-                    this.canResetSelectedQueries = this.responseFacetQueries.items.some(item => item.checked);
+                this.unselectFacetQuery(facetQuery);
+            }
+        }
+    }
+
+    selectFacetQuery(query: FacetQuery) {
+        if (query) {
+            query.checked = true;
+            this.queryBuilder.addUserFacetQuery(query);
+            this.updateSelectedFields();
+            this.queryBuilder.update();
+        }
+    }
+
+    unselectFacetQuery(query: FacetQuery) {
+        if (query) {
+            query.checked = false;
+            this.queryBuilder.removeUserFacetQuery(query);
+            this.updateSelectedFields();
+            this.queryBuilder.update();
+        }
+    }
+
+    private updateSelectedBuckets() {
+        if (this.responseFacetFields) {
+            this.selectedBuckets = [];
+            for (let field of this.responseFacetFields) {
+                if (field.buckets) {
+                    this.selectedBuckets.push(...field.buckets.items.filter(bucket => bucket.checked));
                 }
             }
+        } else {
+            this.selectedBuckets = [];
+        }
+    }
 
-            this.queryBuilder.update();
+    private updateSelectedFields() {
+        if (this.responseFacetQueries) {
+            this.selectedFacetQueries = this.responseFacetQueries.items.filter(item => item.checked);
+            this.canResetSelectedQueries = this.selectedFacetQueries.length > 0;
+        } else {
+            this.selectedFacetQueries = [];
+            this.canResetSelectedQueries = false;
         }
     }
 
     onToggleBucket(event: MatCheckboxChange, bucket: FacetFieldBucket) {
         if (event && bucket) {
-            bucket.checked = event.checked;
-
             if (event.checked) {
-                this.queryBuilder.addUserFacetBucket(bucket);
+                this.selectFacetBucket(bucket);
             } else {
-                this.queryBuilder.removeUserFacetBucket(bucket);
+                this.unselectFacetBucket(bucket);
             }
+        }
+    }
 
+    selectFacetBucket(bucket: FacetFieldBucket) {
+        if (bucket) {
+            bucket.checked = true;
+            this.queryBuilder.addUserFacetBucket(bucket);
+            this.updateSelectedBuckets();
+            this.queryBuilder.update();
+        }
+    }
+
+    unselectFacetBucket(bucket: FacetFieldBucket) {
+        if (bucket) {
+            bucket.checked = false;
+            this.queryBuilder.removeUserFacetBucket(bucket);
+            this.updateSelectedBuckets();
             this.queryBuilder.update();
         }
     }
@@ -114,6 +164,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 query.checked = false;
                 this.queryBuilder.removeUserFacetQuery(query);
             }
+            this.selectedFacetQueries = [];
             this.canResetSelectedQueries = false;
             this.queryBuilder.update();
         }
@@ -132,6 +183,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 bucket.checked = false;
                 this.queryBuilder.removeUserFacetBucket(bucket);
             }
+            this.updateSelectedBuckets();
             this.queryBuilder.update();
         }
     }

@@ -1,14 +1,14 @@
 <mat-chip-list>
-    <ng-container *ngIf="searchFilter && searchFilter.selectedFacetQueries">
+    <ng-container *ngIf="searchFilter && searchFilter.selectedFacetQueries.length">
         <mat-chip
-            *ngFor="let label of searchFilter.selectedFacetQueries"
+            *ngFor="let query of searchFilter.selectedFacetQueries"
             [removable]="true"
-            (remove)="searchFilter.unselectFacetQuery(label)">
-            {{ label | translate }}
+            (remove)="searchFilter.unselectFacetQuery(query)">
+            {{ query.label | translate }}
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
     </ng-container>
-    <ng-container *ngIf="searchFilter && searchFilter.selectedBuckets">
+    <ng-container *ngIf="searchFilter && searchFilter.selectedBuckets.length">
         <mat-chip
             *ngFor="let bucket of searchFilter.selectedBuckets"
             [removable]="true"
