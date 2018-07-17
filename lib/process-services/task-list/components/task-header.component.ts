@@ -153,7 +153,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
                     value: this.formName,
                     key: 'formName',
-                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT')
+                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'),
+                    clickable: !!this.formName,
+                    icon: 'create'
                 }
             )
         ];
