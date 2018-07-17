@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ResponseFacetQuery, FacetQuery } from '../../../facet-query.interface';
+import { FacetQuery } from '../../../facet-query.interface';
 import { SearchFilterList } from './search-filter-list.model';
 
 export class ResponseFacetQueryList extends SearchFilterList<FacetQuery> {
@@ -28,7 +28,7 @@ export class ResponseFacetQueryList extends SearchFilterList<FacetQuery> {
             pageSize
         );
 
-        this.filter = (query: ResponseFacetQuery) => {
+        this.filter = (query: FacetQuery) => {
             if (this.filterText && query.label) {
                 const pattern = (this.filterText || '').toLowerCase();
                 const label = query.label.toLowerCase();

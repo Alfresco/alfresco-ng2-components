@@ -37,7 +37,7 @@
                 <ng-container *ngFor="let query of responseFacetQueries">
                     <mat-checkbox
                         [checked]="query.checked"
-                        (change)="onFacetQueryToggle($event, query)">
+                        (change)="onToggleFacetQuery($event, query)">
                         {{ query.label }} ({{ query.count }})
                     </mat-checkbox>
                 </ng-container>
@@ -66,9 +66,7 @@
     </ng-container>
 
     <ng-container *ngIf="responseFacetFields">
-        <mat-expansion-panel
-            *ngFor="let field of responseFacetFields"
-            [(expanded)]="field.expanded">
+        <mat-expansion-panel *ngFor="let field of responseFacetFields">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ field.label }}</mat-panel-title>
             </mat-expansion-panel-header>
@@ -90,8 +88,8 @@
             <div class="checklist">
                 <mat-checkbox
                     *ngFor="let bucket of field.buckets"
-                    [checked]="bucket.$checked"
-                    (change)="onFacetToggle($event, field, bucket)">
+                    [checked]="bucket.checked"
+                    (change)="onToggleBucket($event, bucket)">
                     {{ bucket.display || bucket.label }} ({{ bucket.count }})
                 </mat-checkbox>
             </div>

@@ -22,9 +22,3 @@ export interface FacetQuery {
     checked?: boolean;
     count?: number;
 }
-
-export interface ResponseFacetQuery {
-    label?: string;
-    filterQuery?: string;
-    count?: number;
-}
