@@ -54,6 +54,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { CardViewComponent } from './components/card-view/card-view.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
+import { HeaderDataComponent } from './components/header-data/header-data.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -84,6 +85,16 @@ export const appRoutes: Routes = [
             {
                 path: '',
                 component: CardViewComponent
+            }
+        ]
+    },
+    {
+        path: 'header-data',
+        component: AppLayoutComponent,
+        children: [
+            {
+                path: '',
+                component: HeaderDataComponent
             }
         ]
     },

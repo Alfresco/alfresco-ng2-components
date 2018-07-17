@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit } from '@angular/core';
 
 @Component({
     selector: 'adf-layout-header',
@@ -23,14 +23,20 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-layout-header' }
 })
-export class HeaderLayoutComponent {
+export class HeaderLayoutComponent implements OnInit {
     @Input() title: string;
-    @Input() logo: string = './assets/images/logo.png';
+    @Input() logo: string;
     @Input() color: string;
     @Input() showSidenavToggle: boolean = true;
     @Output() clicked = new EventEmitter<any>();
 
     toggleMenu() {
         this.clicked.emit(true);
+    }
+
+    ngOnInit() {
+        if (!this.logo) {
+            this.logo = './assets/images/logo.png';
+        }
     }
 }

@@ -1,0 +1,26 @@
+<div class="content header-data">
+    <h1>Header data</h1>
+    <mat-card>
+        <mat-checkbox [(ngModel)]="checkbox" (change)="hideButton()">Show menu button</mat-checkbox>
+
+        <div>
+            <label>Choose header color</label>
+            <select (change)="changeColor($event.target.value)">
+                <option value="primary">Primary</option>
+                <option value="accent">Accent</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Change title</label>
+            <input type="text" name="title" (keyup.enter)="submitTitle($event.target.value)" placeholder ="{{ 'APP_LAYOUT.APP_NAME' | translate}}">
+            <p>*press enter for submitting new title</p>
+        </div>
+
+        <div>
+            <label>Change logo</label>
+            <input type="text" placeholder ="URL path" (keyup.enter)="submitLogo($event.target.value)" >
+            <p>*press enter for submitting new logo</p>
+        </div>
+    </mat-card>
+</div>
