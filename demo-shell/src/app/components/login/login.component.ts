@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
     alfrescologin: any;
 
     customValidation: any;
-    customSuccessRouteURI: string = '';
-    customLogoImageURL: string = './assets/images/alfresco-logo.svg';
+    customSuccessRouteURI = '';
+    customLogoImageURL = './assets/images/alfresco-logo.svg';
 
     disableCsrf = false;
     showFooter = true;
@@ -78,14 +78,14 @@ export class LoginComponent implements OnInit {
     toggleSuccessRoute() {
         this.customSuccessRoute = !this.customSuccessRoute;
         if (!this.customSuccessRoute) {
-            this.customSuccessRouteURI = null
+            this.customSuccessRouteURI = null;
         }
     }
 
     toggleLogo() {
         this.customLogoImage = !this.customLogoImage;
         if (!this.customLogoImage) {
-            this.customLogoImageURL = null
+            this.customLogoImageURL = null;
         }
     }
 
