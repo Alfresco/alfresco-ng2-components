@@ -40,6 +40,16 @@ var ViewerToolbarPage = function () {
     var mediaContainer = element(by.css("adf-media-player[class='adf-media-player ng-star-inserted']"));
     var allPages = element.all(by.css("div[class='canvasWrapper'] > canvas")).first();
     var percentage = element(by.css("div[data-automation-id='adf-page-scale'"));
+    var thumbnailsBtn = element(by.css("button[data-automation-id='adf-thumbnails-button']"));
+    var thumbnailsContent = element(by.css("div[data-automation-id='adf-thumbnails-content']"));
+    var thumbnailsClose = element(by.css("button[data-automation-id='adf-thumbnails-close']"));
+    var secondThumbnail = element(by.css("adf-pdf-thumb > img[title='Page 2'"));
+    var lastThumbnailDisplayed = element.all(by.css("adf-pdf-thumb")).last();
+    var passwordDialog = element(by.css("adf-pdf-viewer-password-dialog"));
+    var passwordSubmit = element(by.css("button[data-automation-id='adf-password-dialog-submit']"));
+    var passwordSubmitDisabled = element(by.css("button[data-automation-id='adf-password-dialog-submit'][disabled]"));
+    var passwordInput = element(by.css("input[data-automation-id='adf-password-dialog-input']"));
+    var passwordError = element(by.css("mat-error[data-automation-id='adf-password-dialog-error']"));
 
     this.viewFile = function (fileName) {
         var fileView = element(by.xpath("//div[@class='document-list-container']//span[@title='" + fileName +"']"));
@@ -63,6 +73,63 @@ var ViewerToolbarPage = function () {
     this.exitFullScreen = function () {
         var jsCode = "document.exitFullscreen?document.exitFullscreen():document.webkitExitFullscreen&&document.webkitExitFullscreen();";
         browser.executeScript(jsCode);
+    };
+
+    this.enterPassword = function (password)
+    {
+        Util.waitUntilElementIsVisible(passwordInput);
+        passwordInput.clear();
+        passwordInput.sendKeys(password);
+    };
+
+    this.checkPasswordErrorIsDisplayed = function ()
+    {
+        Util.waitUntilElementIsVisible(passwordError);
+    };
+
+    this.checkPasswordInputIsDisplayed = function ()
+    {
+        Util.waitUntilElementIsVisible(passwordInput);
+    };
+
+    this.checkPasswordSubmitDisabledIsDisplayed = function ()
+    {
+        Util.waitUntilElementIsVisible(passwordSubmitDisabled);
+    };
+
+    this.checkPasswordDialogIsDisplayed = function ()
+    {
+        Util.waitUntilElementIsVisible(passwordDialog);
+    };
+
+    this.checkAllThumbnailsDisplayed = function (nbPages)
+    {
+        defaultThumbnailHeight = 143;
+        expect(thumbnailsContent.getAttribute('style')).toEqual("height: " + nbPages*defaultThumbnailHeight + "px; transform: translate(-50%, 0px);");
+    };
+
+    this.checkCurrentThumbnailIsSelected = function ()
+    {
+        selectedThumbnail = element(by.css("adf-pdf-thumb[class='pdf-thumbnails__thumb ng-star-inserted pdf-thumbnails__thumb--selected'] > img"));
+        pageSelectorInput.getAttribute('value').then(function (pageNumber) {
+            expect("Page " + pageNumber).toEqual(selectedThumbnail.getAttribute('title'));
+        });
+    };
+
+    this.checkThumbnailsCloseIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(thumbnailsClose);
+    };
+
+    this.checkThumbnailsBtnIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(thumbnailsBtn);
+    };
+
+    this.checkThumbnailsContentIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(thumbnailsContent);
+    };
+
+    this.checkThumbnailsContentIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(thumbnailsContent);
     };
 
     this.checkCloseButtonIsDisplayed = function () {
@@ -114,7 +181,7 @@ var ViewerToolbarPage = function () {
         Util.waitUntilElementIsVisible(pageSelectorInput);
         pageSelectorInput.getAttribute('value').then(function (pageNumber) {
             expect(pageNumber).toEqual(number);
-        })
+        });
     };
 
     this.checkImgContainerIsDisplayed = function () {
@@ -154,13 +221,11 @@ var ViewerToolbarPage = function () {
     this.checkZoomedIn = function (zoom)
     {
         expect(percentage.getText()).toBeGreaterThan(zoom);
-
     };
 
     this.checkZoomedOut = function (zoom)
     {
         expect(percentage.getText()).toBeLessThan(zoom);
-
     };
 
     this.checkRotateLeftButtonIsDisplayed = function () {
@@ -189,6 +254,34 @@ var ViewerToolbarPage = function () {
     this.checkCustomBtnDisplayed = function ()
     {
         Util.waitUntilElementIsVisible(customBtn);
+    };
+
+    this.clickPasswordSubmit = function ()
+    {
+        Util.waitUntilElementIsVisible(passwordSubmit);
+        passwordSubmit.click();
+    };
+
+    this.clickSecondThumbnail = function ()
+    {
+        Util.waitUntilElementIsClickable(secondThumbnail);
+        secondThumbnail.click();
+    };
+
+    this.clickLastThumbnailDisplayed = function ()
+    {
+        Util.waitUntilElementIsClickable(lastThumbnailDisplayed);
+        lastThumbnailDisplayed.click();
+    };
+
+    this.clickThumbnailsClose = function () {
+        Util.waitUntilElementIsClickable(thumbnailsClose);
+        thumbnailsClose.click();
+    };
+
+    this.clickThumbnailsBtn = function () {
+        Util.waitUntilElementIsClickable(thumbnailsBtn);
+        thumbnailsBtn.click();
     };
 
     this.clickScaleImgButton = function ()

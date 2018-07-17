@@ -37,7 +37,20 @@ describe('Content Services Viewer', () => {
     let loginPage = new LoginPage();
     let zoom;
 
-    let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    let pdfFile = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'firstPageText': resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
+        'secondPageText': resources.Files.ADF_DOCUMENTS.PDF.second_page_text,
+        'lastPageNumber': resources.Files.ADF_DOCUMENTS.PDF.last_page_number
+    });
+    let protectedFile = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_name,
+        'firstPageText': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.first_page_text,
+        'secondPageText': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.second_page_text,
+        'lastPageNumber': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.last_page_number,
+        'password': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.password,
+        'location': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_location
+    });
     let docxFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location,
         'name': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
@@ -51,9 +64,9 @@ describe('Content Services Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.MP4.file_location,
         'name': resources.Files.ADF_DOCUMENTS.MP4.file_name
     });
-    let pagesFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.PAGES.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.PAGES.file_name
+    let unsupportedFile = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location,
+        'name': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
     });
     let pptFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.PPT.file_location,
@@ -78,6 +91,9 @@ describe('Content Services Viewer', () => {
         let pdfFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
         Object.assign(pdfFile, pdfFileUploaded.entry);
 
+        let protectedFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, protectedFile.location, protectedFile.name, '-my-');
+        Object.assign(protectedFile, protectedFileUploaded.entry);
+
         let docxFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, docxFile.location, docxFile.name, '-my-');
         Object.assign(docxFile, docxFileUploaded.entry);
 
@@ -90,8 +106,8 @@ describe('Content Services Viewer', () => {
         let pptFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pptFile.location, pptFile.name, '-my-');
         Object.assign(pptFile, pptFileUploaded.entry);
 
-        let pagesFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pagesFile.location, pagesFile.name, '-my-');
-        Object.assign(pagesFile, pagesFileUploaded.entry);
+        let unsupportedFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, unsupportedFile.location, unsupportedFile.name, '-my-');
+        Object.assign(unsupportedFile, unsupportedFileUploaded.entry);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -104,19 +120,15 @@ describe('Content Services Viewer', () => {
         NodesAPI.deleteContent(acsUser, pdfFile.getId(), () => {
             done();
         });
-
         NodesAPI.deleteContent(acsUser, jpgFile.getId(), () => {
             done();
         });
-
         NodesAPI.deleteContent(acsUser, mp4File.getId(), () => {
             done();
         });
-
         NodesAPI.deleteContent(acsUser, pagesFile.getId(), () => {
             done();
         });
-
         NodesAPI.deleteContent(acsUser, pptFile.getId(), () => {
             done();
         });
@@ -155,13 +167,15 @@ describe('Content Services Viewer', () => {
         viewerPage.clearPageNumber();
         viewerPage.checkPageSelectorInputIsDisplayed('');
 
-        zoom = viewerPage.getZoom();
-        viewerPage.clickZoomInButton();
-        viewerPage.checkZoomedIn(zoom);
+        viewerPage.clickZoomOutButton();
 
         zoom = viewerPage.getZoom();
         viewerPage.clickZoomOutButton();
         viewerPage.checkZoomedOut(zoom);
+
+        zoom = viewerPage.getZoom();
+        viewerPage.clickZoomInButton();
+        viewerPage.checkZoomedIn(zoom);
 
         viewerPage.clickCloseButton();
     });
@@ -238,8 +252,6 @@ describe('Content Services Viewer', () => {
     });
 
     it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', () => {
-        contentServicesPage.checkAcsContainer();
-
         viewerPage.viewFile(docxFile.name);
 
         viewerPage.checkFileContent('1', docxFile.firstPageText);
@@ -258,10 +270,10 @@ describe('Content Services Viewer', () => {
     });
 
     it('[C260054] Should display "Preview couldn\'t be loaded" and viewer toolbar when opening an unsupported file', () => {
-        viewerPage.viewFile(pagesFile.name);
+        viewerPage.viewFile(unsupportedFile.name);
 
         viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.checkFileNameIsDisplayed(pagesFile.name);
+        viewerPage.checkFileNameIsDisplayed(unsupportedFile.name);
         viewerPage.checkFileThumbnailIsDisplayed();
         viewerPage.checkDownloadButtonIsDisplayed();
         viewerPage.checkInfoButtonIsDisplayed();
@@ -285,5 +297,69 @@ describe('Content Services Viewer', () => {
         viewerPage.checkZoomInButtonIsNotDisplayed();
 
         viewerPage.clickCloseButton();
+    });
+
+    it('[C261123] Should be able to preview all pages and navigate to a page when using thumbnails', () => {
+        viewerPage.viewFile(pdfFile.name);
+
+        viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        viewerPage.checkThumbnailsBtnIsDisplayed();
+        viewerPage.clickThumbnailsBtn();
+
+        viewerPage.checkThumbnailsContentIsDisplayed();
+        viewerPage.checkThumbnailsCloseIsDisplayed();
+        viewerPage.checkAllThumbnailsDisplayed(pdfFile.lastPageNumber);
+
+        viewerPage.clickSecondThumbnail();
+        viewerPage.checkFileContent('2', pdfFile.secondPageText);
+        viewerPage.checkCurrentThumbnailIsSelected();
+
+        viewerPage.checkPreviousPageButtonIsDisplayed();
+        viewerPage.clickPreviousPageButton();
+        viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        viewerPage.checkCurrentThumbnailIsSelected();
+
+        viewerPage.clickThumbnailsBtn();
+        viewerPage.checkThumbnailsContentIsNotDisplayed();
+        viewerPage.clickThumbnailsBtn();
+        viewerPage.checkThumbnailsCloseIsDisplayed();
+        viewerPage.clickThumbnailsClose();
+    });
+
+    it('[C268105] Should display current thumbnail when getting to the page following the last visible thumbnail', () => {
+        viewerPage.checkThumbnailsBtnIsDisplayed();
+        viewerPage.clickThumbnailsBtn();
+        viewerPage.clickLastThumbnailDisplayed();
+        viewerPage.checkCurrentThumbnailIsSelected();
+
+        viewerPage.checkNextPageButtonIsDisplayed();
+        viewerPage.clickNextPageButton();
+        viewerPage.checkCurrentThumbnailIsSelected();
+
+        viewerPage.clickCloseButton();
+    });
+
+    it('[C269109] Should not be able to open thumbnail pane before the pdf is loaded', () => {
+        viewerPage.viewFile(pdfFile.name);
+        viewerPage.clickThumbnailsBtn();
+        viewerPage.checkThumbnailsContentIsNotDisplayed();
+
+        viewerPage.clickCloseButton();
+    });
+
+    it('[C268901] Should need a password when opening a protected file', () => {
+        viewerPage.viewFile(protectedFile.name);
+
+        viewerPage.checkPasswordDialogIsDisplayed();
+        viewerPage.checkPasswordSubmitDisabledIsDisplayed();
+
+        viewerPage.enterPassword('random password');
+        viewerPage.clickPasswordSubmit();
+        viewerPage.checkPasswordErrorIsDisplayed();
+        viewerPage.checkPasswordInputIsDisplayed();
+
+        viewerPage.enterPassword(protectedFile.password);
+        viewerPage.clickPasswordSubmit();
+        viewerPage.checkFileContent('1', protectedFile.firstPageText);
     });
 });
