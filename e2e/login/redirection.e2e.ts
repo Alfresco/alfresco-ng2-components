@@ -122,6 +122,12 @@ describe('Login component', () => {
 
             browser.get(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
 
+            browser.getCurrentUrl().then((actualUrl) => {
+                expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+            });
+
+            browser.driver.sleep(1000);
+
             navigationBarPage.clickLogoutButton();
 
             browser.driver.sleep(1000);
