@@ -27,6 +27,7 @@ import { UploadActions } from './actions/ACS/upload.actions';
 import ErrorPage = require('./pages/adf/documentListErrorPage');
 import FileModel = require('./models/ACS/fileModel');
 import moment from 'moment-es6';
+import { browser } from '../node_modules/protractor';
 
 describe('Document List Component', () => {
 
@@ -34,8 +35,9 @@ describe('Document List Component', () => {
     let contentServicesPage = new ContentServicesPage();
     let navBar = new NavigationBarPage();
     let errorPage = new ErrorPage();
-    let uploadedFolder;
     let privateSite;
+    let uploadedFolder;
+    let uploadActions = new UploadActions();
 
     beforeAll(() => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -49,8 +51,6 @@ describe('Document List Component', () => {
         let acsUser = new AcsUserModel();
 
         beforeAll(async (done) => {
-            let uploadActions = new UploadActions();
-
             let siteName = `PRIVATE_TEST_SITE_${Util.generateRandomString()}`;
             let folderName = `MEESEEKS_${Util.generateRandomString()}`;
             let privateSiteBody: SiteBody = { visibility: 'PRIVATE' , title: siteName};
@@ -93,19 +93,23 @@ describe('Document List Component', () => {
 
     describe('Custom Column', () => {
 
-        let folderName, createdDate, acsUser;
+        let folderName, acsUser;
         let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
         let docxFileModel = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
             'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
-        let testFileModel = new FileModel({
+        let timeAgoFileModel = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
+        let mediumFileModel = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        });
 
         beforeAll(async (done) => {
-            let uploadActions = new UploadActions();
+
             acsUser = new AcsUserModel();
 
             folderName = `MEESEEKS_${Util.generateRandomString()}_LOOK_AT_ME`;
@@ -115,12 +119,9 @@ describe('Document List Component', () => {
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
             uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
             await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
             await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');
-            let file = await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
-            createdDate = moment(file.createdAt).format('ll');
             done();
         });
 
@@ -130,8 +131,7 @@ describe('Document List Component', () => {
             contentServicesPage.checkContentIsDisplayed(folderName);
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
-            contentServicesPage.checkContentIsDisplayed(testFileModel.name);
-            expect(contentServicesPage.getDocumentListRowNumber()).toBe(5);
+            expect(contentServicesPage.getDocumentListRowNumber()).toBe(4);
         });
 
         it('[C279927] - All columns are showed', () => {
@@ -143,19 +143,97 @@ describe('Document List Component', () => {
             contentServicesPage.checkColumnCreatedHeader();
         });
 
-        it('[C279928] - The date is showed with timeAgo', () => {
+        it('[C279928] - The date is showed with timeAgo', async (done) => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await uploadActions.uploadFile(this.alfrescoJsApi, timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
-            let dateValue = contentServicesPage.getColumnValueForRow(testFileModel.name, 'Created');
+            let dateValue = contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
             expect(dateValue).toBe('a few seconds ago');
+            done();
         });
 
-        it('[C279929] - The date is showed with date type', () => {
+        it('[C279929] - The date is showed with date type', async (done) => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            let file = await uploadActions.uploadFile(this.alfrescoJsApi, mediumFileModel.location, mediumFileModel.name, '-my-');
+            let createdDate = moment(file.createdAt).format('ll');
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableMediumTimeFormat();
-            let dateValue = contentServicesPage.getColumnValueForRow(testFileModel.name, 'Created');
+            let dateValue = contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
             expect(dateValue).toContain(createdDate);
+            done();
+        });
+    });
+
+    describe('Column Sorting', () => {
+
+        let acsUser;
+
+        let fakeFileA = new FileModel({
+            'name': 'A',
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+
+        let fakeFileB = new FileModel({
+            'name': 'B',
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+
+        let fakeFileC = new FileModel({
+            'name': 'C',
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+
+        beforeAll(async (done) => {
+
+            acsUser = new AcsUserModel();
+
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileA.location, fakeFileA.name, '-my-');
+            await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileB.location, fakeFileB.name, '-my-');
+            await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileC.location, fakeFileC.name, '-my-');
+            done();
+        });
+
+        it('[C260112] - Sorting ascending by name', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByName('asc');
+        });
+
+        it('[C272770] - Sorting descending by name', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByName('desc');
+        });
+
+        it('[C272771] - Sorting ascending by author', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc');
+        });
+
+        it('[C272772] - Sorting descending by author', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc');
+        });
+
+        it('[C272773] - Sorting ascending by created date', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByCreated('asc');
+        });
+
+        it('[C272774] - Sorting descending by created date', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByCreated('desc');
         });
     });
 
