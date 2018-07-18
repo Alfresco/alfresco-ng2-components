@@ -224,8 +224,8 @@ var MethodSigInfo = /** @class */ (function () {
         }
         this.params = [];
         var paramStrings = [];
-        if (sourceData.parameters) {
-            sourceData.parameters.forEach(function (rawParam) {
+        if (sourceData.syntax.parameters) {
+            sourceData.syntax.parameters.forEach(function (rawParam) {
                 if (!rawParam.description) {
                     _this.errorMessages.push("Warning: parameter \"" + rawParam.name + "\" of method \"" + sourceData.name + "\" has no doc text.");
                 }
@@ -304,8 +304,13 @@ var ComponentInfo = /** @class */ (function () {
                     }
                     break;
                 case "method":
-                    _this.methods.push(new MethodSigInfo(item));
-                    _this.hasMethods = true;
+                    if (item.flags && (item.flags.length > 0) &&
+                        !item.flags.find(function (flag) { return flag.name === "isPrivate"; }) &&
+                        !item.flags.find(function (flag) { return flag.name === "isProtected"; }) &&
+                        !undocMethodNames[item.name]) {
+                        _this.methods.push(new MethodSigInfo(item));
+                        _this.hasMethods = true;
+                    }
                     break;
                 default:
                     break;

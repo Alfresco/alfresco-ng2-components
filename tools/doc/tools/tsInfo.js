@@ -217,7 +217,7 @@ function getMDMethodParams(methItem) {
         }
         var paramDoc = paramListItem.childNav
             .paragraph().childNav
-            .text(function (t) { return true; }, 1).item.value;
+            .text(function (t) { return true; }, 1).value; //item.value;
         result[paramName] = paramDoc.replace(/^[ -]+/, "");
     });
     return result;

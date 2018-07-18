@@ -20,6 +20,13 @@ items:
   - uid: <%= name %>.<%= child.name %>
     name: <%= child.name %>
     type: <%= child.kindString.toLowerCase() %>
+    flags:
+<%_ if (typeof child.flags !== "undefined") { -%>
+<%_ Object.keys(child.flags).forEach(flagName => { -%>
+      - name: <%= flagName %>
+        value: <%= child.flags[flagName] %>
+<% }) -%>
+<% } -%>
 <%- include("methodSig", {sig: sig}); -%>
 <% }); %>
 <% } else if (child.kindString === "Property") { -%>

@@ -294,7 +294,7 @@ function getMDMethodParams(methItem: MDNav) {
 
         let paramDoc = paramListItem.childNav
         .paragraph().childNav
-        .text(t=>true, 1).item.value;
+        .text(t=>true, 1).value; //item.value;
 
         result[paramName] = paramDoc.replace(/^[ -]+/, "");
     });

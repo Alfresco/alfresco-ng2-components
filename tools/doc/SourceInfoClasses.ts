@@ -290,8 +290,8 @@ export class MethodSigInfo {
         this.params = [];
         let paramStrings = [];
 
-        if (sourceData.parameters) {
-            sourceData.parameters.forEach(rawParam => {
+        if (sourceData.syntax.parameters) {
+            sourceData.syntax.parameters.forEach(rawParam => {
                 if (!rawParam.description) {
                     this.errorMessages.push(`Warning: parameter "${rawParam.name}" of method "${sourceData.name}" has no doc text.`);
                 }
@@ -383,8 +383,14 @@ export class ComponentInfo {
                     break;
                 
                 case "method":
-                    this.methods.push(new MethodSigInfo(item));
-                    this.hasMethods = true;
+                    if (item.flags && (item.flags.length > 0) &&
+                        !item.flags.find(flag => flag.name === "isPrivate") &&
+                        !item.flags.find(flag => flag.name === "isProtected") &&
+                        !undocMethodNames[item.name]
+                    ) {
+                        this.methods.push(new MethodSigInfo(item));
+                        this.hasMethods = true;
+                    }
                     break;
 
                 default:
