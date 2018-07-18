@@ -1,4 +1,5 @@
 <div class="pdf-thumbnails__content"
+     data-automation-id='adf-thumbnails-content'
     [style.height.px]="virtualHeight"
     [style.transform]="'translate(-50%, ' + translateY + 'px)'">
     <adf-pdf-thumb *ngFor="let page of renderItems; trackBy: trackByFn"
