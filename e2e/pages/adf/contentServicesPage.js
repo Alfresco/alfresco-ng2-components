@@ -47,6 +47,43 @@ var ContentServicesPage = function () {
     var createdByHeader = element(by.css('div[data-automation-id="auto_id_createdByUser.displayName"] > span'));
     var createdHeader = element(by.css('div[data-automation-id="auto_id_createdAt"] > span'));
 
+    var recentFiles = element(by.css('.adf-container-recent'));
+    var recentFilesExpanded = element(by.css('.adf-container-recent mat-expansion-panel-header.mat-expanded'));
+    var recentFilesClosed = element(by.css('.adf-container-recent mat-expansion-panel-header'));
+    var recentFileIcon = element(by.css('.adf-container-recent mat-expansion-panel-header mat-icon'));
+
+
+    this.checkRecentFileToBeShowed = function () {
+        Util.waitUntilElementIsVisible(recentFiles);
+    }
+
+    this.expandRecentFiles = function () {
+        this.checkRecentFileToBeShowed();
+        this.checkRecentFileToBeClosed();
+        recentFilesClosed.click();
+        this.checkRecentFileToBeOpened()
+    }
+
+    this.closeRecentFiles = function() {
+        this.checkRecentFileToBeShowed();
+        this.checkRecentFileToBeOpened()
+        recentFilesExpanded.click();
+        this.checkRecentFileToBeClosed();
+    }
+
+    this.checkRecentFileToBeClosed = function () {
+        Util.waitUntilElementIsVisible(recentFilesClosed);
+    }
+
+    this.checkRecentFileToBeOpened = function () {
+        Util.waitUntilElementIsVisible(recentFilesExpanded);
+    }
+
+    this.getRecentFileIcon = async function () {
+        await Util.waitUntilElementIsVisible(recentFileIcon);
+        return recentFileIcon.getText();
+    }
+
     /**
      * Check Document List is displayed
      * @method checkAcsContainer
@@ -227,6 +264,11 @@ var ContentServicesPage = function () {
         contentList.checkEmptyFolderMessageIsDisplayed();
         return this;
     };
+
+    this.checkElementIsDisplayed = function (elementName) {
+        let dataElement = element(by.css(`div[data-automation-id="${elementName}"]`));
+        Util.waitUntilElementIsVisible(dataElement);
+    }
 
     this.navigateToFolderViaBreadcrumbs = function (folder) {
         contentList.tableIsLoaded();

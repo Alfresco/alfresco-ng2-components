@@ -27,7 +27,7 @@ import { UploadActions } from './actions/ACS/upload.actions';
 import ErrorPage = require('./pages/adf/documentListErrorPage');
 import FileModel = require('./models/ACS/fileModel');
 import moment from 'moment-es6';
-import { browser } from '../node_modules/protractor';
+import { browser, by } from '../node_modules/protractor';
 
 describe('Document List Component', () => {
 
@@ -245,6 +245,59 @@ describe('Document List Component', () => {
         contentServicesPage.clickOnContentServices();
         let documentListSpinner = element(by.css('mat-progress-spinner'));
         Util.waitUntilElementIsPresent(documentListSpinner);
+        done();
+    });
+
+    it('[C279959] - Empty Folder state is displayed for new folders', async (done) => {
+        let acsUser = new AcsUserModel();
+        let emptyFolder = element(by.css('.adf-empty-folder-this-space-is-empty'));
+        let emptyFolderImage = element(by.css('.adf-empty-folder-image'));
+        let folderName = 'BANANA';
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.createNewFolder(folderName);
+        contentServicesPage.navigateToFolder(folderName);
+        Util.waitUntilElementIsVisible(emptyFolder);
+        expect(emptyFolder.getText()).toContain('This folder is empty');
+        expect(emptyFolderImage.getAttribute('src')).toContain('/assets/images/empty_doc_lib.svg');
+        done();
+    });
+
+    it('[C272775] - File can be uploaded in a new created folder', async (done) => {
+        let testFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+        let acsUser = new AcsUserModel();
+        let folderName = `MEESEEKS_${Util.generateRandomString()}_LOOK_AT_ME`;
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.checkContentIsDisplayed(uploadedFolder.entry.name);
+        contentServicesPage.navigateToFolder(uploadedFolder.entry.name);
+        contentServicesPage.uploadFile(testFile.location);
+        contentServicesPage.checkContentIsDisplayed(testFile.name);
+        done();
+    });
+
+    it('[C261997] - Recent Files empty', async (done) => {
+        let acsUser = new AcsUserModel();
+        let emptyRecent = element(by.css('.adf-container-recent .empty-list__title'));
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.clickOnContentServices();
+        contentServicesPage.checkRecentFileToBeShowed();
+        let icon = await contentServicesPage.getRecentFileIcon();
+        expect(icon).toBe('history');
+        contentServicesPage.expandRecentFiles();
+        Util.waitUntilElementIsVisible(emptyRecent);
+        contentServicesPage.closeRecentFiles();
         done();
     });
 
