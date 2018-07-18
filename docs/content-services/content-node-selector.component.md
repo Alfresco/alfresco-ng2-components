@@ -13,16 +13,12 @@ Allows a user to select items from a Content Services repository.
 ## Contents
 
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
-
 -   [Details](#details)
-
     -   [Showing the dialog](#showing-the-dialog)
     -   [Usage example](#usage-example)
     -   [RowFilter and ImageResolver](#rowfilter-and-imageresolver)
     -   [Using the breadcrumbTransform function](#using-the-breadcrumbtransform-function)
-
 -   [See also](#see-also)
 
 ## Class members
@@ -30,14 +26,14 @@ Allows a user to select items from a Content Services repository.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| currentFolderId | `string` |  null | (**Deprecated:** in 2.1.0)  |
-| dropdownHideMyFiles | `boolean` | false | (**Deprecated:** in 2.1.0)  |
-| dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) |  null | (**Deprecated:** in 2.1.0)  |
-| imageResolver | [`ImageResolver`](../../lib/content-services/document-list/data/image-resolver.model.ts) |  null | (**Deprecated:** in 2.1.0)  |
-| pageSize | `number` |  | (**Deprecated:** in 2.1.0)  |
-| rowFilter | [`RowFilter`](../../lib/content-services/document-list/data/row-filter.model.ts) |  null | (**Deprecated:** in 2.1.0)  |
-| title | `string` |  null | (**Deprecated:** in 2.1.0)  |
+| ---- | ---- | ------------- | ----------- |
+| currentFolderId | `string` | null | (**Deprecated:** in 2.1.0) |
+| dropdownHideMyFiles | `boolean` | false | (**Deprecated:** in 2.1.0) |
+| dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | null | (**Deprecated:** in 2.1.0) |
+| imageResolver | `ImageResolver` | null | (**Deprecated:** in 2.1.0) |
+| pageSize | `number` |  | (**Deprecated:** in 2.1.0) |
+| rowFilter | `RowFilter` | null | (**Deprecated:** in 2.1.0) |
+| title | `string` | null | (**Deprecated:** in 2.1.0) |
 
 ## Details
 

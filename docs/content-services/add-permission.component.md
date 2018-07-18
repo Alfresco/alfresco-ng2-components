@@ -25,13 +25,13 @@ Searches for people or groups to add to the current node permissions.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | nodeId | `string` |  | ID of the target node. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during the update. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the node is updated successfully. |
 

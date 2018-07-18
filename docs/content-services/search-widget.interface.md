@@ -11,16 +11,12 @@ Specifies required properties for [Search filter component](../content-services/
 ## Contents
 
 -   [Basic usage](#basic-usage)
-
     -   [Properties](#properties)
-
 -   [Details](#details)
-
     -   [Implementing a custom widget](#implementing-a-custom-widget)
     -   [Reading external settings](#reading-external-settings)
     -   [Updating the final query](#updating-the-final-query)
     -   [Registering a custom widget](#registering-a-custom-widget)
-
 -   [See also](#see-also)
 
 ## Basic usage
@@ -39,14 +35,14 @@ export interface SearchWidget {
 | ---- | ---- | ------------- | ----------- |
 | id | `string` |  | Unique identifying value for the widget |
 | settings | [`SearchWidgetSettings`](../../lib/content-services/search/search-widget-settings.interface.ts) |  | Settings for component properties |
-| context | [`SearchQueryBuilderService`](../content-services/search-query-builder.service.md) |  | Instance of the Search Query Builder service to process the query |
+| context | [`SearchQueryBuilderService`](../content-services/search-query-builder.service.md) |  | Instance of the [Search Query Builder service](../content-services/search-query-builder.service.md) to process the query |
 
 ## Details
 
 The [Search Filter component](../content-services/search-filter.component.md) uses widgets to provide the UI that lets the user customize the
 search. ADF provides a number of widgets out of the box (see the [See Also](#see-also) section
 for a full list) but you can also implement your own. Both built-in and custom widgets must
-implement the Search Widget interface to operate with the Search Filter component.
+implement the Search Widget interface to operate with the [Search Filter component](../content-services/search-filter.component.md).
 
 ### Implementing a custom widget
 

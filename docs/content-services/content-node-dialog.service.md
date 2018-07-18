@@ -14,41 +14,41 @@ Displays and manages dialogs for selecting content to open, copy or upload.
 
 -   **close**()<br/>
     Closes the currently open dialog.
--   **getTitleTranslation**(action: `string` = `null`, name: `string` = `null`): `string`<br/>
+-   **getTitleTranslation**(action: `string`, name: `string`): `string`<br/>
     Gets the translation of the dialog title.
     -   _action:_ `string`  - Name of the action to display in the dialog title
     -   _name:_ `string`  - Name of the item on which the action is being performed
     -   **Returns** `string` - Translated version of the title
--   **openCopyMoveDialog**(action: `string` = `null`, contentEntry: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) = `null`, permission?: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
+-   **openCopyMoveDialog**(action: `string`, contentEntry: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md), permission?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
     Opens a dialog to copy or move an item to a new location.
     -   _action:_ `string`  - Name of the action (eg, "Copy" or "Move") to show in the title
     -   _contentEntry:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - Item to be copied or moved
     -   _permission:_ `string`  - (Optional) Permission for the operation
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>` - Information about files that were copied/moved
--   **openFileBrowseDialogByFolderId**(folderNodeId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
+-   **openFileBrowseDialogByFolderId**(folderNodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
     Opens a file browser at a chosen folder location.
     -   _folderNodeId:_ `string`  - ID of the folder to use
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>` - Information about the selected file(s)
 -   **openFileBrowseDialogBySite**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
     Opens a file browser at a chosen site location.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>` - Information about the selected file(s)
--   **openFolderBrowseDialogByFolderId**(folderNodeId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
+-   **openFolderBrowseDialogByFolderId**(folderNodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
     Opens a folder browser at a chosen folder location.
     -   _folderNodeId:_ `string`  - ID of the folder to use
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>` - Information about the selected folder(s)
 -   **openFolderBrowseDialogBySite**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
     Opens a folder browser at a chosen site location.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>` - Information about the selected folder(s)
--   **openLockNodeDialog**(contentEntry: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) = `null`): [`Subject`](http://reactivex.io/documentation/subject.html)`<string>`<br/>
+-   **openLockNodeDialog**(contentEntry: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)): [`Subject`](http://reactivex.io/documentation/subject.html)`<string>`<br/>
     Opens a lock node dialog.
     -   _contentEntry:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - Node to lock
     -   **Returns** [`Subject`](http://reactivex.io/documentation/subject.html)`<string>` - Error/status message (if any)
--   **openUploadFileDialog**(action: `string` = `null`, contentEntry: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
+-   **openUploadFileDialog**(action: `string`, contentEntry: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
     Opens a dialog to choose a file to upload.
     -   _action:_ `string`  - Name of the action to show in the title
     -   _contentEntry:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - Item to upload
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>` - Information about the chosen file(s)
--   **openUploadFolderDialog**(action: `string` = `null`, contentEntry: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
+-   **openUploadFolderDialog**(action: `string`, contentEntry: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>`<br/>
     Opens a dialog to choose folders to upload.
     -   _action:_ `string`  - Name of the action to show in the title
     -   _contentEntry:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - Item to upload
