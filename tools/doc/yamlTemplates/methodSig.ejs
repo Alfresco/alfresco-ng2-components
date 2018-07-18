@@ -1,0 +1,35 @@
+    summary: >-
+      <%- ((typeof sig.comment !== "undefined") && (typeof sig.comment.shortText !== "undefined")) ? (sig.comment.shortText || "").replace(/[\n\r]+/g, " ").trim() : "" %>
+    tags:
+<% if ((typeof sig.comment !== "undefined") && (typeof sig.comment.tags !== "undefined")) { -%>
+<% sig.comment.tags.forEach(tag => { -%>
+      - name: <%= tag.tag %>
+        text: >-
+          <%= (tag.text || "").replace(/[\n\r]+/g, " ").trim() %>
+<% }) -%>
+<% } -%>
+    syntax:
+      parameters:
+<% if ((typeof sig.parameters !== "undefined") && (sig.parameters.length > 0)) { -%>
+<% sig.parameters.forEach((param) => { -%>
+        - id: <%= param.name %>
+          type: >-
+            <%- include("type", {type: param.type}).trim() %>
+          description: >-
+            <%- param.comment ? (param.comment.text || "").replace(/[\n\r]+/g, " ").trim() : "" %>
+          defaultValue: >-
+            <%- (typeof param.defaultValue !== "undefined") ? param.defaultValue : "" %>
+          flags:
+<%_ if (typeof param.flags !== "undefined") { -%>
+<%_ Object.keys(param.flags).forEach(flagName => { -%>
+            - name: <%= flagName %>
+              value: <%- param.flags[flagName] %>
+<% }) -%>
+<% } -%>
+<% }) -%>
+<% } -%>
+      return:
+        type: >-
+          <%- include("type", {type: sig.type}).trim() %>
+        summary: >-
+          <%- ((typeof sig.comment !== "undefined") && (typeof sig.comment.returns !== "undefined")) ? (sig.comment.returns || "").replace(/[\n\r]+/g, " ").trim() : "" %>

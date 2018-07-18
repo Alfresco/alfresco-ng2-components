@@ -1,7 +1,9 @@
 var fs = require("fs");
 var path = require("path");
+
 var program = require("commander");
 var lodash = require("lodash");
+var jsyaml = require("js-yaml");
 
 var remark = require("remark");
 var parse = require("remark-parse");
@@ -9,6 +11,10 @@ var stringify = require("remark-stringify");
 var frontMatter = require("remark-frontmatter");
 var mdCompact = require("mdast-util-compact");
 
+var tdoc = require("typedoc");
+
+var ngHelpers = require("./ngHelpers");
+var si = require("./SourceInfoClasses");
 
 // "Aggregate" data collected over the whole file set.
 var aggData = {};
@@ -16,29 +22,14 @@ var aggData = {};
 var toolsFolderName = "tools";
 var configFileName = "doctool.config.json";
 var defaultFolder = path.resolve("docs");
+var sourceInfoFolder = path.resolve("docs", "sourceinfo");
 
+var libFolders = ["core", "content-services", "process-services", "insights"];
 
-/*
-function initPhase(aggData) {
-    toolList.forEach(toolName => {
-        toolModules[toolName].initPhase(aggData);
-    });
-}
+var excludePatterns = [
+    "**/*.spec.ts"
+];
 
-
-function readPhase(mdCache, aggData) {
-    toolList.forEach(toolName => {
-        toolModules[toolName].readPhase(mdCache, aggData);
-    });
-}
-
-
-function aggPhase(aggData) {
-    toolList.forEach(toolName => {
-        toolModules[toolName].aggPhase(aggData);
-    });
-}
-*/
 
 function updatePhase(mdCache, aggData) {
     var errorMessages;
@@ -149,6 +140,82 @@ function initMdCache(filenames) {
 }
 
 
+function getSourceInfo(infoFolder) {
+    var sourceInfo = {};
+
+    var yamlFiles = fs.readdirSync(infoFolder);
+
+    yamlFiles.forEach(file => {
+        var yamlText = fs.readFileSync(path.resolve(infoFolder, file), "utf8");
+        var yaml = jsyaml.safeLoad(yamlText);
+        sou
+    });
+}
+
+
+function initSourceInfo(aggData, mdCache) {
+
+    var app = new tdoc.Application({
+        exclude: excludePatterns,
+        ignoreCompilerErrors: true,
+        experimentalDecorators: true,
+        tsconfig: "tsconfig.json"
+    });
+
+    let sources = app.expandInputFiles(libFolders.map(folder => {
+        return path.resolve("lib", folder);
+    }));    
+    
+    aggData.projData = app.convert(sources);
+
+
+    aggData.classInfo = {};
+
+    var mdFiles = Object.keys(mdCache);
+
+    mdFiles.forEach(mdFile => {
+        /*
+        var className = ngHelpers.ngNameToClassName(path.basename(mdFile, ".md"), aggData.config.typeNameExceptions);
+        var classRef = aggData.projData.findReflectionByName(className);
+*/
+
+        var className = ngHelpers.ngNameToClassName(path.basename(mdFile, ".md"), aggData.config.typeNameExceptions);
+        var yamlText = fs.readFileSync(path.resolve(sourceInfoFolder, className + ".yml"), "utf8");
+        var yaml = jsyaml.safeLoad(yamlText);
+
+        if (yaml) {
+            aggData.classInfo[className] = new si.ComponentInfo(yaml);
+        }
+/*
+        if (classRef) {
+           aggData.classInfo[className] = new si.ComponentInfo(classRef); 
+        }
+        */
+
+    });
+}
+
+
+function initClassInfo(aggData) {
+    var yamlFilenames = fs.readdirSync(path.resolve(sourceInfoFolder));
+
+    aggData.classInfo = {};
+
+    yamlFilenames.forEach(yamlFilename => {
+        var classYamlText = fs.readFileSync(path.resolve(sourceInfoFolder, yamlFilename), "utf8");
+        var classYaml = jsyaml.safeLoad(classYamlText);
+        
+        if (program.verbose) {
+            console.log(classYaml.items[0].name);
+        }
+
+        aggData.classInfo[classYaml.items[0].name] = new si.ComponentInfo(classYaml);
+    });
+}
+
+
+
+
 program
 .usage("[options] <source>")
 .option("-p, --profile [profileName]", "Select named config profile", "default")
@@ -205,6 +272,11 @@ files = files.filter(filename =>
 
 
 var mdCache = initMdCache(files);
+
+console.log("Loading source data...");
+//initSourceInfo(aggData, mdCache);
+
+initClassInfo(aggData);
 
 /*
 console.log("Initialising...");

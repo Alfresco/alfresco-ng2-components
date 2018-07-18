@@ -1,0 +1,27 @@
+    summary: >-
+      <%- (typeof child.comment !== "undefined") ? (child.comment.shortText || "").replace(/[\n\r]+/g, " ").trim() : "" %>
+    tags:
+<%_ if ((typeof child.comment !== "undefined") && (typeof child.comment.tags !== "undefined")) { -%>
+<% child.comment.tags.forEach(tag => { -%>
+      - name: <%= tag.tag %>
+        text: >-
+          <%- (tag.text || "").replace(/[\n\r]+/g, " ").trim() %>
+<%_ }) -%>
+<% } -%>
+    decorators:
+<%_ if (typeof child.decorators !== "undefined") { -%>
+<% child.decorators.forEach(dec => { -%>
+      - name: <%= dec.name %>
+        arguments:
+<% Object.keys(dec.arguments).forEach(argName => { -%>
+          - id: <%= argName %>
+            value: <%- dec.arguments[argName] %>
+<% }) %>
+<%_ }) -%>
+<% } -%>
+    syntax:
+      return:
+        type: >-
+          <%- include("type", {type: child.type}).trim() %>
+        defaultValue: >-
+          <%- (child.defaultValue || "").length < 20 ? child.defaultValue : "" %>

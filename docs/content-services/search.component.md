@@ -11,18 +11,13 @@ Searches items for supplied search terms.
 ## Contents
 
 -   [Basic usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
     -   [Events](#events)
-
 -   [Details](#details)
-
     -   [Customise Search Results](#customise-search-results)
     -   [Attach an input field to the search](#attach-an-input-field-to-the-search)
     -   [Custom search configuration](#custom-search-configuration)
-
 -   [See Also](#see-also)
 
 ## Basic usage
@@ -39,20 +34,19 @@ Searches items for supplied search terms.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| displayWith | `function \| null` |  null | Function that maps an option's value to its display value in the trigger. |
+| ---- | ---- | ------------- | ----------- |
+| displayWith | `Function \| null` | null | Function that maps an option's value to its display value in the trigger. |
 | maxResults | `number` | 20 | Maximum number of results to show in the search. |
-| queryBody | `QueryBody` |  | (**Deprecated:** in 2.1.0)  |
+| queryBody | `QueryBody` |  | (**Deprecated:** in 2.1.0) |
 | searchTerm | `string` | "" | Search term to use when executing the search. Updating this value will run a new search and update the results. |
 | skipResults | `number` | 0 | Number of results to skip from the results pagination. |
-| class |  |  | CSS class for display. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when search results have fully loaded. |
+| resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when search results have fully loaded. |
 
 ## Details
 

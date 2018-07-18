@@ -1,5 +1,6 @@
 module.exports = {
     "ngNameToDisplayName": ngNameToDisplayName,
+    "ngNameToClassName": ngNameToClassName,
     "dekebabifyName": dekebabifyName,
     "kebabifyClassName": kebabifyClassName,
     "classTypes": ["component", "directive", "model", "pipe", "service", "widget"]
@@ -12,6 +13,37 @@ function ngNameToDisplayName(ngName) {
     return mainSections.join(" ");
 }
 
+
+function initialCap(str) {
+    return str[0].toUpperCase() + str.substr(1);
+}
+
+
+function ngNameToClassName(rawName, nameExceptions) {
+    if (nameExceptions[rawName])
+        return nameExceptions[rawName];
+
+	var name = rawName.replace(/\]|\(|\)/g, '');
+	
+    var fileNameSections = name.split('.');
+    var compNameSections = fileNameSections[0].split('-');
+    
+    var outCompName = '';
+    
+    for (var i = 0; i < compNameSections.length; i++) {
+        outCompName = outCompName + initialCap(compNameSections[i]);
+    }
+    
+    var itemTypeIndicator = '';
+    
+    if (fileNameSections.length > 1) {
+        itemTypeIndicator = initialCap(fileNameSections[1]);
+    }
+	
+    var finalName = outCompName + itemTypeIndicator;
+	
+    return finalName;
+}
 
 function displayNameToNgName(name) {
     var noSpaceName = ngName.replace(/ ([a-zA-Z])/, "$1".toUpperCase());

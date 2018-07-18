@@ -12,7 +12,7 @@ Manages tags in Content Services.
 
 ### Methods
 
--   **addTag**(nodeId: `string` = `null`, tagName: `string` = `null`): `any`<br/>
+-   **addTag**(nodeId: `string`, tagName: `string`): `any`<br/>
     Adds a tag to a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _tagName:_ `string`  - Name of the tag to add
@@ -20,11 +20,11 @@ Manages tags in Content Services.
 -   **getAllTheTags**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets a list of all the tags already defined in the repository.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - TagPaging object (defined in JSAPI) containing the tags
--   **getTagsByNodeId**(nodeId: `string` = `null`): `any`<br/>
+-   **getTagsByNodeId**(nodeId: `string`): `any`<br/>
     Gets a list of tags added to a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   **Returns** `any` - TagPaging object (defined in JSAPI) containing the tags
--   **removeTag**(nodeId: `string` = `null`, tag: `string` = `null`): `any`<br/>
+-   **removeTag**(nodeId: `string`, tag: `string`): `any`<br/>
     Removes a tag from a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _tag:_ `string`  - Name of the tag to remove

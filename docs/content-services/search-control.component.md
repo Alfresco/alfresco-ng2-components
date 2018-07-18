@@ -25,9 +25,9 @@ Displays a input text which shows find-as-you-type suggestions.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | autocomplete | `boolean` | false | Toggles auto-completion of the search input field. |
-| customQueryBody | `QueryBody` |  | (**Deprecated:** in 2.1.0)  |
+| customQueryBody | `QueryBody` |  | (**Deprecated:** in 2.1.0) |
 | expandable | `boolean` | true | Toggles whether to use an expanding search control. If false then a regular input is used. |
 | highlight | `boolean` | false | Toggles highlighting of the search term in the results. |
 | inputType | `string` | "text" | Type of the input field to render, e.g. "search" or "text" (default). |
@@ -37,10 +37,10 @@ Displays a input text which shows find-as-you-type suggestions.
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | optionClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a file item from the list of "find-as-you-type" results is selected. |
 | searchChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then the term is truncated to an empty string. |
-| submit | `EventEmitter<any>` | Emitted when the search is submitted pressing ENTER button. The search term is provided as value of the event. |
+| submit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the search is submitted pressing ENTER button. The search term is provided as value of the event. |
 
 ## Details
 

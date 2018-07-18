@@ -12,18 +12,18 @@ Implements the folder menu actions for the [Document List component](../content-
 
 ### Methods
 
--   **canExecuteAction**(obj: `any` = `null`): `boolean`<br/>
+-   **canExecuteAction**(obj: `any`): `boolean`<br/>
     Checks if an action is available for a particular item.
     -   _obj:_ `any`  - Item to check
     -   **Returns** `boolean` - True if the action is available, false otherwise
--   **getHandler**(key: `string` = `null`): [`ContentActionHandler`](../../lib/content-services/document-list/models/content-action.model.ts)<br/>
+-   **getHandler**(key: `string`): `ContentActionHandler`<br/>
     Gets the handler function for an action.
     -   _key:_ `string`  - Identifier for the action
-    -   **Returns** [`ContentActionHandler`](../../lib/content-services/document-list/models/content-action.model.ts) - The handler function
--   **setHandler**(key: `string` = `null`, handler: [`ContentActionHandler`](../../lib/content-services/document-list/models/content-action.model.ts) = `null`): `boolean`<br/>
+    -   **Returns** `ContentActionHandler` - The handler function
+-   **setHandler**(key: `string`, handler: `ContentActionHandler`): `boolean`<br/>
     Sets a new handler function for an action.
     -   _key:_ `string`  - Identifier for the action
-    -   _handler:_ [`ContentActionHandler`](../../lib/content-services/document-list/models/content-action.model.ts)  - The new handler function
+    -   _handler:_ `ContentActionHandler`  - The new handler function
     -   **Returns** `boolean` - True if the key was a valid action identifier, false otherwise
 
 ## Details

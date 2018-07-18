@@ -1,0 +1,44 @@
+items:
+  - uid: <%= name %>
+    name: <%= name %>
+    fullName: <%= name %>
+    source:
+      path: <%= sources[0].fileName %>
+      startLine: <%= sources[0].line %>
+    children:
+<%_ if (typeof children !== "undefined") { -%>
+<%_ children.forEach((child) => { -%>
+        - <%= name %>.<%= child.name %>
+<% }) -%>
+<% } -%>
+    langs: typeScript
+    type: <%= kindString.toLowerCase() %>
+<%_ if (typeof children !== "undefined") { -%>
+<%_ children.forEach((child) => { -%>
+<%_ if ((child.kindString === "Constructor") || (child.kindString === "Method")) { -%>
+<%_ child.signatures.forEach((sig) => { -%>
+  - uid: <%= name %>.<%= child.name %>
+    name: <%= child.name %>
+    type: <%= child.kindString.toLowerCase() %>
+    flags:
+<%_ if (typeof child.flags !== "undefined") { -%>
+<%_ Object.keys(child.flags).forEach(flagName => { -%>
+      - name: <%= flagName %>
+        value: <%= child.flags[flagName] %>
+<% }) -%>
+<% } -%>
+<%- include("methodSig", {sig: sig}); -%>
+<% }); %>
+<% } else if (child.kindString === "Property") { -%>
+  - uid: <%= name %>.<%= child.name %>
+    name: <%= child.name %>
+    type: <%= child.kindString.toLowerCase() %>
+<%- include("property", {child: child}); -%>
+<% } else if ((child.kindString === "Accessor") && (typeof child.getSignature !== "undefined")) { -%>
+  - uid: <%= name %>.<%= child.name %>
+    name: <%= child.name %>
+    type: <%= child.kindString.toLowerCase() %>
+<%- include("property", {child: child.getSignature}); -%>
+<% } -%>
+<% }) -%>
+<% } -%>

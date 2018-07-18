@@ -26,3 +26,5 @@ src/environments/
 /lib/config/exportCheck.js
 /lib/config/export-check/export-new.json
 /lib/config/export-check/exportCheck.js
+/docs/sourceinfo
+/docs/docs.json

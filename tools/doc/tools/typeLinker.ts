@@ -1,10 +1,12 @@
 import * as path from "path";
 import * as fs from "fs";
 
+
 import * as remark from "remark";
 import * as stringify from "remark-stringify";
 import * as frontMatter from "remark-frontmatter";
 
+/*
 import {
     Application,
     ProjectReflection,
@@ -17,6 +19,7 @@ import {
     Decorator
  } from "typedoc";
 import { CommentTag } from "typedoc/dist/lib/models";
+*/
 
 import * as ProgressBar from "progress";
 
@@ -74,6 +77,7 @@ function initPhase(aggData) {
         });
     });
 
+    /*
     let classes = aggData.projData.getReflectionsByKind(ReflectionKind.Class);
 
     classes.forEach(currClass => {
@@ -81,14 +85,22 @@ function initPhase(aggData) {
             aggData.nameLookup.addName(currClass.name);
         }
     });
+    */
 
+    let classNames = Object.keys(aggData.classInfo);
+
+    classNames.forEach(currClassName => {
+        if (currClassName.match(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/)) {
+            aggData.nameLookup.addName(currClassName);
+        }
+    });
     //console.log(JSON.stringify(aggData.nameLookup));
 }
 
 
 
 
-function updateFile(tree, pathname, aggData, errorMessages) {
+function updateFile(tree, pathname, aggData, _errorMessages) {
     traverseMDTree(tree);
     return true;
 
@@ -363,13 +375,19 @@ function resolveTypeLink(aggData, text): string {
         return "";
     }
 
+    /*
     let ref: Reflection = aggData.projData.findReflectionByName(possTypeName);
+*/
+    let classInfo = aggData.classInfo[possTypeName];
 
-    if (ref && isLinkable(ref.kind)) {
+    //if (ref && isLinkable(ref.kind)) {
+    if (classInfo) {
         let kebabName = ngHelpers.kebabifyClassName(possTypeName);
         let possDocFile = aggData.docFiles[kebabName];
-        let url = "../../lib/" + ref.sources[0].fileName;
-        
+        //let url = "../../lib/" + ref.sources[0].fileName;
+
+        let url = classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
+
         if (possDocFile) {
             url = "../" + possDocFile;
         }
@@ -393,13 +411,14 @@ function cleanTypeName(text) {
     }
 }
 
-
+/*
 function isLinkable(kind: ReflectionKind) {
     return (kind === ReflectionKind.Class) ||
     (kind === ReflectionKind.Interface) ||
     (kind === ReflectionKind.Enum) ||
     (kind === ReflectionKind.TypeAlias);
 }
+*/
 
 function convertNodeToTypeLink(node, text, url, title = null) {
     let linkDisplayText = unist.makeInlineCode(text);

@@ -38,16 +38,16 @@ Some sample CSS to show the drag and drop area:
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| file-draggable | `boolean` | true | Enables/disables drag-and-drop functionality. |
+| ---- | ---- | ------------- | ----------- |
+| enabled | `boolean` | true | Enables/disables drag-and-drop functionality. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | filesDropped | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<File[]>` | Emitted when one or more files are dragged and dropped onto the draggable element. |
-| filesEntityDropped | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | (**Deprecated:** in 2.4.0: use `filesDropped` instead. Emitted when one or more files are dragged and dropped onto the draggable element.)  |
-| folderEntityDropped | `EventEmitter<any>` | Emitted when a directory is dragged and dropped onto the draggable element. |
+| filesEntityDropped | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | (**Deprecated:** in 2.4.0: use `filesDropped` instead. Emitted when one or more files are dragged and dropped onto the draggable element.) |
+| folderEntityDropped | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a directory is dragged and dropped onto the draggable element. |
 
 ## Details
 

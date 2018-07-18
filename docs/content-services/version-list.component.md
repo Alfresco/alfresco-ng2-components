@@ -19,9 +19,9 @@ Displays the version history of a node in a [Version Manager component](../conte
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | allowDownload | `boolean` | true | Enable/disable downloading a version of the current node. |
-| id | `string` |  | (**Deprecated:** in 2.3.0)  |
+| id | `string` |  | (**Deprecated:** in 2.3.0) |
 | node | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | The target node. |
 | showActions | `boolean` | true | Toggles showing/hiding of version actions |
 | showComments | `boolean` | true | Toggles showing/hiding of comments |
