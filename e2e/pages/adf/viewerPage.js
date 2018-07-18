@@ -126,13 +126,13 @@ var ViewerToolbarPage = function () {
 
     this.checkAllThumbnailsDisplayed = function (nbPages)
     {
-        defaultThumbnailHeight = 143;
+        var defaultThumbnailHeight = 143;
         expect(thumbnailsContent.getAttribute("style")).toEqual("height: " + nbPages*defaultThumbnailHeight + "px; transform: translate(-50%, 0px);");
     };
 
     this.checkCurrentThumbnailIsSelected = function ()
     {
-        selectedThumbnail = element(by.css("adf-pdf-thumb[class='pdf-thumbnails__thumb ng-star-inserted pdf-thumbnails__thumb--selected'] > img"));
+        var selectedThumbnail = element(by.css("adf-pdf-thumb[class='pdf-thumbnails__thumb ng-star-inserted pdf-thumbnails__thumb--selected'] > img"));
         pageSelectorInput.getAttribute("value").then(function (pageNumber) {
             expect("Page " + pageNumber).toEqual(selectedThumbnail.getAttribute("title"));
         });
@@ -269,7 +269,7 @@ var ViewerToolbarPage = function () {
 
     this.checkRotation = function (text)
     {
-        rotation = imgContainer.getAttribute("style");
+        var rotation = imgContainer.getAttribute("style");
         expect(rotation).toEqual(text);
     };
 
