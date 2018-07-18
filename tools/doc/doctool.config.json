@@ -51,7 +51,10 @@
         "text-mask.component": "InputMaskDirective",
         "card-item-types.service": "CardItemTypeService",
         "create-task-attachment.component": "AttachmentComponent",
-        "process-list.component": "ProcessInstanceListComponent"
+        "process-list.component": "ProcessInstanceListComponent",
+        "inherited-button.directive": "InheritPermissionDirective",
+        "node-share.directive": "NodeSharedDirective",
+        "sites-dropdown.component": "DropdownSitesComponent"
     },
     "undocStoplist": [
         "model",

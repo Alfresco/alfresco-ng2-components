@@ -12,17 +12,17 @@ Manages ratings for items in Content Services.
 
 ### Methods
 
--   **deleteRating**(nodeId: `string` = `null`, ratingType: `any` = `null`): `any`<br/>
+-   **deleteRating**(nodeId: `string`, ratingType: `any`): `any`<br/>
     Removes the current user's rating for a node.
     -   _nodeId:_ `string`  - Target node
     -   _ratingType:_ `any`  - Type of rating to remove (can be "likes" or "fiveStar")
     -   **Returns** `any` - Null response indicating that the operation is complete
--   **getRating**(nodeId: `string` = `null`, ratingType: `any` = `null`): `any`<br/>
+-   **getRating**(nodeId: `string`, ratingType: `any`): `any`<br/>
     Gets the current user's rating for a node.
     -   _nodeId:_ `string`  - Node to get the rating from
     -   _ratingType:_ `any`  - Type of rating (can be "likes" or "fiveStar")
     -   **Returns** `any` - The rating value
--   **postRating**(nodeId: `string` = `null`, ratingType: `any` = `null`, vote: `any` = `null`): `any`<br/>
+-   **postRating**(nodeId: `string`, ratingType: `any`, vote: `any`): `any`<br/>
     Adds the current user's rating for a node.
     -   _nodeId:_ `string`  - Target node for the rating
     -   _ratingType:_ `any`  - Type of rating (can be "likes" or "fiveStar")

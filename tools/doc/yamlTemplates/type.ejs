@@ -1,0 +1,20 @@
+<%_ if ((type.type === "intrinsic") || (type.type === "reference")) { _%>
+<%= type.name _%>
+<%_ if (typeof type.typeArguments !== "undefined") { _%>
+<<%_ type.typeArguments.forEach((arg, index) => { _%>
+<%= index === 0 ? "" : ", " _%>
+<%- include("type", {type: arg}).trim() _%>
+<%_ }) _%>>
+<%_ } _%>
+<%_ } else if (type.type === "stringLiteral") { _%>
+"<%= type.value _%>"
+<%_ } else if (type.type === "reflection") { _%>
+Function
+<%_ } else if (type.type === "array") { _%>
+<%- include("type", {type: type.elementType}).trim() _%>[]
+<%_ } else if (type.type === "union") { _%>
+<%_ type.types.forEach((unionItem, index) => { _%>
+<%= index === 0 ? "" : " | " _%>
+<%- include("type", {type: unionItem}).trim() _%>
+<%_ }) _%>
+<%_ } _%>

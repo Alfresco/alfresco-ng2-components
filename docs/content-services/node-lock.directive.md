@@ -21,8 +21,8 @@ Locks a node.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| adf-node-lock | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | Node to lock/unlock. |
+| ---- | ---- | ------------- | ----------- |
+| node | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | Node to lock/unlock. |
 
 ## Details
 

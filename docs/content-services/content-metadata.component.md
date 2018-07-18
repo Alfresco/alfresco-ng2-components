@@ -25,7 +25,7 @@ Displays and edits metadata related to a node.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | displayEmpty | `boolean` | false | Toggles whether to display empty values in the card view |
 | editable | `boolean` | false | Toggles whether the edit button should be shown |
 | expanded | `boolean` | false | Toggles between expanded (ie, full information) and collapsed (ie, reduced information) in the display |

@@ -34,7 +34,7 @@ export class AppComponent {
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
 | comment | `string` |  | When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history |
 | disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
@@ -43,22 +43,21 @@ export class AppComponent {
 | nodeType | `string` | "cm:content" | Custom node type for uploaded file |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 | versioning | `boolean` | false | Toggles versioning. |
-| parentId |  |  | **Deprecated:** 2.4.0  use rootFolderId ID of parent folder node. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
-| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` | Raised after files or folders dropped and before the upload process starts. |
+| ---- | ---- | ----------- |
+| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](lib/content-services/upload/components/upload-files.event.ts)`>` | Raised after files or folders dropped and before the upload process starts. |
 | createFolder | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a folder is created. |
-| error | `EventEmitter<Object>` | Emitted when an error occurs. |
-| success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Intercepting uploads
 
 You can intercept the upload process by utilizing the `beginUpload` event. 
 
-The event has a type of [`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts) and provides the following APIs:
+The event has a type of [`UploadFilesEvent`](lib/content-services/upload/components/upload-files.event.ts) and provides the following APIs:
 
 -   **files**: get access to the [`FileInfo`](../../lib/core/utils/file-utils.ts) objects that are prepared for the upload
 -   **pauseUpload**: pause the upload and perform additional tasks, like showing the confirmation dialog
