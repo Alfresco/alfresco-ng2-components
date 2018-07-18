@@ -54,7 +54,7 @@ describe('AttachFormComponent', () => {
 
     it('should call attachFormToATask if clicked on Complete Button', async(() => {
         component.taskId = 1;
-        component.formKey = 2;
+        component.formId = 2;
         spyOn(taskService, 'attachFormToATask').and.returnValue(Observable.of(true));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -73,6 +73,54 @@ describe('AttachFormComponent', () => {
         fixture.whenStable().then(() => {
             expect(formContainer).toBeDefined();
             expect(formContainer).not.toBeNull();
+        });
+    }));
+
+    it('should show the formPreview of the selected form', async(() => {
+        component.formKey = 12;
+        fixture.detectChanges();
+        const formContainer = fixture.debugElement.nativeElement.querySelector('.adf-form-container');
+        fixture.whenStable().then(() => {
+            expect(formContainer).toBeDefined();
+            expect(formContainer).toBeNull();
+        });
+    }));
+
+    it('should remove form if it is present', (done) => {
+        component.taskId = 1;
+        component.formId = 10;
+        component.formKey = 12;
+        spyOn(taskService, 'deleteForm').and.returnValue(Observable.of({}));
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(element.querySelector('#adf-no-form-remove-button')).toBeDefined();
+            const el = fixture.nativeElement.querySelector('#adf-no-form-remove-button');
+            el.click();
+            expect(component.formId).toBeNull();
+            done();
+        });
+    });
+
+    it('should emit success when form is changed', async(() => {
+        component.taskId = 1;
+        component.formId = 10;
+
+        spyOn(taskService, 'attachFormToATask').and.returnValue(Observable.of(
+            {
+                id: 91,
+                name: 'fakeName',
+                formKey: 1204,
+                assignee: null
+            }
+        ));
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const emitSpy = spyOn(component.success, 'emit');
+            const el = fixture.nativeElement.querySelector('#adf-no-form-attach-form-button');
+            el.click();
+            expect(emitSpy).toHaveBeenCalled();
         });
     }));
 });
