@@ -22,7 +22,7 @@
 
         <div class="adf-task-details-core-form">
             <div *ngIf="isAssigned()">
-                <adf-form *ngIf="hasFormKey()" #activitiForm
+                <adf-form *ngIf="hasFormKey() && !showAttachForm" #activitiForm
                           [showDebugButton]="debugMode"
                           [taskId]="taskDetails.id"
                           [showTitle]="showFormTitle"
@@ -39,15 +39,21 @@
                           (error)='onFormError($event)'
                           (executeOutcome)='onFormExecuteOutcome($event)'>
                 </adf-form>
-                <adf-task-standalone *ngIf="!hasFormKey()"
-                                     [taskName]= "taskDetails.name"
-                                     [taskId]= "taskDetails.id"
+                <adf-task-standalone *ngIf="!hasFormKey() && !showAttachForm"
+                                     [taskName]="taskDetails.name"
+                                     [taskId]="taskDetails.id"
                                      [isCompleted]="isCompletedTask()"
                                      [hasCompletePermission]="isCompleteButtonEnabled()"
                                      [hideCancelButton]="true"
                                      (complete)="onComplete()"
-                                     (formAttached)="onFormAttached()">
+                                     (showAttachForm)="onShowAttachForm()">
                 </adf-task-standalone>
+                <adf-attach-form *ngIf="showAttachForm"
+                                 [taskId]="taskDetails.id"
+                                 [formKey]="taskDetails.formKey"
+                                 (cancelAttachForm)="onCancelAttachForm()"
+                                 (success)="onCompleteAttachForm()">
+                </adf-attach-form>
             </div>
             <div *ngIf="!isAssigned()" id="claim-message-id">
                 {{ 'ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM' | translate }}
