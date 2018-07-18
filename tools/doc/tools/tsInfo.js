@@ -62,10 +62,10 @@ function updateFile(tree, pathname, aggData, errorMessages) {
 
     let compData = new ComponentInfo(classRef);
     */
-    var className = ngHelpers_1.ngNameToClassName(path.basename(pathname, ".md"));
+    var className = ngHelpers_1.ngNameToClassName(path.basename(pathname, ".md"), nameExceptions);
     var classTypeMatch = className.match(/component|directive|service/i);
-    if (classTypeMatch) {
-        var compData = aggData.classInfo[className];
+    var compData = aggData.classInfo[className];
+    if (classTypeMatch && compData) {
         var classType = classTypeMatch[0].toLowerCase();
         // Copy docs back from the .md file when the JSDocs are empty.
         var inputMD = getPropDocsFromMD(tree, "Properties", 3);

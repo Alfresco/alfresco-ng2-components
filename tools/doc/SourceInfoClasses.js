@@ -54,12 +54,13 @@ var PropInfo = /** @class */ (function () {
         var _this = this;
         this.errorMessages = [];
         this.name = sourceData.name;
-        this.docText = sourceData.summary;
+        this.docText = sourceData.summary || "";
         this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
-        this.defaultValue = sourceData.syntax["return"].defaultValue;
+        var tempDefaultVal = sourceData.syntax["return"].defaultValue;
+        this.defaultValue = tempDefaultVal ? tempDefaultVal.toString() : "";
         this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
-        this.type = sourceData.syntax["return"].type;
-        this.type = this.type.replace(/\|/, "\\|");
+        this.type = sourceData.syntax["return"].type || "";
+        this.type = this.type.toString().replace(/\|/, "\\|");
         if (sourceData.tags) {
             var depTag = sourceData.tags.find(function (tag) { return tag.name === "deprecated"; });
             if (depTag) {
@@ -198,13 +199,15 @@ var MethodSigInfo = /** @class */ (function () {
         var _this = this;
         this.errorMessages = [];
         this.name = sourceData.name;
-        this.docText = sourceData.summary.replace(/[\n\r]+/g, " ").trim();
+        this.docText = sourceData.summary || "";
+        this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
         if (!this.docText) {
             this.errorMessages.push("Warning: method \"" + sourceData.name + "\" has no doc text.");
         }
-        this.returnType = sourceData["return"].type.replace(/\s/g, "");
+        this.returnType = sourceData.syntax["return"].type || "";
+        this.returnType = this.returnType.toString().replace(/\s/g, "");
         this.returnsSomething = this.returnType && (this.returnType !== "void");
-        this.returnDocText = sourceData["return"].summary;
+        this.returnDocText = sourceData.syntax["return"].summary || "";
         if (this.returnDocText.toLowerCase() === "nothing") {
             this.returnsSomething = false;
         }
@@ -284,8 +287,10 @@ var ComponentInfo = /** @class */ (function () {
         this.hasInputs = false;
         this.hasOutputs = false;
         this.hasMethods = false;
-        this.sourcePath = sourceData.source.path;
-        this.sourceLine = sourceData.source.line;
+        this.sourcePath = sourceData.items[0].source.path;
+        this.sourceLine = sourceData.items[0].source.line;
+        this.properties = [];
+        this.methods = [];
         sourceData.items.forEach(function (item) {
             switch (item.type) {
                 case "property":

@@ -100,7 +100,7 @@ function initPhase(aggData) {
 
 
 
-function updateFile(tree, _pathname, aggData, _errorMessages) {
+function updateFile(tree, pathname, aggData, _errorMessages) {
     traverseMDTree(tree);
     return true;
 
@@ -386,7 +386,7 @@ function resolveTypeLink(aggData, text): string {
         let possDocFile = aggData.docFiles[kebabName];
         //let url = "../../lib/" + ref.sources[0].fileName;
 
-        let url = "../../lib/" + classInfo.source.path;
+        let url = classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
 
         if (possDocFile) {
             url = "../" + possDocFile;

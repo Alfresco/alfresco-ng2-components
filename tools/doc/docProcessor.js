@@ -22,7 +22,7 @@ var aggData = {};
 var toolsFolderName = "tools";
 var configFileName = "doctool.config.json";
 var defaultFolder = path.resolve("docs");
-var yamlFolder = path.resolve("docs", "sourceinfo");
+var sourceInfoFolder = path.resolve("docs", "sourceinfo");
 
 var libFolders = ["core", "content-services", "process-services", "insights"];
 
@@ -180,7 +180,7 @@ function initSourceInfo(aggData, mdCache) {
 */
 
         var className = ngHelpers.ngNameToClassName(path.basename(mdFile, ".md"), aggData.config.typeNameExceptions);
-        var yamlText = fs.readFileSync(path.resolve(infoFolder, className + ".yml"), "utf8");
+        var yamlText = fs.readFileSync(path.resolve(sourceInfoFolder, className + ".yml"), "utf8");
         var yaml = jsyaml.safeLoad(yamlText);
 
         if (yaml) {
@@ -197,14 +197,19 @@ function initSourceInfo(aggData, mdCache) {
 
 
 function initClassInfo(aggData) {
-    var yamlFilenames = fs.readdirSync(path.resolve(infoFolder));
+    var yamlFilenames = fs.readdirSync(path.resolve(sourceInfoFolder));
 
     aggData.classInfo = {};
 
     yamlFilenames.forEach(yamlFilename => {
-        var classYamlText = fs.readFileSync(path.resolve(infoFolder, yamlFilename), "utf8");
+        var classYamlText = fs.readFileSync(path.resolve(sourceInfoFolder, yamlFilename), "utf8");
         var classYaml = jsyaml.safeLoad(classYamlText);
-        aggData.classInfo[classYaml.name] = new si.ComponentInfo(yaml);
+        
+        if (program.verbose) {
+            console.log(classYaml.items[0].name);
+        }
+
+        aggData.classInfo[classYaml.items[0].name] = new si.ComponentInfo(classYaml);
     });
 }
 

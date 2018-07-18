@@ -76,12 +76,14 @@ export class PropInfo {
         this.errorMessages = [];
 
         this.name = sourceData.name;
-        this.docText = sourceData.summary;
+        this.docText = sourceData.summary || "";
         this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
-        this.defaultValue = sourceData.syntax["return"].defaultValue;
+        
+        let tempDefaultVal = sourceData.syntax["return"].defaultValue;
+        this.defaultValue = tempDefaultVal ? tempDefaultVal.toString() : "";
         this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
-        this.type = sourceData.syntax["return"].type;
-        this.type = this.type.replace(/\|/, "\\|");
+        this.type = sourceData.syntax["return"].type || "";
+        this.type = this.type.toString().replace(/\|/, "\\|");
         
         if (sourceData.tags) {
             let depTag = sourceData.tags.find(tag => tag.name === "deprecated");
@@ -254,15 +256,17 @@ export class MethodSigInfo {
 
         this.name = sourceData.name;
 
-        this.docText = sourceData.summary.replace(/[\n\r]+/g, " ").trim();
+        this.docText = sourceData.summary || "";
+        this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
 
         if (!this.docText) {
             this.errorMessages.push(`Warning: method "${sourceData.name}" has no doc text.`);
         }
 
-        this.returnType = sourceData["return"].type.replace(/\s/g, "");
+        this.returnType = sourceData.syntax["return"].type || "";
+        this.returnType = this.returnType.toString().replace(/\s/g, "");
         this.returnsSomething = this.returnType && (this.returnType !== "void");
-        this.returnDocText = sourceData["return"].summary;
+        this.returnDocText = sourceData.syntax["return"].summary || "";
 
         if (this.returnDocText.toLowerCase() === "nothing") {
             this.returnsSomething = false;
@@ -357,9 +361,12 @@ export class ComponentInfo {
         this.hasOutputs = false;
         this.hasMethods = false;
 
-        this.sourcePath = sourceData.source.path;
-        this.sourceLine = sourceData.source.line;
-        
+        this.sourcePath = sourceData.items[0].source.path;
+        this.sourceLine = sourceData.items[0].source.line;
+
+        this.properties = [];
+        this.methods = [];
+
         sourceData.items.forEach(item => {
             switch(item.type) {
                 case "property":

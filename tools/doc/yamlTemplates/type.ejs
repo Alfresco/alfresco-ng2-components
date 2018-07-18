@@ -6,6 +6,10 @@
 <%- include("type", {type: arg}).trim() _%>
 <%_ }) _%>>
 <%_ } _%>
+<%_ } else if (type.type === "stringLiteral") { _%>
+"<%= type.value _%>"
+<%_ } else if (type.type === "reflection") { _%>
+Function
 <%_ } else if (type.type === "array") { _%>
 <%- include("type", {type: type.elementType}).trim() _%>[]
 <%_ } else if (type.type === "union") { _%>

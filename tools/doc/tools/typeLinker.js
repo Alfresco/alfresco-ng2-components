@@ -74,7 +74,7 @@ function initPhase(aggData) {
     });
     //console.log(JSON.stringify(aggData.nameLookup));
 }
-function updateFile(tree, _pathname, aggData, _errorMessages) {
+function updateFile(tree, pathname, aggData, _errorMessages) {
     traverseMDTree(tree);
     return true;
     function traverseMDTree(node) {
@@ -321,7 +321,7 @@ function resolveTypeLink(aggData, text) {
         var kebabName = ngHelpers.kebabifyClassName(possTypeName);
         var possDocFile = aggData.docFiles[kebabName];
         //let url = "../../lib/" + ref.sources[0].fileName;
-        var url = "../../lib/" + classInfo.source.path;
+        var url = classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
         if (possDocFile) {
             url = "../" + possDocFile;
         }
