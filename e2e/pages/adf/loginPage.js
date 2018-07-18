@@ -163,15 +163,15 @@ var LoginPage = function () {
      */
     this.checkUsernameInactive = function () {
         Util.waitUntilElementIsVisible(usernameInactive);
-    },
+    };
 
-        /**
-         * checks password field is inactive
-         * @method checkPasswordInactive
-         */
-        this.checkPasswordInactive = function () {
-            Util.waitUntilElementIsVisible(passwordInactive);
-        };
+    /**
+     * checks password field is inactive
+     * @method checkPasswordInactive
+     */
+    this.checkPasswordInactive = function () {
+        Util.waitUntilElementIsVisible(passwordInactive);
+    };
 
     /**
      * checks username field is highlighted

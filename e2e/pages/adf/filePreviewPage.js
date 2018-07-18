@@ -174,8 +174,8 @@ module.exports = Page.create({
      */
     checktotalPages: {
         value: function (totalPages) {
-            var totalPages = element(by.cssContainingText("div[id='viewer-total-pages']", totalPages));
-            Util.waitUntilElementIsVisible(totalPages);
+            var totalPagesElement = element(by.cssContainingText("div[id='viewer-total-pages']", totalPages));
+            Util.waitUntilElementIsVisible(totalPagesElement);
         }
     },
 

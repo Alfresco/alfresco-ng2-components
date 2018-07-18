@@ -30,7 +30,6 @@ import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from '../actions/ACS/upload.actions';
 import { DropActions } from '../actions/drop.actions';
 
 import path = require('path');
@@ -67,8 +66,6 @@ describe('Upload - User permission', () => {
     });
 
     beforeAll(() => {
-        let uploadActions = new UploadActions();
-
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url

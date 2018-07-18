@@ -66,7 +66,7 @@ describe('Task List Pagination - Sorting', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        let resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         for (let i = 0; i < nrOfTasks; i++) {
             this.alfrescoJsApi.activiti.taskApi.createNewTask({name: taskNames[i]});

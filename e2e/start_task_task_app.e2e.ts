@@ -34,7 +34,6 @@ import resources = require('./util/resources');
 import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
 import fs = require('fs');
 import path = require('path');
@@ -60,7 +59,6 @@ describe('Start Task - Task App', () => {
     });
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
         let users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({

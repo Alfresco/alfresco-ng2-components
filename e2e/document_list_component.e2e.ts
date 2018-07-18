@@ -48,7 +48,7 @@ describe('DocumentList component', () => {
     let folderTwoModel = new FolderModel({ 'name': 'folderTwo' + Util.generateRandomString() });
 
     let uploadedFolder;
-    let rootFolder = 'APP.PERSONAL-FILES', userHomes = 'User Homes', rootFolderName = 'Personal Files';
+    let rootFolder = 'APP.PERSONAL-FILES', rootFolderName = 'Personal Files';
     let fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
 
     let files = {

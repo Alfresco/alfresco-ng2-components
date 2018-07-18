@@ -17,7 +17,8 @@
 
 import LoginPage = require('../pages/adf/loginPage');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
-import AdfViewerPage = require('../pages/adf/viewerPage');
+import ViewerPage = require('../pages/adf/viewerPage');
+import CardViewPage = require('../pages/adf/metadataViewPage');
 
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FileModel = require('../models/ACS/fileModel');
@@ -25,17 +26,29 @@ import FileModel = require('../models/ACS/fileModel');
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import dateFormat = require('dateformat');
-import CONSTANTS = require('../util/constants');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 
-describe('Metadata component', () => {
+fdescribe('Metadata component', () => {
+
+    let METADATA = {
+        DATAFORMAT: 'mmm dd yyyy',
+        TITLE: 'Details',
+        COMMENTS_TAB: 'COMMENTS',
+        PROPERTY_TAB: 'PROPERTIES',
+        DEFAULT_ASPECT: 'Properties',
+        MORE_INFO_BUTTON: 'More information',
+        LESS_INFO_BUTTON: 'Less information',
+        ARROW_DOWN: 'keyboard_arrow_down',
+        ARROW_UP: 'keyboard_arrow_up',
+        EDIT_BUTTON_TOOLTIP: 'Edit'
+    };
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
-    let adfViewerPage = new AdfViewerPage();
-    let cardViewPage;
+    let viewerPage = new ViewerPage();
+    let cardViewPage = new CardViewPage();
 
     let acsUser = new AcsUserModel();
 
@@ -67,63 +80,74 @@ describe('Metadata component', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
+        contentServicesPage.navigateToDocumentList();
+
         done();
     });
 
-    it('[C245652] Properties', () => {
-        contentServicesPage.navigateToDocumentList();
-        adfViewerPage.viewFile(pdfFileModel.name);
+    afterEach(() => {
+        viewerPage.clickCloseButton();
+    });
 
-        cardViewPage = adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsDisplayed();
+    it('[C245652] Properties', () => {
+        viewerPage.viewFile(pdfFileModel.name);
+
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
         cardViewPage.clickOnPropertiesTab();
 
-        expect(cardViewPage.getTitle()).toEqual(CONSTANTS.METADATA.TITLE);
-        expect(cardViewPage.getActiveTab()).toEqual(CONSTANTS.METADATA.PROPERTY_TAB);
-        expect(cardViewPage.getExpandedAspectName()).toEqual(CONSTANTS.METADATA.DEFAULT_ASPECT);
+        expect(cardViewPage.getTitle()).toEqual(METADATA.TITLE);
+        expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
+        expect(cardViewPage.getExpandedAspectName()).toEqual(METADATA.DEFAULT_ASPECT);
         expect(cardViewPage.getName()).toEqual(pdfFileModel.name);
         expect(cardViewPage.getCreator()).toEqual(pdfFileModel.getCreatedByUser().displayName);
-        expect(cardViewPage.getCreatedDate()).toEqual(dateFormat(pdfFileModel.createdAt, CONSTANTS.METADATA.DATAFORMAT));
+        expect(cardViewPage.getCreatedDate()).toEqual(dateFormat(pdfFileModel.createdAt, METADATA.DATAFORMAT));
         expect(cardViewPage.getModifier()).toEqual(pdfFileModel.getCreatedByUser().displayName);
-        expect(cardViewPage.getModifiedDate()).toEqual(dateFormat(pdfFileModel.createdAt, CONSTANTS.METADATA.DATAFORMAT));
+        expect(cardViewPage.getModifiedDate()).toEqual(dateFormat(pdfFileModel.createdAt, METADATA.DATAFORMAT));
         expect(cardViewPage.getMimetypeName()).toEqual(pdfFileModel.getContent().mimeTypeName);
         expect(cardViewPage.getSize()).toEqual(pdfFileModel.getContent().getSizeInBytes());
         expect(cardViewPage.getAuthor()).toEqual(pdfFileModel.properties['cm:author']);
 
         cardViewPage.editIconIsDisplayed();
         cardViewPage.informationButtonIsDisplayed();
-        expect(cardViewPage.getInformationButtonText()).toEqual(CONSTANTS.METADATA.MORE_INFO_BUTTON);
-        expect(cardViewPage.getInformationIconText()).toEqual(CONSTANTS.METADATA.ARROW_DOWN);
+        expect(cardViewPage.getInformationButtonText()).toEqual(METADATA.MORE_INFO_BUTTON);
+        expect(cardViewPage.getInformationIconText()).toEqual(METADATA.ARROW_DOWN);
     });
 
     it('[C272769] Information button', () => {
-        contentServicesPage.navigateToDocumentList();
-        adfViewerPage.viewFile(pdfFileModel.name);
-        cardViewPage = adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsDisplayed();
+        viewerPage.viewFile(pdfFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
         cardViewPage.clickOnPropertiesTab();
         cardViewPage.informationButtonIsDisplayed();
         cardViewPage.clickOnInformationButton();
-        expect(cardViewPage.getInformationButtonText()).toEqual(CONSTANTS.METADATA.LESS_INFO_BUTTON);
-        expect(cardViewPage.getInformationIconText()).toEqual(CONSTANTS.METADATA.ARROW_UP);
+        expect(cardViewPage.getInformationButtonText()).toEqual(METADATA.LESS_INFO_BUTTON);
+        expect(cardViewPage.getInformationIconText()).toEqual(METADATA.ARROW_UP);
     });
 
     it('[C270952] Info icon', () => {
-        contentServicesPage.navigateToDocumentList();
-        adfViewerPage.viewFile(pdfFileModel.name);
-        cardViewPage = adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsDisplayed();
-        cardViewPage.clickOnVersionsTab().checkUploadVersionsButtonIsDisplayed();
-        expect(cardViewPage.getActiveTab()).toEqual(CONSTANTS.METADATA.VERSIONS_TAB);
+        viewerPage.viewFile(pdfFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
         cardViewPage.clickOnPropertiesTab().informationButtonIsDisplayed();
-        adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsNotDisplayed();
-        adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsDisplayed();
-        expect(cardViewPage.getActiveTab()).toEqual(CONSTANTS.METADATA.COMMENTS_TAB);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsNotDisplayed();
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        expect(viewerPage.getActiveTab()).toEqual(METADATA.COMMENTS_TAB);
         cardViewPage.clickOnPropertiesTab();
-        expect(cardViewPage.getActiveTab()).toEqual(CONSTANTS.METADATA.PROPERTY_TAB);
-        expect(cardViewPage.getEditIconTooltip()).toEqual(CONSTANTS.METADATA.EDIT_BUTTON_TOOLTIP);
+        expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
+        expect(cardViewPage.getEditIconTooltip()).toEqual(METADATA.EDIT_BUTTON_TOOLTIP);
+    });
+
+    it('[C270952] Should be possible edit the basic Metadata Info of a Document', () => {
+        viewerPage.viewFile(pdfFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        cardViewPage.clickOnPropertiesTab();
+        cardViewPage.editIconIsDisplayed();
+
+        expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
     });
 
 });

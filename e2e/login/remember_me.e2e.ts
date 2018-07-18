@@ -16,10 +16,7 @@
  */
 
 import LoginPage = require('../pages/adf/loginPage');
-import ContentServicesPage = require('../pages/adf/contentServicesPage');
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
 
-import TestConfig = require('../test.config');
 import AcsUserModel = require('../models/ACS/acsUserModel');
 
 import AdfSettingsPage = require('../pages/adf/settingsPage');
@@ -27,13 +24,8 @@ import AdfSettingsPage = require('../pages/adf/settingsPage');
 describe('Login component - Remember Me', () => {
 
     let adfSettingsPage = new AdfSettingsPage();
-    let navigationBarPage = new NavigationBarPage();
-    let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
-    let adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminUser,
-        'password': TestConfig.adf.adminPassword
-    });
+
 
     beforeAll((done) => {
         adfSettingsPage.setProviderEcmBpm();

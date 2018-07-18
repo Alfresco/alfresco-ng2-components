@@ -14,7 +14,7 @@ export class AppsActions {
 
         let publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
 
-        let published = await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+        await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         return appCreated;
     }
@@ -23,7 +23,7 @@ export class AppsActions {
 
         let publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appId, new AppPublish());
 
-        let published = await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+        await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         return publishApp;
     }
@@ -37,7 +37,7 @@ export class AppsActions {
 
         let publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
 
-        let published = await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+        await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         return appCreated;
     }

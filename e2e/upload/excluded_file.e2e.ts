@@ -28,7 +28,6 @@ import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from '../actions/ACS/upload.actions';
 import { DropActions } from '../actions/drop.actions';
 
 import path = require('path');
@@ -51,14 +50,7 @@ describe('Upload component - Excluded Files', () => {
         'location': resources.Files.ADF_DOCUMENTS.FOLDER_EXCLUDED.folder_location
     });
 
-    let emptyFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
-    });
-
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
-
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url

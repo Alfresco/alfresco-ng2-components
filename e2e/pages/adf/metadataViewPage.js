@@ -17,10 +17,9 @@
 
 var Util = require('../../util/util');
 
-var CardViewPage = function () {
+var MetadataViewPage = function () {
 
     var title = element(by.css("div[info-drawer-title]"));
-    var activeTab = element(by.css("div[class*='mat-tab-label-active']"));
     var expandedAspect = element(by.css("mat-expansion-panel-header[aria-expanded='true']"));
     var aspectTitle = by.css("mat-panel-title");
     var name = element(by.css("span[data-automation-id='card-textitem-value-name'] span"));
@@ -37,17 +36,11 @@ var CardViewPage = function () {
     var informationButton = element(by.css("button[data-automation-id='mata-data-card-toggle-expand']"));
     var informationSpan = element(by.css("span[data-automation-id='mata-data-card-toggle-expand-label']"));
     var informationIcon = element(by.css("span[data-automation-id='mata-data-card-toggle-expand-label'] ~ mat-icon"));
-    var uploadNewVersionButton = element(by.css("input[data-automation-id='upload-single-file']"));
     var rightChevron = element(by.css("div[class*='header-pagination-after']"));
 
     this.getTitle = function () {
         Util.waitUntilElementIsVisible(title);
         return title.getText();
-    };
-
-    this.getActiveTab = function () {
-        Util.waitUntilElementIsVisible(activeTab);
-        return activeTab.getText();
     };
 
     this.getExpandedAspectName = function () {
@@ -132,14 +125,6 @@ var CardViewPage = function () {
         return informationIcon.getText();
     };
 
-    this.clickOnVersionsTab = function() {
-        this.clickRightChevronToGetToTab('Versions');
-        var versionsTab = element(by.cssContainingText("div[id*='mat-tab-label']", "Versions"));
-        Util.waitUntilElementIsVisible(versionsTab);
-        versionsTab.click();
-        return this;
-    };
-
     this.clickOnPropertiesTab = function() {
         var propertiesTab = element(by.cssContainingText("div[class='mat-tab-labels'] div", "Properties"));
         Util.waitUntilElementIsVisible(propertiesTab);
@@ -166,16 +151,6 @@ var CardViewPage = function () {
             });
     };
 
-    this.checkUploadVersionsButtonIsDisplayed = function() {
-        Util.waitUntilElementIsVisible(uploadNewVersionButton);
-        return this;
-    };
-
-    this.checkVersionIsDisplayed = function(version) {
-        Util.waitUntilElementIsVisible(element(by.cssContainingText("h4[class*='adf-version-list-item-name']", version)));
-        return this;
-    };
-
     this.getEditIconTooltip = function () {
         return editIcon.getAttribute('title');
     };
@@ -185,4 +160,4 @@ var CardViewPage = function () {
     };
 };
 
-module.exports = CardViewPage;
+module.exports = MetadataViewPage;

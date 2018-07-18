@@ -17,7 +17,7 @@
 
 import LoginPage = require('../pages/adf/loginPage');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
-import AdfViewerPage = require('../pages/adf/viewerPage');
+import ViewerPage = require('../pages/adf/viewerPage');
 
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FileModel = require('../models/ACS/fileModel');
@@ -25,7 +25,6 @@ import FileModel = require('../models/ACS/fileModel');
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import dateFormat = require('dateformat');
-import CONSTANTS = require('../util/constants');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
@@ -34,7 +33,7 @@ describe('Metadata component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
-    let adfViewerPage = new AdfViewerPage();
+    let viewerPage = new ViewerPage();
     let cardViewPage;
 
     let acsUser = new AcsUserModel();
@@ -72,11 +71,11 @@ describe('Metadata component', () => {
 
     it('[C272768] Versions', () => {
         contentServicesPage.navigateToDocumentList();
-        adfViewerPage.viewFile(pdfFileModel.name);
-        cardViewPage = adfViewerPage.clickInfoButton();
-        adfViewerPage.checkInfoSideBarIsDisplayed();
-        cardViewPage.clickOnVersionsTab().checkUploadVersionsButtonIsDisplayed();
-        expect(cardViewPage.getActiveTab()).toEqual(CONSTANTS.METADATA.VERSIONS_TAB);
+        viewerPage.viewFile(pdfFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        viewerPage.clickOnVersionsTab().checkUploadVersionsButtonIsDisplayed();
+        expect(viewerPage.getActiveTab()).toEqual('VERSIONS');
         cardViewPage.checkVersionIsDisplayed(pdfFileModel.name);
     });
 

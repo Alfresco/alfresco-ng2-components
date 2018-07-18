@@ -19,7 +19,6 @@ import LoginPage = require('../pages/adf/loginPage');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
-import UserInfoDialog = require('../pages/adf/dialog/userInfoDialog');
 
 import TestConfig = require('../test.config');
 import AcsUserModel = require('../models/ACS/acsUserModel');
@@ -35,7 +34,6 @@ describe('Login component', () => {
     let adfSettingsPage = new AdfSettingsPage();
     let processServicesPage = new ProcessServicesPage();
     let navigationBarPage = new NavigationBarPage();
-    let userInfoDialog = new UserInfoDialog();
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
     let adminUserModel = new AcsUserModel({
@@ -45,13 +43,6 @@ describe('Login component', () => {
 
     let userA = new AcsUserModel();
     let userB = new AcsUserModel();
-
-    let errorMessages = {
-        username: 'Your username needs to be at least 2 characters.',
-        invalid_credentials: 'You\'ve entered an unknown username or password',
-        password: 'Enter your password to sign in',
-        required: 'Required'
-    };
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({

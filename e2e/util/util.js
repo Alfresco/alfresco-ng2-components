@@ -44,9 +44,7 @@ var apiRequest = TestConfig.main.protocol !== 'http' ? https : http;
  */
 exports.uploadParentFolder = function (filePath) {
     var parentFolder = path.resolve(path.join(__dirname, 'test'));
-    var absolutePath = path.resolve(path.join(parentFolder, filePath));
-
-    return absolutePath;
+    return path.resolve(path.join(parentFolder, filePath));
 };
 
 /**
@@ -91,9 +89,7 @@ exports.getCrtDateLongFormat = function () {
  * @method getCrtDateInFormat
  */
 exports.getCrtDateInFormat = function (dateFormat) {
-    var currentDate = moment().format(dateFormat);
-    // console.debug("Current date formatted with: '" + dateFormat + "' format, is: '" + currentDate + "'");
-    return currentDate;
+    return moment().format(dateFormat);
 };
 
 /**
@@ -121,11 +117,11 @@ exports.generatePasswordString = function (length) {
     var possibleLowerCase = 'abcdefghijklmnopqrstuvwxyz';
     var lowerCaseLimit = Math.floor(length / 2);
 
-    for (var i = 0; i < lowerCaseLimit; i++) {
+    for (let i = 0; i < lowerCaseLimit; i++) {
         text += possibleLowerCase.charAt(Math.floor(Math.random() * possibleLowerCase.length));
     }
 
-    for (var i = 0; i < length - lowerCaseLimit; i++) {
+    for (let i = 0; i < length - lowerCaseLimit; i++) {
         text += possibleUpperCase.charAt(Math.floor(Math.random() * possibleUpperCase.length));
     }
 

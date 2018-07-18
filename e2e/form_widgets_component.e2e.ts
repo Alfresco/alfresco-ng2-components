@@ -43,10 +43,8 @@ describe('Form widgets', () => {
     let appFields = app.form_fields;
     let taskPage = new TasksPage();
     let appModel;
-    let taskModel;
     let newTask = 'First task';
     let usingWidget = new UsingWidget();
-    let procUserModel;
     let alfrescoJsApi;
 
     beforeAll(async (done) => {

@@ -20,7 +20,6 @@ import ProcessServicesPage = require('./pages/adf/process_services/processServic
 import PaginationPage = require('./pages/adf/paginationPage');
 import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
 import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
-import NavigationBarPage = require('./pages/adf/navigationBarPage');
 
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
@@ -52,7 +51,6 @@ describe('Process List - Pagination', function () {
     let paginationPage = new PaginationPage();
     let processFiltersPage = new ProcessFiltersPage();
     let processDetailsPage = new ProcessDetailsPage();
-    let navigationBarPage = new NavigationBarPage();
 
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;

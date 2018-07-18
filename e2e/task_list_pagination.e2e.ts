@@ -19,7 +19,6 @@ import LoginPage = require('./pages/adf/loginPage');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
 import TasksPage = require('./pages/adf/process_services/tasksPage');
 import PaginationPage = require('./pages/adf/paginationPage');
-import NavigationBarPage = require('./pages/adf/navigationBarPage');
 
 import CONSTANTS = require('./util/constants');
 
@@ -36,7 +35,6 @@ describe('Task List Pagination', () => {
     let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
     let paginationPage = new PaginationPage();
-    let navigationBarPage = new NavigationBarPage();
 
     let processUserModel, processUserModelEmpty;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;

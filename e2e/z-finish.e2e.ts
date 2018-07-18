@@ -16,7 +16,6 @@
  */
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from './actions/ACS/upload.actions';
 import TestConfig = require('./test.config');
 
 import fs = require('fs');
@@ -28,7 +27,6 @@ let saveScreenshot = process.env.SAVE_SCREENSHOT;
 describe('Save screenshot at the end', () => {
 
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
 
         if (saveScreenshot === 'true') {
             if (!buildNumber) {
