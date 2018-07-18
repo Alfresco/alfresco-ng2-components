@@ -207,7 +207,7 @@ describe('PeopleWidgetComponent', () => {
             });
         });
 
-        it('should emit peopleSelected if option is selected', () => {
+        it('should emit peopleSelected if option is selected', async(() => {
             let selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
             let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
@@ -221,7 +221,7 @@ describe('PeopleWidgetComponent', () => {
                 optionElement.click();
                 expect(selectEmitSpy).toHaveBeenCalledWith(1001);
             });
-        });
+        }));
     });
 
 });
