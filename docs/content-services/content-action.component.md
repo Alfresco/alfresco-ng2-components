@@ -13,19 +13,15 @@ Adds options to a Document List actions menu for a particular content type.
 ## Contents
 
 -   [Basic Usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
     -   [Events](#events)
-
 -   [Details](#details)
-
     -   [Examples](#examples)
     -   [Conditional visibility](#conditional-visibility)
+    -   [Conditional disabled state](#conditional-disabled-state)
     -   [Customizing built-in actions](#customizing-built-in-actions)
     -   [Error, Permission and Success callbacks](#error-permission-and-success-callbacks)
-
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -86,24 +82,24 @@ export class MyView {
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it? |
-| disabled | `boolean \|Function` | false | Is the menu item disabled? |
+| disabled | `boolean \| Function` | false | Is the menu item disabled? |
 | handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move". |
 | icon | `string` |  | The name of the icon to display next to the menu command (can be left blank). |
 | permission | `string` |  | The permission type. |
-| target | `string` |  [`ContentActionTarget`](../../lib/content-services/document-list/models/content-action.model.ts).All | Type of item that the action applies to. Can be "document" or "folder" |
+| target | `string` |  | Type of item that the action applies to. Can be "document" or "folder" |
 | title | `string` | "Action" | The title of the action as shown in the menu. |
 | visible | `boolean \| Function` | true | Visibility state (see examples). |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs during the action. Applies to copy and move actions. |
 | execute | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the user selects the action from the menu. |
 | permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a permission error occurs |
-| success | `EventEmitter<Object>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
 
 ## Details
 
@@ -124,7 +120,7 @@ will trigger the same action.) You can also add your own handler by implementing
 `execute` event.
 
 Note that you can use _both_ a built-in handler and your own `execute`
-function in the same action. The `execute` function is passed a [`NodeMinimalEntry`](../../lib/content-services/document-list/models/document-library.model.ts) as its
+function in the same action. The `execute` function is passed a [`NodeMinimalEntry`](lib/content-services/document-list/models/document-library.model.ts) as its
 parameter (see the [Document Library model](document-library.model.md) page for more
 information) which contains full details of the item that the action is operating on. For
 example, with `handler="delete"` you could use `execute` to show a message with the name,
@@ -383,8 +379,8 @@ funcName = (parameters): boolean => {
 
 Similar to `visible` property, it is possible to control the `disabled` state with the following scenarios:
 
-- direct value of `boolean` type
-- binding to a property of the `Function` type that evaluates condition and returns `boolean` value
+-   direct value of `boolean` type
+-   binding to a property of the `Function` type that evaluates condition and returns `boolean` value
 
 #### Using direct value of boolean type
 

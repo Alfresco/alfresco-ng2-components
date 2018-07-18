@@ -19,13 +19,13 @@ Shows a dialog listing all the files uploaded with the Upload Button or Drag Are
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | position | `string` | "right" | Dialog position. Can be 'left' or 'right'. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a file in the list has an error. |
 
 ## Details

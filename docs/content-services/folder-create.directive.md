@@ -30,15 +30,15 @@ Creates folders.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | nodeType | `string` | "cm:folder" | Type of node to create. |
-| adf-create-folder | `string` |  DEFAULT_FOLDER_PARENT_ID | Parent folder where the new folder will be located after creation. |
-| title | `string` |  null | Title of folder creation dialog. |
+| parentNodeId | `string` |  | Parent folder where the new folder will be located after creation. |
+| title | `string` | null | Title of folder creation dialog. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs (eg, a folder with same name already exists). |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the folder is created successfully. |
 

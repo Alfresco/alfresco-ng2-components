@@ -22,11 +22,11 @@ Shows tags for a node.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | nodeId | `string` |  | The identifier of a node. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | results | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a tag is selected. |

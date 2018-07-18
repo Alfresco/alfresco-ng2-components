@@ -29,7 +29,8 @@ Update the current node by adding/removing the inherited permissions.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| updated | [`EventEmitter<MinimalNodeEntryEntity>`](../content-services/document-library.model.md) | Emitted when the node is updated |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` |  |
+| updated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the node is updated |
 
 ## Details
 
