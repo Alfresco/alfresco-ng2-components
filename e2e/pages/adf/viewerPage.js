@@ -50,6 +50,27 @@ var ViewerToolbarPage = function () {
     var passwordSubmitDisabled = element(by.css("button[data-automation-id='adf-password-dialog-submit'][disabled]"));
     var passwordInput = element(by.css("input[data-automation-id='adf-password-dialog-input']"));
     var passwordError = element(by.css("mat-error[data-automation-id='adf-password-dialog-error']"));
+    var infoSideBar = element(by.css("div[class='adf-info-drawer-layout-header']"));
+    var unsupportedFileContainer  = element(by.cssContainingText('.label','Document preview could not be loaded'));
+    var pageCanvas = element.all(by.css("div[class='canvasWrapper']")).first();
+
+    this.canvasHeight = function () {
+        var deferred = protractor.promise.defer();
+        pageCanvas.getAttribute("style").then(function (value) {
+            var canvasHeight = value.split("height: ")[1].split("px")[0];
+            deferred.fulfill(canvasHeight);
+        });
+        return deferred.promise;
+    };
+
+    this.canvasWidth = function () {
+        var deferred = protractor.promise.defer();
+        pageCanvas.getAttribute("style").then(function (value) {
+            var canvasWidth = value.split("width: ")[1].split("px")[0];
+            deferred.fulfill(canvasWidth);
+        });
+        return deferred.promise;
+    };
 
     this.viewFile = function (fileName) {
         var fileView = element(by.xpath("//div[@class='document-list-container']//span[@title='" + fileName +"']"));
@@ -254,6 +275,33 @@ var ViewerToolbarPage = function () {
     this.checkCustomBtnDisplayed = function ()
     {
         Util.waitUntilElementIsVisible(customBtn);
+    };
+
+    this.checkUnsupportedFileContainerIsDisplayed = function ()
+    {
+        Util.waitUntilElementIsVisible(unsupportedFileContainer);
+    };
+
+    this.checkInfoSideBarIsNotDisplayed = function ()
+    {
+        Util.waitUntilElementIsNotVisible(infoSideBar);
+    };
+
+    this.checkInfoSideBarIsDisplayed = function ()
+    {
+        Util.waitUntilElementIsVisible(infoSideBar);
+    };
+
+    this.checkInfoSideBarIsNotDisplayed = function ()
+    {
+        Util.waitUntilElementIsNotOnPage(infoSideBar);
+    };
+
+    this.clickInfoButton = function ()
+    {
+        Util.waitUntilElementIsVisible(infoButton);
+        infoButton.click();
+        return new CardViewPage();
     };
 
     this.clickPasswordSubmit = function ()
