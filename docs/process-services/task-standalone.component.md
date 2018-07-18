@@ -33,3 +33,4 @@ This component can be used when there is no form attached to a task.
 | -- | -- | -- |
 | cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the "Cancel" button is clicked. |
 | complete | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the form associated with the task is completed. |
+| showAttachForm | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the "Show Form" button is clicked. |

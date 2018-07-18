@@ -301,7 +301,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
+            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-clickable-value'));
             expect(valueEl.nativeElement.innerText).toBe('test form');
         });
     }));
