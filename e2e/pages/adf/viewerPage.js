@@ -15,20 +15,21 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util');
+var Util = require("../../util/util");
+var CardViewPage = require("./cardViewPage");
 
 var ViewerToolbarPage = function () {
 
     var closeButton = element(by.css("button[data-automation-id='adf-toolbar-back']"));
-    var fileName = element(by.id('adf-viewer-display-name'));
+    var fileName = element(by.id("adf-viewer-display-name"));
     var downloadButton = element(by.css("button[data-automation-id='adf-toolbar-download'] > span > mat-icon"));
     var infoButton = element(by.css("button[data-automation-id='adf-toolbar-sidebar']"));
-    var previousPageButton = element(by.id('viewer-previous-page-button'));
-    var nextPageButton = element(by.id('viewer-next-page-button'));
-    var zoomInButton = element(by.id('viewer-zoom-in-button'));
-    var zoomOutButton = element(by.id('viewer-zoom-out-button'));
-    var scalePageButton = element(by.id('viewer-scale-page-button'));
-    var pdfContainer = element(by.id('viewer-pdf-container'));
+    var previousPageButton = element(by.id("viewer-previous-page-button"));
+    var nextPageButton = element(by.id("viewer-next-page-button"));
+    var zoomInButton = element(by.id("viewer-zoom-in-button"));
+    var zoomOutButton = element(by.id("viewer-zoom-out-button"));
+    var scalePageButton = element(by.id("viewer-scale-page-button"));
+    var pdfContainer = element(by.id("viewer-pdf-container"));
     var fullScreenButton = element(by.css("button[data-automation-id='adf-toolbar-fullscreen']"));
     var rotateLeft = element(by.css("button[id='viewer-rotate-left-button']"));
     var rotateRight = element(by.css("button[id='viewer-rotate-right-button']"));
@@ -51,7 +52,7 @@ var ViewerToolbarPage = function () {
     var passwordInput = element(by.css("input[data-automation-id='adf-password-dialog-input']"));
     var passwordError = element(by.css("mat-error[data-automation-id='adf-password-dialog-error']"));
     var infoSideBar = element(by.css("div[class='adf-info-drawer-layout-header']"));
-    var unsupportedFileContainer  = element(by.cssContainingText('.label','Document preview could not be loaded'));
+    var unsupportedFileContainer  = element(by.cssContainingText(".label","Document preview could not be loaded"));
     var pageCanvas = element.all(by.css("div[class='canvasWrapper']")).first();
 
     this.canvasHeight = function () {
@@ -126,14 +127,14 @@ var ViewerToolbarPage = function () {
     this.checkAllThumbnailsDisplayed = function (nbPages)
     {
         defaultThumbnailHeight = 143;
-        expect(thumbnailsContent.getAttribute('style')).toEqual("height: " + nbPages*defaultThumbnailHeight + "px; transform: translate(-50%, 0px);");
+        expect(thumbnailsContent.getAttribute("style")).toEqual("height: " + nbPages*defaultThumbnailHeight + "px; transform: translate(-50%, 0px);");
     };
 
     this.checkCurrentThumbnailIsSelected = function ()
     {
         selectedThumbnail = element(by.css("adf-pdf-thumb[class='pdf-thumbnails__thumb ng-star-inserted pdf-thumbnails__thumb--selected'] > img"));
-        pageSelectorInput.getAttribute('value').then(function (pageNumber) {
-            expect("Page " + pageNumber).toEqual(selectedThumbnail.getAttribute('title'));
+        pageSelectorInput.getAttribute("value").then(function (pageNumber) {
+            expect("Page " + pageNumber).toEqual(selectedThumbnail.getAttribute("title"));
         });
     };
 
@@ -200,7 +201,7 @@ var ViewerToolbarPage = function () {
 
     this.checkPageSelectorInputIsDisplayed = function (number) {
         Util.waitUntilElementIsVisible(pageSelectorInput);
-        pageSelectorInput.getAttribute('value').then(function (pageNumber) {
+        pageSelectorInput.getAttribute("value").then(function (pageNumber) {
             expect(pageNumber).toEqual(number);
         });
     };
@@ -268,7 +269,7 @@ var ViewerToolbarPage = function () {
 
     this.checkRotation = function (text)
     {
-        rotation = imgContainer.getAttribute('style');
+        rotation = imgContainer.getAttribute("style");
         expect(rotation).toEqual(text);
     };
 
