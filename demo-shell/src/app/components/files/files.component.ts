@@ -25,13 +25,18 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
-    AlfrescoApiService ,AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
+    AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
     PaginationComponent, FormValues, DisplayMode, UserPreferenceValues, InfinitePaginationComponent
 } from '@alfresco/adf-core';
 
-import { DocumentListComponent, PermissionStyleModel, UploadFilesEvent, ConfirmDialogComponent } from '@alfresco/adf-content-services';
+import {
+    DocumentListComponent,
+    PermissionStyleModel,
+    UploadFilesEvent,
+    ConfirmDialogComponent
+} from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
@@ -199,7 +204,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 this.supportedPages = pages;
             });
 
-        this.alfrescoApiService.nodeUpdated.subscribe(()=>{
+        this.alfrescoApiService.nodeUpdated.subscribe(() => {
             this.documentList.reload();
         });
     }
