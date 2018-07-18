@@ -37,6 +37,8 @@ var MetadataViewPage = function () {
     var informationSpan = element(by.css("span[data-automation-id='mata-data-card-toggle-expand-label']"));
     var informationIcon = element(by.css("span[data-automation-id='mata-data-card-toggle-expand-label'] ~ mat-icon"));
     var rightChevron = element(by.css("div[class*='header-pagination-after']"));
+    var displayEmptySwitch = element(by.id("adf-metadata-empty"));
+    var readonlySwitch = element(by.id("adf-metadata-readonly"));
 
     this.getTitle = function () {
         Util.waitUntilElementIsVisible(title);
@@ -98,41 +100,51 @@ var MetadataViewPage = function () {
         return titleProperty.getText();
     };
 
-    this.editIconIsDisplayed = function() {
+    this.editIconIsDisplayed = function () {
         Util.waitUntilElementIsVisible(editIcon);
         return editIcon.getText();
     };
 
-    this.informationButtonIsDisplayed = function() {
+    this.editIconIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(editIcon);
+        return editIcon.getText();
+    };
+
+    this.editIconClick = function () {
+        Util.waitUntilElementIsVisible(editIcon);
+        return editIcon.click();
+    };
+
+    this.informationButtonIsDisplayed = function () {
         Util.waitUntilElementIsVisible(informationSpan);
         return informationSpan.getText();
     };
 
-    this.clickOnInformationButton = function() {
+    this.clickOnInformationButton = function () {
         Util.waitUntilElementIsVisible(informationButton);
         Util.waitUntilElementIsClickable(informationButton);
         informationButton.click();
         return this;
     };
 
-    this.getInformationButtonText = function() {
+    this.getInformationButtonText = function () {
         Util.waitUntilElementIsVisible(informationSpan);
         return informationSpan.getText();
     };
 
-    this.getInformationIconText = function() {
+    this.getInformationIconText = function () {
         Util.waitUntilElementIsVisible(informationIcon);
         return informationIcon.getText();
     };
 
-    this.clickOnPropertiesTab = function() {
+    this.clickOnPropertiesTab = function () {
         var propertiesTab = element(by.cssContainingText("div[class='mat-tab-labels'] div", "Properties"));
         Util.waitUntilElementIsVisible(propertiesTab);
         propertiesTab.click();
         return this;
     };
 
-    this.clickRightChevron = function() {
+    this.clickRightChevron = function () {
         Util.waitUntilElementIsVisible(rightChevron);
         rightChevron.click();
         return this;
@@ -143,7 +155,7 @@ var MetadataViewPage = function () {
             .map((element) => element.getAttribute('innerText'))
             .then((texts) => {
                 for (let text of texts) {
-                    if (text === tabName ) {
+                    if (text === tabName) {
                         break;
                     }
                     this.clickRightChevron();
@@ -157,6 +169,138 @@ var MetadataViewPage = function () {
 
     this.getInformationButtonTooltip = function () {
         return informationSpan.getAttribute('title');
+    };
+
+    this.editPropertyIconIsDisplayed = function (propertyName) {
+        var editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
+        Util.waitUntilElementIsVisible(editPropertyIcon);
+    };
+
+    this.updatePropertyIconIsDisplayed = function (propertyName) {
+        var updatePropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
+        Util.waitUntilElementIsVisible(updatePropertyIcon);
+    };
+
+    this.clickUpdatePropertyIcon = function (propertyName) {
+        var updatePropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
+        Util.waitUntilElementIsVisible(updatePropertyIcon);
+        return updatePropertyIcon.click();
+    };
+
+    this.clickClearPropertyIcon = function (propertyName) {
+        var clearPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
+        Util.waitUntilElementIsVisible(clearPropertyIcon);
+        return clearPropertyIcon.click();
+    };
+
+    this.enterText = function (propertyName, text) {
+        const textField = element(by.css('input[data-automation-id="card-textitem-editinput-' + propertyName + '"]'));
+        Util.waitUntilElementIsVisible(textField);
+        textField.sendKeys('');
+        textField.clear();
+        browser.driver.sleep(500);
+        textField.sendKeys(text);
+        return this;
+    };
+
+    this.enterDescriptionText = function (text) {
+        const textField = element(by.css('textarea[data-automation-id="card-textitem-edittextarea-properties.cm:description"]'));
+        Util.waitUntilElementIsVisible(textField);
+        textField.sendKeys('');
+        textField.clear();
+        browser.driver.sleep(500);
+        textField.sendKeys(text);
+        return this;
+    };
+
+    this.getText = function (propertyName) {
+        const textField = element(by.css('span[data-automation-id="card-textitem-value-' + propertyName + '"]'));
+        Util.waitUntilElementIsVisible(textField);
+        return textField.getText();
+    };
+
+    this.clearPropertyIconIsDisplayed = function (propertyName) {
+        var clearPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
+        Util.waitUntilElementIsVisible(clearPropertyIcon);
+    };
+
+    this.clickEditPropertyIcons = function (propertyName) {
+        var editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
+        Util.waitUntilElementIsVisible(editPropertyIcon);
+        editPropertyIcon.click();
+    };
+
+    this.getPropertyIconTooltip = function (propertyName, icon) {
+        var editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
+        return editPropertyIcon.getAttribute('title');
+    };
+
+    this.clickMetadatGroup = function (groupName) {
+        var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
+        Util.waitUntilElementIsVisible(group);
+        group.click();
+    };
+
+    /**
+     * disables displayEmpty
+     */
+    this.disableDisplayEmpty = function () {
+        Util.waitUntilElementIsVisible(displayEmptySwitch);
+        displayEmptySwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                displayEmptySwitch.click();
+                expect(displayEmptySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables displayEmpty
+     */
+    this.enableDisplayEmpty  = function () {
+        Util.waitUntilElementIsVisible(displayEmptySwitch);
+        displayEmptySwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                displayEmptySwitch.click();
+                expect(displayEmptySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
+    /**
+     * disables Readonly
+     */
+    this.disableReadonly = function () {
+        Util.waitUntilElementIsVisible(readonlySwitch);
+        readonlySwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                readonlySwitch.click();
+                expect(readonlySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables Readonly
+     */
+    this.enableReadonly  = function () {
+        Util.waitUntilElementIsVisible(readonlySwitch);
+        readonlySwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                readonlySwitch.click();
+                expect(readonlySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
+    this.checkPopertyIsVisible = function (propertyName, type) {
+        var property = element(by.css('div[data-automation-id="card-'+ type + '-label-'+ propertyName + '"]'));
+        Util.waitUntilElementIsVisible(property);
+    };
+
+    this.checkPopertIsNotVisible = function (propertyName, type) {
+        var property = element(by.css('div[data-automation-id="card-'+ type + '-label-'+ propertyName + '"]'));
+        Util.waitUntilElementIsNotVisible(property);
     };
 };
 

@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
-    AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
+    AlfrescoApiService ,AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
     PaginationComponent, FormValues, DisplayMode, UserPreferenceValues, InfinitePaginationComponent
@@ -192,11 +192,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private preference: UserPreferencesService,
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
-                public authenticationService: AuthenticationService) {
+                public authenticationService: AuthenticationService,
+                public alfrescoApiService: AlfrescoApiService) {
         this.preference.select(UserPreferenceValues.SupportedPageSizes)
             .subscribe((pages) => {
                 this.supportedPages = pages;
             });
+
+        this.alfrescoApiService.nodeUpdated.subscribe(()=>{
+            this.documentList.reload();
+        });
     }
 
     showFile(event) {

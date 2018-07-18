@@ -26,7 +26,6 @@ describe('Login component - Remember Me', () => {
     let adfSettingsPage = new AdfSettingsPage();
     let loginPage = new LoginPage();
 
-
     beforeAll((done) => {
         adfSettingsPage.setProviderEcmBpm();
         done();
