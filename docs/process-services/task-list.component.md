@@ -11,21 +11,16 @@ Renders a list containing all the tasks matched by the parameters specified.
 ## Contents
 
 -   [Basic Usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
     -   [Events](#events)
-
 -   [Details](#details)
-
     -   [Setting the column schema](#setting-the-column-schema)
     -   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
     -   [Pagination strategy](#pagination-strategy)
     -   [DataTableAdapter example](#datatableadapter-example)
     -   [DataColumn Features](#datacolumn-features)
     -   [Show custom template when tasklist is empty](#show-custom-template-when-tasklist-is-empty)
-
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -43,31 +38,31 @@ Renders a list containing all the tasks matched by the parameters specified.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | The id of the app. |
 | assignment | `string` |  | The assignment of the process. Possible values are: "assignee" (the current user is the assignee), candidate (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value(the current user is involved). |
-| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | (**Deprecated:** 2.4.0) Data source object that represents the number and the type of the columns that you want to show. |
+| data | `DataTableAdapter` |  | (**Deprecated:** 2.4.0) Data source object that represents the number and the type of the columns that you want to show. |
 | landingTaskId | `string` |  | Define which task id should be selected after reloading. If the task id doesn't exist or nothing is passed then the first task will be selected. |
 | multiselect | `boolean` | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | name | `string` |  | Name of the tasklist. |
 | page | `number` | 0 | The page number of the tasks to fetch. |
-| processDefinitionKey | `string` |  | (**Deprecated:** 2.4.0) The Definition Key of the process. |
 | processDefinitionId | `string` |  | The Definition Id of the process. |
+| processDefinitionKey | `string` |  | (**Deprecated:** 2.4.0) The Definition Key of the process. |
 | processInstanceId | `string` |  | The Instance Id of the process. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| size | `number` |  [`PaginationComponent`](../core/pagination.component.md).DEFAULT_PAGINATION.maxItems | The number of tasks to fetch. Default value: 25. |
+| size | `number` |  | The number of tasks to fetch. Default value: 25. |
 | sort | `string` |  | Define the sort order of the tasks. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
 | state | `string` |  | Current state of the process. Possible values are: `completed`, `active`. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task in the list is clicked |
 | rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected |
-| success | `EventEmitter<any>` | Emitted when the task list is loaded |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task list is loaded |
 
 ## Details
 
@@ -196,7 +191,7 @@ The Tasklist also supports pagination as shown in the example below:
 ### DataTableAdapter example
 
 See the [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) page for full details of the interface and its standard
-implementation, [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts). Below is an example of how you can set up the adapter for a
+implementation, [`ObjectDataTableAdapter`](lib/core/datatable/data/object-datatable-adapter.ts). Below is an example of how you can set up the adapter for a
 typical tasklist.
 
 ```json
