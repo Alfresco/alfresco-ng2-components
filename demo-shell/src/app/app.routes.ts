@@ -50,7 +50,7 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
 import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
-import { ProcessListComponent } from './components/process-list/process-list.component';
+import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { CardViewComponent } from './components/card-view/card-view.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
@@ -266,12 +266,12 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'process-list',
-                component: ProcessListComponent,
+                component: ProcessListDemoComponent,
                 canActivate: [AuthGuardBpm]
             },
             {
                 path: 'process-list/:id',
-                component: ProcessListComponent,
+                component: ProcessListDemoComponent,
                 canActivate: [AuthGuardBpm]
             },
             {

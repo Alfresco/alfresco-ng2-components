@@ -21,8 +21,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
-    templateUrl: './process-list.component.html',
-    styleUrls: [`./process-list.component.scss`],
+    templateUrl: './process-list-demo.component.html',
+    styleUrls: [`./process-list-demo.component.scss`],
 })
 
 export class ProcessListDemoComponent implements OnInit {
