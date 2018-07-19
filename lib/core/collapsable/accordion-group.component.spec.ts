@@ -115,15 +115,29 @@ describe('AccordionGroupComponent', () => {
         header.click();
     }));
 
-    it('should expand if panel is not open and is clicked', () => {
-        component.isSelected = true;
+    it('should expand if panel has content and is clicked', (done) => {
         component.isOpen = false;
+        component.hasContent = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
             selectElement.click();
             expect(component.expansionPanel.expanded).toBe(true);
+            done();
+        });
+    });
+
+    it('should not expand if panel doesn\'t have content and is clicked', (done) => {
+        component.isOpen = false;
+        component.hasContent = false;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
+            selectElement.click();
+            expect(component.expansionPanel.expanded).toBe(true);
+            done();
         });
     });
 });
