@@ -32,7 +32,8 @@ var AppNavigationBarPage = function () {
     };
 
     this.clickProcessButton = function () {
-        processButton.get(1).click();
+        Util.waitUntilElementIsVisible(processButton);
+        processButton.click();
     };
 
     this.clickReportsButton = function () {
