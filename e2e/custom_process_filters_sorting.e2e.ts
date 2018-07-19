@@ -28,7 +28,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from './actions/users.actions';
 import { AppsActions } from './actions/APS/apps.actions';
 
-fdescribe('Sorting for process filters', () => {
+describe('Sorting for process filters', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
