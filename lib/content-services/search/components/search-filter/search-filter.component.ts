@@ -235,7 +235,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private parseFacetQueries(context: any) {
         const responseQueries = this.getFacetQueryMap(context);
-        if (!this.responseFacetQueries) {
+        if (!this.responseFacetQueries && this.queryBuilder.config.facetQueries) {
             const facetQueries = (this.queryBuilder.config.facetQueries.queries || [])
                 .map(query => {
                     const queryResult = responseQueries[query.label];
