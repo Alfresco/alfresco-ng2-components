@@ -65,17 +65,17 @@ export class CardViewComponent implements OnInit {
             }),
             new CardViewDateItemModel({
                 label: 'CardView Date Item',
-                value: new Date(),
-                key: 'date-of-birth',
-                default: new Date(),
+                value: new Date(1983, 11, 24, 10, 0, 30),
+                key: 'date',
+                default: new Date(1983, 11, 24, 10, 0, 30),
                 format: 'DD.MM.YYYY',
                 editable: this.isEditable
             }),
             new CardViewDatetimeItemModel({
                 label: 'CardView Datetime Item',
-                value: new Date(),
-                key: 'datetime-of-birth',
-                default: new Date(),
+                value: new Date(1983, 11, 24, 10, 0, 0),
+                key: 'datetime',
+                default: new Date(1983, 11, 24, 10, 0, 0),
                 format: 'DD.MM.YYYY',
                 editable: this.isEditable
             }),

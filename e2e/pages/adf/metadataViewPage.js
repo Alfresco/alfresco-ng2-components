@@ -213,8 +213,9 @@ var MetadataViewPage = function () {
         return this;
     };
 
-    this.getText = function (propertyName) {
-        const textField = element(by.css('span[data-automation-id="card-textitem-value-' + propertyName + '"]'));
+    this.getText = function (propertyName, type) {
+        let propertyType = !type ? 'textitem' : type;
+        const textField = element(by.css('span[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(textField);
         return textField.getText();
     };
@@ -257,7 +258,7 @@ var MetadataViewPage = function () {
     /**
      * enables displayEmpty
      */
-    this.enableDisplayEmpty  = function () {
+    this.enableDisplayEmpty = function () {
         Util.waitUntilElementIsVisible(displayEmptySwitch);
         displayEmptySwitch.getAttribute('class').then(function (check) {
             if (check === 'mat-slide-toggle mat-primary') {
@@ -283,7 +284,7 @@ var MetadataViewPage = function () {
     /**
      * enables Readonly
      */
-    this.enableReadonly  = function () {
+    this.enableReadonly = function () {
         Util.waitUntilElementIsVisible(readonlySwitch);
         readonlySwitch.getAttribute('class').then(function (check) {
             if (check === 'mat-slide-toggle mat-primary') {
@@ -294,12 +295,12 @@ var MetadataViewPage = function () {
     };
 
     this.checkPopertyIsVisible = function (propertyName, type) {
-        var property = element(by.css('div[data-automation-id="card-'+ type + '-label-'+ propertyName + '"]'));
+        var property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(property);
     };
 
     this.checkPopertIsNotVisible = function (propertyName, type) {
-        var property = element(by.css('div[data-automation-id="card-'+ type + '-label-'+ propertyName + '"]'));
+        var property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsNotVisible(property);
     };
 };

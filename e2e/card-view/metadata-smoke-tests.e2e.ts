@@ -36,7 +36,7 @@ import path = require('path');
 
 describe('Metadata component', () => {
 
-    let METADATA = {
+    const METADATA = {
         DATAFORMAT: 'mmm dd yyyy',
         TITLE: 'Details',
         COMMENTS_TAB: 'COMMENTS',
@@ -49,11 +49,11 @@ describe('Metadata component', () => {
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let viewerPage = new ViewerPage();
-    let metadataViewPage = new CardViewPage();
-    let contentListPage = new ContentListPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const viewerPage = new ViewerPage();
+    const metadataViewPage = new CardViewPage();
+    const contentListPage = new ContentListPage();
 
     let acsUser = new AcsUserModel();
 
@@ -62,6 +62,11 @@ describe('Metadata component', () => {
     let pdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+    });
+
+    let pngFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
@@ -82,6 +87,7 @@ describe('Metadata component', () => {
         await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
 
         let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+        await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
         Object.assign(pdfFileModel, pdfUploadedFile.entry);
 
@@ -299,5 +305,36 @@ describe('Metadata component', () => {
         metadataViewPage.enterText('name', folderName);
         metadataViewPage.clickUpdatePropertyIcon('name');
         expect(metadataViewPage.getText('name')).toEqual(folderName);
+    });
+
+    it('[C260181] Should be possible edit all the metadata aspect', () => {
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+        metadataViewPage.editIconIsDisplayed();
+
+        expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
+
+        metadataViewPage.clickOnInformationButton();
+
+        metadataViewPage.clickMetadatGroup('EXIF');
+
+        metadataViewPage.editIconClick();
+
+        metadataViewPage.clickEditPropertyIcons('properties.exif:software');
+        metadataViewPage.enterText('properties.exif:software', 'test custom text software');
+        metadataViewPage.clickUpdatePropertyIcon('properties.exif:software');
+        expect(metadataViewPage.getText('properties.exif:software')).toEqual('test custom text software');
+
+        metadataViewPage.clickEditPropertyIcons('properties.exif:isoSpeedRatings');
+        metadataViewPage.enterText('properties.exif:isoSpeedRatings', 'test custom text isoSpeedRatings');
+        metadataViewPage.clickUpdatePropertyIcon('properties.exif:isoSpeedRatings');
+        expect(metadataViewPage.getText('properties.exif:isoSpeedRatings')).toEqual('test custom text isoSpeedRatings');
+
+        metadataViewPage.clickEditPropertyIcons('properties.exif:fNumber');
+        metadataViewPage.enterText('properties.exif:fNumber', 22);
+        metadataViewPage.clickUpdatePropertyIcon('properties.exif:fNumber');
+        expect(metadataViewPage.getText('properties.exif:fNumber')).toEqual('22');
     });
 });

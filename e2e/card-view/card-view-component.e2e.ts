@@ -17,6 +17,8 @@
 
 import LoginPage = require('../pages/adf/loginPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import CardViewPage = require('../pages/adf/metadataViewPage');
+
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
@@ -29,6 +31,8 @@ describe('CardView Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const cardViewPageComponent = new CardViewPageComponent();
+    const metadataViewPage = new CardViewPage();
+
     const app = resources.Files.APP_WITH_PROCESSES;
 
     beforeAll(async (done) => {
@@ -171,7 +175,7 @@ describe('CardView Component', () => {
         it('[C279949] Should not be possible have an empty value', () => {
             cardViewPageComponent
                 .clickOnIntField()
-                .enterIntField('')
+                .enterIntField(' ')
                 .clickOnIntSaveIcon();
 
             expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
@@ -245,8 +249,8 @@ describe('CardView Component', () => {
         it('[C279956] Should not be possible have an empty value', () => {
             cardViewPageComponent
                 .clickOnFloatField()
-                .enterFloatField('')
-                .clickOnFloatClearIcon();
+                .enterFloatField(' ')
+                .clickOnFloatSaveIcon();
 
             expect(cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
         });
@@ -270,6 +274,25 @@ describe('CardView Component', () => {
 
             expect(cardViewPageComponent.getOutputText(1)).toBe('[CardView Boolean Item] - true');
         });
+    });
+
+    describe('Date and DateTime', () => {
+
+        it('[C279961] Should the label be present', () => {
+            let label = element(by.xpath('div[data-automation-id="card-dateitem-label-date"]'));
+
+            Util.waitUntilElementIsPresent(label);
+
+            let label = element(by.xpath('div[data-automation-id="card-dateitem-label-datetime"]'));
+
+            Util.waitUntilElementIsPresent(label);
+        });
+
+        fit('[C279962] Should be present a default value', () => {
+            expect(metadataViewPage.getText('date', 'date')).toEqual('24.12.1983');
+            expect(metadataViewPage.getText('datetime', 'datetime')).toEqual('Dec 24 1983 10:00');
+        });
+
     });
 
     it('[C279936] Should not be possible edit any parameter when editable property is false', () => {
