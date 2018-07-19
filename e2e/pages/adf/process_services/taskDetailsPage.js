@@ -16,6 +16,7 @@
  */
 
 var Util = require('../../../util/util');
+var TaskDetailsToggles = require('./dialog/taskDetailsToggles');
 
 var TaskDetailsPage = function () {
 
@@ -36,6 +37,7 @@ var TaskDetailsPage = function () {
     var addPeopleField = element(by.css("input[data-automation-id='adf-people-search-input']"));
     var addInvolvedUserButton = element(by.css("button[id='add-people'] span"));
     var emailInvolvedUser = by.xpath("following-sibling::div[@class='people-email ng-star-inserted']");
+    var infoDrawer = element(by.css("adf-info-drawer"));
 
     this.getFormName = function () {
         Util.waitUntilElementIsVisible(formNameField);
@@ -165,6 +167,18 @@ var TaskDetailsPage = function () {
         var email = this.getRowsUser(user).element(emailInvolvedUser);
         Util.waitUntilElementIsVisible(email);
         return email.getText();
+    };
+
+    this.usingTaskDetailsToggles = function () {
+        return new TaskDetailsToggles();
+    };
+
+    this.taskInfoDrawerIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(infoDrawer);
+    };
+
+    this.taskInfoDrawerIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotOnPage(infoDrawer);
     };
 
 };

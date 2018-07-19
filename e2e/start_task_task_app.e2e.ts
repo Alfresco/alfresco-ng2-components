@@ -53,6 +53,7 @@ describe('Start Task - Task App', () => {
     let formModel;
     let firstComment = 'comm1', firstChecklist = 'checklist1';
     let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
+    let showHeaderTask = 'Show Header';
     let jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
@@ -81,6 +82,8 @@ describe('Start Task - Task App', () => {
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
         await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: showHeaderTask});
 
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
@@ -205,5 +208,17 @@ describe('Start Task - Task App', () => {
                 attachmentListPage.clickAttachFileButton(jpgFile.location);
                 attachmentListPage.checkFileIsAttached(jpgFile.name);
             });
+    });
+
+    it('[C260420] Should Information box be hidden when showHeaderContent property is set on false', () => {
+        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(showHeaderTask).selectTaskFromTasksList(showHeaderTask);
+
+        taskPage.usingTaskDetails().usingTaskDetailsToggles().disableShowHeader();
+        taskPage.usingTaskDetails().taskInfoDrawerIsNotDisplayed();
+
+        taskPage.usingTaskDetails().usingTaskDetailsToggles().enableShowHeader();
+        taskPage.usingTaskDetails().taskInfoDrawerIsDisplayed();
     });
 });
