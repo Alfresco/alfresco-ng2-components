@@ -78,9 +78,7 @@ var LoginPage = function () {
     this.enterUsername = function (username) {
         Util.waitUntilElementIsVisible(txtUsername);
         txtUsername.sendKeys('');
-        txtUsername.clear();
-        browser.driver.sleep(500);
-        txtUsername.sendKeys(username);
+        return txtUsername.clear().sendKeys(username);
     };
 
     /**
@@ -90,9 +88,7 @@ var LoginPage = function () {
      */
     this.enterPassword = function (password) {
         Util.waitUntilElementIsVisible(txtPassword);
-        browser.driver.sleep(500);
-        txtPassword.clear();
-        txtPassword.sendKeys(password);
+        return txtPassword.clear().sendKeys(password);
     };
 
     /**
@@ -102,7 +98,7 @@ var LoginPage = function () {
      */
     this.clearUsername = function () {
         Util.waitUntilElementIsVisible(txtUsername);
-        txtUsername.click().clear();
+        return txtUsername.click().clear();
     };
 
     /**
@@ -530,17 +526,13 @@ var LoginPage = function () {
     this.enterSuccessRoute = function (route) {
         Util.waitUntilElementIsVisible(successRouteTxt);
         successRouteTxt.sendKeys('');
-        successRouteTxt.clear();
-        browser.driver.sleep(500);
-        return successRouteTxt.sendKeys(route);
+        return successRouteTxt.clear().sendKeys(route);
     };
 
     this.enterLogo = function (logo) {
         Util.waitUntilElementIsVisible(logoTxt);
         logoTxt.sendKeys('');
-        logoTxt.clear();
-        browser.driver.sleep(500);
-        return logoTxt.sendKeys(logo);
+        return logoTxt.clear().sendKeys(logo);
     };
 
     /**

@@ -32,7 +32,7 @@ var MetadataViewPage = function () {
     var description = element(by.css("span[data-automation-id='card-textitem-value-properties.cm:description'] span"));
     var author = element(by.css("span[data-automation-id='card-textitem-value-properties.cm:author'] span"));
     var titleProperty = element(by.css("span[data-automation-id='card-textitem-value-properties.cm:title'] span"));
-    var editIcon = element(by.css("button[data-automation-id='mata-data-card-toggle-edit']"));
+    var editIcon = element(by.css("button[data-automation-id='meta-data-card-toggle-edit']"));
     var informationButton = element(by.css("button[data-automation-id='mata-data-card-toggle-expand']"));
     var informationSpan = element(by.css("span[data-automation-id='mata-data-card-toggle-expand-label']"));
     var informationIcon = element(by.css("span[data-automation-id='mata-data-card-toggle-expand-label'] ~ mat-icon"));
@@ -102,13 +102,11 @@ var MetadataViewPage = function () {
     };
 
     this.editIconIsDisplayed = function () {
-        Util.waitUntilElementIsVisible(editIcon);
-        return editIcon.getText();
+        return Util.waitUntilElementIsVisible(editIcon);
     };
 
     this.editIconIsNotDisplayed = function () {
-        Util.waitUntilElementIsNotVisible(editIcon);
-        return editIcon.getText();
+        return Util.waitUntilElementIsNotVisible(editIcon);
     };
 
     this.editIconClick = function () {
@@ -117,8 +115,7 @@ var MetadataViewPage = function () {
     };
 
     this.informationButtonIsDisplayed = function () {
-        Util.waitUntilElementIsVisible(informationSpan);
-        return informationSpan.getText();
+        return Util.waitUntilElementIsVisible(informationSpan);
     };
 
     this.clickOnInformationButton = function () {
@@ -198,9 +195,7 @@ var MetadataViewPage = function () {
         const textField = element(by.css('input[data-automation-id="card-textitem-editinput-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
-        textField.clear();
-        browser.driver.sleep(500);
-        textField.sendKeys(text);
+        textField.clear().sendKeys(text);
         return this;
     };
 
@@ -208,9 +203,7 @@ var MetadataViewPage = function () {
         const textField = element(by.css('textarea[data-automation-id="card-textitem-edittextarea-properties.cm:description"]'));
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
-        textField.clear();
-        browser.driver.sleep(500);
-        textField.sendKeys(text);
+        textField.clear().sendKeys(text);
         return this;
     };
 
@@ -243,6 +236,16 @@ var MetadataViewPage = function () {
         group.click();
     };
 
+    this.checkkMetadatGroupIsPresent = function (groupName) {
+        var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
+        return Util.waitUntilElementIsVisible(group);
+    };
+
+    this.checkkMetadatGroupIsNotPresent = function (groupName) {
+        var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
+        return Util.waitUntilElementIsNotVisible(group);
+    };
+
     this.chekMetadatGroupIsExpand = function (groupName) {
         var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
         Util.waitUntilElementIsVisible(group);
@@ -253,6 +256,12 @@ var MetadataViewPage = function () {
         var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
         Util.waitUntilElementIsVisible(group);
         expect(group.getAttribute('class')).not.toContain('mat-expanded')
+    };
+
+    this.getkMetadatGroupTitle = function (groupName) {
+        var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
+        Util.waitUntilElementIsVisible(group);
+        return group.getText();
     };
 
     /**

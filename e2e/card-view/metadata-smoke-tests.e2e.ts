@@ -206,7 +206,7 @@ describe('Metadata component', () => {
         metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
         expect(metadataViewPage.getText('properties.cm:description')).toEqual('example description');
 
-        viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        viewerPage.checkFileContent('1', pdfFileModel.firstPageText);
 
         viewerPage.clickCloseButton();
 
@@ -276,7 +276,11 @@ describe('Metadata component', () => {
 
         expect(metadataViewPage.getText('modifiedByUser.displayName')).toEqual('Administrator');
 
-        viewerPage.clickCloseButton();
+        loginPage.goToLoginPage();
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        contentServicesPage.navigateToDocumentList();
     });
 
     it('[C261157] Should be possible use the metadata component When the node is a Folder', () => {
@@ -284,6 +288,8 @@ describe('Metadata component', () => {
 
         expect(metadataViewPage.getText('name')).toEqual(folderName);
         expect(metadataViewPage.getText('createdByUser.displayName')).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+
+        browser.refresh();
     });
 
     it('[C261158] Should be possible edit the metadata When the node is a Folder', () => {
@@ -305,6 +311,8 @@ describe('Metadata component', () => {
         metadataViewPage.enterText('name', folderName);
         metadataViewPage.clickUpdatePropertyIcon('name');
         expect(metadataViewPage.getText('name')).toEqual(folderName);
+
+        browser.refresh();
     });
 
     it('[C260181] Should be possible edit all the metadata aspect', () => {

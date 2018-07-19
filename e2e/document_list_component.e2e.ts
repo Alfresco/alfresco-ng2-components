@@ -159,7 +159,8 @@ describe('DocumentList component', () => {
 
         expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
 
-        Util.refreshBrowser();
+        browser.refresh();
+
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
         expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
     });

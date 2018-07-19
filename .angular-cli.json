@@ -52,6 +52,11 @@
           "glob": "pdf.worker.js",
           "input": "../../node_modules/pdfjs-dist/build",
           "output": "./"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../node_modules/ngx-monaco-editor/assets/monaco",
+          "output": "./assets/monaco/"
         }
       ],
       "index": "index.html",
@@ -159,6 +164,11 @@
           "glob": "pdf.worker.js",
           "input": "../../node_modules/pdfjs-dist/build",
           "output": "./"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../node_modules/ngx-monaco-editor/assets/monaco",
+          "output": "./assets/monaco/"
         }
       ],
       "index": "index.html",

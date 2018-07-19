@@ -77,9 +77,7 @@ var CardViewComponentPage = function () {
     this.enterTextField = function (text) {
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
-        textField.clear();
-        browser.driver.sleep(500);
-        textField.sendKeys(text);
+        textField.clear().sendKeys(text);
         return this;
     };
 
@@ -106,9 +104,7 @@ var CardViewComponentPage = function () {
     this.enterIntField = function (text) {
         Util.waitUntilElementIsVisible(intField);
         intField.sendKeys('');
-        intField.clear();
-        browser.driver.sleep(500);
-        intField.sendKeys(text);
+        intField.clear().sendKeys(text);
         return this;
     };
 
@@ -147,9 +143,7 @@ var CardViewComponentPage = function () {
     this.enterFloatField = function (text) {
         Util.waitUntilElementIsVisible(floatField);
         floatField.sendKeys('');
-        floatField.clear();
-        browser.driver.sleep(500);
-        floatField.sendKeys(text);
+        floatField.clear().sendKeys(text);
         return this;
     };
 

@@ -41,9 +41,6 @@ describe('Login component', () => {
         'password': TestConfig.adf.adminPassword
     });
 
-    let userA = new AcsUserModel();
-    let userB = new AcsUserModel();
-
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
@@ -52,9 +49,6 @@ describe('Login component', () => {
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-        await this.alfrescoJsApi.core.peopleApi.addPerson(userA);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(userB);
 
         done();
     });
@@ -129,6 +123,8 @@ describe('Login component', () => {
             loginPage.enterUsername(adminUserModel.id);
             loginPage.enterPassword(adminUserModel.password);
             loginPage.clickSignInButton();
+
+            browser.driver.sleep(1000);
 
             browser.getCurrentUrl().then((actualUrl) => {
                 expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);

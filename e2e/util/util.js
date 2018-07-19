@@ -60,11 +60,6 @@ exports.sleep = function (time, callback) {
     callback();
 };
 
-
-exports.refreshBrowser = function () {
-    browser.refresh();
-};
-
 /**
  * Get current date in long format: Oct 24, 2016
  *

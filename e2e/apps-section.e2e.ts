@@ -88,7 +88,7 @@ describe('Modify applications', () => {
             return apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, firstApp.id);
         });
 
-        Util.refreshBrowser();
+        browser.refresh();
 
         processServicesPage.checkApsContainer();
 
@@ -108,7 +108,7 @@ describe('Modify applications', () => {
             return modelActions.deleteEntireModel(this.alfrescoJsApi, firstApp.id);
         });
 
-        Util.refreshBrowser();
+        browser.refresh();
 
         processServicesPage.checkApsContainer();
         processServicesPage.checkAppIsNotDisplayed(app.title);
@@ -126,7 +126,7 @@ describe('Modify applications', () => {
             return apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, appVersionToBeDeleted.id);
         });
 
-        Util.refreshBrowser();
+        browser.refresh();
 
         processServicesPage.getBackgroundColor(appTobeDeleted.title);
 
@@ -138,7 +138,7 @@ describe('Modify applications', () => {
             await apps.publishDeployApp(this.alfrescoJsApi, appVersionToBeDeleted.id);
         });
 
-        Util.refreshBrowser();
+        browser.refresh();
 
         processServicesPage.checkApsContainer();
         processServicesPage.checkAppIsDisplayed(appTobeDeleted.title);
