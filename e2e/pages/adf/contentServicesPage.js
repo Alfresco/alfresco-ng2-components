@@ -439,6 +439,12 @@ var ContentServicesPage = function () {
         return rowColumn.getText();
     };
 
+    this.getStyleValueForRowText = async function(rowName, styleName) {
+        let row = element(by.css(`div.adf-data-table-cell[filename="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
+        Util.waitUntilElementIsVisible(row);
+        return row.getCssValue(styleName);
+    }
+
 };
 
 module.exports = ContentServicesPage;

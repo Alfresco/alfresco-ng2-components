@@ -20,10 +20,10 @@ var TasksPage = require('./tasksPage');
 
 var AppNavigationBarPage = function () {
 
-    var tasksButton = element.all(by.cssContainingText("div[class*='mat-tab-label']", "Tasks")).first();
-    var processButton = element(by.cssContainingText("div[class*='mat-tab-label']", "Process"));
-    var reportsButton = element(by.cssContainingText("div[class*='mat-tab-label']", "Reports"));
-    var reportsButtonSelected = reportsButton.element(by.css("[aria-selected='true']"));
+    var tasksButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Tasks")).first();
+    var processButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Process")).first();
+    var reportsButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Reports")).first();
+    var reportsButtonSelected = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div[aria-selected='true']", "Reports")).first();
 
     this.clickTasksButton = function () {
         Util.waitUntilElementIsVisible(tasksButton);
