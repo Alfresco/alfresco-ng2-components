@@ -16,7 +16,6 @@
  */
 
 var Util = require("../../util/util");
-var CardViewPage = require("./cardViewPage");
 
 var ViewerToolbarPage = function () {
 
@@ -52,7 +51,7 @@ var ViewerToolbarPage = function () {
     var passwordInput = element(by.css("input[data-automation-id='adf-password-dialog-input']"));
     var passwordError = element(by.css("mat-error[data-automation-id='adf-password-dialog-error']"));
     var infoSideBar = element(by.css("div[class='adf-info-drawer-layout-header']"));
-    var unsupportedFileContainer  = element(by.cssContainingText(".label","Document preview could not be loaded"));
+    var unsupportedFileContainer = element(by.cssContainingText(".label", "Document preview could not be loaded"));
     var pageCanvas = element.all(by.css("div[class='canvasWrapper']")).first();
 
     this.canvasHeight = function () {
@@ -74,21 +73,19 @@ var ViewerToolbarPage = function () {
     };
 
     this.viewFile = function (fileName) {
-        var fileView = element(by.xpath("//div[@class='document-list-container']//span[@title='" + fileName +"']"));
+        var fileView = element(by.xpath("//div[@class='document-list-container']//span[@title='" + fileName + "']"));
         Util.waitUntilElementIsVisible(fileView);
         fileView.click();
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     };
 
-    this.clearPageNumber = function ()
-    {
+    this.clearPageNumber = function () {
         Util.waitUntilElementIsVisible(pageSelectorInput);
         pageSelectorInput.clear();
         pageSelectorInput.sendKeys(protractor.Key.ENTER);
     };
 
-    this.getZoom = function ()
-    {
+    this.getZoom = function () {
         return percentage.getText();
     };
 
@@ -97,41 +94,34 @@ var ViewerToolbarPage = function () {
         browser.executeScript(jsCode);
     };
 
-    this.enterPassword = function (password)
-    {
+    this.enterPassword = function (password) {
         Util.waitUntilElementIsVisible(passwordInput);
         passwordInput.clear();
         passwordInput.sendKeys(password);
     };
 
-    this.checkPasswordErrorIsDisplayed = function ()
-    {
+    this.checkPasswordErrorIsDisplayed = function () {
         Util.waitUntilElementIsVisible(passwordError);
     };
 
-    this.checkPasswordInputIsDisplayed = function ()
-    {
+    this.checkPasswordInputIsDisplayed = function () {
         Util.waitUntilElementIsVisible(passwordInput);
     };
 
-    this.checkPasswordSubmitDisabledIsDisplayed = function ()
-    {
+    this.checkPasswordSubmitDisabledIsDisplayed = function () {
         Util.waitUntilElementIsVisible(passwordSubmitDisabled);
     };
 
-    this.checkPasswordDialogIsDisplayed = function ()
-    {
+    this.checkPasswordDialogIsDisplayed = function () {
         Util.waitUntilElementIsVisible(passwordDialog);
     };
 
-    this.checkAllThumbnailsDisplayed = function (nbPages)
-    {
+    this.checkAllThumbnailsDisplayed = function (nbPages) {
         var defaultThumbnailHeight = 143;
-        expect(thumbnailsContent.getAttribute("style")).toEqual("height: " + nbPages*defaultThumbnailHeight + "px; transform: translate(-50%, 0px);");
+        expect(thumbnailsContent.getAttribute("style")).toEqual("height: " + nbPages * defaultThumbnailHeight + "px; transform: translate(-50%, 0px);");
     };
 
-    this.checkCurrentThumbnailIsSelected = function ()
-    {
+    this.checkCurrentThumbnailIsSelected = function () {
         var selectedThumbnail = element(by.css("adf-pdf-thumb[class='pdf-thumbnails__thumb ng-star-inserted pdf-thumbnails__thumb--selected'] > img"));
         pageSelectorInput.getAttribute("value").then(function (pageNumber) {
             expect("Page " + pageNumber).toEqual(selectedThumbnail.getAttribute("title"));
@@ -175,7 +165,7 @@ var ViewerToolbarPage = function () {
         expect(fileName.getText()).toEqual(file);
     };
 
-    this.checkPreviousPageButtonIsDisplayed =function () {
+    this.checkPreviousPageButtonIsDisplayed = function () {
         Util.waitUntilElementIsVisible(previousPageButton);
     };
 
@@ -240,13 +230,11 @@ var ViewerToolbarPage = function () {
         Util.waitUntilElementIsVisible(percentage);
     };
 
-    this.checkZoomedIn = function (zoom)
-    {
+    this.checkZoomedIn = function (zoom) {
         expect(percentage.getText()).toBeGreaterThan(zoom);
     };
 
-    this.checkZoomedOut = function (zoom)
-    {
+    this.checkZoomedOut = function (zoom) {
         expect(percentage.getText()).toBeLessThan(zoom);
     };
 
@@ -258,8 +246,7 @@ var ViewerToolbarPage = function () {
         Util.waitUntilElementIsVisible(rotateRight);
     };
 
-    this.checkScaled = function (zoom)
-    {
+    this.checkScaled = function (zoom) {
         expect(percentage.getText()).toEqual(zoom);
     };
 
@@ -267,58 +254,47 @@ var ViewerToolbarPage = function () {
         Util.waitUntilElementIsVisible(scaleImg);
     };
 
-    this.checkRotation = function (text)
-    {
+    this.checkRotation = function (text) {
         var rotation = imgContainer.getAttribute("style");
         expect(rotation).toEqual(text);
     };
 
-    this.checkCustomBtnDisplayed = function ()
-    {
+    this.checkCustomBtnDisplayed = function () {
         Util.waitUntilElementIsVisible(customBtn);
     };
 
-    this.checkUnsupportedFileContainerIsDisplayed = function ()
-    {
+    this.checkUnsupportedFileContainerIsDisplayed = function () {
         Util.waitUntilElementIsVisible(unsupportedFileContainer);
     };
 
-    this.checkInfoSideBarIsNotDisplayed = function ()
-    {
+    this.checkInfoSideBarIsNotDisplayed = function () {
         Util.waitUntilElementIsNotVisible(infoSideBar);
     };
 
-    this.checkInfoSideBarIsDisplayed = function ()
-    {
+    this.checkInfoSideBarIsDisplayed = function () {
         Util.waitUntilElementIsVisible(infoSideBar);
     };
 
-    this.checkInfoSideBarIsNotDisplayed = function ()
-    {
+    this.checkInfoSideBarIsNotDisplayed = function () {
         Util.waitUntilElementIsNotOnPage(infoSideBar);
     };
 
-    this.clickInfoButton = function ()
-    {
+    this.clickInfoButton = function () {
         Util.waitUntilElementIsVisible(infoButton);
-        infoButton.click();
-        return new CardViewPage();
+        return infoButton.click();
     };
 
-    this.clickPasswordSubmit = function ()
-    {
+    this.clickPasswordSubmit = function () {
         Util.waitUntilElementIsVisible(passwordSubmit);
         passwordSubmit.click();
     };
 
-    this.clickSecondThumbnail = function ()
-    {
+    this.clickSecondThumbnail = function () {
         Util.waitUntilElementIsClickable(secondThumbnail);
         secondThumbnail.click();
     };
 
-    this.clickLastThumbnailDisplayed = function ()
-    {
+    this.clickLastThumbnailDisplayed = function () {
         Util.waitUntilElementIsClickable(lastThumbnailDisplayed);
         lastThumbnailDisplayed.click();
     };
@@ -333,14 +309,12 @@ var ViewerToolbarPage = function () {
         thumbnailsBtn.click();
     };
 
-    this.clickScaleImgButton = function ()
-    {
+    this.clickScaleImgButton = function () {
         Util.waitUntilElementIsClickable(scaleImg);
         scaleImg.click();
     };
 
-    this.clickScalePdfButton = function ()
-    {
+    this.clickScalePdfButton = function () {
         Util.waitUntilElementIsClickable(scalePageButton);
         scalePageButton.click();
     };
@@ -380,20 +354,17 @@ var ViewerToolbarPage = function () {
         scalePageButton.click();
     };
 
-    this.clickFullScreenButton = function ()
-    {
+    this.clickFullScreenButton = function () {
         Util.waitUntilElementIsClickable(fullScreenButton);
         fullScreenButton.click();
     };
 
-    this.clickRotateLeftButton = function ()
-    {
+    this.clickRotateLeftButton = function () {
         Util.waitUntilElementIsClickable(rotateLeft);
         rotateLeft.click();
     };
 
-    this.clickRotateRightButton = function ()
-    {
+    this.clickRotateRightButton = function () {
         Util.waitUntilElementIsClickable(rotateRight);
         rotateRight.click();
     };
