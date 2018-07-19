@@ -192,6 +192,7 @@ export class ParamInfo {
 
 export class MethodSigInfo {
     name: string;
+    typeParameter: string;
     docText: string;
     returnType: string;
     returnDocText: string;
@@ -255,6 +256,8 @@ export class MethodSigInfo {
         this.errorMessages = [];
 
         this.name = sourceData.name;
+
+        this.typeParameter = sourceData.typeParameter || "";
 
         this.docText = sourceData.summary || "";
         this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();

@@ -199,6 +199,7 @@ var MethodSigInfo = /** @class */ (function () {
         var _this = this;
         this.errorMessages = [];
         this.name = sourceData.name;
+        this.typeParameter = sourceData.typeParameter || "";
         this.docText = sourceData.summary || "";
         this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
         if (!this.docText) {

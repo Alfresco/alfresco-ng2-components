@@ -11,7 +11,7 @@ Supports app configuration settings, stored server side.
 
 ### Methods
 
--   **get**(key: `string` = `null`, defaultValue?: `T` = `null`): `T`<br/>
+-   **get&lt;T>**(key: `string`, defaultValue?: `T`): `T`<br/>
     Gets the value of a named property.
     -   _key:_ `string`  - Name of the property
     -   _defaultValue:_ `T`  - (Optional) Value to return if the key is not found
@@ -26,10 +26,10 @@ Supports app configuration settings, stored server side.
 -   **getLocationProtocol**(): `string`<br/>
     Gets the location.protocol value.
     -   **Returns** `string` - 
--   **load**(): `Promise<any>`<br/>
+-   **load**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>`<br/>
     Loads the config file.
-    -   **Returns** `Promise<any>` - Notification when loading is complete
--   **select**(property: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>` - Notification when loading is complete
+-   **select**(property: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Requests notification of a property value when it is loaded.
     -   _property:_ `string`  - The desired property value
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Property value, when loaded
@@ -65,7 +65,7 @@ Example of the default settings file content:
 Please note that settings above are default ones coming with the server. 
 You can override the values in your custom `app.config.json` file if needed. 
 
-You can also change the path or name of the configuration file when importing the [`CoreModule`](../../lib/core/core.module.ts) in your main application.
+You can also change the path or name of the configuration file when importing the [`CoreModule`](lib/core/core.module.ts) in your main application.
 
 ```ts
 ...
@@ -83,7 +83,7 @@ export class AppModule { }
 
 Below is a simple example of using the [`AppConfigService`](../core/app-config.service.md) in practice. 
 
-**app.component.ts**
+**[app.component](demo-shell/src/app/app.component.ts).ts**
 
 ```ts
 import { AppConfigService } from '@alfresco/adf-core';

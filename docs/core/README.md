@@ -28,12 +28,13 @@ for more information about installing and using the source code.
 | [Info drawer layout component](info-drawer-layout.component.md) | Displays a sidebar-style information panel. | [Source](../../lib/core/info-drawer/info-drawer-layout.component.ts) |
 | [Info drawer component](info-drawer.component.md) | Displays a sidebar-style information panel with tabs. | [Source](../../lib/core/info-drawer/info-drawer.component.ts) |
 | [Language menu component](language-menu.component.md) | Displays all the languages that are present in the "app.config.json" or the default one (EN). | [Source](../../lib/core/language-menu/language-menu.component.ts) |
+| [Header component](header.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Reuseble header for Alfresco applications | [Source](../../lib/core/layout/components/header/header.component.ts) |
+| [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
+| [Sidenav layout component](sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../../lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Login component](login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../../lib/core/login/components/login.component.ts) |
 | [Infinite pagination component](infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../../lib/core/pagination/infinite-pagination.component.ts) |
 | [Pagination component](pagination.component.md) | Adds pagination to the component it is used with. | [Source](../../lib/core/pagination/pagination.component.ts) |
 | [Host settings component](host-settings.component.md) ![Internal](../docassets/images/InternalIcon.png) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../../lib/core/settings/host-settings.component.ts) |
-| [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/sidenav-layout/components/sidebar-action/sidebar-action-menu.component.ts) |
-| [Sidenav layout component](sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../../lib/core/sidenav-layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Sorting picker component](sorting-picker.component.md) | Selects from a set of predefined sorting definitions and directions. | [Source](../../lib/core/sorting-picker/sorting-picker.component.ts) |
 | [Empty content component](empty-content.component.md) | Provides a generic "Empty Content" placeholder for components. | [Source](../../lib/core/templates/empty-content/empty-content.component.ts) |
 | [Error content component](error-content.component.md) | Displays info about a specific error. | [Source](../../lib/core/templates/error-content/error-content.component.ts) |
@@ -134,5 +135,5 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Data Table Adapter interface](datatable-adapter.interface.md) | Defines how table data is supplied to DataTable and Tasklist components. | [Source](../../lib/core/datatable/data/datatable-adapter.ts) |
-| [Form Field Validator interface](form-field-validator.interface.md) | Defines how the input fields of Form and Task Details components are validated. | [Source](../../lib/core/form/components/widgets/core/form-field-validator.ts) |
+| [Form Field Validator interface](form-field-validator.interface.md) | Defines how the input fields of [`Form`](lib/process-services/task-list/models/form.model.ts) and Task Details components are validated. | [Source](../../lib/core/form/components/widgets/core/form-field-validator.ts) |
 | [Search Configuration interface](search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../../lib/core/services/search-configuration.service.ts) |

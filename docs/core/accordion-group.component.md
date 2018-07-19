@@ -40,18 +40,16 @@ export class MyComponent implements OnInit {
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | hasAccordionIcon | `boolean` | true | Should the (expanded) accordion icon be shown? |
 | heading | `string` |  | Title heading for the group. |
 | headingIcon | `string` |  | The material design icon. |
 | headingIconTooltip | `string` |  | Tooltip message to be shown for headingIcon |
-| isOpen |  |  | Is this group currently open? |
-| isSelected |  |  | Is this group currently selected? |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | headingClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the heading is clicked. |
 
 ## Details

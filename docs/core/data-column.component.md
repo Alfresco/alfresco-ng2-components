@@ -10,19 +10,14 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 ## Contents
 
 -   [Basic Usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
-
 -   [Details](#details)
-
     -   [Conditional visibility](#conditional-visibility)
     -   [Automatic column header translation](#automatic-column-header-translation)
     -   [Custom tooltips](#custom-tooltips)
     -   [Column Template](#column-template)
     -   [Styling Techniques](#styling-techniques)
-
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -44,13 +39,13 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| class | `string` |  | Additional CSS class to be applied to column (header and cells). |
+| ---- | ---- | ------------- | ----------- |
+| cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
 | format | `string` |  | Value format (if supported by the parent component), for example format of the date. |
 | formatTooltip | `Function` |  | Custom tooltip formatter function. |
 | key | `string` |  | Data source key. Can be either a column/property key like `title`  or a property path like `createdBy.name`. |
 | sortable | `boolean` | true | Toggles ability to sort by this column, for example by clicking the column header. |
-| sr-title | `string` |  | Title to be used for screen readers. |
+| srTitle | `string` |  | Title to be used for screen readers. |
 | title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
 | type | `string` | "text" | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize' and 'location'. |
 
