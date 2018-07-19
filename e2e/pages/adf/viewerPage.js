@@ -53,6 +53,7 @@ var ViewerToolbarPage = function () {
     var infoSideBar = element(by.css("div[class='adf-info-drawer-layout-header']"));
     var unsupportedFileContainer = element(by.cssContainingText(".label", "Document preview could not be loaded"));
     var pageCanvas = element.all(by.css("div[class='canvasWrapper']")).first();
+    var activeTab = element(by.css("div[class*='mat-tab-label-active']"));
 
     this.canvasHeight = function () {
         var deferred = protractor.promise.defer();
@@ -367,6 +368,11 @@ var ViewerToolbarPage = function () {
     this.clickRotateRightButton = function () {
         Util.waitUntilElementIsClickable(rotateRight);
         rotateRight.click();
+    };
+
+    this.getActiveTab = function () {
+        Util.waitUntilElementIsVisible(activeTab);
+        return activeTab.getText();
     };
 };
 

@@ -39,6 +39,7 @@ var MetadataViewPage = function () {
     var rightChevron = element(by.css("div[class*='header-pagination-after']"));
     var displayEmptySwitch = element(by.id("adf-metadata-empty"));
     var readonlySwitch = element(by.id("adf-metadata-readonly"));
+    var multiSwitch = element(by.id("adf-metadata-multi"));
 
     this.getTitle = function () {
         Util.waitUntilElementIsVisible(title);
@@ -242,6 +243,18 @@ var MetadataViewPage = function () {
         group.click();
     };
 
+    this.chekMetadatGroupIsExpand = function (groupName) {
+        var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
+        Util.waitUntilElementIsVisible(group);
+        expect(group.getAttribute('class')).toContain('mat-expanded')
+    };
+
+    this.chekMetadatGroupIsNotExpand = function (groupName) {
+        var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
+        Util.waitUntilElementIsVisible(group);
+        expect(group.getAttribute('class')).not.toContain('mat-expanded')
+    };
+
     /**
      * disables displayEmpty
      */
@@ -294,12 +307,38 @@ var MetadataViewPage = function () {
         })
     };
 
+    /**
+     * disables multi
+     */
+    this.disableMulti = function () {
+        Util.waitUntilElementIsVisible(multiSwitch);
+        multiSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                multiSwitch.click();
+                expect(multiSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables multi
+     */
+    this.enableMulti = function () {
+        Util.waitUntilElementIsVisible(multiSwitch);
+        multiSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                multiSwitch.click();
+                expect(multiSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
     this.checkPopertyIsVisible = function (propertyName, type) {
         var property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(property);
     };
 
-    this.checkPopertIsNotVisible = function (propertyName, type) {
+    this.checkPopertyIsNotVisible = function (propertyName, type) {
         var property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsNotVisible(property);
     };

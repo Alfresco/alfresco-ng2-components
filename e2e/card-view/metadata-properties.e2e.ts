@@ -89,7 +89,7 @@ describe('CardView Component - properties', () => {
     });
 
     afterEach(() => {
-      viewerPage.clickCloseButton();
+        viewerPage.clickCloseButton();
     });
 
     it('[C246516] Should show/hide the empty metadata when the property displayEmpty is true/false', () => {
@@ -106,7 +106,7 @@ describe('CardView Component - properties', () => {
         metadataViewPage.clickMetadatGroup('EXIF');
 
         metadataViewPage.checkPopertyIsVisible('properties.exif:flash', 'boolean');
-        metadataViewPage.checkPopertIsNotVisible('properties.exif:model', 'textitem');
+        metadataViewPage.checkPopertyIsNotVisible('properties.exif:model', 'textitem');
 
         metadataViewPage.enableDisplayEmpty();
 
@@ -126,4 +126,33 @@ describe('CardView Component - properties', () => {
         metadataViewPage.editIconIsNotDisplayed();
     });
 
+    it('[C268965] Should multi property allow expand multi accordion at the same time when set', () => {
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+
+        metadataViewPage.clickOnInformationButton();
+
+        metadataViewPage.chekMetadatGroupIsNotExpand('EXIF');
+        metadataViewPage.chekMetadatGroupIsNotExpand('properties');
+
+        metadataViewPage.clickMetadatGroup('properties');
+
+        metadataViewPage.chekMetadatGroupIsNotExpand('EXIF');
+        metadataViewPage.chekMetadatGroupIsExpand('properties');
+
+        metadataViewPage.clickMetadatGroup('EXIF');
+
+        metadataViewPage.chekMetadatGroupIsExpand('EXIF');
+        metadataViewPage.chekMetadatGroupIsNotExpand('properties');
+
+        metadataViewPage.enableMulti();
+
+        metadataViewPage.clickMetadatGroup('properties');
+
+        metadataViewPage.chekMetadatGroupIsExpand('EXIF');
+        metadataViewPage.chekMetadatGroupIsExpand('properties');
+
+    });
 });

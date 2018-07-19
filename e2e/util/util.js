@@ -415,7 +415,7 @@ exports.waitUntilElementIsNotVisible = function (elementToCheck, timeout) {
         return elementToCheck.isPresent().then(function (present) {
             return !present;
         })
-    }, waitTimeout, 'Element is not in Visible ' + elementToCheck.locator());
+    }, waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
 };
 
 exports.waitUntilElementIsNotDisplayed = function (elementToCheck, timeout) {
@@ -425,7 +425,7 @@ exports.waitUntilElementIsNotDisplayed = function (elementToCheck, timeout) {
         return elementToCheck.isDisplayed().then(function (present) {
             return !present;
         })
-    }, waitTimeout, 'Element is not in dysplayed ' + elementToCheck.locator());
+    }, waitTimeout, 'Element is dysplayed and it should not' + elementToCheck.locator());
 };
 
 /*
