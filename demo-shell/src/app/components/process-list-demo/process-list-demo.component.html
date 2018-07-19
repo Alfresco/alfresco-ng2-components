@@ -8,10 +8,10 @@
                 class="form-control"
                 [formControl]="processAppId">
             <mat-error *ngIf="processAppId.hasError('required')">
-                {{ 'PROCESS_LIST.APP_ID_REQUIRED_ERROR' | translate }}
+                {{ 'PROCESS_LIST_DEMO.APP_ID_REQUIRED_ERROR' | translate }}
             </mat-error>
             <mat-error *ngIf="processAppId.hasError('pattern')">
-                {{ 'PROCESS_LIST.APP_ID_TYPE_ERROR' | translate }}
+                {{ 'PROCESS_LIST_DEMO.APP_ID_TYPE_ERROR' | translate }}
             </mat-error>
         </mat-form-field>
 

@@ -53,6 +53,7 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
 import { PreviewService } from './services/preview.service';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
+import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
@@ -117,6 +118,7 @@ import { HeaderDataService } from './components/header-data/header-data.service'
         ContentNodeSelectorComponent,
         ReportIssueComponent,
         TaskListDemoComponent,
+        ProcessListDemoComponent,
         HeaderDataComponent
     ],
     providers: [

@@ -25,7 +25,7 @@ import { ActivatedRoute, Params } from '@angular/router';
     styleUrls: [`./process-list.component.scss`],
 })
 
-export class ProcessListComponent implements OnInit {
+export class ProcessListDemoComponent implements OnInit {
 
     processListForm: FormGroup;
 
