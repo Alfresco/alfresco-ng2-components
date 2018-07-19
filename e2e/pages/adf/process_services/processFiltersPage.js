@@ -111,6 +111,15 @@ var ProcessFiltersPage = function () {
         return contentList.getAllRowsColumnValues(nameColumn);
     };
 
+    this.checkFilterIsDisplayed = function (name) {
+        var filterName = element(by.css("span[data-automation-id='" + name + "_filter']"));
+        return Util.waitUntilElementIsVisible(filterName);
+    };
+
+    this.checkFilterIsNotDisplayed = function (name) {
+        var filterName = element(by.css("span[data-automation-id='" + name + "_filter']"));
+        return Util.waitUntilElementIsNotVisible(filterName);
+    };
 };
 
 module.exports = ProcessFiltersPage;
