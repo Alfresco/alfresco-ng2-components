@@ -27,21 +27,18 @@ var AppNavigationBarPage = function () {
 
     this.clickTasksButton = function () {
         Util.waitUntilElementIsVisible(tasksButton);
-        tasksButton.click();
-        return new TasksPage();
+        return tasksButton.click();
     };
 
     this.clickProcessButton = function () {
-        processButton.get(1).click();
+        return processButton.get(1).click();
     };
 
     this.clickReportsButton = function () {
         Util.waitUntilElementIsVisible(reportsButton);
         reportsButton.click();
-        Util.waitUntilElementIsVisible(reportsButtonSelected);
+        return Util.waitUntilElementIsVisible(reportsButtonSelected);
     };
-
-
 };
 
 module.exports = AppNavigationBarPage;

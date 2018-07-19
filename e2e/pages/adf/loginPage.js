@@ -225,7 +225,7 @@ var LoginPage = function () {
     this.loginToProcessServicesUsingUserModel = function (userModel) {
         adfSettingsPage.setProviderBpm();
         this.waitForElements();
-        this.login(userModel.email, userModel.password);
+        return this.login(userModel.email, userModel.password);
     };
 
 
@@ -431,7 +431,7 @@ var LoginPage = function () {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        Util.waitUntilElementIsVisible(userPicture);
+        return  Util.waitUntilElementIsVisible(userPicture);
     };
 
 };
