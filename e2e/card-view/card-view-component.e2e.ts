@@ -288,7 +288,7 @@ describe('CardView Component', () => {
             Util.waitUntilElementIsPresent(label);
         });
 
-        fit('[C279962] Should be present a default value', () => {
+        it('[C279962] Should be present a default value', () => {
             expect(metadataViewPage.getText('date', 'date')).toEqual('24.12.1983');
             expect(metadataViewPage.getText('datetime', 'datetime')).toEqual('Dec 24 1983 10:00');
         });
