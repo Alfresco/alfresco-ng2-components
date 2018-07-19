@@ -62,7 +62,7 @@ exports.Files = {
         id: -19,
         taskName: "User Task",
         form_fields: {
-           text_field: "activiti-textfield",
+            text_field: "activiti-textfield",
             form_fieldId: "textfield",
             text_field_value: "Hi tester, from Rest call"
         }
@@ -120,6 +120,15 @@ exports.Files = {
         PDF_ALL: {
             file_location: "/resources/adf/allFileTypes/pdf_all_properties.pdf",
             file_name: "pdf_all_properties.pdf"
+        },
+        PDF_PROTECTED: {
+            file_location: "/resources/adf/allFileTypes/a_file_protected.pdf",
+            file_name: "a_file_protected.pdf",
+            first_page_text: "A Journey into Test Frameworks",
+            second_page_text: "After looking into Spock’s GitHub",
+            last_page_text: "and provide feedback. The main advantages being the readability of the te",
+            last_page_number: "8",
+            password: "1q2w3e4r"
         },
         LARGE_FILE:{
             file_location: "/resources/adf/BigFile.zip",
@@ -201,6 +210,10 @@ exports.Files = {
         PAGES:{
             file_location: "/resources/adf/allFileTypes/file_unsupported.pages",
             file_name: "file_unsupported.pages"
+        },
+        UNSUPPORTED:{
+            file_location: "/resources/adf/allFileTypes/file_unsupported.3DS",
+            file_name: "file_unsupported.3DS"
         },
         INI:{
             file_location: "/resources/adf/allFileTypes/desktop.ini",
