@@ -78,7 +78,7 @@ export class AccordionGroupComponent implements AfterViewInit {
     constructor() { }
 
     ngAfterViewInit() {
-        this.hasContent = this.contentWrapper.nativeElement && this.contentWrapper.nativeElement.children.length > 0;
+        this.hasContent = this.contentWrapper ? this.contentWrapper.nativeElement && this.contentWrapper.nativeElement.children.length > 0 : false;
     }
 
     hasHeadingIcon() {
@@ -89,14 +89,10 @@ export class AccordionGroupComponent implements AfterViewInit {
         this.headingClick.emit(this.heading);
     }
 
-    isExpandable() {
-        if (!this.hasContent) {
-            this.expandPanel();
-        }
-    }
-
     expandPanel() {
-        this.expansionPanel.expanded = !this.expansionPanel.expanded;
+        if (!this.hasContent) {
+            this.expansionPanel.expanded = !this.expansionPanel.expanded;
+        }
     }
 
     toggleExpansion(): boolean {

@@ -1,7 +1,7 @@
 <mat-accordion class="adf-panel">
     <mat-expansion-panel #expansionPanel
         id="adf-expansion-panel-id"
-        (click)="isExpandable()"
+        (click)="expandPanel()"
         [expanded]="toggleExpansion()"
         (opened)="onHeaderClick()"
         [hideToggle]="!hasAccordionIcon">

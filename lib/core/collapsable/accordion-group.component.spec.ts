@@ -19,6 +19,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccordionGroupComponent } from './accordion-group.component';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { Component } from '@angular/core';
+import { CoreModule } from '../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
 
 describe('AccordionGroupComponent', () => {
 
@@ -115,7 +119,20 @@ describe('AccordionGroupComponent', () => {
         header.click();
     }));
 
+    it('should display icon if is present', (done) => {
+        component.headingIcon = 'assignment';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(component.hasHeadingIcon()).toBe(true);
+            let headerText = element.querySelector('.adf-panel-heading-icon');
+            expect(headerText).toBeDefined();
+            done();
+        });
+    });
+
     it('should expand if panel has content and is clicked', (done) => {
+        spyOn(component, 'expandPanel');
         component.isOpen = false;
         component.hasContent = true;
         fixture.detectChanges();
@@ -123,12 +140,14 @@ describe('AccordionGroupComponent', () => {
             fixture.detectChanges();
             const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
             selectElement.click();
+            expect(component.expandPanel).toHaveBeenCalled();
             expect(component.expansionPanel.expanded).toBe(true);
             done();
         });
     });
 
     it('should not expand if panel doesn\'t have content and is clicked', (done) => {
+        spyOn(component, 'expandPanel');
         component.isOpen = false;
         component.hasContent = false;
         fixture.detectChanges();
@@ -136,8 +155,62 @@ describe('AccordionGroupComponent', () => {
             fixture.detectChanges();
             const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
             selectElement.click();
-            expect(component.expansionPanel.expanded).toBe(true);
+            expect(component.expandPanel).toHaveBeenCalled();
+            expect(component.expansionPanel.expanded).toBe(false);
             done();
         });
+    });
+});
+
+@Component({
+    template: `
+    <adf-accordion-group [heading]="'My List'"
+                         [isSelected]="isSelected"
+                         [isOpen]="isOpen"
+                         [headingIcon]="headingIcon">
+        <div>My List</div>
+    </adf-accordion-group>
+       `
+})
+class CustomAccordionGroupComponent extends AccordionGroupComponent {
+    isOpen: boolean;
+    isSelected: boolean;
+    headingIcon: string;
+}
+
+describe('Custom AccordionGroup', () => {
+    let fixture: ComponentFixture<CustomAccordionGroupComponent>;
+    let component: CustomAccordionGroupComponent;
+
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            CustomAccordionGroupComponent
+        ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CustomAccordionGroupComponent);
+        fixture.detectChanges();
+        component = fixture.componentInstance;
+    });
+
+    it('should render the title', () => {
+        component.isOpen = true;
+        component.isSelected = true;
+        fixture.detectChanges();
+        let title: any = fixture.debugElement.queryAll(By.css('.adf-panel-heading-text'));
+        expect(title.length).toBe(1);
+        expect(title[0].nativeElement.innerText).toBe('My List');
+    });
+
+    it('should render a tab with icon', () => {
+        component.headingIcon = 'assignment';
+        fixture.detectChanges();
+        let tab: any = fixture.debugElement.queryAll(By.css('.material-icons'));
+        expect(tab[0].nativeElement.innerText).toBe('assignment');
     });
 });
