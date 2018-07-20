@@ -39,7 +39,7 @@ export class AttachmentListPage {
     }
 
     checkFileIsAttached(name) {
-        let fileAttached = element(by.css('div[filename="' + name + '"]'));
+        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
         Util.waitUntilElementIsVisible(fileAttached);
     }
 
@@ -48,7 +48,7 @@ export class AttachmentListPage {
     }
 
     viewFile(name) {
-        let fileAttached = element(by.css('div[filename="' + name + '"]'));
+        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
         Util.waitUntilElementIsVisible(fileAttached);
         fileAttached.click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
@@ -61,7 +61,7 @@ export class AttachmentListPage {
     }
 
     removeFile(name) {
-        let fileAttached = element(by.css('div[filename="' + name + '"]'));
+        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
         fileAttached.click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
         Util.waitUntilElementIsClickable(this.buttonMenu);
@@ -73,7 +73,7 @@ export class AttachmentListPage {
     }
 
     downloadFile(name) {
-        let fileAttached = element(by.css('div[filename="' + name + '"]'));
+        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
         fileAttached.click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
         Util.waitUntilElementIsClickable(this.buttonMenu);
@@ -85,7 +85,7 @@ export class AttachmentListPage {
     }
 
     doubleClickFile(name) {
-        let fileAttached = element(by.css('div[filename="' + name + '"]'));
+        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
         Util.waitUntilElementIsVisible(fileAttached);
         Util.waitUntilElementIsClickable(fileAttached);
         fileAttached.click();
@@ -93,7 +93,7 @@ export class AttachmentListPage {
     }
 
     checkFileIsRemoved(name) {
-        let fileAttached = element(by.css('div[filename="' + name + '"]'));
+        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
         Util.waitUntilElementIsNotVisible(fileAttached);
         return this;
     }

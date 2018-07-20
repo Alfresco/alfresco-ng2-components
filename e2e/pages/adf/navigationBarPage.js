@@ -25,7 +25,7 @@ var NavigationBarPage = function () {
     var processServicesButton = element(by.css("a[data-automation-id='Process Services']"));
     var loginButton = element(by.css("a[data-automation-id='Login']"));
     var trashcanButton = element(by.css("a[data-automation-id='Trashcan']"));
-    var userProfileButton = element(by.css("div[data-automation-id='user-profile']"));
+    var userProfileButton = element(by.css("button[data-automation-id='adf-user-profile']"));
     var themeButton = element(by.css("button[data-automation-id='theme menu']"));
     var themeMenuContent = element(by.css("div[class*='mat-menu-panel']"));
     var logoutButton = element(by.css("a[adf-logout]"));

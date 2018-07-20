@@ -33,9 +33,9 @@ var MetadataViewPage = function () {
     var author = element(by.css("span[data-automation-id='card-textitem-value-properties.cm:author'] span"));
     var titleProperty = element(by.css("span[data-automation-id='card-textitem-value-properties.cm:title'] span"));
     var editIcon = element(by.css("button[data-automation-id='meta-data-card-toggle-edit']"));
-    var informationButton = element(by.css("button[data-automation-id='mata-data-card-toggle-expand']"));
-    var informationSpan = element(by.css("span[data-automation-id='mata-data-card-toggle-expand-label']"));
-    var informationIcon = element(by.css("span[data-automation-id='mata-data-card-toggle-expand-label'] ~ mat-icon"));
+    var informationButton = element(by.css("button[data-automation-id='meta-data-card-toggle-expand']"));
+    var informationSpan = element(by.css("span[data-automation-id='meta-data-card-toggle-expand-label']"));
+    var informationIcon = element(by.css("span[data-automation-id='meta-data-card-toggle-expand-label'] ~ mat-icon"));
     var rightChevron = element(by.css("div[class*='header-pagination-after']"));
     var displayEmptySwitch = element(by.id("adf-metadata-empty"));
     var readonlySwitch = element(by.id("adf-metadata-readonly"));
