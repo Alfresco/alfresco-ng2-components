@@ -217,8 +217,8 @@ describe('PeopleWidgetComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const optionElement = fixture.debugElement.nativeElement.querySelector('#adf-people-widget-user-0');
-                optionElement.click();
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
+                widget.onItemSelect(fakeUserResult[0]);
                 expect(selectEmitSpy).toHaveBeenCalledWith(1001);
             });
         }));
