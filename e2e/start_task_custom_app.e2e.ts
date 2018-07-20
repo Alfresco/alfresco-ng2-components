@@ -50,6 +50,7 @@ describe('Start Task - Custom App', () => {
     let taskPage = new TasksPage();
     let firstComment = 'comm1', firstChecklist = 'checklist1';
     let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
+    let showHeaderTask = 'Show Header';
     let appModel;
     let jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
@@ -201,5 +202,18 @@ describe('Start Task - Custom App', () => {
                 attachmentListPage.clickAttachFileButton(jpgFile.location);
                 attachmentListPage.checkFileIsAttached(jpgFile.name);
             });
+    });
+
+    it('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', () => {
+        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.createNewTask().addName(showHeaderTask).clickStartButton();
+        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(showHeaderTask).selectTaskFromTasksList(showHeaderTask);
+
+        taskPage.usingTaskDetails().usingTaskDetailsToggles().disableShowHeader();
+        taskPage.usingTaskDetails().taskInfoDrawerIsNotDisplayed();
+
+        taskPage.usingTaskDetails().usingTaskDetailsToggles().enableShowHeader();
+        taskPage.usingTaskDetails().taskInfoDrawerIsDisplayed();
     });
 });
