@@ -317,4 +317,46 @@ describe('Document List Component', () => {
         done();
     });
 
+    it('[C279970] - Custom column - isLocked field is showed for folders', async (done) => {
+        let acsUser = new AcsUserModel();
+        let folderNameA = `MEESEEKS_${Util.generateRandomString()}_LOOK_AT_ME`;
+        let folderNameB = `MEESEEKS_${Util.generateRandomString()}_LOOK_AT_ME`;
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await uploadActions.uploadFolder(this.alfrescoJsApi, folderNameA, '-my-');
+        await uploadActions.uploadFolder(this.alfrescoJsApi, folderNameB, '-my-');
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.checkContentIsDisplayed(folderNameA);
+        contentServicesPage.checkContentIsDisplayed(folderNameB);
+        contentServicesPage.checkLockIsDislpayedForElement(folderNameA);
+        contentServicesPage.checkLockIsDislpayedForElement(folderNameB);
+        done();
+    });
+
+    it('[C269086] - Custom column - IsLocked field is showed for files', async (done) => {
+        let testFileA = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+        let testFileB = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        });
+        let acsUser = new AcsUserModel();
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await uploadActions.uploadFile(this.alfrescoJsApi, testFileA.location, testFileA.name, '-my-');
+        await uploadActions.uploadFile(this.alfrescoJsApi, testFileB.location, testFileB.name, '-my-');
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.checkContentIsDisplayed(testFileA.name);
+        contentServicesPage.checkContentIsDisplayed(testFileB.name);
+        contentServicesPage.checkLockIsDislpayedForElement(testFileA.name);
+        contentServicesPage.checkLockIsDislpayedForElement(testFileB.name);
+        done();
+    });
+
 });
