@@ -171,7 +171,8 @@
     "START-TASK": "Start task",
     "START-PROCESS": "Start process",
     "PROCESS-AUDIT-LOG": "Process Audit log",
-    "TASK-AUDIT-LOG": "Task Audit log"
+    "TASK-AUDIT-LOG": "Task Audit log",
+    "TASK-SHOW-HEADER": "Show details header"
   },
   "FORM-LIST": {
     "STORE": "Store",
