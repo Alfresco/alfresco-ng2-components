@@ -126,7 +126,7 @@ describe('Search component - Search Bar', () => {
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('4. Existing folder and file are displayed in search suggestion when typing only the first 4 letters', () => {
+    xit('4. Existing folder and file are displayed in search suggestion when typing only the first 4 letters', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.shortName);
 
@@ -151,7 +151,7 @@ describe('Search component - Search Bar', () => {
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('5. Existing folder and file are displayed in search suggestion', () => {
+    xit('5. Existing folder and file are displayed in search suggestion', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.name);
         searchDialog.resultTableContainsRow(firstFolderModel.name);

@@ -34,7 +34,6 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 import FileModel = require('../models/ACS/fileModel');
-import { browser } from '../../node_modules/protractor';
 
 describe('Attachment list action menu for processes', () => {
 
@@ -97,7 +96,7 @@ describe('Attachment list action menu for processes', () => {
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
     });
-
+    // test needs check
     xit('[C260228] Option menu functionality - Active Process', () => {
         processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
 
@@ -118,20 +117,20 @@ describe('Attachment list action menu for processes', () => {
 
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
-        browser.sleep(20000);
+
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList(processName.active);
 
         attachmentListPage.downloadFile(pngFile.name);
 
-        browser.driver.sleep(1000);
+        browser.driver.sleep(500);
 
-        expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        expect(Util.fileExists(downloadedPngFile, 20)).toBe(true);
 
         attachmentListPage.removeFile(pngFile.name);
         attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
-
+    // test needs check
     xit('[C279886] Option menu functionality - Completed Process', () => {
         processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
 
@@ -143,7 +142,7 @@ describe('Attachment list action menu for processes', () => {
         attachmentListPage.clickAttachFileButton(pngFile.location);
 
         processDetailsPage.clickCancelProcessButton();
-        browser.sleep(20000);
+
         processFiltersPage.clickCompletedFilterButton();
 
         processDetailsPage.checkProcessTitleIsDisplayed();
@@ -158,9 +157,9 @@ describe('Attachment list action menu for processes', () => {
 
         attachmentListPage.downloadFile(pngFile.name);
 
-        browser.driver.sleep(1000);
+        browser.driver.sleep(500);
 
-        expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        expect(Util.fileExists(downloadedPngFile, 20)).toBe(true);
 
         attachmentListPage.removeFile(pngFile.name);
         attachmentListPage.checkFileIsRemoved(pngFile.name);

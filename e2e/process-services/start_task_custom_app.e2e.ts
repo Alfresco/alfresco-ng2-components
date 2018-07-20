@@ -165,7 +165,7 @@ describe('Start Task - Custom App', () => {
             });
     });
 
-    it('Refreshing the form', () => {
+    xit('Refreshing the form', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask()
