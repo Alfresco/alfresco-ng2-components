@@ -57,6 +57,7 @@
     "BREADCRUMB": "Breadcrumb",
     "NOTIFICATIONS": "Notifications",
     "TASK_LIST": "Task List",
+    "PROCESS_LIST": "Process List",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
@@ -208,6 +209,10 @@
     "INHERITED_PERMISSIONS_BUTTON": "Permission Inherited"
   },
   "TASK_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Insert App Id",
+    "APP_ID_TYPE_ERROR": "App Id must be a number"
+  },
+  "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "Insert App Id",
     "APP_ID_TYPE_ERROR": "App Id must be a number"
   }
