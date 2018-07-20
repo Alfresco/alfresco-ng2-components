@@ -60,7 +60,6 @@ describe('New Process Filters', () => {
         await this.alfrescoJsApi.login(user.email, user.password);
 
         done();
-
     });
 
     afterAll(async(done) => {
@@ -80,7 +79,6 @@ describe('New Process Filters', () => {
         processFiltersPage.checkFilterIsDisplayed(processFilter.running);
         processFiltersPage.checkFilterIsDisplayed(processFilter.all);
         processFiltersPage.checkFilterIsDisplayed(processFilter.completed);
-
     });
 
     it('[C260473] Should be able to create a new filter on APS and display it on ADF', () => {
