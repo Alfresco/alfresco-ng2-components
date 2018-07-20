@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccordionGroupComponent } from './accordion-group.component';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CoreModule } from '../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -130,44 +130,14 @@ describe('AccordionGroupComponent', () => {
             done();
         });
     });
-
-    it('should expand if panel has content and is clicked', (done) => {
-        spyOn(component, 'expandPanel');
-        component.isOpen = false;
-        component.hasContent = true;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
-            selectElement.click();
-            expect(component.expandPanel).toHaveBeenCalled();
-            expect(component.expansionPanel.expanded).toBe(true);
-            done();
-        });
-    });
-
-    it('should not expand if panel doesn\'t have content and is clicked', (done) => {
-        spyOn(component, 'expandPanel');
-        component.isOpen = false;
-        component.hasContent = false;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
-            selectElement.click();
-            expect(component.expandPanel).toHaveBeenCalled();
-            expect(component.expansionPanel.expanded).toBe(false);
-            done();
-        });
-    });
 });
 
 @Component({
     template: `
-    <adf-accordion-group [heading]="'My List'"
+    <adf-accordion-group [heading]="'My Header'"
                          [isSelected]="isSelected"
                          [isOpen]="isOpen"
-                         [headingIcon]="headingIcon">
+                         [headingIcon]="headingIcon" #accordion>
         <div>My List</div>
     </adf-accordion-group>
        `
@@ -176,6 +146,9 @@ class CustomAccordionGroupComponent extends AccordionGroupComponent {
     isOpen: boolean;
     isSelected: boolean;
     headingIcon: string;
+
+    @ViewChild('accordion')
+    accordion: AccordionGroupComponent;
 }
 
 describe('Custom AccordionGroup', () => {
@@ -194,8 +167,11 @@ describe('Custom AccordionGroup', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomAccordionGroupComponent);
-        fixture.detectChanges();
         component = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should render the title', () => {
@@ -204,7 +180,7 @@ describe('Custom AccordionGroup', () => {
         fixture.detectChanges();
         let title: any = fixture.debugElement.queryAll(By.css('.adf-panel-heading-text'));
         expect(title.length).toBe(1);
-        expect(title[0].nativeElement.innerText).toBe('My List');
+        expect(title[0].nativeElement.innerText).toBe('My Header');
     });
 
     it('should render a tab with icon', () => {
@@ -212,5 +188,37 @@ describe('Custom AccordionGroup', () => {
         fixture.detectChanges();
         let tab: any = fixture.debugElement.queryAll(By.css('.material-icons'));
         expect(tab[0].nativeElement.innerText).toBe('assignment');
+    });
+
+    fit('should expand the panel if has content and is selected', (done) => {
+        spyOn(component.accordion, 'expandPanel').and.callThrough();
+        component.isOpen = false;
+        component.isSelected = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(component.accordion.expansionPanel.expanded).toBe(false);
+            const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
+            selectElement.click();
+            expect(component.accordion.expandPanel).toHaveBeenCalled();
+            expect(component.accordion.expansionPanel.expanded).toBe(true);
+            done();
+        });
+    });
+
+    fit('should close the expanded panel if has content and is selected', (done) => {
+        spyOn(component.accordion, 'expandPanel').and.callThrough();
+        component.isOpen = true;
+        component.isSelected = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(component.accordion.expansionPanel.expanded).toBe(true);
+            const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
+            selectElement.click();
+            expect(component.accordion.expandPanel).toHaveBeenCalled();
+            expect(component.accordion.expansionPanel.expanded).toBe(false);
+            done();
+        });
     });
 });
