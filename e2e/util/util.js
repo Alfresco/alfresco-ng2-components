@@ -492,15 +492,10 @@ exports.openNewTabInBrowser = function () {
 };
 
 exports.switchToWindowHandler = function (number) {
-    browser.driver.getAllWindowHandles().then(function (handles) {
+    browser.driver.getAllWindowHandles().then((handles) => {
         browser.driver.switchTo().window(handles[number]);
     });
 };
-
-exports.pressDownArrowAndEnter = function () {
-    browser.actions().sendKeys(protractor.Key.ARROW_DOWN).sendKeys(protractor.Key.ENTER).perform();
-};
-
 
 /**
  * Verify file exists

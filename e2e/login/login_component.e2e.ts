@@ -214,12 +214,12 @@ describe('Login component', () => {
         adfSettingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
-        browser.executeScript('return window.open(arguments[0], "_blank")', '');
+        Util.openNewTabInBrowser();
 
         browser.getAllWindowHandles().then((handles) => {
-            let secondWindow = handles[1];
+
             browser.ignoreSynchronization = true;
-            browser.switchTo().window(secondWindow).then(() => {
+            browser.switchTo().window(handles[1]).then(() => {
                 browser.get(TestConfig.adf.url + '/activiti');
                 processServicesPage.checkApsContainer();
                 browser.get(TestConfig.adf.url + '/files');

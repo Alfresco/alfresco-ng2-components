@@ -37,7 +37,7 @@ var ContentList = function () {
     var table = element(by.css("div[class*='upload-border']"));
 
     this.getRowsName = function (content) {
-        var row = element(by.xpath("//div[@class='document-list-container']//span[@title='" + content + "']"));
+        var row = element.all(by.xpath("//div[@class='document-list-container']//span[@title='" + content + "']")).first();
         Util.waitUntilElementIsVisible(row);
         return row;
     };

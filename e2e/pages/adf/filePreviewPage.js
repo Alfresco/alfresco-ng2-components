@@ -21,7 +21,7 @@ var documentList = require('./documentListPage');
 
 var pdfTitleFromSearch = element(by.css("span[id='adf-viewer-display-name']"));
 var textLayer = element.all(by.css("div[class='textLayer']")).first();
-var closeButton = element(by.css("button[class*='adf-viewer-close-button']"));
+var closeButton = element(by.css('button[data-automation-id="adf-toolbar-back"]'));
 
 /**
  * Provides the file preview Page.

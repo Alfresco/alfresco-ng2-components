@@ -74,7 +74,7 @@ var ViewerToolbarPage = function () {
     };
 
     this.viewFile = function (fileName) {
-        var fileView = element(by.xpath("//div[@class='document-list-container']//span[@title='" + fileName + "']"));
+        var fileView = element.all(by.xpath("//div[@class='document-list-container']//span[@title='" + fileName + "']")).first();
         Util.waitUntilElementIsVisible(fileView);
         fileView.click();
         browser.actions().sendKeys(protractor.Key.ENTER).perform();

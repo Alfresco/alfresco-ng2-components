@@ -39,11 +39,7 @@ describe('Search component - Search Bar', () => {
             firstChar: 'x',
             secondChar: 'y',
             thirdChar: 'z',
-            name: Util.generateRandomString()
-        },
-        active: {
-            base: 'newFile',
-            extension: '.txt'
+            name: 'impossible-name-folder' + Util.generateRandomString(8)
         }
     };
 
@@ -53,16 +49,25 @@ describe('Search component - Search Bar', () => {
     let searchResultPage = new SearchResultPage();
 
     let acsUser = new AcsUserModel();
+
+    let filename = Util.generateRandomString(8);
+    let firstFolderName = Util.generateRandomString(8);
+    let secondFolderName = Util.generateRandomString(8);
+    let thirdFolderName = Util.generateRandomString(8);
+
     let firstFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'shortName': resources.Files.ADF_DOCUMENTS.PDF.short_file_name
+        'name': filename, 'shortName': filename.substring(0, 4)
     });
 
-    let randomPrefix = Util.generateRandomString();
-
-    let firstFolderModel = new FolderModel({ 'name': randomPrefix + 'folderOne', 'shortName': randomPrefix });
-    let secondFolder = new FolderModel({ 'name': 'nameFolderOne', 'shortName': 'name' });
-    let thirdFolder = new FolderModel({ 'name': 'nameFolderTwo' });
+    let firstFolderModel = new FolderModel({
+        'name': firstFolderName, 'shortName': firstFolderName.substring(0, 4)
+    });
+    let secondFolder = new FolderModel({
+        'name': secondFolderName, 'shortName': secondFolderName.substring(0, 4)
+    });
+    let thirdFolder = new FolderModel({
+        'name': thirdFolderName, 'shortName': thirdFolderName.substring(0, 4)
+    });
 
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();
@@ -84,6 +89,8 @@ describe('Search component - Search Bar', () => {
         await uploadActions.uploadFolder(this.alfrescoJsApi, firstFolderModel.name, '-my-');
         await uploadActions.uploadFolder(this.alfrescoJsApi, secondFolder.name, '-my-');
         await uploadActions.uploadFolder(this.alfrescoJsApi, thirdFolder.name, '-my-');
+
+        await browser.driver.sleep(5000); // wait search index previous file/folder uploaded
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -125,29 +132,21 @@ describe('Search component - Search Bar', () => {
 
         searchDialog.resultTableContainsRow(firstFolderModel.name);
 
-        searchDialog.getSpecificRowsHighlightName(firstFolderModel.name).then((text) => {
-            expect(text).toEqual(firstFolderModel.shortName);
-        });
-        searchDialog.getSpecificRowsAuthor(firstFolderModel.name).then((text) => {
-            expect(text).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-        });
-        searchDialog.getSpecificRowsCompleteName(firstFolderModel.name).then((text) => {
-            expect(text).toEqual(firstFolderModel.name);
-        });
+        expect(searchDialog.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.shortName);
+        expect(searchDialog.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        expect(searchDialog.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+
         searchDialog.clearText();
         searchDialog.checkSearchBarIsNotVisible();
 
         searchDialog.clickOnSearchIcon().enterText(firstFileModel.shortName);
         searchDialog.resultTableContainsRow(firstFileModel.name);
-        searchDialog.getSpecificRowsHighlightName(firstFileModel.name).then((text) => {
-            expect(text).toEqual(firstFileModel.shortName);
-        });
-        searchDialog.getSpecificRowsAuthor(firstFileModel.name).then((text) => {
-            expect(text).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-        });
-        searchDialog.getSpecificRowsCompleteName(firstFileModel.name).then((text) => {
-            expect(text).toEqual(firstFileModel.name);
-        });
+
+        expect(searchDialog.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.shortName);
+        expect(searchDialog.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+
+        expect(searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
+
         searchDialog.clearText();
         searchDialog.checkSearchBarIsNotVisible();
     });
@@ -156,29 +155,20 @@ describe('Search component - Search Bar', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.name);
         searchDialog.resultTableContainsRow(firstFolderModel.name);
-        searchDialog.getSpecificRowsHighlightName(firstFolderModel.name).then((text) => {
-            expect(text).toEqual(firstFolderModel.name);
-        });
-        searchDialog.getSpecificRowsAuthor(firstFolderModel.name).then((text) => {
-            expect(text).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-        });
-        searchDialog.getSpecificRowsCompleteName(firstFolderModel.name).then((text) => {
-            expect(text).toEqual(firstFolderModel.name);
-        });
+
+        expect(searchDialog.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+        expect(searchDialog.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        expect(searchDialog.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+
         searchDialog.clearText();
         searchDialog.checkSearchBarIsNotVisible();
 
         searchDialog.clickOnSearchIcon().enterText(firstFileModel.name);
         searchDialog.resultTableContainsRow(firstFileModel.name);
-        searchDialog.getSpecificRowsHighlightName(firstFileModel.name).then((text) => {
-            expect(text).toEqual(firstFileModel.name);
-        });
-        searchDialog.getSpecificRowsAuthor(firstFileModel.name).then((text) => {
-            expect(text).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-        });
-        searchDialog.getSpecificRowsCompleteName(firstFileModel.name).then((text) => {
-            expect(text).toEqual(firstFileModel.name);
-        });
+
+        expect(searchDialog.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.name);
+        expect(searchDialog.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        expect(searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
 
         searchDialog.clearText();
         searchDialog.checkSearchBarIsNotVisible();
@@ -189,17 +179,16 @@ describe('Search component - Search Bar', () => {
         searchDialog.resultTableContainsRow(firstFolderModel.name);
         searchDialog.clickOnSpecificRow(firstFolderModel.name);
         contentServicesPage.checkAcsContainer().waitForTableBody();
-        contentServicesPage.currentFolderName().then((result) => {
-            expect(result).toEqual(firstFolderModel.name);
-        });
+
+        expect(contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
+
         contentServicesPage.goToDocumentList();
 
         searchDialog.checkSearchIconIsVisible().clickOnSearchIcon().checkSearchBarIsVisible();
         searchDialog.enterText(firstFileModel.name).resultTableContainsRow(firstFileModel.name);
         searchDialog.clickOnSpecificRow(firstFileModel.name);
-        filePreviewPage.getPDFTitleFromSearch().then((title) => {
-            expect(title).toEqual(firstFileModel.name);
-        });
+        expect(filePreviewPage.getPDFTitleFromSearch()).toEqual(firstFileModel.name);
+
         filePreviewPage.closePreviewWithButton();
     });
 
@@ -226,26 +215,23 @@ describe('Search component - Search Bar', () => {
     it('10. A folder is selected from search bar using arrows', () => {
         contentServicesPage.goToDocumentList();
 
-        searchDialog.clickOnSearchIcon().enterText(secondFolder.shortName);
-        searchDialog.resultTableContainsRow(secondFolder.name).resultTableContainsRow(thirdFolder.name);
-
-        let names = [];
-        searchDialog.getAllRowsValues().then((array) => {
-            names = array;
-        });
-        Util.pressDownArrowAndEnter();
+        searchDialog
+            .clickOnSearchIcon()
+            .enterText(secondFolder.shortName)
+            .pressDownArrowAndEnter();
 
         contentServicesPage.checkAcsContainer();
-        contentServicesPage.currentFolderName().then((result) => {
-            expect(result).toEqual(names[0]);
-        });
+        expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 
-    xit('11. The search bar gets closed when clicking on another browser tab', () => {
+    it('11. The search bar gets closed when clicking on another browser tab', () => {
         contentServicesPage.goToDocumentList();
 
-        searchDialog.clickOnSearchIcon().enterText(secondFolder.shortName);
-        searchDialog.resultTableContainsRow(secondFolder.name).resultTableContainsRow(thirdFolder.name);
+        searchDialog
+            .clickOnSearchIcon()
+            .enterText(secondFolder.shortName);
+
+        searchDialog.resultTableContainsRow(secondFolder.name);
 
         Util.openNewTabInBrowser();
         Util.switchToWindowHandler(0);
