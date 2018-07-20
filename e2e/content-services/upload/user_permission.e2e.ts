@@ -92,7 +92,7 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C212861] Should not be allowed to Drag and drop a file/folder in a restricted user folder with limited permissions', () => {
+        xit('[C212861] Should not be allowed to Drag and drop a file/folder in a restricted user folder with limited permissions', () => {
             contentServicesPage.checkDandDIsDisplayed();
 
             let dragAndDrop = new DropActions();
@@ -138,7 +138,7 @@ describe('Upload - User permission', () => {
             notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
-        it('[C279916] Should not be allowed to upload a folder in a restricted user folder with limited permissions', () => {
+        xit('[C279916] Should not be allowed to upload a folder in a restricted user folder with limited permissions', () => {
             uploadToggles.enableFolderUpload();
 
             contentServicesPage.uploadFolder(folder.location).checkContentIsDisplayed(folder.name);
@@ -169,7 +169,7 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C260130] Should be allowed to Drag and drop a file/folder in a restricted user folder with full permissions', () => {
+        xit('[C260130] Should be allowed to Drag and drop a file/folder in a restricted user folder with full permissions', () => {
             contentServicesPage.checkDandDIsDisplayed();
 
             let dragAndDrop = new DropActions();
@@ -191,7 +191,7 @@ describe('Upload - User permission', () => {
             uploadDialog.fileIsUploaded(emptyFile.name);
         });
 
-        it('[C279918] Should be allowed to upload a folder in a restricted user folder with full permissions', () => {
+        xit('[C279918] Should be allowed to upload a folder in a restricted user folder with full permissions', () => {
             uploadToggles.enableFolderUpload();
 
             contentServicesPage.uploadFolder(folder.location);
