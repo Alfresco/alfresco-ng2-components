@@ -301,4 +301,20 @@ describe('Document List Component', () => {
         done();
     });
 
+    it('[C268119] - "ygj" letters rendering in document list', async (done) => {
+        let acsUser = new AcsUserModel();
+        let folderName = 'ggggggjjjjjjjjjjjjyyyyyy';
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.clickOnContentServices();
+        let lineHeight = await contentServicesPage.getStyleValueForRowText(folderName, 'line-height');
+        let fontSize = await contentServicesPage.getStyleValueForRowText(folderName, 'font-size');
+        let actualFontValue = (parseInt(fontSize, 10) * 1.12).toFixed(2);
+        expect(lineHeight).toBe(actualFontValue + 'px');
+        done();
+    });
+
 });
