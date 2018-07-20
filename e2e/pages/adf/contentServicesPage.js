@@ -41,12 +41,10 @@ var ContentServicesPage = function () {
     var loadMoreButton = element(by.css("button[data-automation-id='adf-infinite-pagination-button']"));
     var emptyPagination = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
     var dragAndDrop = element(by.css("adf-upload-drag-area div"));
-
     var nameHeader = element(by.css('div[data-automation-id="auto_id_name"] > span'));
     var sizeHeader = element(by.css('div[data-automation-id="auto_id_content.sizeInBytes"] > span'));
     var createdByHeader = element(by.css('div[data-automation-id="auto_id_createdByUser.displayName"] > span'));
     var createdHeader = element(by.css('div[data-automation-id="auto_id_createdAt"] > span'));
-
     var recentFiles = element(by.css('.adf-container-recent'));
     var recentFilesExpanded = element(by.css('.adf-container-recent mat-expansion-panel-header.mat-expanded'));
     var recentFilesClosed = element(by.css('.adf-container-recent mat-expansion-panel-header'));
@@ -430,6 +428,11 @@ var ContentServicesPage = function () {
     this.checkDandDIsDisplayed = function () {
         Util.waitUntilElementIsVisible(dragAndDrop);
     };
+
+    this.checkLockIsDislpayedForElement = function(name) {
+        let lockButton = element(by.css(`div.adf-data-table-cell[filename="${name}"] button`));
+        Util.waitUntilElementIsVisible(lockButton);
+    }
 
     this.getColumnValueForRow = function (file, columnName) {
         let row = contentList.getRowByRowName(file);
