@@ -89,10 +89,14 @@ export class AccordionGroupComponent implements AfterViewInit {
         this.headingClick.emit(this.heading);
     }
 
-    expandPanel() {
-        if (!this.hasContent) {
-            this.expansionPanel.expanded = !this.expansionPanel.expanded;
+    isExpandable() {
+        if (this.hasContent && this.isSelected) {
+            this.expandPanel();
         }
+    }
+
+    expandPanel() {
+        this.expansionPanel.expanded = !this.expansionPanel.expanded;
     }
 
     toggleExpansion(): boolean {

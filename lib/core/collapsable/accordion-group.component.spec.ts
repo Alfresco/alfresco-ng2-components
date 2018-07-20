@@ -190,7 +190,7 @@ describe('Custom AccordionGroup', () => {
         expect(tab[0].nativeElement.innerText).toBe('assignment');
     });
 
-    fit('should expand the panel if has content and is selected', (done) => {
+    it('should expand the panel if has content and is selected', (done) => {
         spyOn(component.accordion, 'expandPanel').and.callThrough();
         component.isOpen = false;
         component.isSelected = true;
@@ -206,7 +206,7 @@ describe('Custom AccordionGroup', () => {
         });
     });
 
-    fit('should close the expanded panel if has content and is selected', (done) => {
+    it('should close the expanded panel if has content and is selected', (done) => {
         spyOn(component.accordion, 'expandPanel').and.callThrough();
         component.isOpen = true;
         component.isSelected = true;
