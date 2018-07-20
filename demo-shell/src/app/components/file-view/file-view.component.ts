@@ -87,6 +87,6 @@ export class FileViewComponent implements OnInit {
         this.isPreset = false;
         setTimeout(() => {
             this.isPreset = true;
-        }, 100)
+        }, 100);
     }
 }
