@@ -40,6 +40,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/header-data', icon: 'edit', title: 'APP_LAYOUT.HEADER_DATA'},
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
+        { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES' },
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/trashcan', icon: 'delete', title: 'APP_LAYOUT.TRASHCAN' },
