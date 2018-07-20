@@ -105,7 +105,7 @@ describe('Login component', () => {
         browser.controlFlow().execute(async () => {
             uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
 
-            browser.get(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+            navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
             browser.getCurrentUrl().then((actualUrl) => {
                 expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
@@ -117,7 +117,7 @@ describe('Login component', () => {
 
             browser.driver.sleep(1000);
 
-            browser.get(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+            navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
             loginPage.waitForElements();
             loginPage.enterUsername(adminUserModel.id);

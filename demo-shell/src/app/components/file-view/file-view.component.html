@@ -7,7 +7,13 @@
             </adf-info-drawer-tab>
 
             <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.PROPERTIES' | translate">
-                <adf-content-metadata-card [node]="node"
+                <adf-content-metadata-card *ngIf="isPreset" [node]="node"
+                                           [multi]="multi"
+                                           [preset]="customPreset"
+                                           [readOnly]="isReadOnly"
+                                           [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
+
+                <adf-content-metadata-card *ngIf="!isPreset" [node]="node"
                                            [multi]="multi"
                                            [readOnly]="isReadOnly"
                                            [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
@@ -32,7 +38,7 @@
                     </mat-slide-toggle>
                 </p>
 
-              <p class="toggle">
+                <p class="toggle">
                     <mat-slide-toggle
                         id="adf-metadata-readonly"
                         [color]="'primary'"
@@ -40,6 +46,29 @@
                         [checked]="isReadOnly">
                         Editable
                     </mat-slide-toggle>
+                </p>
+
+                <p class="toggle">
+                    <mat-slide-toggle
+                        id="adf-toggle-custom-preset"
+                        [color]="'primary'"
+                        (change)="togglePreset()"
+                        [checked]="isPreset">
+                        Custom preset
+                    </mat-slide-toggle>
+                </p>
+                <p class="toggle">
+                    <ng-container *ngIf="isPreset">
+                        <mat-form-field floatPlaceholder="float">
+                            <input matInput
+                                   placeholder="Custom Preset"
+                                   [(ngModel)]="customPreset"
+                                   data-automation-id="adf-text-custom-preset">
+                        </mat-form-field>
+
+                        <button  mat-raised-button  id="adf-metadata-aplly" (click)="applyCustomPreset()" color="primary">Apply</button>
+
+                    </ng-container>
                 </p>
 
             </adf-info-drawer-tab>

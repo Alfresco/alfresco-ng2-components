@@ -32,6 +32,8 @@ export class FileViewComponent implements OnInit {
     displayEmptyMetadata = false;
     multi = false;
     isReadOnly = false;
+    isPreset = false;
+    customPreset: string = null;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -72,5 +74,19 @@ export class FileViewComponent implements OnInit {
 
     toggleReadOnly() {
         this.isReadOnly = !this.isReadOnly;
+    }
+
+    togglePreset() {
+        this.isPreset = !this.isPreset;
+        if (!this.isPreset) {
+            this.customPreset = null;
+        }
+    }
+
+    applyCustomPreset() {
+        this.isPreset = false;
+        setTimeout(() => {
+            this.isPreset = true;
+        }, 100)
     }
 }

@@ -269,4 +269,37 @@ describe('Metadata component', () => {
         expect(metadataViewPage.getkMetadatGroupTitle('GROUP-TITLE2-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION TWO');
 
     });
+
+    it('[C268899] Should be possible use a custom preset' , () => {
+        navigationBarPage.clickConfigEditorButton();
+
+        configEditorPage.clickClearMetadataButton();
+
+        configEditorPage.enterMetadataConfiguration('{' +
+            '    "presets": {' +
+            '        "custom-preset": {' +
+            '            "exif:exif": "*",' +
+            '            "cm:versionable": "*"' +
+            '        }' +
+            '    }' +
+            '}');
+
+        configEditorPage.clickSaveMetadataButton();
+
+        navigationBarPage.clickContentServicesButton();
+
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+
+        metadataViewPage.enablePreset();
+        metadataViewPage.enterPresetText('custom-preset');
+
+        metadataViewPage.clickOnInformationButton();
+
+        metadataViewPage.checkkMetadatGroupIsPresent('properties');
+        metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
+        metadataViewPage.checkkMetadatGroupIsPresent('Versionable');
+    });
 });

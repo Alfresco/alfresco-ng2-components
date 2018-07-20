@@ -40,6 +40,7 @@ var MetadataViewPage = function () {
     var displayEmptySwitch = element(by.id("adf-metadata-empty"));
     var readonlySwitch = element(by.id("adf-metadata-readonly"));
     var multiSwitch = element(by.id("adf-metadata-multi"));
+    var presetSwitch = element(by.id('adf-toggle-custom-preset'));
 
     this.getTitle = function () {
         Util.waitUntilElementIsVisible(title);
@@ -199,6 +200,16 @@ var MetadataViewPage = function () {
         return this;
     };
 
+    this.enterPresetText = function (text) {
+        const presetField = element(by.css('input[data-automation-id="adf-text-custom-preset"]'));
+        Util.waitUntilElementIsVisible(presetField);
+        presetField.sendKeys('');
+        presetField.clear().sendKeys(text);
+        const applyButton = element(by.css('button[id="adf-metadata-aplly"]'));
+        applyButton.click();
+        return this;
+    };
+
     this.enterDescriptionText = function (text) {
         const textField = element(by.css('textarea[data-automation-id="card-textitem-edittextarea-properties.cm:description"]'));
         Util.waitUntilElementIsVisible(textField);
@@ -338,6 +349,32 @@ var MetadataViewPage = function () {
             if (check === 'mat-slide-toggle mat-primary') {
                 multiSwitch.click();
                 expect(multiSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
+    /**
+     * disables preset
+     */
+    this.disablePreset = function () {
+        Util.waitUntilElementIsVisible(presetSwitch);
+        presetSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                presetSwitch.click();
+                expect(presetSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables preset
+     */
+    this.enablePreset = function () {
+        Util.waitUntilElementIsVisible(presetSwitch);
+        presetSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                presetSwitch.click();
+                expect(presetSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
             }
         })
     };

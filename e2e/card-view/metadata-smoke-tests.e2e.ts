@@ -20,6 +20,7 @@ import ContentServicesPage = require('../pages/adf/contentServicesPage');
 import ViewerPage = require('../pages/adf/viewerPage');
 import CardViewPage = require('../pages/adf/metadataViewPage');
 import ContentListPage = require('../pages/adf/dialog/contentList');
+import NavigationBarPage = require('../pages/adf/navigationBarPage');
 
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FileModel = require('../models/ACS/fileModel');
@@ -33,6 +34,7 @@ import { UploadActions } from '../actions/ACS/upload.actions';
 
 import fs = require('fs');
 import path = require('path');
+import Util = require('../util/util');
 
 describe('Metadata component', () => {
 
@@ -54,8 +56,10 @@ describe('Metadata component', () => {
     const viewerPage = new ViewerPage();
     const metadataViewPage = new CardViewPage();
     const contentListPage = new ContentListPage();
+    const navigationBarPage = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
+    let consumerUser = new AcsUserModel();
 
     let folderName = 'Metadata Folder';
 
@@ -345,4 +349,5 @@ describe('Metadata component', () => {
         metadataViewPage.clickUpdatePropertyIcon('properties.exif:fNumber');
         expect(metadataViewPage.getText('properties.exif:fNumber')).toEqual('22');
     });
+
 });

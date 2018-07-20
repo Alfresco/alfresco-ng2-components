@@ -16,6 +16,7 @@
  */
 
 var Util = require('../../util/util');
+var TestConfig = require('../../test.config');
 
 var NavigationBarPage = function () {
 
@@ -105,6 +106,14 @@ var NavigationBarPage = function () {
     this.clickCardViewButton = function () {
         Util.waitUntilElementIsVisible(cardViewButton);
         cardViewButton.click();
+    };
+
+    /**
+     * Click Card View Button
+     * @method clickCardViewButton
+     */
+    this.openContentServicesFolder = function (folderId) {
+        return browser.get(TestConfig.adf.url + '/files/' + folderId);
     };
 
 };
