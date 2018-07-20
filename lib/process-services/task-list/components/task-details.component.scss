@@ -52,6 +52,10 @@ adf-task-header.assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-property
         }
     }
 
+    &-toggle {
+        position: relative;
+    }
+
     &-core {
         display: flex;
         justify-content: space-between;

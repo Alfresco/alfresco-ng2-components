@@ -16,8 +16,11 @@
  */
 
 var Util = require('../../../util/util');
+var ToggleState = require('../core/toggleState');
 
 var UploadToggles = function () {
+
+    var toggleState = new ToggleState();
 
     var toggleButton = by.xpath("ancestor::mat-slide-toggle");
     var multipleFileUploadToggle = element(by.cssContainingText("span[class*='toggle-content']", "Multiple File Upload"));
@@ -30,80 +33,57 @@ var UploadToggles = function () {
     var disableUploadCheckbox = element(by.css("[id='adf-disable-upload']"));
 
     this.enableMultipleFileUpload = function () {
-        this.enableToggle(multipleFileUploadToggle);
+        toggleState.enableToggle(multipleFileUploadToggle);
         return this;
     };
 
     this.disableMultipleFileUpload = function () {
-        this.disableToggle(multipleFileUploadToggle);
+        toggleState.disableToggle(multipleFileUploadToggle);
         return this;
     };
 
     this.enableFolderUpload = function () {
-        this.enableToggle(uploadFolderToggle);
+        toggleState.enableToggle(uploadFolderToggle);
         return this;
     };
 
     this.disableFolderUpload = function () {
-        this.disableToggle(uploadFolderToggle);
+        toggleState.disableToggle(uploadFolderToggle);
         return this;
     };
 
     this.enableExtensionFilter = function () {
-        this.enableToggle(extensionFilterToggle);
+        toggleState.enableToggle(extensionFilterToggle);
         return this;
     };
 
     this.disableExtensionFilter = function () {
-        this.disableToggle(extensionFilterToggle);
+        toggleState.disableToggle(extensionFilterToggle);
         return this;
     };
 
     this.enableMaxSize = function () {
-        this.enableToggle(maxSizeToggle);
+        toggleState.enableToggle(maxSizeToggle);
         return this;
     };
 
     this.disableMaxSize = function () {
-        this.disableToggle(maxSizeToggle);
+        toggleState.disableToggle(maxSizeToggle);
         return this;
     };
 
     this.enableVersioning = function () {
-        this.enableToggle(versioningToggle);
+        toggleState.enableToggle(versioningToggle);
         return this;
     };
 
     this.disableVersioning = function () {
-        this.disableToggle(versioningToggle);
+        toggleState.disableToggle(versioningToggle);
         return this;
     };
 
     this.clickCheckboxDisableUpload = function () {
         return disableUploadCheckbox.click();
-    };
-
-    this.enableToggle = function (toggle) {
-        Util.waitUntilElementIsVisible(toggle);
-        Util.waitUntilElementIsPresent(toggle);
-        var finalToggleButton = toggle.element(toggleButton);
-        finalToggleButton.getAttribute('class').then(function (value) {
-            if (value.indexOf('mat-checked')===-1) {
-                finalToggleButton.click();
-            }
-        });
-        return this;
-    };
-
-    this.disableToggle = function (toggle) {
-        Util.waitUntilElementIsVisible(toggle);
-        var finalToggleButton = toggle.element(toggleButton);
-        finalToggleButton.getAttribute('class').then(function (value) {
-            if (value.indexOf('mat-checked')!==-1) {
-                finalToggleButton.click();
-            }
-        });
-        return this;
     };
 
     this.addExtension = function (extension) {
