@@ -48,39 +48,35 @@ export class AttachmentListPage {
     }
 
     viewFile(name) {
-        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
-        Util.waitUntilElementIsVisible(fileAttached);
-        fileAttached.click();
+        element.all(by.css('div[filename="' + name + '"]')).first().click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
-        Util.waitUntilElementIsClickable(this.buttonMenu);
         this.buttonMenu.click();
-        Util.waitUntilElementIsVisible(this.menuPanel);
         Util.waitUntilElementIsVisible(this.viewButton);
+        browser.driver.sleep(500);
         this.viewButton.click();
+        browser.driver.sleep(500);
         return this;
     }
 
     removeFile(name) {
-        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
-        fileAttached.click();
+        element.all(by.css('div[filename="' + name + '"]')).first().click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
-        Util.waitUntilElementIsClickable(this.buttonMenu);
         this.buttonMenu.click();
-        Util.waitUntilElementIsVisible(this.menuPanel);
         Util.waitUntilElementIsVisible(this.removeButton);
+        browser.driver.sleep(500);
         this.removeButton.click();
+        browser.driver.sleep(500);
         return this;
     }
 
     downloadFile(name) {
-        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
-        fileAttached.click();
+        element.all(by.css('div[filename="' + name + '"]')).first().click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
-        Util.waitUntilElementIsClickable(this.buttonMenu);
         this.buttonMenu.click();
-        Util.waitUntilElementIsVisible(this.menuPanel);
         Util.waitUntilElementIsVisible(this.downloadButton);
+        browser.driver.sleep(500);
         this.downloadButton.click();
+        browser.driver.sleep(500);
         return this;
     }
 

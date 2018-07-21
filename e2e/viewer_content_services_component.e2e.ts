@@ -139,6 +139,8 @@ describe('Content Services Viewer', () => {
 
         viewerPage.viewFile(pdfFile.name);
 
+        browser.driver.sleep(3000); //wait open file
+
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();
         viewerPage.checkFileNameIsDisplayed(pdfFile.name);
@@ -302,6 +304,8 @@ describe('Content Services Viewer', () => {
     it('[C261123] Should be able to preview all pages and navigate to a page when using thumbnails', () => {
         viewerPage.viewFile(pdfFile.name);
 
+        browser.driver.sleep(3000); //wait open file
+
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.checkThumbnailsBtnIsDisplayed();
         viewerPage.clickThumbnailsBtn();
@@ -341,6 +345,9 @@ describe('Content Services Viewer', () => {
 
     it('[C269109] Should not be able to open thumbnail pane before the pdf is loaded', () => {
         viewerPage.viewFile(pdfFile.name);
+
+        browser.driver.sleep(3000); //wait open file
+
         viewerPage.clickThumbnailsBtn();
         viewerPage.checkThumbnailsContentIsNotDisplayed();
 
@@ -349,6 +356,8 @@ describe('Content Services Viewer', () => {
 
     it('[C268901] Should need a password when opening a protected file', () => {
         viewerPage.viewFile(protectedFile.name);
+
+        browser.driver.sleep(3000); //wait open file
 
         viewerPage.checkPasswordDialogIsDisplayed();
         viewerPage.checkPasswordSubmitDisabledIsDisplayed();

@@ -78,11 +78,12 @@ describe('Start Task - Custom App', () => {
 
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
+        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
         done();
     });
 
     it('Modifying task', () => {
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[0])

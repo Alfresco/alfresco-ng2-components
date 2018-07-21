@@ -60,6 +60,7 @@ export class UserInfoComponent implements OnInit {
     bpmUser: BpmUserModel;
     bpmUserImage: any;
     ecmUserImage: any;
+    selectedIndex: number;
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
@@ -124,4 +125,5 @@ export class UserInfoComponent implements OnInit {
     hasEcmUserAvatarId(): boolean {
         return !!this.ecmUser.avatarId;
     }
+
 }

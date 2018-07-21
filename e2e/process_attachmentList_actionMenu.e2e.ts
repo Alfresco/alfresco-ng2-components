@@ -59,7 +59,7 @@ describe('Attachment list action menu for processes', () => {
         dragDrop: 'Drag and Drop'
     };
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
         let apps = new AppsActions();
         let users = new UsersActions();
 
@@ -90,7 +90,7 @@ describe('Attachment list action menu for processes', () => {
         done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async (done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);

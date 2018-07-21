@@ -50,23 +50,23 @@ describe('Search component - Search Bar', () => {
 
     let acsUser = new AcsUserModel();
 
-    let filename = Util.generateRandomString(8);
-    let firstFolderName = Util.generateRandomString(8);
-    let secondFolderName = Util.generateRandomString(8);
-    let thirdFolderName = Util.generateRandomString(8);
+    let filename = Util.generateRandomString(16);
+    let firstFolderName = Util.generateRandomString(16);
+    let secondFolderName = Util.generateRandomString(16);
+    let thirdFolderName = Util.generateRandomString(16);
 
     let firstFileModel = new FileModel({
-        'name': filename, 'shortName': filename.substring(0, 4)
+        'name': filename, 'shortName': filename.substring(0, 8)
     });
 
     let firstFolderModel = new FolderModel({
-        'name': firstFolderName, 'shortName': firstFolderName.substring(0, 4)
+        'name': firstFolderName, 'shortName': firstFolderName.substring(0, 8)
     });
     let secondFolder = new FolderModel({
-        'name': secondFolderName, 'shortName': secondFolderName.substring(0, 4)
+        'name': secondFolderName, 'shortName': secondFolderName.substring(0, 8)
     });
     let thirdFolder = new FolderModel({
-        'name': thirdFolderName, 'shortName': thirdFolderName.substring(0, 4)
+        'name': thirdFolderName, 'shortName': thirdFolderName.substring(0, 8)
     });
 
     beforeAll(async (done) => {

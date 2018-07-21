@@ -80,13 +80,13 @@ describe('TagActionsComponent', () => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
 
-                expect(element.querySelector('#tag_name_0').innerHTML.trim()).toBe('test1');
-                expect(element.querySelector('#tag_name_1').innerHTML.trim()).toBe('test2');
-                expect(element.querySelector('#tag_name_2').innerHTML.trim()).toBe('test3');
+                expect(element.querySelector('#tag_name_test1').innerHTML.trim()).toBe('test1');
+                expect(element.querySelector('#tag_name_test2').innerHTML.trim()).toBe('test2');
+                expect(element.querySelector('#tag_name_test3').innerHTML.trim()).toBe('test3');
 
-                expect(element.querySelector('#tag_delete_0')).not.toBe(null);
-                expect(element.querySelector('#tag_delete_1')).not.toBe(null);
-                expect(element.querySelector('#tag_delete_2')).not.toBe(null);
+                expect(element.querySelector('#tag_delete_test1')).not.toBe(null);
+                expect(element.querySelector('#tag_delete_test2')).not.toBe(null);
+                expect(element.querySelector('#tag_delete_test3')).not.toBe(null);
 
                 done();
             });
@@ -106,7 +106,7 @@ describe('TagActionsComponent', () => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
 
-                let deleteButton: any = element.querySelector('#tag_delete_0');
+                let deleteButton: any = element.querySelector('#tag_delete_test1');
                 deleteButton.click();
 
                 expect(jasmine.Ajax.requests.at(1).url)

@@ -28,6 +28,8 @@ import Util = require('./util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from './actions/ACS/upload.actions';
 
+import Util = require('./util/util');
+
 describe('Tag component', () => {
 
     let loginPage = new LoginPage();
@@ -35,7 +37,7 @@ describe('Tag component', () => {
 
     let acsUser = new AcsUserModel();
     let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
-    let deleteFile = new FileModel({ 'name': 'deleteFile.id' });
+    let deleteFile = new FileModel({ 'name': Util.generateRandomString() });
     let sameTag = Util.generateRandomStringToLowerCase();
     let tagList = [Util.generateRandomStringToLowerCase(), Util.generateRandomStringToLowerCase()];
     let uppercaseTag = Util.generateRandomStringToUpperCase();
@@ -143,7 +145,7 @@ describe('Tag component', () => {
         tagPage.checkTagIsDisplayedInTagList(deleteTag.toLowerCase());
         tagPage.checkTagIsDisplayedInTagListByNodeId(deleteTag.toLowerCase());
 
-        tagPage.deleteTagFromTagListByNodeId();
+        tagPage.deleteTagFromTagListByNodeId(deleteTag.toLowerCase());
 
         tagPage.checkTagIsNotDisplayedInTagList(deleteTag.toLowerCase());
         tagPage.checkTagIsNotDisplayedInTagListByNodeId(deleteTag.toLowerCase());
@@ -155,7 +157,7 @@ describe('Tag component', () => {
         tagPage.checkTagIsDisplayedInTagList(deleteTag.toLowerCase());
         tagPage.checkTagIsDisplayedInTagListByNodeId(deleteTag.toLowerCase());
 
-        tagPage.deleteTagFromTagList();
+        tagPage.deleteTagFromTagList(deleteTag.toLowerCase());
 
         tagPage.checkTagIsNotDisplayedInTagList(deleteTag.toLowerCase());
         tagPage.checkTagIsNotDisplayedInTagListByNodeId(deleteTag.toLowerCase());

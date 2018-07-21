@@ -28,8 +28,7 @@ var TestConfig = require('../test.config');
 var moment = require('moment');
 var CONSTANTS = require('./constants');
 
-
-var DEFAULT_TIMEOUT = 20000;
+var DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout);
 /**
  * Provides utility methods used throughout the testing framework.
  *

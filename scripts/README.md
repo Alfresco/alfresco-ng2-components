@@ -374,6 +374,7 @@ Script to run e2e test
 |-b or --browser |browser run the test in the browsrwer (No headless mode)|
 |-s or --spec |spec run a single test file|
 |-dev or --dev |run it against local development environment it will deploy on localhost:4200 the current version of your branch|
+|-t or --timeout |override the timeout foe the wait utils|
 |-host or --host | host against to run the test|
 |-proxy or --proxy | proxy Back end URL to use |
 

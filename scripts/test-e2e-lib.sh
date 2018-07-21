@@ -17,6 +17,7 @@ show_help() {
     echo "-dev or --dev run it against local development environment it will deploy on localhost:4200 the current version of your branch"
     echo "-host or --host URL of the Front end to test"
     echo "-save  save the error screenshot in the remote env"
+    echo "-t or --timeout override the timeout foe the wait utils"
     echo "-h or --help"
 }
 
@@ -47,6 +48,10 @@ set_proxy(){
     PROXY=$1
 }
 
+set_timeout(){
+    TIMEOUT=$1
+}
+
 set_save_screenshot(){
     SAVE_SCREENSHOT=true
 }
@@ -61,6 +66,7 @@ while [[ $1 == -* ]]; do
       -u|--username)  set_username $2; shift 2;;
       -p|--password)  set_password $2; shift 2;;
       -e|--email)  set_email $2; shift 2;;
+      -t|--timeout)  set_timeout $2; shift 2;;
       -b|--browser)  set_browser; shift;;
       -dev|--dev)  set_development; shift;;
       -s|--spec)  set_test $2; shift 2;;
@@ -81,6 +87,7 @@ export EMAIL_ADF=$EMAIL
 export BROWSER_RUN=$BROWSER_RUN
 export PROXY_HOST_ADF=$PROXY
 export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
+export TIMEOUT=$TIMEOUT
 
 
 if [[  $DEVELOPMENT == "true" ]]; then

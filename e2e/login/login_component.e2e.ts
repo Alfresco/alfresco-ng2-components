@@ -229,13 +229,11 @@ describe('Login component', () => {
     });
 
     it('[C276746] Login with two different users', () => {
-        adfSettingsPage.setProviderEcmBpm();
         loginPage.loginToContentServicesUsingUserModel(userA);
         navigationBarPage.clickUserProfile();
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
         expect(userInfoDialog.getContentEmail()).toEqual(userA.email);
 
-        adfSettingsPage.setProviderEcmBpm();
         loginPage.loginToContentServicesUsingUserModel(userB);
         navigationBarPage.clickUserProfile();
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
