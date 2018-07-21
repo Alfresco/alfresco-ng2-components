@@ -33,7 +33,7 @@ import { ProcessFilterService } from './process-list/services/process-filter.ser
 
 @NgModule({
     imports: [
-        CoreModule,
+        CoreModule.forChild(),
         CommonModule,
         CommentsModule,
         ProcessCommentsModule,

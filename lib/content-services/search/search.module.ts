@@ -50,7 +50,7 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule,
+        CoreModule.forChild(),
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

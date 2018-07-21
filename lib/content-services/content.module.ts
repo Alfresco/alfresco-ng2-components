@@ -48,7 +48,7 @@ import { SearchFilterService } from './search/components/search-filter/search-fi
 
 @NgModule({
     imports: [
-        CoreModule,
+        CoreModule.forChild(),
         SocialModule,
         TagModule,
         CommonModule,
@@ -88,7 +88,6 @@ import { SearchFilterService } from './search/components/search-filter/search-fi
         SearchFilterService
     ],
     exports: [
-        CoreModule,
         SocialModule,
         TagModule,
         WebScriptModule,

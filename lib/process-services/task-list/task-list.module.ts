@@ -44,7 +44,7 @@ import { AttachFormComponent } from './components/attach-form.component';
 
 @NgModule({
     imports: [
-        CoreModule,
+        CoreModule.forChild(),
         CommonModule,
         FlexLayoutModule,
         MaterialModule,

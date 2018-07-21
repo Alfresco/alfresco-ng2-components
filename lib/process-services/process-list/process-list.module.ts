@@ -40,7 +40,7 @@ import { StartProcessInstanceComponent } from './components/start-process.compon
     imports: [
         CommonModule,
         DataTableModule,
-        CoreModule,
+        CoreModule.forChild(),
         TaskListModule,
         MaterialModule,
         FlexLayoutModule,

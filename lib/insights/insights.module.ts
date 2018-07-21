@@ -27,7 +27,7 @@ import { MaterialModule } from './material.module';
 
 @NgModule({
     imports: [
-        CoreModule,
+        CoreModule.forChild(),
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -46,7 +46,6 @@ import { MaterialModule } from './material.module';
         }
     ],
     exports: [
-        CoreModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

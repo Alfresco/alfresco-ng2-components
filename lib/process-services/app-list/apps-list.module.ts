@@ -31,7 +31,7 @@ import { SelectAppsDialogComponent } from './select-apps-dialog-component';
         MaterialModule,
         FlexLayoutModule,
         TranslateModule,
-        CoreModule
+        CoreModule.forChild()
     ],
     declarations: [
         AppsListComponent,
