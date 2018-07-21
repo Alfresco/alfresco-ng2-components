@@ -23,9 +23,8 @@ import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
 import { AppComponent } from './app.component';
-import { AdfModule } from './adf.module';
 import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -51,7 +50,6 @@ import { AppsViewComponent } from './components/process-service/apps-view.compon
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { TrashcanComponent } from './components/trashcan/trashcan.component';
 import { FilesComponent } from './components/files/files.component';
-import { FileViewComponent } from './components/file-view/file-view.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
 import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
@@ -79,6 +77,9 @@ import { HeaderDataComponent } from './components/header-data/header-data.compon
 import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
 import { HeaderDataService } from './components/header-data/header-data.service';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { ContentModule } from '@alfresco/adf-content-services';
+import { InsightsModule } from '@alfresco/adf-insights';
+import { ProcessModule } from '@alfresco/adf-process-services';
 
 @NgModule({
     imports: [
@@ -88,12 +89,15 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
         routing,
         FormsModule,
         MaterialModule,
+        CoreModule.forRoot(),
+        ContentModule,
+        InsightsModule,
+        ProcessModule,
         ThemePickerModule,
         FlexLayoutModule,
         ChartsModule,
-        HttpClientModule,
-        AdfModule,
-        MonacoEditorModule.forRoot()
+        MonacoEditorModule.forRoot(),
+        HttpClientModule
     ],
     declarations: [
         AppComponent,
@@ -114,7 +118,6 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
         AppsViewComponent,
         DataTableComponent,
         FilesComponent,
-        FileViewComponent,
         TrashcanComponent,
         FormComponent,
         FormListComponent,

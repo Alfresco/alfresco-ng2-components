@@ -40,7 +40,6 @@ import { SocialComponent } from './components/social/social.component';
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 
-import { FileViewComponent } from './components/file-view/file-view.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
@@ -57,12 +56,25 @@ import { ContentNodeSelectorComponent } from './components/content-node-selector
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { HeaderDataComponent } from './components/header-data/header-data.component';
 import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
+import { AppComponent } from './app.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
     { path: 'settings', component: SettingsComponent },
-    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ], outlet: 'overlay' },
+    {
+        path: 'files/:nodeId/view',
+        component: AppComponent,
+        canActivate: [ AuthGuardEcm ],
+        canActivateChild: [ AuthGuardEcm ],
+        outlet: 'overlay',
+        children: [
+            {
+                path: '',
+                loadChildren: 'app/components/file-view/file-view.module#FileViewModule'
+            }
+        ]
+    },
     { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
