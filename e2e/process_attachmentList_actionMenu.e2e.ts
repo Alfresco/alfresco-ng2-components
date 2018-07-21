@@ -123,6 +123,8 @@ describe('Attachment list action menu for processes', () => {
 
         attachmentListPage.downloadFile(jpgFile.name);
 
+        browser.driver.sleep(500);
+
         expect(Util.fileExists(downloadedJpgFile, 20)).toBe(true);
 
         attachmentListPage.removeFile(jpgFile.name);
@@ -154,6 +156,8 @@ describe('Attachment list action menu for processes', () => {
         processFiltersPage.clickCompletedFilterButton();
 
         attachmentListPage.downloadFile(jpgFile.name);
+
+        browser.driver.sleep(500);
 
         expect(Util.fileExists(downloadedJpgFile, 20)).toBe(true);
 

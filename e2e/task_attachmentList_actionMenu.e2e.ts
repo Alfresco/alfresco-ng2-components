@@ -111,6 +111,8 @@ describe('Attachment list action menu for tasks', () => {
 
         attachmentListPage.downloadFile(jpgFile.name);
 
+        browser.driver.sleep(500);
+
         expect(Util.fileExists(downloadedJpgFile, 20)).toBe(true);
 
         attachmentListPage.removeFile(jpgFile.name);
@@ -141,6 +143,8 @@ describe('Attachment list action menu for tasks', () => {
         taskPage.usingTasksListPage().selectTaskFromTasksList(taskName.completed);
 
         attachmentListPage.downloadFile(jpgFile.name);
+
+        browser.driver.sleep(500);
 
         expect(Util.fileExists(downloadedJpgFile, 20)).toBe(true);
 

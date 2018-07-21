@@ -35,11 +35,11 @@ export class AttachmentListPage {
 
     clickAttachFileButton(fileLocation) {
         Util.waitUntilElementIsVisible(this.attachFileButton);
-        this.attachFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
+        return this.attachFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
     }
 
     checkFileIsAttached(name) {
-        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
+        let fileAttached = element(by.css('div[filename="' + name + '"]'));
         Util.waitUntilElementIsVisible(fileAttached);
     }
 
@@ -48,7 +48,7 @@ export class AttachmentListPage {
     }
 
     viewFile(name) {
-        element.all(by.css('div[filename="' + name + '"]')).first().click();
+        element(by.css('div[filename="' + name + '"]')).click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
         this.buttonMenu.click();
         Util.waitUntilElementIsVisible(this.viewButton);
@@ -59,7 +59,7 @@ export class AttachmentListPage {
     }
 
     removeFile(name) {
-        element.all(by.css('div[filename="' + name + '"]')).first().click();
+        element(by.css('div[filename="' + name + '"]')).click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
         this.buttonMenu.click();
         Util.waitUntilElementIsVisible(this.removeButton);
@@ -70,7 +70,7 @@ export class AttachmentListPage {
     }
 
     downloadFile(name) {
-        element.all(by.css('div[filename="' + name + '"]')).first().click();
+        element(by.css('div[filename="' + name + '"]')).click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
         this.buttonMenu.click();
         Util.waitUntilElementIsVisible(this.downloadButton);
@@ -80,7 +80,7 @@ export class AttachmentListPage {
     }
 
     doubleClickFile(name) {
-        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
+        let fileAttached = element(by.css('div[filename="' + name + '"]'));
         Util.waitUntilElementIsVisible(fileAttached);
         Util.waitUntilElementIsClickable(fileAttached);
         fileAttached.click();
@@ -88,7 +88,7 @@ export class AttachmentListPage {
     }
 
     checkFileIsRemoved(name) {
-        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
+        let fileAttached = element(by.css('div[filename="' + name + '"]'));
         Util.waitUntilElementIsNotVisible(fileAttached);
         return this;
     }
