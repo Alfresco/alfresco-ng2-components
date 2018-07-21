@@ -104,7 +104,10 @@ describe('AttachFileWidgetComponent', () => {
     let formService: FormService;
 
     setupTestBed({
-        imports: [ProcessTestingModule, ContentNodeSelectorModule]
+        imports: [
+            ProcessTestingModule,
+            ContentModule.forRoot()
+        ]
     });
 
     beforeEach(async(() => {
