@@ -269,6 +269,7 @@ var LoginPage = function () {
      */
     this.goToLoginPage = function () {
         browser.driver.get(TestConfig.adf.url + TestConfig.adf.port + '/login');
+        this.waitForElements();
     };
 
     /**

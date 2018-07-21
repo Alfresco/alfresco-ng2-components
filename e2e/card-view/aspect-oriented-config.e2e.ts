@@ -33,7 +33,7 @@ import dateFormat = require('dateformat');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 
-describe('Metadata component', () => {
+describe('Aspect oriented config', () => {
 
     const METADATA = {
         DATAFORMAT: 'mmm dd yyyy',

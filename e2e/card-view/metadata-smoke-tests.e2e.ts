@@ -244,13 +244,13 @@ describe('Metadata component', () => {
             fileUrl = currentUrl;
         });
 
-        loginPage.goToLoginPage();
-
         loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         browser.controlFlow().execute(() => {
             return browser.get(fileUrl);
         });
+
+        browser.driver.sleep(2000);
 
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -266,21 +266,19 @@ describe('Metadata component', () => {
         metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
         expect(metadataViewPage.getText('properties.cm:description')).toEqual('check author example description');
 
-        loginPage.goToLoginPage();
-
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         browser.controlFlow().execute(() => {
             return browser.get(fileUrl);
         });
 
+        browser.driver.sleep(2000);
+
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
 
         expect(metadataViewPage.getText('modifiedByUser.displayName')).toEqual('Administrator');
-
-        loginPage.goToLoginPage();
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
