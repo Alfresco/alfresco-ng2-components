@@ -46,6 +46,7 @@ var LoginPage = function () {
     var successRouteSwitch = element(by.id("adf-toogle-show-successRoute"));
     var logoSwitch = element(by.id("adf-toogle-logo"));
     var userPicture = element(by.id("userinfo_container"));
+    var header = element(by.id("adf-header"));
     var cardBackground = element(by.css("mat-card[class*='adf-login-card']"));
     var adfSettingsPage = new AdfSettingsPage();
 
@@ -545,7 +546,7 @@ var LoginPage = function () {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        return Util.waitUntilElementIsVisible(userPicture);
+        return Util.waitUntilElementIsVisible(header);
     };
 
 };

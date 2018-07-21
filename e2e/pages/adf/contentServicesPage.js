@@ -25,7 +25,7 @@ var ContentServicesPage = function () {
 
     var contentList = new ContentList();
     var createFolderDialog = new CreateFolderDialog();
-    var uploadBorder = element(by.css("div[class='document-list-container']"));
+    var uploadBorder = element(by.css("div[id='document-list-container']"));
     var tableBody = element.all(by.css("adf-document-list div[class='adf-datatable-body']")).first();
     var contentServices = element(by.css("a[data-automation-id='Content Services']"));
     var currentFolder = element(by.css("div[class*='adf-breadcrumb-item active'] div"));

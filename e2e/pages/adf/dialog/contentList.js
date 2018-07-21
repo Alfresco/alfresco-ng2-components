@@ -26,18 +26,18 @@ var ContentList = function () {
     var actionMenu = element(by.css("div[role='menu']"));
     var optionButton = by.css("button[data-automation-id*='action_menu_']");
     var rowByRowName = by.xpath("ancestor::div[contains(@class, 'adf-datatable-row')]");
-    var nameColumn = by.css("div[class*='document-list-container'] div[class*='adf-datatable-row'] div[class*='--text full-width'] span");
+    var nameColumn = by.css("div[id*='document-list-container'] div[class*='adf-datatable-row'] div[class*='--text full-width'] span");
     var nameColumnHeader = by.css("div[data-automation-id='auto_id_name']");
     var createdByColumn = by.css("div[class*='--text'][title='Created by'] span");
     var createdByColumnHeader = by.css("div[data-automation-id*='auto_id_createdByUser']");
     var createdColumn = by.css("div[class*='--date'] span");
     var createdColumnHeader = by.css("div[data-automation-id*='auto_id_createdAt']");
-    var rows = by.css("div[class='document-list-container'] div[class*='adf-datatable-body'] div[class*='adf-datatable-row']");
+    var rows = by.css("div[id='document-list-container'] div[class*='adf-datatable-body'] div[class*='adf-datatable-row']");
     var emptyFolderMessage = element(by.css("div[class='adf-empty-folder-this-space-is-empty']"));
     var table = element(by.css("div[class*='upload-border']"));
 
     this.getRowsName = function (content) {
-        var row = element.all(by.xpath("//div[@class='document-list-container']//span[@title='" + content + "']")).first();
+        var row = element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + content + "']")).first();
         Util.waitUntilElementIsVisible(row);
         return row;
     };
@@ -283,7 +283,7 @@ var ContentList = function () {
     };
 
     this.checkContentIsNotDisplayed = function (content) {
-        Util.waitUntilElementIsNotVisible(element(by.css("adf-document-list span[title='" + content + "']")));
+        Util.waitUntilElementIsNotVisible(element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + content + "']")).first());
         return this;
     };
 

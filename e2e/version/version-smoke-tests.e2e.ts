@@ -76,7 +76,7 @@ describe('Metadata component', () => {
         viewerPage.checkInfoSideBarIsDisplayed();
         viewerPage.clickOnVersionsTab().checkUploadVersionsButtonIsDisplayed();
         expect(viewerPage.getActiveTab()).toEqual('VERSIONS');
-        cardViewPage.checkVersionIsDisplayed(pdfFileModel.name);
+        viewerPage.checkVersionIsDisplayed(pdfFileModel.name);
     });
 
 });
