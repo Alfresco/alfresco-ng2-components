@@ -76,7 +76,6 @@ export class AttachmentListPage {
         Util.waitUntilElementIsVisible(this.downloadButton);
         browser.driver.sleep(500);
         this.downloadButton.click();
-        browser.driver.sleep(500);
         return this;
     }
 

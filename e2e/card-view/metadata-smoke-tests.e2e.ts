@@ -249,7 +249,7 @@ describe('Metadata component', () => {
         loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         browser.controlFlow().execute(() => {
-            browser.get(fileUrl);
+            return browser.get(fileUrl);
         });
 
         viewerPage.clickInfoButton();
@@ -271,7 +271,7 @@ describe('Metadata component', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         browser.controlFlow().execute(() => {
-            browser.get(fileUrl);
+            return browser.get(fileUrl);
         });
 
         viewerPage.clickInfoButton();
