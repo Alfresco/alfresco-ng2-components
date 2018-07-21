@@ -30,7 +30,7 @@ describe('AppComponent', () => {
             imports: [
                 RouterTestingModule,
                 CoreModule.forRoot(),
-                ContentModule,
+                ContentModule.forRoot(),
                 InsightsModule,
                 ProcessModule
             ],
