@@ -24,7 +24,6 @@ import { MaterialModule } from '../material.module';
 import { TagActionsComponent } from './tag-actions.component';
 import { TagListComponent } from './tag-list.component';
 import { TagNodeListComponent } from './tag-node-list.component';
-import { TagService } from './services/tag.service';
 
 @NgModule({
     imports: [
@@ -43,9 +42,6 @@ import { TagService } from './services/tag.service';
         TagActionsComponent,
         TagListComponent,
         TagNodeListComponent
-    ],
-    providers: [
-        TagService
     ]
 })
 export class TagModule {}

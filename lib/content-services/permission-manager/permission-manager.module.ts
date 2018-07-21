@@ -25,9 +25,7 @@ import { AddPermissionComponent } from './components/add-permission/add-permissi
 import { AddPermissionDialogComponent } from './components/add-permission/add-permission-dialog.component';
 import { DataTableModule, DataColumnModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
-import { NodePermissionService } from './services/node-permission.service';
 import { NoPermissionTemplateComponent } from './components/permission-list/no-permission.component';
-import { NodePermissionDialogService } from './services/node-permission-dialog.service';
 import { AddPermissionPanelComponent } from './components/add-permission/add-permission-panel.component';
 import { SearchModule } from '../search/search.module';
 
@@ -49,10 +47,6 @@ import { SearchModule } from '../search/search.module';
         InheritPermissionDirective,
         AddPermissionComponent,
         AddPermissionDialogComponent
-    ],
-    providers: [
-        NodePermissionDialogService,
-        NodePermissionService
     ],
     entryComponents: [ AddPermissionPanelComponent, AddPermissionComponent, AddPermissionDialogComponent ],
     exports: [

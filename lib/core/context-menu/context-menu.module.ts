@@ -22,7 +22,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
 import { ContextMenuDirective } from './context-menu.directive';
-import { ContextMenuService } from './context-menu.service';
 
 @NgModule({
     imports: [
@@ -37,9 +36,6 @@ import { ContextMenuService } from './context-menu.service';
     exports: [
         ContextMenuHolderComponent,
         ContextMenuDirective
-    ],
-    providers: [
-        ContextMenuService
     ]
 })
 export class ContextMenuModule {}

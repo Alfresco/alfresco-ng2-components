@@ -44,7 +44,6 @@ import { UploadModule } from '../upload/upload.module';
         VersionUploadComponent,
         VersionManagerComponent,
         VersionListComponent
-    ],
-    providers: []
+    ]
 })
 export class VersionManagerModule {}
