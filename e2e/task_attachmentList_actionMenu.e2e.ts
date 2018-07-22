@@ -123,11 +123,10 @@ describe('Attachment list action menu for tasks', () => {
         processServicesPage.goToProcessServices().goToApp(app.title).clickTasksButton();
 
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(taskName.completed).clickStartButton()
-            .then(() => {
-                attachmentListPage.clickAttachFileButton(pngFile.location);
-                attachmentListPage.checkFileIsAttached(pngFile.name);
-            });
+        taskPage.createNewTask().addName(taskName.completed).clickStartButton();
+
+        attachmentListPage.clickAttachFileButton(pngFile.location);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
 
         taskPage.completeTaskNoForm();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
@@ -156,26 +155,24 @@ describe('Attachment list action menu for tasks', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(taskName.taskApp).clickStartButton()
-            .then(() => {
-                attachmentListPage.clickAttachFileButton(pngFile.location);
-                attachmentListPage.checkFileIsAttached(pngFile.name);
-            });
+        taskPage.createNewTask().addName(taskName.taskApp).clickStartButton();
+
+        attachmentListPage.clickAttachFileButton(pngFile.location);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
     });
 
     it('[C279884] Should be able to view the empty attachment list for tasks', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(taskName.emptyList).clickStartButton()
-            .then(() => {
-                attachmentListPage.checkEmptyAttachmentList();
-                attachmentListPage.clickAttachFileButton(pngFile.location);
-                attachmentListPage.checkFileIsAttached(pngFile.name);
-                attachmentListPage.removeFile(pngFile.name);
-                attachmentListPage.checkFileIsRemoved(pngFile.name);
-                attachmentListPage.checkEmptyAttachmentList();
-            });
+        taskPage.createNewTask().addName(taskName.emptyList).clickStartButton();
+
+        attachmentListPage.checkEmptyAttachmentList();
+        attachmentListPage.clickAttachFileButton(pngFile.location);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
+        attachmentListPage.removeFile(pngFile.name);
+        attachmentListPage.checkFileIsRemoved(pngFile.name);
+        attachmentListPage.checkEmptyAttachmentList();
     });
 
 });

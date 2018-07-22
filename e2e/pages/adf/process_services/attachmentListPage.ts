@@ -48,6 +48,7 @@ export class AttachmentListPage {
     }
 
     viewFile(name) {
+        Util.waitUntilElementIsVisible(element(by.css('div[filename="' + name + '"]')));
         element(by.css('div[filename="' + name + '"]')).click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
         this.buttonMenu.click();
