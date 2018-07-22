@@ -212,7 +212,7 @@ describe('Search component - Search Bar', () => {
         searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
 
-    it('10. A folder is selected from search bar using arrows', () => {
+    xit('10. A folder is selected from search bar using arrows', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
@@ -224,7 +224,7 @@ describe('Search component - Search Bar', () => {
         expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 
-    it('11. The search bar gets closed when clicking on another browser tab', () => {
+    xt('11. The search bar gets closed when clicking on another browser tab', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog

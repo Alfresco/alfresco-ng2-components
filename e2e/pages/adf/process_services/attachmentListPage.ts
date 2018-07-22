@@ -60,6 +60,7 @@ export class AttachmentListPage {
     }
 
     removeFile(name) {
+        Util.waitUntilElementIsVisible(element(by.css('div[filename="' + name + '"]')));
         element(by.css('div[filename="' + name + '"]')).click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
         this.buttonMenu.click();
@@ -71,6 +72,7 @@ export class AttachmentListPage {
     }
 
     downloadFile(name) {
+        Util.waitUntilElementIsVisible(element(by.css('div[filename="' + name + '"]')));
         element(by.css('div[filename="' + name + '"]')).click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
         this.buttonMenu.click();
@@ -81,6 +83,7 @@ export class AttachmentListPage {
     }
 
     doubleClickFile(name) {
+        Util.waitUntilElementIsVisible(element(by.css('div[filename="' + name + '"]')));
         let fileAttached = element(by.css('div[filename="' + name + '"]'));
         Util.waitUntilElementIsVisible(fileAttached);
         Util.waitUntilElementIsClickable(fileAttached);
