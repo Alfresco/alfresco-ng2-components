@@ -37,9 +37,9 @@ describe('Attachment list', () => {
 
     let processUserModel;
     let app = resources.Files.APP_WITH_PROCESSES;
-    let jpgFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
+    let pngFile = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
     let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
 
@@ -70,10 +70,10 @@ describe('Attachment list', () => {
         processFiltersPage.startProcess().selectFromProcessDropdown(app.process_se_name).clickFormStartProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList('My Default Name');
-        attachmentListPage.clickAttachFileButton(jpgFile.location);
-        attachmentListPage.checkFileIsAttached(jpgFile.name);
+        attachmentListPage.clickAttachFileButton(pngFile.location);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
         attachmentListPage.clickAttachFileButton(pdfFile.location);
-        attachmentListPage.checkFileIsAttached(jpgFile.name);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
         attachmentListPage.checkFileIsAttached(pdfFile.name);
     });
 
@@ -82,10 +82,10 @@ describe('Attachment list', () => {
         processFiltersPage.startProcess().selectFromProcessDropdown(app.process_se_name).clickFormStartProcessButton();
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList('My Default Name');
-        attachmentListPage.clickAttachFileButton(jpgFile.location);
-        attachmentListPage.checkFileIsAttached(jpgFile.name);
+        attachmentListPage.clickAttachFileButton(pngFile.location);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
         attachmentListPage.clickAttachFileButton(pdfFile.location);
-        attachmentListPage.checkFileIsAttached(jpgFile.name);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
         attachmentListPage.checkFileIsAttached(pdfFile.name);
     });
 });

@@ -44,12 +44,12 @@ describe('Attachment list action menu for processes', () => {
     let attachmentListPage = new AttachmentListPage();
     let viewerPage = new ViewerPage();
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let jpgFile = new FileModel({
-        location: resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        name: resources.Files.ADF_DOCUMENTS.JPG.file_name
+    let pngFile = new FileModel({
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
-    let downloadedJpgFile = path.join(__dirname, 'downloads', jpgFile.name);
+    let downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
     let tenantId, appId;
     let processName = {
         active: 'Active Process',
@@ -104,31 +104,31 @@ describe('Attachment list action menu for processes', () => {
 
         processDetailsPage.checkProcessTitleIsDisplayed();
 
-        attachmentListPage.clickAttachFileButton(jpgFile.location);
-        attachmentListPage.viewFile(jpgFile.name);
+        attachmentListPage.clickAttachFileButton(pngFile.location);
+        attachmentListPage.viewFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(jpgFile.name);
+        viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList(processName.active);
 
-        attachmentListPage.doubleClickFile(jpgFile.name);
+        attachmentListPage.doubleClickFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(jpgFile.name);
+        viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList(processName.active);
 
-        attachmentListPage.downloadFile(jpgFile.name);
+        attachmentListPage.downloadFile(pngFile.name);
 
         browser.driver.sleep(500);
 
-        expect(Util.fileExists(downloadedJpgFile, 20)).toBe(true);
+        expect(Util.fileExists(downloadedPngFile, 20)).toBe(true);
 
-        attachmentListPage.removeFile(jpgFile.name);
-        attachmentListPage.checkFileIsRemoved(jpgFile.name);
+        attachmentListPage.removeFile(pngFile.name);
+        attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
     it('[C279886] Option menu functionality - Completed Process', () => {
@@ -139,7 +139,7 @@ describe('Attachment list action menu for processes', () => {
 
         processDetailsPage.checkProcessTitleIsDisplayed();
 
-        attachmentListPage.clickAttachFileButton(jpgFile.location);
+        attachmentListPage.clickAttachFileButton(pngFile.location);
 
         processDetailsPage.clickCancelProcessButton();
 
@@ -148,21 +148,21 @@ describe('Attachment list action menu for processes', () => {
         processDetailsPage.checkProcessTitleIsDisplayed();
 
         attachmentListPage.checkAttachFileButtonIsNotDisplayed();
-        attachmentListPage.viewFile(jpgFile.name);
+        attachmentListPage.viewFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(jpgFile.name);
+        viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
         processFiltersPage.clickCompletedFilterButton();
 
-        attachmentListPage.downloadFile(jpgFile.name);
+        attachmentListPage.downloadFile(pngFile.name);
 
         browser.driver.sleep(500);
 
-        expect(Util.fileExists(downloadedJpgFile, 20)).toBe(true);
+        expect(Util.fileExists(downloadedPngFile, 20)).toBe(true);
 
-        attachmentListPage.removeFile(jpgFile.name);
-        attachmentListPage.checkFileIsRemoved(jpgFile.name);
+        attachmentListPage.removeFile(pngFile.name);
+        attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
     it('[C277296] Upload file - ProcessList - Task APP', () => {
@@ -173,8 +173,8 @@ describe('Attachment list action menu for processes', () => {
 
         processDetailsPage.checkProcessTitleIsDisplayed();
 
-        attachmentListPage.clickAttachFileButton(jpgFile.location);
-        attachmentListPage.checkFileIsAttached(jpgFile.name);
+        attachmentListPage.clickAttachFileButton(pngFile.location);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
     });
 
     it('[C260235] Empty list component', () => {
@@ -184,10 +184,10 @@ describe('Attachment list action menu for processes', () => {
         processFiltersPage.selectFromProcessList(processName.emptyList);
 
         attachmentListPage.checkEmptyAttachmentList();
-        attachmentListPage.clickAttachFileButton(jpgFile.location);
-        attachmentListPage.checkFileIsAttached(jpgFile.name);
-        attachmentListPage.removeFile(jpgFile.name);
-        attachmentListPage.checkFileIsRemoved(jpgFile.name);
+        attachmentListPage.clickAttachFileButton(pngFile.location);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
+        attachmentListPage.removeFile(pngFile.name);
+        attachmentListPage.checkFileIsRemoved(pngFile.name);
         attachmentListPage.checkEmptyAttachmentList();
     });
 

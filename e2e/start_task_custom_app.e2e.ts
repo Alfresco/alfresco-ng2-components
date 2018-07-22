@@ -52,9 +52,9 @@ describe('Start Task - Custom App', () => {
     let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     let showHeaderTask = 'Show Header';
     let appModel;
-    let jpgFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
+    let pngFile = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
     beforeAll(async (done) => {
@@ -200,8 +200,8 @@ describe('Start Task - Custom App', () => {
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[6]).clickStartButton()
             .then(() => {
-                attachmentListPage.clickAttachFileButton(jpgFile.location);
-                attachmentListPage.checkFileIsAttached(jpgFile.name);
+                attachmentListPage.clickAttachFileButton(pngFile.location);
+                attachmentListPage.checkFileIsAttached(pngFile.name);
             });
     });
 

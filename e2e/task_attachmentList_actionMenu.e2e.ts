@@ -43,11 +43,11 @@ describe('Attachment list action menu for tasks', () => {
     let attachmentListPage = new AttachmentListPage();
     let viewerPage = new ViewerPage();
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let jpgFile = new FileModel({
-        location: resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        name: resources.Files.ADF_DOCUMENTS.JPG.file_name
+    let pngFile = new FileModel({
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
-    let downloadedJpgFile = path.join(__dirname, 'downloads', jpgFile.name);
+    let downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
     let tenantId, appId;
     let taskName = {
         active: 'Active Task',
@@ -94,29 +94,29 @@ describe('Attachment list action menu for tasks', () => {
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.active).clickStartButton();
 
-        attachmentListPage.clickAttachFileButton(jpgFile.location);
-        attachmentListPage.viewFile(jpgFile.name);
+        attachmentListPage.clickAttachFileButton(pngFile.location);
+        attachmentListPage.viewFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(jpgFile.name);
+        viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
 
-        attachmentListPage.doubleClickFile(jpgFile.name);
+        attachmentListPage.doubleClickFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(jpgFile.name);
+        viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
 
-        attachmentListPage.downloadFile(jpgFile.name);
+        attachmentListPage.downloadFile(pngFile.name);
 
         browser.driver.sleep(500);
 
-        expect(Util.fileExists(downloadedJpgFile, 20)).toBe(true);
+        expect(Util.fileExists(downloadedPngFile, 20)).toBe(true);
 
-        attachmentListPage.removeFile(jpgFile.name);
-        attachmentListPage.checkFileIsRemoved(jpgFile.name);
+        attachmentListPage.removeFile(pngFile.name);
+        attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
     it('[C260236] Should be able to View /Download /Remove from Attachment List on a completed task', () => {
@@ -125,8 +125,8 @@ describe('Attachment list action menu for tasks', () => {
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.completed).clickStartButton()
             .then(() => {
-                attachmentListPage.clickAttachFileButton(jpgFile.location);
-                attachmentListPage.checkFileIsAttached(jpgFile.name);
+                attachmentListPage.clickAttachFileButton(pngFile.location);
+                attachmentListPage.checkFileIsAttached(pngFile.name);
             });
 
         taskPage.completeTaskNoForm();
@@ -134,22 +134,22 @@ describe('Attachment list action menu for tasks', () => {
         taskPage.usingTasksListPage().selectTaskFromTasksList(taskName.completed);
 
         attachmentListPage.checkAttachFileButtonIsNotDisplayed();
-        attachmentListPage.viewFile(jpgFile.name);
+        attachmentListPage.viewFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(jpgFile.name);
+        viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
         taskPage.usingTasksListPage().selectTaskFromTasksList(taskName.completed);
 
-        attachmentListPage.downloadFile(jpgFile.name);
+        attachmentListPage.downloadFile(pngFile.name);
 
         browser.driver.sleep(500);
 
-        expect(Util.fileExists(downloadedJpgFile, 20)).toBe(true);
+        expect(Util.fileExists(downloadedPngFile, 20)).toBe(true);
 
-        attachmentListPage.removeFile(jpgFile.name);
-        attachmentListPage.checkFileIsRemoved(jpgFile.name);
+        attachmentListPage.removeFile(pngFile.name);
+        attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
     it('[C260225] Should be able to upload a file in the Attachment list on Task App', () => {
@@ -158,8 +158,8 @@ describe('Attachment list action menu for tasks', () => {
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.taskApp).clickStartButton()
             .then(() => {
-                attachmentListPage.clickAttachFileButton(jpgFile.location);
-                attachmentListPage.checkFileIsAttached(jpgFile.name);
+                attachmentListPage.clickAttachFileButton(pngFile.location);
+                attachmentListPage.checkFileIsAttached(pngFile.name);
             });
     });
 
@@ -170,10 +170,10 @@ describe('Attachment list action menu for tasks', () => {
         taskPage.createNewTask().addName(taskName.emptyList).clickStartButton()
             .then(() => {
                 attachmentListPage.checkEmptyAttachmentList();
-                attachmentListPage.clickAttachFileButton(jpgFile.location);
-                attachmentListPage.checkFileIsAttached(jpgFile.name);
-                attachmentListPage.removeFile(jpgFile.name);
-                attachmentListPage.checkFileIsRemoved(jpgFile.name);
+                attachmentListPage.clickAttachFileButton(pngFile.location);
+                attachmentListPage.checkFileIsAttached(pngFile.name);
+                attachmentListPage.removeFile(pngFile.name);
+                attachmentListPage.checkFileIsRemoved(pngFile.name);
                 attachmentListPage.checkEmptyAttachmentList();
             });
     });

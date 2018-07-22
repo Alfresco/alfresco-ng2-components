@@ -245,6 +245,7 @@ var ContentServicesPage = function () {
 
     this.uploadFile = function (fileLocation) {
         this.checkUploadButton();
+        Util.waitUntilElementIsVisible(uploadFileButton);
         uploadFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
         this.checkUploadButton();
         return this;
