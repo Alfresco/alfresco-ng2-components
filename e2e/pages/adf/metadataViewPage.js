@@ -120,8 +120,7 @@ var MetadataViewPage = function () {
     };
 
     this.clickOnInformationButton = function () {
-        Util.waitUntilElementIsVisible(informationButton);
-        Util.waitUntilElementIsClickable(informationButton);
+        Util.waitUntilElementIsVisible(informationSpan);
         informationButton.click();
         return this;
     };
@@ -192,7 +191,7 @@ var MetadataViewPage = function () {
         return clearPropertyIcon.click();
     };
 
-    this.enterText = function (propertyName, text) {
+    this.enterPropertyText = function (propertyName, text) {
         const textField = element(by.css('input[data-automation-id="card-textitem-editinput-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
@@ -218,7 +217,7 @@ var MetadataViewPage = function () {
         return this;
     };
 
-    this.getText = function (propertyName, type) {
+    this.getPropertyText = function (propertyName, type) {
         let propertyType = !type ? 'textitem' : type;
         const textField = element(by.css('span[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(textField);

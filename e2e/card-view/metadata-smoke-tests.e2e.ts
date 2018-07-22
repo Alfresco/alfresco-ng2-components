@@ -63,11 +63,6 @@ describe('Metadata component', () => {
 
     let folderName = 'Metadata Folder';
 
-    let pdfFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
-    });
-
     let pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
@@ -90,12 +85,11 @@ describe('Metadata component', () => {
 
         await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
 
-        let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
-        await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
-        Object.assign(pdfFileModel, pdfUploadedFile.entry);
+        Object.assign(pngFileModel, pngUploadedFile.entry);
 
-        pdfFileModel.update(pdfUploadedFile.entry);
+        pngFileModel.update(pngUploadedFile.entry);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -105,7 +99,7 @@ describe('Metadata component', () => {
     });
 
     it('[C245652] Properties', () => {
-        viewerPage.viewFile(pdfFileModel.name);
+        viewerPage.viewFile(pngFileModel.name);
 
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -114,14 +108,13 @@ describe('Metadata component', () => {
         expect(metadataViewPage.getTitle()).toEqual(METADATA.TITLE);
         expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
         expect(metadataViewPage.getExpandedAspectName()).toEqual(METADATA.DEFAULT_ASPECT);
-        expect(metadataViewPage.getName()).toEqual(pdfFileModel.name);
-        expect(metadataViewPage.getCreator()).toEqual(pdfFileModel.getCreatedByUser().displayName);
-        expect(metadataViewPage.getCreatedDate()).toEqual(dateFormat(pdfFileModel.createdAt, METADATA.DATAFORMAT));
-        expect(metadataViewPage.getModifier()).toEqual(pdfFileModel.getCreatedByUser().displayName);
-        expect(metadataViewPage.getModifiedDate()).toEqual(dateFormat(pdfFileModel.createdAt, METADATA.DATAFORMAT));
-        expect(metadataViewPage.getMimetypeName()).toEqual(pdfFileModel.getContent().mimeTypeName);
-        expect(metadataViewPage.getSize()).toEqual(pdfFileModel.getContent().getSizeInBytes());
-        expect(metadataViewPage.getAuthor()).toEqual(pdfFileModel.properties['cm:author']);
+        expect(metadataViewPage.getName()).toEqual(pngFileModel.name);
+        expect(metadataViewPage.getCreator()).toEqual(pngFileModel.getCreatedByUser().displayName);
+        expect(metadataViewPage.getCreatedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATAFORMAT));
+        expect(metadataViewPage.getModifier()).toEqual(pngFileModel.getCreatedByUser().displayName);
+        expect(metadataViewPage.getModifiedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATAFORMAT));
+        expect(metadataViewPage.getMimetypeName()).toEqual(pngFileModel.getContent().mimeTypeName);
+        expect(metadataViewPage.getSize()).toEqual(pngFileModel.getContent().getSizeInBytes());
 
         metadataViewPage.editIconIsDisplayed();
         metadataViewPage.informationButtonIsDisplayed();
@@ -132,7 +125,7 @@ describe('Metadata component', () => {
     });
 
     it('[C272769] Information button', () => {
-        viewerPage.viewFile(pdfFileModel.name);
+        viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
@@ -145,7 +138,7 @@ describe('Metadata component', () => {
     });
 
     it('[C270952] Info icon', () => {
-        viewerPage.viewFile(pdfFileModel.name);
+        viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab().informationButtonIsDisplayed();
@@ -162,7 +155,7 @@ describe('Metadata component', () => {
     });
 
     it('[C245654] Should be possible edit the basic Metadata Info of a Document', () => {
-        viewerPage.viewFile(pdfFileModel.name);
+        viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
@@ -174,63 +167,53 @@ describe('Metadata component', () => {
 
         metadataViewPage.editPropertyIconIsDisplayed('name');
         metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-        metadataViewPage.editPropertyIconIsDisplayed('properties.cm:author');
         metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
 
         expect(metadataViewPage.getPropertyIconTooltip('name', 'edit')).toEqual('Edit');
         expect(metadataViewPage.getPropertyIconTooltip('properties.cm:title', 'edit')).toEqual('Edit');
-        expect(metadataViewPage.getPropertyIconTooltip('properties.cm:author', 'edit')).toEqual('Edit');
         expect(metadataViewPage.getPropertyIconTooltip('properties.cm:description', 'edit')).toEqual('Edit');
 
         metadataViewPage.clickEditPropertyIcons('name');
         metadataViewPage.updatePropertyIconIsDisplayed('name');
         metadataViewPage.clearPropertyIconIsDisplayed('name');
 
-        metadataViewPage.enterText('name', 'exampleText');
+        metadataViewPage.enterPropertyText('name', 'exampleText');
         metadataViewPage.clickClearPropertyIcon('name');
-        expect(metadataViewPage.getText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PDF.file_name);
+        expect(metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
 
         metadataViewPage.clickEditPropertyIcons('name');
-        metadataViewPage.enterText('name', 'exampleText.pdf');
+        metadataViewPage.enterPropertyText('name', 'exampleText.png');
         metadataViewPage.clickUpdatePropertyIcon('name');
-        expect(metadataViewPage.getText('name')).toEqual('exampleText.pdf');
+        expect(metadataViewPage.getPropertyText('name')).toEqual('exampleText.png');
 
         metadataViewPage.clickEditPropertyIcons('properties.cm:title');
-        metadataViewPage.enterText('properties.cm:title', 'example title');
+        metadataViewPage.enterPropertyText('properties.cm:title', 'example title');
         metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
-        expect(metadataViewPage.getText('properties.cm:title')).toEqual('example title');
-
-        metadataViewPage.clickEditPropertyIcons('properties.cm:author');
-        metadataViewPage.enterText('properties.cm:author', 'example author');
-        metadataViewPage.clickUpdatePropertyIcon('properties.cm:author');
-        expect(metadataViewPage.getText('properties.cm:author')).toEqual('example author');
+        expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
 
         metadataViewPage.clickEditPropertyIcons('properties.cm:description');
         metadataViewPage.enterDescriptionText('example description');
         metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
-        expect(metadataViewPage.getText('properties.cm:description')).toEqual('example description');
-
-        viewerPage.checkFileContent('1', pdfFileModel.firstPageText);
+        expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
 
         viewerPage.clickCloseButton();
 
-        viewerPage.viewFile('exampleText.pdf');
+        viewerPage.viewFile('exampleText.png');
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
         metadataViewPage.editIconIsDisplayed();
 
-        expect(metadataViewPage.getText('name')).toEqual('exampleText.pdf');
-        expect(metadataViewPage.getText('properties.cm:title')).toEqual('example title');
-        expect(metadataViewPage.getText('properties.cm:author')).toEqual('example author');
-        expect(metadataViewPage.getText('properties.cm:description')).toEqual('example description');
+        expect(metadataViewPage.getPropertyText('name')).toEqual('exampleText.png');
+        expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
+        expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
 
         metadataViewPage.editIconClick();
 
         metadataViewPage.clickEditPropertyIcons('name');
-        metadataViewPage.enterText('name', resources.Files.ADF_DOCUMENTS.PDF.file_name);
+        metadataViewPage.enterPropertyText('name', resources.Files.ADF_DOCUMENTS.PNG.file_name);
         metadataViewPage.clickUpdatePropertyIcon('name');
-        expect(metadataViewPage.getText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PDF.file_name);
+        expect(metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
 
         viewerPage.clickCloseButton();
     });
@@ -238,7 +221,7 @@ describe('Metadata component', () => {
     it('[C279960] Should show the last username modifier when modify a File', () => {
         let fileUrl;
 
-        viewerPage.viewFile(pdfFileModel.name);
+        viewerPage.viewFile(pngFileModel.name);
 
         browser.getCurrentUrl().then((currentUrl) => {
             fileUrl = currentUrl;
@@ -247,10 +230,8 @@ describe('Metadata component', () => {
         loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         browser.controlFlow().execute(() => {
-            return browser.get(fileUrl);
+            browser.get(fileUrl);
         });
-
-        browser.driver.sleep(2000);
 
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -264,21 +245,19 @@ describe('Metadata component', () => {
         metadataViewPage.clickEditPropertyIcons('properties.cm:description');
         metadataViewPage.enterDescriptionText('check author example description');
         metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
-        expect(metadataViewPage.getText('properties.cm:description')).toEqual('check author example description');
+        expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         browser.controlFlow().execute(() => {
-            return browser.get(fileUrl);
+            browser.get(fileUrl);
         });
-
-        browser.driver.sleep(2000);
 
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
 
-        expect(metadataViewPage.getText('modifiedByUser.displayName')).toEqual('Administrator');
+        expect(metadataViewPage.getPropertyText('modifiedByUser.displayName')).toEqual('Administrator');
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -288,8 +267,8 @@ describe('Metadata component', () => {
     it('[C261157] Should be possible use the metadata component When the node is a Folder', () => {
         contentListPage.metadataContent(folderName);
 
-        expect(metadataViewPage.getText('name')).toEqual(folderName);
-        expect(metadataViewPage.getText('createdByUser.displayName')).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        expect(metadataViewPage.getPropertyText('name')).toEqual(folderName);
+        expect(metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
 
         browser.refresh();
     });
@@ -300,19 +279,19 @@ describe('Metadata component', () => {
         metadataViewPage.editIconClick();
 
         metadataViewPage.clickEditPropertyIcons('name');
-        metadataViewPage.enterText('name', 'newnameFolder');
+        metadataViewPage.enterPropertyText('name', 'newnameFolder');
         metadataViewPage.clickClearPropertyIcon('name');
-        expect(metadataViewPage.getText('name')).toEqual(folderName);
+        expect(metadataViewPage.getPropertyText('name')).toEqual(folderName);
 
         metadataViewPage.clickEditPropertyIcons('name');
-        metadataViewPage.enterText('name', 'newnameFolder');
+        metadataViewPage.enterPropertyText('name', 'newnameFolder');
         metadataViewPage.clickUpdatePropertyIcon('name');
-        expect(metadataViewPage.getText('name')).toEqual('newnameFolder');
+        expect(metadataViewPage.getPropertyText('name')).toEqual('newnameFolder');
 
         metadataViewPage.clickEditPropertyIcons('name');
-        metadataViewPage.enterText('name', folderName);
+        metadataViewPage.enterPropertyText('name', folderName);
         metadataViewPage.clickUpdatePropertyIcon('name');
-        expect(metadataViewPage.getText('name')).toEqual(folderName);
+        expect(metadataViewPage.getPropertyText('name')).toEqual(folderName);
 
         browser.refresh();
     });
@@ -333,19 +312,19 @@ describe('Metadata component', () => {
         metadataViewPage.editIconClick();
 
         metadataViewPage.clickEditPropertyIcons('properties.exif:software');
-        metadataViewPage.enterText('properties.exif:software', 'test custom text software');
+        metadataViewPage.enterPropertyText('properties.exif:software', 'test custom text software');
         metadataViewPage.clickUpdatePropertyIcon('properties.exif:software');
-        expect(metadataViewPage.getText('properties.exif:software')).toEqual('test custom text software');
+        expect(metadataViewPage.getPropertyText('properties.exif:software')).toEqual('test custom text software');
 
         metadataViewPage.clickEditPropertyIcons('properties.exif:isoSpeedRatings');
-        metadataViewPage.enterText('properties.exif:isoSpeedRatings', 'test custom text isoSpeedRatings');
+        metadataViewPage.enterPropertyText('properties.exif:isoSpeedRatings', 'test custom text isoSpeedRatings');
         metadataViewPage.clickUpdatePropertyIcon('properties.exif:isoSpeedRatings');
-        expect(metadataViewPage.getText('properties.exif:isoSpeedRatings')).toEqual('test custom text isoSpeedRatings');
+        expect(metadataViewPage.getPropertyText('properties.exif:isoSpeedRatings')).toEqual('test custom text isoSpeedRatings');
 
         metadataViewPage.clickEditPropertyIcons('properties.exif:fNumber');
-        metadataViewPage.enterText('properties.exif:fNumber', 22);
+        metadataViewPage.enterPropertyText('properties.exif:fNumber', 22);
         metadataViewPage.clickUpdatePropertyIcon('properties.exif:fNumber');
-        expect(metadataViewPage.getText('properties.exif:fNumber')).toEqual('22');
+        expect(metadataViewPage.getPropertyText('properties.exif:fNumber')).toEqual('22');
     });
 
 });
