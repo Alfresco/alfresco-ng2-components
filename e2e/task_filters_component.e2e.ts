@@ -25,15 +25,14 @@ import ProcessServicesPage = require('./pages/adf/process_services/processServic
 import StartProcessPage = require('./pages/adf/process_services/startProcessPage');
 import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
 import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage');
-import ProcessDetailsPage = require('./pages/adf/process_services/processDetailsPage');
+import TasksPage = require('./pages/adf/process_services/tasksPage');
+import TasksListPage = require('./pages/adf/process_services/tasksListPage');
 import TaskFiltersPage = require('./pages/adf/process_services/taskFiltersPage');
+import TaskDetailsPage = require('./pages/adf/process_services/taskDetailsPage');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
-
-
-
 
 fdescribe('Task Filters Test', () => {
 
@@ -43,8 +42,10 @@ fdescribe('Task Filters Test', () => {
     let startProcessPage = new StartProcessPage();
     let processFiltersPage = new ProcessFiltersPage();
     let appNavigationBarPage = new AppNavigationBarPage();
-    let processDetailsPage = new ProcessDetailsPage();
+    let tasksPage = new TasksPage();
+    let tasksListPage = new TasksListPage();
     let taskFiltersPage = new TaskFiltersPage();
+    let taskDetailsPage = new TaskDetailsPage();
 
     let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
 
@@ -82,32 +83,125 @@ fdescribe('Task Filters Test', () => {
 
     it('[C260330] Should display task list when app is in task section', () => {
         navigationBarPage.clickProcessServicesButton();
-
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
 
-        expect(taskFiltersPage.checkMyTasksItem()).toBe('My Tasks');
-        expect(taskFiltersPage.checkQueuedTaskItem()).toBe('Queued Tasks');
-        expect(taskFiltersPage.checkCompletedTaskItem()).toBe('Completed Tasks');
-        expect(taskFiltersPage.checkInvolvedTaskItem()).toBe('Involved Tasks');
+        tasksPage.clickOnCreateButton();
+        taskFiltersPage.clickNewTaskButton();
+        tasksPage.createNewTask().addName('Test').clickStartButton();
+        taskFiltersPage.clickMyTaskTaskItem();
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test');
+        expect(taskFiltersPage.checkActiveFilterActive()).toBe('My Tasks');
+        expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
+
+        taskFiltersPage.clickQueuedTaskItem();
+        expect(taskFiltersPage.checkActiveFilterActive()).toBe('Queued Tasks');
+        tasksListPage.checkTaskIsNotDisplayedInTasksList('Test');
+        expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
+
+        taskFiltersPage.clickInvolvedTaskItem();
+        expect(taskFiltersPage.checkActiveFilterActive()).toBe('Involved Tasks');
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test');
+        expect( taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
+
+        taskFiltersPage.clickCompletedTaskItem();
+        expect(taskFiltersPage.checkActiveFilterActive()).toBe('Completed Tasks');
+        tasksListPage.checkTaskIsNotDisplayedInTasksList('Test');
+        expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
 
     });
 
-    it('[C260330] Should collapse Task Filter List when it is clicked', () => {
+    it('[C260348] Should display task list when app is in task section', () => {
         navigationBarPage.clickProcessServicesButton();
-
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
 
-        expect(taskFiltersPage.checkTasksAccordion()).toBeDefined;
+        expect(taskFiltersPage.checkMyTasksItem()).toBeDefined();
+        expect(taskFiltersPage.checkQueuedTaskItem()).toBeDefined();
+        expect(taskFiltersPage.checkInvolvedTaskItem()).toBeDefined();
+        expect(taskFiltersPage.checkCompletedTaskItem()).toBeDefined();
+        expect(taskFiltersPage.checkTasksAccordionExtended()).toBeDefined();
 
-        taskFiltersPage.clickTasksAccordionButton();  
-        
-        expect(taskFiltersPage.checkTasksAccordion()).toBeNull;
+        taskFiltersPage.clickTasksAccordionButton();
+        expect(taskFiltersPage.checkTasksAccordionClosed()).toBeDefined();
+
+        taskFiltersPage.clickTasksAccordionButton();
+        expect(taskFiltersPage.checkMyTasksItem()).toBeDefined();
+        expect(taskFiltersPage.checkQueuedTaskItem()).toBeDefined();
+        expect(taskFiltersPage.checkInvolvedTaskItem()).toBeDefined();
+        expect(taskFiltersPage.checkCompletedTaskItem()).toBeDefined();
+
+        tasksPage.clickOnCreateButton();
+        taskFiltersPage.clickNewTaskButton();
+        tasksPage.createNewTask().addName('Test').clickStartButton();
+        taskFiltersPage.clickMyTaskTaskItem();
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test');
+        expect(taskFiltersPage.checkActiveFilterActive()).toBe('My Tasks');
+        expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
+
+        taskFiltersPage.clickQueuedTaskItem();
+        expect(taskFiltersPage.checkActiveFilterActive()).toBe('Queued Tasks');
+        expect(taskFiltersPage.checkEmptyTaskList()).toBe('No Tasks Found');
+        expect(taskFiltersPage.checkEmptyTaskDetails()).toBe('No task details found');
+
+        taskFiltersPage.clickInvolvedTaskItem();
+        expect(taskFiltersPage.checkActiveFilterActive()).toBe('Involved Tasks');
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test');
+        expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
+
+        taskFiltersPage.clickCompletedTaskItem();
+        expect(taskFiltersPage.checkActiveFilterActive()).toBe('Completed Tasks');
+        expect(taskFiltersPage.checkEmptyTaskList()).toBe('No Tasks Found');
+        expect(taskFiltersPage.checkEmptyTaskDetails()).toBe('No task details found');
 
     });
 
+    fit('[C260349] Should display task list when app is in task section', () => {
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
 
-    
-   
+        tasksPage.clickOnCreateButton();
+        taskFiltersPage.clickNewTaskButton();
+        tasksPage.createNewTask().addName('Test1').clickStartButton();
+        taskDetailsPage.clickCompleteTask();
+        tasksPage.clickOnCreateButton();
+        taskFiltersPage.clickNewTaskButton();
+        tasksPage.createNewTask().addName('Test2').clickStartButton();
+        taskDetailsPage.clickCompleteTask();
+        tasksPage.clickOnCreateButton();
+        taskFiltersPage.clickNewTaskButton();
+        tasksPage.createNewTask().addName('Test3').clickStartButton();
+
+        tasksPage.clickOnCreateButton();
+        taskFiltersPage.clickNewTaskButton();
+        tasksPage.createNewTask().addName('Test4').clickStartButton();
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test4');
+        tasksListPage.checkHighlightedTaskInTasksList('Test4');
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test3');
+        taskDetailsPage.checkTaskDetailsDisplayed();
+
+        tasksListPage.clickSortByName();
+        expect(tasksListPage.firstTaskOnTaskList()).toBe('Test3');
+        tasksListPage.clickSortByName();
+        expect(tasksListPage.firstTaskOnTaskList()).toBe('Test4');
+
+        taskFiltersPage.clickCompletedTaskItem();
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test1');
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test2');
+        expect(tasksListPage.firstTaskOnTaskList()).toBe('Test2');
+
+        tasksListPage.clickSortByName();
+        expect(tasksListPage.firstTaskOnTaskList()).toBe('Test1');
+
+        taskFiltersPage.clickInvolvedTaskItem();
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test3');
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test4');
+
+
+
+
+
+    });
+
 });

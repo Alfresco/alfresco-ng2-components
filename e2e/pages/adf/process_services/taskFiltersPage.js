@@ -19,31 +19,57 @@ var Util = require('../../../util/util');
 
 var TaskFiltersPage = function () {
 
-    var myTasks = element.all(by.css('span[data-automation-id="My Tasks_filter"]'));
-    var queuedTask = element.all(by.css('span[data-automation-id="Queued Tasks_filter"]'));
-    var completedTask = element.all(by.css('span[data-automation-id="Completed Tasks_filter"]'));
-    var involvedTask = element.all(by.css('span[data-automation-id="Involved Tasks_filter"]'));
-    var tasksAccordionButton = element.all(by.css('div[class="adf-panel-heading adf-panel-heading-selected"]'));
-    var tasksAccordion = element.all(by.css('div[class="mat-expansion-panel-content ng-trigger ng-trigger-bodyExpansion mat-expanded"]'));
+    var myTasks = element(by.css("span[data-automation-id='My Tasks_filter']"));
+    var queuedTask = element(by.css("span[data-automation-id='Queued Tasks_filter']"));
+    var completedTask = element(by.css("span[data-automation-id='Completed Tasks_filter']"));
+    var involvedTask = element(by.css("span[data-automation-id='Involved Tasks_filter']"));
+    var tasksAccordionButton = element(by.css("div[class='adf-panel-heading adf-panel-heading-selected']"));
+    var tasksAccordionClosed = element(by.css("div[class='mat-expansion-panel-content ng-trigger ng-trigger-bodyExpansion']"));
+    var tasksAccordionExpanded = element(by.css("mat-expansion-panel[class='mat-expansion-panel ng-tns-c53-14 mat-expanded mat-expansion-panel-spacing;]"));
+    var startTaskButton = element(by.css("button[id='button-start']"));
+    var newTaskButton = element(by.css("button[data-automation-id='btn-start-task']"));
+    var activeFilter = element(by.css("mat-list-item[class='adf-filters__entry mat-list-item ng-star-inserted active'] span"));
+    var emptyTaskList = element(by.css("p[class='adf-empty-content__title']"));
+    var emptyTaskDetails = element(by.css("adf-task-details > div > div"));
 
     this.checkMyTasksItem = function() {
         Util.waitUntilElementIsVisible(myTasks);
-        return myTasks.getText();
+        return myTasks;
     };
 
     this.checkQueuedTaskItem = function() {
         Util.waitUntilElementIsVisible(queuedTask);
-        return queuedTask.getText();
+        return queuedTask;
+    };
+    
+    this.clickMyTaskTaskItem = function() {
+        Util.waitUntilElementIsVisible(myTasks);
+        return myTasks.click();
+    };
+
+    this.clickCompletedTaskItem = function() {
+        Util.waitUntilElementIsVisible(completedTask);
+        return completedTask.click();
     };
 
     this.checkCompletedTaskItem = function() {
         Util.waitUntilElementIsVisible(completedTask);
-        return completedTask.getText();
+        return completedTask;
+    };
+
+    this.clickQueuedTaskItem = function() {
+        Util.waitUntilElementIsVisible(queuedTask);
+        return queuedTask.click();
+    };
+
+    this.clickInvolvedTaskItem = function() {
+        Util.waitUntilElementIsVisible(involvedTask);
+        return involvedTask.click();
     };
 
     this.checkInvolvedTaskItem = function() {
         Util.waitUntilElementIsVisible(involvedTask);
-        return involvedTask.getText();
+        return involvedTask;
     };
 
     this.clickTasksAccordionButton = function() {
@@ -51,12 +77,40 @@ var TaskFiltersPage = function () {
         return tasksAccordionButton.click();
     };
 
-    this.checkTasksAccordion = function() {
-        Util.waitUntilElementIsVisible(tasksAccordion);
-        return tasksAccordion;
+    this.checkTasksAccordionExtended = function() {
+        Util.waitUntilElementIsVisible(tasksAccordionExpanded);
+        return tasksAccordionExpanded;
     };
 
+    this.checkTasksAccordionClosed = function() {
+        Util.waitUntilElementIsVisible(tasksAccordionClosed);
+        return tasksAccordionClosed;
+    };
 
+    this.clickStartTaskButton = function() {
+        Util.waitUntilElementIsVisible(startTaskButton);
+        startTaskButton.click();
+    };
+
+    this.clickNewTaskButton = function() {
+        Util.waitUntilElementIsVisible(newTaskButton);
+        newTaskButton.click();
+    };
+
+    this.checkActiveFilterActive = function() {
+        Util.waitUntilElementIsVisible(activeFilter);
+        return activeFilter.getText();
+    }
+
+    this.checkEmptyTaskList = function() {
+        Util.waitUntilElementIsVisible(emptyTaskList);
+        return emptyTaskList.getText();
+    };
+
+    this.checkEmptyTaskDetails = function() {
+        Util.waitUntilElementIsVisible(emptyTaskDetails);
+        return emptyTaskDetails.getText();
+    }
 };
 
 module.exports = TaskFiltersPage;
