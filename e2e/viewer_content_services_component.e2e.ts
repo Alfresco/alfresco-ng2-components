@@ -130,11 +130,6 @@ describe('Content Services Viewer', () => {
                 });
             });
         });
-
-
-
-
-
     });
 
     beforeEach(() => {
