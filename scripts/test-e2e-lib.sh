@@ -94,7 +94,7 @@ export BROWSER_RUN=$BROWSER_RUN
 export PROXY_HOST_ADF=$PROXY
 export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
-export FOLDER='/'$FOLDER
+export FOLDER=$FOLDER'/'
 
 if [[  $DEVELOPMENT == "true" ]]; then
   echo "====== Run against local development  ====="
