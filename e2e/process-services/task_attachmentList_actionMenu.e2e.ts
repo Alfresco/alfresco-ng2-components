@@ -35,7 +35,7 @@ import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 import FileModel = require('../models/ACS/fileModel');
 
-describe('Attachment list action menu for tasks', () => {
+fdescribe('Attachment list action menu for tasks', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
@@ -47,10 +47,9 @@ describe('Attachment list action menu for tasks', () => {
         location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
         name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
+
     let downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
-    let tenantId, appId;
-=======
-    let downloadedJpgFile = path.join(__dirname, 'downloads', jpgFile.name);
+
     let tenantId, appId, relatedContent, relatedContentId;
     let taskName = {
         active: 'Active Task',
@@ -184,7 +183,7 @@ describe('Attachment list action menu for tasks', () => {
 
             let newTaskId = newTask.id;
 
-            let filePath = path.join(TestConfig.main.rootPath + jpgFile.location);
+            let filePath = path.join(TestConfig.main.rootPath + pngFile.location);
 
             let file = fs.createReadStream(filePath);
 
@@ -197,7 +196,7 @@ describe('Attachment list action menu for tasks', () => {
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.usingTasksListPage().selectTaskFromTasksList('SHARE KNOWLEDGE');
 
-        attachmentListPage.checkFileIsAttached(jpgFile.name);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
 
         browser.controlFlow().execute(async() => {
             await this.alfrescoJsApi.activiti.contentApi.deleteContent(relatedContentId);
