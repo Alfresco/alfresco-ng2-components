@@ -29,9 +29,9 @@ var TaskFiltersPage = function () {
     var startTaskButton = element(by.css("button[id='button-start']"));
     var newTaskButton = element(by.css("button[data-automation-id='btn-start-task']"));
     var activeFilter = element(by.css("mat-list-item[class='adf-filters__entry mat-list-item ng-star-inserted active'] span"));
-    var emptyTaskList = element(by.css("p[class='adf-empty-content__title']"));
     var emptyTaskDetails = element(by.css("adf-task-details > div > div"));
-
+    var emptyTaskList = element(by.css("p[class='adf-empty-content__title']"));
+    
     this.checkMyTasksItem = function() {
         Util.waitUntilElementIsVisible(myTasks);
         return myTasks;
