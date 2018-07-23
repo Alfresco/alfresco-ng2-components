@@ -44,7 +44,8 @@ describe('Save screenshot at the end', () => {
                 alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
                 let folder = await alfrescoJsApi.nodes.addNode('-my-', {
-                    'name': 'Screenshot-e2e-' + buildNumber + '/content-services',
+                    'name': 'contetn-services',
+                    'relativePath': 'Buiild-screenshot/Screenshot-e2e-' + buildNumber,
                     'nodeType': 'cm:folder'
                 }, {}, {});
 
