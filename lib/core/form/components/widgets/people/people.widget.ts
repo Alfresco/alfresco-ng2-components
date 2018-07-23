@@ -19,7 +19,7 @@
 
 import { PeopleProcessService } from '../../../../services/people-process.service';
 import { UserProcessModel } from '../../../../models';
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
 import { baseHost, WidgetComponent } from './../widget.component';
@@ -45,6 +45,9 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     @ViewChild('inputValue')
     input: ElementRef;
+
+    @Output()
+    peopleSelected: EventEmitter<number>;
 
     groupId: string;
     value: any;
@@ -89,6 +92,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService, public peopleProcessService: PeopleProcessService) {
         super(formService);
+        this.peopleSelected = new EventEmitter();
     }
 
     ngOnInit() {
@@ -135,6 +139,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     onItemSelect(item: UserProcessModel) {
         if (item) {
             this.field.value = item;
+            this.peopleSelected.emit(item && item.id || undefined);
             this.value = this.getDisplayName(item);
         }
     }
