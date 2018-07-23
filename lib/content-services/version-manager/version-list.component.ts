@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
-import { Component, Input, OnChanges, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { VersionsApi, MinimalNodeEntryEntity, VersionEntry } from 'alfresco-js-api';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
@@ -56,10 +56,17 @@ export class VersionListComponent implements OnChanges {
     @Input()
     showActions = true;
 
+    /** Emitted when a version is restored */
+    @Output()
+    restored: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+
+    /** Emitted when a version is deleted */
+    @Output()
+    deleted: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+
     constructor(private alfrescoApi: AlfrescoApiService,
                 private contentService: ContentService,
-                private dialog: MatDialog,
-                private el: ElementRef) {
+                private dialog: MatDialog) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }
 
@@ -79,7 +86,7 @@ export class VersionListComponent implements OnChanges {
         if (this.canUpdate()) {
             this.versionsApi
                 .revertVersion(this.node.id, versionId, { majorVersion: true, comment: '' })
-                .then(() => this.onVersionRestored());
+                .then(() => this.onVersionRestored(this.node));
         }
     }
 
@@ -114,24 +121,20 @@ export class VersionListComponent implements OnChanges {
                 if (result === true) {
                     this.alfrescoApi.versionsApi
                         .deleteVersion(this.node.id, versionId)
-                        .then(() => this.onVersionDeleted());
+                        .then(() => this.onVersionDeleted(this.node));
                 }
             });
         }
     }
 
-    onVersionDeleted() {
+    onVersionDeleted(node: any) {
         this.loadVersionHistory();
-
-        const event = new CustomEvent('version-deleted', { bubbles: true });
-        this.el.nativeElement.dispatchEvent(event);
+        this.deleted.emit(node);
     }
 
-    onVersionRestored() {
+    onVersionRestored(node: any) {
         this.loadVersionHistory();
-
-        const event = new CustomEvent('version-restored', { bubbles: true });
-        this.el.nativeElement.dispatchEvent(event);
+        this.restored.emit(node);
     }
 
     private getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean) {

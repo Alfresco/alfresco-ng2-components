@@ -6,7 +6,7 @@
                     <adf-version-upload
                         id="adf-version-upload-button"
                         [node]="node"
-                        (success)="onUploadSuccess($event)"
+                        (success)="refresh($event)"
                         (cancel)="onUploadCancel()"
                         (error)="uploadError.emit($event)">
                     </adf-version-upload>
@@ -31,7 +31,10 @@
                     #versionList
                     [node]="node"
                     [allowDownload]="allowDownload"
-                    [showComments]="showComments">
+                    [showComments]="showComments"
+                    (success)="refresh($event)"
+                    (deleted)="refresh($event)"
+                    (restored)="refresh($event)">
                 </adf-version-list>
             </div>
         </div>

@@ -57,11 +57,11 @@ export class VersionManagerComponent {
 
     /** Emitted when a file is uploaded successfully. */
     @Output()
-    uploadSuccess = new EventEmitter();
+    uploadSuccess: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
     /** Emitted when an error occurs during upload. */
     @Output()
-    uploadError = new EventEmitter();
+    uploadError: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
     @ViewChild('versionList')
     versionListComponent: VersionListComponent;
@@ -73,10 +73,10 @@ export class VersionManagerComponent {
                 private alfrescoApiService: AlfrescoApiService) {
     }
 
-    onUploadSuccess(event) {
-        this.alfrescoApiService.nodeUpdated.next(event.value.entry);
+    refresh(node: MinimalNodeEntryEntity) {
+        this.alfrescoApiService.nodeUpdated.next(node);
         this.versionListComponent.loadVersionHistory();
-        this.uploadSuccess.emit(event);
+        this.uploadSuccess.emit(node);
         this.uploadState = 'close';
     }
 
