@@ -31,4 +31,4 @@ Creates/Starts new task for the specified app
 | -- | -- | -- |
 | cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the cancel button is clicked by the user. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| success | `EventEmitter<any>` | Emitted when the task is successfully created. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is successfully created. |
