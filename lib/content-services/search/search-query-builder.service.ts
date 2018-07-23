@@ -274,7 +274,10 @@ export class SearchQueryBuilderService {
                     .map(bucket => bucket.filterQuery)
                     .join(' OR ');
                 if (subQuery) {
-                    result += ` AND (${subQuery})`;
+                    if (result.length > 0) {
+                        result += ' AND ';
+                    }
+                    result += `(${subQuery})`;
                 }
             });
         }

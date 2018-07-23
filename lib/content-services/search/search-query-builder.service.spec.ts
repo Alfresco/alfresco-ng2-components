@@ -18,6 +18,7 @@
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { SearchConfiguration } from './search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
+import { FacetField } from './facet-field.interface';
 
 describe('SearchQueryBuilder', () => {
 
@@ -418,6 +419,45 @@ describe('SearchQueryBuilder', () => {
 
         const compiled = builder.buildQuery();
         expect(compiled.query.query).toBe('(my query) AND (cm:name:test)');
+    });
+
+    it('should group facet buckets by field', () => {
+        const field1: FacetField = {
+            field: 'f1',
+            label: 'f1'
+        };
+
+        const field1buckets = [
+            { checked: true, filterQuery: 'f1-q1', label: 'f1-q1', count: 1 },
+            { checked: true, filterQuery: 'f1-q2', label: 'f1-q2', count: 1 }
+        ];
+
+        const field2: FacetField = {
+            field: 'f2',
+            label: 'f2'
+        };
+
+        const field2buckets = [
+            { checked: true, filterQuery: 'f2-q1', label: 'f2-q1', count: 1 },
+            { checked: true, filterQuery: 'f2-q2', label: 'f2-q2', count: 1 }
+        ];
+
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ]
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+
+        builder.addUserFacetBucket(field1, field1buckets[0]);
+        builder.addUserFacetBucket(field1, field1buckets[1]);
+        builder.addUserFacetBucket(field2, field2buckets[0]);
+        builder.addUserFacetBucket(field2, field2buckets[1]);
+
+        const compiledQuery = builder.buildQuery();
+        const expectedResult = '(f1-q1 OR f1-q2) AND (f2-q1 OR f2-q2)';
+
+        expect(compiledQuery.query.query).toBe(expectedResult);
     });
 
 });
