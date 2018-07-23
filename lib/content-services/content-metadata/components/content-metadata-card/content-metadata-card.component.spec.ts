@@ -120,7 +120,7 @@ describe('ContentMetadataCardComponent', () => {
         component.node.allowableOperations = [PermissionsEnum.UPDATE];
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));
+        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
         button.triggerEventHandler('click', {});
         fixture.detectChanges();
 
@@ -131,7 +131,7 @@ describe('ContentMetadataCardComponent', () => {
         component.expanded = true;
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-expand"]'));
+        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand"]'));
         button.triggerEventHandler('click', {});
         fixture.detectChanges();
 
@@ -142,7 +142,7 @@ describe('ContentMetadataCardComponent', () => {
         component.expanded = false;
         fixture.detectChanges();
 
-        const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-expand-label"]'));
+        const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand-label"]'));
 
         expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.MORE_INFORMATION');
     });
@@ -151,7 +151,7 @@ describe('ContentMetadataCardComponent', () => {
         component.expanded = true;
         fixture.detectChanges();
 
-        const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-expand-label"]'));
+        const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand-label"]'));
 
         expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION');
     });
@@ -160,7 +160,7 @@ describe('ContentMetadataCardComponent', () => {
         component.readOnly = true;
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));
+        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
         expect(button).toBeNull();
     });
 
@@ -169,7 +169,7 @@ describe('ContentMetadataCardComponent', () => {
         component.node.allowableOperations = null;
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));
+        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
         expect(button).toBeNull();
     });
 
@@ -178,7 +178,7 @@ describe('ContentMetadataCardComponent', () => {
         component.node.allowableOperations = [PermissionsEnum.UPDATE];
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));
+        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
         expect(button).not.toBeNull();
     });
 });

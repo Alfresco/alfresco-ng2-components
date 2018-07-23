@@ -73,6 +73,7 @@
     "TRASHCAN": "Trashcan",
     "SOCIAL": "Social",
     "SETTINGS": "Settings",
+    "CONFIG-EDITOR": "Config editor",
     "OVERLAY_VIEWER": "Overlay Viewer",
     "ABOUT": "About",
     "SEARCH": "Extended Search",
@@ -96,7 +97,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (with checkboxes)",
-    "THUMBNAILS" :"Enable Thumbnails",
+    "THUMBNAILS": "Enable Thumbnails",
     "MULTIPLE_FILE_UPLOAD": "Multiple File Upload",
     "FOLDER_UPLOAD": "Folder upload",
     "CUSTOM_FILTER": "Custom extensions filter",
@@ -189,7 +190,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Login footer"
+    "LOGIN_FOOTER": "Login footer",
+    "SHOW_REMEMBERME": "Show Remember me",
+    "SHOW_SUCCESS_ROUTE": "Show success route",
+    "CUSTOM_LOGO": "Custom Logo"
   },
   "SEARCH": {
     "RESULTS": "Search results",
@@ -215,5 +219,7 @@
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "Insert App Id",
     "APP_ID_TYPE_ERROR": "App Id must be a number"
-  }
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION ONE",
+  "GROUP-TITLE2-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION TWO"
 }

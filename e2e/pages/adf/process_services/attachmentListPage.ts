@@ -35,7 +35,7 @@ export class AttachmentListPage {
 
     clickAttachFileButton(fileLocation) {
         Util.waitUntilElementIsVisible(this.attachFileButton);
-        this.attachFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
+        return this.attachFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
     }
 
     checkFileIsAttached(name) {
@@ -48,43 +48,42 @@ export class AttachmentListPage {
     }
 
     viewFile(name) {
-        let fileAttached = element(by.css('div[filename="' + name + '"]'));
-        Util.waitUntilElementIsVisible(fileAttached);
-        fileAttached.click();
+        Util.waitUntilElementIsVisible(element(by.css('div[filename="' + name + '"]')));
+        element(by.css('div[filename="' + name + '"]')).click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
-        Util.waitUntilElementIsClickable(this.buttonMenu);
         this.buttonMenu.click();
-        Util.waitUntilElementIsVisible(this.menuPanel);
         Util.waitUntilElementIsVisible(this.viewButton);
+        browser.driver.sleep(500);
         this.viewButton.click();
+        browser.driver.sleep(500);
         return this;
     }
 
     removeFile(name) {
-        let fileAttached = element(by.css('div[filename="' + name + '"]'));
-        fileAttached.click();
+        Util.waitUntilElementIsVisible(element(by.css('div[filename="' + name + '"]')));
+        element(by.css('div[filename="' + name + '"]')).click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
-        Util.waitUntilElementIsClickable(this.buttonMenu);
         this.buttonMenu.click();
-        Util.waitUntilElementIsVisible(this.menuPanel);
         Util.waitUntilElementIsVisible(this.removeButton);
+        browser.driver.sleep(500);
         this.removeButton.click();
+        browser.driver.sleep(500);
         return this;
     }
 
     downloadFile(name) {
-        let fileAttached = element(by.css('div[filename="' + name + '"]'));
-        fileAttached.click();
+        Util.waitUntilElementIsVisible(element(by.css('div[filename="' + name + '"]')));
+        element(by.css('div[filename="' + name + '"]')).click();
         Util.waitUntilElementIsVisible(this.buttonMenu);
-        Util.waitUntilElementIsClickable(this.buttonMenu);
         this.buttonMenu.click();
-        Util.waitUntilElementIsVisible(this.menuPanel);
         Util.waitUntilElementIsVisible(this.downloadButton);
+        browser.driver.sleep(500);
         this.downloadButton.click();
         return this;
     }
 
     doubleClickFile(name) {
+        Util.waitUntilElementIsVisible(element(by.css('div[filename="' + name + '"]')));
         let fileAttached = element(by.css('div[filename="' + name + '"]'));
         Util.waitUntilElementIsVisible(fileAttached);
         Util.waitUntilElementIsClickable(fileAttached);

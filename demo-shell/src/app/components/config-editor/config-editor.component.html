@@ -1,0 +1,9 @@
+
+<h2>Metadata App config editor</h2>
+
+<ngx-monaco-editor id="adf-metadata-editor" class="adf-metadata-editor" [options]="editorOptions" [(ngModel)]="metadataConf" (onInit)="onInitMetadata($event)" ></ngx-monaco-editor>
+
+<button  mat-raised-button id="adf-metadata-save"  (click)="onSaveMetadata()" color="primary">Save metadata configuration</button>
+<button  mat-raised-button id="adf-metadata-clear" (click)="onClearMetadata()" color="primary">Clear metadata configuration</button>
+
+<br>

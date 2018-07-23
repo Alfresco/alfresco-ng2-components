@@ -16,47 +16,58 @@
  */
 
 var Util = require('../../util/util');
+var TestConfig = require('../../test.config');
 
-var NavigationBarPage = function (){
+var NavigationBarPage = function () {
 
     var contentServicesButton = element(by.css("a[data-automation-id='Content Services']"));
+    var configEditoButton = element(by.css("a[data-automation-id='Config editor']"));
     var processServicesButton = element(by.css("a[data-automation-id='Process Services']"));
     var loginButton = element(by.css("a[data-automation-id='Login']"));
     var trashcanButton = element(by.css("a[data-automation-id='Trashcan']"));
-    var userProfileButton = element(by.css("div[data-automation-id='user-profile']"));
+    var userProfileButton = element(by.css("button[data-automation-id='adf-user-profile']"));
     var themeButton = element(by.css("button[data-automation-id='theme menu']"));
     var themeMenuContent = element(by.css("div[class*='mat-menu-panel']"));
     var logoutButton = element(by.css("a[adf-logout]"));
-    var cardViewButton = element(by.cssContainingText(".sidenav-menu-label","CardView"));
+    var cardViewButton = element(by.cssContainingText(".sidenav-menu-label", "CardView"));
 
     /**
      * Click Content Services Button
      * @method clickContentServicesButton
      */
-    this.clickContentServicesButton = function (){
-            Util.waitUntilElementIsVisible(contentServicesButton);
-            contentServicesButton.click();
+    this.clickContentServicesButton = function () {
+        Util.waitUntilElementIsVisible(contentServicesButton);
+        contentServicesButton.click();
+    };
+
+    /**
+     * Click on Config Editor Button
+     * @method clickContentServicesButton
+     */
+    this.clickConfigEditorButton = function () {
+        Util.waitUntilElementIsVisible(configEditoButton);
+        configEditoButton.click();
     };
 
     /**
      * Click Process Services Button
      * @method clickProcessServicesButton
      */
-    this.clickProcessServicesButton = function (){
-            Util.waitUntilElementIsVisible(processServicesButton);
-            processServicesButton.click();
-        };
+    this.clickProcessServicesButton = function () {
+        Util.waitUntilElementIsVisible(processServicesButton);
+        processServicesButton.click();
+    };
 
     /**
      * Click Login Button
      * @method clickLoginButton
      */
-    this.clickLoginButton = function(){
-            Util.waitUntilElementIsVisible(loginButton);
-            loginButton.click();
-        };
+    this.clickLoginButton = function () {
+        Util.waitUntilElementIsVisible(loginButton);
+        loginButton.click();
+    };
 
-    this.clickTrashcanButton = function(){
+    this.clickTrashcanButton = function () {
         Util.waitUntilElementIsVisible(trashcanButton);
         trashcanButton.click();
     };
@@ -83,18 +94,26 @@ var NavigationBarPage = function (){
      * Click Logout Button
      * @method clickLogoutButton
      */
-    this.clickLogoutButton = function(){
+    this.clickLogoutButton = function () {
         Util.waitUntilElementIsVisible(logoutButton);
         logoutButton.click();
     };
 
-      /**
+    /**
      * Click Card View Button
      * @method clickCardViewButton
      */
-    this.clickCardViewButton = function(){
+    this.clickCardViewButton = function () {
         Util.waitUntilElementIsVisible(cardViewButton);
         cardViewButton.click();
+    };
+
+    /**
+     * Click Card View Button
+     * @method clickCardViewButton
+     */
+    this.openContentServicesFolder = function (folderId) {
+        return browser.get(TestConfig.adf.url + '/files/' + folderId);
     };
 
 };

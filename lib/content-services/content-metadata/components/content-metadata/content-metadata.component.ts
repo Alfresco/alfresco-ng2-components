@@ -49,7 +49,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     expanded: boolean = false;
 
-    /** The multi parameter of the underlying material expansion panel */
+    /** The multi parameter of the underlying material expansion panel, set to true to allow multi accordion to be expanded at the same time */
     @Input()
     multi = false;
 

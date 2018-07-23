@@ -1,7 +1,8 @@
 <ng-container *ngIf="!property.isEmpty() || isEditable()">
-    <div class="adf-property-label">{{ property.label | translate }}</div>
+    <div [attr.data-automation-id]="'card-boolean-label-' + property.key" class="adf-property-label">{{ property.label | translate }}</div>
     <div class="adf-property-value">
         <mat-checkbox
+            [attr.data-automation-id]="'card-boolean-' + property.key"
             [attr.title]="'CORE.METADATA.ACTIONS.TOGGLE' | translate"
             [checked]="property.displayValue"
             [disabled]="!isEditable()"
