@@ -117,13 +117,24 @@ describe('Content Services Viewer', () => {
     });
 
     afterAll(() => {
-        this.alfrescoJsApi.nodes.deleteNode(pdfFile.id).then();
-        this.alfrescoJsApi.nodes.deleteNode(protectedFile.id);
-        this.alfrescoJsApi.nodes.deleteNode(docxFile.id);
-        this.alfrescoJsApi.nodes.deleteNode(jpgFile.id);
-        this.alfrescoJsApi.nodes.deleteNode(mp4File.id);
-        this.alfrescoJsApi.nodes.deleteNode(pptFile.id);
-        this.alfrescoJsApi.nodes.deleteNode(unsupportedFile.id);
+        this.alfrescoJsApi.nodes.deleteNode(pdfFile.id).then( () => {
+            this.alfrescoJsApi.nodes.deleteNode(protectedFile.id).then( () => {
+                this.alfrescoJsApi.nodes.deleteNode(docxFile.id).then( () => {
+                    this.alfrescoJsApi.nodes.deleteNode(jpgFile.id).then( () => {
+                        this.alfrescoJsApi.nodes.deleteNode(mp4File.id).then( () => {
+                            this.alfrescoJsApi.nodes.deleteNode(pptFile.id).then( () => {
+                                this.alfrescoJsApi.nodes.deleteNode(unsupportedFile.id);
+                            });
+                        });
+                    });
+                });
+            });
+        });
+
+
+
+
+
     });
 
     beforeEach(() => {

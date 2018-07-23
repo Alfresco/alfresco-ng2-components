@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util');
-var TestConfig = require('../../test.config');
+var Util = require("../../util/util");
+var TestConfig = require("../../test.config");
 
 var NavigationBarPage = function () {
 
@@ -99,11 +99,11 @@ var NavigationBarPage = function () {
     };
 
     this.openViewer = function (nodeId) {
-        browser.get(TestConfig.adf.url + '/files(overlay:files/' + nodeId + '/view');
+        browser.get(TestConfig.adf.url + "/files(overlay:files/" + nodeId + "/view");
     };
 
     this.goToSite = function (site) {
-        browser.get(TestConfig.adf.url + '/files/' + site.entry.guid + '/display/list');
+        browser.get(TestConfig.adf.url + "/files/" + site.entry.guid + "/display/list");
     };
 };
 
