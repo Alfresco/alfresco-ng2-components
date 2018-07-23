@@ -134,3 +134,10 @@ exports.PROCESSSTATUS = {
     RUNNING: 'Running',
     COMPLETED: 'Completed'
 };
+
+exports.SITEMEMBERROLES = {
+    SITECONSUMER: 'SiteConsumer',
+    SITECOLLABORATOR: 'SiteCollaborator',
+    SITECONTRIBUTOR: 'SiteContributor',
+    SITEMANAGER: 'SiteManager'
+};

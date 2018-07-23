@@ -116,23 +116,19 @@ describe('Content Services Viewer', () => {
         done();
     });
 
-    /*afterAll((done) => {
-        NodesAPI.deleteContent(acsUser, pdfFile.getId(), () => {
-            done();
-        });
-        NodesAPI.deleteContent(acsUser, jpgFile.getId(), () => {
-            done();
-        });
-        NodesAPI.deleteContent(acsUser, mp4File.getId(), () => {
-            done();
-        });
-        NodesAPI.deleteContent(acsUser, pagesFile.getId(), () => {
-            done();
-        });
-        NodesAPI.deleteContent(acsUser, pptFile.getId(), () => {
-            done();
-        });
-    });*/
+    afterAll(() => {
+        this.alfrescoJsApi.nodes.deleteNode(pdfFile.id).then();
+        this.alfrescoJsApi.nodes.deleteNode(protectedFile.id);
+        this.alfrescoJsApi.nodes.deleteNode(docxFile.id);
+        this.alfrescoJsApi.nodes.deleteNode(jpgFile.id);
+        this.alfrescoJsApi.nodes.deleteNode(mp4File.id);
+        this.alfrescoJsApi.nodes.deleteNode(pptFile.id);
+        this.alfrescoJsApi.nodes.deleteNode(unsupportedFile.id);
+    });
+
+    beforeEach(() => {
+        browser.get(TestConfig.adf.url + '/files');
+    });
 
     it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', () => {
         contentServicesPage.checkAcsContainer();
@@ -156,6 +152,9 @@ describe('Content Services Viewer', () => {
     });
 
     it('[C260040] Should be able to change pages and zoom when .pdf file is open', () => {
+        viewerPage.viewFile(pdfFile.name);
+
+        viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.clickNextPageButton();
         viewerPage.checkFileContent('2', pdfFile.secondPageText);
         viewerPage.checkPageSelectorInputIsDisplayed('2');
@@ -214,6 +213,9 @@ describe('Content Services Viewer', () => {
     });
 
     it('[C260483] Should be able to zoom and rotate image when .jpg file is open', () => {
+        viewerPage.viewFile(jpgFile.name);
+        viewerPage.checkPercentageIsDisplayed();
+
         zoom = viewerPage.getZoom();
         viewerPage.clickZoomInButton();
         viewerPage.checkZoomedIn(zoom);
@@ -327,6 +329,9 @@ describe('Content Services Viewer', () => {
     });
 
     it('[C268105] Should display current thumbnail when getting to the page following the last visible thumbnail', () => {
+        viewerPage.viewFile(pdfFile.name);
+
+        viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.checkThumbnailsBtnIsDisplayed();
         viewerPage.clickThumbnailsBtn();
         viewerPage.clickLastThumbnailDisplayed();

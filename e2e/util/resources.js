@@ -218,6 +218,14 @@ exports.Files = {
         INI:{
             file_location: "/resources/adf/allFileTypes/desktop.ini",
             file_name: "desktop.ini"
+        },
+        DOC_FOLDER: {
+            folder_location: "/resources/adf/allFileTypes/documents",
+            folder_name: "documents"
+        },
+        IMG_FOLDER: {
+            folder_location: "/resources/adf/allFileTypes/images",
+            folder_name: "images"
         }
     },
 
