@@ -12,7 +12,7 @@ const height = 768;
 
 var HOST = process.env.URL_HOST_ADF;
 var BROWSER_RUN = process.env.BROWSER_RUN;
-var FOLDER = process.env.FOLDER;
+var FOLDER = process.env.FOLDER || '';
 
 var args_options = [];
 
