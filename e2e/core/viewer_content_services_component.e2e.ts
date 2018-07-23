@@ -346,8 +346,6 @@ describe('Content Services Viewer', () => {
     it('[C269109] Should not be able to open thumbnail pane before the pdf is loaded', () => {
         viewerPage.viewFile(pdfFile.name);
 
-        browser.driver.sleep(3000); //wait open file
-
         viewerPage.clickThumbnailsBtn();
         viewerPage.checkThumbnailsContentIsNotDisplayed();
 
