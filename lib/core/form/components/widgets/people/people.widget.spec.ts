@@ -206,6 +206,22 @@ describe('PeopleWidgetComponent', () => {
                 expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).toBeNull();
             });
         });
+
+        it('should emit peopleSelected if option is selected', async(() => {
+            let selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            peopleHTMLElement.focus();
+            peopleHTMLElement.value = 'T';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
+                widget.onItemSelect(fakeUserResult[0]);
+                expect(selectEmitSpy).toHaveBeenCalledWith(1001);
+            });
+        }));
     });
 
 });
