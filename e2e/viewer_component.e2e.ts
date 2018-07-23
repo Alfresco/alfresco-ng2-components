@@ -117,16 +117,14 @@ describe('Viewer', () => {
     it('[C260517] Should be possible to open any Document supported extension', () => {
         uploadedDocs.forEach((currentFile) => {
             navigationBarPage.openViewer(currentFile.entry.id);
-            //viewerPage.checkPageCanvasIsDisplayed();
-            browser.driver.sleep(1000);
+            viewerPage.checkPageCanvasIsDisplayed();
         });
     });
 
     it('[C279966] Should be possible to open any Image supported extension', () => {
         uploadedImages.forEach((currentFile) => {
             navigationBarPage.openViewer(currentFile.entry.id);
-            //viewerPage.checkPageCanvasIsDisplayed();
-            browser.driver.sleep(1000);
+            viewerPage.checkPageCanvasIsDisplayed();
         });
     });
 
