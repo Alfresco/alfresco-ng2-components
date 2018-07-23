@@ -160,6 +160,16 @@ var NavigationBarPage = function () {
         var logoTooltip = element(by.css('a[title="'+ logoTooltip +'"]'));
         Util.waitUntilElementIsVisible(logoTooltip);
     }
+
+    this.openViewer = function (nodeId) {
+        browser.get(TestConfig.adf.url + "/files(overlay:files/" + nodeId + "/view");
+        return this;
+    };
+
+    this.goToSite = function (site) {
+        browser.get(TestConfig.adf.url + "/files/" + site.entry.guid + "/display/list");
+    };
+
 };
 
 module.exports = NavigationBarPage;

@@ -49,6 +49,11 @@ var LoginPage = function () {
     var header = element(by.id("adf-header"));
     var cardBackground = element(by.css("mat-card[class*='adf-login-card']"));
     var adfSettingsPage = new AdfSettingsPage();
+    var loginForm = element(by.css("form[id='adf-login-form'"));
+
+    this.checkLoginFormIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(loginForm);
+    };
 
     /**
      * Provides the longer wait required

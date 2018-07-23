@@ -15,38 +15,34 @@
  * limitations under the License.
  */
 
-import TestConfig = require('./test.config');
+import TestConfig = require('../test.config');
 
-import LoginPage = require('./pages/adf/loginPage');
-import ContentServicesPage = require('./pages/adf/contentServicesPage');
-import ViewerPage = require('./pages/adf/viewerPage');
-import NavigationBarPage = require('./pages/adf/NavigationBarPage');
+import LoginPage = require('../pages/adf/loginPage');
+import ViewerPage = require('../pages/adf/viewerPage');
+import NavigationBarPage = require('../pages/adf/navigationBarPage');
 
-import resources = require('./util/resources');
-import Util = require('./util/util');
-import CONSTANTS = require('./util/constants');
+import resources = require('../util/resources');
+import Util = require('../util/util');
+import CONSTANTS = require('../util/constants');
 
-import FileModel = require('./models/ACS/fileModel');
-import FolderModel = require("./models/ACS/folderModel");
-import AcsUserModel = require('./models/ACS/acsUserModel');
+import FileModel = require('../models/ACS/fileModel');
+import FolderModel = require('../models/ACS/folderModel');
+import AcsUserModel = require('../models/ACS/acsUserModel');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from './actions/ACS/upload.actions';
+import { UploadActions } from '../actions/ACS/upload.actions';
 
 describe('Viewer', () => {
 
     let acsUser = new AcsUserModel();
     let viewerPage = new ViewerPage();
     let navigationBarPage = new NavigationBarPage();
-    let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
     let site, uploadedDocs, uploadedImages;
 
-    let pdfFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'firstPageText': resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
-        'secondPageText': resources.Files.ADF_DOCUMENTS.PDF.second_page_text,
-        'lastPageNumber': resources.Files.ADF_DOCUMENTS.PDF.last_page_number
+    let pngFile = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     let docFolder = new FolderModel({
@@ -70,14 +66,11 @@ describe('Viewer', () => {
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
-            title: Util.generateRandomString(),
-            visibility: "PUBLIC"
+            title: Util.generateRandomString(8),
+            visibility: 'PUBLIC'
         });
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        /*tslint:disable-next-line*/
-        console.log(`USERNAME : ${acsUser.id} - PASSWORD : ${acsUser.password}`);
 
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: acsUser.id,
@@ -86,8 +79,8 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let pdfFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, site.entry.guid);
-        Object.assign(pdfFile, pdfFileUploaded.entry);
+        let pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pngFile.location, pngFile.name, site.entry.guid);
+        Object.assign(pngFile, pngFileUploaded.entry);
 
         let docFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, docFolder.name, "-my-");
         Object.assign(docFolder, docFolderUploaded.entry);
@@ -110,10 +103,6 @@ describe('Viewer', () => {
         });
     });
 
-    beforeEach(() => {
-        browser.get(TestConfig.adf.url);
-    });
-
     it('[C260517] Should be possible to open any Document supported extension', () => {
         uploadedDocs.forEach((currentFile) => {
             navigationBarPage.openViewer(currentFile.entry.id);
@@ -129,10 +118,11 @@ describe('Viewer', () => {
     });
 
     it('[C272813] Should be able to close the viewer when clicking close button', () => {
+        browser.get(TestConfig.adf.url);
         navigationBarPage.goToSite(site);
 
-        viewerPage.viewFile(pdfFile.name);
-        viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        viewerPage.viewFile(pngFile.name);
+        viewerPage.checkImgViewerIsDisplayed();
 
         viewerPage.clickCloseButton();
     });

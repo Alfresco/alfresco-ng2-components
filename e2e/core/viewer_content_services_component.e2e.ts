@@ -240,7 +240,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C279922] Open viewer for a .ppt file', () => {
+    it('[C279922] Should display first page, toolbar and pagination when opening a .ppt file', () => {
         viewerPage.viewFile(pptFile.name);
         viewerPage.checkFileContent('1', pptFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();

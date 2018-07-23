@@ -16,7 +16,7 @@
  */
 
 var Util = require("../../util/util");
-var CardViewPage = require("./cardViewPage");
+var CardViewPage = require("./cardViewPageComponent");
 
 var ViewerToolbarPage = function () {
 
