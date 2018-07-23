@@ -13,11 +13,12 @@ show_help() {
     echo "-e or --email"
     echo "-b or --browser run the test in the browsrwer (No headless mode)"
     echo "-s or --spec run a single test file"
+    echo "-f or --folder run a single folder test"
     echo "-proxy or --proxy proxy Back end URL to use only possibel to use with -dev option"
     echo "-dev or --dev run it against local development environment it will deploy on localhost:4200 the current version of your branch"
     echo "-host or --host URL of the Front end to test"
     echo "-save  save the error screenshot in the remote env"
-    echo "-t or --timeout override the timeout foe the wait utils"
+    echo "-timeout or --timeout override the timeout foe the wait utils"
     echo "-h or --help"
 }
 
@@ -60,13 +61,18 @@ set_development(){
     DEVELOPMENT=true
 }
 
+set_test_folder(){
+    FOLDER=$1
+}
+
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
       -u|--username)  set_username $2; shift 2;;
       -p|--password)  set_password $2; shift 2;;
       -e|--email)  set_email $2; shift 2;;
-      -t|--timeout)  set_timeout $2; shift 2;;
+      -f|--folder)  set_test_folder $2; shift 2;;
+      -timeout|--timeout)  set_timeout $2; shift 2;;
       -b|--browser)  set_browser; shift;;
       -dev|--dev)  set_development; shift;;
       -s|--spec)  set_test $2; shift 2;;
@@ -88,7 +94,7 @@ export BROWSER_RUN=$BROWSER_RUN
 export PROXY_HOST_ADF=$PROXY
 export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
-
+export FOLDER='/'$FOLDER
 
 if [[  $DEVELOPMENT == "true" ]]; then
   echo "====== Run against local development  ====="
