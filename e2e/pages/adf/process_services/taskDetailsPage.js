@@ -119,12 +119,6 @@ var TaskDetailsPage = function () {
         return this;
     };
 
-    this.clearComment = function (comment) {
-        Util.waitUntilElementIsVisible(commentField);
-        commentField.sendKeys(protractor.Key.ENTER);
-        return this;
-    };
-
     this.checkCommentIsDisplayed = function (comment) {
         var row = element(by.cssContainingText("div[id='comment-message']", comment));
         Util.waitUntilElementIsVisible(row);
