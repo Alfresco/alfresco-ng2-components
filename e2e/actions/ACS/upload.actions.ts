@@ -71,4 +71,33 @@ export class UploadActions {
         return alfrescoJsApi.nodes.deleteNode(folderId, { permanent: true } );
     }
 
+    async uploadFolderFiles(alfrescoJsApi, sourcePath, folder) {
+        let absolutePath = '../../' + sourcePath;
+        let files = fs.readdirSync(path.join(__dirname, absolutePath));
+        let uploadedFiles = [];
+
+        if (files && files.length > 0) {
+
+            for (const fileName of files) {
+
+                let pathFile = path.join(__dirname, absolutePath, fileName);
+                let file = fs.createReadStream(pathFile);
+
+                let curretnFile = await  alfrescoJsApi.upload.uploadFile(
+                    file,
+                    '',
+                    folder.entry.id,
+                    null,
+                    {
+                        'name': file.name,
+                        'nodeType': 'cm:content'
+                    }
+                );
+
+                uploadedFiles.push(curretnFile);
+            }
+        }
+
+        return uploadedFiles;
+    }
 }
