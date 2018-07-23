@@ -78,19 +78,19 @@ export class AccordionGroupComponent implements AfterViewInit {
     constructor() { }
 
     ngAfterViewInit() {
-        this.hasContent = this.contentWrapper.nativeElement && this.contentWrapper.nativeElement.children.length > 0;
+        this.hasContent = this.contentWrapper ? this.contentWrapper.nativeElement && this.contentWrapper.nativeElement.children.length > 0 : false;
     }
 
     hasHeadingIcon() {
-        return this.headingIcon ? true : false;
+        return !!this.headingIcon;
     }
 
     onHeaderClick(): void {
         this.headingClick.emit(this.heading);
     }
 
-    isExpandable(event: any) {
-        if (!this.hasContent || !this.isOpen) {
+    isExpandable() {
+        if (this.hasContent && this.isSelected) {
             this.expandPanel();
         }
     }
