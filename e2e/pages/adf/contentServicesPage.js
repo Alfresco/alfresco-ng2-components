@@ -41,14 +41,18 @@ var ContentServicesPage = function () {
     var loadMoreButton = element(by.css("button[data-automation-id='adf-infinite-pagination-button']"));
     var emptyPagination = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
     var dragAndDrop = element(by.css("adf-upload-drag-area div"));
-    var nameHeader = element(by.css('div[data-automation-id="auto_id_name"] > span'));
-    var sizeHeader = element(by.css('div[data-automation-id="auto_id_content.sizeInBytes"] > span'));
-    var createdByHeader = element(by.css('div[data-automation-id="auto_id_createdByUser.displayName"] > span'));
-    var createdHeader = element(by.css('div[data-automation-id="auto_id_createdAt"] > span'));
-    var recentFiles = element(by.css('.adf-container-recent'));
-    var recentFilesExpanded = element(by.css('.adf-container-recent mat-expansion-panel-header.mat-expanded'));
-    var recentFilesClosed = element(by.css('.adf-container-recent mat-expansion-panel-header'));
-    var recentFileIcon = element(by.css('.adf-container-recent mat-expansion-panel-header mat-icon'));
+    var nameHeader = element(by.css("div[data-automation-id='auto_id_name'] > span"));
+    var sizeHeader = element(by.css("div[data-automation-id='auto_id_content.sizeInBytes'] > span"));
+    var createdByHeader = element(by.css("div[data-automation-id='auto_id_createdByUser.displayName'] > span"));
+    var createdHeader = element(by.css("div[data-automation-id='auto_id_createdAt'] > span"));
+    var recentFiles = element(by.css(".adf-container-recent"));
+    var recentFilesExpanded = element(by.css(".adf-container-recent mat-expansion-panel-header.mat-expanded"));
+    var recentFilesClosed = element(by.css(".adf-container-recent mat-expansion-panel-header"));
+    var recentFileIcon = element(by.css(".adf-container-recent mat-expansion-panel-header mat-icon"));
+    var documentListSpinner = element(by.css("mat-progress-spinner"));
+    var emptyFolder = element(by.css(".adf-empty-folder-this-space-is-empty"));
+    var emptyFolderImage = element(by.css(".adf-empty-folder-image"));
+    var emptyRecent = element(by.css(".adf-container-recent .empty-list__title"));
 
 
     this.checkRecentFileToBeShowed = function () {
@@ -448,6 +452,23 @@ var ContentServicesPage = function () {
         return row.getCssValue(styleName);
     }
 
+    this.checkSpinnerIsShowed = function () {
+        Util.waitUntilElementIsPresent(documentListSpinner);
+    }
+
+    this.checkEmptyFolderTextToBe = function (text) {
+        Util.waitUntilElementIsVisible(emptyFolder);
+        expect(emptyFolder.getText()).toContain(text);
+    }
+
+    this.checkEmptyFolderImageUrlToContain = function (url) {
+        Util.waitUntilElementIsVisible(emptyFolderImage);
+        expect(emptyFolderImage.getAttribute('src')).toContain(url);
+    }
+
+    this.checkEmptyRecentFileIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(emptyRecent);
+    }
 };
 
 module.exports = ContentServicesPage;
