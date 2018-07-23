@@ -130,29 +130,29 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
-    onToggleBucket(event: MatCheckboxChange, bucket: FacetFieldBucket) {
+    onToggleBucket(event: MatCheckboxChange, field: FacetField, bucket: FacetFieldBucket) {
         if (event && bucket) {
             if (event.checked) {
-                this.selectFacetBucket(bucket);
+                this.selectFacetBucket(field, bucket);
             } else {
-                this.unselectFacetBucket(bucket);
+                this.unselectFacetBucket(field, bucket);
             }
         }
     }
 
-    selectFacetBucket(bucket: FacetFieldBucket) {
+    selectFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
         if (bucket) {
             bucket.checked = true;
-            this.queryBuilder.addUserFacetBucket(bucket);
+            this.queryBuilder.addUserFacetBucket(field, bucket);
             this.updateSelectedBuckets();
             this.queryBuilder.update();
         }
     }
 
-    unselectFacetBucket(bucket: FacetFieldBucket) {
+    unselectFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
         if (bucket) {
             bucket.checked = false;
-            this.queryBuilder.removeUserFacetBucket(bucket);
+            this.queryBuilder.removeUserFacetBucket(field, bucket);
             this.updateSelectedBuckets();
             this.queryBuilder.update();
         }
@@ -181,7 +181,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         if (field && field.buckets) {
             for (let bucket of field.buckets.items) {
                 bucket.checked = false;
-                this.queryBuilder.removeUserFacetBucket(bucket);
+                this.queryBuilder.removeUserFacetBucket(field, bucket);
             }
             this.updateSelectedBuckets();
             this.queryBuilder.update();
