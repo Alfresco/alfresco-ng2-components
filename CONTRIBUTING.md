@@ -73,6 +73,6 @@ In ADF we are encouraging the use of behavior-driven development (BDD)
 
 ### Test Name
 
-Any test should follow the naming convetion:
+Any test should follow the naming convention:
 
 [Should] [ ***Expected Behavior** ] [when/after/before] [ ***State Under Test*** ].
