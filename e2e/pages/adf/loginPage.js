@@ -24,6 +24,9 @@ var LoginPage = function () {
     var loginURL = TestConfig.adf.url + TestConfig.adf.port + "/login";
     var txtUsername = element(by.css("input[id='username']"));
     var txtPassword = element(by.css("input[id='password']"));
+    var logoImg = element(by.css("img[id='adf-login-img-logo']"));
+    var successRouteTxt = element(by.css("input[data-automation-id='adf-success-route']"));
+    var logoTxt = element(by.css("input[data-automation-id='adf-url-logo']"));
     var usernameTooltip = element(by.css("span[data-automation-id='username-error']"));
     var passwordTooltip = element(by.css("span[data-automation-id='password-required']"));
     var loginTooltip = element(by.css("span[class='login-error-message']"));
@@ -39,9 +42,14 @@ var LoginPage = function () {
     var needHelp = element(by.css("div[id='adf-login-action-left']"));
     var register = element(by.css("div[id='adf-login-action-right']"));
     var footerSwitch = element(by.id("switch4"));
+    var rememberMeSwitch = element(by.id("adf-toogle-show-rememberme"));
+    var successRouteSwitch = element(by.id("adf-toogle-show-successRoute"));
+    var logoSwitch = element(by.id("adf-toogle-logo"));
     var userPicture = element(by.id("userinfo_container"));
+    var header = element(by.id("adf-header"));
     var cardBackground = element(by.css("mat-card[class*='adf-login-card']"));
     var adfSettingsPage = new AdfSettingsPage();
+
 
     /**
      * Provides the longer wait required
@@ -71,9 +79,7 @@ var LoginPage = function () {
     this.enterUsername = function (username) {
         Util.waitUntilElementIsVisible(txtUsername);
         txtUsername.sendKeys('');
-        txtUsername.clear();
-        browser.driver.sleep(500);
-        txtUsername.sendKeys(username);
+        return txtUsername.clear().sendKeys(username);
     };
 
     /**
@@ -83,9 +89,7 @@ var LoginPage = function () {
      */
     this.enterPassword = function (password) {
         Util.waitUntilElementIsVisible(txtPassword);
-        browser.driver.sleep(500);
-        txtPassword.clear();
-        txtPassword.sendKeys(password);
+        return txtPassword.clear().sendKeys(password);
     };
 
     /**
@@ -95,7 +99,7 @@ var LoginPage = function () {
      */
     this.clearUsername = function () {
         Util.waitUntilElementIsVisible(txtUsername);
-        txtUsername.click().clear();
+        return txtUsername.click().clear();
     };
 
     /**
@@ -141,20 +145,30 @@ var LoginPage = function () {
     };
 
     /**
+     * checks login error tooltips
+     * @method checkLoginError
+     * @param {String} message
+     */
+    this.checkLoginImgURL = function (url) {
+        Util.waitUntilElementIsVisible(logoImg);
+        expect(logoImg.getAttribute('src')).toEqual(url);
+    };
+
+    /**
      * checks username field is inactive
      * @method checkUsernameInactive
      */
     this.checkUsernameInactive = function () {
         Util.waitUntilElementIsVisible(usernameInactive);
-    },
+    };
 
-        /**
-         * checks password field is inactive
-         * @method checkPasswordInactive
-         */
-        this.checkPasswordInactive = function () {
-            Util.waitUntilElementIsVisible(passwordInactive);
-        };
+    /**
+     * checks password field is inactive
+     * @method checkPasswordInactive
+     */
+    this.checkPasswordInactive = function () {
+        Util.waitUntilElementIsVisible(passwordInactive);
+    };
 
     /**
      * checks username field is highlighted
@@ -255,6 +269,7 @@ var LoginPage = function () {
      */
     this.goToLoginPage = function () {
         browser.driver.get(TestConfig.adf.url + TestConfig.adf.port + '/login');
+        this.waitForElements();
     };
 
     /**
@@ -273,6 +288,14 @@ var LoginPage = function () {
     this.clickSignInButton = function () {
         Util.waitUntilElementIsVisible(signInButton);
         signInButton.click();
+    };
+
+    /**
+     * clicks the remember me checkbox
+     */
+    this.clickRememberMe = function () {
+        Util.waitUntilElementIsVisible(rememberMe);
+        rememberMe.click();
     };
 
     /**
@@ -422,6 +445,99 @@ var LoginPage = function () {
     };
 
     /**
+     * disables RememberMe
+     */
+    this.disableRememberMe = function () {
+        Util.waitUntilElementIsVisible(rememberMeSwitch);
+        rememberMeSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                rememberMeSwitch.click();
+                expect(rememberMeSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables footer switch
+     * @method enableFooter
+     */
+    this.enableRememberMe = function () {
+        Util.waitUntilElementIsVisible(rememberMeSwitch);
+        rememberMeSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                rememberMeSwitch.click();
+                expect(rememberMeSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
+    /**
+     * disables successRouteSwitch
+     */
+    this.disableSuccessRouteSwitch = function () {
+        Util.waitUntilElementIsVisible(successRouteSwitch);
+        successRouteSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                successRouteSwitch.click();
+                expect(successRouteSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables successRouteSwitch
+     * @method enableFooter
+     */
+    this.enableSuccessRouteSwitch = function () {
+        Util.waitUntilElementIsVisible(rememberMeSwitch);
+        successRouteSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                successRouteSwitch.click();
+                expect(successRouteSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
+    /**
+     * disables successRouteSwitch
+     */
+    this.disableLogowitch = function () {
+        Util.waitUntilElementIsVisible(logoSwitch);
+        logoSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                logoSwitch.click();
+                expect(logoSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables successRouteSwitch
+     * @method enableFooter
+     */
+    this.enableLogoSwitch = function () {
+        Util.waitUntilElementIsVisible(rememberMeSwitch);
+        logoSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                logoSwitch.click();
+                expect(logoSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
+    this.enterSuccessRoute = function (route) {
+        Util.waitUntilElementIsVisible(successRouteTxt);
+        successRouteTxt.sendKeys('');
+        return successRouteTxt.clear().sendKeys(route);
+    };
+
+    this.enterLogo = function (logo) {
+        Util.waitUntilElementIsVisible(logoTxt);
+        logoTxt.sendKeys('');
+        return logoTxt.clear().sendKeys(logo);
+    };
+
+    /**
      * logs in with a valid user
      * @method login
      * @param {String, String} username, password
@@ -431,7 +547,7 @@ var LoginPage = function () {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        Util.waitUntilElementIsVisible(userPicture);
+        return Util.waitUntilElementIsVisible(header);
     };
 
 };

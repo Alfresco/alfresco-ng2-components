@@ -7,10 +7,13 @@ var HOST = process.env.URL_HOST_ADF;
 var USERNAME = process.env.USERNAME_ADF;
 var PASSWORD = process.env.PASSWORD_ADF;
 var EMAIL = process.env.EMAIL_ADF;
+var TIMEOUT = process.env.TIMEOUT || 20000;
 
 module.exports = {
 
     main: {
+        timeout: TIMEOUT,
+
         presence_timeout: 60000,
 
         rootPath: __dirname

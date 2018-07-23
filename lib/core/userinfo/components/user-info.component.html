@@ -5,8 +5,8 @@
           class="adf-userinfo-name">{{ecmUser.fullNameDisplay}}</span>
     <span *ngIf="bpmUser && !ecmUser && showName" id="adf-userinfo-bpm-name-display"
           class="adf-userinfo-name">{{bpmUser.fullNameDisplay}}</span>
-    <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button">
-        <div class="adf-userinfo-button-profile" id="user-profile" data-automation-id="user-profile">
+    <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button" data-automation-id="adf-user-profile">
+        <div class="adf-userinfo-button-profile" id="user-profile">
             <div *ngIf="bpmUser && !ecmUser" id="bpm-user-image">
                 <div *ngIf="!hasBpmUserPictureId()" [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-pic'"></div>
                 <div *ngIf="hasBpmUserPictureId()" class="adf-userinfo-profile-container">

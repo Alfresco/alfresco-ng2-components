@@ -68,16 +68,15 @@ var TagPage = function () {
         return this;
     };
 
-    this.deleteTagFromTagListByNodeId = function () {
-        var deleteChip = element(by.css('button[id=\'tag_delete_0\']'));
+    this.deleteTagFromTagListByNodeId = function (name) {
+        var deleteChip = element(by.css('button[id="tag_chips_delete_' + name + '"]'));
         Util.waitUntilElementIsVisible(deleteChip);
         deleteChip.click();
         return this;
     };
 
-
-    this.deleteTagFromTagList = function () {
-        var deleteChip = element(by.xpath('//*[@id="tag_delete_0"]/mat-icon'));
+    this.deleteTagFromTagList = function (name) {
+        var deleteChip = element(by.xpath('//*[@id="tag_chips_delete_' + name + '"]/mat-icon'));
         Util.waitUntilElementIsVisible(deleteChip);
         deleteChip.click();
         return this;

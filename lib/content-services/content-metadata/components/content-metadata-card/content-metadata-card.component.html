@@ -15,17 +15,17 @@
                 mat-icon-button
                 (click)="toggleEdit()"
                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                data-automation-id="mata-data-card-toggle-edit">
+                data-automation-id="meta-data-card-toggle-edit">
                 <mat-icon>mode_edit</mat-icon>
             </button>
         </div>
-        <button mat-button (click)="toggleExpanded()" data-automation-id="mata-data-card-toggle-expand">
+        <button mat-button (click)="toggleExpanded()" data-automation-id="meta-data-card-toggle-expand">
             <ng-container *ngIf="!expanded">
-                <span data-automation-id="mata-data-card-toggle-expand-label">{{ 'ADF_VIEWER.SIDEBAR.METADATA.MORE_INFORMATION' | translate }}</span>
+                <span data-automation-id="meta-data-card-toggle-expand-label">{{ 'ADF_VIEWER.SIDEBAR.METADATA.MORE_INFORMATION' | translate }}</span>
                 <mat-icon>keyboard_arrow_down</mat-icon>
             </ng-container>
             <ng-container *ngIf="expanded">
-                <span data-automation-id="mata-data-card-toggle-expand-label">{{ 'ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION' | translate }}</span>
+                <span data-automation-id="meta-data-card-toggle-expand-label">{{ 'ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION' | translate }}</span>
                 <mat-icon>keyboard_arrow_up</mat-icon>
             </ng-container>
         </button>

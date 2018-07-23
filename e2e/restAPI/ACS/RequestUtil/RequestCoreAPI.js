@@ -26,8 +26,7 @@ exports.getBaseURL = function () {
 };
 
 exports.requestHeaders = function (auth) {
-    var headers = {
+    return {
         'Authorization': new APIUtils().getAuthorization(auth.id, auth.password)
     };
-    return headers;
 };

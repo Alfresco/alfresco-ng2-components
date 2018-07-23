@@ -21,6 +21,7 @@
     ]
   },
   "exclude": [
+    "e2e",
     "lib/config",
     "integration",
     "scripts",

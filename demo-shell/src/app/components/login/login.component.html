@@ -19,6 +19,55 @@
             {{ 'LOGIN.LOGIN_FOOTER'| translate }}
         </mat-slide-toggle>
     </p>
+    <p class="toggle">
+        <mat-slide-toggle
+            id="adf-toogle-show-rememberme"
+            [color]="'primary'"
+            (change)="toggleRemamberme()"
+            [checked]="showRememberMe">
+            {{ 'LOGIN.SHOW_REMEMBERME'| translate }}
+        </mat-slide-toggle>
+    </p>
+    <p class="toggle">
+        <mat-slide-toggle
+            id="adf-toogle-show-successRoute"
+            [color]="'primary'"
+            (change)="toggleSuccessRoute()"
+            [checked]="customSuccessRoute">
+            {{ 'LOGIN.SHOW_SUCCESS_ROUTE'| translate }}
+        </mat-slide-toggle>
+    </p>
+    <p class="toggle">
+        <ng-container *ngIf="customSuccessRoute">
+            <mat-form-field floatPlaceholder="float">
+                <input matInput
+                       placeholder="Custom success route"
+                       [(ngModel)]="customSuccessRouteURI"
+                       data-automation-id="adf-success-route">
+            </mat-form-field>
+        </ng-container>
+    </p>
+
+    <p class="toggle">
+        <mat-slide-toggle
+            id="adf-toogle-logo"
+            [color]="'primary'"
+            (change)="toggleLogo()"
+            [checked]="customLogoImage">
+            {{ 'LOGIN.CUSTOM_LOGO'| translate }}
+        </mat-slide-toggle>
+    </p>
+    <p class="toggle">
+        <ng-container *ngIf="customLogoImage">
+            <mat-form-field floatPlaceholder="float">
+                <input matInput
+                       placeholder="Custom success Logo URL"
+                       [(ngModel)]="customLogoImageURL"
+                       data-automation-id="adf-url-logo">
+            </mat-form-field>
+        </ng-container>
+    </p>
+
 </div>
 
 <!--SETTING BUTTON-->
@@ -29,10 +78,12 @@
 
 <adf-login
     #alfrescologin
+    [successRoute]="customSuccessRouteURI"
+    [logoImageUrl]="customLogoImageURL"
     [fieldsValidation]="customValidation"
     [disableCsrf]="disableCsrf"
     [showLoginActions]="showFooter"
-    [showRememberMe]="showFooter"
+    [showRememberMe]="showFooter && showRememberMe"
     (executeSubmit)="checkForm($event)"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
     (success)="onLogin($event)"
@@ -56,7 +107,9 @@
                 {{ 'LOGIN.LOGIN_FOOTER'| translate }}
             </mat-slide-toggle>
         </p>
-        <button type="button" mat-raised-button color="accent" class="mobile-setting-button" routerLink="/settings" data-automation-id="settings">{{ 'APP_LAYOUT.SETTINGS'| translate }}</button>
+        <button type="button" mat-raised-button color="accent" class="mobile-setting-button" routerLink="/settings"
+                data-automation-id="settings">{{ 'APP_LAYOUT.SETTINGS'| translate }}
+        </button>
 
     </div>
 </adf-login>

@@ -17,8 +17,6 @@
 
 var url = require('url-join');
 var TestConfig = require('../test.config');
-var BasicAuthorization = require('../restAPI/httpRequest/BasicAuthorization');
-var Ajv = require('ajv');
 
 var APIUtils = function () {
     /**
@@ -53,12 +51,10 @@ var APIUtils = function () {
         urlComponents.path = TestConfig[application].apiContextRoot;
         Object.assign(urlComponents, urlComponentsParam);
 
-        var baseUrl = url(urlComponents.protocol
+        return url(urlComponents.protocol
             + "://" + urlComponents.hostname
             + (urlComponents.port !== "" ? ":" + urlComponents.port : ""),
             urlComponents.path);
-
-        return baseUrl;
     };
 
 };

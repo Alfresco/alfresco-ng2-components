@@ -31,9 +31,14 @@ export class LoginComponent implements OnInit {
     alfrescologin: any;
 
     customValidation: any;
+    customSuccessRouteURI = '';
+    customLogoImageURL = './assets/images/alfresco-logo.svg';
 
     disableCsrf = false;
     showFooter = true;
+    showRememberMe = true;
+    customSuccessRoute = false;
+    customLogoImage = false;
     customMinLength = 2;
 
     constructor(private router: Router,
@@ -46,7 +51,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.alfrescologin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
-        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', {minLength: this.customMinLength});
+        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', { minLength: this.customMinLength });
         this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
     }
 
@@ -64,6 +69,24 @@ export class LoginComponent implements OnInit {
 
     toggleFooter() {
         this.showFooter = !this.showFooter;
+    }
+
+    toggleRemamberme() {
+        this.showRememberMe = !this.showRememberMe;
+    }
+
+    toggleSuccessRoute() {
+        this.customSuccessRoute = !this.customSuccessRoute;
+        if (!this.customSuccessRoute) {
+            this.customSuccessRouteURI = null;
+        }
+    }
+
+    toggleLogo() {
+        this.customLogoImage = !this.customLogoImage;
+        if (!this.customLogoImage) {
+            this.customLogoImageURL = null;
+        }
     }
 
     checkForm(event: any) {

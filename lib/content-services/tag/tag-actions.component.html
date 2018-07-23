@@ -1,7 +1,7 @@
 <mat-list>
     <mat-list-item *ngFor="let currentEntry of tagsEntries; let idx = index">
-        <div class="adf-tag-actions-container" id="tag_delete_{{idx}}" (click)="removeTag(currentEntry.entry.id)">
-            <div class="adf-tag-actions-delete-text" id="tag_name_{{idx}}">
+        <div class="adf-tag-actions-container" id="tag_delete_{{currentEntry.entry.tag}}" (click)="removeTag(currentEntry.entry.id)">
+            <div class="adf-tag-actions-delete-text" id="tag_name_{{currentEntry.entry.tag}}">
                 {{currentEntry.entry.tag}}
             </div>
             <mat-icon class="adf-tag-actions-delete-icon">delete</mat-icon>

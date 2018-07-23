@@ -12,6 +12,7 @@ const height = 768;
 
 var HOST = process.env.URL_HOST_ADF;
 var BROWSER_RUN = process.env.BROWSER_RUN;
+var FOLDER = process.env.FOLDER;
 
 var args_options = [];
 
@@ -27,7 +28,7 @@ exports.config = {
     allScriptsTimeout: 60000,
 
     specs: [
-        './e2e/**/*.e2e.ts'
+        './e2e/'+FOLDER+'**/*.e2e.ts'
     ],
 
     capabilities: {

@@ -85,20 +85,6 @@ exports.TASKSTATUS = {
     RUNNING: 'Running'
 };
 
-exports.METADATA = {
-    DATAFORMAT: "mmm dd yyyy",
-    TITLE: "Details",
-    COMMENTS_TAB: "COMMENTS",
-    PROPERTY_TAB: "PROPERTIES",
-    VERSIONS_TAB: "VERSIONS",
-    DEFAULT_ASPECT: "Properties",
-    MORE_INFO_BUTTON: "More information",
-    LESS_INFO_BUTTON: "Less information",
-    ARROW_DOWN: "keyboard_arrow_down",
-    ARROW_UP: "keyboard_arrow_up",
-    EDIT_BUTTON_TOOLTIP: "Edit"
-};
-
 exports.THEMING = {
     PINK_BLUE_DARK: "Pink Bluegrey Dark",
     DEFAULT_PASSWORD_ICON_COLOR: "rgba(0, 0, 0, 0.87)",

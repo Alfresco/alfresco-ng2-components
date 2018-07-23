@@ -17,7 +17,7 @@
 
 var Util = require('../../../util/util');
 
-    var SearchDialog = function () {
+var SearchDialog = function () {
 
     var searchIcon = element(by.css("button[class*='adf-search-button']"));
     var searchBar = element(by.css("adf-search-control div[style*='translateX(0%)'] input"));
@@ -28,6 +28,12 @@ var Util = require('../../../util/util');
     var highlightName = by.css("div[id*='results-content'] span[class='highlight']");
     var searchDialog = element(by.css("mat-list[id*='autocomplete-search-result-list']"));
     var allRows = element.all(by.css("h4[class*='adf-search-fixed-text']"));
+
+    this.pressDownArrowAndEnter = function () {
+        element(by.css("adf-search-control div[style*='translateX(0%)'] input")).sendKeys(protractor.Key.ARROW_DOWN);
+        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    };
+
 
     this.clickOnSearchIcon = function () {
         Util.waitUntilElementIsVisible(searchIcon);
@@ -87,24 +93,7 @@ var Util = require('../../../util/util');
     };
 
     this.getRowByRowName = function (name) {
-        return element(by.css("mat-list-item[data-automation-id='autocomplete_for_" + name +"']"));
-    };
-
-    this.getAllRowsValues = function () {
-        var deferred = protractor.promise.defer();
-        var array = [], i =0;
-
-        allRows.map(function(element) {
-            return element.getText();
-        }).then(function (texts) {
-            texts.forEach(function (text) {
-                array[i] = text;
-                i++;
-            });
-        });
-
-        deferred.fulfill(array);
-        return deferred.promise;
+        return element(by.css("mat-list-item[data-automation-id='autocomplete_for_" + name + "']"));
     };
 
     this.getSpecificRowsHighlightName = function (name) {
@@ -139,33 +128,5 @@ var Util = require('../../../util/util');
         });
         return deferred.promise;
     };
-
-    this.resultTableContainsRowWithRetry = function (name, retry) {
-
-        var isPresent = false;
-
-        function run() {
-            element(by.css("mat-list-item[data-automation-id='autocomplete_for_" + name +"']")).isPresent().then(
-                function (result) {
-                    if(result === true) {
-                        isPresent = true;
-                    }
-                    else {
-                        retry --;
-
-                        if(retry > 0) {
-                            // console.log("Retry: " + retry);
-                            run();
-                        };
-                    }
-
-                }
-
-                );
-            };
-
-            run();
-
-        };
 };
 module.exports = SearchDialog;
