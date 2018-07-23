@@ -26,6 +26,7 @@ import {
     CardViewKeyValuePairsItemModel,
     CardViewSelectItemModel,
     CardViewUpdateService,
+    CardViewMapItemModel,
     UpdateNotification
 } from '@alfresco/adf-core';
 import { of } from 'rxjs/observable/of';
@@ -38,76 +39,87 @@ export class CardViewComponent implements OnInit {
 
     @ViewChild('console') console: ElementRef;
 
+    isEditable = true;
     properties: any;
     logs: string[];
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {
         this.logs = [];
+        this.createCard();
+    }
+
+    ngOnInit() {
+        this.cardViewUpdateService.itemUpdated$.subscribe(this.onItemChange.bind(this));
+    }
+
+    createCard() {
         this.properties = [
             new CardViewTextItemModel({
                 label: 'CardView Text Item',
                 value: 'Spock',
                 key: 'name',
-                default: 'default bar' ,
+                default: 'default bar',
                 multiline: false,
                 icon: 'icon',
-                editable: true
+                editable: this.isEditable
             }),
             new CardViewDateItemModel({
                 label: 'CardView Date Item',
-                value: new Date(),
-                key: 'date-of-birth',
-                default: new Date(),
+                value: new Date(1983, 11, 24, 10, 0, 30),
+                key: 'date',
+                default: new Date(1983, 11, 24, 10, 0, 30),
                 format: 'DD.MM.YYYY',
-                editable: true
+                editable: this.isEditable
             }),
             new CardViewDatetimeItemModel({
                 label: 'CardView Datetime Item',
-                value: new Date(),
-                key: 'datetime-of-birth',
-                default: new Date(),
+                value: new Date(1983, 11, 24, 10, 0, 0),
+                key: 'datetime',
+                default: new Date(1983, 11, 24, 10, 0, 0),
                 format: 'DD.MM.YYYY',
-                editable: true
+                editable: this.isEditable
             }),
             new CardViewBoolItemModel({
                 label: 'CardView Boolean Item',
                 value: true,
-                key: 'vulcanian',
+                key: 'boolean',
                 default: false,
-                editable: true
+                editable: this.isEditable
             }),
             new CardViewIntItemModel({
                 label: 'CardView Int Item',
                 value: 213,
-                key: 'intelligence',
+                key: 'int',
                 default: 1,
-                editable: true
+                editable: this.isEditable
             }),
             new CardViewFloatItemModel({
                 label: 'CardView Float Item',
                 value: 9.9,
-                key: 'mental-stability',
+                key: 'float',
                 default: 0.0,
-                editable: true
+                editable: this.isEditable
             }),
             new CardViewKeyValuePairsItemModel({
                 label: 'CardView Key-Value Pairs Item',
                 value: [],
                 key: 'key-value-pairs',
-                editable: true
+                editable: this.isEditable
             }),
             new CardViewSelectItemModel({
                 label: 'CardView Select Item',
                 value: 'one',
                 options$: of([{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }]),
                 key: 'select',
-                editable: true
+                editable: this.isEditable
+            }),
+            new CardViewMapItemModel({
+                label: 'My map',
+                value: new Map([['999', 'My Value']]),
+                key: 'map',
+                default: 'default map value'
             })
         ];
-    }
-
-    ngOnInit() {
-        this.cardViewUpdateService.itemUpdated$.subscribe(this.onItemChange.bind(this));
     }
 
     onItemChange(notification: UpdateNotification) {
@@ -119,5 +131,16 @@ export class CardViewComponent implements OnInit {
 
         this.logs.push(`[${notification.target.label}] - ${value}`);
         this.console.nativeElement.scrollTop = this.console.nativeElement.scrollHeight;
+    }
+
+    toggleEditable() {
+        this.isEditable = !this.isEditable;
+        this.createCard();
+    }
+
+    reset() {
+        this.isEditable = true;
+        this.createCard();
+        this.logs = [];
     }
 }

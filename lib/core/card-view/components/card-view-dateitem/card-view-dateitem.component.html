@@ -1,6 +1,6 @@
-<div class="adf-property-label" *ngIf="showProperty() || isEditable()">{{ property.label | translate }}</div>
+<div [attr.data-automation-id]="'card-dateitem-label-' + property.key" class="adf-property-label" *ngIf="showProperty() || isEditable()">{{ property.label | translate }}</div>
 <div class="adf-property-value">
-    <span *ngIf="!isEditable()">
+    <span *ngIf="!isEditable()" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span [attr.data-automation-id]="'card-dateitem-' + property.key">
             <span *ngIf="showProperty()">{{ property.displayValue }}</span>
         </span>
@@ -11,7 +11,7 @@
                 class="adf-datepicker-toggle"
                 [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
                 (click)="showDatePicker($event)">
-                <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
+                <span [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key" *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
             <mat-datetimepicker-toggle
                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"

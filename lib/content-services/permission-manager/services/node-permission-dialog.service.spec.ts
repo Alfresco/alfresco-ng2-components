@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed, ContentService } from '@alfresco/adf-core';
 import { NodePermissionDialogService } from './node-permission-dialog.service';
 import { MatDialog } from '@angular/material';

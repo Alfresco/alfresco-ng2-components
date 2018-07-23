@@ -1,6 +1,6 @@
 <div class="adf-metadata-properties">
     <mat-accordion displayMode="flat" [multi]="multi">
-        <mat-expansion-panel [expanded]="!expanded" [hideToggle]="!expanded">
+        <mat-expansion-panel [expanded]="!expanded" [hideToggle]="!expanded" [attr.data-automation-id]="'adf-metadata-group-properties'" >
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
@@ -17,7 +17,7 @@
         <ng-container *ngIf="expanded">
             <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
                 <div *ngFor="let group of groupedProperties" class="adf-metadata-grouped-properties-container">
-                    <mat-expansion-panel>
+                    <mat-expansion-panel [attr.data-automation-id]="'adf-metadata-group-' + group.title" >
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{ group.title | translate }}

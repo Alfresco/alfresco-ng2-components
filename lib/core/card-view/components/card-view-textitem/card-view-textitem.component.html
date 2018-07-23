@@ -1,4 +1,4 @@
-<div class="adf-property-label" *ngIf="showProperty() || isEditable()">{{ property.label | translate }}</div>
+<div [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label" *ngIf="showProperty() || isEditable()">{{ property.label | translate }}</div>
 <div class="adf-property-value">
     <span *ngIf="!isEditable()">
         <span *ngIf="!isClickable(); else elseBlock" [attr.data-automation-id]="'card-textitem-value-' + property.key">
@@ -53,7 +53,7 @@
                     [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                     [attr.data-automation-id]="'card-textitem-reset-' + property.key">clear</mat-icon>
             </div>
-            <mat-error class="adf-textitem-editable-error" *ngIf="hasErrors()">
+            <mat-error  [attr.data-automation-id]="'card-textitem-error-' + property.key" class="adf-textitem-editable-error" *ngIf="hasErrors()">
                 <ul>
                     <li *ngFor="let errorMessage of errorMessages">{{ errorMessage | translate }}</li>
                 </ul>

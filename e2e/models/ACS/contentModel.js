@@ -31,10 +31,8 @@ var ContentModel = function (details) {
     };
 
     this.getSizeInBytes = function () {
-        if (this.sizeInBytes>=1024)
-        {
-            var bytes=(this.sizeInBytes/1024).toFixed(2)+' KB';
-            return bytes;
+        if (this.sizeInBytes >= 1024) {
+            return (this.sizeInBytes / 1024).toFixed(2) + ' KB';
         }
         else {
             return this.sizeInBytes;

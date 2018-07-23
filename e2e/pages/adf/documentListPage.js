@@ -157,9 +157,9 @@ module.exports = Page.create({
      * */
     deleteContent: {
         value: function (contentName) {
-            var contentName = element(by.css("div[data-automation-id*='text_"+ contentName+"']"));
-            Util.waitUntilElementIsVisible(contentName);
-            contentName.click();
+            var contentElement = element(by.css("div[data-automation-id*='text_" + contentName + "']"));
+            Util.waitUntilElementIsVisible(contentElement);
+            contentElement.click();
             deleteContent.click();
         }
     },
@@ -183,7 +183,7 @@ module.exports = Page.create({
     goIntoFolder: {
         value: function (folderName) {
             this.checkItemInDocList(folderName);
-            browser.actions().doubleClick(element(by.css("div[data-automation-id*='text_"+ folderName+"']"))).perform();
+            browser.actions().doubleClick(element(by.css("div[data-automation-id*='text_" + folderName + "']"))).perform();
         }
     },
 
@@ -193,7 +193,7 @@ module.exports = Page.create({
      * */
     goIntoFolderViaBreadcrumbs: {
         value: function (folderName) {
-            var  breadcrumb = element(by.cssContainingText("a[data-automation-id='breadcrumb_"+ folderName +"']", folderName));
+            var breadcrumb = element(by.cssContainingText("a[data-automation-id='breadcrumb_" + folderName + "']", folderName));
 
             Util.waitUntilElementIsVisible(breadcrumb);
             breadcrumb.click();
@@ -202,14 +202,14 @@ module.exports = Page.create({
     },
 
     currentFolderName: {
-         value: function () {
-             var deferred = protractor.promise.defer();
-             Util.waitUntilElementIsVisible(currentFolder);
-             currentFolder.getText().then(function (result) {
-                 deferred.fulfill(result);
-             })
-             return deferred.promise;
-         }
+        value: function () {
+            var deferred = protractor.promise.defer();
+            Util.waitUntilElementIsVisible(currentFolder);
+            currentFolder.getText().then(function (result) {
+                deferred.fulfill(result);
+            })
+            return deferred.promise;
+        }
     },
 
     /**
@@ -218,7 +218,7 @@ module.exports = Page.create({
      * */
     checkFolderInBreadcrumbs: {
         value: function (folderName) {
-            var  breadcrumb = element(by.cssContainingText("a[data-automation-id='breadcrumb_"+ folderName +"']", folderName));
+            var breadcrumb = element(by.cssContainingText("a[data-automation-id='breadcrumb_" + folderName + "']", folderName));
 
             Util.waitUntilElementIsVisible(breadcrumb);
         }
@@ -301,7 +301,7 @@ module.exports = Page.create({
             var singleUpload = element(by.cssContainingText("div[ng-reflect-klass='file-dialog'] div[class='title'] ", "upload complete"));
             var multipleUploads = element(by.cssContainingText("div[ng-reflect-klass='file-dialog'] div[class='title'] ", "uploads complete"));
 
-            dialogUpload.count().then(function(count) {
+            dialogUpload.count().then(function (count) {
                 if (count === 1) {
                     Util.waitUntilElementIsVisible(singleUpload);
                 }
@@ -338,7 +338,7 @@ module.exports = Page.create({
      * */
     checkProgressBar: {
         value: function (fileName) {
-            Util.waitUntilElementIsVisible(element(by.css("div[data-automation-id='dialog_progress_" + fileName +"']")));
+            Util.waitUntilElementIsVisible(element(by.css("div[data-automation-id='dialog_progress_" + fileName + "']")));
         }
     },
 
@@ -611,9 +611,7 @@ module.exports = Page.create({
             var fullFileName = fileName.split(".");
             var nameWithoutExtension = fullFileName[0];
             var extension = fullFileName[1];
-            var versionedFileName = nameWithoutExtension + versioningAddition + "." + extension;
-
-            return versionedFileName;
+            return  nameWithoutExtension + versioningAddition + "." + extension;
         }
     },
 
@@ -636,7 +634,7 @@ module.exports = Page.create({
      * */
     checkFirstFolderName: {
         value: function (folderName) {
-            var firstFolder = element(by.xpath("//img[(contains(@src, 'folder.svg'))]/../../../../td/div/div[(contains(@data-automation-id, 'text_" + folderName +"'))]"));
+            var firstFolder = element(by.xpath("//img[(contains(@src, 'folder.svg'))]/../../../../td/div/div[(contains(@data-automation-id, 'text_" + folderName + "'))]"));
 
             Util.waitUntilElementIsVisible(firstFolder);
             Util.waitUntilElementIsVisible(this.documentList);
@@ -651,7 +649,7 @@ module.exports = Page.create({
      * */
     checkFirstFilesName: {
         value: function (fileName) {
-            var firstFile = element(by.xpath("//img[not (contains(@src, 'folder.svg'))]/../../../../td/div/div[(contains(@data-automation-id, 'text_" + fileName +"'))]"));
+            var firstFile = element(by.xpath("//img[not (contains(@src, 'folder.svg'))]/../../../../td/div/div[(contains(@data-automation-id, 'text_" + fileName + "'))]"));
 
             Util.waitUntilElementIsVisible(firstFile);
             Util.waitUntilElementIsVisible(this.documentList);
@@ -691,7 +689,7 @@ module.exports = Page.create({
      * */
     checkFirstFolderCreator: {
         value: function (folderName, creator) {
-            var firstFolder = element(by.xpath("//img[(contains(@src, 'folder.svg'))]/../../../../td/div/div[(contains(@data-automation-id, 'text_" + creator +"'))]"));
+            var firstFolder = element(by.xpath("//img[(contains(@src, 'folder.svg'))]/../../../../td/div/div[(contains(@data-automation-id, 'text_" + creator + "'))]"));
 
             Util.waitUntilElementIsVisible(firstFolder);
             Util.waitUntilElementIsVisible(this.documentList);
@@ -705,7 +703,7 @@ module.exports = Page.create({
      * */
     checkFirstFilesCreator: {
         value: function (fileName, creator) {
-            var firstFile = element(by.xpath("//img[not (contains(@src, 'folder.svg'))]/../../../../td/div/div[(contains(@data-automation-id, 'text_" + creator +"'))]"));
+            var firstFile = element(by.xpath("//img[not (contains(@src, 'folder.svg'))]/../../../../td/div/div[(contains(@data-automation-id, 'text_" + creator + "'))]"));
 
             Util.waitUntilElementIsVisible(firstFile);
             Util.waitUntilElementIsVisible(this.documentList);

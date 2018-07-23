@@ -29,7 +29,7 @@ Displays and edits metadata related to a node.
 | displayEmpty | `boolean` | false | Toggles whether to display empty values in the card view |
 | editable | `boolean` | false | Toggles whether the edit button should be shown |
 | expanded | `boolean` | false | Toggles between expanded (ie, full information) and collapsed (ie, reduced information) in the display |
-| multi | `boolean` | false | The multi parameter of the underlying material expansion panel |
+| multi | `boolean` | false | The multi parameter of the underlying material expansion panel, set to true to allow multi accordion to be expanded at the same time |
 | node | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | (required) The node entity to fetch metadata about |
 | preset | `string` |  | Name of the metadata preset, which defines aspects and their properties |
 

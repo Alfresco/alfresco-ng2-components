@@ -56,6 +56,7 @@ import { CardViewComponent } from './components/card-view/card-view.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { HeaderDataComponent } from './components/header-data/header-data.component';
+import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -76,6 +77,16 @@ export const appRoutes: Routes = [
             {
                 path: '',
                 component: NotificationsComponent
+            }
+        ]
+    },
+    {
+        path: 'config-editor',
+        component: AppLayoutComponent ,
+        children: [
+            {
+                path: '',
+                component: ConfigEditorComponent
             }
         ]
     },

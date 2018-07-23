@@ -59,7 +59,9 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { CardViewComponent } from './components/card-view/card-view.component';
 import { HeaderDataComponent } from './components/header-data/header-data.component';
+import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
 import { HeaderDataService } from './components/header-data/header-data.service';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 @NgModule({
     imports: [
@@ -73,7 +75,8 @@ import { HeaderDataService } from './components/header-data/header-data.service'
         FlexLayoutModule,
         ChartsModule,
         HttpClientModule,
-        AdfModule
+        AdfModule,
+        MonacoEditorModule.forRoot()
     ],
     declarations: [
         AppComponent,
@@ -119,7 +122,8 @@ import { HeaderDataService } from './components/header-data/header-data.service'
         ReportIssueComponent,
         TaskListDemoComponent,
         ProcessListDemoComponent,
-        HeaderDataComponent
+        HeaderDataComponent,
+        ConfigEditorComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production

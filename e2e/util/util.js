@@ -28,8 +28,7 @@ var TestConfig = require('../test.config');
 var moment = require('moment');
 var CONSTANTS = require('./constants');
 
-
-var DEFAULT_TIMEOUT = 20000;
+var DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout);
 /**
  * Provides utility methods used throughout the testing framework.
  *
@@ -44,9 +43,7 @@ var apiRequest = TestConfig.main.protocol !== 'http' ? https : http;
  */
 exports.uploadParentFolder = function (filePath) {
     var parentFolder = path.resolve(path.join(__dirname, 'test'));
-    var absolutePath = path.resolve(path.join(parentFolder, filePath));
-
-    return absolutePath;
+    return path.resolve(path.join(parentFolder, filePath));
 };
 
 /**
@@ -60,11 +57,6 @@ exports.sleep = function (time, callback) {
     while (new Date().getTime() < stop + time) {
     }
     callback();
-};
-
-
-exports.refreshBrowser = function () {
-    browser.refresh();
 };
 
 /**
@@ -91,9 +83,7 @@ exports.getCrtDateLongFormat = function () {
  * @method getCrtDateInFormat
  */
 exports.getCrtDateInFormat = function (dateFormat) {
-    var currentDate = moment().format(dateFormat);
-    // console.debug("Current date formatted with: '" + dateFormat + "' format, is: '" + currentDate + "'");
-    return currentDate;
+    return moment().format(dateFormat);
 };
 
 /**
@@ -121,11 +111,11 @@ exports.generatePasswordString = function (length) {
     var possibleLowerCase = 'abcdefghijklmnopqrstuvwxyz';
     var lowerCaseLimit = Math.floor(length / 2);
 
-    for (var i = 0; i < lowerCaseLimit; i++) {
+    for (let i = 0; i < lowerCaseLimit; i++) {
         text += possibleLowerCase.charAt(Math.floor(Math.random() * possibleLowerCase.length));
     }
 
-    for (var i = 0; i < length - lowerCaseLimit; i++) {
+    for (let i = 0; i < length - lowerCaseLimit; i++) {
         text += possibleUpperCase.charAt(Math.floor(Math.random() * possibleUpperCase.length));
     }
 
@@ -419,7 +409,7 @@ exports.waitUntilElementIsNotVisible = function (elementToCheck, timeout) {
         return elementToCheck.isPresent().then(function (present) {
             return !present;
         })
-    }, waitTimeout, 'Element is not in Visible ' + elementToCheck.locator());
+    }, waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
 };
 
 exports.waitUntilElementIsNotDisplayed = function (elementToCheck, timeout) {
@@ -429,7 +419,7 @@ exports.waitUntilElementIsNotDisplayed = function (elementToCheck, timeout) {
         return elementToCheck.isDisplayed().then(function (present) {
             return !present;
         })
-    }, waitTimeout, 'Element is not in dysplayed ' + elementToCheck.locator());
+    }, waitTimeout, 'Element is dysplayed and it should not' + elementToCheck.locator());
 };
 
 /*
@@ -501,15 +491,10 @@ exports.openNewTabInBrowser = function () {
 };
 
 exports.switchToWindowHandler = function (number) {
-    browser.driver.getAllWindowHandles().then(function (handles) {
+    browser.driver.getAllWindowHandles().then((handles) => {
         browser.driver.switchTo().window(handles[number]);
     });
 };
-
-exports.pressDownArrowAndEnter = function () {
-    browser.actions().sendKeys(protractor.Key.ARROW_DOWN).sendKeys(protractor.Key.ENTER).perform();
-};
-
 
 /**
  * Verify file exists
