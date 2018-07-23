@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage');
-import ContentServicesPage = require('./pages/adf/contentServicesPage');
-import NavigationBarPage = require('./pages/adf/navigationBarPage');
-import AcsUserModel = require('./models/ACS/acsUserModel');
-import TestConfig = require('./test.config');
-import resources = require('./util/resources');
-import Util = require('./util/util');
+import LoginPage = require('../pages/adf/loginPage');
+import ContentServicesPage = require('../pages/adf/contentServicesPage');
+import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import AcsUserModel = require('../models/ACS/acsUserModel');
+import TestConfig = require('../test.config');
+import resources = require('../util/resources');
+import Util = require('../util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from './actions/ACS/upload.actions';
-import ErrorPage = require('./pages/adf/documentListErrorPage');
-import FileModel = require('./models/ACS/fileModel');
+import { UploadActions } from '../actions/ACS/upload.actions';
+import ErrorPage = require('../pages/adf/documentListErrorPage');
+import FileModel = require('../models/ACS/fileModel');
 import moment from 'moment-es6';
-import { browser } from '../node_modules/protractor';
+import { browser } from '../../node_modules/protractor';
 
 fdescribe('Document List Component', () => {
 
