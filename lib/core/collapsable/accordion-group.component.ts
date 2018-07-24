@@ -78,7 +78,7 @@ export class AccordionGroupComponent implements AfterViewInit {
     constructor() { }
 
     ngAfterViewInit() {
-        this.hasContent = this.contentWrapper ? this.contentWrapper.nativeElement && this.contentWrapper.nativeElement.children.length > 0 : false;
+        this.hasContent = this.contentWrapper.nativeElement && this.contentWrapper.nativeElement.children.length > 0;
     }
 
     hasHeadingIcon() {
@@ -90,7 +90,7 @@ export class AccordionGroupComponent implements AfterViewInit {
     }
 
     isExpandable() {
-        if (this.hasContent && this.isSelected) {
+        if (!this.hasContent || !this.isOpen) {
             this.expandPanel();
         }
     }
