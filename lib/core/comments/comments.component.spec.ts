@@ -277,10 +277,10 @@ describe('CommentsComponent', () => {
             });
         }));
 
-        it('should clear comment when clear button is pressed', async(() => {
-            let element = fixture.nativeElement.querySelector('.adf-comments-input-clear');
-            component.message = 'Test comment';
-            element.dispatchEvent(new Event('click'));
+        it('should clear comment when escape key is pressed', async(() => {
+            let event = new KeyboardEvent('keyup', {'key': 'Escape'});
+            let element = fixture.nativeElement.querySelector('#comment-input');
+            element.dispatchEvent(event);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -365,10 +365,10 @@ describe('CommentsComponent', () => {
             });
         }));
 
-        it('should clear comment when clear button is pressed', async(() => {
-            let element = fixture.nativeElement.querySelector('.adf-comments-input-clear');
-            component.message = 'Test comment';
-            element.dispatchEvent(new Event('click'));
+        it('should clear comment when escape key is pressed', async(() => {
+            let event = new KeyboardEvent('keyup', {'key': 'Escape'});
+            let element = fixture.nativeElement.querySelector('#comment-input');
+            element.dispatchEvent(event);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();

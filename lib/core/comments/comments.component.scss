@@ -20,6 +20,10 @@
         width: calc(100% - 30px);
         padding-top: 8px;
         border-bottom: $header-border;
+
+        textarea {
+            resize: vertical;
+        }
     }
 
     .adf-comments-input-actions {
