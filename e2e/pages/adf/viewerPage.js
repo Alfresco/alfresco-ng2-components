@@ -308,6 +308,7 @@ var ViewerToolbarPage = function () {
     };
 
     this.clickThumbnailsBtn = function () {
+        Util.waitUntilElementIsVisible(thumbnailsBtn);
         Util.waitUntilElementIsClickable(thumbnailsBtn);
         thumbnailsBtn.click();
     };
