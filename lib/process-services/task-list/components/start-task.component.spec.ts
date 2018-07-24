@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /*tslint:disable:ban */
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
@@ -30,7 +28,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { taskDetailsMock } from '../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
 
-fdescribe('StartTaskComponent', () => {
+describe('StartTaskComponent', () => {
 
     let component: StartTaskComponent;
     let fixture: ComponentFixture<StartTaskComponent>;
@@ -272,8 +270,8 @@ fdescribe('StartTaskComponent', () => {
         });
     });
 
-    it('should not attach a form when a form id is not slected', () => {
-        let attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(of());
+    it('should not attach a form when a form id is not selected', () => {
+        let attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(Observable.of());
         spyOn(service, 'createNewTask').and.callFake(
             function () {
                 return Observable.create(observer => {

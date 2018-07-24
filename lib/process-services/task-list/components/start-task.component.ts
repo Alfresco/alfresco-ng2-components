@@ -83,6 +83,8 @@ export class StartTaskComponent implements OnInit {
 
     taskModelForm: FormGroup;
 
+    field: FormFieldModel;
+
     /**
      * Constructor
      * @param auth
