@@ -96,8 +96,8 @@ describe('Attachment list action menu for processes', () => {
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
     });
-    // test needs check
-    xit('[C260228] Option menu functionality - Active Process', () => {
+
+    it('[C260228] Option menu functionality - Active Process', () => {
         processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
 
         processFiltersPage.selectFromProcessList(processName.active);
@@ -130,8 +130,8 @@ describe('Attachment list action menu for processes', () => {
         attachmentListPage.removeFile(pngFile.name);
         attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
-    // test needs check
-    xit('[C279886] Option menu functionality - Completed Process', () => {
+
+    it('[C279886] Option menu functionality - Completed Process', () => {
         processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();

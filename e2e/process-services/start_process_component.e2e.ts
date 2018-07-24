@@ -214,7 +214,7 @@ describe('Start Process Component', () => {
         processDetailsPage.checkCommentIsDisplayed('comment1');
     });
 
-    xit('Click Audit Log button', () => {
+    it('Click Audit Log button', () => {
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
