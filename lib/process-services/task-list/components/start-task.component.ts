@@ -15,7 +15,11 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 import { LogService, UserPreferencesService, UserProcessModel, TranslationService, FormModel, FormFieldModel } from '@alfresco/adf-core';
+=======
+import { LogService, UserPreferencesService, UserProcessModel, TranslationService, FormFieldModel, FormModel } from '@alfresco/adf-core';
+>>>>>>> [ADF-3282] Conflicts solved
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
