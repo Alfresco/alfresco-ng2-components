@@ -373,7 +373,7 @@ describe('Upload component', () => {
         expect(contentServicesPage.uploadButtonIsEnabled()).toBeTruthy();
     });
 
-    xit('[C279882] Should be possible Upload a folder in a folder', () => {
+    it('[C279882] Should be possible Upload a folder in a folder', () => {
         uploadToggles.enableFolderUpload();
         contentServicesPage.uploadFolder(folderOne.location).checkContentIsDisplayed(folderOne.name);
         uploadDialog.fileIsUploaded(uploadedFileInFolder.name);

@@ -32,7 +32,7 @@ import Util = require('../util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 
-xdescribe('Search component - Search Bar', () => {
+describe('Search component - Search Bar', () => {
 
     let search = {
         inactive: {
@@ -126,7 +126,7 @@ xdescribe('Search component - Search Bar', () => {
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    xit('4. Existing folder and file are displayed in search suggestion when typing only the first 4 letters', () => {
+    it('4. Existing folder and file are displayed in search suggestion when typing only the first 4 letters', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.shortName);
 
@@ -151,7 +151,7 @@ xdescribe('Search component - Search Bar', () => {
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    xit('5. Existing folder and file are displayed in search suggestion', () => {
+    it('5. Existing folder and file are displayed in search suggestion', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.name);
         searchDialog.resultTableContainsRow(firstFolderModel.name);
