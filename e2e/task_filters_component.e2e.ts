@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /*tslint:disable:ban */
-
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
 import LoginPage = require('./pages/adf/loginPage');
@@ -34,7 +32,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from './actions/APS/apps.actions';
 import { UsersActions } from './actions/users.actions';
 
-fdescribe('Task Filters Test', () => {
+describe('Task Filters Test', () => {
 
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();
@@ -108,7 +106,6 @@ fdescribe('Task Filters Test', () => {
         expect(taskFiltersPage.checkActiveFilterActive()).toBe('Completed Tasks');
         tasksListPage.checkTaskIsNotDisplayedInTasksList('Test');
         expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
-
     });
 
     it('[C260348] Should display task list when app is in task section', () => {
@@ -153,10 +150,9 @@ fdescribe('Task Filters Test', () => {
         expect(taskFiltersPage.checkActiveFilterActive()).toBe('Completed Tasks');
         expect(taskFiltersPage.checkEmptyTaskList()).toBe('No Tasks Found');
         expect(taskFiltersPage.checkEmptyTaskDetails()).toBe('No task details found');
-
     });
 
-    fit('[C260349] Should display task list when app is in task section', () => {
+    it('[C260349] Should display task list when app is in task section', () => {
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
@@ -197,11 +193,6 @@ fdescribe('Task Filters Test', () => {
         taskFiltersPage.clickInvolvedTaskItem();
         tasksListPage.checkTaskIsDisplayedInTasksList('Test3');
         tasksListPage.checkTaskIsDisplayedInTasksList('Test4');
-
-
-
-
-
     });
 
 });
