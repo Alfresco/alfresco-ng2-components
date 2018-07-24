@@ -21,7 +21,7 @@ var StartTaskDialog = function () {
 
     var name = element(by.css("input[id='name_id']"));
     var description = element(by.css("textarea[id='description_id']"));
-    var assignee = element(by.css("input[data-automation-id='adf-people-search-input']"));
+    var assignee = element(by.css("div#people-widget-content input"));
     var formDropDown = element(by.css("mat-select[id='form_id']"));
     var startButton = element(by.css("button[id='button-start']"));
     var startButtonEnabled = element(by.css("button[id='button-start']:not(disabled)"));
@@ -44,14 +44,14 @@ var StartTaskDialog = function () {
         Util.waitUntilElementIsVisible(assignee);
         assignee.sendKeys(name);
         this.selectAssigneeFromList(name);
-        Util.waitUntilElementIsVisible(removeAssigneeIcon);
         return this;
     };
 
     this.selectAssigneeFromList = function (name) {
-        var assigneeRow = element(by.cssContainingText("adf-people-list div[class*='datatable-row'] div", name));
+        var assigneeRow = element(by.cssContainingText("mat-option span.adf-people-label-name", name));
         Util.waitUntilElementIsVisible(assigneeRow);
         assigneeRow.click();
+        Util.waitUntilElementIsNotVisible(assigneeRow);
         return this;
     };
 
