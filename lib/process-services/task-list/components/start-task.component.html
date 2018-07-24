@@ -40,18 +40,18 @@
                         <div class="adf-grid-column adf-grid-half-width">
                             <div class="adf-grid-full-width adf-grid-row">
                                 <mat-form-field class="adf-grid-full-width">
-                                    <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE' | translate}}</mat-label>
-                                    <input 
-                                        matInput 
+                                    <input matInput
                                         [matDatepicker]="taskDatePicker"
-                                        (keydown)="true" 
-                                        (focusout)="onDateChanged($event.srcElement.value)" 
+                                        (keydown)="true"
+                                        (focusout)="onDateChanged($event.srcElement.value)"
                                         placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
-                                        formControlName="taskModelDueDate" 
-                                        class="form-control"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="taskDetailsModel.dueDate"
                                         id="date_id">
                                     <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
-                                    <mat-datepicker #taskDatePicker [touchUi]="true" (dateChanged)="onDateChanged($event)">
+                                    <mat-datepicker #taskDatePicker
+                                        [touchUi]="true"
+                                        (dateChanged)="onDateChanged($event)">
                                     </mat-datepicker>
                                     <div class="adf-error-text-container">
                                         <div *ngIf="dateError">
