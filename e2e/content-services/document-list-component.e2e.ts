@@ -71,11 +71,6 @@ fdescribe('Document List Component', () => {
             if (uploadedFolder) {
                 await uploadActions.deleteFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
             }
-            // if (privateSite) {
-            //     /*tslint:disable-next-line*/
-            //     console.log(privateSite);
-            //     await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.guid, { permanent: true });
-            // }
             done();
         });
 
@@ -86,21 +81,21 @@ fdescribe('Document List Component', () => {
             expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
 
-        // xit('[C279924] - Custom error message is displayed', () => {
-        //     loginPage.loginToContentServicesUsingUserModel(acsUser);
-        //     contentServicesPage.goToDocumentList();
-        //     contentServicesPage.enableCustomPermissionMessage();
-        //     browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-        //     expect(errorPage.getErrorCode()).toBe('Cris you don\'t have permissions');
-        // });
+        xit('[C279924] - Custom error message is displayed', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.enableCustomPermissionMessage();
+            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            expect(errorPage.getErrorCode()).toBe('Cris you don\'t have permissions');
+        });
 
-        // it('[C279925] - Message is translated', () => {
-        //     loginPage.loginToContentServicesUsingUserModel(acsUser);
-        //     navBar.openLanguageMenu();
-        //     navBar.chooseLanguage('Italian');
-        //     browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-        //     expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
-        // });
+        it('[C279925] - Message is translated', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            navBar.openLanguageMenu();
+            navBar.chooseLanguage('Italian');
+            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
+        });
 
     });
 
