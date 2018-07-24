@@ -57,12 +57,13 @@ describe('SearchFilterComponent', () => {
         spyOn(queryBuilder, 'addUserFacetBucket').and.callThrough();
 
         const event: any = { checked: true };
+        const field: FacetField = { field: 'f1', label: 'f1' };
         const bucket: FacetFieldBucket = { checked: false, filterQuery: 'q1', label: 'q1', count: 1 };
 
-        component.onToggleBucket(event, bucket);
+        component.onToggleBucket(event, field, bucket);
 
         expect(bucket.checked).toBeTruthy();
-        expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith(bucket);
+        expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith(field, bucket);
         expect(queryBuilder.update).toHaveBeenCalled();
     });
 
@@ -71,11 +72,12 @@ describe('SearchFilterComponent', () => {
         spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
         const event: any = { checked: false };
+        const field: FacetField = { field: 'f1', label: 'f1' };
         const bucket: FacetFieldBucket = { checked: true, filterQuery: 'q1', label: 'q1', count: 1 };
 
-        component.onToggleBucket(event, bucket);
+        component.onToggleBucket(event, field, bucket);
 
-        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(bucket);
+        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(field, bucket);
         expect(queryBuilder.update).toHaveBeenCalled();
     });
 
@@ -217,7 +219,8 @@ describe('SearchFilterComponent', () => {
     it('should update query builder only when has bucket to unselect', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
-        component.onToggleBucket(<any> { checked: true }, null);
+        const field: FacetField = { field: 'f1', label: 'f1' };
+        component.onToggleBucket(<any> { checked: true }, field, null);
 
         expect(queryBuilder.update).not.toHaveBeenCalled();
     });

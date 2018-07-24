@@ -43,7 +43,7 @@ export class SearchQueryBuilderService {
     sorting: Array<SearchSortingDefinition> = [];
 
     protected userFacetQueries: FacetQuery[] = [];
-    protected userFacetBuckets: FacetFieldBucket[] = [];
+    protected userFacetBuckets: { [key: string]: Array<FacetFieldBucket> } = {};
 
     get userQuery(): string {
         return this._userQuery;
@@ -69,7 +69,7 @@ export class SearchQueryBuilderService {
             this.config = JSON.parse(JSON.stringify(template));
             this.categories = (this.config.categories || []).filter(category => category.enabled);
             this.filterQueries = this.config.filterQueries || [];
-            this.userFacetBuckets = [];
+            this.userFacetBuckets = {};
             this.userFacetQueries = [];
             if (this.config.sorting) {
                 this.sorting = this.config.sorting.defaults || [];
@@ -95,18 +95,21 @@ export class SearchQueryBuilderService {
         }
     }
 
-    addUserFacetBucket(bucket: FacetFieldBucket) {
-        if (bucket) {
-            const existing = this.userFacetBuckets.find(facetBucket => facetBucket.label === bucket.label);
+    addUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
+        if (field && field.field && bucket) {
+            const buckets = this.userFacetBuckets[field.field] || [];
+            const existing = buckets.find(facetBucket => facetBucket.label === bucket.label);
             if (!existing) {
-                this.userFacetBuckets.push(bucket);
+                buckets.push(bucket);
             }
+            this.userFacetBuckets[field.field] = buckets;
         }
     }
 
-    removeUserFacetBucket(bucket: FacetFieldBucket) {
-        if (bucket) {
-            this.userFacetBuckets = this.userFacetBuckets
+    removeUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
+        if (field && field.field && bucket) {
+            const buckets = this.userFacetBuckets[field.field] || [];
+            this.userFacetBuckets[field.field] = buckets
                 .filter(facetBucket => facetBucket.label !== bucket.label);
         }
     }
@@ -265,11 +268,18 @@ export class SearchQueryBuilderService {
             result += ` AND (${combined})`;
         }
 
-        if (this.userFacetBuckets && this.userFacetBuckets.length > 0) {
-            const combined = this.userFacetBuckets
-                .map(bucket => bucket.filterQuery)
-                .join(' OR ');
-            result += ` AND (${combined})`;
+        if (this.userFacetBuckets) {
+            Object.keys(this.userFacetBuckets).forEach(key => {
+                const subQuery = (this.userFacetBuckets[key] || [])
+                    .map(bucket => bucket.filterQuery)
+                    .join(' OR ');
+                if (subQuery) {
+                    if (result.length > 0) {
+                        result += ' AND ';
+                    }
+                    result += `(${subQuery})`;
+                }
+            });
         }
 
         return result;
