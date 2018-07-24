@@ -89,7 +89,7 @@
                 <mat-checkbox
                     *ngFor="let bucket of field.buckets"
                     [checked]="bucket.checked"
-                    (change)="onToggleBucket($event, bucket)">
+                    (change)="onToggleBucket($event, field, bucket)">
                     {{ bucket.display || bucket.label }} ({{ bucket.count }})
                 </mat-checkbox>
             </div>
