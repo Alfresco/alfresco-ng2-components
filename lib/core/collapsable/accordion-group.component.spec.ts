@@ -19,10 +19,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccordionGroupComponent } from './accordion-group.component';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { Component, ViewChild } from '@angular/core';
-import { CoreModule } from '../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { By } from '@angular/platform-browser';
 
 describe('AccordionGroupComponent', () => {
 
@@ -127,97 +123,6 @@ describe('AccordionGroupComponent', () => {
             expect(component.hasHeadingIcon()).toBe(true);
             let headerText = element.querySelector('.adf-panel-heading-icon');
             expect(headerText).toBeDefined();
-            done();
-        });
-    });
-});
-
-@Component({
-    template: `
-    <adf-accordion-group [heading]="'My Header'"
-                         [isSelected]="isSelected"
-                         [isOpen]="isOpen"
-                         [headingIcon]="headingIcon" #accordion>
-        <div>My List</div>
-    </adf-accordion-group>
-       `
-})
-class CustomAccordionGroupComponent extends AccordionGroupComponent {
-    isOpen: boolean;
-    isSelected: boolean;
-    headingIcon: string;
-
-    @ViewChild('accordion')
-    accordion: AccordionGroupComponent;
-}
-
-describe('Custom AccordionGroup', () => {
-    let fixture: ComponentFixture<CustomAccordionGroupComponent>;
-    let component: CustomAccordionGroupComponent;
-
-    setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            CustomAccordionGroupComponent
-        ]
-    });
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(CustomAccordionGroupComponent);
-        component = fixture.componentInstance;
-    });
-
-    afterEach(() => {
-        fixture.destroy();
-    });
-
-    it('should render the title', () => {
-        component.isOpen = true;
-        component.isSelected = true;
-        fixture.detectChanges();
-        let title: any = fixture.debugElement.queryAll(By.css('.adf-panel-heading-text'));
-        expect(title.length).toBe(1);
-        expect(title[0].nativeElement.innerText).toBe('My Header');
-    });
-
-    it('should render a tab with icon', () => {
-        component.headingIcon = 'assignment';
-        fixture.detectChanges();
-        let tab: any = fixture.debugElement.queryAll(By.css('.material-icons'));
-        expect(tab[0].nativeElement.innerText).toBe('assignment');
-    });
-
-    it('should expand the panel if has content and is selected', (done) => {
-        spyOn(component.accordion, 'expandPanel').and.callThrough();
-        component.isOpen = false;
-        component.isSelected = true;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.accordion.expansionPanel.expanded).toBe(false);
-            const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
-            selectElement.click();
-            expect(component.accordion.expandPanel).toHaveBeenCalled();
-            expect(component.accordion.expansionPanel.expanded).toBe(true);
-            done();
-        });
-    });
-
-    it('should close the expanded panel if has content and is selected', (done) => {
-        spyOn(component.accordion, 'expandPanel').and.callThrough();
-        component.isOpen = true;
-        component.isSelected = true;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.accordion.expansionPanel.expanded).toBe(true);
-            const selectElement = fixture.debugElement.nativeElement.querySelector('#adf-expansion-panel-id');
-            selectElement.click();
-            expect(component.accordion.expandPanel).toHaveBeenCalled();
-            expect(component.accordion.expansionPanel.expanded).toBe(false);
             done();
         });
     });
