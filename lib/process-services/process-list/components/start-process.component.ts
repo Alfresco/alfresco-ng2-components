@@ -26,6 +26,9 @@ import { ProcessDefinitionRepresentation } from './../models/process-definition.
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-start-process',
@@ -92,12 +95,36 @@ export class StartProcessInstanceComponent implements OnChanges {
         this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
     }
 
+    processControl = new FormControl();
+    filteredOptions: Observable<any>;
+
     ngOnChanges(changes: SimpleChanges) {
         if (changes['values'] && changes['values'].currentValue) {
             this.moveNodeFromCStoPS();
         }
 
         this.loadStartProcess();
+
+        this.filteredOptions = this.processControl.valueChanges
+            .pipe(
+                startWith(''),
+                map(value => this._filter(value))
+            );
+    }
+
+    private _filter(value) {
+        let filterValue = '';
+        if (value && value.name) {
+            filterValue = value.name.toLowerCase();
+        } else if (value) {
+            filterValue = value.toLowerCase();
+        }
+        return this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
+    }
+
+    displayFn(user): string | undefined {
+        this.selectedProcessDef = user;
+        return user;
     }
 
     public loadStartProcess() {
@@ -217,6 +244,6 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     hasProcessName(): boolean {
-        return this.name ? true : false;
+        return !!this.name;
     }
 }
