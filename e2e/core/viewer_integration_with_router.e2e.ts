@@ -19,7 +19,7 @@ import TestConfig = require('../test.config');
 
 import LoginPage = require('../pages/adf/loginPage');
 import ViewerPage = require('../pages/adf/viewerPage');
-import NavigationBarPage = require('../pages/adf/NavigationBarPage');
+import NavigationBarPage = require('../pages/adf/navigationBarPage');
 
 import resources = require('../util/resources');
 

@@ -97,10 +97,11 @@ describe('Viewer', () => {
         done();
     });
 
-    afterAll(() => {
-        this.alfrescoJsApi.nodes.deleteNode(docFolder.id).then( () => {
-            this.alfrescoJsApi.nodes.deleteNode(imgFolder.id);
-        });
+    afterAll(async(done) => {
+        await this.alfrescoJsApi.nodes.deleteNode(docFolder.id);
+        await this.alfrescoJsApi.nodes.deleteNode(imgFolder.id);
+
+        done();
     });
 
     it('[C260517] Should be possible to open any Document supported extension', () => {
@@ -122,6 +123,7 @@ describe('Viewer', () => {
         navigationBarPage.goToSite(site);
 
         viewerPage.viewFile(pngFile.name);
+        browser.driver.sleep(3000); // waiting for the file to open
         viewerPage.checkImgViewerIsDisplayed();
 
         viewerPage.clickCloseButton();
