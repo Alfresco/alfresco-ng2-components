@@ -54,37 +54,36 @@ var ContentServicesPage = function () {
     var emptyFolderImage = element(by.css(".adf-empty-folder-image"));
     var emptyRecent = element(by.css(".adf-container-recent .empty-list__title"));
 
-
     this.checkRecentFileToBeShowed = function () {
         Util.waitUntilElementIsVisible(recentFiles);
-    }
+    };
 
     this.expandRecentFiles = function () {
         this.checkRecentFileToBeShowed();
         this.checkRecentFileToBeClosed();
         recentFilesClosed.click();
         this.checkRecentFileToBeOpened()
-    }
+    };
 
     this.closeRecentFiles = function() {
         this.checkRecentFileToBeShowed();
         this.checkRecentFileToBeOpened()
         recentFilesExpanded.click();
         this.checkRecentFileToBeClosed();
-    }
+    };
 
     this.checkRecentFileToBeClosed = function () {
         Util.waitUntilElementIsVisible(recentFilesClosed);
-    }
+    };
 
     this.checkRecentFileToBeOpened = function () {
         Util.waitUntilElementIsVisible(recentFilesExpanded);
-    }
+    };
 
     this.getRecentFileIcon = async function () {
         await Util.waitUntilElementIsVisible(recentFileIcon);
         return recentFileIcon.getText();
-    }
+    };
 
     /**
      * Check Document List is displayed
@@ -112,7 +111,7 @@ var ContentServicesPage = function () {
         Util.waitUntilElementIsVisible(contentServices);
         Util.waitUntilElementIsClickable(contentServices);
         contentServices.click();
-    }
+    };
 
     this.navigateToDocumentList = function () {
         browser.driver.get(contentServicesURL);
@@ -183,6 +182,10 @@ var ContentServicesPage = function () {
             deferred.fulfill(result);
         });
         return deferred.promise;
+    };
+
+    this.checkListIsSortedByNameColumn = async function(sortOrder) {
+        await contentList.checkListIsOrderedByNameColumn(sortOrder);
     };
 
     /**
@@ -270,7 +273,7 @@ var ContentServicesPage = function () {
     this.checkElementIsDisplayed = function (elementName) {
         let dataElement = element(by.css(`div[data-automation-id="${elementName}"]`));
         Util.waitUntilElementIsVisible(dataElement);
-    }
+    };
 
     this.navigateToFolderViaBreadcrumbs = function (folder) {
         contentList.tableIsLoaded();
@@ -436,7 +439,7 @@ var ContentServicesPage = function () {
     this.checkLockIsDislpayedForElement = function(name) {
         let lockButton = element(by.css(`div.adf-data-table-cell[filename="${name}"] button`));
         Util.waitUntilElementIsVisible(lockButton);
-    }
+    };
 
     this.getColumnValueForRow = function (file, columnName) {
         let row = contentList.getRowByRowName(file);
@@ -450,25 +453,26 @@ var ContentServicesPage = function () {
         let row = element(by.css(`div.adf-data-table-cell[filename="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
         Util.waitUntilElementIsVisible(row);
         return row.getCssValue(styleName);
-    }
+    };
 
     this.checkSpinnerIsShowed = function () {
         Util.waitUntilElementIsPresent(documentListSpinner);
-    }
+    };
 
     this.checkEmptyFolderTextToBe = function (text) {
         Util.waitUntilElementIsVisible(emptyFolder);
         expect(emptyFolder.getText()).toContain(text);
-    }
+    };
 
     this.checkEmptyFolderImageUrlToContain = function (url) {
         Util.waitUntilElementIsVisible(emptyFolderImage);
         expect(emptyFolderImage.getAttribute('src')).toContain(url);
-    }
+    };
 
     this.checkEmptyRecentFileIsDisplayed = function () {
         Util.waitUntilElementIsVisible(emptyRecent);
-    }
+    };
+
 };
 
 module.exports = ContentServicesPage;

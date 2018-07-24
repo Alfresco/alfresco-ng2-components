@@ -46,14 +46,14 @@ fdescribe('Document List Component', () => {
         });
     });
 
-    describe('Permission Message', async () => {
+    fdescribe('Permission Message', async () => {
 
         let acsUser = new AcsUserModel();
 
         beforeAll(async (done) => {
-            let siteName = `PRIVATE_TEST_SITE_${Util.generateRandomString()}`;
-            let folderName = `MEESEEKS_${Util.generateRandomString()}`;
-            let privateSiteBody: SiteBody = { visibility: 'PRIVATE' , title: siteName};
+            let siteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
+            let folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
+            let privateSiteBody = { visibility: 'PRIVATE' , title: siteName};
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -66,6 +66,19 @@ fdescribe('Document List Component', () => {
             done();
         });
 
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            if (uploadedFolder) {
+                await uploadActions.deleteFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
+            }
+            // if (privateSite) {
+            //     /*tslint:disable-next-line*/
+            //     console.log(privateSite);
+            //     await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.guid, { permanent: true });
+            // }
+            done();
+        });
+
         it('[C217334] - Error message displayed without permissions', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
@@ -73,21 +86,21 @@ fdescribe('Document List Component', () => {
             expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
 
-        xit('[C279924] - Custom error message is displayed', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.enableCustomPermissionMessage();
-            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-            expect(errorPage.getErrorCode()).toBe('Cris you don\'t have permissions');
-        });
+        // xit('[C279924] - Custom error message is displayed', () => {
+        //     loginPage.loginToContentServicesUsingUserModel(acsUser);
+        //     contentServicesPage.goToDocumentList();
+        //     contentServicesPage.enableCustomPermissionMessage();
+        //     browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+        //     expect(errorPage.getErrorCode()).toBe('Cris you don\'t have permissions');
+        // });
 
-        it('[C279925] - Message is translated', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            navBar.openLanguageMenu();
-            navBar.chooseLanguage('Italian');
-            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-            expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
-        });
+        // it('[C279925] - Message is translated', () => {
+        //     loginPage.loginToContentServicesUsingUserModel(acsUser);
+        //     navBar.openLanguageMenu();
+        //     navBar.chooseLanguage('Italian');
+        //     browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+        //     expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
+        // });
 
     });
 
@@ -112,7 +125,7 @@ fdescribe('Document List Component', () => {
 
             acsUser = new AcsUserModel();
 
-            folderName = `MEESEEKS_${Util.generateRandomString()}_LOOK_AT_ME`;
+            folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -268,7 +281,7 @@ fdescribe('Document List Component', () => {
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         let acsUser = new AcsUserModel();
-        let folderName = `MEESEEKS_${Util.generateRandomString()}_LOOK_AT_ME`;
+        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -315,8 +328,8 @@ fdescribe('Document List Component', () => {
 
     it('[C279970] - Custom column - isLocked field is showed for folders', async (done) => {
         let acsUser = new AcsUserModel();
-        let folderNameA = `MEESEEKS_${Util.generateRandomString()}_LOOK_AT_ME`;
-        let folderNameB = `MEESEEKS_${Util.generateRandomString()}_LOOK_AT_ME`;
+        let folderNameA = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        let folderNameB = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -352,6 +365,22 @@ fdescribe('Document List Component', () => {
         contentServicesPage.checkContentIsDisplayed(testFileB.name);
         contentServicesPage.checkLockIsDislpayedForElement(testFileA.name);
         contentServicesPage.checkLockIsDislpayedForElement(testFileB.name);
+        done();
+    });
+
+    xit('[C277093] - Sorting files with Items per page set to default', async (done) => {
+        let acsUser = new AcsUserModel();
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        let folderName = '';
+        for (let i = 0; i < 20; i++) {
+            folderName = `MEESEEKS_${Util.generateRandomString(5)}_${i}`;
+            await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+        }
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.checkListIsSortedByNameColumn('asc');
         done();
     });
 
