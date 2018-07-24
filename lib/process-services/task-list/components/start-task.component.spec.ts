@@ -20,8 +20,6 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 import { Observable, of, throwError } from 'rxjs';
-import { startTaskMock } from '../../mock';
-import { StartTaskModel } from '../models/start-task.model';
 import { TaskListService } from '../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
