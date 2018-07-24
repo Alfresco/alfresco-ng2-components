@@ -20,7 +20,7 @@ import ProcessServicesPage = require('../pages/adf/process_services/processServi
 import TasksPage = require('../pages/adf/process_services/tasksPage');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import CONSTANTS = require('../util/constants');
-import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
+import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 
 import Task = require('../models/APS/Task');
 import Tenant = require('../models/APS/Tenant');
@@ -57,10 +57,6 @@ describe('Start Task - Custom App', () => {
     let pngFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name
-    let newTenant;
-    let jpgFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
     beforeAll(async (done) => {
@@ -74,7 +70,7 @@ describe('Start Task - Custom App', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
