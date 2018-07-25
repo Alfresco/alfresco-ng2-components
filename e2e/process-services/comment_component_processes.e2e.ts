@@ -73,8 +73,11 @@ describe('Comment component for Processes', () => {
 
     afterEach(async(done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+
         done();
     });
 
@@ -93,12 +96,12 @@ describe('Comment component for Processes', () => {
         browser.controlFlow().execute(async() => {
             addedComment = await this.alfrescoJsApi.activiti.commentsApi.getProcessInstanceComments(processInstanceId, {'latestFirst': true});
 
-            commentsPage.checkUserIconIsDisplayed();
+            commentsPage.checkUserIconIsDisplayed(0);
 
             expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments ('+ addedComment.total +')');
-            expect(commentsPage.getMessage()).toEqual(addedComment.data[0].message);
-            expect(commentsPage.getUserName()).toEqual(addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName);
-            expect(commentsPage.getTime()).toEqual('a few seconds ago');
+            expect(commentsPage.getMessage(0)).toEqual(addedComment.data[0].message);
+            expect(commentsPage.getUserName(0)).toEqual(addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName);
+            expect(commentsPage.getTime(0)).toEqual('a few seconds ago');
         });
     });
 
@@ -143,12 +146,12 @@ describe('Comment component for Processes', () => {
         browser.controlFlow().execute(async() => {
             let addedTaskComment = await this.alfrescoJsApi.activiti.commentsApi.getProcessInstanceComments(processInstanceId, {'latestFirst': true});
 
-            commentsPage.checkUserIconIsDisplayed();
+            commentsPage.checkUserIconIsDisplayed(0);
 
             expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments ('+ addedTaskComment.total +')');
-            expect(commentsPage.getMessage()).toEqual(addedTaskComment.data[0].message);
-            expect(commentsPage.getUserName()).toEqual(addedTaskComment.data[0].createdBy.firstName + ' ' + addedTaskComment.data[0].createdBy.lastName);
-            expect(commentsPage.getTime()).toEqual('a few seconds ago');
+            expect(commentsPage.getMessage(0)).toEqual(addedTaskComment.data[0].message);
+            expect(commentsPage.getUserName(0)).toEqual(addedTaskComment.data[0].createdBy.firstName + ' ' + addedTaskComment.data[0].createdBy.lastName);
+            expect(commentsPage.getTime(0)).toEqual('a few seconds ago');
         });
     });
 });
