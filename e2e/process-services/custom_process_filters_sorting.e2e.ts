@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import LoginPage = require('./pages/adf/loginPage');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
-import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage.js');
-import FiltersPage = require('./pages/adf/process_services/filtersPage.js')
+import LoginPage = require('../pages/adf/loginPage');
+import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage.js');
+import FiltersPage = require('../pages/adf/process_services/filtersPage.js')
 
-import TestConfig = require('./test.config');
-import resources = require('./util/resources');
-import Util = require('./util/util.js');
+import TestConfig = require('../test.config');
+import resources = require('../util/resources');
+import Util = require('../util/util.js');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UsersActions } from './actions/users.actions';
-import { AppsActions } from './actions/APS/apps.actions';
+import { UsersActions } from '../actions/users.actions';
+import { AppsActions } from '../actions/APS/apps.actions';
 
 describe('Sorting for process filters', () => {
 
