@@ -29,7 +29,7 @@ import Util = require('../util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 
-describe('DocumentList component', () => {
+xdescribe('DocumentList component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();

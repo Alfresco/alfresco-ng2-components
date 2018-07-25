@@ -71,16 +71,17 @@ describe('Process Filters Test', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.clickProcessServicesButton();
-
         done();
     });
 
-    it('Navigate to Running filter', () => {
+    beforeEach( () => {
+        navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
-
         appNavigationBarPage.clickProcessButton();
+    });
+
+    it('Navigate to Running filter', () => {
 
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
