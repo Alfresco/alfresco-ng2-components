@@ -122,6 +122,7 @@ var ProcessDetailsPage = function () {
     // Click Audit log
     this.clickAuditLogButton = function () {
         Util.waitUntilElementIsVisible(auditLogButton);
+        Util.waitUntilElementIsClickable(auditLogButton);
         auditLogButton.click();
     };
 

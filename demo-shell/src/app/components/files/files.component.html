@@ -208,6 +208,11 @@
                 (preview)="showFile($event)"
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)">
+                <no-permission-content *ngIf="enableCustomPermissionMessage">
+                    <ng-template>
+                    <h1>Cris you don't have permissions</h1>
+                    </ng-template>
+                </no-permission-content>
                 <empty-folder-content *ngIf="disableDragArea">
                     <ng-template>
                         <div class="adf-empty_template">
@@ -274,7 +279,7 @@
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
                         key="createdAt"
                         type="date"
-                        format="timeAgo"
+                        [format]="enableMediumTimeFormat ? 'medium' : 'timeAgo'"
                         class="desktop-only">
                     </data-column>
 
@@ -520,6 +525,18 @@
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="warnOnMultipleUploads">
                 {{'APP.WARN-MULTIPLE-UPLOADS' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="enableCustomPermissionMessage">
+                {{'APP.CUSTOM-PERMISSION-MESSAGE' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="enableMediumTimeFormat" id="enableMediumTimeFormat">
+                {{'APP.MEDIUM-TIME-FORMAT' | translate}}
             </mat-slide-toggle>
         </section>
 

@@ -519,6 +519,6 @@ exports.fileExists = function (filePath, retries) {
                     resolve(true);
                 }
             });
-        }, 1000);
+        }, 2000);
     });
 };

@@ -183,8 +183,7 @@ describe('Start Task - Custom App', () => {
     it('Assign User', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[5])
-            .addAssignee(assigneeUserModel.firstName).clickStartButton()
+        taskPage.createNewTask().addName(tasks[5]).addAssignee(assigneeUserModel.firstName).clickStartButton()
             .then(() => {
                 taskPage.usingTasksListPage().checkTaskListIsLoaded();
                 taskPage.usingTasksListPage().waitForTableBody();
