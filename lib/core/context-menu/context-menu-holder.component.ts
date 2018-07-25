@@ -21,6 +21,7 @@ import { Component, HostListener, Input, OnDestroy, OnInit, Renderer2, ViewChild
 import { MatMenuTrigger } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 import { ContextMenuService } from './context-menu.service';
+
 /**
  * @deprecated: context-menu-holder is deprecated, use adf-context-menu-holder instead.
  */
@@ -31,9 +32,9 @@ import { ContextMenuService } from './context-menu.service';
         <mat-menu #contextMenu="matMenu" class="context-menu">
             <ng-container *ngFor="let link of links">
                 <button *ngIf="link.model?.visible"
-                    mat-menu-item
-                    [disabled]="link.model?.disabled"
-                    (click)="onMenuItemClick($event, link)">
+                        mat-menu-item
+                        [disabled]="link.model?.disabled"
+                        (click)="onMenuItemClick($event, link)">
                     <mat-icon *ngIf="showIcons && link.model?.icon">{{ link.model.icon }}</mat-icon>
                     {{ (link.title || link.model?.title) | translate }}
                 </button>
@@ -44,7 +45,7 @@ import { ContextMenuService } from './context-menu.service';
 export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     links = [];
 
-    private mouseLocation: { left: number, top: number } = {left: 0, top: 0};
+    private mouseLocation: { left: number, top: number } = { left: 0, top: 0 };
     private menuElement = null;
     private subscriptions: Subscription[] = [];
     private contextMenuListenerFn: () => void;
@@ -70,11 +71,12 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     }
 
     constructor(
-            private viewport: ViewportRuler,
-            private overlayContainer: OverlayContainer,
-            private contextMenuService: ContextMenuService,
-            private renderer: Renderer2
-    ) {}
+        private viewport: ViewportRuler,
+        private overlayContainer: OverlayContainer,
+        private contextMenuService: ContextMenuService,
+        private renderer: Renderer2
+    ) {
+    }
 
     ngOnInit() {
         this.subscriptions.push(
@@ -149,20 +151,22 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
 
     private updatePosition() {
         setTimeout(() => {
-            if (this.mdMenuElement.clientWidth + this.mouseLocation.left > this.viewport.getViewportRect().width) {
-                this.menuTrigger.menu.xPosition = 'before';
-                this.mdMenuElement.parentElement.style.left = this.mouseLocation.left - this.mdMenuElement.clientWidth + 'px';
-            } else {
-                this.menuTrigger.menu.xPosition = 'after';
-                this.mdMenuElement.parentElement.style.left = this.locationCss().left;
-            }
+            if (this.mdMenuElement.parentElement) {
+                if (this.mdMenuElement.clientWidth + this.mouseLocation.left > this.viewport.getViewportRect().width) {
+                    this.menuTrigger.menu.xPosition = 'before';
+                    this.mdMenuElement.parentElement.style.left = this.mouseLocation.left - this.mdMenuElement.clientWidth + 'px';
+                } else {
+                    this.menuTrigger.menu.xPosition = 'after';
+                    this.mdMenuElement.parentElement.style.left = this.locationCss().left;
+                }
 
-            if (this.mdMenuElement.clientHeight + this.mouseLocation.top > this.viewport.getViewportRect().height) {
-                this.menuTrigger.menu.yPosition = 'above';
-                this.mdMenuElement.parentElement.style.top = this.mouseLocation.top - this.mdMenuElement.clientHeight + 'px';
-            } else {
-                this.menuTrigger.menu.yPosition = 'below';
-                this.mdMenuElement.parentElement.style.top = this.locationCss().top;
+                if (this.mdMenuElement.clientHeight + this.mouseLocation.top > this.viewport.getViewportRect().height) {
+                    this.menuTrigger.menu.yPosition = 'above';
+                    this.mdMenuElement.parentElement.style.top = this.mouseLocation.top - this.mdMenuElement.clientHeight + 'px';
+                } else {
+                    this.menuTrigger.menu.yPosition = 'below';
+                    this.mdMenuElement.parentElement.style.top = this.locationCss().top;
+                }
             }
         }, 0);
     }

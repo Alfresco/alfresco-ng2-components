@@ -80,6 +80,17 @@ export class VersionManagerComponent {
         this.uploadState = 'close';
     }
 
+    onUploadSuccess(event: any) {
+        this.alfrescoApiService.nodeUpdated.next(event.value.entry);
+        this.versionListComponent.loadVersionHistory();
+        this.uploadSuccess.emit(event.value.entry);
+        this.uploadState = 'close';
+    }
+
+    onUploadError(event: any) {
+        this.uploadError.emit(event);
+    }
+
     onUploadCancel() {
         this.uploadState = 'close';
     }

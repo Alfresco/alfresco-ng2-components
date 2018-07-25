@@ -31,6 +31,7 @@ import dateFormat = require('dateformat');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import Util = require('../../util/util');
+import path = require('path');
 
 describe('Version component', () => {
 
@@ -97,80 +98,62 @@ describe('Version component', () => {
         done();
     });
 
-    it('[C272768] Should be visible the first file version when you upload a file', () => {
-        versionManagePage.checkUploadNewVersionsButtonIsDisplayed();
+    it('[] Should not be possible delete the verrsion if there is only one version', () => {
 
-        versionManagePage.chekFileVersionExist('1.0');
-        expect(versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
-        expect(versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
     });
 
-    it('[] Should show/hide the new upload file options when click on add New version/canclel button', () => {
-        versionManagePage.showNewVersionButton.click();
+    it('[] Should not be possible restore the verrsion if there is only one version', () => {
 
-        browser.driver.sleep(300);
-
-        Util.waitUntilElementIsVisible(versionManagePage.cancelButton);
-        Util.waitUntilElementIsVisible(versionManagePage.majorRadio);
-        Util.waitUntilElementIsVisible(versionManagePage.minorRadio);
-        Util.waitUntilElementIsVisible(versionManagePage.cancelButton);
-        Util.waitUntilElementIsVisible(versionManagePage.commentText);
-        Util.waitUntilElementIsVisible(versionManagePage.uploadNewVersionButton);
-
-        versionManagePage.cancelButton.click();
-
-        browser.driver.sleep(300);
-
-        Util.waitUntilElementIsNotVisible(versionManagePage.cancelButton);
-        Util.waitUntilElementIsNotVisible(versionManagePage.majorRadio);
-        Util.waitUntilElementIsNotVisible(versionManagePage.minorRadio);
-        Util.waitUntilElementIsNotVisible(versionManagePage.cancelButton);
-        Util.waitUntilElementIsNotVisible(versionManagePage.commentText);
-        Util.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
-
-        Util.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
     });
 
-    it('[C260244] Should show the version history when select a file with multiple version', () => {
+    it('[] Should be showed all the default action when you have more then one version', () => {
         versionManagePage.showNewVersionButton.click();
+
         versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
+        versionManagePage.clickActionButton('1.1').checkActionsArePresent('1.1');
+
+        versionManagePage.closeActionButton();
+    });
+
+    it('[C269081] Should be possible download all the version of a file', () => {
+        versionManagePage.downloadFileVersion('1.0');
+
+        expect(Util.fileExists(path.join(__dirname, 'downloads', txtFileModel.name), 20)).toBe(true);
+
+        versionManagePage.downloadFileVersion('1.1');
+
+        expect(Util.fileExists(path.join(__dirname, 'downloads', fileModelVersionTwo.name), 20)).toBe(true);
+    });
+
+    it('[C272819] Shoudl be possible delete a version when click on delete version action', () => {
+        versionManagePage.deleteFileVersion('1.1');
+
+        versionManagePage.clickAcceptConfirm();
+
+        versionManagePage.chekFileVersionNotExist('1.1');
         versionManagePage.chekFileVersionExist('1.0');
-        expect(versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
-        expect(versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
+    });
+
+    it('[] Shoudl be possible prevent a version to be deleted when click on No on the confirm dialog', () => {
+        versionManagePage.showNewVersionButton.click();
+
+        versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
         versionManagePage.chekFileVersionExist('1.1');
-        expect(versionManagePage.getFileVersionName('1.1')).toEqual(fileModelVersionTwo.name);
-        expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
+
+        versionManagePage.deleteFileVersion('1.1');
+
+        versionManagePage.clickCancelConfirm();
+
+        versionManagePage.chekFileVersionExist('1.1');
+        versionManagePage.chekFileVersionExist('1.0');
     });
 
-    it('[C269084] Should be possible add a comment when add a new version', () => {
-        versionManagePage.showNewVersionButton.click();
-        versionManagePage.enterCommentText('Example comment text');
-        versionManagePage.uploadNewVersionFile(fileModelVersionThree.location);
-
-        versionManagePage.chekFileVersionExist('1.2');
-        expect(versionManagePage.getFileVersionName('1.2')).toEqual(fileModelVersionThree.name);
-        expect(versionManagePage.getFileVersionDate('1.2')).not.toBeUndefined();
-        expect(versionManagePage.getFileVersionComment('1.2')).toEqual('Example comment text');
-    });
-
-    it('[C275719] Should be possible preview the file when you add a new version', () => {
-        versionManagePage.showNewVersionButton.click();
-        versionManagePage.clickMajorChange();
-
-        versionManagePage.uploadNewVersionFile(fileModelVersionFor.location);
+    it('[] Should be possible restore an old version of your file', () => {
+        versionManagePage.restoreFileVersion('1.0');
 
         versionManagePage.chekFileVersionExist('2.0');
-        expect(versionManagePage.getFileVersionName('2.0')).toEqual(fileModelVersionFor.name);
-
-        versionManagePage.showNewVersionButton.click();
-        versionManagePage.clickMinorChange();
-
-        versionManagePage.uploadNewVersionFile(fileModelVersionFive.location);
-
-        versionManagePage.chekFileVersionExist('2.1');
-        expect(versionManagePage.getFileVersionName('2.1')).toEqual(fileModelVersionFive.name);
     });
 
 });
