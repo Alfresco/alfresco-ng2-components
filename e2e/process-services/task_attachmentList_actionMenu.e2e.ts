@@ -111,9 +111,9 @@ describe('Attachment list action menu for tasks', () => {
 
         attachmentListPage.downloadFile(pngFile.name);
 
-        browser.driver.sleep(500);
+        browser.driver.sleep(1000);
 
-        expect(Util.fileExists(downloadedPngFile, 20)).toBe(true);
+        expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
         attachmentListPage.removeFile(pngFile.name);
         attachmentListPage.checkFileIsRemoved(pngFile.name);
@@ -143,9 +143,9 @@ describe('Attachment list action menu for tasks', () => {
 
         attachmentListPage.downloadFile(pngFile.name);
 
-        browser.driver.sleep(500);
+        browser.driver.sleep(1000);
 
-        expect(Util.fileExists(downloadedPngFile, 20)).toBe(true);
+        expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
         attachmentListPage.removeFile(pngFile.name);
         attachmentListPage.checkFileIsRemoved(pngFile.name);

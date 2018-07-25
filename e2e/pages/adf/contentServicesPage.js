@@ -41,6 +41,49 @@ var ContentServicesPage = function () {
     var loadMoreButton = element(by.css("button[data-automation-id='adf-infinite-pagination-button']"));
     var emptyPagination = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
     var dragAndDrop = element(by.css("adf-upload-drag-area div"));
+    var nameHeader = element(by.css("div[data-automation-id='auto_id_name'] > span"));
+    var sizeHeader = element(by.css("div[data-automation-id='auto_id_content.sizeInBytes'] > span"));
+    var createdByHeader = element(by.css("div[data-automation-id='auto_id_createdByUser.displayName'] > span"));
+    var createdHeader = element(by.css("div[data-automation-id='auto_id_createdAt'] > span"));
+    var recentFiles = element(by.css(".adf-container-recent"));
+    var recentFilesExpanded = element(by.css(".adf-container-recent mat-expansion-panel-header.mat-expanded"));
+    var recentFilesClosed = element(by.css(".adf-container-recent mat-expansion-panel-header"));
+    var recentFileIcon = element(by.css(".adf-container-recent mat-expansion-panel-header mat-icon"));
+    var documentListSpinner = element(by.css("mat-progress-spinner"));
+    var emptyFolder = element(by.css(".adf-empty-folder-this-space-is-empty"));
+    var emptyFolderImage = element(by.css(".adf-empty-folder-image"));
+    var emptyRecent = element(by.css(".adf-container-recent .empty-list__title"));
+
+    this.checkRecentFileToBeShowed = function () {
+        Util.waitUntilElementIsVisible(recentFiles);
+    };
+
+    this.expandRecentFiles = function () {
+        this.checkRecentFileToBeShowed();
+        this.checkRecentFileToBeClosed();
+        recentFilesClosed.click();
+        this.checkRecentFileToBeOpened()
+    };
+
+    this.closeRecentFiles = function() {
+        this.checkRecentFileToBeShowed();
+        this.checkRecentFileToBeOpened()
+        recentFilesExpanded.click();
+        this.checkRecentFileToBeClosed();
+    };
+
+    this.checkRecentFileToBeClosed = function () {
+        Util.waitUntilElementIsVisible(recentFilesClosed);
+    };
+
+    this.checkRecentFileToBeOpened = function () {
+        Util.waitUntilElementIsVisible(recentFilesExpanded);
+    };
+
+    this.getRecentFileIcon = async function () {
+        await Util.waitUntilElementIsVisible(recentFileIcon);
+        return recentFileIcon.getText();
+    };
 
     /**
      * Check Document List is displayed
@@ -60,10 +103,14 @@ var ContentServicesPage = function () {
      * @method goToDocumentList
      * */
     this.goToDocumentList = function () {
+        this.clickOnContentServices();
+        this.checkAcsContainer();
+    };
+
+    this.clickOnContentServices = function () {
         Util.waitUntilElementIsVisible(contentServices);
         Util.waitUntilElementIsClickable(contentServices);
         contentServices.click();
-        this.checkAcsContainer();
     };
 
     this.navigateToDocumentList = function () {
@@ -135,6 +182,10 @@ var ContentServicesPage = function () {
             deferred.fulfill(result);
         });
         return deferred.promise;
+    };
+
+    this.checkListIsSortedByNameColumn = async function(sortOrder) {
+        await contentList.checkListIsOrderedByNameColumn(sortOrder);
     };
 
     /**
@@ -217,6 +268,11 @@ var ContentServicesPage = function () {
     this.checkEmptyFolderMessageIsDisplayed = function () {
         contentList.checkEmptyFolderMessageIsDisplayed();
         return this;
+    };
+
+    this.checkElementIsDisplayed = function (elementName) {
+        let dataElement = element(by.css(`div[data-automation-id="${elementName}"]`));
+        Util.waitUntilElementIsVisible(dataElement);
     };
 
     this.navigateToFolderViaBreadcrumbs = function (folder) {
@@ -304,8 +360,7 @@ var ContentServicesPage = function () {
         for (i = 0; i < content.length; i++) {
             this.deleteContent(content[i]);
             this.checkContentIsNotDisplayed(content[i]);
-        }
-        ;
+        };
         return this;
     };
 
@@ -329,6 +384,20 @@ var ContentServicesPage = function () {
         return this;
     };
 
+    this.enableCustomPermissionMessage = function () {
+        var customPermissionMessage = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
+        Util.waitUntilElementIsVisible(customPermissionMessage);
+        customPermissionMessage.click();
+        return this;
+    };
+
+    this.enableMediumTimeFormat = function () {
+        var mediumTimeFormat = element(by.css('#enableMediumTimeFormat'));
+        Util.waitUntilElementIsVisible(mediumTimeFormat);
+        mediumTimeFormat.click();
+        return this;
+    };
+
     this.clickLoadMoreButton = function () {
         Util.waitUntilElementIsVisible(loadMoreButton);
         Util.waitUntilElementIsClickable(loadMoreButton);
@@ -340,8 +409,68 @@ var ContentServicesPage = function () {
         Util.waitUntilElementIsVisible(emptyPagination);
     };
 
+    this.getDocumentListRowNumber = function() {
+        let documentList = element(by.css('adf-upload-drag-area adf-document-list'));
+        Util.waitUntilElementIsVisible(documentList);
+        let actualRows = $$('adf-upload-drag-area adf-document-list .adf-datatable-row').count();
+        return actualRows;
+    };
+
+    this.checkColumnNameHeader = function() {
+        Util.waitUntilElementIsVisible(nameHeader);
+    };
+
+    this.checkColumnSizeHeader = function() {
+        Util.waitUntilElementIsVisible(sizeHeader);
+    };
+
+    this.checkColumnCreatedByHeader = function() {
+        Util.waitUntilElementIsVisible(createdByHeader);
+    };
+
+    this.checkColumnCreatedHeader = function() {
+        Util.waitUntilElementIsVisible(createdHeader);
+    };
+
     this.checkDandDIsDisplayed = function () {
         Util.waitUntilElementIsVisible(dragAndDrop);
+    };
+
+    this.checkLockIsDislpayedForElement = function(name) {
+        let lockButton = element(by.css(`div.adf-data-table-cell[filename="${name}"] button`));
+        Util.waitUntilElementIsVisible(lockButton);
+    };
+
+    this.getColumnValueForRow = function (file, columnName) {
+        let row = contentList.getRowByRowName(file);
+        Util.waitUntilElementIsVisible(row);
+        let rowColumn = row.element(by.css('div[title="'+columnName+'"] span'));
+        Util.waitUntilElementIsVisible(rowColumn);
+        return rowColumn.getText();
+    };
+
+    this.getStyleValueForRowText = async function(rowName, styleName) {
+        let row = element(by.css(`div.adf-data-table-cell[filename="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
+        Util.waitUntilElementIsVisible(row);
+        return row.getCssValue(styleName);
+    };
+
+    this.checkSpinnerIsShowed = function () {
+        Util.waitUntilElementIsPresent(documentListSpinner);
+    };
+
+    this.checkEmptyFolderTextToBe = function (text) {
+        Util.waitUntilElementIsVisible(emptyFolder);
+        expect(emptyFolder.getText()).toContain(text);
+    };
+
+    this.checkEmptyFolderImageUrlToContain = function (url) {
+        Util.waitUntilElementIsVisible(emptyFolderImage);
+        expect(emptyFolderImage.getAttribute('src')).toContain(url);
+    };
+
+    this.checkEmptyRecentFileIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(emptyRecent);
     };
 
 };

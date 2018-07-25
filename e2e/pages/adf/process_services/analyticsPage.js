@@ -26,7 +26,7 @@ var AnalyticsPage = function () {
     var reportMessage = element(by.css("div[class='ng-star-inserted'] span"));
 
     this.getReport = function (title) {
-        var reportTitle = element(by.css("mat-icon[data-automation-id='"+ title +"_filter']"));
+        var reportTitle = element(by.css(`mat-icon[data-automation-id="${title}_filter"]`));
         Util.waitUntilElementIsVisible(reportTitle);
         reportTitle.click();
     };

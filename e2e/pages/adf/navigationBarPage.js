@@ -30,6 +30,8 @@ var NavigationBarPage = function () {
     var themeMenuContent = element(by.css("div[class*='mat-menu-panel']"));
     var logoutButton = element(by.css("a[adf-logout]"));
     var cardViewButton = element(by.cssContainingText(".sidenav-menu-label", "CardView"));
+    var languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
+    var appTitle = element(by.css('.adf-app-title'));
 
     /**
      * Click Content Services Button
@@ -115,7 +117,18 @@ var NavigationBarPage = function () {
     this.openContentServicesFolder = function (folderId) {
         return browser.get(TestConfig.adf.url + '/files/' + folderId);
     };
+    
+    this.chooseLanguage = function(language) {
+        let buttonLanguage = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
+        Util.waitUntilElementIsVisible(buttonLanguage);
+        buttonLanguage.click();
+    };
 
+    this.openLanguageMenu = function () {
+        Util.waitUntilElementIsVisible(languageMenuButton);
+        languageMenuButton.click();
+        Util.waitUntilElementIsVisible(appTitle);
+    };
 };
 
 module.exports = NavigationBarPage;

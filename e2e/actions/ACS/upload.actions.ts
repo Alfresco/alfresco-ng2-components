@@ -43,4 +43,8 @@ export class UploadActions {
         }, {}, {});
     }
 
+    async deleteFilesOrFolder(alfrescoJsApi, folderId) {
+        return alfrescoJsApi.nodes.deleteNode(folderId, { permanent: true } );
+    }
+
 }

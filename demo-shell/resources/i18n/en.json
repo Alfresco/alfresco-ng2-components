@@ -24,6 +24,8 @@
     },
     "PERSONAL-FILES": "Personal Files",
     "WARN-MULTIPLE-UPLOADS": "Display warning for multiple uploads.",
+    "CUSTOM-PERMISSION-MESSAGE": "Enable custom permission message",
+    "MEDIUM-TIME-FORMAT": "Enable medium time format for document list",
     "SEARCH": {
       "RADIO": {
         "NONE": "None",
