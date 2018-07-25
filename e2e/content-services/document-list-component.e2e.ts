@@ -29,15 +29,17 @@ import FileModel = require('../models/ACS/fileModel');
 import moment from 'moment-es6';
 import { browser } from '../../node_modules/protractor';
 
-fdescribe('Document List Component', () => {
+describe('Document List Component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let navBar = new NavigationBarPage();
     let errorPage = new ErrorPage();
     let privateSite;
-    let uploadedFolder;
+    let uploadedFolder, uploadedFolderExtra;
     let uploadActions = new UploadActions();
+    let acsUser = null;
+    let testFileNode, pdfBFileNode;
 
     beforeAll(() => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -46,11 +48,31 @@ fdescribe('Document List Component', () => {
         });
     });
 
-    fdescribe('Permission Message', async () => {
+    afterEach(async (done) => {
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        if (uploadedFolder) {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
+            uploadedFolder = null;
+        }
+        if (uploadedFolderExtra) {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolderExtra.entry.id);
+            uploadedFolderExtra = null;
+        }
+        if (testFileNode) {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, testFileNode.entry.id);
+            testFileNode = null;
+        }
+        if (pdfBFileNode) {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfBFileNode.entry.id);
+            pdfBFileNode = null;
+        }
+        done();
+    });
 
-        let acsUser = new AcsUserModel();
+    describe('Permission Message', async () => {
 
         beforeAll(async (done) => {
+            acsUser = new AcsUserModel();
             let siteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
             let folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
             let privateSiteBody = { visibility: 'PRIVATE' , title: siteName};
@@ -63,14 +85,6 @@ fdescribe('Document List Component', () => {
 
             uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, privateSite.entry.guid);
 
-            done();
-        });
-
-        afterAll(async (done) => {
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            if (uploadedFolder) {
-                await uploadActions.deleteFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
-            }
             done();
         });
 
@@ -101,7 +115,7 @@ fdescribe('Document List Component', () => {
 
     describe('Custom Column', () => {
 
-        let folderName, acsUser;
+        let folderName;
         let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
         let docxFileModel = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
@@ -116,6 +130,8 @@ fdescribe('Document List Component', () => {
             'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
         });
 
+        let pdfUploadedNode, docxUploadedNode, timeAgoUploadedNode, mediumDateUploadedNode;
+
         beforeAll(async (done) => {
 
             acsUser = new AcsUserModel();
@@ -128,8 +144,26 @@ fdescribe('Document List Component', () => {
 
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
-            await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
-            await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');
+            pdfUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+            docxUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');
+            done();
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            if (pdfUploadedNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedNode.entry.id);
+            }
+            if (docxUploadedNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, docxUploadedNode.entry.id);
+            }
+            if (timeAgoUploadedNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, timeAgoUploadedNode.entry.id);
+            }
+            if (mediumDateUploadedNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, mediumDateUploadedNode.entry.id);
+            }
             done();
         });
 
@@ -153,7 +187,7 @@ fdescribe('Document List Component', () => {
 
         it('[C279928] - The date is showed with timeAgo', async (done) => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-            await uploadActions.uploadFile(this.alfrescoJsApi, timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
+            timeAgoUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             let dateValue = contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
@@ -163,8 +197,8 @@ fdescribe('Document List Component', () => {
 
         it('[C279929] - The date is showed with date type', async (done) => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-            let file = await uploadActions.uploadFile(this.alfrescoJsApi, mediumFileModel.location, mediumFileModel.name, '-my-');
-            let createdDate = moment(file.createdAt).format('ll');
+            mediumDateUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, mediumFileModel.location, mediumFileModel.name, '-my-');
+            let createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableMediumTimeFormat();
@@ -175,8 +209,6 @@ fdescribe('Document List Component', () => {
     });
 
     describe('Column Sorting', () => {
-
-        let acsUser;
 
         let fakeFileA = new FileModel({
             'name': 'A',
@@ -193,6 +225,9 @@ fdescribe('Document List Component', () => {
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
+
+        let fileANode, fileBNode, fileCNode;
+
         beforeAll(async (done) => {
 
             acsUser = new AcsUserModel();
@@ -202,9 +237,23 @@ fdescribe('Document List Component', () => {
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-            await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileA.location, fakeFileA.name, '-my-');
-            await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileB.location, fakeFileB.name, '-my-');
-            await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileC.location, fakeFileC.name, '-my-');
+            fileANode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileA.location, fakeFileA.name, '-my-');
+            fileBNode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileB.location, fakeFileB.name, '-my-');
+            fileCNode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileC.location, fakeFileC.name, '-my-');
+            done();
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            if (fileANode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileANode.entry.id);
+            }
+            if (fileBNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileBNode.entry.id);
+            }
+            if (fileCNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileCNode.entry.id);
+            }
             done();
         });
 
@@ -246,7 +295,7 @@ fdescribe('Document List Component', () => {
     });
 
     it('[C260121] - should show the spinner on loading', async (done) => {
-        let acsUser = new AcsUserModel();
+        acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -256,7 +305,7 @@ fdescribe('Document List Component', () => {
     });
 
     it('[C279959] - Empty Folder state is displayed for new folders', async (done) => {
-        let acsUser = new AcsUserModel();
+        acsUser = new AcsUserModel();
 
         let folderName = 'BANANA';
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -275,7 +324,7 @@ fdescribe('Document List Component', () => {
             'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
-        let acsUser = new AcsUserModel();
+        acsUser = new AcsUserModel();
         let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -291,7 +340,7 @@ fdescribe('Document List Component', () => {
     });
 
     it('[C261997] - Recent Files empty', async (done) => {
-        let acsUser = new AcsUserModel();
+        acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -306,12 +355,12 @@ fdescribe('Document List Component', () => {
     });
 
     it('[C268119] - "ygj" letters rendering in document list', async (done) => {
-        let acsUser = new AcsUserModel();
+        acsUser = new AcsUserModel();
         let folderName = 'ggggggjjjjjjjjjjjjyyyyyy';
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
         loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.clickOnContentServices();
         let lineHeight = await contentServicesPage.getStyleValueForRowText(folderName, 'line-height');
@@ -322,14 +371,14 @@ fdescribe('Document List Component', () => {
     });
 
     it('[C279970] - Custom column - isLocked field is showed for folders', async (done) => {
-        let acsUser = new AcsUserModel();
+        acsUser = new AcsUserModel();
         let folderNameA = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
         let folderNameB = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        await uploadActions.uploadFolder(this.alfrescoJsApi, folderNameA, '-my-');
-        await uploadActions.uploadFolder(this.alfrescoJsApi, folderNameB, '-my-');
+        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderNameA, '-my-');
+        uploadedFolderExtra = await uploadActions.uploadFolder(this.alfrescoJsApi, folderNameB, '-my-');
         loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkContentIsDisplayed(folderNameA);
@@ -348,12 +397,12 @@ fdescribe('Document List Component', () => {
             'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
         });
-        let acsUser = new AcsUserModel();
+        acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        await uploadActions.uploadFile(this.alfrescoJsApi, testFileA.location, testFileA.name, '-my-');
-        await uploadActions.uploadFile(this.alfrescoJsApi, testFileB.location, testFileB.name, '-my-');
+        testFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileA.location, testFileA.name, '-my-');
+        pdfBFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileB.location, testFileB.name, '-my-');
         loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkContentIsDisplayed(testFileA.name);
@@ -363,20 +412,41 @@ fdescribe('Document List Component', () => {
         done();
     });
 
-    xit('[C277093] - Sorting files with Items per page set to default', async (done) => {
-        let acsUser = new AcsUserModel();
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        let folderName = '';
-        for (let i = 0; i < 20; i++) {
-            folderName = `MEESEEKS_${Util.generateRandomString(5)}_${i}`;
-            await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
-        }
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.checkListIsSortedByNameColumn('asc');
-        done();
+    describe('Once uploaded 20 folders', () => {
+
+        let folderCreated;
+
+        beforeAll(async (done) => {
+            acsUser = new AcsUserModel();
+            folderCreated = [];
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            let folderName = '';
+            let folder = null;
+            for (let i = 0; i < 20; i++) {
+                folderName = `MEESEEKS_000${i}`;
+                folder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+                folderCreated.push(folder);
+            }
+            done();
+        });
+
+        afterAll(async (done) => {
+            Promise.all(folderCreated.map((folder) =>
+                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folder.entry.id)
+            )).then(
+                done()
+            );
+        });
+
+        it('[C277093] - Sorting files with Items per page set to default', async (done) => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.checkListIsSortedByNameColumn('asc');
+            done();
+        });
+
     });
 
 });

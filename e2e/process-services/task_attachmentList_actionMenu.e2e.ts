@@ -111,7 +111,7 @@ describe('Attachment list action menu for tasks', () => {
 
         attachmentListPage.downloadFile(pngFile.name);
 
-        browser.driver.sleep(800);
+        browser.driver.sleep(1000);
 
         expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
@@ -143,7 +143,7 @@ describe('Attachment list action menu for tasks', () => {
 
         attachmentListPage.downloadFile(pngFile.name);
 
-        browser.driver.sleep(500);
+        browser.driver.sleep(1000);
 
         expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
