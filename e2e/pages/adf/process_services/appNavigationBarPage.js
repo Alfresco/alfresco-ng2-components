@@ -16,14 +16,13 @@
  */
 
 var Util = require('../../../util/util');
-var TasksPage = require('./tasksPage');
 
 var AppNavigationBarPage = function () {
 
-    var tasksButton = element.all(by.cssContainingText("div[class*='mat-tab-label']", "Tasks")).first();
-    var processButton = element.all(by.css('div[id*="mat-tab-label"]'));
-    var reportsButton = element(by.id('mat-tab-label-1-2'));
-    var reportsButtonSelected = element(by.css("div[id='mat-tab-label-1-2'][aria-selected='true']"))
+    var tasksButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Tasks")).first();
+    var processButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Process")).first();
+    var reportsButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Reports")).first();
+    var reportsButtonSelected = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div[aria-selected='true']", "Reports")).first();
 
     this.clickTasksButton = function () {
         Util.waitUntilElementIsVisible(tasksButton);
@@ -31,7 +30,7 @@ var AppNavigationBarPage = function () {
     };
 
     this.clickProcessButton = function () {
-        return processButton.get(1).click();
+        return processButton.click();
     };
 
     this.clickReportsButton = function () {
