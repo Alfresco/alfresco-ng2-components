@@ -21,32 +21,38 @@ import TestConfig = require('../../test.config');
 export class CommentsPage {
 
     numberOfComments = element(by.id('comment-header'));
-    commentUserIcon = element(by.id('comment-user-icon'));
-    commentUserName = element(by.id('comment-user'));
-    commentMessage = element(by.id('comment-message'));
-    commentTime = element(by.id('comment-time'));
+    commentUserIcon = element.all(by.id('comment-user-icon'));
+    commentUserName = element.all(by.id('comment-user'));
+    commentMessage = element.all(by.id('comment-message'));
+    commentTime = element.all(by.id('comment-time'));
+    commentInput = element(by.id('comment-input'));
 
     getTotalNumberOfComments() {
         Util.waitUntilElementIsVisible(this.numberOfComments);
         return this.numberOfComments.getText();
     }
 
-    checkUserIconIsDisplayed() {
+    checkUserIconIsDisplayed(number) {
         Util.waitUntilElementIsVisible(this.commentUserIcon);
+        return this.commentUserIcon.get(number);
     }
 
-    getUserName() {
+    getUserName(number) {
         Util.waitUntilElementIsVisible(this.commentUserName);
-        return this.commentUserName.getText();
+        return this.commentUserName.get(number).getText();
     }
 
-    getMessage() {
+    getMessage(number) {
         Util.waitUntilElementIsVisible(this.commentMessage);
-        return this.commentMessage.getText();
+        return this.commentMessage.get(number).getText();
     }
 
-    getTime() {
+    getTime(number) {
         Util.waitUntilElementIsVisible(this.commentTime);
-        return this.commentTime.getText();
+        return this.commentTime.get(number).getText();
+    }
+
+    checkCommentInputIsNotDisplayed() {
+        Util.waitUntilElementIsNotVisible(this.commentInput);
     }
 }
