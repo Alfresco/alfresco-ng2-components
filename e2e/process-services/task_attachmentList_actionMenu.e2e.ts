@@ -48,7 +48,7 @@ describe('Attachment list action menu for tasks', () => {
         name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
     let downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
-    let tenantId, appId;
+    let tenantId, appId, relatedContent, relatedContentId;
     let taskName = {
         active: 'Active Task',
         completed: 'Completed Task',
@@ -175,4 +175,36 @@ describe('Attachment list action menu for tasks', () => {
         attachmentListPage.checkEmptyAttachmentList();
     });
 
+    it('[C260234] Should be able to attache a file on a task on APS and check on ADF', () => {
+        browser.controlFlow().execute(async() => {
+            let newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: "SHARE KNOWLEDGE"});
+
+            let newTaskId = newTask.id;
+
+            let filePath = path.join(TestConfig.main.rootPath + pngFile.location);
+
+            let file = fs.createReadStream(filePath);
+
+            relatedContent = await this.alfrescoJsApi.activiti.contentApi.createRelatedContentOnTask(newTaskId, file, {'isRelatedContent': true});
+            relatedContentId = relatedContent.id;
+        });
+
+        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+
+        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.usingTasksListPage().selectTaskFromTasksList('SHARE KNOWLEDGE');
+
+        attachmentListPage.checkFileIsAttached(pngFile.name);
+
+        browser.controlFlow().execute(async() => {
+            await this.alfrescoJsApi.activiti.contentApi.deleteContent(relatedContentId);
+        });
+
+        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+
+        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.usingTasksListPage().selectTaskFromTasksList('SHARE KNOWLEDGE');
+
+        attachmentListPage.checkEmptyAttachmentList();
+    });
 });
