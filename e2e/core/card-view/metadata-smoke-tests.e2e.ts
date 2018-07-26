@@ -269,11 +269,10 @@ describe('Metadata component', () => {
 
         expect(metadataViewPage.getPropertyText('name')).toEqual(folderName);
         expect(metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-
-        browser.refresh();
     });
 
     it('[C261158] Should be possible edit the metadata When the node is a Folder', () => {
+        contentServicesPage.navigateToDocumentList();
         contentListPage.metadataContent(folderName);
 
         metadataViewPage.editIconClick();
@@ -292,11 +291,10 @@ describe('Metadata component', () => {
         metadataViewPage.enterPropertyText('name', folderName);
         metadataViewPage.clickUpdatePropertyIcon('name');
         expect(metadataViewPage.getPropertyText('name')).toEqual(folderName);
-
-        browser.refresh();
     });
 
     it('[C260181] Should be possible edit all the metadata aspect', () => {
+        contentServicesPage.navigateToDocumentList();
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
