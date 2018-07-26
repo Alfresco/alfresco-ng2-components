@@ -219,4 +219,10 @@ describe('Start Task - Task App', () => {
         taskPage.usingTaskDetails().usingTaskDetailsToggles().enableShowHeader();
         taskPage.usingTaskDetails().taskInfoDrawerIsDisplayed();
     });
+
+    it('[C260424] Should be able to see Spinner loading on task list when clicking on Tasks', () => {
+        processServicesPage.goToProcessServices().goToTaskApp();
+        taskPage.usingTasksListPage().checkSpinnerIsDisplayed();
+    });
+
 });

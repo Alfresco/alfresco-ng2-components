@@ -24,6 +24,11 @@ var FormFields = function () {
     var saveButton = element(by.cssContainingText("mat-card-actions[class*='adf-form'] span", "SAVE"));
     var valueLocator = by.css("input");
     var labelLocator = by.css("label");
+    var noFormMessage = element(by.css("span[id*='no-form-message']"));
+    var completedTaskNoFormMessage = element(by.css("div[id*='completed-form-message'] p"));
+    var attachFormButton = element(by.id("adf-no-form-attach-form-button"));
+    var selectFormDropDownArrow = element(by.css("adf-attach-form div[class*='mat-select-arrow']"));
+    var selectFormContent = element(by.css("div[class*='mat-select-content']"));
 
     this.setFieldValue = function (By, field, value) {
         var fieldElement =  element(By(field));
@@ -80,6 +85,36 @@ var FormFields = function () {
     this.checkFormIsDisplayed = function () {
         Util.waitUntilElementIsVisible(formContent);
         return this;
+    };
+
+    this.getNoFormMessage = function () {
+        Util.waitUntilElementIsVisible(noFormMessage);
+        return noFormMessage.getText();
+    };
+
+    this.getCompletedTaskNoFormMessage = function () {
+        Util.waitUntilElementIsVisible(completedTaskNoFormMessage);
+        return completedTaskNoFormMessage.getText();
+    };
+
+    this.clickOnAttachFormButton = function () {
+        Util.waitUntilElementIsVisible(attachFormButton);
+        attachFormButton.click();
+        return this;
+    };
+
+    this.selectForm = function (formName) {
+        Util.waitUntilElementIsVisible(selectFormDropDownArrow);
+        selectFormDropDownArrow.click();
+        Util.waitUntilElementIsVisible(selectFormContent);
+        this.selectFormFromDropDown(formName);
+        return this;
+    };
+
+    this.selectFormFromDropDown = function (formName) {
+        var formNameElement = element(by.cssContainingText("span", formName));
+        Util.waitUntilElementIsVisible(formNameElement);
+        formNameElement.click();
     };
 
 };
