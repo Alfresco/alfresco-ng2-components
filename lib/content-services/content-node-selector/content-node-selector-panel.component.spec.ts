@@ -28,6 +28,7 @@ import { NodePaging } from 'alfresco-js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
+import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 
 const ONE_FOLDER_RESULT = {
     list: {
@@ -295,7 +296,8 @@ describe('ContentNodeSelectorComponent', () => {
                 const sitesService = TestBed.get(SitesService);
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
 
-                getCorrespondingNodeIdsSpy = spyOn(component.documentList, 'getCorrespondingNodeIds').and
+                const customResourcesService = TestBed.get(CustomResourcesService);
+                getCorrespondingNodeIdsSpy = spyOn(customResourcesService, 'getCorrespondingNodeIds').and
                     .callFake(id => {
                         if (id === '-sites-') {
                             return of(['123456testId', '09876543testId']);
