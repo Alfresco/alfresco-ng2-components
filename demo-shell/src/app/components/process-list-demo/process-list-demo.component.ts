@@ -53,9 +53,7 @@ export class ProcessListDemoComponent implements OnInit {
 
     sortOptions = [
         {value: 'created-asc', title: 'Created (asc)'},
-        {value: 'created-desc', title: 'Created (desc)'},
-        {value: 'due-asc', title: 'Due (asc)'},
-        {value: 'due-desc', title: 'Due (desc)'}
+        {value: 'created-desc', title: 'Created (desc)'}
     ];
 
     constructor(private route: ActivatedRoute,

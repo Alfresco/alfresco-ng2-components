@@ -509,7 +509,7 @@
                 {
                     "key": "processDefinitionId",
                     "type": "text",
-                    "title": "ADF_PROCESS_LIST.PROPERTIES.PROCESS_DEFITINITION_ID",
+                    "title": "ADF_PROCESS_LIST.PROPERTIES.PROCESS_DEFINITION_ID",
                     "sortable": true
                 },
                 {

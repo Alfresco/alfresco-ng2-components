@@ -188,7 +188,7 @@
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "No description",
       "ID": "ID",
-      "PROCESS_DEFITINITION_ID": "Process Definition Id"
+      "PROCESS_DEFINITION_ID": "Process Definition Id"
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "View",
