@@ -222,8 +222,7 @@ describe('StartFormComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            let selectElement = fixture.nativeElement.querySelector('mat-select');
-            expect(selectElement.children.length).toBe(1);
+            expect(component.processDefinitions.length).toBe(2);
         });
 
         it('should display the option def details', () => {
@@ -232,7 +231,7 @@ describe('StartFormComponent', () => {
             component.processDefinitions = testMultipleProcessDefs;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                let selectElement = fixture.nativeElement.querySelector('mat-autocomplete');
                 let optionElement = fixture.nativeElement.querySelectorAll('mat-option');
                 selectElement.click();
                 expect(selectElement).not.toBeNull();
@@ -298,12 +297,12 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                    let selectElement = fixture.nativeElement.querySelector('mat-autocomplete');
                     expect(selectElement).toBeNull();
                 });
             }));
 
-            it('should show the process dropdown if showSelectProcessDropdown is false', async(() => {
+            it('should show the process dropdown if showSelectProcessDropdown is true', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
                 component.appId = 123;
                 component.processDefinitionName = 'My Process 2';
@@ -311,7 +310,7 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                    let selectElement = fixture.nativeElement.querySelector('mat-autocomplete');
                     expect(selectElement).not.toBeNull();
                 });
             }));
@@ -323,7 +322,7 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                    let selectElement = fixture.nativeElement.querySelector('mat-autocomplete');
                     expect(selectElement).not.toBeNull();
                 });
             }));

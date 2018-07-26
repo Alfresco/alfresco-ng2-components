@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges,
+import { Component, EventEmitter, Input, OnInit, OnChanges,
     Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { ActivitiContentService, AppConfigService, AppConfigValues,
@@ -27,7 +27,7 @@ import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { map, startWith } from 'rxjs/operators';
 
 @Component({
@@ -36,7 +36,7 @@ import { map, startWith } from 'rxjs/operators';
     styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartProcessInstanceComponent implements OnChanges {
+export class StartProcessInstanceComponent implements OnInit, OnChanges {
 
     /** (optional) Limit the list of processes that can be started to those
      * contained in the specified app.
@@ -98,18 +98,20 @@ export class StartProcessInstanceComponent implements OnChanges {
     processControl = new FormControl();
     filteredOptions: Observable<any>;
 
+    ngOnInit() {
+        this.filteredOptions = this.processControl.valueChanges
+            .pipe(
+                startWith(''),
+                map(value => this._filter(value))
+            );
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (changes['values'] && changes['values'].currentValue) {
             this.moveNodeFromCStoPS();
         }
 
         this.loadStartProcess();
-
-        this.filteredOptions = this.processControl.valueChanges
-            .pipe(
-                startWith(''),
-                map(value => this._filter(value))
-            );
     }
 
     private _filter(value) {
@@ -122,9 +124,8 @@ export class StartProcessInstanceComponent implements OnChanges {
         return this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
     }
 
-    displayFn(user): string | undefined {
-        this.selectedProcessDef = user;
-        return user;
+    displayFn(processDef): string {
+        return processDef ? processDef.name : '';
     }
 
     public loadStartProcess() {
@@ -245,5 +246,9 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     hasProcessName(): boolean {
         return !!this.name;
+    }
+
+    onItemSelect(item) {
+        this.selectedProcessDef = item;
     }
 }
