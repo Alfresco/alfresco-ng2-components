@@ -38,7 +38,7 @@ describe('Comment component for Processes', () => {
     let commentsPage = new CommentsPage();
 
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let tenantId, appId, secondUser, newTaskId;
+    let user, tenantId, appId, secondUser, newTaskId;
 
     let taskName = {
         completed_task: 'Test Completed',
@@ -61,7 +61,7 @@ describe('Comment component for Processes', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let user = await users.createTenantAndUser(this.alfrescoJsApi);
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         tenantId = user.tenantId;
 
@@ -78,6 +78,8 @@ describe('Comment component for Processes', () => {
     });
 
     afterEach(async(done) => {
+        await loginPage.loginToProcessServicesUsingUserModel(user);
+
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
