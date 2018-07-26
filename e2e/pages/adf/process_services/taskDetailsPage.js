@@ -38,6 +38,8 @@ var TaskDetailsPage = function () {
     var addInvolvedUserButton = element(by.css("button[id='add-people'] span"));
     var emailInvolvedUser = by.xpath("following-sibling::div[@class='people-email ng-star-inserted']");
     var infoDrawer = element(by.css("adf-info-drawer"));
+    var auditLogButton = element(by.css("button[adf-task-audit]"));
+
 
     this.getFormName = function () {
         Util.waitUntilElementIsVisible(formNameField);
@@ -167,6 +169,11 @@ var TaskDetailsPage = function () {
         var email = this.getRowsUser(user).element(emailInvolvedUser);
         Util.waitUntilElementIsVisible(email);
         return email.getText();
+    };
+
+    this.clickAuditLogButton = function () {
+        Util.waitUntilElementIsVisible(auditLogButton);
+        auditLogButton.click();
     };
 
     this.usingTaskDetailsToggles = function () {

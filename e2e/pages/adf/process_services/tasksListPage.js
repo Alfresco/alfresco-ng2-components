@@ -21,6 +21,7 @@ var TasksListPage = function () {
 
     var taskList = element(by.css("adf-tasklist"));
     var tableBody = element.all(by.css("adf-datatable div[class='adf-datatable-body']")).first();
+    var spinner = element(by.css('mat-progress-spinner'));
 
     this.checkTaskIsDisplayedInTasksList = function(taskName) {
         var row = by.cssContainingText("span", taskName);
@@ -48,6 +49,10 @@ var TasksListPage = function () {
 
     this.waitForTableBody = function (){
         Util.waitUntilElementIsVisible(tableBody);
+    };
+
+    this.checkSpinnerIsDisplayed = function () {
+        Util.waitUntilElementIsPresent(spinner);
     };
 
 };
