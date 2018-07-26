@@ -121,6 +121,9 @@ export class StartProcessInstanceComponent implements OnInit, OnChanges {
         } else if (value) {
             filterValue = value.toLowerCase();
         }
+        let processDefArray = this.processDefinitions.filter(option => option.name.toLowerCase() === filterValue);
+        this.selectedProcessDef = processDefArray.length ? processDefArray[0] : null;
+
         return this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
     }
 

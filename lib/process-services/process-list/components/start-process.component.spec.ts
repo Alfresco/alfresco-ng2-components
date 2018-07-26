@@ -143,7 +143,7 @@ describe('StartFormComponent', () => {
                 });
             }));
 
-            it('should have start button disabled if the process is not seleted', async(() => {
+            it('should have start button disabled if the process is not selected', async(() => {
                 component.name = 'My new process';
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -241,7 +241,7 @@ describe('StartFormComponent', () => {
             });
         });
 
-        it('should indicate an error to the user if process defs cannot be loaded', async(() => {
+        it('should indicate an error to the user if process definitions cannot be loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(throwError({}));
             component.appId = 123;
             component.ngOnChanges({});
@@ -285,6 +285,17 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.selectedProcessDef.name).toBe(JSON.parse(JSON.stringify(testProcessDefinitions[0])).name);
+            });
+        }));
+
+        it('should have start button enabled when process is selected', async(() => {
+            component.selectedProcessDef = testProcessDefRepr;
+            component.name = 'My process';
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let startBtn = fixture.nativeElement.querySelector('#button-start');
+                expect(startBtn.disabled).toBe(false);
             });
         }));
 
@@ -350,7 +361,7 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should get current processDeff', () => {
+        it('should get current processDef', () => {
             component.appId = 456;
             component.ngOnChanges({ appId: change });
             fixture.detectChanges();
@@ -391,7 +402,7 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should call service to start process with the variables setted', async(() => {
+        it('should call service to start process with the variables set up', async(() => {
             let inputProcessVariable: ProcessInstanceVariable[] = [];
 
             let variable: ProcessInstanceVariable = {};
