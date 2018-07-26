@@ -225,7 +225,6 @@ describe('Document List Component', () => {
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
-
         let fileANode, fileBNode, fileCNode;
 
         beforeAll(async (done) => {
@@ -447,6 +446,90 @@ describe('Document List Component', () => {
             done();
         });
 
+    });
+
+    describe('Thumbnails', () => {
+
+        let pdfFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        });
+
+        let testFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+
+        let docxFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        });
+        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        let filePdfNode, fileTestNode, fileDocxNode;
+
+        beforeAll(async (done) => {
+            acsUser = new AcsUserModel();
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            filePdfNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
+            fileTestNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFile.location, testFile.name, '-my-');
+            fileDocxNode = await uploadActions.uploadFile(this.alfrescoJsApi, docxFile.location, docxFile.name, '-my-');
+            uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+            done();
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            if (filePdfNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, filePdfNode.entry.id);
+            }
+            if (fileTestNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTestNode.entry.id);
+            }
+            if (fileDocxNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileDocxNode.entry.id);
+            }
+            done();
+        });
+
+        beforeEach( () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+        });
+
+        it('[C260119] - Thumbnail - Disabled - folder', async (done) => {
+            let folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
+            expect(folderIconUrl).toContain('/assets/images/ft_ic_folder.svg');
+            done();
+        });
+
+        it('[C260119] - Thumbnail - Disabled - pdf file', async (done) => {
+            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
+            expect(fileIconUrl).toContain('/assets/images/ft_ic_pdf.svg');
+            done();
+        });
+
+        it('[C260119] - Thumbnail - Disabled - docx file', async (done) => {
+            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(docxFile.name);
+            expect(fileIconUrl).toContain('/assets/images/ft_ic_ms_word.svg');
+            done();
+        });
+
+        it('[C260119] - Thumbnail - Disabled - test file', async (done) => {
+            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(testFile.name);
+            expect(fileIconUrl).toContain('/assets/images/ft_ic_document.svg');
+            done();
+        });
+
+        it('[C274701] - Thumbnails - Enabled', async (done) => {
+            contentServicesPage.enableThumbnails();
+            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
+            expect(fileIconUrl).toContain(`/versions/1/nodes/${filePdfNode.entry.id}/renditions`);
+            done();
+        });
     });
 
 });

@@ -398,6 +398,13 @@ var ContentServicesPage = function () {
         return this;
     };
 
+    this.enableThumbnails = function () {
+        var thumbnailSlide = element(by.css('#enableThumbnails'));
+        Util.waitUntilElementIsVisible(thumbnailSlide);
+        thumbnailSlide.click();
+        return this;
+    };
+
     this.clickLoadMoreButton = function () {
         Util.waitUntilElementIsVisible(loadMoreButton);
         Util.waitUntilElementIsClickable(loadMoreButton);
@@ -472,6 +479,17 @@ var ContentServicesPage = function () {
     this.checkEmptyRecentFileIsDisplayed = function () {
         Util.waitUntilElementIsVisible(emptyRecent);
     };
+
+    this.checkIconForRowIsDisplayed = function(fileName) {
+        let iconRow = element(by.css(`.document-list-container div.adf-data-table-cell[filename="${fileName}"] img`));
+        Util.waitUntilElementIsVisible(iconRow);
+        return iconRow;
+    }
+
+    this.getRowIconImageUrl = async function(fileName) {
+        let iconRow = this.checkIconForRowIsDisplayed(fileName);
+        return iconRow.getAttribute('src');
+    }
 
 };
 
