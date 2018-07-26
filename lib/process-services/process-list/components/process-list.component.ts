@@ -77,7 +77,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     processDefinitionId: string;
 
-    /** The processDefinitionId of the process. */
+    /** The id of the process instance. */
     @Input()
     processInstanceId: number|string;
 
