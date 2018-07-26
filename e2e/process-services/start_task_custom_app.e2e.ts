@@ -20,6 +20,7 @@ import ProcessServicesPage = require('../pages/adf/process_services/processServi
 import TasksPage = require('../pages/adf/process_services/tasksPage');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import CONSTANTS = require('../util/constants');
+import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 
 import Task = require('../models/APS/Task');
 import Tenant = require('../models/APS/Tenant');
@@ -39,6 +40,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Start Task - Custom App', () => {
 
+    let processFiltersPage = new ProcessFiltersPage();
     let TASKDATAFORMAT = 'mmm dd yyyy';
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
@@ -49,7 +51,7 @@ describe('Start Task - Custom App', () => {
     let formFieldValue = 'First value ';
     let taskPage = new TasksPage();
     let firstComment = 'comm1', firstChecklist = 'checklist1';
-    let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
+    let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File', 'Spinner'];
     let showHeaderTask = 'Show Header';
     let appModel;
     let pngFile = new FileModel({
@@ -216,4 +218,14 @@ describe('Start Task - Custom App', () => {
         taskPage.usingTaskDetails().usingTaskDetailsToggles().enableShowHeader();
         taskPage.usingTaskDetails().taskInfoDrawerIsDisplayed();
     });
+
+    it('[C263950] Should be able to see Spinner loading on task list when clicking on Tasks on custom app', () => {
+        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.createNewTask().addName(tasks[7]).clickStartButton();
+
+        processServicesPage.goToProcessServices().goToTaskApp();
+        taskPage.usingTasksListPage().checkSpinnerIsDisplayed();
+    });
+
 });
