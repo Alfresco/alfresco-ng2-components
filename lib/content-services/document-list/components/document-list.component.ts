@@ -813,23 +813,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.pagination.value.skipCount = 0;
     }
 
-    // TODO: remove it from here
-    getCorrespondingNodeIds(nodeId: string): Observable<string[]> {
-        if (this.customResourcesService.isCustomSource(nodeId)) {
-            return this.customResourcesService.getCorrespondingNodeIds(nodeId, this.pagination.getValue());
-        } else if (nodeId) {
-            return new Observable(observer => {
-                this.documentListService.getFolderNode(nodeId, this.includeFields)
-                    .subscribe((node: MinimalNodeEntryEntity) => {
-                        observer.next([node.id]);
-                        observer.complete();
-                    });
-            });
-        }
-
-        return Observable.of([]);
-    }
-
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
         this.subscriptions = [];
