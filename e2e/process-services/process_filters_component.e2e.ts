@@ -29,6 +29,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
+import { browser } from 'protractor';
 
 describe('Process Filters Test', () => {
 
@@ -79,10 +80,10 @@ describe('Process Filters Test', () => {
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
         appNavigationBarPage.clickProcessButton();
+        processServicesPage.checkProcessListIsDisplayed();
     });
 
     it('Navigate to Running filter', () => {
-
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
 
