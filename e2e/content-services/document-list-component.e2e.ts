@@ -29,7 +29,7 @@ import FileModel = require('../models/ACS/fileModel');
 import moment from 'moment-es6';
 import { browser } from '../../node_modules/protractor';
 
-describe('Document List Component', () => {
+fdescribe('Document List Component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
@@ -448,7 +448,7 @@ describe('Document List Component', () => {
 
     });
 
-    describe('Thumbnails', () => {
+    describe('Thumbnails and tooltips', () => {
 
         let pdfFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -500,6 +500,15 @@ describe('Document List Component', () => {
             contentServicesPage.goToDocumentList();
         });
 
+        // it('1. File has tooltip', () => {
+        //     expect(contentServicesPage.getTooltip(pdfFile.name)).toEqual(pdfFile.name);
+        // });
+
+        // it('2. Folder has tooltip', () => {
+        //     expect(contentServicesPage.getTooltip(folderOneModel.name)).toEqual(folderOneModel.name);
+        //     expect(contentServicesPage.getBreadcrumbTooltip(rootFolderName)).toEqual(rootFolderName);
+        // });
+
         it('[C260119] - Thumbnail - Disabled - folder', async (done) => {
             let folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
             expect(folderIconUrl).toContain('/assets/images/ft_ic_folder.svg');
@@ -526,6 +535,7 @@ describe('Document List Component', () => {
 
         it('[C274701] - Thumbnails - Enabled', async (done) => {
             contentServicesPage.enableThumbnails();
+            contentServicesPage.checkAcsContainer();
             let fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
             expect(fileIconUrl).toContain(`/versions/1/nodes/${filePdfNode.entry.id}/renditions`);
             done();
