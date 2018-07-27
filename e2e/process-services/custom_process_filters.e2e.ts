@@ -18,7 +18,7 @@
 import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage.js');
-import FiltersPage = require('../pages/adf/process_services/filtersPage.js')
+import FiltersPage = require('../pages/adf/process_services/filtersPage.js');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

@@ -87,7 +87,6 @@ describe('Version Properties', () => {
 
         versionManagePage.clickActionButton('1.0');
 
-
         Util.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
 
         versionManagePage.closeActionButton();

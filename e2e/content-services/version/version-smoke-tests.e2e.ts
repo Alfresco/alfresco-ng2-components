@@ -61,12 +61,12 @@ describe('Version component', () => {
     let fileModelVersionFor = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_C.file_location
-    })
+    });
 
     let fileModelVersionFive = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_D.file_location
-    })
+    });
 
     beforeAll(async (done) => {
 

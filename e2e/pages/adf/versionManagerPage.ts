@@ -43,7 +43,7 @@ export class VersionManagePage {
         this.uploadNewVersionButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
         Util.waitUntilElementIsVisible(this.showNewVersionButton);
         return this;
-    }
+    };
 
     getFileVersionName(version) {
         let fileElement = element(by.css(`[id="adf-version-list-item-name-${version}"]`));
@@ -55,7 +55,6 @@ export class VersionManagePage {
         let fileVersion = element(by.css(`[id="adf-version-list-item-version-${version}"]`));
         return Util.waitUntilElementIsVisible(fileVersion);
     }
-
 
     chekFileVersionNotExist(version) {
         let fileVersion = element(by.css(`[id="adf-version-list-item-version-${version}"]`));
@@ -72,7 +71,7 @@ export class VersionManagePage {
         let fileDate = element(by.css(`[id="adf-version-list-item-date-${version}"]`));
         Util.waitUntilElementIsVisible(fileDate);
         return fileDate.getText();
-    };
+    }
 
     enterCommentText(text) {
         Util.waitUntilElementIsVisible(this.commentText);
@@ -93,7 +92,6 @@ export class VersionManagePage {
         radioMinor.click();
     }
 
-
     /**
      * disables download
      */
@@ -103,7 +101,7 @@ export class VersionManagePage {
             if (check.indexOf('mat-checked') >= 0) {
                 this.readOnlySwitch.click();
             }
-        })
+        });
     }
 
     /**
@@ -115,7 +113,7 @@ export class VersionManagePage {
             if (check.indexOf('mat-checked') < 0) {
                 this.readOnlySwitch.click();
             }
-        })
+        });
     }
 
     /**
@@ -127,7 +125,7 @@ export class VersionManagePage {
             if (check.indexOf('mat-checked') >= 0) {
                 this.downloadSwitch.click();
             }
-        })
+        });
     }
 
     /**
@@ -139,7 +137,7 @@ export class VersionManagePage {
             if (check.indexOf('mat-checked') < 0) {
                 this.downloadSwitch.click();
             }
-        })
+        });
     }
 
     /**
@@ -152,7 +150,7 @@ export class VersionManagePage {
             if (check.indexOf('mat-checked') >= 0) {
                 this.commentsSwitch.click();
             }
-        })
+        });
     }
 
     /**
@@ -164,7 +162,7 @@ export class VersionManagePage {
             if (check.indexOf('mat-checked') < 0) {
                 this.commentsSwitch.click();
             }
-        })
+        });
     }
 
     clickActionButton(version) {
