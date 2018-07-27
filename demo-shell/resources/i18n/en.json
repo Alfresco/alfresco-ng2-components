@@ -51,6 +51,9 @@
       "TITLE": "Metadata"
     }
   },
+  "COMMENTS": {
+    "ADD_COMMENT": "ADD"
+  },
   "APP_LAYOUT": {
     "APP_NAME": "ADF Demo Application",
     "HOME": "Home",
