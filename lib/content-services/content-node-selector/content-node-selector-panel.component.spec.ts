@@ -373,7 +373,30 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId']);
             }));
 
-            it('should get the corresponding node ids before the search call on changing the site selectbox\'s value to a known alias', fakeAsync(() => {
+            it('should get the corresponding node ids on search when a known alias is selected from dropdown', fakeAsync(() => {
+                typeToSearchBox('vegeta');
+
+                tick(debounceSearch);
+
+                component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
+                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1, 'getCorrespondingNodeIdsSpy calls count should be one after the site changes to known alias \'-sites\-');
+                expect(getCorrespondingNodeIdsSpy.calls.mostRecent().args[0]).toEqual('-sites-');
+            }));
+
+            it('should get the corresponding node ids on search when a known alias is selected from CUSTOM dropdown', fakeAsync(() => {
+                component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
+                fixture.detectChanges();
+
+                typeToSearchBox('vegeta');
+
+                tick(debounceSearch);
+
+                component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
+                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1);
+                expect(getCorrespondingNodeIdsSpy.calls.mostRecent().args[0]).toEqual('-sites-');
+            }));
+
+            it('should NOT get the corresponding node ids on search when NOTHING is selected from dropdown', fakeAsync(() => {
                 component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
                 fixture.detectChanges();
 
@@ -382,17 +405,23 @@ describe('ContentNodeSelectorComponent', () => {
                 tick(debounceSearch);
 
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy calls count should be 0 when no site is selected');
-
-                component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
-                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy calls count should be 0 after the site changes to unknown alias');
-
-                component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
-                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1, 'getCorrespondingNodeIdsSpy calls count should be one after the site changes to known alias \'-sites\-');
-
-                expect(getCorrespondingNodeIdsSpy.calls.allArgs()).toEqual([['-sites-', { maxItems: 999 }]]);
             }));
 
-            it('should NOT get the corresponding node ids before the search call on changing the site selectbox\'s value from default dropdown menu', fakeAsync(() => {
+            it('should NOT get the corresponding node ids on search when NO known alias is selected from dropdown', fakeAsync(() => {
+                typeToSearchBox('vegeta');
+                tick(debounceSearch);
+
+                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy should not be called');
+
+                component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
+
+                expect(getCorrespondingNodeIdsSpy).not.toHaveBeenCalled();
+            }));
+
+            it('should NOT get the corresponding node ids on search when NO known alias is selected from CUSTOM dropdown', fakeAsync(() => {
+                component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
+                fixture.detectChanges();
+
                 typeToSearchBox('vegeta');
                 tick(debounceSearch);
 
