@@ -33,7 +33,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import Util = require('../../util/util');
 import path = require('path');
 
-fdescribe('Version component', () => {
+describe('Version component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();

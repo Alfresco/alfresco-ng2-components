@@ -39,7 +39,7 @@ import Util = require('../../util/util');
 import path = require('path');
 import CONSTANTS = require('../../util/constants');
 
-fdescribe('Version component', () => {
+describe('Version component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();

@@ -32,7 +32,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import Util = require('../../util/util');
 
-fdescribe('Version component', () => {
+describe('Version component', () => {
 
     let txtUploadedFile;
     const loginPage = new LoginPage();
