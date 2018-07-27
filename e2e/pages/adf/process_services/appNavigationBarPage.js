@@ -16,7 +16,6 @@
  */
 
 var Util = require('../../../util/util');
-var TasksPage = require('./tasksPage');
 
 var AppNavigationBarPage = function () {
 
@@ -27,22 +26,18 @@ var AppNavigationBarPage = function () {
 
     this.clickTasksButton = function () {
         Util.waitUntilElementIsVisible(tasksButton);
-        tasksButton.click();
-        return new TasksPage();
+        return tasksButton.click();
     };
 
     this.clickProcessButton = function () {
-        Util.waitUntilElementIsVisible(processButton);
-        processButton.click();
+        return processButton.click();
     };
 
     this.clickReportsButton = function () {
         Util.waitUntilElementIsVisible(reportsButton);
         reportsButton.click();
-        Util.waitUntilElementIsVisible(reportsButtonSelected);
+        return Util.waitUntilElementIsVisible(reportsButtonSelected);
     };
-
-
 };
 
 module.exports = AppNavigationBarPage;

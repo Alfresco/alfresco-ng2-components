@@ -50,7 +50,6 @@ var LoginPage = function () {
     var cardBackground = element(by.css("mat-card[class*='adf-login-card']"));
     var adfSettingsPage = new AdfSettingsPage();
 
-
     /**
      * Provides the longer wait required
      * @property waitForElements
