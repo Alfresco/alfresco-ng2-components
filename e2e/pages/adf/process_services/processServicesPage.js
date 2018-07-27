@@ -25,6 +25,7 @@ var ProcessServicesPage = function(){
     var taskApp = element(by.css("mat-card[title='Task App']"));
     var iconTypeLocator = by.css("mat-icon[class*='card-logo-icon']");
     var descriptionLocator = by.css("mat-card-subtitle[class*='subtitle']");
+    var processInstanceList = element(by.css("adf-process-instance-list"));
 
     /**
      * Check Process Page Container is displayed
@@ -97,6 +98,10 @@ var ProcessServicesPage = function(){
         var app = element(by.css("mat-card[title='" + applicationName +"']"));
         return Util.waitUntilElementIsVisible(app);
     };
+
+    this.checkProcessListIsDisplayed = function() {
+        Util.waitUntilElementIsVisible(processInstanceList);
+    }
 
 };
 
