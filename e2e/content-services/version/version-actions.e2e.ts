@@ -33,7 +33,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import Util = require('../../util/util');
 import path = require('path');
 
-describe('Version component', () => {
+fdescribe('Version component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -98,15 +98,21 @@ describe('Version component', () => {
         done();
     });
 
-    it('[] Should not be possible delete the verrsion if there is only one version', () => {
-
+    it('[C280003] Should not be possible delete a file version if there is only one version', () => {
+        versionManagePage.clickActionButton('1.0');
+        expect(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
+        versionManagePage.closeActionButton();
+        Util.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
-    it('[] Should not be possible restore the verrsion if there is only one version', () => {
-
+    it('[C280004] Should not be possible restore the version if there is only one version', () => {
+        versionManagePage.clickActionButton('1.0');
+        expect(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
+        versionManagePage.closeActionButton();
+        Util.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
 
-    it('[] Should be showed all the default action when you have more then one version', () => {
+    it('[C280005] Should be showed all the default action when you have more then one version', () => {
         versionManagePage.showNewVersionButton.click();
 
         versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
@@ -126,7 +132,7 @@ describe('Version component', () => {
         expect(Util.fileExists(path.join(__dirname, 'downloads', fileModelVersionTwo.name), 20)).toBe(true);
     });
 
-    it('[C272819] Shoudl be possible delete a version when click on delete version action', () => {
+    it('[C272819] Should be possible delete a version when click on delete version action', () => {
         versionManagePage.deleteFileVersion('1.1');
 
         versionManagePage.clickAcceptConfirm();
@@ -135,7 +141,7 @@ describe('Version component', () => {
         versionManagePage.chekFileVersionExist('1.0');
     });
 
-    it('[] Shoudl be possible prevent a version to be deleted when click on No on the confirm dialog', () => {
+    it('[C280006] Should be possible prevent a version to be deleted when click on No on the confirm dialog', () => {
         versionManagePage.showNewVersionButton.click();
 
         versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
@@ -150,7 +156,7 @@ describe('Version component', () => {
         versionManagePage.chekFileVersionExist('1.0');
     });
 
-    it('[] Should be possible restore an old version of your file', () => {
+    it('[C280007] Should be possible restore an old version of your file', () => {
         versionManagePage.restoreFileVersion('1.0');
 
         versionManagePage.chekFileVersionExist('2.0');

@@ -35,6 +35,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import fs = require('fs');
 import path = require('path');
 import Util = require('../../util/util');
+import CONSTANTS = require('../../util/constants');
 
 describe('permissions', () => {
 
@@ -91,17 +92,17 @@ describe('permissions', () => {
 
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: consumerUser.id,
-            role: 'SiteConsumer'
+            role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: collaboratorUser.id,
-            role: 'SiteCollaborator'
+            role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: contributorUser.id,
-            role: 'SiteContributor'
+            role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
         await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, site.entry.guid);

@@ -33,20 +33,24 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import Util = require('../../util/util');
 import path = require('path');
 
-fdescribe('Version component', () => {
+fdescribe('Version Properties', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = new ContentListPage();
     const versionManagePage = new VersionManagePage();
     const viewerPage = new ViewerPage();
-    const cardViewPage;
 
     let acsUser = new AcsUserModel();
 
     let txtFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+    });
+
+    let fileModelVersionTwo = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
@@ -78,23 +82,61 @@ fdescribe('Version component', () => {
         done();
     });
 
-    it('[C272817] Should NOT be possible download a file when allowDownload property is false', () => {
+    it('[C272817] Should NOT be present the download action when allowDownload property is false', () => {
         versionManagePage.disableDownload();
 
-        versionManagePage.downloadFileVersion('1.0');
+        versionManagePage.clickActionButton('1.0');
 
-        browser.driver.sleep(700);
 
-        expect(Util.fileExists(path.join(__dirname, 'downloads', txtFileModel.name), 20)).toBe(false);
+        Util.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
+
+        versionManagePage.closeActionButton();
     });
 
-    it('[C272817] Should be possible download a file when allowDownload property is true', () => {
+    it('[C279992] Should be present the download action when allowDownload property is true', () => {
         versionManagePage.enableDownload();
 
-        versionManagePage.downloadFileVersion('1.0');
+        versionManagePage.clickActionButton('1.0');
 
-        browser.driver.sleep(700);
+        Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
 
-        expect(Util.fileExists(path.join(__dirname, 'downloads', txtFileModel.name), 20)).toBe(true);
+        versionManagePage.closeActionButton();
     });
+
+    it('[C269085] Should show/hide comments when showComments true/false', () => {
+        versionManagePage.enableComments();
+
+        versionManagePage.showNewVersionButton.click();
+        versionManagePage.enterCommentText('Example comment text');
+        versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
+
+        versionManagePage.chekFileVersionExist('1.1');
+        expect(versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
+
+        versionManagePage.disableComments();
+
+        Util.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-item-comment-1.1"]`)));
+    });
+
+    it('[C277277] Should show/hide actions menu when readOnly is true/false', () => {
+        versionManagePage.disableReadOnly();
+
+        Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
+
+        versionManagePage.enableReadOnly();
+
+        Util.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
+    });
+
+    it('[C279994] Should show/hide upload new version button when readOnly is true/false', () => {
+        versionManagePage.disableReadOnly();
+
+        Util.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
+
+        versionManagePage.enableReadOnly();
+
+        Util.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
+        Util.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
+    });
+
 });

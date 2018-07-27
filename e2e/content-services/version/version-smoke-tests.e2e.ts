@@ -32,14 +32,14 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import Util = require('../../util/util');
 
-describe('Version component', () => {
+fdescribe('Version component', () => {
 
+    let txtUploadedFile;
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = new ContentListPage();
     const versionManagePage = new VersionManagePage();
     const viewerPage = new ViewerPage();
-    const cardViewPage;
 
     let acsUser = new AcsUserModel();
 
@@ -83,8 +83,7 @@ describe('Version component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
-
+        txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
         Object.assign(txtFileModel, txtUploadedFile.entry);
 
         txtFileModel.update(txtUploadedFile.entry);
@@ -105,7 +104,7 @@ describe('Version component', () => {
         expect(versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
     });
 
-    it('[] Should show/hide the new upload file options when click on add New version/canclel button', () => {
+    it('[C279995] Should show/hide the new upload file options when click on add New version/canclel button', () => {
         versionManagePage.showNewVersionButton.click();
 
         browser.driver.sleep(300);

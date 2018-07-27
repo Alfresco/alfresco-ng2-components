@@ -53,13 +53,13 @@ export class VersionManagePage {
 
     chekFileVersionExist(version) {
         let fileVersion = element(by.css(`[id="adf-version-list-item-version-${version}"]`));
-        Util.waitUntilElementIsVisible(fileVersion);
+        return Util.waitUntilElementIsVisible(fileVersion);
     }
 
 
     chekFileVersionNotExist(version) {
         let fileVersion = element(by.css(`[id="adf-version-list-item-version-${version}"]`));
-        Util.waitUntilElementIsNotVisible(fileVersion);
+        return Util.waitUntilElementIsNotVisible(fileVersion);
     }
 
     getFileVersionComment(version) {
@@ -99,10 +99,9 @@ export class VersionManagePage {
      */
     disableReadOnly() {
         Util.waitUntilElementIsVisible(this.readOnlySwitch);
-        this.readOnlySwitch.getAttribute('class').then(function (check) {
-            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+        this.readOnlySwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
                 this.readOnlySwitch.click();
-                expect(this.readOnlySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
             }
         })
     }
@@ -112,10 +111,9 @@ export class VersionManagePage {
      */
     enableReadOnly() {
         Util.waitUntilElementIsVisible(this.readOnlySwitch);
-        this.readOnlySwitch.getAttribute('class').then(function (check) {
-            if (check === 'mat-slide-toggle mat-primary') {
+        this.readOnlySwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
                 this.readOnlySwitch.click();
-                expect(this.readOnlySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
             }
         })
     }
@@ -125,10 +123,9 @@ export class VersionManagePage {
      */
     disableDownload() {
         Util.waitUntilElementIsVisible(this.downloadSwitch);
-        this.downloadSwitch.getAttribute('class').then(function (check) {
-            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+        this.downloadSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
                 this.downloadSwitch.click();
-                expect(this.downloadSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
             }
         })
     }
@@ -138,10 +135,9 @@ export class VersionManagePage {
      */
     enableDownload() {
         Util.waitUntilElementIsVisible(this.downloadSwitch);
-        this.downloadSwitch.getAttribute('class').then(function (check) {
-            if (check === 'mat-slide-toggle mat-primary') {
+        this.downloadSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
                 this.downloadSwitch.click();
-                expect(this.downloadSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
             }
         })
     }
@@ -152,10 +148,9 @@ export class VersionManagePage {
      */
     disableComments() {
         Util.waitUntilElementIsVisible(this.commentsSwitch);
-        this.commentsSwitch.getAttribute('class').then(function (check) {
-            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+        this.commentsSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
                 this.commentsSwitch.click();
-                expect(this.commentsSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
             }
         })
     }
@@ -165,10 +160,9 @@ export class VersionManagePage {
      */
     enableComments() {
         Util.waitUntilElementIsVisible(this.commentsSwitch);
-        this.commentsSwitch.getAttribute('class').then(function (check) {
-            if (check === 'mat-slide-toggle mat-primary') {
+        this.commentsSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
                 this.commentsSwitch.click();
-                expect(this.commentsSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
             }
         })
     }
@@ -191,7 +185,7 @@ export class VersionManagePage {
         return this;
     }
 
-    closeActionButton(version) {
+    closeActionButton() {
         browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
         return this;
     }
@@ -227,5 +221,10 @@ export class VersionManagePage {
         Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-download-${version}"]`)));
         Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-delete-${version}"]`)));
         Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-restore-${version}"]`)));
+    }
+
+    closeVersionDialog() {
+        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        Util.waitUntilElementIsNotOnPage(this.uploadNewVersionContainer);
     }
 }
