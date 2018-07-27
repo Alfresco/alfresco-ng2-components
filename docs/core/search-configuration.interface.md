@@ -84,7 +84,7 @@ described below.
         })
     ```
 
-    You also need to add the [`SearchService`](../../lib/core/services/search.service.ts) as a provider to avoid overriding the module instance. This component will have his own instance of the [`SearchService`](../../lib/core/services/search.service.ts) that will use the class you have provided
+    You also need to add the [`SearchService`](lib/core/services/search.service.ts) as a provider to avoid overriding the module instance. This component will have his own instance of the [`SearchService`](lib/core/services/search.service.ts) that will use the class you have provided
     as its configuration.
 
 ## See also

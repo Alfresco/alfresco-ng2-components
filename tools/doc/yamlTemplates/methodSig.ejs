@@ -8,6 +8,7 @@
           <%= (tag.text || "").replace(/[\n\r]+/g, " ").trim() %>
 <% }) -%>
 <% } -%>
+    typeParameter: <%= typeof sig.typeParameter !== "undefined" ? sig.typeParameter[0].name : "" %>
     syntax:
       parameters:
 <% if ((typeof sig.parameters !== "undefined") && (sig.parameters.length > 0)) { -%>

@@ -3,7 +3,7 @@
 ### Methods
 
 <% methods.forEach(function(meth) { -%>
-- **<%= meth.name %>**<%- meth.signature %><% if (meth.returnsSomething) { %>: `<%- meth.returnType %>`<% } %><br/>
+- **<%= meth.name %><%= meth.typeParameter ? `<${meth.typeParameter}>` : "" %>**<%- meth.signature %><% if (meth.returnsSomething) { %>: `<%- meth.returnType %>`<% } %><br/>
   <%= meth.docText %>
 <% meth.params.forEach(function(param) { -%>
    - *<%= param.name%>:* `<%- param.type %>`  - <% if (param.isOptional) { %>(Optional) <% } %><%= param.docText %>

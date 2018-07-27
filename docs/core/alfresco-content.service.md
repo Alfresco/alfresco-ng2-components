@@ -23,7 +23,7 @@ Gets a node's content.
 [`createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent>`](../../lib/core/events/folder-created.event.ts)<br/>
 Creates a folder.
 
-`hasPermission(node: any, permission:`[`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string): boolean`<br/>
+`hasPermission(node: any, permission:`[`PermissionsEnum`](lib/core/models/permissions.enum.ts)`|string): boolean`<br/>
 Checks if the user has the specified permissions for `node`.
 
 `hasAllowableOperations(node: any): boolean`<br/>

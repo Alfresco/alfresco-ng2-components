@@ -53,7 +53,7 @@ constructor(private cardViewUpdateService: CardViewUpdateService) {
 }
 ```
 
-The constructor here also sets the [`CardViewTextItemModel`](../../lib/core/card-view/models/card-view-textitem.model.ts) instances that define the layout of the
+The constructor here also sets the [`CardViewTextItemModel`](lib/core/card-view/models/card-view-textitem.model.ts) instances that define the layout of the
 card view (see the [Card View component](card-view.component.md) for further information
 about this). The model objects and the `key` property are used to identify which item has been clicked
 or updated when an event occurs. 
@@ -84,8 +84,8 @@ export interface UpdateNotification {
 }
 ```
 
-Here, `target` contains the [`CardViewTextItemModel`](../../lib/core/card-view/models/card-view-textitem.model.ts) that was used to initialize
-the field in question (in practice, this might be a [`CardViewDateItemModel`](../../lib/core/card-view/models/card-view-dateitem.model.ts) or [`CardViewMapItemModel`](../../lib/core/card-view/models/card-view-mapitem.model.ts) if
+Here, `target` contains the [`CardViewTextItemModel`](lib/core/card-view/models/card-view-textitem.model.ts) that was used to initialize
+the field in question (in practice, this might be a [`CardViewDateItemModel`](lib/core/card-view/models/card-view-dateitem.model.ts) or [`CardViewMapItemModel`](lib/core/card-view/models/card-view-mapitem.model.ts) if
 the card layout includes these objects). The `changed` property contains an object with a single property:
 
 ```ts

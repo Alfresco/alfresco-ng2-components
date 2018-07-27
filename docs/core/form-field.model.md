@@ -6,7 +6,7 @@ Last reviewed: 2018-03-20
 
 # Form Field model
 
-Contains the value and metadata for a field of a [`Form`](../../lib/process-services/task-list/models/form.model.ts) component.
+Contains the value and metadata for a field of a [`Form`](lib/process-services/task-list/models/form.model.ts) component.
 
 ## Properties
 
@@ -41,13 +41,13 @@ Contains the value and metadata for a field of a [`Form`](../../lib/process-serv
 | hyperlinkUrl | string |  | URL for Hyperlink widgets |
 | displayText | string |  | Displayed text for Hyperlink widgets |
 | isVisible | boolean | true | Is the field shown on the form? |
-| visibilityCondition | WidgetVisibilityModel | null | Defines a expression that determines whether the field is visible or not, based on its logical relation to values in other fields |
+| visibilityCondition | [`WidgetVisibilityModel`](lib/core/form/models/widget-visibility.model.ts) | null | Defines a expression that determines whether the field is visible or not, based on its logical relation to values in other fields |
 | enableFractions | boolean | false | Are numeric values allowed to contain a decimal point? |
 | currency | string | null | Currency symbol for Amount widgets |
 | dateDisplayFormat | string |  | Date/time display format template |
 | numberOfColumns | number | 1 | Number of columns defined by a container field |
-| fields | FormFieldModel\[] | \[] | Fields contained within a container field |
-| columns | ContainerColumnModel\[] | \[] | Column definitions for a container field |
+| fields | [`FormFieldModel`](../core/form-field.model.md)\[] | \[] | Fields contained within a container field |
+| columns | [`ContainerColumnModel`](lib/core/form/components/widgets/core/container-column.model.ts)\[] | \[] | Column definitions for a container field |
 | emptyOption | FormFieldOption |  | Dropdown menu item to use when no option is chosen |
 | validationSummary | string |  | Error/information message added during field validation (see [`FormFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) interface) |
 
@@ -66,7 +66,7 @@ example, the `currency` property holds the currency symbol to be displayed next 
 
 ### Validation
 
-A [`Form`](../../lib/process-services/task-list/models/form.model.ts) or [Task Details](../process-services/task-details.component.md) component can
+A [`Form`](lib/process-services/task-list/models/form.model.ts) or [Task Details](../process-services/task-details.component.md) component can
 be supplied with a set of validator objects. Each validator applies a particular kind of
 check to a field. A number of [`FormFieldModel`](../core/form-field.model.md) properties are used by validators. For
 example, `minValue` and `maxValue` are used to check that a numeric value falls within an

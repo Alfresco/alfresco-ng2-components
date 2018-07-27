@@ -30,10 +30,10 @@ Get/set the values for display in the table using an array of rows.
 [`setColumns(columns: Array<DataColumn>): void;`](../../lib/core/datatable/data/data-column.model.ts)<br/>
 Get/set an array of column specifications.
 
-`getValue(row: `[`DataRow,`](../../lib/core/datatable/data/data-row.model.ts)` col: DataColumn): any;`<br/>
+`getValue(row:`[`DataRow,`](../../lib/core/datatable/data/data-row.model.ts)`col: DataColumn): any;`<br/>
 Get the data value from a specific table cell.
 
-`getSorting(): `[`DataSorting`](../../lib/core/datatable/data/data-sorting.model.ts)`;`<br/>
+`getSorting():`[`DataSorting`](lib/core/datatable/data/data-sorting.model.ts)`;`<br/>
 `setSorting(sorting: DataSorting): void;`<br/>
 Get/set the sorting key and direction (ascending or descending).
 
@@ -44,7 +44,7 @@ Sort the table with a specified key and direction (ascending or descending).
 
 You can implement [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) in your own class to display your data with the [DataTable](datatable.component.md)
 and [Tasklist](../process-services/task-list.component.md) components.
-This interface (along with other interfaces for column and row data) hides the details of your class from the caller, so you can store your data internally however you like. The DataTable library implements the interface in the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) class which is the standard adapter for the Datatable component.
+This interface (along with other interfaces for column and row data) hides the details of your class from the caller, so you can store your data internally however you like. The DataTable library implements the interface in the [`ObjectDataTableAdapter`](lib/core/datatable/data/object-datatable-adapter.ts) class which is the standard adapter for the Datatable component.
 
 The basic idea of [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) is that the caller can request your class to return an array of column
 definition objects. Each of these objects specifies the unique key, name, type and other properties of a single column.
@@ -92,7 +92,7 @@ Each row contains a set of values. An item in the set is retrieved by passing it
 ### ObjectDataTableAdapter
 
 The DataTable library provides a implementation of [DataTableAdapter,](../../lib/core/datatable/data/datatable-adapter.ts) called
-[`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts). This is a simple adapter that binds to object arrays and turns object fields into columns:
+[`ObjectDataTableAdapter`](lib/core/datatable/data/object-datatable-adapter.ts). This is a simple adapter that binds to object arrays and turns object fields into columns:
 
 ```ts
 let data = new ObjectDataTableAdapter(
