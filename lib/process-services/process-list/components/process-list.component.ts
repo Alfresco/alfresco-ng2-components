@@ -73,6 +73,14 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     processDefinitionKey: string;
 
+    /** The processDefinitionId of the process. */
+    @Input()
+    processDefinitionId: string;
+
+    /** The id of the process instance. */
+    @Input()
+    processInstanceId: number|string;
+
     /** Defines the state of the processes. Possible values are `running`, `completed` and `all` */
     @Input()
     state: string;
@@ -82,10 +90,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      */
     @Input()
     sort: string;
-
-    /** The name of the list. */
-    @Input()
-    name: string;
 
     /** The page number of the processes to fetch. */
     @Input()
@@ -191,21 +195,24 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
         let appId = changes['appId'];
         let processDefinitionKey = changes['processDefinitionKey'];
+        let processDefinitionId = changes['processDefinitionId'];
+        let processInstanceId = changes['processInstanceId'];
         let state = changes['state'];
         let sort = changes['sort'];
-        let name = changes['name'];
         let page = changes['page'];
         let size = changes['size'];
 
         if (appId && appId.currentValue) {
             changed = true;
-        } else if (processDefinitionKey && processDefinitionKey.currentValue) {
+        } else if (processDefinitionKey) {
+            changed = true;
+        } else if (processDefinitionId) {
+            changed = true;
+        } else if (processInstanceId) {
             changed = true;
         } else if (state && state.currentValue) {
             changed = true;
         } else if (sort && sort.currentValue) {
-            changed = true;
-        } else if (name && name.currentValue) {
             changed = true;
         } else if (page && page.currentValue !== page.previousValue) {
             changed = true;
@@ -371,6 +378,8 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     private createRequestNode() {
         let requestNode = {
             appDefinitionId: this.appId,
+            processDefinitionId: this.processDefinitionId,
+            processInstanceId: this.processInstanceId,
             state: this.state,
             sort: this.sort,
             page: this.page,

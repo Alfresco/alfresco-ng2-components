@@ -37,9 +37,13 @@ export class ProcessListDemoComponent implements OnInit {
 
     processDefId: string;
 
+    instanceId: number|string;
+
     state: string;
 
     sort: string;
+
+    presetColumn = 'default';
 
     stateOptions = [
         {value: 'all', title: 'All'},
@@ -49,9 +53,7 @@ export class ProcessListDemoComponent implements OnInit {
 
     sortOptions = [
         {value: 'created-asc', title: 'Created (asc)'},
-        {value: 'created-desc', title: 'Created (desc)'},
-        {value: 'due-asc', title: 'Due (asc)'},
-        {value: 'due-desc', title: 'Due (desc)'}
+        {value: 'created-desc', title: 'Created (desc)'}
     ];
 
     constructor(private route: ActivatedRoute,
@@ -70,8 +72,8 @@ export class ProcessListDemoComponent implements OnInit {
     buildForm() {
         this.processListForm = this.formBuilder.group({
             processAppId: new FormControl(this.defaultAppId, [Validators.required, Validators.pattern('^[0-9]*$')]),
-            processName: new FormControl(''),
             processDefinitionId: new FormControl(''),
+            processInstanceId: new FormControl(''),
             processState: new FormControl(''),
             processSort: new FormControl('')
         });
@@ -90,6 +92,7 @@ export class ProcessListDemoComponent implements OnInit {
         this.appId = processFilter.processAppId;
         this.name = processFilter.processName;
         this.processDefId = processFilter.processDefinitionId;
+        this.instanceId = processFilter.processInstanceId;
         this.state = processFilter.processState;
         this.sort = processFilter.processSort;
     }
@@ -102,16 +105,20 @@ export class ProcessListDemoComponent implements OnInit {
         this.processListForm.reset();
     }
 
+    getStatus(ended: Date) {
+        return ended ? 'Completed' : 'Active';
+    }
+
     get processAppId(): AbstractControl {
         return this.processListForm.get('processAppId');
     }
 
-    get processName(): AbstractControl {
-        return this.processListForm.get('processName');
-    }
-
     get processDefinitionId(): AbstractControl {
         return this.processListForm.get('processDefinitionId');
+    }
+
+    get processInstanceId(): AbstractControl {
+        return this.processListForm.get('processInstanceId');
     }
 
     get processState(): AbstractControl {
