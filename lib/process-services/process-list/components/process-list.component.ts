@@ -69,11 +69,13 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     appId: number;
 
-    /** The processDefinitionKey of the process. */
+    /** The Definition Key of the process.
+     * @deprecated 2.4.0
+     */
     @Input()
     processDefinitionKey: string;
 
-    /** The processDefinitionId of the process. */
+    /** The Definition Id of the process. */
     @Input()
     processDefinitionId: string;
 
