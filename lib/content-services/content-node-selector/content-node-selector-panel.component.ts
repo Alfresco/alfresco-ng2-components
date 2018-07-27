@@ -33,6 +33,7 @@ import { CustomResourcesService } from '../document-list/services/custom-resourc
 export type ValidationFunction = (entry: MinimalNodeEntryEntity) => boolean;
 
 const defaultValidation = () => true;
+const ALL_ITEMS_PAGE_SIZE = 999;
 
 @Component({
     selector: 'adf-content-node-selector-panel',
@@ -258,7 +259,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         this.loadingSearchResults = true;
 
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
-            this.customResourcesService.getCorrespondingNodeIds(this.siteId, { maxItems: 999 })
+            this.customResourcesService.getCorrespondingNodeIds(this.siteId, { maxItems: ALL_ITEMS_PAGE_SIZE })
                 .subscribe(nodeIds => {
                         this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize, nodeIds)
                             .subscribe(this.showSearchResults.bind(this));
