@@ -32,10 +32,6 @@ import dateFormat = require('dateformat');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
-import fs = require('fs');
-import path = require('path');
-import Util = require('../../util/util');
-
 describe('Metadata component', () => {
 
     const METADATA = {
@@ -91,11 +87,12 @@ describe('Metadata component', () => {
 
         pngFileModel.update(pngUploadedFile.entry);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        contentServicesPage.navigateToDocumentList();
-
         done();
+    });
+
+    beforeEach(() => {
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.navigateToDocumentList();
     });
 
     it('[C245652] Properties', () => {
@@ -218,20 +215,16 @@ describe('Metadata component', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C279960] Should show the last username modifier when modify a File', () => {
+    it('[C279960] Should show the last username modifier when modify a File', async (done) => {
         let fileUrl;
 
         viewerPage.viewFile(pngFileModel.name);
 
-        browser.getCurrentUrl().then((currentUrl) => {
-            fileUrl = currentUrl;
-        });
+        fileUrl = await browser.getCurrentUrl();
 
         loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        browser.controlFlow().execute(() => {
-            browser.get(fileUrl);
-        });
+        browser.get(fileUrl);
 
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -247,21 +240,14 @@ describe('Metadata component', () => {
         metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
         expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        browser.controlFlow().execute(() => {
-            browser.get(fileUrl);
-        });
+        browser.get(fileUrl);
 
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
 
         expect(metadataViewPage.getPropertyText('modifiedByUser.displayName')).toEqual('Administrator');
-
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        contentServicesPage.navigateToDocumentList();
+        done();
     });
 
     it('[C261157] Should be possible use the metadata component When the node is a Folder', () => {
@@ -272,7 +258,6 @@ describe('Metadata component', () => {
     });
 
     it('[C261158] Should be possible edit the metadata When the node is a Folder', () => {
-        contentServicesPage.navigateToDocumentList();
         contentListPage.metadataContent(folderName);
 
         metadataViewPage.editIconClick();
@@ -294,7 +279,6 @@ describe('Metadata component', () => {
     });
 
     it('[C260181] Should be possible edit all the metadata aspect', () => {
-        contentServicesPage.navigateToDocumentList();
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
