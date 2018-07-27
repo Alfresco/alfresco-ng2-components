@@ -21,9 +21,7 @@
             <div matLine id="comment-user" class="adf-comment-user-name">
                 {{comment.createdBy?.firstName}} {{comment.createdBy?.lastName}}
             </div>
-            <div matLine id="comment-message" class="adf-comment-message">
-                {{comment.message}}
-            </div>
+            <div matLine id="comment-message" class="adf-comment-message" [innerHTML]="comment.message"></div>
             <div matLine id="comment-time" class="adf-comment-message-time">
                 {{ comment.created | adfTimeAgo: currentLocale }}
             </div>

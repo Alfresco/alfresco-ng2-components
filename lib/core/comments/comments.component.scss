@@ -20,6 +20,16 @@
         width: calc(100% - 30px);
         padding-top: 8px;
         border-bottom: $header-border;
+
+        textarea {
+            resize: vertical;
+        }
+    }
+
+    .adf-comments-input-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
     }
 
     .adf-full-width {

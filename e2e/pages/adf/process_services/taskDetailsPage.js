@@ -30,7 +30,8 @@ var TaskDetailsPage = function () {
     var descriptionField = element(by.css("span[data-automation-id*='description'] span"));
     var dueDateField = element(by.css("span[data-automation-id*='dueDate'] span"));
     var activitiesTitle = element(by.css("div[class*='adf-info-drawer-layout-header-title'] div"));
-    var commentField = element(by.css("input[id='comment-input']"));
+    var commentField = element(by.id("comment-input"));
+    var addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
     var activityTab = element(by.cssContainingText("div[class*='mat-tab-label ']", "Activity"));
     var detailsTab = element(by.cssContainingText("div[class*='mat-tab-label ']", "Details"));
     var involvePeopleButton = element(by.css("div[class*='add-people']"));
@@ -116,6 +117,12 @@ var TaskDetailsPage = function () {
     this.addComment = function (comment) {
         Util.waitUntilElementIsVisible(commentField);
         commentField.sendKeys(comment);
+        addCommentButton.click();
+        return this;
+    };
+
+    this.clearComment = function (comment) {
+        Util.waitUntilElementIsVisible(commentField);
         commentField.sendKeys(protractor.Key.ENTER);
         return this;
     };

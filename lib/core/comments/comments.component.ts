@@ -126,9 +126,11 @@ export class CommentsComponent implements OnChanges {
 
     add(): void {
         if (this.message && this.message.trim() && !this.beingAdded) {
+            const comment = this.sanitize(this.message);
+
             this.beingAdded = true;
             if (this.isATask()) {
-                this.commentProcessService.addTaskComment(this.taskId, this.message)
+                this.commentProcessService.addTaskComment(this.taskId, comment)
                     .subscribe(
                         (res: CommentModel) => {
                             this.comments.unshift(res);
@@ -144,7 +146,7 @@ export class CommentsComponent implements OnChanges {
             }
 
             if (this.isANode()) {
-                this.commentContentService.addNodeComment(this.nodeId, this.message)
+                this.commentContentService.addNodeComment(this.nodeId, comment)
                     .subscribe(
                         (res: CommentModel) => {
                             this.comments.unshift(res);
@@ -175,5 +177,11 @@ export class CommentsComponent implements OnChanges {
 
     isANode(): boolean {
         return this.nodeId ? true : false;
+    }
+
+    private sanitize(input: string) {
+        return input.replace(/<[^>]+>/g, '')
+            .replace(/^\s+|\s+$|\s+(?=\s)/g, '')
+            .replace(/\r?\n/g, '<br/>');
     }
 }
