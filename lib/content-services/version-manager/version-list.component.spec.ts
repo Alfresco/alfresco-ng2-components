@@ -381,7 +381,7 @@ describe('VersionListComponent', () => {
                     let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
                     menuButton.click();
 
-                    let deleteButton = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
+                    let deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
 
                     expect(deleteButton.disabled).toBe(true);
                     done();
@@ -394,7 +394,7 @@ describe('VersionListComponent', () => {
                     let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
                     menuButton.click();
 
-                    let restoreButton = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
+                    let restoreButton: any = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
 
                     expect(restoreButton.disabled).toBe(true);
                     done();
@@ -431,7 +431,7 @@ describe('VersionListComponent', () => {
                     let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
                     menuButton.click();
 
-                    let deleteButton = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
+                    let deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
 
                     expect(deleteButton.disabled).toBe(false);
                     done();
@@ -444,7 +444,7 @@ describe('VersionListComponent', () => {
                     let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
                     menuButton.click();
 
-                    let restoreButton = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
+                    let restoreButton: any = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
 
                     expect(restoreButton.disabled).toBe(false);
                     done();
