@@ -47,7 +47,9 @@ describe('Save screenshot at the end', () => {
                     'name': 'process-services',
                     'relativePath': 'Buiild-screenshot/Screenshot-e2e-' + buildNumber,
                     'nodeType': 'cm:folder'
-                }, {}, {});
+                }, {}, {
+                    'overwrite': true
+                });
 
                 for (const fileName of files) {
 

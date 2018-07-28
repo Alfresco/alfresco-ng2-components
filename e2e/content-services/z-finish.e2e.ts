@@ -24,7 +24,7 @@ import path = require('path');
 let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
 let saveScreenshot = process.env.SAVE_SCREENSHOT;
 
-describe('Save screenshot at the end', () => {
+fdescribe('Save screenshot at the end', () => {
 
     beforeAll(async (done) => {
 
@@ -47,7 +47,9 @@ describe('Save screenshot at the end', () => {
                     'name': 'contetn-services',
                     'relativePath': 'Buiild-screenshot/Screenshot-e2e-' + buildNumber,
                     'nodeType': 'cm:folder'
-                }, {}, {});
+                }, {}, {
+                    'overwrite': true
+                });
 
                 for (const fileName of files) {
 
