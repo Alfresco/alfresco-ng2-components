@@ -24,7 +24,7 @@ import path = require('path');
 let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
 let saveScreenshot = process.env.SAVE_SCREENSHOT;
 
-fdescribe('Save screenshot at the end', () => {
+describe('Save screenshot at the end', () => {
 
     beforeAll(async (done) => {
 
