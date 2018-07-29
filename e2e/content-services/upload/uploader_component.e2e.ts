@@ -31,7 +31,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { DropActions } from '../../actions/drop.actions';
 
-describe('Upload component', () => {
+fdescribe('Upload component', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();
@@ -187,10 +187,11 @@ describe('Upload component', () => {
         contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
     });
 
-    xit('[C272792] Cancel a big file through the upload dialog icon before the upload to be done', () => {
-        contentServicesPage.uploadFile(largeFile.location);
+    it('[C272792] Cancel a big file through the upload dialog icon before the upload to be done', () => {
+        browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
+           'document.querySelector("#adf-upload-dialog-cancel").click();  }, 5000)');
 
-        uploadDialog.removeFileWhileUploading(largeFile.name).fileIsCancelled(largeFile.name);
+        contentServicesPage.uploadFile(largeFile.location);
 
         expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
@@ -199,7 +200,6 @@ describe('Upload component', () => {
 
     xit('[C260169] Cancel a big file through the cancel uploads button', () => {
         contentServicesPage.uploadFile(largeFile.location);
-        uploadDialog.cancelUploads();
         expect(uploadDialog.getTitleText()).toEqual('Uploading 0 / 1');
         expect(uploadDialog.getConfirmationDialogTitleText()).toEqual('Cancel Upload');
         expect(uploadDialog.getConfirmationDialogDescriptionText()).toEqual('Stop uploading and remove files already uploaded.');
@@ -279,7 +279,7 @@ describe('Upload component', () => {
         uploadToggles.disableVersioning();
     });
 
-    xit('[C260173] Enable folder upload', () => {
+    it('[C260173] Enable folder upload', () => {
         uploadToggles.enableFolderUpload();
         contentServicesPage.uploadFolder(folderOne.location).checkContentIsDisplayed(folderOne.name);
         expect(contentServicesPage.getFolderButtonTooltip()).toEqual('Custom tooltip');
@@ -290,7 +290,7 @@ describe('Upload component', () => {
         uploadToggles.disableFolderUpload();
     });
 
-    xit('[C260176] The files uploaded before closing the upload dialog box are not displayed anymore in the upload box', () => {
+    it('[C260176] The files uploaded before closing the upload dialog box are not displayed anymore in the upload box', () => {
         contentServicesPage.uploadFile(docxFileModel.location).checkContentIsDisplayed(docxFileModel.name);
 
         uploadDialog.fileIsUploaded(docxFileModel.name);
@@ -309,7 +309,7 @@ describe('Upload component', () => {
             .checkContentsAreNotDisplayed([docxFileModel.name, pngFileModel.name, pdfFileModel.name]);
     });
 
-    xit('[C260170] Upload files on the same time', () => {
+    it('[C260170] Upload files on the same time', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
 
@@ -328,7 +328,7 @@ describe('Upload component', () => {
         uploadToggles.disableMultipleFileUpload();
     });
 
-    xit('[C279919] Enable max size and set it to 400', () => {
+    it('[C279919] Enable max size and set it to 400', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         uploadToggles.enableMaxSize().addMaxSize('400');
@@ -345,7 +345,7 @@ describe('Upload component', () => {
         uploadToggles.disableMaxSize();
     });
 
-    xit('[C272796] Enable max size and set it to 0', () => {
+    it('[C272796] Enable max size and set it to 0', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         uploadToggles.enableMaxSize().addMaxSize('0');
@@ -358,7 +358,7 @@ describe('Upload component', () => {
         uploadToggles.disableMaxSize();
     });
 
-    xit('[C272797] Set max size to 1 and disable it', () => {
+    it('[C272797] Set max size to 1 and disable it', () => {
         uploadToggles.enableMaxSize().addMaxSize('1');
         uploadToggles.disableMaxSize();
         contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsDisplayed(fileWithSpecificSize.name);
