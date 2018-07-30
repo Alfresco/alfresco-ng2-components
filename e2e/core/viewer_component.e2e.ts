@@ -109,9 +109,7 @@ describe('Viewer', () => {
             role: CONSTANTS.SITEMEMBERROLES.SITEMANAGER
         });
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password)
-
-        console.log(`\nUsername : ${acsUser.id}\tPassword : ${acsUser.password}`);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         let pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pngFile.location, pngFile.name, site.entry.guid);
         Object.assign(pngFile, pngFileUploaded.entry);
