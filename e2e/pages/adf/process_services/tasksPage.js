@@ -33,7 +33,9 @@ var TasksPage = function () {
     var taskTitle = "h2[class='activiti-task-details__header'] span";
     var rows = by.css("div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[class*='adf-data-table-cell']");
     var completeButtonNoForm = element(by.id("adf-no-form-complete-button"));
-
+    var checklistDialog = element(by.id("checklist-dialog"));
+    var checklistNoMessage = element(by.id("checklist-none-message"));
+    var numberOfChecklists = element(by.css("mat-chip-list[id='checklist-label'] mat-chip"));
 
     this.createNewTask = function () {
         this.createButtonIsDisplayed();
@@ -75,6 +77,10 @@ var TasksPage = function () {
         return new TasksListPage();
     };
 
+    this.usingCheckListDialog = function () {
+        return new ChecklistDialog();
+    };
+
     this.clickOnAddChecklistButton = function () {
         Util.waitUntilElementIsClickable(addChecklistButton);
         addChecklistButton.click();
@@ -98,6 +104,11 @@ var TasksPage = function () {
         return this;
     };
 
+    this.checkChecklistIsNotDisplayed = function (checklist) {
+        Util.waitUntilElementIsNotOnPage(element(checklistContainer).element(by.cssContainingText("span", checklist)));
+        return this;
+    };
+
     this.checkTaskTitle = function(taskName) {
         Util.waitUntilElementIsVisible(element(by.css(taskTitle)));
         var title = element(by.cssContainingText(taskTitle, taskName));
@@ -112,6 +123,44 @@ var TasksPage = function () {
     this.completeTaskNoForm = function () {
         Util.waitUntilElementIsClickable(completeButtonNoForm);
         completeButtonNoForm.click();
+    };
+
+    this.completeTaskNoFormNotDisplayed = function () {
+        Util.waitUntilElementIsNotOnPage(completeButtonNoForm);
+        return this;
+    };
+
+    this.checkChecklistDialogIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(checklistDialog);
+        return this;
+    };
+
+    this.checkChecklistDialogIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotOnPage(checklistDialog);
+        return this;
+    };
+
+    this.checkNoChecklistIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(checklistNoMessage);
+        return this;
+    };
+
+    this.getNumberOfChecklists = function () {
+        Util.waitUntilElementIsVisible(numberOfChecklists);
+        return numberOfChecklists.getText();
+    };
+
+    this.removeChecklists = function (checklist) {
+        var row = this.getRowsName(checklist).element(rowByRowName);
+        Util.waitUntilElementIsVisible(row.element(by.css('button')));
+        row.element(by.css('button')).click();
+        return this;
+    };
+
+    this.checkChecklistsRemoveButtonIsNotDisplayed = function (checklist) {
+        var row = this.getRowsName(checklist).element(rowByRowName);
+        Util.waitUntilElementIsNotOnPage(row.element(by.css('button')));
+        return this;
     };
 
 };
