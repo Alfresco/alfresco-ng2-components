@@ -117,7 +117,7 @@ describe('Viewer', () => {
         let archiveFolderUploaded;
 
         beforeAll(async (done) => {
-            archiveFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, archiveFolderInfo.name, "-my-");
+            archiveFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, archiveFolderInfo.name, '-my-');
 
             uploadedArchives = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, archiveFolderInfo.location, archiveFolderUploaded.entry.id);
 
@@ -134,7 +134,7 @@ describe('Viewer', () => {
 
         it('[C260517] Should be possible to open any Archive file', () => {
             uploadedArchives.forEach((currentFile) => {
-                if (currentFile.entry.name != '.DS_Store') {
+                if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
                     viewerPage.checkZoomInButtonIsDisplayed(150000);
                     viewerPage.clickCloseButton();
@@ -151,7 +151,7 @@ describe('Viewer', () => {
         let excelFolderUploaded;
 
         beforeAll(async (done) => {
-            excelFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, excelFolderInfo.name, "-my-");
+            excelFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, excelFolderInfo.name, '-my-');
 
             uploadedExcels = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, excelFolderInfo.location, excelFolderUploaded.entry.id);
 
@@ -168,7 +168,7 @@ describe('Viewer', () => {
 
         it('[C280008] Should be possible to open any Excel file', () => {
             uploadedExcels.forEach((currentFile) => {
-                if (currentFile.entry.name != '.DS_Store') {
+                if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
                     viewerPage.checkZoomInButtonIsDisplayed(150000);
                     viewerPage.clickCloseButton();
@@ -185,7 +185,7 @@ describe('Viewer', () => {
         let pptFolderUploaded;
 
         beforeAll(async (done) => {
-            pptFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, pptFolderInfo.name, "-my-");
+            pptFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, pptFolderInfo.name, '-my-');
 
             uploadedPpts = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, pptFolderInfo.location, pptFolderUploaded.entry.id);
 
@@ -202,7 +202,7 @@ describe('Viewer', () => {
 
         it('[C280009] Should be possible to open any PowerPoint file', () => {
             uploadedPpts.forEach((currentFile) => {
-                if (currentFile.entry.name != '.DS_Store') {
+                if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
                     viewerPage.checkZoomInButtonIsDisplayed(150000);
                     viewerPage.clickCloseButton();
@@ -219,7 +219,7 @@ describe('Viewer', () => {
         let textFolderUploaded;
 
         beforeAll(async (done) => {
-            textFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, textFolderInfo.name, "-my-");
+            textFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, textFolderInfo.name, '-my-');
 
             uploadedTexts = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, textFolderInfo.location, textFolderUploaded.entry.id);
 
@@ -236,7 +236,7 @@ describe('Viewer', () => {
 
         it('[C280010] Should be possible to open any Text file', () => {
             uploadedTexts.forEach((currentFile) => {
-                if (currentFile.entry.name != '.DS_Store') {
+                if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
                     viewerPage.checkZoomInButtonIsDisplayed(150000);
                     viewerPage.clickCloseButton();
@@ -253,7 +253,7 @@ describe('Viewer', () => {
         let wordFolderUploaded;
 
         beforeAll(async (done) => {
-            wordFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, wordFolderInfo.name, "-my-");
+            wordFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, wordFolderInfo.name, '-my-');
 
             uploadedWords = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, wordFolderInfo.location, wordFolderUploaded.entry.id);
 
@@ -270,7 +270,7 @@ describe('Viewer', () => {
 
         it('[C280011] Should be possible to open any Word file', () => {
             uploadedWords.forEach((currentFile) => {
-                if (currentFile.entry.name != '.DS_Store') {
+                if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
                     viewerPage.checkZoomInButtonIsDisplayed(150000);
                     viewerPage.clickCloseButton();
@@ -287,7 +287,7 @@ describe('Viewer', () => {
         let otherFolderUploaded;
 
         beforeAll(async (done) => {
-            otherFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, otherFolderInfo.name, "-my-");
+            otherFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, otherFolderInfo.name, '-my-');
 
             uploadedOthers = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, otherFolderInfo.location, otherFolderUploaded.entry.id);
 
@@ -304,7 +304,7 @@ describe('Viewer', () => {
 
         it('[C280012] Should be possible to open any other Document supported extension', () => {
             uploadedOthers.forEach((currentFile) => {
-                if (currentFile.entry.name != '.DS_Store') {
+                if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
                     viewerPage.checkZoomInButtonIsDisplayed(150000);
                     viewerPage.clickCloseButton();
@@ -321,7 +321,7 @@ describe('Viewer', () => {
         let imgFolderUploaded;
 
         beforeAll(async (done) => {
-            imgFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, imgFolderInfo.name, "-my-");
+            imgFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, imgFolderInfo.name, '-my-');
 
             uploadedImages = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, imgFolderInfo.location, imgFolderUploaded.entry.id);
 
@@ -338,7 +338,7 @@ describe('Viewer', () => {
 
         it('[C279966] Should be possible to open any Image supported extension', () => {
             uploadedImages.forEach((currentFile) => {
-                if (currentFile.entry.name != ".DS_Store") {
+                if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
                     viewerPage.checkZoomInButtonIsDisplayed(150000);
                     viewerPage.clickCloseButton();
