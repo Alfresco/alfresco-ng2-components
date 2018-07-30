@@ -54,7 +54,7 @@ describe('Save screenshot at the end', () => {
                 for (const fileName of files) {
 
                     let pathFile = path.join(__dirname, '../../e2e-output/screenshots', fileName);
-                    let file = fs.createReadStream(pathFile);
+                    let file: any = fs.createReadStream(pathFile);
 
                     await  alfrescoJsApi.upload.uploadFile(
                         file,

@@ -18,7 +18,7 @@
 import Util = require('../../util/util');
 import TestConfig = require('../../test.config');
 import path = require('path');
-import TestConfig = require('../../test.config');
+import { browser, by, element, protractor } from 'protractor';
 
 export class VersionManagePage {
 
@@ -76,7 +76,8 @@ export class VersionManagePage {
     enterCommentText(text) {
         Util.waitUntilElementIsVisible(this.commentText);
         this.commentText.sendKeys('');
-        this.commentText.clear().sendKeys(text);
+        this.commentText.clear();
+        this.commentText.sendKeys(text);
         return this;
     }
 

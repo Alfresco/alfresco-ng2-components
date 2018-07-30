@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { element, by, browser } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
@@ -29,8 +31,6 @@ import resources = require('../../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { DropActions } from '../../actions/drop.actions';
-
-import path = require('path');
 
 describe('Upload component - Excluded Files', () => {
 

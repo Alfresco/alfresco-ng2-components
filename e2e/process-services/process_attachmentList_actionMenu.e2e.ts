@@ -22,8 +22,6 @@ import ProcessDetailsPage = require('../pages/adf/process_services/processDetail
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import ViewerPage = require('../pages/adf/viewerPage.js');
 
-import CONSTANTS = require('../util/constants');
-
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import Util = require('../util/util.js');

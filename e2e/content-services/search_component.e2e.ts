@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../pages/adf/loginPage');
 import SearchDialog = require('../pages/adf/dialog/searchDialog');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
@@ -26,7 +28,6 @@ import FileModel = require('../models/ACS/fileModel');
 import FolderModel = require('../models/ACS/folderModel');
 
 import TestConfig = require('../test.config');
-import resources = require('../util/resources');
 import Util = require('../util/util');
 
 import AlfrescoApi = require('alfresco-js-api-node');

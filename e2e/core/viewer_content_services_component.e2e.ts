@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import TestConfig = require('../test.config');
 
 import LoginPage = require('../pages/adf/loginPage');

@@ -242,6 +242,7 @@ describe('Process List - Pagination', function () {
         });
 
         it('[C261045] 5 Items per page', function () {
+            let showing;
             page = 1;
             totalPages = 4;
             processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
@@ -255,7 +256,9 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
             expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.five * page + ' of ' + nrOfProcesses);
+
+            showing = (itemsPerPage.fiveValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
             expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
             paginationPage.checkNextPageButtonIsEnabled();
             paginationPage.checkPreviousPageButtonIsDisabled();
@@ -267,7 +270,9 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
             expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.five * page + ' of ' + nrOfProcesses);
+
+            showing = (itemsPerPage.fiveValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 6-' + showing + ' of ' + nrOfProcesses);
             expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
             paginationPage.checkNextPageButtonIsEnabled();
             paginationPage.checkPreviousPageButtonIsEnabled();
@@ -279,7 +284,9 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
             expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.five * page + ' of ' + nrOfProcesses);
+
+            showing = (itemsPerPage.fiveValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
             expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
             paginationPage.checkNextPageButtonIsEnabled();
             paginationPage.checkPreviousPageButtonIsEnabled();
@@ -291,7 +298,9 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
             expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.five * page + ' of ' + nrOfProcesses);
+
+            showing = (itemsPerPage.fiveValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + showing + ' of ' + nrOfProcesses);
             expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
             paginationPage.checkNextPageButtonIsDisabled();
             paginationPage.checkPreviousPageButtonIsEnabled();
@@ -308,6 +317,7 @@ describe('Process List - Pagination', function () {
         });
 
         it('[C261049] Page number dropdown', function () {
+            let showing;
             page = 1;
             totalPages = 2;
             processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
@@ -320,7 +330,9 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
             expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
+
+            showing = (itemsPerPage.tenValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
             expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
             paginationPage.checkNextPageButtonIsEnabled();
             paginationPage.checkPreviousPageButtonIsDisabled();
@@ -334,7 +346,9 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
             expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
+
+            showing = (itemsPerPage.tenValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
             expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
             paginationPage.checkNextPageButtonIsDisabled();
             paginationPage.checkPreviousPageButtonIsEnabled();
@@ -348,7 +362,9 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
             expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
+
+            showing = (itemsPerPage.tenValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
             expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
             paginationPage.checkNextPageButtonIsEnabled();
             paginationPage.checkPreviousPageButtonIsDisabled();

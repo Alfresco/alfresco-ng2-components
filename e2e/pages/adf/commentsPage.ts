@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+import { element, by } from 'protractor';
+
 import Util = require('../../util/util');
-import TestConfig = require('../../test.config');
 
 export class CommentsPage {
 

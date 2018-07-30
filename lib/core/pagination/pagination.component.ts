@@ -25,7 +25,7 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { Subscription } from 'rxjs/Subscription';
 import { PaginationModel } from '../models/pagination.model';
-import { UserPreferencesService } from "../services/user-preferences.service";
+import { UserPreferencesService } from '../services/user-preferences.service';
 
 @Component({
     selector: 'adf-pagination',

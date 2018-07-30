@@ -26,6 +26,7 @@ import { AppConfigService, NotificationService } from '@alfresco/adf-core';
 export class ConfigEditorComponent {
 
     editor: any;
+    editorSearch: any;
 
     editorOptions = {
         theme: 'vs-dark',
@@ -36,6 +37,7 @@ export class ConfigEditorComponent {
     };
 
     metadataConf: string;
+    searchConf: string;
 
     onInitMetadata(editor) {
         this.editor = editor;
@@ -44,8 +46,16 @@ export class ConfigEditorComponent {
         }, 1000);
     }
 
+    onInitSearch(editor) {
+        this.editorSearch = editor;
+        setTimeout(() => {
+            this.editorSearch.getAction('editor.action.formatDocument').run();
+        }, 1000);
+    }
+
     constructor(private appConfig: AppConfigService, private notificationService: NotificationService) {
         this.metadataConf = JSON.stringify(appConfig.config['content-metadata']);
+        this.searchConf = JSON.stringify(appConfig.config['search']);
     }
 
     onSaveMetadata() {
@@ -59,7 +69,22 @@ export class ConfigEditorComponent {
         }
     }
 
+    onSaveSearch() {
+        try {
+            this.appConfig.config['search'] = JSON.parse(this.editor.getValue());
+        } catch (error) {
+            this.notificationService.openSnackMessage(
+                'Wrong sSearch configuration',
+                4000
+            );
+        }
+    }
+
     onClearMetadata() {
         this.metadataConf = '';
+    }
+
+    onClearSearch() {
+        this.searchConf = '';
     }
 }

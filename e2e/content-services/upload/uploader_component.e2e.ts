@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { element, by, browser } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');

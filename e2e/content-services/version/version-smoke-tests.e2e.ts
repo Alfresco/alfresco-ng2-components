@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
-import ViewerPage = require('../../pages/adf/viewerPage');
 import ContentListPage = require('../../pages/adf/dialog/contentList');
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
@@ -26,7 +27,6 @@ import FileModel = require('../../models/ACS/fileModel');
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
@@ -39,7 +39,6 @@ describe('Version component', () => {
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = new ContentListPage();
     const versionManagePage = new VersionManagePage();
-    const viewerPage = new ViewerPage();
 
     let acsUser = new AcsUserModel();
 

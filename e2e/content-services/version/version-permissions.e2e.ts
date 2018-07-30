@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { element, by } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
-import ViewerPage = require('../../pages/adf/viewerPage');
 import ContentListPage = require('../../pages/adf/dialog/contentList');
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
@@ -29,27 +29,23 @@ import FileModel = require('../../models/ACS/fileModel');
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NodeActions } from '../../actions/ACS/node.actions';
 
 import Util = require('../../util/util');
-import path = require('path');
 import CONSTANTS = require('../../util/constants');
 
 describe('Version component', () => {
 
     const loginPage = new LoginPage();
-    const contentServicesPage = new ContentServicesPage();
     const contentListPage = new ContentListPage();
     const versionManagePage = new VersionManagePage();
-    const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialog();
     const notificationPage = new NotificationPage();
-    const site;
+    let site;
 
     let acsUser = new AcsUserModel();
     let consumerUser = new AcsUserModel();
@@ -221,8 +217,6 @@ describe('Version component', () => {
     describe('Consumer', () => {
 
         beforeAll(async (done) => {
-            let uploadActions = new UploadActions();
-
             loginPage.loginToContentServicesUsingUserModel(consumerUser);
 
             navigationBarPage.openContentServicesFolder(site.entry.guid);

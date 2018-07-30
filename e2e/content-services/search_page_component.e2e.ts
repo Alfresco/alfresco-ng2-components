@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../pages/adf/loginPage');
 import SearchDialog = require('../pages/adf/dialog/searchDialog');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
@@ -35,6 +37,8 @@ import { UploadActions } from '../actions/ACS/upload.actions';
 describe('Search component - Search Page', () => {
     let search = {
         active: {
+            firstFile: null,
+            secondFile: null,
             base: Util.generateRandomString(3),
             extension: '.txt'
         },
@@ -59,12 +63,13 @@ describe('Search component - Search Page', () => {
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, search.active.base, search.active.extension);
         adminFileNames = Util.generateSeqeunceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
 
+        search.active.firstFile = fileNames[1];
+        search.active.secondFile = fileNames[2];
+
         firstFileModel = new FileModel({
             'name': search.active.firstFile,
             'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
         });
-        search.active.firstFile = fileNames[1];
-        search.active.secondFile = fileNames[2];
 
         let uploadActions = new UploadActions();
 

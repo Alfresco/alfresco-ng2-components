@@ -25,13 +25,9 @@ import FileModel = require('../../models/ACS/fileModel');
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
-
-import fs = require('fs');
-import path = require('path');
 
 describe('CardView Component - properties', () => {
 
