@@ -29,6 +29,7 @@ export class NotificationsComponent implements OnInit {
     message = 'I ♥️ ADF';
     withAction = false;
     actionOutput = '';
+    snackBarConfigObject = '';
 
     configForm: FormGroup;
 
@@ -57,7 +58,6 @@ export class NotificationsComponent implements OnInit {
 
     ngOnInit() {
         this.configForm = this.formBuilder.group({
-            announcementMessage: new FormControl(''),
             direction: new FormControl(''),
             horizontalPosition: new FormControl(''),
             verticalPosition: new FormControl(''),
@@ -72,10 +72,6 @@ export class NotificationsComponent implements OnInit {
     }
 
     setSnackBarConfig(configFormValues: any) {
-
-        if (configFormValues.announcementMessage) {
-            this.snackBarConfig.announcementMessage = configFormValues.announcementMessage;
-        }
         if (configFormValues.direction) {
             this.snackBarConfig.direction = configFormValues.direction;
 
@@ -90,7 +86,6 @@ export class NotificationsComponent implements OnInit {
         if (configFormValues.verticalPosition) {
             this.snackBarConfig.verticalPosition = configFormValues.verticalPosition;
         }
-
     }
 
     send() {
@@ -110,7 +105,10 @@ export class NotificationsComponent implements OnInit {
 
     sendCustomConfig() {
         this.actionOutput = '';
-        console.log(this.snackBarConfig);
+        this.snackBarConfigObject = `{"direction": "${this.snackBarConfig.direction}",
+                                    "duration": "${this.snackBarConfig.duration}",
+                                    "horizontalPosition": "${ this.snackBarConfig.horizontalPosition}",
+                                    "verticalPosition": "${ this.snackBarConfig.verticalPosition}"}`;
 
         if (this.message) {
             if (this.withAction) {
