@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*tslint:disable*/
 
 import TestConfig = require('../test.config');
 
@@ -41,50 +40,46 @@ describe('Viewer', () => {
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let uploadActions = new UploadActions();
-    let site, uploadedArchives, uploadedExcels, uploadedOthers, uploadedPpts, uploadedTexts, uploadedWords, uploadedImages;
+    let site;
     let acsUser = new AcsUserModel();
+    let pngFileUploaded;
 
-    let pngFile = new FileModel({
+    let pngFileInfo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let archiveFolder = new FolderModel({
+    let archiveFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_location
     });
 
-    let excelFolder = new FolderModel({
+    let excelFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_location
     });
 
-
-    let otherFolder = new FolderModel({
+    let otherFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_location
     });
 
-
-    let pptFolder = new FolderModel({
+    let pptFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.PPT_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.PPT_FOLDER.folder_location
     });
 
-
-    let textFolder = new FolderModel({
+    let textFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
-
-    let wordFolder = new FolderModel({
+    let wordFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_location
     });
 
-
-    let imgFolder = new FolderModel({
+    let imgFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_location
     });
@@ -111,20 +106,20 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pngFile.location, pngFile.name, site.entry.guid);
-        Object.assign(pngFile, pngFileUploaded.entry);
+        pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileInfo.location, pngFileInfo.name, site.entry.guid);
 
         done();
     });
 
-
     describe('Archive Folder Uploaded', () => {
 
-        beforeAll(async (done) => {
-            let archiveFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, archiveFolder.name, "-my-");
-            Object.assign(archiveFolder, archiveFolderUploaded.entry);
+        let uploadedArchives;
+        let archiveFolderUploaded;
 
-            uploadedArchives = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, archiveFolder.location, archiveFolderUploaded.entry.id);
+        beforeAll(async (done) => {
+            archiveFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, archiveFolderInfo.name, "-my-");
+
+            uploadedArchives = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, archiveFolderInfo.location, archiveFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -133,7 +128,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, archiveFolder.id);
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, archiveFolderUploaded.entry.id);
             done();
         });
 
@@ -152,11 +147,13 @@ describe('Viewer', () => {
 
     describe('Excel Folder Uploaded', () => {
 
-        beforeAll(async (done) => {
-            let excelFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, excelFolder.name, "-my-");
-            Object.assign(excelFolder, excelFolderUploaded.entry);
+        let uploadedExcels;
+        let excelFolderUploaded;
 
-            uploadedExcels = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, excelFolder.location, excelFolderUploaded.entry.id);
+        beforeAll(async (done) => {
+            excelFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, excelFolderInfo.name, "-my-");
+
+            uploadedExcels = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, excelFolderInfo.location, excelFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -165,7 +162,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, excelFolder.id);
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, excelFolderUploaded.entry.id);
             done();
         });
 
@@ -184,11 +181,13 @@ describe('Viewer', () => {
 
     describe('PowerPoint Folder Uploaded', () => {
 
-        beforeAll(async (done) => {
-            let pptFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, pptFolder.name, "-my-");
-            Object.assign(pptFolder, pptFolderUploaded.entry);
+        let uploadedPpts;
+        let pptFolderUploaded;
 
-            uploadedPpts = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, pptFolder.location, pptFolderUploaded.entry.id);
+        beforeAll(async (done) => {
+            pptFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, pptFolderInfo.name, "-my-");
+
+            uploadedPpts = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, pptFolderInfo.location, pptFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -197,7 +196,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFolder.id);
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFolderUploaded.entry.id);
             done();
         });
 
@@ -216,11 +215,13 @@ describe('Viewer', () => {
 
     describe('Text Folder Uploaded', () => {
 
-        beforeAll(async (done) => {
-            let textFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, textFolder.name, "-my-");
-            Object.assign(textFolder, textFolderUploaded.entry);
+        let uploadedTexts;
+        let textFolderUploaded;
 
-            uploadedTexts = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, textFolder.location, textFolderUploaded.entry.id);
+        beforeAll(async (done) => {
+            textFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, textFolderInfo.name, "-my-");
+
+            uploadedTexts = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, textFolderInfo.location, textFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -229,7 +230,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, textFolder.id);
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, textFolderUploaded.entry.id);
             done();
         });
 
@@ -248,11 +249,13 @@ describe('Viewer', () => {
 
     describe('Word Folder Uploaded', () => {
 
-        beforeAll(async (done) => {
-            let wordFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, wordFolder.name, "-my-");
-            Object.assign(wordFolder, wordFolderUploaded.entry);
+        let uploadedWords;
+        let wordFolderUploaded;
 
-            uploadedWords = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, wordFolder.location, wordFolderUploaded.entry.id);
+        beforeAll(async (done) => {
+            wordFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, wordFolderInfo.name, "-my-");
+
+            uploadedWords = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, wordFolderInfo.location, wordFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -261,7 +264,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, wordFolder.id);
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, wordFolderUploaded.entry.id);
             done();
         });
 
@@ -280,11 +283,13 @@ describe('Viewer', () => {
 
     describe('Other Folder Uploaded', () => {
 
-        beforeAll(async (done) => {
-            let otherFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, otherFolder.name, "-my-");
-            Object.assign(otherFolder, otherFolderUploaded.entry);
+        let uploadedOthers;
+        let otherFolderUploaded;
 
-            uploadedOthers = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, otherFolder.location, otherFolderUploaded.entry.id);
+        beforeAll(async (done) => {
+            otherFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, otherFolderInfo.name, "-my-");
+
+            uploadedOthers = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, otherFolderInfo.location, otherFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -293,7 +298,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, otherFolder.id);
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, otherFolderUploaded.entry.id);
             done();
         });
 
@@ -312,11 +317,13 @@ describe('Viewer', () => {
 
     describe('Image Folder Uploaded', () => {
 
-        beforeAll(async (done) => {
-            let imgFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, imgFolder.name, "-my-");
-            Object.assign(imgFolder, imgFolderUploaded.entry);
+        let uploadedImages;
+        let imgFolderUploaded;
 
-            uploadedImages = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, imgFolder.location, imgFolderUploaded.entry.id);
+        beforeAll(async (done) => {
+            imgFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, imgFolderInfo.name, "-my-");
+
+            uploadedImages = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, imgFolderInfo.location, imgFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -325,7 +332,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, imgFolder.id);
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, imgFolderUploaded.entry.id);
             done();
         });
 
@@ -342,11 +349,11 @@ describe('Viewer', () => {
 
     });
 
-    it('[C272813] Should be able to close the viewer when clicking close button', () => {
+    it('[C272813] Should be redirected to site when opening and closing a file in a site', () => {
         navigationBarPage.goToSite(site);
         viewerPage.checkDatatableHeaderIsDisplayed();
 
-        viewerPage.viewFile(pngFile.name);
+        viewerPage.viewFile(pngFileUploaded.entry.name);
 
         viewerPage.checkImgViewerIsDisplayed();
 
