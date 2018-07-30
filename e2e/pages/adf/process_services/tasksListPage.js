@@ -23,6 +23,7 @@ var TasksListPage = function () {
     var tableBody = element.all(by.css("adf-datatable div[class='adf-datatable-body']")).first();
     var sortByName = element(by.css('div[data-automation-id="auto_id_name"]'));
     var firstTaskOnTaskList = element.all(by.css('div[class="adf-datatable-body"] span')).first();
+    var spinner = element(by.css('mat-progress-spinner'));
 
     this.clickSortByName = function () {
         Util.waitUntilElementIsVisible(sortByName);
@@ -34,8 +35,7 @@ var TasksListPage = function () {
         Util.waitUntilElementIsVisible(taskList.element(row));
         return this;
     };
-    var spinner = element(by.css('mat-progress-spinner'));
-
+    
     this.checkTaskIsDisplayedInTasksList = function(taskName) {
         var row = by.cssContainingText("span", taskName);
         Util.waitUntilElementIsVisible(taskList.element(row));
@@ -67,12 +67,11 @@ var TasksListPage = function () {
     this.firstTaskOnTaskList = function (){
         Util.waitUntilElementIsVisible(firstTaskOnTaskList);
         return firstTaskOnTaskList.getText();
+    };
+
     this.checkSpinnerIsDisplayed = function () {
         Util.waitUntilElementIsPresent(spinner);
     };
-
 };
 
 module.exports = TasksListPage;
-
-
