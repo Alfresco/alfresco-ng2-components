@@ -236,7 +236,7 @@ describe('Upload component', () => {
         contentServicesPage.uploadFile(docxFileModel.location).checkContentIsDisplayed(docxFileModel.name);
         uploadDialog.removeUploadedFile(docxFileModel.name).fileIsCancelled(docxFileModel.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.uploadFile(largeFile.location).checkContentIsNotDisplayed(largeFile.name);
+        contentServicesPage.uploadFile(pngFileModel.location).checkContentIsNotDisplayed(pngFileModel.name);
         uploadDialog.dialogIsNotDisplayed();
         uploadToggles.disableExtensionFilter();
     });
@@ -255,8 +255,8 @@ describe('Upload component', () => {
         uploadDialog.removeUploadedFile(docxFileModel.name).fileIsCancelled(docxFileModel.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
-        dragAndDrop.dropFile(dragAndDropArea, largeFile.location);
-        contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
+        dragAndDrop.dropFile(dragAndDropArea, pngFileModel.location);
+        contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name);
         uploadDialog.dialogIsNotDisplayed();
         uploadToggles.disableExtensionFilter();
     });
