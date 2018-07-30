@@ -20,7 +20,9 @@ var Util = require('../../../../util/util');
 var ChecklistDialog = function () {
 
     var nameField = element(by.css("input[data-automation-id='checklist-name']"));
-    var checklistButton = element(by.css("button[id='add-check'] span"));
+    var addChecklistButton = element(by.css("button[id='add-check'] span"));
+    var closeButton = element(by.css("button[id='close-check-dialog'] span"));
+    var dialogTitle = element(by.id("add-checklist-title"));
 
     this.addName = function (name) {
         Util.waitUntilElementIsVisible(nameField);
@@ -29,8 +31,35 @@ var ChecklistDialog = function () {
     };
 
     this.clickCreateChecklistButton = function () {
-        Util.waitUntilElementIsVisible(checklistButton);
-        checklistButton.click();
+        Util.waitUntilElementIsVisible(addChecklistButton);
+        addChecklistButton.click();
+    };
+
+    this.clickCancelButton = function () {
+        Util.waitUntilElementIsVisible(closeButton);
+        closeButton.click();
+    };
+
+    this.getDialogTitle = function () {
+        Util.waitUntilElementIsVisible(dialogTitle);
+        return dialogTitle.getText();
+    };
+
+    this.getNameFieldPlaceholder = function () {
+        Util.waitUntilElementIsVisible(nameField);
+        return nameField.getAttribute('placeholder');
+    };
+
+    this.checkCancelButtonIsEnabled = function () {
+        Util.waitUntilElementIsVisible(closeButton);
+        Util.waitUntilElementIsClickable(closeButton);
+        return this;
+    };
+
+    this.checkAddChecklistButtonIsEnabled = function () {
+        Util.waitUntilElementIsVisible(addChecklistButton);
+        Util.waitUntilElementIsClickable(addChecklistButton);
+        return this;
     };
 
 };

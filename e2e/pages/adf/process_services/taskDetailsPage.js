@@ -38,9 +38,16 @@ var TaskDetailsPage = function () {
     var addPeopleField = element(by.css("input[data-automation-id='adf-people-search-input']"));
     var addInvolvedUserButton = element(by.css("button[id='add-people'] span"));
     var emailInvolvedUser = by.xpath("following-sibling::div[@class='people-email ng-star-inserted']");
+    var editActionInvolvedUser = by.xpath("following-sibling::div[@class='people-edit-label ng-star-inserted']");
+    var involvedUserPic = by.xpath("ancestor::div/ancestor::div/preceding-sibling::div//div[@class='adf-people-search-people-pic ng-star-inserted']");
     var infoDrawer = element(by.css("adf-info-drawer"));
     var auditLogButton = element(by.css("button[adf-task-audit]"));
 
+    var noPeopleInvolved = element(by.id('no-people-label'));
+    var cancelInvolvePeopleButton = element(by.id('close-people-search'));
+    var involvePeopleHeader = element(by.css("div[class='search-text-header']"));
+    var removeInvolvedPeople = element(by.css("button[data-automation-id='Remove']"));
+    var peopleTitle = element(by.id("people-title"));
 
     this.getFormName = function () {
         Util.waitUntilElementIsVisible(formNameField);
@@ -172,10 +179,24 @@ var TaskDetailsPage = function () {
         return row;
     };
 
+    this.removeInvolvedUser = function (user) {
+        var row = this.getRowsUser(user).element(by.xpath("ancestor::div[contains(@class, 'adf-datatable-row')]"));
+        Util.waitUntilElementIsVisible(row);
+        row.element(by.css("button[data-automation-id='action_menu_0']")).click();
+        Util.waitUntilElementIsVisible(removeInvolvedPeople);
+        return removeInvolvedPeople.click();
+    };
+
     this.getInvolvedUserEmail = function (user) {
         var email = this.getRowsUser(user).element(emailInvolvedUser);
         Util.waitUntilElementIsVisible(email);
         return email.getText();
+    };
+
+    this.getInvolvedUserEditAction = function (user) {
+        var edit = this.getRowsUser(user).element(editActionInvolvedUser);
+        Util.waitUntilElementIsVisible(edit);
+        return edit.getText();
     };
 
     this.clickAuditLogButton = function () {
@@ -193,6 +214,55 @@ var TaskDetailsPage = function () {
 
     this.taskInfoDrawerIsNotDisplayed = function () {
         Util.waitUntilElementIsNotOnPage(infoDrawer);
+    };
+
+    this.checkNoPeopleIsInvolved = function () {
+        Util.waitUntilElementIsVisible(noPeopleInvolved);
+        return this;
+    };
+
+    this.clickCancelInvolvePeopleButton = function () {
+        Util.waitUntilElementIsVisible(cancelInvolvePeopleButton);
+        cancelInvolvePeopleButton.click();
+        return this;
+    };
+
+    this.getInvolvePeopleHeader = function () {
+        Util.waitUntilElementIsVisible(involvePeopleHeader);
+        return involvePeopleHeader.getText();
+    };
+
+    this.getInvolvePeoplePlaceholder = function () {
+        Util.waitUntilElementIsVisible(addPeopleField);
+        return addPeopleField.getAttribute('placeholder');
+    };
+
+    this.checkCancelButtonIsEnabled = function () {
+        Util.waitUntilElementIsVisible(cancelInvolvePeopleButton);
+        Util.waitUntilElementIsClickable(cancelInvolvePeopleButton);
+        return this;
+    };
+
+    this.checkAddPeopleButtonIsEnabled = function () {
+        Util.waitUntilElementIsVisible(addInvolvedUserButton);
+        Util.waitUntilElementIsClickable(addInvolvedUserButton);
+        return this;
+    };
+
+    this.noUserIsDisplayedInSearchInvolvePeople = function (user) {
+        Util.waitUntilElementIsNotOnPage(element(by.cssContainingText("div[class*='people-full-name']", user)));
+        return this;
+    };
+
+    this.getInvolvedPeopleTitle = function () {
+        Util.waitUntilElementIsVisible(peopleTitle);
+        return peopleTitle.getText();
+    };
+
+    this.getInvolvedPeopleInitialImage = function (user) {
+        var pic = this.getRowsUser(user).element(involvedUserPic);
+        Util.waitUntilElementIsVisible(pic);
+        return pic.getText();
     };
 
 };
