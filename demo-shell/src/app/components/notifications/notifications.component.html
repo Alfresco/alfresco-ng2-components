@@ -16,7 +16,7 @@
             data-automation-id="notification-message">
     </mat-form-field>
 
-    <button mat-icon-button (click)="send()">
+    <button mat-icon-button (click)="send()" data-automation-id="notification-default-button">
         <mat-icon>send</mat-icon>
     </button>
 
@@ -28,53 +28,43 @@
         </mat-slide-toggle>
     </div>
 
-    <div data-automation-id="notification-action-output">
+    <div data-automation-id="notification-action-output" *ngIf="actionOutput">
         {{ actionOutput }}
     </div>
-    <mat-accordion>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                        <h3>Custom Configuration</h3>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
     
-
+    <h2>Custom Configuration</h2>
+    
     <form [formGroup]="configForm">
         <mat-form-field>
-            <input matInput class="form-control" formControlName="announcementMessage" placeholder="Announcement Message" >
-        </mat-form-field>
-        <mat-form-field>
-            <mat-select class="form-control" formControlName="direction" placeholder="Direction">
+            <mat-select class="form-control" formControlName="direction" placeholder="Direction" data-automation-id="notification-direction">
                     <mat-option *ngFor="let direction of directions" [value]="direction.value">
                         {{ direction.title }}
                     </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <input matInput type="number" class="form-control" formControlName="duration" placeholder="Duration" >
+            <input matInput type="number" class="form-control" formControlName="duration" placeholder="Duration" data-automation-id="notification-duration">
         </mat-form-field>
         <mat-form-field>
-            <mat-select class="form-control" formControlName="horizontalPosition" placeholder="Horizontal Position">
+            <mat-select class="form-control" formControlName="horizontalPosition" placeholder="Horizontal Position" data-automation-id="notification-horizontal-position">
                 <mat-option *ngFor="let horizontalPosition of horizontalPositions" [value]="horizontalPosition.value">
                     {{ horizontalPosition.title }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <mat-select class="form-control" formControlName="verticalPosition" placeholder="Vertical Position">
+            <mat-select class="form-control" formControlName="verticalPosition" placeholder="Vertical Position" data-automation-id="notification-vertical-position">
                 <mat-option *ngFor="let verticalPosition of verticalPositions" [value]="verticalPosition.value">{{ verticalPosition.title }}</mat-option>
             </mat-select>
         </mat-form-field>
-
-        
+        <button mat-icon-button (click)="sendCustomConfig()" data-automation-id="notification-custom-config-button">
+            <mat-icon>send</mat-icon>
+        </button>
     </form>
-
-    <button mat-icon-button (click)="sendCustomConfig()">
-        <mat-icon>send</mat-icon>
-    </button>
-
-</mat-expansion-panel>
-</mat-accordion>
-
+    <div>
+        <h3>SnackBar Config</h3>
+        <p *ngIf="snackBarConfigObject" data-automation-id="notification-custom-object">
+            {{snackBarConfigObject}}
+        </p>
+    </div>
 </div>
