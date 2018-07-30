@@ -205,6 +205,9 @@
           "nocase": true
         }
     },
+    "file-viewer": {
+        "metadataTab": true
+    },
     "logLevel": "trace",
     "activiti": {
         "rest": {
@@ -529,7 +532,8 @@
             "default": {
                 "exif:exif": "*"
             }
-        }
+        },
+        "displayMetadata": false
     },
     "sideNav": {
       "expandedSidenav": true,

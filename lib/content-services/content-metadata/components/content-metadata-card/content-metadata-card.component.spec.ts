@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/*tslint:disable: ban*/
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
@@ -60,6 +58,24 @@ describe('ContentMetadataCardComponent', () => {
 
     it('should have displayEmpty input param as false by default', () => {
         expect(component.displayEmpty).toBe(false);
+    });
+
+    it('should display metadata fields if displayMetadata is set to true', () => {
+        component.displayMetadata = true;
+        const metadataContainer = fixture.debugElement.query(By.css('adf-content-metadata'));
+        fixture.detectChanges();
+        expect(metadataContainer).toBeDefined();
+    });
+
+    it('should does not displa metadata fields if displayMetadata is set to false', () => {
+        component.displayMetadata = false;
+        const metadataContainer = fixture.debugElement.query(By.css('adf-content-metadata'));
+        fixture.detectChanges();
+        expect(metadataContainer).not.toBeDefined();
+    });
+
+    it('should have displayMetadata input param as true by default', () => {
+        expect(component.displayMetadata).toBe(true);
     });
 
     it('should pass through the node to the underlying component', () => {

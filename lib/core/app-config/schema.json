@@ -136,7 +136,7 @@
                 "sortable": { "type": "boolean" }
             }
         },
-        "content-metadata-aspect": {
+        "content-metadata-aspect": {ƒ
             "description": "Content metadata's aspect definition",
             "type": "object",
             "patternProperties": {
@@ -513,7 +513,11 @@
                                 { "$ref": "#/definitions/content-metadata-layout-group" }
                             ]
                         }
-                    }
+                    }                    
+                },
+                "displayMetadata": { 
+                    "description": "This sets the original state of the metadata content card",
+                    "type": "boolean" 
                 }
             }
         },

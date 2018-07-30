@@ -1,6 +1,7 @@
 <mat-card *ngIf="node">
     <mat-card-content>
         <adf-content-metadata
+           *ngIf="displayMetadata"
             [node]="node"
             [displayEmpty]="displayEmpty"
             [editable]="editable"
