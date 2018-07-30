@@ -199,6 +199,10 @@ exports.Files = {
             file_name: "a_ppt_file.pptx",
             first_page_text: "PPTX test file"
         },
+        PPT_B: {
+            file_location: "/resources/adf/allFileTypes/b_ppt_file.pptx",
+            file_name: "b_ppt_file.pptx"
+        },
         TEST: {
             file_location: "/resources/adf/allFileTypes/testExtension.test",
             file_name: "testExtension.test"

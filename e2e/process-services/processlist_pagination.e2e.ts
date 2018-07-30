@@ -84,7 +84,7 @@ describe('Process List - Pagination', function () {
         done();
     });
 
-    xit('[C261042] Default pagination', function () {
+    it('[C261042] Default pagination', function () {
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.checkNoContentMessage();
         paginationPage.checkPaginationIsNotDisplayed();
@@ -106,7 +106,7 @@ describe('Process List - Pagination', function () {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    xit('[C261043] Items per page set to 15', function () {
+    it('[C261043] Items per page set to 15', function () {
         page = 1;
         totalPages = 2;
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
@@ -148,7 +148,7 @@ describe('Process List - Pagination', function () {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    xit('[C261044] Items per page set to 10', function () {
+    it('[C261044] Items per page set to 10', function () {
         page = 1;
         totalPages = 2;
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();

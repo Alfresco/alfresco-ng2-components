@@ -374,6 +374,7 @@ var ContentServicesPage = function () {
         for (i = 0; i < content.length; i++) {
             this.deleteContent(content[i]);
             this.checkContentIsNotDisplayed(content[i]);
+            browser.driver.sleep(1000);
         };
         return this;
     };

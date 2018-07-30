@@ -36,8 +36,6 @@ describe('Search component - Search Page', () => {
     let search = {
         active: {
             base: Util.generateRandomString(3),
-            firstFile: Util.generateRandomString(),
-            secondFile: Util.generateRandomString(),
             extension: '.txt'
         },
         no_permission: {
@@ -52,17 +50,21 @@ describe('Search component - Search Page', () => {
     let searchResultPage = new SearchResultPage();
 
     let acsUser = new AcsUserModel();
-    let emptyFolderModel = new FolderModel({ 'name': Util.generateRandomString()});
-    let firstFileModel = new FileModel({
-        'name': search.active.firstFile,
-        'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
-    });
+    let emptyFolderModel = new FolderModel({ 'name': Util.generateRandomString() });
+    let firstFileModel;
     let newFolderModel = new FolderModel({ 'name': 'newFolder' });
     let fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
 
     beforeAll(async (done) => {
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, search.active.base, search.active.extension);
         adminFileNames = Util.generateSeqeunceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
+
+        firstFileModel = new FileModel({
+            'name': search.active.firstFile,
+            'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
+        });
+        search.active.firstFile = fileNames[1];
+        search.active.secondFile = fileNames[2];
 
         let uploadActions = new UploadActions();
 
@@ -273,8 +275,11 @@ describe('Search component - Search Page', () => {
 
     it('[C272808] Try to delete a folder without rights from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
-            .enterTextAndPressEnter(search.no_permission.noPermFolder);
+        searchDialog.checkSearchBarIsNotVisible();
+        searchDialog.checkSearchIconIsVisible();
+        searchDialog.clickOnSearchIcon();
+        searchDialog.enterTextAndPressEnter(search.no_permission.noPermFolder);
+
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
         searchResultPage.deleteContent(search.no_permission.noPermFolder);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);

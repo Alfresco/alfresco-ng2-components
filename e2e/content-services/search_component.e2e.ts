@@ -201,6 +201,7 @@ describe('Search component - Search Bar', () => {
 
     it('[C272802] Existing folder is displayed in search page', () => {
         searchDialog.clickOnSearchIcon();
+        browser.driver.sleep(1000);
         searchDialog.enterTextAndPressEnter(firstFolderModel.name);
         searchResultPage.checkContentIsDisplayed(firstFolderModel.name);
     });
@@ -219,6 +220,7 @@ describe('Search component - Search Bar', () => {
             .clickOnSearchIcon()
             .enterText(secondFolder.shortName)
             .pressDownArrowAndEnter();
+        searchDialog.pressDownArrowAndEnter();
 
         contentServicesPage.checkAcsContainer();
         expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
