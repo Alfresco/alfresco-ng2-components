@@ -34,6 +34,11 @@ var NotificationPage = function () {
     var notificationsPage = element(by.css("a[data-automation-id='Notifications']"));
     var notificationConfig = element(by.css("p[data-automation-id='notification-custom-object']"));
 
+    this.checkNotifyContains = function (message) {
+        Util.waitUntilElementIsVisible(element(by.cssContainingText('simple-snack-bar', message)));
+        return this;
+    };
+
     this.goToNotificationsPage = function () {
         Util.waitUntilElementIsVisible(notificationsPage);
         notificationsPage.click();
