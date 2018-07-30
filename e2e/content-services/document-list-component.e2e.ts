@@ -29,7 +29,7 @@ import FileModel = require('../models/ACS/fileModel');
 import moment from 'moment-es6';
 import { browser } from '../../node_modules/protractor';
 
-fdescribe('Document List Component', () => {
+describe('Document List Component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
@@ -465,7 +465,7 @@ fdescribe('Document List Component', () => {
             'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
         let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
-        let filePdfNode, fileTestNode, fileDocxNode;
+        let filePdfNode, fileTestNode, fileDocxNode, folderNode;
 
         beforeAll(async (done) => {
             acsUser = new AcsUserModel();
@@ -477,7 +477,8 @@ fdescribe('Document List Component', () => {
             filePdfNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(this.alfrescoJsApi, docxFile.location, docxFile.name, '-my-');
-            uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+            folderNode = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+
             done();
         });
 
@@ -492,6 +493,9 @@ fdescribe('Document List Component', () => {
             if (fileDocxNode) {
                 await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileDocxNode.entry.id);
             }
+            if (folderNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folderNode.entry.id);
+            }
             done();
         });
 
@@ -500,14 +504,13 @@ fdescribe('Document List Component', () => {
             contentServicesPage.goToDocumentList();
         });
 
-        // it('1. File has tooltip', () => {
-        //     expect(contentServicesPage.getTooltip(pdfFile.name)).toEqual(pdfFile.name);
-        // });
+        it('[C260108] - File tooltip', () => {
+            expect(contentServicesPage.getTooltip(pdfFile.name)).toEqual(pdfFile.name);
+        });
 
-        // it('2. Folder has tooltip', () => {
-        //     expect(contentServicesPage.getTooltip(folderOneModel.name)).toEqual(folderOneModel.name);
-        //     expect(contentServicesPage.getBreadcrumbTooltip(rootFolderName)).toEqual(rootFolderName);
-        // });
+        it('[C260109] - Folder tooltip', () => {
+            expect(contentServicesPage.getTooltip(folderName)).toEqual(folderName);
+        });
 
         it('[C260119] - Thumbnail - Disabled - folder', async (done) => {
             let folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
