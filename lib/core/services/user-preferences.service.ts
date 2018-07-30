@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -44,7 +45,7 @@ export class UserPreferencesService {
      * @deprecated we are grouping every value changed on the user preference in a single stream : userPreferenceValue$
      */
     locale$: Observable<string>;
-    private localeSubject: BehaviorSubject<string>;
+    private localeSubject: Subject<string>;
 
     private onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
@@ -53,7 +54,7 @@ export class UserPreferencesService {
                 private appConfig: AppConfigService,
                 private storage: StorageService) {
         this.appConfig.onLoad.subscribe(this.initUserPreferenceStatus.bind(this));
-        this.localeSubject = new BehaviorSubject(this.userPreferenceStatus[UserPreferenceValues.Locale]);
+        this.localeSubject = new Subject();
         this.locale$ = this.localeSubject.asObservable();
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
@@ -61,8 +62,7 @@ export class UserPreferencesService {
 
     private initUserPreferenceStatus() {
         this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
-        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.paginationSize ?
-            this.paginationSize : this.appConfig.get('pagination.size', this.defaults.paginationSize);
+        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.appConfig.get('pagination.size', this.defaults.paginationSize);
         this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
     }
 
@@ -150,27 +150,35 @@ export class UserPreferencesService {
      * @returns Array of page size values
      */
     getDefaultPageSizes(): number[] {
-        return this.defaults.supportedPageSizes;
+        return this.userPreferenceStatus[UserPreferenceValues.PaginationSize];
+    }
+
+    /**
+     * Gets an array containing the available page sizes.
+     * @returns Array of page size values
+     */
+    getDefaultSupportedPageSizes(): number[] {
+        return this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes];
     }
 
     /** Pagination size. */
     set paginationSize(value: number) {
-        this.set('PAGINATION_SIZE', value);
+        this.set(UserPreferenceValues.PaginationSize, value);
     }
 
     get paginationSize(): number {
-        return Number(this.get('PAGINATION_SIZE')) || this.defaults.paginationSize;
+        return Number(this.get(UserPreferenceValues.PaginationSize, this.userPreferenceStatus[UserPreferenceValues.PaginationSize]));
     }
 
     /** Current locale setting. */
     get locale(): string {
-        const locale = this.get('LOCALE');
+        const locale = this.get(UserPreferenceValues.Locale, this.userPreferenceStatus[UserPreferenceValues.Locale]);
         return locale;
     }
 
     set locale(value: string) {
         this.localeSubject.next(value);
-        this.set('LOCALE', value);
+        this.set(UserPreferenceValues.Locale, value);
     }
 
     /**

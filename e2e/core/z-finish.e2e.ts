@@ -45,7 +45,7 @@ describe('Save screenshot at the end', () => {
 
                 let folder = await alfrescoJsApi.nodes.addNode('-my-', {
                     'name': 'core',
-                    'relativePath': 'Buiild-screenshot/Screenshot-e2e-' + buildNumber,
+                    'relativePath': 'Build-screenshot/Screenshot-e2e-' + buildNumber,
                     'nodeType': 'cm:folder'
                 }, {}, {
                     'overwrite': true

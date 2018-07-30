@@ -77,7 +77,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         done();
     });
 
-    xit('Pagination - returns to previous page when current is empty', () => {
+    it('Pagination - returns to previous page when current is empty', () => {
         contentServicesPage.navigateToFolder(folderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();

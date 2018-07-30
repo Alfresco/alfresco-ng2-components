@@ -28,7 +28,7 @@ import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues, InfinitePaginationComponent
+    PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent
 } from '@alfresco/adf-core';
 
 import {
@@ -177,7 +177,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
-    supportedPages: number[];
     currentSiteid = '';
     warnOnMultipleUploads = false;
     thumbnails = false;
@@ -201,10 +200,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 @Optional() private route: ActivatedRoute,
                 public authenticationService: AuthenticationService,
                 public alfrescoApiService: AlfrescoApiService) {
-        this.preference.select(UserPreferenceValues.SupportedPageSizes)
-            .subscribe((pages) => {
-                this.supportedPages = pages;
-            });
 
         this.alfrescoApiService.nodeUpdated.subscribe(() => {
             this.documentList.reload();
@@ -255,7 +250,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
         this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));
         this.onEditFolder = this.contentService.folderEdit.subscribe(value => this.onFolderAction(value));
-        this.supportedPages = this.supportedPages ? this.supportedPages : this.preference.getDefaultPageSizes();
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
