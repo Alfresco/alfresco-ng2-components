@@ -125,7 +125,7 @@ var SearchResultsPage = function () {
      * @param sortOrder: 'true' to sort the list ascendant and 'false' for descendant
      */
     this.sortByAuthor = function (sortOrder) {
-        contentList.sortByAuthor(sortOrder);
+        this.sortBy(sortOrder, "Author");
     };
 
     /**
@@ -134,7 +134,7 @@ var SearchResultsPage = function () {
      * @param sortOrder: 'true' to sort the list ascendant and 'false' for descendant
      */
     this.sortByCreated = function (sortOrder) {
-        return contentList.sortByCreated(sortOrder);
+        this.sortBy(sortOrder, "Created");
     };
 
     /**
