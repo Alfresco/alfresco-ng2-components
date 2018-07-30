@@ -32,6 +32,8 @@ var NavigationBarPage = function () {
     var cardViewButton = element(by.cssContainingText(".sidenav-menu-label", "CardView"));
     var languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
     var appTitle = element(by.css('.adf-app-title'));
+    var headerDataButton = element(by.css("a[data-automation-id='Header data']"));
+    var menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
 
     /**
      * Click Content Services Button
@@ -117,7 +119,7 @@ var NavigationBarPage = function () {
     this.openContentServicesFolder = function (folderId) {
         return browser.get(TestConfig.adf.url + '/files/' + folderId);
     };
-    
+
     this.chooseLanguage = function(language) {
         let buttonLanguage = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
         Util.waitUntilElementIsVisible(buttonLanguage);
@@ -129,6 +131,24 @@ var NavigationBarPage = function () {
         languageMenuButton.click();
         Util.waitUntilElementIsVisible(appTitle);
     };
+
+    this.clickHeaderDataButton = function () {
+        Util.waitUntilElementIsVisible(headerDataButton);
+        return headerDataButton.click();
+    };
+
+    this.checkMenuButtonIsDisplayed = function () {
+        return Util.waitUntilElementIsVisible(menuButton);
+    };
+
+    this.checkMenuButtonIsNotDisplayed = function () {
+        return Util.waitUntilElementIsNotVisible(menuButton);
+    };
+
+    this.checkToolbarColor = function (color) {
+        var toolbarColor = element(by.css(`mat-toolbar.mat-${color}`));
+        return Util.waitUntilElementIsVisible(toolbarColor);
+    }
 };
 
 module.exports = NavigationBarPage;
