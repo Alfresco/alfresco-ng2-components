@@ -63,6 +63,7 @@ var ViewerToolbarPage = function () {
     var rightChevron = element(by.css("div[class*='header-pagination-after']"));
     var toolbarSwitch = element(by.id('adf-switch-toolbar'));
     var toolbar = element(by.id('adf-viewer-toolbar'));
+    var datatableHeader = element(by.css("div.adf-datatable-header"))
     var goBackSwitch = element(by.id('adf-switch-goback'));
 
     var openWithSwitch = element(by.id('adf-switch-openwith'));
@@ -137,8 +138,16 @@ var ViewerToolbarPage = function () {
         passwordInput.sendKeys(password);
     };
 
+    this.checkDatatableHeaderIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(datatableHeader);
+    }
+
     this.checkPageCanvasIsDisplayed = function () {
         Util.waitUntilElementIsVisible(pageCanvas);
+    };
+
+    this.checkToolbarIsDisplayed = function (timeout) {
+        Util.waitUntilElementIsVisible(toolbar, timeout);
     };
 
     this.checkViewerIsNotDisplayed = function () {
@@ -237,6 +246,10 @@ var ViewerToolbarPage = function () {
 
     this.checkZoomInButtonIsDisplayed = function () {
         Util.waitUntilElementIsVisible(zoomInButton);
+    };
+
+    this.checkZoomInButtonIsDisplayed = function (timeout) {
+        Util.waitUntilElementIsVisible(zoomInButton, timeout);
     };
 
     this.checkZoomInButtonIsNotDisplayed = function () {

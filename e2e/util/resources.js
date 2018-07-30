@@ -242,9 +242,29 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/desktop.ini",
             file_name: "desktop.ini"
         },
-        DOC_FOLDER: {
-            folder_location: "/resources/adf/allFileTypes/documents",
-            folder_name: "documents"
+        ARCHIVE_FOLDER: {
+            folder_location: "/resources/adf/allFileTypes/documents/archive",
+            folder_name: "archive"
+        },
+        EXCEL_FOLDER: {
+            folder_location: "/resources/adf/allFileTypes/documents/excel",
+            folder_name: "excel"
+        },
+        OTHER_FOLDER: {
+            folder_location: "/resources/adf/allFileTypes/documents/other",
+            folder_name: "other"
+        },
+        PPT_FOLDER: {
+            folder_location: "/resources/adf/allFileTypes/documents/ppt",
+            folder_name: "ppt"
+        },
+        TEXT_FOLDER: {
+            folder_location: "/resources/adf/allFileTypes/documents/text",
+            folder_name: "text"
+        },
+        WORD_FOLDER: {
+            folder_location: "/resources/adf/allFileTypes/documents/word",
+            folder_name: "word"
         },
         IMG_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/images",

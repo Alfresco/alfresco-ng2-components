@@ -14,12 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*tslint:disable*/
 
 import TestConfig = require('../test.config');
 
 import LoginPage = require('../pages/adf/loginPage');
 import ViewerPage = require('../pages/adf/viewerPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import ContentServicesPage = require('../pages/adf/contentServicesPage');
 
 import resources = require('../util/resources');
 import Util = require('../util/util');
@@ -34,21 +36,53 @@ import { UploadActions } from '../actions/ACS/upload.actions';
 
 describe('Viewer', () => {
 
-    let acsUser = new AcsUserModel();
     let viewerPage = new ViewerPage();
     let navigationBarPage = new NavigationBarPage();
     let loginPage = new LoginPage();
-    let site, uploadedDocs, uploadedImages;
+    let contentServicesPage = new ContentServicesPage();
+    let uploadActions = new UploadActions();
+    let site, uploadedArchives, uploadedExcels, uploadedOthers, uploadedPpts, uploadedTexts, uploadedWords, uploadedImages;
+    let acsUser = new AcsUserModel();
 
     let pngFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let docFolder = new FolderModel({
-        'name': resources.Files.ADF_DOCUMENTS.DOC_FOLDER.folder_name,
-        'location': resources.Files.ADF_DOCUMENTS.DOC_FOLDER.folder_location
+    let archiveFolder = new FolderModel({
+        'name': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_location
     });
+
+    let excelFolder = new FolderModel({
+        'name': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_location
+    });
+
+
+    let otherFolder = new FolderModel({
+        'name': resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_location
+    });
+
+
+    let pptFolder = new FolderModel({
+        'name': resources.Files.ADF_DOCUMENTS.PPT_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.PPT_FOLDER.folder_location
+    });
+
+
+    let textFolder = new FolderModel({
+        'name': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+    });
+
+
+    let wordFolder = new FolderModel({
+        'name': resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_location
+    });
+
 
     let imgFolder = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_name,
@@ -56,7 +90,6 @@ describe('Viewer', () => {
     });
 
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -64,69 +97,261 @@ describe('Viewer', () => {
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
             title: Util.generateRandomString(8),
             visibility: 'PUBLIC'
         });
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: acsUser.id,
             role: CONSTANTS.SITEMEMBERROLES.SITEMANAGER
         });
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password)
+
+        console.log(`\nUsername : ${acsUser.id}\tPassword : ${acsUser.password}`);
 
         let pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pngFile.location, pngFile.name, site.entry.guid);
         Object.assign(pngFile, pngFileUploaded.entry);
 
-        let docFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, docFolder.name, "-my-");
-        Object.assign(docFolder, docFolderUploaded.entry);
-
-        uploadedDocs = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, docFolder.location, docFolderUploaded);
-
-        let imgFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, imgFolder.name, "-my-");
-        Object.assign(imgFolder, imgFolderUploaded.entry);
-
-        uploadedImages = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, imgFolder.location, imgFolderUploaded);
-
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         done();
     });
 
-    afterAll(async(done) => {
-        await this.alfrescoJsApi.nodes.deleteNode(docFolder.id);
-        await this.alfrescoJsApi.nodes.deleteNode(imgFolder.id);
 
-        done();
+    describe('Archive Folder Uploaded', () => {
+
+        beforeAll(async (done) => {
+            let archiveFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, archiveFolder.name, "-my-");
+            Object.assign(archiveFolder, archiveFolderUploaded.entry);
+
+            uploadedArchives = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, archiveFolder.location, archiveFolderUploaded.entry.id);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            done();
+        });
+
+        afterAll(async (done) => {
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, archiveFolder.id);
+            done();
+        });
+
+        it('[C260517] Should be possible to open any Archive file', () => {
+            uploadedArchives.forEach((currentFile) => {
+                if (currentFile.entry.name != '.DS_Store') {
+                    navigationBarPage.openViewer(currentFile.entry.id);
+                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.clickCloseButton();
+                    contentServicesPage.checkAcsContainer();
+                }
+            });
+        });
+
     });
 
-    it('[C260517] Should be possible to open any Document supported extension', () => {
-        uploadedDocs.forEach((currentFile) => {
-            navigationBarPage.openViewer(currentFile.entry.id);
-            viewerPage.checkPageCanvasIsDisplayed();
+    describe('Excel Folder Uploaded', () => {
+
+        beforeAll(async (done) => {
+            let excelFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, excelFolder.name, "-my-");
+            Object.assign(excelFolder, excelFolderUploaded.entry);
+
+            uploadedExcels = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, excelFolder.location, excelFolderUploaded.entry.id);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            done();
         });
+
+        afterAll(async (done) => {
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, excelFolder.id);
+            done();
+        });
+
+        it('[C280008] Should be possible to open any Excel file', () => {
+            uploadedExcels.forEach((currentFile) => {
+                if (currentFile.entry.name != '.DS_Store') {
+                    navigationBarPage.openViewer(currentFile.entry.id);
+                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.clickCloseButton();
+                    contentServicesPage.checkAcsContainer();
+                }
+            });
+        });
+
     });
 
-    it('[C279966] Should be possible to open any Image supported extension', () => {
-        uploadedImages.forEach((currentFile) => {
-            navigationBarPage.openViewer(currentFile.entry.id);
-            viewerPage.checkPageCanvasIsDisplayed();
+    describe('PowerPoint Folder Uploaded', () => {
+
+        beforeAll(async (done) => {
+            let pptFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, pptFolder.name, "-my-");
+            Object.assign(pptFolder, pptFolderUploaded.entry);
+
+            uploadedPpts = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, pptFolder.location, pptFolderUploaded.entry.id);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            done();
         });
+
+        afterAll(async (done) => {
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFolder.id);
+            done();
+        });
+
+        it('[C280009] Should be possible to open any PowerPoint file', () => {
+            uploadedPpts.forEach((currentFile) => {
+                if (currentFile.entry.name != '.DS_Store') {
+                    navigationBarPage.openViewer(currentFile.entry.id);
+                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.clickCloseButton();
+                    contentServicesPage.checkAcsContainer();
+                }
+            });
+        });
+
+    });
+
+    describe('Text Folder Uploaded', () => {
+
+        beforeAll(async (done) => {
+            let textFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, textFolder.name, "-my-");
+            Object.assign(textFolder, textFolderUploaded.entry);
+
+            uploadedTexts = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, textFolder.location, textFolderUploaded.entry.id);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            done();
+        });
+
+        afterAll(async (done) => {
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, textFolder.id);
+            done();
+        });
+
+        it('[C280010] Should be possible to open any Text file', () => {
+            uploadedTexts.forEach((currentFile) => {
+                if (currentFile.entry.name != '.DS_Store') {
+                    navigationBarPage.openViewer(currentFile.entry.id);
+                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.clickCloseButton();
+                    contentServicesPage.checkAcsContainer();
+                }
+            });
+        });
+
+    });
+
+    describe('Word Folder Uploaded', () => {
+
+        beforeAll(async (done) => {
+            let wordFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, wordFolder.name, "-my-");
+            Object.assign(wordFolder, wordFolderUploaded.entry);
+
+            uploadedWords = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, wordFolder.location, wordFolderUploaded.entry.id);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            done();
+        });
+
+        afterAll(async (done) => {
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, wordFolder.id);
+            done();
+        });
+
+        it('[C280011] Should be possible to open any Word file', () => {
+            uploadedWords.forEach((currentFile) => {
+                if (currentFile.entry.name != '.DS_Store') {
+                    navigationBarPage.openViewer(currentFile.entry.id);
+                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.clickCloseButton();
+                    contentServicesPage.checkAcsContainer();
+                }
+            });
+        });
+
+    });
+
+    describe('Other Folder Uploaded', () => {
+
+        beforeAll(async (done) => {
+            let otherFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, otherFolder.name, "-my-");
+            Object.assign(otherFolder, otherFolderUploaded.entry);
+
+            uploadedOthers = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, otherFolder.location, otherFolderUploaded.entry.id);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            done();
+        });
+
+        afterAll(async (done) => {
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, otherFolder.id);
+            done();
+        });
+
+        it('[C280012] Should be possible to open any other Document supported extension', () => {
+            uploadedOthers.forEach((currentFile) => {
+                if (currentFile.entry.name != '.DS_Store') {
+                    navigationBarPage.openViewer(currentFile.entry.id);
+                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.clickCloseButton();
+                    contentServicesPage.checkAcsContainer();
+                }
+            });
+        });
+
+    });
+
+    describe('Image Folder Uploaded', () => {
+
+        beforeAll(async (done) => {
+            let imgFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, imgFolder.name, "-my-");
+            Object.assign(imgFolder, imgFolderUploaded.entry);
+
+            uploadedImages = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, imgFolder.location, imgFolderUploaded.entry.id);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            done();
+        });
+
+        afterAll(async (done) => {
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, imgFolder.id);
+            done();
+        });
+
+        it('[C279966] Should be possible to open any Image supported extension', () => {
+            uploadedImages.forEach((currentFile) => {
+                if (currentFile.entry.name != ".DS_Store") {
+                    navigationBarPage.openViewer(currentFile.entry.id);
+                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.clickCloseButton();
+                    contentServicesPage.checkAcsContainer();
+                }
+            });
+        });
+
     });
 
     it('[C272813] Should be able to close the viewer when clicking close button', () => {
-        browser.get(TestConfig.adf.url);
         navigationBarPage.goToSite(site);
+        viewerPage.checkDatatableHeaderIsDisplayed();
 
         viewerPage.viewFile(pngFile.name);
-        browser.driver.sleep(3000); // waiting for the file to open
+
         viewerPage.checkImgViewerIsDisplayed();
 
         viewerPage.clickCloseButton();
     });
-
 });

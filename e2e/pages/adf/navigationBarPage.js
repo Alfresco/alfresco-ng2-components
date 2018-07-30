@@ -169,6 +169,10 @@ var NavigationBarPage = function () {
     this.goToSite = function (site) {
         browser.get(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
     };
+
+    this.checkContentServicesButtonIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(contentServicesButton);
+    };
 };
 
 module.exports = NavigationBarPage;
