@@ -12,22 +12,22 @@
                                            [multi]="multi"
                                            [preset]="customPreset"
                                            [readOnly]="isReadOnly"
-                                           [displayMetadata]="displayMetadata"
+                                           [displayDefaultProperties]="displayDefaultProperties"
                                            [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
 
                 <adf-content-metadata-card *ngIf="!isPreset" [node]="node"
                                            [multi]="multi"
                                            [readOnly]="isReadOnly"
-                                           [displayMetadata]="displayMetadata"
+                                           [displayDefaultProperties]="displayDefaultProperties"
                                            [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
 
                 <p class="toggle">
                     <mat-slide-toggle
                         id="adf-toggle-custom-preset"
                         [color]="'primary'"
-                        (change)="toggleDisplayMetadata()"
-                        [checked]="displayMetadata">
-                        Display Metadata
+                        (change)="toggleDisplayProperties()"
+                        [checked]="displayDefaultProperties">
+                        Display Properties
                     </mat-slide-toggle>
                 </p>
                 

@@ -60,22 +60,22 @@ describe('ContentMetadataCardComponent', () => {
         expect(component.displayEmpty).toBe(false);
     });
 
-    it('should display metadata fields if displayMetadata is set to true', () => {
-        component.displayMetadata = true;
+    it('should display metadata fields if displayDefaultProperties is set to true', () => {
+        component.displayDefaultProperties = true;
         const metadataContainer = fixture.debugElement.query(By.css('adf-content-metadata'));
         fixture.detectChanges();
         expect(metadataContainer).toBeDefined();
     });
 
-    it('should does not displa metadata fields if displayMetadata is set to false', () => {
-        component.displayMetadata = false;
+    it('should does not displa metadata fields if displayDefaultProperties is set to false', () => {
+        component.displayDefaultProperties = false;
         const metadataContainer = fixture.debugElement.query(By.css('adf-content-metadata'));
         fixture.detectChanges();
         expect(metadataContainer).not.toBeDefined();
     });
 
-    it('should have displayMetadata input param as true by default', () => {
-        expect(component.displayMetadata).toBe(true);
+    it('should have displayDefaultProperties input param as true by default', () => {
+        expect(component.displayDefaultProperties).toBe(true);
     });
 
     it('should pass through the node to the underlying component', () => {

@@ -15,7 +15,7 @@ Displays and edits metadata related to a node.
 ```html
 <adf-content-metadata-card
     [displayEmpty]="false"
-    [displayMetadata]="displayMetadata"
+    [toggleDisplayProperties]="displayDefaultProperties"
     [preset]="'*'"
     [node]="node">
 </adf-content-metadata-card>
@@ -28,7 +28,7 @@ Displays and edits metadata related to a node.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | displayEmpty | `boolean` | false | Toggles whether to display empty values in the card view |
-| displayMetadata | `boolean` | true | Toggles whether to display metadata fields values in the card view |
+| displayDefaultProperties | `boolean` | true | Toggles whether to display metadata fields values in the card view |
 | editable | `boolean` | false | Toggles whether the edit button should be shown |
 | expanded | `boolean` | false | Toggles between expanded (ie, full information) and collapsed (ie, reduced information) in the display |
 | multi | `boolean` | false | The multi parameter of the underlying material expansion panel, set to true to allow multi accordion to be expanded at the same time |
@@ -64,7 +64,7 @@ The default configuration behaves like the following:
     "presets": {
         "default": "*"
     },
-    "displayMetadata": true
+    "displayDefaultProperties": false
 }
 ...
 ```
@@ -87,8 +87,7 @@ just the `exif:exif` and `custom:aspect` aspects are whitelisted:
             "custom:aspect": "*",
             "exif:exif": "*"
         }
-    },
-    "displayMetadata": true
+    }
 }
 ...
 ```
@@ -104,8 +103,7 @@ an array of property names in place of the "\*" filter:
             "custom:aspect": "*",
             "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
         }
-    },
-    "displayMetadata": true
+    }
 }
 ...
 ```
@@ -121,8 +119,7 @@ A final example shows the same process applied to a custom preset called "kitten
             "custom:aspect": "*",
             "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
         }
-    },
-    "displayMetadata": true
+    }
 }
 ...
 ```
@@ -151,8 +148,7 @@ and `exif:pixelYDimension`) from the `exif:exif` aspect and then one property (`
                 { "type": "custom:type", "properties": [ "custom:myPropertyName" ] },
             ] 
         }]
-    },
-    "displayMetadata": true
+    }
 }
 ...
 ```

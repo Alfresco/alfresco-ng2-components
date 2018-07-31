@@ -515,8 +515,8 @@
                         }
                     }                    
                 },
-                "displayMetadata": { 
-                    "description": "This sets the original state of the metadata content card",
+                "displayDefaultProperties": { 
+                    "description": "This sets the weather metadata properties are visible or not",
                     "type": "boolean" 
                 }
             }

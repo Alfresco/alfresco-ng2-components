@@ -34,7 +34,7 @@ export class FileViewComponent implements OnInit {
     isReadOnly = false;
     isPreset = false;
     customPreset: string = null;
-    displayMetadata: boolean;
+    displayDefaultProperties: boolean;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -61,7 +61,7 @@ export class FileViewComponent implements OnInit {
             }
         });
 
-        this.displayMetadata = this.appConfig.get<boolean>('content-metadata.displayMetadata');
+        this.displayDefaultProperties = this.appConfig.get<boolean>('content-metadata.displayDefaultProperties');
     }
 
     onUploadError(errorMessage: string) {
@@ -80,8 +80,8 @@ export class FileViewComponent implements OnInit {
         this.isReadOnly = !this.isReadOnly;
     }
 
-    toggleDisplayMetadata() {
-        this.displayMetadata = !this.displayMetadata;
+    toggleDisplayProperties() {
+        this.displayDefaultProperties = !this.displayDefaultProperties;
     }
 
     togglePreset() {
