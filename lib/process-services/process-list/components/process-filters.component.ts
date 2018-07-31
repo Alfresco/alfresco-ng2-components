@@ -19,7 +19,6 @@ import { AppsProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './../services/process-filter.service';
 
@@ -60,22 +59,17 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     @Input()
     showIcon: boolean = true;
 
-    private filterObserver: Observer<ProcessInstanceFilterRepresentation>;
     filter$: Observable<ProcessInstanceFilterRepresentation>;
 
     currentFilter: ProcessInstanceFilterRepresentation;
 
     filters: UserProcessInstanceFilterRepresentation [] = [];
 
-    constructor(private processFilterService: ProcessFilterService, private appsProcessService: AppsProcessService) {
-        this.filter$ = new Observable<ProcessInstanceFilterRepresentation>(observer => this.filterObserver = observer).share();
+    constructor(private processFilterService: ProcessFilterService,
+                private appsProcessService: AppsProcessService) {
     }
 
-    ngOnInit() {
-        this.filter$.subscribe((filter: ProcessInstanceFilterRepresentation) => {
-            this.filters.push(filter);
-        });
-    }
+    ngOnInit() {}
 
     ngOnChanges(changes: SimpleChanges) {
         const appId = changes['appId'];
@@ -102,10 +96,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                     this.processFilterService.createDefaultFilters(appId).subscribe(
                         (resDefault: ProcessInstanceFilterRepresentation[]) => {
                             this.resetFilter();
-                            resDefault.forEach((filter) => {
-                                this.filterObserver.next(filter);
-                            });
-
+                            this.filters = resDefault;
                             this.selectProcessFilter(this.filterParam);
                             this.success.emit(resDefault);
                         },
@@ -115,10 +106,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                     );
                 } else {
                     this.resetFilter();
-                    res.forEach((filter) => {
-                        this.filterObserver.next(filter);
-                    });
-
+                    this.filters = res;
                     this.selectProcessFilter(this.filterParam);
                     this.success.emit(res);
                 }
@@ -210,6 +198,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     }
 
     private isCurrentFilterEmpty(): boolean {
-        return this.currentFilter === undefined || null ? true : false;
+        return this.currentFilter === undefined || null;
     }
 }
