@@ -28,6 +28,10 @@
 
                     .mat-tab-label {
                         flex-grow: 1;
+
+                        .mat-icon + span {
+                            padding-left: 5px;
+                        }
                     }
 
                     .mat-ink-bar {
