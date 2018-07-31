@@ -4,6 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/../"
 BROWSER_RUN=false
 DEVELOPMENT=false
+PARALLEL_RUN=0
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
@@ -12,6 +13,7 @@ show_help() {
     echo "-p or --password"
     echo "-e or --email"
     echo "-b or --browser run the test in the browsrwer (No headless mode)"
+    echo "-pl or --parallel run the test in parallel (10 webdriver instances configured)"
     echo "-s or --spec run a single test file"
     echo "-f or --folder run a single folder test"
     echo "-proxy or --proxy proxy Back end URL to use only possibel to use with -dev option"
@@ -45,6 +47,11 @@ set_browser(){
     BROWSER_RUN=true
 }
 
+set_parallel_run(){
+    echo "====== PARALLEL TEST RUN ====="
+    PARALLEL_RUN=1
+}
+
 set_proxy(){
     PROXY=$1
 }
@@ -74,6 +81,7 @@ while [[ $1 == -* ]]; do
       -f|--folder)  set_test_folder $2; shift 2;;
       -timeout|--timeout)  set_timeout $2; shift 2;;
       -b|--browser)  set_browser; shift;;
+      -pl|--parallel)  set_parallel_run; shift;;
       -dev|--dev)  set_development; shift;;
       -s|--spec)  set_test $2; shift 2;;
       -save)   set_save_screenshot; shift;;
@@ -91,6 +99,7 @@ export USERNAME_ADF=$USERNAME
 export PASSWORD_ADF=$PASSWORD
 export EMAIL_ADF=$EMAIL
 export BROWSER_RUN=$BROWSER_RUN
+export PARALLEL_RUN=$PARALLEL_RUN
 export PROXY_HOST_ADF=$PROXY
 export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
@@ -112,7 +121,7 @@ else
      ./node_modules/protractor/bin/protractor  protractor.conf.js  --specs ./e2e/$NAME_TEST
   else
      webdriver-manager update --gecko=false --versions.chrome=2.38
-     ./node_modules/protractor/bin/protractor protractor.conf.js
+     ./node_modules/protractor/bin/protractor --capabilities.shardTestFiles=$PARALLEL_RUN protractor.conf.js
   fi
 fi
 

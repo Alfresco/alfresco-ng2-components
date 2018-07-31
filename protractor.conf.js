@@ -15,6 +15,7 @@ var BROWSER_RUN = process.env.BROWSER_RUN;
 var FOLDER = process.env.FOLDER || '';
 
 var args_options = [];
+var retry = require('protractor-retry').retry;
 
 if (BROWSER_RUN === 'true') {
     args_options = ['--incognito', '--window-size=1366,768'];
@@ -33,6 +34,8 @@ exports.config = {
 
     capabilities: {
         browserName: 'chrome',
+        shardTestFiles: false,
+        maxInstances: 10,
         chromeOptions: {
             prefs: {
                 'credentials_enable_service': false,
@@ -69,6 +72,8 @@ exports.config = {
     }],
 
     onPrepare() {
+        retry.onPrepare();
+
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
         });
@@ -103,5 +108,13 @@ exports.config = {
             head.appendChild(style);
         }
 
-    }
+    },
+
+    onCleanUp(results) {
+        retry.onCleanUp(results);
+    },
+
+    afterLaunch() {
+        return retry.afterLaunch(3);
+     }
 };
