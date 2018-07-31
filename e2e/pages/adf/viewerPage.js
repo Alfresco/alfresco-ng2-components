@@ -418,6 +418,13 @@ var ViewerToolbarPage = function () {
         return this;
     };
 
+    this.clickOnCommentsTab = function() {
+        var commentsTab = element(by.cssContainingText("div[id*='mat-tab-label']", "Comments"));
+        Util.waitUntilElementIsVisible(commentsTab);
+        commentsTab.click();
+        return this;
+    };
+
 };
 
 module.exports = ViewerToolbarPage;
