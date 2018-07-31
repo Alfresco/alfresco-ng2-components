@@ -18,7 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-
+import { debounceTime } from "rxjs/operators";
 
 @Component({
     templateUrl: './process-list-demo.component.html',
@@ -46,9 +46,9 @@ export class ProcessListDemoComponent implements OnInit {
     presetColumn = 'default';
 
     stateOptions = [
-        {value: 'all', title: 'All'},
-        {value: 'active', title: 'Active'},
-        {value: 'completed', title: 'Completed'}
+        { value: 'all', title: 'All' },
+        { value: 'active', title: 'Active' },
+        { value: 'completed', title: 'Completed' }
     ];
 
     sortOptions = [
@@ -57,7 +57,8 @@ export class ProcessListDemoComponent implements OnInit {
     ];
 
     constructor(private route: ActivatedRoute,
-                private formBuilder: FormBuilder) {}
+                private formBuilder: FormBuilder) {
+    }
 
     ngOnInit() {
         if (this.route) {
@@ -79,7 +80,9 @@ export class ProcessListDemoComponent implements OnInit {
         });
 
         this.processListForm.valueChanges
-            .debounceTime(500)
+            .pipe(
+                debounceTime(500)
+            )
             .subscribe(processFilter => {
                 if (this.isFormValid()) {
                     this.filterProcesses(processFilter);

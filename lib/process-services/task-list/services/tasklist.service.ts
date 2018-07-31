@@ -243,8 +243,10 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     deleteForm(taskId: string): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.callApiDeleteForm(taskId))
-            .catch(err => this.handleError(err));
+        return from<TaskDetailsModel>(this.callApiDeleteForm(taskId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**

@@ -20,8 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskListService } from './../services/tasklist.service';
-import { of } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+import { of, Observable } from 'rxjs';
 
 describe('AttachFormComponent', () => {
     let component: AttachFormComponent;

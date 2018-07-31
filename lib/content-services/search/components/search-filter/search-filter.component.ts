@@ -58,22 +58,21 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
         }
 
-        this.queryBuilder.updated
-            .takeWhile(() => this.isAlive)
-            .subscribe(() => {
-                this.queryBuilder.execute();
-            });
+        this.queryBuilder.updated.pipe(
+            takeWhile(() => this.isAlive)
+        ).subscribe(() => {
+            this.queryBuilder.execute();
+        });
     }
 
     ngOnInit() {
         if (this.queryBuilder) {
-            this.queryBuilder.executed
-                .takeWhile(() => this.isAlive)
-                .subscribe(data => {
-                    this.onDataLoaded(data);
-                    this.searchService.dataLoaded.next(data);
-                });
-        }
+            this.queryBuilder.executed.pipe(
+                takeWhile(() => this.isAlive)
+            ).subscribe((data) => {
+                this.onDataLoaded(data);
+                this.searchService.dataLoaded.next(data);
+            });
     }
 
     ngOnDestroy() {

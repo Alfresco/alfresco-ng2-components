@@ -194,29 +194,6 @@
         }
       }
     },
-    "dist-e2e": {
-      "root": "demo-shell",
-      "sourceRoot": "demo-shell/e2e",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "dist:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [],
-            "exclude": [
-              "**/node_modules/**/*"
-            ]
-          }
-        }
-      }
-    },
     "dev": {
       "root": "demo-shell",
       "sourceRoot": "demo-shell/src",
@@ -466,7 +443,7 @@
         }
       }
     },
-    "dev-e2e": {
+    "demo-shell-e2e": {
       "root": "demo-shell",
       "sourceRoot": "demo-shell/e2e",
       "projectType": "application",
@@ -475,7 +452,43 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "dev:serve"
+            "devServerTarget": "dist:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [],
+            "exclude": [
+              "**/node_modules/**/*"
+            ]
+          }
+        }
+      }
+    },
+    "lib-e2e": {
+      "root": "demo-shell",
+      "sourceRoot": "./demo-shell",
+      "projectType": "application",
+      "architect": {
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "./e2e/proxy.conf.js",
+            "browserTarget": "dev:build",
+            "port": 3000
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "dev:build:production"
+            }
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "lib-e2e:serve"
           }
         },
         "lint": {
