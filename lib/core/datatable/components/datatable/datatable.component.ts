@@ -545,7 +545,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return event.value.actions;
     }
 
-    getRowActions(row: DataRow, col: DataColumn): any[] {
+    getRowActions(row: DataRow, col?: DataColumn): any[] {
         const id = row.getValue('id');
 
         if (!this.rowMenuCache[id]) {
