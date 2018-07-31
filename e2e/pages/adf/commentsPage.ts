@@ -26,33 +26,41 @@ export class CommentsPage {
     commentMessage = element.all(by.id('comment-message'));
     commentTime = element.all(by.id('comment-time'));
     commentInput = element(by.id('comment-input'));
+    addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
+
 
     getTotalNumberOfComments() {
         Util.waitUntilElementIsVisible(this.numberOfComments);
         return this.numberOfComments.getText();
     }
 
-    checkUserIconIsDisplayed(number) {
+    checkUserIconIsDisplayed(position) {
         Util.waitUntilElementIsVisible(this.commentUserIcon);
-        return this.commentUserIcon.get(number);
+        return this.commentUserIcon.get(position);
     }
 
-    getUserName(number) {
+    getUserName(position) {
         Util.waitUntilElementIsVisible(this.commentUserName);
-        return this.commentUserName.get(number).getText();
+        return this.commentUserName.get(position).getText();
     }
 
-    getMessage(number) {
+    getMessage(position) {
         Util.waitUntilElementIsVisible(this.commentMessage);
-        return this.commentMessage.get(number).getText();
+        return this.commentMessage.get(position).getText();
     }
 
-    getTime(number) {
+    getTime(position) {
         Util.waitUntilElementIsVisible(this.commentTime);
-        return this.commentTime.get(number).getText();
+        return this.commentTime.get(position).getText();
     }
 
     checkCommentInputIsNotDisplayed() {
         Util.waitUntilElementIsNotVisible(this.commentInput);
+    }
+
+    addComment(comment) {
+        Util.waitUntilElementIsVisible(this.commentInput);
+        this.commentInput.sendKeys(comment);
+        return this.addCommentButton.click();
     }
 }
