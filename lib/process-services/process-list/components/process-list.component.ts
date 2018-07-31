@@ -335,8 +335,4 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
     currentPage(skipCount: number, maxItems: number): number {
         return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
     }
-
-    get supportedPageSizes(): number[] {
-        return this.userPreferences.getDefaultPageSizes();
-    }
 }

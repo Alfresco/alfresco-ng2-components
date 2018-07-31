@@ -150,14 +150,6 @@ export class UserPreferencesService {
      * @returns Array of page size values
      */
     getDefaultPageSizes(): number[] {
-        return this.userPreferenceStatus[UserPreferenceValues.PaginationSize];
-    }
-
-    /**
-     * Gets an array containing the available page sizes.
-     * @returns Array of page size values
-     */
-    getDefaultSupportedPageSizes(): number[] {
         return this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes];
     }
 
