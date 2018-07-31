@@ -136,7 +136,7 @@
                 "sortable": { "type": "boolean" }
             }
         },
-        "content-metadata-aspect": {ƒ
+        "content-metadata-aspect": {
             "description": "Content metadata's aspect definition",
             "type": "object",
             "patternProperties": {
