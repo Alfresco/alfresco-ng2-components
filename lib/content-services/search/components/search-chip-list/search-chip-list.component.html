@@ -10,10 +10,10 @@
     </ng-container>
     <ng-container *ngIf="searchFilter && searchFilter.selectedBuckets.length">
         <mat-chip
-            *ngFor="let bucket of searchFilter.selectedBuckets"
+            *ngFor="let selection of searchFilter.selectedBuckets"
             [removable]="true"
-            (remove)="searchFilter.unselectFacetBucket(bucket)">
-            {{ (bucket.display || bucket.label) | translate }}
+            (remove)="searchFilter.unselectFacetBucket(selection.field, selection.bucket)">
+            {{ (selection.bucket.display || selection.bucket.label) | translate }}
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
     </ng-container>

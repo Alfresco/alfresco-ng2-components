@@ -46,7 +46,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     canResetSelectedQueries = false;
 
     selectedFacetQueries: Array<FacetQuery> = [];
-    selectedBuckets: Array<FacetFieldBucket> = [];
+    selectedBuckets: Array<{ field: FacetField, bucket: FacetFieldBucket }> = [];
 
     constructor(public queryBuilder: SearchQueryBuilderService,
                 private searchService: SearchService,
@@ -112,7 +112,13 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.selectedBuckets = [];
             for (let field of this.responseFacetFields) {
                 if (field.buckets) {
-                    this.selectedBuckets.push(...field.buckets.items.filter(bucket => bucket.checked));
+                    this.selectedBuckets.push(
+                        ...field.buckets.items
+                            .filter(bucket => bucket.checked)
+                            .map(bucket => {
+                                return { field, bucket };
+                            })
+                    );
                 }
             }
         } else {
