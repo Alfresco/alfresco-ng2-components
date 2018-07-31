@@ -129,6 +129,8 @@ describe('Viewer', () => {
 
         afterAll(async (done) => {
             uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, archiveFolderUploaded.entry.id);
+            browser.refresh();
+            contentServicesPage.checkAcsContainer();
             done();
         });
 
@@ -163,6 +165,8 @@ describe('Viewer', () => {
 
         afterAll(async (done) => {
             uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, excelFolderUploaded.entry.id);
+            browser.refresh();
+            contentServicesPage.checkAcsContainer();
             done();
         });
 
@@ -197,6 +201,8 @@ describe('Viewer', () => {
 
         afterAll(async (done) => {
             uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFolderUploaded.entry.id);
+            browser.refresh();
+            contentServicesPage.checkAcsContainer();
             done();
         });
 
@@ -231,6 +237,8 @@ describe('Viewer', () => {
 
         afterAll(async (done) => {
             uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, textFolderUploaded.entry.id);
+            browser.refresh();
+            contentServicesPage.checkAcsContainer();
             done();
         });
 
@@ -265,6 +273,8 @@ describe('Viewer', () => {
 
         afterAll(async (done) => {
             uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, wordFolderUploaded.entry.id);
+            browser.refresh();
+            contentServicesPage.checkAcsContainer();
             done();
         });
 
@@ -299,6 +309,8 @@ describe('Viewer', () => {
 
         afterAll(async (done) => {
             uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, otherFolderUploaded.entry.id);
+            browser.refresh();
+            contentServicesPage.checkAcsContainer();
             done();
         });
 
@@ -333,6 +345,8 @@ describe('Viewer', () => {
 
         afterAll(async (done) => {
             uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, imgFolderUploaded.entry.id);
+            browser.refresh();
+            contentServicesPage.checkAcsContainer();
             done();
         });
 
