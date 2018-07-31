@@ -17,7 +17,7 @@
 
 import { AppsProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
+import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
@@ -65,7 +65,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     currentFilter: ProcessInstanceFilterRepresentation;
 
-    filters: ProcessInstanceFilterRepresentation [] = [];
+    filters: UserProcessInstanceFilterRepresentation [] = [];
 
     constructor(private processFilterService: ProcessFilterService, private appsProcessService: AppsProcessService) {
         this.filter$ = new Observable<ProcessInstanceFilterRepresentation>(observer => this.filterObserver = observer).share();
@@ -158,8 +158,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      */
     public selectProcessFilter(filterParam: FilterProcessRepresentationModel) {
         if (filterParam) {
-            this.filters.filter((processFilter: ProcessInstanceFilterRepresentation, index) => {
-                if (filterParam.name && filterParam.name.toLowerCase() === processFilter.name.toLowerCase() || filterParam.index === index) {
+            this.filters.filter((processFilter: UserProcessInstanceFilterRepresentation, index) => {
+                if (filterParam.name && filterParam.name.toLowerCase() === processFilter.name.toLowerCase() ||
+                    filterParam.id === processFilter.id ||
+                    filterParam.index === index) {
                     this.currentFilter = processFilter;
                 }
             });
