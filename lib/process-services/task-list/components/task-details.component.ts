@@ -182,6 +182,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     peopleSearch: Observable<UserProcessModel[]>;
 
     currentLoggedUser: UserRepresentation;
+    data: any;
 
     constructor(private taskListService: TaskListService,
                 private authService: AuthenticationService,

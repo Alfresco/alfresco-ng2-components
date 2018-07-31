@@ -98,7 +98,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private dropDownSub;
     private reportParamsSub;
     private paramOpts;
-    private reportParamQuery: ReportQuery;
+    reportParamQuery: ReportQuery;
     private hideParameters: boolean = true;
     formValidState: boolean = false;
 

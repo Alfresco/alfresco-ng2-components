@@ -59,7 +59,6 @@
     <section class="upload-dialog__content"
         [class.upload-dialog--padding]="isConfirmation">
         <adf-file-uploading-list
-            (error)="onError($event)"
             [class.upload-dialog--hide]="isConfirmation"
             #uploadList
             [files]="filesUploadingList">
@@ -101,7 +100,7 @@
             *ngIf="uploadList.isUploadCompleted() || uploadList.isUploadCancelled()"
             mat-button
             color="primary"
-            (click)="close($event)">
+            (click)="close()">
             {{ 'ADF_FILE_UPLOAD.BUTTON.CLOSE' | translate }}
         </button>
     </footer>

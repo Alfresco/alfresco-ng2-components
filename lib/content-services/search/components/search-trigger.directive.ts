@@ -45,7 +45,7 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
     host: {
         'role': 'combobox',
-        'autocomplete': 'off',
+        '[attr.autocomplete]': 'autocompleteAttribute',
         'aria-autocomplete': 'list',
         '[attr.aria-expanded]': 'panelOpen.toString()',
         '[attr.aria-owns]': 'autocomplete?.id',
@@ -59,6 +59,9 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     @Input('searchAutocomplete')
     searchPanel: SearchComponent;
+
+    @Input('autocomplete')
+    autocompleteAttribute: string = 'off';
 
     private _panelOpen: boolean = false;
     private closingActionsSubscription: Subscription;

@@ -73,6 +73,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 this.onDataLoaded(data);
                 this.searchService.dataLoaded.next(data);
             });
+        }
     }
 
     ngOnDestroy() {
