@@ -530,7 +530,7 @@
                 "exif:exif": "*"
             }
         },
-        "displayDefaultProperties": false
+        "displayDefaultProperties": true
     },
     "sideNav": {
       "expandedSidenav": true,
