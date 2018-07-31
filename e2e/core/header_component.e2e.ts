@@ -83,7 +83,7 @@ describe('Header Component', () => {
         headerPage.checkShowMenuCheckBoxIsDisplayed();
         headerPage.checkChooseHeaderColourIsDisplayed();
         headerPage.checkChangeTitleIsDisplayed();
-        headerPage.checkChangeUrlPathIsDisplayed(;
+        headerPage.checkChangeUrlPathIsDisplayed();
 
     });
 

@@ -159,7 +159,7 @@ export class UserPreferencesService {
     }
 
     get paginationSize(): number {
-        return Number(this.get(UserPreferenceValues.PaginationSize, this.userPreferenceStatus[UserPreferenceValues.PaginationSize]));
+        return Number(this.get(UserPreferenceValues.PaginationSize, this.userPreferenceStatus[UserPreferenceValues.PaginationSize])) || this.defaults.paginationSize;
     }
 
     /** Current locale setting. */

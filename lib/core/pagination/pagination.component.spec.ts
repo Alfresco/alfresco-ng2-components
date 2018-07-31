@@ -232,6 +232,8 @@ describe('PaginationComponent', () => {
 
     describe('Without pagination input', () => {
         it('has defaults', () => {
+            component.ngOnInit();
+
             const {
                 current, lastPage, isFirstPage, isLastPage,
                 next, previous, range, pages
