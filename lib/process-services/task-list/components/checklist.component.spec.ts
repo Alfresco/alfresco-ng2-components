@@ -51,8 +51,8 @@ describe('ChecklistComponent', () => {
     }));
 
     it('should show checklist component title', () => {
-        expect(element.querySelector('#checklist-label')).toBeDefined();
-        expect(element.querySelector('#checklist-label')).not.toBeNull();
+        expect(element.querySelector('[data-automation-id=checklist-label]')).toBeDefined();
+        expect(element.querySelector('[data-automation-id=checklist-label]')).not.toBeNull();
     });
 
     it('should show no checklist message', () => {
