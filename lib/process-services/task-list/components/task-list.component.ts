@@ -163,6 +163,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     isLoading: boolean = true;
     sorting: any[] = ['created', 'desc'];
 
+    hasDataWithoutSchema: boolean;
+
     /**
      * Toggles custom data source mode.
      * When enabled the component reloads data from it's current source instead of the server side.
@@ -188,13 +190,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     ngAfterContentInit() {
+        this.checkDataHasSchema();
         this.createDatatableSchema();
-        if (this.data && this.data.getColumns().length === 0) {
+        if (this.hasDataWithoutSchema) {
             this.data.setColumns(this.columns);
-        }
-
-        if (this.appId) {
-            this.reload();
         }
     }
 
@@ -212,6 +211,13 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             }
             this.reload();
         }
+
+        if (this.isPresetColumnChanged(changes)) {
+            this.createDatatableSchema();
+            if (this.hasDataWithoutSchema) {
+                this.data.setColumns(this.columns);
+            }
+        }
     }
 
     private isSortChanged(changes: SimpleChanges): boolean {
@@ -220,13 +226,35 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
-        let changed: boolean = true;
+        let changed = false;
 
-        let landingTaskId = changes['landingTaskId'];
-        let page = changes['page'];
-        let size = changes['size'];
-        if (landingTaskId && landingTaskId.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
-            changed = false;
+        const appId = changes['appId'];
+        const processInstanceId = changes['processInstanceId'];
+        const processDefinitionId = changes['processDefinitionId'];
+        const processDefinitionKey = changes['processDefinitionKey'];
+        const state = changes['state'];
+        const assignment = changes['assignment'];
+        const name = changes['name'];
+        const landingTaskId = changes['landingTaskId'];
+        const page = changes['page'];
+        const size = changes['size'];
+
+        if (appId && appId.currentValue) {
+            changed = true;
+        } else if (processInstanceId) {
+            changed = true;
+        } else if (processDefinitionId) {
+            changed = true;
+        } else if (processDefinitionKey) {
+            changed = true;
+        } else if (state) {
+            changed = true;
+        }  else if (assignment) {
+            changed = true;
+        }  else if (name) {
+            changed = true;
+        }  else if (landingTaskId && landingTaskId.currentValue && !this.isEqualToCurrentId(landingTaskId.currentValue)) {
+            changed = true;
         } else if (page && page.currentValue !== page.previousValue) {
             changed = true;
         } else if (size && size.currentValue !== size.previousValue) {
@@ -234,6 +262,11 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         }
 
         return changed;
+    }
+
+    private isPresetColumnChanged(changes: SimpleChanges): boolean {
+        const presetColumn = changes['presetColumn'];
+        return presetColumn && !presetColumn.firstChange;
     }
 
     reload(): void {
