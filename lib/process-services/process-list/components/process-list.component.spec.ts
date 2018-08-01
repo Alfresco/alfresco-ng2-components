@@ -481,9 +481,9 @@ describe('ProcessInstanceListComponent', () => {
             component.ngOnChanges({'sort': change});
         });
 
-        it('should reload the process list when the name parameter changes', (done) => {
-            const name = 'FakeTaskName';
-            let change = new SimpleChange(null, name, true);
+        it('should reload the process list when the processDefinitionKey parameter changes', (done) => {
+            const processDefinitionKey = 'SimpleProcess';
+            let change = new SimpleChange(null, processDefinitionKey, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -494,7 +494,87 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({'name': change});
+            component.ngOnChanges({'processDefinitionKey': change});
+        });
+
+        it('should reload the process list when the processDefinitionKey parameter changes to null', (done) => {
+            const processDefinitionKey = null;
+            let change = new SimpleChange('SimpleProcess', processDefinitionKey, false);
+
+            component.success.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                done();
+            });
+
+            component.ngOnChanges({'processDefinitionKey': change});
+        });
+
+        it('should reload the process list when the processDefinitionId parameter changes', (done) => {
+            const processDefinitionId = 'SimpleProcess:1:10';
+            let change = new SimpleChange(null, processDefinitionId, true);
+
+            component.success.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                done();
+            });
+
+            component.ngOnChanges({'processDefinitionId': change});
+        });
+
+        it('should reload the process list when the processDefinitionId parameter changes to null', (done) => {
+            const processDefinitionId = null;
+            let change = new SimpleChange('SimpleProcess:1:10', processDefinitionId, false);
+
+            component.success.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                done();
+            });
+
+            component.ngOnChanges({'processDefinitionId': change});
+        });
+
+        it('should reload the process list when the processInstanceId parameter changes', (done) => {
+            const processInstanceId = '123';
+            let change = new SimpleChange(null, processInstanceId, true);
+
+            component.success.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                done();
+            });
+
+            component.ngOnChanges({'processInstanceId': change});
+        });
+
+        it('should reload the process list when the processInstanceId parameter changes to null', (done) => {
+            const processInstanceId = null;
+            let change = new SimpleChange('123', processInstanceId, false);
+
+            component.success.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                done();
+            });
+
+            component.ngOnChanges({'processInstanceId': change});
         });
     });
 });

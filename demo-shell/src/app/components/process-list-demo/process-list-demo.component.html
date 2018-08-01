@@ -16,14 +16,6 @@
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Process Name</mat-label>
-            <input
-                matInput
-                class="form-control"
-                [formControl]="processName">
-        </mat-form-field>
-
-        <mat-form-field>
             <mat-label>ProcessDefinitionId</mat-label>
             <input
                 matInput
@@ -33,7 +25,15 @@
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>State</mat-label>
+            <mat-label>ProcessInstanceId</mat-label>
+            <input
+                matInput
+                class="form-control"
+                [formControl]="processInstanceId">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Status</mat-label>
             <mat-select
                 class="form-control"
                 [formControl]="processState">
@@ -60,10 +60,18 @@
     <adf-process-instance-list
         #processList
         [appId]="appId"
-        [processDefinitionKey]="processDefId"
+        [processDefinitionId]="processDefId"
+        [processInstanceId]="instanceId"
         [state]="state"
         [sort]="sort"
-        [name]="name">
+        [presetColumn]="presetColumn">
+        <data-columns>
+            <data-column key="ended" title="ADF_PROCESS_LIST.PROPERTIES.STATUS">
+                <ng-template let-entry="$implicit">
+                    <div title="{{getStatus(entry.row.obj.ended)}}">{{getStatus(entry.row.obj.ended)}}</div>
+                </ng-template>
+            </data-column>
+        </data-columns>
     </adf-process-instance-list>
 
     <adf-pagination
