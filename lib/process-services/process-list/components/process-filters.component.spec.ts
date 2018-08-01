@@ -80,7 +80,7 @@ describe('ProcessFiltersComponent', () => {
         fixture.destroy();
     });
 
-    fit('should return the filter task list', (done) => {
+    it('should return the filter task list', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -99,7 +99,7 @@ describe('ProcessFiltersComponent', () => {
         filterList.ngOnInit();
     });
 
-    fit('should select the Running process filter', (done) => {
+    it('should select the Running process filter', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -116,7 +116,7 @@ describe('ProcessFiltersComponent', () => {
         filterList.ngOnInit();
     });
 
-    fit('should return the filter task list, filtered By Name', (done) => {
+    it('should return the filter task list, filtered By Name', (done) => {
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(Promise.resolve({ id: 1 })));
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
@@ -133,7 +133,7 @@ describe('ProcessFiltersComponent', () => {
         filterList.ngOnInit();
     });
 
-    fit('should emit an error with a bad response', (done) => {
+    it('should emit an error with a bad response', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(mockErrorFilterPromise));
 
         const appId = '1';
@@ -148,7 +148,7 @@ describe('ProcessFiltersComponent', () => {
         filterList.ngOnInit();
     });
 
-    fit('should emit an error with a bad response', (done) => {
+    it('should emit an error with a bad response', (done) => {
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(mockErrorFilterPromise));
 
         const appId = 'fake-app';
@@ -163,7 +163,7 @@ describe('ProcessFiltersComponent', () => {
         filterList.ngOnInit();
     });
 
-    fit('should emit an event when a filter is selected', (done) => {
+    it('should emit an event when a filter is selected', (done) => {
         let currentFilter = new FilterProcessRepresentationModel({
             id: 10,
             name: 'FakeInvolvedTasks',
@@ -180,7 +180,7 @@ describe('ProcessFiltersComponent', () => {
         filterList.selectFilter(currentFilter);
     });
 
-    fit('should reload filters by appId on binding changes', () => {
+    it('should reload filters by appId on binding changes', () => {
         spyOn(filterList, 'getFiltersByAppId').and.stub();
         const appId = '1';
 
@@ -190,7 +190,7 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
     });
 
-    fit('should reload filters by appId null on binding changes', () => {
+    it('should reload filters by appId null on binding changes', () => {
         spyOn(filterList, 'getFiltersByAppId').and.stub();
         const appId = null;
 
@@ -200,7 +200,7 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
     });
 
-    fit('should reload filters by app name on binding changes', () => {
+    it('should reload filters by app name on binding changes', () => {
         spyOn(filterList, 'getFiltersByAppName').and.stub();
         const appName = 'fake-app-name';
 
@@ -210,7 +210,7 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.getFiltersByAppName).toHaveBeenCalledWith(appName);
     });
 
-    fit('should return the current filter after one is selected', () => {
+    it('should return the current filter after one is selected', () => {
         let filter = new FilterProcessRepresentationModel({
             name: 'FakeMyTasks',
             filter: { state: 'open', assignment: 'fake-assignee' }
@@ -220,7 +220,7 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.getCurrentFilter()).toBe(filter);
     });
 
-    fit('should select the filter passed as input by id', (done) => {
+    it('should select the filter passed as input by id', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         filterList.filterParam = new FilterProcessRepresentationModel({ id: 20 });
@@ -240,7 +240,7 @@ describe('ProcessFiltersComponent', () => {
         });
     });
 
-    fit('should select the filter passed as input by name', (done) => {
+    it('should select the filter passed as input by name', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         filterList.filterParam = new FilterProcessRepresentationModel({ name: 'FakeMyTasks' });
@@ -260,7 +260,7 @@ describe('ProcessFiltersComponent', () => {
         });
     });
 
-    fit('should select first filter if filterParam is empty', (done) => {
+    it('should select first filter if filterParam is empty', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         filterList.filterParam = new FilterProcessRepresentationModel({});
