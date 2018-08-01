@@ -45,11 +45,11 @@ Renders a list containing all the process instances matched by the parameters sp
 | appId | `number` |  | The id of the app. |
 | data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
-| name | `string` |  | The name of the list. |
 | page | `number` | 0 | The page number of the processes to fetch. |
 | presetColumn | `string` |  | Name of a custom schema to fetch from `app.config.json`. |
-| processDefinitionKey | `string` |  | The processDefinitionKey of the process. |
 | processDefinitionId | `string` |  | The Definition Id of the process. |
+| processDefinitionKey | `string` |  | (**Deprecated:** 2.4.0) The Definition key of the process. |
+| processInstanceId | `number|string` |  | The id of the process instance. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | size | `number` |  [`PaginationComponent`](../core/pagination.component.md).DEFAULT_PAGINATION.maxItems | The number of processes to fetch in each page. |
