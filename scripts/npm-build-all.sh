@@ -53,12 +53,12 @@ enable_testbrowser(){
 
 test_project() {
     echo "====== test project: $1 ====="
-    ng test $1
+    ng test $1 --watch=false || exit 1
 }
 
 debug_project() {
     echo "====== debug project: $1 ====="
-    npm run test-lib-browser -- --component $1 || exit 1
+        ng test $1 || exit 1
 }
 
 enable_js_api_git_link() {
