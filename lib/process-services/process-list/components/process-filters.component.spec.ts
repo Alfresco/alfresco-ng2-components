@@ -222,21 +222,18 @@ describe('ProcessFiltersComponent', () => {
 
     fit('should select the filter passed as input by id', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
-        spyOn(filterList, 'selectProcessFilter');
 
         filterList.filterParam = new FilterProcessRepresentationModel({ id: 20 });
 
         const appId = 1;
         let change = new SimpleChange(null, appId, true);
 
-        fixture.detectChanges();
         filterList.ngOnChanges({ 'appId': change });
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(filterList.filters).toBeDefined();
             expect(filterList.filters.length).toEqual(3);
-            expect(filterList.selectProcessFilter).toHaveBeenCalledWith(filterList.filterParam);
             expect(filterList.currentFilter).toBeDefined();
             expect(filterList.currentFilter.name).toEqual('FakeMyTasks');
             done();
@@ -245,21 +242,18 @@ describe('ProcessFiltersComponent', () => {
 
     fit('should select the filter passed as input by name', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
-        spyOn(filterList, 'selectProcessFilter');
 
         filterList.filterParam = new FilterProcessRepresentationModel({ name: 'FakeMyTasks' });
 
         const appId = 1;
         let change = new SimpleChange(null, appId, true);
 
-        fixture.detectChanges();
         filterList.ngOnChanges({ 'appId': change });
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(filterList.filters).toBeDefined();
             expect(filterList.filters.length).toEqual(3);
-            expect(filterList.selectProcessFilter).toHaveBeenCalledWith(filterList.filterParam);
             expect(filterList.currentFilter).toBeDefined();
             expect(filterList.currentFilter.name).toEqual('FakeMyTasks');
             done();
@@ -268,22 +262,20 @@ describe('ProcessFiltersComponent', () => {
 
     fit('should select first filter if filterParam is empty', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
-        spyOn(filterList, 'selectProcessFilter');
 
         filterList.filterParam = new FilterProcessRepresentationModel({});
 
         const appId = 1;
         let change = new SimpleChange(null, appId, true);
 
-        fixture.detectChanges();
         filterList.ngOnChanges({ 'appId': change });
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(filterList.filters).toBeDefined();
             expect(filterList.filters.length).toEqual(3);
-            expect(filterList.selectProcessFilter).toHaveBeenCalledWith(filterList.filterParam);
-            expect(filterList.currentFilter).toBe(undefined);
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
             done();
         });
     });
