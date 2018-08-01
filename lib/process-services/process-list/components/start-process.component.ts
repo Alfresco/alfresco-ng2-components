@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, OnChanges,
+import { Component, EventEmitter, Input, AfterViewInit, OnChanges,
     Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { ActivitiContentService, AppConfigService, AppConfigValues,
@@ -28,7 +28,7 @@ import { ProcessService } from './../services/process.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, delay } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-start-process',
@@ -36,7 +36,7 @@ import { map, startWith } from 'rxjs/operators';
     styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartProcessInstanceComponent implements OnInit, OnChanges {
+export class StartProcessInstanceComponent implements AfterViewInit, OnChanges {
 
     /** (optional) Limit the list of processes that can be started to those
      * contained in the specified app.
@@ -98,12 +98,15 @@ export class StartProcessInstanceComponent implements OnInit, OnChanges {
     processControl = new FormControl();
     filteredOptions: Observable<any>;
 
-    ngOnInit() {
-        this.filteredOptions = this.processControl.valueChanges
-            .pipe(
-                startWith(''),
-                map(value => this._filter(value))
-            );
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.filteredOptions = this.processControl.valueChanges
+                .pipe(
+                    startWith(''),
+                    delay(0),
+                    map(value => this._filter(value))
+                );
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {

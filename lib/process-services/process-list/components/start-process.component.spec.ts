@@ -278,7 +278,7 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should select automatically the processDefinition if the app contain oly one', async(() => {
+        it('should select automatically the processDefinition if the app contain only one', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testProcessDefinitions));
             component.appId = 123;
             component.ngOnChanges({});
