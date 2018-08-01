@@ -19,7 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { NodePermissionService } from './node-permission.service';
 import { SearchService, NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,
          fakeNodeToRemovePermission, fakeNodeWithoutPermissions } from '../../mock/permission-list.component.mock';
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';

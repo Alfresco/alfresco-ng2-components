@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from './services/tag.service';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('TagNodeList', () => {

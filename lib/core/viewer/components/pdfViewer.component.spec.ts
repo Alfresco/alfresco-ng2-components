@@ -22,7 +22,7 @@ import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
 import { MatDialog } from '@angular/material';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
 import { TranslationService } from '../../services/translation.service';

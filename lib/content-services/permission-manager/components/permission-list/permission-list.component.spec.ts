@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PermissionListComponent } from './permission-list.component';
 import { By } from '@angular/platform-browser';
 import { NodesApiService, SearchService, setupTestBed } from '@alfresco/adf-core';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { fakeNodeWithPermissions,
          fakeNodeInheritedOnly,

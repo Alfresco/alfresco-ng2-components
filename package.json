@@ -103,6 +103,7 @@
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "~0.6.8",
     "@angular/cli": "6.1.0",
     "@angular/compiler-cli": "6.1.0",
     "@types/hammerjs": "2.0.35",
@@ -123,7 +124,6 @@
     "css-to-string-loader": "0.1.2",
     "cssnano": "3.8.1",
     "ejs": "^2.6.1",
-    "extract-text-webpack-plugin": "2.0.0-rc.3",
     "file-loader": "0.11.1",
     "fork-ts-checker-webpack-plugin": "0.2.3",
     "fs-extra": "^4.0.2",
@@ -192,25 +192,25 @@
     "uglifyjs-webpack-plugin": "1.1.6",
     "url-join": "^4.0.0",
     "webpack-bundle-analyzer": "2.9.0",
-    "webpack-merge": "2.6.1",
-    "@angular-devkit/build-angular": "~0.6.8"
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "2.6.1"
   },
   "license": "Apache-2.0",
   "bundlesize": [
     {
-      "path": "./lib/dist/content-services/bundles/adf-content-services.umd.js",
+      "path": "./lib/dist/content-services/bundles/adf-content-services.umd.min.js",
       "maxSize": "70 kb"
     },
     {
-      "path": "./lib/dist/process-services/bundles/adf-process-services.umd.js",
+      "path": "./lib/dist/process-services/bundles/adf-process-services.umd.min.js",
       "maxSize": "50 kb"
     },
     {
-      "path": "./lib/dist/insights/bundles/adf-insights.umd.js",
+      "path": "./lib/dist/insights/bundles/adf-insights.umd.min.js",
       "maxSize": "50 kb"
     },
     {
-      "path": "./lib/dist/core/bundles/adf-core.umd.js",
+      "path": "./lib/dist/core/bundles/adf-core.umd.min.js",
       "maxSize": "150 kb"
     }
   ],

@@ -62,6 +62,6 @@ describe('TaskAttachmentList', () => {
         fixture.whenStable().then(() => {
             expect(element.querySelectorAll('.adf-datatable-body > .adf-datatable-row').length).toBe(2);
         });
-    });
+    }));
 
 });
