@@ -187,7 +187,8 @@
       "BUSINESS_KEY_DEFAULT": "None",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "No description",
-      "ID": "ID"
+      "ID": "ID",
+      "PROCESS_DEFINITION_ID": "Process Definition Id"
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "View",
