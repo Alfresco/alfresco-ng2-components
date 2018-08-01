@@ -77,7 +77,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-       this.isAlive = false;
+        this.isAlive = false;
     }
 
     onToggleFacetQuery(event: MatCheckboxChange, facetQuery: FacetQuery) {

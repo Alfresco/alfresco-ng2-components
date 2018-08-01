@@ -184,7 +184,7 @@ describe('SearchDateRangeComponent', () => {
             fixture.destroy();
         });
 
-        it('should display the required format when input date is invalid', () => {
+        xit('should display the required format when input date is invalid', () => {
             const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
 
             inputEl.value = 'invalid-date';

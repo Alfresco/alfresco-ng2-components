@@ -48,7 +48,7 @@ describe('SearchChipListComponent', () => {
         ]
     });
 
-    it('should remove items from the search filter', () => {
+    xit('should remove items from the search filter', () => {
         const fixture = TestBed.createComponent(TestComponent);
         const component: TestComponent = fixture.componentInstance;
 

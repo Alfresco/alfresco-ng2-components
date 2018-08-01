@@ -49,8 +49,7 @@ describe('NodeSharedDirective', () => {
                 TestComponent,
                 NodeSharedDirective
             ]
-        })
-            .compileComponents()
+        }).compileComponents()
             .then(() => {
                 fixture = TestBed.createComponent(TestComponent);
                 component = fixture.componentInstance;

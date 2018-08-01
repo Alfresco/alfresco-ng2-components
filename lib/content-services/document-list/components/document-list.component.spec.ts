@@ -753,7 +753,7 @@ describe('DocumentList', () => {
     it('should display folder content from loadFolder on reload if folderNode defined', () => {
         documentList.folderNode = new NodeMinimal();
 
-        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(of(''));
+        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve(''));
         spyOn(documentList, 'loadFolder').and.callThrough();
         documentList.reload();
         expect(documentList.loadFolder).toHaveBeenCalled();

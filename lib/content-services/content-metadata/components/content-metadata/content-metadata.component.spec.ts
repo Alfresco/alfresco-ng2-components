@@ -103,7 +103,7 @@ describe('ContentMetadataComponent', () => {
             const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
                 updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
                 nodesApiService: NodesApiService = TestBed.get(NodesApiService);
-            spyOn(nodesApiService, 'updateNode');
+            spyOn(nodesApiService, 'updateNode').and.callThrough();
 
             updateService.update(property, 'updated-value');
 

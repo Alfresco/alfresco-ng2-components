@@ -195,14 +195,14 @@ describe('SearchControlComponent', () => {
 
         it('should display a text input field by default', async(() => {
             fixture.detectChanges();
-            expect(element.querySelectorAll('input[type="text"]').length).toBe(1);
+            expect(element.querySelectorAll('#adf-control-input').length).toBe(1);
             expect(element.querySelector('#adf-control-input')).toBeDefined();
             expect(element.querySelector('#adf-control-input')).not.toBeNull();
         }));
 
         it('should set browser autocomplete to off by default', async(() => {
             fixture.detectChanges();
-            let attr = element.querySelectorAll('input[type="text"]')[0].getAttribute('autocomplete');
+            let attr = element.querySelector('#adf-control-input').getAttribute('autocomplete');
             expect(attr).toBe('off');
         }));
 
@@ -215,7 +215,7 @@ describe('SearchControlComponent', () => {
         it('should set browser autocomplete to on when configured', async(() => {
             component.autocomplete = true;
             fixture.detectChanges();
-            expect(element.querySelectorAll('input[type="text"]')[0].getAttribute('autocomplete')).toBe('on');
+            expect(element.querySelector('#adf-control-input').getAttribute('autocomplete')).toBe('on');
         }));
 
         xit('should fire a search when a enter key is pressed', (done) => {

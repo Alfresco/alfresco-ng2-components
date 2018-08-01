@@ -206,8 +206,6 @@ export class DocumentListService {
     }
 
     private handleError(error: any) {
-        // in a real world app, we may send the error to some remote logging infrastructure
-        // instead of just logging it to the console
         this.logService.error(error);
         return throwError(error || 'Server error');
     }

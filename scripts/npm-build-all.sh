@@ -53,13 +53,13 @@ enable_testbrowser(){
 
 test_project() {
     echo "====== test project: $1 ====="
-    ng lint $1
+    ng lint $1 || exit 1
     ng test $1 --watch=false || exit 1
 }
 
 debug_project() {
     echo "====== debug project: $1 ====="
-    ng lint $1
+    ng lint $1 || exit 1
     ng test $1 || exit 1
 }
 

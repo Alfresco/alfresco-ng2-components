@@ -14,7 +14,7 @@
             <input matInput
                    #searchInput
                    [attr.aria-label]="'SEARCH.INPUT.ARIA-LABEL' | translate"
-                   <!--[type]="inputType"-->
+                   [attr.type]="inputType"
                    [autocomplete]="getAutoComplete()"
                    id="adf-control-input"
                    [(ngModel)]="searchTerm"
