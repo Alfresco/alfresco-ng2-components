@@ -51,6 +51,69 @@ var TaskDetailsPage = function () {
     var involvePeopleHeader = element(by.css("div[class='search-text-header']"));
     var removeInvolvedPeople = element(by.css("button[data-automation-id='Remove']"));
     var peopleTitle = element(by.id("people-title"));
+    var editFormButton = element.all(by.css("mat-icon[data-automation-id='card-textitem-edit-icon-create'")).last();
+    var attachFormDropdown = element(by.css("div[class='adf-attach-form-row']"));
+    var cancelAttachForm = element(by.id("adf-no-form-cancel-button"));
+    var attachFormButton = element(by.id("adf-no-form-attach-form-button"));
+    var removeAttachForm = element(by.id("adf-no-form-remove-button"));
+
+    this.checkEditFormButtonIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(editFormButton);
+    };
+
+    this.clickEditFormButton = function () {
+        Util.waitUntilElementIsClickable(editFormButton);
+        return editFormButton.click();
+    };
+
+    this.checkAttachFormDropdownIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(attachFormDropdown);
+    };
+
+    this.clickAttachFormDropdown = function () {
+        Util.waitUntilElementIsClickable(attachFormDropdown);
+        return attachFormDropdown.click();
+    };
+
+    this.selectAttachFormOption = function (option) {
+        let selectedOption = element(by.cssContainingText("mat-option[role='option']", option));
+        Util.waitUntilElementIsClickable(selectedOption);
+        return selectedOption.click();
+    };
+
+    this.checkCancelAttachFormIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(cancelAttachForm);
+    };
+
+    this.clickCancelAttachForm = function () {
+        Util.waitUntilElementIsClickable(cancelAttachForm);
+        return cancelAttachForm.click();
+    };
+
+    this.checkRemoveAttachFormIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(removeAttachForm);
+    };
+
+    this.clickRemoveAttachForm = function () {
+        Util.waitUntilElementIsClickable(removeAttachForm);
+        return removeAttachForm.click();
+    };
+
+    this.checkAttachFormButtonIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(attachFormButton);
+    };
+
+    this.clickAttachFormButton = function () {
+        Util.waitUntilElementIsClickable(attachFormButton);
+        return attachFormButton.click();
+    };
+
+    this.checkFormIsAttached = function (formName) {
+        Util.waitUntilElementIsVisible(formNameField);
+        formNameField.getText().then(function (attachedFormName){
+            expect(attachedFormName).toEqual(formName);
+        })
+    };
 
     this.getFormName = function () {
         Util.waitUntilElementIsVisible(formNameField);

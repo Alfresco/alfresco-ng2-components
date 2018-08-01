@@ -1,0 +1,123 @@
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import TestConfig = require('../test.config');
+import Util = require('../util/util');
+
+import LoginPage = require('../pages/adf/loginPage');
+import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import TasksListPage = require('../pages/adf/process_services/tasksListPage');
+import TaskDetailsPage = require('../pages/adf/process_services/taskDetailsPage');
+import FiltersPage = require('../pages/adf/process_services/filtersPage');
+
+import TaskModel = require('../models/APS/StandaloneTask');
+
+import AlfrescoApi = require('alfresco-js-api-node');
+import { UsersActions } from '../actions/users.actions';
+
+describe('Task Details - Form', () => {
+    let loginPage = new LoginPage();
+    let processServicesPage = new ProcessServicesPage();
+    let tasksListPage = new TasksListPage();
+    let taskDetailsPage = new TaskDetailsPage();
+    let filtersPage = new FiltersPage();
+    let task, user, newForm, attachedForm;
+
+    beforeAll(async(done) => {
+        let users = new UsersActions();
+        let taskModel = new TaskModel();
+        let attachedFormModel = {'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0};
+        let newFormModel = {'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0};
+
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(user.email, user.password);
+
+        let emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
+
+        attachedForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(attachedFormModel);
+
+        await this.alfrescoJsApi.activiti.taskApi.attachForm(emptyTask.id, {'formId': attachedForm.id});
+
+        task = await this.alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
+
+        await this.alfrescoJsApi.activiti.taskApi.getTaskForm(task.id);
+
+        newForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(newFormModel);
+
+        loginPage.loginToProcessServicesUsingUserModel(user);
+
+        done();
+    });
+
+    beforeEach(() => {
+        processServicesPage.goToProcessServices();
+        processServicesPage.goToTaskApp();
+        tasksListPage.checkTaskListIsLoaded();
+        filtersPage.goToFilter('Involved Tasks');
+        tasksListPage.checkTaskListIsLoaded();
+    });
+
+    it('[C280018] Should be able to change the form in a task', () => {
+        tasksListPage.selectTaskFromTasksList(task.name);
+
+        taskDetailsPage.checkEditFormButtonIsDisplayed();
+        taskDetailsPage.clickEditFormButton();
+
+        taskDetailsPage.checkAttachFormDropdownIsDisplayed();
+        taskDetailsPage.clickAttachFormDropdown();
+
+        taskDetailsPage.selectAttachFormOption(newForm.name);
+
+        taskDetailsPage.checkCancelAttachFormIsDisplayed();
+        taskDetailsPage.clickCancelAttachForm();
+
+        taskDetailsPage.checkFormIsAttached(attachedForm.name);
+
+        taskDetailsPage.checkEditFormButtonIsDisplayed();
+        taskDetailsPage.clickEditFormButton();
+
+        taskDetailsPage.checkAttachFormDropdownIsDisplayed();
+        taskDetailsPage.clickAttachFormDropdown();
+
+        taskDetailsPage.selectAttachFormOption(newForm.name);
+
+        taskDetailsPage.checkAttachFormButtonIsDisplayed();
+        taskDetailsPage.clickAttachFormButton();
+
+        taskDetailsPage.checkFormIsAttached(newForm.name);
+    });
+
+    it('[C280019] Should be able to remove the form form a task', () => {
+        tasksListPage.selectTaskFromTasksList(task.name);
+
+        taskDetailsPage.checkEditFormButtonIsDisplayed();
+        taskDetailsPage.clickEditFormButton();
+
+        taskDetailsPage.checkRemoveAttachFormIsDisplayed();
+        taskDetailsPage.clickRemoveAttachForm();
+
+        taskDetailsPage.checkFormIsAttached('No form');
+    });
+});
