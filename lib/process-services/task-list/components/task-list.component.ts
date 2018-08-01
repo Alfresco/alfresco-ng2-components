@@ -213,7 +213,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         }
 
         if (this.isPresetColumnChanged(changes)) {
-            this.createDatatableSchema();
+            this.columns = this.mergeJsonAndHtmlSchema();
             if (this.hasDataWithoutSchema) {
                 this.data.setColumns(this.columns);
             }
