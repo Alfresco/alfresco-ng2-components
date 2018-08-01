@@ -60,7 +60,7 @@ describe('LogoutDirective', () => {
         });
 
         it('should redirect to login on click', () => {
-            spyOn(router, 'navigate').and.callThrough();
+            spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(of(true));
 
             const button = fixture.nativeElement.querySelector('button');
@@ -71,7 +71,7 @@ describe('LogoutDirective', () => {
         });
 
         it('should redirect to login even on logout error', () => {
-            spyOn(router, 'navigate').and.callThrough();
+            spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(throwError('err'));
 
             const button = fixture.nativeElement.querySelector('button');
@@ -83,7 +83,7 @@ describe('LogoutDirective', () => {
 
     });
 
-    xdescribe('redirectUri', () => {
+    describe('redirectUri', () => {
 
         @Component({
             selector: 'adf-test-component',
@@ -116,7 +116,7 @@ describe('LogoutDirective', () => {
         });
 
         it('should redirect to the the input redirectUri on click if present', () => {
-            spyOn(router, 'navigate').and.callThrough();
+            spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(of(true));
 
             const button = fixture.nativeElement.querySelector('button');
@@ -161,7 +161,7 @@ describe('LogoutDirective', () => {
         });
 
         it('should not redirect if enabelRedirect is false', () => {
-            spyOn(router, 'navigate').and.callThrough();
+            spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(of(true));
             const button = fixture.nativeElement.querySelector('button');
             button.click();
