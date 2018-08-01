@@ -210,6 +210,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             return;
         }
 
+        if (this.isPropertyChanged(changes['columns'])) {
+            this.setTableSchema();
+        }
+
         if (this.isPropertyChanged(changes['rows'])) {
             if (this.isTableEmpty()) {
                 this.initTable();
