@@ -545,4 +545,149 @@ describe('Document List Component', () => {
         });
     });
 
+    describe('Gallery View', () => {
+
+        let cardProperties = {
+            DISPLAY_NAME : 'Display name',
+            SIZE: 'Size',
+            LOCK: 'Lock',
+            CREATED_BY: 'Created by',
+            CREATED: 'Created'
+        };
+
+        let funnyUser = {};
+
+        let pdfFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        });
+
+        let testFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+
+        let docxFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        });
+        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        let filePdfNode, fileTestNode, fileDocxNode, folderNode, filePDFSubNode;
+
+        beforeAll(async (done) => {
+            acsUser = new AcsUserModel();
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            funnyUser = await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            filePdfNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
+            fileTestNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFile.location, testFile.name, '-my-');
+            fileDocxNode = await uploadActions.uploadFile(this.alfrescoJsApi, docxFile.location, docxFile.name, '-my-');
+            folderNode = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+            filePDFSubNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, folderNode.entry.id);
+
+            done();
+        });
+
+        beforeEach( () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.clickGridViewButton();
+            contentServicesPage.checkCardViewContainerIsDisplayed();
+        });
+
+        it('[C280016] - Gallery view is showed', () => {
+            expect(contentServicesPage.getCardElementShowedInPage()).toBe(4);
+        });
+
+        it('[C280023] - Gallery Card show details', () => {
+            expect(contentServicesPage.getDocumentCardIconForElement(folderName)).toContain('/assets/images/ft_ic_folder.svg');
+            expect(contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
+            expect(contentServicesPage.getDocumentCardIconForElement(docxFile.name)).toContain('/assets/images/ft_ic_ms_word.svg');
+            expect(contentServicesPage.getDocumentCardIconForElement(testFile.name)).toContain('/assets/images/ft_ic_document.svg');
+            contentServicesPage.checkMenuIsShowedForElementIndex(0);
+            contentServicesPage.checkMenuIsShowedForElementIndex(1);
+            contentServicesPage.checkMenuIsShowedForElementIndex(2);
+            contentServicesPage.checkMenuIsShowedForElementIndex(3);
+        });
+
+        it('[C280023] - Gallery Card show details - attributes', () => {
+            contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.DISPLAY_NAME);
+            contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.SIZE);
+            contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED_BY);
+            contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED);
+
+            expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.DISPLAY_NAME)).toBe(folderName);
+            expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toBe(`a few seconds ago`);
+
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.DISPLAY_NAME)).toBe(pdfFile.name);
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.SIZE)).toBe(`702.76 KB`);
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toBe(`a few seconds ago`);
+
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`770.35 KB`);
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toBe(`a few seconds ago`);
+
+            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.DISPLAY_NAME)).toBe(testFile.name);
+            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.SIZE)).toBe(`14 Bytes`);
+            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toBe(`a few seconds ago`);
+        });
+
+        it('[C280023] - Gallery Card show details - subfolder gallery displayed', () => {
+            contentServicesPage.navigateToCardFolder(folderName);
+            expect(contentServicesPage.getCardElementShowedInPage()).toBe(1);
+            expect(contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
+        });
+
+        it('[C280023] - Gallery Card show details - back to list view', () => {
+            contentServicesPage.clickGridViewButton();
+            contentServicesPage.checkAcsContainer();
+            contentServicesPage.navigateToFolder(folderName);
+            contentServicesPage.checkRowIsDisplayed(pdfFile.name);
+        });
+
+        it('[C261993] - Sort by Display name', () => {
+            contentServicesPage.selectGridSortingFromDropdown(cardProperties.DISPLAY_NAME);
+            contentServicesPage.checkListIsSortedByNameColumn('asc');
+        });
+
+        it('[C261994] - Sort by Size', () => {
+            contentServicesPage.selectGridSortingFromDropdown(cardProperties.SIZE);
+            contentServicesPage.checkListIsSortedBySizeColumn('asc');
+        });
+
+        it('[C261995] - Sort by Author', () => {
+            contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED_BY);
+            contentServicesPage.checkListIsSortedByAuthorColumn('asc');
+        });
+
+        it('[C261994] - Sort by Created', () => {
+            contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED);
+            contentServicesPage.checkListIsSortedByCreatedColumn('asc');
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            if (filePdfNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, filePdfNode.entry.id);
+            }
+            if (fileTestNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTestNode.entry.id);
+            }
+            if (fileDocxNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileDocxNode.entry.id);
+            }
+            if (filePDFSubNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, filePDFSubNode.entry.id);
+            }
+            if (folderNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folderNode.entry.id);
+            }
+            done();
+        });
+    });
+// USER: cvQi4kVd - PASSWORD : WrhR99V6
 });

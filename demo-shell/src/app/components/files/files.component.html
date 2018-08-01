@@ -68,6 +68,7 @@
                 <div fxFlex="0 0 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
                     <button
                         mat-icon-button
+                        data-automation-id="document-list-grid-view"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}"
                         (click)="toogleGalleryView()">
                         <mat-icon *ngIf="displayMode === 'list'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}">view_comfy</mat-icon>
