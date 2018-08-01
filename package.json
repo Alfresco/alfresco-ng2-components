@@ -146,7 +146,7 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-ajax": "0.1.13",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-mocha-reporter": "2.2.2",
+    "karma-mocha-reporter": "2.2.5",
     "karma-remap-istanbul": "0.6.0",
     "karma-sourcemap-loader": "0.3.7",
     "karma-systemjs": "0.16.0",
