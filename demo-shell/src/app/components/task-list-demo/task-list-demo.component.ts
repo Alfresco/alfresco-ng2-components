@@ -49,6 +49,8 @@ export class TaskListDemoComponent implements OnInit {
 
     includeProcessInstance: boolean;
 
+    isDetailedView: boolean;
+
     assignmentOptions = [
         {value: 'assignee', title: 'Assignee'},
         {value: 'candidate', title: 'Candidate'}
@@ -106,8 +108,11 @@ export class TaskListDemoComponent implements OnInit {
             taskDueAfter: new FormControl(''),
             taskDueBefore: new FormControl(''),
             taskStart: new FormControl('', [Validators.pattern('^[0-9]*$')]),
-            taskIncludeProcessInstance: new FormControl('')
+            taskIncludeProcessInstance: new FormControl(''),
+            detailedView: new FormControl(true)
         });
+
+        this.filterTasks(this.taskListForm.value);
 
         this.taskListForm.valueChanges
             .pipe(
@@ -143,6 +148,7 @@ export class TaskListDemoComponent implements OnInit {
         this.dueBefore = taskFilter.taskDueBefore;
 
         this.includeProcessInstance = taskFilter.taskIncludeProcessInstance === 'include';
+        this.isDetailedView = taskFilter.detailedView;
     }
 
     resetTaskForm() {
@@ -168,6 +174,10 @@ export class TaskListDemoComponent implements OnInit {
 
     isFormValid() {
         return this.taskListForm && this.taskListForm.dirty && this.taskListForm.valid;
+    }
+
+    getPresetColumn() {
+        return this.isDetailedView ? 'detailed' : 'minimal';
     }
 
     get taskAppId(): AbstractControl {
@@ -224,5 +234,9 @@ export class TaskListDemoComponent implements OnInit {
 
     get taskDueBefore(): AbstractControl {
         return this.taskListForm.get('taskDueBefore');
+    }
+
+    get detailedView(): AbstractControl {
+        return this.taskListForm.get('detailedView');
     }
 }

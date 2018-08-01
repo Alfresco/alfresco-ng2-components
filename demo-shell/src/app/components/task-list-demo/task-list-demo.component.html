@@ -132,6 +132,13 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+
+        <div class="adf-reset-button">
+            <mat-slide-toggle [checked]="true" [formControl]="detailedView">
+              {{isDetailedView ? 'Detailed View' : 'Minimal View'}}
+            </mat-slide-toggle>
+            <button mat-raised-button (click)="resetTaskForm()">Reset</button>
+        </div>
     </form>
 </div>
 <div class="adf-reset-button">
@@ -154,6 +161,7 @@
         [dueAfter]="dueAfter"
         [dueBefore]="dueBefore"
         [includeProcessInstance]="includeProcessInstance"
+        [presetColumn]="getPresetColumn()"
         #taskList>
         <data-columns>
             <data-column key="id" title="Id"></data-column>

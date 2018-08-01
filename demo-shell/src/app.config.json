@@ -482,14 +482,44 @@
     },
     "adf-task-list": {
         "presets": {
-            "default": [
+            "minimal": [
                 {
                     "key": "name",
                     "type": "text",
                     "title": "ADF_TASK_LIST.PROPERTIES.NAME",
                     "sortable": true
                 }
+            ],
+            "detailed": [
+                {
+                    "key": "name",
+                    "type": "text",
+                    "title": "ADF_TASK_LIST.PROPERTIES.NAME",
+                    "cssClass": "full-width ellipsis-cell",
+                    "sortable": true
+                },
+                {
+                    "key": "created",
+                    "type": "date",
+                    "title": "ADF_TASK_LIST.PROPERTIES.CREATED",
+                    "format": "timeAgo",
+                    "sortable": true
+                },
+                {
+                    "key": "processDefinitionName",
+                    "type": "text",
+                    "title": "ADF_PROCESS_LIST.PROPERTIES.PROCESS_NAME",
+                    "cssClass": "desktop-only",
+                    "sortable": true
+                },
+                {
+                    "key": "priority",
+                    "type": "text",
+                    "title": "ADF_TASK_LIST.PROPERTIES.PRIORITY",
+                    "sortable": true
+                }
             ]
+
         }
     },
     "adf-start-process": {
@@ -504,6 +534,7 @@
                     "key": "name",
                     "type": "text",
                     "title": "ADF_PROCESS_LIST.PROPERTIES.NAME",
+                    "cssClass": "full-width ellipsis-cell",
                     "sortable": true
                 },
                 {
