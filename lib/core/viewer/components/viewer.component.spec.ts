@@ -232,7 +232,7 @@ describe('ViewerComponent', () => {
 
         beforeEach(() => {
             component.showToolbar = true;
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = 'fake-test-file.pdf';
             component.mimeType = 'application/pdf';
 
             fixture.detectChanges();
@@ -513,7 +513,7 @@ describe('ViewerComponent', () => {
         describe('Extension Type Test', () => {
 
             it('should  extension file pdf  be loaded', async(() => {
-                component.urlFile = 'base/src/assets/fake-test-file.pdf';
+                component.urlFile = 'fake-test-file.pdf';
                 component.ngOnChanges(null);
                 fixture.detectChanges();
 
@@ -753,7 +753,7 @@ describe('ViewerComponent', () => {
         describe('display name property override by urlFile', () => {
 
             it('should displayName override the default name if is present and urlFile is set', async(() => {
-                component.urlFile = 'base/src/assets/fake-test-file.pdf';
+                component.urlFile = 'fake-test-file.pdf';
                 component.displayName = 'test name';
                 fixture.detectChanges();
                 component.ngOnChanges(null);
@@ -765,7 +765,7 @@ describe('ViewerComponent', () => {
             }));
 
             it('should use the urlFile name if displayName is NOT set and urlFile is set', async(() => {
-                component.urlFile = 'base/src/assets/fake-test-file.pdf';
+                component.urlFile = 'fake-test-file.pdf';
                 component.displayName = null;
                 fixture.detectChanges();
                 component.ngOnChanges(null);
@@ -838,7 +838,7 @@ describe('ViewerComponent', () => {
             component = fixture.componentInstance;
 
             component.showToolbar = true;
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = 'fake-test-file.pdf';
             component.mimeType = 'application/pdf';
             fixture.detectChanges();
         });

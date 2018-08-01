@@ -506,7 +506,7 @@
       "root": "lib/core",
       "sourceRoot": "lib/core/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "adf",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -532,8 +532,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/core/tsconfig.json",
-              "projects/core/tsconfig.json"
+              "lib/core/tsconfig.json",
+              "lib/core/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -546,7 +546,7 @@
       "root": "lib/content-services",
       "sourceRoot": "lib/content-services/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "adf",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -572,8 +572,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/content-services/tsconfig.json",
-              "projects/content-services/tsconfig.json"
+              "lib/content-services/tsconfig.json",
+              "lib/content-services/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -586,7 +586,7 @@
       "root": "lib/process-services",
       "sourceRoot": "lib/process-services/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "adf",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -612,8 +612,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/process-services/tsconfig.json",
-              "projects/process-services/tsconfig.json"
+              "lib/process-services/tsconfig.json",
+              "lib/process-services/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -626,7 +626,7 @@
       "root": "lib/insights",
       "sourceRoot": "lib/insights/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "adf",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -652,8 +652,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/insights/tsconfig.json",
-              "projects/insights/tsconfig.json"
+              "lib/insights/tsconfig.json",
+              "lib/insights/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"

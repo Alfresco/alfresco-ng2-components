@@ -83,7 +83,7 @@ describe('LogoutDirective', () => {
 
     });
 
-    describe('redirectUri', () => {
+    xdescribe('redirectUri', () => {
 
         @Component({
             selector: 'adf-test-component',
@@ -128,7 +128,7 @@ describe('LogoutDirective', () => {
 
     });
 
-    describe('redirectUri', () => {
+    describe('enabelRedirect', () => {
 
         @Component({
             selector: 'adf-test-component',

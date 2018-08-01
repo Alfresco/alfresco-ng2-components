@@ -53,12 +53,14 @@ enable_testbrowser(){
 
 test_project() {
     echo "====== test project: $1 ====="
+    ng lint $1
     ng test $1 --watch=false || exit 1
 }
 
 debug_project() {
     echo "====== debug project: $1 ====="
-        ng test $1 || exit 1
+    ng lint $1
+    ng test $1 || exit 1
 }
 
 enable_js_api_git_link() {
@@ -153,7 +155,6 @@ fi
 
 if $RUN_TESTBROWSER == true; then
       if $EXEC_SINGLE_TEST == true; then
-            cp -n "$DIR/../lib/config/karma-test-shim.js" "$DIR/../lib/$SINGLE_TEST/"
             debug_project $SINGLE_TEST
       else
        for PACKAGE in ${projects[@]}

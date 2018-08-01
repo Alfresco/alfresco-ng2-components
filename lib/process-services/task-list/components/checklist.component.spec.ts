@@ -22,7 +22,7 @@ import { ChecklistComponent } from './checklist.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskListService } from './../services/tasklist.service';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 
 describe('ChecklistComponent', () => {
 
@@ -38,7 +38,10 @@ describe('ChecklistComponent', () => {
 
     beforeEach(async(() => {
         service = TestBed.get(TaskListService);
-        spyOn(service, 'getTaskChecklist').and.returnValue(of([{ id: 'fake-check-changed-id', name: 'fake-check-changed-name' }] ));
+        spyOn(service, 'getTaskChecklist').and.returnValue(of([{
+            id: 'fake-check-changed-id',
+            name: 'fake-check-changed-name'
+        }]));
 
         fixture = TestBed.createComponent(ChecklistComponent);
         checklistComponent = fixture.componentInstance;
@@ -168,7 +171,7 @@ describe('ChecklistComponent', () => {
 
         it('should add checklist', async(() => {
             spyOn(service, 'addTask').and.returnValue(of({
-              id: 'fake-check-added-id', name: 'fake-check-added-name'
+                id: 'fake-check-added-id', name: 'fake-check-added-name'
             }));
 
             showChecklistDialog.click();
