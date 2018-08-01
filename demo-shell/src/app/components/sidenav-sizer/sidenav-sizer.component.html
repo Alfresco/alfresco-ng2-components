@@ -1,5 +1,6 @@
 <form class="sidenav-sizer-form">
     <mat-form-field class="sidenav-max-value">
+      <label>SideNav Max</label>
       <input matInput type="number"
             value="220"
             placeholder="SideNav Max extension"
@@ -7,10 +8,11 @@
     </mat-form-field>
 
     <mat-form-field class="sidenav-min-value">
+        <label>SideNav Min</label>
         <input matInput type="number"
                value="70"
                placeholder="SideNav Min extension"
-               [formControl]="sidenavMax">
+               [formControl]="sidenavMin">
       </mat-form-field>
       <button mat-raised-button color="primary" (click)="resetToDefault()">
           RESET

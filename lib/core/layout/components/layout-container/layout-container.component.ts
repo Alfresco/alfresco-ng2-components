@@ -64,7 +64,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
         }
         if (changes.sidenavMin &&
             changes.sidenavMin.currentValue !== changes.sidenavMin.previousValue) {
-            this.configureSidenavMax(changes.sidenavMin.currentValue);
+            this.configureSidenavMin(changes.sidenavMin.currentValue);
             this.updateSideNavAnimationState();
         }
     }
