@@ -115,7 +115,7 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         let tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toBe('Tab1');
+        expect(tab[0].nativeElement.innerText).toContain('Tab1');
     });
 
     it('should select the tab 2 (index 1)', () => {
@@ -123,7 +123,7 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         let tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toBe('Tab2');
+        expect(tab[0].nativeElement.innerText).toContain('Tab2');
     });
 
     it('should render a tab with icon', () => {
