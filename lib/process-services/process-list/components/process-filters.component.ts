@@ -18,10 +18,9 @@
 import { AppsProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './../services/process-filter.service';
+import { IconModel } from '../../app-list/icon.model';
 
 @Component({
     selector: 'adf-process-instance-filters',
@@ -58,23 +57,20 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /** Toggle to show or hide the filter's icon. */
     @Input()
-    showIcon: boolean = true;
+    hasIcon: boolean;
 
-    private filterObserver: Observer<ProcessInstanceFilterRepresentation>;
-    filter$: Observable<ProcessInstanceFilterRepresentation>;
+    currentFilter: FilterProcessRepresentationModel;
 
-    currentFilter: ProcessInstanceFilterRepresentation;
+    filters: FilterProcessRepresentationModel [] = [];
 
-    filters: ProcessInstanceFilterRepresentation [] = [];
+    private iconsMDL: IconModel;
 
-    constructor(private processFilterService: ProcessFilterService, private appsProcessService: AppsProcessService) {
-        this.filter$ = new Observable<ProcessInstanceFilterRepresentation>(observer => this.filterObserver = observer).share();
+    constructor(private processFilterService: ProcessFilterService,
+                private appsProcessService: AppsProcessService) {
     }
 
     ngOnInit() {
-        this.filter$.subscribe((filter: ProcessInstanceFilterRepresentation) => {
-            this.filters.push(filter);
-        });
+        this.iconsMDL = new IconModel();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -97,15 +93,12 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      */
     getFiltersByAppId(appId?: number) {
         this.processFilterService.getProcessFilters(appId).subscribe(
-            (res: ProcessInstanceFilterRepresentation[]) => {
+            (res: FilterProcessRepresentationModel[]) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
                     this.processFilterService.createDefaultFilters(appId).subscribe(
-                        (resDefault: ProcessInstanceFilterRepresentation[]) => {
+                        (resDefault: FilterProcessRepresentationModel[]) => {
                             this.resetFilter();
-                            resDefault.forEach((filter) => {
-                                this.filterObserver.next(filter);
-                            });
-
+                            this.filters = resDefault;
                             this.selectProcessFilter(this.filterParam);
                             this.success.emit(resDefault);
                         },
@@ -115,10 +108,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                     );
                 } else {
                     this.resetFilter();
-                    res.forEach((filter) => {
-                        this.filterObserver.next(filter);
-                    });
-
+                    this.filters = res;
                     this.selectProcessFilter(this.filterParam);
                     this.success.emit(res);
                 }
@@ -148,7 +138,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      * Pass the selected filter as next
      * @param filter
      */
-    public selectFilter(filter: ProcessInstanceFilterRepresentation) {
+    public selectFilter(filter: FilterProcessRepresentationModel) {
         this.currentFilter = filter;
         this.filterClick.emit(filter);
     }
@@ -158,7 +148,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      */
     public selectProcessFilter(filterParam: FilterProcessRepresentationModel) {
         if (filterParam) {
-            this.filters.filter((processFilter: ProcessInstanceFilterRepresentation, index) => {
+            this.filters.filter((processFilter: FilterProcessRepresentationModel, index) => {
                 if (filterParam.name && filterParam.name.toLowerCase() === processFilter.name.toLowerCase() || filterParam.index === index) {
                     this.currentFilter = processFilter;
                 }
@@ -188,7 +178,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     /**
      * Return the current task
      */
-    getCurrentFilter(): ProcessInstanceFilterRepresentation {
+    getCurrentFilter(): FilterProcessRepresentationModel {
         return this.currentFilter;
     }
 
@@ -208,6 +198,13 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     }
 
     private isCurrentFilterEmpty(): boolean {
-        return this.currentFilter === undefined || null ? true : false;
+        return this.currentFilter === undefined || null;
+    }
+
+    /**
+     * Return current filter icon
+     */
+    getFilterIcon(icon): string {
+        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 }
