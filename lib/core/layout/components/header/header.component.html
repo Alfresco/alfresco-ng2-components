@@ -3,7 +3,9 @@
         <mat-icon class="mat-icon material-icon" role="img" aria-hidden="true">menu</mat-icon>
     </button>
 
-    <img src="{{logo}}" class="adf-app-logo">
+    <a [routerLink]="logoUrl">
+        <img src="{{logo}}" class="adf-app-logo" />
+    </a>
 
     <span fxFlex="1 1 auto" fxShow fxHide.lt-sm="true" class="adf-app-title">{{title}}</span>
     <ng-content></ng-content>

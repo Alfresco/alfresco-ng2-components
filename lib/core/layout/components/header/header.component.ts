@@ -26,6 +26,7 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit } fro
 export class HeaderLayoutComponent implements OnInit {
     @Input() title: string;
     @Input() logo: string;
+    @Input() logoUrl: string = '/';
     @Input() color: string;
     @Input() showSidenavToggle: boolean = true;
     @Output() clicked = new EventEmitter<any>();
