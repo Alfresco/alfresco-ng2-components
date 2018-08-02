@@ -29,6 +29,7 @@ var ContentList = function () {
     var nameColumn = by.css("div[id*='document-list-container'] div[class*='adf-datatable-row'] div[class*='--text full-width'] span");
     var nameColumnHeader = by.css("div[data-automation-id='auto_id_name']");
     var createdByColumn = by.css("div[class*='--text'][title='Created by'] span");
+    var sizeColumn = by.css("div[id*='document-list-container'] div[class*='adf-datatable-row'] .adf-filesize-cell");
     var createdByColumnHeader = by.css("div[data-automation-id*='auto_id_createdByUser']");
     var createdColumn = by.css("div[class*='--date'] span");
     var createdColumnHeader = by.css("div[data-automation-id*='auto_id_createdAt']");
@@ -181,6 +182,12 @@ var ContentList = function () {
     this.checkListIsOrderedByAuthorColumn = function (sortOrder) {
         var deferred = protractor.promise.defer();
         deferred.fulfill(this.checkListIsSorted(sortOrder, createdByColumn));
+        return deferred.promise;
+    };
+
+    this.checkListIsOrderedBySizeColumn = function (sortOrder) {
+        var deferred = protractor.promise.defer();
+        deferred.fulfill(this.checkListIsSorted(sortOrder, sizeColumn));
         return deferred.promise;
     };
 

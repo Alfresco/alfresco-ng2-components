@@ -53,6 +53,8 @@ var ContentServicesPage = function () {
     var emptyFolder = element(by.css(".adf-empty-folder-this-space-is-empty"));
     var emptyFolderImage = element(by.css(".adf-empty-folder-image"));
     var emptyRecent = element(by.css(".adf-container-recent .empty-list__title"));
+    var gridViewButton = element(by.css("button[data-automation-id='document-list-grid-view']"));
+    var cardViewContainer = element(by.css("div.document-list-container div.adf-data-table-card"));
 
     this.checkRecentFileToBeShowed = function () {
         Util.waitUntilElementIsVisible(recentFiles);
@@ -186,6 +188,18 @@ var ContentServicesPage = function () {
 
     this.checkListIsSortedByNameColumn = async function(sortOrder) {
         await contentList.checkListIsOrderedByNameColumn(sortOrder);
+    };
+
+    this.checkListIsSortedByCreatedColumn = async function(sortOrder) {
+        await contentList.checkListIsOrderedByCreatedColumn(sortOrder);
+    };
+
+    this.checkListIsSortedByAuthorColumn = async function(sortOrder) {
+        await contentList.checkListIsOrderedByAuthorColumn(sortOrder);
+    };
+
+    this.checkListIsSortedBySizeColumn = async function(sortOrder) {
+        await contentList.checkListIsOrderedBySizeColumn(sortOrder);
     };
 
     /**
@@ -398,6 +412,13 @@ var ContentServicesPage = function () {
         return this;
     };
 
+    this.enableThumbnails = function () {
+        var thumbnailSlide = element(by.css('#enableThumbnails'));
+        Util.waitUntilElementIsVisible(thumbnailSlide);
+        thumbnailSlide.click();
+        return this;
+    };
+
     this.clickLoadMoreButton = function () {
         Util.waitUntilElementIsVisible(loadMoreButton);
         Util.waitUntilElementIsClickable(loadMoreButton);
@@ -472,6 +493,83 @@ var ContentServicesPage = function () {
     this.checkEmptyRecentFileIsDisplayed = function () {
         Util.waitUntilElementIsVisible(emptyRecent);
     };
+
+    this.checkIconForRowIsDisplayed = function(fileName) {
+        let iconRow = element(by.css(`.document-list-container div.adf-data-table-cell[filename="${fileName}"] img`));
+        Util.waitUntilElementIsVisible(iconRow);
+        return iconRow;
+    }
+
+    this.getRowIconImageUrl = async function(fileName) {
+        let iconRow = this.checkIconForRowIsDisplayed(fileName);
+        return iconRow.getAttribute('src');
+    }
+
+    this.checkGridViewButtonIsVisible = function () {
+        Util.waitUntilElementIsVisible(gridViewButton);
+    }
+
+    this.clickGridViewButton = function() {
+        this.checkGridViewButtonIsVisible();
+        gridViewButton.click();
+    }
+
+    this.checkCardViewContainerIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(cardViewContainer);
+    }
+
+    this.getCardElementShowedInPage = function() {
+        this.checkCardViewContainerIsDisplayed();
+        let actualCards = $$('div.document-list-container div.adf-data-table-card div.cell-value img').count();
+        return actualCards;
+    }
+
+    this.getDocumentCardIconForElement = function(elementName){
+        let elementIcon = element(by.css(`.document-list-container div.adf-data-table-cell[filename="${elementName}"] img`));
+        return elementIcon.getAttribute('src');
+    }
+
+    this.checkDocumentCardPropertyIsShowed = function(elementName, propertyName) {
+        let elementProperty = element(by.css(`.document-list-container div.adf-data-table-cell[filename="${elementName}"][title="${propertyName}"]`));
+        Util.waitUntilElementIsVisible(elementProperty);
+    }
+
+    this.getAttributeValueForElement = function(elementName, propertyName) {
+        let elementSize = element(by.css(`.document-list-container div.adf-data-table-cell[filename="${elementName}"][title="${propertyName}"] span`));
+        return elementSize.getText();
+    }
+
+    this.checkMenuIsShowedForElementIndex = function(elementIndex) {
+        let elementMenu = element(by.css(`button[data-automation-id="action_menu_${elementIndex}"]`));
+        Util.waitUntilElementIsVisible(elementMenu);
+    }
+
+    this.navigateToCardFolder = function(folderName) {
+        let folderCard = element(by.css(`.document-list-container div.image-table-cell.adf-data-table-cell[filename="${folderName}"]`));
+        folderCard.click();
+        let folderSelected = element(by.css(`.adf-datatable-row.is-selected div[filename="${folderName}"].adf-data-table-cell--image`));
+        Util.waitUntilElementIsVisible(folderSelected);
+        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    }
+
+    this.getGridViewSortingDropdown = function() {
+        let sortingDropdown = element(by.css('mat-select[data-automation-id="grid-view-sorting"]'));
+        Util.waitUntilElementIsVisible(sortingDropdown);
+        return sortingDropdown;
+    }
+
+    this.selectGridSortingFromDropdown = function(sortingChosen){
+        let dropdownSorting = this.getGridViewSortingDropdown();
+        dropdownSorting.click();
+        let optionToClick = element(by.css(`mat-option[data-automation-id="grid-view-sorting-${sortingChosen}"]`));
+        Util.waitUntilElementIsPresent(optionToClick);
+        optionToClick.click();
+    }
+
+    this.checkRowIsDisplayed = function(rowName){
+        let row = contentList.getRowByRowName(rowName);
+        Util.waitUntilElementIsVisible(row);
+    }
 
 };
 
