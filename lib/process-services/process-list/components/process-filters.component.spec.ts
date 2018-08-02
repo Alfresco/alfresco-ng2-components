@@ -16,32 +16,46 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { AppsProcessService } from '@alfresco/adf-core';
+import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
+import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('ProcessFiltersComponent', () => {
 
     let filterList: ProcessFiltersComponent;
+    let fixture: ComponentFixture<ProcessFiltersComponent>;
+
     let processFilterService: ProcessFilterService;
     let appsProcessService: AppsProcessService;
     let fakeGlobalFilterPromise;
     let mockErrorFilterPromise;
 
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
+
     beforeEach(() => {
         fakeGlobalFilterPromise = Promise.resolve([
             new FilterProcessRepresentationModel({
                 name: 'FakeInvolvedTasks',
+                icon: 'glyphicon-th',
                 filter: { state: 'open', assignment: 'fake-involved' }
             }),
             new FilterProcessRepresentationModel({
                 name: 'FakeMyTasks',
+                icon: 'glyphicon-random',
                 filter: { state: 'open', assignment: 'fake-assignee' }
             }),
             new FilterProcessRepresentationModel({
                 name: 'Running',
+                icon: 'glyphicon-ok-sign',
                 filter: { state: 'open', assignment: 'fake-running' }
             })
         ]);
@@ -50,9 +64,11 @@ describe('ProcessFiltersComponent', () => {
             error: 'wrong request'
         });
 
-        processFilterService = new ProcessFilterService(null);
-        appsProcessService = new AppsProcessService(null, null);
-        filterList = new ProcessFiltersComponent(processFilterService, appsProcessService);
+        fixture = TestBed.createComponent(ProcessFiltersComponent);
+        filterList = fixture.componentInstance;
+
+        processFilterService = TestBed.get(ProcessFilterService);
+        appsProcessService = TestBed.get(AppsProcessService);
     });
 
     it('should return the filter task list', (done) => {
@@ -216,5 +232,41 @@ describe('ProcessFiltersComponent', () => {
         });
 
         filterList.ngOnInit();
+    });
+
+    it('should attach specific icon for each filter if hasIcon is true', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        filterList.hasIcon = true;
+
+        let change = new SimpleChange(undefined, 1, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(filterList.filters.length).toBe(3);
+            let filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            expect(filters.length).toBe(3);
+            expect(filters[0].nativeElement.innerText).toContain('dashboard');
+            expect(filters[1].nativeElement.innerText).toContain('shuffle');
+            expect(filters[2].nativeElement.innerText).toContain('check_circle');
+            done();
+        });
+    });
+
+    it('should not attach icons for each filter if hasIcon is false', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        filterList.hasIcon = false;
+
+        let change = new SimpleChange(undefined, 1, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            expect(filters.length).toBe(0);
+            done();
+        });
     });
 });

@@ -123,8 +123,9 @@
                                              [headingIcon]="'assessment'">
                             <adf-process-instance-filters
                                 #activitiprocessfilter
-                                [filterParam]="{index: 0}"
                                 [appId]="appId"
+                                [filterParam]="{index: 0}"
+                                [hasIcon]="false"
                                 (filterClick)="onProcessFilterClick($event)"
                                 (success)="onSuccessProcessFilterList($event)">
                             </adf-process-instance-filters>
