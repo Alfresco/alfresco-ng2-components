@@ -22,6 +22,7 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
 import { LayoutModule } from '../..';
 import { Component } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from './../../../material.module';
 
 describe('HeaderLayoutComponent', () => {
@@ -78,6 +79,14 @@ describe('HeaderLayoutComponent', () => {
             expect(src).toEqual('logo.png');
         });
 
+        it('should have custom url link set on logo when the logoUrl is set', () => {
+            component.logoUrl = '/customHomePage';
+            fixture.detectChanges();
+
+            const logoAnchor = fixture.nativeElement.querySelector('mat-toolbar>a');
+            expect(/\/customHomePage$/.test(logoAnchor.href)).toEqual(true);
+        });
+
         it('test click on sidenav button', () => {
             component.showSidenavToggle = true;
             fixture.detectChanges();
@@ -117,7 +126,7 @@ describe('HeaderLayoutComponent', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
               declarations: [HeaderLayoutTesterComponent],
-              imports: [ LayoutModule, MaterialModule ]
+              imports: [ LayoutModule, MaterialModule, RouterTestingModule ]
             })
             .compileComponents();
           }));
