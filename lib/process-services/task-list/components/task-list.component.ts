@@ -21,7 +21,7 @@ import {
     UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
 import {
     AfterContentInit, Component, ContentChild, EventEmitter,
-    Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+    Input, OnChanges, Output, SimpleChanges, SimpleChange } from '@angular/core';
 
 import { Observable, BehaviorSubject } from 'rxjs';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
@@ -205,7 +205,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes)) {
+        if (this.isInputChanged(changes)) {
             if (this.isSortChanged(changes)) {
                 this.sorting = this.sort ? this.sort.split('-') : this.sorting;
             }
@@ -220,53 +220,65 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         }
     }
 
-    private isSortChanged(changes: SimpleChanges): boolean {
-        const actualSort = changes['sort'];
-        return actualSort && actualSort.currentValue && actualSort.currentValue !== actualSort.previousValue;
-    }
-
-    private isPropertyChanged(changes: SimpleChanges): boolean {
-        let changed = false;
-
-        const appId = changes['appId'];
-        const processInstanceId = changes['processInstanceId'];
-        const processDefinitionId = changes['processDefinitionId'];
-        const processDefinitionKey = changes['processDefinitionKey'];
-        const state = changes['state'];
-        const assignment = changes['assignment'];
-        const name = changes['name'];
-        const landingTaskId = changes['landingTaskId'];
-        const page = changes['page'];
-        const size = changes['size'];
-
-        if (appId && appId.currentValue) {
-            changed = true;
-        } else if (processInstanceId) {
-            changed = true;
-        } else if (processDefinitionId) {
-            changed = true;
-        } else if (processDefinitionKey) {
-            changed = true;
-        } else if (state) {
-            changed = true;
-        }  else if (assignment) {
-            changed = true;
-        }  else if (name) {
-            changed = true;
-        }  else if (landingTaskId && landingTaskId.currentValue && !this.isEqualToCurrentId(landingTaskId.currentValue)) {
-            changed = true;
-        } else if (page && page.currentValue !== page.previousValue) {
-            changed = true;
-        } else if (size && size.currentValue !== size.previousValue) {
-            changed = true;
-        }
-
-        return changed;
+    private isInputChanged(changes: SimpleChanges): boolean {
+        return this.isAppIdChanged(changes) || this.isProcessInstanceIdChanged(changes) ||
+                this.isProcessDefinitionKeyChanged(changes) || this.isProcessDefinitionIdChanged(changes) ||
+                this.isStateChanged(changes) || this.isAssignmentChanged(changes) ||
+                this.isNameChanged(changes) || this.isLandingTaskIdChanged(changes) ||
+                this.isPageChanged(changes) || this.isSizeChanged(changes) || this.isSortChanged(changes);
     }
 
     private isPresetColumnChanged(changes: SimpleChanges): boolean {
-        const presetColumn = changes['presetColumn'];
-        return presetColumn && !presetColumn.firstChange;
+        return this.isChanged(changes.presetColumn) && !changes.presetColumn.firstChange;
+    }
+
+    private isAppIdChanged(changes: SimpleChanges): boolean {
+        return this.isChanged(changes.appId) && changes.appId.currentValue;
+    }
+
+    private isProcessInstanceIdChanged(changes: SimpleChanges): boolean {
+        return this.isChanged(changes.processInstanceId);
+    }
+
+    private isProcessDefinitionKeyChanged(changes: SimpleChanges): boolean {
+        return this.isChanged(changes.processDefinitionKey);
+    }
+
+    private isProcessDefinitionIdChanged(changes: SimpleChanges): boolean {
+        return this.isChanged(changes.processDefinitionId);
+    }
+
+    private isStateChanged(changes: SimpleChanges): boolean {
+        return this.isChanged(changes.state);
+    }
+
+    private isAssignmentChanged(changes: SimpleChanges): boolean {
+        return this.isChanged(changes.assignment);
+    }
+
+    private isNameChanged(changes: SimpleChanges): boolean {
+        return this.isChanged(changes.name);
+    }
+
+    private isLandingTaskIdChanged(changes: SimpleChanges): boolean {
+        const landingTaskId = changes.landingTaskId;
+        return landingTaskId && landingTaskId.currentValue && !this.isEqualToCurrentId(landingTaskId.currentValue);
+    }
+
+    private isPageChanged(changes: SimpleChanges): boolean {
+        return this.isChanged(changes.page);
+    }
+
+    private isSizeChanged(changes: SimpleChanges): boolean {
+        return this.isChanged(changes.size);
+    }
+
+    private isSortChanged(changes: SimpleChanges): boolean {
+        return this.isChanged(changes.sort) && changes.sort.currentValue;
+    }
+
+    private isChanged(change: SimpleChange): boolean {
+        return change && change.currentValue !== change.previousValue;
     }
 
     reload(): void {

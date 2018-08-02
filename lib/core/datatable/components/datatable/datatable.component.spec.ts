@@ -261,6 +261,35 @@ describe('DataTable', () => {
         expect(rows[1].getValue('name')).toEqual('test2');
     });
 
+    it('should set columns to the data when columns input changes', () => {
+        const dataColumns =
+            [
+                { title: 'Name', key: 'name' },
+                { title: 'Age',  key: 'age' },
+                { title: 'Group', key: 'group' }
+            ];
+        dataTable.data = new ObjectDataTableAdapter([{ name: 'test1', age: 11, group: 'A' }],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.columns = dataColumns;
+
+        dataTable.ngOnChanges({
+            columns: new SimpleChange(null, dataColumns, false)
+        });
+        fixture.detectChanges();
+
+        const columns = dataTable.data.getColumns();
+
+        expect(columns.length).toBe(3);
+        expect(columns[0].key).toBe('name');
+        expect(columns[0].title).toBe('Name');
+        expect(columns[1].key).toBe('age');
+        expect(columns[1].title).toBe('Age');
+        expect(columns[2].key).toBe('group');
+        expect(columns[2].title).toBe('Group');
+    });
+
     it('should set custom sort order', () => {
         const dataSortObj = new DataSorting('dummayName', 'asc');
         const dataRows =
