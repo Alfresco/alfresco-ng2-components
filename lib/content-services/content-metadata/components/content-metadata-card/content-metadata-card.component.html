@@ -1,11 +1,11 @@
 <mat-card *ngIf="node">
     <mat-card-content>
         <adf-content-metadata
-           *ngIf="displayDefaultProperties"
+            [displayDefaultProperties]="displayDefaultProperties"
+            [expanded]="expanded"
             [node]="node"
             [displayEmpty]="displayEmpty"
             [editable]="editable"
-            [expanded]="expanded"
             [multi]="multi"
             [preset]="preset">
         </adf-content-metadata>

@@ -516,7 +516,7 @@
                     }                    
                 },
                 "displayDefaultProperties": { 
-                    "description": "This sets the weather metadata properties are visible or not",
+                    "description": "This flag allows you to hide/show default metadata properties",
                     "type": "boolean" 
                 }
             }

@@ -30,6 +30,7 @@ export class FileViewComponent implements OnInit {
 
     nodeId: string = null;
     displayEmptyMetadata = false;
+    expanded: boolean;
     multi = false;
     isReadOnly = false;
     isPreset = false;
