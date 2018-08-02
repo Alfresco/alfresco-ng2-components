@@ -29,7 +29,6 @@ export class CommentsPage {
     commentInput = element(by.id('comment-input'));
     addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
 
-
     getTotalNumberOfComments() {
         Util.waitUntilElementIsVisible(this.numberOfComments);
         return this.numberOfComments.getText();

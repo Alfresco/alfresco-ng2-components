@@ -62,8 +62,8 @@ describe('Search component - Search Page', () => {
     beforeAll(async (done) => {
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, search.active.base, search.active.extension);
         adminFileNames = Util.generateSeqeunceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
-
         search.active.firstFile = fileNames[1];
+        fileNames = fileNames.splice(0, 1);
         search.active.secondFile = fileNames[2];
 
         firstFileModel = new FileModel({
@@ -89,8 +89,7 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderModelUploaded.entry.id);
 
-        let firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
-        Object.assign(firstFileModel, firstFileUploaded.entry);
+        await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 

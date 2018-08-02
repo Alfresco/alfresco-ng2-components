@@ -19,7 +19,6 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -45,7 +44,7 @@ export class UserPreferencesService {
      * @deprecated we are grouping every value changed on the user preference in a single stream : userPreferenceValue$
      */
     locale$: Observable<string>;
-    private localeSubject: Subject<string>;
+    private localeSubject: BehaviorSubject<string>;
 
     private onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
@@ -54,7 +53,7 @@ export class UserPreferencesService {
                 private appConfig: AppConfigService,
                 private storage: StorageService) {
         this.appConfig.onLoad.subscribe(this.initUserPreferenceStatus.bind(this));
-        this.localeSubject = new Subject();
+        this.localeSubject = new BehaviorSubject(this.get(UserPreferenceValues.Locale, this.getDefaultLocale()));
         this.locale$ = this.localeSubject.asObservable();
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();

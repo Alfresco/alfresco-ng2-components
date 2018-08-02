@@ -109,6 +109,7 @@ describe('Document List Component', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             navBar.openLanguageMenu();
             navBar.chooseLanguage('Italian');
+            browser.sleep(2000);
             browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
         });

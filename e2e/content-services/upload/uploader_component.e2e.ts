@@ -336,11 +336,10 @@ describe('Upload component', () => {
         uploadToggles.disableMultipleFileUpload();
     });
 
-    it('[C279919] Enable max size and set it to 400', () => {
+    xit('[C279919] Enable max size and set it to 400', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         uploadToggles.enableMaxSize();
-        browser.driver.sleep(1000);
         uploadToggles.addMaxSize('400');
         contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsDisplayed(fileWithSpecificSize.name);
         uploadDialog.fileIsUploaded(fileWithSpecificSize.name).clickOnCloseButton().dialogIsNotDisplayed();
@@ -355,14 +354,13 @@ describe('Upload component', () => {
         uploadToggles.disableMaxSize();
     });
 
-    it('[C272796] Enable max size and set it to 0', () => {
+    xit('[C272796] Enable max size and set it to 0', () => {
         contentServicesPage.goToDocumentList();
-        contentServicesPage.checkAcsContainer();
         uploadToggles.enableMaxSize();
-        browser.driver.sleep(1000);
         uploadToggles.addMaxSize('0');
         contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsNotDisplayed(fileWithSpecificSize.name);
         expect(contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
+
         uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
         contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
         uploadDialog.fileIsUploaded(emptyFile.name).clickOnCloseButton().dialogIsNotDisplayed();

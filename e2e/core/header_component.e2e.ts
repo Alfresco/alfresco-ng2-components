@@ -53,7 +53,7 @@ describe('Header Component', () => {
         done();
     });
 
-    beforeEach(async(done) =>{
+    beforeEach(async(done) => {
         let users = new UsersActions();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
