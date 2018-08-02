@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
 import {
     ContentMetadataConfig,
     LayoutOrientedConfigItem,
@@ -24,7 +23,6 @@ import {
 } from '../../interfaces/content-metadata.interfaces';
 import { getProperty } from './property-group-reader';
 
-@Injectable()
 export class LayoutOrientedConfigService implements ContentMetadataConfig {
 
     constructor(private config: any) {}

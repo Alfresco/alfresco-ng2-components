@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
 import { ContentMetadataConfig, OrganisedPropertyGroup,
     PropertyGroupContainer
 } from '../../interfaces/content-metadata.interfaces';
 
-@Injectable()
 export class IndifferentConfigService implements ContentMetadataConfig {
 
     constructor(config: any) {}
