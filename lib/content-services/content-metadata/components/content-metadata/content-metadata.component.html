@@ -24,7 +24,7 @@
                     <mat-expansion-panel 
                     *ngIf="first"
                     [attr.data-automation-id]="'adf-metadata-group-' + group.title" 
-                    [expanded]="!displayDefaultProperties">
+                    [expanded]="!displayDefaultProperties && first">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{ group.title | translate }}
@@ -37,23 +37,7 @@
                             [displayEmpty]="displayEmpty">
                         </adf-card-view>
                     </mat-expansion-panel>
-                    
-                    <mat-expansion-panel 
-                    *ngIf="!first"
-                    [attr.data-automation-id]="'adf-metadata-group-' + group.title" 
-                    [expanded]="!displayDefaultProperties">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{ group.title | translate }}
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-
-                        <adf-card-view
-                            [properties]="group.properties"
-                            [editable]="editable"
-                            [displayEmpty]="displayEmpty">
-                        </adf-card-view>
-                    </mat-expansion-panel>
+    
                 </div>
             </ng-container>
             <ng-template #loading>
