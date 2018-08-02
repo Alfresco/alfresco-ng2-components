@@ -333,7 +333,7 @@ describe('ProcessInstanceListComponent', () => {
                 expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.rows.length).toEqual(2);
-                expect(component.rows[0]['name']).toEqual('Process 773443333');
+                expect(component.rows[0].name).toEqual('Process 773443333');
                 done();
             });
 
@@ -362,10 +362,10 @@ describe('ProcessInstanceListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[0].name).toEqual('Process 773443333');
                 done();
             });
 
@@ -378,10 +378,10 @@ describe('ProcessInstanceListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[0].name).toEqual('Process 773443333');
                 done();
             });
 
@@ -394,10 +394,10 @@ describe('ProcessInstanceListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[0].name).toEqual('Process 773443333');
                 done();
             });
 
@@ -410,10 +410,10 @@ describe('ProcessInstanceListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[0].name).toEqual('Process 773443333');
                 done();
             });
 
@@ -426,10 +426,10 @@ describe('ProcessInstanceListComponent', () => {
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(component.data).toBeDefined();
+                expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+                expect(component.rows.length).toEqual(2);
+                expect(component.rows[0].name).toEqual('Process 773443333');
                 done();
             });
 
@@ -445,7 +445,7 @@ describe('ProcessInstanceListComponent', () => {
                 expect(component.rows).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.rows.length).toEqual(2);
-                expect(component.rows[0]['name']).toEqual('Process 773443333');
+                expect(component.rows[0].name).toEqual('Process 773443333');
                 done();
             });
 
