@@ -66,7 +66,7 @@
     </ng-container>
 
     <ng-container *ngIf="responseFacetFields">
-        <mat-expansion-panel *ngFor="let field of responseFacetFields">
+        <mat-expansion-panel *ngFor="let field of responseFacetFields" [expanded]="true">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ field.label }}</mat-panel-title>
             </mat-expansion-panel-header>
@@ -90,7 +90,7 @@
                     *ngFor="let bucket of field.buckets"
                     [checked]="bucket.checked"
                     (change)="onToggleBucket($event, field, bucket)">
-                    {{ bucket.display || bucket.label }} ({{ bucket.count }})
+                    {{ bucket.display || bucket.label }} <span *ngIf="bucket.count!==null">(</span>{{ bucket.count }}<span *ngIf="bucket.count!==null">)</span>
                 </mat-checkbox>
             </div>
 
