@@ -25,7 +25,6 @@ import FileModel = require('../../models/ACS/fileModel');
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
@@ -44,7 +43,7 @@ describe('Comment Component', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let nodeId, userFullName;
+    let nodeId, userFullName, uploadActions;
 
     let comments = {
         first: 'This is a comment',
@@ -73,7 +72,7 @@ describe('Comment Component', () => {
 
     beforeEach(async (done) => {
 
-        let uploadActions = new UploadActions();
+        uploadActions = new UploadActions();
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
@@ -94,11 +93,7 @@ describe('Comment Component', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.core.nodesApi.deleteNode(nodeId, {'permanent': true}).then(function() {
-            console.log('API called successfully.');
-        }, function(error) {
-            console.error(error);
-        });
+        await uploadActions.deleteFilesOrFolder(nodeId, {'permanent': true});
 
         done();
     });
