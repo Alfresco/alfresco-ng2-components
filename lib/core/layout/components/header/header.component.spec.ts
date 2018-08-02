@@ -87,6 +87,14 @@ describe('HeaderLayoutComponent', () => {
             expect(/\/customHomePage$/.test(logoAnchor.href)).toEqual(true);
         });
 
+        it('should have custom tooltip text set on logo when the tooltip parameter is set', () => {
+            component.tooltip = 'logo title';
+            fixture.detectChanges();
+
+            const logoAnchor = fixture.nativeElement.querySelector('mat-toolbar>a');
+            expect(logoAnchor.title).toEqual('logo title');
+        });
+
         it('test click on sidenav button', () => {
             component.showSidenavToggle = true;
             fixture.detectChanges();

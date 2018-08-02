@@ -27,6 +27,7 @@ export class HeaderLayoutComponent implements OnInit {
     @Input() title: string;
     @Input() logo: string;
     @Input() logoUrl: any = '/';
+    @Input() tooltip: string;
     @Input() color: string;
     @Input() showSidenavToggle: boolean = true;
     @Output() clicked = new EventEmitter<any>();
