@@ -111,6 +111,18 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     selectFirstRow: boolean = true;
 
+    /** The id of a task */
+    @Input()
+    taskId: string;
+
+    /** Toggles inclusion of Process Instances */
+    @Input()
+    includeProcessInstance: boolean;
+
+    /** Starting point of the */
+    @Input()
+    start: number = 0;
+
     /** Emitted when a task in the list is clicked */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -321,7 +333,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Optimize name field
-     * @param istances
+     * @param instances
      */
     private optimizeNames(instances: any[]): any[] {
         instances = instances.map(t => {
@@ -344,10 +356,11 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             assignment: this.assignment,
             state: this.state,
             sort: this.sort,
-            landingTaskId: this.landingTaskId,
             page: this.page,
             size: this.size,
-            start: 0
+            start: this.start,
+            taskId: this.taskId,
+            includeProcessInstance: this.includeProcessInstance
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }

@@ -118,6 +118,8 @@ export class TaskQueryRequestRepresentationModel implements TaskQueryRequestRepr
     sort: string;
     page: number;
     size: number;
+    taskId: string;
+    includeProcessInstance: boolean;
 
     constructor(obj?: any) {
         if (obj) {
@@ -131,6 +133,8 @@ export class TaskQueryRequestRepresentationModel implements TaskQueryRequestRepr
             this.sort = obj.sort || null;
             this.page = obj.page || 0;
             this.size = obj.size || 25;
+            this.taskId = obj.taskId || null;
+            this.includeProcessInstance = obj.includeProcessInstance;
         }
     }
 }

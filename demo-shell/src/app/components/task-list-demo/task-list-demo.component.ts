@@ -18,7 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-
+import { NotificationService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './task-list-demo.component.html',
@@ -35,7 +35,11 @@ export class TaskListDemoComponent implements OnInit {
 
     appId: number;
 
+    id: string;
+
     processDefinitionId: string;
+
+    processInstanceId: string;
 
     state: string;
 
@@ -45,9 +49,18 @@ export class TaskListDemoComponent implements OnInit {
 
     sort: string;
 
+    start: number;
+
+    includeProcessInstance: boolean;
+
     assignmentOptions = [
         {value: 'assignee', title: 'Assignee'},
         {value: 'candidate', title: 'Candidate'}
+    ];
+
+    includeProcessInstanceOptions = [
+        {value: 'include', title: 'Include'},
+        {value: 'exclude', title: 'Exclude'}
     ];
 
     stateOptions = [
@@ -64,7 +77,8 @@ export class TaskListDemoComponent implements OnInit {
     ];
 
     constructor(private route: ActivatedRoute,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit() {
@@ -78,20 +92,24 @@ export class TaskListDemoComponent implements OnInit {
             });
         }
 
+        this.appId = this.defaultAppId;
         this.errorMessage = 'Insert App Id';
 
         this.buildForm();
-
     }
 
     buildForm() {
         this.taskListForm = this.formBuilder.group({
             taskAppId: new FormControl(this.defaultAppId, [Validators.required, Validators.pattern('^[0-9]*$')]),
             taskName: new FormControl(''),
+            taskId: new FormControl(''),
             taskProcessDefinitionId: new FormControl(''),
+            taskProcessInstanceId: new FormControl(''),
             taskAssignment: new FormControl(''),
             taskState: new FormControl(''),
-            taskSort: new FormControl('')
+            taskSort: new FormControl(''),
+            taskStart: new FormControl('', [Validators.pattern('^[0-9]*$')]),
+            taskIncludeProcessInstance: new FormControl('')
         });
 
         this.taskListForm.valueChanges
@@ -101,16 +119,27 @@ export class TaskListDemoComponent implements OnInit {
                     this.filterTasks(taskFilter);
                 }
         });
-
     }
 
     filterTasks(taskFilter: any) {
         this.appId = taskFilter.taskAppId;
+        this.id = taskFilter.taskId;
         this.processDefinitionId = taskFilter.taskProcessDefinitionId;
+        this.processInstanceId = taskFilter.taskProcessInstanceId;
         this.name = taskFilter.taskName;
         this.assignment = taskFilter.taskAssignment;
         this.state = taskFilter.taskState;
         this.sort = taskFilter.taskSort;
+        this.start = taskFilter.taskStart;
+
+        this.includeProcessInstance = taskFilter.taskIncludeProcessInstance === 'include';
+    }
+
+    onError($event) {
+        const errorMessage = JSON.parse($event.message).message;
+        this.notificationService.openSnackMessageAction(errorMessage, 'Reset', 5000).onAction().subscribe(() => {
+           this.resetTaskForm();
+        });
     }
 
     resetTaskForm() {
@@ -125,8 +154,16 @@ export class TaskListDemoComponent implements OnInit {
         return this.taskListForm.get('taskAppId');
     }
 
+    get taskId(): AbstractControl {
+        return this.taskListForm.get('taskId');
+    }
+
     get taskProcessDefinitionId(): AbstractControl {
         return this.taskListForm.get('taskProcessDefinitionId');
+    }
+
+    get taskProcessInstanceId(): AbstractControl {
+        return this.taskListForm.get('taskProcessInstanceId');
     }
 
     get taskName(): AbstractControl {
@@ -143,5 +180,13 @@ export class TaskListDemoComponent implements OnInit {
 
     get taskSort(): AbstractControl {
         return this.taskListForm.get('taskSort');
+    }
+
+    get taskIncludeProcessInstance(): AbstractControl {
+        return this.taskListForm.get('taskIncludeProcessInstance');
+    }
+
+    get taskStart(): AbstractControl {
+        return this.taskListForm.get('taskStart');
     }
 }
