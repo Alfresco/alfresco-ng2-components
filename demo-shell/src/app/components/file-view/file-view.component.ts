@@ -17,7 +17,7 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -35,12 +35,11 @@ export class FileViewComponent implements OnInit {
     isReadOnly = false;
     isPreset = false;
     customPreset: string = null;
-    displayDefaultProperties: boolean;
+    displayDefaultProperties = true;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private snackBar: MatSnackBar,
-                private appConfig: AppConfigService,
                 private apiService: AlfrescoApiService) {
     }
 
@@ -61,8 +60,6 @@ export class FileViewComponent implements OnInit {
                 );
             }
         });
-
-        this.displayDefaultProperties = this.appConfig.get<boolean>('content-metadata.displayDefaultProperties');
     }
 
     onUploadError(errorMessage: string) {

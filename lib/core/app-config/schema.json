@@ -514,10 +514,6 @@
                             ]
                         }
                     }                    
-                },
-                "displayDefaultProperties": { 
-                    "description": "This flag allows you to hide/show default metadata properties",
-                    "type": "boolean" 
                 }
             }
         },

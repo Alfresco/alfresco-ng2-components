@@ -529,8 +529,7 @@
             "default": {
                 "exif:exif": "*"
             }
-        },
-        "displayDefaultProperties": true
+        }
     },
     "sideNav": {
       "expandedSidenav": true,
