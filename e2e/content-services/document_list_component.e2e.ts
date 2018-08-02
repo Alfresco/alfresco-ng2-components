@@ -17,167 +17,681 @@
 
 import LoginPage = require('../pages/adf/loginPage');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
-
+import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import AcsUserModel = require('../models/ACS/acsUserModel');
-import FileModel = require('../models/ACS/fileModel');
-import FolderModel = require('../models/ACS/folderModel');
-
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import Util = require('../util/util');
-
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
+import ErrorPage = require('../pages/adf/documentListErrorPage');
+import FileModel = require('../models/ACS/fileModel');
+import moment from 'moment-es6';
+import { browser } from '../../node_modules/protractor';
 
-xdescribe('DocumentList component', () => {
+describe('Document List Component', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
+    let navBar = new NavigationBarPage();
+    let errorPage = new ErrorPage();
+    let privateSite;
+    let uploadedFolder, uploadedFolderExtra;
+    let uploadActions = new UploadActions();
+    let acsUser = null;
+    let testFileNode, pdfBFileNode;
 
-    let acsUser = new AcsUserModel();
-    let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
-    let docxFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
-    });
-    let testFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
-    });
-    let folderOneModel = new FolderModel({ 'name': 'folderOne' + Util.generateRandomString() });
-    let folderTwoModel = new FolderModel({ 'name': 'folderTwo' + Util.generateRandomString() });
-
-    let uploadedFolder;
-    let rootFolder = 'APP.PERSONAL-FILES', rootFolderName = 'Personal Files';
-    let fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
-
-    let files = {
-        base: 'newFile',
-        firstFile: 'newFile14.txt',
-        extension: '.txt'
-    };
-
-    let extensions = {
-        pdf: 'pdf',
-        docx: 'word',
-        test: 'document'
-    };
-
-    beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
-
-        fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, files.base, files.extension);
-        adminFileNames = Util.generateSeqeunceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, files.base, files.extension);
-
+    beforeAll(() => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
         });
+    });
 
+    afterEach(async (done) => {
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-        await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
-        await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');
-        await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
-
-        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderOneModel.name, '-my-');
-
-        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, uploadedFolder.entry.id);
-
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-        await uploadActions.createEmptyFiles(this.alfrescoJsApi, adminFileNames, uploadedFolder.entry.id);
-
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        contentServicesPage.goToDocumentList();
-
+        if (uploadedFolder) {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
+            uploadedFolder = null;
+        }
+        if (uploadedFolderExtra) {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolderExtra.entry.id);
+            uploadedFolderExtra = null;
+        }
+        if (testFileNode) {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, testFileNode.entry.id);
+            testFileNode = null;
+        }
+        if (pdfBFileNode) {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfBFileNode.entry.id);
+            pdfBFileNode = null;
+        }
         done();
     });
 
-    it('1. File has tooltip', () => {
-        expect(contentServicesPage.getTooltip(pdfFileModel.name)).toEqual(pdfFileModel.name);
+    describe('Permission Message', async () => {
+
+        beforeAll(async (done) => {
+            acsUser = new AcsUserModel();
+            let siteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
+            let folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
+            let privateSiteBody = { visibility: 'PRIVATE' , title: siteName};
+
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+            privateSite = await this.alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
+
+            uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, privateSite.entry.guid);
+
+            done();
+        });
+
+        it('[C217334] - Error message displayed without permissions', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            expect(errorPage.getErrorCode()).toBe('403');
+            expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
+        });
+
+        xit('[C279924] - Custom error message is displayed', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.enableCustomPermissionMessage();
+            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            expect(errorPage.getErrorCode()).toBe('Cris you don\'t have permissions');
+        });
+
+        it('[C279925] - Message is translated', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            navBar.openLanguageMenu();
+            navBar.chooseLanguage('Italian');
+            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
+        });
+
     });
 
-    it('2. Folder has tooltip', () => {
-        expect(contentServicesPage.getTooltip(folderOneModel.name)).toEqual(folderOneModel.name);
-        expect(contentServicesPage.getBreadcrumbTooltip(rootFolderName)).toEqual(rootFolderName);
+    describe('Custom Column', () => {
+
+        let folderName;
+        let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+        let docxFileModel = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        });
+        let timeAgoFileModel = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+        let mediumFileModel = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        });
+
+        let pdfUploadedNode, docxUploadedNode, timeAgoUploadedNode, mediumDateUploadedNode;
+
+        beforeAll(async (done) => {
+
+            acsUser = new AcsUserModel();
+
+            folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+            pdfUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+            docxUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, docxFileModel.location, docxFileModel.name, '-my-');
+            done();
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            if (pdfUploadedNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedNode.entry.id);
+            }
+            if (docxUploadedNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, docxUploadedNode.entry.id);
+            }
+            if (timeAgoUploadedNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, timeAgoUploadedNode.entry.id);
+            }
+            if (mediumDateUploadedNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, mediumDateUploadedNode.entry.id);
+            }
+            done();
+        });
+
+        it('[C279926] - Checks that only the files and folders of the users are showed', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.checkContentIsDisplayed(folderName);
+            contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+            contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+            expect(contentServicesPage.getDocumentListRowNumber()).toBe(4);
+        });
+
+        it('[C279927] - All columns are showed', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.checkColumnNameHeader();
+            contentServicesPage.checkColumnSizeHeader();
+            contentServicesPage.checkColumnCreatedByHeader();
+            contentServicesPage.checkColumnCreatedHeader();
+        });
+
+        it('[C279928] - The date is showed with timeAgo', async (done) => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            timeAgoUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            let dateValue = contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
+            expect(dateValue).toBe('a few seconds ago');
+            done();
+        });
+
+        it('[C279929] - The date is showed with date type', async (done) => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            mediumDateUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, mediumFileModel.location, mediumFileModel.name, '-my-');
+            let createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.enableMediumTimeFormat();
+            let dateValue = contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
+            expect(dateValue).toContain(createdDate);
+            done();
+        });
     });
 
-    it('4. Sort content ascending by name.', () => {
-        contentServicesPage.doubleClickRow(folderOneModel.name).checkContentIsDisplayed(files.firstFile);
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
-        expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
-        expect(contentServicesPage.sortAndCheckListIsOrderedByName(true)).toEqual(true);
+    describe('Column Sorting', () => {
+
+        let fakeFileA = new FileModel({
+            'name': 'A',
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+
+        let fakeFileB = new FileModel({
+            'name': 'B',
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+
+        let fakeFileC = new FileModel({
+            'name': 'C',
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+
+        let fileANode, fileBNode, fileCNode;
+
+        beforeAll(async (done) => {
+
+            acsUser = new AcsUserModel();
+
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            fileANode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileA.location, fakeFileA.name, '-my-');
+            fileBNode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileB.location, fakeFileB.name, '-my-');
+            fileCNode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileC.location, fakeFileC.name, '-my-');
+            done();
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            if (fileANode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileANode.entry.id);
+            }
+            if (fileBNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileBNode.entry.id);
+            }
+            if (fileCNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileCNode.entry.id);
+            }
+            done();
+        });
+
+        it('[C260112] - Sorting ascending by name', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByName('asc');
+        });
+
+        it('[C272770] - Sorting descending by name', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByName('desc');
+        });
+
+        it('[C272771] - Sorting ascending by author', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc');
+        });
+
+        it('[C272772] - Sorting descending by author', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc');
+        });
+
+        it('[C272773] - Sorting ascending by created date', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByCreated('asc');
+        });
+
+        it('[C272774] - Sorting descending by created date', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.sortAndCheckListIsOrderedByCreated('desc');
+        });
     });
 
-    it('5. Sort content descending by name.', () => {
-        expect(contentServicesPage.sortAndCheckListIsOrderedByName(false)).toEqual(true);
+    it('[C260121] - should show the spinner on loading', async (done) => {
+        acsUser = new AcsUserModel();
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.clickOnContentServices();
+        contentServicesPage.checkSpinnerIsShowed();
+        done();
     });
 
-    it('6. Sort content ascending by author.', () => {
-        expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor(true)).toEqual(true);
+    it('[C279959] - Empty Folder state is displayed for new folders', async (done) => {
+        acsUser = new AcsUserModel();
+
+        let folderName = 'BANANA';
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.createNewFolder(folderName);
+        contentServicesPage.navigateToFolder(folderName);
+        contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
+        contentServicesPage.checkEmptyFolderImageUrlToContain('/assets/images/empty_doc_lib.svg');
+        done();
     });
 
-    it('7. Sort content descending by author.', () => {
-        expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor(false)).toEqual(true);
+    it('[C272775] - File can be uploaded in a new created folder', async (done) => {
+        let testFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+        acsUser = new AcsUserModel();
+        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.checkContentIsDisplayed(uploadedFolder.entry.name);
+        contentServicesPage.navigateToFolder(uploadedFolder.entry.name);
+        contentServicesPage.uploadFile(testFile.location);
+        contentServicesPage.checkContentIsDisplayed(testFile.name);
+        done();
     });
 
-    it('8. Sort content ascending by created date.', () => {
-        expect(contentServicesPage.sortAndCheckListIsOrderedByCreated(true)).toEqual(true);
+    it('[C261997] - Recent Files empty', async (done) => {
+        acsUser = new AcsUserModel();
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.clickOnContentServices();
+        contentServicesPage.checkRecentFileToBeShowed();
+        let icon = await contentServicesPage.getRecentFileIcon();
+        expect(icon).toBe('history');
+        contentServicesPage.expandRecentFiles();
+        contentServicesPage.checkEmptyRecentFileIsDisplayed();
+        contentServicesPage.closeRecentFiles();
+        done();
     });
 
-    it('9. Sort content descending by created date.', () => {
-        expect(contentServicesPage.sortAndCheckListIsOrderedByCreated(false)).toEqual(true);
+    it('[C268119] - "ygj" letters rendering in document list', async (done) => {
+        acsUser = new AcsUserModel();
+        let folderName = 'ggggggjjjjjjjjjjjjyyyyyy';
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.clickOnContentServices();
+        let lineHeight = await contentServicesPage.getStyleValueForRowText(folderName, 'line-height');
+        let fontSize = await contentServicesPage.getStyleValueForRowText(folderName, 'font-size');
+        let actualFontValue = (parseInt(fontSize, 10) * 1.12).toFixed(2);
+        expect(lineHeight).toBe(actualFontValue + 'px');
+        done();
     });
 
-    it('10. File can be uploaded in a new created folder.', () => {
-        contentServicesPage.createNewFolder(folderTwoModel.name).checkContentIsDisplayed(folderTwoModel.name);
-        contentServicesPage.doubleClickRow(folderTwoModel.name).checkEmptyFolderMessageIsDisplayed();
+    it('[C279970] - Custom column - isLocked field is showed for folders', async (done) => {
+        acsUser = new AcsUserModel();
+        let folderNameA = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        let folderNameB = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderNameA, '-my-');
+        uploadedFolderExtra = await uploadActions.uploadFolder(this.alfrescoJsApi, folderNameB, '-my-');
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.checkContentIsDisplayed(folderNameA);
+        contentServicesPage.checkContentIsDisplayed(folderNameB);
+        contentServicesPage.checkLockIsDislpayedForElement(folderNameA);
+        contentServicesPage.checkLockIsDislpayedForElement(folderNameB);
+        done();
     });
 
-    it('11. Navigate to child folder via breadcrumbs.', () => {
-        contentServicesPage.navigateToFolderViaBreadcrumbs(acsUser.getId());
-
-        contentServicesPage
-            .checkContentIsDisplayed(folderOneModel.name)
-            .doubleClickRow(folderOneModel.name)
-            .checkContentIsDisplayed(folderTwoModel.name)
-            .doubleClickRow(folderTwoModel.name);
-
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(folderTwoModel.name);
+    it('[C269086] - Custom column - IsLocked field is showed for files', async (done) => {
+        let testFileA = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+        let testFileB = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        });
+        acsUser = new AcsUserModel();
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        testFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileA.location, testFileA.name, '-my-');
+        pdfBFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileB.location, testFileB.name, '-my-');
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.checkContentIsDisplayed(testFileA.name);
+        contentServicesPage.checkContentIsDisplayed(testFileB.name);
+        contentServicesPage.checkLockIsDislpayedForElement(testFileA.name);
+        contentServicesPage.checkLockIsDislpayedForElement(testFileB.name);
+        done();
     });
 
-    it('12. Navigate to parent folder via breadcrumbs.', () => {
-        contentServicesPage.navigateToFolderViaBreadcrumbs(uploadedFolder.entry.name);
+    describe('Once uploaded 20 folders', () => {
 
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
+        let folderCreated;
 
-        expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
+        beforeAll(async (done) => {
+            acsUser = new AcsUserModel();
+            folderCreated = [];
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            let folderName = '';
+            let folder = null;
+            for (let i = 0; i < 20; i++) {
+                folderName = `MEESEEKS_000${i}`;
+                folder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+                folderCreated.push(folder);
+            }
+            done();
+        });
 
-        browser.refresh();
+        afterAll(async (done) => {
+            Promise.all(folderCreated.map((folder) =>
+                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folder.entry.id)
+            )).then(
+                done()
+            );
+        });
 
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(uploadedFolder.entry.name);
-        expect(contentServicesPage.getCurrentFolderID()).toContain(uploadedFolder.entry.id);
+        it('[C277093] - Sorting files with Items per page set to default', async (done) => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.checkListIsSortedByNameColumn('asc');
+            done();
+        });
+
     });
 
-    it('13. Each known extension has it s own icon.', () => {
-        contentServicesPage.navigateToFolderViaBreadcrumbs(acsUser.getId());
+    describe('Thumbnails and tooltips', () => {
 
-        contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-        contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
-        contentServicesPage.checkContentIsDisplayed(testFileModel.name);
-        contentServicesPage.checkIconColumn(pdfFileModel.name, extensions.pdf);
-        contentServicesPage.checkIconColumn(docxFileModel.name, extensions.docx);
-        contentServicesPage.checkIconColumn(testFileModel.name, extensions.test);
+        let pdfFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        });
+
+        let testFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+
+        let docxFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        });
+        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        let filePdfNode, fileTestNode, fileDocxNode, folderNode;
+
+        beforeAll(async (done) => {
+            acsUser = new AcsUserModel();
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            filePdfNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
+            fileTestNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFile.location, testFile.name, '-my-');
+            fileDocxNode = await uploadActions.uploadFile(this.alfrescoJsApi, docxFile.location, docxFile.name, '-my-');
+            folderNode = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+
+            done();
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            if (filePdfNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, filePdfNode.entry.id);
+            }
+            if (fileTestNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTestNode.entry.id);
+            }
+            if (fileDocxNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileDocxNode.entry.id);
+            }
+            if (folderNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folderNode.entry.id);
+            }
+            done();
+        });
+
+        beforeEach( () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+        });
+
+        it('[C260108] - File tooltip', () => {
+            expect(contentServicesPage.getTooltip(pdfFile.name)).toEqual(pdfFile.name);
+        });
+
+        it('[C260109] - Folder tooltip', () => {
+            expect(contentServicesPage.getTooltip(folderName)).toEqual(folderName);
+        });
+
+        it('[C260119] - Thumbnail - Disabled - folder', async (done) => {
+            let folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
+            expect(folderIconUrl).toContain('/assets/images/ft_ic_folder.svg');
+            done();
+        });
+
+        it('[C260119] - Thumbnail - Disabled - pdf file', async (done) => {
+            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
+            expect(fileIconUrl).toContain('/assets/images/ft_ic_pdf.svg');
+            done();
+        });
+
+        it('[C260119] - Thumbnail - Disabled - docx file', async (done) => {
+            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(docxFile.name);
+            expect(fileIconUrl).toContain('/assets/images/ft_ic_ms_word.svg');
+            done();
+        });
+
+        it('[C260119] - Thumbnail - Disabled - test file', async (done) => {
+            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(testFile.name);
+            expect(fileIconUrl).toContain('/assets/images/ft_ic_document.svg');
+            done();
+        });
+
+        it('[C274701] - Thumbnails - Enabled', async (done) => {
+            contentServicesPage.enableThumbnails();
+            contentServicesPage.checkAcsContainer();
+            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
+            expect(fileIconUrl).toContain(`/versions/1/nodes/${filePdfNode.entry.id}/renditions`);
+            done();
+        });
     });
 
-    it('14. Navigate to root folder via breadcrumbs.', () => {
-        contentServicesPage.navigateToFolderViaBreadcrumbs(rootFolder);
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(rootFolderName);
+    describe('Gallery View', () => {
+
+        let cardProperties = {
+            DISPLAY_NAME : 'Display name',
+            SIZE: 'Size',
+            LOCK: 'Lock',
+            CREATED_BY: 'Created by',
+            CREATED: 'Created'
+        };
+
+        let funnyUser = {};
+
+        let pdfFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        });
+
+        let testFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        });
+
+        let docxFile = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        });
+        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        let filePdfNode, fileTestNode, fileDocxNode, folderNode, filePDFSubNode;
+
+        beforeAll(async (done) => {
+            acsUser = new AcsUserModel();
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            funnyUser = await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            filePdfNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
+            fileTestNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFile.location, testFile.name, '-my-');
+            fileDocxNode = await uploadActions.uploadFile(this.alfrescoJsApi, docxFile.location, docxFile.name, '-my-');
+            folderNode = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+            filePDFSubNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, folderNode.entry.id);
+
+            done();
+        });
+
+        beforeEach( () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.clickGridViewButton();
+            contentServicesPage.checkCardViewContainerIsDisplayed();
+        });
+
+        it('[C280016] - Gallery view is showed', () => {
+            expect(contentServicesPage.getCardElementShowedInPage()).toBe(4);
+        });
+
+        it('[C280023] - Gallery Card show details', () => {
+            expect(contentServicesPage.getDocumentCardIconForElement(folderName)).toContain('/assets/images/ft_ic_folder.svg');
+            expect(contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
+            expect(contentServicesPage.getDocumentCardIconForElement(docxFile.name)).toContain('/assets/images/ft_ic_ms_word.svg');
+            expect(contentServicesPage.getDocumentCardIconForElement(testFile.name)).toContain('/assets/images/ft_ic_document.svg');
+            contentServicesPage.checkMenuIsShowedForElementIndex(0);
+            contentServicesPage.checkMenuIsShowedForElementIndex(1);
+            contentServicesPage.checkMenuIsShowedForElementIndex(2);
+            contentServicesPage.checkMenuIsShowedForElementIndex(3);
+        });
+
+        it('[C280023] - Gallery Card show details - attributes', () => {
+            let timeMessage = '';
+            contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.DISPLAY_NAME);
+            contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.SIZE);
+            contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED_BY);
+            contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED);
+
+            expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.DISPLAY_NAME)).toBe(folderName);
+            expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            timeMessage = moment(folderNode.entry.createdAt).fromNow();
+            expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toBe(timeMessage);
+
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.DISPLAY_NAME)).toBe(pdfFile.name);
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.SIZE)).toBe(`702.76 KB`);
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            timeMessage = moment(filePdfNode.entry.createdAt).fromNow();
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toBe(timeMessage);
+
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`770.35 KB`);
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            timeMessage = moment(fileDocxNode.entry.createdAt).fromNow();
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toBe(timeMessage);
+
+            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.DISPLAY_NAME)).toBe(testFile.name);
+            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.SIZE)).toBe(`14 Bytes`);
+            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            timeMessage = moment(fileTestNode.entry.createdAt).fromNow();
+            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toBe(timeMessage);
+        });
+
+        it('[C280023] - Gallery Card show details - subfolder gallery displayed', () => {
+            contentServicesPage.navigateToCardFolder(folderName);
+            expect(contentServicesPage.getCardElementShowedInPage()).toBe(1);
+            expect(contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
+        });
+
+        it('[C280023] - Gallery Card show details - back to list view', () => {
+            contentServicesPage.clickGridViewButton();
+            contentServicesPage.checkAcsContainer();
+            contentServicesPage.navigateToFolder(folderName);
+            contentServicesPage.checkRowIsDisplayed(pdfFile.name);
+        });
+
+        it('[C261993] - Sort by Display name', () => {
+            contentServicesPage.selectGridSortingFromDropdown(cardProperties.DISPLAY_NAME);
+            contentServicesPage.checkListIsSortedByNameColumn('asc');
+        });
+
+        it('[C261994] - Sort by Size', () => {
+            contentServicesPage.selectGridSortingFromDropdown(cardProperties.SIZE);
+            contentServicesPage.checkListIsSortedBySizeColumn('asc');
+        });
+
+        it('[C261995] - Sort by Author', () => {
+            contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED_BY);
+            contentServicesPage.checkListIsSortedByAuthorColumn('asc');
+        });
+
+        it('[C261994] - Sort by Created', () => {
+            contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED);
+            contentServicesPage.checkListIsSortedByCreatedColumn('asc');
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            if (filePdfNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, filePdfNode.entry.id);
+            }
+            if (fileTestNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTestNode.entry.id);
+            }
+            if (fileDocxNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileDocxNode.entry.id);
+            }
+            if (filePDFSubNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, filePDFSubNode.entry.id);
+            }
+            if (folderNode) {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folderNode.entry.id);
+            }
+            done();
+        });
     });
 });

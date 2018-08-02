@@ -16,7 +16,8 @@ export class UploadActions {
             null,
             {
                 'name': fileName,
-                'nodeType': 'cm:content'
+                'nodeType': 'cm:content',
+                'renditions': 'doclib'
             }
         );
     }
