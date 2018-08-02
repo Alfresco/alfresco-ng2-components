@@ -545,9 +545,9 @@ var ContentServicesPage = function () {
     }
 
     this.navigateToCardFolder = function(folderName) {
-        let folderCard = element(by.css(`.document-list-container div.adf-data-table-cell[filename="${folderName}"]`));
+        let folderCard = element(by.css(`.document-list-container div.image-table-cell.adf-data-table-cell[filename="${folderName}"]`));
         folderCard.click();
-        let folderSelected = element(by.css(`.adf-datatable-row.is-selected div[filename="${folderName}"]`));
+        let folderSelected = element(by.css(`.adf-datatable-row.is-selected div[filename="${folderName}"].adf-data-table-cell--image`));
         Util.waitUntilElementIsVisible(folderSelected);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
