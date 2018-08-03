@@ -96,7 +96,7 @@ describe('Search component - Search Page', () => {
         done();
     });
 
-    it('1. \'No results found searching for\' message is displayed on Search Page', () => {
+    it('[C260264] \'No results found searching for\' message is displayed on Search Page', () => {
         let notExistentFileName = Util.generateRandomString();
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
@@ -104,7 +104,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('2. File previewer is displayed', () => {
+    it('[C260265] File previewer is displayed', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
@@ -121,7 +121,7 @@ describe('Search component - Search Page', () => {
         filePreviewPage.closePreviewWithButton();
     });
 
-    it('3. Only the searched file is displayed', () => {
+    it('[C272810] Only the searched file is displayed', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
@@ -134,7 +134,7 @@ describe('Search component - Search Page', () => {
         expect(searchResultPage.numberOfResultsDisplayed()).toBe(1);
     });
 
-    it('4. Folder content is displayed', () => {
+    it('[C260267] Folder content is displayed', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog.checkSearchBarIsNotVisible()
@@ -150,7 +150,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    it('5. Delete a file from the Search Results Page', () => {
+    it('[C260261] Delete a file from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
@@ -172,7 +172,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('6. Delete a folder from the Search Results Page', () => {
+    it('[C272809] Delete a folder from the Search Results Page', () => {
         searchDialog.checkSearchBarIsNotVisible()
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -189,7 +189,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    xit('8. Sort content ascending by name.', () => {
+    xit('[C272803] Sort content ascending by name.', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
@@ -204,7 +204,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('9. Sort content descending by name.', () => {
+    xit('[C272804] Sort content descending by name.', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog.checkSearchBarIsNotVisible()
@@ -218,7 +218,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('10. Sort content ascending by author.', () => {
+    xit('[C272805] Sort content ascending by author.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -228,7 +228,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('11. Sort content descending by author.', () => {
+    xit('[C272806] Sort content descending by author.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -238,7 +238,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('12. Sort content ascending by created date.', () => {
+    xit('[C272807] Sort content ascending by created date.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -248,7 +248,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('13. Sort content descending by created date.', () => {
+    xit('[C260260] Sort content descending by created date.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -258,7 +258,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('14. Try to delete a file without rights from the Search Results Page', () => {
+    xit('[C260262] Try to delete a file without rights from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.no_permission.noPermFile);
@@ -271,7 +271,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
     });
 
-    it('15. Try to delete a folder without rights from the Search Results Page', () => {
+    it('[C272808] Try to delete a folder without rights from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.no_permission.noPermFolder);
