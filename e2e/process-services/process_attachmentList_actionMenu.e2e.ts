@@ -22,8 +22,6 @@ import ProcessDetailsPage = require('../pages/adf/process_services/processDetail
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import ViewerPage = require('../pages/adf/viewerPage.js');
 
-import CONSTANTS = require('../util/constants');
-
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import Util = require('../util/util.js');
@@ -98,7 +96,7 @@ describe('Attachment list action menu for processes', () => {
         done();
     });
 
-    xit('[C260228] Option menu functionality - Active Process', () => {
+    it('[C260228] Option menu functionality - Active Process', () => {
         processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
 
         processFiltersPage.selectFromProcessList(processName.active);
@@ -132,7 +130,7 @@ describe('Attachment list action menu for processes', () => {
         attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
-    xit('[C279886] Option menu functionality - Completed Process', () => {
+    it('[C279886] Option menu functionality - Completed Process', () => {
         processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();

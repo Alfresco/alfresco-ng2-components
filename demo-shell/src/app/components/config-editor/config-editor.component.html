@@ -7,3 +7,14 @@
 <button  mat-raised-button id="adf-metadata-clear" (click)="onClearMetadata()" color="primary">Clear metadata configuration</button>
 
 <br>
+<br>
+<br>
+
+<h2>Search App config editor</h2>
+
+<ngx-monaco-editor id="adf-search-editor" class="adf-search-editor" [options]="editorOptions" [(ngModel)]="searchConf" (onInit)="onInitSearch($event)" ></ngx-monaco-editor>
+
+<button  mat-raised-button id="adf-search-save"  (click)="onSaveSearch()" color="primary">Save Search configuration</button>
+<button  mat-raised-button id="adf-search-clear" (click)="onClearSearch()" color="primary">Clear Search configuration</button>
+
+<br>

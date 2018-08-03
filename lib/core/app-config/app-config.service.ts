@@ -18,7 +18,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../utils/object-utils';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 export enum AppConfigValues {
@@ -49,11 +49,11 @@ export class AppConfigService {
         alfrescoRepositoryName: 'alfresco-1'
     };
 
-    private onLoadSubject: BehaviorSubject<any>;
+    private onLoadSubject: Subject<any>;
     onLoad: Observable<any>;
 
     constructor(private http: HttpClient) {
-        this.onLoadSubject = new BehaviorSubject(this.config);
+        this.onLoadSubject = new Subject();
         this.onLoad = this.onLoadSubject.asObservable();
     }
 

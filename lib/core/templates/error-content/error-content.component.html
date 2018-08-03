@@ -10,12 +10,12 @@
         {{ 'ERROR_CONTENT.' + errorCode + '.DESCRIPTION' | translate }}
     </p>
     <div class="adf-error-content-buttons">
-        <a mat-raised-button color="primary" 
+        <a a id="adf-secondary-button" mat-raised-button color="primary"
             *ngIf="secondaryButtonText" (click)="onSecondButton()"
-            class="adf-error-content-description-link"> 
+            class="adf-error-content-description-link">
             {{ 'ERROR_CONTENT.' + errorCode + '.SECONDARY_BUTTON.TEXT' | translate | uppercase }}
         </a>
-        <a mat-raised-button color="primary" (click)="onReturnButton()">
+        <a id="adf-return-button" mat-raised-button color="primary" (click)="onReturnButton()">
             {{ 'ERROR_CONTENT.' + this.errorCode + '.RETURN_BUTTON.TEXT' | translate | uppercase }}
         </a>
     </div>

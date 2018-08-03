@@ -89,7 +89,8 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     clone(date: Moment): Moment {
-        return date.clone().locale(this.locale);
+        let locale = this.locale || 'en';
+        return date.clone().locale(locale);
     }
 
     createDate(year: number, month: number, date: number): Moment {
@@ -97,16 +98,18 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     today(): Moment {
-        return moment().locale(this.locale);
+        let locale = this.locale || 'en';
+        return moment().locale(locale);
     }
 
     parse(value: any, parseFormat: any): Moment {
+        let locale = this.locale || 'en';
 
         if (value && typeof value === 'string') {
-            let m = moment(value, parseFormat, this.locale, true);
+            let m = moment(value, parseFormat, locale, true);
             if (!m.isValid()) {
                 // use strict parsing because Moment's parser is very forgiving, and this can lead to undesired behavior.
-                m = moment(value, this.overrideDisplyaFormat, this.locale, true);
+                m = moment(value, this.overrideDisplyaFormat, locale, true);
             }
             if (m.isValid()) {
                 // if user omits year, it defaults to 2001, so check for that issue.
@@ -123,7 +126,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
             return m;
         }
 
-        return value ? moment(value).locale(this.locale) : null;
+        return value ? moment(value).locale(locale) : null;
     }
 
     format(date: Moment, displayFormat: any): string {
@@ -204,7 +207,8 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     fromIso8601(iso8601String: string): Moment | null {
-        let d = moment(iso8601String, moment.ISO_8601).locale(this.locale);
+        let locale = this.locale || 'en';
+        let d = moment(iso8601String, moment.ISO_8601).locale(locale);
         return this.isValid(d) ? d : null;
     }
 

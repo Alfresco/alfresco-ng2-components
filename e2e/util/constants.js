@@ -20,7 +20,7 @@ var exports = module.exports = {};
 /**
  *Rest API Response statusCodes
  */
-exports.HTTP_RESPONSE_STATUS_CODE ={
+exports.HTTP_RESPONSE_STATUS_CODE = {
     FORBIDDEN: 403,
     OK: 200,
     BAD_REQUEST: 400,
@@ -32,7 +32,7 @@ exports.HTTP_RESPONSE_STATUS_CODE ={
 /**
  *Rest API Response Messages
  */
-exports.HTTP_RESPONSE_STATUS ={
+exports.HTTP_RESPONSE_STATUS = {
     OK: {
         'CODE': 200,
         'MESSAGE': 'OK'
@@ -55,8 +55,8 @@ exports.HTTP_RESPONSE_STATUS ={
  *Rest API HTTP content types
  */
 exports.HTTP_CONTENT_TYPE = {
-    JSON : 'application/json',
-    URLENCODED : 'application/x-www-form-urlencoded',
+    JSON: 'application/json',
+    URLENCODED: 'application/x-www-form-urlencoded',
     IMAGE_PNG: 'image/png',
     TEXT: 'text/csv'
 };
@@ -119,4 +119,11 @@ exports.PROCESSDATEFORMAT = "mmm dd yyyy";
 exports.PROCESSSTATUS = {
     RUNNING: 'Running',
     COMPLETED: 'Completed'
+};
+
+exports.CS_USER_ROLES = {
+    CONSUMER: 'SiteConsumer',
+    COLLABORATOR: 'SiteCollaborator',
+    CONTRIBUTOR: 'SiteContributor',
+    MANAGER: 'SiteManager'
 };

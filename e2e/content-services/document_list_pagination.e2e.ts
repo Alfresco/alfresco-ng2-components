@@ -55,7 +55,7 @@ describe('Document List - Pagination', function () {
 
     let acsUser = new AcsUserModel();
     let newFolderModel = new FolderModel({ 'name': 'newFolder' });
-    let fileNames = [], nrOfFiles = 20, currentPage = 1, secondSetOfFiles, secondSetNumber = 25;
+    let fileNames = [], nrOfFiles = 20, currentPage = 1, secondSetOfFiles, secondSetNumber = 20;
     let folderTwoModel = new FolderModel({ 'name': 'folderTwo' });
     let folderThreeModel = new FolderModel({ 'name': 'folderThree' });
 
@@ -93,7 +93,7 @@ describe('Document List - Pagination', function () {
         contentServicesPage.navigateToFolder(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
+        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
         contentServicesPage.getAllRowsNameColumn().then(function (list) {

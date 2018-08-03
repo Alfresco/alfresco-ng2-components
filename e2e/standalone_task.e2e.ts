@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('./pages/adf/loginPage');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
 import TasksPage = require('./pages/adf/process_services/tasksPage');
@@ -23,14 +25,9 @@ import CONSTANTS = require('./util/constants');
 
 import Tenant = require('./models/APS/Tenant');
 import Task = require('./models/APS/Task');
-import TaskModel = require('./models/APS/TaskModel');
-import FormModel = require('./models/APS/FormModel');
-import FileModel = require('./models/ACS/fileModel');
 
 import TestConfig = require('./test.config');
 import resources = require('./util/resources');
-
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from './actions/users.actions';
@@ -47,7 +44,6 @@ describe('Start Task - Task App', () => {
     let taskPage = new TasksPage();
     let tasks = ['Standalone task', 'Completed standalone task', 'Add a form', 'Remove form'];
     let noFormMessage = 'No forms attached';
-    let taskModel;
 
     beforeAll(async (done) => {
         let users = new UsersActions();
@@ -126,7 +122,7 @@ describe('Start Task - Task App', () => {
         taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]);
         expect(taskPage.usingTaskDetails().getFormName()).toEqual(app.formName);
 
-        browser.controlFlow().execute(async() => {
+        browser.controlFlow().execute(async () => {
             const listOfTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
             await this.alfrescoJsApi.activiti.taskApi.removeForm(listOfTasks.data[0].id);
         });

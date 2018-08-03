@@ -20,7 +20,9 @@
       "ALLOW_DELETE": "Allow delete",
       "SHOW_COMMENTS": "Show comments on versions",
       "ALLOW_DOWNLOAD": "Enable version download",
-      "READ_ONLY": "Read-only"
+      "READ_ONLY": "Read-only",
+      "ALLOW_DOWNLOAD": "Allow Download",
+      "COMMENTS": "Show comments"
     },
     "PERSONAL-FILES": "Personal Files",
     "WARN-MULTIPLE-UPLOADS": "Display warning for multiple uploads.",

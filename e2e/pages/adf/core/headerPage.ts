@@ -14,8 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import { element, by, protractor } from 'protractor';
+
 import Util = require('../../../util/util');
-import TestConfig = require('../../../test.config');
 
 export class HeaderPage {
 
@@ -47,7 +49,7 @@ export class HeaderPage {
     }
 
     changeHeaderColor(color) {
-        let headerColor = element(by.css('option[value="'+color+'"]'));
+        let headerColor = element(by.css('option[value="' + color + '"]'));
         return headerColor.click();
     }
 
@@ -58,16 +60,20 @@ export class HeaderPage {
 
     addTitle(title) {
         Util.waitUntilElementIsVisible(this.titleInput);
-        return this.titleInput.click().sendKeys(title).sendKeys(protractor.Key.ENTER);
+        this.titleInput.click();
+        this.titleInput.sendKeys(title);
+        this.titleInput.sendKeys(protractor.Key.ENTER);
     }
 
     checkIconIsDisplayed(url) {
-        let icon = element(by.css('img[src="'+ url +'"]'));
+        let icon = element(by.css('img[src="' + url + '"]'));
         Util.waitUntilElementIsVisible(icon);
     }
 
     addIcon(url) {
         Util.waitUntilElementIsVisible(this.iconInput);
-        return this.iconInput.click().sendKeys(url).sendKeys(protractor.Key.ENTER);
+        this.iconInput.click();
+        this.iconInput.sendKeys(url);
+        this.iconInput.sendKeys(protractor.Key.ENTER);
     }
 }

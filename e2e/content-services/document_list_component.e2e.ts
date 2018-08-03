@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../pages/adf/loginPage');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
@@ -24,7 +26,7 @@ import resources = require('../util/resources');
 import Util = require('../util/util');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
-import ErrorPage = require('../pages/adf/documentListErrorPage');
+import ErrorPage = require('../pages/adf/errorPage');
 import FileModel = require('../models/ACS/fileModel');
 import moment from 'moment-es6';
 import { browser } from '../../node_modules/protractor';
@@ -95,18 +97,19 @@ describe('Document List Component', () => {
             expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
 
-        xit('[C279924] - Custom error message is displayed', () => {
+        it('[C279924] - Custom error message is displayed', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableCustomPermissionMessage();
             browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-            expect(errorPage.getErrorCode()).toBe('Cris you don\'t have permissions');
+            expect(errorPage.getErrorCode()).toBe('403');
         });
 
         it('[C279925] - Message is translated', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             navBar.openLanguageMenu();
             navBar.chooseLanguage('Italian');
+            browser.sleep(2000);
             browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
         });

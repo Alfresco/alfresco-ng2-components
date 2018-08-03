@@ -16,10 +16,8 @@
  */
 
 import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import ViewerPage = require('../../pages/adf/viewerPage');
 import CardViewPage = require('../../pages/adf/metadataViewPage');
-import ContentListPage = require('../../pages/adf/dialog/contentList');
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
@@ -27,14 +25,12 @@ import FileModel = require('../../models/ACS/fileModel');
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
-import fs = require('fs');
-import path = require('path');
 import Util = require('../../util/util');
+import CONSTANTS = require('../../util/constants');
 
 describe('permissions', () => {
 
@@ -52,13 +48,10 @@ describe('permissions', () => {
     };
 
     const loginPage = new LoginPage();
-    const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new CardViewPage();
-    const contentListPage = new ContentListPage();
     const navigationBarPage = new NavigationBarPage();
 
-    let acsUser = new AcsUserModel();
     let consumerUser = new AcsUserModel();
     let collaboratorUser = new AcsUserModel();
     let contributorUser = new AcsUserModel();
@@ -91,17 +84,17 @@ describe('permissions', () => {
 
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: consumerUser.id,
-            role: 'SiteConsumer'
+            role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: collaboratorUser.id,
-            role: 'SiteCollaborator'
+            role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: contributorUser.id,
-            role: 'SiteContributor'
+            role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
         await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, site.entry.guid);

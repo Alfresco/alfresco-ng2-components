@@ -380,7 +380,6 @@
                 *ngIf="!infiniteScrolling"
                 class="adf-documentlist-pagination"
                 [target]="documentList"
-                [supportedPageSizes]="supportedPages"
                 (changePageSize)="onChangePageSize($event)"
                 (changePageNumber)="onChangePageNumber($event)"
                 (nextPage)="onNextPage($event)"
@@ -397,7 +396,7 @@
         <adf-info-drawer-layout *ngIf="showVersions" class="adf-manage-versions-sidebar" fxFlex="0 0 auto">
             <div info-drawer-content>
 
-                <adf-info-drawer [title]="'Details'">
+                <adf-info-drawer [title]="'Details'"  *ngIf="documentList.selection[0]" >
                     <adf-info-drawer-tab [label]="'Properties'">
                         <adf-content-metadata-card
                             [node]="documentList.selection[0].entry">

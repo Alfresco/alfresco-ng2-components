@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import TestConfig = require('../test.config');
 
 import LoginPage = require('../pages/adf/loginPage');
@@ -139,7 +141,7 @@ describe('Content Services Viewer', () => {
 
         viewerPage.viewFile(pdfFile.name);
 
-        browser.driver.sleep(3000); //wait open file
+        browser.driver.sleep(3000); // wait open file
 
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();
@@ -304,7 +306,7 @@ describe('Content Services Viewer', () => {
     it('[C261123] Should be able to preview all pages and navigate to a page when using thumbnails', () => {
         viewerPage.viewFile(pdfFile.name);
 
-        browser.driver.sleep(3000); //wait open file
+        browser.driver.sleep(3000); // wait open file
 
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.checkThumbnailsBtnIsDisplayed();
@@ -355,7 +357,7 @@ describe('Content Services Viewer', () => {
     it('[C268901] Should need a password when opening a protected file', () => {
         viewerPage.viewFile(protectedFile.name);
 
-        browser.driver.sleep(3000); //wait open file
+        browser.driver.sleep(3000); // wait open file
 
         viewerPage.checkPasswordDialogIsDisplayed();
         viewerPage.checkPasswordSubmitDisabledIsDisplayed();
