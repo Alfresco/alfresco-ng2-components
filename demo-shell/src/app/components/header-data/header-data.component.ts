@@ -46,4 +46,17 @@ export class HeaderDataComponent {
             this.headerService.changeLogo(logoPath);
         }
     }
+
+    submitRedirectUrl(value: string) {
+        const redirectUrl = JSON.parse(value);
+        if (redirectUrl) {
+            this.headerService.changeRedirectUrl(redirectUrl);
+        }
+    }
+
+    submitTooltip(tooltip: string) {
+        if (tooltip) {
+            this.headerService.changeTooltip(tooltip);
+        }
+    }
 }

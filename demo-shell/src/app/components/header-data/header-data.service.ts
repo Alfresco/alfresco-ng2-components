@@ -10,6 +10,8 @@ export class HeaderDataService {
   @Output() color: EventEmitter<string> = new EventEmitter();
   @Output() title: EventEmitter<string> = new EventEmitter();
   @Output() logo: EventEmitter<string> = new EventEmitter();
+  @Output() redirectUrl: EventEmitter<string|any[]> = new EventEmitter();
+  @Output() tooltip: EventEmitter<string> = new EventEmitter();
 
   hideMenuButton() {
     this.show = !this.show;
@@ -27,5 +29,13 @@ export class HeaderDataService {
 
   changeLogo(logoPath: string) {
     this.logo.emit(logoPath);
+  }
+
+  changeRedirectUrl(redirectUrl: string | any[]) {
+    this.redirectUrl.emit(redirectUrl);
+  }
+
+  changeTooltip(tooltip: string) {
+    this.tooltip.emit(tooltip);
   }
 }
