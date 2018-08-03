@@ -26,10 +26,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { PeopleModule } from '../people/people.module';
 import { ContentWidgetModule } from '../content-widget/content-widget.module';
-import { TaskUploadService } from './services/task-upload.service';
-import { ProcessUploadService } from './services/process-upload.service';
-import { TaskListService } from './services/tasklist.service';
-import { TaskFilterService } from './services/task-filter.service';
 
 import { ChecklistComponent } from './components/checklist.component';
 import { NoTaskDetailsTemplateDirective } from './components/no-task-detail-template.directive';
@@ -66,12 +62,6 @@ import { AttachFormComponent } from './components/attach-form.component';
         StartTaskComponent,
         TaskStandaloneComponent,
         AttachFormComponent
-    ],
-    providers: [
-        TaskListService,
-        TaskFilterService,
-        TaskUploadService,
-        ProcessUploadService
     ],
     exports: [
         NoTaskDetailsTemplateDirective,

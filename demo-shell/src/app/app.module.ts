@@ -92,7 +92,7 @@ import { ProcessModule } from '@alfresco/adf-process-services';
         CoreModule.forRoot(),
         ContentModule.forRoot(),
         InsightsModule,
-        ProcessModule,
+        ProcessModule.forRoot(),
         ThemePickerModule,
         FlexLayoutModule,
         ChartsModule,
