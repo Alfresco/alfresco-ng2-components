@@ -3,15 +3,20 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { PDFJSStatic } from 'pdfjs-dist';
+
+declare global {
+    const PDFJS: PDFJSStatic;
+}
+
 import 'hammerjs';
 import 'chart.js';
 import 'ng2-charts';
 
-import * as pdfjsLib from 'pdfjs-dist';
-pdfjsLib.PDFJS.workerSrc = 'pdf.worker.js';
+PDFJS.workerSrc = 'pdf.worker.js';
 
 if (environment.production) {
-  enableProdMode();
+    enableProdMode();
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule);
