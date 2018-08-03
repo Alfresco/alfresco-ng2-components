@@ -109,7 +109,10 @@ export class NotificationsComponent implements OnInit {
 
     sendCustomConfig() {
         this.actionOutput = '';
-
+        this.snackBarConfigObject = `{"direction": "${this.snackBarConfig.direction}",
+                                    "duration": "${this.snackBarConfig.duration}",
+                                    "horizontalPosition": "${ this.snackBarConfig.horizontalPosition}",
+                                    "verticalPosition": "${ this.snackBarConfig.verticalPosition}"}`;
         if (this.message) {
             if (this.withAction) {
                 this.notificationService

@@ -62,9 +62,9 @@ describe('Search component - Search Page', () => {
     beforeAll(async (done) => {
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, search.active.base, search.active.extension);
         adminFileNames = Util.generateSeqeunceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
-        search.active.firstFile = fileNames[1];
-        fileNames = fileNames.splice(0, 1);
-        search.active.secondFile = fileNames[2];
+        search.active.firstFile = fileNames[0];
+        search.active.secondFile = fileNames[1];
+        fileNames.splice(0, 1);
 
         firstFileModel = new FileModel({
             'name': search.active.firstFile,
@@ -203,7 +203,6 @@ describe('Search component - Search Page', () => {
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
-
         searchResultPage.checkContentIsDisplayed(search.active.secondFile);
         searchResultPage.sortAndCheckListIsOrderedByName(true).then((result) => {
             expect(result).toEqual(true);

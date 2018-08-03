@@ -42,8 +42,8 @@ describe('Comment Component', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-
-    let nodeId, userFullName, uploadActions;
+    let uploadActions = new UploadActions();
+    let nodeId, userFullName;
 
     let comments = {
         first: 'This is a comment',
@@ -72,8 +72,6 @@ describe('Comment Component', () => {
 
     beforeEach(async (done) => {
 
-        uploadActions = new UploadActions();
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
@@ -93,7 +91,7 @@ describe('Comment Component', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        await uploadActions.deleteFilesOrFolder(nodeId, {'permanent': true});
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
 
         done();
     });
