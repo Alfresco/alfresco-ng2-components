@@ -63,8 +63,7 @@ The default configuration behaves like the following:
 "content-metadata": {
     "presets": {
         "default": "*"
-    },
-    "displayDefaultProperties": false
+    }
 }
 ...
 ```

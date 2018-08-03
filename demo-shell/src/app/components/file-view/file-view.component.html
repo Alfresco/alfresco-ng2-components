@@ -23,14 +23,14 @@
 
                 <p class="toggle">
                     <mat-slide-toggle
-                        id="adf-toggle-custom-preset"
+                        id="adf-toggle-display-properties"
                         [color]="'primary'"
                         (change)="toggleDisplayProperties()"
                         [checked]="displayDefaultProperties">
                         Display Properties
                     </mat-slide-toggle>
                 </p>
-                
+
                 <p class="toggle">
                     <mat-slide-toggle
                         id="adf-metadata-empty"
@@ -83,7 +83,7 @@
 
                     </ng-container>
                 </p>
-                
+
             </adf-info-drawer-tab>
 
             <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.VERSIONS' | translate">

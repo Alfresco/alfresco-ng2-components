@@ -69,15 +69,18 @@ describe('Aspect oriented config', () => {
         done();
     });
 
+    beforeEach(() =>{
+        navigationBarPage.clickConfigEditorButton();
+        configEditorPage.clickClearMetadataButton();
+    });
+
     afterEach(() => {
         viewerPage.clickCloseButton();
         browser.refresh();
+        contentServicesPage.checkAcsContainer();
     });
 
     it('[C261117] Should be possible restrict the display properties of one an aspect', () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('{  "presets": {' +
             '        "default": [{' +
@@ -113,9 +116,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260185] Should ignore not existing aspect when present in the configuration', () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('   {' +
             '        "presets": {' +
@@ -145,9 +145,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided' , () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('{ }');
 
@@ -172,9 +169,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260182] Should show all the aspects if the default configuration contains the * symbol' , () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('{' +
             '    "presets": {' +
@@ -203,9 +197,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C268899] Should be possible use a Translation key as Title of a metadata group' , () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('{' +
             '  "presets": {' +
@@ -255,9 +246,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C279968] Should be possible use a custom preset' , () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('{' +
             '    "presets": {' +
@@ -278,6 +266,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.clickOnPropertiesTab();
 
         metadataViewPage.enablePreset();
+
         metadataViewPage.enterPresetText('custom-preset');
 
         metadataViewPage.clickOnInformationButton();
