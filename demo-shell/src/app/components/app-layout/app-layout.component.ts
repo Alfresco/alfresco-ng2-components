@@ -69,6 +69,8 @@ export class AppLayoutComponent implements OnInit {
     color = 'primary';
     title = 'APP_LAYOUT.APP_NAME';
     logo: string;
+    redirectUrl: string | any[] = ['/home'];
+    tooltip = 'APP_LAYOUT.APP_NAME';
 
     ngOnInit() {
         const expand = this.config.get<boolean>('sideNav.expandedSidenav');
@@ -84,6 +86,8 @@ export class AppLayoutComponent implements OnInit {
         this.headerService.color.subscribe(color => this.color = color);
         this.headerService.title.subscribe(title => this.title = title);
         this.headerService.logo.subscribe(path => this.logo = path);
+        this.headerService.redirectUrl.subscribe(redirectUrl => this.redirectUrl = redirectUrl);
+        this.headerService.tooltip.subscribe(tooltip => this.tooltip = tooltip);
     }
 
     constructor(
