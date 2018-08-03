@@ -94,6 +94,10 @@
             }
         }
 
+        mat-slide-toggle {
+            margin: 10px;
+        }
+
         @media screen and ($mat-small) {
             container-widget .grid-list {
                 flex-direction: column;
