@@ -118,7 +118,7 @@ describe('Start Process Component', () => {
             processServicesPage.checkApsContainer();
         });
 
-        it('Check start a process without a process model included', () => {
+        it('[C260458] Check start a process without a process model included', () => {
             processServicesPage.goToApp('Task App');
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -135,7 +135,7 @@ describe('Start Process Component', () => {
             processServicesPage.checkApsContainer();
         });
 
-        it('Check Start Process within Task App', () => {
+        it('[C260441] Check Start Process within Task App', () => {
             processServicesPage.goToApp('Task App');
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -143,7 +143,7 @@ describe('Start Process Component', () => {
             expect(startProcessPage.getDefaultName()).toEqual('My Default Name');
         });
 
-        it('Process Definition is required and cancel button is clicked', () => {
+        it('[C260445] Process Definition is required and cancel button is clicked', () => {
             processServicesPage.goToApp('Task App');
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -154,7 +154,7 @@ describe('Start Process Component', () => {
             processFiltersPage.checkNoContentMessage();
         });
 
-        it('Name of the process is required', () => {
+        it('[C260444] Name of the process is required', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -164,7 +164,7 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsDisabled();
         });
 
-        it('Check Start Process within an app without a start event', () => {
+        it('[C260443] Check Start Process within an app without a start event', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -174,7 +174,7 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        xit('Start a process within an app with a start event', () => {
+        xit('[C260449] Start a process within an app with a start event', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -201,7 +201,7 @@ describe('Start Process Component', () => {
                 });
         });
 
-        it('Add a comment on an active process', () => {
+        it('[C260453] Add a comment on an active process', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -215,7 +215,7 @@ describe('Start Process Component', () => {
             processDetailsPage.checkCommentIsDisplayed('comment1');
         });
 
-        it('Click Audit Log button', () => {
+        it('[C260454] Click Audit Log button', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -249,7 +249,7 @@ describe('Start Process Component', () => {
             attachmentListPage.checkFileIsAttached(jpgFile.name);
         });
 
-        it('Click Show Diagram', () => {
+        it('[C260451] Click Show Diagram', () => {
             processServicesPage.goToApp(app.title);
 
             appNavigationBarPage.clickProcessButton();
@@ -267,7 +267,7 @@ describe('Start Process Component', () => {
             processDetailsPage.clickShowDiagram();
         });
 
-        it('Click on an active task', () => {
+        it('[C260452] Click on an active task', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -281,7 +281,7 @@ describe('Start Process Component', () => {
             processDetailsPage.checkActiveTaskTitleIsDisplayed(app.task_name);
         });
 
-        it('Click Cancel process button', () => {
+        it('[C260457] Click Cancel process button', () => {
             loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
             navigationBarPage.clickProcessServicesButton();
             processServicesPage.checkApsContainer();
@@ -300,7 +300,7 @@ describe('Start Process Component', () => {
             processDetailsPage.checkShowDiagramIsDisabled();
         });
 
-        it('Add a comment on a complete process', () => {
+        it('[C260461] Add a comment on a complete process', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -317,7 +317,7 @@ describe('Start Process Component', () => {
             processDetailsPage.checkCommentIsDisplayed('goodbye');
         });
 
-        it('Cannot attach a file on a completed process', () => {
+        it('[C260467] Cannot attach a file on a completed process', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();

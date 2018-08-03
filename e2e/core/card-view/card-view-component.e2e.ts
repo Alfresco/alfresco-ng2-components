@@ -65,7 +65,7 @@ describe('CardView Component', () => {
 
     describe('key-value pair ', () => {
 
-        it('[C279937] Should the label be present', () => {
+        it('[C279938] Should the label be present', () => {
             let label = element(by.xpath('div[data-automation-id="card-key-value-pairs-label-key-value-pairs"]'));
 
             Util.waitUntilElementIsPresent(label);
