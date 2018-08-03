@@ -72,6 +72,10 @@ export class NotificationsComponent implements OnInit {
     }
 
     setSnackBarConfig(configFormValues: any) {
+
+        if (configFormValues.announcementMessage) {
+            this.snackBarConfig.announcementMessage = configFormValues.announcementMessage;
+        }
         if (configFormValues.direction) {
             this.snackBarConfig.direction = configFormValues.direction;
 
@@ -109,7 +113,6 @@ export class NotificationsComponent implements OnInit {
                                     "duration": "${this.snackBarConfig.duration}",
                                     "horizontalPosition": "${ this.snackBarConfig.horizontalPosition}",
                                     "verticalPosition": "${ this.snackBarConfig.verticalPosition}"}`;
-
         if (this.message) {
             if (this.withAction) {
                 this.notificationService

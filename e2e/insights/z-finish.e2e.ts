@@ -45,14 +45,16 @@ describe('Save screenshot at the end', () => {
 
                 let folder = await alfrescoJsApi.nodes.addNode('-my-', {
                     'name': 'insights',
-                    'relativePath': 'Buiild-screenshot/Screenshot-e2e-' + buildNumber,
+                    'relativePath': 'Build-screenshot/Screenshot-e2e-' + buildNumber,
                     'nodeType': 'cm:folder'
-                }, {}, {});
+                }, {}, {
+                    'overwrite': true
+                });
 
                 for (const fileName of files) {
 
                     let pathFile = path.join(__dirname, '../../e2e-output/screenshots', fileName);
-                    let file = fs.createReadStream(pathFile);
+                    let file: any = fs.createReadStream(pathFile);
 
                     await  alfrescoJsApi.upload.uploadFile(
                         file,

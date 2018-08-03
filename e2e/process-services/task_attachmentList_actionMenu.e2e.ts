@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
@@ -177,7 +179,7 @@ describe('Attachment list action menu for tasks', () => {
 
     it('[C260234] Should be able to attache a file on a task on APS and check on ADF', () => {
         browser.controlFlow().execute(async() => {
-            let newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: "SHARE KNOWLEDGE"});
+            let newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: 'SHARE KNOWLEDGE'});
 
             let newTaskId = newTask.id;
 

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { by } from 'protractor';
+
 import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');

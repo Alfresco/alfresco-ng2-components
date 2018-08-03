@@ -37,7 +37,6 @@ export class TrashcanComponent {
     @ViewChild('documentList')
     documentList: DocumentListComponent;
 
-    supportedPages = [];
     currentLocale;
 
     constructor(
@@ -45,12 +44,6 @@ export class TrashcanComponent {
         private router: Router,
         private notificationService: NotificationService
     ) {
-        this.preference
-            .select(UserPreferenceValues.SupportedPageSizes)
-            .subscribe(pages => {
-                this.supportedPages = pages;
-            });
-
         this.preference
             .select(UserPreferenceValues.Locale)
             .subscribe(locale => {

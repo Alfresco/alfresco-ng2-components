@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../pages/adf/loginPage');
 import SearchDialog = require('../pages/adf/dialog/searchDialog');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
@@ -35,9 +37,9 @@ import { UploadActions } from '../actions/ACS/upload.actions';
 describe('Search component - Search Page', () => {
     let search = {
         active: {
+            firstFile: null,
+            secondFile: null,
             base: Util.generateRandomString(3),
-            firstFile: Util.generateRandomString(),
-            secondFile: Util.generateRandomString(),
             extension: '.txt'
         },
         no_permission: {
@@ -52,17 +54,22 @@ describe('Search component - Search Page', () => {
     let searchResultPage = new SearchResultPage();
 
     let acsUser = new AcsUserModel();
-    let emptyFolderModel = new FolderModel({ 'name': Util.generateRandomString()});
-    let firstFileModel = new FileModel({
-        'name': search.active.firstFile,
-        'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
-    });
+    let emptyFolderModel = new FolderModel({ 'name': Util.generateRandomString() });
+    let firstFileModel;
     let newFolderModel = new FolderModel({ 'name': 'newFolder' });
     let fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
 
     beforeAll(async (done) => {
         fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, search.active.base, search.active.extension);
         adminFileNames = Util.generateSeqeunceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
+        search.active.firstFile = fileNames[0];
+        search.active.secondFile = fileNames[1];
+        fileNames.splice(0, 1);
+
+        firstFileModel = new FileModel({
+            'name': search.active.firstFile,
+            'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
+        });
 
         let uploadActions = new UploadActions();
 
@@ -82,8 +89,7 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderModelUploaded.entry.id);
 
-        let firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
-        Object.assign(firstFileModel, firstFileUploaded.entry);
+        await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -197,7 +203,6 @@ describe('Search component - Search Page', () => {
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
-
         searchResultPage.checkContentIsDisplayed(search.active.secondFile);
         searchResultPage.sortAndCheckListIsOrderedByName(true).then((result) => {
             expect(result).toEqual(true);
@@ -273,8 +278,11 @@ describe('Search component - Search Page', () => {
 
     it('[C272808] Try to delete a folder without rights from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
-            .enterTextAndPressEnter(search.no_permission.noPermFolder);
+        searchDialog.checkSearchBarIsNotVisible();
+        searchDialog.checkSearchIconIsVisible();
+        searchDialog.clickOnSearchIcon();
+        searchDialog.enterTextAndPressEnter(search.no_permission.noPermFolder);
+
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
         searchResultPage.deleteContent(search.no_permission.noPermFolder);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);

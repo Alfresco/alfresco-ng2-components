@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
+import { by } from 'protractor';
+
 import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import CONSTANTS = require('../util/constants');
-import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 
 import Task = require('../models/APS/Task');
 import Tenant = require('../models/APS/Tenant');
@@ -40,7 +41,6 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Start Task - Custom App', () => {
 
-    let processFiltersPage = new ProcessFiltersPage();
     let TASKDATAFORMAT = 'mmm dd yyyy';
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();

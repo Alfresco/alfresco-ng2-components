@@ -29,7 +29,6 @@ import AlfrescoApi = require('alfresco-js-api-node');
 
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-import { browser } from 'protractor';
 
 describe('Process Filters Test', () => {
 
@@ -75,7 +74,7 @@ describe('Process Filters Test', () => {
         done();
     });
 
-    beforeEach( () => {
+    beforeEach(() => {
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);

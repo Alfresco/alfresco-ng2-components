@@ -1,5 +1,6 @@
 <div *ngIf="isDialogActive"
      class="upload-dialog"
+     id="upload-dialog"
      [class.upload-dialog--minimized]="isDialogMinimized"
      [class.upload-dialog--position-left]="position === 'left'"
      [class.upload-dialog--position-right]="position === 'right'">
@@ -45,8 +46,7 @@
         </span>
     </header>
 
-    <section
-        class="upload-dialog__info"
+    <section class="upload-dialog__info"
         *ngIf="totalErrors">
         {{
             (totalErrors > 1
@@ -56,8 +56,7 @@
         }}
     </section>
 
-    <section
-        class="upload-dialog__content"
+    <section class="upload-dialog__content"
         [class.upload-dialog--padding]="isConfirmation">
         <adf-file-uploading-list
             (error)="onError($event)"
@@ -86,10 +85,10 @@
         </div>
     </section>
 
-    <footer
-        class="upload-dialog__actions"
-        [class.upload-dialog--hide]="isConfirmation">
+    <footer class="upload-dialog__actions"
+            *ngIf="!isConfirmation">
         <button
+            id="adf-upload-dialog-cancel-all"
             color="primary"
             mat-button
             *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()"
@@ -98,6 +97,7 @@
         </button>
 
         <button
+            id="adf-upload-dialog-close"
             *ngIf="uploadList.isUploadCompleted() || uploadList.isUploadCancelled()"
             mat-button
             color="primary"
@@ -106,10 +106,10 @@
         </button>
     </footer>
 
-    <footer
-        class="upload-dialog__actions"
-        [class.upload-dialog--hide]="!isConfirmation">
+    <footer class="upload-dialog__actions"
+            *ngIf="isConfirmation">
         <button
+            id="adf-upload-dialog-cancel"
             color="secondary"
             mat-button
             (click)="cancelAllUploads()">
@@ -117,6 +117,7 @@
         </button>
 
         <button
+            id="adf-upload-dialog-confirm"
             mat-button
             color="primary"
             (click)="toggleConfirmation()">

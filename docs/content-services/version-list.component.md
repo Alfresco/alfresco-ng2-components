@@ -26,6 +26,13 @@ Displays the version history of a node in a [Version Manager component](../conte
 | showActions | `boolean` | true | Toggles showing/hiding of version actions |
 | showComments | `boolean` | true | Toggles showing/hiding of comments |
 
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| deleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when a version is deleted |
+| restored | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when a version is restored |
+
 ## Details
 
 This component is used by the [Version Manager component](../content-services/version-manager.component.md) to

@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import ViewerPage = require('../../pages/adf/viewerPage');
 import CardViewPage = require('../../pages/adf/metadataViewPage');
 import ContentListPage = require('../../pages/adf/dialog/contentList');
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -52,10 +53,8 @@ describe('Metadata component', () => {
     const viewerPage = new ViewerPage();
     const metadataViewPage = new CardViewPage();
     const contentListPage = new ContentListPage();
-    const navigationBarPage = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
-    let consumerUser = new AcsUserModel();
 
     let folderName = 'Metadata Folder';
 

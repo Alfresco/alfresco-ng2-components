@@ -53,7 +53,7 @@ export class UserPreferencesService {
                 private appConfig: AppConfigService,
                 private storage: StorageService) {
         this.appConfig.onLoad.subscribe(this.initUserPreferenceStatus.bind(this));
-        this.localeSubject = new BehaviorSubject(this.userPreferenceStatus[UserPreferenceValues.Locale]);
+        this.localeSubject = new BehaviorSubject(this.get(UserPreferenceValues.Locale, this.getDefaultLocale()));
         this.locale$ = this.localeSubject.asObservable();
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
@@ -61,8 +61,7 @@ export class UserPreferencesService {
 
     private initUserPreferenceStatus() {
         this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
-        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.paginationSize ?
-            this.paginationSize : this.appConfig.get('pagination.size', this.defaults.paginationSize);
+        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.appConfig.get('pagination.size', this.defaults.paginationSize);
         this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
     }
 
@@ -150,27 +149,27 @@ export class UserPreferencesService {
      * @returns Array of page size values
      */
     getDefaultPageSizes(): number[] {
-        return this.defaults.supportedPageSizes;
+        return this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes];
     }
 
     /** Pagination size. */
     set paginationSize(value: number) {
-        this.set('PAGINATION_SIZE', value);
+        this.set(UserPreferenceValues.PaginationSize, value);
     }
 
     get paginationSize(): number {
-        return Number(this.get('PAGINATION_SIZE')) || this.defaults.paginationSize;
+        return Number(this.get(UserPreferenceValues.PaginationSize, this.userPreferenceStatus[UserPreferenceValues.PaginationSize])) || this.defaults.paginationSize;
     }
 
     /** Current locale setting. */
     get locale(): string {
-        const locale = this.get('LOCALE');
+        const locale = this.get(UserPreferenceValues.Locale, this.userPreferenceStatus[UserPreferenceValues.Locale]);
         return locale;
     }
 
     set locale(value: string) {
         this.localeSubject.next(value);
-        this.set('LOCALE', value);
+        this.set(UserPreferenceValues.Locale, value);
     }
 
     /**

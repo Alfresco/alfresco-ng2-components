@@ -17,8 +17,6 @@
 
 import LoginPage = require('../../pages/adf/loginPage');
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-
 import AdfSettingsPage = require('../../pages/adf/settingsPage');
 
 describe('Login component - Remember Me', () => {

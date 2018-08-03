@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
 import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage.js');
 import { CommentsPage } from '../pages/adf/commentsPage';
 
-
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import Util = require('../util/util.js');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
@@ -45,10 +44,10 @@ describe('Comment component for Processes', () => {
             hostBpm: TestConfig.adf.url
         });
 
-        done();
+       done();
     });
 
-    beforeEach(async(done) =>{
+    beforeEach(async(done) => {
         let apps = new AppsActions();
         let users = new UsersActions();
 
@@ -85,7 +84,7 @@ describe('Comment component for Processes', () => {
 
     it('[C260464] Should be able to add a comment on APS and check on ADF', () => {
         browser.controlFlow().execute(async() => {
-            comment = {message: "HELLO"};
+            comment = {message: 'HELLO'};
 
             await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment(comment, processInstanceId);
         });
@@ -100,7 +99,7 @@ describe('Comment component for Processes', () => {
 
             commentsPage.checkUserIconIsDisplayed(0);
 
-            expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments ('+ addedComment.total +')');
+            expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + addedComment.total + ')');
             expect(commentsPage.getMessage(0)).toEqual(addedComment.data[0].message);
             expect(commentsPage.getUserName(0)).toEqual(addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName);
             expect(commentsPage.getTime(0)).toEqual('a few seconds ago');
@@ -109,7 +108,7 @@ describe('Comment component for Processes', () => {
 
     it('[C260465] Should not be able to view process comment on included task', () => {
         browser.controlFlow().execute(async() => {
-            comment = {message: "GOODBYE"};
+            comment = {message: 'GOODBYE'};
 
             await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment(comment, processInstanceId);
         });
@@ -135,7 +134,7 @@ describe('Comment component for Processes', () => {
 
             let taskId = taskQuery.data[0].id;
 
-            taskComment = {message: "Task Comment"};
+            taskComment = {message: 'Task Comment'};
 
             await this.alfrescoJsApi.activiti.taskApi.addTaskComment(taskComment, taskId);
         });
@@ -150,7 +149,7 @@ describe('Comment component for Processes', () => {
 
             commentsPage.checkUserIconIsDisplayed(0);
 
-            expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments ('+ addedTaskComment.total +')');
+            expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + addedTaskComment.total + ')');
             expect(commentsPage.getMessage(0)).toEqual(addedTaskComment.data[0].message);
             expect(commentsPage.getUserName(0)).toEqual(addedTaskComment.data[0].createdBy.firstName + ' ' + addedTaskComment.data[0].createdBy.lastName);
             expect(commentsPage.getTime(0)).toEqual('a few seconds ago');

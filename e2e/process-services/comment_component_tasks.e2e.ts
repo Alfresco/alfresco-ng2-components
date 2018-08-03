@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
@@ -24,7 +26,6 @@ import CONSTANTS = require('../util/constants');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import Util = require('../util/util.js');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
@@ -55,7 +56,7 @@ describe('Comment component for Processes', () => {
         done();
     });
 
-    beforeEach(async(done) =>{
+    beforeEach(async(done) => {
         let apps = new AppsActions();
         let users = new UsersActions();
 
@@ -114,8 +115,8 @@ describe('Comment component for Processes', () => {
 
             await this.alfrescoJsApi.activiti.taskApi.involveUser(newTaskId, {email: secondUser.email});
 
-            let taskComment = {message: "Task Comment"};
-            let secondTaskComment = {message: "Second Task Comment"};
+            let taskComment = {message: 'Task Comment'};
+            let secondTaskComment = {message: 'Second Task Comment'};
 
             await this.alfrescoJsApi.activiti.taskApi.addTaskComment(taskComment, newTaskId);
             await this.alfrescoJsApi.activiti.taskApi.addTaskComment(secondTaskComment, newTaskId);
@@ -130,12 +131,12 @@ describe('Comment component for Processes', () => {
         browser.controlFlow().execute(async() => {
             let totalComments = await this.alfrescoJsApi.activiti.taskApi.getTaskComments(newTaskId, {'latestFirst': true});
 
-            let thirdTaskComment = {message: "Third Task Comment"};
+            let thirdTaskComment = {message: 'Third Task Comment'};
 
             await commentsPage.checkUserIconIsDisplayed(0);
             await commentsPage.checkUserIconIsDisplayed(1);
 
-            await expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments ('+ totalComments.total +')');
+            await expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + totalComments.total + ')');
 
             await expect(commentsPage.getMessage(0)).toEqual(totalComments.data[0].message);
             await expect(commentsPage.getMessage(1)).toEqual(totalComments.data[1].message);
@@ -164,7 +165,7 @@ describe('Comment component for Processes', () => {
             await commentsPage.checkUserIconIsDisplayed(1);
             await commentsPage.checkUserIconIsDisplayed(2);
 
-            await expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments ('+ totalComments.total +')');
+            await expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + totalComments.total + ')');
 
             await expect(commentsPage.getMessage(0)).toEqual(totalComments.data[0].message);
             await expect(commentsPage.getMessage(1)).toEqual(totalComments.data[1].message);

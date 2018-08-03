@@ -19,7 +19,6 @@ import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import { HeaderPage } from '../pages/adf/core/headerPage';
 
 import TestConfig = require('../test.config');
-import Util = require('../util/util.js');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
@@ -54,7 +53,7 @@ describe('Header Component', () => {
         done();
     });
 
-    beforeEach(async(done) =>{
+    beforeEach(async(done) => {
         let users = new UsersActions();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -83,8 +82,8 @@ describe('Header Component', () => {
     it('[C280002] Should be able to view Header component', () => {
         headerPage.checkShowMenuCheckBoxIsDisplayed();
         headerPage.checkChooseHeaderColourIsDisplayed();
-        headerPage.checkChangeTitleIsDisplayed(title.default);
-        headerPage.checkChangeUrlPathIsDisplayed(urlPath.default);
+        headerPage.checkChangeTitleIsDisplayed();
+        headerPage.checkChangeUrlPathIsDisplayed();
 
     });
 

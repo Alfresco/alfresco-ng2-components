@@ -1,39 +1,40 @@
 <mat-list class="adf-version-list" *ngIf="!isLoading; else loading_template">
     <mat-list-item *ngFor="let version of versions; let idx = index">
         <mat-icon mat-list-icon>insert_drive_file</mat-icon>
-        <h4 mat-line class="adf-version-list-item-name">{{version.entry.name}}</h4>
+        <h4 mat-line class="adf-version-list-item-name" [id]="'adf-version-list-item-name-' + version.entry.id" >{{version.entry.name}}</h4>
         <p mat-line>
-            <span class="adf-version-list-item-version">{{version.entry.id}}</span> -
-            <span class="adf-version-list-item-date">{{version.entry.modifiedAt | date}}</span>
+            <span class="adf-version-list-item-version"  [id]="'adf-version-list-item-version-' + version.entry.id" >{{version.entry.id}}</span> -
+            <span class="adf-version-list-item-date"     [id]="'adf-version-list-item-date-' + version.entry.id" >{{version.entry.modifiedAt | date}}</span>
         </p>
-        <p mat-line class="adf-version-list-item-comment" *ngIf="showComments">{{version.entry.versionComment}}</p>
+        <p mat-line [id]="'adf-version-list-item-comment-'+ version.entry.id" class="adf-version-list-item-comment"
+           *ngIf="showComments">{{version.entry.versionComment}}</p>
 
         <div *ngIf="showActions">
-            <mat-menu [id]="'adf-version-list-action-menu-'+idx"
+            <mat-menu [id]="'adf-version-list-action-menu-'+version.entry.id"
                       #versionMenu="matMenu" yPosition="below" xPosition="before">
                 <button
-                    [id]="'adf-version-list-action-restore-'+idx"
+                    [id]="'adf-version-list-action-restore-'+version.entry.id"
                     [disabled]="!canUpdate()"
                     mat-menu-item
                     (click)="restore(version.entry.id)">
                     {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
                 </button>
                 <button *ngIf="allowDownload"
-                        [id]="'adf-version-list-action-download-'+idx"
+                        [id]="'adf-version-list-action-download-'+version.entry.id"
                         mat-menu-item
                         (click)="downloadVersion(version.entry.id)">
                     {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
                 </button>
                 <button
                     [disabled]="!canDelete()"
-                    [id]="'adf-version-list-action-delete-'+idx"
+                    [id]="'adf-version-list-action-delete-'+version.entry.id"
                     (click)="deleteVersion(version.entry.id)"
                     mat-menu-item>
                     {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
                 </button>
             </mat-menu>
 
-            <button mat-icon-button [matMenuTriggerFor]="versionMenu" [id]="'adf-version-list-action-menu-button-'+idx">
+            <button mat-icon-button [matMenuTriggerFor]="versionMenu" [id]="'adf-version-list-action-menu-button-'+version.entry.id">
                 <mat-icon>more_vert</mat-icon>
             </button>
         </div>

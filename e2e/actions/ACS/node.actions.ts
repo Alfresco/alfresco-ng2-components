@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-export class ModelsActions {
+export class NodeActions {
 
-    async deleteVersionModel(alfrescoJsApi, modelId) {
+    lockNode(alfrescoJsApi, nodeId: string, allowOwner?: string) {
 
-       return await alfrescoJsApi.activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
-    }
-
-    async deleteEntireModel(alfrescoJsApi, modelId) {
-
-        return await alfrescoJsApi.activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
+        return alfrescoJsApi.nodes.lockNode(nodeId, {
+            'type': allowOwner ? 'ALLOW_OWNER_CHANGES' : 'FULL',
+            'lifetime': 'PERSISTENT'
+        });
     }
 
 }
