@@ -18,7 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { debounceTime } from "rxjs/operators";
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     templateUrl: './process-list-demo.component.html',
