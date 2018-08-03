@@ -31,7 +31,6 @@ cp -R ./lib/dist/insights/* ./node_modules/@alfresco/adf-insights/
 
 echo "====== Build style ====="
 
-
 node ./lib/config/bundle-scss.js
 
 npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
