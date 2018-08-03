@@ -79,7 +79,7 @@ describe('Task List Pagination', () => {
         done();
     });
 
-    it('Pagination at first 20 started tasks', () => {
+    it('[C260301] Pagination at first 20 started tasks', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
@@ -91,7 +91,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
     });
 
-    it('Items per page set to 5', () => {
+    it('[C260304] Items per page set to 5', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.five);
@@ -119,7 +119,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
     });
 
-    it('Items per page set to 10', () => {
+    it('[C260303] Items per page set to 10', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
@@ -136,7 +136,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
     });
 
-    it('Items per page set to 15', () => {
+    it('[C260302] Items per page set to 15', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);

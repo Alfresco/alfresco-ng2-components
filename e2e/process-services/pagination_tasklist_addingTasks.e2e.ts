@@ -71,7 +71,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         done();
     });
 
-    it('Items per page set to 15 and adding of tasks', () => {
+    it('[C260306] Items per page set to 15 and adding of tasks', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);

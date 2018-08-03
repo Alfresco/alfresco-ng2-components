@@ -83,7 +83,7 @@ describe('Process Filters Test', () => {
         processServicesPage.checkProcessListIsDisplayed();
     });
 
-    it('Navigate to Running filter', () => {
+    it('[C260387] Should the running process be displayed when clicking on Running filter', () => {
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
 
@@ -111,7 +111,7 @@ describe('Process Filters Test', () => {
         processDetailsPage.checkProcessDetailsCard();
     });
 
-    it('Navigate to All filter', () => {
+    it('[C280063] Should both the new created process and a completed one to be displayed when clicking on All filter', () => {
         processFiltersPage.clickAllFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilter.all);
         processFiltersPage.selectFromProcessList(processTitle.running);
@@ -119,7 +119,7 @@ describe('Process Filters Test', () => {
         processDetailsPage.checkProcessDetailsCard();
     });
 
-    it('Navigate to Completed filter', () => {
+    it('[C280064] Should the completed process be displayed when clicking on Completed filter', () => {
         processFiltersPage.clickCompletedFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
         processFiltersPage.selectFromProcessList(processTitle.completed);
