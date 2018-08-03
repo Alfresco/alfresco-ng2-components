@@ -1,9 +1,11 @@
-<mat-toolbar color="{{color}}">
+<mat-toolbar color="{{color}}" [style.background-color]="color">
     <button *ngIf="showSidenavToggle" data-automation-id="adf-menu-icon" class="mat-icon-button adf-menu-icon" mat-icon-button (click)="toggleMenu()">
         <mat-icon class="mat-icon material-icon" role="img" aria-hidden="true">menu</mat-icon>
     </button>
 
-    <img src="{{logo}}" class="adf-app-logo">
+    <a [routerLink]="redirectUrl" title="{{ tooltip }}">
+        <img src="{{logo}}" class="adf-app-logo" />
+    </a>
 
     <span fxFlex="1 1 auto" fxShow fxHide.lt-sm="true" class="adf-app-title">{{title}}</span>
     <ng-content></ng-content>
