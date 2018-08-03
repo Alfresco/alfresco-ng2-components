@@ -52,7 +52,7 @@ cp -R $DIR/../lib/dist/insights/* $DIR/../node_modules/@alfresco/adf-insights
 echo "====== Build dist demo shell ===== "
 
 npm run server-versions
-ng build --prod --app dist --base-href=$NAME/ -op demo-shell/dist/$NAME || exit 1
+ng build dist --prod --base-href=$NAME/ -op demo-shell/dist/$NAME || exit 1
 
 echo "====== e2e test ===== "
 
