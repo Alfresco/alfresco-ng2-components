@@ -270,7 +270,7 @@ describe('Aspect oriented config', () => {
 
     });
 
-    it('[C268899] Should be possible use a custom preset' , () => {
+    it('[C279968] Should be possible use a custom preset' , () => {
         navigationBarPage.clickConfigEditorButton();
 
         configEditorPage.clickClearMetadataButton();
