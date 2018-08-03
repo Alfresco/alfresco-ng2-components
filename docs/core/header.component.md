@@ -13,7 +13,7 @@ Reusable header for Alfresco applications
 <adf-layout-header 
     title="title" 
     logo="logo.png" 
-    [logoUrl]="'/home'"
+    [redirectUrl]="'/home'"
     color="primary"
     (toggled)=toggleMenu($event)>
 
@@ -29,7 +29,7 @@ Reusable header for Alfresco applications
 | -- | -- | -- |
 | title | string |  Title of the application
 | logo | string | Path to an image file for the application logo.
-| logoUrl | string\|any[] | The router link for the application logo.
+| redirectUrl | string\|any[] | The router link for the application logo.
 | tooltip | string | The tooltip text for the application logo.
 | color | string | Background color for the header. It can be any hex color code or the Material theme colors: 'primary', 'accent' or 'warn'.
 | showSidenavToggle | boolean | Signals if the sidenav button will be displayed in the header or not. By default is true.

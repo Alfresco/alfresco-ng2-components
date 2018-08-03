@@ -79,8 +79,8 @@ describe('HeaderLayoutComponent', () => {
             expect(src).toEqual('logo.png');
         });
 
-        it('should have custom url link set on logo when the logoUrl is set', () => {
-            component.logoUrl = '/customHomePage';
+        it('should have custom url link set on logo when the redirectUrl is set', () => {
+            component.redirectUrl = '/customHomePage';
             fixture.detectChanges();
 
             const logoAnchor = fixture.nativeElement.querySelector('mat-toolbar>a');
