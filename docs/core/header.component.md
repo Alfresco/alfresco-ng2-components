@@ -31,7 +31,7 @@ Reusable header for Alfresco applications
 | logo | string | Path to an image file for the application logo.
 | logoUrl | string\|any[] | The router link for the application logo.
 | tooltip | string | The tooltip text for the application logo.
-| color | string | Primary color for the header
+| color | string | Background color for the header. It can be any hex color code or the Material theme colors: 'primary', 'accent' or 'warn'.
 | showSidenavToggle | boolean | Signals if the sidenav button will be displayed in the header or not. By default is true.
 
 ### Events
