@@ -47,7 +47,7 @@ import { CardViewSelectItemComponent } from './components/card-view-selectitem/c
         CommonModule,
         FormsModule,
         FlexLayoutModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         MatDatepickerModule,
         MatNativeDateModule,
         MatCheckboxModule,

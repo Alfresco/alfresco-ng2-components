@@ -27,7 +27,7 @@ import { ContextMenuDirective } from './context-menu.directive';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     declarations: [
         ContextMenuHolderComponent,

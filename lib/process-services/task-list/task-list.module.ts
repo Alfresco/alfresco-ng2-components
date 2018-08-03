@@ -18,7 +18,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessCommentsModule } from '../process-comments/process-comments.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -40,13 +39,12 @@ import { AttachFormComponent } from './components/attach-form.component';
 
 @NgModule({
     imports: [
-        CoreModule.forChild(),
         CommonModule,
         FlexLayoutModule,
         MaterialModule,
-        TranslateModule,
         FormsModule,
         ReactiveFormsModule,
+        CoreModule.forChild(),
         PeopleModule,
         ProcessCommentsModule,
         ContentWidgetModule

@@ -44,7 +44,7 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
         DataTableModule,
         HttpClientModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
         DataColumnModule,

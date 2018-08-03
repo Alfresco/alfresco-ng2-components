@@ -88,16 +88,16 @@ import { ProcessModule } from '@alfresco/adf-process-services';
         ReactiveFormsModule,
         routing,
         FormsModule,
+        HttpClientModule,
         MaterialModule,
+        FlexLayoutModule,
         CoreModule.forRoot(),
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),
         ThemePickerModule,
-        FlexLayoutModule,
         ChartsModule,
         MonacoEditorModule.forRoot(),
-        HttpClientModule
     ],
     declarations: [
         AppComponent,

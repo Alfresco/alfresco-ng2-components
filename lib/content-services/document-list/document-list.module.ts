@@ -18,8 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule } from '@ngx-translate/core';
-import { DataTableModule, PaginationModule, ToolbarModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
 import { UploadModule } from '../upload/upload.module';
@@ -35,14 +34,11 @@ import { NoPermissionContentDirective } from './components/no-permission/no-perm
 
 @NgModule({
     imports: [
-        ToolbarModule,
+        CoreModule.forChild(),
         CommonModule,
-        DataTableModule,
         FlexLayoutModule,
         MaterialModule,
-        UploadModule,
-        TranslateModule,
-        PaginationModule
+        UploadModule
     ],
     declarations: [
         DocumentListComponent,

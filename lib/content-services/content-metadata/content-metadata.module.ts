@@ -18,9 +18,8 @@
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { CardViewModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { ContentMetadataComponent } from './components/content-metadata/content-metadata.component';
 import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
 
@@ -28,9 +27,8 @@ import { ContentMetadataCardComponent } from './components/content-metadata-card
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
         FlexLayoutModule,
-        CardViewModule
+        CoreModule.forChild()
     ],
     exports: [
         ContentMetadataComponent,

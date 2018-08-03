@@ -18,20 +18,20 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { MaterialModule } from '../material.module';
 import { TagActionsComponent } from './tag-actions.component';
 import { TagListComponent } from './tag-list.component';
 import { TagNodeListComponent } from './tag-node-list.component';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CoreModule.forChild()
     ],
     exports: [
         TagActionsComponent,
