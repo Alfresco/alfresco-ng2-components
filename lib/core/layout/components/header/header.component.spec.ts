@@ -22,6 +22,7 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
 import { LayoutModule } from '../..';
 import { Component } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from './../../../material.module';
 
 describe('HeaderLayoutComponent', () => {
@@ -78,6 +79,22 @@ describe('HeaderLayoutComponent', () => {
             expect(src).toEqual('logo.png');
         });
 
+        it('should have custom url link set on logo when the redirectUrl is set', () => {
+            component.redirectUrl = '/customHomePage';
+            fixture.detectChanges();
+
+            const logoAnchor = fixture.nativeElement.querySelector('mat-toolbar>a');
+            expect(/\/customHomePage$/.test(logoAnchor.href)).toEqual(true);
+        });
+
+        it('should have custom tooltip text set on logo when the tooltip parameter is set', () => {
+            component.tooltip = 'logo title';
+            fixture.detectChanges();
+
+            const logoAnchor = fixture.nativeElement.querySelector('mat-toolbar>a');
+            expect(logoAnchor.title).toEqual('logo title');
+        });
+
         it('test click on sidenav button', () => {
             component.showSidenavToggle = true;
             fixture.detectChanges();
@@ -117,7 +134,7 @@ describe('HeaderLayoutComponent', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
               declarations: [HeaderLayoutTesterComponent],
-              imports: [ LayoutModule, MaterialModule ]
+              imports: [ LayoutModule, MaterialModule, RouterTestingModule ]
             })
             .compileComponents();
           }));
