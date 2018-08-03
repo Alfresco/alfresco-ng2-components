@@ -140,7 +140,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     blobFile: any;
     flag = true;
 
-    presetColoum = 'default';
+    presetColumn = 'default';
 
     showTaskTab: boolean;
     showProcessTab: boolean;

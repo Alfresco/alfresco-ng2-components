@@ -218,8 +218,14 @@
     "INHERITED_PERMISSIONS_BUTTON": "Permission Inherited"
   },
   "TASK_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Insert App Id",
-    "APP_ID_TYPE_ERROR": "App Id must be a number"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insert App Id",
+      "APP_ID_TYPE_ERROR": "App Id must be a number",
+      "NUMBER_TYPE_ERROR": "Value must be a number"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Starting page"
+    }
   },
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "Insert App Id",
