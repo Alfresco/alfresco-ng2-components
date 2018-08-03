@@ -102,7 +102,7 @@ describe('VersionManagerComponent', () => {
 
         const emittedData = { value: { entry: node }};
         component.uploadSuccess.subscribe(event => {
-            expect(event).toBe(emittedData);
+            expect(event).toBe(node);
         });
         component.onUploadSuccess(emittedData);
     }));

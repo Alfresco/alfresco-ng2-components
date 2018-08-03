@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { element, by, protractor, browser } from 'protractor';
+
 import Util = require('../../../util/util');
 import TestConfig = require('../../../test.config');
 import path = require('path');

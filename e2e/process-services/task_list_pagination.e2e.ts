@@ -49,7 +49,7 @@ describe('Task List Pagination', () => {
         fifteenValue: 15,
         twenty: '20',
         twentyValue: 20,
-        default: '25'
+        default: '20'
     };
 
     beforeAll(async (done) => {

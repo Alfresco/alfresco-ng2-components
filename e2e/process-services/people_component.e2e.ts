@@ -38,9 +38,9 @@ describe('People component', () => {
     let processUserModel, assigneeUserModel, secondAssigneeUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let taskPage = new TasksPage();
-    let peopleTitle = "People this task is shared with ";
+    let peopleTitle = 'People this task is shared with ';
 
-        let tasks = ['no people involved task', 'remove people task', 'can not complete task', 'multiple users', 'completed filter'];
+    let tasks = ['no people involved task', 'remove people task', 'can not complete task', 'multiple users', 'completed filter'];
 
     beforeAll(async (done) => {
         let users = new UsersActions();
@@ -177,8 +177,8 @@ describe('People component', () => {
         expect(taskPage.usingTaskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
         expect(taskPage.usingTaskDetails().getInvolvedUserEditAction(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
-            .toEqual("can edit");
-        expect(taskPage.usingTaskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + "(1)");
+            .toEqual('can edit');
+        expect(taskPage.usingTaskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(1)');
 
         taskPage.usingTaskDetails().clickInvolvePeopleButton()
             .typeUser(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName)
@@ -190,8 +190,8 @@ describe('People component', () => {
             .toEqual(secondAssigneeUserModel.email);
 
         expect(taskPage.usingTaskDetails().getInvolvedUserEditAction(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
-            .toEqual("can edit");
-        expect(taskPage.usingTaskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + "(2)");
+            .toEqual('can edit');
+        expect(taskPage.usingTaskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(2)');
     });
 
     it('[C280014] Should involved user see the task in completed filters when the task is completed', () => {
@@ -224,4 +224,3 @@ describe('People component', () => {
     });
 
 });
-

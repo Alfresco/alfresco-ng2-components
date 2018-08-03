@@ -14,6 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import { protractor } from 'protractor';
+
 import AdfSettingsPage = require('../pages/adf/settingsPage');
 import LoginPage = require('../pages/adf/loginPage');
 import UserInfoDialog = require('../pages/adf/dialog/userInfoDialog');

@@ -374,6 +374,7 @@ var ContentServicesPage = function () {
         for (i = 0; i < content.length; i++) {
             this.deleteContent(content[i]);
             this.checkContentIsNotDisplayed(content[i]);
+            browser.driver.sleep(1000);
         };
         return this;
     };
@@ -382,6 +383,8 @@ var ContentServicesPage = function () {
         Util.waitUntilElementIsVisible(errorSnackBar);
         var deferred = protractor.promise.defer();
         errorSnackBar.getText().then(function (text) {
+            /*tslint:disable-next-line*/
+            console.log(text);
             deferred.fulfill(text);
         });
         return deferred.promise;

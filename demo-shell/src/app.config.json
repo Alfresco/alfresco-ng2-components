@@ -72,7 +72,9 @@
         "options": [
           { "key": "name", "label": "Name", "type": "FIELD", "field": "cm:name", "ascending": true },
           { "key": "content.sizeInBytes", "label": "Size", "type": "FIELD", "field": "content.size", "ascending": true },
-          { "key": "description", "label": "Description", "type": "FIELD", "field": "cm:description", "ascending": true }
+          { "key": "description", "label": "Description", "type": "FIELD", "field": "cm:description", "ascending": true },
+          { "key": "createdByUser", "label": "Author", "type": "FIELD", "field": "cm:creator", "ascending": true },
+          { "key": "createdAt", "label": "Created", "type": "FIELD", "field": "cm:created", "ascending": true }
         ],
         "defaults": [
           { "key": "name", "type": "FIELD", "field": "cm:name", "ascending": true }
@@ -194,7 +196,7 @@
       ]
     },
     "pagination": {
-        "size": 25,
+        "size": 20,
         "supportedPageSizes": [ 5, 10, 15, 20 ]
     },
     "files": {

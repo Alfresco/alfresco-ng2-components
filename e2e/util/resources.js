@@ -182,10 +182,26 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/a_png_file.png",
             file_name: "a_png_file.png"
         },
+        PNG_B: {
+            file_location: "/resources/adf/allFileTypes/b_png_file.png",
+            file_name: "b_png_file.png"
+        },
+        PNG_C: {
+            file_location: "/resources/adf/allFileTypes/c_png_file.png",
+            file_name: "c_png_file.png"
+        },
+        PNG_D: {
+            file_location: "/resources/adf/allFileTypes/d_png_file.png",
+            file_name: "d_png_file.png"
+        },
         PPT: {
             file_location: "/resources/adf/allFileTypes/a_ppt_file.pptx",
             file_name: "a_ppt_file.pptx",
             first_page_text: "PPTX test file"
+        },
+        PPT_B: {
+            file_location: "/resources/adf/allFileTypes/b_ppt_file.pptx",
+            file_name: "b_ppt_file.pptx"
         },
         TEST: {
             file_location: "/resources/adf/allFileTypes/testExtension.test",

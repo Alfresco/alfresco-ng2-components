@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
+import { element, by, browser } from 'protractor';
 import Util = require('../../util/util');
-import TestConfig = require('../../test.config');
 
 export class ConfigEditorPage {
 
@@ -25,7 +25,8 @@ export class ConfigEditorPage {
         browser.driver.sleep(1000);
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
-        textField.clear().sendKeys(text);
+        textField.clear();
+        textField.sendKeys(text);
         return this;
     }
 

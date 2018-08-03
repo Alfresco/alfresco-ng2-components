@@ -127,8 +127,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     paginationPageSize = 0;
     processSchemaColumns: any[] = [];
 
-    supportedPages: number[];
-
     defaultProcessDefinitionName: string;
     defaultProcessName: string;
 
@@ -225,7 +223,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.currentProcessInstanceId = null;
         });
         this.layoutType = AppsListComponent.LAYOUT_GRID;
-        this.supportedPages = this.preferenceService.getDefaultPageSizes();
     }
 
     ngOnDestroy() {

@@ -51,7 +51,7 @@ describe('Process List - Pagination', function () {
     let paginationPage = new PaginationPage();
     let processFiltersPage = new ProcessFiltersPage();
     let processDetailsPage = new ProcessDetailsPage();
-
+    let deployedTestApp;
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let nrOfProcesses = 20;
@@ -73,283 +73,322 @@ describe('Process List - Pagination', function () {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        let resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-
-        for (let i = 0; i < nrOfProcesses; i++) {
-            await apps.startProcess(this.alfrescoJsApi, resultApp);
-        }
+        deployedTestApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });
 
-    xit('[C261042] Default pagination', function () {
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.checkNoContentMessage();
-        paginationPage.checkPaginationIsNotDisplayed();
+    describe('Empty processes', function () {
 
-        page = 1;
-        totalPages = 1;
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
-    });
-
-    xit('[C261043] Items per page set to 15', function () {
-        page = 1;
-        totalPages = 2;
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
-
-        page++;
-        paginationPage.clickOnNextPage();
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsEnabled();
-
-        page = 1;
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-    });
-
-    xit('[C261044] Items per page set to 10', function () {
-        page = 1;
-        totalPages = 2;
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        paginationPage.selectItemsPerPage(itemsPerPage.ten);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
-
-        page++;
-        paginationPage.clickOnNextPage();
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + nrOfProcesses + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsEnabled();
-
-        page = 1;
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-    });
-
-    it('[C261047] Items per page set to 20', function () {
-        page = 1;
-        totalPages = 1;
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
-
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-    });
-
-    it('[C261045] 5 Items per page', function () {
-        page = 1;
-        totalPages = 4;
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        paginationPage.selectItemsPerPage(itemsPerPage.five);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.five * page + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
-
-        page++;
-        paginationPage.clickOnNextPage();
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.five * page + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsEnabled();
-
-        page++;
-        paginationPage.clickOnNextPage();
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.five * page + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsEnabled();
-
-        page++;
-        paginationPage.clickOnNextPage();
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.five * page + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsEnabled();
-
-        page = 1;
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-    });
-
-    it('[C261049] Page number dropdown', function () {
-        page = 1;
-        totalPages = 2;
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        paginationPage.selectItemsPerPage(itemsPerPage.ten);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
-
-        paginationPage.clickOnPageDropdown();
-        expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
-        page = 2;
-        paginationPage.clickOnPageDropdownOption('2');
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsEnabled();
-
-        paginationPage.clickOnPageDropdown();
-        expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
-        page = 1;
-        paginationPage.clickOnPageDropdownOption('1');
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
-    });
-
-    xit('[C261048] Sorting by Name', function () {
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        processFiltersPage.sortByName(true);
-        processFiltersPage.waitForTableBody();
-        processFiltersPage.getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) === JSON.stringify(processNames)).toEqual(true);
+        it('[C261042] Should show empty content message an no pagination when no process are present', function () {
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.checkNoContentMessage();
+            paginationPage.checkPaginationIsNotDisplayed();
         });
-        processFiltersPage.sortByName(false);
-        processFiltersPage.getAllRowsNameColumn().then(function (list) {
-            processNames.reverse();
-            expect(JSON.stringify(list) === JSON.stringify(processNames)).toEqual(true);
+    });
+
+    describe('With processes Pagination', function () {
+
+        beforeAll(async (done) => {
+            let apps = new AppsActions();
+
+            this.alfrescoJsApi = new AlfrescoApi({
+                provider: 'BPM',
+                hostBpm: TestConfig.adf.url
+            });
+
+            await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+            for (let i = 0; i < nrOfProcesses; i++) {
+                await apps.startProcess(this.alfrescoJsApi, deployedTestApp);
+            }
+
+            done();
+        });
+
+        it('[C261042] Default pagination', function () {
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+
+            page = 1;
+            totalPages = 1;
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
+            paginationPage.checkNextPageButtonIsDisabled();
+            paginationPage.checkPreviousPageButtonIsDisabled();
+        });
+
+        it('[C261043] Items per page set to 15', function () {
+            page = 1;
+            totalPages = 2;
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
+            paginationPage.checkNextPageButtonIsEnabled();
+            paginationPage.checkPreviousPageButtonIsDisabled();
+
+            page++;
+            paginationPage.clickOnNextPage();
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
+            paginationPage.checkNextPageButtonIsDisabled();
+            paginationPage.checkPreviousPageButtonIsEnabled();
+
+            page = 1;
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        });
+
+        it('[C261044] Items per page set to 10', function () {
+            page = 1;
+            totalPages = 2;
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            paginationPage.selectItemsPerPage(itemsPerPage.ten);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            paginationPage.checkNextPageButtonIsEnabled();
+            paginationPage.checkPreviousPageButtonIsDisabled();
+
+            page++;
+            paginationPage.clickOnNextPage();
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            paginationPage.checkNextPageButtonIsDisabled();
+            paginationPage.checkPreviousPageButtonIsEnabled();
+
+            page = 1;
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+        });
+
+        it('[C261047] Items per page set to 20', function () {
+            page = 1;
+            totalPages = 1;
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            paginationPage.selectItemsPerPage(itemsPerPage.twenty);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
+            paginationPage.checkNextPageButtonIsDisabled();
+            paginationPage.checkPreviousPageButtonIsDisabled();
+
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+        });
+
+        it('[C261045] 5 Items per page', function () {
+            let showing;
+            page = 1;
+            totalPages = 4;
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            paginationPage.selectItemsPerPage(itemsPerPage.five);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+
+            showing = (itemsPerPage.fiveValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            paginationPage.checkNextPageButtonIsEnabled();
+            paginationPage.checkPreviousPageButtonIsDisabled();
+
+            page++;
+            paginationPage.clickOnNextPage();
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+
+            showing = (itemsPerPage.fiveValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 6-' + showing + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            paginationPage.checkNextPageButtonIsEnabled();
+            paginationPage.checkPreviousPageButtonIsEnabled();
+
+            page++;
+            paginationPage.clickOnNextPage();
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+
+            showing = (itemsPerPage.fiveValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            paginationPage.checkNextPageButtonIsEnabled();
+            paginationPage.checkPreviousPageButtonIsEnabled();
+
+            page++;
+            paginationPage.clickOnNextPage();
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+
+            showing = (itemsPerPage.fiveValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + showing + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            paginationPage.checkNextPageButtonIsDisabled();
+            paginationPage.checkPreviousPageButtonIsEnabled();
+
+            page = 1;
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        });
+
+        it('[C261049] Page number dropdown', function () {
+            let showing;
+            page = 1;
+            totalPages = 2;
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            paginationPage.selectItemsPerPage(itemsPerPage.ten);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+
+            showing = (itemsPerPage.tenValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            paginationPage.checkNextPageButtonIsEnabled();
+            paginationPage.checkPreviousPageButtonIsDisabled();
+
+            paginationPage.clickOnPageDropdown();
+            expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
+            page = 2;
+            paginationPage.clickOnPageDropdownOption('2');
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+
+            showing = (itemsPerPage.tenValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            paginationPage.checkNextPageButtonIsDisabled();
+            paginationPage.checkPreviousPageButtonIsEnabled();
+
+            paginationPage.clickOnPageDropdown();
+            expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
+            page = 1;
+            paginationPage.clickOnPageDropdownOption('1');
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+
+            showing = (itemsPerPage.tenValue * page);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
+            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            paginationPage.checkNextPageButtonIsEnabled();
+            paginationPage.checkPreviousPageButtonIsDisabled();
+        });
+
+        xit('[C261048] Sorting by Name', function () {
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            paginationPage.selectItemsPerPage(itemsPerPage.twenty);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+            processFiltersPage.sortByName(true);
+            processFiltersPage.waitForTableBody();
+            processFiltersPage.getAllRowsNameColumn().then(function (list) {
+                expect(JSON.stringify(list) === JSON.stringify(processNames)).toEqual(true);
+            });
+            processFiltersPage.sortByName(false);
+            processFiltersPage.getAllRowsNameColumn().then(function (list) {
+                processNames.reverse();
+                expect(JSON.stringify(list) === JSON.stringify(processNames)).toEqual(true);
+            });
         });
     });
 });

@@ -1,8 +1,20 @@
 <header mat-dialog-title>{{'VERSION.DIALOG.TITLE' | translate}}</header>
 
 <section>
-    <mat-slide-toggle color="primary" [(ngModel)]="readOnly">
+    <mat-slide-toggle id="adf-version-manager-switch-readonly" color="primary" [(ngModel)]="readOnly">
         {{'APP.ADF_VERSION_MANAGER.READ_ONLY' | translate}}
+    </mat-slide-toggle>
+</section>
+
+<section>
+    <mat-slide-toggle id="adf-version-manager-switch-download"color="primary" [(ngModel)]="allowDownload">
+        {{'APP.ADF_VERSION_MANAGER.ALLOW_DOWNLOAD' | translate}}
+    </mat-slide-toggle>
+</section>
+
+<section>
+    <mat-slide-toggle id="adf-version-manager-switch-comments" color="primary" [(ngModel)]="showComments">
+        {{'APP.ADF_VERSION_MANAGER.COMMENTS' | translate}}
     </mat-slide-toggle>
 </section>
 

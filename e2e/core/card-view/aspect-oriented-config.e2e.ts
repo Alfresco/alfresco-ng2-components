@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import ViewerPage = require('../../pages/adf/viewerPage');
 import CardViewPage = require('../../pages/adf/metadataViewPage');
-import ContentListPage = require('../../pages/adf/dialog/contentList');
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 
@@ -28,31 +28,15 @@ import FileModel = require('../../models/ACS/fileModel');
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Aspect oriented config', () => {
 
-    const METADATA = {
-        DATAFORMAT: 'mmm dd yyyy',
-        TITLE: 'Details',
-        COMMENTS_TAB: 'COMMENTS',
-        PROPERTY_TAB: 'PROPERTIES',
-        DEFAULT_ASPECT: 'Properties',
-        MORE_INFO_BUTTON: 'More information',
-        LESS_INFO_BUTTON: 'Less information',
-        ARROW_DOWN: 'keyboard_arrow_down',
-        ARROW_UP: 'keyboard_arrow_up',
-        EDIT_BUTTON_TOOLTIP: 'Edit'
-    };
-
     const loginPage = new LoginPage();
-    const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new CardViewPage();
-    const contentListPage = new ContentListPage();
     const navigationBarPage = new NavigationBarPage();
     const configEditorPage = new ConfigEditorPage();
 

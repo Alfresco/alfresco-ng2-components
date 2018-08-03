@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
 import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 
 import CONSTANTS = require('../util/constants');
-import Util = require('../util/util');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -29,7 +29,6 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { ModelsActions } from '../actions/APS/models.actions';
-import AppPublish = require('../models/APS/AppPublish');
 
 describe('Modify applications', () => {
 
@@ -43,7 +42,7 @@ describe('Modify applications', () => {
     let modelActions = new ModelsActions();
     let firstApp, appVersionToBeDeleted;
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
         let users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -75,7 +74,7 @@ describe('Modify applications', () => {
         expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
-    it('[C260213] Should a new version of the app be displayed on dashboard when is replaced by importing another app in APS', async() => {
+    it('[C260213] Should a new version of the app be displayed on dashboard when is replaced by importing another app in APS', async () => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
@@ -97,7 +96,7 @@ describe('Modify applications', () => {
         expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
-    it('[C260220] Should the app not be displayed on dashboard after it was deleted in APS', async() => {
+    it('[C260220] Should the app not be displayed on dashboard after it was deleted in APS', async () => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
@@ -114,7 +113,7 @@ describe('Modify applications', () => {
         processServicesPage.checkAppIsNotDisplayed(app.title);
     });
 
-    it('[C260215] Should the penultimate version of an app be displayed on dashboard when the last version is deleted in APS', async() => {
+    it('[C260215] Should the penultimate version of an app be displayed on dashboard when the last version is deleted in APS', async () => {
         navigationBarPage.clickProcessServicesButton();
 
         processServicesPage.checkApsContainer();
@@ -132,7 +131,7 @@ describe('Modify applications', () => {
 
         expect(processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
 
-        browser.controlFlow().execute(async() => {
+        browser.controlFlow().execute(async () => {
             await modelActions.deleteVersionModel(this.alfrescoJsApi, appVersionToBeDeleted.id);
             await modelActions.deleteVersionModel(this.alfrescoJsApi, appVersionToBeDeleted.id);
             await apps.publishDeployApp(this.alfrescoJsApi, appVersionToBeDeleted.id);

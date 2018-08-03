@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { element, by, browser } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
@@ -187,10 +189,11 @@ describe('Upload component', () => {
         contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
     });
 
-    xit('[C272792] Cancel a big file through the upload dialog icon before the upload to be done', () => {
-        contentServicesPage.uploadFile(largeFile.location);
+    it('[C272792] Cancel a big file through the upload dialog icon before the upload to be done', () => {
+        browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
+           'document.querySelector("#adf-upload-dialog-cancel").click();  }, 5000)');
 
-        uploadDialog.removeFileWhileUploading(largeFile.name).fileIsCancelled(largeFile.name);
+        contentServicesPage.uploadFile(largeFile.location);
 
         expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
@@ -199,7 +202,6 @@ describe('Upload component', () => {
 
     xit('[C260169] Cancel a big file through the cancel uploads button', () => {
         contentServicesPage.uploadFile(largeFile.location);
-        uploadDialog.cancelUploads();
         expect(uploadDialog.getTitleText()).toEqual('Uploading 0 / 1');
         expect(uploadDialog.getConfirmationDialogTitleText()).toEqual('Cancel Upload');
         expect(uploadDialog.getConfirmationDialogDescriptionText()).toEqual('Stop uploading and remove files already uploaded.');
@@ -224,22 +226,27 @@ describe('Upload component', () => {
 
     it('[C272794] Tooltip of uploading multiple files button', () => {
         uploadToggles.enableMultipleFileUpload();
+        browser.driver.sleep(1000);
         expect(contentServicesPage.getMultipleFileButtonTooltip()).toEqual('Custom tooltip');
         uploadToggles.disableMultipleFileUpload();
     });
 
     it('[C260171] Should upload only the extension filter allowed when Enable extension filter is enabled', () => {
-        uploadToggles.enableExtensionFilter().addExtension('.docx');
+        uploadToggles.enableExtensionFilter();
+        browser.driver.sleep(1000);
+        uploadToggles.addExtension('.docx');
         contentServicesPage.uploadFile(docxFileModel.location).checkContentIsDisplayed(docxFileModel.name);
         uploadDialog.removeUploadedFile(docxFileModel.name).fileIsCancelled(docxFileModel.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.uploadFile(largeFile.location).checkContentIsNotDisplayed(largeFile.name);
+        contentServicesPage.uploadFile(pngFileModel.location).checkContentIsNotDisplayed(pngFileModel.name);
         uploadDialog.dialogIsNotDisplayed();
         uploadToggles.disableExtensionFilter();
     });
 
     it('[C274687] Should upload with drag and drop only the extension filter allowed when Enable extension filter is enabled', () => {
-        uploadToggles.enableExtensionFilter().addExtension('.docx');
+        uploadToggles.enableExtensionFilter();
+        browser.driver.sleep(1000);
+        uploadToggles.addExtension('.docx');
 
         let dragAndDrop = new DropActions();
         let dragAndDropArea = element(by.css('adf-upload-drag-area div'));
@@ -250,8 +257,8 @@ describe('Upload component', () => {
         uploadDialog.removeUploadedFile(docxFileModel.name).fileIsCancelled(docxFileModel.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
-        dragAndDrop.dropFile(dragAndDropArea, largeFile.location);
-        contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
+        dragAndDrop.dropFile(dragAndDropArea, pngFileModel.location);
+        contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name);
         uploadDialog.dialogIsNotDisplayed();
         uploadToggles.disableExtensionFilter();
     });
@@ -279,8 +286,9 @@ describe('Upload component', () => {
         uploadToggles.disableVersioning();
     });
 
-    xit('[C260173] Enable folder upload', () => {
+    it('[C260173] Enable folder upload', () => {
         uploadToggles.enableFolderUpload();
+        browser.driver.sleep(1000);
         contentServicesPage.uploadFolder(folderOne.location).checkContentIsDisplayed(folderOne.name);
         expect(contentServicesPage.getFolderButtonTooltip()).toEqual('Custom tooltip');
         uploadDialog.fileIsUploaded(uploadedFileInFolder.name);
@@ -290,7 +298,7 @@ describe('Upload component', () => {
         uploadToggles.disableFolderUpload();
     });
 
-    xit('[C260176] The files uploaded before closing the upload dialog box are not displayed anymore in the upload box', () => {
+    it('[C260176] The files uploaded before closing the upload dialog box are not displayed anymore in the upload box', () => {
         contentServicesPage.uploadFile(docxFileModel.location).checkContentIsDisplayed(docxFileModel.name);
 
         uploadDialog.fileIsUploaded(docxFileModel.name);
@@ -309,7 +317,7 @@ describe('Upload component', () => {
             .checkContentsAreNotDisplayed([docxFileModel.name, pngFileModel.name, pdfFileModel.name]);
     });
 
-    xit('[C260170] Upload files on the same time', () => {
+    it('[C260170] Upload files on the same time', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
 
@@ -331,14 +339,15 @@ describe('Upload component', () => {
     xit('[C279919] Enable max size and set it to 400', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
-        uploadToggles.enableMaxSize().addMaxSize('400');
+        uploadToggles.enableMaxSize();
+        uploadToggles.addMaxSize('400');
         contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsDisplayed(fileWithSpecificSize.name);
         uploadDialog.fileIsUploaded(fileWithSpecificSize.name).clickOnCloseButton().dialogIsNotDisplayed();
         contentServicesPage.deleteContent(fileWithSpecificSize.name).checkContentIsNotDisplayed(fileWithSpecificSize.name);
         uploadToggles.addMaxSize('399');
         contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsNotDisplayed(fileWithSpecificSize.name);
-        uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
         expect(contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
+        uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
         contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
         uploadDialog.fileIsUploaded(emptyFile.name).clickOnCloseButton().dialogIsNotDisplayed();
         contentServicesPage.deleteContent(emptyFile.name).checkContentIsNotDisplayed(emptyFile.name);
@@ -347,19 +356,22 @@ describe('Upload component', () => {
 
     xit('[C272796] Enable max size and set it to 0', () => {
         contentServicesPage.goToDocumentList();
-        contentServicesPage.checkAcsContainer();
-        uploadToggles.enableMaxSize().addMaxSize('0');
+        uploadToggles.enableMaxSize();
+        uploadToggles.addMaxSize('0');
         contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsNotDisplayed(fileWithSpecificSize.name);
-        uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
         expect(contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
+
+        uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
         contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
         uploadDialog.fileIsUploaded(emptyFile.name).clickOnCloseButton().dialogIsNotDisplayed();
         contentServicesPage.deleteContent(emptyFile.name).checkContentIsNotDisplayed(emptyFile.name);
         uploadToggles.disableMaxSize();
     });
 
-    xit('[C272797] Set max size to 1 and disable it', () => {
-        uploadToggles.enableMaxSize().addMaxSize('1');
+    it('[C272797] Set max size to 1 and disable it', () => {
+        uploadToggles.enableMaxSize();
+        browser.driver.sleep(1000);
+        uploadToggles.addMaxSize('1');
         uploadToggles.disableMaxSize();
         contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsDisplayed(fileWithSpecificSize.name);
         uploadDialog.fileIsUploaded(fileWithSpecificSize.name).clickOnCloseButton().dialogIsNotDisplayed();
@@ -375,6 +387,7 @@ describe('Upload component', () => {
 
     it('[C279882] Should be possible Upload a folder in a folder', () => {
         uploadToggles.enableFolderUpload();
+        browser.driver.sleep(1000);
         contentServicesPage.uploadFolder(folderOne.location).checkContentIsDisplayed(folderOne.name);
         uploadDialog.fileIsUploaded(uploadedFileInFolder.name);
 
@@ -382,6 +395,7 @@ describe('Upload component', () => {
         contentServicesPage.doubleClickRow(folderOne.name).checkContentIsDisplayed(uploadedFileInFolder.name);
 
         uploadToggles.enableFolderUpload();
+        browser.driver.sleep(1000);
         contentServicesPage.uploadFolder(folderTwo.location).checkContentIsDisplayed(folderTwo.name);
         uploadDialog.fileIsUploaded(uploadedFileInFolderTwo.name);
 

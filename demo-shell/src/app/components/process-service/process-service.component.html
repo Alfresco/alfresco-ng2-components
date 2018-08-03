@@ -59,7 +59,6 @@
                         *ngIf="taskList"
                         [target]="taskList"
                         (changePageSize)="onChangePageSize($event)"
-                        [supportedPageSizes]="supportedPages"
                         #taskListPagination>
                     </adf-pagination>
                 </div>
@@ -157,7 +156,6 @@
                         *ngIf="processList"
                         [target]="processList"
                         (changePageSize)="onChangePageSize($event)"
-                        [supportedPageSizes]="supportedPages"
                         #processListPagination>
                     </adf-pagination>
                 </div>

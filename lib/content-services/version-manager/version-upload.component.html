@@ -1,16 +1,16 @@
 <div class="adf-new-version-max-width">
     <mat-radio-group class="adf-new-version-radio-group" [(ngModel)]="semanticVersion">
-        <mat-radio-button class="adf-new-version-radio-button" [value]="'minor'">{{
+        <mat-radio-button class="adf-new-version-radio-button" id="adf-new-version-minor"[value]="'minor'">{{
             'ADF_VERSION_LIST.ACTIONS.UPLOAD.MINOR' |
             translate }}
         </mat-radio-button>
-        <mat-radio-button class="adf-new-version-radio-button" [value]="'major'">{{
+        <mat-radio-button class="adf-new-version-radio-button" id="adf-new-version-major" [value]="'major'">{{
             'ADF_VERSION_LIST.ACTIONS.UPLOAD.MAJOR' |
             translate }}
         </mat-radio-button>
     </mat-radio-group>
     <mat-form-field class="adf-new-version-max-width">
-                    <textarea matInput [(ngModel)]="comment" class="adf-new-version-text-area"
+                    <textarea matInput [(ngModel)]="comment" class="adf-new-version-text-area" id="adf-new-version-text-area"
                               placeholder="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.COMMENT' | translate }}"></textarea>
     </mat-form-field>
 
@@ -29,7 +29,7 @@
         (success)="success.emit($event)"
         (error)="error.emit($event)">
     </adf-upload-version-button>
-    <button mat-raised-button (click)="cancelUpload()">{{
+    <button mat-raised-button (click)="cancelUpload()" id="adf-new-version-cancel"  >{{
         'ADF_VERSION_LIST.ACTIONS.UPLOAD.CANCEL'| translate }}
     </button>
 </div>

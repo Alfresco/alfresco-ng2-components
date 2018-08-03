@@ -40,7 +40,7 @@ describe('Checklist component', () => {
     let taskPage = new TasksPage();
 
     let tasks = ['no checklist created task', 'checklist number task', 'remove running checklist', 'remove completed checklist', 'hierarchy'];
-    let checklists= ['cancelCheckList', 'dialogChecklist', 'addFirstChecklist', 'addSecondChecklist'];
+    let checklists = ['cancelCheckList', 'dialogChecklist', 'addFirstChecklist', 'addSecondChecklist'];
     let removeChecklist = ['removeFirstRunningChecklist', 'removeSecondRunningChecklist', 'removeFirstCompletedChecklist', 'removeSecondCompletedChecklist'];
     let hierarchyChecklist = ['checklistOne', 'checklistTwo', 'checklistOneChild', 'checklistTwoChild'];
 
@@ -178,7 +178,7 @@ describe('Checklist component', () => {
 
         taskPage.usingTasksListPage().selectTaskFromTasksList(tasks[4]);
         taskPage.completeTaskNoForm();
-        
+
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
         taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[4]);
         taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(hierarchyChecklist[0]);
@@ -188,4 +188,3 @@ describe('Checklist component', () => {
     });
 
 });
-

@@ -36,8 +36,8 @@ Displays the version history of a node with the ability to upload a new version.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs during upload. |
-| uploadSuccess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a file is uploaded successfully. |
+| uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when an error occurs during upload. |
+| uploadSuccess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when a file is uploaded successfully. |
 
 ## Details
 
