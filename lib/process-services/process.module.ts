@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, TRANSLATION_PROVIDER, CommentsModule } from '@alfresco/adf-core';
+import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -50,7 +50,6 @@ export function providers() {
     imports: [
         CoreModule.forChild(),
         CommonModule,
-        CommentsModule,
         ProcessCommentsModule,
         FormsModule,
         ReactiveFormsModule,
@@ -74,7 +73,6 @@ export function providers() {
     ],
     exports: [
         CommonModule,
-        CommentsModule,
         ProcessCommentsModule,
         FormsModule,
         ReactiveFormsModule,
@@ -114,7 +112,6 @@ export class ProcessModule {
     imports: [
         CoreModule.forChild(),
         CommonModule,
-        CommentsModule,
         ProcessCommentsModule,
         FormsModule,
         ReactiveFormsModule,
@@ -127,7 +124,6 @@ export class ProcessModule {
     ],
     exports: [
         CommonModule,
-        CommentsModule,
         ProcessCommentsModule,
         FormsModule,
         ReactiveFormsModule,

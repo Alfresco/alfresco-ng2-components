@@ -32,7 +32,7 @@ import {
     imports: [
         NoopAnimationsModule,
         CoreModule.forRoot(),
-        InsightsModule
+        InsightsModule.forRoot()
     ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
