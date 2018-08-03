@@ -518,19 +518,19 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C260119] - Thumbnail - Disabled - pdf file', async (done) => {
+        it('[C280066] - Thumbnail - Disabled - pdf file', async (done) => {
             let fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_pdf.svg');
             done();
         });
 
-        it('[C260119] - Thumbnail - Disabled - docx file', async (done) => {
+        it('[C280067] - Thumbnail - Disabled - docx file', async (done) => {
             let fileIconUrl = await contentServicesPage.getRowIconImageUrl(docxFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_ms_word.svg');
             done();
         });
 
-        it('[C260119] - Thumbnail - Disabled - test file', async (done) => {
+        it('[C280068] - Thumbnail - Disabled - test file', async (done) => {
             let fileIconUrl = await contentServicesPage.getRowIconImageUrl(testFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_document.svg');
             done();
@@ -610,7 +610,7 @@ describe('Document List Component', () => {
             contentServicesPage.checkMenuIsShowedForElementIndex(3);
         });
 
-        it('[C280023] - Gallery Card show details - attributes', () => {
+        it('[C280069] - Gallery Card show details - attributes', () => {
             let timeMessage = '';
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.DISPLAY_NAME);
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.SIZE);
@@ -641,13 +641,13 @@ describe('Document List Component', () => {
             expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toBe(timeMessage);
         });
 
-        it('[C280023] - Gallery Card show details - subfolder gallery displayed', () => {
+        it('[C280129] - Gallery Card show details - subfolder gallery displayed', () => {
             contentServicesPage.navigateToCardFolder(folderName);
             expect(contentServicesPage.getCardElementShowedInPage()).toBe(1);
             expect(contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
         });
 
-        it('[C280023] - Gallery Card show details - back to list view', () => {
+        it('[C280130] - Gallery Card show details - back to list view', () => {
             contentServicesPage.clickGridViewButton();
             contentServicesPage.checkAcsContainer();
             contentServicesPage.navigateToFolder(folderName);
@@ -669,7 +669,7 @@ describe('Document List Component', () => {
             contentServicesPage.checkListIsSortedByAuthorColumn('asc');
         });
 
-        it('[C261994] - Sort by Created', () => {
+        it('[C261996] - Sort by Created', () => {
             contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED);
             contentServicesPage.checkListIsSortedByCreatedColumn('asc');
         });
