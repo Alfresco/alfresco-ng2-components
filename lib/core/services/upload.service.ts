@@ -93,7 +93,7 @@ export class UploadService {
 
             isAllowed = this.excludedFileList.filter((pattern) => {
                 let minimatch = new Minimatch(pattern, this.matchingOptions);
-                return minimatch.match(file.name)
+                return minimatch.match(file.name);
             }).length === 0;
         }
         return isAllowed;
