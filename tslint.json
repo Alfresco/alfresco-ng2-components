@@ -1,9 +1,13 @@
 {
   "rulesDirectory": [
-    "../node_modules/codelyzer",
-    "../tools/tslint-rules/"
+    "./node_modules/codelyzer",
+    "./tools/tslint-rules/"
   ],
   "rules": {
+    "adf-license-banner": [
+      true,
+      "e2e/**/*.ts"
+    ],
     "align": [
       true,
       "parameters",
@@ -11,8 +15,7 @@
     ],
     "ban": [
       true,
-      "eval",
-      "fdescribe"
+      "eval"
     ],
     "class-name": true,
     "comment-format": [

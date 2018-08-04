@@ -16,29 +16,7 @@
     }
   ],
   "devDependencies": {
-    "@angular/compiler": "4.2.3",
-    "@angular/core": "4.2.3",
-    "@types/chai": "3.4.33",
-    "@types/less": "0.0.31",
-    "@types/mocha": "2.2.32",
-    "@types/node": "6.0.41",
-    "@types/node-sass": "3.10.31",
-    "@types/source-map": "0.5.0",
-    "@types/sprintf-js": "0.0.27",
-    "chai": "3.5.0",
-    "chai-spies": "0.7.1",
-    "minimalist": "1.0.0",
-    "mocha": "3.0.2",
-    "node-sass": "3.13.0",
-    "rimraf": "2.5.2",
-    "rxjs": "5.4.1",
-    "ts-node": "1.2.2",
-    "tslint": "5.0.0",
-    "typescript": "2.4.0",
-    "zone.js": "0.8.4",
-    "js-yaml": "3.8.4",
-    "json-stringify-pretty-compact": "1.0.4",
-    "@types/js-yaml": "3.5.31"
+    "typescript": "2.4.0"
   },
   "peerDependencies": {
     "tslint": "5.0.0"

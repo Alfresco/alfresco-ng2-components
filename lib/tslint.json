@@ -4,6 +4,10 @@
     "../tools/tslint-rules/"
   ],
   "rules": {
+    "adf-license-banner": [
+      true,
+      "lib/+(core|content-services|process-services|insights)/**/*.ts"
+    ],
     "align": [
       true,
       "parameters",

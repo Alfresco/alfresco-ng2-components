@@ -4,6 +4,10 @@
     "../tools/tslint-rules/"
   ],
   "rules": {
+    "adf-license-banner": [
+      true,
+      "**/*.ts"
+    ],
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,
