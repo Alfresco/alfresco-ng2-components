@@ -41,11 +41,12 @@ mkdir -p node_modules/@alfresco/adf-content-services
 mkdir -p node_modules/@alfresco/adf-process-services
 mkdir -p node_modules/@alfresco/adf-insights
 
-cp -R -v "../../lib/dist/core/" "node_modules/@alfresco/adf-core"
-cp -R -v "../../lib/dist/content-services/" "node_modules/@alfresco/adf-content-services"
-cp -R -v "../../lib/dist/process-services/" "node_modules/@alfresco/adf-process-services"
-cp -R -v "../../lib/dist/insights/" "node_modules/@alfresco/adf-insights"
+cp -R -v "$DIR/../lib/dist/core/" "$DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core"
+cp -R -v "$DIR/../lib/dist/content-services/" "$DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-content-services"
+cp -R -v "$DIR/../lib/dist/process-services/" "$DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-process-services"
+cp -R -v ".$DIR/../lib/dist/insights/" "$DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-insights"
 
 rm -rf "$DIR/../node_modules/@angular"
+rm -rf "$DIR/../node_modules/@alfresco"
 
 npm run e2e
