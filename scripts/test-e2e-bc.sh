@@ -41,10 +41,10 @@ mkdir -p node_modules/@alfresco/adf-content-services
 mkdir -p node_modules/@alfresco/adf-process-services
 mkdir -p node_modules/@alfresco/adf-insights
 
-cp -R "../../lib/dist/core/" "node_modules/@alfresco/adf-core"
-cp -R "../../lib/dist/content-services/" "node_modules/@alfresco/adf-content-services"
-cp -R "../../lib/dist/process-services/" "node_modules/@alfresco/adf-process-services"
-cp -R "../../lib/dist/insights/" "node_modules/@alfresco/adf-insights"
+cp -R -v "../../lib/dist/core/" "node_modules/@alfresco/adf-core"
+cp -R -v "../../lib/dist/content-services/" "node_modules/@alfresco/adf-content-services"
+cp -R -v "../../lib/dist/process-services/" "node_modules/@alfresco/adf-process-services"
+cp -R -v "../../lib/dist/insights/" "node_modules/@alfresco/adf-insights"
 
 rm -rf "$DIR/../node_modules/@angular"
 
