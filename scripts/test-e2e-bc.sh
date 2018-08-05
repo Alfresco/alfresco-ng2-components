@@ -46,4 +46,6 @@ cp -R "../../lib/dist/content-services/" "node_modules/@alfresco/adf-content-ser
 cp -R "../../lib/dist/process-services/" "node_modules/@alfresco/adf-process-services"
 cp -R "../../lib/dist/insights/" "node_modules/@alfresco/adf-insights"
 
+rm -rf "$DIR/../node_modules/@angular"
+
 npm run e2e
