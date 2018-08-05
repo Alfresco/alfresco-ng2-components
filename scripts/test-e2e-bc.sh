@@ -5,7 +5,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 npm run build-lib || exit 1
 
-rm -rf "$DIR/../node_modules/@angular"
 cd "$DIR/../integration/base_ver_2_app"
 
 ANGULAR_VERSION="5.1.1"
