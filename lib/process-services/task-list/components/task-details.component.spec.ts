@@ -188,6 +188,12 @@ describe('TaskDetailsComponent', () => {
         });
     }));
 
+    it('should reset formName if delete value is emitted', () => {
+        const emit = 'delete';
+        component.onCompleteAttachForm(emit);
+        expect(component.taskFormName).toBe(null);
+    });
+
     describe('change detection', () => {
 
         let change;

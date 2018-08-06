@@ -374,7 +374,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.showAttachForm = false;
     }
 
-    onCompleteAttachForm() {
+    onCompleteAttachForm(event) {
+        if (event === 'delete') {
+            this.taskFormName = null;
+        }
         this.showAttachForm = false;
         this.loadDetails(this.taskId);
     }
