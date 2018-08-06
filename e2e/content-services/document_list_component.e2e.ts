@@ -194,7 +194,7 @@ describe('Document List Component', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             let dateValue = contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
-            expect(dateValue).toBe('a few seconds ago');
+            expect(dateValue).toContain('ago');
             done();
         });
 
