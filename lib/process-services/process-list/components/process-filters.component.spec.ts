@@ -220,7 +220,7 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.getCurrentFilter()).toBe(filter);
     });
 
-  it('should select the filter passed as input by id', (done) => {
+    it('should select the filter passed as input by id', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
         filterList.filterParam = new FilterProcessRepresentationModel({ id: 20 });
