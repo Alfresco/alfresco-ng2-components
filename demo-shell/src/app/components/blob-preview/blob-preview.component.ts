@@ -19,10 +19,6 @@ import { Component } from '@angular/core';
 import { PreviewService } from '../../services/preview.service';
 import { Router } from '@angular/router';
 
-import * as pdfjsLib from 'pdfjs-dist';
-pdfjsLib.PDFJS.workerSrc = 'pdf.worker.js';
-pdfjsLib.PDFJS.disableFontFace = true;
-
 @Component({
     templateUrl: 'bob-preview.component.html'
 })
