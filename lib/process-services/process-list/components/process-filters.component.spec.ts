@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AppsProcessService } from '@alfresco/adf-core';
 import { from } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
