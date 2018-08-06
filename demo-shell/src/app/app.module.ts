@@ -55,7 +55,6 @@ import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
-import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
 
@@ -134,7 +133,6 @@ import { ProcessModule } from '@alfresco/adf-process-services';
         FormLoadingComponent,
         DemoPermissionComponent,
         FormLoadingComponent,
-        BlobPreviewComponent,
         BreadcrumbDemoComponent,
         NotificationsComponent,
         CardViewComponent,

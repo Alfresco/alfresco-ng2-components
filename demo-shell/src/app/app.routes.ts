@@ -46,7 +46,6 @@ import { OverlayViewerComponent } from './components/overlay-viewer/overlay-view
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
-import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
@@ -75,7 +74,18 @@ export const appRoutes: Routes = [
             }
         ]
     },
-    { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
+    {
+        path: 'preview/blob',
+        component: AppComponent,
+        outlet: 'overlay',
+        pathMatch: 'full',
+        children: [
+            {
+                path: '',
+                loadChildren: 'app/components/blob-preview/blob-preview.module#BlobPreviewModule'
+            }
+        ]
+    },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
         path: 'breadcrumb',
