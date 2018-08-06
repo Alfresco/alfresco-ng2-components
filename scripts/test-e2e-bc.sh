@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 npm run build-lib || exit 1
 
-cd "$DIR/../integration/base_ver_2_app"
+cd $DIR/../integration/base_ver_2_app
 
 ANGULAR_VERSION="5.1.1"
 ANGULAR_CLI_VERSION="1.7.4"
@@ -34,26 +34,21 @@ npm install --save alfresco-js-api@alpha
 
 echo "====== COPY new build in node_modules ===== "
 
-rm -rf "node_modules/@alfresco"
+rm -rf $DIR/../integration/base_ver_2_app/node_modules/@alfresco
 
-mkdir -p node_modules/@alfresco/adf-core
-mkdir -p node_modules/@alfresco/adf-content-services
-mkdir -p node_modules/@alfresco/adf-process-services
-mkdir -p node_modules/@alfresco/adf-insights
+mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/ && \
+cp -R  $DIR/../lib/dist/core/*  $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/
 
-mkdir -p ./node_modules/@alfresco/adf-core/ && \
-cp -R  "$DIR/../lib/dist/core/*"  "$DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/"
+mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-content-services/ && \
+cp -R $DIR/../lib/dist/content-services/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-content-services/
 
-mkdir -p ./node_modules/@alfresco/adf-content-services/ && \
-cp -R "$DIR/../lib/dist/content-services/*" "$DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-content-services/"
+mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-process-services/ && \
+cp -R $DIR/../lib/dist/process-services/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-process-services/
 
-mkdir -p ./node_modules/@alfresco/adf-process-services/ && \
-cp -R "$DIR/../lib/dist/process-services/*" "$DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-process-services/"
+mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-insights/ && \
+cp -R $DIR/../lib/dist/insights/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-insights/
 
-mkdir -p ./node_modules/@alfresco/adf-insights/ && \
-cp -R ".$DIR/../lib/dist/insights/*" "$DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-insights/"
-
-rm -rf "$DIR/../node_modules/@angular"
-rm -rf "$DIR/../node_modules/@alfresco"
+rm -rf $DIR/../node_modules/@angular
+rm -rf $DIR/../node_modules/@alfresco
 
 npm run e2e
