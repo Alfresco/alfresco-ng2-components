@@ -7,7 +7,7 @@
     "START-DATE": "Fecha de inicio",
     "END-DATE": "Fecha de fin",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "Fecha de inicio obligatoria",
+      "START-DATE-REQUIRED": "Se necesita fecha de inicio",
       "START-LESS-THAN-END-DATE": "La fecha de inicio debe ser anterior a la fecha de finalización"
     }
   },
@@ -19,6 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "Ninguna tarea encontrada",
+        "SUBTITLE": "Crear una nueva tarea que desee encontrar fácilmente después",
         "NONE": "No se han encontrado listas de tareas"
       }
     },
@@ -150,6 +152,11 @@
       "NO_FORM_MESSAGE": "No se han adjuntado formularios",
       "COMPLETE_TASK_MESSAGE": "Tarea {{taskName}} finalizada",
       "COMPLETE_TASK_SUB_MESSAGE": "No se han añadido formularios"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Seleccionar formulario para adjuntar",
+      "REMOVE_FORM": "Eliminar formulario",
+      "SELECT_OPTION": "Seleccionar una opción"
     }
   },
   "ADF_PROCESS_LIST": {
