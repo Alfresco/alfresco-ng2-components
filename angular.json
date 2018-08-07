@@ -62,7 +62,7 @@
                 "output": "/assets"
               },
               {
-                "glob": "pdf.worker.js",
+                "glob": "pdf.worker.min.js",
                 "input": "node_modules/pdfjs-dist/build",
                 "output": "/"
               },
@@ -179,7 +179,7 @@
                 "output": "/assets"
               },
               {
-                "glob": "pdf.worker.js",
+                "glob": "pdf.worker.min.js",
                 "input": "node_modules/pdfjs-dist/build",
                 "output": "/"
               },
@@ -292,7 +292,7 @@
                 "output": "/assets/adf-insights/i18n"
               },
               {
-                "glob": "pdf.worker.js",
+                "glob": "pdf.worker.min.js",
                 "input": "node_modules/pdfjs-dist/build",
                 "output": "/"
               },
@@ -438,7 +438,7 @@
                 "output": "/assets/adf-insights/i18n"
               },
               {
-                "glob": "pdf.worker.js",
+                "glob": "pdf.worker.min.js",
                 "input": "node_modules/pdfjs-dist/build",
                 "output": "/"
               },

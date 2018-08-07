@@ -30,7 +30,7 @@ import 'hammerjs';
 import 'chart.js';
 import 'ng2-charts';
 
-PDFJS.workerSrc = 'pdf.worker.js';
+PDFJS.workerSrc = 'pdf.worker.min.js';
 
 if (environment.production) {
     enableProdMode();
