@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-19
+Last reviewed: 2018-08-07
 ---
 
 # Login component
@@ -24,7 +24,6 @@ Authenticates to Alfresco Content Services and or Alfresco Process Services.
     -   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
     -   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
     -   [SSO login](#sso-login)
-    -   [Implicit Flow](#implicit-flow)
 -   [See Also](#see-also)
 
 ## Basic usage
@@ -268,11 +267,15 @@ export class MyCustomLogin {
 }
 ```
 
+Note that if you do not call `event.preventDefault()` then the default behaviour 
+will execute _after_ your custom code has completed.
+
 ### SSO login
 
-### Implicit Flow
+#### Implicit Flow
 
-If the 'app.config.json' or you used the host-setting component to use the SSO Oauth the [login component](../core/login.component.md) will show only a button to login:
+If you used the host-setting component to enable SSO Oauth (or if you
+enabled the setting in `app.config.json`) then the [login component](../core/login.component.md) will show only a button to login:
 
 ```JSON
     "authType" :"OAUTH",
@@ -290,11 +293,9 @@ If the 'app.config.json' or you used the host-setting component to use the SSO O
 
 ![Login component](../docassets/images/sso-login.png)
 
-Note if the silentLogin property in the oauth2 configuration is true will not be possible to show the login page. with silentLogin true the application is automatically redirect to the 
-authorization server when is not logged-in
-
-Note that if you do not call `event.preventDefault()` then the default behaviour 
-will execute _after_ your custom code has completed.
+Note that if the `silentLogin property` in the `oauth2` configuration is set to true
+then the login page will not be shown. Instead, the application will redirect
+automatically to the authorization server when the user is not logged-in
 
 ## See Also
 
