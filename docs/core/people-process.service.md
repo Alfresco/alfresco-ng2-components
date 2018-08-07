@@ -12,21 +12,21 @@ Gets information about Process Services users.
 
 ### Methods
 
--   **getUserImage**(user: [`UserProcessModel`](../core/user-process.model.md) = `null`): `string`<br/>
+-   **getUserImage**(user: [`UserProcessModel`](../core/user-process.model.md)): `string`<br/>
     Gets the profile picture URL for the specified user.
     -   _user:_ [`UserProcessModel`](../core/user-process.model.md)  - The target user
     -   **Returns** `string` - Profile picture URL
--   **getWorkflowUsers**(taskId?: `string` = `null`, searchWord?: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../core/user-process.model.md)`[]>`<br/>
+-   **getWorkflowUsers**(taskId?: `string`, searchWord?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../core/user-process.model.md)`[]>`<br/>
     Gets information about users across all tasks.
     -   _taskId:_ `string`  - (Optional) ID of the task
     -   _searchWord:_ `string`  - (Optional) Filter text to search for
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../core/user-process.model.md)`[]>` - Array of user information objects
--   **involveUserWithTask**(taskId: `string` = `null`, idToInvolve: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../core/user-process.model.md)`[]>`<br/>
+-   **involveUserWithTask**(taskId: `string`, idToInvolve: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../core/user-process.model.md)`[]>`<br/>
     Sets a user to be involved with a task.
     -   _taskId:_ `string`  - ID of the target task
     -   _idToInvolve:_ `string`  - ID of the user to involve
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../core/user-process.model.md)`[]>` - Empty response when the update completes
--   **removeInvolvedUser**(taskId: `string` = `null`, idToRemove: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../core/user-process.model.md)`[]>`<br/>
+-   **removeInvolvedUser**(taskId: `string`, idToRemove: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../core/user-process.model.md)`[]>`<br/>
     Removes a user who is currently involved with a task.
     -   _taskId:_ `string`  - ID of the target task
     -   _idToRemove:_ `string`  - ID of the user to remove

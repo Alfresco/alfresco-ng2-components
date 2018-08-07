@@ -127,7 +127,7 @@ function makeToc(tree) {
         context.headings.push({
             "level": heading.item.depth - 2,
             "title": heading.textValue,
-            "anchor": "#" + heading.textValue.toLowerCase().replace(/ /g, "-").replace(/[\.,]/g ,"")
+            "anchor": "#" + heading.textValue.toLowerCase().replace(/ /g, "-").replace(/[\.,'"`$]/g ,"")
         })
     });
 

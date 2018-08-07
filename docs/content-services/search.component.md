@@ -46,7 +46,7 @@ Searches items for supplied search terms.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when search results have fully loaded. |
+| resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when search results have fully loaded. |
 
 ## Details
 

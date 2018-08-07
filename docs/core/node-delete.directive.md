@@ -28,14 +28,14 @@ Deletes multiple files and folders.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | permanent | `boolean` | false | If true then the nodes are deleted immediately rather than being put in the trash |
-| adf-delete | `MinimalNodeEntity[] \| DeletedNodeEntity[]` |  | Array of nodes to delete. |
+| selection | [`MinimalNodeEntity`](../content-services/document-library.model.md)`[] \| DeletedNodeEntity[]` |  | Array of nodes to delete. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | delete | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the nodes have been deleted. |
 
 ## Details

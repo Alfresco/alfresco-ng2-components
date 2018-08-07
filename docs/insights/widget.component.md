@@ -28,15 +28,14 @@ export class CustomEditorComponent extends WidgetComponent {}
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| field | [`FormFieldModel`](../core/form-field.model.md) |  | Data to be displayed in the field |
-| readOnly | `boolean` | false | Does the widget show a read-only value? (ie, can't be edited) |
+| ---- | ---- | ------------- | ----------- |
+| field | `any` |  | Data to be displayed in the field |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
-| fieldChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../core/form-field.model.md)`>` | (**Deprecated:** Used only to trigger visibility engine; components should do that internally if needed)  |
+| ---- | ---- | ----------- |
+| fieldChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | ( |
 
 ## Details
 

@@ -18,9 +18,9 @@ Shows user information.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| bpmBackgroundImage | `string` | "./assets/images/bpm-background.png" | Custom path for the background banner image for APS users. |
-| ecmBackgroundImage | `string` | "./assets/images/ecm-background.png" | Custom path for the background banner image for ACS users. |
+| ---- | ---- | ------------- | ----------- |
+| bpmBackgroundImage | `string` |  | Custom path for the background banner image for APS users. |
+| ecmBackgroundImage | `string` |  | Custom path for the background banner image for ACS users. |
 | menuPositionX | `string` | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
 | menuPositionY | `string` | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
 | namePosition | `string` | "right" | When the username is shown, this defines its position relative to the user info button. Can be `right` or `left`. |

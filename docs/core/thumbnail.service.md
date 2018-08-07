@@ -15,11 +15,11 @@ Retrieves an SVG thumbnail image to represent a document type.
 -   **getDefaultMimeTypeIcon**(): `string`<br/>
     Gets a "miscellaneous" thumbnail URL for types with no other icon defined.
     -   **Returns** `string` - URL string
--   **getDocumentThumbnailUrl**(node: `any` = `null`): `string`<br/>
+-   **getDocumentThumbnailUrl**(node: `any`): `string`<br/>
     Gets a thumbnail URL for the given document node.
     -   _node:_ `any`  - Node to get URL for.
     -   **Returns** `string` - URL string
--   **getMimeTypeIcon**(mimeType: `string` = `null`): `string`<br/>
+-   **getMimeTypeIcon**(mimeType: `string`): `string`<br/>
     Gets a thumbnail URL for a MIME type.
     -   _mimeType:_ `string`  - MIME type for the thumbnail
     -   **Returns** `string` - URL string

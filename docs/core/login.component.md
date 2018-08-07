@@ -13,14 +13,10 @@ Authenticates to Alfresco Content Services and or Alfresco Process Services.
 ## Contents
 
 -   [Basic usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
     -   [Events](#events)
-
 -   [Details](#details)
-
     -   [Handling events](#handling-events)
     -   [Changing content](#changing-content)
     -   [Custom logo and background](#custom-logo-and-background)
@@ -29,7 +25,6 @@ Authenticates to Alfresco Content Services and or Alfresco Process Services.
     -   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
     -   [SSO login](#sso-login)
     -   [Implicit Flow](#implicit-flow)
-
 -   [See Also](#see-also)
 
 ## Basic usage
@@ -45,32 +40,32 @@ Authenticates to Alfresco Content Services and or Alfresco Process Services.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| backgroundImageUrl | `string` | "./assets/images/background.svg" | Path to a custom background image. |
-| copyrightText | `string` | "© 2016 Alfresco Software, Inc. All Rights Reserved." | The copyright text below the login box. |
+| ---- | ---- | ------------- | ----------- |
+| backgroundImageUrl | `string` |  | Path to a custom background image. |
+| copyrightText | `string` |  | The copyright text below the login box. |
 | disableCsrf | `boolean` |  | Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. |
 | fieldsValidation | `any` |  | Custom validation rules for the login form. |
-| logoImageUrl | `string` | "./assets/images/alfresco-logo.svg" | Path to a custom logo image. |
+| logoImageUrl | `string` |  | Path to a custom logo image. |
 | needHelpLink | `string` | "" | Sets the URL of the NEED HELP link in the footer. |
-| providers | `string` |  | **Deprecated:** 3.0.0 |
+| providers | `string` |  | (**Deprecated:** 3.0.0 Possible valid values are ECM, BPM or ALL. deprecated in 3.0.0 use the providers property in the the app.config.json) |
 | registerLink | `string` | "" | Sets the URL of the REGISTER link in the footer. |
 | showLoginActions | `boolean` | true | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
 | showRememberMe | `boolean` | true | Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly. |
-| successRoute | `string` |  null | Route to redirect to on successful login. |
+| successRoute | `string` | null | Route to redirect to on successful login. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../lib/core/login/models/login-error.event.ts)`>` | Emitted when the login fails. |
 | executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../lib/core/login/models/login-submit.event.ts)`>` | Emitted when the login form is submitted. |
-| success | `EventEmitter<LoginSuccessEvent>` | Emitted when the login is successful. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../lib/core/login/models/login-success.event.ts)`>` | Emitted when the login is successful. |
 
 ## Details
 
 ### Handling events
 
-**app.component.html**
+**[app.component](../../demo-shell/src/app/app.component.ts).html**
 
 ```html
 <adf-login 
@@ -79,7 +74,7 @@ Authenticates to Alfresco Content Services and or Alfresco Process Services.
 </adf-login>
 ```
 
-**app.component.ts**
+**[app.component](../../demo-shell/src/app/app.component.ts).ts**
 
 ```ts
 export class AppComponent {

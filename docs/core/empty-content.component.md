@@ -31,7 +31,7 @@ Provides a generic "Empty Content" placeholder for components.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | icon | `string` | "cake" | Material Icon to use |
 | subtitle | `string` | "" | String or Resource Key for the title |
 | title | `string` | "" | String or Resource Key for the subtitle |

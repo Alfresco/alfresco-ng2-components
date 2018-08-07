@@ -12,13 +12,9 @@ Displays users involved with a specified task
 ## Contents
 
 -   [Basic Usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
-
 -   [Details](#details)
-
     -   [How to customize the people component behavior](#how-to-customize-the-people-component-behavior)
     -   [Involve People single click and close search](#involve-people-single-click-and-close-search)
     -   [Involve People single click without close search](#involve-people-single-click-without-close-search)
@@ -40,8 +36,8 @@ Displays users involved with a specified task
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| people | [`UserProcessModel`](../core/user-process.model.md)`[]` |  \[] | The array of User objects to display. |
+| ---- | ---- | ------------- | ----------- |
+| people | [`UserProcessModel`](../core/user-process.model.md)`[]` | \[] | The array of User objects to display. |
 | readOnly | `boolean` | false | Should the data be read-only? |
 | taskId | `string` | "" | The numeric ID of the task. |
 

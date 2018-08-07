@@ -23,14 +23,14 @@ Shows all the information related to a task.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| formName | `string` |  null | The name of the form. |
+| ---- | ---- | ------------- | ----------- |
+| formName | `string` | null | The name of the form. |
 | taskDetails | [`TaskDetailsModel`](../process-services/task-details.model.md) |  | (required) Details related to the task. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | claim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed. |
 | unclaim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is unclaimed (ie, requeued). |
 

@@ -12,7 +12,7 @@ Accesses and manipulates sites from a Content Services repository.
 
 ### Methods
 
--   **deleteSite**(siteId: `string` = `null`, permanentFlag: `boolean` = `true`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **deleteSite**(siteId: `string`, permanentFlag: `boolean` = `true`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Deletes a site.
     -   _siteId:_ `string`  - Site to delete
     -   _permanentFlag:_ `boolean`  - True: deletion is permanent; False: site is moved to the trash
@@ -20,16 +20,16 @@ Accesses and manipulates sites from a Content Services repository.
 -   **getEcmCurrentLoggedUserName**(): `string`<br/>
     Gets the username of the user currently logged into ACS.
     -   **Returns** `string` - Username string
--   **getSite**(siteId: `string` = `null`, opts?: `any` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>`<br/>
+-   **getSite**(siteId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>`<br/>
     Gets the details for a site.
     -   _siteId:_ `string`  - ID of the target site
     -   _opts:_ `any`  - (Optional) Options supported by JSAPI
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>` - Information about the site
--   **getSiteContent**(siteId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>`<br/>
+-   **getSiteContent**(siteId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>`<br/>
     Gets a site's content.
     -   _siteId:_ `string`  - ID of the target site
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>` - Site content
--   **getSiteMembers**(siteId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>`<br/>
+-   **getSiteMembers**(siteId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>`<br/>
     Gets a list of all a site's members.
     -   _siteId:_ `string`  - ID of the target site
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>` - Site members
