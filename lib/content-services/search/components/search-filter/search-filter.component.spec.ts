@@ -230,12 +230,12 @@ describe('SearchFilterComponent', () => {
             }
         };
 
-        const responseFields: any = [
+        const serverResponseFields: any = [
             {
                 label: 'f1',
                 buckets: [
-                    {label: 'b1', count: 10, display: 'HTML', filterQuery: 'filter', checked: true},
-                    {label: 'b2', count: 1}
+                    { label: 'b1', count: 10 },
+                    { label: 'b2', count: 1 }
                 ]
             },
             { label: 'f2', buckets: [] }
@@ -243,7 +243,7 @@ describe('SearchFilterComponent', () => {
         const data = {
             list: {
                 context: {
-                    facetsFields: responseFields
+                    facetsFields: serverResponseFields
                 }
             }
         };
@@ -267,7 +267,7 @@ describe('SearchFilterComponent', () => {
         };
 
         const initialFields: any = [
-            { label: 'f1', buckets: { items: [{ label: 'b1', count: 10, display: 'HTML', filterQuery: 'filter' }, { label: 'b2', count: 1 }]} },
+            { label: 'f1', buckets: { items: [{ label: 'b1', count: 10, filterQuery: 'filter' }, { label: 'b2', count: 1 }]} },
             { label: 'f2', buckets: [] }
         ];
         component.responseFacetFields = initialFields;
@@ -275,14 +275,14 @@ describe('SearchFilterComponent', () => {
         expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(10);
         expect(component.responseFacetFields[0].buckets.items[1].count).toEqual(1);
 
-        const responseFields: any = [
-            { label: 'f1', buckets: [{ label: 'b1', count: 6, display: 'HTML', filterQuery: 'filter', checked: true }, { label: 'b2', count: 0 }] },
+        const serverResponseFields: any = [
+            { label: 'f1', buckets: [{ label: 'b1', count: 6, filterQuery: 'filter' }, { label: 'b2', count: 0 }] },
             { label: 'f2', buckets: [] }
         ];
         const data = {
             list: {
                 context: {
-                    facetsFields: responseFields
+                    facetsFields: serverResponseFields
                 }
             }
         };
@@ -308,27 +308,25 @@ describe('SearchFilterComponent', () => {
 
         component.responseFacetFields = <any> [
             { label: 'f1', field: 'f1', buckets: {items: [
-                { label: 'b1', count: 10, filterQuery: 'filter' },
+                { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                 { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
             { label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
-        const firstField: FacetField = { field: 'f1', label: 'f1' };
-        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[0]);
 
-        const responseFields: any = [
+        const serverResponseFields: any = [
             { label: 'f1', field: 'f1', buckets: [
-                { label: 'b1', count: 6, display: 'HTML', filterQuery: 'filter', checked: true },
-                { label: 'b2', count: 1, filterQuery: 'filter2', checked: true }] },
+                { label: 'b1', count: 6, filterQuery: 'filter' },
+                { label: 'b2', count: 1, filterQuery: 'filter2' }] },
             { label: 'f2', field: 'f2', buckets: [] }
         ];
         const data = {
             list: {
                 context: {
-                    facetsFields: responseFields
+                    facetsFields: serverResponseFields
                 }
             }
         };
-        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[1]);
+        component.selectFacetBucket({ field: 'f1', label: 'f1' }, component.responseFacetFields[0].buckets.items[1]);
         component.onDataLoaded(data);
         expect(component.responseFacetFields.length).toEqual(2);
         expect(component.responseFacetFields[0].buckets.items[0].checked).toEqual(true, 'should show the already checked item');
@@ -349,27 +347,25 @@ describe('SearchFilterComponent', () => {
 
         component.responseFacetFields = <any> [
             { label: 'f1', field: 'f1', buckets: {items: [
-                        { label: 'b1', count: 10, filterQuery: 'filter' },
+                        { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                         { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
             { label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
-        const firstField: FacetField = { field: 'f1', label: 'f1' };
-        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[0]);
 
-        const responseFields: any = [
+        const serverResponseFields: any = [
             { label: 'f1', field: 'f1', buckets: [
-                    { label: 'b1', count: 6, display: 'HTML', filterQuery: 'filter', checked: true },
-                    { label: 'b2', count: 1, filterQuery: 'filter2', checked: true }] },
+                    { label: 'b1', count: 6, filterQuery: 'filter' },
+                    { label: 'b2', count: 1, filterQuery: 'filter2' }] },
             { label: 'f2', field: 'f2', buckets: [] }
         ];
         const data = {
             list: {
                 context: {
-                    facetsFields: responseFields
+                    facetsFields: serverResponseFields
                 }
             }
         };
-        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[1]);
+        component.selectFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacetFields[0].buckets.items[1]);
         component.onDataLoaded(data);
         expect(component.responseFacetFields.length).toEqual(2);
         expect(component.responseFacetFields[0].buckets.items[1].checked).toEqual(true, 'should show the newly checked item');
@@ -390,22 +386,16 @@ describe('SearchFilterComponent', () => {
 
         component.responseFacetFields = <any> [
             { label: 'f1', field: 'f1', buckets: {items: [
-                        { label: 'b1', count: 10, filterQuery: 'filter' },
+                        { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                         { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
             { label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
-        const firstField: FacetField = { field: 'f1', label: 'f1' };
-        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[0]);
-
-        const responseFields = [];
         const data = {
             list: {
-                context: {
-                    facetsFields: responseFields
-                }
+                context: {}
             }
         };
-        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[1]);
+        component.selectFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacetFields[0].buckets.items[1]);
         component.onDataLoaded(data);
 
         expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(0);
@@ -452,6 +442,7 @@ describe('SearchFilterComponent', () => {
     });
 
     it('should reset selected buckets', () => {
+        spyOn(queryBuilder, 'execute').and.stub();
         const buckets: FacetFieldBucket[] = [
             { label: 'bucket1', checked: false, count: 1, filterQuery: 'q1' },
             { label: 'bucket2', checked: true, count: 1, filterQuery: 'q2' }
