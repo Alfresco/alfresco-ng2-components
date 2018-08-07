@@ -29,6 +29,7 @@ var FormFields = function () {
     var attachFormButton = element(by.id("adf-no-form-attach-form-button"));
     var selectFormDropDownArrow = element(by.css("adf-attach-form div[class*='mat-select-arrow']"));
     var selectFormContent = element(by.css("div[class*='mat-select-content']"));
+    var completeButton = element(by.id('adf-form-complete'));
 
     this.setFieldValue = function (By, field, value) {
         var fieldElement =  element(By(field));
@@ -117,6 +118,17 @@ var FormFields = function () {
         formNameElement.click();
     };
 
+    this.checkWidgetIsReadOnlyMode = function (fieldId) {
+        var widget = element(by.css("form-field div[id='field-" + fieldId + "-container']"));
+        var widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
+        Util.waitUntilElementIsVisible(widgetReadOnly);
+        return widgetReadOnly;
+    };
+
+    this.completeForm = function () {
+        Util.waitUntilElementIsVisible(completeButton);
+        return completeButton.click();
+    };
 };
 
 module.exports = FormFields;
