@@ -27,25 +27,58 @@ import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
     host: { 'class': 'adf-content-metadata-card' }
 })
 export class ContentMetadataCardComponent {
+    /** (required) The node entity to fetch metadata about */
     @Input()
     node: MinimalNodeEntryEntity;
 
+    /** (optional) This flag displays/hides empty metadata
+     * fields.
+     */
     @Input()
     displayEmpty: boolean = false;
 
+    /** (required) Name of the metadata preset, which defines aspects
+     * and their properties.
+     */
     @Input()
     preset: string;
 
+    /** (optional) This flag sets the metadata in read only mode
+     * preventing changes.
+     */
     @Input()
     readOnly = false;
 
+    /** (optional) This flag allows the component to display more
+     * than one accordion at a time.
+     */
     @Input()
     multi = false;
 
+    private _displayDefaultProperties: boolean = true;
+
+    /** (optional) This flag displays/hides the metadata
+     * properties.
+     */
+    @Input()
+    set displayDefaultProperties(value: boolean) {
+        this._displayDefaultProperties = value;
+        this.onDisplayDefaultPropertiesChange();
+    }
+
+    get displayDefaultProperties(): boolean {
+        return this._displayDefaultProperties;
+    }
+
     editable: boolean = false;
-    expanded: boolean = false;
+
+    expanded: boolean;
 
     constructor(private contentService: ContentService) {
+    }
+
+    onDisplayDefaultPropertiesChange(): void {
+        this.expanded = !this._displayDefaultProperties;
     }
 
     toggleEdit(): void {

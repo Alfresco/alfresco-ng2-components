@@ -2,6 +2,7 @@
 
     <ng-template let-node="node" #sidebarTemplate>
         <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
+
             <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.COMMENTS' | translate">
                 <adf-comments [nodeId]="nodeId"></adf-comments>
             </adf-info-drawer-tab>
@@ -11,12 +12,24 @@
                                            [multi]="multi"
                                            [preset]="customPreset"
                                            [readOnly]="isReadOnly"
+                                           [displayDefaultProperties]="displayDefaultProperties"
                                            [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
 
                 <adf-content-metadata-card *ngIf="!isPreset" [node]="node"
                                            [multi]="multi"
                                            [readOnly]="isReadOnly"
+                                           [displayDefaultProperties]="displayDefaultProperties"
                                            [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
+
+                <p class="toggle">
+                    <mat-slide-toggle
+                        id="adf-toggle-display-properties"
+                        [color]="'primary'"
+                        (change)="toggleDisplayProperties()"
+                        [checked]="displayDefaultProperties">
+                        Display Properties
+                    </mat-slide-toggle>
+                </p>
 
                 <p class="toggle">
                     <mat-slide-toggle

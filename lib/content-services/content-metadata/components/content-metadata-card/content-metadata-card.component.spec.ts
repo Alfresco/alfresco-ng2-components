@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/*tslint:disable: ban*/
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
@@ -60,6 +58,16 @@ describe('ContentMetadataCardComponent', () => {
 
     it('should have displayEmpty input param as false by default', () => {
         expect(component.displayEmpty).toBe(false);
+    });
+
+    it('should show more information when no metadata properties are being displayed', () => {
+        component.displayDefaultProperties = false;
+        expect(component.expanded).toBe(!component.displayDefaultProperties);
+    });
+
+    it('should show less information when metadata properties are being displayed', () => {
+        component.displayDefaultProperties = true;
+        expect(component.expanded).toBe(!component.displayDefaultProperties);
     });
 
     it('should pass through the node to the underlying component', () => {

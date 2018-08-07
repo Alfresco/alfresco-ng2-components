@@ -33,12 +33,14 @@ export class ConfigEditorPage {
     clickSaveMetadataButton() {
         let saveButton = element(by.xpath('//*[@id="adf-metadata-save"]'));
         Util.waitUntilElementIsVisible(saveButton);
+        Util.waitUntilElementIsClickable(saveButton);
         return saveButton.click();
     }
 
     clickClearMetadataButton() {
         let clearButton = element(by.xpath('//*[@id="adf-metadata-clear"]'));
         Util.waitUntilElementIsVisible(clearButton);
+        Util.waitUntilElementIsClickable(clearButton);
         return clearButton.click();
     }
 }
