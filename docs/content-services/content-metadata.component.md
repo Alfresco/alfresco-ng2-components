@@ -1,7 +1,7 @@
 ---
 Added: v2.1.0
 Status: Active
-Last reviewed: 2018-04-16
+Last reviewed: 2018-08-07
 ---
 
 # Content Metadata Card component
@@ -124,7 +124,7 @@ A final example shows the same process applied to a custom preset called "kitten
 ### Layout oriented config
 
 You can also go beyond the aspect oriented configuration if you need to configure the groups and properties in a more detailed way. With this type of configuration any property of any aspect/type
-can be "cherry picked" and grouped into an accordion drawer, along wwith a translatable title
+can be "cherry picked" and grouped into an accordion drawer, along with a translatable title
 defined in the preset configuration.
 
 #### Basic elements
