@@ -63,7 +63,9 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.isClickMode() && this.renderer) {
-            this.upload = this.renderer.createElement(this.el.nativeElement.parentNode, 'input') as HTMLInputElement;
+            let inputUpload = this.renderer.createElement('input');
+            this.upload = this.el.nativeElement.parentElement.appendChild(inputUpload);
+
             this.upload.type = 'file';
             this.upload.style.display = 'none';
             this.upload.addEventListener('change', e => this.onSelectFiles(e));
