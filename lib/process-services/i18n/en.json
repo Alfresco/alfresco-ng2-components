@@ -156,7 +156,7 @@
     "ATTACH_FORM":{
       "SELECT_FORM": "Select Form To Attach",
       "REMOVE_FORM": "Remove Form",
-      "SELECT_OPTION": "Please select option"
+      "SELECT_OPTION": "Select an option"
     }
   },
   "ADF_PROCESS_LIST": {
@@ -187,8 +187,7 @@
       "BUSINESS_KEY_DEFAULT": "None",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "No description",
-      "ID": "ID",
-      "PROCESS_DEFINITION_ID": "Process Definition Id"
+      "ID": "ID"
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "View",

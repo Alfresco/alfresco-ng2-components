@@ -6,14 +6,27 @@
       "PROPERTIES": "属性",
       "VERSIONS": "版本"
     },
+    "HOME": {
+      "TITLE": "Alfresco 的 Angular 组件",
+      "DOCUMENTATION": "文档"
+    },
+    "LOGOUT": {
+      "TITLE": "注销页面",
+      "SUB_TITLE": "您现在已注销",
+      "LOGIN": "登录",
+      "HOME": "主页"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "允许删除",
       "SHOW_COMMENTS": "显示有关版本的注释",
-      "ALLOW_DOWNLOAD": "允许版本下载",
-      "READ_ONLY": "只读"
+      "ALLOW_DOWNLOAD": "允许下载",
+      "READ_ONLY": "只读",
+      "COMMENTS": "显示注释"
     },
     "PERSONAL-FILES": "个人文件",
     "WARN-MULTIPLE-UPLOADS": "针对多个上传显示警告。",
+    "CUSTOM-PERMISSION-MESSAGE": "启用自定义权限消息",
+    "MEDIUM-TIME-FORMAT": "对文档列表启用中时间格式",
     "SEARCH": {
       "RADIO": {
         "NONE": "无",
@@ -39,11 +52,19 @@
       "TITLE": "元数据"
     }
   },
+  "COMMENTS": {
+    "ADD_COMMENT": "添加"
+  },
   "APP_LAYOUT": {
     "APP_NAME": "ADF 演示应用程序",
     "HOME": "主页",
+    "NODE-SELECTOR": "节点选择器",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "面包屑",
+    "NOTIFICATIONS": "通知",
+    "TASK_LIST": "任务列表",
+    "PROCESS_LIST": "流程列表",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "登录",
     "CUSTOM_SOURCES": "自定义来源",
@@ -58,13 +79,15 @@
     "TRASHCAN": "垃圾桶",
     "SOCIAL": "社交",
     "SETTINGS": "设置",
+    "CONFIG-EDITOR": "配置编辑器",
     "OVERLAY_VIEWER": "重叠查看器",
     "ABOUT": "关于",
     "SEARCH": "扩展搜索",
     "EXTENDED_SEARCH_QUERY_BODY": "包含查询主体的扩展搜索",
     "WORD_TO_SEARCH": "搜索词",
     "SEARCH_CREATED_BY": "创建者",
-    "SEARCH_SERVICE_APPROACH": "选中此项以禁用输入属性并使用服务进行配置"
+    "SEARCH_SERVICE_APPROACH": "选中此项以禁用输入属性并使用服务进行配置",
+    "HEADER_DATA": "标头数据"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -79,6 +102,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "多选（含复选框）",
+    "THUMBNAILS": "启用缩略图",
     "MULTIPLE_FILE_UPLOAD": "上传多个文件",
     "FOLDER_UPLOAD": "文件夹上传",
     "CUSTOM_FILTER": "自定义扩展过滤器",
@@ -154,7 +178,8 @@
     "START-TASK": "启动任务",
     "START-PROCESS": "启动流程",
     "PROCESS-AUDIT-LOG": "流程审计日志",
-    "TASK-AUDIT-LOG": "任务审计日志"
+    "TASK-AUDIT-LOG": "任务审计日志",
+    "TASK-SHOW-HEADER": "显示详细信息标头"
   },
   "FORM-LIST": {
     "STORE": "存储",
@@ -170,7 +195,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "登录页脚"
+    "LOGIN_FOOTER": "登录页脚",
+    "SHOW_REMEMBERME": "显示记住我",
+    "SHOW_SUCCESS_ROUTE": "显示成功路由",
+    "CUSTOM_LOGO": "自定义徽标"
   },
   "SEARCH": {
     "RESULTS": "搜索结果",
@@ -188,5 +216,15 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "继承权限",
     "INHERITED_PERMISSIONS_BUTTON": "已继承权限"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",
+    "APP_ID_TYPE_ERROR": "应用程序 ID 必须为数字"
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",
+    "APP_ID_TYPE_ERROR": "应用程序 ID 必须为数字"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "自定义标题翻译 1",
+  "GROUP-TITLE2-TRANSLATION-KEY": "自定义标题翻译 2"
 }

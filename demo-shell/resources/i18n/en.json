@@ -80,7 +80,7 @@
     "TRASHCAN": "Trashcan",
     "SOCIAL": "Social",
     "SETTINGS": "Settings",
-    "CONFIG-EDITOR": "Config editor",
+    "CONFIG-EDITOR": "Configuration Editor",
     "OVERLAY_VIEWER": "Overlay Viewer",
     "ABOUT": "About",
     "SEARCH": "Extended Search",
@@ -89,7 +89,7 @@
     "WORD_TO_SEARCH": "Search Word",
     "SEARCH_CREATED_BY": "Created By",
     "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and configure using the service",
-    "HEADER_DATA": "Header data"
+    "HEADER_DATA": "Header Data"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -198,7 +198,7 @@
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN_FOOTER": "Login footer",
-    "SHOW_REMEMBERME": "Show Remember me",
+    "SHOW_REMEMBERME": "Show remember me",
     "SHOW_SUCCESS_ROUTE": "Show success route",
     "CUSTOM_LOGO": "Custom Logo"
   },
@@ -221,8 +221,8 @@
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Insert App Id",
-      "APP_ID_TYPE_ERROR": "App Id must be a number",
+      "APP_ID_REQUIRED_ERROR": "Insert App ID",
+      "APP_ID_TYPE_ERROR": "App ID must be a number",
       "NUMBER_TYPE_ERROR": "Value must be a number"
     },
     "TOOLTIP_MESSAGE": {
@@ -230,8 +230,8 @@
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Insert App Id",
-    "APP_ID_TYPE_ERROR": "App Id must be a number"
+    "APP_ID_REQUIRED_ERROR": "Insert App ID",
+    "APP_ID_TYPE_ERROR": "App ID must be a number"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION ONE",
   "GROUP-TITLE2-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION TWO"

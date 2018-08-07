@@ -6,14 +6,27 @@
       "PROPERTIES": "Proprietà",
       "VERSIONS": "Versione"
     },
+    "HOME": {
+      "TITLE": "Componenti angolari per Alfresco",
+      "DOCUMENTATION": "Documentazione"
+    },
+    "LOGOUT": {
+      "TITLE": "Pagina di uscita",
+      "SUB_TITLE": "Utente disconnesso",
+      "LOGIN": "Login",
+      "HOME": "Home"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Consenti eliminazione",
       "SHOW_COMMENTS": "Mostra commenti sulle versioni",
-      "ALLOW_DOWNLOAD": "Abilita download versioni",
-      "READ_ONLY": "Sola lettura"
+      "ALLOW_DOWNLOAD": "Abilita download",
+      "READ_ONLY": "Sola lettura",
+      "COMMENTS": "Mostra commenti"
     },
     "PERSONAL-FILES": "File personali",
     "WARN-MULTIPLE-UPLOADS": "Mostra avviso per caricamenti multipli.",
+    "CUSTOM-PERMISSION-MESSAGE": "Abilita messaggio di autorizzazione personalizzato",
+    "MEDIUM-TIME-FORMAT": "Abilita formato tempo medio per elenco documenti",
     "SEARCH": {
       "RADIO": {
         "NONE": "Nessuno",
@@ -39,11 +52,19 @@
       "TITLE": "Metadati"
     }
   },
+  "COMMENTS": {
+    "ADD_COMMENT": "Aggiungi"
+  },
   "APP_LAYOUT": {
     "APP_NAME": "Applicazione demo ADF",
     "HOME": "Home",
+    "NODE-SELECTOR": "Selezione nodo",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Breadcrumb",
+    "NOTIFICATIONS": "Notifiche",
+    "TASK_LIST": "Elenco attività",
+    "PROCESS_LIST": "Elenco processi",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
     "CUSTOM_SOURCES": "Fonti personalizzate",
@@ -58,13 +79,15 @@
     "TRASHCAN": "Cestino",
     "SOCIAL": "Social",
     "SETTINGS": "Impostazioni",
+    "CONFIG-EDITOR": "Editor configurazione",
     "OVERLAY_VIEWER": "Visualizzatore overlay",
     "ABOUT": "Informazioni su",
     "SEARCH": "Ricerca estesa",
     "EXTENDED_SEARCH_QUERY_BODY": "Ricerca estesa con corpo query",
     "WORD_TO_SEARCH": "Termine di ricerca",
     "SEARCH_CREATED_BY": "Creato da",
-    "SEARCH_SERVICE_APPROACH": "Selezionare per disattivare la proprietà di input ed eseguire la configurazione utilizzando il servizio"
+    "SEARCH_SERVICE_APPROACH": "Selezionare per disattivare la proprietà di input ed eseguire la configurazione utilizzando il servizio",
+    "HEADER_DATA": "Dati intestazione"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -79,6 +102,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Selezione multipla (con caselle di spunta)",
+    "THUMBNAILS": "Abilita anteprime",
     "MULTIPLE_FILE_UPLOAD": "Caricamento di file multipli",
     "FOLDER_UPLOAD": "Caricamento cartelle",
     "CUSTOM_FILTER": "Filtro estensioni personalizzato",
@@ -154,7 +178,8 @@
     "START-TASK": "Avvia compito",
     "START-PROCESS": "Avvia processo",
     "PROCESS-AUDIT-LOG": "Registro di audit processo",
-    "TASK-AUDIT-LOG": "Registro di audit compito"
+    "TASK-AUDIT-LOG": "Registro di audit compito",
+    "TASK-SHOW-HEADER": "Mostra intestazione dettagli"
   },
   "FORM-LIST": {
     "STORE": "Memorizza",
@@ -170,7 +195,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Piè di pagina login"
+    "LOGIN_FOOTER": "Piè di pagina login",
+    "SHOW_REMEMBERME": "Mostra utente memorizzato",
+    "SHOW_SUCCESS_ROUTE": "Mostra percorso riuscito",
+    "CUSTOM_LOGO": "Logo personalizzato"
   },
   "SEARCH": {
     "RESULTS": "Risultati della ricerca",
@@ -188,5 +216,21 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Eredita permessi",
     "INHERITED_PERMISSIONS_BUTTON": "Permesso ereditato"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Inserisci ID app",
+      "APP_ID_TYPE_ERROR": "L'ID app deve essere un numero",
+      "NUMBER_TYPE_ERROR": "Il valore inserito deve essere numerico"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Pagina iniziale"
+    }
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Inserisci ID app",
+    "APP_ID_TYPE_ERROR": "L'ID app deve essere un numero"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Custom Title Translation One",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Custom Title Translation Two"
 }

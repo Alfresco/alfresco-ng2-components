@@ -283,7 +283,8 @@
       "EVERYONE": "任何人"
     },
     "ERROR": {
-      "DUPLICATE-PERMISSION": "您所设置的一个或多个权限已经存在：{{list}}"
+      "DUPLICATE-PERMISSION": "您所设置的一个或多个权限已经存在：{{list}}",
+      "NOT-ALLOWED": "不允许更改权限"
     }
   }
 }

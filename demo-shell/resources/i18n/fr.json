@@ -6,14 +6,27 @@
       "PROPERTIES": "Propriétés",
       "VERSIONS": "Versions"
     },
+    "HOME": {
+      "TITLE": "Composants Angular pour Alfresco",
+      "DOCUMENTATION": "Documentation"
+    },
+    "LOGOUT": {
+      "TITLE": "Page de déconnexion",
+      "SUB_TITLE": "Vous êtes bien déconnecté",
+      "LOGIN": "Connexion",
+      "HOME": "Accueil"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Autoriser la suppression",
       "SHOW_COMMENTS": "Afficher les commentaires sur les versions",
-      "ALLOW_DOWNLOAD": "Autoriser le téléchargement de la version",
-      "READ_ONLY": "Lecture seule"
+      "ALLOW_DOWNLOAD": "Autoriser le téléchargement",
+      "READ_ONLY": "Lecture seule",
+      "COMMENTS": "Afficher les commentaires"
     },
     "PERSONAL-FILES": "Fichiers personnels",
     "WARN-MULTIPLE-UPLOADS": "Avertir en cas de téléchargements multiples.",
+    "CUSTOM-PERMISSION-MESSAGE": "Activer le message de droits d'accès personnalisés",
+    "MEDIUM-TIME-FORMAT": "Activer le format de date \"medium\" pour la liste de documents",
     "SEARCH": {
       "RADIO": {
         "NONE": "Aucune",
@@ -39,11 +52,19 @@
       "TITLE": "Métadonnées"
     }
   },
+  "COMMENTS": {
+    "ADD_COMMENT": "Ajouter"
+  },
   "APP_LAYOUT": {
     "APP_NAME": "Application Démo ADF",
     "HOME": "Accueil",
+    "NODE-SELECTOR": "Sélecteur de nœud",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Fil d'Ariane",
+    "NOTIFICATIONS": "Notifications",
+    "TASK_LIST": "Liste des tâches",
+    "PROCESS_LIST": "Liste des processus",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Connexion",
     "CUSTOM_SOURCES": "Sources personnalisées",
@@ -58,13 +79,15 @@
     "TRASHCAN": "Corbeille",
     "SOCIAL": "Réseaux sociaux",
     "SETTINGS": "Paramètres",
+    "CONFIG-EDITOR": "Editeur de configuration",
     "OVERLAY_VIEWER": "Visualisation de la superposition",
     "ABOUT": "À propos de",
     "SEARCH": "Recherche globale",
     "EXTENDED_SEARCH_QUERY_BODY": "Recherche globale sur le corps de la requête",
     "WORD_TO_SEARCH": "Mot recherché",
     "SEARCH_CREATED_BY": "Créé par",
-    "SEARCH_SERVICE_APPROACH": "Cochez cette option pour désactiver la propriété d'entrée et configurer à partir du service"
+    "SEARCH_SERVICE_APPROACH": "Cochez cette option pour désactiver la propriété d'entrée et configurer à partir du service",
+    "HEADER_DATA": "Données d'en-tête"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -79,6 +102,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Sélection multiple (avec cases à cocher)",
+    "THUMBNAILS": "Activer les miniatures",
     "MULTIPLE_FILE_UPLOAD": "Importation de fichiers multiples",
     "FOLDER_UPLOAD": "Importation de dossier",
     "CUSTOM_FILTER": "Filtre d'extensions personnalisées",
@@ -154,7 +178,8 @@
     "START-TASK": "Démarrer la tâche",
     "START-PROCESS": "Démarrer le processus",
     "PROCESS-AUDIT-LOG": "Journal d'audit des processus",
-    "TASK-AUDIT-LOG": "Journal d'audit des tâches"
+    "TASK-AUDIT-LOG": "Journal d'audit des tâches",
+    "TASK-SHOW-HEADER": "Afficher l'en-tête de détail"
   },
   "FORM-LIST": {
     "STORE": "Stocker",
@@ -170,7 +195,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Pied de la page connexion"
+    "LOGIN_FOOTER": "Pied de la page connexion",
+    "SHOW_REMEMBERME": "Afficher Mémoriser mes informations",
+    "SHOW_SUCCESS_ROUTE": "Afficher la success route",
+    "CUSTOM_LOGO": "Logo personnalisé"
   },
   "SEARCH": {
     "RESULTS": "Résultats de la recherche",
@@ -188,5 +216,21 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Hériter les droits d'accès",
     "INHERITED_PERMISSIONS_BUTTON": "Droits d'accès hérités"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
+      "APP_ID_TYPE_ERROR": "L'ID d'application doit être un numéro",
+      "NUMBER_TYPE_ERROR": "La valeur saisie doit être numérique"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Page d'accueil"
+    }
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
+    "APP_ID_TYPE_ERROR": "L'ID d'application doit être un numéro"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Titre personnalisé traduction un",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Titre personnalisé traduction deux"
 }
