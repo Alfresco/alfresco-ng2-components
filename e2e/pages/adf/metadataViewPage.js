@@ -116,11 +116,12 @@ var MetadataViewPage = function () {
     };
 
     this.informationButtonIsDisplayed = function () {
-        return Util.waitUntilElementIsVisible(informationSpan);
+        Util.waitUntilElementIsVisible(informationButton);
+        Util.waitUntilElementIsClickable(informationButton);
     };
 
     this.clickOnInformationButton = function () {
-        Util.waitUntilElementIsVisible(informationSpan);
+        this.informationButtonIsDisplayed();
         informationButton.click();
         return this;
     };
@@ -136,7 +137,7 @@ var MetadataViewPage = function () {
     };
 
     this.clickOnPropertiesTab = function () {
-        var propertiesTab = element(by.cssContainingText(".adf-info-drawer-layout-content div.mat-tab-labels div", "Properties"));
+        let propertiesTab = element(by.cssContainingText(".adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content", "Properties"));
         Util.waitUntilElementIsVisible(propertiesTab);
         propertiesTab.click();
         return this;
