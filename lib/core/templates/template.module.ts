@@ -26,7 +26,7 @@ import { EmptyContentComponent } from './empty-content/empty-content.component';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     declarations: [
         ErrorContentComponent,

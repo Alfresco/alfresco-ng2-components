@@ -36,7 +36,7 @@ import { ContentModule } from '../content.module';
         NoopAnimationsModule,
         RouterTestingModule,
         CoreModule.forRoot(),
-        ContentModule
+        ContentModule.forRoot()
     ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

@@ -24,11 +24,16 @@ import {
     AppConfigService,
     AppConfigServiceMock,
     TranslationService,
-    TranslationMock
+    TranslationMock,
+    CoreModule
 } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [NoopAnimationsModule, InsightsModule],
+    imports: [
+        NoopAnimationsModule,
+        CoreModule.forRoot(),
+        InsightsModule.forRoot()
+    ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },

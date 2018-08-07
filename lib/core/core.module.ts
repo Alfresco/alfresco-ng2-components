@@ -83,6 +83,17 @@ import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
 import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
+import { AppConfigService } from './app-config/app-config.service';
+import { ContextMenuService } from './context-menu/context-menu.service';
+import { ActivitiContentService } from './form/services/activiti-alfresco.service';
+import { EcmModelService } from './form/services/ecm-model.service';
+import { FormRenderingService } from './form/services/form-rendering.service';
+import { FormService } from './form/services/form.service';
+import { NodeService } from './form/services/node.service';
+import { ProcessContentService } from './form/services/process-content.service';
+import { WidgetVisibilityService } from './form/services/widget-visibility.service';
+import { EcmUserService } from './userinfo/services/ecm-user.service';
+import { BpmUserService } from './userinfo/services/bpm-user.service';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -124,7 +135,18 @@ export function providers() {
         CommentProcessService,
         CommentContentService,
         SearchConfigurationService,
-        DatePipe
+        DatePipe,
+        AppConfigService,
+        ContextMenuService,
+        ActivitiContentService,
+        EcmModelService,
+        FormRenderingService,
+        FormService,
+        NodeService,
+        ProcessContentService,
+        WidgetVisibilityService,
+        EcmUserService,
+        BpmUserService
     ];
 }
 

@@ -36,14 +36,6 @@ import { FormComponent } from './components/form.component';
 import { StartFormComponent } from './components/start-form.component';
 import { ContentWidgetComponent } from './components/widgets/content/content.widget';
 import { WidgetComponent } from './components/widgets/widget.component';
-
-import { ActivitiContentService } from './services/activiti-alfresco.service';
-import { EcmModelService } from './services/ecm-model.service';
-import { FormRenderingService } from './services/form-rendering.service';
-import { FormService } from './services/form.service';
-import { NodeService } from './services/node.service';
-import { ProcessContentService } from './services/process-content.service';
-import { WidgetVisibilityService } from './services/widget-visibility.service';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 
 @NgModule({
@@ -52,7 +44,7 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
         DataTableModule,
         HttpClientModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
         DataColumnModule,
@@ -73,15 +65,6 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
     ],
     entryComponents: [
         ...WIDGET_DIRECTIVES
-    ],
-    providers: [
-        ActivitiContentService,
-        EcmModelService,
-        FormRenderingService,
-        FormService,
-        NodeService,
-        ProcessContentService,
-        WidgetVisibilityService
     ],
     exports: [
         ContentWidgetComponent,
