@@ -26,16 +26,16 @@ Selects from a set of predefined sorting definitions and directions.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | ascending | `boolean` | true | Current sorting direction |
-| options | `Array<object>` |  \[] | Available sorting options |
+| options | `Array<Function>` | \[] | Available sorting options |
 | selected | `string` |  | Currently selected option key |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
-| change | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<object>` | Raised each time sorting key or direction gets changed. |
+| ---- | ---- | ----------- |
+| change | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Function>` | Raised each time sorting key or direction gets changed. |
 
 ## Details
 

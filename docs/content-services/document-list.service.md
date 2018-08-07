@@ -33,12 +33,12 @@ Implements node operations used by the [Document List component](../content-serv
     Get thumbnail URL for the given document node.
     -   _node:_ [`MinimalNodeEntity`](../content-services/document-library.model.md)  - Node to get URL for.
     -   **Returns** `string` - Thumbnail URL string
--   **getFolder**(folder: `string`, opts?: `any`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+-   **getFolder**(folder: `string`, opts?: `any`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the folder node with the specified relative name path below the root node.
     -   _folder:_ `string`  - Path to folder.
     -   _opts:_ `any`  - (Optional) Options.
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](lib/content-services/document-list/models/document-library.model.ts)`>` - Details of the folder
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - Details of the folder
 -   **getFolderNode**(nodeId: `string`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
     (**Deprecated:** 2.3.0 Gets a folder node via its node ID.) 
     -   _nodeId:_ `string`  - ID of the folder node
@@ -53,10 +53,10 @@ Implements node operations used by the [Document List component](../content-serv
     -   _nodeId:_ `string`  - ID of the target node
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
--   **hasPermission**(node: `any`, permission: [`PermissionsEnum`](lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
+-   **hasPermission**(node: `any`, permission: [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
     (**Deprecated:** 2.3.0 use the one in the content service Checks if a node has the specified permission.) 
     -   _node:_ `any`  - Target node
-    -   _permission:_ [`PermissionsEnum`](lib/core/models/permissions.enum.ts)`|string`  - Permission level to query
+    -   _permission:_ [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`  - Permission level to query
     -   **Returns** `boolean` - True if the node has the permission, false otherwise
 -   **moveNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Moves a node to destination node.

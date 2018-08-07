@@ -13,18 +13,18 @@ Stores items in the form of key-value pairs.
 
 -   **clear**()<br/>
     Removes all currently stored items.
--   **getItem**(key: `string` = `null`): `string | null`<br/>
+-   **getItem**(key: `string`): `string|null`<br/>
     Gets an item.
     -   _key:_ `string`  - Key to identify the item
-    -   **Returns** `string | null` - The item (if any) retrieved by the key
--   **hasItem**(key: `string` = `null`): `boolean`<br/>
+    -   **Returns** `string|null` - The item (if any) retrieved by the key
+-   **hasItem**(key: `string`): `boolean`<br/>
     Is any item currently stored under `key`?
     -   _key:_ `string`  - Key identifying item to check
     -   **Returns** `boolean` - True if key retrieves an item, false otherwise
--   **removeItem**(key: `string` = `null`)<br/>
+-   **removeItem**(key: `string`)<br/>
     Removes a single item.
     -   _key:_ `string`  - Key to identify the item
--   **setItem**(key: `string` = `null`, data: `string` = `null`)<br/>
+-   **setItem**(key: `string`, data: `string`)<br/>
     Stores an item
     -   _key:_ `string`  - Key to identify the item
     -   _data:_ `string`  - Data to store

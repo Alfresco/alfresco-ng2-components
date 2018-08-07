@@ -16,6 +16,15 @@ Stores information from all the custom search and faceted search widgets, compil
 
     -   _query:_ `string`  - 
 
+-   **addUserFacetBucket**(field: `FacetField`, bucket: `FacetFieldBucket`)<br/>
+
+    -   _field:_ `FacetField`  - 
+    -   _bucket:_ `FacetFieldBucket`  - 
+
+-   **addUserFacetQuery**(query: `FacetQuery`)<br/>
+
+    -   _query:_ `FacetQuery`  - 
+
 -   **buildQuery**(): `QueryBody`<br/>
 
     -   **Returns** `QueryBody` - 
@@ -43,6 +52,15 @@ Stores information from all the custom search and faceted search widgets, compil
 -   **removeFilterQuery**(query: `string`)<br/>
 
     -   _query:_ `string`  - 
+
+-   **removeUserFacetBucket**(field: `FacetField`, bucket: `FacetFieldBucket`)<br/>
+
+    -   _field:_ `FacetField`  - 
+    -   _bucket:_ `FacetFieldBucket`  - 
+
+-   **removeUserFacetQuery**(query: `FacetQuery`)<br/>
+
+    -   _query:_ `FacetQuery`  - 
 
 -   **resetToDefaults**()<br/>
 

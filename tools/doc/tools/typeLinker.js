@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var path = require("path");
 var fs = require("fs");
 /*
@@ -321,7 +321,7 @@ function resolveTypeLink(aggData, text) {
         var kebabName = ngHelpers.kebabifyClassName(possTypeName);
         var possDocFile = aggData.docFiles[kebabName];
         //let url = "../../lib/" + ref.sources[0].fileName;
-        var url = classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
+        var url = "../../" + classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
         if (possDocFile) {
             url = "../" + possDocFile;
         }

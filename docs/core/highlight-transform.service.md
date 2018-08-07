@@ -11,12 +11,12 @@ Adds HTML to a string to highlight chosen sections.
 
 ### Methods
 
--   **highlight**(text: `string` = `null`, search: `string` = `null`, wrapperClass: `string` = `"highlight"`): [`HightlightTransformResult`](../../lib/core/services/highlight-transform.service.ts)<br/>
+-   **highlight**(text: `string`, search: `string`, wrapperClass: `string` = `"highlight"`): `HightlightTransformResult`<br/>
     Searches for `search` string(s) within `text` and highlights all occurrences.
     -   _text:_ `string`  - Text to search within
     -   _search:_ `string`  - Text pattern to search for
     -   _wrapperClass:_ `string`  - CSS class used to provide highlighting style
-    -   **Returns** [`HightlightTransformResult`](../../lib/core/services/highlight-transform.service.ts) - New text along with boolean value to indicate whether anything was highlighted
+    -   **Returns** `HightlightTransformResult` - New text along with boolean value to indicate whether anything was highlighted
 
 ## Details
 

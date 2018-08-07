@@ -386,7 +386,7 @@ function resolveTypeLink(aggData, text): string {
         let possDocFile = aggData.docFiles[kebabName];
         //let url = "../../lib/" + ref.sources[0].fileName;
 
-        let url = classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
+        let url = "../../" + classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
 
         if (possDocFile) {
             url = "../" + possDocFile;

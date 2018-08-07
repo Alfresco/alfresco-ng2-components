@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Activiti Analytics Component
 
 Shows the charts related to the reportId passed as input
@@ -24,13 +25,13 @@ Shows the charts related to the reportId passed as input
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  |  |
+| hideParameters | `boolean` | false |  |
 | reportId | `number` |  |  |
-| hideParameters | `boolean` | `false` |  |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| editReport | `EventEmitter<{}>` |  |
-| reportSaved | `EventEmitter<{}>` |  |
-| reportDeleted | `EventEmitter<{}>` |  |
+| editReport | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |
+| reportDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |
+| reportSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |

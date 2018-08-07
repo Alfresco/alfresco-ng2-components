@@ -51,8 +51,8 @@ Render tab with icon instead of labels:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| label | `string` | '' | Tab label. |
-| icon | `string` | null | The material design icon. |
+| icon | `string` | null | Icon to render for the tab. |
+| label | `string` | "Main tab" | The title of the tab. |
 
 ## Details
 

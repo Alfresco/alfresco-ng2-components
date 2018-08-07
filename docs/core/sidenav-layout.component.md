@@ -13,14 +13,10 @@ Displays the standard three-region ADF application layout.
 ## Contents
 
 -   [Basic Usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
     -   [Events](#events)
-
 -   [Details](#details)
-
     -   [Template context](#template-context)
     -   [menuOpenState$](#menuopenstate)
     -   [Preserving the menu state](#preserving-the-menu-state)
@@ -65,7 +61,7 @@ Displays the standard three-region ADF application layout.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? |
 | hideSidenav | `boolean` | false | Toggles showing/hiding the navigation region |
 | sidenavMax | `number` |  | Maximum size of the navigation region |
@@ -75,7 +71,7 @@ Displays the standard three-region ADF application layout.
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | expanded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes |
 
 ## Details
@@ -120,7 +116,7 @@ Beside the template context's **isMenuMinimized** variable, another way to liste
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| menuOpenState$ | Observable&lt;boolean> | true | Another way to listen to menu open/closed state |
+| menuOpenState$ | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;boolean> | true | Another way to listen to menu open/closed state |
 
 Every time the menu state is changed, the following values are emitted:
 

@@ -34,7 +34,7 @@ Provides access to Webscript features.
 
 Another example:
 
-**[app.component](demo-shell/src/app/app.component.ts).html**
+**[app.component](../../demo-shell/src/app/app.component.ts).html**
 
 ```html
 <adf-webscript-get 
@@ -46,7 +46,7 @@ Another example:
 </adf-webscript-get>
 ```
 
-**[app.component](demo-shell/src/app/app.component.ts).ts**
+**[app.component](../../demo-shell/src/app/app.component.ts).ts**
 
 ```ts
 export class AppComponent {

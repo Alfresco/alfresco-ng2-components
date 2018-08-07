@@ -12,20 +12,20 @@ Maps an APS form field type string onto the corresponding form [widget component
 
 ### Methods
 
--   **getComponentTypeResolver**(type: `string` = `null`, defaultValue: `Type<__type>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
+-   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<__type>` = `this.defaultValue`): `DynamicComponentResolveFunction`<br/>
     Gets the currently active ComponentTypeResolver function for a field type.
     -   _type:_ `string`  - The type whose resolver you want
     -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
-    -   **Returns** [`DynamicComponentResolveFunction`](../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
--   **resolveComponentType**(model: [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts) = `null`, defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
+    -   **Returns** `DynamicComponentResolveFunction` - Resolver function
+-   **resolveComponentType**(model: `DynamicComponentModel`, defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
     Finds the component type that is needed to render a form field.
-    -   _model:_ [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../lib/process-services/task-list/models/form.model.ts) field model for the field to render
+    -   _model:_ `DynamicComponentModel`  - [Form](../../lib/process-services/task-list/models/form.model.ts) field model for the field to render
     -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<__type>` - Component type
--   **setComponentTypeResolver**(type: `string` = `null`, resolver: [`DynamicComponentResolveFunction`](../../lib/core/services/dynamic-component-mapper.service.ts) = `null`, override: `boolean` = `true`)<br/>
+-   **setComponentTypeResolver**(type: `string`, resolver: `DynamicComponentResolveFunction`, override: `boolean` = `true`)<br/>
     Sets or optionally replaces a ComponentTypeResolver function for a field type.
     -   _type:_ `string`  - The type whose resolver you want to set
-    -   _resolver:_ [`DynamicComponentResolveFunction`](../../lib/core/services/dynamic-component-mapper.service.ts)  - The new resolver function
+    -   _resolver:_ `DynamicComponentResolveFunction`  - The new resolver function
     -   _override:_ `boolean`  - The new resolver will only replace an existing one if this parameter is true
 
 ## Details
@@ -63,23 +63,23 @@ The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Renderin
 
 | Stencil name | Field type string | Component type |
 | ------------ | ----------------- | -------------- |
-| Amount | "amount" | AmountWidgetComponent |
-| Attach | "upload" | AttachWidgetComponent or UploadWidgetComponent (based on metadata) |
-| Checkbox | "boolean" | CheckboxWidgetComponent |
-| Date | "date" | DateWidgetComponent |
-| Display text | "readonly-text" | DisplayTextWidgetComponentComponent |
+| Amount | "amount" | [`AmountWidgetComponent`](../../lib/core/form/components/widgets/amount/amount.widget.ts) |
+| Attach | "upload" | AttachWidgetComponent or [`UploadWidgetComponent`](../../lib/core/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
+| Checkbox | "boolean" | [`CheckboxWidgetComponent`](../../lib/core/form/components/widgets/checkbox/checkbox.widget.ts) |
+| Date | "date" | [`DateWidgetComponent`](../../lib/core/form/components/widgets/date/date.widget.ts) |
+| Display text | "readonly-text" | [`DisplayTextWidgetComponentComponent`](../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
 | Display value | "readonly" | DisplayValueWidgetComponent |
-| Dropdown | "dropdown" | DropdownWidgetComponent |
-| Dynamic table | "dynamic-table" | DynamicTableWidgetComponent |
-| Group of people | "functional-group" | FunctionalGroupWidgetComponent |
-| Header | "group" | ContainerWidgetComponent |
-| Hyperlink | "hyperlink" | HyperlinkWidgetComponent |
-| Multi-line text | "multi-line-text" | MultilineTextWidgetComponentComponent |
-| Number | "integer" | NumberWidgetComponent |
-| People | "people" | PeopleWidgetComponent |
-| Radio buttons | "radio-buttons" | RadioButtonsWidgetComponent |
-| Text | "text" | TextWidgetComponent |
-| Typeahead | "typeahead" | TypeaheadWidgetComponent |
+| Dropdown | "dropdown" | [`DropdownWidgetComponent`](../../lib/core/form/components/widgets/dropdown/dropdown.widget.ts) |
+| Dynamic table | "dynamic-table" | [`DynamicTableWidgetComponent`](../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |
+| Group of people | "functional-group" | [`FunctionalGroupWidgetComponent`](../../lib/core/form/components/widgets/functional-group/functional-group.widget.ts) |
+| Header | "group" | [`ContainerWidgetComponent`](../../lib/core/form/components/widgets/container/container.widget.ts) |
+| Hyperlink | "hyperlink" | [`HyperlinkWidgetComponent`](../../lib/core/form/components/widgets/hyperlink/hyperlink.widget.ts) |
+| Multi-line text | "multi-line-text" | [`MultilineTextWidgetComponentComponent`](../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts) |
+| Number | "integer" | [`NumberWidgetComponent`](../../lib/core/form/components/widgets/number/number.widget.ts) |
+| People | "people" | [`PeopleWidgetComponent`](../../lib/core/form/components/widgets/people/people.widget.ts) |
+| Radio buttons | "radio-buttons" | [`RadioButtonsWidgetComponent`](../../lib/core/form/components/widgets/radio-buttons/radio-buttons.widget.ts) |
+| Text | "text" | [`TextWidgetComponent`](../../lib/core/form/components/widgets/text/text.widget.ts) |
+| Typeahead | "typeahead" | [`TypeaheadWidgetComponent`](../../lib/core/form/components/widgets/typeahead/typeahead.widget.ts) |
 
 You can add new items to the mapping or replace existing items in order to customize the way
 fields are rendered.

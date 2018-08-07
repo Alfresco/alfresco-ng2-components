@@ -41,13 +41,13 @@ export class MyComponent {
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| adf-node-favorite | `MinimalNodeEntity[]` |  \[] | Array of nodes to toggle as favorites. |
+| ---- | ---- | ------------- | ----------- |
+| selection | [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]` | \[] | Array of nodes to toggle as favorites. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting has fail. |
 | toggle | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting is complete. |
 

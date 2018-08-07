@@ -175,7 +175,7 @@ for further details.
 
 ### Categories and widgets
 
-The Search [Settings component](demo-shell/src/app/components/settings/settings.component.ts) and Query Builder require a `categories` section in the
+The Search [Settings component](../../demo-shell/src/app/components/settings/settings.component.ts) and Query Builder require a `categories` section in the
 configuration.
 
 Categories are used to configure the UI widgets that let the user edit the search query

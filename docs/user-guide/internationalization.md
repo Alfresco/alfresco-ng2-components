@@ -1,6 +1,7 @@
 ---
 Added: v2.2.0
 ---
+
 # Internationalization in ADF
 
 Internationalization (abbreviated to i18n) is the process of providing UI messages
@@ -67,7 +68,7 @@ below:
 ```
 
 The hierarchical structure is referred to in the UI using the familiar "dot"
-notation (so `FORM.START_FORM.TITLE` would be the key for the "Start Form"
+notation (so `FORM.START_FORM.TITLE` would be the key for the "Start [Form"](../../lib/process-services/task-list/models/form.model.ts)
 string here). This is useful for grouping related messages and providing
 singular and plural versions, among other things.
 
@@ -136,11 +137,11 @@ should check you are using the key correctly.
 
 ## Using the translate pipe
 
-Using `TranslationService.get` is straightforward but it is often more
+Using [`TranslationService`](../core/translation.service.md)`.get` is straightforward but it is often more
 convenient to add translation keys directly into your page's HTML.
 Use the `translate` pipe to convert a key in the page directly to the
 corresponding text. For example, the following will display the
-"Start Form" text as above but without any code or variables in the
+"Start [Form"](../../lib/process-services/task-list/models/form.model.ts) text as above but without any code or variables in the
 component's `.ts` file:
 
 <!-- {% raw %} -->
@@ -203,7 +204,7 @@ messages whose content can change at runtime. For example, in the built-in
 
 The sections in curly braces are _interpolation variables_ that you supply
 at runtime. You can specify them by passing an extra parameter to
-`TranslationService.get`; this is an object whose properties have the same
+[`TranslationService`](../core/translation.service.md)`.get`; this is an object whose properties have the same
 names as the interpolation variables in the string:
 
 ```ts
@@ -236,7 +237,7 @@ Note that when the user selects an item from the menu, it simply changes the "lo
 preference (which you can get via the [User Preferences service](../core/user-preferences.service.md)).
 The `translate` pipe reacts automatically to this and changes the page text
 immediately to the new language. However, text added via a variable set using
-`TranslationService.get`, as in the example above, will not be updated like this;
+[`TranslationService`](../core/translation.service.md)`.get`, as in the example above, will not be updated like this;
 you will need to get a new translation and set the variable's value again explicitly
 from the code.
 

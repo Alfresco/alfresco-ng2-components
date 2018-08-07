@@ -25,10 +25,10 @@ Adds highlighting to selected sections of an HTML element's content.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| adf-highlight-class | `string` | "adf-highlight" | CSS class used to apply highlighting. |
-| adf-highlight | `string` | "" | Text to highlight. |
-| adf-highlight-selector | `string` | "" | Class selector for highlightable elements. |
+| ---- | ---- | ------------- | ----------- |
+| classToApply | `string` | "adf-highlight" | CSS class used to apply highlighting. |
+| search | `string` | "" | Text to highlight. |
+| selector | `string` | "" | Class selector for highlightable elements. |
 
 ## Details
 
