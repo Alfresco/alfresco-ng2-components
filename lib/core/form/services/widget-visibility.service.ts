@@ -19,11 +19,11 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment-es6';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, throwError } from 'rxjs';
 import { FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
-import 'rxjs/add/observable/throw';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class WidgetVisibilityService {
@@ -244,13 +244,15 @@ export class WidgetVisibilityService {
     }
 
     getTaskProcessVariable(taskId: string): Observable<TaskProcessVariableModel[]> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskFormsApi.getTaskFormVariables(taskId))
-            .map(res => {
-                let jsonRes = this.toJson(res);
-                this.processVarList = <TaskProcessVariableModel[]> jsonRes;
-                return jsonRes;
-            })
-            .catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.taskFormsApi.getTaskFormVariables(taskId))
+            .pipe(
+                map(res => {
+                    let jsonRes = this.toJson(res);
+                    this.processVarList = <TaskProcessVariableModel[]> jsonRes;
+                    return jsonRes;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     toJson(res: any) {
@@ -259,6 +261,6 @@ export class WidgetVisibilityService {
 
     private handleError(err) {
         this.logService.error('Error while performing a call');
-        return Observable.throw('Error while performing a call - Server error');
+        return throwError('Error while performing a call - Server error');
     }
 }

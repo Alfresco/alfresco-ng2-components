@@ -151,7 +151,7 @@ describe('DateWidgetComponent', () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
-                value:  '12-30-9999';
+                value:  '12-30-9999',
                 type: 'date',
                 readOnly: 'false'
             });

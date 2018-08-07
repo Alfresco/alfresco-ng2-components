@@ -20,7 +20,7 @@ import { async, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material';
 import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { FolderDialogComponent } from './folder.dialog';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 
@@ -86,7 +86,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should submit updated values if form is valid', () => {
-            spyOn(nodesApi, 'updateNode').and.returnValue(Observable.of({}));
+            spyOn(nodesApi, 'updateNode').and.returnValue(of({}));
 
             component.form.controls['name'].setValue('folder-name-update');
             component.form.controls['description'].setValue('folder-description-update');
@@ -110,7 +110,7 @@ describe('FolderDialogComponent', () => {
                 data: 'folder-data'
             };
 
-            spyOn(nodesApi, 'updateNode').and.returnValue(Observable.of(folder));
+            spyOn(nodesApi, 'updateNode').and.returnValue(of(folder));
 
             component.submit();
 
@@ -121,7 +121,7 @@ describe('FolderDialogComponent', () => {
                 const folder = { data: 'folder-data' };
                 let expectedNode = null;
 
-                spyOn(nodesApi, 'updateNode').and.returnValue(Observable.of(folder));
+                spyOn(nodesApi, 'updateNode').and.returnValue(of(folder));
 
                 component.success.subscribe((node) => { expectedNode = node; });
                 component.submit();
@@ -144,7 +144,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should not call dialog to close if submit fails', () => {
-            spyOn(nodesApi, 'updateNode').and.returnValue(Observable.throw('error'));
+            spyOn(nodesApi, 'updateNode').and.returnValue(throwError('error'));
             spyOn(component, 'handleError').and.callFake(val => val);
 
             component.submit();
@@ -183,7 +183,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should submit updated values if form is valid', () => {
-            spyOn(nodesApi, 'createFolder').and.returnValue(Observable.of({}));
+            spyOn(nodesApi, 'createFolder').and.returnValue(of({}));
 
             component.form.controls['name'].setValue('folder-name-update');
             component.form.controls['description'].setValue('folder-description-update');
@@ -204,7 +204,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should submit updated values if form is valid (with custom nodeType)', () => {
-                spyOn(nodesApi, 'createFolder').and.returnValue(Observable.of({}));
+                spyOn(nodesApi, 'createFolder').and.returnValue(of({}));
 
                 component.form.controls['name'].setValue('folder-name-update');
                 component.form.controls['description'].setValue('folder-description-update');
@@ -233,7 +233,7 @@ describe('FolderDialogComponent', () => {
             component.form.controls['name'].setValue('name');
             component.form.controls['description'].setValue('description');
 
-            spyOn(nodesApi, 'createFolder').and.returnValue(Observable.of(folder));
+            spyOn(nodesApi, 'createFolder').and.returnValue(of(folder));
 
             component.submit();
 
@@ -253,7 +253,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should not call dialog to close if submit fails', () => {
-            spyOn(nodesApi, 'createFolder').and.returnValue(Observable.throw('error'));
+            spyOn(nodesApi, 'createFolder').and.returnValue(throwError('error'));
             spyOn(component, 'handleError').and.callFake(val => val);
 
             component.form.controls['name'].setValue('name');
@@ -276,7 +276,7 @@ describe('FolderDialogComponent', () => {
                     done();
                 });
 
-                spyOn(nodesApi, 'createFolder').and.returnValue(Observable.throw(error));
+                spyOn(nodesApi, 'createFolder').and.returnValue(throwError(error));
 
                 component.form.controls['name'].setValue('name');
                 component.form.controls['description'].setValue('description');
@@ -294,7 +294,7 @@ describe('FolderDialogComponent', () => {
                     done();
                 });
 
-                spyOn(nodesApi, 'createFolder').and.returnValue(Observable.throw(error));
+                spyOn(nodesApi, 'createFolder').and.returnValue(throwError(error));
 
                 component.form.controls['name'].setValue('name');
                 component.form.controls['description'].setValue('description');

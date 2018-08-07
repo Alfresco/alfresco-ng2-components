@@ -16,12 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of, from, throwError } from 'rxjs';
 import { AlfrescoApiService, SearchService, NodesApiService, TranslationService } from '@alfresco/adf-core';
 import { QueryBody, MinimalNodeEntryEntity, MinimalNodeEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
-import 'rxjs/add/operator/switchMap';
-import { of } from 'rxjs/observable/of';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 
 @Injectable()
 export class NodePermissionService {
@@ -40,14 +38,16 @@ export class NodePermissionService {
     getNodeRoles(node: MinimalNodeEntryEntity): Observable<string[]> {
         const retrieveSiteQueryBody: QueryBody = this.buildRetrieveSiteQueryBody(node.path.elements);
         return this.searchApiService.searchByQueryBody(retrieveSiteQueryBody)
-            .switchMap((siteNodeList: any) => {
-                if ( siteNodeList.list.entries.length > 0 ) {
-                    let siteName = siteNodeList.list.entries[0].entry.name;
-                    return this.getGroupMembersBySiteName(siteName);
-                } else {
-                    return Observable.of(node.permissions.settable);
-                }
-            });
+            .pipe(
+                switchMap((siteNodeList: any) => {
+                    if ( siteNodeList.list.entries.length > 0 ) {
+                        let siteName = siteNodeList.list.entries[0].entry.name;
+                        return this.getGroupMembersBySiteName(siteName);
+                    } else {
+                        return of(node.permissions.settable);
+                    }
+                })
+            );
     }
 
     /**
@@ -86,7 +86,7 @@ export class NodePermissionService {
         if (duplicatedPermissions.length > 0) {
             const list = duplicatedPermissions.map((permission) => 'authority -> ' + permission.authorityId + ' / role -> ' + permission.name).join(', ');
             const duplicatePermissionMessage: string = this.translation.instant('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION',  {list});
-            return Observable.throw(duplicatePermissionMessage);
+            return throwError(duplicatePermissionMessage);
         }
         permissionBody.permissions.locallySet = node.permissions.locallySet ? node.permissions.locallySet.concat(permissionList) : permissionList;
         return this.nodeService.updateNode(node.id, permissionBody);
@@ -137,13 +137,15 @@ export class NodePermissionService {
     private getGroupMembersBySiteName(siteName: string): Observable<string[]> {
         const groupName = 'GROUP_site_' + siteName;
         return this.getGroupMemeberByGroupName(groupName)
-            .map((res: GroupsPaging) => {
-                let displayResult: string[] = [];
-                res.list.entries.forEach((member: GroupMemberEntry) => {
-                    displayResult.push(this.formattedRoleName(member.entry.displayName, 'site_' + siteName));
-                });
-                return displayResult;
-            });
+            .pipe(
+                map((res: GroupsPaging) => {
+                    let displayResult: string[] = [];
+                    res.list.entries.forEach((member: GroupMemberEntry) => {
+                        displayResult.push(this.formattedRoleName(member.entry.displayName, 'site_' + siteName));
+                    });
+                    return displayResult;
+                })
+            );
     }
 
     /**
@@ -153,7 +155,7 @@ export class NodePermissionService {
      * @returns List of members
      */
     getGroupMemeberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging> {
-        return Observable.fromPromise(this.apiService.groupsApi.getGroupMembers(groupName, opts));
+        return from<GroupMemberPaging>(this.apiService.groupsApi.getGroupMembers(groupName, opts));
     }
 
     private formattedRoleName(displayName, siteName): string {

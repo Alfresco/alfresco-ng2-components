@@ -34,7 +34,7 @@ import {
 import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
 
 /* tslint:disable:adf-file-name */

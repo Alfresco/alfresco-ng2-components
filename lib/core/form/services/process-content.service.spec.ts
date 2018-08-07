@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { ProcessContentService } from './process-content.service';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
@@ -188,7 +188,7 @@ describe('ProcessContentService', () => {
     it('should return a Blob as thumbnail', (done) => {
         let contentId: number = 999;
         let blob = createFakeBlob();
-        spyOn(service, 'getContentThumbnail').and.returnValue(Observable.of(blob));
+        spyOn(service, 'getContentThumbnail').and.returnValue(of(blob));
         service.getContentThumbnail(contentId).subscribe(result => {
             expect(result).toEqual(jasmine.any(Blob));
             expect(result.size).toEqual(48);

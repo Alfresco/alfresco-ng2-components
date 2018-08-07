@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
     AppConfigService, AlfrescoApiService, EcmModelService, LogService, FormService, FormOutcomeEvent
 } from '@alfresco/adf-core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class FakeFormService extends FormService {
@@ -36,7 +36,7 @@ export class FakeFormService extends FormService {
 
     public getRestFieldValues(taskId: string, fieldId: string): Observable<any> {
         if (fieldId === 'typeahedField') {
-            return Observable.of([
+            return of([
                 { 'id': '1', 'name': 'Leanne Graham' },
                 { 'id': '2', 'name': 'Ervin Howell' },
                 { 'id': '3', 'name': 'Clementine Bauch' },

@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { TranslationService } from '../services/translation.service';
 
 export interface LangChangeEvent {
@@ -47,7 +47,7 @@ export class TranslationMock implements TranslationService {
     }
 
     get(key: string | Array<string>, interpolateParams?: Object): Observable<string | any> {
-        return Observable.of(key);
+        return of(key);
     }
 
     instant(key: string | Array<string>, interpolateParams?: Object): string | any {

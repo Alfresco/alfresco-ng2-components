@@ -17,10 +17,10 @@
 
 import { AppsProcessService, TranslationService, EmptyCustomContentDirective } from '@alfresco/adf-core';
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer, of } from 'rxjs';
 import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
+import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-apps',
@@ -74,7 +74,8 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     constructor(
         private appsProcessService: AppsProcessService,
         private translationService: TranslationService) {
-            this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer => this.appsObserver = observer).share();
+            this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer => this.appsObserver = observer)
+                .pipe(share());
     }
 
     ngOnInit() {
@@ -125,7 +126,7 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     getAppName(app) {
         return this.isDefaultApp(app)
             ? this.translationService.get(AppsListComponent.DEFAULT_TASKS_APP_NAME)
-            : Observable.of(app.name);
+            : of(app.name);
     }
 
     /**

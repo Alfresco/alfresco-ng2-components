@@ -19,7 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { NodePermissionService } from './node-permission.service';
 import { SearchService, NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,
          fakeNodeToRemovePermission, fakeNodeWithoutPermissions } from '../../mock/permission-list.component.mock';
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
@@ -55,12 +55,12 @@ describe('NodePermissionService', () => {
         let fakeNode: MinimalNodeEntryEntity = {};
         fakeNode.id = 'fake-updated-node';
         fakeNode.permissions = nodeBody.permissions;
-        return Observable.of(fakeNode);
+        return of(fakeNode);
     }
 
     it('should return a list of roles taken from the site groups', async(() => {
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeSiteNodeResponse));
-        spyOn(service, 'getGroupMemeberByGroupName').and.returnValue(Observable.of(fakeSiteRoles));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
+        spyOn(service, 'getGroupMemeberByGroupName').and.returnValue(of(fakeSiteRoles));
 
         service.getNodeRoles(fakeNodeWithOnlyLocally).subscribe((roleArray: string[]) => {
             expect(roleArray).not.toBeNull();
@@ -70,7 +70,7 @@ describe('NodePermissionService', () => {
     }));
 
     it('should return a list of settable if node has no site', async(() => {
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeEmptyResponse));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
 
         service.getNodeRoles(fakeNodeWithOnlyLocally).subscribe((roleArray: string[]) => {
             expect(roleArray).not.toBeNull();
@@ -119,10 +119,10 @@ describe('NodePermissionService', () => {
 
     it('should be able to update locally set permissions on the node by node id', async(() => {
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
-        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeCopy));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeCopy));
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeSiteNodeResponse));
-        spyOn(service, 'getGroupMemeberByGroupName').and.returnValue(Observable.of(fakeSiteRoles));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
+        spyOn(service, 'getGroupMemeberByGroupName').and.returnValue(of(fakeSiteRoles));
 
         service.updateNodePermissions('fake-node-id', fakeAuthorityResults).subscribe((node: MinimalNodeEntryEntity) => {
             expect(node).not.toBeNull();

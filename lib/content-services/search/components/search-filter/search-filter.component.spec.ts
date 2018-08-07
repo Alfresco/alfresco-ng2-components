@@ -18,7 +18,7 @@
 import { SearchFilterComponent } from './search-filter.component';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { AppConfigService, TranslationMock } from '@alfresco/adf-core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 import { FacetQuery } from '../../facet-query.interface';
 import { FacetField } from '../../facet-field.interface';

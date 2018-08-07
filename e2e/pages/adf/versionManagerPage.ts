@@ -185,7 +185,10 @@ export class VersionManagePage {
     }
 
     closeActionButton() {
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        let container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        Util.waitUntilElementIsVisible(container);
+        container.click();
+        Util.waitUntilElementIsNotVisible(container);
         return this;
     }
 

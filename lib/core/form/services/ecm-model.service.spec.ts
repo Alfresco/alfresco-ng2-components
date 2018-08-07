@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormModel } from './../components/widgets/core/form.model';
 import { EcmModelService } from './ecm-model.service';
 import { setupTestBed } from '../../testing/setupTestBed';

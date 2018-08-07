@@ -194,7 +194,7 @@ describe('Document List Component', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             let dateValue = contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
-            expect(dateValue).toBe('a few seconds ago');
+            expect(dateValue).toContain('ago');
             done();
         });
 
@@ -614,7 +614,6 @@ describe('Document List Component', () => {
         });
 
         it('[C280069] - Gallery Card show details - attributes', () => {
-            let timeMessage = '';
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.DISPLAY_NAME);
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.SIZE);
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED_BY);
@@ -622,26 +621,26 @@ describe('Document List Component', () => {
 
             expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.DISPLAY_NAME)).toBe(folderName);
             expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
-            timeMessage = moment(folderNode.entry.createdAt).fromNow();
-            expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toBe(timeMessage);
+
+            expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toContain('ago');
 
             expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.DISPLAY_NAME)).toBe(pdfFile.name);
             expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.SIZE)).toBe(`702.76 KB`);
             expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
-            timeMessage = moment(filePdfNode.entry.createdAt).fromNow();
-            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toBe(timeMessage);
+
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toContain('ago');
 
             expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
             expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`770.35 KB`);
             expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
-            timeMessage = moment(fileDocxNode.entry.createdAt).fromNow();
-            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toBe(timeMessage);
+
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toContain('ago');
 
             expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.DISPLAY_NAME)).toBe(testFile.name);
             expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.SIZE)).toBe(`14 Bytes`);
             expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
-            timeMessage = moment(fileTestNode.entry.createdAt).fromNow();
-            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toBe(timeMessage);
+
+            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toContain('ago');
         });
 
         it('[C280129] - Gallery Card show details - subfolder gallery displayed', () => {

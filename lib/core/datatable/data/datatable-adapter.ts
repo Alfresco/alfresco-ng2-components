@@ -18,7 +18,7 @@
 import { DataColumn } from './data-column.model';
 import { DataRow } from './data-row.model';
 import { DataSorting } from './data-sorting.model';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 
 export interface DataTableAdapter {
     rowsChanged?: Subject<Array<DataRow>>;

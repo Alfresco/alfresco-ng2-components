@@ -16,7 +16,7 @@
  */
 
 import { CardViewItemProperties } from './card-view-item-properties.interface';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 export interface CardViewSelectItemOption<T> {
     label: string;

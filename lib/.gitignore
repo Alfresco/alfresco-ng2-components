@@ -7,22 +7,22 @@ coverage
 dist
 
 content-services/**/*.js
-!content-services/karma-test-shim.js
+!content-services/karma.conf.js
 content-services/**/*.js.map
 content-services/**/*.d.ts
 
 process-services/**/*.js
-!process-services/karma-test-shim.js
+!process-services/karma.conf.js
 process-services/**/*.js.map
 process-services/**/*.d.ts
 
 core/**/*.js
-!core/karma-test-shim.js
+!core/karma.conf.js
 core/**/*.js.map
 core/**/*.d.ts
 
 insights/**/*.js
-!insights/karma-test-shim.js
+!insights/karma.conf.js
 insights/**/*.js.map
 insights/**/*.d.ts
 

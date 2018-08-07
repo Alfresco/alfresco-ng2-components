@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiContentService, AppConfigService, FormService, setupTestBed } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
@@ -59,10 +59,10 @@ describe('StartFormComponent', () => {
         processService = TestBed.get(ProcessService);
         formService = TestBed.get(FormService);
 
-        getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(Observable.of(testMultipleProcessDefs));
-        startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(Observable.of(newProcess));
-        getStartFormDefinitionSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(Observable.of(taskFormMock));
-        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of({ id: 1234 }));
+        getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(testMultipleProcessDefs));
+        startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));
+        getStartFormDefinitionSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(of(taskFormMock));
+        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of({ id: 1234 }));
     });
 
     afterEach(() => {
@@ -122,7 +122,7 @@ describe('StartFormComponent', () => {
         describe('with start form', () => {
 
             beforeEach(() => {
-                getDefinitionsSpy.and.returnValue(Observable.of(testProcessDefWithForm));
+                getDefinitionsSpy.and.returnValue(of(testProcessDefWithForm));
                 let change = new SimpleChange(null, 123, true);
                 component.ngOnChanges({ 'appId': change });
             });
@@ -243,7 +243,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should indicate an error to the user if process defs cannot be loaded', async(() => {
-            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.throw({}));
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(throwError({}));
             component.appId = 123;
             component.ngOnChanges({});
             fixture.detectChanges();
@@ -256,7 +256,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should show no process available message when no process definition is loaded', async(() => {
-            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of([]));
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([]));
             component.appId = 123;
             component.ngOnChanges({});
             fixture.detectChanges();
@@ -269,7 +269,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should select processDefinition based on processDefinition input', async(() => {
-            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             component.appId = 123;
             component.processDefinitionName = 'My Process 2';
             component.ngOnChanges({});
@@ -280,7 +280,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should select automatically the processDefinition if the app contain oly one', async(() => {
-            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testProcessDefinitions));
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testProcessDefinitions));
             component.appId = 123;
             component.ngOnChanges({});
             fixture.detectChanges();
@@ -292,7 +292,7 @@ describe('StartFormComponent', () => {
         describe('dropdown', () => {
 
             it('should hide the process dropdown if showSelectProcessDropdown is false', async(() => {
-                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of([testProcessDefRepr]));
+                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([testProcessDefRepr]));
                 component.appId = 123;
                 component.showSelectProcessDropdown = false;
                 component.ngOnChanges({});
@@ -304,7 +304,7 @@ describe('StartFormComponent', () => {
             }));
 
             it('should show the process dropdown if showSelectProcessDropdown is false', async(() => {
-                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
+                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
                 component.appId = 123;
                 component.processDefinitionName = 'My Process 2';
                 component.showSelectProcessDropdown = true;
@@ -317,7 +317,7 @@ describe('StartFormComponent', () => {
             }));
 
             it('should show the process dropdown by default', async(() => {
-                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
+                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
                 component.appId = 123;
                 component.processDefinitionName = 'My Process 2';
                 component.ngOnChanges({});
@@ -421,7 +421,7 @@ describe('StartFormComponent', () => {
         it('should throw error event when process cannot be started', async(() => {
             let errorSpy = spyOn(component.error, 'error');
             let error = { message: 'My error' };
-            startProcessSpy = startProcessSpy.and.returnValue(Observable.throw(error));
+            startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
             component.selectedProcessDef = testProcessDefRepr;
             component.startProcess();
             fixture.whenStable().then(() => {
@@ -430,7 +430,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should indicate an error to the user if process cannot be started', async(() => {
-            startProcessSpy = startProcessSpy.and.returnValue(Observable.throw({}));
+            startProcessSpy = startProcessSpy.and.returnValue(throwError({}));
             component.selectedProcessDef = testProcessDefRepr;
             component.startProcess();
             fixture.whenStable().then(() => {

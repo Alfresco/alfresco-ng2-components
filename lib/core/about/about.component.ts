@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '../services/authentication.service';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { DiscoveryApiService } from '../services/discovery-api.service';
@@ -43,7 +43,7 @@ export class AboutComponent implements OnInit {
     ecmVersion: EcmProductVersionModel = null;
     bpmVersion: BpmProductVersionModel = null;
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private appConfig: AppConfigService,
                 private authService: AuthenticationService,
                 private discovery: DiscoveryApiService) {
@@ -90,10 +90,10 @@ export class AboutComponent implements OnInit {
             });
         }
 
-        this.http.get('/versions.json?' + new Date()).subscribe(response => {
+        this.http.get('/versions.json?' + new Date()).subscribe((response: any) => {
             const regexp = new RegExp('^(@alfresco)');
 
-            const alfrescoPackages = Object.keys(response.json().dependencies).filter((val) => {
+            const alfrescoPackages = Object.keys(response.dependencies).filter((val) => {
                 return regexp.test(val);
             });
 
@@ -101,7 +101,7 @@ export class AboutComponent implements OnInit {
             alfrescoPackages.forEach((val) => {
                 alfrescoPackagesTableRepresentation.push({
                     name: val,
-                    version: response.json().dependencies[val].version
+                    version: response.dependencies[val].version
                 });
             });
 

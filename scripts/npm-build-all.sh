@@ -4,7 +4,6 @@ set -f
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval RUN_TEST=false
 eval RUN_TESTBROWSER=false
-eval EXEC_FAST_TEST=false
 eval EXEC_CLEAN=false
 eval EXEC_BUILD=true
 eval EXEC_INSTALL=true
@@ -28,7 +27,6 @@ show_help() {
     echo "-c or --clean             Clean the node_modules before starting the build."
     echo "-si or --skipinstall      Skip the install of node_modules before starting the build."
     echo "-sb or --skipbuild        Skip the build of ng-components."
-    echo "-ft or --fasttest         Build all your local component and run also the test in one single karma-test-shim (high memory consuming and less details)"
     echo "-gitjsapi <commit-ish>    Build all the components against a commit-ish version of the JS-API"
     echo "-vjsapi <commit-ish>      Install different version from npm of JS-API defined in the package.json"
 }
@@ -55,16 +53,14 @@ enable_testbrowser(){
 
 test_project() {
     echo "====== test project: $1 ====="
-    npm run test-lib -- --component $1 --mode coverage || exit 1
+    ng lint $1 || exit 1
+    ng test $1 --watch=false || exit 1
 }
 
 debug_project() {
     echo "====== debug project: $1 ====="
-    npm run test-lib-browser -- --component $1 || exit 1
-}
-
-enable_fast_test() {
-    EXEC_FAST_TEST=true
+    ng lint $1 || exit 1
+    ng test $1 || exit 1
 }
 
 enable_js_api_git_link() {
@@ -106,7 +102,6 @@ while [[ $1 == -* ]]; do
                        fi
                        ;;
       -d|--debug)  enable_testbrowser $2; shift; if $EXEC_SINGLE_TEST == true; then shift; fi ;;
-      -ft|--fasttest)  enable_fast_test; shift;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
       -c|--clean)  clean; shift;;
@@ -147,14 +142,8 @@ if $EXEC_BUILD == true; then
     npm run build-lib || exit 1
 fi
 
-if $EXEC_FAST_TEST == true; then
-    echo "====== Test all components (fast option) ====="
-    npm run test-lib || exit 1
-fi
-
 if $RUN_TEST == true; then
       if $EXEC_SINGLE_TEST == true; then
-            cp -n "$DIR/../lib/config/karma-test-shim.js" "$DIR/../lib/$SINGLE_TEST/"
             test_project $SINGLE_TEST
       else
        for PACKAGE in ${projects[@]}
@@ -166,7 +155,6 @@ fi
 
 if $RUN_TESTBROWSER == true; then
       if $EXEC_SINGLE_TEST == true; then
-            cp -n "$DIR/../lib/config/karma-test-shim.js" "$DIR/../lib/$SINGLE_TEST/"
             debug_project $SINGLE_TEST
       else
        for PACKAGE in ${projects[@]}

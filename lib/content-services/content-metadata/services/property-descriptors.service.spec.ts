@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { ClassesApi } from 'alfresco-js-api';
 import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -73,7 +73,7 @@ describe('PropertyDescriptorLoaderService', () => {
         let counter = 0;
 
         spyOn(classesApi, 'getClass').and.callFake(() => {
-            return Observable.of(apiResponses[counter++]);
+            return of(apiResponses[counter++]);
         });
 
         service.load(['exif:exif', 'cm:content'])

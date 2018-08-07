@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SimpleChange } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -75,8 +75,8 @@ describe('FormComponent UI and visibility', () => {
     describe('Validation icon', () => {
 
         it('should display valid icon for valid form', () => {
-            spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-            spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionTwoTextFields));
+            spyOn(service, 'getTask').and.returnValue(of({}));
+            spyOn(service, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
 
             let change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ 'taskId': change });
@@ -87,8 +87,8 @@ describe('FormComponent UI and visibility', () => {
         });
 
         it('should display invalid icon for valid form', () => {
-            spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-            spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionRequiredField));
+            spyOn(service, 'getTask').and.returnValue(of({}));
+            spyOn(service, 'getTaskForm').and.returnValue(of(formDefinitionRequiredField));
 
             let change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ 'taskId': change });
@@ -99,8 +99,8 @@ describe('FormComponent UI and visibility', () => {
         });
 
         it('should NOT display validation icon when [showValidationIcon] is false', () => {
-            spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-            spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionTwoTextFields));
+            spyOn(service, 'getTask').and.returnValue(of({}));
+            spyOn(service, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
 
             let change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ 'taskId': change });
@@ -114,8 +114,8 @@ describe('FormComponent UI and visibility', () => {
     describe('form definition', () => {
 
         it('should display two text fields form definition', () => {
-            spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-            spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionTwoTextFields));
+            spyOn(service, 'getTask').and.returnValue(of({}));
+            spyOn(service, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
 
             let change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ 'taskId': change });
@@ -131,8 +131,8 @@ describe('FormComponent UI and visibility', () => {
         });
 
         it('should display dropdown field', fakeAsync(() => {
-            spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-            spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionDropdownField));
+            spyOn(service, 'getTask').and.returnValue(of({}));
+            spyOn(service, 'getTaskForm').and.returnValue(of(formDefinitionDropdownField));
 
             let change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ 'taskId': change });
@@ -162,8 +162,8 @@ describe('FormComponent UI and visibility', () => {
         describe('Visibility conditions', () => {
 
             it('should hide the field based on the next one', () => {
-                spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-                spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefVisibilitiFieldDependsOnNextOne));
+                spyOn(service, 'getTask').and.returnValue(of({}));
+                spyOn(service, 'getTaskForm').and.returnValue(of(formDefVisibilitiFieldDependsOnNextOne));
 
                 let change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ 'taskId': change });
@@ -179,8 +179,8 @@ describe('FormComponent UI and visibility', () => {
             });
 
             it('should hide the field based on the previous one', () => {
-                spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-                spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefVisibilitiFieldDependsOnPreviousOne));
+                spyOn(service, 'getTask').and.returnValue(of({}));
+                spyOn(service, 'getTaskForm').and.returnValue(of(formDefVisibilitiFieldDependsOnPreviousOne));
 
                 let change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ 'taskId': change });
@@ -196,8 +196,8 @@ describe('FormComponent UI and visibility', () => {
             });
 
             it('should show the hidden field when the visibility condition change to true', () => {
-                spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-                spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefVisibilitiFieldDependsOnNextOne));
+                spyOn(service, 'getTask').and.returnValue(of({}));
+                spyOn(service, 'getTaskForm').and.returnValue(of(formDefVisibilitiFieldDependsOnNextOne));
 
                 let change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ 'taskId': change });
@@ -221,8 +221,8 @@ describe('FormComponent UI and visibility', () => {
 
         describe('Readonly Form', () => {
             it('should display two text fields readonly', () => {
-                spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-                spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formReadonlyTwoTextFields));
+                spyOn(service, 'getTask').and.returnValue(of({}));
+                spyOn(service, 'getTaskForm').and.returnValue(of(formReadonlyTwoTextFields));
 
                 let change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ 'taskId': change });

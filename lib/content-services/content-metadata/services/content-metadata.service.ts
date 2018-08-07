@@ -18,12 +18,13 @@
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { BasicPropertiesService } from './basic-properties.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
 import { CardViewItem } from '@alfresco/adf-core';
 import { CardViewGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
 import { PropertyDescriptorsService } from './property-descriptors.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ContentMetadataService {
@@ -35,11 +36,11 @@ export class ContentMetadataService {
     }
 
     getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
-        return Observable.of(this.basicPropertiesService.getProperties(node));
+        return of(this.basicPropertiesService.getProperties(node));
     }
 
     getGroupedProperties(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<CardViewGroup[]> {
-        let groupedProperties = Observable.of([]);
+        let groupedProperties = of([]);
 
         if (node.aspectNames) {
             const config = this.contentMetadataConfigFactory.get(presetName),
@@ -48,9 +49,10 @@ export class ContentMetadataService {
                     .filter(groupName => config.isGroupAllowed(groupName));
 
             if (groupNames.length > 0) {
-                groupedProperties = this.propertyDescriptorsService.load(groupNames)
-                    .map(groups => config.reorganiseByConfig(groups))
-                    .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties));
+                groupedProperties = this.propertyDescriptorsService.load(groupNames).pipe(
+                    map(groups => config.reorganiseByConfig(groups)),
+                    map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties))
+                );
             }
         }
 

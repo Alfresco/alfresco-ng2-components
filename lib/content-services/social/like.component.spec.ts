@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LikeComponent } from './like.component';
 import { setupTestBed } from '../../core/testing';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { RatingService } from './services/rating.service';
 
 describe('Like component', () => {
@@ -36,7 +36,7 @@ describe('Like component', () => {
     beforeEach(async(() => {
         service = TestBed.get(RatingService);
 
-        spyOn(service, 'getRating').and.returnValue(Observable.of({
+        spyOn(service, 'getRating').and.returnValue(of({
             entry: {
                 id: 'likes',
                 aggregate: { numberOfRatings: 2 }
@@ -60,7 +60,7 @@ describe('Like component', () => {
     }));
 
     it('should increase the number of likes when clicked', async(() => {
-        spyOn(service, 'postRating').and.returnValue(Observable.of({
+        spyOn(service, 'postRating').and.returnValue(of({
             entry: {
                 id: 'likes',
                 aggregate: { numberOfRatings: 3 }
@@ -77,7 +77,7 @@ describe('Like component', () => {
     }));
 
     it('should decrease the number of likes when clicked and is already liked', async(() => {
-        spyOn(service, 'deleteRating').and.returnValue(Observable.of('');
+        spyOn(service, 'deleteRating').and.returnValue(of(''));
 
         component.isLike = true;
 

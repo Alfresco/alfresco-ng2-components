@@ -22,8 +22,8 @@ import {
 
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity,  NodeEntry, NodePaging } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
+import { Observable, from, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class DocumentListService {
@@ -74,7 +74,7 @@ export class DocumentListService {
      * @returns Empty response when the operation is complete
      */
     deleteNode(nodeId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.deleteNode(nodeId));
+        return from(this.apiService.getInstance().nodes.deleteNode(nodeId));
     }
 
     /**
@@ -85,8 +85,9 @@ export class DocumentListService {
      * @returns NodeEntry for the copied node
      */
     copyNode(nodeId: string, targetParentId: string) {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.copyNode(nodeId, { targetParentId }))
-            .catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().nodes.copyNode(nodeId, { targetParentId })).pipe(
+            catchError(err => this.handleError(err))
+        );
     }
 
     /**
@@ -97,8 +98,9 @@ export class DocumentListService {
      * @returns NodeEntry for the moved node
      */
     moveNode(nodeId: string, targetParentId: string) {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.moveNode(nodeId, { targetParentId }))
-            .catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().nodes.moveNode(nodeId, { targetParentId })).pipe(
+            catchError(err => this.handleError(err))
+        );
     }
 
     /**
@@ -108,9 +110,10 @@ export class DocumentListService {
      * @returns Details of the created folder node
      */
     createFolder(name: string, parentId: string): Observable<MinimalNodeEntity> {
-        let observable = Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, '/', parentId));
-        observable.catch(err => this.handleError(err));
-        return observable;
+        return from(this.apiService.getInstance().nodes.createFolder(name, '/', parentId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -121,9 +124,10 @@ export class DocumentListService {
      * @returns Details of the folder
      */
     getFolder(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
-        return Observable.fromPromise(this.getNodesPromise(folder, opts, includeFields))
-            .map(res => <NodePaging> res)
-            .catch(err => this.handleError(err));
+        return from(this.getNodesPromise(folder, opts, includeFields))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -162,7 +166,7 @@ export class DocumentListService {
             include: includeFieldsRequest
         };
 
-        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts));
+        return from(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts));
     }
     /**
      * Get thumbnail URL for the given document node.
@@ -202,9 +206,7 @@ export class DocumentListService {
     }
 
     private handleError(error: any) {
-        // in a real world app, we may send the error to some remote logging infrastructure
-        // instead of just logging it to the console
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

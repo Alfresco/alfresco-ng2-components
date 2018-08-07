@@ -19,8 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed, ContentService } from '@alfresco/adf-core';
 import { NodePermissionDialogService } from './node-permission-dialog.service';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Subject, of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodePermissionService } from './node-permission.service';
 import { Node } from 'alfresco-js-api';
@@ -49,7 +48,7 @@ describe('NodePermissionDialogService', () => {
         contentService = TestBed.get(ContentService);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
             afterOpen: () => afterOpenObservable,
-            afterClosed: () => Observable.of({}),
+            afterClosed: () => of({}),
             componentInstance: {
                 error: new Subject<any>()
             }
@@ -74,9 +73,9 @@ describe('NodePermissionDialogService', () => {
         });
 
         it('should return the updated node', (done) => {
-            spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(Observable.of({id : 'fake-node-updated'}));
-            spyOn(service, 'openAddPermissionDialog').and.returnValue(Observable.of({}));
-            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakePermissionNode));
+            spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(of({id : 'fake-node-updated'}));
+            spyOn(service, 'openAddPermissionDialog').and.returnValue(of({}));
+            spyOn(contentService, 'getNode').and.returnValue(of(fakePermissionNode));
             service.updateNodePermissionByDialog('fake-node-id', 'fake-title').subscribe((node) => {
                 expect(node.id).toBe('fake-node-updated');
                 done();
@@ -84,11 +83,11 @@ describe('NodePermissionDialogService', () => {
         });
 
         it('should throw an error if the update of the node fails', (done) => {
-            spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(Observable.throw({error : 'error'}));
-            spyOn(service, 'openAddPermissionDialog').and.returnValue(Observable.of({}));
-            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakePermissionNode));
+            spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(throwError({error : 'error'}));
+            spyOn(service, 'openAddPermissionDialog').and.returnValue(of({}));
+            spyOn(contentService, 'getNode').and.returnValue(of(fakePermissionNode));
             service.updateNodePermissionByDialog('fake-node-id', 'fake-title').subscribe(() => {
-                Observable.throw('This call should fail');
+                throwError('This call should fail');
             }, (error) => {
                 expect(error.error).toBe('error');
                 done();
@@ -110,9 +109,9 @@ describe('NodePermissionDialogService', () => {
         });
 
         it('should return the updated node', (done) => {
-            spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeForbiddenNode));
+            spyOn(contentService, 'getNode').and.returnValue(of(fakeForbiddenNode));
             service.updateNodePermissionByDialog('fake-node-id', 'fake-title').subscribe((node) => {
-                Observable.throw('This call should fail');
+                throwError('This call should fail');
             },
             (error) => {
                 expect(error.message).toBe('PERMISSION_MANAGER.ERROR.NOT-ALLOWED');

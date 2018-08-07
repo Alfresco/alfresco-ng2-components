@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskListService } from './../services/tasklist.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('AttachFormComponent', () => {
     let component: AttachFormComponent;
@@ -55,7 +55,7 @@ describe('AttachFormComponent', () => {
     it('should call attachFormToATask if clicked on Complete Button', async(() => {
         component.taskId = 1;
         component.formId = 2;
-        spyOn(taskService, 'attachFormToATask').and.returnValue(Observable.of(true));
+        spyOn(taskService, 'attachFormToATask').and.returnValue(of(true));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(element.querySelector('#adf-no-form-attach-form-button')).toBeDefined();
@@ -90,7 +90,7 @@ describe('AttachFormComponent', () => {
         component.taskId = 1;
         component.formId = 10;
         component.formKey = 12;
-        spyOn(taskService, 'deleteForm').and.returnValue(Observable.of({}));
+        spyOn(taskService, 'deleteForm').and.returnValue(of({}));
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -106,7 +106,7 @@ describe('AttachFormComponent', () => {
         component.taskId = 1;
         component.formId = 10;
 
-        spyOn(taskService, 'attachFormToATask').and.returnValue(Observable.of(
+        spyOn(taskService, 'attachFormToATask').and.returnValue(of(
             {
                 id: 91,
                 name: 'fakeName',

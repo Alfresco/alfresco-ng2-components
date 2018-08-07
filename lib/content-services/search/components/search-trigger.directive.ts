@@ -30,13 +30,10 @@ import {
     Optional
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DOCUMENT } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { merge } from 'rxjs/observable/merge';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
+import { DOCUMENT } from '@angular/common';
+import { Observable, Subject, Subscription, merge, of, fromEvent } from 'rxjs';
 import { SearchComponent } from './search.component';
+import { filter, switchMap } from 'rxjs/operators';
 
 export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -48,10 +45,9 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
     host: {
         'role': 'combobox',
-        'autocomplete': 'off',
+        '[attr.autocomplete]': 'autocomplete',
         'aria-autocomplete': 'list',
         '[attr.aria-expanded]': 'panelOpen.toString()',
-        '[attr.aria-owns]': 'autocomplete?.id',
         '(blur)': 'onTouched()',
         '(input)': 'handleInput($event)',
         '(keydown)': 'handleKeydown($event)'
@@ -62,6 +58,9 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     @Input('searchAutocomplete')
     searchPanel: SearchComponent;
+
+    @Input()
+    autocomplete: string = 'off';
 
     private _panelOpen: boolean = false;
     private closingActionsSubscription: Subscription;
@@ -114,17 +113,18 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     private get outsideClickStream(): Observable<any> {
         if (!this.document) {
-            return Observable.of(null);
+            return of(null);
         }
 
         return merge(
             fromEvent(this.document, 'click'),
             fromEvent(this.document, 'touchend')
-        ).filter((event: MouseEvent | TouchEvent) => {
-            const clickTarget = event.target as HTMLElement;
-            return this._panelOpen &&
-                clickTarget !== this.element.nativeElement;
-        });
+        ).pipe(
+            filter((event: MouseEvent | TouchEvent) => {
+                const clickTarget = event.target as HTMLElement;
+                return this._panelOpen && clickTarget !== this.element.nativeElement;
+            })
+        );
     }
 
     writeValue(value: any): void {
@@ -186,10 +186,12 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         const optionChanges = this.searchPanel.keyPressedStream.asObservable();
 
         return merge(firstStable, optionChanges)
-            .switchMap(() => {
-                this.searchPanel.setVisibility();
-                return this.panelClosingActions;
-            })
+            .pipe(
+                switchMap(() => {
+                    this.searchPanel.setVisibility();
+                    return this.panelClosingActions;
+                })
+            )
             .subscribe(event => this.setValueAndClose(event));
     }
 

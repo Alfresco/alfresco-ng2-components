@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from './services/tag.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('TagNodeList', () => {
@@ -57,7 +57,7 @@ describe('TagNodeList', () => {
         fixture = TestBed.createComponent(TagNodeListComponent);
 
         tagService = TestBed.get(TagService);
-        spyOn(tagService, 'getTagsByNodeId').and.returnValue(Observable.of(dataTag));
+        spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(dataTag));
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
@@ -89,7 +89,7 @@ describe('TagNodeList', () => {
         it('Tag list click on delete button should delete the tag', (done) => {
             component.nodeId = 'fake-node-id';
 
-            spyOn(tagService, 'removeTag').and.returnValue(Observable.of(true));
+            spyOn(tagService, 'removeTag').and.returnValue(of(true));
 
             component.results.subscribe(() => {
                 fixture.detectChanges();

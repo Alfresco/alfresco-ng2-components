@@ -16,11 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, of } from 'rxjs';
 
 import { NodePaging } from 'alfresco-js-api';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class DeletedNodesApiService {
@@ -39,21 +40,16 @@ export class DeletedNodesApiService {
      * @returns List of nodes in the trash
      */
     getDeletedNodes(options?: Object): Observable<NodePaging> {
-        const { nodesApi, handleError } = this;
         const defaultOptions = {
             include: [ 'path', 'properties' ],
             maxItems: this.preferences.paginationSize,
             skipCount: 0
         };
         const queryOptions = Object.assign(defaultOptions, options);
-        const promise = nodesApi.getDeletedNodes(queryOptions);
+        const promise = this.nodesApi.getDeletedNodes(queryOptions);
 
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
-    }
-
-    private handleError(error: any): Observable<any> {
-        return Observable.of(error);
+        return from(promise).pipe(
+            catchError(err => of(err))
+        );
     }
 }

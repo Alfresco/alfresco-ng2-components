@@ -286,8 +286,13 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
         searchResultPage.deleteContent(search.no_permission.noPermFolder);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
+        searchResultPage.closeActionButton();
+
+        searchDialog.checkSearchBarIsNotVisible()
+            .checkSearchIconIsVisible()
+            .clickOnSearchIcon()
             .enterTextAndPressEnter(search.no_permission.noPermFolder);
+
         searchResultPage.checkNoResultMessageIsNotDisplayed();
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
     });

@@ -132,7 +132,7 @@ describe('Custom SidebarActionMenuComponent', () => {
             expect(actionButton).not.toBeNull();
             expect(actionButton).toBeDefined();
             expect(options).toBeDefined();
-            expect(actionButton.innerText.trim()).toBe('Fake title arrow_drop_down');
+            expect(actionButton.innerText.trim()).toBe('Fake titlearrow_drop_down');
         });
     });
 

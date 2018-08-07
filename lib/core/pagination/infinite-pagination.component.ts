@@ -24,7 +24,7 @@ import {
 
 import { PaginatedComponent } from './paginated-component.interface';
 import { Pagination } from 'alfresco-js-api';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { PaginationModel } from '../models/pagination.model';
 

@@ -17,8 +17,9 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
+import { Observable, from, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { TagPaging } from 'alfresco-js-api';
 
 @Injectable()
 export class TagService {
@@ -37,17 +38,18 @@ export class TagService {
      * @returns TagPaging object (defined in JSAPI) containing the tags
      */
     getTagsByNodeId(nodeId: string): any {
-        return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId))
-            .catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId)).pipe(
+            catchError(err => this.handleError(err))
+        );
     }
 
     /**
      * Gets a list of all the tags already defined in the repository.
      * @returns TagPaging object (defined in JSAPI) containing the tags
      */
-    getAllTheTags() {
-        return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getTags())
-            .catch(err => this.handleError(err));
+    getAllTheTags(): Observable<TagPaging> {
+        return from(this.apiService.getInstance().core.tagsApi.getTags())
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -57,11 +59,11 @@ export class TagService {
      * @returns TagEntry object (defined in JSAPI) with details of the new tag
      */
     addTag(nodeId: string, tagName: string): any {
-        let alfrescoApi: any = this.apiService.getInstance();
-        let tagBody = new alfrescoApi.core.TagBody();
+        const alfrescoApi: any = this.apiService.getInstance();
+        const tagBody = new alfrescoApi.core.TagBody();
         tagBody.tag = tagName;
 
-        let promiseAdd = Observable.fromPromise(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));
+        let promiseAdd = from(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));
 
         promiseAdd.subscribe((data) => {
             this.refresh.emit(data);
@@ -79,7 +81,7 @@ export class TagService {
      * @returns Null object when the operation completes
      */
     removeTag(nodeId: string, tag: string): any {
-        let promiseRemove = Observable.fromPromise(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag));
+        const promiseRemove = from(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag));
 
         promiseRemove.subscribe((data) => {
             this.refresh.emit(data);
@@ -92,6 +94,6 @@ export class TagService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

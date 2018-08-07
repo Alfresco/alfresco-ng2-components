@@ -24,7 +24,7 @@
                     [disabled]="!isOutcomeButtonEnabled(outcome)"
                     [class.mdl-button--colored]="!outcome.isSystem"
                     [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
-                    (click)="onOutcomeClicked(outcome, $event)">
+                    (click)="onOutcomeClicked(outcome)">
                 {{outcome.name}}
             </button>
         </mat-card-content>

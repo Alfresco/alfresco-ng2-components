@@ -17,10 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { NodePaging, SharedLinkEntry } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, of } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
-import 'rxjs/add/observable/fromPromise';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class SharedLinksApiService {
@@ -39,19 +39,17 @@ export class SharedLinksApiService {
      * @returns List of shared links
      */
     getSharedLinks(options: any = {}): Observable<NodePaging> {
-        const { sharedLinksApi, handleError } = this;
         const defaultOptions = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
             include: ['properties', 'allowableOperations']
         };
         const queryOptions = Object.assign({}, defaultOptions, options);
-        const promise = sharedLinksApi
-            .findSharedLinks(queryOptions);
+        const promise = this.sharedLinksApi.findSharedLinks(queryOptions);
 
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
+        return from(promise).pipe(
+            catchError(err => of(err))
+        );
     }
 
     /**
@@ -61,13 +59,11 @@ export class SharedLinksApiService {
      * @returns The shared link just created
      */
     createSharedLinks(nodeId: string, options: any = {}): Observable<SharedLinkEntry> {
-        const { sharedLinksApi, handleError } = this;
+        const promise = this.sharedLinksApi.addSharedLink({ nodeId: nodeId });
 
-        const promise = sharedLinksApi.addSharedLink({ nodeId: nodeId });
-
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
+        return from(promise).pipe(
+            catchError(err => of(err))
+        );
     }
 
     /**
@@ -76,16 +72,10 @@ export class SharedLinksApiService {
      * @returns Null response notifying when the operation is complete
      */
     deleteSharedLink(sharedId: string): Observable<SharedLinkEntry> {
-        const { sharedLinksApi, handleError } = this;
+        const promise = this.sharedLinksApi.deleteSharedLink(sharedId);
 
-        const promise = sharedLinksApi.deleteSharedLink(sharedId);
-
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
-    }
-
-    private handleError(error: any): Observable<any> {
-        return Observable.of(error);
+        return from(promise).pipe(
+            catchError(err => of(err))
+        );
     }
 }

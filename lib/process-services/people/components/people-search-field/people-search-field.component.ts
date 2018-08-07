@@ -18,8 +18,8 @@
 import { UserProcessModel, TranslationService, PeopleProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { getDisplayUser } from '../../helpers/getDisplayUser';
 
@@ -50,14 +50,16 @@ export class PeopleSearchFieldComponent {
     constructor(public peopleProcessService: PeopleProcessService,
                 private translationService: TranslationService) {
         this.users$ = this.searchUser.valueChanges
-            .pipe(debounceTime(200))
-            .switchMap((searchWord: string) => {
-                if (searchWord && searchWord.trim()) {
-                    return this.performSearch(searchWord);
-                } else {
-                    return Observable.of([]);
-                }
-            });
+            .pipe(
+                debounceTime(200),
+                switchMap((searchWord: string) => {
+                    if (searchWord && searchWord.trim()) {
+                        return this.performSearch(searchWord);
+                    } else {
+                        return of([]);
+                    }
+                })
+            );
 
         this.defaultPlaceholder = this.translationService.instant(this.defaultPlaceholder);
     }

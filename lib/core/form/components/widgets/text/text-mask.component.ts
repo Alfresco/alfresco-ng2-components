@@ -24,7 +24,7 @@ import {
     HostListener,
     Input,
     OnChanges,
-    Renderer,
+    Renderer2,
     SimpleChanges
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -59,7 +59,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     private value;
     private invalidCharacters = [];
 
-    constructor(private el: ElementRef, private render: Renderer) {
+    constructor(private el: ElementRef, private render: Renderer2) {
     }
 
     _onChange = (_: any) => {
@@ -100,7 +100,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         if (this.byPassKeys.indexOf(keyCode) === -1) {
             let value = this.getMasked(false, actualValue, maskToApply, isMaskReversed);
             let calculatedCaret = this.calculateCaretPosition(startCaret, actualValue, keyCode);
-            this.render.setElementAttribute(this.el.nativeElement, 'value', value);
+            this.render.setAttribute(this.el.nativeElement, 'value', value);
             this.el.nativeElement.value = value;
             this.setValue(value);
             this._onChange(value);
