@@ -118,6 +118,12 @@
       "ERROR_PLURAL": "{{ number }} elementos no se han podido eliminar"
     },
     "HOST_SETTINGS": {
+      "TYPE-AUTH": "Tipo de autenticación",
+      "BASIC": "Autenticación básica",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Flujo implícito",
+      "PROVIDER": "Proveedor",
+      "REQUIRED": "Campo necesario",
       "CS_URL_ERROR": "La dirección de Content Services no coincide con el formato de la URL",
       "PS_URL_ERROR": "La dirección de Process Services no coincide con el formato de la URL",
       "TITLE": "Configuración",
@@ -125,9 +131,19 @@
       "BP-HOST": "URL de Process Services",
       "BACK": "Volver",
       "APPLY": "Aplicar",
-      "NOT_VALID": "http(s)://host|ip:port(/path) no reconocido; pruebe con una URL diferente."
+      "NOT_VALID": "http(s)://host|ip:port(/path) no reconocido; pruebe con una URL diferente.",
+      "REDIRECT": "URI de redireccionamiento",
+      "REDIRECT_LOGOUT": "Cierre de sesión de URI de redireccionamiento",
+      "SILENT": "Inicio de sesión silencioso",
+      "SCOPE": "Ámbito",
+      "CLIENT": "ID de cliente"
     },
     "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Añadir nuevo",
+        "NAME": "Nombre",
+        "VALUE": "Valor"
+      },
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizar un formato de número",
         "INT_VALIDATION_ERROR": "Utilizar un formato de entero"
@@ -193,7 +209,8 @@
     "BUTTON": {
       "LOGIN": "Iniciar sesión",
       "CHECKING": "Comprobando",
-      "WELCOME": "Bienvenido"
+      "WELCOME": "Bienvenido",
+      "SSO": "Iniciar sesión en SSO"
     },
     "ACTION": {
       "HELP": "¿Necesita ayuda?",
@@ -290,7 +307,7 @@
       "DESCRIPTION": "No tiene permitido acceder a este recurso en el servidor.",
       "SECONDARY_BUTTON": {
         "TEXT": "Notificar problema",
-        "URL": ""
+        "URL": "notificar-problema"
       },
       "RETURN_BUTTON": {
         "TEXT": "Volver al inicio",

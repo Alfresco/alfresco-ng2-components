@@ -119,11 +119,11 @@
     },
     "HOST_SETTINGS": {
       "TYPE-AUTH": "Authentication type",
-      "BASIC": "Basic Auth",
+      "BASIC": "Basic Authentication",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "implicitFlow",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Provider",
-      "REQUIRED": "The field is required",
+      "REQUIRED": "This field is required",
       "CS_URL_ERROR": "Content Services address doesn't match the URL format",
       "PS_URL_ERROR": "Process Services address doesn't match the URL format",
       "TITLE": "Settings",
@@ -132,15 +132,15 @@
       "BACK": "Back",
       "APPLY": "APPLY",
       "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL.",
-      "REDIRECT": "Redirect Uri",
-      "REDIRECT_LOGOUT": "Redirect Uri Logout",
+      "REDIRECT": "Redirect URI",
+      "REDIRECT_LOGOUT": "Redirect URI Logout",
       "SILENT": "Silent Login",
       "SCOPE": "Scope",
-      "CLIENT": "ClientId"
+      "CLIENT": "Client ID"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
-        "ADD": "Add new",
+        "ADD": "Add New",
         "NAME": "Name",
         "VALUE": "Value"
       },

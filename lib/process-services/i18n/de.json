@@ -19,6 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "Keine Aufgaben gefunden",
+        "SUBTITLE": "Erstellen Sie eine neue Aufgabe, die sich später leicht wiederfinden lässt",
         "NONE": "Keine Aufgabenliste gefunden"
       }
     },
@@ -150,6 +152,11 @@
       "NO_FORM_MESSAGE": "Keine Formulare angehängt",
       "COMPLETE_TASK_MESSAGE": "Aufgabe {{taskName}} abgeschlossen",
       "COMPLETE_TASK_SUB_MESSAGE": "Keine Formulare, die hinzugefügt werden können"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Abzuhängendes Formular auswählen",
+      "REMOVE_FORM": "Formular entfernen",
+      "SELECT_OPTION": "Option auswählen"
     }
   },
   "ADF_PROCESS_LIST": {

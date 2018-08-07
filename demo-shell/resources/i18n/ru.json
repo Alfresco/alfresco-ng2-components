@@ -6,14 +6,27 @@
       "PROPERTIES": "Свойства",
       "VERSIONS": "Версии"
     },
+    "HOME": {
+      "TITLE": "Угловые компоненты для Alfresco",
+      "DOCUMENTATION": "Документация"
+    },
+    "LOGOUT": {
+      "TITLE": "Страница выхода из системы",
+      "SUB_TITLE": "Вы не вышли из системы",
+      "LOGIN": "Войти",
+      "HOME": "Домашняя"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Разрешить удаление",
       "SHOW_COMMENTS": "Показать комментарии к версиям",
-      "ALLOW_DOWNLOAD": "Разрешить загрузку версии",
-      "READ_ONLY": "Только чтение"
+      "ALLOW_DOWNLOAD": "Разрешить загрузку",
+      "READ_ONLY": "Только чтение",
+      "COMMENTS": "Показать комментарии"
     },
     "PERSONAL-FILES": "Личные файлы",
     "WARN-MULTIPLE-UPLOADS": "Показывать предупреждение для нескольких загрузок.",
+    "CUSTOM-PERMISSION-MESSAGE": "Включить сообщение о пользовательском разрешении",
+    "MEDIUM-TIME-FORMAT": "Включить средний формат времени для списка документов",
     "SEARCH": {
       "RADIO": {
         "NONE": "Нет",
@@ -39,11 +52,19 @@
       "TITLE": "Метаданные"
     }
   },
+  "COMMENTS": {
+    "ADD_COMMENT": "Добавить"
+  },
   "APP_LAYOUT": {
     "APP_NAME": "Демонстрационное приложение ADF",
     "HOME": "Домашняя",
+    "NODE-SELECTOR": "Селектор узлов",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Иерархия",
+    "NOTIFICATIONS": "Оповещения",
+    "TASK_LIST": "Список задач",
+    "PROCESS_LIST": "Список процессов",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Войти",
     "CUSTOM_SOURCES": "Пользовательские источники",
@@ -58,13 +79,15 @@
     "TRASHCAN": "Корзина",
     "SOCIAL": "Социальный",
     "SETTINGS": "Параметры",
+    "CONFIG-EDITOR": "Редактор конфигурации",
     "OVERLAY_VIEWER": "Просмотр наложения",
     "ABOUT": "О приложении",
     "SEARCH": "Расширенный поиск",
     "EXTENDED_SEARCH_QUERY_BODY": "Расширенный поиск с использованием тела запроса",
     "WORD_TO_SEARCH": "Искать слово",
     "SEARCH_CREATED_BY": "Создано пользователем",
-    "SEARCH_SERVICE_APPROACH": "Установите флажок, чтобы отключить свойство ввода и настроить, используя службу."
+    "SEARCH_SERVICE_APPROACH": "Установите флажок, чтобы отключить свойство ввода и настроить, используя службу.",
+    "HEADER_DATA": "Данные заголовка"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -79,6 +102,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Выбор нескольких вариантов (с флажками)",
+    "THUMBNAILS": "Включить эскизы",
     "MULTIPLE_FILE_UPLOAD": "Загрузка нескольких файлов",
     "FOLDER_UPLOAD": "Загрузка папки",
     "CUSTOM_FILTER": "Пользовательский фильтр расширений",
@@ -154,7 +178,8 @@
     "START-TASK": "Начать задачу",
     "START-PROCESS": "Начать процесс",
     "PROCESS-AUDIT-LOG": "Журнал проверки процесса",
-    "TASK-AUDIT-LOG": "Журнал проверки задачи"
+    "TASK-AUDIT-LOG": "Журнал проверки задачи",
+    "TASK-SHOW-HEADER": "Показать подробности заголовка"
   },
   "FORM-LIST": {
     "STORE": "Хранилище",
@@ -170,7 +195,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Нижний колонтитул страницы входа в систему"
+    "LOGIN_FOOTER": "Нижний колонтитул страницы входа в систему",
+    "SHOW_REMEMBERME": "Показывать «Запомнить меня»",
+    "SHOW_SUCCESS_ROUTE": "Показать успешный маршрут",
+    "CUSTOM_LOGO": "Пользовательский логотип"
   },
   "SEARCH": {
     "RESULTS": "Результаты поиска",
@@ -188,5 +216,15 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Наследовать разрешение",
     "INHERITED_PERMISSIONS_BUTTON": "Разрешение унаследовано"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
+    "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом"
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
+    "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Перевод пользовательского заголовка один",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Перевод пользовательского заголовка два"
 }

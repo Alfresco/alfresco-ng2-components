@@ -19,6 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "Задачи не найдены",
+        "SUBTITLE": "Создать новую задачу для быстрого поиска позже",
         "NONE": "Списков задач не найдено"
       }
     },
@@ -150,6 +152,11 @@
       "NO_FORM_MESSAGE": "Нет прикрепленных форм",
       "COMPLETE_TASK_MESSAGE": "Задача {{taskName}} выполнена",
       "COMPLETE_TASK_SUB_MESSAGE": "Нет форм для добавления"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Выбрать форму для прикрепления",
+      "REMOVE_FORM": "Удалить форму",
+      "SELECT_OPTION": "Выбрать параметр"
     }
   },
   "ADF_PROCESS_LIST": {

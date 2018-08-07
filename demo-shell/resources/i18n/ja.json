@@ -6,14 +6,27 @@
       "PROPERTIES": "プロパティ",
       "VERSIONS": "バージョン"
     },
+    "HOME": {
+      "TITLE": "Alfresco の Angular コンポーネント",
+      "DOCUMENTATION": "文書化"
+    },
+    "LOGOUT": {
+      "TITLE": "ログアウトページ",
+      "SUB_TITLE": "ログアウトしました",
+      "LOGIN": "ログイン",
+      "HOME": "ホーム"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "削除を許可する",
       "SHOW_COMMENTS": "バージョンに関するコメントを表示",
-      "ALLOW_DOWNLOAD": "バージョンのダウンロードを許可する",
-      "READ_ONLY": "読取り専用"
+      "ALLOW_DOWNLOAD": "ダウンロードを許可する",
+      "READ_ONLY": "読取り専用",
+      "COMMENTS": "コメントを表示する"
     },
     "PERSONAL-FILES": "個人的なファイル",
     "WARN-MULTIPLE-UPLOADS": "複数のアップロードの警告を表示します。",
+    "CUSTOM-PERMISSION-MESSAGE": "カスタムの権限メッセージを有効にする",
+    "MEDIUM-TIME-FORMAT": "文書リストの medium 時刻形式を有効にする",
     "SEARCH": {
       "RADIO": {
         "NONE": "なし",
@@ -39,11 +52,19 @@
       "TITLE": "メタデータ"
     }
   },
+  "COMMENTS": {
+    "ADD_COMMENT": "追加"
+  },
   "APP_LAYOUT": {
     "APP_NAME": "ADF デモアプリケーション",
     "HOME": "ホーム",
+    "NODE-SELECTOR": "ノードセレクター",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "階層リンク",
+    "NOTIFICATIONS": "通知",
+    "TASK_LIST": "タスクリスト",
+    "PROCESS_LIST": "プロセスリスト",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "ログイン",
     "CUSTOM_SOURCES": "カスタムソース",
@@ -58,13 +79,15 @@
     "TRASHCAN": "ごみ箱",
     "SOCIAL": "ソーシャル",
     "SETTINGS": "設定",
+    "CONFIG-EDITOR": "設定エディター",
     "OVERLAY_VIEWER": "オーバーレイビューア",
     "ABOUT": "バージョン情報",
     "SEARCH": "詳細検索",
     "EXTENDED_SEARCH_QUERY_BODY": "クエリ本体を使った詳細検索",
     "WORD_TO_SEARCH": "語句の検索",
     "SEARCH_CREATED_BY": "作成者",
-    "SEARCH_SERVICE_APPROACH": "入力プロパティを無効にし、サービスを使って設定する場合は、このチェックボックスをオンにします"
+    "SEARCH_SERVICE_APPROACH": "入力プロパティを無効にし、サービスを使って設定する場合は、このチェックボックスをオンにします",
+    "HEADER_DATA": "ヘッダーの日付"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -79,6 +102,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "複数選択 (チェックボックスを使用)",
+    "THUMBNAILS": "サムネイルを有効にする",
     "MULTIPLE_FILE_UPLOAD": "複数ファイルのアップロード",
     "FOLDER_UPLOAD": "フォルダのアップロード",
     "CUSTOM_FILTER": "カスタム拡張子フィルタ",
@@ -154,7 +178,8 @@
     "START-TASK": "タスクの開始",
     "START-PROCESS": "プロセスの開始",
     "PROCESS-AUDIT-LOG": "プロセスの監査ログ",
-    "TASK-AUDIT-LOG": "タスクの監査ログ"
+    "TASK-AUDIT-LOG": "タスクの監査ログ",
+    "TASK-SHOW-HEADER": "詳細ヘッダーを表示する"
   },
   "FORM-LIST": {
     "STORE": "保存",
@@ -170,7 +195,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "ログインページのフッター"
+    "LOGIN_FOOTER": "ログインページのフッター",
+    "SHOW_REMEMBERME": "ログイン情報の保存オプションを表示する",
+    "SHOW_SUCCESS_ROUTE": "サクセスルートを表示する",
+    "CUSTOM_LOGO": "カスタムのロゴ"
   },
   "SEARCH": {
     "RESULTS": "検索結果",
@@ -188,5 +216,15 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "権限の継承",
     "INHERITED_PERMISSIONS_BUTTON": "継承された権限"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",
+    "APP_ID_TYPE_ERROR": "アプリケーション ID は番号でなければなりません"
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",
+    "APP_ID_TYPE_ERROR": "アプリケーション ID は番号でなければなりません"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "カスタムのタイトル翻訳 1",
+  "GROUP-TITLE2-TRANSLATION-KEY": "カスタムのタイトル翻訳 2"
 }

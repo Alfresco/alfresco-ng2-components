@@ -6,14 +6,27 @@
       "PROPERTIES": "Eigenschaften",
       "VERSIONS": "Versionen"
     },
+    "HOME": {
+      "TITLE": "Angular-Komponenten für Alfresco",
+      "DOCUMENTATION": "Dokumentation"
+    },
+    "LOGOUT": {
+      "TITLE": "Seite 'Abmelden'",
+      "SUB_TITLE": "Sie sind nun abgemeldet.",
+      "LOGIN": "Anmelden",
+      "HOME": "Startseite"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Löschen zulassen",
       "SHOW_COMMENTS": "Anmerkungen zu Versionen einblenden",
-      "ALLOW_DOWNLOAD": "Versions-Download zulassen",
-      "READ_ONLY": "Schreibgeschützt"
+      "ALLOW_DOWNLOAD": "Download zulassen",
+      "READ_ONLY": "Schreibgeschützt",
+      "COMMENTS": "Kommentare anzeigen"
     },
     "PERSONAL-FILES": "Persönliche Dateien",
     "WARN-MULTIPLE-UPLOADS": "Warnung bei Mehrfach-Uploads anzeigen.",
+    "CUSTOM-PERMISSION-MESSAGE": "Meldung 'Benutzerdefinierte Berechtigung aktivieren'",
+    "MEDIUM-TIME-FORMAT": "Mittleres Zeitformat für Dokumentliste aktivieren",
     "SEARCH": {
       "RADIO": {
         "NONE": "Keine",
@@ -39,11 +52,19 @@
       "TITLE": "Metadaten"
     }
   },
+  "COMMENTS": {
+    "ADD_COMMENT": "Hinzufügen"
+  },
   "APP_LAYOUT": {
     "APP_NAME": "ADF-Demoanwendung",
     "HOME": "Startseite",
+    "NODE-SELECTOR": "Node-Auswahl",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Breadcrumb",
+    "NOTIFICATIONS": "Benachrichtigungen",
+    "TASK_LIST": "Aufgabenliste",
+    "PROCESS_LIST": "Prozessliste",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Anmelden",
     "CUSTOM_SOURCES": "Benutzerdefinierte Quellen",
@@ -58,13 +79,15 @@
     "TRASHCAN": "Papierkorb",
     "SOCIAL": "Soziale Funktionen",
     "SETTINGS": "Einstellungen",
+    "CONFIG-EDITOR": "Konfigurations-Editor",
     "OVERLAY_VIEWER": "Overlay-Viewer",
     "ABOUT": "Info",
     "SEARCH": "Erweiterte Suche",
     "EXTENDED_SEARCH_QUERY_BODY": "Erweiterte Suche mit Abfragetext",
     "WORD_TO_SEARCH": "Suchbegriff",
     "SEARCH_CREATED_BY": "Erstellt von",
-    "SEARCH_SERVICE_APPROACH": "Aktivieren Sie diese Option, um die Eingabeeigenschaft zu deaktivieren und die Nutzung des Services zu konfigurieren"
+    "SEARCH_SERVICE_APPROACH": "Aktivieren Sie diese Option, um die Eingabeeigenschaft zu deaktivieren und die Nutzung des Services zu konfigurieren",
+    "HEADER_DATA": "Headerdaten"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -79,6 +102,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Mehrfachauswahl (mit Kontrollkästchen)",
+    "THUMBNAILS": "Miniaturansichten aktivieren",
     "MULTIPLE_FILE_UPLOAD": "Mehrere Dateien hochladen",
     "FOLDER_UPLOAD": "Ordner hochladen",
     "CUSTOM_FILTER": "Filter für benutzerdefinierte Erweiterungen",
@@ -154,7 +178,8 @@
     "START-TASK": "Aufgabe starten",
     "START-PROCESS": "Prozess starten",
     "PROCESS-AUDIT-LOG": "Prozess-Audit-Protokoll",
-    "TASK-AUDIT-LOG": "Aufgaben-Audit-Protokoll"
+    "TASK-AUDIT-LOG": "Aufgaben-Audit-Protokoll",
+    "TASK-SHOW-HEADER": "Detailsheader anzeigen"
   },
   "FORM-LIST": {
     "STORE": "Speichern",
@@ -170,7 +195,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Login-Fußzeile"
+    "LOGIN_FOOTER": "Login-Fußzeile",
+    "SHOW_REMEMBERME": "'Benutzername und Passwort speichern' anzeigen",
+    "SHOW_SUCCESS_ROUTE": "Erfolgsroute anzeigen",
+    "CUSTOM_LOGO": "Benutzerdefiniertes Logo"
   },
   "SEARCH": {
     "RESULTS": "Ergebnisse durchsuchen",
@@ -188,5 +216,15 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Berechtigungen erben",
     "INHERITED_PERMISSIONS_BUTTON": "Berechtigungen geerbt"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
+    "APP_ID_TYPE_ERROR": "App-ID muss eine Zahl sein"
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
+    "APP_ID_TYPE_ERROR": "App-ID muss eine Zahl sein"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 1",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 2"
 }
