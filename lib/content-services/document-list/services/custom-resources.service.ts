@@ -304,45 +304,26 @@ export class CustomResourcesService {
      * @returns List of node IDs
      */
     getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel = {}): Observable<string[]> {
-        const defaults = {
-            maxItems: 100,
-            skipCount: 0
-        };
-        const options = Object.assign(defaults, pagination);
+        if (this.isCustomSource(nodeId)) {
 
-        if (nodeId === '-trashcan-') {
-            return from(this.apiService.nodesApi.getDeletedNodes(options)
-                .then(result => result.list.entries.map(node => node.entry.id)));
+            return this.loadFolderByNodeId(nodeId, pagination, [])
+                .map(result => result.list.entries.map(node => {
+                    if (nodeId === '-sharedlinks-') {
+                        return node.entry.nodeId;
 
-        } else if (nodeId === '-sharedlinks-') {
-            return from(this.apiService.sharedLinksApi.findSharedLinks(options)
-                .then(result => result.list.entries.map(node => node.entry.nodeId)));
+                    } else if (nodeId === '-sites-' || nodeId === '-mysites-') {
+                        return node.entry.guid;
 
-        } else if (nodeId === '-sites-') {
-            return from(this.apiService.sitesApi.getSites(options)
-                .then(result => result.list.entries.map(node => node.entry.guid)));
+                    } else if (nodeId === '-favorites-') {
+                        return node.entry.targetGuid;
+                    }
 
-        } else if (nodeId === '-mysites-') {
-            return from(this.apiService.peopleApi.getSiteMembership('-me-', options)
-                .then(result => result.list.entries.map(node => node.entry.guid)));
-
-        } else if (nodeId === '-favorites-') {
-            return from(this.apiService.favoritesApi.getFavorites('-me-', options)
-                .then(result => result.list.entries.map(node => node.entry.targetGuid)));
-
-        } else if (nodeId === '-recent-') {
-            return new Observable(observer => {
-                this.getRecentFiles('-me-', options)
-                    .subscribe((recentFiles) => {
-                        let recentFilesIdS = recentFiles.list.entries.map(node => node.entry.id);
-                        observer.next(recentFilesIdS);
-                        observer.complete();
-                    });
-            });
+                    return node.entry.id;
+                }));
 
         } else if (nodeId) {
             // cases when nodeId is '-my-', '-root-' or '-shared-'
-            return Observable.fromPromise(this.apiService.nodesApi.getNode(nodeId, options)
+            return Observable.fromPromise(this.apiService.nodesApi.getNode(nodeId, pagination)
                 .then(node => [node.entry.id]));
         }
 
