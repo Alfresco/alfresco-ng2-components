@@ -513,7 +513,7 @@
                                 { "$ref": "#/definitions/content-metadata-layout-group" }
                             ]
                         }
-                    }                    
+                    }
                 }
             }
         },

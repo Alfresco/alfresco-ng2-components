@@ -71,14 +71,18 @@ describe('Aspect oriented config', () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach(async(done) => {
         navigationBarPage.clickConfigEditorButton();
         configEditorPage.clickClearMetadataButton();
+        done();
     });
 
-    afterEach(() => {
+    afterEach(async(done) => {
         viewerPage.clickCloseButton();
         contentServicesPage.checkAcsContainer();
+        browser.refresh();
+        contentServicesPage.checkAcsContainer();
+        done();
     });
 
     it('[C261117] Should be possible restrict the display properties of one an aspect', () => {
@@ -102,7 +106,7 @@ describe('Aspect oriented config', () => {
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
-
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.clickMetadatGroup('IMAGE');
@@ -135,8 +139,9 @@ describe('Aspect oriented config', () => {
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
-
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
+
         metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
         metadataViewPage.checkkMetadatGroupIsPresent('properties');
         metadataViewPage.checkkMetadatGroupIsPresent('Versionable');
@@ -155,7 +160,7 @@ describe('Aspect oriented config', () => {
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
-
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
@@ -184,6 +189,7 @@ describe('Aspect oriented config', () => {
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
 
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
@@ -234,6 +240,7 @@ describe('Aspect oriented config', () => {
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
 
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.checkkMetadatGroupIsPresent('GROUP-TITLE1-TRANSLATION-KEY');
@@ -268,6 +275,7 @@ describe('Aspect oriented config', () => {
 
         metadataViewPage.enterPresetText('custom-preset');
 
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.checkkMetadatGroupIsPresent('properties');
