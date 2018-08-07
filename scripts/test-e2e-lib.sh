@@ -96,6 +96,8 @@ export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
 export FOLDER=$FOLDER'/'
 
+npm run lint-e2e || exit 1
+
 if [[  $DEVELOPMENT == "true" ]]; then
   echo "====== Run against local development  ====="
   if [[  $SINGLE_TEST == "true" ]]; then

@@ -21,7 +21,7 @@ var TestConfig = require('../../test.config');
 var NavigationBarPage = function () {
 
     var contentServicesButton = element(by.css("a[data-automation-id='Content Services']"));
-    var configEditoButton = element(by.css("a[data-automation-id='Config editor']"));
+    var configEditoButton = element(by.css("a[data-automation-id='Configuration Editor']"));
     var processServicesButton = element(by.css("a[data-automation-id='Process Services']"));
     var loginButton = element(by.css("a[data-automation-id='Login']"));
     var trashcanButton = element(by.css("a[data-automation-id='Trashcan']"));
@@ -32,7 +32,7 @@ var NavigationBarPage = function () {
     var cardViewButton = element(by.cssContainingText(".sidenav-menu-label", "CardView"));
     var languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
     var appTitle = element(by.css('.adf-app-title'));
-    var headerDataButton = element(by.css("a[data-automation-id='Header data']"));
+    var headerDataButton = element(by.css("a[data-automation-id='Header Data']"));
     var menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
 
     /**
