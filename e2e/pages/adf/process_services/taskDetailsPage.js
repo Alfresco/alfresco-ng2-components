@@ -266,6 +266,8 @@ var TaskDetailsPage = function () {
         var pic = this.getRowsUser(user).element(involvedUserPic);
         Util.waitUntilElementIsVisible(pic);
         return pic.getText();
+    }
+    
     this.checkTaskDetails = function () {
         Util.waitUntilElementIsVisible(taskDetailsSection);
         return taskDetailsSection.getText();
