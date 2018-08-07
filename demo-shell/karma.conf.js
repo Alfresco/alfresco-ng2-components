@@ -25,9 +25,10 @@ module.exports = function (config) {
             fixWebpackSourcePaths: true
         },
 
-        browserDisconnectTimeout: 200000,
-        browserNoActivityTimeout: 2400000,
-        captureTimeout: 1200000,
+        captureTimeout: 180000,
+        browserDisconnectTimeout: 180000,
+        browserDisconnectTolerance: 3,
+        browserNoActivityTimeout: 300000,
 
         reporters: config.angularCli && config.angularCli.codeCoverage
             ? ['progress', 'coverage-istanbul']
