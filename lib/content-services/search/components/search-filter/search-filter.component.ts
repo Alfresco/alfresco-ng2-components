@@ -225,7 +225,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
                 let responseField = (context.facetsFields || []).find(response => response.label === field.label);
 
-                if(!responseField && bkpBuckets.length) {
+                if (!responseField && bkpBuckets.length) {
                     responseField = { buckets: [...bkpBuckets] };
                 }
 

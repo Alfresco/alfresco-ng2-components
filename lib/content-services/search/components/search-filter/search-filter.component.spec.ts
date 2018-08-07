@@ -216,6 +216,202 @@ describe('SearchFilterComponent', () => {
         expect(component.responseFacetFields.length).toEqual(2);
     });
 
+    it('should fetch facet fields from response payload and show the bucket values', () => {
+        component.responseFacetFields = null;
+
+        queryBuilder.config = {
+            categories: [],
+            facetFields: [
+                { label: 'f1', field: 'f1' },
+                { label: 'f2', field: 'f2' }
+            ],
+            facetQueries: {
+                queries: []
+            }
+        };
+
+        const responseFields: any = [
+            {
+                label: 'f1',
+                buckets: [
+                    {label: 'b1', count: 10, display: 'HTML', filterQuery: 'filter', checked: true},
+                    {label: 'b2', count: 1}
+                ]
+            },
+            { label: 'f2', buckets: [] }
+        ];
+        const data = {
+            list: {
+                context: {
+                    facetsFields: responseFields
+                }
+            }
+        };
+
+        component.onDataLoaded(data);
+
+        expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(10);
+        expect(component.responseFacetFields[0].buckets.items[1].count).toEqual(1);
+    });
+
+    it('should fetch facet fields from response payload and update the existing bucket values', () => {
+        queryBuilder.config = {
+            categories: [],
+            facetFields: [
+                { label: 'f1', field: 'f1' },
+                { label: 'f2', field: 'f2' }
+            ],
+            facetQueries: {
+                queries: []
+            }
+        };
+
+        const initialFields: any = [
+            { label: 'f1', buckets: { items: [{ label: 'b1', count: 10, display: 'HTML', filterQuery: 'filter' }, { label: 'b2', count: 1 }]} },
+            { label: 'f2', buckets: [] }
+        ];
+        component.responseFacetFields = initialFields;
+
+        expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(10);
+        expect(component.responseFacetFields[0].buckets.items[1].count).toEqual(1);
+
+        const responseFields: any = [
+            { label: 'f1', buckets: [{ label: 'b1', count: 6, display: 'HTML', filterQuery: 'filter', checked: true }, { label: 'b2', count: 0 }] },
+            { label: 'f2', buckets: [] }
+        ];
+        const data = {
+            list: {
+                context: {
+                    facetsFields: responseFields
+                }
+            }
+        };
+
+        component.onDataLoaded(data);
+
+        expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(6);
+        expect(component.responseFacetFields[0].buckets.items[1].count).toEqual(0);
+    });
+
+    it('should fetch facet fields from response payload and show the already checked items', () => {
+        spyOn(queryBuilder, 'execute').and.stub();
+        queryBuilder.config = {
+            categories: [],
+            facetFields: [
+                { label: 'f1', field: 'f1' },
+                { label: 'f2', field: 'f2' }
+            ],
+            facetQueries: {
+                queries: []
+            }
+        };
+
+        component.responseFacetFields = <any> [
+            { label: 'f1', field: 'f1', buckets: {items: [
+                { label: 'b1', count: 10, filterQuery: 'filter' },
+                { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
+            { label: 'f2', field: 'f2', buckets: {items: [] }}
+        ];
+        const firstField: FacetField = { field: 'f1', label: 'f1' };
+        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[0]);
+
+        const responseFields: any = [
+            { label: 'f1', field: 'f1', buckets: [
+                { label: 'b1', count: 6, display: 'HTML', filterQuery: 'filter', checked: true },
+                { label: 'b2', count: 1, filterQuery: 'filter2', checked: true }] },
+            { label: 'f2', field: 'f2', buckets: [] }
+        ];
+        const data = {
+            list: {
+                context: {
+                    facetsFields: responseFields
+                }
+            }
+        };
+        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[1]);
+        component.onDataLoaded(data);
+        expect(component.responseFacetFields.length).toEqual(2);
+        expect(component.responseFacetFields[0].buckets.items[0].checked).toEqual(true, 'should show the already checked item');
+    });
+
+    it('should fetch facet fields from response payload and show the newly checked items', () => {
+        spyOn(queryBuilder, 'execute').and.stub();
+        queryBuilder.config = {
+            categories: [],
+            facetFields: [
+                { label: 'f1', field: 'f1' },
+                { label: 'f2', field: 'f2' }
+            ],
+            facetQueries: {
+                queries: []
+            }
+        };
+
+        component.responseFacetFields = <any> [
+            { label: 'f1', field: 'f1', buckets: {items: [
+                        { label: 'b1', count: 10, filterQuery: 'filter' },
+                        { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
+            { label: 'f2', field: 'f2', buckets: {items: [] }}
+        ];
+        const firstField: FacetField = { field: 'f1', label: 'f1' };
+        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[0]);
+
+        const responseFields: any = [
+            { label: 'f1', field: 'f1', buckets: [
+                    { label: 'b1', count: 6, display: 'HTML', filterQuery: 'filter', checked: true },
+                    { label: 'b2', count: 1, filterQuery: 'filter2', checked: true }] },
+            { label: 'f2', field: 'f2', buckets: [] }
+        ];
+        const data = {
+            list: {
+                context: {
+                    facetsFields: responseFields
+                }
+            }
+        };
+        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[1]);
+        component.onDataLoaded(data);
+        expect(component.responseFacetFields.length).toEqual(2);
+        expect(component.responseFacetFields[0].buckets.items[1].checked).toEqual(true, 'should show the newly checked item');
+    });
+
+    it('should show buckets with 0 values when there are no facet fields on the response payload', () => {
+        spyOn(queryBuilder, 'execute').and.stub();
+        queryBuilder.config = {
+            categories: [],
+            facetFields: [
+                { label: 'f1', field: 'f1' },
+                { label: 'f2', field: 'f2' }
+            ],
+            facetQueries: {
+                queries: []
+            }
+        };
+
+        component.responseFacetFields = <any> [
+            { label: 'f1', field: 'f1', buckets: {items: [
+                        { label: 'b1', count: 10, filterQuery: 'filter' },
+                        { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
+            { label: 'f2', field: 'f2', buckets: {items: [] }}
+        ];
+        const firstField: FacetField = { field: 'f1', label: 'f1' };
+        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[0]);
+
+        const responseFields = [];
+        const data = {
+            list: {
+                context: {
+                    facetsFields: responseFields
+                }
+            }
+        };
+        component.selectFacetBucket(firstField, component.responseFacetFields[0].buckets.items[1]);
+        component.onDataLoaded(data);
+
+        expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(0);
+        expect(component.responseFacetFields[0].buckets.items[1].count).toEqual(0);
+    });
+
     it('should update query builder only when has bucket to unselect', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
