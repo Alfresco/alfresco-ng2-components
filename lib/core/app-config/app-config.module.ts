@@ -17,7 +17,6 @@
 
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { AppConfigService } from './app-config.service';
 import { AppConfigPipe } from './app-config.pipe';
 
 @NgModule({
@@ -26,9 +25,6 @@ import { AppConfigPipe } from './app-config.pipe';
     ],
     declarations: [
         AppConfigPipe
-    ],
-    providers: [
-        AppConfigService
     ],
     exports: [
         AppConfigPipe

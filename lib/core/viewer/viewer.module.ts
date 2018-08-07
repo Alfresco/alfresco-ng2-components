@@ -44,7 +44,7 @@ import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actio
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
         ToolbarModule,

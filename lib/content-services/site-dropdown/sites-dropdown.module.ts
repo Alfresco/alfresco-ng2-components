@@ -18,18 +18,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { DropdownSitesComponent } from './sites-dropdown.component';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CoreModule.forChild()
     ],
     exports: [
         DropdownSitesComponent

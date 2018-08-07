@@ -19,11 +19,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { ProcessCommentsModule } from '../process-comments/process-comments.module';
-import { CardViewModule, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/adf-core';
 import { TaskListModule } from '../task-list/task-list.module';
 import { PeopleModule } from '../people/people.module';
 import { ContentWidgetModule } from '../content-widget/content-widget.module';
@@ -39,18 +37,12 @@ import { StartProcessInstanceComponent } from './components/start-process.compon
 @NgModule({
     imports: [
         CommonModule,
-        DataTableModule,
-        CoreModule,
-        TaskListModule,
         MaterialModule,
         FlexLayoutModule,
-        TranslateModule,
-        CardViewModule,
         FormsModule,
         ReactiveFormsModule,
-        PipeModule,
-        DataColumnModule,
-        DirectiveModule,
+        CoreModule.forChild(),
+        TaskListModule,
         PeopleModule,
         ContentWidgetModule,
         ProcessCommentsModule

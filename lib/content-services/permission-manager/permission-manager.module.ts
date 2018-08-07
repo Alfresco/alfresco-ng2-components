@@ -18,28 +18,23 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
 import { AddPermissionComponent } from './components/add-permission/add-permission.component';
 import { AddPermissionDialogComponent } from './components/add-permission/add-permission-dialog.component';
-import { DataTableModule, DataColumnModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
-import { NodePermissionService } from './services/node-permission.service';
 import { NoPermissionTemplateComponent } from './components/permission-list/no-permission.component';
-import { NodePermissionDialogService } from './services/node-permission-dialog.service';
 import { AddPermissionPanelComponent } from './components/add-permission/add-permission-panel.component';
 import { SearchModule } from '../search/search.module';
 
 @NgModule({
     imports: [
+        CoreModule.forChild(),
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        TranslateModule,
-        DataTableModule,
-        DataColumnModule,
         SearchModule
     ],
     declarations: [
@@ -50,11 +45,11 @@ import { SearchModule } from '../search/search.module';
         AddPermissionComponent,
         AddPermissionDialogComponent
     ],
-    providers: [
-        NodePermissionDialogService,
-        NodePermissionService
+    entryComponents: [
+        AddPermissionPanelComponent,
+        AddPermissionComponent,
+        AddPermissionDialogComponent
     ],
-    entryComponents: [ AddPermissionPanelComponent, AddPermissionComponent, AddPermissionDialogComponent ],
     exports: [
         PermissionListComponent,
         NoPermissionTemplateComponent,

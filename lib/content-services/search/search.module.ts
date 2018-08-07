@@ -18,10 +18,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 
-import { PipeModule, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 
 import { SearchTriggerDirective } from './components/search-trigger.directive';
 
@@ -50,13 +49,11 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        PipeModule,
-        TranslateModule
+        CoreModule.forChild()
     ],
     declarations: [
         ...ALFRESCO_SEARCH_DIRECTIVES,
