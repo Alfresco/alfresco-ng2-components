@@ -1,7 +1,7 @@
 {
   "name": "alfresco-components",
   "description": "Alfresco Angular components",
-  "version": "2.5.0-beta2",
+  "version": "2.5.0-beta5",
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
@@ -54,10 +54,10 @@
     "process services"
   ],
   "dependencies": {
-    "@alfresco/adf-content-services": "2.5.0-beta2",
-    "@alfresco/adf-core": "2.5.0-beta2",
-    "@alfresco/adf-insights": "2.5.0-beta2",
-    "@alfresco/adf-process-services": "2.5.0-beta2",
+    "@alfresco/adf-content-services": "2.5.0-beta5",
+    "@alfresco/adf-core": "2.5.0-beta5",
+    "@alfresco/adf-insights": "2.5.0-beta5",
+    "@alfresco/adf-process-services": "2.5.0-beta5",
     "@angular-devkit/build-ng-packagr": "^0.7.1",
     "@angular/animations": "6.1.0",
     "@angular/cdk": "6.4.2",
@@ -78,8 +78,8 @@
     "@nrwl/schematics": "^1.0.3",
     "@schematics/angular": "^0.6.8",
     "adf-tslint-rules": "0.0.4",
-    "alfresco-js-api": "^2.5.0-bafd6cb5b1597a4cd92ff396da63f37cfaad93d3",
-    "alfresco-js-api-node": "2.5.0-beta2",
+    "alfresco-js-api": "2.5.0-beta5",
+    "alfresco-js-api-node": "2.5.0-beta5",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
     "core-js": "^2.5.4",
