@@ -21,7 +21,7 @@ var TestConfig = require('../../test.config');
 var NavigationBarPage = function () {
 
     var contentServicesButton = element(by.css("a[data-automation-id='Content Services']"));
-    var configEditoButton = element(by.css("a[data-automation-id='Config editor']"));
+    var configEditoButton = element(by.css("a[data-automation-id='Configuration Editor']"));
     var processServicesButton = element(by.css("a[data-automation-id='Process Services']"));
     var loginButton = element(by.css("a[data-automation-id='Login']"));
     var trashcanButton = element(by.css("a[data-automation-id='Trashcan']"));
