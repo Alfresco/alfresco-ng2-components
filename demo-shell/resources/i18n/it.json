@@ -218,8 +218,14 @@
     "INHERITED_PERMISSIONS_BUTTON": "Permesso ereditato"
   },
   "TASK_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Inserisci ID app",
-    "APP_ID_TYPE_ERROR": "L'ID app deve essere un numero"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Inserisci ID app",
+      "APP_ID_TYPE_ERROR": "L'ID app deve essere un numero",
+      "NUMBER_TYPE_ERROR": "Il valore inserito deve essere numerico"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Pagina iniziale"
+    }
   },
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "Inserisci ID app",

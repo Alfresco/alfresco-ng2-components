@@ -218,8 +218,14 @@
     "INHERITED_PERMISSIONS_BUTTON": "Droits d'accès hérités"
   },
   "TASK_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
-    "APP_ID_TYPE_ERROR": "L'ID d'application doit être un numéro"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
+      "APP_ID_TYPE_ERROR": "L'ID d'application doit être un numéro",
+      "NUMBER_TYPE_ERROR": "La valeur saisie doit être numérique"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Page d'accueil"
+    }
   },
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
