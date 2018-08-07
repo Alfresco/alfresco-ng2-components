@@ -106,13 +106,13 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280054] Multiple items can be selected from a search facet filter',  () => {
-            searchFiltersPage.filterByFileType("Plain Text");
+            searchFiltersPage.filterByFileType('Plain Text');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             searchResultsPage.checkContentIsDisplayed(txtFileSite.entry.name);
 
-            searchFiltersPage.filterByFileType("JPEG Image");
+            searchFiltersPage.filterByFileType('JPEG Image');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(4);
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
@@ -186,8 +186,8 @@ describe('Search Component - Multi-Select Facet', () => {
         it('[C280056] Multiple items can be selected from multiple search facets',  () => {
             searchFiltersPage.checkSearchFiltersIsDisplayed();
 
-            searchFiltersPage.filterByFileType("Plain Text");
-            searchFiltersPage.filterByFileType("JPEG Image");
+            searchFiltersPage.filterByFileType('Plain Text');
+            searchFiltersPage.filterByFileType('JPEG Image');
 
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
@@ -242,7 +242,7 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280058] The filter facets items number is updated when another filter facet item is selected',  () => {
-            searchFiltersPage.filterByFileType("Plain Text");
+            searchFiltersPage.filterByFileType('Plain Text');
 
             searchFiltersPage.filterByCreator(acsUser.firstName, acsUser.lastName);
 
