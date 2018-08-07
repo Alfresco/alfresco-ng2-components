@@ -18,8 +18,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../utils/object-utils';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
 export enum AppConfigValues {
