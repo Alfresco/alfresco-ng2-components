@@ -21,7 +21,7 @@ is well documented [here](https://alfresco.github.io/alfresco-content-app/#/), a
 However, if you prefer to create a brand new ADF application from scratch then you should still be able
 to follow the tutorial without difficulty.
 
-For this tutorial, the endpoint used to populate the Data Table component is the
+For this tutorial, the endpoint used to populate the [Data Table component](../../lib/core/datatable/components/datatable/datatable.component.ts) is the
 [`/people` service](https://api-explorer.alfresco.com/api-explorer/#!/people/listPeople) which lists
 all users available in an Alfresco Content Services instance. The `/people` service is suitable for the
 purpose of this tutorial because it is available by default in the Alfresco Content Services REST API.
@@ -101,7 +101,7 @@ the `src/app/mydatatable/mydatatable.component.ts` file and add the following im
 import { ObjectDataTableAdapter } from '@alfresco/adf-core';
 ```
 
-A DataTable needs an instance of `ObjectDataTableAdapter` to be configured as the data source. Add
+A DataTable needs an instance of [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) to be configured as the data source. Add
 the source code below to the `mydatatable` component, just before the constructor:
 
 ```ts
@@ -174,7 +174,7 @@ context menus, actions and keyboard navigation.
 
 As a simple example, we'll add a `click` event to display an alert when a row is clicked. Open
 `src/app/mydatatable/mydatatable.component.html` and add the following:
- 
+
 ```html
 <adf-datatable 
   (rowClick)="onRowClick($event)"
@@ -201,19 +201,19 @@ Let's dig a bit deeper into the different options for rendering columns within t
 [Data Column component](https://alfresco.github.io/adf-component-catalog/components/DataColumnComponent.html)
 is quite in-depth and has lots of examples. We highly recommend checking it out.
 
-From the documentation we can see that the Data Column component has quite a few properties but the
+From the documentation we can see that the [Data Column component](../core/data-column.component.md) has quite a few properties but the
 most important ones are `key`, `type`, `sortable`, `title` and  `class`. 
 
-- `key` is the name of the corresponding property in the `ObjectDataTableAdapter` object. 
-- `type` indicates how to render. By default it will take the `text` from the matching key in the data,
-but other modes are also available:
-	 - `image` will take a URI for a Material Icon or a URL for any image and display it.
-	 - `date` will format a date/datetime string. Use the `format` property to override it and define a custom time format.
-	 - `fileSize` will convert into kb/mb/gb as needed.
-	 - `location` assumes the value is a nodeId for ACS and will display the path.
-- `sortable` toggles whether or not the column can be sorted.
-- `title` sets the column title in the table header.
-- `class` allows you to set CSS classes for the column. Use `full-width` for the column to take as much width as it can while still leaving room for the remaining columns.
+-   `key` is the name of the corresponding property in the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) object. 
+-   `type` indicates how to render. By default it will take the `text` from the matching key in the data,
+    but other modes are also available:
+    	 \- `image` will take a URI for a Material Icon or a URL for any image and display it.
+    	 \- `date` will format a date/datetime string. Use the `format` property to override it and define a custom time format.
+    	 \- `fileSize` will convert into kb/mb/gb as needed.
+    	 \- `location` assumes the value is a nodeId for ACS and will display the path.
+-   `sortable` toggles whether or not the column can be sorted.
+-   `title` sets the column title in the table header.
+-   `class` allows you to set CSS classes for the column. Use `full-width` for the column to take as much width as it can while still leaving room for the remaining columns.
 
 ## Content projection
 
@@ -277,7 +277,7 @@ to integrate an external API (in this example the
 [`/people` service](https://api-explorer.alfresco.com/api-explorer/#!/people/listPeople)
 that lists all the users available in an Alfresco Content Services instance).
 
-As explained above, you can do this by populating the `ObjectDataTableAdapter` object that acts as
+As explained above, you can do this by populating the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) object that acts as
 the data source of the `DataTable` component. Open the `src/app/mydatatable/mydatatable.component.ts`
 file and replace the content with the following:
 
@@ -334,7 +334,7 @@ As you can see, the major changes are in the constructor where the external API 
 be in JSON but it could be in any format).
 
 After saving the file, you should see something like the following in the browser:
- 
+
 ![data_table_dataSource](../docassets/images/data_table_dataSource.png)
 
 ## Adding an action
@@ -414,4 +414,3 @@ After saving this, the application will be updated automatically and your browse
 like the following when the `Greetings` action is selected for a row:
 
 ![data_table_dataSource](../docassets/images/data_table_action2.png)
-

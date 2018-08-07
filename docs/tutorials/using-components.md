@@ -4,22 +4,22 @@ Level: Beginner
 
 # Using components
 
-There are three different ways to use, extend and configure an ADF component: configuration properties, event listeners, and content projection / HTML extensions. In this tutorial you will see a practical example of each approach using the Login component.
+There are three different ways to use, extend and configure an ADF component: configuration properties, event listeners, and content projection / HTML extensions. In this tutorial you will see a practical example of each approach using the [Login component](../core/login.component.md).
 
 The ADF documentation is always a good starting point when you plan to use a component. In general,
 there are three different ways to use, extend and configure an ADF component:
 
-1. Configuration properties.
-2. Event listeners.
-3. Content projection / HTML extensions.
+1.  Configuration properties.
+2.  Event listeners.
+3.  Content projection / HTML extensions.
 
 ## Configuration properties
 
 Angular components can easily be configured via properties in the HTML template. In this example we will
-work with the "Remember me" checkbox and "Need Help?" and "Register" links in the footer of the Login component.
+work with the "Remember me" checkbox and "Need Help?" and "Register" links in the footer of the [Login component](../core/login.component.md).
 
 To prepare for the task, make sure you have your ADF application up and running by executing `npm start`
-in a terminal from the root folder of the project. Access the login page using your browser and edit the `login.component.html` file stored in the `src/app/.../login` folder. The content of the `login.component.html` file should look like the following:
+in a terminal from the root folder of the project. Access the login page using your browser and edit the [`login.component`](../core/login.component.md)`.html` file stored in the `src/app/.../login` folder. The content of the [`login.component`](../core/login.component.md)`.html` file should look like the following:
 
 ```html
 <adf-login
@@ -54,10 +54,10 @@ new property values.
 **Note:** The two new properties are specified with `[]` around them. There are three ways to configure a
 property:
 
-1. `[property]=""` This sets the property using an expression or another property from the Typescript
-controller. Use this syntax for boolean expressions or variables.
-2. `property=""` This value will be passed as raw text.
-3. `[(property)]` This is called *banana in a box* and is used for two way binding.
+1.  `[property]=""` This sets the property using an expression or another property from the Typescript
+    controller. Use this syntax for boolean expressions or variables.
+2.  `property=""` This value will be passed as raw text.
+3.  `[(property)]` This is called _banana in a box_ and is used for two way binding.
 
 ## Event listeners
 
@@ -70,7 +70,7 @@ we can see that it emits three events: `success`, `error` and `executeSubmit`.
 We can subscribe to these events and have our custom code executed when they are emitted. We will
 hook into the `executeSubmit` event and show a simple `alert()` when the form is submitted.
 
-Back in the `login.component.html` file,  add `(success)="mySuccessMethod($event)"` to the `<adf-login/>` component (the position is not relevant).
+Back in the [`login.component`](../core/login.component.md)`.html` file,  add `(success)="mySuccessMethod($event)"` to the `<adf-login/>` component (the position is not relevant).
 
 ```html
 <adf-login
@@ -81,7 +81,7 @@ Back in the `login.component.html` file,  add `(success)="mySuccessMethod($event
 ```
 
 Next, implement `myExecuteSubmitMethod` in the Typescript class that defines the component. Edit
-the `login.component.ts` file stored in the same `src/app/.../login` folder and add the implementation
+the [`login.component`](../core/login.component.md)`.ts` file stored in the same `src/app/.../login` folder and add the implementation
 of `myExecuteSubmitMethod` as follows:
 
 ```ts
@@ -100,7 +100,7 @@ export class LoginComponent {
 }
 ```
 
-After saving both files, the login component will be refreshed in your browser. Enter random values for
+After saving both files, the [login component](../core/login.component.md) will be refreshed in your browser. Enter random values for
 the username and password and you should see the alert after pressing the submit button. Looking in the
 console of the browser, you'll see the `event` data containing all the details of the form. 
 
@@ -109,7 +109,7 @@ described in the documentation.
 
 ## Content projection / HTML extensions
 
-The final way to configure or extend a component is through an approach called *Content projection*. This
+The final way to configure or extend a component is through an approach called _Content projection_. This
 involves adding placeholders to a component template, allowing developers to "project" their own code or
 components into pre-defined locations within the component.
 
@@ -126,7 +126,7 @@ In regular HTML, elements can be nested. For example:
 We can use the same approach with ADF components to inject custom code or entire components into another
 component. The documentation shows which targets are available. For example, the `<adf-login/>` component
 supports two targets: `login-header` and `login-footer`. Let's add a simple "Hello World" message in the
-footer. Edit the template `login.component.html` and add a new tag *inside* the `<adf-login/>` tag:
+footer. Edit the template [`login.component`](../core/login.component.md)`.html` and add a new tag _inside_ the `<adf-login/>` tag:
 
 ```html
 <adf-login
@@ -140,7 +140,7 @@ footer. Edit the template `login.component.html` and add a new tag *inside* the 
 </adf-login>
 ```
 
-Make sure that you place the `<login-footer/>` tag *inside* the `<adf-login/>` tag. Inside the
+Make sure that you place the `<login-footer/>` tag _inside_ the `<adf-login/>` tag. Inside the
 `<login-footer/>` or `<login-header/>` tags you can put anything you want, as long as you wrap it inside
 an `<ng-template/>` tag. You can also add custom or 3rd party components.
 

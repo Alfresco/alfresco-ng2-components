@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Diagram Component
 
 Displays process diagrams.
@@ -28,18 +29,19 @@ The below component shows the diagram of a running process instance with the act
 
 ### Properties
 
-| Name | Type | Description |
-| --- | --- | -- |
-| metricPercentages | any | The array that contains the percentage of time for each element |
-| processInstanceId | any | |
-| metricColor | any | The array that contains the color for each element |
-| metricType | any | The string that specifies the metric type |
-| width | number | |
-| height | number | |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| height | `number` | 500 |  |
+| metricColor | `any` |  |  |
+| metricPercentages | `any` |  |  |
+| metricType | `string` | "" |  |
+| processDefinitionId | `any` |  |  |
+| processInstanceId | `any` |  |  |
+| width | `number` | 1000 |  |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| success | Raised when the diagrams elements are loaded |
-| error | Raised when an error occurs during loading |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |

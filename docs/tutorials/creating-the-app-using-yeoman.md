@@ -1,14 +1,17 @@
 ---
 Level: Basic
 ---
+
 # Creating your ADF application using Yeoman
 
 In this tutorial you are going to see how to create an ADF application from scratch, using the [Yeoman scaffolding tool](http://yeoman.io/). This is a "getting started" task that should enable you to start developing your own ADF application.
 
 ## Prerequisites
+
 Before any further task, be sure you executed the optional section described in [the preparation of the development environment](./preparing-environment.md), dedicated to the installation of the ADF Yeoman generator. This is a requested prerequisite to complete this tutorial with success.
 
 ## Creating the ADF application
+
 The creation of a brand new application is straightforward using the [Yeoman generator](http://yeoman.io/). Open a terminal and execute the following command.
 
     yo alfresco-adf-app
@@ -21,7 +24,7 @@ You can select one of the three following blueprints.
 
 **Process Services**
 
-This will generate an application for Alfresco Process Services. It mainly contains the following components: Login, App List, Task List, Form and Start Process.
+This will generate an application for Alfresco Process Services. It mainly contains the following components: Login, App List, Task List, [`Form`](../../lib/process-services/task-list/models/form.model.ts) and Start Process.
 
 **Content Services**
 

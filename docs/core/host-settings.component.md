@@ -32,15 +32,15 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| providers | `string[]` |  ['BPM', 'ECM', 'ALL'] | Tells the component which provider option are available. Possible valid values are "ECM" (Content), "BPM" (Process) , "ALL" (Content and Process), 'OAUTH2' SSO . |
+| ---- | ---- | ------------- | ----------- |
+| providers | `string[]` |  | Tells the component which provider option are available. Possible valid values are "ECM" (Content), "BPM" (Process) , "ALL" (Content and Process), 'OAUTH2' SSO . |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | bpmHostChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | (**Deprecated:** in 2.4.0) Emitted when the bpm host URL is changed. |
 | cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` |  |
 | ecmHostChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | (**Deprecated:** in 2.4.0) Emitted when the ecm host URL is changed. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the URL is invalid. |
-| success | `EventEmitter<boolean>` |  |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` |  |

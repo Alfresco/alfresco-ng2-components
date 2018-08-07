@@ -36,16 +36,16 @@ Adds "infinite" pagination to the component it is used with.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| loading | `boolean` | false | Is a new page loading? |
-| pageSize | `number` |  [`InfinitePaginationComponent`](../core/infinite-pagination.component.md).DEFAULT_PAGE_SIZE | Number of items that are added with each "load more" event. |
-| pagination | [`PaginationModel`](../../lib/core/models/pagination.model.ts) |  | (**Deprecated:** 2.3.0  [Pagination](../../lib/content-services/document-list/models/document-library.model.ts) object.)  |
+| ---- | ---- | ------------- | ----------- |
+| isLoading | `boolean` | false | Is a new page loading? |
+| pageSize | `number` |  | Number of items that are added with each "load more" event. |
+| pagination | [`PaginationModel`](../../lib/core/models/pagination.model.ts) |  | (**Deprecated:** 2.3.0  [Pagination](../../lib/content-services/document-list/models/document-library.model.ts) object.) |
 | target | `PaginatedComponent` |  | Component that provides custom pagination support. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | loadMore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the "Load More" button is clicked. |
 
 ## Details
