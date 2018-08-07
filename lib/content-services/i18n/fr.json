@@ -283,7 +283,8 @@
       "EVERYONE": "Tout le monde"
     },
     "ERROR": {
-      "DUPLICATE-PERMISSION": "Un ou plusieurs droits d'accès définis existent déjà : {{list}}"
+      "DUPLICATE-PERMISSION": "Un ou plusieurs droits d'accès définis existent déjà : {{list}}",
+      "NOT-ALLOWED": "Vous n'avez pas le droit de modifier les droits d'accès"
     }
   }
 }

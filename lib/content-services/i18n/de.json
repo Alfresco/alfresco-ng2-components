@@ -283,7 +283,8 @@
       "EVERYONE": "JEDER"
     },
     "ERROR": {
-      "DUPLICATE-PERMISSION": "Mindestens eine der von Ihnen bestimmten Berechtigungen ist bereits vorhanden: {{list}}"
+      "DUPLICATE-PERMISSION": "Mindestens eine der von Ihnen bestimmten Berechtigungen ist bereits vorhanden: {{list}}",
+      "NOT-ALLOWED": "Sie sind nicht zum Ändern von Berechtigungen berechtigt."
     }
   }
 }

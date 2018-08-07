@@ -19,6 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "Fant ingen oppgaver",
+        "SUBTITLE": "Opprett en ny oppgave som du lett kan finne igjen senere",
         "NONE": "Ingen oppgavelister funnet"
       }
     },
@@ -150,6 +152,11 @@
       "NO_FORM_MESSAGE": "Ingen skjemaer er vedlagt",
       "COMPLETE_TASK_MESSAGE": "Oppgaven {{taskName}} er fullført",
       "COMPLETE_TASK_SUB_MESSAGE": "Ingen skjemaer å legge til"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Velg skjema å legge ved",
+      "REMOVE_FORM": "Fjern skjema",
+      "SELECT_OPTION": "Velg et alternativ"
     }
   },
   "ADF_PROCESS_LIST": {

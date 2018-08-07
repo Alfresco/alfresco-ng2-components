@@ -283,7 +283,8 @@
       "EVERYONE": "全員"
     },
     "ERROR": {
-      "DUPLICATE-PERMISSION": "設定済みの権限が既にあります: {{list}}"
+      "DUPLICATE-PERMISSION": "設定済みの権限が既にあります: {{list}}",
+      "NOT-ALLOWED": "権限を変更することはできません"
     }
   }
 }

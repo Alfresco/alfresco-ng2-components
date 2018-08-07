@@ -283,7 +283,8 @@
       "EVERYONE": "Todos"
     },
     "ERROR": {
-      "DUPLICATE-PERMISSION": "Uno o más de los permisos que ha establecido ya existe: {{list}}"
+      "DUPLICATE-PERMISSION": "Uno o más de los permisos que ha establecido ya existe: {{list}}",
+      "NOT-ALLOWED": "No puede cambiar los permisos"
     }
   }
 }

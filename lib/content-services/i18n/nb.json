@@ -283,7 +283,8 @@
       "EVERYONE": "Alle"
     },
     "ERROR": {
-      "DUPLICATE-PERMISSION": "Én eller flere av tillatelsene du har angitt, er allerede til stede: {{list}}"
+      "DUPLICATE-PERMISSION": "Én eller flere av tillatelsene du har angitt, er allerede til stede: {{list}}",
+      "NOT-ALLOWED": "Du har ikke lov til å endre tillatelser"
     }
   }
 }

@@ -118,6 +118,12 @@
       "ERROR_PLURAL": "Kan {{ number }} items niet verwijderen"
     },
     "HOST_SETTINGS": {
+      "TYPE-AUTH": "Verificatietype",
+      "BASIC": "Basisverificatie",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Impliciete stroom",
+      "PROVIDER": "Provider",
+      "REQUIRED": "Dit veld is vereist",
       "CS_URL_ERROR": "Content Services-adres komt niet overeen met de URL-indeling",
       "PS_URL_ERROR": "Process Services-adres komt niet overeen met de URL-indeling",
       "TITLE": "Instellingen",
@@ -125,9 +131,19 @@
       "BP-HOST": "Process Services-URL",
       "BACK": "Terug",
       "APPLY": "Toepassen",
-      "NOT_VALID": "http(s)://host|ip:port(/path) niet herkend, probeer een andere URL."
+      "NOT_VALID": "http(s)://host|ip:port(/path) niet herkend, probeer een andere URL.",
+      "REDIRECT": "Omleidings-URI",
+      "REDIRECT_LOGOUT": "Omleidings-URI afmelden",
+      "SILENT": "Stille aanmelding",
+      "SCOPE": "Bereik",
+      "CLIENT": "Client-id"
     },
     "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Nieuwe toevoegen",
+        "NAME": "Naam",
+        "VALUE": "Waarde"
+      },
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Gebruik een getalnotatie",
         "INT_VALIDATION_ERROR": "Gebruik een notatie voor gehele getallen"
@@ -193,7 +209,8 @@
     "BUTTON": {
       "LOGIN": "Aanmelden",
       "CHECKING": "Controleren",
-      "WELCOME": "Welkom"
+      "WELCOME": "Welkom",
+      "SSO": "Aanmelden SSO"
     },
     "ACTION": {
       "HELP": "Hulp nodig?",
@@ -290,7 +307,7 @@
       "DESCRIPTION": "Het is u niet toegestaan toegang te krijgen tot deze resource op de server.",
       "SECONDARY_BUTTON": {
         "TEXT": "Probleem melden",
-        "URL": ""
+        "URL": "report-issue"
       },
       "RETURN_BUTTON": {
         "TEXT": "Terug naar Home",

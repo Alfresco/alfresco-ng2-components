@@ -118,6 +118,12 @@
       "ERROR_PLURAL": "{{ number }} Elemente konnten nicht gelöscht werden"
     },
     "HOST_SETTINGS": {
+      "TYPE-AUTH": "Authentifizierungstyp",
+      "BASIC": "Basisauthentifizierung",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Impliziter Fluss",
+      "PROVIDER": "Provider",
+      "REQUIRED": "Dies ist ein Pflichtfeld",
       "CS_URL_ERROR": "Content Services-Adresse nicht im richtigen URL-Format",
       "PS_URL_ERROR": "Process Services-Adresse nicht im richtigen URL-Format",
       "TITLE": "Einstellungen",
@@ -125,9 +131,19 @@
       "BP-HOST": "URL für Process Services",
       "BACK": "Zurück",
       "APPLY": "Anwenden",
-      "NOT_VALID": "http(s)://host|ip:port(/path) nicht erkannt. Probieren Sie es mit einer anderen URL."
+      "NOT_VALID": "http(s)://host|ip:port(/path) nicht erkannt. Probieren Sie es mit einer anderen URL.",
+      "REDIRECT": "Umleitungs-URI",
+      "REDIRECT_LOGOUT": "Umleitungs-URI zum Abmelden",
+      "SILENT": "Automatische Anmeldung",
+      "SCOPE": "Bereich",
+      "CLIENT": "Client-ID"
     },
     "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Neue hinzufügen",
+        "NAME": "Name",
+        "VALUE": "Wert"
+      },
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Verwenden Sie ein Zahlenformat",
         "INT_VALIDATION_ERROR": "Verwenden Sie ein Ganzzahlenformat"
@@ -193,7 +209,8 @@
     "BUTTON": {
       "LOGIN": "Anmelden",
       "CHECKING": "Überprüfung",
-      "WELCOME": "Willkommen"
+      "WELCOME": "Willkommen",
+      "SSO": "Bei SSO anmelden"
     },
     "ACTION": {
       "HELP": "Brauchen Sie Hilfe?",
@@ -290,7 +307,7 @@
       "DESCRIPTION": "Sie sind nicht zum Zugriff auf diese Ressource auf dem Server berechtigt.",
       "SECONDARY_BUTTON": {
         "TEXT": "Problem melden",
-        "URL": ""
+        "URL": "report-issue"
       },
       "RETURN_BUTTON": {
         "TEXT": "Zurück zur Startseite",
