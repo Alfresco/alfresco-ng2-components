@@ -20,7 +20,7 @@ import { from, throwError } from 'rxjs';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { map, catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class DiscoveryApiService {
