@@ -30,10 +30,12 @@ export class FileViewComponent implements OnInit {
 
     nodeId: string = null;
     displayEmptyMetadata = false;
+    expanded: boolean;
     multi = false;
     isReadOnly = false;
     isPreset = false;
     customPreset: string = null;
+    displayDefaultProperties = true;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -74,6 +76,10 @@ export class FileViewComponent implements OnInit {
 
     toggleReadOnly() {
         this.isReadOnly = !this.isReadOnly;
+    }
+
+    toggleDisplayProperties() {
+        this.displayDefaultProperties = !this.displayDefaultProperties;
     }
 
     togglePreset() {

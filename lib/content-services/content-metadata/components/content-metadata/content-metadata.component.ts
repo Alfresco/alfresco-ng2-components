@@ -57,6 +57,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     preset: string;
 
+    /** Toggles whether the metadata properties should be shown */
+    @Input()
+    displayDefaultProperties: boolean = true;
+
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
     disposableNodeUpdate: Subscription;

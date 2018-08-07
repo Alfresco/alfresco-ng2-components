@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/*tslint:disable: ban*/
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -232,5 +230,27 @@ describe('ContentMetadataComponent', () => {
                 expect(basicPropertiesComponent.displayEmpty).toBe(false);
             });
         }));
+    });
+
+    describe('Properties displaying', () => {
+        it('should hide metadata fields if displayDefaultProperties is set to false', () => {
+            component.displayDefaultProperties = false;
+            fixture.detectChanges();
+            const metadataContainer = fixture.debugElement.query(By.css('mat-expansion-panel[data-automation-id="adf-metadata-group-properties"]'));
+            fixture.detectChanges();
+            expect(metadataContainer).toBeNull();
+        });
+
+        it('should display metadata fields if displayDefaultProperties is set to true', () => {
+            component.displayDefaultProperties = true;
+            fixture.detectChanges();
+            const metadataContainer = fixture.debugElement.query(By.css('mat-expansion-panel[data-automation-id="adf-metadata-group-properties"]'));
+            fixture.detectChanges();
+            expect(metadataContainer).toBeDefined();
+        });
+
+        it('should have displayDefaultProperties input param as true by default', () => {
+            expect(component.displayDefaultProperties).toBe(true);
+        });
     });
 });
