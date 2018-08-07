@@ -29,7 +29,7 @@ import {
     ContentService,
     setupTestBed
 } from '@alfresco/adf-core';
-import { ContentNodeDialogService } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService, ContentModule } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ProcessTestingModule } from '../testing/process.testing.module';
