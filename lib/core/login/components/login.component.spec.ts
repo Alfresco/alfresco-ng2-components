@@ -25,7 +25,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { OauthConfigModel } from '../../models/oauth-config.model';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
@@ -107,7 +107,7 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to route on successful login', () => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
+        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
         spyOn(router, 'navigate');
@@ -116,7 +116,7 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to previous route state on successful login', () => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
+        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
         authService.setRedirect({ provider: 'ECM', url: 'some-route' });
@@ -160,14 +160,14 @@ describe('LoginComponent', () => {
         });
 
         it('should be changed back to the default after a failed login attempt', () => {
-            spyOn(authService, 'login').and.returnValue(Observable.throw('Fake server error'));
+            spyOn(authService, 'login').and.returnValue(throwError('Fake server error'));
             loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
 
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.LOGIN');
         });
 
         it('should be changed to the "welcome key" after a successful login attempt', () => {
-            spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
+            spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
             loginWithCredentials('fake-username', 'fake-password');
 
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.WELCOME');
@@ -391,7 +391,7 @@ describe('LoginComponent', () => {
     });
 
     it('should return success event after the login have succeeded', (done) => {
-        spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket' }));
+        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
 
         component.providers = 'ECM';
         expect(component.isError).toBe(false);
@@ -456,7 +456,7 @@ describe('LoginComponent', () => {
     });
 
     it('should return CORS error when server CORS error occurs', (done) => {
-        spyOn(authService, 'login').and.returnValue(Observable.throw({
+        spyOn(authService, 'login').and.returnValue(throwError({
             error: {
                 crossDomain: true,
                 message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
@@ -479,7 +479,7 @@ describe('LoginComponent', () => {
 
     it('should return CSRF error when server CSRF error occurs', async(() => {
         spyOn(authService, 'login')
-            .and.returnValue(Observable.throw({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
+            .and.returnValue(throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
@@ -496,7 +496,7 @@ describe('LoginComponent', () => {
     it('should return ECOM read-oly error when error occurs', async(() => {
         spyOn(authService, 'login')
             .and.returnValue(
-            Observable.throw(
+                throwError(
                 {
                     message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
                     status: 403
@@ -531,7 +531,7 @@ describe('LoginComponent', () => {
     }));
 
     it('should emit error event after the login has failed', async(() => {
-        spyOn(authService, 'login').and.returnValue(Observable.throw('Fake server error'));
+        spyOn(authService, 'login').and.returnValue(throwError('Fake server error'));
         component.providers = 'ECM';
 
         component.error.subscribe((error) => {

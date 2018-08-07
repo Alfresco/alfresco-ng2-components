@@ -6,3 +6,6 @@ var adfFileNameRule_1 = require("./adfFileNameRule");
 exports.ADFComponentSelectorRule = adfFileNameRule_1.Rule;
 var adfPrefixNameRule_1 = require("./adfPrefixNameRule");
 exports.ADFOutputPrefixNameRule = adfPrefixNameRule_1.Rule;
+var adfLicenseBannerRule_1 = require("./adfLicenseBannerRule");
+exports.ADFLicenseBannerRule = adfLicenseBannerRule_1.Rule;
+exports.rulesDirectory = '.';

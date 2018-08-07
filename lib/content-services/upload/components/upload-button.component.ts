@@ -24,9 +24,8 @@ import {
     OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, NgZone
 } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { PermissionModel } from '../../document-list/models/permissions.model';
-import 'rxjs/add/observable/throw';
 import { UploadBase } from './base-upload/upload-base';
 
 @Component({

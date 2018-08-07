@@ -19,8 +19,7 @@ import { Injectable } from '@angular/core';
 import { AppConfigService, AlfrescoApiService, EcmModelService, LogService,
          FormFieldOption, FormService, FormValues, FormModel,
          FormOutcomeModel, FormOutcomeEvent } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 
 interface ProcessServiceData {
     rest: {

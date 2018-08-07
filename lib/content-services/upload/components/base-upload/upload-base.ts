@@ -18,7 +18,7 @@
 import { FileModel, FileInfo } from '@alfresco/adf-core';
 import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { UploadService, TranslationService } from '@alfresco/adf-core';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 import { UploadFilesEvent } from '../upload-files.event';
 
 export abstract class UploadBase implements OnInit, OnDestroy {

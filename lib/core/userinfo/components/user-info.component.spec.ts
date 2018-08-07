@@ -25,7 +25,7 @@ import { BpmUserService } from '../services/bpm-user.service';
 import { EcmUserService } from '../services/ecm-user.service';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { UserInfoComponent } from './user-info.component';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 
@@ -115,7 +115,7 @@ describe('User info component', () => {
             beforeEach(() => {
                 spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
                 spyOn(authService, 'isLoggedIn').and.returnValue(true);
-                spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeEcmEditedUser));
+                spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmEditedUser));
             });
 
             it('should show ecm only last name when user first name is null ', async(() => {
@@ -178,7 +178,7 @@ describe('User info component', () => {
             beforeEach(async(() => {
                 spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
                 spyOn(authService, 'isLoggedIn').and.returnValue(true);
-                spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeEcmUser));
+                spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUser));
                 spyOn(contentService, 'getContentUrl').and.returnValue('assets/images/ecmImg.gif');
                 fixture.detectChanges();
             }));
@@ -238,7 +238,7 @@ describe('User info component', () => {
             beforeEach(async(() => {
                 spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
                 spyOn(authService, 'isLoggedIn').and.returnValue(true);
-                spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeEcmUserNoImage));
+                spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUserNoImage));
                 fixture.detectChanges();
                 fixture.whenStable().then(() => fixture.detectChanges());
             }));
@@ -286,7 +286,7 @@ describe('User info component', () => {
         beforeEach(async(() => {
             spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(authService, 'isLoggedIn').and.returnValue(true);
-            getCurrentUserInfoStub = spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeBpmUser));
+            getCurrentUserInfoStub = spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmUser));
         }));
 
         it('should show full name next the user image', async(() => {
@@ -320,7 +320,7 @@ describe('User info component', () => {
                 firstName: null,
                 lastName: 'fake-last-name'
             });
-            getCurrentUserInfoStub.and.returnValue(Observable.of(wrongBpmUser));
+            getCurrentUserInfoStub.and.returnValue(of(wrongBpmUser));
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -337,7 +337,7 @@ describe('User info component', () => {
                 firstName: 'null',
                 lastName: 'fake-last-name'
             });
-            getCurrentUserInfoStub.and.returnValue(Observable.of(wrongFirstNameBpmUser));
+            getCurrentUserInfoStub.and.returnValue(of(wrongFirstNameBpmUser));
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -354,7 +354,7 @@ describe('User info component', () => {
                 firstName: 'fake-first-name',
                 lastName: 'null'
             });
-            getCurrentUserInfoStub.and.returnValue(Observable.of(wrongLastNameBpmUser));
+            getCurrentUserInfoStub.and.returnValue(of(wrongLastNameBpmUser));
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -388,8 +388,8 @@ describe('User info component', () => {
             spyOn(authService, 'isLoggedIn').and.returnValue(true);
             spyOn(contentService, 'getContentUrl').and.returnValue('src/assets/images/ecmImg.gif');
 
-            ecmUserInfoSpy = spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeEcmUser));
-            spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeBpmUser));
+            ecmUserInfoSpy = spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUser));
+            spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmUser));
         }));
 
         it('should get the bpm user informations from the service', async(() => {
@@ -433,7 +433,7 @@ describe('User info component', () => {
         }));
 
         it('should show the ecm initials if the ecm user has no image', async(() => {
-            ecmUserInfoSpy.and.returnValue(Observable.of(fakeEcmUserNoImage));
+            ecmUserInfoSpy.and.returnValue(of(fakeEcmUserNoImage));
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {

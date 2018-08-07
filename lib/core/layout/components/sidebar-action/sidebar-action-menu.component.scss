@@ -59,7 +59,8 @@
         &-sidebar-action-menu-panel {
             margin-top: 7.5px;
             border-radius: 2px;
-            box-shadow: #{map-get($_umbra-elevation-map, 2)}, #{map-get($_penumbra-elevation-map, 2)},#{map-get($_ambient-elevation-map, 2)};
+
+            @include mat-elevation(2);
         }
     }
 }

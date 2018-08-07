@@ -21,8 +21,7 @@ import { AppConfigService, SitesService, setupTestBed } from '@alfresco/adf-core
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
 const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
@@ -75,7 +74,7 @@ describe('ContentNodeDialogService', () => {
         afterOpenObservable = new Subject<any>();
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
             afterOpen: () => afterOpenObservable,
-            afterClosed: () => Observable.of({}),
+            afterClosed: () => of({}),
             componentInstance: {
                 error: new Subject<any>()
             }
@@ -112,23 +111,23 @@ describe('ContentNodeDialogService', () => {
     });
 
     it('should be able to open the dialog using a folder id', fakeAsync(() => {
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNode));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNode));
         service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe();
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
 
     it('should be able to open the dialog for files using the first user site', fakeAsync(() => {
-        spyOn(sitesService, 'getSites').and.returnValue(Observable.of(fakeSiteList));
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNode));
+        spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNode));
         service.openFileBrowseDialogBySite().subscribe();
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
 
     it('should be able to open the dialog for folder using the first user site', fakeAsync(() => {
-        spyOn(sitesService, 'getSites').and.returnValue(Observable.of(fakeSiteList));
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNode));
+        spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNode));
         service.openFolderBrowseDialogBySite().subscribe();
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();

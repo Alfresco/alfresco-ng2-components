@@ -17,17 +17,9 @@
 
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/concat';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/merge';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/toArray';
-import 'rxjs/add/operator/take';
 
 export const TRANSLATION_PROVIDER = new InjectionToken('Injection token for translation providers.');
 

@@ -16,8 +16,8 @@
  */
 
 import { EventEmitter, Injectable } from '@angular/core';
-import * as minimatch_ from 'minimatch';
-import { Subject } from 'rxjs/Subject';
+import { Minimatch } from 'minimatch-browser';
+import { Subject } from 'rxjs';
 import { AppConfigService } from '../app-config/app-config.service';
 import {
     FileUploadCompleteEvent,
@@ -28,8 +28,6 @@ import {
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 
-let minimatch: any = (<any> minimatch_).default || minimatch_;
-
 @Injectable()
 export class UploadService {
 
@@ -37,7 +35,7 @@ export class UploadService {
     private totalComplete: number = 0;
     private totalAborted: number = 0;
     private totalError: number = 0;
-    private excludedFileList: String[] = [];
+    private excludedFileList: string[] = [];
     private matchingOptions: any = null;
 
     activeTask: Promise<any> = null;
@@ -56,7 +54,7 @@ export class UploadService {
 
     constructor(protected apiService: AlfrescoApiService,
                 appConfigService: AppConfigService) {
-        this.excludedFileList = <String[]> appConfigService.get('files.excluded');
+        this.excludedFileList = <string[]> appConfigService.get('files.excluded');
         this.matchingOptions = appConfigService.get('files.match-options');
     }
 
@@ -92,7 +90,11 @@ export class UploadService {
         let isAllowed = true;
 
         if (this.excludedFileList) {
-            isAllowed = this.excludedFileList.filter(expr => minimatch(file.name, expr, this.matchingOptions)).length === 0;
+
+            isAllowed = this.excludedFileList.filter((pattern) => {
+                let minimatch = new Minimatch(pattern, this.matchingOptions);
+                return minimatch.match(file.name);
+            }).length === 0;
         }
         return isAllowed;
     }

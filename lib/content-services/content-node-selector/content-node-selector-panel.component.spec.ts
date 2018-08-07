@@ -20,8 +20,7 @@ import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from 'alfresco-js-api';
 import { SearchService, SitesService, setupTestBed } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer, of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
@@ -119,9 +118,9 @@ describe('ContentNodeSelectorComponent', () => {
                 expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
                 documentListService = TestBed.get(DocumentListService);
                 sitesService = TestBed.get(SitesService);
-                spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(expectedDefaultFolderNode));
-                spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw('No results for test'));
-                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries: [] } }));
+                spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
+                spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
+                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -290,18 +289,18 @@ describe('ContentNodeSelectorComponent', () => {
                 const documentListService = TestBed.get(DocumentListService);
                 const expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
 
-                spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(expectedDefaultFolderNode));
+                spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
 
                 const sitesService = TestBed.get(SitesService);
-                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries: [] } }));
+                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
 
                 getCorrespondingNodeIdsSpy = spyOn(component.documentList, 'getCorrespondingNodeIds').and
                     .callFake(id => {
                         if (id === '-sites-') {
-                            return Observable.of(['123456testId', '09876543testId']);
+                            return of(['123456testId', '09876543testId']);
                         }
-                        return Observable.of([id]);
+                        return of([id]);
                     });
 
                 component.currentFolderId = 'cat-girl-nuku-nuku';
@@ -659,7 +658,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             beforeEach(() => {
                 const sitesService = TestBed.get(SitesService);
-                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries: [] } }));
+                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
             });
 
             describe('in the case when isSelectionValid is a custom function for checking permissions,', () => {

@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslationService, ContentService } from '../../../../services';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../index';
@@ -105,7 +105,7 @@ describe('ContentWidgetComponent', () => {
 
         it('should load the thumbnail preview of the png image', (done) => {
             let blob = createFakeImageBlob();
-            spyOn(processContentService, 'getFileRawContent').and.returnValue(Observable.of(blob));
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
 
             component.thumbnailLoaded.subscribe((res) => {
                 fixture.detectChanges();
@@ -148,7 +148,7 @@ describe('ContentWidgetComponent', () => {
 
         it('should load the thumbnail preview of a pdf', (done) => {
             let blob = createFakePdfBlob();
-            spyOn(processContentService, 'getContentThumbnail').and.returnValue(Observable.of(blob));
+            spyOn(processContentService, 'getContentThumbnail').and.returnValue(of(blob));
 
             component.thumbnailLoaded.subscribe((res) => {
                 fixture.detectChanges();
@@ -230,8 +230,8 @@ describe('ContentWidgetComponent', () => {
 
         it('should open the viewer when the view button is clicked', (done) => {
             let blob = createFakePdfBlob();
-            spyOn(processContentService, 'getContentPreview').and.returnValue(Observable.of(blob));
-            spyOn(processContentService, 'getFileRawContent').and.returnValue(Observable.of(blob));
+            spyOn(processContentService, 'getContentPreview').and.returnValue(of(blob));
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
 
             component.content = new ContentLinkModel({
                 id: 4004,
@@ -264,7 +264,7 @@ describe('ContentWidgetComponent', () => {
 
         it('should download the pdf when the download button is clicked', () => {
             let blob = createFakePdfBlob();
-            spyOn(processContentService, 'getFileRawContent').and.returnValue(Observable.of(blob));
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
             spyOn(serviceContent, 'downloadBlob').and.callThrough();
 
             component.content = new ContentLinkModel({

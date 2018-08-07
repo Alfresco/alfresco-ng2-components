@@ -16,17 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 import { UserRepresentation } from 'alfresco-js-api';
+import { map, catchError, tap } from 'rxjs/operators';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
@@ -80,16 +77,18 @@ export class AuthenticationService {
      * @returns Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
      */
     login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string, ticket: any }> {
-        return Observable.fromPromise(this.alfrescoApi.getInstance().login(username, password))
-            .map((response: any) => {
-                this.saveRememberMeCookie(rememberMe);
-                this.onLogin.next(response);
-                return {
-                    type: this.appConfig.get(AppConfigValues.PROVIDERS),
-                    ticket: response
-                };
-            })
-            .catch(err => this.handleError(err));
+        return from(this.alfrescoApi.getInstance().login(username, password))
+            .pipe(
+                map((response: any) => {
+                    this.saveRememberMeCookie(rememberMe);
+                    this.onLogin.next(response);
+                    return {
+                        type: this.appConfig.get(AppConfigValues.PROVIDERS),
+                        ticket: response
+                    };
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -128,12 +127,14 @@ export class AuthenticationService {
      * @returns Response event called when logout is complete
      */
     logout() {
-        return Observable.fromPromise(this.callApiLogout())
-            .do(response => {
-                this.onLogout.next(response);
-                return response;
-            })
-            .catch(err => this.handleError(err));
+        return from(this.callApiLogout())
+            .pipe(
+                tap(response => {
+                    this.onLogout.next(response);
+                    return response;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -233,7 +234,7 @@ export class AuthenticationService {
     }
 
     getBpmLoggedUser(): Observable<UserRepresentation> {
-        return Observable.fromPromise(this.alfrescoApi.getInstance().activiti.profileApi.getProfile());
+        return from(this.alfrescoApi.getInstance().activiti.profileApi.getProfile());
     }
 
     private hasValidRedirection(provider: string): boolean {
@@ -251,6 +252,6 @@ export class AuthenticationService {
      */
     handleError(error: any): Observable<any> {
         this.logService.error('Error when logging in', error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

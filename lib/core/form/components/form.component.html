@@ -26,7 +26,7 @@
         </mat-card-header>
         <mat-card-content>
             <div *ngIf="form.hasTabs()">
-                <tabs-widget [tabs]="form.tabs" (formTabChanged)="onFieldChanged($event);"></tabs-widget>
+                <tabs-widget [tabs]="form.tabs"></tabs-widget>
             </div>
 
             <div *ngIf="!form.hasTabs() && form.hasFields()">
@@ -42,7 +42,7 @@
                     mat-button
                     [disabled]="!isOutcomeButtonEnabled(outcome)"
                     [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
-                    (click)="onOutcomeClicked(outcome, $event)">
+                    (click)="onOutcomeClicked(outcome)">
                 {{outcome.name | uppercase}}
             </button>
         </mat-card-actions>

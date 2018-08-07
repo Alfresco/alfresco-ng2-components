@@ -19,7 +19,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { ViewportRuler } from '@angular/cdk/scrolling';
 import { Component, HostListener, Input, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { ContextMenuService } from './context-menu.service';
 
 /**

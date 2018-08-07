@@ -62,7 +62,7 @@
             width: 100%;
         }
 
-        .mat-input-placeholder-wrapper {
+        .mat-form-field-label-wrapper {
             top: 5px !important;
         }
 
@@ -79,7 +79,7 @@
                 color: mat-color($primary);
             }
 
-            .mat-input-prefix {
+            .mat-form-field-prefix {
                 color: mat-color($primary);
             }
         }

@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LogService, PeopleProcessService, setupTestBed } from '@alfresco/adf-core';
 import { PeopleSelectorComponent } from './people-selector.component';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
@@ -51,17 +51,17 @@ describe('PeopleSelectorComponent', () => {
 
     it('should call the PeopleProcessService\'s getWorkflowUsers method on search', () => {
         const peopleProcessService = TestBed.get(PeopleProcessService);
-        spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.of([]));
+        spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
 
         component.performSearch('Chloe Price');
 
         expect(peopleProcessService.getWorkflowUsers).toHaveBeenCalledWith(undefined, 'Chloe Price');
     });
 
-    it('should log error on getWorkflowUsers\'s error', () => {
+    it('should log error on getWorkflowUsers error', () => {
         const peopleProcessService = TestBed.get(PeopleProcessService);
         const logService = TestBed.get(LogService);
-        spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.throw(new Error()));
+        spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError(new Error()));
         spyOn(logService, 'error');
 
         component.performSearch('Chloe Price')

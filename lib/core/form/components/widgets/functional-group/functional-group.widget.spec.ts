@@ -16,7 +16,7 @@
  */
 
 import { ElementRef } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';

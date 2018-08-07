@@ -4,7 +4,7 @@
 
 <mat-dialog-content>
     <form [formGroup]="form" (submit)="submit()">
-        <mat-input-container class="adf-full-width">
+        <mat-form-field class="adf-full-width">
             <input
                 placeholder="{{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.LABEL' | translate }}"
                 matInput
@@ -21,18 +21,18 @@
                     {{ form.controls['name'].errors?.message | translate }}
                 </span>
             </mat-hint>
-        </mat-input-container>
+        </mat-form-field>
 
         <br />
         <br />
 
-        <mat-input-container class="adf-full-width">
+        <mat-form-field class="adf-full-width">
             <textarea
                 matInput
                 placeholder="{{ 'CORE.FOLDER_DIALOG.FOLDER_DESCRIPTION.LABEL' | translate }}"
                 rows="4"
                 [formControl]="form.controls['description']"></textarea>
-        </mat-input-container>
+        </mat-form-field>
     </form>
 </mat-dialog-content>
 

@@ -4,6 +4,10 @@
     "./tools/tslint-rules/"
   ],
   "rules": {
+    "adf-license-banner": [
+      true,
+      "e2e/**/*.ts"
+    ],
     "align": [
       true,
       "parameters",
@@ -11,14 +15,7 @@
     ],
     "ban": [
       true,
-      "eval",
-      {
-        "name": [
-          "fdescribe",
-          "fit"
-        ],
-        "message": "don't focus tests"
-      }
+      "eval"
     ],
     "class-name": true,
     "comment-format": [
@@ -41,8 +38,14 @@
     ],
     "member-ordering": [
       true,
-      "static-before-instance",
-      "variables-before-functions"
+      {
+        "order": [
+          "static-field",
+          "instance-field",
+          "static-method",
+          "instance-method"
+        ]
+      }
     ],
     "no-any": false,
     "no-arg": true,
@@ -61,6 +64,7 @@
     "no-construct": true,
     "no-constructor-vars": false,
     "no-debugger": true,
+    "no-duplicate-super": true,
     "no-duplicate-variable": true,
     "no-empty": false,
     "no-eval": true,
@@ -71,8 +75,6 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
-    "no-unused-variable": true,
-    "no-use-before-declare": true,
     "no-var-keyword": true,
     "no-var-requires": true,
     "object-literal-sort-keys": false,
@@ -89,7 +91,10 @@
       "avoid-escape"
     ],
     "radix": true,
-    "semicolon": true,
+    "semicolon": [
+      true,
+      "always"
+    ],
     "switch-default": true,
     "trailing-comma": [
       true,
@@ -121,10 +126,6 @@
       "ban-keywords"
     ],
     "callable-types": true,
-    "import-blacklist": [
-      true,
-      "rxjs"
-    ],
     "import-spacing": true,
     "interface-over-type-literal": true,
     "member-access": false,
@@ -150,6 +151,12 @@
       "adf",
       "kebab-case"
     ],
+    "naming-convention": [
+      {
+        "type": "enumMember",
+        "format": "PascalCase"
+      }
+    ],
     "ordered-imports": false,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
@@ -158,9 +165,10 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "no-access-missing-member": false,
     "adf-file-name": true,
     "adf-class-name": true,
-    "adf-prefix-name": true
+    "adf-prefix-name": true,
+    "no-input-rename": true,
+    "no-output-rename": true
   }
 }

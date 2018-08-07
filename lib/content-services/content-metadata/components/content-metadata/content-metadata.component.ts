@@ -17,11 +17,11 @@
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription } from 'rxjs';
 import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
-import { Subscription } from 'rxjs/Rx';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -71,7 +71,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit() {
         this.disposableNodeUpdate =  this.cardViewUpdateService.itemUpdated$
-            .switchMap(this.saveNode.bind(this))
+            .pipe(
+                switchMap(this.saveNode.bind(this))
+            )
             .subscribe(
                 updatedNode => {
                     Object.assign(this.node, updatedNode);

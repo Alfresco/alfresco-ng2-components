@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { Component, Inject, OnInit, Optional, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

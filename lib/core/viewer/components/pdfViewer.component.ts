@@ -327,7 +327,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      *
      * @param ticks
      */
-    zoomIn(ticks: number) {
+    zoomIn(ticks?: number) {
         let newScale: any = this.currentScale;
         do {
             newScale = (newScale * this.DEFAULT_SCALE_DELTA).toFixed(2);
@@ -343,7 +343,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      *
      * @param ticks
      */
-    zoomOut(ticks: number) {
+    zoomOut(ticks?: number) {
         let newScale: any = this.currentScale;
         do {
             newScale = (newScale / this.DEFAULT_SCALE_DELTA).toFixed(2);
@@ -413,10 +413,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 data: { reason }
             })
             .afterClosed().subscribe(password => {
-                if (password) {
-                    callback(password);
-                }
-            });
+            if (password) {
+                callback(password);
+            }
+        });
     }
 
     /**

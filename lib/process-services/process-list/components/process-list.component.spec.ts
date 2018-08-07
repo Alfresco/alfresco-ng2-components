@@ -17,7 +17,7 @@
 
 import { Component, SimpleChange, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 
 import { ProcessInstanceListComponent } from './process-list.component';
@@ -50,7 +50,7 @@ describe('ProcessInstanceListComponent', () => {
         appConfig = TestBed.get(AppConfigService);
         service = TestBed.get(ProcessService);
 
-        getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstance));
+        getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(of(fakeProcessInstance));
         appConfig.config['adf-process-list'] = {
             'presets': {
                 'fakeProcessCutomSchema': [
@@ -143,7 +143,7 @@ describe('ProcessInstanceListComponent', () => {
     }));
 
     it('should return a default name if no name is specified on the process', async(() => {
-        getProcessInstancesSpy = getProcessInstancesSpy.and.returnValue(Observable.of(fakeProcessInstancesWithNoName));
+        getProcessInstancesSpy = getProcessInstancesSpy.and.returnValue(of(fakeProcessInstancesWithNoName));
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = 'fakeprocess';
@@ -187,7 +187,7 @@ describe('ProcessInstanceListComponent', () => {
     it('should throw an exception when the response is wrong', fakeAsync(() => {
         let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
         let mockError = 'Fake server error';
-        getProcessInstancesSpy.and.returnValue(Observable.throw(mockError));
+        getProcessInstancesSpy.and.returnValue(throwError(mockError));
         component.appId = 1;
         component.state = 'open';
         fixture.detectChanges();

@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { VersionListComponent } from './version-list.component';
 import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('VersionListComponent', () => {
@@ -78,7 +78,7 @@ describe('VersionListComponent', () => {
 
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
-                return Observable.of(false);
+                return of(false);
             }
         });
 
@@ -92,7 +92,7 @@ describe('VersionListComponent', () => {
         component.versions = versionTest;
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
-                return Observable.of(true);
+                return of(true);
             }
         });
 
@@ -109,7 +109,7 @@ describe('VersionListComponent', () => {
 
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
-                return Observable.of(false);
+                return of(false);
             }
         });
 

@@ -19,7 +19,7 @@ import { DebugElement, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent } from './apps-list.component';
@@ -43,7 +43,7 @@ describe('AppsListComponent', () => {
         debugElement = fixture.debugElement;
 
         service = TestBed.get(AppsProcessService);
-        getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(Observable.of(deployedApps));
+        getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(of(deployedApps));
     });
 
     it('should define layoutType with the default value', () => {
@@ -125,7 +125,7 @@ describe('AppsListComponent', () => {
 
     it('should emit an error when an error occurs loading apps', () => {
         let emitSpy = spyOn(component.error, 'emit');
-        getAppsSpy.and.returnValue(Observable.throw({}));
+        getAppsSpy.and.returnValue(throwError({}));
         fixture.detectChanges();
         expect(emitSpy).toHaveBeenCalled();
     });
@@ -185,19 +185,19 @@ describe('AppsListComponent', () => {
     describe('display apps', () => {
 
         it('should display all deployed apps', () => {
-            getAppsSpy.and.returnValue(Observable.of(deployedApps));
+            getAppsSpy.and.returnValue(of(deployedApps));
             fixture.detectChanges();
             expect(debugElement.queryAll(By.css('h1')).length).toBe(6);
         });
 
         it('should not display undeployed apps', () => {
-            getAppsSpy.and.returnValue(Observable.of(nonDeployedApps));
+            getAppsSpy.and.returnValue(of(nonDeployedApps));
             fixture.detectChanges();
             expect(debugElement.queryAll(By.css('h1')).length).toBe(0);
         });
 
         it('should display default app', () => {
-            getAppsSpy.and.returnValue(Observable.of(defaultApp));
+            getAppsSpy.and.returnValue(of(defaultApp));
             fixture.detectChanges();
             expect(debugElement.queryAll(By.css('h1')).length).toBe(1);
         });
@@ -207,7 +207,7 @@ describe('AppsListComponent', () => {
     describe('select apps', () => {
 
         beforeEach(() => {
-            getAppsSpy.and.returnValue(Observable.of(deployedApps));
+            getAppsSpy.and.returnValue(of(deployedApps));
             fixture.detectChanges();
         });
 

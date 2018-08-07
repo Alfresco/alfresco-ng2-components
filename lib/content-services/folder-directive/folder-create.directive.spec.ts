@@ -19,12 +19,11 @@ import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { Subject, of } from 'rxjs';
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
 
 import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { FolderCreateDirective } from './folder-create.directive';
-import { Subject } from 'rxjs/Subject';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
@@ -89,7 +88,7 @@ describe('FolderCreateDirective', () => {
         node = { entry: { id: 'nodeId' } };
 
         dialogRefMock = {
-            afterClosed: val =>  Observable.of(val),
+            afterClosed: val =>  of(val),
             componentInstance: {
                 error: new Subject<any>(),
                 success: new Subject<MinimalNodeEntryEntity>()
@@ -108,7 +107,7 @@ describe('FolderCreateDirective', () => {
         });
 
         xit('should emit folderCreate event when input value is not undefined', (done) => {
-            spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(node));
+            spyOn(dialogRefMock, 'afterClosed').and.returnValue(of(node));
             spyOn(contentService.folderCreate, 'next');
 
             contentService.folderCreate.subscribe((val) => {
@@ -124,7 +123,7 @@ describe('FolderCreateDirective', () => {
         });
 
         it('should not emit folderCreate event when input value is undefined', () => {
-            spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(null));
+            spyOn(dialogRefMock, 'afterClosed').and.returnValue(of(null));
             spyOn(contentService.folderCreate, 'next');
 
             fixture.detectChanges();

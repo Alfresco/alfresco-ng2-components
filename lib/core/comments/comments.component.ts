@@ -19,8 +19,8 @@ import { CommentProcessService } from '../services/comment-process.service';
 import { CommentContentService } from '../services/comment-content.service';
 import { CommentModel } from '../models/comment.model';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer } from 'rxjs';
+import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-comments',
@@ -55,7 +55,8 @@ export class CommentsComponent implements OnChanges {
     beingAdded: boolean = false;
 
     constructor(private commentProcessService: CommentProcessService, private commentContentService: CommentContentService) {
-        this.comment$ = new Observable<CommentModel>(observer => this.commentObserver = observer).share();
+        this.comment$ = new Observable<CommentModel>(observer => this.commentObserver = observer)
+            .pipe(share());
         this.comment$.subscribe((comment: CommentModel) => {
             this.comments.push(comment);
         });

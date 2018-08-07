@@ -18,7 +18,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
 import { MatSelectChange } from '@angular/material';
 

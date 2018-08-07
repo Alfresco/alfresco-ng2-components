@@ -19,12 +19,10 @@
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, forkJoin, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/zip';
-import 'rxjs/add/operator/mergeMap';
+import { tap, mergeMap, map, catchError } from 'rxjs/operators';
 
 export class RestoreMessageModel {
     message: string;
@@ -69,28 +67,27 @@ export class NodeRestoreDirective {
 
         if (selection.length && nodesWithPath.length) {
 
-            this.restoreNodesBatch(nodesWithPath)
-                .do((restoredNodes) => {
+            this.restoreNodesBatch(nodesWithPath).pipe(
+                tap(restoredNodes => {
                     const status = this.processStatus(restoredNodes);
 
                     this.restoreProcessStatus.fail.push(...status.fail);
                     this.restoreProcessStatus.success.push(...status.success);
-                })
-                .mergeMap(() => this.getDeletedNodes())
-                .subscribe(
-                    (deletedNodesList: any) => {
-                        const { entries: nodelist } = deletedNodesList.list;
-                        const { fail: restoreErrorNodes } = this.restoreProcessStatus;
-                        const selectedNodes = this.diff(restoreErrorNodes, selection, false);
-                        const remainingNodes = this.diff(selectedNodes, nodelist);
+                }),
+                mergeMap(() => this.getDeletedNodes())
+            )
+            .subscribe(deletedNodesList => {
+                const { entries: nodelist } = deletedNodesList.list;
+                const { fail: restoreErrorNodes } = this.restoreProcessStatus;
+                const selectedNodes = this.diff(restoreErrorNodes, selection, false);
+                const remainingNodes = this.diff(selectedNodes, nodelist);
 
-                        if (!remainingNodes.length) {
-                            this.notification();
-                        } else {
-                            this.recover(remainingNodes);
-                        }
-                    }
-                );
+                if (!remainingNodes.length) {
+                    this.notification();
+                } else {
+                    this.recover(remainingNodes);
+                }
+            });
         } else {
             this.restoreProcessStatus.fail.push(...selection);
             this.notification();
@@ -99,7 +96,7 @@ export class NodeRestoreDirective {
     }
 
     private restoreNodesBatch(batch: DeletedNodeEntry[]): Observable<DeletedNodeEntry[]> {
-        return Observable.forkJoin(batch.map((node) => this.restoreNode(node)));
+        return forkJoin(batch.map((node) => this.restoreNode(node)));
     }
 
     private getNodesWithPath(selection): DeletedNodeEntry[] {
@@ -110,7 +107,7 @@ export class NodeRestoreDirective {
         const promise = this.alfrescoApiService.getInstance()
             .core.nodesApi.getDeletedNodes({ include: ['path'] });
 
-        return Observable.from(promise);
+        return from(promise);
     }
 
     private restoreNode(node): Observable<any> {
@@ -118,20 +115,21 @@ export class NodeRestoreDirective {
 
         const promise = this.alfrescoApiService.getInstance().nodes.restoreNode(entry.id);
 
-        return Observable.from(promise)
-            .map(() => ({
+        return from(promise).pipe(
+            map(() => ({
                 status: 1,
                 entry
-            }))
-            .catch((error) => {
+            })),
+            catchError((error) => {
                 const { statusCode } = (JSON.parse(error.message)).error;
 
-                return Observable.of({
+                return of({
                     status: 0,
                     statusCode,
                     entry
                 });
-            });
+            })
+        );
     }
 
     private diff(selection, list, fromList = true): any {

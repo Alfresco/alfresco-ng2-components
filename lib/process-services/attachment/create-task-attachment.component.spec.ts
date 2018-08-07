@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
 import { AttachmentComponent } from './create-task-attachment.component';
@@ -40,7 +40,7 @@ describe('AttachmentComponent', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ProcessContentService);
 
-        createTaskRelatedContentSpy = spyOn(service, 'createTaskRelatedContent').and.returnValue(Observable.of(
+        createTaskRelatedContentSpy = spyOn(service, 'createTaskRelatedContent').and.returnValue(of(
             {
                 status: true
             }));

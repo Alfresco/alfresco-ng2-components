@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { UserProcessModel } from '../../../../models';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';

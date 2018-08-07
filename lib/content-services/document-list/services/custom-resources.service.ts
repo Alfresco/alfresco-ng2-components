@@ -29,7 +29,8 @@ import {
     SearchRequest
 } from 'alfresco-js-api';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CustomResourcesService {
@@ -86,7 +87,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).catch(err => this.handleError(err));
+        }).pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -132,7 +133,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).catch(err => this.handleError(err));
+        }).pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -171,7 +172,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).catch(err => this.handleError(err));
+        }).pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -202,7 +203,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).catch(err => this.handleError(err));
+        }).pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -220,7 +221,8 @@ export class CustomResourcesService {
             skipCount: pagination.skipCount
         };
 
-        return Observable.fromPromise(this.apiService.nodesApi.getDeletedNodes(options)).catch(err => this.handleError(err));
+        return from(this.apiService.nodesApi.getDeletedNodes(options))
+            .pipe(catchError(err => this.handleError(err)));
 
     }
 
@@ -239,7 +241,8 @@ export class CustomResourcesService {
             skipCount: pagination.skipCount
         };
 
-        return Observable.fromPromise(this.apiService.sharedLinksApi.findSharedLinks(options)).catch(err => this.handleError(err));
+        return from(this.apiService.sharedLinksApi.findSharedLinks(options))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -291,23 +294,23 @@ export class CustomResourcesService {
      */
     getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel): Observable<string[]> {
         if (nodeId === '-trashcan-') {
-            return Observable.fromPromise(this.apiService.nodesApi.getDeletedNodes()
+            return from(this.apiService.nodesApi.getDeletedNodes()
                 .then(result => result.list.entries.map(node => node.entry.id)));
 
         } else if (nodeId === '-sharedlinks-') {
-            return Observable.fromPromise(this.apiService.sharedLinksApi.findSharedLinks()
+            return from(this.apiService.sharedLinksApi.findSharedLinks()
                 .then(result => result.list.entries.map(node => node.entry.nodeId)));
 
         } else if (nodeId === '-sites-') {
-            return Observable.fromPromise(this.apiService.sitesApi.getSites()
+            return from(this.apiService.sitesApi.getSites()
                 .then(result => result.list.entries.map(node => node.entry.guid)));
 
         } else if (nodeId === '-mysites-') {
-            return Observable.fromPromise(this.apiService.peopleApi.getSiteMembership('-me-')
+            return from(this.apiService.peopleApi.getSiteMembership('-me-')
                 .then(result => result.list.entries.map(node => node.entry.guid)));
 
         } else if (nodeId === '-favorites-') {
-            return Observable.fromPromise(this.apiService.favoritesApi.getFavorites('-me-')
+            return from(this.apiService.favoritesApi.getFavorites('-me-')
                 .then(result => result.list.entries.map(node => node.entry.targetGuid)));
 
         } else if (nodeId === '-recent-') {
@@ -322,7 +325,7 @@ export class CustomResourcesService {
 
         }
 
-        return Observable.of([]);
+        return of([]);
     }
 
     private getIncludesFields(includeFields: string[]): string[] {
@@ -331,9 +334,7 @@ export class CustomResourcesService {
     }
 
     private handleError(error: Response) {
-        // in a real world app, we may send the error to some remote logging infrastructure
-        // instead of just logging it to the console
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

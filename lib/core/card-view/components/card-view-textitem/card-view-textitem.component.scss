@@ -76,26 +76,26 @@
             color: mat-color($foreground, text, 0.54);
         }
 
-        &-textitem-editable .mat-input-wrapper {
+        &-textitem-editable .mat-form-field-wrapper {
             margin: 0;
             padding-bottom: 0;
         }
 
-        &-textitem-editable .mat-input-underline {
+        &-textitem-editable .mat-form-field-underline {
             display: none;
         }
 
-        &-textitem-editable .mat-input-infix {
+        &-textitem-editable .mat-form-field-infix {
             padding: 0;
             border-top: none;
         }
 
-        &-textitem-editable .mat-input-placeholder-wrapper {
+        &-textitem-editable .mat-form-field-label-wrapper {
             padding-top: 2em;
             position: static;
         }
 
-        &-textitem-editable .mat-input-placeholder {
+        &-textitem-editable .mat-form-field-label {
             top: 4px;
         }
 

@@ -136,7 +136,7 @@ var MetadataViewPage = function () {
     };
 
     this.clickOnPropertiesTab = function () {
-        var propertiesTab = element(by.cssContainingText("div[class='mat-tab-labels'] div", "Properties"));
+        var propertiesTab = element(by.cssContainingText(".adf-info-drawer-layout-content div.mat-tab-labels div", "Properties"));
         Util.waitUntilElementIsVisible(propertiesTab);
         propertiesTab.click();
         return this;

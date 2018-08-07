@@ -22,4 +22,6 @@ export interface FacetFieldBucket {
     filterQuery: string;
 
     checked?: boolean;
+    field?: string;
+
 }

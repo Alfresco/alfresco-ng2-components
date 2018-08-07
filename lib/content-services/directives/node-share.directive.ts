@@ -44,7 +44,7 @@ export class NodeSharedDirective implements OnChanges {
     }
 
     shareNode(node: MinimalNodeEntity) {
-        if (node.entry && node.entry.isFile) {
+        if (node && node.entry && node.entry.isFile) {
             this.dialog.open(ShareDialogComponent, {
                 width: '600px',
                 disableClose: true,

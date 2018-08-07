@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 
 import { CommentProcessService, setupTestBed } from '@alfresco/adf-core';
 
@@ -41,7 +41,7 @@ describe('ProcessCommentsComponent', () => {
         component = fixture.componentInstance;
         commentProcessService = TestBed.get(CommentProcessService);
 
-        getCommentsSpy = spyOn(commentProcessService, 'getProcessInstanceComments').and.returnValue(Observable.of([
+        getCommentsSpy = spyOn(commentProcessService, 'getProcessInstanceComments').and.returnValue(of([
             { message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
             { message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
             { message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }
@@ -57,7 +57,7 @@ describe('ProcessCommentsComponent', () => {
 
     it('should emit an error when an error occurs loading comments', () => {
         let emitSpy = spyOn(component.error, 'emit');
-        getCommentsSpy.and.returnValue(Observable.throw({}));
+        getCommentsSpy.and.returnValue(throwError({}));
 
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
@@ -97,7 +97,7 @@ describe('ProcessCommentsComponent', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
-        getCommentsSpy.and.returnValue(Observable.of([]));
+        getCommentsSpy.and.returnValue(of([]));
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.nativeElement.querySelector('#comment-container')).toBeNull();

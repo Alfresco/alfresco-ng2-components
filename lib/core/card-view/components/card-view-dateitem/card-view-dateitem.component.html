@@ -10,7 +10,7 @@
             <span
                 class="adf-datepicker-toggle"
                 [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
-                (click)="showDatePicker($event)">
+                (click)="showDatePicker()">
                 <span [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key" *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
             <mat-datetimepicker-toggle

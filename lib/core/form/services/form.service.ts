@@ -19,8 +19,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { UserProcessModel } from '../../models';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject, from, of, throwError } from 'rxjs';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from './../components/widgets/core/content-link.model';
 import { GroupModel } from './../components/widgets/core/group.model';
@@ -30,10 +29,7 @@ import {
     ValidateDynamicTableRowEvent, ValidateFormEvent, ValidateFormFieldEvent
 } from './../events/index';
 import { EcmModelService } from './ecm-model.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/defaultIfEmpty';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
 
 @Injectable()
 export class FormService {
@@ -150,7 +146,7 @@ export class FormService {
             stencilSet: 0
         };
 
-        return Observable.fromPromise(
+        return from(
             this.modelsApi.createModel(dataModel)
         );
     }
@@ -162,7 +158,7 @@ export class FormService {
      * @returns Data for the saved form
      */
     saveForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
-        return Observable.fromPromise(
+        return from(
             this.editorApi.saveForm(formId, formModel)
         );
     }
@@ -175,7 +171,7 @@ export class FormService {
      */
     addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
         this.logService.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
-        return Observable.fromPromise(
+        return from(
             this.editorApi.saveForm(formId, formModel)
         );
     }
@@ -190,13 +186,15 @@ export class FormService {
             'modelType': 2
         };
 
-        return Observable.fromPromise(
+        return from(
             this.modelsApi.getModels(opts)
         )
-            .map(function (forms: any) {
+        .pipe(
+            map(function (forms: any) {
                 return forms.data.find(formdata => formdata.name === name);
-            })
-            .catch(err => this.handleError(err));
+            }),
+            catchError(err => this.handleError(err))
+        );
     }
 
     /**
@@ -208,9 +206,11 @@ export class FormService {
             'modelType': 2
         };
 
-        return Observable.fromPromise(this.modelsApi.getModels(opts))
-            .map(this.toJsonArray)
-            .catch(err => this.handleError(err));
+        return from(this.modelsApi.getModels(opts))
+            .pipe(
+                map(this.toJsonArray),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -218,9 +218,11 @@ export class FormService {
      * @returns List of process definitions
      */
     getProcessDefinitions(): Observable<any> {
-        return Observable.fromPromise(this.processApi.getProcessDefinitions({}))
-            .map(this.toJsonArray)
-            .catch(err => this.handleError(err));
+        return from(this.processApi.getProcessDefinitions({}))
+            .pipe(
+                map(this.toJsonArray),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -229,9 +231,11 @@ export class FormService {
      * @returns List of instance variable information
      */
     getProcessVarablesById(processInstanceId: string): Observable<any[]> {
-        return Observable.fromPromise(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId))
-            .map(this.toJson)
-            .catch(err => this.handleError(err));
+        return from(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId))
+            .pipe(
+                map(this.toJson),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -239,9 +243,11 @@ export class FormService {
      * @returns List of tasks
      */
     getTasks(): Observable<any> {
-        return Observable.fromPromise(this.taskApi.listTasks({}))
-            .map(this.toJsonArray)
-            .catch(err => this.handleError(err));
+        return from(this.taskApi.listTasks({}))
+            .pipe(
+                map(this.toJsonArray),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -250,9 +256,11 @@ export class FormService {
      * @returns Task info
      */
     getTask(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.taskApi.getTask(taskId))
-            .map(this.toJson)
-            .catch(err => this.handleError(err));
+        return from(this.taskApi.getTask(taskId))
+            .pipe(
+                map(this.toJson),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -264,8 +272,10 @@ export class FormService {
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
         let body = JSON.stringify({values: formValues});
 
-        return Observable.fromPromise(this.taskApi.saveTaskForm(taskId, body))
-            .catch(err => this.handleError(err));
+        return from(this.taskApi.saveTaskForm(taskId, body))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -282,8 +292,10 @@ export class FormService {
         }
         let body = JSON.stringify(data);
 
-        return Observable.fromPromise(this.taskApi.completeTaskForm(taskId, body))
-            .catch(err => this.handleError(err));
+        return from(this.taskApi.completeTaskForm(taskId, body))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -292,9 +304,11 @@ export class FormService {
      * @returns Form definition
      */
     getTaskForm(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.taskApi.getTaskForm(taskId))
-            .map(this.toJson)
-            .catch(err => this.handleError(err));
+        return from(this.taskApi.getTaskForm(taskId))
+            .pipe(
+                map(this.toJson),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -303,9 +317,11 @@ export class FormService {
      * @returns Form definition
      */
     getFormDefinitionById(formId: string): Observable<any> {
-        return Observable.fromPromise(this.editorApi.getForm(formId))
-            .map(this.toJson)
-            .catch(err => this.handleError(err));
+        return from(this.editorApi.getForm(formId))
+            .pipe(
+                map(this.toJson),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -320,9 +336,11 @@ export class FormService {
             'modelType': 2
         };
 
-        return Observable.fromPromise(this.modelsApi.getModels(opts))
-            .map(this.getFormId)
-            .catch(err => this.handleError(err));
+        return from(this.modelsApi.getModels(opts))
+            .pipe(
+                map(this.getFormId),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -331,10 +349,11 @@ export class FormService {
      * @returns Form definition
      */
     getStartFormInstance(processId: string): Observable<any> {
-        return Observable.fromPromise(
-            this.processApi.getProcessInstanceStartForm(processId))
-            .map(this.toJson)
-            .catch(err => this.handleError(err));
+        return from(this.processApi.getProcessInstanceStartForm(processId))
+            .pipe(
+                map(this.toJson),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -343,9 +362,11 @@ export class FormService {
      * @returns Process instance
      */
     getProcessIntance(processId: string): Observable<any> {
-        return Observable.fromPromise(this.processApi.getProcessInstance(processId))
-            .map(this.toJson)
-            .catch(err => this.handleError(err));
+        return from(this.processApi.getProcessInstance(processId))
+            .pipe(
+                map(this.toJson),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -354,10 +375,11 @@ export class FormService {
      * @returns Form definition
      */
     getStartFormDefinition(processId: string): Observable<any> {
-        return Observable.fromPromise(
-            this.processApi.getProcessDefinitionStartForm(processId))
-            .map(this.toJson)
-            .catch(err => this.handleError(err));
+        return from(this.processApi.getProcessDefinitionStartForm(processId))
+            .pipe(
+                map(this.toJson),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -367,7 +389,10 @@ export class FormService {
      * @returns Field values
      */
     getRestFieldValues(taskId: string, field: string): Observable<any> {
-        return Observable.fromPromise(this.taskApi.getRestFieldValues(taskId, field)).catch(err => this.handleError(err));
+        return from(this.taskApi.getRestFieldValues(taskId, field))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -377,7 +402,10 @@ export class FormService {
      * @returns Field values
      */
     getRestFieldValuesByProcessId(processDefinitionId: string, field: string): Observable<any> {
-        return Observable.fromPromise(this.processApi.getRestFieldValues(processDefinitionId, field)).catch(err => this.handleError(err));
+        return from(this.processApi.getRestFieldValues(processDefinitionId, field))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -388,7 +416,10 @@ export class FormService {
      * @returns Field values
      */
     getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): Observable<any> {
-        return Observable.fromPromise(this.processApi.getRestTableFieldValues(processDefinitionId, field, column)).catch(err => this.handleError(err));
+        return from(this.processApi.getRestTableFieldValues(processDefinitionId, field, column))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -399,7 +430,10 @@ export class FormService {
      * @returns Field values
      */
     getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any> {
-        return Observable.fromPromise(this.taskApi.getRestFieldValuesColumn(taskId, field, column)).catch(err => this.handleError(err));
+        return from(this.taskApi.getRestFieldValuesColumn(taskId, field, column))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -422,15 +456,17 @@ export class FormService {
         if (groupId) {
             option.groupId = groupId;
         }
-        return Observable.fromPromise(this.usersWorkflowApi.getUsers(option))
-            .switchMap((response: any) => <UserProcessModel[]> response.data || [])
-            .map((user: any) => {
-                user.userImage = this.getUserProfileImageApi(user.id);
-                return Observable.of(user);
-            })
-            .combineAll()
-            .defaultIfEmpty([])
-            .catch(err => this.handleError(err));
+        return from(this.usersWorkflowApi.getUsers(option))
+            .pipe(
+                switchMap((response: any) => <UserProcessModel[]> response.data || []),
+                map((user: any) => {
+                    user.userImage = this.getUserProfileImageApi(user.id);
+                    return of(user);
+                }),
+                combineAll(),
+                defaultIfEmpty([]),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -444,9 +480,11 @@ export class FormService {
         if (groupId) {
             option.groupId = groupId;
         }
-        return Observable.fromPromise(this.groupsApi.getGroups(option))
-            .map((response: any) => <GroupModel[]> response.data || [])
-            .catch(err => this.handleError(err));
+        return from(this.groupsApi.getGroups(option))
+            .pipe(
+                map((response: any) => <GroupModel[]> response.data || []),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -500,6 +538,6 @@ export class FormService {
                 error.status ? `${error.status} - ${error.statusText}` : FormService.GENERIC_ERROR_MESSAGE;
         }
         this.logService.error(errMsg);
-        return Observable.throw(errMsg);
+        return throwError(errMsg);
     }
 }
