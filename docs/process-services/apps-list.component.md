@@ -34,16 +34,16 @@ You can also show a custom template if there are no apps present:
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | filtersAppId | `any[]` |  | Provides a way to filter the apps to show. |
-| layoutType | `string` |  [`AppsListComponent`](../process-services/apps-list.component.md).LAYOUT_GRID | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
+| layoutType | `string` |  | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`AppDefinitionRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)`>` | Emitted when an app entry is clicked. |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 
 ## Details
 

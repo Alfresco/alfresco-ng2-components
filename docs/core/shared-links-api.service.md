@@ -12,12 +12,12 @@ Finds shared links to Content Services items.
 
 ### Methods
 
--   **createSharedLinks**(nodeId: `string` = `null`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<SharedLinkEntry>`<br/>
+-   **createSharedLinks**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<SharedLinkEntry>`<br/>
     Creates a shared link available to the current user.
     -   _nodeId:_ `string`  - ID of the node to link to
     -   _options:_ `any`  - Options supported by JSAPI
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<SharedLinkEntry>` - The shared link just created
--   **deleteSharedLink**(sharedId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<SharedLinkEntry>`<br/>
+-   **deleteSharedLink**(sharedId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<SharedLinkEntry>`<br/>
     Deletes a shared link.
     -   _sharedId:_ `string`  - ID of the link to delete
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<SharedLinkEntry>` - Null response notifying when the operation is complete

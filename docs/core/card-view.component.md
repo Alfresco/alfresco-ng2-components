@@ -94,10 +94,10 @@ Defining properties from Typescript:
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
 | editable | `boolean` |  | Toggles whether or not the items can be edited. |
-| properties | [`CardViewItem`](../../lib/core/card-view/interfaces/card-view-item.interface.ts)`[]` |  | (**required**) Items to show in the card view. |
+| properties | `CardViewItem[]` |  | (**required**) Items to show in the card view. |
 
 ## Details
 
@@ -110,7 +110,7 @@ You define the property list, the [`CardViewComponent`](../core/card-view.compon
 -   [**CardViewBoolItemModel**](#card-bool-item) - _for bool items (checkbox)_
 -   [**CardViewIntItemModel**](#card-int-item) - _for integer items_
 -   [**CardViewFloatItemModel**](#card-float-item) - _for float items_
--   [**CardViewKeyValuePairsItemModel**](#card-key-values-pairs-item) - _for key-value-pairs items_
+-   [**CardViewKeyValuePairsItemModel**](#card-key-value-pairs-item) - _for key-value-pairs items_
 -   [**CardViewSelectItemModel**](#card-select-item) - _for select items_
 
 Each of these types implements the [Card View Item interface](card-view-item.interface.md):
@@ -315,7 +315,6 @@ const keyValuePairsItemProperty = new CardViewKeyValuePairsItemModel(options);
 | editable | boolean | false | Toggles whether the item is editable |
 | value\* | `[{ name: '', value: '' }, ...]` |  | The original data value for the item |
 
-
 #### Card Select Item
 
 [`CardViewSelectItemModel`](../../lib/core/card-view/models/card-view-selectitem.model.ts) is a property type for select properties.
@@ -330,9 +329,7 @@ const selectItemProperty = new CardViewSelectItemModel(options);
 | key\* | string |  | Identifying key (important when editing the item) |
 | editable | boolean | false | Toggles whether the item is editable |
 | value | string |  | The original data value for the item |
-| options$\* | Observable<CardViewSelectItemOption[]> |  | The original data value for the item |
-
-
+| options$\* | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;CardViewSelectItemOption\[]> |  | The original data value for the item |
 
 ## See also
 

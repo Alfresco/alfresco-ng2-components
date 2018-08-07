@@ -48,7 +48,7 @@ export class AppComponent {
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](lib/content-services/upload/components/upload-files.event.ts)`>` | Raised after files or folders dropped and before the upload process starts. |
+| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` | Raised after files or folders dropped and before the upload process starts. |
 | createFolder | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a folder is created. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the file is uploaded successfully. |
@@ -57,7 +57,7 @@ export class AppComponent {
 
 You can intercept the upload process by utilizing the `beginUpload` event. 
 
-The event has a type of [`UploadFilesEvent`](lib/content-services/upload/components/upload-files.event.ts) and provides the following APIs:
+The event has a type of [`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts) and provides the following APIs:
 
 -   **files**: get access to the [`FileInfo`](../../lib/core/utils/file-utils.ts) objects that are prepared for the upload
 -   **pauseUpload**: pause the upload and perform additional tasks, like showing the confirmation dialog

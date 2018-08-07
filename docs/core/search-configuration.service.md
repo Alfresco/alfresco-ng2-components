@@ -11,7 +11,7 @@ Provides fine control of parameters to a search.
 
 ### Methods
 
--   **generateQueryBody**(searchTerm: `string` = `null`, maxResults: `number` = `null`, skipCount: `number` = `null`): `QueryBody`<br/>
+-   **generateQueryBody**(searchTerm: `string`, maxResults: `number`, skipCount: `number`): `QueryBody`<br/>
 
     -   _searchTerm:_ `string`  - 
     -   _maxResults:_ `number`  - 

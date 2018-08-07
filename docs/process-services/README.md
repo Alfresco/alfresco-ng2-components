@@ -26,6 +26,7 @@ for more information about installing and using the source code.
 | [Process instance tasks component](process-instance-tasks.component.md) | Lists both the active and completed tasks associated with a particular process instance | [Source](../../lib/process-services/process-list/components/process-instance-tasks.component.ts) |
 | [Process list component](process-list.component.md) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../../lib/process-services/process-list/components/process-list.component.ts) |
 | [Start process component](start-process.component.md) | Starts a process. | [Source](../../lib/process-services/process-list/components/start-process.component.ts) |
+| [Attach form component](attach-form.component.md) | This component can be used when there is no form attached to a task and we want to add one. | [Source](../../lib/process-services/task-list/components/attach-form.component.ts) |
 | [Checklist component](checklist.component.md) | Shows the checklist task functionality. | [Source](../../lib/process-services/task-list/components/checklist.component.ts) |
 | [Start task component](start-task.component.md) | Creates/Starts new task for the specified app | [Source](../../lib/process-services/task-list/components/start-task.component.ts) |
 | [Task details component](task-details.component.md) | Shows the details of the task ID passed in as input. | [Source](../../lib/process-services/task-list/components/task-details.component.ts) |

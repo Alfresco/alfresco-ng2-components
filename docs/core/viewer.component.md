@@ -13,16 +13,11 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 ## Contents
 
 -   [Basic usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
     -   [Events](#events)
-
 -   [Keyboard shortcuts](#keyboard-shortcuts)
-
 -   [Details](#details)
-
     -   [Integrating with the Document List component](#integrating-with-the-document-list-component)
     -   [Custom file parameters](#custom-file-parameters)
     -   [Supported file formats](#supported-file-formats)
@@ -35,7 +30,6 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
     -   [Custom "Open With" menu](#custom-open-with-menu)
     -   [Custom "More actions" menu](#custom-more-actions-menu)
     -   [Extending the Viewer](#extending-the-viewer)
-
 -   [See also](#see-also)
 
 ## Basic usage
@@ -77,7 +71,7 @@ URL with `urlFile`.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | allowDownload | `boolean` | true | Toggles downloading. |
 | allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
 | allowGoBack | `boolean` | true | Allows `back` navigation |
@@ -86,39 +80,38 @@ URL with `urlFile`.
 | allowShare | `boolean` | false | Toggles sharing. |
 | allowSidebar | `boolean` | false | Toggles the sidebar. |
 | allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
-| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
+| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
 | canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
 | canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
 | displayName | `string` |  | Specifies the name of the file when it is not available from the URL. |
-| downloadUrl | `string` |  null | URL to download. |
+| downloadUrl | `string` | null | URL to download. |
 | fileName | `string` |  | Content filename. |
-| maxRetries | `number` | 5 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
+| maxRetries | `number` | 10 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
 | mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
-| nodeId | `string` |  null | Node Id of the file to load. |
+| nodeId | `string` | null | Node Id of the file to load. |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
-| sharedLinkId | `string` |  null | Shared link id (to display shared file). |
+| sharedLinkId | `string` | null | Shared link id (to display shared file). |
 | showSidebar | `boolean` | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
 | showToolbar | `boolean` | true | Hide or show the toolbar |
 | showViewer | `boolean` | true | Hide or show the viewer |
 | sidebarPosition | `string` | "right" | The position of the sidebar. Can be `left` or `right`. |
-| sidebarTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` |  null | The template for the sidebar. The template context contains the loaded node data. |
-| thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` |  null | The template for the pdf thumbnails. |
+| sidebarTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the sidebar. The template context contains the loaded node data. |
+| thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
-| urlFileViewer | `string` |  null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
-| fileNodeId |  |  | Node Id of the file to load. |
+| urlFileViewer | `string` | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | download | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Download' button. |
 | extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
 | goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
 | navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
-| navigateNext | `EventEmitter<Object>` | Emitted when user clicks 'Navigate Next' (">") button. |
-| print | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Print' button. |
-| share | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Share' button. |
-| showViewerChange | `EventEmitter<boolean>` | Emitted when the viewer is shown or hidden. |
+| navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when user clicks 'Navigate Next' (">") button. |
+| print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
+| share | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Share' button. |
+| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
 
 ## Keyboard shortcuts
 

@@ -15,16 +15,11 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 ## Contents
 
 -   [Basic usage](#basic-usage)
-
     -   [Setting the rows and column schema](#setting-the-rows-and-column-schema)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
     -   [Events](#events)
-
 -   [Details](#details)
-
     -   [Supplying data for the table](#supplying-data-for-the-table)
     -   [Customizing columns](#customizing-columns)
     -   [DataTable DOM Events](#datatable-dom-events)
@@ -32,12 +27,11 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
     -   [Custom Empty content template](#custom-empty-content-template)
     -   [Loading content template](#loading-content-template)
     -   [Using events](#using-events)
-
 -   [See also](#see-also)
 
 ## Basic usage
 
-**app.component.html**
+**[app.component](../../demo-shell/src/app/app.component.ts).html**
 
 ```html
 <adf-datatable 
@@ -45,7 +39,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 </adf-datatable>
 ```
 
-**app.component.ts**
+**[app.component](../../demo-shell/src/app/app.component.ts).ts**
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -84,7 +78,7 @@ export class DataTableDemo {
 
 ### Setting the rows and column schema
 
-You can set rows and columns to the [ObjectDataTableAdapter](../../lib/core/datatable/data/object-datatable-adapter.ts) like shown below:
+You can set rows and columns to the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) like shown below:
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -161,7 +155,7 @@ export class DataTableDemo {
 </adf-datatable>
 ```
 
-You can also set rows to the [ObjectDataTableAdapter](../../lib/core/datatable/data/object-datatable-adapter.ts) and set columns as an input like shown below :
+You can also set rows to the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) and set columns as an input like shown below :
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -256,34 +250,35 @@ export class DataTableDemo {
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | actions | `boolean` | false | Toggles the data actions column. |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
 | allowDropFiles | `boolean` | false | Toggles file drop support for rows (see [Upload directive](upload.directive.md) for further details). |
-| columns | `any[]` |  \[] | The columns that the datatable will show. |
+| columns | `any[]` | \[] | The columns that the datatable will show. |
 | contextMenu | `boolean` | false | Toggles custom context menu for the component. |
-| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
-| display | `string` |  [`DisplayMode`](../../lib/core/datatable/components/datatable/datatable.component.ts).List | Selects the display mode of the table. Can be "list" or "gallery". |
+| data | `DataTableAdapter` |  | Data source for the table |
+| display | `string` | DisplayMode.List | Selects the display mode of the table. Can be "list" or "gallery". |
 | fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing. |
 | loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row. |
 | noPermission | `boolean` | false | Flag that indicates if the datatable should show the "no permission" template. |
+| rowMenuCacheEnabled | `boolean` | true |  |
 | rowStyle | `string` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
-| rows | `any[]` |  \[] | The rows that the datatable will show. |
+| rows | `any[]` | \[] | The rows that the datatable will show. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `boolean` | true | Toggles the header. |
-| sorting | `any[]` |  \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
+| sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../lib/core/datatable/components/datatable/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
-| rowDblClick | `EventEmitter<DataRowEvent>` | Emitted when the user double-clicks a row. |
-| showRowActionsMenu | `EventEmitter<DataCellEvent>` | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | `EventEmitter<DataCellEvent>` | Emitted before the context menu is displayed for a row. |
+| rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user double-clicks a row. |
+| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
 
 ## Details
 

@@ -11,13 +11,9 @@ Selectively disables an HTML element or Angular component
 ## Contents
 
 -   [Basic Usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
-
 -   [Details](#details)
-
     -   [HTML element example](#html-element-example)
     -   [Angular component example](#angular-component-example)
     -   [Implementing the NodePermissionSubject interface](#implementing-the-nodepermissionsubject-interface)
@@ -44,14 +40,14 @@ Selectively disables an HTML element or Angular component
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| adf-nodes | `MinimalNodeEntity[]` |  \[] | Nodes to check permission for. |
-| adf-node-permission | `string` |  null | Node permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
+| ---- | ---- | ------------- | ----------- |
+| nodes | [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]` | \[] | Nodes to check permission for. |
+| permission | `string` | null | Node permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
 
 ## Details
 
 The [Node Permission directive](../core/node-permission.directive.md) lets you disable an HTML element or Angular component
-by taking a collection of `MinimalNodeEntity` instances and checking their permissions.
+by taking a collection of [`MinimalNodeEntity`](../content-services/document-library.model.md) instances and checking their permissions.
 
 The decorated element will be disabled if:
 

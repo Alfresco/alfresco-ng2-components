@@ -13,20 +13,15 @@ Shows a [`Form`](../../lib/process-services/task-list/models/form.model.ts) from
 ## Contents
 
 -   [Basic Usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
     -   [Events](#events)
-
 -   [Details](#details)
-
     -   [Displaying a form](#displaying-a-form)
     -   [Custom empty form template](#custom-empty-form-template)
     -   [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
     -   [Field Validators](#field-validators)
     -   [Common scenarios](#common-scenarios)
-
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -42,11 +37,11 @@ Shows a [`Form`](../../lib/process-services/task-list/models/form.model.ts) from
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| data | [`FormValues`](../../lib/core/form/components/widgets/core/form-values.ts) |  | Custom form values map to be used with the rendered form. |
+| ---- | ---- | ------------- | ----------- |
+| data | `FormValues` |  | Custom form values map to be used with the rendered form. |
 | disableCompleteButton | `boolean` | false | If true then the `Complete` outcome button is shown but it will be disabled. |
 | disableStartProcessButton | `boolean` | false | If true then the `Start Process` outcome button is shown but it will be disabled. |
-| fieldValidators | [`FormFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` |  \[] | Contains a list of form field validator instances. |
+| fieldValidators | `FormFieldValidator[]` | \[] | Contains a list of form field validator instances. |
 | form | [`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts) |  | Underlying [form model](../../lib/core/form/components/widgets/core/form.model.ts) instance. |
 | formId | `string` |  | The id of the form definition to load and display with custom values. |
 | formName | `string` |  | Name of the form definition to load and display with custom values. |
@@ -66,14 +61,14 @@ Shows a [`Form`](../../lib/process-services/task-list/models/form.model.ts) from
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
 | formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
 | formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
 | formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
-| formLoaded | `EventEmitter<FormModel>` | Emitted when the form is loaded or reloaded. |
-| formSaved | `EventEmitter<FormModel>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
-| onError | `EventEmitter<any>` | Emitted when any error occurs. |
+| formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
+| formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
+| onError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
 
 ## Details
 
