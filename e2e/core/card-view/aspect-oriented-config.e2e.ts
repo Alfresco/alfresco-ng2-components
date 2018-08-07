@@ -81,7 +81,7 @@ describe('Aspect oriented config', () => {
         contentServicesPage.checkAcsContainer();
     });
 
-    fit('[C261117] Should be possible restrict the display properties of one an aspect', () => {
+    it('[C261117] Should be possible restrict the display properties of one an aspect', () => {
 
         configEditorPage.enterMetadataConfiguration('{  "presets": {' +
             '        "default": [{' +
@@ -104,9 +104,8 @@ describe('Aspect oriented config', () => {
         metadataViewPage.clickOnPropertiesTab();
 
         metadataViewPage.clickOnInformationButton();
-        console.log('QUI');
+
         metadataViewPage.clickMetadatGroup('IMAGE');
-        console.log('QUO');
         metadataViewPage.checkPopertyIsVisible('properties.exif:pixelXDimension', 'textitem');
         metadataViewPage.checkPopertyIsVisible('properties.exif:pixelYDimension', 'textitem');
         metadataViewPage.checkPopertyIsNotVisible('properties.exif:isoSpeedRatings', 'textitem');
@@ -158,7 +157,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.clickOnPropertiesTab();
 
         metadataViewPage.clickOnInformationButton();
-        browser.sleep(20000);
+
         metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
         metadataViewPage.checkkMetadatGroupIsPresent('properties');
         metadataViewPage.checkkMetadatGroupIsPresent('Versionable');
