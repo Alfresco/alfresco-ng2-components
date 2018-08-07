@@ -22,7 +22,7 @@ import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('ErrorContentComponent', () => {
 
@@ -37,7 +37,7 @@ describe('ErrorContentComponent', () => {
         ],
         providers: [
             { provide: TranslationService, useClass: TranslationMock },
-            { provide: ActivatedRoute, useValue: { params: Observable.of({id: '404'})}}
+            { provide: ActivatedRoute, useValue: { params: of({id: '404'})}}
         ]
     });
 
@@ -121,7 +121,7 @@ describe('ErrorContentComponent', () => {
     }));
 
     it('should navigate to an error given by the route params', async(() => {
-        spyOn(translateService, 'get').and.returnValue(Observable.of('404'));
+        spyOn(translateService, 'get').and.returnValue(of('404'));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(errorContentComponent.errorCode).toBe('404');

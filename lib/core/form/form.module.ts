@@ -18,11 +18,11 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { DataTableModule } from '../datatable/datatable.module';
 import { DataColumnModule } from '../data-column/data-column.module';
 import { PipeModule } from '../pipes/pipe.module';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MaterialModule } from '../material.module';
 
@@ -50,7 +50,7 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
     imports: [
         CommonModule,
         DataTableModule,
-        HttpModule,
+        HttpClientModule,
         MaterialModule,
         TranslateModule,
         FormsModule,

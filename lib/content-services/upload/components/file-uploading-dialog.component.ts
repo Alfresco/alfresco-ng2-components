@@ -20,10 +20,8 @@ import {
     FileUploadErrorEvent, FileUploadStatus, UploadService
 } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, merge } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
-import 'rxjs/add/observable/merge';
 
 // @deprecated file-uploading-dialog TODO remove in 3.0.0
 @Component({
@@ -69,8 +67,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 }
             });
 
-        this.counterSubscription = Observable
-            .merge(
+        this.counterSubscription = merge(
                 this.uploadService.fileUploadComplete,
                 this.uploadService.fileUploadDeleted
             )

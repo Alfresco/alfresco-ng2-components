@@ -18,7 +18,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
-import 'rxjs/add/operator/toPromise';
 
 @Component({
     selector: 'adf-txt-viewer',
@@ -77,7 +76,7 @@ export class TxtViewerComponent implements OnChanges {
                 resolve();
             };
 
-            reader.onerror = (error: ErrorEvent) => {
+            reader.onerror = (error: any) => {
                 reject(error);
             };
 

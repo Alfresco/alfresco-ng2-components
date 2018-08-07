@@ -4,6 +4,8 @@
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $mat-menu-border-radius: 2px !default;
+    $mat-menu-overlay-min-width: 112px !default;   // 56 * 2
+    $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
 
     .adf-search-container {
         overflow: hidden !important;
@@ -33,7 +35,13 @@
         }
 
         &-search-result-autocomplete {
-            @include mat-menu-base(2);
+            @include mat-overridable-elevation(2);
+
+            min-width: $mat-menu-overlay-min-width;
+            max-width: $mat-menu-overlay-max-width;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+
             transform-origin: top left;
             transform:translateX(-40px);
             position: absolute;

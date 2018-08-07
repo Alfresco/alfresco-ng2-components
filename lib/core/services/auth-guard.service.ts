@@ -21,7 +21,7 @@ import {
     CanActivateChild, RouterStateSnapshot, Router
 } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 
@@ -32,12 +32,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                 private appConfig: AppConfigService) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         const redirectUrl = state.url;
         return this.checkLogin(redirectUrl);
     }
 
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         return this.canActivate(route, state);
     }
 

@@ -18,17 +18,13 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ContentApi, MinimalNodeEntryEntity, Node, NodeEntry } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject, from, throwError } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/observable/throw';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ContentService {
@@ -157,9 +153,10 @@ export class ContentService {
      * @returns Content data
      */
     getNodeContent(nodeId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId).then((dataContent) => {
-            return dataContent;
-        })).catch(this.handleError);
+        return from(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -169,17 +166,19 @@ export class ContentService {
      * @param parentId Node ID of parent folder
      * @returns Information about the new folder
      */
-    createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
-            .do(data => {
-                this.folderCreated.next(<FolderCreatedEvent> {
-                    relativePath: relativePath,
-                    name: name,
-                    parentId: parentId,
-                    node: data
-                });
-            })
-            .catch(err => this.handleError(err));
+    createFolder(relativePath: string, name: string, parentId?: string): Observable<NodeEntry> {
+        return from(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
+            .pipe(
+                tap(data => {
+                    this.folderCreated.next(<FolderCreatedEvent> {
+                        relativePath: relativePath,
+                        name: name,
+                        parentId: parentId,
+                        node: data
+                    });
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -189,7 +188,7 @@ export class ContentService {
      * @returns Details of the folder
      */
     getNode(nodeId: string, opts?: any): Observable<NodeEntry> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.getNode(nodeId, opts));
+        return from(this.apiService.getInstance().nodes.getNode(nodeId, opts));
     }
 
     /**
@@ -240,6 +239,6 @@ export class ContentService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

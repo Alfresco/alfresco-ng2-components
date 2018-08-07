@@ -42,7 +42,7 @@ import {
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { ProcessListModel } from '../models/process-list.model';
 
 @Component({

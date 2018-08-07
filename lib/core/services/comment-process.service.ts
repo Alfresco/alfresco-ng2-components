@@ -16,14 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, throwError } from 'rxjs';
 import { CommentModel } from '../models/comment.model';
 import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CommentProcessService {
@@ -39,17 +37,18 @@ export class CommentProcessService {
      * @returns Details about the comment
      */
     addTaskComment(taskId: string, message: string): Observable<CommentModel> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.addTaskComment({message: message}, taskId))
-            .map(res => res)
-            .map((response: CommentModel) => {
-                return new CommentModel({
-                    id: response.id,
-                    message: response.message,
-                    created: response.created,
-                    createdBy: response.createdBy
-                });
-            }).catch(err => this.handleError(err));
-
+        return from(this.apiService.getInstance().activiti.taskApi.addTaskComment({message: message}, taskId))
+            .pipe(
+                map((response: CommentModel) => {
+                    return new CommentModel({
+                        id: response.id,
+                        message: response.message,
+                        created: response.created,
+                        createdBy: response.createdBy
+                    });
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -58,16 +57,18 @@ export class CommentProcessService {
      * @returns Details for each comment
      */
     getTaskComments(taskId: string): Observable<CommentModel[]> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskComments(taskId))
-            .map(res => res)
-            .map((response: any) => {
-                let comments: CommentModel[] = [];
-                response.data.forEach((comment: CommentModel) => {
-                    let user = new UserProcessModel(comment.createdBy);
-                    comments.push(new CommentModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
-                });
-                return comments;
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.taskApi.getTaskComments(taskId))
+            .pipe(
+                map((response: any) => {
+                    let comments: CommentModel[] = [];
+                    response.data.forEach((comment: CommentModel) => {
+                        let user = new UserProcessModel(comment.createdBy);
+                        comments.push(new CommentModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
+                    });
+                    return comments;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -76,16 +77,18 @@ export class CommentProcessService {
      * @returns Details for each comment
      */
     getProcessInstanceComments(processInstanceId: string): Observable<CommentModel[]> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId))
-            .map(res => res)
-            .map((response: any) => {
-                let comments: CommentModel[] = [];
-                response.data.forEach((comment: CommentModel) => {
-                    let user = new UserProcessModel(comment.createdBy);
-                    comments.push(new CommentModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
-                });
-                return comments;
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId))
+            .pipe(
+                map((response: any) => {
+                    let comments: CommentModel[] = [];
+                    response.data.forEach((comment: CommentModel) => {
+                        let user = new UserProcessModel(comment.createdBy);
+                        comments.push(new CommentModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
+                    });
+                    return comments;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -95,23 +98,24 @@ export class CommentProcessService {
      * @returns Details of the comment added
      */
     addProcessInstanceComment(processInstanceId: string, message: string): Observable<CommentModel> {
-        return Observable.fromPromise(
+        return from(
             this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({message: message}, processInstanceId)
-        )
-            .map((response: CommentModel) => {
+        ).pipe(
+            map((response: CommentModel) => {
                 return new CommentModel({
                     id: response.id,
                     message: response.message,
                     created: response.created,
                     createdBy: response.createdBy
                 });
-            }).catch(err => this.handleError(err));
-
+            }),
+            catchError(err => this.handleError(err))
+        );
     }
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
 }

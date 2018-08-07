@@ -30,7 +30,7 @@ import {
     setupTestBed
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentNodeSelectorModule } from '@alfresco/adf-content-services';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 
@@ -127,7 +127,7 @@ describe('AttachFileWidgetComponent', () => {
     });
 
     it('should show up as simple upload when is configured for only local files', async(() => {
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(null));
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(null));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -147,7 +147,7 @@ describe('AttachFileWidgetComponent', () => {
         });
         widget.field.id = 'attach-file-attach';
         widget.field.params = <FormFieldMetadata> allSourceParams;
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(fakeRepositoryListAnswer));
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         fixture.detectChanges();
         fixture.whenRenderingDone().then(() => {
             let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
@@ -166,9 +166,9 @@ describe('AttachFileWidgetComponent', () => {
     }));
 
     it('should be able to upload files coming from content node selector', async(() => {
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(fakeRepositoryListAnswer));
-        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of(fakePngAnswer));
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(Observable.of([fakeMinimalNode]));
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
+        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -196,9 +196,9 @@ describe('AttachFileWidgetComponent', () => {
         });
         widget.field.id = 'attach-file-attach';
         widget.field.params = <FormFieldMetadata> definedSourceParams;
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(fakeRepositoryListAnswer));
-        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of(fakePngAnswer));
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogByFolderId').and.returnValue(Observable.of([fakeMinimalNode]));
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
+        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByFolderId').and.returnValue(of([fakeMinimalNode]));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
@@ -213,14 +213,14 @@ describe('AttachFileWidgetComponent', () => {
     }));
 
     it('should be able to upload files from local source', async(() => {
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(null));
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(null));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
         });
         widget.field.id = 'attach-file-attach';
         widget.field.params = <FormFieldMetadata> onlyLocalParams;
-        spyOn(processContentService, 'createTemporaryRawRelatedContent').and.returnValue(Observable.of(fakePngAnswer));
+        spyOn(processContentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakePngAnswer));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             let inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
@@ -236,7 +236,7 @@ describe('AttachFileWidgetComponent', () => {
             type: FormFieldTypes.UPLOAD,
             value: [fakePngAnswer]
         });
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(null));
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(null));
         widget.field.id = 'attach-file-attach';
         widget.field.params = <FormFieldMetadata> onlyLocalParams;
         fixture.detectChanges();
@@ -254,8 +254,8 @@ describe('AttachFileWidgetComponent', () => {
             });
             widget.field.id = 'attach-file-attach';
             widget.field.params = <FormFieldMetadata>  onlyLocalParams;
-            spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(null));
-            spyOn(processContentService, 'createTemporaryRawRelatedContent').and.returnValue(Observable.of(fakePngAnswer));
+            spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(null));
+            spyOn(processContentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakePngAnswer));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 let inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
@@ -304,7 +304,7 @@ describe('AttachFileWidgetComponent', () => {
         }));
 
         it('should raise formContentClicked event when show file is clicked', async(() => {
-            spyOn(processContentService, 'getFileRawContent').and.returnValue(Observable.of(fakePngAnswer));
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
             formService.formContentClicked.subscribe((file) => {
                 expect(file).not.toBeNull();
                 expect(file.id).toBe(1155);

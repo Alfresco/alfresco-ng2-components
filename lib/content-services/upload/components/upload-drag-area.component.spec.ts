@@ -27,7 +27,7 @@ import {
 
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
-import { Observable } from 'rxjs/Observable';
+import { throwError } from 'rxjs';
 
 function getFakeShareDataRow(allowableOperations = ['delete', 'update', 'create']) {
     return {
@@ -457,7 +457,7 @@ describe('UploadDragAreaComponent', () => {
             };
 
             fixture.detectChanges();
-            spyOn(uploadService, 'fileUploadError').and.returnValue(Observable.throw(new Error()));
+            spyOn(uploadService, 'fileUploadError').and.returnValue(throwError(new Error()));
 
             component.error.subscribe((error) => {
                 expect(error).not.toBeNull();

@@ -19,7 +19,7 @@ import { Component, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angu
 import { TaskListService, TaskAttachmentListComponent, TaskDetailsModel, TaskUploadService } from '@alfresco/adf-process-services';
 import { UploadService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
     return new TaskUploadService(api, config);
@@ -65,7 +65,7 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges() {
         if (this.taskId) {
-            this.activitiTaskList.getTaskDetails(this.taskId).map((res) => res)
+            this.activitiTaskList.getTaskDetails(this.taskId)
                 .subscribe((taskDetails: TaskDetailsModel) => {
                     this.taskDetails = taskDetails;
                 });

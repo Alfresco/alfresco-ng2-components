@@ -20,7 +20,7 @@ import { AddPermissionComponent } from './add-permission.component';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
 import { setupTestBed, NodesApiService } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { NodePermissionService } from '../../services/node-permission.service';
@@ -40,7 +40,7 @@ describe('AddPermissionComponent', () => {
 
     beforeEach(() => {
         nodeApiService  = TestBed.get(NodesApiService);
-        spyOn(nodeApiService, 'getNode').and.returnValue(Observable.of({ id: 'fake-node', allowableOperations: ['updatePermissions']}));
+        spyOn(nodeApiService, 'getNode').and.returnValue(of({ id: 'fake-node', allowableOperations: ['updatePermissions']}));
         fixture = TestBed.createComponent(AddPermissionComponent);
         element = fixture.nativeElement;
         nodePermissionService = TestBed.get(NodePermissionService);
@@ -83,7 +83,7 @@ describe('AddPermissionComponent', () => {
 
     it('should emit a success event when the node is updated', (done) => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
-        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(Observable.of({ id: 'fake-node-id'}));
+        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(of({ id: 'fake-node-id'}));
 
         fixture.componentInstance.success.subscribe((node) => {
             expect(node.id).toBe('fake-node-id');
@@ -101,7 +101,7 @@ describe('AddPermissionComponent', () => {
     it('should NOT emit a success event when the user does not have permission to update the node', () => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
         fixture.componentInstance.currentNode = { id: 'fake-node-id' };
-        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(Observable.of({ id: 'fake-node-id' }));
+        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(of({ id: 'fake-node-id' }));
 
         let spySuccess = spyOn(fixture.componentInstance, 'success');
         fixture.componentInstance.applySelection();
@@ -110,7 +110,7 @@ describe('AddPermissionComponent', () => {
 
     it('should emit an error event when the node update fail', (done) => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
-        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(Observable.throw({ error: 'errored'}));
+        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(throwError({ error: 'errored'}));
 
         fixture.componentInstance.error.subscribe((error) => {
             expect(error.error).toBe('errored');

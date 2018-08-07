@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
 import { SitesService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DropdownSitesComponent', () => {
@@ -50,7 +50,7 @@ describe('DropdownSitesComponent', () => {
 
             beforeEach(async(() => {
                 siteService = TestBed.get(SitesService);
-                spyOn(siteService, 'getSites').and.returnValue(Observable.of({
+                spyOn(siteService, 'getSites').and.returnValue(of({
                     'list': {
                         'pagination': {
                             'count': 2,
@@ -119,7 +119,7 @@ describe('DropdownSitesComponent', () => {
                     let options: any = debug.queryAll(By.css('mat-option'));
                     expect(options[0].nativeElement.innerText).toContain('DROPDOWN.MY_FILES_OPTION');
                 });
-            });
+            }));
 
             it('should hide the "My files" option if the developer desires that way', async(() => {
                 component.hideMyFiles = true;
@@ -243,7 +243,7 @@ describe('DropdownSitesComponent', () => {
 
             beforeEach(async(() => {
                 siteService = TestBed.get(SitesService);
-                spyOn(siteService, 'getSites').and.returnValue(Observable.of({
+                spyOn(siteService, 'getSites').and.returnValue(of({
                     'list': {
                         'entries': [{
                             'entry': {
@@ -372,7 +372,7 @@ describe('DropdownSitesComponent', () => {
             afterEach(async(() => {
                 fixture.destroy();
                 TestBed.resetTestingModule();
-            });
+            }));
 
             describe('No relations', () => {
 

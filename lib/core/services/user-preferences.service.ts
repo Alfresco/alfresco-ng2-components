@@ -17,11 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
-import 'rxjs/add/operator/distinctUntilChanged';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 export enum UserPreferenceValues {
     PaginationSize = 'PAGINATION_SIZE',
@@ -71,7 +70,11 @@ export class UserPreferencesService {
      * @returns Notification callback
      */
     select(property: string): Observable<any> {
-        return this.onChange.map((userPreferenceStatus) => userPreferenceStatus[property]).distinctUntilChanged();
+        return this.onChange
+            .pipe(
+                map((userPreferenceStatus) => userPreferenceStatus[property]),
+                distinctUntilChanged()
+            );
     }
 
     /**

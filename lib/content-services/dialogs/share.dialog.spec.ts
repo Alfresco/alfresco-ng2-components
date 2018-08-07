@@ -18,7 +18,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { ShareDialogComponent } from './share.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { SharedLinksApiService, setupTestBed } from '@alfresco/adf-core';
@@ -54,8 +54,8 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        spyCreate = spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(Observable.of({ entry: { id: 'test-sharedId' } }));
-        spyDelete = spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(Observable.of({}));
+        spyCreate = spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({ entry: { id: 'test-sharedId' } }));
+        spyDelete = spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
     });
 
     it('should init the dialog with the file name and baseShareUrl', async(() => {

@@ -21,7 +21,7 @@ import Util = require('../../util/util');
 export class ConfigEditorPage {
 
     enterMetadataConfiguration(text) {
-        let textField = element(by.css('#adf-metadata-editor > div > div > div.overflow-guard > textarea'));
+        let textField = element(by.css('#adf-metadata-editor div.overflow-guard > textarea'));
         browser.driver.sleep(1000);
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');

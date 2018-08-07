@@ -23,7 +23,7 @@ import { MatDialog } from '@angular/material';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { deployedApps } from '../mock/apps-list.mock';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 import { SelectAppsDialogComponent } from './select-apps-dialog-component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
@@ -90,7 +90,7 @@ describe('Select app dialog', () => {
         service = TestBed.get(AppsProcessService);
 
         spyOn(service, 'getDeployedApplications').and.returnValue(
-            Observable.of(deployedApps)
+            of(deployedApps)
         );
     });
 

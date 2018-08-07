@@ -54,7 +54,7 @@ import {
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
 import { PreviewService } from '../../services/preview.service';

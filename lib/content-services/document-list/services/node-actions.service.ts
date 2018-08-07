@@ -17,7 +17,7 @@
 
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity, MinimalNodeEntity } from 'alfresco-js-api';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
 

@@ -121,7 +121,7 @@ export class WidgetComponent implements AfterViewInit {
         return null;
     }
 
-    protected event(event: Event): void {
+    event(event: Event): void {
         this.formService.formEvents.next(event);
     }
 }

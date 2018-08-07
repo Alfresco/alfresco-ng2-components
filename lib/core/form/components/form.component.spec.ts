@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { LogService } from '../../services/log.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of, throwError } from 'rxjs';
 import { fakeForm } from '../../mock';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
@@ -177,7 +177,7 @@ describe('FormComponent', () => {
             });
         });
 
-        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(Observable.of({}));
+        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(of({}));
         spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
             return Observable.create(observer => {
                 observer.next({ taskId: currentTaskId, processDefinitionId: '10201' });
@@ -200,7 +200,7 @@ describe('FormComponent', () => {
             });
         });
 
-        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(Observable.of({}));
+        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(of({}));
         spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
             return Observable.create(observer => {
                 observer.next({ taskId: currentTaskId, processDefinitionId: 'null' });
@@ -226,7 +226,7 @@ describe('FormComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formService, 'getFormDefinitionById').and.returnValue(Observable.of(JSON.parse(JSON.stringify(fakeForm))));
+        spyOn(formService, 'getFormDefinitionById').and.returnValue(of(JSON.parse(JSON.stringify(fakeForm))));
         const formId = '123';
 
         formComponent.formId = formId;
@@ -418,7 +418,7 @@ describe('FormComponent', () => {
     });
 
     it('should fetch and parse form by task id', (done) => {
-        spyOn(formService, 'getTask').and.returnValue(Observable.of({}));
+        spyOn(formService, 'getTask').and.returnValue(of({}));
         spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
             return Observable.create(observer => {
                 observer.next({ taskId: currentTaskId });
@@ -441,10 +441,10 @@ describe('FormComponent', () => {
     it('should handle error when getting form by task id', (done) => {
         const error = 'Some error';
 
-        spyOn(formService, 'getTask').and.returnValue(Observable.of({}));
+        spyOn(formService, 'getTask').and.returnValue(of({}));
         spyOn(formComponent, 'handleError').and.stub();
         spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
-            return Observable.throw(error);
+            return throwError(error);
         });
 
         formComponent.getFormByTaskId('123').then(_ => {
@@ -454,7 +454,7 @@ describe('FormComponent', () => {
     });
 
     it('should apply readonly state when getting form by task id', (done) => {
-        spyOn(formService, 'getTask').and.returnValue(Observable.of({}));
+        spyOn(formService, 'getTask').and.returnValue(of({}));
         spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
             return Observable.create(observer => {
                 observer.next({ taskId: taskId });
@@ -495,7 +495,7 @@ describe('FormComponent', () => {
         const error = 'Some error';
 
         spyOn(formComponent, 'handleError').and.stub();
-        spyOn(formService, 'getFormDefinitionById').and.callFake(() => Observable.throw(error));
+        spyOn(formService, 'getFormDefinitionById').and.callFake(() => throwError(error));
 
         formComponent.getFormDefinitionByFormId('123');
         expect(formService.getFormDefinitionById).toHaveBeenCalledWith('123');
@@ -562,7 +562,7 @@ describe('FormComponent', () => {
 
     it('should handle error during form save', () => {
         const error = 'Error';
-        spyOn(formService, 'saveTaskForm').and.callFake(() => Observable.throw(error));
+        spyOn(formService, 'saveTaskForm').and.callFake(() => throwError(error));
         spyOn(formComponent, 'handleError').and.stub();
 
         formComponent.form = new FormModel({ taskId: '123' });

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { QueryBody, RequestFacetFields, RequestFacetField, RequestSortDefinitionInner } from 'alfresco-js-api';
 import { SearchCategory } from './search-category.interface';

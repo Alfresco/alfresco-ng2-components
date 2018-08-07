@@ -18,7 +18,7 @@
 import { async } from '@angular/core/testing';
 import { CardViewSelectItemModel } from './card-view-selectitem.model';
 import { CardViewSelectItemProperties } from '../interfaces/card-view.interfaces';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 
 describe('CardViewSelectItemModel', () => {
     let properties: CardViewSelectItemProperties<string>;

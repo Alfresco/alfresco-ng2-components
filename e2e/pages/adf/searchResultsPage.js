@@ -29,6 +29,14 @@ var SearchResultsPage = function () {
     var sortDropdownLocator = by.css("mat-option span");
     var sortingArrow = element(by.css("adf-sorting-picker div[class='mat-select-arrow']"));
 
+    this.closeActionButton = function () {
+        let container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        Util.waitUntilElementIsVisible(container);
+        container.click();
+        Util.waitUntilElementIsNotVisible(container);
+        return this;
+    }
+
     this.checkContentIsDisplayed = function (content) {
         contentList.checkContentIsDisplayed(content);
         return this;

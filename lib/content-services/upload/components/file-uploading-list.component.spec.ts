@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslationService, FileUploadStatus, NodesApiService, UploadService,
     setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock
 } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { UploadModule } from '../upload.module';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -57,7 +57,7 @@ describe('FileUploadingListComponent', () => {
         fixture = TestBed.createComponent(FileUploadingListComponent);
         component = fixture.componentInstance;
 
-        spyOn(translateService, 'get').and.returnValue(Observable.of('some error message'));
+        spyOn(translateService, 'get').and.returnValue(of('some error message'));
         spyOn(uploadService, 'cancelUpload');
     });
 
@@ -71,7 +71,7 @@ describe('FileUploadingListComponent', () => {
 
     describe('removeFile()', () => {
         it('should change file status when api returns success', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.of(file));
+            spyOn(nodesApiService, 'deleteNode').and.returnValue(of(file));
 
             component.removeFile(file);
             fixture.detectChanges();
@@ -80,7 +80,7 @@ describe('FileUploadingListComponent', () => {
         });
 
         it('should change file status when api returns error', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw(file));
+            spyOn(nodesApiService, 'deleteNode').and.returnValue(throwError(file));
 
             component.removeFile(file);
             fixture.detectChanges();
@@ -89,7 +89,7 @@ describe('FileUploadingListComponent', () => {
         });
 
         it('should call uploadService on error', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw(file));
+            spyOn(nodesApiService, 'deleteNode').and.returnValue(throwError(file));
 
             component.removeFile(file);
             fixture.detectChanges();
@@ -98,7 +98,7 @@ describe('FileUploadingListComponent', () => {
         });
 
         it('should call uploadService on success', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.of(file));
+            spyOn(nodesApiService, 'deleteNode').and.returnValue(of(file));
 
             component.removeFile(file);
             fixture.detectChanges();
@@ -109,7 +109,7 @@ describe('FileUploadingListComponent', () => {
         describe('Events', () => {
 
             it('should throw an error event if delete file goes wrong', (done) => {
-                spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw(file));
+                spyOn(nodesApiService, 'deleteNode').and.returnValue(throwError(file));
 
                 component.error.subscribe(() => {
                     done();
@@ -153,7 +153,7 @@ describe('FileUploadingListComponent', () => {
         });
 
         it('should call deleteNode when there are completed uploads', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.of({}));
+            spyOn(nodesApiService, 'deleteNode').and.returnValue(of({}));
 
             component.files[0].status = FileUploadStatus.Complete;
             component.cancelAllFiles();
@@ -162,7 +162,7 @@ describe('FileUploadingListComponent', () => {
         });
 
         it('should call uploadService when there are uploading files', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.of({}));
+            spyOn(nodesApiService, 'deleteNode').and.returnValue(of({}));
 
             component.files[0].status = FileUploadStatus.Progress;
             component.cancelAllFiles();

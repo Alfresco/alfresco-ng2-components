@@ -16,7 +16,7 @@
  */
 
 import { PaginationModel } from '../models/pagination.model';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 export interface PaginatedComponent {
     pagination: BehaviorSubject<PaginationModel>;

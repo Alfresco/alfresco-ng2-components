@@ -30,10 +30,8 @@ import {
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/from';
-import { zip } from 'rxjs/observable/zip';
-import { of } from 'rxjs/observable/of';
+import { from, zip, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
     selector: 'attach-widget',
@@ -184,24 +182,27 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     private uploadFileFromCS(fileNodeList: MinimalNodeEntryEntity[], accountId: string, siteId?: string) {
-        let filesSaved = [];
-        Observable.from(fileNodeList)
-            .mergeMap(node =>
-                zip(of(node.content.mimeType), this.activitiContentService.applyAlfrescoNode(node,
-                    siteId,
-                    accountId))
-            ).subscribe(([mymeType, res]) => {
-                res.mimeType = mymeType;
-                filesSaved.push(res);
-            },
-            (error) => {
-                this.logger.error(error);
-            },
-            () => {
-                this.field.value = filesSaved;
-                this.field.json.value = filesSaved;
-                this.hasFile = true;
-            });
+        const filesSaved = [];
+        from(fileNodeList).pipe(
+            mergeMap(node =>
+                zip(
+                    of(node.content.mimeType),
+                    this.activitiContentService.applyAlfrescoNode(node, siteId, accountId)
+                )
+            )
+        )
+        .subscribe(([mymeType, res]) => {
+            res.mimeType = mymeType;
+            filesSaved.push(res);
+        },
+        (error) => {
+            this.logger.error(error);
+        },
+        () => {
+            this.field.value = filesSaved;
+            this.field.json.value = filesSaved;
+            this.hasFile = true;
+        });
     }
 
 }

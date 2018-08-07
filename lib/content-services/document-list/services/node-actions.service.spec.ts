@@ -21,7 +21,7 @@ import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { MatDialogRef } from '@angular/material';
 import { DialogModule } from '../../dialogs/dialog.module';
 
@@ -65,8 +65,8 @@ describe('NodeActionsService', () => {
     });
 
     it('should be able to copy content', async(() => {
-        spyOn(documentListService, 'copyNode').and.returnValue(Observable.of('FAKE-OK'));
-        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
+        spyOn(documentListService, 'copyNode').and.returnValue(of('FAKE-OK'));
+        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
         service.copyContent(fakeNode, 'allowed').subscribe((value) => {
             expect(value).toBe('OPERATION.SUCCESS.CONTENT.COPY');
@@ -74,8 +74,8 @@ describe('NodeActionsService', () => {
     }));
 
     it('should be able to move content', async(() => {
-        spyOn(documentListService, 'moveNode').and.returnValue(Observable.of('FAKE-OK'));
-        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
+        spyOn(documentListService, 'moveNode').and.returnValue(of('FAKE-OK'));
+        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
         service.moveContent(fakeNode, 'allowed').subscribe((value) => {
             expect(value).toBe('OPERATION.SUCCESS.CONTENT.MOVE');
@@ -83,8 +83,8 @@ describe('NodeActionsService', () => {
     }));
 
     it('should be able to move folder', async(() => {
-        spyOn(documentListService, 'moveNode').and.returnValue(Observable.of('FAKE-OK'));
-        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
+        spyOn(documentListService, 'moveNode').and.returnValue(of('FAKE-OK'));
+        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
         service.moveFolder(fakeNode, 'allowed').subscribe((value) => {
             expect(value).toBe('OPERATION.SUCCESS.FOLDER.MOVE');
@@ -92,8 +92,8 @@ describe('NodeActionsService', () => {
     }));
 
     it('should be able to copy folder', async(() => {
-        spyOn(documentListService, 'copyNode').and.returnValue(Observable.of('FAKE-OK'));
-        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
+        spyOn(documentListService, 'copyNode').and.returnValue(of('FAKE-OK'));
+        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
         service.copyFolder(fakeNode, 'allowed').subscribe((value) => {
             expect(value).toBe('OPERATION.SUCCESS.FOLDER.COPY');
@@ -101,8 +101,8 @@ describe('NodeActionsService', () => {
     }));
 
     it('should be able to propagate the dialog error', async(() => {
-        spyOn(documentListService, 'copyNode').and.returnValue(Observable.throw('FAKE-KO'));
-        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
+        spyOn(documentListService, 'copyNode').and.returnValue(throwError('FAKE-KO'));
+        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
         service.copyFolder(fakeNode, '!allowed').subscribe((value) => {
         }, (error) => {

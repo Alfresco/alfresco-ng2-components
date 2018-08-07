@@ -9,6 +9,23 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,6 +36,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     templateUrl: './task-list-demo.component.html',
@@ -113,7 +131,9 @@ export class TaskListDemoComponent implements OnInit {
         });
 
         this.taskListForm.valueChanges
-        .debounceTime(500)
+            .pipe(
+                debounceTime(500)
+            )
             .subscribe(taskFilter => {
                 if (this.isFormValid()) {
                     this.filterTasks(taskFilter);

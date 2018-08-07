@@ -20,6 +20,7 @@ import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../utils/object-utils';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 
 export enum AppConfigValues {
     APP_CONFIG_LANGUAGES_KEY = 'languages',
@@ -63,7 +64,11 @@ export class AppConfigService {
      * @returns Property value, when loaded
      */
     select(property: string): Observable<any> {
-        return this.onLoadSubject.map((config) => config[property]).distinctUntilChanged();
+        return this.onLoadSubject
+            .pipe(
+                map((config) => config[property]),
+                distinctUntilChanged()
+            );
     }
 
     /**
@@ -75,12 +80,12 @@ export class AppConfigService {
     get<T>(key: string, defaultValue?: T): T {
         let result: any = ObjectUtils.getValue(this.config, key);
         if (typeof result === 'string') {
-            const map = new Map<string, string>();
-            map.set('hostname', this.getLocationHostname());
-            map.set(':port', this.getLocationPort(':'));
-            map.set('port', this.getLocationPort());
-            map.set('protocol', this.getLocationProtocol());
-            result = this.formatString(result, map);
+            const keywords = new Map<string, string>();
+            keywords.set('hostname', this.getLocationHostname());
+            keywords.set(':port', this.getLocationPort(':'));
+            keywords.set('port', this.getLocationPort());
+            keywords.set('protocol', this.getLocationProtocol());
+            result = this.formatString(result, keywords);
         }
         if (result === undefined) {
             return defaultValue;
@@ -131,10 +136,10 @@ export class AppConfigService {
         });
     }
 
-    private formatString(str: string, map: Map<string, string>): string {
+    private formatString(str: string, keywords: Map<string, string>): string {
         let result = str;
 
-        map.forEach((value, key) => {
+        keywords.forEach((value, key) => {
             const expr = new RegExp('{' + key + '}', 'gm');
             result = result.replace(expr, value);
         });

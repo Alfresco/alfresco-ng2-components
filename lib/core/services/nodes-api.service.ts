@@ -17,11 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/throw';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class NodesApiService {
@@ -45,18 +44,17 @@ export class NodesApiService {
      * @returns Node information
      */
     getNode(nodeId: string, options: any = {}): Observable<MinimalNodeEntryEntity> {
-        const { nodesApi, handleError, getEntryFromEntity } = this;
         const defaults = {
             include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
         };
         const queryOptions = Object.assign(defaults, options);
-        const promise = nodesApi
+        const promise = this.nodesApi
             .getNode(nodeId, queryOptions)
-            .then(getEntryFromEntity);
+            .then(this.getEntryFromEntity);
 
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
+        return from(promise).pipe(
+            catchError(err => throwError(err))
+        );
     }
 
     /**
@@ -66,19 +64,18 @@ export class NodesApiService {
      * @returns List of child items from the folder
      */
     getNodeChildren(nodeId: string, options: any = {}): Observable<NodePaging> {
-        const { nodesApi, handleError } = this;
         const defaults = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
             include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
         };
         const queryOptions = Object.assign(defaults, options);
-        const promise = nodesApi
+        const promise = this.nodesApi
             .getNodeChildren(nodeId, queryOptions);
 
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
+        return from(promise).pipe(
+            catchError(err => throwError(err))
+        );
     }
 
     /**
@@ -89,12 +86,13 @@ export class NodesApiService {
      * @returns Details of the new node
      */
     createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
-        const { nodesApi, handleError, getEntryFromEntity } = this;
-        const promise = nodesApi
+        const promise = this.nodesApi
             .addNode(parentNodeId, nodeBody, options)
-            .then(getEntryFromEntity);
+            .then(this.getEntryFromEntity);
 
-        return Observable.fromPromise(promise).catch(handleError);
+        return from(promise).pipe(
+            catchError(err => throwError(err))
+        );
     }
 
     /**
@@ -117,18 +115,18 @@ export class NodesApiService {
      * @returns Updated node information
      */
     updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
-        const { nodesApi, handleError, getEntryFromEntity } = this;
-
         const defaults = {
             include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
         };
         const queryOptions = Object.assign(defaults, options);
 
-        const promise = nodesApi
+        const promise = this.nodesApi
             .updateNode(nodeId, nodeBody, queryOptions)
-            .then(getEntryFromEntity);
+            .then(this.getEntryFromEntity);
 
-        return Observable.fromPromise(promise).catch(handleError);
+        return from(promise).pipe(
+            catchError(err => throwError(err))
+        );
     }
 
     /**
@@ -137,14 +135,12 @@ export class NodesApiService {
      * @param options Optional parameters supported by JSAPI
      * @returns Empty result that notifies when the deletion is complete
      */
-    deleteNode(nodeId: string, options: any = {}): Observable<void> {
-        const { nodesApi, handleError } = this;
-        const promise = nodesApi
-            .deleteNode(nodeId, options);
+    deleteNode(nodeId: string, options: any = {}): Observable<any> {
+        const promise = this.nodesApi.deleteNode(nodeId, options);
 
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
+        return from(promise).pipe(
+            catchError(err => throwError(err))
+        );
     }
 
     /**
@@ -153,22 +149,12 @@ export class NodesApiService {
      * @returns Details of the restored node
      */
     restoreNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
-        const { nodesApi, handleError, getEntryFromEntity } = this;
-        const promise = nodesApi
+        const promise = this.nodesApi
             .restoreNode(nodeId)
-            .then(getEntryFromEntity);
+            .then(this.getEntryFromEntity);
 
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
-    }
-
-    /**
-     * Reports an error.
-     * @param error Object representing the error
-     * @returns Error information
-     */
-    handleError(error: any): Observable<any> {
-        return Observable.throw(error);
+        return from(promise).pipe(
+            catchError(err => throwError(err))
+        );
     }
 }

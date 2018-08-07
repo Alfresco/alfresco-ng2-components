@@ -19,10 +19,9 @@
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { FavoriteBody, MinimalNodeEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, forkJoin, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/observable/forkJoin';
+import { catchError, map } from 'rxjs/operators';
 
 @Directive({
     selector: '[adf-node-favorite]',
@@ -71,10 +70,10 @@ export class NodeFavoriteDirective implements OnChanges {
                 // shared files have nodeId
                 const id = selected.entry.nodeId || selected.entry.id;
 
-                return Observable.fromPromise(this.alfrescoApiService.favoritesApi.removeFavoriteSite('-me-', id));
+                return from(this.alfrescoApiService.favoritesApi.removeFavoriteSite('-me-', id));
             });
 
-            Observable.forkJoin(batch).subscribe(
+            forkJoin(batch).subscribe(
                 () => {
                     this.favorites.map(selected => selected.entry.isFavorite = false);
                     this.toggle.emit();
@@ -87,7 +86,7 @@ export class NodeFavoriteDirective implements OnChanges {
             const notFavorite = this.favorites.filter((node) => !node.entry.isFavorite);
             const body: FavoriteBody[] = notFavorite.map((node) => this.createFavoriteBody(node));
 
-            Observable.fromPromise(this.alfrescoApiService.favoritesApi.addFavorite('-me-', <any> body))
+            from(this.alfrescoApiService.favoritesApi.addFavorite('-me-', <any> body))
                 .subscribe(
                     () => {
                         notFavorite.map(selected => selected.entry.isFavorite = true);
@@ -107,7 +106,7 @@ export class NodeFavoriteDirective implements OnChanges {
         const result = this.diff(selection, this.favorites);
         const batch = this.getProcessBatch(result);
 
-        Observable.forkJoin(batch).subscribe((data) => {
+        forkJoin(batch).subscribe(data => {
             this.favorites.push(...data);
         });
     }
@@ -129,7 +128,7 @@ export class NodeFavoriteDirective implements OnChanges {
 
         // ACS 6.x with 'isFavorite' include
         if (node && node.hasOwnProperty('isFavorite')) {
-            return Observable.of(selected);
+            return of(selected);
         }
 
         // ACS 5.x and 6.x without 'isFavorite' include
@@ -139,8 +138,8 @@ export class NodeFavoriteDirective implements OnChanges {
 
         const promise = this.alfrescoApiService.favoritesApi.getFavorite('-me-', id);
 
-        return Observable.from(promise)
-            .map(() => ({
+        return from(promise).pipe(
+            map(() => ({
                 entry: {
                     id,
                     isFolder,
@@ -148,9 +147,9 @@ export class NodeFavoriteDirective implements OnChanges {
                     name,
                     isFavorite: true
                 }
-            }))
-            .catch(() => {
-                return Observable.of({
+            })),
+            catchError(() => {
+                return of({
                     entry: {
                         id,
                         isFolder,
@@ -159,7 +158,8 @@ export class NodeFavoriteDirective implements OnChanges {
                         isFavorite: false
                     }
                 });
-            });
+            })
+        );
     }
 
     private createFavoriteBody(node): FavoriteBody {

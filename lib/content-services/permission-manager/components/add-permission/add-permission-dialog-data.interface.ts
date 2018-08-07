@@ -16,7 +16,7 @@
  */
 
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 export interface AddPermissionDialogData {
     title?: string;

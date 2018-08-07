@@ -22,7 +22,7 @@ import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
 import { TranslationService } from '../../services/translation.service';
@@ -530,13 +530,13 @@ describe('Test PdfViewer component', () => {
             spyOn(dialog, 'open').and.callFake((comp, context) => {
                 if (context.data.reason === PDFJS.PasswordResponses.NEED_PASSWORD) {
                     return {
-                        afterClosed: () => Observable.of('wrong_password')
+                        afterClosed: () => of('wrong_password')
                     };
                 }
 
                 if (context.data.reason === PDFJS.PasswordResponses.INCORRECT_PASSWORD) {
                     return {
-                        afterClosed: () => Observable.of('password')
+                        afterClosed: () => of('password')
                     };
                 }
             });

@@ -19,10 +19,8 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import { RelatedContentRepresentation } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { Observable, from, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ProcessContentService {
@@ -44,7 +42,8 @@ export class ProcessContentService {
      * @returns The created content data
      */
     createTemporaryRawRelatedContent(file: any): Observable<RelatedContentRepresentation> {
-        return Observable.fromPromise(this.contentApi.createTemporaryRawRelatedContent(file)).catch(err => this.handleError(err));
+        return from(this.contentApi.createTemporaryRawRelatedContent(file))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -53,7 +52,8 @@ export class ProcessContentService {
      * @returns Metadata for the content
      */
     getFileContent(contentId: number): Observable<RelatedContentRepresentation> {
-        return Observable.fromPromise(this.contentApi.getContent(contentId)).catch(err => this.handleError(err));
+        return from(this.contentApi.getContent(contentId))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -62,7 +62,8 @@ export class ProcessContentService {
      * @returns Binary data of the related content
      */
     getFileRawContent(contentId: number): Observable<Blob> {
-        return Observable.fromPromise(this.contentApi.getRawContent(contentId)).catch(err => this.handleError(err));
+        return from(this.contentApi.getRawContent(contentId))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -108,7 +109,8 @@ export class ProcessContentService {
      * @returns Binary data of the thumbnail image
      */
     getContentThumbnail(contentId: number): Observable<Blob> {
-        return Observable.fromPromise(this.contentApi.getContentThumbnail(contentId)).catch(err => this.handleError(err));
+        return from(this.contentApi.getContentThumbnail(contentId))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -117,8 +119,8 @@ export class ProcessContentService {
      * @returns Metadata for the content
      */
     getTaskRelatedContent(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.contentApi.getRelatedContentForTask(taskId))
-            .catch(err => this.handleError(err));
+        return from(this.contentApi.getRelatedContentForTask(taskId))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -127,8 +129,8 @@ export class ProcessContentService {
      * @returns Metadata for the content
      */
     getProcessRelatedContent(processId: string): Observable<any> {
-        return Observable.fromPromise(this.contentApi.getRelatedContentForProcessInstance(processId))
-            .catch(err => this.handleError(err));
+        return from(this.contentApi.getRelatedContentForProcessInstance(processId))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -137,8 +139,8 @@ export class ProcessContentService {
      * @returns Null response that notifies when the deletion is complete
      */
     deleteRelatedContent(contentId: number): Observable<any> {
-        return Observable.fromPromise(this.contentApi.deleteContent(contentId))
-            .catch(err => this.handleError(err));
+        return from(this.contentApi.deleteContent(contentId))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -149,8 +151,8 @@ export class ProcessContentService {
      * @returns Details of created content
      */
     createProcessRelatedContent(processInstanceId: string, content: any, opts?: any): Observable<any> {
-        return Observable.fromPromise(this.contentApi.createRelatedContentOnProcessInstance(processInstanceId, content, opts))
-            .catch(err => this.handleError(err));
+        return from(this.contentApi.createRelatedContentOnProcessInstance(processInstanceId, content, opts))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -161,8 +163,8 @@ export class ProcessContentService {
      * @returns Details of created content
      */
     createTaskRelatedContent(taskId: string, file: any, opts?: any) {
-        return Observable.fromPromise(this.contentApi.createRelatedContentOnTask(taskId, file, opts))
-            .catch(err => this.handleError(err));
+        return from(this.contentApi.createRelatedContentOnTask(taskId, file, opts))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -201,7 +203,7 @@ export class ProcessContentService {
                 error.status ? `${error.status} - ${error.statusText}` : ProcessContentService.GENERIC_ERROR_MESSAGE;
         }
         this.logService.error(errMsg);
-        return Observable.throw(errMsg);
+        return throwError(errMsg);
     }
 
 }

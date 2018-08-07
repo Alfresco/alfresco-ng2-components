@@ -22,7 +22,7 @@ import { UploadService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { AppConfigService } from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 export function processUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
     return new ProcessUploadService(api, config);

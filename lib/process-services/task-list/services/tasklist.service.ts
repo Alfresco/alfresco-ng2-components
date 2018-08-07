@@ -17,16 +17,12 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, forkJoin, throwError } from 'rxjs';
+import { map, catchError, switchMap, flatMap, filter } from 'rxjs/operators';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListModel } from '../models/task-list.model';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/forkJoin';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/operator/switchMap';
-import 'rxjs/add/observable/from';
 
 @Injectable()
 export class TaskListService {
@@ -42,9 +38,11 @@ export class TaskListService {
      * @returns Filters belonging to the task
      */
     getFilterForTaskById(taskId: string, filterList: FilterRepresentationModel[]): Observable<FilterRepresentationModel> {
-        return Observable.from(filterList)
-            .flatMap((filter: FilterRepresentationModel) => this.isTaskRelatedToFilter(taskId, filter))
-            .filter((filter: FilterRepresentationModel) => filter != null);
+        return from(filterList)
+            .pipe(
+                flatMap((data: FilterRepresentationModel) => this.isTaskRelatedToFilter(taskId, data)),
+                filter((data: FilterRepresentationModel) => data != null)
+            );
     }
 
     /**
@@ -52,12 +50,12 @@ export class TaskListService {
      * @param filter The filter to use
      * @returns The search query
      */
-    private generateTaskRequestNodeFromFilter(filter: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
+    private generateTaskRequestNodeFromFilter(filterModel: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
         let requestNode = {
-            appDefinitionId: filter.appId,
-            assignment: filter.filter.assignment,
-            state: filter.filter.state,
-            sort: filter.filter.sort
+            appDefinitionId: filterModel.appId,
+            assignment: filterModel.filter.assignment,
+            state: filterModel.filter.state,
+            sort: filterModel.filter.sort
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }
@@ -68,12 +66,15 @@ export class TaskListService {
      * @param filter The filter you want to check
      * @returns The filter if it is related or null otherwise
      */
-     isTaskRelatedToFilter(taskId: string, filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        let requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filter);
-        return Observable.fromPromise(this.callApiTasksFiltered(requestNodeForFilter))
-            .map((res: any) => {
-                return res.data.find(element => element.id === taskId) ? filter : null;
-            }).catch(err => this.handleError(err));
+     isTaskRelatedToFilter(taskId: string, filterModel: FilterRepresentationModel): Observable<FilterRepresentationModel> {
+        let requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filterModel);
+        return from(this.callApiTasksFiltered(requestNodeForFilter))
+            .pipe(
+                map((res: any) => {
+                    return res.data.find(element => element.id === taskId) ? filterModel : null;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -82,10 +83,10 @@ export class TaskListService {
      * @returns List of tasks
      */
     getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
-        return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
-            .map((res: TaskListModel) => {
-                return res;
-            }).catch(err => this.handleError(err));
+        return from<TaskListModel>(this.callApiTasksFiltered(requestNode))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -111,10 +112,13 @@ export class TaskListService {
         if (state) {
             requestNode.state = state;
         }
-        return this.getTotalTasks(requestNode).switchMap((res: any) => {
-            requestNode.size = res.total;
-            return this.getTasks(requestNode);
-        });
+        return this.getTotalTasks(requestNode)
+            .pipe(
+                switchMap((res: any) => {
+                    requestNode.size = res.total;
+                    return this.getTasks(requestNode);
+                })
+            );
     }
 
     /**
@@ -123,7 +127,7 @@ export class TaskListService {
      * @returns List of tasks
      */
     findAllTasksWithoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
-        return Observable.forkJoin(
+        return forkJoin(
                 this.findTasksByState(requestNode, 'open'),
                 this.findAllTaskByState(requestNode, 'completed'),
                 (activeTasks: TaskListModel, completedTasks: TaskListModel) => {
@@ -141,11 +145,13 @@ export class TaskListService {
      * @returns Task details
      */
     getTaskDetails(taskId: string): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.callApiTaskDetails(taskId))
-            .map(res => res)
-            .map((details: any) => {
-                return new TaskDetailsModel(details);
-            }).catch(err => this.handleError(err));
+        return from(this.callApiTaskDetails(taskId))
+            .pipe(
+                map((details: any) => {
+                    return new TaskDetailsModel(details);
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -154,15 +160,17 @@ export class TaskListService {
      * @returns Array of checklist task details
      */
     getTaskChecklist(id: string): Observable<TaskDetailsModel[]> {
-        return Observable.fromPromise(this.callApiTaskChecklist(id))
-            .map(res => res)
-            .map((response: any) => {
-                let checklists: TaskDetailsModel[] = [];
-                response.data.forEach((checklist) => {
-                    checklists.push(new TaskDetailsModel(checklist));
-                });
-                return checklists;
-            }).catch(err => this.handleError(err));
+        return from(this.callApiTaskChecklist(id))
+            .pipe(
+                map((response: any) => {
+                    const checklists: TaskDetailsModel[] = [];
+                    response.data.forEach((checklist) => {
+                        checklists.push(new TaskDetailsModel(checklist));
+                    });
+                    return checklists;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -176,14 +184,17 @@ export class TaskListService {
             'modelType': 2 // Integer | modelType
         };
 
-        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts)).map(res => res)
-            .map((response: any) => {
-                let forms: Form[] = [];
-                response.data.forEach((form) => {
-                    forms.push(new Form(form.id, form.name));
-                });
-                return forms;
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
+            .pipe(
+                map((response: any) => {
+                    let forms: Form[] = [];
+                    response.data.forEach((form) => {
+                        forms.push(new Form(form.id, form.name));
+                    });
+                    return forms;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -193,7 +204,10 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     attachFormToATask(taskId: string, formId: number): Observable<any> {
-        return Observable.fromPromise(this.apiService.taskApi.attachForm(taskId, {'formId': formId})).catch(err => this.handleError(err));
+        return from(this.apiService.taskApi.attachForm(taskId, {'formId': formId}))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -202,11 +216,13 @@ export class TaskListService {
      * @returns The subtask that was added
      */
     addTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.callApiAddTask(task))
-            .map(res => res)
-            .map((response: TaskDetailsModel) => {
-                return new TaskDetailsModel(response);
-            }).catch(err => this.handleError(err));
+        return from(this.callApiAddTask(task))
+            .pipe(
+                map((response: TaskDetailsModel) => {
+                    return new TaskDetailsModel(response);
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -215,8 +231,10 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     deleteTask(taskId: string): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.callApiDeleteTask(taskId))
-            .catch(err => this.handleError(err));
+        return from<TaskDetailsModel>(this.callApiDeleteTask(taskId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -225,8 +243,10 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     deleteForm(taskId: string): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.callApiDeleteForm(taskId))
-            .catch(err => this.handleError(err));
+        return from<TaskDetailsModel>(this.callApiDeleteForm(taskId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -235,9 +255,10 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     completeTask(taskId: string) {
-        return Observable.fromPromise(this.apiService.taskApi.completeTask(taskId))
-            .map(res => res)
-            .catch(err => this.handleError(err));
+        return from(this.apiService.taskApi.completeTask(taskId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -247,10 +268,13 @@ export class TaskListService {
      */
     public getTotalTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<any> {
         requestNode.size = 0;
-        return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
-            .map((res: any) => {
-                return res;
-            }).catch(err => this.handleError(err));
+        return from(this.callApiTasksFiltered(requestNode))
+            .pipe(
+                map((res: any) => {
+                    return res;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -259,11 +283,13 @@ export class TaskListService {
      * @returns Details of the newly created task
      */
     createNewTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.callApiCreateTask(task))
-            .map(res => res)
-            .map((response: TaskDetailsModel) => {
-                return new TaskDetailsModel(response);
-            }).catch(err => this.handleError(err));
+        return from(this.callApiCreateTask(task))
+            .pipe(
+                map((response: TaskDetailsModel) => {
+                    return new TaskDetailsModel(response);
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -274,11 +300,13 @@ export class TaskListService {
      */
     assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
         let assignee = {assignee: requestNode.id};
-        return Observable.fromPromise(this.callApiAssignTask(taskId, assignee))
-            .map(res => res)
-            .map((response: TaskDetailsModel) => {
-                return new TaskDetailsModel(response);
-            }).catch(err => this.handleError(err));
+        return from(this.callApiAssignTask(taskId, assignee))
+            .pipe(
+                map((response: TaskDetailsModel) => {
+                    return new TaskDetailsModel(response);
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -288,12 +316,14 @@ export class TaskListService {
      * @returns Details of the assigned task
      */
     assignTaskByUserId(taskId: string, userId: number): Observable<TaskDetailsModel> {
-        let assignee = {assignee: userId};
-        return Observable.fromPromise(this.callApiAssignTask(taskId, assignee))
-            .map(res => res)
-            .map((response: TaskDetailsModel) => {
-                return new TaskDetailsModel(response);
-            }).catch(err => this.handleError(err));
+        const assignee = { assignee: userId };
+        return from(this.callApiAssignTask(taskId, assignee))
+            .pipe(
+                map((response: TaskDetailsModel) => {
+                    return new TaskDetailsModel(response);
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -302,8 +332,10 @@ export class TaskListService {
      * @returns Details of the claimed task
      */
     claimTask(taskId: string): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.apiService.taskApi.claimTask(taskId))
-            .catch(err => this.handleError(err));
+        return from<TaskDetailsModel>(this.apiService.taskApi.claimTask(taskId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -312,8 +344,10 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     unclaimTask(taskId: string): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.apiService.taskApi.unclaimTask(taskId))
-            .catch(err => this.handleError(err));
+        return from<TaskDetailsModel>(this.apiService.taskApi.unclaimTask(taskId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -323,8 +357,11 @@ export class TaskListService {
      * @returns Updated task details
      */
     updateTask(taskId: any, updated): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.apiService.taskApi.updateTask(taskId, updated))
-            .catch(err => this.handleError(err));
+        return from(this.apiService.taskApi.updateTask(taskId, updated))
+            .pipe(
+                map(result => <TaskDetailsModel> result),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -333,8 +370,11 @@ export class TaskListService {
      * @returns Binary PDF data
      */
     fetchTaskAuditPdfById(taskId: string): Observable<Blob> {
-        return Observable.fromPromise(this.apiService.taskApi.getTaskAuditPdf(taskId))
-            .catch(err => this.handleError(err));
+        return from(this.apiService.taskApi.getTaskAuditPdf(taskId))
+            .pipe(
+                map(data => <Blob> data),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -343,8 +383,10 @@ export class TaskListService {
      * @returns JSON data
      */
     fetchTaskAuditJsonById(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.taskApi.getTaskAuditJson(taskId))
-            .catch(err => this.handleError(err));
+        return from(this.apiService.taskApi.getTaskAuditJson(taskId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
@@ -381,7 +423,7 @@ export class TaskListService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
 }

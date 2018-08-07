@@ -19,8 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, TemplateRef, QueryList } from '@a
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AlfrescoApiService, DataColumnListComponent, DataColumnComponent } from '@alfresco/adf-core';
 import { DataColumn, DataTableComponent } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Subject, of, throwError } from 'rxjs';
 import { FileNode, FolderNode } from '../../mock';
 import {
     fakeNodeAnswerWithNOEntries,
@@ -249,7 +248,7 @@ describe('DocumentList', () => {
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
-        spyOn(documentListService, 'getFolder').and.returnValue(Observable.of(fakeNodeAnswerWithNOEntries));
+        spyOn(documentListService, 'getFolder').and.returnValue(of(fakeNodeAnswerWithNOEntries));
 
         let disposableReady = documentList.ready.subscribe(() => {
             expect(element.querySelector('#adf-document-list-empty')).toBeDefined();
@@ -754,7 +753,7 @@ describe('DocumentList', () => {
     it('should display folder content from loadFolder on reload if folderNode defined', () => {
         documentList.folderNode = new NodeMinimal();
 
-        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Observable.of(''));
+        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve(''));
         spyOn(documentList, 'loadFolder').and.callThrough();
         documentList.reload();
         expect(documentList.loadFolder).toHaveBeenCalled();
@@ -953,7 +952,7 @@ describe('DocumentList', () => {
 
     it('should emit error when getFolderNode fails', (done) => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.throw(error));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(throwError(error));
 
         let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe(error);
@@ -966,7 +965,7 @@ describe('DocumentList', () => {
 
     it('should emit error when loadFolderNodesByFolderNodeId fails', (done) => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNodeWithCreatePermission));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeWithCreatePermission));
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
 
         let disposableError = documentList.error.subscribe(val => {
@@ -980,7 +979,7 @@ describe('DocumentList', () => {
 
     it('should set no permission when getFolderNode fails with 403', (done) => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.throw(error));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(throwError(error));
 
         let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe(error);
@@ -1022,8 +1021,8 @@ describe('DocumentList', () => {
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNodeWithNoPermission));
-        spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw(error));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeWithNoPermission));
+        spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
 
         documentList.loadFolder();
         let clickedFolderNode = new FolderNode('fake-folder-node');
@@ -1226,7 +1225,7 @@ describe('DocumentList', () => {
     });
 
     xit('should emit error when fetch recent fails on search call', (done) => {
-        spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(Observable.throw('error'));
+        spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(throwError('error'));
 
         let disposableError = documentList.error.subscribe(val => {
             expect(val).toBe('error');

@@ -23,8 +23,9 @@ import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { ContentLinkModel } from './widgets/core/content-link.model';
 import { FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues, FormFieldValidator } from './widgets/core/index';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-form',
@@ -320,14 +321,15 @@ export class FormComponent implements OnInit, OnChanges {
     }
 
     findProcessVariablesByTaskId(taskId: string): Observable<any> {
-        return this.formService.getTask(taskId).
-        switchMap((task: any) => {
-            if (this.isAProcessTask(task)) {
-                return this.visibilityService.getTaskProcessVariable(taskId);
-            } else {
-                return Observable.of({});
-            }
-        });
+        return this.formService.getTask(taskId).pipe(
+            switchMap((task: any) => {
+                if (this.isAProcessTask(task)) {
+                    return this.visibilityService.getTaskProcessVariable(taskId);
+                } else {
+                    return of({});
+                }
+            })
+        );
     }
 
     isAProcessTask(taskRepresentation) {

@@ -17,7 +17,7 @@
 
 import { async } from '@angular/core/testing';
 import { UserProcessModel, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import {
     fakeCompletedTaskList,
     fakeFilter,
@@ -82,8 +82,8 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list with all tasks filtered by state', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
-            spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
+            spyOn(service, 'getTasks').and.returnValue(of(fakeTaskList));
+            spyOn(service, 'getTotalTasks').and.returnValue(of(fakeTaskList));
 
             service.findAllTaskByState(<TaskQueryRequestRepresentationModel> fakeFilter, 'open').subscribe(res => {
 
@@ -101,8 +101,8 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list with all tasks filtered', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
-            spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
+            spyOn(service, 'getTasks').and.returnValue(of(fakeTaskList));
+            spyOn(service, 'getTotalTasks').and.returnValue(of(fakeTaskList));
 
             service.findAllTaskByState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(res => {
                 expect(res).toBeDefined();
@@ -160,8 +160,8 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list with all tasks filtered without state', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
-            spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
+            spyOn(service, 'getTasks').and.returnValue(of(fakeTaskList));
+            spyOn(service, 'getTotalTasks').and.returnValue(of(fakeTaskList));
 
             service.findAllTasksWithoutState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(res => {
                 expect(res).toBeDefined();
@@ -181,8 +181,8 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('Should return both open and completed task', (done) => {
-            spyOn(service, 'findTasksByState').and.returnValue(Observable.of(fakeOpenTaskList));
-            spyOn(service, 'findAllTaskByState').and.returnValue(Observable.of(fakeCompletedTaskList));
+            spyOn(service, 'findTasksByState').and.returnValue(of(fakeOpenTaskList));
+            spyOn(service, 'findAllTaskByState').and.returnValue(of(fakeCompletedTaskList));
             service.findAllTasksWithoutState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(res => {
                 expect(res).toBeDefined();
                 expect(res.data).toBeDefined();
@@ -197,8 +197,8 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should add  the task list to the tasklistSubject with all tasks filtered without state', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
-            spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
+            spyOn(service, 'getTasks').and.returnValue(of(fakeTaskList));
+            spyOn(service, 'getTotalTasks').and.returnValue(of(fakeTaskList));
 
             service.findAllTasksWithoutState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(res => {
                 expect(res).toBeDefined();

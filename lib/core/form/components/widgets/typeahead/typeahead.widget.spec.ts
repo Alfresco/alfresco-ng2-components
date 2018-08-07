@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of, throwError } from 'rxjs';
 
 import { By } from '@angular/platform-browser';
 import { FormService } from '../../../services/form.service';
@@ -99,7 +99,7 @@ describe('TypeaheadWidgetComponent', () => {
             restUrl: 'whateverURL'
         });
         const err = 'Error';
-        spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.throw(err));
+        spyOn(formService, 'getRestFieldValues').and.returnValue(throwError(err));
         spyOn(widget, 'handleError').and.stub();
 
         widget.ngOnInit();
@@ -121,7 +121,7 @@ describe('TypeaheadWidgetComponent', () => {
             restUrl: 'whateverURL'
         });
         const err = 'Error';
-        spyOn(formService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.throw(err));
+        spyOn(formService, 'getRestFieldValuesByProcessId').and.returnValue(throwError(err));
         spyOn(widget, 'handleError').and.stub();
 
         widget.ngOnInit();
@@ -270,7 +270,7 @@ describe('TypeaheadWidgetComponent', () => {
 
             beforeEach(async(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
-                spyOn(stubFormService, 'getRestFieldValues').and.returnValue(Observable.of(fakeOptionList));
+                spyOn(stubFormService, 'getRestFieldValues').and.returnValue(of(fakeOptionList));
                 typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',
@@ -348,7 +348,7 @@ describe('TypeaheadWidgetComponent', () => {
 
             beforeEach(async(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
-                spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.of(fakeOptionList));
+                spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(of(fakeOptionList));
                 typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',

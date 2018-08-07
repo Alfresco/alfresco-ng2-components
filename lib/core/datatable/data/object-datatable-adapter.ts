@@ -21,7 +21,7 @@ import { ObjectDataRow } from './object-datarow.model';
 import { ObjectDataColumn } from './object-datacolumn.model';
 import { DataSorting } from './data-sorting.model';
 import { DataTableAdapter } from './datatable-adapter';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {

@@ -19,10 +19,10 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import { AlfrescoApi, MinimalNodeEntryEntity, RelatedContentRepresentation } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, throwError } from 'rxjs';
 import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
-import 'rxjs/add/observable/throw';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ActivitiContentService {
@@ -43,9 +43,11 @@ export class ActivitiContentService {
     getAlfrescoNodes(accountId: string, folderId: string): Observable<[ExternalContent]> {
         let apiService: AlfrescoApi = this.apiService.getInstance();
         let accountShortId = accountId.replace('alfresco-', '');
-        return Observable.fromPromise(apiService.activiti.alfrescoApi.getContentInFolder(accountShortId, folderId))
-            .map(this.toJsonArray)
-            .catch(err => this.handleError(err));
+        return from(apiService.activiti.alfrescoApi.getContentInFolder(accountShortId, folderId))
+            .pipe(
+                map(this.toJsonArray),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -60,9 +62,11 @@ export class ActivitiContentService {
             tenantId: tenantId,
             includeAccounts: includeAccount
         };
-        return Observable.fromPromise(apiService.activiti.alfrescoApi.getRepositories(opts))
-            .map(this.toJsonArray)
-            .catch(err => this.handleError(err));
+        return from(apiService.activiti.alfrescoApi.getRepositories(opts))
+            .pipe(
+                map(this.toJsonArray),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -73,14 +77,18 @@ export class ActivitiContentService {
      * @param siteId
      */
     linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink> {
-        let apiService: AlfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(apiService.activiti.contentApi.createTemporaryRelatedContent({
+        const apiService: AlfrescoApi = this.apiService.getInstance();
+        return from(apiService.activiti.contentApi.createTemporaryRelatedContent({
             link: true,
             name: node.title,
             simpleType: node.simpleType,
             source: accountId,
             sourceId: node.id + '@' + siteId
-        })).map(this.toJson).catch(err => this.handleError(err));
+        }))
+        .pipe(
+            map(this.toJson),
+            catchError(err => this.handleError(err))
+        );
     }
 
     applyAlfrescoNode(node: MinimalNodeEntryEntity, siteId: string, accountId: string) {
@@ -93,10 +101,11 @@ export class ActivitiContentService {
             name: node.name,
             link: false
         };
-        return Observable.fromPromise(
-                apiService.activiti.contentApi.createTemporaryRelatedContent(params))
-                    .map(this.toJson)
-                    .catch(err => this.handleError(err));
+        return from(apiService.activiti.contentApi.createTemporaryRelatedContent(params))
+            .pipe(
+                map(this.toJson),
+                catchError(err => this.handleError(err))
+            );
     }
 
     private getSiteNameFromNodePath(node: MinimalNodeEntryEntity): string {
@@ -132,6 +141,6 @@ export class ActivitiContentService {
                 error.status ? `${error.status} - ${error.statusText}` : ActivitiContentService.GENERIC_ERROR_MESSAGE;
         }
         this.logService.error(errMsg);
-        return Observable.throw(errMsg);
+        return throwError(errMsg);
     }
 }

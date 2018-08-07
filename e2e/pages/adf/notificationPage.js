@@ -27,7 +27,7 @@ var NotificationPage = function () {
     var actionToggle = element(by.css("mat-slide-toggle[data-automation-id='notification-action-toggle']"));
     var notificationSnackBar = element.all(by.css("simple-snack-bar")).first();
     var actionOutput = element(by.css("div[data-automation-id='notification-action-output']"));
-    var actionButton = element(by.css("simple-snack-bar > button"));
+    var actionButton = element(by.css("simple-snack-bar > div > button"));
     var defaultNotificationButton = element(by.css("button[data-automation-id='notification-default-button']"));
     var customNotificationButton = element(by.css("button[data-automation-id='notification-custom-config-button']"));
     var selectionDropDown = element.all(by.css("div[class*='mat-select-content']")).first();

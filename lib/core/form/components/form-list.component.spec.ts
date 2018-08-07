@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslationService, TranslationMock } from '../../index';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';
 import { setupTestBed } from '../../testing/setupTestBed';
@@ -51,7 +51,7 @@ describe('TaskAttachmentList', () => {
     }));
 
     it('should show the forms as a list', async(() => {
-        spyOn(service, 'getForms').and.returnValue(Observable.of([
+        spyOn(service, 'getForms').and.returnValue(of([
             { name: 'FakeName-1', lastUpdatedByFullName: 'FakeUser-1', lastUpdated: '2017-01-02' },
             { name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03' }
         ]));
@@ -62,6 +62,6 @@ describe('TaskAttachmentList', () => {
         fixture.whenStable().then(() => {
             expect(element.querySelectorAll('.adf-datatable-body > .adf-datatable-row').length).toBe(2);
         });
-    });
+    }));
 
 });

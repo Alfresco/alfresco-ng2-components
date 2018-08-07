@@ -23,7 +23,7 @@ import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
 import { AddPermissionDialogComponent } from './add-permission-dialog.component';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';

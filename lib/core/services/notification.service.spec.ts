@@ -36,7 +36,7 @@ class ProvidesNotificationServiceComponent {
     }
 
     sendMessageWithoutConfig() {
-        let promise = this.notificationService.openSnackMessage('Test notification');
+        let promise = this.notificationService.openSnackMessage('Test notification', 1000);
         return promise;
     }
 
@@ -51,7 +51,7 @@ class ProvidesNotificationServiceComponent {
     }
 
     sendMessageActionWithoutConfig() {
-        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn');
+        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
         return promise;
     }
 
@@ -61,7 +61,7 @@ class ProvidesNotificationServiceComponent {
     }
 
     sendCustomMessageAction() {
-        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn',  new MatSnackBarConfig());
+        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', new MatSnackBarConfig());
         return promise;
     }
 
@@ -119,7 +119,7 @@ describe('NotificationService', () => {
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
-    it('should open a message notification bar without custom configuration',  (done) => {
+    it('should open a message notification bar without custom configuration', (done) => {
         let promise = fixture.componentInstance.sendMessageWithoutConfig();
         promise.afterDismissed().subscribe(() => {
             done();
@@ -163,7 +163,7 @@ describe('NotificationService', () => {
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     }));
 
-    it('should open a message notification bar with action and no custom configuration',  (done) => {
+    it('should open a message notification bar with action and no custom configuration', (done) => {
         let promise = fixture.componentInstance.sendMessageActionWithoutConfig();
         promise.afterDismissed().subscribe(() => {
             done();

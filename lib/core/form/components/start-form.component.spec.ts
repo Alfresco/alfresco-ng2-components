@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../../mock';
 import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from '../../mock';
 import { FormService } from './../services/form.service';
@@ -53,7 +53,7 @@ describe('StartFormComponent', () => {
         formService = TestBed.get(FormService);
         visibilityService = TestBed.get(WidgetVisibilityService);
 
-        getStartFormSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(Observable.of({
+        getStartFormSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(of({
             processDefinitionName: 'my:process'
         }));
     });
@@ -89,13 +89,13 @@ describe('StartFormComponent', () => {
     });
 
     it('should consume errors encountered when loading start form', () => {
-        getStartFormSpy.and.returnValue(Observable.throw({}));
+        getStartFormSpy.and.returnValue(throwError({}));
         component.processDefinitionId = exampleId1;
         component.ngOnInit();
     });
 
     it('should show outcome buttons by default', () => {
-        getStartFormSpy.and.returnValue(Observable.of({
+        getStartFormSpy.and.returnValue(of({
             id: '1',
             processDefinitionName: 'my:process',
             outcomes: [{
@@ -111,7 +111,7 @@ describe('StartFormComponent', () => {
     });
 
     it('should show outcome buttons if showOutcomeButtons is true', () => {
-        getStartFormSpy.and.returnValue(Observable.of({
+        getStartFormSpy.and.returnValue(of({
             id: '1',
             processDefinitionName: 'my:process',
             outcomes: [{
@@ -127,7 +127,7 @@ describe('StartFormComponent', () => {
     });
 
     it('should fetch start form detasils by processDefinitionId ', () => {
-        getStartFormSpy.and.returnValue(Observable.of(startMockForm));
+        getStartFormSpy.and.returnValue(of(startMockForm));
         component.processDefinitionId = exampleId1;
         component.showOutcomeButtons = true;
         component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -139,7 +139,7 @@ describe('StartFormComponent', () => {
     describe('Disply widgets', () => {
 
         it('should be able to display a textWidget from a process definition', () => {
-            getStartFormSpy.and.returnValue(Observable.of(startFormTextDefinitionMock));
+            getStartFormSpy.and.returnValue(of(startFormTextDefinitionMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -157,7 +157,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should be able to display a radioButtonWidget from a process definition', () => {
-            getStartFormSpy.and.returnValue(Observable.of(startFormRadioButtonWidgetMock));
+            getStartFormSpy.and.returnValue(of(startFormRadioButtonWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -175,7 +175,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should be able to display a amountWidget from a process definition', () => {
-            getStartFormSpy.and.returnValue(Observable.of(startFormAmountWidgetMock));
+            getStartFormSpy.and.returnValue(of(startFormAmountWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -193,7 +193,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should be able to display a numberWidget from a process definition', () => {
-            getStartFormSpy.and.returnValue(Observable.of(startFormNumberWidgetMock));
+            getStartFormSpy.and.returnValue(of(startFormNumberWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -209,7 +209,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should be able to display a dropDown Widget from a process definition', () => {
-            getStartFormSpy.and.returnValue(Observable.of(startFormDropdownDefinitionMock));
+            getStartFormSpy.and.returnValue(of(startFormDropdownDefinitionMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -232,7 +232,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should be able to display a date Widget from a process definition', () => {
-            getStartFormSpy.and.returnValue(Observable.of(startFormDateWidgetMock));
+            getStartFormSpy.and.returnValue(of(startFormDateWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -242,7 +242,7 @@ describe('StartFormComponent', () => {
                 const formFields = component.form.getFormFields();
                 const labelField = formFields.find(field => field.id === 'date');
                 const dateWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
-                const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-input-infix> .adf-label');
+                const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-form-field-infix> .adf-label');
                 expect(dateWidget).toBeDefined();
                 expect(labelField.type).toBe('date');
                 expect(dateLabelElement.innerText).toBe('date (D-M-YYYY)');
@@ -250,7 +250,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should fetch and define form fields with proper type', () => {
-            getStartFormSpy.and.returnValue(Observable.of(startMockForm));
+            getStartFormSpy.and.returnValue(of(startMockForm));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -265,7 +265,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should show dropdown options', () => {
-            getStartFormSpy.and.returnValue(Observable.of(startMockForm));
+            getStartFormSpy.and.returnValue(of(startMockForm));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -281,7 +281,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should disply start form with fields ', async(() => {
-            getStartFormSpy.and.returnValue(Observable.of(startMockForm));
+            getStartFormSpy.and.returnValue(of(startMockForm));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -289,9 +289,9 @@ describe('StartFormComponent', () => {
                 fixture.detectChanges();
                 const formFieldsWidget = fixture.debugElement.nativeElement.querySelector('form-field');
                 const inputElement = fixture.debugElement.nativeElement.querySelector('.adf-input');
-                const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.mat-input-infix > .adf-label');
+                const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix > .adf-label');
                 const dateElement = fixture.debugElement.nativeElement.querySelector('#billdate');
-                const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-input-infix> .adf-label');
+                const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-form-field-infix> .adf-label');
                 const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
                 const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
                 expect(formFieldsWidget).toBeDefined();
@@ -305,7 +305,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should refresh start form on click of refresh button  ', async(() => {
-            getStartFormSpy.and.returnValue(Observable.of(startMockForm));
+            getStartFormSpy.and.returnValue(of(startMockForm));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
@@ -324,7 +324,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should difine custom-tabs ', async(() => {
-            getStartFormSpy.and.returnValue(Observable.of(startMockFormWithTab));
+            getStartFormSpy.and.returnValue(of(startMockFormWithTab));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
@@ -342,7 +342,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should difine title and [custom-action-buttons]', async(() => {
-            getStartFormSpy.and.returnValue(Observable.of(startMockFormWithTab));
+            getStartFormSpy.and.returnValue(of(startMockFormWithTab));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;

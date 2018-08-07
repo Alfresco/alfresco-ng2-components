@@ -16,13 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, throwError } from 'rxjs';
 import { CommentModel } from '../models/comment.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LogService } from '../services/log.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CommentContentService {
@@ -38,15 +36,18 @@ export class CommentContentService {
      * @returns Details of the comment added
      */
     addNodeComment(nodeId: string, message: string): Observable<CommentModel> {
-        return Observable.fromPromise(this.apiService.getInstance().core.commentsApi.addComment(nodeId, {content: message}))
-            .map((response: any) => {
-                return new CommentModel({
-                    id: response.entry.id,
-                    message: response.entry.content,
-                    created: response.entry.createdAt,
-                    createdBy: response.entry.createdBy
-                });
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().core.commentsApi.addComment(nodeId, {content: message}))
+            .pipe(
+                map((response: any) => {
+                    return new CommentModel({
+                        id: response.entry.id,
+                        message: response.entry.content,
+                        created: response.entry.createdAt,
+                        createdBy: response.entry.createdBy
+                    });
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -55,24 +56,27 @@ export class CommentContentService {
      * @returns Details for each comment
      */
     getNodeComments(nodeId: string): Observable<CommentModel[]> {
-        return Observable.fromPromise(this.apiService.getInstance().core.commentsApi.getComments(nodeId))
-            .map((response: any) => {
-                const comments: CommentModel[] = [];
-                response.list.entries.forEach((comment: any) => {
-                    comments.push(new CommentModel({
-                        id: comment.entry.id,
-                        message: comment.entry.content,
-                        created: comment.entry.createdAt,
-                        createdBy: comment.entry.createdBy
-                    }));
-                });
-                return comments;
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().core.commentsApi.getComments(nodeId))
+            .pipe(
+                map((response: any) => {
+                    const comments: CommentModel[] = [];
+                    response.list.entries.forEach((comment: any) => {
+                        comments.push(new CommentModel({
+                            id: comment.entry.id,
+                            message: comment.entry.content,
+                            created: comment.entry.createdAt,
+                            createdBy: comment.entry.createdBy
+                        }));
+                    });
+                    return comments;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
 }
