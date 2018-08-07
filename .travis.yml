@@ -66,7 +66,7 @@ script:
 jobs:
     include:
         - stage: Demo shell prod && Demo shell e2e && Check ADF exports
-          script: travis_wait 30 ./scripts/test-dist.sh -n $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
+          script: ./scripts/test-dist.sh -n $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
         - # Test Update version 2.0.0
           script: ./scripts/test-e2e-bc.sh
         - # Test expors
