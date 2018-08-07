@@ -93,7 +93,7 @@
                 <mat-checkbox
                     *ngFor="let bucket of field.buckets"
                     [checked]="bucket.checked"
-                    [attr.data-automation-id]="'checkbox-'+field.label+'-'++(bucket.display || bucket.label)"
+                    [attr.data-automation-id]="'checkbox-'+field.label+'-'+(bucket.display || bucket.label)"
                     (change)="onToggleBucket($event, field, bucket)">
                     {{ bucket.display || bucket.label }} <span *ngIf="bucket.count!==null">(</span>{{ bucket.count }}<span *ngIf="bucket.count!==null">)</span>
                 </mat-checkbox>
