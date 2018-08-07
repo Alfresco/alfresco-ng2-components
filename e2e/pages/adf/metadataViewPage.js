@@ -120,7 +120,7 @@ var MetadataViewPage = function () {
     };
 
     this.clickOnInformationButton = function () {
-        Util.waitUntilElementIsVisible(informationSpan);
+        Util.waitUntilElementIsVisible(informationSpan, 50000);
         informationButton.click();
         return this;
     };
