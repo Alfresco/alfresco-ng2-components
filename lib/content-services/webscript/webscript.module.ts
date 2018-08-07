@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { DataTableModule, PipeModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { MaterialModule } from '../material.module';
 import { WebscriptComponent } from './webscript.component';
@@ -26,10 +25,8 @@ import { WebscriptComponent } from './webscript.component';
 @NgModule({
     imports: [
         CommonModule,
-        PipeModule,
         MaterialModule,
-        DataTableModule,
-        TranslateModule
+        CoreModule.forChild()
     ],
     exports: [
         WebscriptComponent

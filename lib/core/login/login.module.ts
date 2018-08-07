@@ -33,7 +33,7 @@ import { LoginHeaderDirective } from './directives/login-header.directive';
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     declarations: [
         LoginComponent,
@@ -41,11 +41,9 @@ import { LoginHeaderDirective } from './directives/login-header.directive';
         LoginHeaderDirective
     ],
     exports: [
-        [
-            LoginComponent,
-            LoginFooterDirective,
-            LoginHeaderDirective
-        ]
+        LoginComponent,
+        LoginFooterDirective,
+        LoginHeaderDirective
     ]
 })
 export class LoginModule {

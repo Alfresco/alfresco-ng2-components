@@ -16,9 +16,9 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, TRANSLATION_PROVIDER, CommentsModule } from '@alfresco/adf-core';
+import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -30,12 +30,26 @@ import { AttachmentModule } from './attachment/attachment.module';
 import { PeopleModule } from './people/people.module';
 import { ProcessService } from './process-list/services/process.service';
 import { ProcessFilterService } from './process-list/services/process-filter.service';
+import { TaskListService } from './task-list/services/tasklist.service';
+import { TaskFilterService } from './task-list/services/task-filter.service';
+import { TaskUploadService } from './task-list/services/task-upload.service';
+import { ProcessUploadService } from './task-list/services/process-upload.service';
+
+export function providers() {
+    return [
+        ProcessService,
+        ProcessFilterService,
+        TaskListService,
+        TaskFilterService,
+        TaskUploadService,
+        ProcessUploadService
+    ];
+}
 
 @NgModule({
     imports: [
-        CoreModule,
+        CoreModule.forChild(),
         CommonModule,
-        CommentsModule,
         ProcessCommentsModule,
         FormsModule,
         ReactiveFormsModule,
@@ -47,6 +61,7 @@ import { ProcessFilterService } from './process-list/services/process-filter.ser
         PeopleModule
     ],
     providers: [
+        ...providers(),
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -54,13 +69,10 @@ import { ProcessFilterService } from './process-list/services/process-filter.ser
                 name: 'adf-process-services',
                 source: 'assets/adf-process-services'
             }
-        },
-        ProcessService,
-        ProcessFilterService
+        }
     ],
     exports: [
         CommonModule,
-        CommentsModule,
         ProcessCommentsModule,
         FormsModule,
         ReactiveFormsModule,
@@ -72,4 +84,54 @@ import { ProcessFilterService } from './process-list/services/process-filter.ser
     ]
 })
 export class ProcessModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ProcessModule,
+            providers: [
+                ...providers(),
+                {
+                    provide: TRANSLATION_PROVIDER,
+                    multi: true,
+                    useValue: {
+                        name: 'adf-process-services',
+                        source: 'assets/adf-process-services'
+                    }
+                }
+            ]
+        };
+    }
+
+    static forChild(): ModuleWithProviders {
+        return {
+            ngModule: ProcessModuleLazy
+        };
+    }
 }
+
+@NgModule({
+    imports: [
+        CoreModule.forChild(),
+        CommonModule,
+        ProcessCommentsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        ProcessListModule,
+        TaskListModule,
+        AppsListModule,
+        AttachmentModule,
+        PeopleModule
+    ],
+    exports: [
+        CommonModule,
+        ProcessCommentsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ProcessListModule,
+        TaskListModule,
+        AppsListModule,
+        AttachmentModule,
+        PeopleModule
+    ]
+})
+export class ProcessModuleLazy {}

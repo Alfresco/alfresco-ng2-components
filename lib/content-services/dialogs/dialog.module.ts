@@ -17,18 +17,15 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoreModule } from '@alfresco/adf-core';
 
+import { MaterialModule } from '../material.module';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { FolderDialogComponent } from './folder.dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ShareDialogComponent } from './share.dialog';
 import { ConfirmDialogComponent } from './confirm.dialog';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-
-import { FormModule } from '@alfresco/adf-core';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
 
@@ -36,9 +33,8 @@ import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        CoreModule.forChild(),
         FormsModule,
-        FormModule,
         ReactiveFormsModule,
         MatMomentDatetimeModule,
         MatDatetimepickerModule

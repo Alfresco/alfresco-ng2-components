@@ -17,11 +17,10 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { DataColumnModule,  DataTableModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { PeopleComponent } from './components/people/people.component';
 import { PeopleListComponent } from './components/people-list/people-list.component';
 import { PeopleSearchComponent } from './components/people-search/people-search.component';
@@ -35,11 +34,9 @@ import { PeopleSearchTitleDirective } from './directives/people-search-title.dir
     imports: [
         FormsModule,
         ReactiveFormsModule,
-        DataColumnModule,
-        DataTableModule,
         MaterialModule,
         CommonModule,
-        TranslateModule
+        CoreModule.forChild()
     ],
     declarations: [
         PeopleComponent,

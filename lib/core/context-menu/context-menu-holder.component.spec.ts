@@ -21,6 +21,7 @@ import { fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testin
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
 import { ContextMenuModule } from './context-menu.module';
 import { ContextMenuService } from './context-menu.service';
+import { CoreModule } from '../core.module';
 
 describe('ContextMenuHolderComponent', () => {
     let fixture: ComponentFixture<ContextMenuHolderComponent>;
@@ -53,6 +54,7 @@ describe('ContextMenuHolderComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
                 imports: [
+                    CoreModule.forRoot(),
                     ContextMenuModule
                 ],
                 providers: [

@@ -24,7 +24,7 @@ import { AttachFolderWidgetComponent } from './attach-folder-widget.component';
 
 @NgModule({
     imports: [
-        CoreModule,
+        CoreModule.forChild(),
         MaterialModule
     ],
     entryComponents: [
