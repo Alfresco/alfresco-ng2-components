@@ -92,8 +92,9 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "buildOptimizer": true,
+              "verbose": true,
               "fileReplacements": [
                 {
                   "replace": "demo-shell/src/environments/environment.ts",
@@ -322,8 +323,9 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "buildOptimizer": true,
+              "verbose": true,
               "fileReplacements": [
                 {
                   "replace": "demo-shell/src/environments/environment.ts",
