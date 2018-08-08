@@ -52,6 +52,10 @@ export class TaskListDemoComponent implements OnInit {
 
     start: number;
 
+    size: number;
+
+    page: number;
+
     includeProcessInstance: boolean;
 
     assignmentOptions = [
@@ -87,8 +91,6 @@ export class TaskListDemoComponent implements OnInit {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
                     this.defaultAppId = +params['id'];
-                } else {
-                    this.defaultAppId = 0;
                 }
             });
         }
@@ -101,7 +103,7 @@ export class TaskListDemoComponent implements OnInit {
 
     buildForm() {
         this.taskListForm = this.formBuilder.group({
-            taskAppId: new FormControl(this.defaultAppId, [Validators.required, Validators.pattern('^[0-9]*$')]),
+            taskAppId: new FormControl(this.defaultAppId, [Validators.pattern('^[0-9]*$')]),
             taskName: new FormControl(''),
             taskId: new FormControl(''),
             taskProcessDefinitionId: new FormControl(''),
@@ -109,6 +111,8 @@ export class TaskListDemoComponent implements OnInit {
             taskAssignment: new FormControl(''),
             taskState: new FormControl(''),
             taskSort: new FormControl(''),
+            taskSize: new FormControl(''),
+            taskPage: new FormControl(''),
             taskStart: new FormControl('', [Validators.pattern('^[0-9]*$')]),
             taskIncludeProcessInstance: new FormControl('')
         });
@@ -134,6 +138,8 @@ export class TaskListDemoComponent implements OnInit {
         this.state = taskFilter.taskState;
         this.sort = taskFilter.taskSort;
         this.start = taskFilter.taskStart;
+        this.size = taskFilter.taskSize;
+        this.page = taskFilter.taskPage;
 
         this.includeProcessInstance = taskFilter.taskIncludeProcessInstance === 'include';
     }
@@ -191,5 +197,13 @@ export class TaskListDemoComponent implements OnInit {
 
     get taskStart(): AbstractControl {
         return this.taskListForm.get('taskStart');
+    }
+
+    get taskSize(): AbstractControl {
+        return this.taskListForm.get('taskSize');
+    }
+
+    get taskPage(): AbstractControl {
+        return this.taskListForm.get('taskPage');
     }
 }
