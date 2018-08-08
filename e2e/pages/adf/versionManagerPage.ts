@@ -43,7 +43,7 @@ export class VersionManagePage {
         this.uploadNewVersionButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
         Util.waitUntilElementIsVisible(this.showNewVersionButton);
         return this;
-    };
+    }
 
     getFileVersionName(version) {
         let fileElement = element(by.css(`[id="adf-version-list-item-name-${version}"]`));

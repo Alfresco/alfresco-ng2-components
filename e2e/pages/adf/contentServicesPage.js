@@ -20,6 +20,7 @@ var ContentList = require('./dialog/contentList');
 var CreateFolderDialog = require('./dialog/createFolderDialog');
 var path = require('path');
 var TestConfig = require('../../test.config');
+var NavigationBarPage = require('./navigationBarPage');
 
 var ContentServicesPage = function () {
 
@@ -116,7 +117,8 @@ var ContentServicesPage = function () {
     };
 
     this.navigateToDocumentList = function () {
-        browser.driver.get(contentServicesURL);
+        var navigationBarPage = new NavigationBarPage();
+        navigationBarPage.clickContentServicesButton();
         this.checkAcsContainer();
     };
 
