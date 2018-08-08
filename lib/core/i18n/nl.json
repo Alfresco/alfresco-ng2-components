@@ -294,36 +294,30 @@
       "TITLE": "Er is een fout opgetreden.",
       "DESCRIPTION": "Er is waarschijnlijk iets fout gegaan.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Terug naar Home",
-        "ROUTE": "Home"
+        "TEXT": "Terug naar Home"
       }
     },
     "403": {
       "TITLE": "U hebt geen machtiging voor toegang tot deze server.",
       "DESCRIPTION": "Het is u niet toegestaan toegang te krijgen tot deze resource op de server.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Probleem melden",
-        "URL": "report-issue"
+        "TEXT": "Probleem melden"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Terug naar Home",
-        "ROUTE": "Home"
+        "TEXT": "Terug naar Home"
       }
     },
     "404": {
       "TITLE": "Er is een fout opgetreden.",
       "DESCRIPTION": "De pagina die u zoekt is niet gevonden.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Terug naar Home",
-        "ROUTE": "Home"
+        "TEXT": "Terug naar Home"
       }
     }
   }

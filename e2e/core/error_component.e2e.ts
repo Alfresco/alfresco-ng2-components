@@ -44,11 +44,34 @@ describe('Error Component', () => {
 
     });
 
-    it('[C277302]  Error message displayed without permissions', () => {
+    it('[C277302] Should display the error 403 when access to unathorized page', () => {
         browser.get(TestConfig.adf.url + '/error/403');
         expect(errorPage.getErrorCode()).toBe('403');
         expect(errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
         expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
+    });
+
+    it('[C280563] Should back home button navigate to the home page', () => {
+        browser.get(TestConfig.adf.url + '/error/404');
+
+        errorPage.clickBackButton();
+
+        expect(browser.getCurrentUrl()).toBe(TestConfig.adf.url + '/');
+    });
+
+    it('[C280564] Should secondary button by default redirect to report-issue URL', () => {
+        browser.get(TestConfig.adf.url + '/error/403');
+
+        errorPage.clickSecondButton();
+
+        expect(browser.getCurrentUrl()).toBe(TestConfig.adf.url + '/report-issue');
+    });
+
+    it('[C277304] We couldn’t find the page you were looking for.\' to be \'You\'re not allowed access to this resource on the server.', () => {
+        browser.get(TestConfig.adf.url + '/error/404');
+        expect(errorPage.getErrorCode()).toBe('404');
+        expect(errorPage.getErrorTitle()).toBe('An error occurred.');
+        expect(errorPage.getErrorDescription()).toBe('We couldn’t find the page you were looking for.');
     });
 
 });

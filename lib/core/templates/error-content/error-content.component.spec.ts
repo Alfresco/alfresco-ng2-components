@@ -103,20 +103,18 @@ describe('ErrorContentComponent', () => {
         });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            expect(errorContentComponent.secondaryButtonText).toBe('Secondary Button');
-            const errorContentElement = element.querySelector('.adf-error-content-description-link');
+            const errorContentElement = element.querySelector('#adf-secondary-button');
             expect(errorContentElement).not.toBeNull();
             expect(errorContentElement).toBeDefined();
+            expect(errorContentElement.textContent).toContain('ERROR_CONTENT.UNKNOWN.SECONDARY_BUTTON.TEXT');
+
         });
     }));
 
-    it('should render return button with its value from the translate file', async(() => {
-        spyOn(translateService, 'instant').and.callFake((inputString) => {
-            return 'Home';
-        });
+    it('shoul the default value of return burron be /', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            expect(errorContentComponent.returnButtonUrl).toBe('Home');
+            expect(errorContentComponent.returnButtonUrl).toBe('/');
         });
     }));
 

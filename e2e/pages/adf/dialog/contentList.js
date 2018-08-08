@@ -68,7 +68,6 @@ var ContentList = function () {
                 if (text !== '') {
                     initialList.push(text);
                 }
-                ;
             });
         }).then(function () {
             deferred.fulfill(initialList);

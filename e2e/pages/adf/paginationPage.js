@@ -106,7 +106,7 @@ var PaginationPage = function () {
             element.getText().then(function(text) {
                 if(text !== '') {
                     initialList.push(text);
-                };
+                }
             });
         }).then(function () {
             deferred.fulfill(initialList);

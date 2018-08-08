@@ -294,36 +294,30 @@
       "TITLE": "エラーが発生しました。",
       "DESCRIPTION": "何らかの問題がある可能性があります。",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る",
-        "ROUTE": "ホーム"
+        "TEXT": "ホームへ戻る"
       }
     },
     "403": {
       "TITLE": "このサーバーにアクセスする権限がありません。",
       "DESCRIPTION": "サーバー上のこのリソースにはアクセスできません。",
       "SECONDARY_BUTTON": {
-        "TEXT": "問題の報告",
-        "URL": "report-issue"
+        "TEXT": "問題の報告"
       },
       "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る",
-        "ROUTE": "ホーム"
+        "TEXT": "ホームへ戻る"
       }
     },
     "404": {
       "TITLE": "エラーが発生しました。",
       "DESCRIPTION": "お探しのページが見つかりませんでした。",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る",
-        "ROUTE": "ホーム"
+        "TEXT": "ホームへ戻る"
       }
     }
   }

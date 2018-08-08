@@ -241,7 +241,7 @@ var MetadataViewPage = function () {
         editPropertyIcon.click();
     };
 
-    this.getPropertyIconTooltip = function (propertyName, icon) {
+    this.getPropertyIconTooltip = function (propertyName) {
         var editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
         return editPropertyIcon.getAttribute('title');
     };

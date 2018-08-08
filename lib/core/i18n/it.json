@@ -294,36 +294,30 @@
       "TITLE": "Si è verificato un errore.",
       "DESCRIPTION": "Si è verificato un errore.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Torna alla home",
-        "ROUTE": "Home"
+        "TEXT": "Torna alla home"
       }
     },
     "403": {
       "TITLE": "Non si dispone delle autorizzazioni per accedere al server.",
       "DESCRIPTION": "Accesso alla risorsa sul server non consentito.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Segnala errore",
-        "URL": "segnala problema"
+        "TEXT": "Segnala errore"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Torna alla home",
-        "ROUTE": "Home"
+        "TEXT": "Torna alla home"
       }
     },
     "404": {
       "TITLE": "Si è verificato un errore.",
       "DESCRIPTION": "Impossibile trovare la pagina.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Torna alla home",
-        "ROUTE": "Home"
+        "TEXT": "Torna alla home"
       }
     }
   }

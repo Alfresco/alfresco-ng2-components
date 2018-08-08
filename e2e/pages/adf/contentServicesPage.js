@@ -20,6 +20,7 @@ var ContentList = require('./dialog/contentList');
 var CreateFolderDialog = require('./dialog/createFolderDialog');
 var path = require('path');
 var TestConfig = require('../../test.config');
+var NavigationBarPage = require('./navigationBarPage');
 
 var ContentServicesPage = function () {
 
@@ -116,7 +117,8 @@ var ContentServicesPage = function () {
     };
 
     this.navigateToDocumentList = function () {
-        browser.driver.get(contentServicesURL);
+        var navigationBarPage = new NavigationBarPage();
+        navigationBarPage.clickContentServicesButton();
         this.checkAcsContainer();
     };
 
@@ -261,7 +263,7 @@ var ContentServicesPage = function () {
     };
 
     this.checkContentsAreDisplayed = function (content) {
-        for (i = 0; i < content.length; i++) {
+        for (var i = 0; i < content.length; i++) {
             this.checkContentIsDisplayed(content[i]);
         }
         return this;
@@ -273,7 +275,7 @@ var ContentServicesPage = function () {
     };
 
     this.checkContentsAreNotDisplayed = function (content) {
-        for (i = 0; i < content.length; i++) {
+        for (var i = 0; i < content.length; i++) {
             this.checkContentIsNotDisplayed(content[i]);
         }
         return this;
@@ -327,7 +329,6 @@ var ContentServicesPage = function () {
         for (var i = 1; i < files.length; i++) {
             allFiles = allFiles + "\n" + path.resolve(path.join(TestConfig.main.rootPath, files[i]));
         }
-        ;
         uploadMultipleFileButton.sendKeys(allFiles);
         Util.waitUntilElementIsVisible(uploadMultipleFileButton);
         return this;
@@ -371,11 +372,11 @@ var ContentServicesPage = function () {
     };
 
     this.deleteContents = function (content) {
-        for (i = 0; i < content.length; i++) {
+        for (var i = 0; i < content.length; i++) {
             this.deleteContent(content[i]);
             this.checkContentIsNotDisplayed(content[i]);
             browser.driver.sleep(1000);
-        };
+        }
         return this;
     };
 

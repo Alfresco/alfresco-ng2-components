@@ -294,36 +294,30 @@
       "TITLE": "Une erreur est survenue.",
       "DESCRIPTION": "Il semble qu'une erreur soit survenue.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Retour à l'accueil",
-        "ROUTE": "Accueil"
+        "TEXT": "Retour à l'accueil"
       }
     },
     "403": {
       "TITLE": "Vous n'avez pas les droits d'accès à ce serveur.",
       "DESCRIPTION": "Vous n'êtes pas autorisé à accéder à cette ressource sur le serveur.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Signaler le problème",
-        "URL": "signaler-problème"
+        "TEXT": "Signaler le problème"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Retour à l'accueil",
-        "ROUTE": "Accueil"
+        "TEXT": "Retour à l'accueil"
       }
     },
     "404": {
       "TITLE": "Une erreur est survenue.",
       "DESCRIPTION": "Impossible de trouver la page recherchée.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Retour à l'accueil",
-        "ROUTE": "Accueil"
+        "TEXT": "Retour à l'accueil"
       }
     }
   }

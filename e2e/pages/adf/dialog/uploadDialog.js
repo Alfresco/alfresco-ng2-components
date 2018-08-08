@@ -85,7 +85,7 @@ var UploadDialog = function () {
     };
 
     this.filesAreUploaded = function (content) {
-        for (i=0; i<content.length; i++) {
+        for (var i=0; i<content.length; i++) {
             this.fileIsUploaded(content[i]);
         }
         return this;
@@ -96,7 +96,7 @@ var UploadDialog = function () {
         return this;
     };
 
-     this.cancelUploads = function (content) {
+     this.cancelUploads = function () {
          Util.waitUntilElementIsVisible(cancelUploads);
          cancelUploads.click();
          return this;
