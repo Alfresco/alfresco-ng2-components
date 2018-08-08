@@ -294,36 +294,30 @@
       "TITLE": "Det oppstod en feil",
       "DESCRIPTION": "Noe gikk galt.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbake til startsiden",
-        "ROUTE": "Hjem"
+        "TEXT": "Tilbake til startsiden"
       }
     },
     "403": {
       "TITLE": "Du har ikke tillatelse for tilgang til denne serveren.",
       "DESCRIPTION": "Du har ikke lov til å få tilgang til denne ressursen på serveren.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Rapporter problem",
-        "URL": "rapporter-problem"
+        "TEXT": "Rapporter problem"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbake til startsiden",
-        "ROUTE": "Hjem"
+        "TEXT": "Tilbake til startsiden"
       }
     },
     "404": {
       "TITLE": "Det oppstod en feil.",
       "DESCRIPTION": "Vi kunne ikke finne siden du så etter.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbake til startsiden",
-        "ROUTE": "Hjem"
+        "TEXT": "Tilbake til startsiden"
       }
     }
   }

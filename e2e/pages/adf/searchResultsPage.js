@@ -115,12 +115,12 @@ var SearchResultsPage = function () {
             if(sortOrder===true) {
                 if(result !== 'arrow_upward') {
                         element(sortArrowLocator).click();
-                };
+                }
             }
             else {
                 if(result === 'arrow_upward') {
                     element(sortArrowLocator).click();
-                };
+                }
             }
 
             return Promise.resolve();

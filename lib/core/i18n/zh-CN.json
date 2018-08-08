@@ -294,36 +294,30 @@
       "TITLE": "出现错误。",
       "DESCRIPTION": "看似发生错误。",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "返回到主页",
-        "ROUTE": "主页"
+        "TEXT": "返回到主页"
       }
     },
     "403": {
       "TITLE": "您没有访问此服务器的权限。",
       "DESCRIPTION": "不允许您访问服务器上的此资源。",
       "SECONDARY_BUTTON": {
-        "TEXT": "报告问题",
-        "URL": "report-issue"
+        "TEXT": "报告问题"
       },
       "RETURN_BUTTON": {
-        "TEXT": "返回到主页",
-        "ROUTE": "主页"
+        "TEXT": "返回到主页"
       }
     },
     "404": {
       "TITLE": "出现错误。",
       "DESCRIPTION": "我们无法找到您正在查找的页面。",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "返回到主页",
-        "ROUTE": "主页"
+        "TEXT": "返回到主页"
       }
     }
   }

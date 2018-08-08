@@ -123,7 +123,7 @@ var SearchDialog = function () {
     this.clearText = function () {
         Util.waitUntilElementIsVisible(searchBar);
         var deferred = protractor.promise.defer();
-        searchBar.clear().then(function (value) {
+        searchBar.clear().then(function () {
             searchBar.sendKeys(protractor.Key.ESCAPE);
         });
         return deferred.promise;

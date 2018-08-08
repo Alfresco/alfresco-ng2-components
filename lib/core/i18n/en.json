@@ -294,36 +294,30 @@
       "TITLE": "We hit a problem.",
       "DESCRIPTION": "Looks like something went wrong.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home",
-        "ROUTE": "Home"
+        "TEXT": "Back to home"
       }
     },
     "403": {
       "TITLE": "You don't have permission to access this server.",
       "DESCRIPTION": "You're not allowed access to this resource on the server.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Report issue",
-        "URL": "report-issue"
+        "TEXT": "Report issue"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home",
-        "ROUTE": "Home"
+        "TEXT": "Back to home"
       }
     },
     "404": {
       "TITLE": "An error occurred.",
       "DESCRIPTION": "We couldn’t find the page you were looking for.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home",
-        "ROUTE": "Home"
+        "TEXT": "Back to home"
       }
     }
   }

@@ -294,36 +294,30 @@
       "TITLE": "Se ha producido un error.",
       "DESCRIPTION": "Parece que algo ha ido mal.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Volver al inicio",
-        "ROUTE": "Inicio"
+        "TEXT": "Volver al inicio"
       }
     },
     "403": {
       "TITLE": "No tiene permiso para acceder a este servidor.",
       "DESCRIPTION": "No tiene permitido acceder a este recurso en el servidor.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Notificar problema",
-        "URL": "notificar-problema"
+        "TEXT": "Notificar problema"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Volver al inicio",
-        "ROUTE": "Inicio"
+        "TEXT": "Volver al inicio"
       }
     },
     "404": {
       "TITLE": "Se ha producido un error.",
       "DESCRIPTION": "No hemos podido encontrar la página que busca.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Volver al inicio",
-        "ROUTE": "Inicio"
+        "TEXT": "Volver al inicio"
       }
     }
   }

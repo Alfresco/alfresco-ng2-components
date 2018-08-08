@@ -68,7 +68,7 @@ var CardViewComponentPage = function () {
         return saveIcon.click();
     };
 
-    this.getTextFieldText = function (text) {
+    this.getTextFieldText = function () {
         var textField = element(by.css("span[data-automation-id='card-textitem-value-name']"));
         Util.waitUntilElementIsVisible(textField);
         return textField.getText();
@@ -108,13 +108,13 @@ var CardViewComponentPage = function () {
         return this;
     };
 
-    this.getIntFieldText = function (text) {
+    this.getIntFieldText = function () {
         var textField = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
         Util.waitUntilElementIsVisible(textField);
         return textField.getText();
     };
 
-    this.getErrorInt = function (text) {
+    this.getErrorInt = function () {
         let errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
         Util.waitUntilElementIsVisible(errorElement);
         return errorElement.getText();
@@ -147,13 +147,13 @@ var CardViewComponentPage = function () {
         return this;
     };
 
-    this.getFloatFieldText = function (text) {
+    this.getFloatFieldText = function () {
         var textField = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
         Util.waitUntilElementIsVisible(textField);
         return textField.getText();
     };
 
-    this.getErrorFloat = function (text) {
+    this.getErrorFloat = function () {
         let errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
         Util.waitUntilElementIsVisible(errorElement);
         return errorElement.getText();

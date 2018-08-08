@@ -38,12 +38,12 @@ export class VersionManagePage {
         return this;
     }
 
-    uploadNewVersionFile = function (fileLocation) {
+    uploadNewVersionFile(fileLocation) {
         Util.waitUntilElementIsVisible(this.uploadNewVersionButton);
         this.uploadNewVersionButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
         Util.waitUntilElementIsVisible(this.showNewVersionButton);
         return this;
-    };
+    }
 
     getFileVersionName(version) {
         let fileElement = element(by.css(`[id="adf-version-list-item-name-${version}"]`));

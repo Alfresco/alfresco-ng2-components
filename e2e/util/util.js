@@ -435,7 +435,7 @@ exports.waitUntilElementIsNotOnPage = function (elementToCheck, timeout) {
 };
 
 exports.waitUntilElementIsOnPage = function (elementToCheck, timeout) {
-    waitTimeout = timeout || DEFAULT_TIMEOUT;
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
     return browser.wait(browser.wait(until.visibilityOf(elementToCheck)), timeout);
 };
