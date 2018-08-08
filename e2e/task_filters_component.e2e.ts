@@ -20,9 +20,6 @@ import resources = require('./util/resources');
 import LoginPage = require('./pages/adf/loginPage');
 import NavigationBarPage = require('./pages/adf/navigationBarPage');
 import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
-import StartProcessPage = require('./pages/adf/process_services/startProcessPage');
-import ProcessFiltersPage = require('./pages/adf/process_services/processFiltersPage');
-import AppNavigationBarPage = require('./pages/adf/process_services/appNavigationBarPage');
 import TasksPage = require('./pages/adf/process_services/tasksPage');
 import TasksListPage = require('./pages/adf/process_services/tasksListPage');
 import TaskFiltersPage = require('./pages/adf/process_services/taskFiltersPage');
@@ -37,25 +34,12 @@ describe('Task Filters Test', () => {
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();
     let processServicesPage = new ProcessServicesPage();
-    let startProcessPage = new StartProcessPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
     let tasksPage = new TasksPage();
     let tasksListPage = new TasksListPage();
     let taskFiltersPage = new TaskFiltersPage();
     let taskDetailsPage = new TaskDetailsPage();
 
     let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
-
-    let processTitle = {
-        running: 'Test_running',
-        completed: 'Test_completed'
-    };
-    let processFilter = {
-        running: 'Running',
-        all: 'All',
-        completed: 'Completed'
-    };
 
     beforeAll(async (done) => {
         let apps = new AppsActions();
@@ -79,11 +63,15 @@ describe('Task Filters Test', () => {
         done();
     });
 
-    it('[C260330] Should display task list when app is in task section', () => {
+    beforeEach(async (done) => {
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
 
+        done();
+    });
+
+    it('[C260330] Should display task list when app is in task section', () => {
         tasksPage.clickOnCreateButton();
         taskFiltersPage.clickNewTaskButton();
         tasksPage.createNewTask().addName('Test').clickStartButton();
@@ -109,10 +97,6 @@ describe('Task Filters Test', () => {
     });
 
     it('[C260348] Should display task list when app is in task section', () => {
-        navigationBarPage.clickProcessServicesButton();
-        processServicesPage.checkApsContainer();
-        processServicesPage.goToApp(app.title);
-
         expect(taskFiltersPage.checkMyTasksItem()).toBeDefined();
         expect(taskFiltersPage.checkQueuedTaskItem()).toBeDefined();
         expect(taskFiltersPage.checkInvolvedTaskItem()).toBeDefined();
@@ -153,10 +137,6 @@ describe('Task Filters Test', () => {
     });
 
     it('[C260349] Should display task list when app is in task section', () => {
-        navigationBarPage.clickProcessServicesButton();
-        processServicesPage.checkApsContainer();
-        processServicesPage.goToApp(app.title);
-
         tasksPage.clickOnCreateButton();
         taskFiltersPage.clickNewTaskButton();
         tasksPage.createNewTask().addName('Test1').clickStartButton();

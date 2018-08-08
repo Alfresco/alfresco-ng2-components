@@ -23,12 +23,11 @@ var TaskFiltersPage = function () {
     var queuedTask = element(by.css("span[data-automation-id='Queued Tasks_filter']"));
     var completedTask = element(by.css("span[data-automation-id='Completed Tasks_filter']"));
     var involvedTask = element(by.css("span[data-automation-id='Involved Tasks_filter']"));
-    var tasksAccordionButton = element(by.css("div[class='adf-panel-heading adf-panel-heading-selected']"));
-    var tasksAccordionClosed = element(by.css("div[class='mat-expansion-panel-content ng-trigger ng-trigger-bodyExpansion']"));
-    var tasksAccordionExpanded = element(by.css("mat-expansion-panel[class='mat-expansion-panel ng-tns-c53-14 mat-expanded mat-expansion-panel-spacing;]"));
+    var tasksAccordionButton = element(by.css("div[data-automation-id='adf-panel-heading']"));
+    var tasksAccordionExpanded = element(by.xpath("mat-expansion-panel[contains(@class, 'mat-expanded')]"));
     var startTaskButton = element(by.css("button[id='button-start']"));
     var newTaskButton = element(by.css("button[data-automation-id='btn-start-task']"));
-    var activeFilter = element(by.css("mat-list-item[class='adf-filters__entry mat-list-item ng-star-inserted active'] span"));
+    var activeFilter = element(by.xpath("mat-list-item[contains(@class, 'active')]"));
     var emptyTaskDetails = element(by.css("adf-task-details > div > div"));
     var emptyTaskList = element(by.css("p[class='adf-empty-content__title']"));
     
@@ -83,8 +82,8 @@ var TaskFiltersPage = function () {
     };
 
     this.checkTasksAccordionClosed = function() {
-        Util.waitUntilElementIsVisible(tasksAccordionClosed);
-        return tasksAccordionClosed;
+        Util.waitUntilElementIsNotVisible(tasksAccordionExpanded);
+        return tasksAccordionExpanded;
     };
 
     this.clickStartTaskButton = function() {
@@ -114,5 +113,3 @@ var TaskFiltersPage = function () {
 };
 
 module.exports = TaskFiltersPage;
-
-

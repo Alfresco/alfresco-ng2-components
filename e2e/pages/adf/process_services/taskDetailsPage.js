@@ -41,8 +41,8 @@ var TaskDetailsPage = function () {
     var editActionInvolvedUser = by.xpath("following-sibling::div[@class='people-edit-label ng-star-inserted']");
     var involvedUserPic = by.xpath("ancestor::div/ancestor::div/preceding-sibling::div//div[@class='adf-people-search-people-pic ng-star-inserted']");
     var infoDrawer = element(by.css("adf-info-drawer"));
-    var taskDetailsSection = element(by.css("div[class='adf-task-details ng-star-inserted']"));
-    var taskDetailsEmptySection = element(by.css("div[class='full-width adf-data-table ng-star-inserted adf-data-table--empty']"));
+    var taskDetailsSection = element(by.css("div[data-automation-id='adf-tasks-details']"));
+    var taskDetailsEmptySection = element(by.css("div[data-automation-id='adf-tasks-details--empty']"));
     var completeTask = element(by.css("button[id='adf-no-form-complete-button']"));
     var auditLogButton = element(by.css("button[adf-task-audit]"));
 
