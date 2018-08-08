@@ -41,6 +41,9 @@ var TaskDetailsPage = function () {
     var editActionInvolvedUser = by.xpath("following-sibling::div[@class='people-edit-label ng-star-inserted']");
     var involvedUserPic = by.xpath("ancestor::div/ancestor::div/preceding-sibling::div//div[@class='adf-people-search-people-pic ng-star-inserted']");
     var infoDrawer = element(by.css("adf-info-drawer"));
+    var taskDetailsSection = element(by.css("div[data-automation-id='adf-tasks-details']"));
+    var taskDetailsEmptySection = element(by.css("div[data-automation-id='adf-tasks-details--empty']"));
+    var completeTask = element(by.css("button[id='adf-no-form-complete-button']"));
     var auditLogButton = element(by.css("button[adf-task-audit]"));
 
     var noPeopleInvolved = element(by.id('no-people-label'));
@@ -263,6 +266,38 @@ var TaskDetailsPage = function () {
         var pic = this.getRowsUser(user).element(involvedUserPic);
         Util.waitUntilElementIsVisible(pic);
         return pic.getText();
+    }
+    
+    this.checkTaskDetails = function () {
+        Util.waitUntilElementIsVisible(taskDetailsSection);
+        return taskDetailsSection.getText();
+    };
+
+    this.checkTaskDetailsEmpty = function () {
+        Util.waitUntilElementIsVisible(taskDetailsEmptySection);
+        return taskDetailsEmptySection.getText();
+    };
+
+    this.checkTaskDetailsDisplayed = function () {
+        Util.waitUntilElementIsVisible(taskDetailsSection);
+        Util.waitUntilElementIsVisible(formNameField);
+        Util.waitUntilElementIsVisible(assigneeField);
+        Util.waitUntilElementIsVisible(statusField);
+        Util.waitUntilElementIsVisible(categoryField);
+        Util.waitUntilElementIsVisible(parentNameField);
+        Util.waitUntilElementIsVisible(createdField);
+        Util.waitUntilElementIsVisible(idField);
+        Util.waitUntilElementIsVisible(descriptionField);
+        Util.waitUntilElementIsVisible(dueDateField);
+        Util.waitUntilElementIsVisible(dueDateField);
+        Util.waitUntilElementIsVisible(activitiesTitle);
+
+        return taskDetailsSection.getText();
+    };
+
+    this.clickCompleteTask = function () {
+        Util.waitUntilElementIsVisible(completeTask);
+        return completeTask.click();
     };
 
 };
