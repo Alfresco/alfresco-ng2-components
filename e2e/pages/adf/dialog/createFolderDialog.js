@@ -19,14 +19,24 @@ var Util = require('../../../util/util');
 
 var CreateFolderDialog = function () {
 
-    var folderNameField = element(by.css("input[placeholder='Name']"));
-    var folderDescriptionField = element(by.css("textarea[placeholder='Description']"));
-    var createButton = element(by.cssContainingText("button span", "Create"));
-    var cancelButton = element(by.cssContainingText("button span", "Cancel"));
+    var folderNameField = element(by.id('adf-folder-name-input'));
+    var folderDescriptionField = element(by.id('adf-folder-description-input'));
+    var createButton = element(by.id('adf-folder-create-button'));
+    var cancelButton = element(by.id('adf-folder-cancel-button'));
 
     this.clickOnCreateButton = function () {
         Util.waitUntilElementIsVisible(createButton);
         createButton.click();
+        return this;
+    };
+
+    this.checkCreateBtnIsDisabled = function () {
+        Util.waitUntilElementIsVisible(createButton.getAttribute("disabled"));
+        return this;
+    };
+
+    this.checkCreateBtnIsEnabled = function () {
+        createButton.isEnabled();
         return this;
     };
 
@@ -38,13 +48,14 @@ var CreateFolderDialog = function () {
 
     this.addFolderName = function (folderName) {
         Util.waitUntilElementIsVisible(folderNameField);
-        folderNameField.sendKeys(folderName);
+        folderNameField.clear().sendKeys(folderName);
+        browser.driver.sleep(500);
         return this;
     };
 
     this.addFolderDescription = function (folderDescription) {
         Util.waitUntilElementIsVisible(folderDescriptionField);
-        folderDescriptionField.sendKeys(folderDescription);
+        folderDescriptionField.clear().sendKeys(folderDescription);
         return this;
     };
 
