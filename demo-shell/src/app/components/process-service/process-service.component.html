@@ -62,7 +62,7 @@
                         #taskListPagination>
                     </adf-pagination>
                 </div>
-                <div class="adf-grid-item adf-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto">
+                <div class="adf-grid-item adf-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto" data-automation-id="adf-tasks-details">
                     <adf-task-details #activitidetails
                                            [debugMode]="true"
                                            [taskId]="currentTaskId"
