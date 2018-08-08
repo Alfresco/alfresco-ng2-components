@@ -1,0 +1,140 @@
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import LoginPage = require('../../pages/adf/loginPage');
+import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import CreateFolderDialog = require('../../pages/adf/dialog/createFolderDialog');
+import NotificationPage = require('../../pages/adf/notificationPage');
+import MetadataViewPage = require('../../pages/adf/metadataViewPage');
+import ContentListPage = require('../../pages/adf/dialog/contentList');
+
+import AcsUserModel = require('../../models/ACS/acsUserModel');
+
+import TestConfig = require('../../test.config');
+
+import AlfrescoApi = require('alfresco-js-api-node');
+import CONSTANTS = require('../../util/constants');
+
+import { browser, protractor } from 'protractor';
+
+describe('Document List - Pagination', function () {
+
+    let loginPage = new LoginPage();
+    let contentServicesPage = new ContentServicesPage();
+    let createFolderDialog = new CreateFolderDialog();
+    let notificationPage = new NotificationPage();
+    let metadataViewPage = new MetadataViewPage();
+    let contentListPage = new ContentListPage();
+
+    let acsUser = new AcsUserModel();
+    let consumerUser = new AcsUserModel();
+    let site;
+
+    beforeAll(async (done) => {
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        contentServicesPage.goToDocumentList();
+
+        done();
+    });
+
+    afterEach(() => {
+        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    });
+
+    it('[C260154] Should not create the folder if cancel button is clicked', () => {
+        let folderName = 'cancelFolder';
+        contentServicesPage.clickOnCreateNewFolder();
+
+        createFolderDialog.addFolderName(folderName);
+        createFolderDialog.clickOnCancelButton();
+
+        contentServicesPage.checkContentIsNotDisplayed(folderName);
+    });
+
+    it('[C260155] Should enable the Create button only when a folder name is present', () => {
+        let folderName = 'NotEnableFolder';
+        contentServicesPage.clickOnCreateNewFolder();
+
+        createFolderDialog.checkCreateBtnIsDisabled();
+
+        createFolderDialog.addFolderName(folderName);
+
+        createFolderDialog.checkCreateBtnIsEnabled();
+    });
+
+    it('[C260156] Should not be possible create two folder with the same name', () => {
+        let folderName = 'duplicate';
+        contentServicesPage.createNewFolder(folderName);
+
+        contentServicesPage.checkContentIsDisplayed(folderName);
+
+        contentServicesPage.createNewFolder(folderName);
+
+        notificationPage.checkNotifyContains('There\'s already a folder with this name. Try a different name.');
+    });
+
+    it('[C260157] Should be possible create a folder under a folder with the same name', () => {
+        let folderName = 'sameSubFolder';
+
+        contentServicesPage.createNewFolder(folderName);
+        contentServicesPage.checkContentIsDisplayed(folderName);
+
+        contentServicesPage.navigateToFolder(folderName);
+
+        contentServicesPage.createNewFolder(folderName);
+        contentServicesPage.checkContentIsDisplayed(folderName);
+    });
+
+    it('[C260158] Should be possible add a folder description when create a new folder', () => {
+        let folderName = 'folderDescription';
+        let description = 'this is the description';
+
+        contentServicesPage.clickOnCreateNewFolder();
+
+        createFolderDialog.addFolderName(folderName);
+        createFolderDialog.addFolderDescription(description);
+
+        createFolderDialog.clickOnCreateButton();
+
+        contentServicesPage.checkContentIsDisplayed(folderName);
+
+        contentListPage.metadataContent(folderName);
+
+        expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('this is the description');
+    });
+
+    it('[C260159] Should not be possible create a folder with banned carachter', () => {
+        let bannedChar = ['* ', '<', '>', '\\', '/', '?', ':', '|'];
+
+        contentServicesPage.clickOnCreateNewFolder();
+
+        bannedChar.forEach((currentChar) => {
+            createFolderDialog.addFolderName(currentChar);
+            createFolderDialog.checkCreateBtnIsDisabled();
+        });
+    });
+});
