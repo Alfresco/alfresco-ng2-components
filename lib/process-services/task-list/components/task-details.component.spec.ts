@@ -18,7 +18,7 @@
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of, throwError } from 'rxjs';
+import { of, throwError, Observable } from 'rxjs';
 
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormService, setupTestBed, BpmUserService } from '@alfresco/adf-core';
 import { CommentProcessService, LogService, AuthenticationService } from '@alfresco/adf-core';
