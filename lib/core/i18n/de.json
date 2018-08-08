@@ -306,24 +306,20 @@
       "TITLE": "Sie sind nicht zum Zugriff auf diesen Server berechtigt.",
       "DESCRIPTION": "Sie sind nicht zum Zugriff auf diese Ressource auf dem Server berechtigt.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Problem melden",
-        "URL": "report-issue"
+        "TEXT": "Problem melden"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Zurück zur Startseite",
-        "ROUTE": "Startseite"
+        "TEXT": "Zurück zur Startseite"
       }
     },
     "404": {
       "TITLE": "Es ist ein Fehler aufgetreten.",
       "DESCRIPTION": "Die Seite, nach der Sie suchen, wurde nicht gefunden.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Zurück zur Startseite",
-        "ROUTE": "Startseite"
+        "TEXT": "Zurück zur Startseite"
       }
     }
   }
