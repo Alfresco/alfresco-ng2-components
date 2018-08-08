@@ -30,7 +30,7 @@ var SearchDialog = function () {
     var allRows = element.all(by.css("h4[class*='adf-search-fixed-text']"));
 
     this.pressDownArrowAndEnter = function () {
-        element(by.css("adf-search-control div[style*='translateX(0%)'] input")).sendKeys(protractor.Key.ARROW_DOWN);
+        element(by.css("adf-search-control div input")).sendKeys(protractor.Key.ARROW_DOWN);
         return browser.actions().sendKeys(protractor.Key.ENTER).perform();
     };
 

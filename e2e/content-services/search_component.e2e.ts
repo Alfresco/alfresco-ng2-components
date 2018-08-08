@@ -214,20 +214,19 @@ describe('Search component - Search Bar', () => {
         searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
 
-    xit('[C91321] Should be able to use down arrow key when navigating throw suggestions', () => {
+    it('[C91321] Should be able to use down arrow key when navigating throw suggestions', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
             .clickOnSearchIcon()
             .enterText(secondFolder.shortName)
             .pressDownArrowAndEnter();
-        searchDialog.pressDownArrowAndEnter();
 
         contentServicesPage.checkAcsContainer();
         expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 
-    xit('[C260254] The search bar gets closed when clicking on another browser tab', () => {
+    it('[C260254] The search bar gets closed when clicking on another browser tab', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
