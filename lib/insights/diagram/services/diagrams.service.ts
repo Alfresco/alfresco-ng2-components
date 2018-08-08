@@ -17,8 +17,8 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
+import { Observable, from, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class DiagramsService {
@@ -28,17 +28,21 @@ export class DiagramsService {
     }
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().
-        activiti.modelJsonBpmnApi.getModelJSON(processDefinitionId)).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.modelJsonBpmnApi.getModelJSON(processDefinitionId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     getRunningProcessDefinitionModel(processInstanceId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().
-        activiti.modelJsonBpmnApi.getModelJSONForProcessDefinition(processInstanceId)).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.modelJsonBpmnApi.getModelJSONForProcessDefinition(processInstanceId))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

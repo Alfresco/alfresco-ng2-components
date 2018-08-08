@@ -23,7 +23,7 @@ import { AnalyticsReportParametersComponent } from '../components/analytics-repo
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { AnalyticsService } from '../services/analytics.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 declare let jasmine: any;
 
@@ -448,7 +448,7 @@ describe('AnalyticsReportParametersComponent', () => {
             }));
 
             it('Should be able to change the report title', (done) => {
-                spyOn(service, 'updateReport').and.returnValue(Observable.of(analyticParamsMock.reportDefParamStatus));
+                spyOn(service, 'updateReport').and.returnValue(of(analyticParamsMock.reportDefParamStatus));
 
                 let title: HTMLElement = element.querySelector('h4');
                 title.click();

@@ -37,14 +37,14 @@ import {
     ViewChild
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer } from 'rxjs';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
 import { UserRepresentation } from 'alfresco-js-api';
+import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-task-details',
@@ -182,6 +182,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     peopleSearch: Observable<UserProcessModel[]>;
 
     currentLoggedUser: UserRepresentation;
+    data: any;
 
     constructor(private taskListService: TaskListService,
                 private authService: AuthenticationService,
@@ -193,7 +194,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
         this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
-        this.peopleSearch = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer).share();
+        this.peopleSearch = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer)
+            .pipe(share());
         this.authService.getBpmLoggedUser().subscribe((user: UserRepresentation) => {
             this.currentLoggedUser = user;
         });

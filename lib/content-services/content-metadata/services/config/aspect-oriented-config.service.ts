@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
 import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
 import { getGroup, getProperty } from './property-group-reader';
 
-@Injectable()
 export class AspectOrientedConfigService implements ContentMetadataConfig {
 
     constructor(private config: any) {}

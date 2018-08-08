@@ -76,11 +76,11 @@ var ProcessFiltersPage = function () {
     };
 
     this.checkNoContentMessage = function () {
-        Util.waitUntilElementIsVisible(noContentMessage);
+        return Util.waitUntilElementIsVisible(noContentMessage);
     };
 
     this.selectFromProcessList = function (title) {
-        var processName = element.all(by.css('div[data-automation-id="text_'+ title +'"]')).first();
+        var processName = element.all(by.css('div[data-automation-id="text_' + title + '"]')).first();
         Util.waitUntilElementIsVisible(processName);
         processName.click();
     };
@@ -94,7 +94,7 @@ var ProcessFiltersPage = function () {
         return element.all(rows).count();
     };
 
-    this.waitForTableBody = function (){
+    this.waitForTableBody = function () {
         Util.waitUntilElementIsVisible(tableBody);
     };
 

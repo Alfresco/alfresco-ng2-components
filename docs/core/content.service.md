@@ -12,57 +12,57 @@ Accesses app-generated data objects via URLs and file downloads.
 
 ### Methods
 
--   **createFolder**(relativePath: `string` = `null`, name: `string` = `null`, parentId?: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FolderCreatedEvent`](../../lib/core/events/folder-created.event.ts)`>`<br/>
+-   **createFolder**(relativePath: `string`, name: `string`, parentId?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<FolderCreatedEvent>`<br/>
     Creates a folder.
     -   _relativePath:_ `string`  - Location to create the folder
     -   _name:_ `string`  - Folder name
     -   _parentId:_ `string`  - (Optional) Node ID of parent folder
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FolderCreatedEvent`](../../lib/core/events/folder-created.event.ts)`>` - Information about the new folder
--   **createTrustedUrl**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) = `null`): `string`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<FolderCreatedEvent>` - Information about the new folder
+-   **createTrustedUrl**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)): `string`<br/>
     Creates a trusted object URL from the [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob). WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
     -   _blob:_ [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Data to wrap into object URL
     -   **Returns** `string` - URL string
--   **downloadBlob**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) = `null`, fileName: `string` = `null`)<br/>
+-   **downloadBlob**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), fileName: `string`)<br/>
     Invokes content download for a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) with a file name.
     -   _blob:_ [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Content to download.
     -   _fileName:_ `string`  - Name of the resulting file.
--   **downloadData**(data: `any` = `null`, fileName: `string` = `null`)<br/>
+-   **downloadData**(data: `any`, fileName: `string`)<br/>
     Invokes content download for a data array with a file name.
     -   _data:_ `any`  - Data to download.
     -   _fileName:_ `string`  - Name of the resulting file.
--   **downloadJSON**(json: `any` = `null`, fileName: `string` = `null`)<br/>
+-   **downloadJSON**(json: `any`, fileName: `string`)<br/>
     Invokes content download for a JSON object with a file name.
     -   _json:_ `any`  - JSON object to download.
     -   _fileName:_ `string`  - Name of the resulting file.
--   **getContentUrl**(node: `any` = `null`, attachment?: `boolean` = `null`, ticket?: `string` = `null`): `string`<br/>
+-   **getContentUrl**(node: `any`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
     Gets a content URL for the given node.
     -   _node:_ `any`  - Node to get URL for.
     -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
     -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
     -   **Returns** `string` - URL string
--   **getDocumentThumbnailUrl**(node: `any` = `null`, attachment?: `boolean` = `null`, ticket?: `string` = `null`): `string`<br/>
+-   **getDocumentThumbnailUrl**(node: `any`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
     Gets a thumbnail URL for the given document node.
     -   _node:_ `any`  - Node to get URL for.
     -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
     -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
     -   **Returns** `string` - URL string
--   **getNode**(nodeId: `string` = `null`, opts?: `any` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+-   **getNode**(nodeId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Gets a Node via its node ID.
     -   _nodeId:_ `string`  - ID of the target node
     -   _opts:_ `any`  - (Optional) Options supported by JSAPI
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
--   **getNodeContent**(nodeId: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **getNodeContent**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets content for the given node.
     -   _nodeId:_ `string`  - ID of the target node
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Content data
--   **hasAllowableOperations**(node: `any` = `null`): `boolean`<br/>
+-   **hasAllowableOperations**(node: `any`): `boolean`<br/>
     Checks if the node has the properties allowableOperations
     -   _node:_ `any`  - Node to check allowableOperations
     -   **Returns** `boolean` - True if the node has the property, false otherwise
--   **hasPermission**(node: `Node` = `null`, permission: [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)` | string` = `null`): `boolean`<br/>
+-   **hasPermission**(node: `Node`, permission: [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permissions on that node
     -   _node:_ `Node`  - Node to check allowableOperations
-    -   _permission:_ [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)` | string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+    -   _permission:_ [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 
 ## Details

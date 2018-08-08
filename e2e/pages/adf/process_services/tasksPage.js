@@ -25,7 +25,7 @@ var TasksListPage = require('./tasksListPage');
 
 var TasksPage = function () {
 
-    var createButton = element(by.css("button[data-automation-id='create-button']"));
+    var createButton = element(by.css("button[data-automation-id='create-button'"));
     var newTaskButton = element(by.css("button[data-automation-id='btn-start-task']"));
     var addChecklistButton = element(by.css("button[class*='adf-add-to-checklist-button']"));
     var rowByRowName = by.xpath("ancestor::mat-chip");
@@ -35,7 +35,7 @@ var TasksPage = function () {
     var completeButtonNoForm = element(by.id("adf-no-form-complete-button"));
     var checklistDialog = element(by.id("checklist-dialog"));
     var checklistNoMessage = element(by.id("checklist-none-message"));
-    var numberOfChecklists = element(by.css("mat-chip-list[id='checklist-label'] mat-chip"));
+    var numberOfChecklists = element(by.css("[data-automation-id='checklist-label'] mat-chip"));
 
     this.createNewTask = function () {
         this.createButtonIsDisplayed();
@@ -43,6 +43,12 @@ var TasksPage = function () {
         this.newTaskButtonIsDisplayed();
         newTaskButton.click();
         return new StartTaskDialog();
+    };
+
+    this.clickOnNewTaskButton = function() {
+        Util.waitUntilElementIsClickable(newTaskButton);
+        newTaskButton.click();
+        return this;
     };
 
     this.createButtonIsDisplayed = function() {

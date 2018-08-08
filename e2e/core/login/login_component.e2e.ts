@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import ProcessServicesPage = require('../../pages/adf/process_services/processServicesPage');
@@ -28,7 +30,6 @@ import AdfSettingsPage = require('../../pages/adf/settingsPage');
 import AlfrescoApi = require('alfresco-js-api-node');
 
 import Util = require('../../util/util');
-import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Login component', () => {
 

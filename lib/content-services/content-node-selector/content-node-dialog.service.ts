@@ -18,8 +18,7 @@
 import { MatDialog } from '@angular/material';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ContentService } from '@alfresco/adf-core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
 import { DataColumn, SitesService, TranslationService, PermissionsEnum } from '@alfresco/adf-core';
@@ -27,7 +26,7 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
-import 'rxjs/operator/switchMap';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class ContentNodeDialogService {
@@ -49,9 +48,9 @@ export class ContentNodeDialogService {
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
-        return this.documentListService.getFolderNode(folderNodeId).switchMap((node: MinimalNodeEntryEntity) => {
+        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((node: MinimalNodeEntryEntity) => {
             return this.openUploadFileDialog('Choose', node);
-        });
+        }));
     }
 
     /**
@@ -85,9 +84,9 @@ export class ContentNodeDialogService {
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]> {
-        return this.siteService.getSites().switchMap((response: SitePaging) => {
+        return this.siteService.getSites().pipe(switchMap((response: SitePaging) => {
             return this.openFileBrowseDialogByFolderId(response.list.entries[0].entry.guid);
-        });
+        }));
     }
 
     /**
@@ -95,9 +94,9 @@ export class ContentNodeDialogService {
      * @returns Information about the selected folder(s)
      */
     openFolderBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]> {
-        return this.siteService.getSites().switchMap((response: SitePaging) => {
+        return this.siteService.getSites().pipe(switchMap((response: SitePaging) => {
             return this.openFolderBrowseDialogByFolderId(response.list.entries[0].entry.guid);
-        });
+        }));
     }
 
     /**
@@ -106,9 +105,9 @@ export class ContentNodeDialogService {
      * @returns Information about the selected folder(s)
      */
     openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
-        return this.documentListService.getFolderNode(folderNodeId).switchMap((node: MinimalNodeEntryEntity) => {
+        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((node: MinimalNodeEntryEntity) => {
             return this.openUploadFolderDialog('Choose', node);
-        });
+        }));
     }
 
     /**
@@ -143,7 +142,7 @@ export class ContentNodeDialogService {
             return select;
         } else {
             let errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
-            return Observable.throw(errors);
+            return throwError(errors);
         }
     }
 

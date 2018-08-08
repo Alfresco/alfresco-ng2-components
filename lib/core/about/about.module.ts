@@ -27,7 +27,7 @@ import { DataColumnModule } from '../data-column/data-column.module';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         DataTableModule,
         DataColumnModule
     ],

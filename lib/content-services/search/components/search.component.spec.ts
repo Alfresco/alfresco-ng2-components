@@ -19,18 +19,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { QueryBody } from 'alfresco-js-api';
 import { differentResult, folderResult, result, SimpleSearchTestComponent } from '../../mock';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of, throwError } from 'rxjs';
 import { SearchModule } from '../search.module';
 
 function fakeNodeResultSearch(searchNode: QueryBody): Observable<any> {
     if (searchNode && searchNode.query.query === 'FAKE_SEARCH_EXMPL') {
-        return Observable.of(differentResult);
+        return of(differentResult);
     }
     if (searchNode && searchNode.filterQueries.length === 1 &&
         searchNode.filterQueries[0].query === "TYPE:'cm:folder'") {
-        return Observable.of(folderResult);
+        return of(folderResult);
     }
-    return Observable.of(result);
+    return of(result);
 }
 
 describe('SearchComponent', () => {
@@ -58,8 +58,8 @@ describe('SearchComponent', () => {
 
         it('should clear results straight away when a new search term is entered', (done) => {
             spyOn(searchService, 'search').and.returnValues(
-                Observable.of(result),
-                Observable.of(differentResult)
+                of(result),
+                of(differentResult)
             );
 
             component.setSearchWordTo('searchTerm');
@@ -80,8 +80,7 @@ describe('SearchComponent', () => {
         });
 
         it('should display the returned search results', (done) => {
-            spyOn(searchService, 'search')
-                .and.returnValue(Observable.of(result));
+            spyOn(searchService, 'search').and.returnValue(of(result));
 
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
@@ -95,7 +94,7 @@ describe('SearchComponent', () => {
 
         it('should emit error event when search call fail', (done) => {
             spyOn(searchService, 'search')
-                .and.returnValue(Observable.throw({ status: 402 }));
+                .and.returnValue(throwError({ status: 402 }));
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -108,8 +107,8 @@ describe('SearchComponent', () => {
 
         it('should be able to hide the result panel', (done) => {
             spyOn(searchService, 'search').and.returnValues(
-                Observable.of(result),
-                Observable.of(differentResult)
+                of(result),
+                of(differentResult)
             );
 
             component.setSearchWordTo('searchTerm');
@@ -156,8 +155,8 @@ describe('SearchComponent', () => {
             });
         });
 
-        it('should perform a search with a defaultNode if no searchnode is given', (done) => {
-            spyOn(searchService, 'search').and.returnValue(Observable.of(result));
+        it('should perform a search with a defaultNode if no search node is given', (done) => {
+            spyOn(searchService, 'search').and.returnValue(of(result));
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
             fixture.whenStable().then(() => {

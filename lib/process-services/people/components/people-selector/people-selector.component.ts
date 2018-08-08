@@ -20,7 +20,8 @@ import { PerformSearchCallback } from '../../interfaces/perform-search-callback.
 import { PeopleProcessService, UserProcessModel, LogService, TranslationService } from '@alfresco/adf-core';
 import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
 import { getDisplayUser } from '../../helpers/getDisplayUser';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
 
@@ -60,12 +61,14 @@ export class PeopleSelectorComponent {
 
     searchUser(searchWord: string): Observable<{} | UserProcessModel[]> {
         return this.peopleProcessService.getWorkflowUsers(undefined, searchWord)
-            .catch(this.onSearchUserError.bind(this));
+            .pipe(
+                catchError(this.onSearchUserError.bind(this))
+            );
     }
 
     private onSearchUserError(): Observable<UserProcessModel[]> {
         this.logService.error('getWorkflowUsers threw error');
-        return Observable.of([]);
+        return of([]);
     }
 
     userSelected(user: UserProcessModel): void {

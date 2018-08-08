@@ -19,7 +19,7 @@ import { Component, ContentChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { AuthenticationService } from '../services';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
@@ -60,8 +60,8 @@ describe('LogoutDirective', () => {
         });
 
         it('should redirect to login on click', () => {
-            spyOn(router, 'navigate').and.callThrough();
-            spyOn(authService, 'logout').and.returnValue(Observable.of(true));
+            spyOn(router, 'navigate');
+            spyOn(authService, 'logout').and.returnValue(of(true));
 
             const button = fixture.nativeElement.querySelector('button');
             button.click();
@@ -71,8 +71,8 @@ describe('LogoutDirective', () => {
         });
 
         it('should redirect to login even on logout error', () => {
-            spyOn(router, 'navigate').and.callThrough();
-            spyOn(authService, 'logout').and.returnValue(Observable.throw('err'));
+            spyOn(router, 'navigate');
+            spyOn(authService, 'logout').and.returnValue(throwError('err'));
 
             const button = fixture.nativeElement.querySelector('button');
             button.click();
@@ -116,8 +116,8 @@ describe('LogoutDirective', () => {
         });
 
         it('should redirect to the the input redirectUri on click if present', () => {
-            spyOn(router, 'navigate').and.callThrough();
-            spyOn(authService, 'logout').and.returnValue(Observable.of(true));
+            spyOn(router, 'navigate');
+            spyOn(authService, 'logout').and.returnValue(of(true));
 
             const button = fixture.nativeElement.querySelector('button');
             button.click();
@@ -128,7 +128,7 @@ describe('LogoutDirective', () => {
 
     });
 
-    describe('redirectUri', () => {
+    describe('enabelRedirect', () => {
 
         @Component({
             selector: 'adf-test-component',
@@ -161,8 +161,8 @@ describe('LogoutDirective', () => {
         });
 
         it('should not redirect if enabelRedirect is false', () => {
-            spyOn(router, 'navigate').and.callThrough();
-            spyOn(authService, 'logout').and.returnValue(Observable.of(true));
+            spyOn(router, 'navigate');
+            spyOn(authService, 'logout').and.returnValue(of(true));
             const button = fixture.nativeElement.querySelector('button');
             button.click();
 

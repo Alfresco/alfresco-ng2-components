@@ -15,8 +15,8 @@
                                     data-automation-id="reportName"
                                     [value]="reportParameters.name"
                                     (input)="reportParameters.name=$event.target.value"
-                                    (blur)="editTitle($event)"
-                                    (keyup.enter)="editTitle($event)"
+                                    (blur)="editTitle()"
+                                    (keyup.enter)="editTitle()"
                                 />
                             </mat-form-field>
                         </div>
@@ -24,7 +24,7 @@
                             <mat-icon class="adf-report-icon" >mode_edit</mat-icon>
                             <h4>{{reportParameters.name}}</h4>
                         </div>
-                    </adf-toolbar-title> 
+                    </adf-toolbar-title>
                     <adf-buttons-action-menu *ngIf="!isEditable">
                         <button mat-menu-item (click)="toggleParameters()" id="">
                             <mat-icon>settings</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-SETTING' | translate }}</span>
@@ -40,7 +40,7 @@
                                 <mat-icon>save</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-SAVE' | translate }}</span>
                             </button>
                         </div>
-                    </adf-buttons-action-menu>   
+                    </adf-buttons-action-menu>
                 </adf-toolbar>
                 <div *ngFor="let field of reportParameters.definition.parameters"
                         [class.is-hide]="isParametersHide()">

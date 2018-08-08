@@ -6,14 +6,27 @@
       "PROPERTIES": "Propiedades",
       "VERSIONS": "Versiones"
     },
+    "HOME": {
+      "TITLE": "Componentes angulares para Alfresco",
+      "DOCUMENTATION": "Documentación"
+    },
+    "LOGOUT": {
+      "TITLE": "Página de cierre de sesión",
+      "SUB_TITLE": "Se ha cerrado su sesión",
+      "LOGIN": "Iniciar sesión",
+      "HOME": "Inicio"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Permitir eliminar",
       "SHOW_COMMENTS": "Mostrar comentarios en las versiones",
-      "ALLOW_DOWNLOAD": "Permitir descarga de la versión",
-      "READ_ONLY": "Solo lectura"
+      "ALLOW_DOWNLOAD": "Permitir descarga",
+      "READ_ONLY": "Solo lectura",
+      "COMMENTS": "Mostrar comentarios"
     },
     "PERSONAL-FILES": "Ficheros personales",
     "WARN-MULTIPLE-UPLOADS": "Mostrar advertencia de múltiples cargas.",
+    "CUSTOM-PERMISSION-MESSAGE": "Habilitar mensaje de permiso personalizado",
+    "MEDIUM-TIME-FORMAT": "Habilitar formato de tiempo mediano para lista de documentos",
     "SEARCH": {
       "RADIO": {
         "NONE": "Ninguno",
@@ -39,11 +52,19 @@
       "TITLE": "Metadatos"
     }
   },
+  "COMMENTS": {
+    "ADD_COMMENT": "Añadir"
+  },
   "APP_LAYOUT": {
     "APP_NAME": "Aplicación ADF Demo",
     "HOME": "Inicio",
+    "NODE-SELECTOR": "Selector de nodo",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Ruta de navegación",
+    "NOTIFICATIONS": "Notificaciones",
+    "TASK_LIST": "Lista de tareas",
+    "PROCESS_LIST": "Lista de procesos",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Iniciar sesión",
     "CUSTOM_SOURCES": "Fuentes personalizadas",
@@ -58,13 +79,15 @@
     "TRASHCAN": "Papelera",
     "SOCIAL": "Social",
     "SETTINGS": "Configuración",
+    "CONFIG-EDITOR": "Editor de configuración",
     "OVERLAY_VIEWER": "Visor de superposición",
     "ABOUT": "Acerca de",
     "SEARCH": "Búsqueda ampliada",
     "EXTENDED_SEARCH_QUERY_BODY": "Búsqueda ampliada con cuerpo de consulta",
     "WORD_TO_SEARCH": "Buscar palabra",
     "SEARCH_CREATED_BY": "Creado por",
-    "SEARCH_SERVICE_APPROACH": "Marque esto para desactivar la propiedad de entrada y configurar el uso del servicio"
+    "SEARCH_SERVICE_APPROACH": "Marque esto para desactivar la propiedad de entrada y configurar el uso del servicio",
+    "HEADER_DATA": "Datos de encabezado"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -79,6 +102,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Selección múltiple (con casillas)",
+    "THUMBNAILS": "Habilitar miniaturas",
     "MULTIPLE_FILE_UPLOAD": "Carga de varios ficheros",
     "FOLDER_UPLOAD": "Carga de carpetas",
     "CUSTOM_FILTER": "Filtro de extensiones personalizado",
@@ -154,7 +178,8 @@
     "START-TASK": "Iniciar tarea",
     "START-PROCESS": "Iniciar proceso",
     "PROCESS-AUDIT-LOG": "Registro de auditoría de procesos",
-    "TASK-AUDIT-LOG": "Registro de auditoría de tareas"
+    "TASK-AUDIT-LOG": "Registro de auditoría de tareas",
+    "TASK-SHOW-HEADER": "Mostrar encabezado de detalles"
   },
   "FORM-LIST": {
     "STORE": "Almacenar",
@@ -170,7 +195,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Pie del inicio de sesión"
+    "LOGIN_FOOTER": "Pie del inicio de sesión",
+    "SHOW_REMEMBERME": "Mostrar opción para recordarme",
+    "SHOW_SUCCESS_ROUTE": "Permitir ruta correcta",
+    "CUSTOM_LOGO": "Logotipo personalizado"
   },
   "SEARCH": {
     "RESULTS": "Resultados de la búsqueda",
@@ -188,5 +216,21 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Heredar permiso",
     "INHERITED_PERMISSIONS_BUTTON": "Permiso heredado"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insertar ID de aplicación",
+      "APP_ID_TYPE_ERROR": "El ID de aplicación debe ser un número",
+      "NUMBER_TYPE_ERROR": "El valor ingresado debe ser numérico"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Página de inicio"
+    }
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Insertar ID de aplicación",
+    "APP_ID_TYPE_ERROR": "El ID de aplicación debe ser un número"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Traducción de título personalizado 1",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Traducción de título personalizado 2"
 }

@@ -1,12 +1,18 @@
 .task-list-demo-inputs {
-    margin-top: 100px;
-    margin-bottom: 50px;
+    margin: 100px auto 0 auto;
+    width: 80%;
     display: flex;
+    flex: wrap;
     justify-content: space-evenly;
+
+    & mat-form-field {
+        margin: 20px 0;
+        width: calc(100% * (1/4) - 10px);
+    }
 }
 
 .adf-reset-button {
-    margin-top: 50px;
+    margin-bottom: 50px;
     display: flex;
     justify-content: center;
 }

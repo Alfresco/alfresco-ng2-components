@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-input-rename  */
 
-import { Directive, ElementRef, Input, Renderer } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 import { HighlightTransformService, HightlightTransformResult } from '../services/highlight-transform.service';
 
 @Directive({
@@ -39,7 +39,7 @@ export class HighlightDirective {
 
     constructor(
         private el: ElementRef,
-        private renderer: Renderer,
+        private renderer: Renderer2,
         private highlightTransformService: HighlightTransformService) { }
 
     public highlight(search = this.search, selector = this.selector, classToApply = this.classToApply) {
@@ -49,7 +49,7 @@ export class HighlightDirective {
             elements.forEach((element) => {
                 const result: HightlightTransformResult = this.highlightTransformService.highlight(element.innerHTML, search, classToApply);
                 if (result.changed) {
-                    this.renderer.setElementProperty(element, 'innerHTML', result.text);
+                    this.renderer.setProperty(element, 'innerHTML', result.text);
                 }
             });
         }

@@ -18,7 +18,7 @@
 import { SearchService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { NodePaging } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 /**
  * Internal service used by ContentNodeSelector component.

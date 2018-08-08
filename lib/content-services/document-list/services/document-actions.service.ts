@@ -18,14 +18,12 @@
 import { ContentService, TranslationService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject, throwError } from 'rxjs';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
-import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class DocumentActionsService {
@@ -138,7 +136,7 @@ export class DocumentActionsService {
                     action: 'delete',
                     permission: permission
                 }));
-                return Observable.throw(new Error('No permission to delete'));
+                return throwError(new Error('No permission to delete'));
             }
         }
     }

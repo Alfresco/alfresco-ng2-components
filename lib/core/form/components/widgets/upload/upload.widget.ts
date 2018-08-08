@@ -20,12 +20,12 @@
 import { LogService } from '../../../../services/log.service';
 import { ThumbnailService } from '../../../../services/thumbnail.service';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../core/content-link.model';
 import { baseHost, WidgetComponent } from './../widget.component';
-import 'rxjs/add/operator/mergeMap';
+import { mergeMap, map } from 'rxjs/operators';
 
 @Component({
     selector: 'upload-widget',
@@ -75,27 +75,29 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         }
 
         if (files && files.length > 0) {
-            Observable.from(files).mergeMap(file => this.uploadRawContent(file)).subscribe((res) => {
-                    filesSaved.push(res);
-                },
-                (error) => {
-                    this.logService.error('Error uploading file. See console output for more details.');
-                },
-                () => {
-                    this.field.value = filesSaved;
-                    this.field.json.value = filesSaved;
-                    this.hasFile = true;
-                });
+            from(files)
+                .pipe(mergeMap(file => this.uploadRawContent(file)))
+                .subscribe(
+                    (res) => filesSaved.push(res),
+                    () => this.logService.error('Error uploading file. See console output for more details.'),
+                    () => {
+                        this.field.value = filesSaved;
+                        this.field.json.value = filesSaved;
+                        this.hasFile = true;
+                    }
+                );
         }
     }
 
     private uploadRawContent(file): Observable<any> {
         return this.processContentService.createTemporaryRawRelatedContent(file)
-            .map((response: any) => {
-                this.logService.info(response);
-                response.contentBlob = file;
-                return response;
-            });
+            .pipe(
+                map((response: any) => {
+                    this.logService.info(response);
+                    response.contentBlob = file;
+                    return response;
+                })
+            );
     }
 
     getMultipleFileParam() {

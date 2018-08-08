@@ -19,6 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "Aucune tâche trouvée",
+        "SUBTITLE": "Créer une nouvelle tâche facilement accessible ultérieurement",
         "NONE": "Aucune liste de tâches trouvée"
       }
     },
@@ -150,6 +152,11 @@
       "NO_FORM_MESSAGE": "Aucun formulaire joint",
       "COMPLETE_TASK_MESSAGE": "La tâche {{taskName}} est terminée",
       "COMPLETE_TASK_SUB_MESSAGE": "Aucun formulaire à ajouter"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Sélectionner le formulaire à joindre",
+      "REMOVE_FORM": "Supprimer le formulaire",
+      "SELECT_OPTION": "Sélectionner une option"
     }
   },
   "ADF_PROCESS_LIST": {

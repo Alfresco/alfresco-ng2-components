@@ -118,6 +118,12 @@
       "ERROR_PLURAL": "Не удалось удалить элементов: {{ number }}"
     },
     "HOST_SETTINGS": {
+      "TYPE-AUTH": "Тип авторизации",
+      "BASIC": "Базовая авторизация",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Неявный поток",
+      "PROVIDER": "Поставщик",
+      "REQUIRED": "Поле обязательно для заполнения",
       "CS_URL_ERROR": "Адрес Content Services не соответствует формату URL",
       "PS_URL_ERROR": "Адрес Process Services не соответствует формату URL",
       "TITLE": "Параметры",
@@ -125,9 +131,19 @@
       "BP-HOST": "URL-адрес Process Services",
       "BACK": "Назад",
       "APPLY": "Применить",
-      "NOT_VALID": "http(s)://host|ip:port(/path) не распознан, используйте другой URL-адрес."
+      "NOT_VALID": "http(s)://host|ip:port(/path) не распознан, используйте другой URL-адрес.",
+      "REDIRECT": "URI перенаправления",
+      "REDIRECT_LOGOUT": "Выход URI перенаправления",
+      "SILENT": "Автоматический вход",
+      "SCOPE": "Область применения",
+      "CLIENT": "Идентификатор клиента"
     },
     "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Добавить",
+        "NAME": "Имя",
+        "VALUE": "Значение"
+      },
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Использовать формат числа",
         "INT_VALIDATION_ERROR": "Использовать формат целого числа"
@@ -193,7 +209,8 @@
     "BUTTON": {
       "LOGIN": "Войти",
       "CHECKING": "Проверка",
-      "WELCOME": "Добро пожаловать"
+      "WELCOME": "Добро пожаловать",
+      "SSO": "SSO входа"
     },
     "ACTION": {
       "HELP": "Справка?",
@@ -277,36 +294,30 @@
       "TITLE": "Произошла ошибка.",
       "DESCRIPTION": "Кажется, что-то пошло не так.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Назад на главную",
-        "ROUTE": "Домашняя"
+        "TEXT": "Назад на главную"
       }
     },
     "403": {
       "TITLE": "У вас нет разрешения для доступа к этому серверу.",
       "DESCRIPTION": "У вас нет разрешения для доступа к этому ресурсу на сервере.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Сообщить о проблеме",
-        "URL": ""
+        "TEXT": "Сообщить о проблеме"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Назад на главную",
-        "ROUTE": "Домашняя"
+        "TEXT": "Назад на главную"
       }
     },
     "404": {
       "TITLE": "Произошла ошибка.",
       "DESCRIPTION": "Нам не удалось найти страницу, которую вы искали.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Назад на главную",
-        "ROUTE": "Домашняя"
+        "TEXT": "Назад на главную"
       }
     }
   }

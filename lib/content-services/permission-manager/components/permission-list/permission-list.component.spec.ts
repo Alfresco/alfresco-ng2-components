@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PermissionListComponent } from './permission-list.component';
 import { By } from '@angular/platform-browser';
 import { NodesApiService, SearchService, setupTestBed } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { fakeNodeWithPermissions,
          fakeNodeInheritedOnly,
@@ -57,16 +57,16 @@ describe('PermissionDisplayComponent', () => {
     });
 
     it('should be able to render the component', () => {
-        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
-        spyOn(nodePermissionService, 'getNodeRoles').and.returnValue(Observable.of([]));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
+        spyOn(nodePermissionService, 'getNodeRoles').and.returnValue(of([]));
         fixture.detectChanges();
         expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
     });
 
     it('should render default empty template when no permissions', () => {
         component.nodeId = 'fake-node-id';
-        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithoutPermissions));
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeEmptyResponse));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithoutPermissions));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
         fixture.detectChanges();
 
         expect(element.querySelector('#adf-no-permissions-template')).not.toBeNull();
@@ -75,8 +75,8 @@ describe('PermissionDisplayComponent', () => {
 
     it('should show the node permissions', () => {
         component.nodeId = 'fake-node-id';
-        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithPermissions));
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeEmptyResponse));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithPermissions));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
         fixture.detectChanges();
         expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
         expect(element.querySelectorAll('.adf-datatable-row').length).toBe(4);
@@ -84,8 +84,8 @@ describe('PermissionDisplayComponent', () => {
 
     it('should show inherited label for inherited permissions', () => {
         component.nodeId = 'fake-node-id';
-        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeInheritedOnly));
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeEmptyResponse));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeInheritedOnly));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
         fixture.detectChanges();
         expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
         expect(element.querySelector('#adf-permission-inherited-label')).toBeDefined();
@@ -96,9 +96,9 @@ describe('PermissionDisplayComponent', () => {
 
         it('should show locally set label for locally set permissions',  () => {
             component.nodeId = 'fake-node-id';
-            spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
-            spyOn(nodePermissionService, 'getGroupMemeberByGroupName').and.returnValue(Observable.of(fakeSiteRoles));
-            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeSiteNodeResponse));
+            spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
+            spyOn(nodePermissionService, 'getGroupMemeberByGroupName').and.returnValue(of(fakeSiteRoles));
+            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
             fixture.detectChanges();
             expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
             expect(element.querySelector('#adf-permission-locallyset-label')).toBeDefined();
@@ -107,9 +107,9 @@ describe('PermissionDisplayComponent', () => {
 
         it('should show a dropdown with the possible roles',  async(() => {
             component.nodeId = 'fake-node-id';
-            spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
-            spyOn(nodePermissionService, 'getGroupMemeberByGroupName').and.returnValue(Observable.of(fakeSiteRoles));
-            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeSiteNodeResponse));
+            spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
+            spyOn(nodePermissionService, 'getGroupMemeberByGroupName').and.returnValue(of(fakeSiteRoles));
+            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -133,8 +133,8 @@ describe('PermissionDisplayComponent', () => {
 
         it('should show the settable roles if the node is not in any site',  async(() => {
             component.nodeId = 'fake-node-id';
-            spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
-            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeEmptyResponse));
+            spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
+            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -159,9 +159,9 @@ describe('PermissionDisplayComponent', () => {
 
         it('should update the role when another value is chosen',  async(() => {
             component.nodeId = 'fake-node-id';
-            spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
-            spyOn(nodeService, 'updateNode').and.returnValue(Observable.of({id: 'fake-updated-node'}));
-            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeEmptyResponse));
+            spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
+            spyOn(nodeService, 'updateNode').and.returnValue(of({id: 'fake-updated-node'}));
+            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
             component.update.subscribe((updatedPermission) => {
                 expect(updatedPermission).not.toBeNull();
                 expect(updatedPermission.name).toBe('Editor');

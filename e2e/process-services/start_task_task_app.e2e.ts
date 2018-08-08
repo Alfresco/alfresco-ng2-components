@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { by } from 'protractor';
+
 import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
@@ -88,7 +90,7 @@ describe('Start Task - Task App', () => {
         done();
     });
 
-    it('Modifying task', () => {
+    it('[C260383] Modifying task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[0])
@@ -110,7 +112,7 @@ describe('Start Task - Task App', () => {
             });
     });
 
-    it('Information box', () => {
+    it('[C260506] Information box', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
@@ -155,7 +157,7 @@ describe('Start Task - Task App', () => {
             });
     });
 
-    it('Start task buttons', () => {
+    it('[C260422] Start task buttons', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().checkStartButtonIsDisabled().addName(tasks[3])
@@ -166,7 +168,7 @@ describe('Start Task - Task App', () => {
             });
     });
 
-    it('Refreshing the form', () => {
+    it('[C260423] Refreshing the form', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask()
@@ -183,7 +185,7 @@ describe('Start Task - Task App', () => {
             });
     });
 
-    it('Assign User', () => {
+    it('[C260425] Assign User', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[5])

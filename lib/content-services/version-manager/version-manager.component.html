@@ -1,6 +1,6 @@
 <div class="adf-new-version-container">
-    <div class="adf-new-version-uploader-container" fxLayout="row" fxLayoutAlign="end center" [@uploadToggle]="uploadState">
-        <table class="adf-version-upload">
+    <div class="adf-new-version-uploader-container" id="adf-new-version-uploader-container" fxLayout="row" fxLayoutAlign="end center" [@uploadToggle]="uploadState">
+        <table class="adf-version-upload" *ngIf="uploadState !== 'close'">
             <tr>
                 <td>
                     <adf-version-upload
@@ -8,7 +8,7 @@
                         [node]="node"
                         (success)="onUploadSuccess($event)"
                         (cancel)="onUploadCancel()"
-                        (error)="uploadError.emit($event)">
+                        (error)="onUploadError($event)">
                     </adf-version-upload>
                 </td>
             </tr>
@@ -27,11 +27,14 @@
                 </button>
             </div>
             <div>
+
                 <adf-version-list
                     #versionList
                     [node]="node"
                     [allowDownload]="allowDownload"
-                    [showComments]="showComments">
+                    [showComments]="showComments"
+                    (deleted)="refresh($event)"
+                    (restored)="refresh($event)">
                 </adf-version-list>
             </div>
         </div>

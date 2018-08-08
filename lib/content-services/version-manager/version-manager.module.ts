@@ -19,18 +19,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { VersionUploadComponent } from './version-upload.component';
 import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
 import { UploadModule } from '../upload/upload.module';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        CoreModule.forChild(),
         UploadModule,
         FormsModule
     ],
@@ -44,7 +44,6 @@ import { UploadModule } from '../upload/upload.module';
         VersionUploadComponent,
         VersionManagerComponent,
         VersionListComponent
-    ],
-    providers: []
+    ]
 })
 export class VersionManagerModule {}

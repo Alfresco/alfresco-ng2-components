@@ -24,7 +24,7 @@ import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
 import { baseHost, WidgetComponent } from './../widget.component';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import { Observable, empty } from 'rxjs';
 import {
     catchError,
     distinctUntilChanged,
@@ -32,7 +32,6 @@ import {
     switchMap,
     tap
 } from 'rxjs/operators';
-import 'rxjs/add/observable/empty';
 
 @Component({
     selector: 'people-widget',
@@ -62,7 +61,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }),
         distinctUntilChanged(),
         switchMap((searchTerm) => {
-            let userResponse = Observable.empty();
+            let userResponse: any = empty();
 
             if (typeof searchTerm === 'string') {
                 userResponse = this.formService.getWorkflowUsers(searchTerm, this.groupId)

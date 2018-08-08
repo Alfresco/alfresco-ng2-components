@@ -1,4 +1,4 @@
-<div *ngIf="!taskDetails">
+<div *ngIf="!taskDetails" data-automation-id="adf-tasks-details--empty">
     <ng-template *ngIf="noTaskDetailsTemplateComponent" ngFor [ngForOf]="[data]"
                  [ngForTemplate]="noTaskDetailsTemplateComponent">
         {{ 'ADF_TASK_LIST.DETAILS.MESSAGES.NONE' | translate }}

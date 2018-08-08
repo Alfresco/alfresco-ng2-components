@@ -283,7 +283,8 @@
       "EVERYONE": "Iedereen"
     },
     "ERROR": {
-      "DUPLICATE-PERMISSION": "Een of meerdere machtigingen die u hebt ingesteld zijn al aanwezig: {{list}}"
+      "DUPLICATE-PERMISSION": "Een of meerdere machtigingen die u hebt ingesteld zijn al aanwezig: {{list}}",
+      "NOT-ALLOWED": "Het is u niet toegestaan om machtigingen te wijzigen"
     }
   }
 }

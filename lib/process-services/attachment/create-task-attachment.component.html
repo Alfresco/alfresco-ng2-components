@@ -4,8 +4,8 @@
     mat-raised-button
     mat-icon-button
     class="adf-create-attachment"
-    [adf-upload]="true"
-    mode="['click']"
+    adf-upload="true"
+    [mode]="['click']"
     [multiple]="true"
     (upload-files)="onFileUpload($event)">
     <mat-icon>add</mat-icon>

@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RatingComponent } from './rating.component';
 import { setupTestBed } from '../../core/testing';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { RatingService } from './services/rating.service';
 
 describe('Rating component', () => {
@@ -51,7 +51,7 @@ describe('Rating component', () => {
     describe('Rendering tests', () => {
 
         it('should rating component should be present', (done) => {
-            spyOn(service, 'getRating').and.returnValue(Observable.of({
+            spyOn(service, 'getRating').and.returnValue(of({
                 entry: {
                     id: 'fiveStar',
                     aggregate: {
@@ -70,7 +70,7 @@ describe('Rating component', () => {
         });
 
         it('should the star rating filled with the right grey/colored star', (done) => {
-            spyOn(service, 'getRating').and.returnValue(Observable.of({
+            spyOn(service, 'getRating').and.returnValue(of({
                 entry: {
                     id: 'fiveStar',
                     aggregate: {
@@ -92,7 +92,7 @@ describe('Rating component', () => {
         });
 
         it('should click on a star change your vote', (done) => {
-            spyOn(service, 'getRating').and.returnValue(Observable.of({
+            spyOn(service, 'getRating').and.returnValue(of({
                 'entry': {
                     myRating: 1,
                     'ratedAt': '2017-04-06T14:34:28.061+0000',
@@ -101,7 +101,7 @@ describe('Rating component', () => {
                 }
             }));
 
-            spyOn(service, 'postRating').and.returnValue(Observable.of({
+            spyOn(service, 'postRating').and.returnValue(of({
                 'entry': {
                     'myRating': 3,
                     'ratedAt': '2017-04-06T14:36:40.731+0000',

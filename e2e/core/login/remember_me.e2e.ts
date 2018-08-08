@@ -17,8 +17,6 @@
 
 import LoginPage = require('../../pages/adf/loginPage');
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-
 import AdfSettingsPage = require('../../pages/adf/settingsPage');
 
 describe('Login component - Remember Me', () => {
@@ -31,7 +29,7 @@ describe('Login component - Remember Me', () => {
         done();
     });
 
-    it('[C260036] Should Remember me checkbox not be present in the login if the property showRememberMe is false', () => {
+    it('[C260501] Should Remember me checkbox not be present in the login if the property showRememberMe is false', () => {
         loginPage.checkRememberIsDisplayed();
         loginPage.disableRememberMe();
         loginPage.checkRememberIsNotDisplayed();

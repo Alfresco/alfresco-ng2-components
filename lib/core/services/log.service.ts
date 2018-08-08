@@ -20,7 +20,7 @@
 import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { logLevels, LogLevelsEnum } from '../models/log-levels.model';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class LogService {

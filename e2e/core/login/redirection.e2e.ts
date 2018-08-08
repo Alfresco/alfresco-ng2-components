@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import ProcessServicesPage = require('../../pages/adf/process_services/processServicesPage');
@@ -81,7 +83,7 @@ describe('Login component', () => {
         loginPage.waitForElements();
     });
 
-    it('[C260085] Should after login in BOTH not be redirect to Login page when try to access to CS or PS', () => {
+    it('[C260081] Should after login in BOTH not be redirect to Login page when try to access to CS or PS', () => {
         adfSettingsPage.setProviderEcmBpm();
 
         loginPage.login(adminUserModel.id, adminUserModel.password);

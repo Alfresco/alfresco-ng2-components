@@ -16,10 +16,10 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer } from 'rxjs';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import { AnalyticsService } from '../services/analytics.service';
+import { share } from 'rxjs/operators';
 
 // @deprecated 2.3.0 analytics-report-list tag removed
 @Component({
@@ -59,7 +59,8 @@ export class AnalyticsReportListComponent implements OnInit {
     reports: ReportParametersModel[] = [];
 
     constructor(private analyticsService: AnalyticsService) {
-        this.report$ = new Observable<ReportParametersModel>(observer => this.reportObserver = observer).share();
+        this.report$ = new Observable<ReportParametersModel>(observer => this.reportObserver = observer)
+            .pipe(share());
     }
 
     ngOnInit() {

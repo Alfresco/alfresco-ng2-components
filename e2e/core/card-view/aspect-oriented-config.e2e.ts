@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import ViewerPage = require('../../pages/adf/viewerPage');
 import CardViewPage = require('../../pages/adf/metadataViewPage');
-import ContentListPage = require('../../pages/adf/dialog/contentList');
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 
@@ -28,33 +28,19 @@ import FileModel = require('../../models/ACS/fileModel');
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 
 describe('Aspect oriented config', () => {
 
-    const METADATA = {
-        DATAFORMAT: 'mmm dd yyyy',
-        TITLE: 'Details',
-        COMMENTS_TAB: 'COMMENTS',
-        PROPERTY_TAB: 'PROPERTIES',
-        DEFAULT_ASPECT: 'Properties',
-        MORE_INFO_BUTTON: 'More information',
-        LESS_INFO_BUTTON: 'Less information',
-        ARROW_DOWN: 'keyboard_arrow_down',
-        ARROW_UP: 'keyboard_arrow_up',
-        EDIT_BUTTON_TOOLTIP: 'Edit'
-    };
-
     const loginPage = new LoginPage();
-    const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new CardViewPage();
-    const contentListPage = new ContentListPage();
     const navigationBarPage = new NavigationBarPage();
     const configEditorPage = new ConfigEditorPage();
+    let contentServicesPage = new ContentServicesPage();
 
     let acsUser = new AcsUserModel();
 
@@ -85,15 +71,21 @@ describe('Aspect oriented config', () => {
         done();
     });
 
-    afterEach(() => {
+    beforeEach(async(done) => {
+        navigationBarPage.clickConfigEditorButton();
+        configEditorPage.clickClearMetadataButton();
+        done();
+    });
+
+    afterEach(async(done) => {
         viewerPage.clickCloseButton();
+        contentServicesPage.checkAcsContainer();
         browser.refresh();
+        contentServicesPage.checkAcsContainer();
+        done();
     });
 
     it('[C261117] Should be possible restrict the display properties of one an aspect', () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('{  "presets": {' +
             '        "default": [{' +
@@ -114,11 +106,10 @@ describe('Aspect oriented config', () => {
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
-
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.clickMetadatGroup('IMAGE');
-
         metadataViewPage.checkPopertyIsVisible('properties.exif:pixelXDimension', 'textitem');
         metadataViewPage.checkPopertyIsVisible('properties.exif:pixelYDimension', 'textitem');
         metadataViewPage.checkPopertyIsNotVisible('properties.exif:isoSpeedRatings', 'textitem');
@@ -129,9 +120,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260185] Should ignore not existing aspect when present in the configuration', () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('   {' +
             '        "presets": {' +
@@ -151,7 +139,7 @@ describe('Aspect oriented config', () => {
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
-
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
@@ -161,9 +149,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided' , () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('{ }');
 
@@ -175,7 +160,7 @@ describe('Aspect oriented config', () => {
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
-
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
@@ -188,9 +173,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260182] Should show all the aspects if the default configuration contains the * symbol' , () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('{' +
             '    "presets": {' +
@@ -207,6 +189,7 @@ describe('Aspect oriented config', () => {
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
 
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
@@ -219,9 +202,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C268899] Should be possible use a Translation key as Title of a metadata group' , () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
 
         configEditorPage.enterMetadataConfiguration('{' +
             '  "presets": {' +
@@ -260,6 +240,7 @@ describe('Aspect oriented config', () => {
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
 
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.checkkMetadatGroupIsPresent('GROUP-TITLE1-TRANSLATION-KEY');
@@ -270,10 +251,7 @@ describe('Aspect oriented config', () => {
 
     });
 
-    it('[C268899] Should be possible use a custom preset' , () => {
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickClearMetadataButton();
+    it('[C279968] Should be possible use a custom preset' , () => {
 
         configEditorPage.enterMetadataConfiguration('{' +
             '    "presets": {' +
@@ -294,8 +272,10 @@ describe('Aspect oriented config', () => {
         metadataViewPage.clickOnPropertiesTab();
 
         metadataViewPage.enablePreset();
+
         metadataViewPage.enterPresetText('custom-preset');
 
+        metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.checkkMetadatGroupIsPresent('properties');

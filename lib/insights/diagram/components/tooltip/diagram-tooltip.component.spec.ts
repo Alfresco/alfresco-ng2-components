@@ -77,7 +77,7 @@ describe('DiagramTooltipComponent', () => {
             let nameProperty = fixture.debugElement.query(By.css('.adf-diagram-name-property'));
 
             expect(nameProperty).not.toBeNull();
-            expect(nameProperty.nativeElement.innerText).toBe('Name: diagram-element-name');
+            expect(nameProperty.nativeElement.innerText).toBe('Name:diagram-element-name');
         });
 
         it('should NOT render the name if name is NOT defined in the tooltip body', () => {

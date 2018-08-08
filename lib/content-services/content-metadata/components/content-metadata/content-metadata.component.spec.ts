@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/*tslint:disable: ban*/
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -24,8 +22,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService, LogService, setupTestBed } from '@alfresco/adf-core';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { Observable } from 'rxjs/Observable';
+import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataComponent', () => {
@@ -104,7 +101,7 @@ describe('ContentMetadataComponent', () => {
             const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
                 updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
                 nodesApiService: NodesApiService = TestBed.get(NodesApiService);
-            spyOn(nodesApiService, 'updateNode');
+            spyOn(nodesApiService, 'updateNode').and.callThrough();
 
             updateService.update(property, 'updated-value');
 
@@ -120,7 +117,7 @@ describe('ContentMetadataComponent', () => {
                 expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
 
             spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-                return Observable.of(expectedNode);
+                return of(expectedNode);
             });
 
             updateService.update(property, 'updated-value');
@@ -137,7 +134,7 @@ describe('ContentMetadataComponent', () => {
                 logService: LogService = TestBed.get(LogService);
 
             spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-                return ErrorObservable.create(new Error('My bad'));
+                return throwError(new Error('My bad'));
             });
 
             updateService.update(property, 'updated-value');
@@ -168,7 +165,7 @@ describe('ContentMetadataComponent', () => {
             component.expanded = false;
             fixture.detectChanges();
             spyOn(contentMetadataService, 'getBasicProperties').and.callFake(() => {
-                return Observable.of(expectedProperties);
+                return of(expectedProperties);
             });
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -183,7 +180,7 @@ describe('ContentMetadataComponent', () => {
         it('should pass through the displayEmpty to the card view of basic properties', async(() => {
             component.displayEmpty = false;
             fixture.detectChanges();
-            spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(Observable.of([]));
+            spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -207,7 +204,7 @@ describe('ContentMetadataComponent', () => {
             component.expanded = true;
             fixture.detectChanges();
             spyOn(contentMetadataService, 'getGroupedProperties').and.callFake(() => {
-                return Observable.of([{ properties: expectedProperties }]);
+                return of([{ properties: expectedProperties }]);
             });
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -223,7 +220,7 @@ describe('ContentMetadataComponent', () => {
             component.expanded = true;
             component.displayEmpty = false;
             fixture.detectChanges();
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(Observable.of([{ properties: [] }]));
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] }]));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -233,5 +230,27 @@ describe('ContentMetadataComponent', () => {
                 expect(basicPropertiesComponent.displayEmpty).toBe(false);
             });
         }));
+    });
+
+    describe('Properties displaying', () => {
+        it('should hide metadata fields if displayDefaultProperties is set to false', () => {
+            component.displayDefaultProperties = false;
+            fixture.detectChanges();
+            const metadataContainer = fixture.debugElement.query(By.css('mat-expansion-panel[data-automation-id="adf-metadata-group-properties"]'));
+            fixture.detectChanges();
+            expect(metadataContainer).toBeNull();
+        });
+
+        it('should display metadata fields if displayDefaultProperties is set to true', () => {
+            component.displayDefaultProperties = true;
+            fixture.detectChanges();
+            const metadataContainer = fixture.debugElement.query(By.css('mat-expansion-panel[data-automation-id="adf-metadata-group-properties"]'));
+            fixture.detectChanges();
+            expect(metadataContainer).toBeDefined();
+        });
+
+        it('should have displayDefaultProperties input param as true by default', () => {
+            expect(component.displayDefaultProperties).toBe(true);
+        });
     });
 });

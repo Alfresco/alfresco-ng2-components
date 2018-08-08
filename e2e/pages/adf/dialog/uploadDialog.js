@@ -20,8 +20,8 @@ var Util = require('../../../util/util');
 
 var UploadDialog = function () {
 
-    var closeButton = element.all((by.css("footer[class*='upload-dialog__actions'] button"))).first();
-    var dialog = element.all(by.css("div[class*='upload-dialog']")).first();
+    var closeButton = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]')));
+    var dialog = element(by.css("div[id='upload-dialog']"));
     var minimizedDialog = element(by.css("div[class*='upload-dialog--minimized']"));
     var uploadedStatusIcon = by.css("mat-icon[class*='status--done']");
     var cancelledStatusIcon = by.css("div[class*='status--cancelled']");
@@ -36,7 +36,7 @@ var UploadDialog = function () {
     var canUploadConfirmationDescription = element(by.css("p[class='upload-dialog__confirmation--text']"));
     var confirmationDialogNoButton = element(by.partialButtonText("No"));
     var confirmationDialogYesButton = element(by.partialButtonText("Yes"));
-    var cancelUploads = element(by.partialButtonText("Cancel uploads"));
+    var cancelUploads = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]')));
 
     this.clickOnCloseButton = function () {
         this.checkCloseButtonIsDisplayed();
@@ -85,7 +85,7 @@ var UploadDialog = function () {
     };
 
     this.filesAreUploaded = function (content) {
-        for (i=0; i<content.length; i++) {
+        for (var i=0; i<content.length; i++) {
             this.fileIsUploaded(content[i]);
         }
         return this;
@@ -96,7 +96,7 @@ var UploadDialog = function () {
         return this;
     };
 
-     this.cancelUploads = function (content) {
+     this.cancelUploads = function () {
          Util.waitUntilElementIsVisible(cancelUploads);
          cancelUploads.click();
          return this;

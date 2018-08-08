@@ -29,6 +29,14 @@ var SearchResultsPage = function () {
     var sortDropdownLocator = by.css("mat-option span");
     var sortingArrow = element(by.css("adf-sorting-picker div[class='mat-select-arrow']"));
 
+    this.closeActionButton = function () {
+        let container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        Util.waitUntilElementIsVisible(container);
+        container.click();
+        Util.waitUntilElementIsNotVisible(container);
+        return this;
+    }
+
     this.checkContentIsDisplayed = function (content) {
         contentList.checkContentIsDisplayed(content);
         return this;
@@ -107,12 +115,12 @@ var SearchResultsPage = function () {
             if(sortOrder===true) {
                 if(result !== 'arrow_upward') {
                         element(sortArrowLocator).click();
-                };
+                }
             }
             else {
                 if(result === 'arrow_upward') {
                     element(sortArrowLocator).click();
-                };
+                }
             }
 
             return Promise.resolve();
@@ -125,7 +133,7 @@ var SearchResultsPage = function () {
      * @param sortOrder: 'true' to sort the list ascendant and 'false' for descendant
      */
     this.sortByAuthor = function (sortOrder) {
-        contentList.sortByAuthor(sortOrder);
+        this.sortBy(sortOrder, "Author");
     };
 
     /**
@@ -134,7 +142,7 @@ var SearchResultsPage = function () {
      * @param sortOrder: 'true' to sort the list ascendant and 'false' for descendant
      */
     this.sortByCreated = function (sortOrder) {
-        return contentList.sortByCreated(sortOrder);
+        this.sortBy(sortOrder, "Created");
     };
 
     /**

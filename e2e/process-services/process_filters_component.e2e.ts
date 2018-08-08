@@ -40,6 +40,7 @@ describe('Process Filters Test', () => {
     let processFiltersPage = new ProcessFiltersPage();
     let appNavigationBarPage = new AppNavigationBarPage();
     let processDetailsPage = new ProcessDetailsPage();
+    let appModel;
 
     let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
 
@@ -68,14 +69,14 @@ describe('Process Filters Test', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
         done();
     });
 
-    beforeEach( () => {
+    beforeEach(() => {
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
@@ -83,7 +84,7 @@ describe('Process Filters Test', () => {
         processServicesPage.checkProcessListIsDisplayed();
     });
 
-    it('Navigate to Running filter', () => {
+    it('[C260387] Should the running process be displayed when clicking on Running filter', () => {
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
 
@@ -111,7 +112,7 @@ describe('Process Filters Test', () => {
         processDetailsPage.checkProcessDetailsCard();
     });
 
-    it('Navigate to All filter', () => {
+    it('[C280063] Should both the new created process and a completed one to be displayed when clicking on All filter', () => {
         processFiltersPage.clickAllFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilter.all);
         processFiltersPage.selectFromProcessList(processTitle.running);
@@ -119,10 +120,38 @@ describe('Process Filters Test', () => {
         processDetailsPage.checkProcessDetailsCard();
     });
 
-    it('Navigate to Completed filter', () => {
+    it('[C280064] Should the completed process be displayed when clicking on Completed filter', () => {
         processFiltersPage.clickCompletedFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
         processFiltersPage.selectFromProcessList(processTitle.completed);
         processDetailsPage.checkProcessDetailsCard();
+    });
+
+    it('[C280407] Should be able to access the filters with URL', async () => {
+
+        let defaultFiltersNumber = 3;
+        let deployedApp, processFilterUrl;
+
+        let taskAppFilters = await browser.controlFlow().execute(async() => {
+
+            let appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+
+            deployedApp = appDefinitions.data.find((currentApp) => {
+
+                    return currentApp.modelId === appModel.id;
+            });
+
+            processFilterUrl = TestConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
+
+            return this.alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({appId: deployedApp.id});
+        });
+
+        expect(taskAppFilters.size).toBe(defaultFiltersNumber);
+
+        taskAppFilters.data.forEach((filter) => {
+            browser.get(processFilterUrl + filter.id);
+            processServicesPage.checkProcessListIsDisplayed();
+            processFiltersPage.checkFilterIsHighlighted(filter.name);
+        });
     });
 });

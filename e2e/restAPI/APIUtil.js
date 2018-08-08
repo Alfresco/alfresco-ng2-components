@@ -27,7 +27,7 @@ var APIUtils = function () {
      * @returns Basic authorization
      */
     this.getAuthorization = function (user, password) {
-        return 'Basic ' + Buffer(user + ':' + password).toString('base64');
+        return 'Basic ' + Buffer.from(user + ':' + password).toString('base64');
     };
 
     /** 

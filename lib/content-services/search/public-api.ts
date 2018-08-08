@@ -31,6 +31,7 @@ export * from './components/search-control.component';
 export * from './components/search-trigger.directive';
 export * from './components/empty-search-result.component';
 export * from './components/search-filter/search-filter.component';
+export * from './components/search-filter/search-filter.service';
 export * from './components/search-chip-list/search-chip-list.component';
 export * from './components/search-sorting-picker/search-sorting-picker.component';
 

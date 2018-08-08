@@ -15,24 +15,14 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
-import { RenderingQueueServices } from './rendering-queue.services';
+export class NodeActions {
 
-describe('RenderingQueueServices', () => {
+    lockNode(alfrescoJsApi, nodeId: string, allowOwner?: string) {
 
-    let service, injector;
+        return alfrescoJsApi.nodes.lockNode(nodeId, {
+            'type': allowOwner ? 'ALLOW_OWNER_CHANGES' : 'FULL',
+            'lifetime': 'PERSISTENT'
+        });
+    }
 
-    beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            RenderingQueueServices
-        ]);
-    });
-
-    beforeEach(() => {
-        service = injector.get(RenderingQueueServices);
-    });
-
-    it('Simple import example', () => {
-        expect(service.CLEANUP_TIMEOUT).toEqual(30000);
-    });
-});
+}

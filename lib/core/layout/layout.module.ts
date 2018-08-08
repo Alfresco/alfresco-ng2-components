@@ -17,6 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';
 import { SidenavLayoutContentDirective } from './directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from './directives/sidenav-layout-header.directive';
@@ -29,7 +30,8 @@ import { HeaderLayoutComponent } from './components/header/header.component';
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        RouterModule
     ],
     exports: [
         SidenavLayoutHeaderDirective,

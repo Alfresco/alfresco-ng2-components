@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import AdfSettingsPage = require('../pages/adf/settingsPage');
 import LoginPage = require('../pages/adf/loginPage');
 import UserInfoDialog = require('../pages/adf/dialog/userInfoDialog');
@@ -69,14 +70,13 @@ describe('User Info component', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(contentUserModel);
 
-        loginPage.goToLoginPage();
-        adfSettingsPage.setProviderEcmBpm();
-        loginPage.login(contentUserModel.id, contentUserModel.password);
-
         done();
     });
 
     it('1. Enable Process Services and Content Services ', () => {
+        loginPage.goToLoginPage();
+        adfSettingsPage.setProviderEcmBpm();
+        loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
         userInfoDialog.dialogIsDisplayed().contentServicesTabIsDisplayed().processServicesTabIsDisplayed();
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
@@ -105,9 +105,10 @@ describe('User Info component', () => {
     });
 
     it('2. Enable Content Services and disable Process Services ', () => {
-        navigationBarPage.clickLoginButton();
+        loginPage.goToLoginPage();
         adfSettingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
+
         navigationBarPage.clickUserProfile();
         userInfoDialog.dialogIsDisplayed().contentServicesTabIsNotDisplayed().processServicesTabIsNotDisplayed();
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
@@ -121,10 +122,8 @@ describe('User Info component', () => {
     });
 
     it('3. Enable Process Services and disable Content Services ', () => {
-        navigationBarPage.clickLoginButton();
-
+        loginPage.goToLoginPage();
         adfSettingsPage.setProviderBpm();
-
         loginPage.login(processUserModel.email, processUserModel.password);
 
         navigationBarPage.clickUserProfile();
@@ -141,30 +140,28 @@ describe('User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('4. Enable Process Services and Content Services ', () => {
-        let flow = protractor.promise.controlFlow();
-        flow.execute(() => {
-            PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
-            PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function (result) {
-            });
+    it('4. Enable Process Services and Content Services ', async(done) => {
+        browser.controlFlow().execute(async() => {
+            await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
+            await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function (result) {});
         });
 
-        navigationBarPage.clickLoginButton();
+        loginPage.goToLoginPage();
         adfSettingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
         userInfoDialog.checkACSProfileImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.closeUserProfile();
+        done();
     });
 
     it('5. The profile picture is changed from APS', async () => {
         let users = new UsersActions();
-        navigationBarPage.clickLoginButton();
-
         await this.alfrescoJsApi.login(contentUserModel.email, contentUserModel.password);
         await users.changeProfilePictureAps(this.alfrescoJsApi, apsAvatarFileModel.getLocation());
 
+        loginPage.goToLoginPage();
         adfSettingsPage.setProviderBpm();
         loginPage.login(processUserModel.email, processUserModel.password);
         navigationBarPage.clickUserProfile();
@@ -175,8 +172,8 @@ describe('User Info component', () => {
     });
 
     it('6. Delete the profile picture from ACS', () => {
-        navigationBarPage.clickLoginButton();
         PeopleAPI.deleteAvatarViaAPI(contentUserModel, '-me-');
+        loginPage.goToLoginPage();
         adfSettingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();

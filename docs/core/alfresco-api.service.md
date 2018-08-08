@@ -46,7 +46,7 @@ export class MyComponent implements OnInit {
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| nodeUpdated | `Subject<MinimalNodeEntryEntity>` | Emitted when a node updates. |
+| nodeUpdated | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when a node updates. |
 
 ## Details
 

@@ -19,9 +19,8 @@ import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewSelectItemProperties, CardViewSelectItemOption } from '../interfaces/card-view.interfaces';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 
 export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'select';

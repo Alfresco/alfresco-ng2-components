@@ -17,11 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import 'rxjs/add/observable/throw';
 import { SearchConfigurationService } from './search-configuration.service';
-import { Subject } from 'rxjs/Subject';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class SearchService {
@@ -39,9 +38,9 @@ export class SearchService {
             this.dataLoaded.next(data);
         });
 
-        return Observable
-            .fromPromise(promise)
-            .catch(err => this.handleError(err));
+        return from(promise).pipe(
+            catchError(err => this.handleError(err))
+        );
     }
 
     search(searchTerm: string, maxResults: number, skipCount: number): Observable<NodePaging> {
@@ -52,9 +51,9 @@ export class SearchService {
             this.dataLoaded.next(data);
         });
 
-        return Observable
-            .fromPromise(promise)
-            .catch(err => this.handleError(err));
+        return from(promise).pipe(
+            catchError(err => this.handleError(err))
+        );
     }
 
     searchByQueryBody(queryBody: QueryBody): Observable<NodePaging> {
@@ -64,13 +63,13 @@ export class SearchService {
             this.dataLoaded.next(data);
         });
 
-        return Observable
-            .fromPromise(promise)
-            .catch(err => this.handleError(err));
+        return from(promise).pipe(
+            catchError(err => this.handleError(err))
+        );
     }
 
     private handleError(error: any): Observable<any> {
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }
 

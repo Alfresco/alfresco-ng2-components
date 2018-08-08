@@ -4,6 +4,10 @@
     "../tools/tslint-rules/"
   ],
   "rules": {
+    "adf-license-banner": [
+      true,
+      "lib/+(core|content-services|process-services|insights)/**/*.ts"
+    ],
     "align": [
       true,
       "parameters",
@@ -11,8 +15,7 @@
     ],
     "ban": [
       true,
-      "eval",
-      "fdescribe"
+      "eval"
     ],
     "class-name": true,
     "comment-format": [
@@ -22,12 +25,6 @@
     "curly": true,
     "eofline": true,
     "forin": true,
-    "import-blacklist": [
-      true,
-      "rxjs",
-      "rxjs/Rx"
-    ],
-    "import-spacing": true,
     "indent": [
       true,
       "spaces"
@@ -39,7 +36,6 @@
       true,
       180
     ],
-    "member-access": false,
     "member-ordering": [
       true,
       {
@@ -130,10 +126,6 @@
       "ban-keywords"
     ],
     "callable-types": true,
-    "import-blacklist": [
-      true,
-      "rxjs"
-    ],
     "import-spacing": true,
     "interface-over-type-literal": true,
     "member-access": false,

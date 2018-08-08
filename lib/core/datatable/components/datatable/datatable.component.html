@@ -33,9 +33,10 @@
             </div>
         </div>
         <mat-form-field *ngIf="display === 'gallery'">
-            <mat-select [value]="getSortingKey()">
+            <mat-select [value]="getSortingKey()" [attr.data-automation-id]="'grid-view-sorting'">
                 <mat-option *ngFor="let col of getSortableColumns()"
                             [value]="col.key"
+                            [attr.data-automation-id]="'grid-view-sorting-'+col.title"
                             (click)="onColumnHeaderClick(col)"
                             (keyup.enter)="onColumnHeaderClick(col)">
                     {{ col.title | translate}}

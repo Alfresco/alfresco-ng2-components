@@ -16,17 +16,12 @@
  */
 
 var exports = module.exports = {};
-var http = require('http');
-var https = require('https');
-
 var fs = require('fs');
-var FormData = require('form-data');
 var path = require('path');
 
 var until = protractor.ExpectedConditions;
 var TestConfig = require('../test.config');
 var moment = require('moment');
-var CONSTANTS = require('./constants');
 
 var DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout);
 /**
@@ -34,9 +29,6 @@ var DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout);
  *
  * @class util.Util
  */
-
-// Dynamically load http or https library based on protocol chosen
-var apiRequest = TestConfig.main.protocol !== 'http' ? https : http;
 
 /**
  * creates an absolute path string if multiple file uploads are required
@@ -443,7 +435,7 @@ exports.waitUntilElementIsNotOnPage = function (elementToCheck, timeout) {
 };
 
 exports.waitUntilElementIsOnPage = function (elementToCheck, timeout) {
-    waitTimeout = timeout || DEFAULT_TIMEOUT;
+    var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
     return browser.wait(browser.wait(until.visibilityOf(elementToCheck)), timeout);
 };

@@ -23,9 +23,21 @@ var ErrorPage = function(){
     var errorPageCode = element(by.css("adf-error-content .adf-error-content-code"));
     var errorPageTitle = element(by.css("adf-error-content .adf-error-content-title"));
     var errorPageDescription = element(by.css("adf-error-content .adf-error-content-description"));
+    var backButton = element(by.id("adf-return-button"));
+    var secondButton = element(by.id("adf-secondary-button"));
 
     this.checkErrorPage = function(){
         Util.waitUntilElementIsVisible(errorPage);
+    };
+
+    this.clickBackButton = function(){
+        Util.waitUntilElementIsVisible(backButton);
+        backButton.click();
+    };
+
+    this.clickSecondButton = function(){
+        Util.waitUntilElementIsVisible(secondButton);
+        secondButton.click();
     };
 
     this.checkErrorTitle = function(){
@@ -43,6 +55,11 @@ var ErrorPage = function(){
     this.getErrorCode = function() {
         Util.waitUntilElementIsVisible(errorPageCode);
         return errorPageCode.getText();
+    };
+
+    this.getErrorTitle = function() {
+        Util.waitUntilElementIsVisible(errorPageTitle);
+        return errorPageTitle.getText();
     };
 
     this.getErrorDescription = function() {

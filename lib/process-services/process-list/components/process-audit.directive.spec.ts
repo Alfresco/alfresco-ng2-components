@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { ProcessService } from './../services/process.service';
 import { ProcessAuditDirective } from './process-audit.directive';
 import { setupTestBed, CoreModule } from '@alfresco/adf-core';
@@ -100,7 +100,7 @@ describe('ProcessAuditDirective', () => {
         component.fileName = 'FakeAuditName';
         component.format = 'pdf';
         let blob = createFakePdfBlob();
-        spyOn(service, 'fetchProcessAuditPdfById').and.returnValue(Observable.of(blob));
+        spyOn(service, 'fetchProcessAuditPdfById').and.returnValue(of(blob));
         spyOn(component, 'onAuditClick').and.callThrough();
 
         fixture.detectChanges();
@@ -136,7 +136,7 @@ describe('ProcessAuditDirective', () => {
             }
             ], decisionInfo: { calculatedValues: [], appliedRules: [] }
         };
-        spyOn(service, 'fetchProcessAuditJsonById').and.returnValue(Observable.of(auditJson));
+        spyOn(service, 'fetchProcessAuditJsonById').and.returnValue(of(auditJson));
         spyOn(component, 'onAuditClick').and.callThrough();
 
         fixture.detectChanges();
@@ -156,7 +156,7 @@ describe('ProcessAuditDirective', () => {
         component.fileName = 'FakeAuditName';
         component.format = 'fakeFormat';
         let blob = createFakePdfBlob();
-        spyOn(service, 'fetchProcessAuditPdfById').and.returnValue(Observable.of(blob));
+        spyOn(service, 'fetchProcessAuditPdfById').and.returnValue(of(blob));
         spyOn(component, 'onAuditClick').and.callThrough();
 
         fixture.detectChanges();

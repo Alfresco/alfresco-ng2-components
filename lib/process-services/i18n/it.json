@@ -19,6 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "Nessuna attività trovata",
+        "SUBTITLE": "Crea una nuova attività da trovare facilmente più tardi",
         "NONE": "Nessun elenco compiti trovato"
       }
     },
@@ -150,6 +152,11 @@
       "NO_FORM_MESSAGE": "Nessun modulo allegato",
       "COMPLETE_TASK_MESSAGE": "Compito {{taskName}} completato",
       "COMPLETE_TASK_SUB_MESSAGE": "Nessun modulo da aggiungere"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Seleziona modulo da allegare",
+      "REMOVE_FORM": "Rimuovi modulo",
+      "SELECT_OPTION": "Seleziona un'opzione"
     }
   },
   "ADF_PROCESS_LIST": {

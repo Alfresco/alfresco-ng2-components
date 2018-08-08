@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormFieldOption } from './../core/form-field-option';
@@ -130,7 +130,7 @@ describe('DropdownWidgetComponent', () => {
             beforeEach(async(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-                    return Observable.of(fakeOptionList);
+                    return of(fakeOptionList);
                 });
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
@@ -194,7 +194,7 @@ describe('DropdownWidgetComponent', () => {
             beforeEach(async(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(formService, 'getRestFieldValuesByProcessId').and.callFake(() => {
-                    return Observable.of(fakeOptionList);
+                    return of(fakeOptionList);
                 });
                 widget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'dropdown-id',

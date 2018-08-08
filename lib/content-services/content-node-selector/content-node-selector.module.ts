@@ -19,15 +19,12 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { ContentNodeSelectorService } from './content-node-selector.service';
-import { ContentNodeDialogService } from './content-node-dialog.service';
 import { SitesDropdownModule } from '../site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
-import { PaginationModule, ToolbarModule, DirectiveModule, DataColumnModule, DataTableModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
 
@@ -35,17 +32,12 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
     imports: [
         FormsModule,
         ReactiveFormsModule,
-        DirectiveModule,
+        CoreModule.forChild(),
         CommonModule,
         MaterialModule,
-        TranslateModule,
         SitesDropdownModule,
         BreadcrumbModule,
-        ToolbarModule,
-        DocumentListModule,
-        DataColumnModule,
-        DataTableModule,
-        PaginationModule
+        DocumentListModule
     ],
     exports: [
         ContentNodeSelectorPanelComponent,
@@ -53,16 +45,13 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
         ContentNodeSelectorComponent
     ],
     entryComponents: [
-        ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent
+        ContentNodeSelectorPanelComponent,
+        ContentNodeSelectorComponent
     ],
     declarations: [
         ContentNodeSelectorPanelComponent,
         NameLocationCellComponent,
         ContentNodeSelectorComponent
-    ],
-    providers: [
-        ContentNodeSelectorService,
-        ContentNodeDialogService
     ]
 })
 export class ContentNodeSelectorModule {}

@@ -12,7 +12,7 @@ Stores preferences for components.
 
 ### Methods
 
--   **get**(property: `string` = `null`, defaultValue?: `string` = `null`): `string`<br/>
+-   **get**(property: `string`, defaultValue?: `string`): `string`<br/>
     Gets a preference property.
     -   _property:_ `string`  - Name of the property
     -   _defaultValue:_ `string`  - (Optional) Default to return if the property is not found
@@ -23,22 +23,26 @@ Stores preferences for components.
 -   **getDefaultPageSizes**(): `number[]`<br/>
     Gets an array containing the available page sizes.
     -   **Returns** `number[]` - Array of page size values
--   **getPropertyKey**(property: `string` = `null`): `string`<br/>
+-   **getPropertyKey**(property: `string`): `string`<br/>
     Gets the full property key with prefix.
     -   _property:_ `string`  - The property name
-    -   **Returns** `string` - [Property](../../lib/content-services/content-metadata/interfaces/property.interface.ts) key
+    -   **Returns** `string` - Property key
 -   **getStoragePrefix**(): `string`<br/>
     Gets the active storage prefix for preferences.
     -   **Returns** `string` - Storage prefix
--   **select**(property: `string` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **hasItem**(property: `string`): `boolean`<br/>
+    Check if an item is present in the storage
+    -   _property:_ `string`  - Name of the property
+    -   **Returns** `boolean` - 
+-   **select**(property: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Sets up a callback to notify when a property has changed.
     -   _property:_ `string`  - The property to watch
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Notification callback
--   **set**(property: `string` = `null`, value: `any` = `null`)<br/>
+-   **set**(property: `string`, value: `any`)<br/>
     Sets a preference property.
     -   _property:_ `string`  - Name of the property
     -   _value:_ `any`  - New value for the property
--   **setStoragePrefix**(value: `string` = `null`)<br/>
+-   **setStoragePrefix**(value: `string`)<br/>
     Sets the active storage prefix for preferences.
     -   _value:_ `string`  - Name of the prefix
 
@@ -90,7 +94,7 @@ The service also provides quick access to a set of the "known" properties used a
 | ---- | ---- | ----------- |
 | authType | `string` | Authorization type (can be "ECM", "BPM" or "ALL"). |
 | disableCSRF | `boolean` | Prevents the CSRF Token from being submitted if true. Only valid for Process Services. |
-| paginationSize | `number` | Pagination size. |
+| paginationSize | `number` | [`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts) size. |
 | locale | `string` | Current locale setting. |
 
 ## User Preference onChange Stream

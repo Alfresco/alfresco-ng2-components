@@ -18,7 +18,7 @@
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, throwError } from 'rxjs';
 import { ParameterValueModel } from '../../diagram/models/report/parameterValue.model';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import { BarChart } from '../../diagram/models/chart/barChart.model';
@@ -28,8 +28,7 @@ import { HeatMapChart } from '../../diagram/models/chart/heatMapChart.model';
 import { MultiBarChart } from '../../diagram/models/chart/multiBarChart.model';
 import { PieChart } from '../../diagram/models/chart/pieChart.model';
 import { TableChart } from '../../diagram/models/chart/tableChart.model';
-
-import 'rxjs/add/observable/throw';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AnalyticsService {
@@ -39,31 +38,37 @@ export class AnalyticsService {
     }
 
     /**
-     * Retrive all the Deployed app
+     * Retrieve all the Deployed app
      */
     getReportList(appId: number): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportList())
-            .map((res: any) => {
-                let reports: ReportParametersModel[] = [];
-                res.forEach((report: ReportParametersModel) => {
-                    let reportModel = new ReportParametersModel(report);
-                    if (this.isReportValid(appId, report)) {
-                        reports.push(reportModel);
-                    }
-                });
-                return reports;
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.reportApi.getReportList())
+            .pipe(
+                map((res: any) => {
+                    let reports: ReportParametersModel[] = [];
+                    res.forEach((report: ReportParametersModel) => {
+                        let reportModel = new ReportParametersModel(report);
+                        if (this.isReportValid(appId, report)) {
+                            reports.push(reportModel);
+                        }
+                    });
+                    return reports;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
-     * Retrive Report by name
+     * Retrieve Report by name
      * @param reportName - string - The name of report
      */
     getReportByName(reportName: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportList())
-            .map((response: any) => {
-                return response.find(report => report.name === reportName);
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.reportApi.getReportList())
+            .pipe(
+                map((response: any) => {
+                    return response.find(report => report.name === reportName);
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     private isReportValid(appId: number, report: ReportParametersModel) {
@@ -75,10 +80,13 @@ export class AnalyticsService {
     }
 
     getReportParams(reportId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportParams(reportId))
-            .map((res: any) => {
-                return new ReportParametersModel(res);
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.reportApi.getReportParams(reportId))
+            .pipe(
+                map((res: any) => {
+                    return new ReportParametersModel(res);
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     getParamValuesByType(type: string, appId: number, reportId?: string, processDefinitionId?: string) {
@@ -144,101 +152,125 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValuesNoApp(): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getProcessDefinitions())
-            .map((res: any) => {
-                let paramOptions: ParameterValueModel[] = [];
-                res.forEach((opt) => {
-                    paramOptions.push(new ParameterValueModel(opt));
-                });
-                return paramOptions;
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.reportApi.getProcessDefinitions())
+            .pipe(
+                map((res: any) => {
+                    let paramOptions: ParameterValueModel[] = [];
+                    res.forEach((opt) => {
+                        paramOptions.push(new ParameterValueModel(opt));
+                    });
+                    return paramOptions;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     getProcessDefinitionsValues(appId: number): Observable<any> {
         let options = { 'appDefinitionId': appId };
-        return Observable.fromPromise(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
-            .map((res: any) => {
-                let paramOptions: ParameterValueModel[] = [];
-                res.data.forEach((opt) => {
-                    paramOptions.push(new ParameterValueModel(opt));
-                });
-                return paramOptions;
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
+            .pipe(
+                map((res: any) => {
+                    let paramOptions: ParameterValueModel[] = [];
+                    res.data.forEach((opt) => {
+                        paramOptions.push(new ParameterValueModel(opt));
+                    });
+                    return paramOptions;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId))
-            .map((res: any) => {
-                let paramOptions: ParameterValueModel[] = [];
-                res.forEach((opt) => {
-                    paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
-                });
-                return paramOptions;
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId))
+            .pipe(
+                map((res: any) => {
+                    let paramOptions: ParameterValueModel[] = [];
+                    res.forEach((opt) => {
+                        paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
+                    });
+                    return paramOptions;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     getReportsByParams(reportId: number, paramsQuery: any): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportsByParams(reportId, paramsQuery))
-            .map((res: any) => {
-                let elements: Chart[] = [];
-                res.elements.forEach((chartData) => {
-                    if (chartData.type === 'pieChart') {
-                        elements.push(new PieChart(chartData));
-                    } else if (chartData.type === 'table') {
-                        elements.push(new TableChart(chartData));
-                    } else if (chartData.type === 'processDefinitionHeatMap') {
-                        elements.push(new HeatMapChart(chartData));
-                    } else if (chartData.type === 'masterDetailTable') {
-                        elements.push(new DetailsTableChart(chartData));
-                    } else if (chartData.type === 'barChart') {
-                        elements.push(new BarChart(chartData));
-                    } else if (chartData.type === 'multiBarChart') {
-                        elements.push(new MultiBarChart(chartData));
-                    }
-                });
+        return from(this.apiService.getInstance().activiti.reportApi.getReportsByParams(reportId, paramsQuery))
+            .pipe(
+                map((res: any) => {
+                    let elements: Chart[] = [];
+                    res.elements.forEach((chartData) => {
+                        if (chartData.type === 'pieChart') {
+                            elements.push(new PieChart(chartData));
+                        } else if (chartData.type === 'table') {
+                            elements.push(new TableChart(chartData));
+                        } else if (chartData.type === 'processDefinitionHeatMap') {
+                            elements.push(new HeatMapChart(chartData));
+                        } else if (chartData.type === 'masterDetailTable') {
+                            elements.push(new DetailsTableChart(chartData));
+                        } else if (chartData.type === 'barChart') {
+                            elements.push(new BarChart(chartData));
+                        } else if (chartData.type === 'multiBarChart') {
+                            elements.push(new MultiBarChart(chartData));
+                        }
+                    });
 
-                return elements;
-            }).catch(err => this.handleError(err));
+                    return elements;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     createDefaultReports(): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.createDefaultReports())
-            .map(this.toJson)
-            .catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.reportApi.createDefaultReports())
+            .pipe(
+                map(this.toJson),
+                catchError(err => this.handleError(err))
+            );
     }
 
     updateReport(reportId: number, name: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.updateReport(reportId, name))
-            .map((res: any) => {
-                this.logService.info('upload');
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.reportApi.updateReport(reportId, name))
+            .pipe(
+                map(() => this.logService.info('upload')),
+                catchError(err => this.handleError(err))
+            );
     }
 
     exportReportToCsv(reportId: string, paramsQuery: any): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.exportToCsv(reportId, paramsQuery))
-            .map((res: any) => {
-                this.logService.info('export');
-                return res;
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.reportApi.exportToCsv(reportId, paramsQuery))
+            .pipe(
+                map((res: any) => {
+                    this.logService.info('export');
+                    return res;
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     saveReport(reportId: string, paramsQuery: any): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.saveReport(reportId, paramsQuery))
-            .map(() => {
-                this.logService.info('save');
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.reportApi.saveReport(reportId, paramsQuery))
+            .pipe(
+                map(() => {
+                    this.logService.info('save');
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     deleteReport(reportId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.deleteReport(reportId))
-            .map(() => {
-                this.logService.info('delete');
-            }).catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.reportApi.deleteReport(reportId))
+            .pipe(
+                map(() => {
+                    this.logService.info('delete');
+                }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     private handleError(error: Response) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
     toJson(res: any) {

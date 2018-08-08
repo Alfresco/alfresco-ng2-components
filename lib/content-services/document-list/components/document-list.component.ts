@@ -27,15 +27,9 @@ import {
 } from '@alfresco/adf-core';
 
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
-
+import { Observable, Subject, BehaviorSubject, Subscription, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
-
 import { presetsDefaultModel } from '../models/preset.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
@@ -559,7 +553,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (typeof action.handler === 'function') {
                 handlerSub = action.handler(node, this, action.permission);
             } else {
-                handlerSub = Observable.of(true);
+                handlerSub = of(true);
             }
 
             if (typeof action.execute === 'function' && handlerSub) {

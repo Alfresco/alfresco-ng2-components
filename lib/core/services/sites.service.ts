@@ -17,11 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/catch';
 import { SitePaging, SiteEntry } from 'alfresco-js-api';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class SitesService {
@@ -40,8 +39,10 @@ export class SitesService {
             include: ['properties']
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSites(queryOptions))
-            .catch(this.handleError);
+        return from(this.apiService.getInstance().core.sitesApi.getSites(queryOptions))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -51,8 +52,10 @@ export class SitesService {
      * @returns Information about the site
      */
     getSite(siteId: string, opts?: any): Observable<SiteEntry> {
-        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSite(siteId, opts))
-            .catch(this.handleError);
+        return from(this.apiService.getInstance().core.sitesApi.getSite(siteId, opts))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -64,8 +67,10 @@ export class SitesService {
     deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any> {
         let options: any = {};
         options.permanent = permanentFlag;
-        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options)
-            .catch(this.handleError));
+        return from(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options))
+            .pipe(
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -96,6 +101,6 @@ export class SitesService {
 
     private handleError(error: Response): any {
         console.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

@@ -8,6 +8,17 @@ Last reviewed: 2018-06-07
 
 Shows all available filters.
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Filtering APS task filters](#filtering-aps-task-filters)
+    -   [How to create an accordion menu with the task filter](#how-to-create-an-accordion-menu-with-the-task-filter)
+-   [See also](#see-also)
+
 ## Basic Usage
 
 ```html
@@ -19,7 +30,7 @@ Shows all available filters.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name. |
 | filterParam | [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts) |  | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
@@ -28,10 +39,10 @@ Shows all available filters.
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
 | filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)`>` | Emitted when a filter in the list is clicked. |
-| success | `EventEmitter<any>` | Emitted when the list is loaded. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list is loaded. |
 
 ## Details
 
@@ -47,7 +58,6 @@ Use the `filterParam` property to restrict the range of filters that are shown:
 
 You can use properties from [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts)
 as the value of `filterParam` as shown in the table below:
-
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

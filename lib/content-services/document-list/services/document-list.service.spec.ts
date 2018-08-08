@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiServiceMock, AlfrescoApiService,
-    AppConfigService, StorageService, ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+    AppConfigService, StorageService, ContentService, setupTestBed, CoreModule, LogService, AppConfigServiceMock } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 
 declare let jasmine: any;
@@ -94,9 +94,10 @@ describe('DocumentListService', () => {
     });
 
     beforeEach(() => {
+        let logService = new LogService(new AppConfigServiceMock(null));
         let contentService = new ContentService(null, null, null, null);
         alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
-        service = new DocumentListService(null, contentService, alfrescoApiService, null, null);
+        service = new DocumentListService(null, contentService, alfrescoApiService, logService, null);
         jasmine.Ajax.install();
     });
 
@@ -161,7 +162,7 @@ describe('DocumentListService', () => {
     });
 
     it('should add the includeTypes in the request Node Children if required', () => {
-        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeChildren');
+        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeChildren').and.callThrough();
 
         service.getFolder('/fake-root/fake-name', {}, ['isLocked']);
 
@@ -173,7 +174,7 @@ describe('DocumentListService', () => {
     });
 
     it('should not add the includeTypes in the request Node Children if is duplicated', () => {
-        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeChildren');
+        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeChildren').and.callThrough();
 
         service.getFolder('/fake-root/fake-name', {}, ['allowableOperations']);
 
@@ -185,7 +186,7 @@ describe('DocumentListService', () => {
     });
 
     it('should add the includeTypes in the request getFolderNode if required', () => {
-        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo');
+        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo').and.callThrough();
 
         service.getFolderNode('test-id', ['isLocked']);
 
@@ -196,7 +197,7 @@ describe('DocumentListService', () => {
     });
 
     it('should not add the includeTypes in the request getFolderNode if is duplicated', () => {
-        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo');
+        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo').and.callThrough();
 
         service.getFolderNode('test-id', ['allowableOperations']);
 

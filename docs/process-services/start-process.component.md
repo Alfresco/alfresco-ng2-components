@@ -13,19 +13,14 @@ Starts a process.
 ## Contents
 
 -   [Basic Usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
     -   [Events](#events)
-
 -   [Details](#details)
-
     -   [Starting a process with a default name and pre-selected process definition name](#starting-a-process-with-a-default-name-and-pre-selected-process-definition-name)
     -   [Starting a process not included in an app](#starting-a-process-not-included-in-an-app)
     -   [Custom data example](#custom-data-example)
     -   [Attaching a File to the start form of the process](#attaching-a-file-to-the-start-form-of-the-process)
-
 -   [See also](#see-also)
 
 ## Basic Usage

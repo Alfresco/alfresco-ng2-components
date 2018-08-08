@@ -19,7 +19,7 @@ import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 
@@ -87,13 +87,11 @@ describe('ProcessAttachmentListComponent', () => {
                 }]
         };
 
-        getProcessRelatedContentSpy = spyOn(service, 'getProcessRelatedContent').and.returnValue(Observable.of(mockAttachment));
-        spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({successCode: true}));
+        getProcessRelatedContentSpy = spyOn(service, 'getProcessRelatedContent').and.returnValue(of(mockAttachment));
+        spyOn(service, 'deleteRelatedContent').and.returnValue(of({successCode: true}));
 
         let blobObj = new Blob();
-        spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
-            blobObj
-        ));
+        spyOn(service, 'getFileRawContent').and.returnValue(of(blobObj));
     });
 
     afterEach(() => {
@@ -113,7 +111,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should emit an error when an error occurs loading attachments', () => {
         let emitSpy = spyOn(component.error, 'emit');
-        getProcessRelatedContentSpy.and.returnValue(Observable.throw({}));
+        getProcessRelatedContentSpy.and.returnValue(throwError({}));
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         expect(emitSpy).toHaveBeenCalled();
@@ -180,7 +178,7 @@ describe('ProcessAttachmentListComponent', () => {
     }));
 
     it('should show the empty list component when the attachments list is empty', async(() => {
-        getProcessRelatedContentSpy.and.returnValue(Observable.of({
+        getProcessRelatedContentSpy.and.returnValue(of({
             'size': 0,
             'total': 0,
             'start': 0,
@@ -195,7 +193,7 @@ describe('ProcessAttachmentListComponent', () => {
     }));
 
     it('should not show the empty list drag and drop component when is disabled', async(() => {
-        getProcessRelatedContentSpy.and.returnValue(Observable.of({
+        getProcessRelatedContentSpy.and.returnValue(of({
             'size': 0,
             'total': 0,
             'start': 0,
@@ -213,7 +211,7 @@ describe('ProcessAttachmentListComponent', () => {
     }));
 
     it('should show the empty list component when the attachments list is empty for completed process', async(() => {
-        getProcessRelatedContentSpy.and.returnValue(Observable.of({
+        getProcessRelatedContentSpy.and.returnValue(of({
             'size': 0,
             'total': 0,
             'start': 0,
@@ -231,7 +229,7 @@ describe('ProcessAttachmentListComponent', () => {
     }));
 
     it('should not show the empty list component when the attachments list is not empty for completed process', async(() => {
-        getProcessRelatedContentSpy.and.returnValue(Observable.of(mockAttachment));
+        getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'processInstanceId': change});
         component.disabled = true;

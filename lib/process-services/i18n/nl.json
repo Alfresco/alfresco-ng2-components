@@ -19,6 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "Geen taken gevonden",
+        "SUBTITLE": "Maak een nieuwe taak die u later gemakkelijk wilt kunnen vinden",
         "NONE": "Geen takenlijsten gevonden"
       }
     },
@@ -150,6 +152,11 @@
       "NO_FORM_MESSAGE": "Geen formulieren bijgevoegd",
       "COMPLETE_TASK_MESSAGE": "Taak {{taskName}} voltooid",
       "COMPLETE_TASK_SUB_MESSAGE": "Geen formulieren om toe te voegen"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Selecteer formulier om bij te voegen",
+      "REMOVE_FORM": "Formulier verwijderen",
+      "SELECT_OPTION": "Selecteer een optie"
     }
   },
   "ADF_PROCESS_LIST": {

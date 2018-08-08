@@ -97,18 +97,5 @@ describe('PeopleAPI', () => {
                     .toBe('-me-');
             });
         }));
-
-        it('handles the error when it fails', async(() => {
-            const test = new PeopleContentServiceTest({
-                rejectGetPerson: true
-            });
-
-            const handleErrorSpy = spyOn(test.service, 'handleError')
-                .and.callThrough();
-
-            test.service.getPerson().subscribe(() => {
-                expect(handleErrorSpy).toHaveBeenCalled();
-            });
-        }));
     });
 });

@@ -25,13 +25,9 @@ import FileModel = require('../../models/ACS/fileModel');
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
-
-import fs = require('fs');
-import path = require('path');
 
 describe('CardView Component - properties', () => {
 
@@ -154,5 +150,36 @@ describe('CardView Component - properties', () => {
         metadataViewPage.chekMetadatGroupIsExpand('EXIF');
         metadataViewPage.chekMetadatGroupIsExpand('properties');
 
+    });
+
+    it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', () => {
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+
+        metadataViewPage.disabledDefaultProperties();
+
+        metadataViewPage.checkkMetadatGroupIsNotPresent('properties');
+        metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
+        metadataViewPage.chekMetadatGroupIsExpand('EXIF');
+
+        metadataViewPage.enabledDefaultProperties();
+
+        metadataViewPage.checkkMetadatGroupIsPresent('properties');
+        metadataViewPage.chekMetadatGroupIsExpand('properties');
+    });
+
+    it('[C280560] Should show/hide the more properties button when displayDefaultProperties is true/false', () => {
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+
+        metadataViewPage.informationButtonIsDisplayed();
+
+        metadataViewPage.disabledDefaultProperties();
+
+        metadataViewPage.informationButtonIsNotDisplayed();
     });
 });

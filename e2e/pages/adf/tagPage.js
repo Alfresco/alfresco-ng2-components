@@ -63,7 +63,6 @@ var TagPage = function () {
         this.addNewTagInput(tag);
         Util.waitUntilElementIsVisible(addTagButton);
         Util.waitUntilElementIsClickable(addTagButton);
-        Util.waitUntilElementIsPresent(addTagButton);
         addTagButton.click();
         return this;
     };

@@ -19,11 +19,11 @@ import { LogService } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer } from 'rxjs';
 import { TaskDetailsEvent, TaskDetailsModel } from '../../task-list';
 import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
+import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-process-instance-tasks',
@@ -71,8 +71,10 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     constructor(private activitiProcess: ProcessService,
                 private logService: LogService,
                 private dialog: MatDialog) {
-        this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
-        this.completedTask$ = new Observable<TaskDetailsModel>(observer => this.completedTaskObserver = observer).share();
+        this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer)
+            .pipe(share());
+        this.completedTask$ = new Observable<TaskDetailsModel>(observer => this.completedTaskObserver = observer)
+            .pipe(share());
     }
 
     ngOnInit() {

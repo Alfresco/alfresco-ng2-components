@@ -25,7 +25,6 @@ import FileModel = require('../../models/ACS/fileModel');
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
@@ -43,7 +42,7 @@ describe('Comment Component', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-
+    let uploadActions = new UploadActions();
     let nodeId, userFullName;
 
     let comments = {
@@ -73,8 +72,6 @@ describe('Comment Component', () => {
 
     beforeEach(async (done) => {
 
-        let uploadActions = new UploadActions();
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
@@ -94,11 +91,7 @@ describe('Comment Component', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.core.nodesApi.deleteNode(nodeId, {'permanent': true}).then(function() {
-            console.log('API called successfully.');
-        }, function(error) {
-            console.error(error);
-        });
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
 
         done();
     });
@@ -115,7 +108,7 @@ describe('Comment Component', () => {
         expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         expect(commentsPage.getMessage(0)).toEqual(comments.first);
         expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toEqual('a few seconds ago');
+        expect(commentsPage.getTime(0)).toContain('ago');
     });
 
     it('[C280021] Should be able to add a multiline comment on a file', () => {
@@ -130,7 +123,7 @@ describe('Comment Component', () => {
         expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         expect(commentsPage.getMessage(0)).toEqual(comments.multiline);
         expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toEqual('a few seconds ago');
+        expect(commentsPage.getTime(0)).toContain('ago');
 
         commentsPage.addComment(comments.second);
         commentsPage.checkUserIconIsDisplayed(0);
@@ -138,7 +131,7 @@ describe('Comment Component', () => {
         expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (2)');
         expect(commentsPage.getMessage(0)).toEqual(comments.second);
         expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toEqual('a few seconds ago');
+        expect(commentsPage.getTime(0)).toContain('ago');
     });
 
     it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', () => {
@@ -153,6 +146,6 @@ describe('Comment Component', () => {
         expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         expect(commentsPage.getMessage(0)).toEqual('First name: Last name:');
         expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toEqual('a few seconds ago');
+        expect(commentsPage.getTime(0)).toContain('ago');
     });
 });

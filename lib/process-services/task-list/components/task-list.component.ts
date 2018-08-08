@@ -23,8 +23,7 @@ import {
     AfterContentInit, Component, ContentChild, EventEmitter,
     Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
@@ -110,6 +109,18 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     /** Toggles default selection of the first row */
     @Input()
     selectFirstRow: boolean = true;
+
+    /** The id of a task */
+    @Input()
+    taskId: string;
+
+    /** Toggles inclusion of Process Instances */
+    @Input()
+    includeProcessInstance: boolean;
+
+    /** Starting point of the */
+    @Input()
+    start: number = 0;
 
     /** Emitted when a task in the list is clicked */
     @Output()
@@ -321,7 +332,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Optimize name field
-     * @param istances
+     * @param instances
      */
     private optimizeNames(instances: any[]): any[] {
         instances = instances.map(t => {
@@ -344,10 +355,11 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             assignment: this.assignment,
             state: this.state,
             sort: this.sort,
-            landingTaskId: this.landingTaskId,
             page: this.page,
             size: this.size,
-            start: 0
+            start: this.start,
+            taskId: this.taskId,
+            includeProcessInstance: this.includeProcessInstance
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }
@@ -363,9 +375,5 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     currentPage(skipCount: number, maxItems: number): number {
         return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
-    }
-
-    get supportedPageSizes(): number[] {
-        return this.userPreferences.getDefaultPageSizes();
     }
 }

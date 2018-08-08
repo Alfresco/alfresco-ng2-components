@@ -41,6 +41,7 @@ var MetadataViewPage = function () {
     var readonlySwitch = element(by.id("adf-metadata-readonly"));
     var multiSwitch = element(by.id("adf-metadata-multi"));
     var presetSwitch = element(by.id('adf-toggle-custom-preset'));
+    var defaultPropertiesSwitch = element(by.id('adf-metadata-default-properties'));
 
     this.getTitle = function () {
         Util.waitUntilElementIsVisible(title);
@@ -116,11 +117,16 @@ var MetadataViewPage = function () {
     };
 
     this.informationButtonIsDisplayed = function () {
-        return Util.waitUntilElementIsVisible(informationSpan);
+        Util.waitUntilElementIsVisible(informationButton);
+        Util.waitUntilElementIsClickable(informationButton);
+    };
+
+    this.informationButtonIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(informationButton);
     };
 
     this.clickOnInformationButton = function () {
-        Util.waitUntilElementIsVisible(informationSpan);
+        this.informationButtonIsDisplayed();
         informationButton.click();
         return this;
     };
@@ -136,7 +142,7 @@ var MetadataViewPage = function () {
     };
 
     this.clickOnPropertiesTab = function () {
-        var propertiesTab = element(by.cssContainingText("div[class='mat-tab-labels'] div", "Properties"));
+        let propertiesTab = element(by.cssContainingText(".adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content", "Properties"));
         Util.waitUntilElementIsVisible(propertiesTab);
         propertiesTab.click();
         return this;
@@ -235,7 +241,7 @@ var MetadataViewPage = function () {
         editPropertyIcon.click();
     };
 
-    this.getPropertyIconTooltip = function (propertyName, icon) {
+    this.getPropertyIconTooltip = function (propertyName) {
         var editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
         return editPropertyIcon.getAttribute('title');
     };
@@ -374,6 +380,32 @@ var MetadataViewPage = function () {
             if (check === 'mat-slide-toggle mat-primary') {
                 presetSwitch.click();
                 expect(presetSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
+    /**
+     * disables preset
+     */
+    this.disabledDefaultProperties = function () {
+        Util.waitUntilElementIsVisible(defaultPropertiesSwitch);
+        defaultPropertiesSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                defaultPropertiesSwitch.click();
+                expect(defaultPropertiesSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables preset
+     */
+    this.enabledDefaultProperties = function () {
+        Util.waitUntilElementIsVisible(defaultPropertiesSwitch);
+        defaultPropertiesSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                defaultPropertiesSwitch.click();
+                expect(defaultPropertiesSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
             }
         })
     };

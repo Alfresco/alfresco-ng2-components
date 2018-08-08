@@ -1,6 +1,19 @@
 # Form Stencils
 
-Form component provides basic support for custom stencils created with Activiti stencil editor.
+[`Form`](../../lib/process-services/task-list/models/form.model.ts) component provides basic support for custom stencils created with Activiti stencil editor.
+
+## Contents
+
+-   [Installing](#installing)
+-   [Creating new stencil](#creating-new-stencil)
+-   [Form runtime template](#form-runtime-template)
+-   [Form editor template](#form-editor-template)
+-   [Custom component controller](#custom-component-controller)
+    -   [JavaScript code](#javascript-code)
+    -   [TypeScript code](#typescript-code)
+    -   [Mapping template with component class](#mapping-template-with-component-class)
+    -   [Final result](#final-result)
+-   [Runtime result](#runtime-result)
 
 ## Installing
 
@@ -18,16 +31,17 @@ Where `<activiti-app-root>` should be replaced with a valid url pointing to your
 ```html
 <script src="http://localhost:9999/activiti-app/app/rest/script-files/controllers"></script>
 ```
-- `/app/rest/script-files/controllers`
-    provides all stencil controllers stored within Activiti
 
-- `runtime.ng1.js`
-    provides a compatibility layer for controllers created with AngularJS (aka Angular 1x)
-    (this is to avoid runtime errors when loading AngularJS code into `<activiti-form>` component)
+-   `/app/rest/script-files/controllers`
+      provides all stencil controllers stored within Activiti
 
-- `runtime.adf.js`
-    provides API for stencil management and registration,
-    i.e. mapping html templates with corresponding controller classes
+-   `runtime.ng1.js`
+      provides a compatibility layer for controllers created with AngularJS (aka Angular 1x)
+      (this is to avoid runtime errors when loading AngularJS code into `<activiti-form>` component)
+
+-   `runtime.adf.js`
+      provides API for stencil management and registration,
+      i.e. mapping html templates with corresponding controller classes
 
 ## Creating new stencil
 
@@ -53,7 +67,7 @@ This should be a valid Angular component template that you want to render in `<a
 
 ## Form editor template
 
-This can be any html layout to be rendered as a component placeholder in Activiti Form Designer.
+This can be any html layout to be rendered as a component placeholder in Activiti [`Form`](../../lib/process-services/task-list/models/form.model.ts) Designer.
 
 ```html
 <div>
@@ -145,4 +159,4 @@ Angular Component
 Created by: Denys
 ```
 
-ADF Form component will automatically assemble and compile a valid Angular component on the fly.
+ADF [`Form`](../../lib/process-services/task-list/models/form.model.ts) component will automatically assemble and compile a valid Angular component on the fly.

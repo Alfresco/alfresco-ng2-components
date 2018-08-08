@@ -76,7 +76,7 @@ describe('Form widgets', () => {
         done();
     });
 
-    it('Check text, multiline widgets - label, value and displayed', () => {
+    it('[C272778] Check text, multiline widgets - label, value and displayed', () => {
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToApp(appModel.name)
             .clickTasksButton();
@@ -112,7 +112,7 @@ describe('Form widgets', () => {
 
     });
 
-    it('Check number, amount widgets - label, value and displayed', () => {
+    it('[C272779] Check number, amount widgets - label, value and displayed', () => {
 
         expect(taskPage.usingFormFields().getFieldValue(appFields.number_id))
             .toEqual(formInstance.getWidgetBy('id', appFields.number_id).value || '');
@@ -125,7 +125,7 @@ describe('Form widgets', () => {
             .toEqual(formInstance.getWidgetBy('id', appFields.amount_id).name);
     });
 
-    it('Check attachfolder, attachfile widgets - label and displayed', () => {
+    it('[C272780] Check attachfolder, attachfile widgets - label and displayed', () => {
 
         expect(taskPage.usingFormFields().getFieldLabel(appFields.attachfolder_id))
             .toEqual(formInstance.getWidgetBy('id', appFields.attachfolder_id).name);
@@ -133,7 +133,7 @@ describe('Form widgets', () => {
             .toEqual(formInstance.getWidgetBy('id', appFields.attachfile_id).name);
     });
 
-    it('Check date, date & time widgets - label, value and displayed', () => {
+    it('[C272781] Check date, date & time widgets - label, value and displayed', () => {
 
         expect(taskPage.usingFormFields().getFieldLabel(appFields.date_id))
             .toContain(formInstance.getWidgetBy('id', appFields.date_id).name);
@@ -146,7 +146,7 @@ describe('Form widgets', () => {
             .toEqual(formInstance.getWidgetBy('id', appFields.dateTime_id).value || '');
     });
 
-    it('Check people, group widgets - label, value and displayed', () => {
+    it('[C272782] Check people, group widgets - label, value and displayed', () => {
 
         expect(taskPage.usingFormFields().getFieldValue(appFields.people_id))
             .toEqual(formInstance.getWidgetBy('id', appFields.people_id).value || '');
@@ -159,7 +159,7 @@ describe('Form widgets', () => {
             .toEqual(formInstance.getWidgetBy('id', appFields.group_id).name);
     });
 
-    it('Check displayText, displayValue widgets - value and displayed', () => {
+    it('[C272783] Check displayText, displayValue widgets - value and displayed', () => {
 
         expect(usingWidget.usingDisplayTextWidget().getFieldLabel(appFields.displaytext_id))
             .toEqual(formInstance.getWidgetBy('id', appFields.displaytext_id).value);
@@ -167,7 +167,7 @@ describe('Form widgets', () => {
             .toEqual(formInstance.getWidgetBy('id', appFields.displayvalue_id).value || 'Unknown type: readonly');
     });
 
-    it('Check typeahead, header widgets - label, value and displayed', () => {
+    it('[C272784] Check typeahead, header widgets - label, value and displayed', () => {
 
         expect(usingWidget.usingHeaderWidget().getFieldLabel(appFields.header_id))
             .toEqual(formInstance.getWidgetBy('id', appFields.header_id).name);
@@ -178,7 +178,7 @@ describe('Form widgets', () => {
             .toEqual(formInstance.getWidgetBy('id', appFields.typeahead_id).name);
     });
 
-    it('Check checkbox, radiobuttons widgets - label, value and displayed', () => {
+    it('[C272785] Check checkbox, radiobuttons widgets - label, value and displayed', () => {
         let radioOption = 1;
 
         expect(taskPage.usingFormFields().getFieldLabel(appFields.checkbox_id))
@@ -190,7 +190,7 @@ describe('Form widgets', () => {
             .toContain(formInstance.getWidgetBy('id', appFields.radiobuttons_id).options[radioOption - 1].name);
     });
 
-    it('Check hyperlink, dropdown, dynamictable widgets - label, value and displayed', () => {
+    it('[C268149] Check hyperlink, dropdown, dynamictable widgets - label, value and displayed', () => {
 
         expect(usingWidget.usingHyperlink().getFieldText(appFields.hyperlink_id))
             .toEqual(formInstance.getWidgetBy('id', appFields.hyperlink_id).hyperlinkUrl || '');

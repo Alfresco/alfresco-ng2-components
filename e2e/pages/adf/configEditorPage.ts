@@ -15,29 +15,32 @@
  * limitations under the License.
  */
 
+import { element, by, browser } from 'protractor';
 import Util = require('../../util/util');
-import TestConfig = require('../../test.config');
 
 export class ConfigEditorPage {
 
     enterMetadataConfiguration(text) {
-        let textField = element(by.css('#adf-metadata-editor > div > div > div.overflow-guard > textarea'));
+        let textField = element(by.css('#adf-metadata-editor div.overflow-guard > textarea'));
         browser.driver.sleep(1000);
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
-        textField.clear().sendKeys(text);
+        textField.clear();
+        textField.sendKeys(text);
         return this;
     }
 
     clickSaveMetadataButton() {
         let saveButton = element(by.xpath('//*[@id="adf-metadata-save"]'));
         Util.waitUntilElementIsVisible(saveButton);
+        Util.waitUntilElementIsClickable(saveButton);
         return saveButton.click();
     }
 
     clickClearMetadataButton() {
         let clearButton = element(by.xpath('//*[@id="adf-metadata-clear"]'));
         Util.waitUntilElementIsVisible(clearButton);
+        Util.waitUntilElementIsClickable(clearButton);
         return clearButton.click();
     }
 }

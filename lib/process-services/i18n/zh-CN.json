@@ -19,6 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "找不到任务",
+        "SUBTITLE": "创建您希望稍后轻松找到的新任务",
         "NONE": "未找到任务列表"
       }
     },
@@ -150,6 +152,11 @@
       "NO_FORM_MESSAGE": "未附加表单",
       "COMPLETE_TASK_MESSAGE": "已完成任务 {{taskName}}",
       "COMPLETE_TASK_SUB_MESSAGE": "没有要添加的表单"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "选择要附加的表单",
+      "REMOVE_FORM": "删除表单",
+      "SELECT_OPTION": "选择选项"
     }
   },
   "ADF_PROCESS_LIST": {

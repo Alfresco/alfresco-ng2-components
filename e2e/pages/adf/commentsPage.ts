@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+import { element, by } from 'protractor';
+
 import Util = require('../../util/util');
-import TestConfig = require('../../test.config');
 
 export class CommentsPage {
 
@@ -27,7 +28,6 @@ export class CommentsPage {
     commentTime = element.all(by.id('comment-time'));
     commentInput = element(by.id('comment-input'));
     addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
-
 
     getTotalNumberOfComments() {
         Util.waitUntilElementIsVisible(this.numberOfComments);

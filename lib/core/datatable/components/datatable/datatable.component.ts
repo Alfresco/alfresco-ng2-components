@@ -20,7 +20,7 @@ import {
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
-import { Subscription, Observable, Observer } from 'rxjs/Rx';
+import { Subscription, Observable, Observer } from 'rxjs';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
@@ -32,9 +32,7 @@ import { ObjectDataRow } from '../../data/object-datarow.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/buffer';
-import 'rxjs/add/operator/filter';
+import { share, buffer, map, filter, debounceTime } from 'rxjs/operators';
 
 export enum DisplayMode {
     List = 'list',
@@ -180,7 +178,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
-        this.click$ = new Observable<DataRowEvent>(observer => this.clickObserver = observer).share();
+        this.click$ = new Observable<DataRowEvent>(observer => this.clickObserver = observer)
+            .pipe(share());
     }
 
     ngAfterContentInit() {
@@ -254,9 +253,15 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private initAndSubscribeClickStream() {
         this.unsubscribeClickStream();
         let singleClickStream = this.click$
-            .buffer(this.click$.debounceTime(250))
-            .map(list => list)
-            .filter(x => x.length === 1);
+            .pipe(
+                buffer(
+                    this.click$.pipe(
+                        debounceTime(250)
+                    )
+                ),
+                map(list => list),
+                filter(x => x.length === 1)
+            );
 
         this.singleClickStreamSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
@@ -273,9 +278,15 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         });
 
         let multiClickStream = this.click$
-            .buffer(this.click$.debounceTime(250))
-            .map(list => list)
-            .filter(x => x.length >= 2);
+            .pipe(
+                buffer(
+                    this.click$.pipe(
+                        debounceTime(250)
+                    )
+                ),
+                map(list => list),
+                filter(x => x.length >= 2)
+            );
 
         this.multiClickStreamSub = multiClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
@@ -534,7 +545,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return event.value.actions;
     }
 
-    getRowActions(row: DataRow, col: DataColumn): any[] {
+    getRowActions(row: DataRow, col?: DataColumn): any[] {
         const id = row.getValue('id');
 
         if (!this.rowMenuCache[id]) {

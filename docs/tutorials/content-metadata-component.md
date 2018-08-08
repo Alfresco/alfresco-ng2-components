@@ -4,11 +4,11 @@ Level: Advanced
 
 # Content metadata component
 
-In this tutorial you will learn how to work with the [`ContentMetadataComponent`](https://alfresco.github.io/adf-component-catalog/components/ContentMetadataComponent.html). This component is used to render the standard and custom metadata of generic content item (called a *node*) stored in Alfresco Content Services. With the usual approach "learning by doing", you will see here some practical examples you might find useful in your own applicatioin. As a starting point, we will use and customize the [Alfresco Content App](https://github.com/Alfresco/alfresco-content-app).
+In this tutorial you will learn how to work with the [`ContentMetadataComponent`](../content-services/content-metadata.component.md). This component is used to render the standard and custom metadata of generic content item (called a _node_) stored in Alfresco Content Services. With the usual approach "learning by doing", you will see here some practical examples you might find useful in your own applicatioin. As a starting point, we will use and customize the [Alfresco Content App](https://github.com/Alfresco/alfresco-content-app).
 
 ## About the `ContentMetadataComponent`
 
-As described in the [`ContentMetadataComponent`](https://alfresco.github.io/adf-component-catalog/components/ContentMetadataComponent.html) documentation, the `adf-content-metadata-card` tag has some useful attributes, included the `preset` attribute, which is used to point to a collection of aspects/properties to render.
+As described in the [`ContentMetadataComponent`](../content-services/content-metadata.component.md) documentation, the `adf-content-metadata-card` tag has some useful attributes, included the `preset` attribute, which is used to point to a collection of aspects/properties to render.
 
 Below, you can see the `preset` value requesting to render all the available aspects/properties:
 
@@ -86,7 +86,7 @@ To add a new `preset` configuration, edit the `src/app.config.json` file and loc
 
 ### Using the `my-preset` configuration
 
-Now that the `my-preset` configuration is defined, let's use it in a view of the ADF application. As an example, let's edit the files view, stored in the `src/app/files` folder. Specifically, let's change the `files.component.html` file as follows:
+Now that the `my-preset` configuration is defined, let's use it in a view of the ADF application. As an example, let's edit the files view, stored in the `src/app/files` folder. Specifically, let's change the [`files.component`](../../demo-shell/src/app/components/files/files.component.ts)`.html` file as follows:
 
 ```html
 <adf-content-metadata-card

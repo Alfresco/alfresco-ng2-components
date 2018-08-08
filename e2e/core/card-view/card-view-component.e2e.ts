@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { element, by } from 'protractor';
+
 import LoginPage = require('../../pages/adf/loginPage');
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 import CardViewPage = require('../../pages/adf/metadataViewPage');
@@ -65,7 +67,7 @@ describe('CardView Component', () => {
 
     describe('key-value pair ', () => {
 
-        it('[C279937] Should the label be present', () => {
+        it('[C279938] Should the label be present', () => {
             let label = element(by.xpath('div[data-automation-id="card-key-value-pairs-label-key-value-pairs"]'));
 
             Util.waitUntilElementIsPresent(label);
@@ -279,13 +281,13 @@ describe('CardView Component', () => {
     describe('Date and DateTime', () => {
 
         it('[C279961] Should the label be present', () => {
-            let label = element(by.xpath('div[data-automation-id="card-dateitem-label-date"]'));
+            let labelDate = element(by.xpath('div[data-automation-id="card-dateitem-label-date"]'));
 
-            Util.waitUntilElementIsPresent(label);
+            Util.waitUntilElementIsPresent(labelDate);
 
-            let label = element(by.xpath('div[data-automation-id="card-dateitem-label-datetime"]'));
+            let labelDatetime = element(by.xpath('div[data-automation-id="card-dateitem-label-datetime"]'));
 
-            Util.waitUntilElementIsPresent(label);
+            Util.waitUntilElementIsPresent(labelDatetime);
         });
 
         it('[C279962] Should be present a default value', () => {

@@ -18,10 +18,10 @@
 import { LogService, UserProcessModel } from '@alfresco/adf-core';
 import { PeopleProcessService } from '@alfresco/adf-core';
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer } from 'rxjs';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleSearchComponent } from '../people-search/people-search.component';
+import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-people',
@@ -51,7 +51,10 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     peopleSearch$: Observable<UserProcessModel[]>;
 
     constructor(private logService: LogService, public peopleProcessService: PeopleProcessService) {
-        this.peopleSearch$ = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer).share();
+        this.peopleSearch$ = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer)
+            .pipe(
+                share()
+            );
     }
 
     ngOnInit() {

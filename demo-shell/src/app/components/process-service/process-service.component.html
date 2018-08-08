@@ -59,11 +59,10 @@
                         *ngIf="taskList"
                         [target]="taskList"
                         (changePageSize)="onChangePageSize($event)"
-                        [supportedPageSizes]="supportedPages"
                         #taskListPagination>
                     </adf-pagination>
                 </div>
-                <div class="adf-grid-item adf-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto">
+                <div class="adf-grid-item adf-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto" data-automation-id="adf-tasks-details">
                     <adf-task-details #activitidetails
                                            [debugMode]="true"
                                            [taskId]="currentTaskId"
@@ -123,7 +122,7 @@
                                              [headingIcon]="'assessment'">
                             <adf-process-instance-filters
                                 #activitiprocessfilter
-                                [filterParam]="{index: 0}"
+                                [filterParam]="filterSelected"
                                 [appId]="appId"
                                 (filterClick)="onProcessFilterClick($event)"
                                 (success)="onSuccessProcessFilterList($event)">
@@ -157,7 +156,6 @@
                         *ngIf="processList"
                         [target]="processList"
                         (changePageSize)="onChangePageSize($event)"
-                        [supportedPageSizes]="supportedPages"
                         #processListPagination>
                     </adf-pagination>
                 </div>
