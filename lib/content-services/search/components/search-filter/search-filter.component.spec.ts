@@ -312,6 +312,7 @@ describe('SearchFilterComponent', () => {
                 { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
             { label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
+        component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacetFields[0].buckets.items[0]);
 
         const serverResponseFields: any = [
             { label: 'f1', field: 'f1', buckets: [
@@ -351,6 +352,7 @@ describe('SearchFilterComponent', () => {
                         { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
             { label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
+        component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacetFields[0].buckets.items[0]);
 
         const serverResponseFields: any = [
             { label: 'f1', field: 'f1', buckets: [
@@ -390,6 +392,7 @@ describe('SearchFilterComponent', () => {
                         { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
             { label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
+        component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacetFields[0].buckets.items[0]);
         const data = {
             list: {
                 context: {}
