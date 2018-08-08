@@ -146,8 +146,19 @@ var NavigationBarPage = function () {
     };
 
     this.checkToolbarColor = function (color) {
-        var toolbarColor = element(by.css(`mat-toolbar.mat-${color}`));
+        var toolbarColor = element(by.css(`mat-toolbar[class*="mat-${color}"]`));
         return Util.waitUntilElementIsVisible(toolbarColor);
+    };
+
+    this.clickAppLogo = function (logoTitle) {
+        var appLogo = element(by.css('a[title="'+ logoTitle +'"]'));
+        Util.waitUntilElementIsVisible(appLogo);
+        appLogo.click();
+    };
+
+    this.checkLogoTooltip = function (logoTooltip) {
+        var logoTooltip = element(by.css('a[title="'+ logoTooltip +'"]'));
+        Util.waitUntilElementIsVisible(logoTooltip);
     }
 };
 
