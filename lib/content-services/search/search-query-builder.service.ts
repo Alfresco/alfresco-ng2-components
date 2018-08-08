@@ -106,6 +106,10 @@ export class SearchQueryBuilderService {
         }
     }
 
+    getUserFacetBuckets(field: string) {
+        return this.userFacetBuckets[field] || [];
+    }
+
     removeUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
         if (field && field.field && bucket) {
             const buckets = this.userFacetBuckets[field.field] || [];

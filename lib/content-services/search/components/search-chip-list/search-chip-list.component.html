@@ -3,7 +3,7 @@
         <mat-chip
             *ngFor="let query of searchFilter.selectedFacetQueries"
             [removable]="true"
-            (remove)="searchFilter.unselectFacetQuery(query)">
+            (removed)="searchFilter.unselectFacetQuery(query)">
             {{ query.label | translate }}
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
@@ -12,7 +12,7 @@
         <mat-chip
             *ngFor="let selection of searchFilter.selectedBuckets"
             [removable]="true"
-            (remove)="searchFilter.unselectFacetBucket(selection.field, selection.bucket)">
+            (removed)="searchFilter.unselectFacetBucket(selection.field, selection.bucket)">
             {{ (selection.bucket.display || selection.bucket.label) | translate }}
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>

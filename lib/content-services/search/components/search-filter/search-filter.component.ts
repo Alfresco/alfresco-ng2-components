@@ -114,7 +114,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             for (let field of this.responseFacetFields) {
                 if (field.buckets) {
                     this.selectedBuckets.push(
-                        ...field.buckets.items
+                        ...this.queryBuilder.getUserFacetBuckets(field.field)
                             .filter(bucket => bucket.checked)
                             .map(bucket => {
                                 return { field, bucket };
