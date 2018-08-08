@@ -5,7 +5,7 @@ Status: Active
 
 # Task Standalone component
 
-This component can be used when there is no form attached to a task.
+This component can be used when the task doesn't belong to any processes.
 
 ## Basic Usage
 
