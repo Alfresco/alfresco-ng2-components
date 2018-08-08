@@ -294,36 +294,30 @@
       "TITLE": "Ocorreu um erro.",
       "DESCRIPTION": "Parece que ocorreu um erro.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Voltar para a página inicial",
-        "ROUTE": "Página Inicial"
+        "TEXT": "Voltar para a página inicial"
       }
     },
     "403": {
       "TITLE": "Você não tem permissão para acessar este servidor.",
       "DESCRIPTION": "Você não tem permissão para acessar este recurso no servidor.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Relatar problema",
-        "URL": "relatar-problema"
+        "TEXT": "Relatar problema""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Voltar para a página inicial",
-        "ROUTE": "Página Inicial"
+        "TEXT": "Voltar para a página inicial"
       }
     },
     "404": {
       "TITLE": "Ocorreu um erro.",
       "DESCRIPTION": "Não foi possível encontrar a página que você está procurando.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Voltar para a página inicial",
-        "ROUTE": "Página Inicial"
+        "TEXT": "Voltar para a página inicial"
       }
     }
   }

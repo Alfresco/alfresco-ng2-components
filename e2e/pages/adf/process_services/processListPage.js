@@ -17,6 +17,7 @@
 
 var Util = require('../../../util/util');
 var TestConfig = require('../../../test.config');
+var NavigationBarPage = require('../navigationBarPage');
 
 var ProcessListPage = function () {
 
@@ -30,7 +31,8 @@ var ProcessListPage = function () {
     var startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
 
     this.goToProcessList = function () {
-        browser.driver.get(processListURL);
+        var navigationBarPage = new NavigationBarPage();
+        navigationBarPage.clickProcessServicesButton();
         Util.waitUntilElementIsVisible(pageLoaded);
     };
 

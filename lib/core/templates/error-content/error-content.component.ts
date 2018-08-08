@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, AfterContentChecked } from '@angular/core';
+import {
+    Component,
+    ChangeDetectionStrategy,
+    Input,
+    ViewEncapsulation,
+    OnInit,
+    AfterContentChecked
+} from '@angular/core';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { TranslationService } from '../../services/translation.service';
 
@@ -29,10 +36,16 @@ import { TranslationService } from '../../services/translation.service';
 })
 export class ErrorContentComponent implements OnInit, AfterContentChecked {
 
+    @Input()
+    secondaryButtonUrl: string = 'report-issue';
+
+    @Input()
+    returnButtonUrl: string = '/';
+
+    @Input()
     errorCode: string;
-    secondaryButtonText: string;
-    secondaryButtonUrl: string;
-    returnButtonUrl: string;
+
+    hasSecondButton: boolean;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -42,7 +55,7 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
     ngOnInit() {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
-                if (params['id']) {
+                if (params['id'] && !this.errorCode) {
                     this.errorCode = params['id'];
                     let unknown = '';
                     this.translateService.get('ERROR_CONTENT.' + this.errorCode + '.TITLE').subscribe((errorTranslation: string) => {
@@ -56,21 +69,13 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
         }
     }
 
-    ngAfterContentChecked() {
-        this.getTranslations();
+    getTranslations() {
+        this.hasSecondButton = this.translateService.instant(
+            'ERROR_CONTENT.' + this.errorCode + '.SECONDARY_BUTTON.TEXT') ? true : false;
     }
 
-    getTranslations() {
-        this.returnButtonUrl = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.RETURN_BUTTON.ROUTE');
-
-        this.secondaryButtonText = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.SECONDARY_BUTTON.TEXT');
-
-        if (this.secondaryButtonText) {
-            this.secondaryButtonUrl = this.translateService.instant(
-                'ERROR_CONTENT.' + this.errorCode + '.SECONDARY_BUTTON.URL');
-        }
+    ngAfterContentChecked() {
+        this.getTranslations();
     }
 
     onSecondButton() {

@@ -16,41 +16,15 @@ Once you have caught the error in your server you will need to redirect to `/err
 this.router.navigate(['/error', errorCode]);
 ```
 
-```html
-<div class="adf-error-content">
-    <p class="adf-error-content-code">
-        {{ errorCode }}
-    </p>
-    <div class="adf-error-content-shadow"></div>
-    <p class="adf-error-content-title">
-        {{ 'ERROR_CONTENT.' + errorCode + '.TITLE' | translate }}
-    </p>
-    <p class="adf-error-content-description">
-        {{ 'ERROR_CONTENT.' + errorCode + '.DESCRIPTION' | translate }}
-    </p>
-    <div class="adf-error-content-buttons">
-        <a href="/" mat-raised-button color="primary" 
-            *ngIf="secondaryButtonText" (click)="onSecondButton()"
-            class="adf-error-content-description-link"> 
-            {{ 'ERROR_CONTENT.' + errorCode + '.SECONDARY_BUTTON.TEXT' | translate | uppercase }}
-        </a>
-        <a href="/" mat-raised-button color="primary" (click)="onReturnButton()">
-            {{ 'ERROR_CONTENT.' + this.errorCode + '.RETURN_BUTTON.TEXT' | translate | uppercase }}
-        </a>
-    </div>
-</div>
-```
-
 ## Properties
 
 ### Error Content Component
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| errorCode | string | Error code |
-| returnButtonUrl | string | URL for the return button |
-| secondaryButtonText | string | (Optional) Text that will be displayed inside the secondary button |
-| secondaryButtonUrl | string | (Optional) URL for the secondary button |
+| Name | Type | Default | Description |
+| ---- | ---- |---- | ----------- |
+| errorCode | string |  |Error code |
+| returnButtonUrl | string | "/"  |URL for the return button |
+| secondaryButtonUrl | string | "report-issue" |(Optional) URL for the secondary button |
 
 Note that you will also have to provide values for the variables used in the view template.
 
@@ -65,12 +39,10 @@ You can customize your error messages by adding them to the translate files insi
       "TITLE": "An error occurred.",
       "DESCRIPTION": "We couldn’t find the page you were looking for.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": { 
-        "TEXT": "Back to home",
-        "ROUTE": "home"
+        "TEXT": "Back to home"
       }
     }
   }

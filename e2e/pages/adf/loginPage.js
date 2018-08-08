@@ -120,7 +120,7 @@ var LoginPage = function () {
      * @method checkUsernameTooltip
      * @param {String} message
      */
-    this.checkUsernameTooltip = function (message) {
+    this.checkUsernameTooltip = function () {
         Util.waitUntilElementIsVisible(usernameTooltip);
     };
 
@@ -129,7 +129,7 @@ var LoginPage = function () {
      * @method checkPasswordTooltip
      * @param {String} message
      */
-    this.checkPasswordTooltip = function (message) {
+    this.checkPasswordTooltip = function () {
         Util.waitUntilElementIsVisible(passwordTooltip);
     };
 
