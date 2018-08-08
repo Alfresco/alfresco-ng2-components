@@ -41,6 +41,7 @@ var MetadataViewPage = function () {
     var readonlySwitch = element(by.id("adf-metadata-readonly"));
     var multiSwitch = element(by.id("adf-metadata-multi"));
     var presetSwitch = element(by.id('adf-toggle-custom-preset'));
+    var defaultPropertiesSwitch = element(by.id('adf-metadata-default-properties'));
 
     this.getTitle = function () {
         Util.waitUntilElementIsVisible(title);
@@ -118,6 +119,10 @@ var MetadataViewPage = function () {
     this.informationButtonIsDisplayed = function () {
         Util.waitUntilElementIsVisible(informationButton);
         Util.waitUntilElementIsClickable(informationButton);
+    };
+
+    this.informationButtonIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(informationButton);
     };
 
     this.clickOnInformationButton = function () {
@@ -375,6 +380,32 @@ var MetadataViewPage = function () {
             if (check === 'mat-slide-toggle mat-primary') {
                 presetSwitch.click();
                 expect(presetSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
+            }
+        })
+    };
+
+    /**
+     * disables preset
+     */
+    this.disabledDefaultProperties = function () {
+        Util.waitUntilElementIsVisible(defaultPropertiesSwitch);
+        defaultPropertiesSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+                defaultPropertiesSwitch.click();
+                expect(defaultPropertiesSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+            }
+        })
+    };
+
+    /**
+     * enables preset
+     */
+    this.enabledDefaultProperties = function () {
+        Util.waitUntilElementIsVisible(defaultPropertiesSwitch);
+        defaultPropertiesSwitch.getAttribute('class').then(function (check) {
+            if (check === 'mat-slide-toggle mat-primary') {
+                defaultPropertiesSwitch.click();
+                expect(defaultPropertiesSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
             }
         })
     };
