@@ -361,7 +361,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             taskId: this.taskId,
             includeProcessInstance: this.includeProcessInstance
         };
-        console.log(requestNode);
         return new TaskQueryRequestRepresentationModel(requestNode);
     }
 
