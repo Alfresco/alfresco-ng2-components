@@ -17,6 +17,7 @@
 import LoginPage = require('../pages/adf/loginPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import { HeaderPage } from '../pages/adf/core/headerPage';
+import SettingsPage = require('../pages/adf/settingsPage')
 
 import TestConfig = require('../test.config');
 
@@ -28,20 +29,22 @@ describe('Header Component', () => {
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();
     let headerPage = new HeaderPage();
+    let settingsPage = new SettingsPage();
+
     let user, tenantId;
-    let title = {
-        default: 'ADF Demo Application',
-        custom: 'New Test App'
-    };
 
-    let urlPath = {
-        default: './assets/images/logo.png',
-        custom: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Flower_jtca001.jpg'
-    };
-
-    let color = {
-        primary: 'primary',
-        accent: 'accent'
+    let names = {
+        app_title_default: 'ADF Demo Application',
+        app_title_custom: 'New Test App',
+        urlPath_default: './assets/images/logo.png',
+        urlPath_custom: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Flower_jtca001.jpg',
+        urlPath_logo_link: '"/settings-layout"',
+        color_primary: 'primary',
+        color_accent: 'accent',
+        color_warn: 'warn',
+        color_custom: '#862B2B',
+        logo_title: 'ADF Demo Application',
+        logo_tooltip: 'test_tooltip'
     };
 
     beforeAll(async(done) => {
@@ -82,9 +85,11 @@ describe('Header Component', () => {
     it('[C280002] Should be able to view Header component', () => {
         headerPage.checkShowMenuCheckBoxIsDisplayed();
         headerPage.checkChooseHeaderColourIsDisplayed();
+        headerPage.checkHexColorInputIsDisplayed();
         headerPage.checkChangeTitleIsDisplayed();
         headerPage.checkChangeUrlPathIsDisplayed();
-
+        headerPage.checkLogoHyperlinkInputIsDisplayed();
+        headerPage.checkLogoTooltipInputIsDisplayed();
     });
 
     it('[C279996] Should be able to show/hide menu button', () => {
@@ -97,25 +102,50 @@ describe('Header Component', () => {
         navigationBarPage.checkMenuButtonIsDisplayed();
     });
 
-    it('[C279999]Should be able to change the colour between primary and accent', () => {
-        headerPage.changeHeaderColor(color.accent);
+    it('[C279999] Should be able to change the colour between primary, accent and warn', () => {
+        headerPage.changeHeaderColor(names.color_accent);
 
-        navigationBarPage.checkToolbarColor(color.accent);
+        navigationBarPage.checkToolbarColor(names.color_accent);
 
-        headerPage.changeHeaderColor(color.primary);
+        headerPage.changeHeaderColor(names.color_primary);
 
-        navigationBarPage.checkToolbarColor(color.primary);
+        navigationBarPage.checkToolbarColor(names.color_primary);
+
+        headerPage.changeHeaderColor(names.color_warn);
+
+        navigationBarPage.checkToolbarColor(names.color_warn);
+    });
+
+    it('[C280552] Should be able to change the colour of the header by typing a hex code', () => {
+        headerPage.addHexCodeColor(names.color_custom);
+
+        navigationBarPage.checkToolbarColor(names.color_custom);
+
     });
 
     it('[C279997] Should be able to change the title of the app', () => {
-        headerPage.checkAppTitle(title.default);
-        headerPage.addTitle(title.custom);
-        headerPage.checkAppTitle(title.custom);
+        headerPage.checkAppTitle(names.app_title_default);
+        headerPage.addTitle(names.app_title_custom);
+        headerPage.checkAppTitle(names.app_title_custom);
     });
 
     it('[C279998] Should be able to change the default logo of the app', () => {
-        headerPage.checkIconIsDisplayed(urlPath.default);
-        headerPage.addIcon(urlPath.custom);
-        headerPage.checkIconIsDisplayed(urlPath.custom);
+        headerPage.checkIconIsDisplayed(names.urlPath_default);
+        headerPage.addIcon(names.urlPath_custom);
+        headerPage.checkIconIsDisplayed(names.urlPath_custom);
+    });
+
+    it('[C280553] Should be able to set a hyperlink to the logo', () => {
+        headerPage.addLogoHyperlink(names.urlPath_logo_link);
+
+        navigationBarPage.clickAppLogo(names.logo_title);
+
+        settingsPage.checkProviderDropdownIsDisplayed();
+    });
+
+    it('[C280554] Should be able to customise the tooltip-text of the logo', () => {
+        headerPage.addLogoTooltip(names.logo_tooltip);
+
+        navigationBarPage.checkLogoTooltip(names.logo_tooltip);
     });
 });

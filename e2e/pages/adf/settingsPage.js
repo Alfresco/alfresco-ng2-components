@@ -127,5 +127,9 @@ var SettingsPage = function () {
         Util.waitUntilElementIsVisible(applyButton);
         applyButton.click();
     };
+
+    this.checkProviderDropdownIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(providerDropdown);
+    };
 };
 module.exports = SettingsPage;

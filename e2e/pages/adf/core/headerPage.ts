@@ -25,6 +25,9 @@ export class HeaderPage {
     headerColor = element(by.css('option[value="primary"]'));
     titleInput = element(by.css('input[name="title"]'));
     iconInput = element(by.css('input[placeholder="URL path"]'));
+    hexColorInput = element(by.css('input[placeholder="hex color code"]'));
+    logoHyperlinkInput = element(by.css('input[placeholder="Redirect URL"]'));
+    logoTooltipInput =  element(by.css('input[placeholder="Tooltip text"]'));
 
     checkShowMenuCheckBoxIsDisplayed() {
         return Util.waitUntilElementIsVisible(this.checkBox);
@@ -75,5 +78,32 @@ export class HeaderPage {
         this.iconInput.click();
         this.iconInput.sendKeys(url);
         this.iconInput.sendKeys(protractor.Key.ENTER);
+    }
+
+    checkHexColorInputIsDisplayed() {
+        return Util.waitUntilElementIsVisible(this.hexColorInput);
+    }
+
+    checkLogoHyperlinkInputIsDisplayed() {
+        return Util.waitUntilElementIsVisible(this.logoHyperlinkInput);
+    }
+
+    checkLogoTooltipInputIsDisplayed() {
+        return Util.waitUntilElementIsVisible(this.logoTooltipInput);
+    }
+
+    addHexCodeColor(hexCode) {
+        Util.waitUntilElementIsVisible(this.hexColorInput);
+        return this.hexColorInput.click().sendKeys(hexCode).sendKeys(protractor.Key.ENTER);
+    }
+
+    addLogoHyperlink(hyperlink) {
+        Util.waitUntilElementIsVisible(this.logoHyperlinkInput);
+        return this.logoHyperlinkInput.click().sendKeys(hyperlink).sendKeys(protractor.Key.ENTER);
+    }
+
+    addLogoTooltip(tooltip) {
+        Util.waitUntilElementIsVisible(this.logoTooltipInput);
+        return this.logoTooltipInput.click().sendKeys(tooltip).sendKeys(protractor.Key.ENTER);
     }
 }
