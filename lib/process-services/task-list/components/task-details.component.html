@@ -61,7 +61,7 @@
                                  [taskId]="taskDetails.id"
                                  [formKey]="taskDetails.formKey"
                                  (cancelAttachForm)="onCancelAttachForm()"
-                                 (success)="onCompleteAttachForm()">
+                                 (success)="onCompleteAttachForm($event)">
                 </adf-attach-form>
             </div>
             <div *ngIf="!isAssigned()" id="claim-message-id">
