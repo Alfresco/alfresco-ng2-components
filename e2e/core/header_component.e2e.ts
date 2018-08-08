@@ -24,7 +24,6 @@ import Util = require('../util/util.js');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
-import { headersToString } from "selenium-webdriver/http";
 
 describe('Header Component', () => {
 
