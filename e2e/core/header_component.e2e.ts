@@ -88,8 +88,8 @@ describe('Header Component', () => {
         headerPage.checkShowMenuCheckBoxIsDisplayed();
         headerPage.checkChooseHeaderColourIsDisplayed();
         headerPage.checkHexColorInputIsDisplayed();
-        headerPage.checkChangeTitleIsDisplayed(names.app_title_default);
-        headerPage.checkChangeUrlPathIsDisplayed(names.urlPath_default);
+        headerPage.checkChangeTitleIsDisplayed();
+        headerPage.checkChangeUrlPathIsDisplayed();
         headerPage.checkLogoHyperlinkInputIsDisplayed();
         headerPage.checkLogoTooltipInputIsDisplayed();
     });
