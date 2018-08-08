@@ -29,6 +29,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
+import { browser } from 'protractor';
 
 describe('Process Filters Test', () => {
 
@@ -39,6 +40,7 @@ describe('Process Filters Test', () => {
     let processFiltersPage = new ProcessFiltersPage();
     let appNavigationBarPage = new AppNavigationBarPage();
     let processDetailsPage = new ProcessDetailsPage();
+    let appModel;
 
     let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
 
@@ -67,7 +69,7 @@ describe('Process Filters Test', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
@@ -123,5 +125,33 @@ describe('Process Filters Test', () => {
         processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
         processFiltersPage.selectFromProcessList(processTitle.completed);
         processDetailsPage.checkProcessDetailsCard();
+    });
+
+    it('[C280407] Should be able to access the filters with URL', async () => {
+
+        let defaultFiltersNumber = 3;
+        let deployedApp, processFilterUrl;
+
+        let taskAppFilters = await browser.controlFlow().execute(async() => {
+
+            let appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+
+            deployedApp = appDefinitions.data.find((currentApp) => {
+
+                    return currentApp.modelId === appModel.id;
+            });
+
+            processFilterUrl = TestConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
+
+            return this.alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({appId: deployedApp.id});
+        });
+
+        expect(taskAppFilters.size).toBe(defaultFiltersNumber);
+
+        taskAppFilters.data.forEach((filter) => {
+            browser.get(processFilterUrl + filter.id);
+            processServicesPage.checkProcessListIsDisplayed();
+            processFiltersPage.checkFilterIsHighlighted(filter.name);
+        });
     });
 });
