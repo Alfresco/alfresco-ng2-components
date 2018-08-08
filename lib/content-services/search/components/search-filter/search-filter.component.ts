@@ -242,7 +242,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 }
 
                 const buckets: FacetFieldBucket[] = ((responseField && responseField.buckets) || []).map(bucket => {
-                    const selectedBucket = this.selectedBuckets.find(facetBucket => facetBucket.bucket.label === bucket.label);
+                    const selectedBucket = this.selectedBuckets.find(facetBucket =>
+                        facetBucket.bucket.label === bucket.label && facetBucket.field.field === field.field);
 
                     return <FacetFieldBucket> {
                         ...bucket,
