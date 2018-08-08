@@ -249,9 +249,14 @@ var ContentServicesPage = function () {
         return this;
     };
 
-    this.createNewFolder = function (folder) {
+    this.clickOnCreateNewFolder = function () {
         Util.waitUntilElementIsVisible(createFolderButton);
         createFolderButton.click();
+        return this;
+    };
+
+    this.createNewFolder = function (folder) {
+        this.clickOnCreateNewFolder();
         createFolderDialog.addFolderName(folder);
         createFolderDialog.clickOnCreateButton();
         return this;
@@ -363,7 +368,7 @@ var ContentServicesPage = function () {
     };
 
     this.uploadButtonIsEnabled = function () {
-        return uploadFileButton.isEnabled()
+        return uploadFileButton.isEnabled();
     };
 
     this.deleteContent = function (content) {
