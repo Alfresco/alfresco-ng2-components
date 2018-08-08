@@ -316,5 +316,29 @@ var ContentList = function () {
         Util.waitUntilElementIsVisible(row.element(by.css("div[class*='--image'] img[alt*='" + extension + "']")));
     };
 
+    this.rightClickOnRowNamed = function(rowName) {
+        let row = this.getRowByRowName(rowName);
+        browser.actions().click(row, protractor.Button.RIGHT).perform();
+        Util.waitUntilElementIsVisible(element(by.css('div.context-menu')));
+    }
+
+    this.checkContextActionIsVisible = function(actionName) {
+        let actionButton = element(by.css(`div.context-menu button[data-automation-id="context-${actionName}"`));
+        Util.waitUntilElementIsVisible(actionButton);
+        Util.waitUntilElementIsClickable(actionButton);
+        return actionButton;
+    }
+
+    this.pressContextMenuActionNamed = function(actionName) {
+        let actionButton = this.checkContextActionIsVisible(actionName);
+        actionButton.click();
+    }
+
+    this.clickRowToSelect = function(rowName) {
+        let row = this.getRowByRowName(rowName);
+        browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
+        this.checkRowIsSelected(rowName);
+    }
+
 };
 module.exports = ContentList;
