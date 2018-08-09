@@ -19,25 +19,20 @@ import { browser } from 'protractor';
 import LoginPage = require('../pages/adf/loginPage');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
 import ContentListPage = require('../pages/adf/dialog/contentList');
-// import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
-// import ErrorPage = require('../pages/adf/errorPage');
 import FileModel = require('../models/ACS/fileModel');
 import Util = require('../util/util');
-/*tslint:disable*/
-fdescribe('Document List Component - Actions', () => {
+
+describe('Document List Component - Actions', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let contentListPage = new ContentListPage();
-    // let navBar = new NavigationBarPage();
-    // let errorPage = new ErrorPage();
-    // let privateSite;
-    let uploadedFolder;
+    let uploadedFolder, secondUploadedFolder;
     let uploadActions = new UploadActions();
     let acsUser = null;
     let testFileNode;
@@ -46,17 +41,9 @@ fdescribe('Document List Component - Actions', () => {
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
-    let docxFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
-    });
     let testFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
-    });
-    let mediumFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     });
 
     beforeAll(() => {
@@ -167,15 +154,17 @@ fdescribe('Document List Component - Actions', () => {
 
     describe('Folder Actions', () => {
 
-        let folderName;
+        let folderName,secondfolderName;
 
         beforeEach(async (done) => {
             acsUser = new AcsUserModel();
             folderName = `TATSUMAKY_${Util.generateRandomString(5)}_SENPOUKYAKU`;
+            secondfolderName = `TATSUMAKY_${Util.generateRandomString(5)}_SENPOUKYAKU`;
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+            secondUploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, secondfolderName, '-my-');
             done();
         });
 
@@ -199,6 +188,19 @@ fdescribe('Document List Component - Actions', () => {
             contentListPage.checkContextActionIsVisible('Permission');
         });
 
+        it('[C260138] - Copy - folder', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+            contentListPage.copyContent(folderName);
+            contentServicesPage.typeIntoNodeSelectorSearchField(secondfolderName);
+            contentServicesPage.clickContentNodeSelectorResult(secondfolderName);
+            contentServicesPage.clickCopyButton();
+            contentServicesPage.checkAcsContainer();
+            contentServicesPage.checkContentIsDisplayed(folderName);
+            browser.get(TestConfig.adf.url + '/files/' + secondUploadedFolder.entry.id);
+            contentServicesPage.checkAcsContainer();
+            contentServicesPage.checkContentIsDisplayed(folderName);
+        });
 
     });
 
