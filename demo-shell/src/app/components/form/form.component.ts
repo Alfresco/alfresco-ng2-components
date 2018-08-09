@@ -32,7 +32,7 @@
 * limitations under the License.
 */
 
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormModel, FormService, FormOutcomeEvent } from '@alfresco/adf-core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
@@ -43,7 +43,8 @@ import { DemoForm } from './demo-form';
     styleUrls: ['form.component.css'],
     providers: [
         { provide: FormService, useClass: InMemoryFormService }
-    ]
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class FormComponent implements OnInit {
 
