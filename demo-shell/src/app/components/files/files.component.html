@@ -89,6 +89,7 @@
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
                             (error)="openSnackMessage($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry"
+                            (success)="documentList.reload()"
                             matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}">
                         <mat-icon>create</mat-icon>
                     </button>
