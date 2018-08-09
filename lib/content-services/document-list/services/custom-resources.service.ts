@@ -30,7 +30,7 @@ import {
 } from 'alfresco-js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class CustomResourcesService {
@@ -307,7 +307,7 @@ export class CustomResourcesService {
         if (this.isCustomSource(nodeId)) {
 
             return this.loadFolderByNodeId(nodeId, pagination, [])
-                .map(result => result.list.entries.map(node => {
+                .pipe(map(result => result.list.entries.map((node: any) => {
                     if (nodeId === '-sharedlinks-') {
                         return node.entry.nodeId;
 
@@ -319,11 +319,11 @@ export class CustomResourcesService {
                     }
 
                     return node.entry.id;
-                }));
+                })));
 
         } else if (nodeId) {
             // cases when nodeId is '-my-', '-root-' or '-shared-'
-            return Observable.fromPromise(this.apiService.nodesApi.getNode(nodeId, pagination)
+            return from(this.apiService.nodesApi.getNode(nodeId)
                 .then(node => [node.entry.id]));
         }
 

@@ -27,7 +27,7 @@ import {
 } from '@alfresco/adf-core';
 
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { Observable, Subject, BehaviorSubject, Subscription, of } from 'rxjs';
+import { Subject, BehaviorSubject, Subscription, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { presetsDefaultModel } from '../models/preset.model';
