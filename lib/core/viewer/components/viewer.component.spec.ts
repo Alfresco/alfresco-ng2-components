@@ -175,14 +175,14 @@ describe('ViewerComponent', () => {
         tick();
 
         expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id1', {include: [ 'allowableOperations' ]});
-        expect(component.displayName).toBe('file1');
+        expect(component.fileTitle).toBe('file1');
 
         component.fileNodeId = 'id2';
         component.ngOnChanges({});
         tick();
 
         expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id2', {include: [ 'allowableOperations' ]});
-        expect(component.displayName).toBe('file2');
+        expect(component.fileTitle).toBe('file2');
     }));
 
     describe('Viewer Example Component Rendering', () => {
