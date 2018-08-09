@@ -219,6 +219,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     otherMenu: any;
     extension: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
+    fileTitle: string;
 
     private cacheBusterNumber;
 
@@ -312,7 +313,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private setUpBlobData() {
-        this.displayName = this.getDisplayName('Unknown');
+        this.fileTitle = this.getDisplayName('Unknown');
         this.mimeType = this.blobFile.type;
         this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
 
@@ -325,7 +326,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private setUpUrlFile() {
         let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
-        this.displayName = this.getDisplayName(filenameFromUrl);
+        this.fileTitle = this.getDisplayName(filenameFromUrl);
         this.extension = this.getFileExtension(filenameFromUrl);
         this.urlFileContent = this.urlFile;
 
@@ -348,7 +349,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.mimeType = data.content.mimeType;
         }
 
-        this.displayName = this.getDisplayName(data.name);
+        this.fileTitle = this.getDisplayName(data.name);
 
         this.urlFileContent = this.apiService.contentApi.getContentUrl(data.id);
         this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + this.cacheBusterNumber : this.urlFileContent;
@@ -376,7 +377,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private setUpSharedLinkFile(details: any) {
         this.mimeType = details.entry.content.mimeType;
-        this.displayName = this.getDisplayName(details.entry.name);
+        this.fileTitle = this.getDisplayName(details.entry.name);
         this.extension = this.getFileExtension(details.entry.name);
         this.fileName = details.entry.name;
 
@@ -406,7 +407,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private getDisplayName(name) {
-        return name || this.displayName ;
+        return this.displayName || name ;
     }
 
     scrollTop() {
