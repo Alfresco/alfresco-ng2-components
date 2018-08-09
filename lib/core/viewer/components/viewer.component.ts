@@ -406,7 +406,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private getDisplayName(name) {
-        return this.displayName || name;
+        return name || this.displayName ;
     }
 
     scrollTop() {
