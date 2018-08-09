@@ -90,6 +90,11 @@ describe('Document List Component', () => {
             done();
         });
 
+        afterAll(async(done) => {
+            await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
+            done();
+        });
+
         it('[C217334] - Error message displayed without permissions', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
