@@ -348,8 +348,7 @@ describe('Content Services Viewer', () => {
     it('[C269109] Should not be able to open thumbnail pane before the pdf is loaded', () => {
         viewerPage.viewFile(pdfFile.name);
 
-        viewerPage.clickThumbnailsBtn();
-        viewerPage.checkThumbnailsContentIsNotDisplayed();
+        viewerPage.checkThumbnailsBtnIsDisabled();
 
         viewerPage.clickCloseButton();
     });

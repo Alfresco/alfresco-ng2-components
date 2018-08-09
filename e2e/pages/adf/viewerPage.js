@@ -139,6 +139,11 @@ var ViewerToolbarPage = function () {
         Util.waitUntilElementIsVisible(thumbnailsBtn);
     };
 
+    this.checkThumbnailsBtnIsDisabled = function () {
+        Util.waitUntilElementIsVisible(thumbnailsBtn.getAttribute("disabled"));
+        return this;
+    };
+
     this.checkThumbnailsContentIsDisplayed = function () {
         Util.waitUntilElementIsVisible(thumbnailsContent);
     };
