@@ -52,11 +52,11 @@ describe('PeopleWidgetComponent', () => {
         fixture.detectChanges();
     });
 
-    fit('should return empty display name for missing model', () => {
+    it('should return empty display name for missing model', () => {
         expect(widget.getDisplayName(null)).toBe('');
     });
 
-    fit('should return full name for a given model', () => {
+    it('should return full name for a given model', () => {
         let model = new UserProcessModel({
             firstName: 'John',
             lastName: 'Doe'
@@ -64,17 +64,17 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.getDisplayName(model)).toBe('John Doe');
     });
 
-    fit('should skip first name for display name', () => {
+    it('should skip first name for display name', () => {
         let model = new UserProcessModel({ firstName: null, lastName: 'Doe' });
         expect(widget.getDisplayName(model)).toBe('Doe');
     });
 
-    fit('should skip last name for display name', () => {
+    it('should skip last name for display name', () => {
         let model = new UserProcessModel({ firstName: 'John', lastName: null });
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
-    fit('should init value from the field', async(() => {
+    it('should init value from the field', async(() => {
         widget.field.value = new UserProcessModel({
             id: 'people-id',
             firstName: 'John',
@@ -95,7 +95,7 @@ describe('PeopleWidgetComponent', () => {
         });
     }));
 
-    fit('should show the readonly value when the form is readonly', async(() => {
+    it('should show the readonly value when the form is readonly', async(() => {
         widget.field.value = new UserProcessModel({
             id: 'people-id',
             firstName: 'John',
@@ -119,7 +119,7 @@ describe('PeopleWidgetComponent', () => {
         });
     }));
 
-    fit('should require form field to setup values on init', () => {
+    it('should require form field to setup values on init', () => {
         widget.field.value = null;
         widget.ngOnInit();
         fixture.detectChanges();
@@ -128,7 +128,7 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.groupId).toBeUndefined();
     });
 
-    fit('should setup group restriction', () => {
+    it('should setup group restriction', () => {
         widget.ngOnInit();
         expect(widget.groupId).toBeUndefined();
 
@@ -163,11 +163,11 @@ describe('PeopleWidgetComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        fit('should render the people component', () => {
+        it('should render the people component', () => {
             expect(element.querySelector('#people-widget-content')).not.toBeNull();
         });
 
-        fit('should show an error message if the user is invalid', async(() => {
+        it('should show an error message if the user is invalid', async(() => {
             let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'K';
@@ -180,7 +180,7 @@ describe('PeopleWidgetComponent', () => {
             });
         }));
 
-        fit('should show the people if the typed result match', async(() => {
+        it('should show the people if the typed result match', async(() => {
             let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'T';
@@ -194,7 +194,7 @@ describe('PeopleWidgetComponent', () => {
             });
         }));
 
-        fit('should hide result list if input is empty', () => {
+        it('should hide result list if input is empty', () => {
             let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = '';
@@ -207,7 +207,7 @@ describe('PeopleWidgetComponent', () => {
             });
         });
 
-        fit('should display two options if we tap one letter', async(() => {
+        it('should display two options if we tap one letter', async(() => {
             let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'T';
@@ -221,7 +221,7 @@ describe('PeopleWidgetComponent', () => {
             });
         }));
 
-        fit('should emit peopleSelected if option is valid', async() => {
+        it('should emit peopleSelected if option is valid', async() => {
             let selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
             let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
