@@ -22,10 +22,6 @@ import { CoreModule, InfoDrawerModule } from '@alfresco/adf-core';
 import { ContentDirectiveModule, ContentMetadataModule, VersionManagerModule } from '@alfresco/adf-content-services';
 import { BlobPreviewComponent } from './blob-preview.component';
 
-import * as pdfjsLib from 'pdfjs-dist';
-pdfjsLib.PDFJS.workerSrc = 'pdf.worker.min.js';
-pdfjsLib.PDFJS.disableFontFace = true;
-
 const routes: Routes = [
     {
         path: '',
