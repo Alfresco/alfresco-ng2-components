@@ -1,15 +1,15 @@
 var program = require('commander');
 var request = require('request');
 
-var stackId = "1st550"
-
 function asyncRequest(option) {
     return new Promise(function (resolve, reject) {
         request(option, function (error, res, body) {
             if (!error && (res.statusCode == 200 || res.statusCode == 201)) {
                 resolve(body);
             } else {
+                console.log("Error " + JSON.stringify(body));
                 reject(error + JSON.stringify(body));
+                throw "Error";
             }
         });
     });
@@ -41,11 +41,27 @@ async function main() {
         },
         body: ""
     }).catch((error) => {
-        console.log(error);
+        console.log('Project name errror'+ error);
     });
 
+    var stacks = await asyncRequest({
+        url: `${program.server}/v2-beta/projects/1a2747/stacks?limit=-1&sort=name`,
+        method: 'GET',
+        json: true,
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json",
+            "Authorization": auth
+        },
+        body: ""
+    }).catch((error) => {
+        console.log('Stacks errror'+ error);
+    });
+
+    var stackId = stacks.data[0].id;
     var environmentId = project.data[0].id
 
+    console.log("StackId " + stackId);
     console.log("ID environment " + environmentId);
     console.log("image to Load " + program.image);
 
@@ -166,7 +182,7 @@ async function main() {
         },
         body: postData,
     }).catch((error) => {
-        console.log(error)
+        console.log('Error createService'+ error);
     });
 
     if (!createService) {
@@ -186,7 +202,7 @@ async function main() {
         },
         body: postData,
     }).catch((error) => {
-        console.log(error)
+        console.log('Error loadBalancer'+ error);
     });
 
     if (!loadBalancer) {
@@ -206,7 +222,7 @@ async function main() {
             "Authorization": auth
         }
     }).catch((error) => {
-        console.log(error)
+        console.log('Error get load balancer'+ error);
     });
 
     //console.log("Load balancer ID " + JSON.stringify(loadBalancerGet.lbConfig.portRules));
@@ -235,7 +251,7 @@ async function main() {
         },
         body: loadBalancerGet
     }).catch((error) => {
-        console.log(error)
+        console.log('Error Update load balancer'+ error);
     });
 
 }

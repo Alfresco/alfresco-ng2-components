@@ -17,7 +17,7 @@
 import LoginPage = require('../pages/adf/loginPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import { HeaderPage } from '../pages/adf/core/headerPage';
-import SettingsPage = require('../pages/adf/settingsPage')
+import SettingsPage = require('../pages/adf/settingsPage');
 
 import TestConfig = require('../test.config');
 
