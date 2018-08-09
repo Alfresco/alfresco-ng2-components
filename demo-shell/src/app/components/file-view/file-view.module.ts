@@ -23,7 +23,7 @@ import { ContentDirectiveModule, VersionManagerModule, ContentMetadataModule } f
 import { FileViewComponent } from './file-view.component';
 
 import * as pdfjsLib from 'pdfjs-dist';
-pdfjsLib.PDFJS.workerSrc = 'pdf.worker.js';
+pdfjsLib.PDFJS.workerSrc = 'pdf.worker.min.js';
 pdfjsLib.PDFJS.disableFontFace = true;
 
 const routes: Routes = [
