@@ -32,7 +32,10 @@ export interface SearchConfiguration {
         expanded?: boolean;
         queries: Array<FacetQuery>;
     };
-    facetFields?: Array<FacetField>;
+    facetFields?: {
+        expanded?: boolean;
+        fields: Array<FacetField>;
+    };
     sorting?: {
         options: Array<SearchSortingDefinition>;
         defaults: Array<SearchSortingDefinition>;

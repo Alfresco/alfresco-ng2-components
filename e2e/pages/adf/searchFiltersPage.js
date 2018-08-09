@@ -90,7 +90,7 @@ var SearchFiltersPage = function () {
 
     this.filterByCreator = function (creatorFirstName, creatorLastName) {
         this.checkCreatorFilterIsDisplayed();
-        this.clickCreatorFilter();
+        // this.clickCreatorFilter();
 
         this.checkSearchCreatorFilterIsDisplayed();
         this.searchInCreatorFilter(`${creatorFirstName} ${creatorLastName}`);

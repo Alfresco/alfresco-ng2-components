@@ -44,6 +44,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesLabel: string = 'Facet Queries';
     facetQueriesExpanded = false;
+    facetFieldsExpanded = false;
     canResetSelectedQueries = false;
 
     selectedFacetQueries: Array<FacetQuery> = [];
@@ -56,6 +57,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || this.DEFAULT_PAGE_SIZE;
             this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
+        }
+        if (queryBuilder.config && queryBuilder.config.facetFields) {
+            this.facetFieldsExpanded = queryBuilder.config.facetFields.expanded;
         }
 
         this.queryBuilder.updated.pipe(
@@ -208,7 +212,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     private parseFacetFields(context: any) {
-        const configFacetFields = this.queryBuilder.config.facetFields || [];
+        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
 
         const bkpResponseFacetFields =  [...this.responseFacetFields || []];
         this.responseFacetFields = configFacetFields
