@@ -27,6 +27,7 @@ export class ConfigEditorComponent {
 
     editor: any;
     editorSearch: any;
+    editorExcludedFile: any;
 
     editorOptions = {
         theme: 'vs-dark',
@@ -38,6 +39,7 @@ export class ConfigEditorComponent {
 
     metadataConf: string;
     searchConf: string;
+    excludedFileConf: string;
 
     onInitMetadata(editor) {
         this.editor = editor;
@@ -53,9 +55,17 @@ export class ConfigEditorComponent {
         }, 1000);
     }
 
+    onInitExcludedFile(excludedFile) {
+        this.editorExcludedFile = excludedFile;
+        setTimeout(() => {
+            this.editorExcludedFile.getAction('editor.action.formatDocument').run();
+        }, 1000);
+    }
+
     constructor(private appConfig: AppConfigService, private notificationService: NotificationService) {
         this.metadataConf = JSON.stringify(appConfig.config['content-metadata']);
         this.searchConf = JSON.stringify(appConfig.config['search']);
+        this.excludedFileConf = JSON.stringify(appConfig.config['files']);
     }
 
     onSaveMetadata() {
@@ -71,10 +81,21 @@ export class ConfigEditorComponent {
 
     onSaveSearch() {
         try {
-            this.appConfig.config['search'] = JSON.parse(this.editor.getValue());
+            this.appConfig.config['search'] = JSON.parse(this.editorSearch.getValue());
         } catch (error) {
             this.notificationService.openSnackMessage(
-                'Wrong sSearch configuration',
+                'Wrong search configuration',
+                4000
+            );
+        }
+    }
+
+    onSaveExcludedFile() {
+        try {
+            this.appConfig.config['files'] = JSON.parse(this.editorExcludedFile.getValue());
+        } catch (error) {
+            this.notificationService.openSnackMessage(
+                'Wrong exclude file configuration',
                 4000
             );
         }
@@ -85,6 +106,10 @@ export class ConfigEditorComponent {
     }
 
     onClearSearch() {
+        this.searchConf = '';
+    }
+
+    onClearExcludedFile() {
         this.searchConf = '';
     }
 }

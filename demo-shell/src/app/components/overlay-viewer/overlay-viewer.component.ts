@@ -26,6 +26,11 @@ export class OverlayViewerComponent {
     showViewer = false;
 
     nodeId: string;
+    isOverlay = true;
+
+    toggleOverlay() {
+        this.isOverlay = !this.isOverlay;
+    }
 
     showPreview(event) {
         if (event.value.entry.isFile) {

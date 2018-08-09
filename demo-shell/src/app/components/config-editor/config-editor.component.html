@@ -18,3 +18,12 @@
 <button  mat-raised-button id="adf-search-clear" (click)="onClearSearch()" color="primary">Clear Search configuration</button>
 
 <br>
+
+<h2>Excluded File config editor</h2>
+
+<ngx-monaco-editor id="adf-excluded-file" class="adf-excluded-file-editor" [options]="editorOptions" [(ngModel)]="excludedFileConf" (onInit)="onInitExcludedFile($event)" ></ngx-monaco-editor>
+
+<button  mat-raised-button id="adf-excluded-file-save"  (click)="onSaveExcludedFile()" color="primary">Save excluded file configuration</button>
+<button  mat-raised-button id="adf-excluded-file-clear" (click)="onClearExcludedFile()" color="primary">Clear excluded file configuration</button>
+
+<br>
