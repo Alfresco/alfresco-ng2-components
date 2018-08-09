@@ -146,6 +146,21 @@ export class TaskListDemoComponent implements OnInit {
 
     resetTaskForm() {
         this.taskListForm.reset();
+        this.resetQueryParameters();
+    }
+
+    resetQueryParameters() {
+        this.appId = null;
+        this.id = null;
+        this.processDefinitionId = null;
+        this.processInstanceId = null;
+        this.name = null;
+        this.assignment = null;
+        this.state = null;
+        this.sort = null;
+        this.start = null;
+        this.size = null;
+        this.page = null;
     }
 
     isFormValid() {
