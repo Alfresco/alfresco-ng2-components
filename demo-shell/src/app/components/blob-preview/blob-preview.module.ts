@@ -23,7 +23,7 @@ import { ContentDirectiveModule, ContentMetadataModule, VersionManagerModule } f
 import { BlobPreviewComponent } from './blob-preview.component';
 
 import * as pdfjsLib from 'pdfjs-dist';
-pdfjsLib.PDFJS.workerSrc = 'pdf.worker.js';
+pdfjsLib.PDFJS.workerSrc = 'pdf.worker.min.js';
 pdfjsLib.PDFJS.disableFontFace = true;
 
 const routes: Routes = [
