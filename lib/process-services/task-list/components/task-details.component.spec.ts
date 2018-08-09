@@ -18,7 +18,7 @@
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of, throwError, Observable } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormService, setupTestBed, BpmUserService } from '@alfresco/adf-core';
 import { CommentProcessService, LogService, AuthenticationService } from '@alfresco/adf-core';
@@ -151,7 +151,7 @@ describe('TaskDetailsComponent', () => {
 
     it('should display task standalone component when the task does not have an associated form', async(() => {
         component.taskId = '123';
-        getTaskDetailsSpy.and.returnValue(Observable.of(standaloneTaskWithoutForm));
+        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithoutForm));
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -163,7 +163,7 @@ describe('TaskDetailsComponent', () => {
 
     it('should not display task standalone component when the task has a form', async(() => {
         component.taskId = '123';
-        getTaskDetailsSpy.and.returnValue(Observable.of(standaloneTaskWithForm));
+        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithForm));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -175,7 +175,7 @@ describe('TaskDetailsComponent', () => {
 
     it('should display the AttachFormComponent when standaloneTaskWithForm and click on attach button', async(() => {
         component.taskId = '123';
-        getTaskDetailsSpy.and.returnValue(Observable.of(standaloneTaskWithForm));
+        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithForm));
         fixture.detectChanges();
         component.onShowAttachForm();
         fixture.whenStable().then(() => {
