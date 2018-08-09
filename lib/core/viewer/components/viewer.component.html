@@ -29,7 +29,7 @@
                         <mat-icon>navigate_before</mat-icon>
                     </button>
                     <img class="adf-viewer__mimeicon" [src]="mimeType | adfMimeTypeIcon" data-automation-id="adf-file-thumbnail">
-                    <span class="adf-viewer__display-name" id="adf-viewer-display-name">{{ displayName }}</span>
+                    <span class="adf-viewer__display-name" id="adf-viewer-display-name">{{ fileTitle }}</span>
                     <button
                         *ngIf="allowNavigate && canNavigateNext"
                         data-automation-id="adf-toolbar-next-file"
