@@ -144,13 +144,6 @@ export class TaskListDemoComponent implements OnInit {
         this.includeProcessInstance = taskFilter.taskIncludeProcessInstance === 'include';
     }
 
-    onError($event) {
-        const errorMessage = JSON.parse($event.message).message;
-        this.notificationService.openSnackMessageAction(errorMessage, 'Reset', 5000).onAction().subscribe(() => {
-           this.resetTaskForm();
-        });
-    }
-
     resetTaskForm() {
         this.taskListForm.reset();
     }
