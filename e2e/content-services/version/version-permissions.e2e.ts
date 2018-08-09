@@ -130,6 +130,11 @@ describe('Version component', () => {
         done();
     });
 
+    afterAll(async(done) => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+        done();
+    });
+
     describe('Manager', () => {
 
         let sameCreatoFile = new FileModel({

@@ -102,10 +102,13 @@ describe('Search Component - Multi-Select Facet', () => {
                 uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, txtFile.entry.id),
                 uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, txtFileSite.entry.id)
             ]);
+
+            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+
             done();
         });
 
-        it('[C280054] Multiple items can be selected from a search facet filter',  () => {
+        it('[C280054] Multiple items can be selected from a search facet filter', () => {
             searchFiltersPage.filterByFileType('Plain Text');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
@@ -180,10 +183,13 @@ describe('Search Component - Multi-Select Facet', () => {
                 uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jpgFile.entry.id),
                 uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, txtFile.entry.id)
             ]);
+
+            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+
             done();
         });
 
-        it('[C280056] Multiple items can be selected from multiple search facets',  () => {
+        it('[C280056] Multiple items can be selected from multiple search facets', () => {
             searchFiltersPage.checkSearchFiltersIsDisplayed();
 
             searchFiltersPage.filterByFileType('Plain Text');
@@ -238,10 +244,11 @@ describe('Search Component - Multi-Select Facet', () => {
 
         afterAll(async (done) => {
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, txtFile.entry.id);
+            await this.alfrescoJsApi.core.sitesApi;
             done();
         });
 
-        it('[C280058] The filter facets items number is updated when another filter facet item is selected',  () => {
+        it('[C280058] The filter facets items number is updated when another filter facet item is selected', () => {
             searchFiltersPage.filterByFileType('Plain Text');
 
             searchFiltersPage.filterByCreator(acsUser.firstName, acsUser.lastName);
