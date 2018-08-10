@@ -32,6 +32,7 @@ import { ContextMenuService } from './context-menu.service';
         <mat-menu #contextMenu="matMenu" class="context-menu">
             <ng-container *ngFor="let link of links">
                 <button *ngIf="link.model?.visible"
+                        [attr.data-automation-id]="'context-'+((link.title || link.model?.title) | translate)"
                         mat-menu-item
                         [disabled]="link.model?.disabled"
                         (click)="onMenuItemClick($event, link)">
