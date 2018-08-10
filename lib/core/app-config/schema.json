@@ -576,7 +576,7 @@
                   "type": "boolean"
                 },
                 "fields": {
-                  "description": "List of custom facet queries",
+                  "description": "List of custom facet fields",
                   "type": "array",
                   "minItems": 1,
                   "items": {
