@@ -24,7 +24,7 @@ import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
 import { baseHost, WidgetComponent } from './../widget.component';
 import { FormControl } from '@angular/forms';
-import { Observable, empty } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
     catchError,
     distinctUntilChanged,
@@ -32,6 +32,7 @@ import {
     switchMap,
     tap
 } from 'rxjs/operators';
+import 'rxjs/add/observable/empty';
 
 @Component({
     selector: 'people-widget',
@@ -61,30 +62,17 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }),
         distinctUntilChanged(),
         switchMap((searchTerm) => {
-            let userResponse: any = empty();
-
-            if (typeof searchTerm === 'string') {
-                userResponse = this.formService.getWorkflowUsers(searchTerm, this.groupId)
-                    .pipe(
-                        catchError(err => {
-                            this.errorMsg = err.message;
-                            return userResponse;
-                        })
-                    );
-            }
-
-            return userResponse;
+            return this.formService.getWorkflowUsers(searchTerm, this.groupId)
+                .pipe(
+                    catchError(err => {
+                        this.errorMsg = err.message;
+                        return Observable.empty();
+                    })
+                );
         }),
         map((list: UserProcessModel[]) => {
             let value = (this.input.nativeElement as HTMLInputElement).value;
-
-            if (value) {
-                this.checkUserAndValidateForm(list, value);
-            } else {
-                this.field.value = null;
-                list = [];
-            }
-
+            this.checkUserAndValidateForm(list, value);
             return list;
         })
     );
@@ -122,9 +110,15 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     isValidUser(users: UserProcessModel[], name: string) {
-        return users.find((user) => {
-            return this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
-        });
+        if (users) {
+            return users.find((user) => {
+                const selectedUser = this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
+                if (selectedUser) {
+                    this.peopleSelected.emit(user && user.id || undefined);
+                }
+                return selectedUser;
+            });
+        }
     }
 
     getDisplayName(model: UserProcessModel) {
@@ -135,11 +129,10 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    onItemSelect(item: UserProcessModel) {
+    onItemSelect(item) {
         if (item) {
             this.field.value = item;
-            this.peopleSelected.emit(item && item.id || undefined);
-            this.value = this.getDisplayName(item);
+            this.value = item;
         }
     }
 }
