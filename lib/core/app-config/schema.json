@@ -568,37 +568,48 @@
               }
             },
             "facetFields": {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "type": "object",
-                "required": [ "field", "mincount", "label" ],
-                "properties": {
-                  "field": {
-                    "type": "string",
-                    "description": "This specifies the facet field."
-                  },
-                  "mincount": {
-                    "type": "number",
-                    "description": "This specifies the minimum count required for a facet field to be included in the response. The default value is 1."
-                  },
-                  "label": {
-                    "type": "string",
-                    "description": "This specifies the label to include in place of the facet field."
-                  },
-                  "prefix": {
-                    "type": "string",
-                    "description": "This restricts the possible constraints to only indexed values with a specified prefix."
-                  },
-                  "limit": {
-                    "type": "number",
-                    "description": "Maximum number of results"
-                  },
-                  "pageSize": {
-                    "type": "number",
-                    "description": "Display page size"
-                  },
-                  "offset": { "type": "integer" }
+              "type": "object",
+              "required": ["fields"],
+              "properties": {
+                "expanded": {
+                  "description": "Toggles expanded state of the facet field",
+                  "type": "boolean"
+                },
+                "fields": {
+                  "description": "List of custom facet fields",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": [ "field", "mincount", "label" ],
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "description": "This specifies the facet field."
+                      },
+                      "mincount": {
+                        "type": "number",
+                        "description": "This specifies the minimum count required for a facet field to be included in the response. The default value is 1."
+                      },
+                      "label": {
+                        "type": "string",
+                        "description": "This specifies the label to include in place of the facet field."
+                      },
+                      "prefix": {
+                        "type": "string",
+                        "description": "This restricts the possible constraints to only indexed values with a specified prefix."
+                      },
+                      "limit": {
+                        "type": "number",
+                        "description": "Maximum number of results"
+                      },
+                      "pageSize": {
+                        "type": "number",
+                        "description": "Display page size"
+                      },
+                      "offset": { "type": "integer" }
+                    }
+                  }
                 }
               }
             },

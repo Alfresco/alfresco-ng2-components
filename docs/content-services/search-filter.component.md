@@ -61,12 +61,15 @@ A typical configuration is shown below:
             { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
             { "query": "NOT cm:creator:System" }
         ],
-        "facetFields": [
+        "facetFields": {
+          "expanded": true,
+          "fields": [
             { "field": "content.mimetype", "mincount": 1, "label": "Type" },
             { "field": "content.size", "mincount": 1, "label": "Size" },
             { "field": "creator", "mincount": 1, "label": "Creator" },
             { "field": "modifier", "mincount": 1, "label": "Modifier" }
-        ],
+          ]
+        },
         "facetQueries": {
             "label": "My facet queries",
             "pageSize": 4,
