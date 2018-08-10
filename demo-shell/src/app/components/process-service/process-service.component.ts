@@ -190,7 +190,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                         validateDynamicTableRowEvent.preventDefault();
                     }
                 }
-            )
+            ),
+
+            formService.formContentClicked.subscribe(content => {
+                this.showContentPreview(content);
+            })
         );
 
         // Uncomment this block to see form event handling in action
@@ -396,6 +400,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onContentClick(content: any): void {
+        this.showContentPreview(content);
+    }
+
+    private showContentPreview(content: any) {
         if (content.contentBlob) {
             this.preview.showBlob(content.name, content.contentBlob);
         } else {
