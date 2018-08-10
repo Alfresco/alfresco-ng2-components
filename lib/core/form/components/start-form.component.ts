@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { LogService } from '../../services/log.service';
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { FormComponent } from './form.component';
 import { ContentLinkModel } from './widgets/core/content-link.model';
 import { FormOutcomeModel } from './widgets/core/index';
+import { Subscription } from 'rxjs';
 
 /**
  * Displays the start form for a named process definition, which can be used to retrieve values to start a new process.
@@ -45,7 +45,9 @@ import { FormOutcomeModel } from './widgets/core/index';
     styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartFormComponent extends FormComponent implements OnChanges, OnInit {
+export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {
+
+    private subscriptions: Subscription[] = [];
 
     /** Definition ID of the process to start. */
     @Input()
@@ -79,16 +81,22 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     outcomesContainer: ElementRef = null;
 
     constructor(formService: FormService,
-                visibilityService: WidgetVisibilityService,
-                logService: LogService) {
+                visibilityService: WidgetVisibilityService) {
         super(formService, visibilityService, null, null);
         this.showTitle = false;
     }
 
     ngOnInit() {
-        this.formService.formContentClicked.subscribe((content: ContentLinkModel) => {
-            this.formContentClicked.emit(content);
-        });
+        this.subscriptions.push(
+            this.formService.formContentClicked.subscribe(content => {
+                this.formContentClicked.emit(content);
+            })
+        );
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -109,22 +117,22 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
     loadStartForm(processId: string) {
         this.formService.getProcessIntance(processId)
-            .subscribe((intance: any) => {
+            .subscribe((instance: any) => {
                 this.formService
                     .getStartFormInstance(processId)
                     .subscribe(
-                    form => {
-                        this.formName = form.name;
-                        if (intance.variables) {
-                            form.processVariables = intance.variables;
-                        }
-                        this.form = this.parseForm(form);
-                        this.visibilityService.refreshVisibility(this.form);
-                        this.form.validateForm();
-                        this.form.readOnly = this.readOnlyForm;
-                        this.onFormLoaded(this.form);
-                    },
-                    error => this.handleError(error)
+                        form => {
+                            this.formName = form.name;
+                            if (instance.variables) {
+                                form.processVariables = instance.variables;
+                            }
+                            this.form = this.parseForm(form);
+                            this.visibilityService.refreshVisibility(this.form);
+                            this.form.validateForm();
+                            this.form.readOnly = this.readOnlyForm;
+                            this.onFormLoaded(this.form);
+                        },
+                        error => this.handleError(error)
                     );
             });
     }
