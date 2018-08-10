@@ -360,7 +360,7 @@ export class TaskListService {
     updateTask(taskId: any, updated): Observable<TaskDetailsModel> {
         return from(this.apiService.taskApi.updateTask(taskId, updated))
             .pipe(
-                map(result => <TaskDetailsModel>result),
+                map(result => <TaskDetailsModel> result),
                 catchError(err => this.handleError(err))
             );
     }
@@ -373,7 +373,7 @@ export class TaskListService {
     fetchTaskAuditPdfById(taskId: string): Observable<Blob> {
         return from(this.apiService.taskApi.getTaskAuditPdf(taskId))
             .pipe(
-                map(data => <Blob>data),
+                map(data => <Blob> data),
                 catchError(err => this.handleError(err))
             );
     }
