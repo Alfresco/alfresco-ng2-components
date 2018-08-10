@@ -21,11 +21,12 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { Observable } from 'rxjs/Observable';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { Observable, of, switchMap, defaultIfEmpty } from 'rxjs';
 
 @Component({
     selector: 'adf-start-task',

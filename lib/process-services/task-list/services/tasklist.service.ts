@@ -169,7 +169,7 @@ export class TaskListService {
      * Gets all available reusable forms.
      * @returns Array of form details
      */
-    getFormList(): Observable<Form []> {
+    getFormList(): Observable<Form[]> {
         let opts = {
             'filter': 'myReusableForms', // String | filter
             'sort': 'modifiedDesc', // String | sort
