@@ -190,10 +190,10 @@ describe('SearchQueryBuilder', () => {
     it('should fetch facet from the config by label', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetFields: [
+            facetFields: { 'fields': [
                 { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
                 { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
-            ]
+            ]}
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const field = builder.getFacetField('Size');
@@ -205,10 +205,10 @@ describe('SearchQueryBuilder', () => {
     it('should not fetch facet from the config by label', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetFields: [
+            facetFields: { 'fields': [
                 { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
                 { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
-            ]
+            ]}
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const field = builder.getFacetField('Missing');
@@ -359,16 +359,16 @@ describe('SearchQueryBuilder', () => {
             categories: [
                 <any> { id: 'cat1', enabled: true }
             ],
-            facetFields: [
+            facetFields: { fields: [
                 { field: 'field1', label: 'field1', mincount: 1, limit: null, offset: 0, prefix: null },
                 { field: 'field2', label: 'field2', mincount: 1, limit: null, offset: 0, prefix: null }
-            ]
+            ]}
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
-        expect(compiled.facetFields.facets).toEqual(jasmine.objectContaining(config.facetFields));
+        expect(compiled.facetFields.facets).toEqual(jasmine.objectContaining(config.facetFields.fields));
     });
 
     it('should build query with sorting', () => {

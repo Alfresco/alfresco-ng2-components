@@ -81,7 +81,6 @@ var SearchFiltersPage = function () {
 
     this.filterByFileType = function (fileType) {
         this.checkFileTypeFilterIsDisplayed();
-        this.clickFileTypeFilter();
 
         this.checkSearchFileTypeFilterIsDisplayed();
         this.searchInFileTypeFilter(fileType);
@@ -90,7 +89,6 @@ var SearchFiltersPage = function () {
 
     this.filterByCreator = function (creatorFirstName, creatorLastName) {
         this.checkCreatorFilterIsDisplayed();
-        this.clickCreatorFilter();
 
         this.checkSearchCreatorFilterIsDisplayed();
         this.searchInCreatorFilter(`${creatorFirstName} ${creatorLastName}`);

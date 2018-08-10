@@ -69,7 +69,8 @@
     </ng-container>
 
     <ng-container *ngIf="responseFacetFields">
-        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of responseFacetFields">
+        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of responseFacetFields"
+                             [expanded]="facetFieldsExpanded">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ field.label }}</mat-panel-title>
             </mat-expansion-panel-header>

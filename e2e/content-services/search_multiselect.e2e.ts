@@ -192,14 +192,14 @@ describe('Search Component - Multi-Select Facet', () => {
         it('[C280056] Multiple items can be selected from multiple search facets', () => {
             searchFiltersPage.checkSearchFiltersIsDisplayed();
 
-            searchFiltersPage.filterByFileType('Plain Text');
-            searchFiltersPage.filterByFileType('JPEG Image');
+            searchFiltersPage.filterByCreator(userUploadingTxt.firstName, userUploadingTxt.lastName);
+            searchFiltersPage.filterByCreator(userUploadingImg.firstName, userUploadingImg.lastName);
 
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
 
-            searchFiltersPage.filterByCreator(userUploadingTxt.firstName, userUploadingTxt.lastName);
-            searchFiltersPage.filterByCreator(userUploadingImg.firstName, userUploadingImg.lastName);
+            searchFiltersPage.filterByFileType('Plain Text');
+            searchFiltersPage.filterByFileType('JPEG Image');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);

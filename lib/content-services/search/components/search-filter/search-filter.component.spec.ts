@@ -190,10 +190,10 @@ describe('SearchFilterComponent', () => {
 
         queryBuilder.config = {
             categories: [],
-            facetFields: [
+            facetFields: { fields: [
                 { label: 'f1', field: 'f1' },
                 { label: 'f2', field: 'f2' }
-            ],
+            ]},
             facetQueries: {
                 queries: []
             }
@@ -221,10 +221,10 @@ describe('SearchFilterComponent', () => {
 
         queryBuilder.config = {
             categories: [],
-            facetFields: [
+            facetFields: { fields: [
                 { label: 'f1', field: 'f1' },
                 { label: 'f2', field: 'f2' }
-            ],
+            ]},
             facetQueries: {
                 queries: []
             }
@@ -257,10 +257,10 @@ describe('SearchFilterComponent', () => {
     it('should fetch facet fields from response payload and update the existing bucket values', () => {
         queryBuilder.config = {
             categories: [],
-            facetFields: [
+            facetFields: { fields: [
                 { label: 'f1', field: 'f1' },
                 { label: 'f2', field: 'f2' }
-            ],
+            ]},
             facetQueries: {
                 queries: []
             }
@@ -297,10 +297,10 @@ describe('SearchFilterComponent', () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
             categories: [],
-            facetFields: [
+            facetFields: { fields: [
                 { label: 'f1', field: 'f1' },
                 { label: 'f2', field: 'f2' }
-            ],
+            ]},
             facetQueries: {
                 queries: []
             }
@@ -312,6 +312,7 @@ describe('SearchFilterComponent', () => {
                 { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
             { label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
+        component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacetFields[0].buckets.items[0]);
 
         const serverResponseFields: any = [
             { label: 'f1', field: 'f1', buckets: [
@@ -336,10 +337,10 @@ describe('SearchFilterComponent', () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
             categories: [],
-            facetFields: [
+            facetFields: { fields: [
                 { label: 'f1', field: 'f1' },
                 { label: 'f2', field: 'f2' }
-            ],
+            ]},
             facetQueries: {
                 queries: []
             }
@@ -351,6 +352,7 @@ describe('SearchFilterComponent', () => {
                         { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
             { label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
+        component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacetFields[0].buckets.items[0]);
 
         const serverResponseFields: any = [
             { label: 'f1', field: 'f1', buckets: [
@@ -375,10 +377,10 @@ describe('SearchFilterComponent', () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
             categories: [],
-            facetFields: [
+            facetFields: { fields: [
                 { label: 'f1', field: 'f1' },
                 { label: 'f2', field: 'f2' }
-            ],
+            ]},
             facetQueries: {
                 queries: []
             }
@@ -390,6 +392,7 @@ describe('SearchFilterComponent', () => {
                         { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
             { label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
+        component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacetFields[0].buckets.items[0]);
         const data = {
             list: {
                 context: {}

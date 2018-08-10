@@ -106,6 +106,10 @@ export class SearchQueryBuilderService {
         }
     }
 
+    getUserFacetBuckets(field: string) {
+        return this.userFacetBuckets[field] || [];
+    }
+
     removeUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
         if (field && field.field && bucket) {
             const buckets = this.userFacetBuckets[field.field] || [];
@@ -142,7 +146,7 @@ export class SearchQueryBuilderService {
 
     getFacetField(label: string): FacetField {
         if (label) {
-            const fields = this.config.facetFields || [];
+            const fields = this.config.facetFields.fields || [];
             const result = fields.find(field => field.label === label);
             if (result) {
                 return { ...result };
@@ -286,7 +290,7 @@ export class SearchQueryBuilderService {
     }
 
     protected get facetFields(): RequestFacetFields {
-        const facetFields = this.config.facetFields;
+        const facetFields = this.config.facetFields && this.config.facetFields.fields;
 
         if (facetFields && facetFields.length > 0) {
             return {
