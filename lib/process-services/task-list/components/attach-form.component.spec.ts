@@ -21,6 +21,7 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskListService } from './../services/tasklist.service';
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 describe('AttachFormComponent', () => {
     let component: AttachFormComponent;
@@ -42,6 +43,19 @@ describe('AttachFormComponent', () => {
         fixture.detectChanges();
     }));
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
+    it('should show the attach button disabled', async(() => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
+            expect(attachButton.nativeElement.disabled).toBeTruthy();
+        });
+    }));
+
     it('should emit cancel event if clicked on Cancel Button ', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -52,9 +66,9 @@ describe('AttachFormComponent', () => {
         });
     }));
 
-    it('should call attachFormToATask if clicked on Complete Button', async(() => {
+    it('should call attachFormToATask if clicked on attach Button', async(() => {
         component.taskId = 1;
-        component.formId = 2;
+        component.attachFormControl.setValue(2);
         spyOn(taskService, 'attachFormToATask').and.returnValue(of(true));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -65,12 +79,42 @@ describe('AttachFormComponent', () => {
         });
     }));
 
+    it('should render the attachForm enabled if the user select the different formId', async(() => {
+        component.taskId = 1;
+        component.formId = 2;
+        component.attachFormControl.setValue(3);
+        fixture.detectChanges();
+        spyOn(taskService, 'attachFormToATask').and.returnValue(of(true));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
+            expect(attachButton.nativeElement.disabled).toBeFalsy();
+        });
+    }));
+
+    it('should render a disabled attachForm button if the user select the original formId', async(() => {
+        component.taskId = 1;
+        component.formId = 2;
+        component.attachFormControl.setValue(3);
+        fixture.detectChanges();
+        spyOn(taskService, 'attachFormToATask').and.returnValue(of(true));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            component.attachFormControl.setValue(2);
+            fixture.detectChanges();
+            let attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
+            expect(attachButton.nativeElement.disabled).toBeTruthy();
+        });
+    }));
+
     it('should show the adf-form of the selected form', async(() => {
         component.taskId = 1;
-        component.formKey = 12;
+        component.selectedFormId = 12;
         fixture.detectChanges();
-        const formContainer = fixture.debugElement.nativeElement.querySelector('adf-form');
         fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const formContainer = fixture.debugElement.nativeElement.querySelector('adf-form');
             expect(formContainer).toBeDefined();
             expect(formContainer).not.toBeNull();
         });
@@ -79,32 +123,33 @@ describe('AttachFormComponent', () => {
     it('should show the formPreview of the selected form', async(() => {
         component.formKey = 12;
         fixture.detectChanges();
-        const formContainer = fixture.debugElement.nativeElement.querySelector('.adf-form-container');
         fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const formContainer = fixture.debugElement.nativeElement.querySelector('.adf-form-container');
             expect(formContainer).toBeDefined();
             expect(formContainer).toBeNull();
         });
     }));
 
-    it('should remove form if it is present', (done) => {
+    it('should remove form if it is present', async(() => {
         component.taskId = 1;
-        component.formId = 10;
+        component.attachFormControl.setValue(10);
         component.formKey = 12;
         spyOn(taskService, 'deleteForm').and.returnValue(of({}));
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
+            fixture.detectChanges();
             expect(element.querySelector('#adf-no-form-remove-button')).toBeDefined();
             const el = fixture.nativeElement.querySelector('#adf-no-form-remove-button');
             el.click();
             expect(component.formId).toBeNull();
-            done();
         });
-    });
+    }));
 
-    it('should emit success when form is changed', async(() => {
+    it('should emit success when a form is attached', async(() => {
         component.taskId = 1;
-        component.formId = 10;
+        component.attachFormControl.setValue(10);
 
         spyOn(taskService, 'attachFormToATask').and.returnValue(of(
             {

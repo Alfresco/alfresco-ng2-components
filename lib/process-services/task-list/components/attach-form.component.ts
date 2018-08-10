@@ -16,9 +16,10 @@
  */
 
 import { FormService, LogService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Form } from '../models/form.model';
 import { TaskListService } from './../services/tasklist.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'adf-attach-form',
@@ -26,7 +27,7 @@ import { TaskListService } from './../services/tasklist.service';
     styleUrls: ['./attach-form.component.scss']
 })
 
-export class AttachFormComponent implements OnChanges {
+export class AttachFormComponent implements OnInit, OnChanges {
     constructor(private taskService: TaskListService,
                 private logService: LogService,
                 private formService: FormService) { }
@@ -49,20 +50,42 @@ export class AttachFormComponent implements OnChanges {
     forms: Form[];
 
     formId: number;
+    disableSubmit: boolean = true;
+    selectedFormId: number;
+
+    attachFormControl: FormControl;
+
+    ngOnInit() {
+        this.attachFormControl = new FormControl('', Validators.required);
+        this.attachFormControl.valueChanges.subscribe( (currentValue) => {
+            if (this.attachFormControl.valid) {
+                if ( this.formId !== currentValue) {
+                    this.disableSubmit = false;
+                } else {
+                    this.disableSubmit = true;
+                }
+            }
+        });
+    }
 
     ngOnChanges() {
+        this.formId = undefined;
+        this.disableSubmit = true;
         this.loadFormsTask();
-        this.onFormAttached();
+        if (this.formKey) {
+            this.onFormAttached();
+        }
     }
 
     onCancelButtonClick(): void {
+        this.selectedFormId = this.formId;
         this.cancelAttachForm.emit();
     }
 
     onRemoveButtonClick(): void {
         this.taskService.deleteForm(this.taskId).subscribe(
             () => {
-                this.formId = null;
+                this.formId = this.selectedFormId = null;
                 this.success.emit();
             },
             (err) => {
@@ -72,7 +95,7 @@ export class AttachFormComponent implements OnChanges {
     }
 
     onAttachFormButtonClick(): void {
-        this.attachForm(this.taskId, this.formId);
+        this.attachForm(this.taskId, this.selectedFormId);
     }
 
     private loadFormsTask(): void {
@@ -89,7 +112,7 @@ export class AttachFormComponent implements OnChanges {
         this.formService.getTaskForm(this.taskId)
             .subscribe((res) => {
                 this.formService.getFormDefinitionByName(res.name).subscribe((formDef) => {
-                    this.formId = formDef;
+                    this.formId = this.selectedFormId = formDef;
                 });
             }, (err) => {
                 this.error.emit(err);
