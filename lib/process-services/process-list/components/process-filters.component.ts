@@ -57,7 +57,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /** Toggle to show or hide the filter's icon. */
     @Input()
-    showIcon: boolean = true;
+    showIcon: boolean;
 
     filter$: Observable<ProcessInstanceFilterRepresentation>;
 
