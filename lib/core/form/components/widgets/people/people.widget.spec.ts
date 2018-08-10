@@ -207,8 +207,7 @@ describe('PeopleWidgetComponent', () => {
             });
         });
 
-        it('should emit peopleSelected if option is selected', async(() => {
-            let selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
+        it('should display two options if we tap one letter', async(() => {
             let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'T';
@@ -218,10 +217,23 @@ describe('PeopleWidgetComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
-                widget.onItemSelect(fakeUserResult[0]);
-                expect(selectEmitSpy).toHaveBeenCalledWith(1001);
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
             });
         }));
+
+        it('should emit peopleSelected if option is valid', async() => {
+            let selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            peopleHTMLElement.focus();
+            peopleHTMLElement.value = 'Test01 Test01';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(selectEmitSpy).toHaveBeenCalledWith(1001);
+            });
+        });
     });
 
 });
