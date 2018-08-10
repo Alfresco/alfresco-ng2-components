@@ -22,7 +22,7 @@ feel of what's available.
 * Start the demo shell using the JS-API from the development branch and the local component in the lib folder
 
 ```sh
-./start.sh -dev -t -gitjsapi development
+./start.sh -dev -gitjsapi development
 ```
 
 * Build the lib folder using the JS-API from the development branch 
