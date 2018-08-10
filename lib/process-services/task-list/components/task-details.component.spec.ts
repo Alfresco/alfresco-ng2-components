@@ -25,7 +25,7 @@ import { CommentProcessService, LogService, AuthenticationService } from '@alfre
 
 import { UserProcessModel } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
+import { noDataMock, taskDetailsMock, standaloneTaskWithForm, standaloneTaskWithoutForm, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
@@ -151,22 +151,37 @@ describe('TaskDetailsComponent', () => {
 
     it('should display task standalone component when the task does not have an associated form', async(() => {
         component.taskId = '123';
+        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithoutForm));
+
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
+            expect(component.isStandaloneTaskWithoutForm()).toBeTruthy();
             expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
         });
     }));
 
-    it('should not display task standalone component when the task have an associated form', async(() => {
+    it('should not display task standalone component when the task has a form', async(() => {
         component.taskId = '123';
-        component.taskDetails = new TaskDetailsModel(taskDetailsMock);
-        component.taskDetails.formKey = '10';
+        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithForm));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
+            expect(component.isStandaloneTaskWithForm()).toBeTruthy();
             expect(fixture.debugElement.query(By.css('adf-task-standalone'))).toBeDefined();
             expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
+        });
+    }));
+
+    it('should display the AttachFormComponent when standaloneTaskWithForm and click on attach button', async(() => {
+        component.taskId = '123';
+        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithForm));
+        fixture.detectChanges();
+        component.onShowAttachForm();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(component.isStandaloneTaskWithForm()).toBeTruthy();
+            expect(fixture.debugElement.query(By.css('adf-attach-form'))).toBeDefined();
         });
     }));
 

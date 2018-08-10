@@ -31,7 +31,7 @@
 
         <div class="adf-task-details-core-form">
             <div *ngIf="isAssigned()">
-                <adf-form *ngIf="hasFormKey() && !showAttachForm" #activitiForm
+                <adf-form *ngIf="isFormComponentVisible()" #activitiForm
                           [showDebugButton]="debugMode"
                           [taskId]="taskDetails.id"
                           [showTitle]="showFormTitle"
@@ -48,7 +48,7 @@
                           (error)='onFormError($event)'
                           (executeOutcome)='onFormExecuteOutcome($event)'>
                 </adf-form>
-                <adf-task-standalone *ngIf="!hasFormKey() && !showAttachForm"
+                <adf-task-standalone *ngIf="isTaskStandaloneComponentVisible()"
                                      [taskName]="taskDetails.name"
                                      [taskId]="taskDetails.id"
                                      [isCompleted]="isCompletedTask()"
@@ -57,7 +57,7 @@
                                      (complete)="onComplete()"
                                      (showAttachForm)="onShowAttachForm()">
                 </adf-task-standalone>
-                <adf-attach-form *ngIf="showAttachForm"
+                <adf-attach-form *ngIf="isShowAttachForm()"
                                  [taskId]="taskDetails.id"
                                  [formKey]="taskDetails.formKey"
                                  (cancelAttachForm)="onCancelAttachForm()"
