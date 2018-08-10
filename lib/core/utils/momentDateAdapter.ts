@@ -19,11 +19,6 @@ import { DateAdapter } from '@angular/material';
 import { isMoment, Moment } from 'moment';
 import moment from 'moment-es6';
 
-const dateNames: string[] = [];
-for (let date = 1; date <= 31; date++) {
-    dateNames.push(String(date));
-}
-
 export class MomentDateAdapter extends DateAdapter<Moment> {
 
     private localeData: any = moment.localeData();
@@ -60,6 +55,11 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     getDateNames(): string[] {
+        const dateNames: string[] = [];
+        for (let date = 1; date <= 31; date++) {
+            dateNames.push(String(date));
+        }
+
         return dateNames;
     }
 
