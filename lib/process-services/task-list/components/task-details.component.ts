@@ -217,9 +217,32 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         if (taskId && !taskId.currentValue) {
             this.reset();
         } else if (taskId && taskId.currentValue) {
-            this.taskFormName = null;
             this.loadDetails(taskId.currentValue);
         }
+    }
+
+    isStandaloneTask(): boolean {
+        return !(this.taskDetails && (!!this.taskDetails.processDefinitionId));
+    }
+
+    isStandaloneTaskWithForm(): boolean {
+        return this.isStandaloneTask() && this.hasFormKey();
+    }
+
+    isStandaloneTaskWithoutForm(): boolean {
+        return this.isStandaloneTask() && !this.hasFormKey();
+    }
+
+    isFormComponentVisible(): boolean {
+        return this.hasFormKey() && !this.isShowAttachForm();
+    }
+
+    isTaskStandaloneComponentVisible(): boolean {
+        return this.isStandaloneTaskWithoutForm() && !this.isShowAttachForm();
+    }
+
+    isShowAttachForm(): boolean {
+        return this.showAttachForm;
     }
 
     /**
@@ -232,10 +255,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     /**
      * Check if the task has a form
      */
-    hasFormKey(): TaskDetailsModel | string | boolean {
-        return (this.taskDetails
-            && this.taskDetails.formKey
-            && this.taskDetails.formKey !== 'null');
+    hasFormKey(): boolean {
+        return (this.taskDetails && (!!this.taskDetails.formKey));
     }
 
     isTaskActive() {
@@ -272,10 +293,12 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     private loadDetails(taskId: string) {
         this.taskPeople = [];
         this.readOnlyForm = false;
+        this.taskFormName = null;
 
         if (taskId) {
             this.taskListService.getTaskDetails(taskId).subscribe(
                 (res: TaskDetailsModel) => {
+                    this.showAttachForm = false;
                     this.taskDetails = res;
 
                     if (this.taskDetails.name === 'null') {
