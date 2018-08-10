@@ -56,6 +56,8 @@ var ContentServicesPage = function () {
     var emptyRecent = element(by.css(".adf-container-recent .empty-list__title"));
     var gridViewButton = element(by.css("button[data-automation-id='document-list-grid-view']"));
     var cardViewContainer = element(by.css("div.document-list-container div.adf-data-table-card"));
+    var copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
+    var searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"'));
 
     this.checkRecentFileToBeShowed = function () {
         Util.waitUntilElementIsVisible(recentFiles);
@@ -580,6 +582,21 @@ var ContentServicesPage = function () {
         Util.waitUntilElementIsVisible(row);
     }
 
+    this.typeIntoNodeSelectorSearchField = function(text) {
+        Util.waitUntilElementIsVisible(searchInputElement);
+        searchInputElement.sendKeys(text);
+    }
+
+    this.clickContentNodeSelectorResult = function(name){
+        let resultElement = element(by.css(`div[data-automation-id="content-node-selector-content-list"] div[filename="${name}"`));
+        Util.waitUntilElementIsVisible(resultElement);
+        resultElement.click();
+    }
+
+    this.clickCopyButton = function(){
+        Util.waitUntilElementIsClickable(copyButton);
+        copyButton.click();
+    }
 };
 
 module.exports = ContentServicesPage;
