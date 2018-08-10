@@ -145,8 +145,8 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 | Option | Description |
 | --- | --- |
 | -h or --help    | show the help  |
-| -t or --test    | Run the tests, this parameter accepts also a wildcard to execute tests for example -t "ng2-alfresco-core" |
-| -d or --debug    | Run the tests **in browser**, this parameter accepts also a wildcard to execute tests for example -d "ng2-alfresco-core" |
+| -t or --test    | Run the tests, this parameter accepts also a wildcard to execute tests for example -t "core" |
+| -d or --debug    | Run the tests **in browser**, this parameter accepts also a wildcard to execute tests for example -d "core" |
 | -c or --clean   | clean the ng2_components folders before start from all the temp builds files as node_modules  |
 | -gitjsapi   | start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
 | -si or --skipinstall    | skip the installation of the node_modules  |
@@ -169,6 +169,13 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 
 ```sh
 ./npm-build-all.sh -d
+```
+
+* Build only a part of the component and run the tests only for a specific folder **in BROWSER**:
+(you can change core with, any other lib in the lib folder) 
+
+```sh
+./npm-build-all.sh -si -sb -d "core"
 ```
 
 * Clean the lib folder node_modules before build
