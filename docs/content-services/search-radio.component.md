@@ -1,7 +1,7 @@
 ---
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-06-11
+Last reviewed: 2018-08-10
 ---
 
 # Search radio component
@@ -26,7 +26,7 @@ Implements a radio button list widget for the [Search Filter component](../conte
                         "field": null,
                         "pageSize": 5,
                         "options": [
-                            { "name": "None", "value": "", "default": true },
+                            { "name": "None", "value": "" },
                             { "name": "All", "value": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
                             { "name": "Folder", "value": "TYPE:'cm:folder'" },
                             { "name": "Document", "value": "TYPE:'cm:content'" }
@@ -43,7 +43,7 @@ Implements a radio button list widget for the [Search Filter component](../conte
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| options | `array` | Array of objects with `name` and `value` properties. Each object defines a radio button, labelled with `name`, that adds the query fragment in `value` to the query when enabled. Set the `default` property to `true` for one item to have it selected initially when the widget is displayed. |
+| options | `array` | Array of objects with `name` and `value` properties. Each object defines a radio button, labelled with `name`, that adds the query fragment in `value` to the query when enabled. |
 
 ## Details
 
