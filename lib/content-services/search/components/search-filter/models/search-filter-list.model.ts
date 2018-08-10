@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
+const DEFAULT_PAGE_SIZE = 5;
+
 export class SearchFilterList<T> implements Iterable<T> {
 
     private filteredItems: T[] = [];
     private _filterText: string = '';
 
     items: T[] = [];
-    pageSize: number = 5;
-    currentPageSize: number = 5;
+    pageSize: number = DEFAULT_PAGE_SIZE;
+    currentPageSize: number = DEFAULT_PAGE_SIZE;
 
     get filterText(): string {
         return this._filterText;
@@ -78,11 +80,11 @@ export class SearchFilterList<T> implements Iterable<T> {
         return this.pageSize >= this.filteredItems.length;
     }
 
-    constructor(items: T[] = [], pageSize: number = 5) {
+    constructor(items: T[] = [], pageSize?: number) {
         this.items = items;
         this.filteredItems = items;
-        this.pageSize = pageSize;
-        this.currentPageSize = pageSize;
+        this.pageSize = pageSize || DEFAULT_PAGE_SIZE;
+        this.currentPageSize = pageSize || DEFAULT_PAGE_SIZE;
     }
 
     /** Display more items. */
