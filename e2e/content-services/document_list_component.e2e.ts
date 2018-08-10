@@ -16,7 +16,6 @@
  */
 
 import { browser } from 'protractor';
-
 import LoginPage = require('../pages/adf/loginPage');
 import ContentServicesPage = require('../pages/adf/contentServicesPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
@@ -29,7 +28,6 @@ import { UploadActions } from '../actions/ACS/upload.actions';
 import ErrorPage = require('../pages/adf/errorPage');
 import FileModel = require('../models/ACS/fileModel');
 import moment from 'moment-es6';
-import { browser } from '../../node_modules/protractor';
 
 describe('Document List Component', () => {
 
@@ -124,7 +122,10 @@ describe('Document List Component', () => {
     describe('Custom Column', () => {
 
         let folderName;
-        let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+        let pdfFileModel = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        });
         let docxFileModel = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
             'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
