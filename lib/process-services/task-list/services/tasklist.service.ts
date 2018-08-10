@@ -184,17 +184,9 @@ export class TaskListService {
             'modelType': 2 // Integer | modelType
         };
 
-        return from(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
-            .pipe(
-                map((response: any) => {
-                    let forms: Form[] = [];
-                    response.data.forEach((form) => {
-                        forms.push(new Form(form.id, form.name));
-                    });
-                    return forms;
-                }),
-                catchError(err => this.handleError(err))
-            );
+        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
+            .map((res: any) => res.data)
+            .catch(err => this.handleError(err));
     }
 
     /**
