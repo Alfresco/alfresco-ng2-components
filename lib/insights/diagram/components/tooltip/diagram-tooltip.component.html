@@ -1,6 +1,10 @@
 <div #tooltipContent class="{{adf}}-diagram-tooltip">
     <div class="{{adf}}-diagram-tooltip-header">{{ data.type }} {{ data.name || data.id }}</div>
     <div class="{{adf}}-diagram-tooltip-body">
+        <div *ngIf="data.value" class="{{adf}}-diagram-heat-value">
+            <span class="{{adf}}-diagram-value">{{ data.value }}</span>
+            <span class="{{adf}}-diagram-valuetype"> {{ data.dataType }}</span>
+        </div>
         <div *ngIf="data.name" class="{{adf}}-diagram-name-property">
             <span class="{{adf}}-diagram-propertyName">Name:</span>
             <span class="{{adf}}-diagram-propertyValue">{{ data.name }}</span>
