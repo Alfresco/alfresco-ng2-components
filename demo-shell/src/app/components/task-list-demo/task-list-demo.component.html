@@ -5,7 +5,7 @@
             <mat-label>App Id</mat-label>
                 <input 
                 matInput
-                class="form-control" 
+                class="form-control"
                 [formControl]="taskAppId">
                 <mat-error *ngIf="taskAppId.hasError('required')">
                     {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.APP_ID_REQUIRED_ERROR' | translate }}
@@ -18,8 +18,8 @@
         <mat-form-field>
             <mat-label>Task Name</mat-label>
             <input 
-            matInput 
-            class="form-control" 
+            matInput
+            class="form-control"
             [formControl]="taskName">
         </mat-form-field>
 
@@ -27,7 +27,7 @@
             <mat-label>Task Id</mat-label>
             <input 
             matInput 
-            class="form-control" 
+            class="form-control"
             [formControl]="taskId">
         </mat-form-field>
 
@@ -35,7 +35,7 @@
             <mat-label>Start</mat-label>
             <input 
             matInput 
-            class="form-control" 
+            class="form-control"
             matTooltip="{{ 'TASK_LIST_DEMO.TOOLTIP_MESSAGE.START_INPUT' | translate }}"
             [formControl]="taskStart">
             <mat-error *ngIf="taskStart.hasError('pattern')">
@@ -46,8 +46,8 @@
         <mat-form-field>
             <mat-label>ProcessDefinitionId</mat-label>
             <input 
-            matInput 
-            class="form-control" 
+            matInput
+            class="form-control"
             [formControl]="taskProcessDefinitionId">
             <mat-hint>E.g. SimpleProcess:1:2</mat-hint>
         </mat-form-field>
@@ -64,7 +64,7 @@
         <mat-form-field>
                 <mat-label>Process Instance</mat-label>
                 <mat-select 
-                class="form-control" 
+                class="form-control"
                 [formControl]="taskIncludeProcessInstance">
                  <mat-option *ngFor="let includeProcessInstanceOption of includeProcessInstanceOptions" [value]="includeProcessInstanceOption.value">{{ includeProcessInstanceOption.title }}</mat-option>
                 </mat-select>
@@ -73,7 +73,7 @@
         <mat-form-field>
                 <mat-label>Assignment</mat-label>
                 <mat-select 
-                class="form-control" 
+                class="form-control"
                 [formControl]="taskAssignment">
                  <mat-option *ngFor="let assignmentOption of assignmentOptions" [value]="assignmentOption.value">{{ assignmentOption.title }}</mat-option>
                 </mat-select>
@@ -82,7 +82,7 @@
         <mat-form-field>
                 <mat-label>State</mat-label>
                 <mat-select 
-                class="form-control" 
+                class="form-control"
                 [formControl]="taskState">
                     <mat-option *ngFor="let stateOption of stateOptions" [value]="stateOption.value">{{ stateOption.title }}</mat-option>
                 </mat-select>
@@ -91,7 +91,7 @@
         <mat-form-field>
                 <mat-label>Sort</mat-label>
                 <mat-select 
-                class="form-control" 
+                class="form-control"
                 [formControl]="taskSort">
                     <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title }}</mat-option>
                 </mat-select>
@@ -104,13 +104,13 @@
 
 <div>
     <adf-tasklist
-        [appId]="appId" 
-        [taskId]="id" 
-        [name]="name" 
-        [processDefinitionId]="processDefinitionId" 
-        [processInstanceId]="processInstanceId" 
-        [assignment]="assignment" 
-        [state]="state" 
+        [appId]="appId"
+        [taskId]="id"
+        [name]="name"
+        [processDefinitionId]="processDefinitionId"
+        [processInstanceId]="processInstanceId"
+        [assignment]="assignment"
+        [state]="state"
         [sort]="sort"
         [start]="start"
         [includeProcessInstance]="includeProcessInstance"
@@ -127,7 +127,7 @@
             </data-columns>
     </adf-tasklist>
     
-    <adf-pagination 
+    <adf-pagination
         [target]="taskList">
     </adf-pagination>
 </div>
