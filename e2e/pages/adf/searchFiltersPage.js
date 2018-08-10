@@ -81,7 +81,7 @@ var SearchFiltersPage = function () {
 
     this.filterByFileType = function (fileType) {
         this.checkFileTypeFilterIsDisplayed();
-        this.clickFileTypeFilter();
+        // this.clickFileTypeFilter();
 
         this.checkSearchFileTypeFilterIsDisplayed();
         this.searchInFileTypeFilter(fileType);
