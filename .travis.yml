@@ -2,8 +2,9 @@ language: node_js
 dist: trusty
 sudo: required
 node_js:
-  - "8"
-
+ # Use the explicit NodeJS LTS version 8.9.4 to avoid any automatic upgrade of the version.
+  - '8.9.4'
+  
 addons:
     chrome: stable
 before_script:
