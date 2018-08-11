@@ -41,7 +41,7 @@ describe('DiagramTooltipComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                declarations: [ DiagramTooltipComponent ]
+                declarations: [DiagramTooltipComponent]
             }).compileComponents();
         }));
 
@@ -91,8 +91,8 @@ describe('DiagramTooltipComponent', () => {
 
         it('should render the properties, if there is any', () => {
             data.properties = [
-                { name: 'property-1-name', value: 'property-1-value' },
-                { name: 'property-2-name', value: 'property-2-value' }
+                {name: 'property-1-name', value: 'property-1-value'},
+                {name: 'property-2-name', value: 'property-2-value'}
             ];
             fixture.detectChanges();
 
@@ -106,6 +106,21 @@ describe('DiagramTooltipComponent', () => {
             expect(propertyValues[0].nativeElement.innerText).toBe('property-1-value');
             expect(propertyValues[1].nativeElement.innerText).toBe('property-2-value');
         });
+
+        it('should render value and data type', () => {
+            data.value = '1';
+            data.dataType = 'hour';
+
+            fixture.detectChanges();
+
+            let propertyValue = fixture.debugElement.queryAll(By.css('.adf-diagram-heat-value > .adf-diagram-value')),
+                propertyValueType = fixture.debugElement.queryAll(By.css('.adf-diagram-heat-value > .adf-diagram-valuetype'));
+
+            expect(propertyValue.length).toBe(1);
+            expect(propertyValueType.length).toBe(1);
+            expect(propertyValue[0].nativeElement.innerText).toBe('1');
+            expect(propertyValueType[0].nativeElement.innerText).toBe(' hour');
+        });
     });
 
     describe('Tooltip functionality', () => {
@@ -114,12 +129,12 @@ describe('DiagramTooltipComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                declarations: [ DiagramTooltipComponent, TestHostComponent ]
+                declarations: [DiagramTooltipComponent, TestHostComponent]
             }).compileComponents();
         }));
 
         beforeEach(() => {
-            fixture  = TestBed.createComponent(TestHostComponent);
+            fixture = TestBed.createComponent(TestHostComponent);
 
             fixture.detectChanges();
         });
