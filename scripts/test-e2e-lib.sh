@@ -14,6 +14,7 @@ show_help() {
     echo "-b or --browser run the test in the browsrwer (No headless mode)"
     echo "-s or --spec run a single test file"
     echo "-f or --folder run a single folder test"
+    echo "--seleniumServer configure a selenium server to use to run the e2e test"
     echo "-proxy or --proxy proxy Back end URL to use only possibel to use with -dev option"
     echo "-dev or --dev run it against local development environment it will deploy on localhost:4200 the current version of your branch"
     echo "-host or --host URL of the Front end to test"
@@ -65,6 +66,10 @@ set_test_folder(){
     FOLDER=$1
 }
 
+set_selenium(){
+    SELENIUM_SERVER=$1
+}
+
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
@@ -78,6 +83,7 @@ while [[ $1 == -* ]]; do
       -s|--spec)  set_test $2; shift 2;;
       -save)   set_save_screenshot; shift;;
       -proxy|--proxy)  set_proxy $2; shift 2;;
+      -s|--seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
@@ -95,6 +101,7 @@ export PROXY_HOST_ADF=$PROXY
 export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
 export FOLDER=$FOLDER'/'
+export SELENIUM_SERVER=$SELENIUM_SERVER
 
 npm run lint-e2e || exit 1
 
