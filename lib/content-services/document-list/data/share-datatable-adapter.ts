@@ -235,7 +235,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
         if (merge) {
             let listPrunedDuplicate = rows.filter((elemntToFilter) => {
-                let isPresent = this.rows.find((currenRow) => {
+                let isPresent = this.rows.find((currenRow: any) => {
                     return currenRow.obj.entry.id === elemntToFilter.obj.entry.id;
                 });
 
