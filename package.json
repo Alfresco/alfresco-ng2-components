@@ -146,7 +146,7 @@
     "merge-stream": "1.0.1",
     "nconf": "^0.10.0",
     "ng-packagr": "4.0.1",
-    "node-sass": "^4.9.2",
+    "node-sass": "4.9.2",
     "protractor": "^5.4.0",
     "raw-loader": "0.5.1",
     "remap-istanbul": "^0.11.1",
