@@ -13,6 +13,8 @@ const height = 768;
 var HOST = process.env.URL_HOST_ADF;
 var BROWSER_RUN = process.env.BROWSER_RUN;
 var FOLDER = process.env.FOLDER || '';
+var SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
+var DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
 
 var args_options = [];
 
@@ -28,7 +30,7 @@ exports.config = {
     allScriptsTimeout: 60000,
 
     specs: [
-        './e2e/'+FOLDER+'**/*.e2e.ts'
+        './e2e/' + FOLDER + '**/*.e2e.ts'
     ],
 
     capabilities: {
@@ -45,17 +47,24 @@ exports.config = {
         }
     },
 
-    directConnect: true,
+    directConnect: DIRECT_CONNECCT,
 
     baseUrl: "http://" + HOST,
 
     framework: 'jasmine2',
+
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 90000,
         print: function () {
         }
     },
+
+    /**
+     * The address of a running selenium server (must be manually start before running the tests). If this is specified seleniumServerJar and seleniumPort will be ignored.
+     * @config {String} seleniumAddress
+     */
+    seleniumAddress: SELENIUM_SERVER,
 
     plugins: [{
         package: 'jasmine2-protractor-utils',
