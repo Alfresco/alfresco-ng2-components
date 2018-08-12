@@ -4,6 +4,7 @@
 const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const jasmineReporters = require('jasmine-reporters');
+const remote = require('selenium-webdriver/remote');
 
 const projectRoot = path.resolve(__dirname);
 
@@ -111,6 +112,8 @@ exports.config = {
             style.appendChild(document.createTextNode(css));
             head.appendChild(style);
         }
+
+        browser.setFileDetector(new remote.FileDetector());
 
     }
 };

@@ -27,6 +27,7 @@ import { Pagination } from 'alfresco-js-api';
 import { Subscription } from 'rxjs';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { PaginationModel } from '../models/pagination.model';
+import { UserPreferencesService } from '../services/user-preferences.service';
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -68,7 +69,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     private paginationSubscription: Subscription;
 
-    constructor(private cdr: ChangeDetectorRef) {
+    constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
@@ -76,7 +77,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
             this.paginationSubscription = this.target.pagination.subscribe(pagination => {
                 this.isLoading = false;
                 this.pagination = pagination;
-                this.pageSize = pagination.maxItems;
+                this.pageSize = this.userPreferencesService.paginationSize || this.pageSize;
                 this.cdr.detectChanges();
             });
         }
