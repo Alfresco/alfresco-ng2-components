@@ -21,6 +21,7 @@ var CreateFolderDialog = require('./dialog/createFolderDialog');
 var path = require('path');
 var TestConfig = require('../../test.config');
 var NavigationBarPage = require('./navigationBarPage');
+var remote = require('selenium-webdriver/remote');
 
 var ContentServicesPage = function () {
 
@@ -323,6 +324,7 @@ var ContentServicesPage = function () {
     };
 
     this.uploadFile = function (fileLocation) {
+        browser.setFileDetector(new remote.FileDetector());
         this.checkUploadButton();
         Util.waitUntilElementIsVisible(uploadFileButton);
         uploadFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
