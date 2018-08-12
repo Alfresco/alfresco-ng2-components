@@ -21,12 +21,13 @@ import { Observable } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
+import { IconModel } from '../../app-list/icon.model';
 
 /**
- * @deprecated: in 2.4.0 'adf-filters' and 'taskListService-filters' selectors were deprecated, use adf-task-filters instead.
+ * @deprecated: in 2.4.0 'adf-filters' selector was deprecated, use adf-task-filters instead.
  */
 @Component({
-    selector: 'adf-task-filters, adf-filters, taskListService-filters',
+    selector: 'adf-task-filters, adf-filters',
     templateUrl: './task-filters.component.html',
     styleUrls: ['task-filters.component.scss']
 })
@@ -60,7 +61,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /** Toggles display of the filter's icon. */
     @Input()
-    hasIcon: boolean = true;
+    hasIcon: boolean;
 
     filter$: Observable<FilterRepresentationModel>;
 
@@ -68,12 +69,16 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     filters: FilterRepresentationModel [] = [];
 
+    private iconsMDL: IconModel;
+
     constructor(private taskFilterService: TaskFilterService,
                 private taskListService: TaskListService,
                 private appsProcessService: AppsProcessService) {
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.iconsMDL = new IconModel();
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
@@ -225,5 +230,12 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
+    }
+
+    /**
+     * Return current filter icon
+     */
+    getFilterIcon(icon): string {
+        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 }
