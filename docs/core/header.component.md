@@ -17,10 +17,9 @@ Reusable header for Alfresco applications
     [redirectUrl]="'/home'"
     color="primary"
     (toggled)=toggleMenu($event)>
+    .......
 
-    <app-search-bar fxFlex="0 1 auto"></app-search-bar>
-    <app-theme-picker></app-theme-picker>
-<adf-layout>
+</adf-layout-header>
 ```
 
 ## Class members
