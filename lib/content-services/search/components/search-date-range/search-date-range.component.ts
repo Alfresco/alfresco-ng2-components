@@ -126,4 +126,9 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     hasParseError(formControl) {
         return formControl.hasError('matDatepickerParse') && formControl.getError('matDatepickerParse').text;
     }
+
+    forcePlaceholder(event: any) {
+        event.srcElement.click();
+    }
+
 }
