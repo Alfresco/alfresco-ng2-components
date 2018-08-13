@@ -89,8 +89,6 @@ export class ContextMenuListComponent implements AfterViewInit {
             return;
         }
 
-        console.log('MORI', event);
-
         menuItem.subject.next(menuItem);
         this.contextMenuOverlayRef.close();
     }

@@ -49,13 +49,11 @@ export class ContextMenuOverlayService {
         if (overlayConfig.hasBackdrop) {
             (<any> overlay)._backdropElement
                 .addEventListener('contextmenu', (event) => {
-                    console.log('BORG!!!!!!', event);
                     event.preventDefault();
                     (<any> overlay)._backdropClick.next(null);
                 }, true);
         }
 
-        console.log('overlayRef', overlayRef);
         return overlayRef;
     }
 
