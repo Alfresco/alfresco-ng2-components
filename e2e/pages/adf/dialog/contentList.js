@@ -319,11 +319,11 @@ var ContentList = function () {
     this.rightClickOnRowNamed = function(rowName) {
         let row = this.getRowByRowName(rowName);
         browser.actions().click(row, protractor.Button.RIGHT).perform();
-        Util.waitUntilElementIsVisible(element(by.css('div.context-menu')));
+        Util.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
 
     this.checkContextActionIsVisible = function(actionName) {
-        let actionButton = element(by.css(`div.context-menu button[data-automation-id="context-${actionName}"`));
+        let actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
         Util.waitUntilElementIsVisible(actionButton);
         Util.waitUntilElementIsClickable(actionButton);
         return actionButton;

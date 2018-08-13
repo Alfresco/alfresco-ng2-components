@@ -31,14 +31,16 @@ import { CONTEXT_MENU_DATA } from './context-menu.tokens';
     selector: 'adf-context-menu',
     template: `
     <div mat-menu class="mat-menu-panel" @panelAnimation>
-        <div class="mat-menu-content">
+        <div id="adf-context-menu-content" class="mat-menu-content">
             <ng-container *ngFor="let link of links">
+                
                 <button *ngIf="link.model?.visible"
+                        [attr.data-automation-id]="'context-'+((link.title || link.model?.title) | translate)"
                         mat-menu-item
                         [disabled]="link.model?.disabled"
                         (click)="onMenuItemClick($event, link)">
                     <mat-icon *ngIf="link.model?.icon">{{ link.model.icon }}</mat-icon>
-                    <span data-automation-id="contextmenu-item-title">{{ (link.title || link.model?.title) | translate }}</span>
+                    <span>{{ (link.title || link.model?.title) | translate }}</span>
                 </button>
             </ng-container>
         </div>
