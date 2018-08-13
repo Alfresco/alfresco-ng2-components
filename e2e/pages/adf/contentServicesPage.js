@@ -333,6 +333,7 @@ var ContentServicesPage = function () {
     };
 
     this.uploadMultipleFile = function (files) {
+        browser.setFileDetector(new remote.FileDetector());
         Util.waitUntilElementIsVisible(uploadMultipleFileButton);
         var allFiles = path.resolve(path.join(TestConfig.main.rootPath, files[0]));
         for (var i = 1; i < files.length; i++) {
@@ -344,6 +345,7 @@ var ContentServicesPage = function () {
     };
 
     this.uploadFolder = function (folder) {
+        browser.setFileDetector(new remote.FileDetector());
         Util.waitUntilElementIsVisible(uploadFolderButton);
         uploadFolderButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, folder)));
         Util.waitUntilElementIsVisible(uploadFolderButton);

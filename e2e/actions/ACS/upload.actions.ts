@@ -18,10 +18,12 @@
 import path = require('path');
 import fs = require('fs');
 import TestConfig = require('../../test.config');
+import remote = require('selenium-webdriver/remote');
 
 export class UploadActions {
 
     async uploadFile(alfrescoJsApi, fileLocation, fileName, parentFolderId) {
+        browser.setFileDetector(new remote.FileDetector());
 
         let pathFile = path.join(TestConfig.main.rootPath + fileLocation);
         let file = fs.createReadStream(pathFile);
@@ -55,6 +57,7 @@ export class UploadActions {
     }
 
     async uploadFolder(alfrescoJsApi, folderName, parentFolderId) {
+
         return alfrescoJsApi.nodes.addNode(parentFolderId, {
             'name': folderName,
             'nodeType': 'cm:folder'
