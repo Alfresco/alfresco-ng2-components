@@ -31,7 +31,7 @@ class TestComponent {
     actions;
 }
 
-fdescribe('ContextMenuDirective', () => {
+describe('ContextMenuDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     const actions = [
         {
