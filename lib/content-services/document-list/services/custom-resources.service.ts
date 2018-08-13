@@ -30,7 +30,7 @@ import {
 } from 'alfresco-js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class CustomResourcesService {
@@ -261,6 +261,17 @@ export class CustomResourcesService {
         return isCustomSources;
     }
 
+    isSupportedSource(folderId: string): boolean {
+        let isSupportedSources = false;
+        const sources = ['-my-', '-root-', '-shared-'];
+
+        if (sources.indexOf(folderId) > -1) {
+            isSupportedSources = true;
+        }
+
+        return isSupportedSources;
+    }
+
     /**
      * Gets a folder's contents.
      * @param nodeId ID of the target folder node
@@ -292,40 +303,35 @@ export class CustomResourcesService {
      * @param pagination Specifies how to paginate the results
      * @returns List of node IDs
      */
-    getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel): Observable<string[]> {
-        if (nodeId === '-trashcan-') {
-            return from(this.apiService.nodesApi.getDeletedNodes()
-                .then(result => result.list.entries.map(node => node.entry.id)));
+    getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel = {}): Observable<string[]> {
+        if (this.isCustomSource(nodeId)) {
 
-        } else if (nodeId === '-sharedlinks-') {
-            return from(this.apiService.sharedLinksApi.findSharedLinks()
-                .then(result => result.list.entries.map(node => node.entry.nodeId)));
+            return this.loadFolderByNodeId(nodeId, pagination, [])
+                .pipe(map(result => result.list.entries.map((node: any) => {
+                    if (nodeId === '-sharedlinks-') {
+                        return node.entry.nodeId;
 
-        } else if (nodeId === '-sites-') {
-            return from(this.apiService.sitesApi.getSites()
-                .then(result => result.list.entries.map(node => node.entry.guid)));
+                    } else if (nodeId === '-sites-' || nodeId === '-mysites-') {
+                        return node.entry.guid;
 
-        } else if (nodeId === '-mysites-') {
-            return from(this.apiService.peopleApi.getSiteMembership('-me-')
-                .then(result => result.list.entries.map(node => node.entry.guid)));
+                    } else if (nodeId === '-favorites-') {
+                        return node.entry.targetGuid;
+                    }
 
-        } else if (nodeId === '-favorites-') {
-            return from(this.apiService.favoritesApi.getFavorites('-me-')
-                .then(result => result.list.entries.map(node => node.entry.targetGuid)));
+                    return node.entry.id;
+                })));
 
-        } else if (nodeId === '-recent-') {
-            return new Observable(observer => {
-                this.getRecentFiles('-me-', pagination)
-                    .subscribe((recentFiles) => {
-                        let recentFilesIdS = recentFiles.list.entries.map(node => node.entry.id);
-                        observer.next(recentFilesIdS);
-                        observer.complete();
-                    });
-            });
-
+        } else if (nodeId) {
+            // cases when nodeId is '-my-', '-root-' or '-shared-'
+            return from(this.apiService.nodesApi.getNode(nodeId)
+                .then(node => [node.entry.id]));
         }
 
         return of([]);
+    }
+
+    hasCorrespondingNodeIds(nodeId: string): boolean {
+        return this.isCustomSource(nodeId) || this.isSupportedSource(nodeId);
     }
 
     private getIncludesFields(includeFields: string[]): string[] {
