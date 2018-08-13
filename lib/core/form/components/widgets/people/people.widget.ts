@@ -24,7 +24,7 @@ import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
 import { baseHost, WidgetComponent } from './../widget.component';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
     catchError,
     distinctUntilChanged,
@@ -32,7 +32,6 @@ import {
     switchMap,
     tap
 } from 'rxjs/operators';
-import 'rxjs/add/observable/empty';
 
 @Component({
     selector: 'people-widget',
@@ -66,7 +65,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 .pipe(
                     catchError(err => {
                         this.errorMsg = err.message;
-                        return Observable.empty();
+                        return of();
                     })
                 );
         }),
