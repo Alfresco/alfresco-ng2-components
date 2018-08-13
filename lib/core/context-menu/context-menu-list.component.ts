@@ -54,7 +54,7 @@ import { CONTEXT_MENU_DATA } from './context-menu.tokens';
     ]
 })
 export class ContextMenuListComponent implements AfterViewInit {
-    private _keyManager: FocusKeyManager<MatMenuItem>;
+    private keyManager: FocusKeyManager<MatMenuItem>;
     @ViewChildren(MatMenuItem) items: QueryList<MatMenuItem>;
     links: any[];
 
@@ -70,7 +70,7 @@ export class ContextMenuListComponent implements AfterViewInit {
         if (event) {
             const keyCode = event.keyCode;
             if (keyCode === UP_ARROW || keyCode === DOWN_ARROW) {
-                this._keyManager.onKeydown(event);
+                this.keyManager.onKeydown(event);
             }
         }
     }
@@ -94,7 +94,7 @@ export class ContextMenuListComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this._keyManager = new FocusKeyManager<MatMenuItem>(this.items);
-        this._keyManager.setFirstItemActive();
+        this.keyManager = new FocusKeyManager<MatMenuItem>(this.items);
+        this.keyManager.setFirstItemActive();
     }
 }
