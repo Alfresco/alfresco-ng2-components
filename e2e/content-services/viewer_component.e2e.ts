@@ -32,6 +32,7 @@ import AcsUserModel = require('../models/ACS/acsUserModel');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Viewer', () => {
 
@@ -101,7 +102,7 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: acsUser.id,
-            role: CONSTANTS.SITEMEMBERROLES.SITEMANAGER
+            role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);

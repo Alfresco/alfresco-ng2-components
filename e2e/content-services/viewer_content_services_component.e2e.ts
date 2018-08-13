@@ -136,7 +136,7 @@ describe('Content Services Viewer', () => {
         contentServicesPage.checkAcsContainer();
 
         viewerPage.viewFile(pdfFile.name);
-		browser.driver.sleep(3000); // wait open file
+        browser.driver.sleep(3000); // wait open file
         viewerPage.checkZoomInButtonIsDisplayed();
 
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
