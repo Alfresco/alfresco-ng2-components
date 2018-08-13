@@ -162,8 +162,10 @@ export class SearchQueryBuilderService {
 
     async execute() {
         const query = this.buildQuery();
-        const data = await this.alfrescoApiService.searchApi.search(query);
-        this.executed.next(data);
+        if (query) {
+            const data = await this.alfrescoApiService.searchApi.search(query);
+            this.executed.next(data);
+        }
     }
 
     buildQuery(): QueryBody {
