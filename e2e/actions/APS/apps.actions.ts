@@ -19,10 +19,12 @@ import path = require('path');
 import fs = require('fs');
 import TestConfig = require('../../test.config');
 import AppPublish = require('../../models/APS/AppPublish');
+import remote = require('selenium-webdriver/remote');
 
 export class AppsActions {
 
     async importPublishDeployApp(alfrescoJsApi, appFileLocation) {
+        browser.setFileDetector(new remote.FileDetector());
 
         let pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
         let file = fs.createReadStream(pathFile);
@@ -37,6 +39,7 @@ export class AppsActions {
     }
 
     async publishDeployApp(alfrescoJsApi, appId) {
+        browser.setFileDetector(new remote.FileDetector());
 
         let publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appId, new AppPublish());
 
@@ -46,6 +49,7 @@ export class AppsActions {
     }
 
     async importNewVersionAppDefinitionPublishDeployApp(alfrescoJsApi, appFileLocation, modelId) {
+        browser.setFileDetector(new remote.FileDetector());
 
         let pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
         let file = fs.createReadStream(pathFile);
@@ -60,6 +64,7 @@ export class AppsActions {
     }
 
     async startProcess(alfrescoJsApi, app, processName?: string) {
+        browser.setFileDetector(new remote.FileDetector());
 
         let appDefinitionsList = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
 

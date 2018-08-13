@@ -127,7 +127,7 @@ describe('Start Task - Task App', () => {
             await this.alfrescoJsApi.activiti.taskApi.removeForm(listOfTasks.data[0].id);
         });
 
-        Util.refreshBrowser();
+        browser.refresh();
         taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]);
         taskPage.checkTaskTitle(tasks[3]);
 

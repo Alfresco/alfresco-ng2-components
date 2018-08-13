@@ -18,6 +18,7 @@
 import Util = require('../../util/util');
 import TestConfig = require('../../test.config');
 import path = require('path');
+import remote = require('selenium-webdriver/remote');
 import { browser, by, element, protractor } from 'protractor';
 
 export class VersionManagePage {
@@ -39,6 +40,7 @@ export class VersionManagePage {
     }
 
     uploadNewVersionFile(fileLocation) {
+        browser.setFileDetector(new remote.FileDetector());
         Util.waitUntilElementIsVisible(this.uploadNewVersionButton);
         this.uploadNewVersionButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
         Util.waitUntilElementIsVisible(this.showNewVersionButton);
