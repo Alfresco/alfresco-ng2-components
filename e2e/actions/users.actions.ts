@@ -20,6 +20,8 @@ import User = require('../models/APS/User');
 import TestConfig = require('../test.config');
 import path = require('path');
 import fs = require('fs');
+import remote = require('selenium-webdriver/remote');
+import { browser } from "protractor";
 
 export class UsersActions {
 
@@ -46,6 +48,8 @@ export class UsersActions {
     }
 
     async changeProfilePictureAps(alfrescoJsApi, fileLocation) {
+        browser.setFileDetector(new remote.FileDetector());
+
         let pathFile = path.join(TestConfig.main.rootPath + fileLocation);
         let file = fs.createReadStream(pathFile);
 

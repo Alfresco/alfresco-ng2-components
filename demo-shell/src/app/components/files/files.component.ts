@@ -371,22 +371,18 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onContentActionSuccess(message) {
         const translatedMessage: any = this.translateService.get(message);
         this.openSnackMessage(translatedMessage.value);
-        this.reloadForInfiniteScrolling();
+        this.documentList.reload();
     }
 
     onDeleteActionSuccess(message) {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
-        this.reloadForInfiniteScrolling();
+        this.documentList.reload();
         this.openSnackMessage(message);
     }
 
     onPermissionRequested(node) {
         this.router.navigate(['/permissions', node.value.entry.id]);
-    }
-
-    private reloadForInfiniteScrolling() {
-        this.documentList.reload();
     }
 
     onManageVersions(event) {
@@ -521,7 +517,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onInfiniteScrolling(): void {
         this.infiniteScrolling = !this.infiniteScrolling;
         this.infinitePaginationComponent.reset();
-        this.reloadForInfiniteScrolling();
+        this.documentList.reload();
     }
 
     canDownloadNode = (node: MinimalNodeEntity): boolean => {

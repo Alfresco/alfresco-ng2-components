@@ -20,6 +20,7 @@ import { element, by, protractor, browser } from 'protractor';
 import Util = require('../../../util/util');
 import TestConfig = require('../../../test.config');
 import path = require('path');
+import remote = require('selenium-webdriver/remote');
 
 export class AttachmentListPage {
 
@@ -36,6 +37,8 @@ export class AttachmentListPage {
     }
 
     clickAttachFileButton(fileLocation) {
+        browser.setFileDetector(new remote.FileDetector());
+
         Util.waitUntilElementIsVisible(this.attachFileButton);
         return this.attachFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
     }

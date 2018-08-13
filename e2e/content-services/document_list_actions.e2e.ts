@@ -154,7 +154,7 @@ describe('Document List Component - Actions', () => {
 
     describe('Folder Actions', () => {
 
-        let folderName,secondfolderName;
+        let folderName, secondfolderName;
 
         beforeEach(async (done) => {
             acsUser = new AcsUserModel();
