@@ -92,6 +92,7 @@
     "ng2-charts": "1.6.0",
     "ngx-monaco-editor": "^5.0.0",
     "pdfjs-dist": "2.0.303",
+    "protractor-retry": "^1.2.0",
     "raphael": "2.2.7",
     "reflect-metadata": "0.1.10",
     "rxjs": "^6.0.0",

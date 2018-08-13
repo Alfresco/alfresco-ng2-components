@@ -42,6 +42,8 @@ export class UploadActions {
     }
 
     async createEmptyFiles(alfrescoJsApi, emptyFileNames: string[], parentFolderId) {
+        browser.setFileDetector(new remote.FileDetector());
+
         let filesRequest = [];
 
         for (let i = 0; i < emptyFileNames.length; i++) {
@@ -57,6 +59,7 @@ export class UploadActions {
     }
 
     async uploadFolder(alfrescoJsApi, folderName, parentFolderId) {
+        browser.setFileDetector(new remote.FileDetector());
 
         return alfrescoJsApi.nodes.addNode(parentFolderId, {
             'name': folderName,
