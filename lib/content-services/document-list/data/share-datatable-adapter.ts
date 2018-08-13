@@ -234,7 +234,15 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         if (merge) {
-            this.rows = this.rows.concat(rows);
+            let listPrunedDuplicate = rows.filter((elemntToFilter) => {
+                let isPresent = this.rows.find((currenRow: any) => {
+                    return currenRow.obj.entry.id === elemntToFilter.obj.entry.id;
+                });
+
+                return !isPresent;
+            });
+
+            this.rows = this.rows.concat(listPrunedDuplicate);
         } else {
             this.rows = rows;
         }

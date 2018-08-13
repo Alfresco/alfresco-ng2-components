@@ -19,6 +19,7 @@ var FormFields = require('../formFields');
 var TestConfig = require('../../../../test.config');
 var path = require('path');
 var Util = require('../../../../util/util');
+var remote = require('selenium-webdriver/remote');
 
 var AttachFile = function () {
 
@@ -28,6 +29,7 @@ var AttachFile = function () {
     var filesListLocator = by.css("div[id='adf-attach-widget-readonly-list']");
 
     this.attachFile = function (fieldId, fileLocation) {
+        browser.setFileDetector(new remote.FileDetector());
         var widget = formFields.getWidget(fieldId);
         var uploadButton = widget.element(uploadLocator);
         Util.waitUntilElementIsVisible(uploadButton);

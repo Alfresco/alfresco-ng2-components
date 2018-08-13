@@ -440,7 +440,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
-
         if (node && node.entry) {
             let target = null;
 

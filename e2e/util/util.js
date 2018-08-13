@@ -22,6 +22,7 @@ var path = require('path');
 var until = protractor.ExpectedConditions;
 var TestConfig = require('../test.config');
 var moment = require('moment');
+var remote = require('selenium-webdriver/remote');
 
 var DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout);
 /**
@@ -34,6 +35,8 @@ var DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout);
  * creates an absolute path string if multiple file uploads are required
  */
 exports.uploadParentFolder = function (filePath) {
+    browser.setFileDetector(new remote.FileDetector());
+
     var parentFolder = path.resolve(path.join(__dirname, 'test'));
     return path.resolve(path.join(parentFolder, filePath));
 };
