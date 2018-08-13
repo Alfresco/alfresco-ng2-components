@@ -27,7 +27,7 @@ import {
 } from '@alfresco/adf-core';
 
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { Observable, Subject, BehaviorSubject, Subscription, of } from 'rxjs';
+import { Subject, BehaviorSubject, Subscription, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { presetsDefaultModel } from '../models/preset.model';
@@ -811,22 +811,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private resetNewFolderPagination() {
         this.folderNode = null;
         this.pagination.value.skipCount = 0;
-    }
-
-    // TODO: remove it from here
-    getCorrespondingNodeIds(nodeId: string): Observable<string[]> {
-        if (this.customResourcesService.isCustomSource(nodeId)) {
-            return this.customResourcesService.getCorrespondingNodeIds(nodeId, this.pagination.getValue());
-        } else if (nodeId) {
-            return new Observable(observer => {
-                this.documentListService.getFolderNode(nodeId, this.includeFields)
-                    .subscribe((node: MinimalNodeEntryEntity) => {
-                        observer.next([node.id]);
-                        observer.complete();
-                    });
-            });
-        }
-
     }
 
     ngOnDestroy() {
