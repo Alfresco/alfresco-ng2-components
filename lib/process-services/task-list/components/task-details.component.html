@@ -62,7 +62,7 @@
                     <mat-card-content>
                         <div class="adf-no-form-message-container">
                             <div class="adf-no-form-message-list">
-                                <div *ngIf="!isCompleted" class="adf-no-form-message">
+                                <div *ngIf="!isCompletedTask()" class="adf-no-form-message">
                                     <span id="adf-no-form-message">{{'ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE' | translate}}</span>
                                 </div>
                             </div>
