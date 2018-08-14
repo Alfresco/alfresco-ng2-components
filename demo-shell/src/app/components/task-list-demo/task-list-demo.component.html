@@ -7,9 +7,6 @@
                 matInput
                 class="form-control"
                 [formControl]="taskAppId">
-                <mat-error *ngIf="taskAppId.hasError('required')">
-                    {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.APP_ID_REQUIRED_ERROR' | translate }}
-                </mat-error>
                 <mat-error *ngIf="taskAppId.hasError('pattern')">
                     {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.APP_ID_TYPE_ERROR' | translate }}
                 </mat-error>
@@ -59,6 +56,22 @@
             class="form-control"
             [formControl]="taskProcessInstanceId">
             <mat-hint>E.g. 12345</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Items per page</mat-label>
+            <input
+            matInput
+            class="form-control"
+            [formControl]="taskSize">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Page</mat-label>
+            <input 
+            matInput 
+            class="form-control"
+            [formControl]="taskPage">
         </mat-form-field>
 
         <mat-form-field>
@@ -113,8 +126,9 @@
         [state]="state"
         [sort]="sort"
         [start]="start"
+        [page]="page"
+        [size]="size"
         [includeProcessInstance]="includeProcessInstance"
-        (error)="onError($event)"
         #taskList>
         <data-columns>
                 <data-column key="id" title="Id"></data-column>

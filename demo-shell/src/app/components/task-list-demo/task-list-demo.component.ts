@@ -18,7 +18,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { NotificationService } from '@alfresco/adf-core';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -52,6 +51,10 @@ export class TaskListDemoComponent implements OnInit {
 
     start: number;
 
+    size: number;
+
+    page: number;
+
     includeProcessInstance: boolean;
 
     assignmentOptions = [
@@ -78,8 +81,7 @@ export class TaskListDemoComponent implements OnInit {
     ];
 
     constructor(private route: ActivatedRoute,
-                private formBuilder: FormBuilder,
-                private notificationService: NotificationService) {
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -87,8 +89,6 @@ export class TaskListDemoComponent implements OnInit {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
                     this.defaultAppId = +params['id'];
-                } else {
-                    this.defaultAppId = 0;
                 }
             });
         }
@@ -101,7 +101,7 @@ export class TaskListDemoComponent implements OnInit {
 
     buildForm() {
         this.taskListForm = this.formBuilder.group({
-            taskAppId: new FormControl(this.defaultAppId, [Validators.required, Validators.pattern('^[0-9]*$')]),
+            taskAppId: new FormControl(this.defaultAppId, [Validators.pattern('^[0-9]*$')]),
             taskName: new FormControl(''),
             taskId: new FormControl(''),
             taskProcessDefinitionId: new FormControl(''),
@@ -109,6 +109,8 @@ export class TaskListDemoComponent implements OnInit {
             taskAssignment: new FormControl(''),
             taskState: new FormControl(''),
             taskSort: new FormControl(''),
+            taskSize: new FormControl(''),
+            taskPage: new FormControl(''),
             taskStart: new FormControl('', [Validators.pattern('^[0-9]*$')]),
             taskIncludeProcessInstance: new FormControl('')
         });
@@ -134,19 +136,29 @@ export class TaskListDemoComponent implements OnInit {
         this.state = taskFilter.taskState;
         this.sort = taskFilter.taskSort;
         this.start = taskFilter.taskStart;
+        this.size = taskFilter.taskSize;
+        this.page = taskFilter.taskPage;
 
         this.includeProcessInstance = taskFilter.taskIncludeProcessInstance === 'include';
     }
 
-    onError($event) {
-        const errorMessage = JSON.parse($event.message).message;
-        this.notificationService.openSnackMessageAction(errorMessage, 'Reset', 5000).onAction().subscribe(() => {
-           this.resetTaskForm();
-        });
-    }
-
     resetTaskForm() {
         this.taskListForm.reset();
+        this.resetQueryParameters();
+    }
+
+    resetQueryParameters() {
+        this.appId = null;
+        this.id = null;
+        this.processDefinitionId = null;
+        this.processInstanceId = null;
+        this.name = null;
+        this.assignment = null;
+        this.state = null;
+        this.sort = null;
+        this.start = null;
+        this.size = null;
+        this.page = null;
     }
 
     isFormValid() {
@@ -191,5 +203,13 @@ export class TaskListDemoComponent implements OnInit {
 
     get taskStart(): AbstractControl {
         return this.taskListForm.get('taskStart');
+    }
+
+    get taskSize(): AbstractControl {
+        return this.taskListForm.get('taskSize');
+    }
+
+    get taskPage(): AbstractControl {
+        return this.taskListForm.get('taskPage');
     }
 }

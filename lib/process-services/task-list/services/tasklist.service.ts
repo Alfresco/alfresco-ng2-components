@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from, forkJoin, throwError } from 'rxjs';
+import { Observable, from, forkJoin, throwError, of } from 'rxjs';
 import { map, catchError, switchMap, flatMap, filter } from 'rxjs/operators';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { Form } from '../models/form.model';
@@ -66,7 +66,7 @@ export class TaskListService {
      * @param filter The filter you want to check
      * @returns The filter if it is related or null otherwise
      */
-     isTaskRelatedToFilter(taskId: string, filterModel: FilterRepresentationModel): Observable<FilterRepresentationModel> {
+    isTaskRelatedToFilter(taskId: string, filterModel: FilterRepresentationModel): Observable<FilterRepresentationModel> {
         let requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filterModel);
         return from(this.callApiTasksFiltered(requestNodeForFilter))
             .pipe(
@@ -99,7 +99,8 @@ export class TaskListService {
         if (state) {
             requestNode.state = state;
         }
-        return this.getTasks(requestNode);
+        return this.getTasks(requestNode)
+            .pipe(catchError(() => of(new TaskListModel())));
     }
 
     /**
@@ -128,15 +129,15 @@ export class TaskListService {
      */
     findAllTasksWithoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
         return forkJoin(
-                this.findTasksByState(requestNode, 'open'),
-                this.findAllTaskByState(requestNode, 'completed'),
-                (activeTasks: TaskListModel, completedTasks: TaskListModel) => {
-                    const tasks = Object.assign({}, activeTasks);
-                    tasks.total += completedTasks.total;
-                    tasks.data = tasks.data.concat(completedTasks.data);
-                    return tasks;
-                }
-            );
+            this.findTasksByState(requestNode, 'open'),
+            this.findAllTaskByState(requestNode, 'completed'),
+            (activeTasks: TaskListModel, completedTasks: TaskListModel) => {
+                const tasks = Object.assign({}, activeTasks);
+                tasks.total += completedTasks.total;
+                tasks.data = tasks.data.concat(completedTasks.data);
+                return tasks;
+            }
+        );
     }
 
     /**
@@ -177,7 +178,7 @@ export class TaskListService {
      * Gets all available reusable forms.
      * @returns Array of form details
      */
-    getFormList(): Observable<Form []> {
+    getFormList(): Observable<Form[]> {
         let opts = {
             'filter': 'myReusableForms', // String | filter
             'sort': 'modifiedDesc', // String | sort
@@ -204,7 +205,7 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     attachFormToATask(taskId: string, formId: number): Observable<any> {
-        return from(this.apiService.taskApi.attachForm(taskId, {'formId': formId}))
+        return from(this.apiService.taskApi.attachForm(taskId, { 'formId': formId }))
             .pipe(
                 catchError(err => this.handleError(err))
             );
@@ -299,7 +300,7 @@ export class TaskListService {
      * @returns Details of the assigned task
      */
     assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
-        let assignee = {assignee: requestNode.id};
+        let assignee = { assignee: requestNode.id };
         return from(this.callApiAssignTask(taskId, assignee))
             .pipe(
                 map((response: TaskDetailsModel) => {
