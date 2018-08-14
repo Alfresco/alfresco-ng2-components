@@ -10,14 +10,8 @@
                 (focusout)="onChangedHandler($event, from)">
         <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #fromDatepicker></mat-datepicker>
-        <mat-error *ngIf="from.hasError('required') && !hasParseError(from)">
-            {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
-        </mat-error>
-        <mat-error *ngIf="from.hasError('matDatepickerMax')">
-            {{ 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE' | translate }}
-        </mat-error>
-        <mat-error *ngIf="hasParseError(from)">
-            {{ 'SEARCH.FILTER.VALIDATION.INVALID-DATE' | translate: { requiredFormat: datePickerDateFormat } }}
+        <mat-error *ngIf="from.invalid">
+            {{ getFromValidationMessage() | translate: { requiredFormat: datePickerDateFormat } }}
         </mat-error>
     </mat-form-field>
 
@@ -33,17 +27,8 @@
                 (focusout)="onChangedHandler($event, to)">
         <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #toDatepicker></mat-datepicker>
-        <mat-error *ngIf="to.hasError('required') && !hasParseError(to)">
-                {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
-        </mat-error>
-        <mat-error *ngIf="to.hasError('matDatepickerMin')">
-                {{ 'SEARCH.FILTER.VALIDATION.NO-DAYS' | translate }}
-        </mat-error>
-        <mat-error *ngIf="to.hasError('matDatepickerMax')">
-            {{ 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE' | translate }}
-        </mat-error>
-        <mat-error *ngIf="hasParseError(to)">
-            {{ 'SEARCH.FILTER.VALIDATION.INVALID-DATE' | translate: { requiredFormat: datePickerDateFormat } }}
+        <mat-error *ngIf="to.invalid">
+            {{ getToValidationMessage() | translate: { requiredFormat: datePickerDateFormat } }}
         </mat-error>
     </mat-form-field>
 
