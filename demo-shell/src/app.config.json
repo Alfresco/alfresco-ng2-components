@@ -510,19 +510,6 @@
                     "type": "text",
                     "title": "ADF_PROCESS_LIST.PROPERTIES.ID",
                     "sortable": true
-                },
-                {
-                    "key": "processDefinitionId",
-                    "type": "text",
-                    "title": "ADF_PROCESS_LIST.PROPERTIES.PROCESS_DEFINITION_ID",
-                    "sortable": true
-                },
-                {
-                    "key": "started",
-                    "type": "date",
-                    "title": "ADF_PROCESS_LIST.PROPERTIES.CREATED",
-                    "format": "timeAgo",
-                    "sortable": true
                 }
             ]
         }
