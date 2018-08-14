@@ -173,7 +173,7 @@
   },
   "COMMENTS": {
     "NONE": "No hay comentarios",
-    "ADD": "Añadir comentario",
+    "ADD": "Añadir",
     "HEADER": "Comentarios ({{ count }})",
     "CREATED_BY_HEADER": "Creado por",
     "MESSAGE_HEADER": "Mensaje",
