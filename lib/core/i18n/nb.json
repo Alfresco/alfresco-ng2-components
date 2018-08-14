@@ -173,7 +173,7 @@
   },
   "COMMENTS": {
     "NONE": "Ingen kommentarer",
-    "ADD": "Legg til kommentar",
+    "ADD": "Legg til",
     "HEADER": "Kommentarer ({{ count }})",
     "CREATED_BY_HEADER": "Opprettet av",
     "MESSAGE_HEADER": "Melding",

@@ -173,7 +173,7 @@
   },
   "COMMENTS": {
     "NONE": "Geen opmerkingen",
-    "ADD": "Opmerking toevoegen",
+    "ADD": "Toevoegen",
     "HEADER": "Opmerkingen ({{ count }})",
     "CREATED_BY_HEADER": "Gemaakt door",
     "MESSAGE_HEADER": "Bericht",
