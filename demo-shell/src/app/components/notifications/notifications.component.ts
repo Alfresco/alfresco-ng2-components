@@ -36,25 +36,29 @@ export class NotificationsComponent implements OnInit {
     snackBarConfig: MatSnackBarConfig = new MatSnackBarConfig();
 
     directions = [
-        {value: 'ltr', title: 'Left to right'},
-        {value: 'rtl', title: 'Right to left'}
+        { value: 'ltr', title: 'Left to right' },
+        { value: 'rtl', title: 'Right to left' }
     ];
 
     horizontalPositions = [
-        {value: 'start', title: 'Start'},
-        {value: 'center', title: 'Center'},
-        {value: 'end', title: 'End'},
-        {value: 'left', title: 'Left'},
-        {value: 'right', title: 'Right'}
+        { value: 'start', title: 'Start' },
+        { value: 'center', title: 'Center' },
+        { value: 'end', title: 'End' },
+        { value: 'left', title: 'Left' },
+        { value: 'right', title: 'Right' }
     ];
 
     verticalPositions = [
-        {value: 'top', title: 'Top'},
-        {value: 'bottom', title: 'Bottom'}
+        { value: 'top', title: 'Top' },
+        { value: 'bottom', title: 'Bottom' }
     ];
 
+    defaultDuration = 20000;
+
     constructor(private notificationService: NotificationService,
-                private formBuilder: FormBuilder) { }
+                private formBuilder: FormBuilder) {
+        this.snackBarConfig.duration = this.defaultDuration;
+    }
 
     ngOnInit() {
         this.configForm = this.formBuilder.group({
@@ -65,9 +69,9 @@ export class NotificationsComponent implements OnInit {
         });
 
         this.configForm.valueChanges
-        .subscribe(configFormValues =>
-            this.setSnackBarConfig(configFormValues)
-        );
+            .subscribe(configFormValues =>
+                this.setSnackBarConfig(configFormValues)
+            );
 
     }
 
@@ -97,12 +101,11 @@ export class NotificationsComponent implements OnInit {
 
         if (this.message) {
             if (this.withAction) {
-                this.notificationService
-                    .openSnackMessageAction(this.message, 'Some action')
+                this.notificationService.openSnackMessageAction(this.message, 'Some action', this.snackBarConfig.duration)
                     .onAction()
                     .subscribe(() => this.actionOutput = 'Action clicked');
             } else {
-                this.notificationService.openSnackMessage(this.message);
+                this.notificationService.openSnackMessage(this.message, this.snackBarConfig.duration);
             }
         }
     }
@@ -116,7 +119,7 @@ export class NotificationsComponent implements OnInit {
         if (this.message) {
             if (this.withAction) {
                 this.notificationService
-                    .openSnackMessageAction(this.message, 'Some action', this.snackBarConfig )
+                    .openSnackMessageAction(this.message, 'Some action', this.snackBarConfig)
                     .onAction()
                     .subscribe(() => this.actionOutput = 'Action clicked');
             } else {
