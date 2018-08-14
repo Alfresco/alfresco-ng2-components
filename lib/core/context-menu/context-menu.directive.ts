@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, HostListener, Input } from '@angular/core';
-import { ContextMenuService } from './context-menu.service';
+import { ContextMenuOverlayService } from './context-menu-overlay.service';
 
 // @deprecated 2.3.0 context-menu tag removed
 @Directive({
@@ -33,8 +33,7 @@ export class ContextMenuDirective {
     @Input('context-menu-enabled')
     enabled: boolean = false;
 
-    constructor(private _contextMenuService: ContextMenuService) {
-    }
+    constructor(private contextMenuService: ContextMenuOverlayService) {}
 
     @HostListener('contextmenu', ['$event'])
     onShowContextMenu(event?: MouseEvent) {
@@ -44,9 +43,10 @@ export class ContextMenuDirective {
             }
 
             if (this.links && this.links.length > 0) {
-                if (this._contextMenuService) {
-                    this._contextMenuService.show.next({event: event, obj: this.links});
-                }
+                this.contextMenuService.open({
+                    source: event,
+                    data: this.links
+                });
             }
         }
     }

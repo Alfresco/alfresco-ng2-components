@@ -21,7 +21,7 @@ import TestConfig = require('../test.config');
 import path = require('path');
 import fs = require('fs');
 import remote = require('selenium-webdriver/remote');
-import { browser } from "protractor";
+import { browser } from 'protractor';
 
 export class UsersActions {
 
