@@ -107,13 +107,17 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         }
     }
 
-    onChangedHandler(event: any, formControl) {
+    onChangedHandler(event: any, formControl: FormControl) {
         const inputValue = event.srcElement.value;
 
         if (inputValue) {
             const formatDate = this.dateAdapter.parse(inputValue, this.datePickerDateFormat);
             if (formatDate && formatDate.isValid()) {
                 formControl.setValue(formatDate);
+            } else {
+                formControl.setErrors({
+                    'matDatepickerParse': true
+                });
             }
         }
     }
