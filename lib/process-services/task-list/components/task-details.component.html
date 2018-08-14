@@ -57,6 +57,26 @@
                                      (complete)="onComplete()"
                                      (showAttachForm)="onShowAttachForm()">
                 </adf-task-standalone>
+
+                <mat-card class="adf-message-card" *ngIf="!isTaskStandaloneComponentVisible() && !isCompletedTask()" >
+                    <mat-card-content>
+                        <div class="adf-no-form-message-container">
+                            <div class="adf-no-form-message-list">
+                                <div *ngIf="!isCompletedTask()" class="adf-no-form-message">
+                                    <span id="adf-no-form-message">{{'ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE' | translate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+
+                    <mat-card-actions class="adf-no-form-mat-card-actions">
+                        <div>
+                            <button mat-button id="adf-no-form-complete-button" color="primary" (click)="onComplete()">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}</button>
+                        </div>
+                    </mat-card-actions>
+
+                </mat-card>
+
                 <adf-attach-form *ngIf="isShowAttachForm()"
                                  [taskId]="taskDetails.id"
                                  [formKey]="taskDetails.formKey"
