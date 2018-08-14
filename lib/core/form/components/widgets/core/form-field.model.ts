@@ -120,11 +120,13 @@ export class FormFieldModel extends FormWidgetModel {
     validate(): boolean {
         this.validationSummary = new ErrorMessageModel();
 
-        let validators = this.form.fieldValidators || [];
-        for (let validator of validators) {
-            if (!validator.validate(this)) {
-                this._isValid = false;
-                return this._isValid;
+        if (!this.readOnly) {
+            let validators = this.form.fieldValidators || [];
+            for (let validator of validators) {
+                if (!validator.validate(this)) {
+                    this._isValid = false;
+                    return this._isValid;
+                }
             }
         }
 
