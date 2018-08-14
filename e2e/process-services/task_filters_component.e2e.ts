@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import TestConfig = require('./test.config');
-import resources = require('./util/resources');
-import LoginPage = require('./pages/adf/loginPage');
-import NavigationBarPage = require('./pages/adf/navigationBarPage');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
-import TasksPage = require('./pages/adf/process_services/tasksPage');
-import TasksListPage = require('./pages/adf/process_services/tasksListPage');
-import TaskFiltersPage = require('./pages/adf/process_services/taskFiltersPage');
-import TaskDetailsPage = require('./pages/adf/process_services/taskDetailsPage');
+import TestConfig = require('../test.config');
+import resources = require('../util/resources');
+import LoginPage = require('../pages/adf/loginPage');
+import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import TasksPage = require('../pages/adf/process_services/tasksPage');
+import TasksListPage = require('../pages/adf/process_services/tasksListPage');
+import TaskFiltersPage = require('../pages/adf/process_services/taskFiltersPage');
+import TaskDetailsPage = require('../pages/adf/process_services/taskDetailsPage');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { AppsActions } from './actions/APS/apps.actions';
-import { UsersActions } from './actions/users.actions';
+import { AppsActions } from '../actions/APS/apps.actions';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Task Filters Test', () => {
 

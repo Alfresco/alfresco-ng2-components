@@ -17,23 +17,23 @@
 
 import { browser } from 'protractor';
 
-import LoginPage = require('./pages/adf/loginPage');
-import ProcessServicesPage = require('./pages/adf/process_services/processServicesPage');
-import TasksPage = require('./pages/adf/process_services/tasksPage');
+import LoginPage = require('../pages/adf/loginPage');
+import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import TasksPage = require('../pages/adf/process_services/tasksPage');
 
-import CONSTANTS = require('./util/constants');
+import CONSTANTS = require('../util/constants');
 
-import Tenant = require('./models/APS/Tenant');
-import Task = require('./models/APS/Task');
+import Tenant = require('../models/APS/Tenant');
+import Task = require('../models/APS/Task');
 
-import TestConfig = require('./test.config');
-import resources = require('./util/resources');
+import TestConfig = require('../test.config');
+import resources = require('../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
-import { UsersActions } from './actions/users.actions';
+import AlfrescoApi = require('.alfresco-js-api-node');
+import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
-import Util = require('./util/util');
+import Util = require('..ro/util/util');
 
 describe('Start Task - Task App', () => {
 

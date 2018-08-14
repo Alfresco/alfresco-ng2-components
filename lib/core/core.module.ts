@@ -85,6 +85,7 @@ import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { AppConfigService } from './app-config/app-config.service';
 import { ContextMenuService } from './context-menu/context-menu.service';
+import { ContextMenuOverlayService } from './context-menu/context-menu-overlay.service';
 import { ActivitiContentService } from './form/services/activiti-alfresco.service';
 import { EcmModelService } from './form/services/ecm-model.service';
 import { FormRenderingService } from './form/services/form-rendering.service';
@@ -138,6 +139,7 @@ export function providers() {
         DatePipe,
         AppConfigService,
         ContextMenuService,
+        ContextMenuOverlayService,
         ActivitiContentService,
         EcmModelService,
         FormRenderingService,
