@@ -31,9 +31,9 @@
     <div data-automation-id="notification-action-output" *ngIf="actionOutput">
         {{ actionOutput }}
     </div>
-    
+
     <h2>Custom Configuration</h2>
-    
+
     <form [formGroup]="configForm">
         <mat-form-field>
             <mat-select class="form-control" formControlName="direction" placeholder="Direction" data-automation-id="notification-direction">
@@ -43,7 +43,7 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <input matInput type="number" class="form-control" formControlName="duration" placeholder="Duration" data-automation-id="notification-duration">
+            <input matInput type="number" class="form-control" formControlName="duration"  [value]="defaultDuration" placeholder="Duration" data-automation-id="notification-duration">
         </mat-form-field>
         <mat-form-field>
             <mat-select class="form-control" formControlName="horizontalPosition" placeholder="Horizontal Position" data-automation-id="notification-horizontal-position">
