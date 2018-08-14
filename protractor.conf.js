@@ -16,6 +16,13 @@ var BROWSER_RUN = process.env.BROWSER_RUN;
 var FOLDER = process.env.FOLDER || '';
 var SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 var DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
+var NAME_TEST = process.env.NAME_TEST ? true : false
+
+var specsToRun = './e2e/' + FOLDER + '**/*.e2e.ts';
+
+if (process.env.NAME_TEST) {
+    specsToRun =   './e2e/**/' + process.env.NAME_TEST;
+}
 
 var args_options = [];
 
@@ -31,7 +38,7 @@ exports.config = {
     allScriptsTimeout: 60000,
 
     specs: [
-        './e2e/' + FOLDER + '**/*.e2e.ts'
+        specsToRun
     ],
 
     capabilities: {
