@@ -1,7 +1,9 @@
 var fs = require("fs");
 var path = require("path");
+
 var program = require("commander");
 var lodash = require("lodash");
+var jsyaml = require("js-yaml");
 
 var remark = require("remark");
 var parse = require("remark-parse");
@@ -9,6 +11,10 @@ var stringify = require("remark-stringify");
 var frontMatter = require("remark-frontmatter");
 var mdCompact = require("mdast-util-compact");
 
+var tdoc = require("typedoc");
+
+var ngHelpers = require("./ngHelpers");
+var si = require("./SourceInfoClasses");
 
 // "Aggregate" data collected over the whole file set.
 var aggData = {};
@@ -16,66 +22,32 @@ var aggData = {};
 var toolsFolderName = "tools";
 var configFileName = "doctool.config.json";
 var defaultFolder = path.resolve("docs");
+var sourceInfoFolder = path.resolve("docs", "sourceinfo");
+
+var libFolders = ["core", "content-services", "process-services", "insights"];
+
+var excludePatterns = [
+    "**/*.spec.ts"
+];
 
 
-function initPhase(aggData) {
-    toolList.forEach(toolName => {
-        toolModules[toolName].initPhase(aggData);
-    });
-}
-
-
-function readPhase(filenames, aggData) {
-    for (var i = 0; i < filenames.length; i++) {
-        var pathname = filenames[i];//path.resolve(srcFolder, filenames[i]);
-        
-        var src = fs.readFileSync(pathname);
-        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
-
-        toolList.forEach(toolName => {
-            toolModules[toolName].readPhase(tree, pathname, aggData);
-        });
-    }
-
-    //console.log(JSON.stringify(aggData.mdFileData));
-}
-
-
-function aggPhase(aggData) {
-    toolList.forEach(toolName => {
-        toolModules[toolName].aggPhase(aggData);
-    });
-}
-
-
-function updatePhase(filenames, aggData) {
+function updatePhase(mdCache, aggData) {
     var errorMessages;
 
-    for (var i = 0; i < filenames.length; i++) {
+    toolList.forEach(toolName => {
         errorMessages = [];
+        console.log(`Tool: ${toolName}`);
+        toolModules[toolName].processDocs(mdCache, aggData, errorMessages);
+    });
+
+    var filenames = Object.keys(mdCache);
+    
+
+    for (var i = 0; i < filenames.length; i++) {
         var pathname = filenames[i];
-        
-        if (program.verbose) {
-            console.log("Reading " + pathname);
-        }
-        
-        var src = fs.readFileSync(pathname);
-        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
+        var tree = mdCache[pathname].mdOutTree;
+        var original = mdCache[pathname].mdInTree;
 
-        var original = minimiseTree(tree);
-
-        var modified = false;
-
-        toolList.forEach(toolName => {
-            modified |= toolModules[toolName].updatePhase(tree, pathname, aggData, errorMessages);
-        });
-        
-        if (errorMessages.length > 0) {
-            showErrors(pathname, errorMessages);
-        }
-
-        tree = minimiseTree(tree);
-       
         if (program.json) {
             let filename = path.basename(pathname);
 
@@ -84,10 +56,8 @@ function updatePhase(filenames, aggData) {
             console.log(`\nFile "${filename}" after processing:`);
             console.log(JSON.stringify(tree));
         }
-        
-        modified = !lodash.isEqual(tree, original);
 
-        if (modified) {
+        if (!lodash.isEqual(tree, original)) {
             if (program.verbose) {
                 console.log(`Modified: ${pathname}`);
             }
@@ -110,17 +80,6 @@ function minimiseTree(tree) {
     let minPropsTree = JSON.parse(JSON.stringify(tree, (key, value) => key === "position" ? undefined : value));
     mdCompact(minPropsTree);
     return minPropsTree;
-}
-
-
-function showErrors(filename, errorMessages) {
-    console.log(filename);
-
-    errorMessages.forEach(message => {
-        console.log("    " + message);
-    });
-
-    console.log("");
 }
 
 
@@ -164,12 +123,112 @@ function getAllDocFilePaths(docFolder, files) {
 }
 
 
+function initMdCache(filenames) {
+    var mdCache = {};
+
+    for (var i = 0; i < filenames.length; i++) {
+        var pathname = filenames[i];
+        mdCache[pathname] = {};
+
+        var src = fs.readFileSync(pathname);
+        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
+        mdCache[pathname].mdInTree = minimiseTree(tree);
+        mdCache[pathname].mdOutTree = minimiseTree(tree);
+    }
+
+    return mdCache;
+}
+
+
+function getSourceInfo(infoFolder) {
+    var sourceInfo = {};
+
+    var yamlFiles = fs.readdirSync(infoFolder);
+
+    yamlFiles.forEach(file => {
+        var yamlText = fs.readFileSync(path.resolve(infoFolder, file), "utf8");
+        var yaml = jsyaml.safeLoad(yamlText);
+        sou
+    });
+}
+
+
+function initSourceInfo(aggData, mdCache) {
+
+    var app = new tdoc.Application({
+        exclude: excludePatterns,
+        ignoreCompilerErrors: true,
+        experimentalDecorators: true,
+        tsconfig: "tsconfig.json"
+    });
+
+    let sources = app.expandInputFiles(libFolders.map(folder => {
+        return path.resolve("lib", folder);
+    }));    
+    
+    aggData.projData = app.convert(sources);
+
+
+    aggData.classInfo = {};
+
+    var mdFiles = Object.keys(mdCache);
+
+    mdFiles.forEach(mdFile => {
+        /*
+        var className = ngHelpers.ngNameToClassName(path.basename(mdFile, ".md"), aggData.config.typeNameExceptions);
+        var classRef = aggData.projData.findReflectionByName(className);
+*/
+
+        var className = ngHelpers.ngNameToClassName(path.basename(mdFile, ".md"), aggData.config.typeNameExceptions);
+        var yamlText = fs.readFileSync(path.resolve(sourceInfoFolder, className + ".yml"), "utf8");
+        var yaml = jsyaml.safeLoad(yamlText);
+
+        if (yaml) {
+            aggData.classInfo[className] = new si.ComponentInfo(yaml);
+        }
+/*
+        if (classRef) {
+           aggData.classInfo[className] = new si.ComponentInfo(classRef); 
+        }
+        */
+
+    });
+}
+
+
+function initClassInfo(aggData) {
+    var yamlFilenames = fs.readdirSync(path.resolve(sourceInfoFolder));
+
+    aggData.classInfo = {};
+
+    yamlFilenames.forEach(yamlFilename => {
+        var classYamlText = fs.readFileSync(path.resolve(sourceInfoFolder, yamlFilename), "utf8");
+        var classYaml = jsyaml.safeLoad(classYamlText);
+        
+        if (program.verbose) {
+            console.log(classYaml.items[0].name);
+        }
+
+        aggData.classInfo[classYaml.items[0].name] = new si.ComponentInfo(classYaml);
+    });
+}
+
+
+
+
 program
 .usage("[options] <source>")
 .option("-p, --profile [profileName]", "Select named config profile", "default")
 .option("-j, --json", "Output JSON data for Markdown syntax tree")
 .option("-v, --verbose", "Log doc files as they are processed")
+.option("-t, --timing", "Output time taken for run")
 .parse(process.argv);
+
+var startTime;
+
+if (program.timing) {
+    startTime = process.hrtime();
+}
 
 var sourcePath;
 
@@ -206,23 +265,34 @@ if (sourceInfo.isDirectory()) {
 }
 
 files = files.filter(filename => 
+    (filename !== undefined) &&
     (path.extname(filename) === ".md") &&
     (filename !== "README.md")
 );
 
-//files.forEach(element => console.log(element));
 
+var mdCache = initMdCache(files);
+
+console.log("Loading source data...");
+//initSourceInfo(aggData, mdCache);
+
+initClassInfo(aggData);
+
+/*
 console.log("Initialising...");
 initPhase(aggData);
 
 console.log("Analysing Markdown files...");
-readPhase(files, aggData);
+readPhase(mdCache, aggData);
 
 console.log("Computing aggregate data...");
 aggPhase(aggData);
+*/
 
 console.log("Updating Markdown files...");
-updatePhase(files, aggData);
+updatePhase(mdCache, aggData);
 
-
-
+if (program.timing) {
+    var endTime = process.hrtime(startTime);
+    console.log(`Run complete in ${endTime[0]} sec`);
+}

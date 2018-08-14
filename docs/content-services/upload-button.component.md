@@ -27,7 +27,7 @@ Activates a file upload.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
 | comment | `string` |  | When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history |
 | disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
@@ -37,19 +37,19 @@ Activates a file upload.
 | nodeType | `string` | "cm:content" | Custom node type for uploaded file |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 | staticTitle | `string` |  | Defines the text of the upload button. |
-| tooltip | `string` |  null | Custom tooltip text. |
+| tooltip | `string` | null | Custom tooltip text. |
 | uploadFolders | `boolean` | false | Allows/disallows upload folders (only for Chrome). |
 | versioning | `boolean` | false | Toggles versioning. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` |  |
 | createFolder | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a folder is created. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
-| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when create permission is missing. |
-| success | `EventEmitter<Object>` | Emitted when the file is uploaded successfully. |
+| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../lib/content-services/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details
 

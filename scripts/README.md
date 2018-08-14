@@ -22,7 +22,7 @@ feel of what's available.
 * Start the demo shell using the JS-API from the development branch and the local component in the lib folder
 
 ```sh
-./start.sh -dev -t -gitjsapi development
+./start.sh -dev -gitjsapi development
 ```
 
 * Build the lib folder using the JS-API from the development branch 
@@ -145,8 +145,8 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 | Option | Description |
 | --- | --- |
 | -h or --help    | show the help  |
-| -t or --test    | Run the tests, this parameter accepts also a wildcard to execute tests for example -t "ng2-alfresco-core" |
-| -d or --debug    | Run the tests **in browser**, this parameter accepts also a wildcard to execute tests for example -d "ng2-alfresco-core" |
+| -t or --test    | Run the tests, this parameter accepts also a wildcard to execute tests for example -t "core" |
+| -d or --debug    | Run the tests **in browser**, this parameter accepts also a wildcard to execute tests for example -d "core" |
 | -c or --clean   | clean the ng2_components folders before start from all the temp builds files as node_modules  |
 | -gitjsapi   | start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
 | -si or --skipinstall    | skip the installation of the node_modules  |
@@ -169,6 +169,13 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 
 ```sh
 ./npm-build-all.sh -d
+```
+
+* Build only a part of the component and run the tests only for a specific folder **in BROWSER**:
+(you can change core with, any other lib in the lib folder) 
+
+```sh
+./npm-build-all.sh -si -sb -d "core"
 ```
 
 * Clean the lib folder node_modules before build
@@ -357,4 +364,54 @@ Internal script for update the rancher env
 
 ```sh
 /rancher-update.sh --access_key ACCESS_KEY --secret_key SECRET_KEY --url RANCHER_URL--environment_name adf-master --image docker:alfresco/demo-shell:master
+```
+
+
+# test-e2e-lib.sh
+
+***test-e2e-lib.sh*** 
+
+Script to run e2e test
+
+| Option | Description |
+| --- | --- |
+|-u or --username |username to use|
+|-p or --password|password to use|
+|-e or --email |email user to use|
+|-b or --browser |browser run the test in the browsrwer (No headless mode)|
+|-s or --spec |spec run a single test file|
+|-dev or --dev |run it against local development environment it will deploy on localhost:4200 the current version of your branch|
+|-t or --timeout |override the timeout foe the wait utils|
+|-host or --host | host against to run the test|
+|-proxy or --proxy | proxy Back end URL to use |
+
+## Examples
+
+```sh
+./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin
+```
+
+Run on browser
+
+```sh
+./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin --browser
+```
+
+
+Run a single test
+
+```sh
+./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin --spec filenam.e2e.ts
+```
+
+if the test in a subfolder in e2e you need to add the subfolder in the path:
+
+```shnpm in
+./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin --spec ./core/filenam.e2e.ts
+```
+
+Use a different backend
+
+```sh
+./scripts/test-e2e-lib.sh -host localhost:42000 -proxy adf.domain.com  -u admin -p admin -e admin
 ```

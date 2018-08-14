@@ -28,7 +28,11 @@ export class TaskStandaloneComponent {
 
     /** Name of the task. */
     @Input()
-    taskName: string;
+    taskName;
+
+    /** Id of the task. */
+    @Input()
+    taskId;
 
     /** If true then Task completed message is shown and `Complete` and `Cancel` buttons are hidden. */
     @Input()
@@ -38,6 +42,7 @@ export class TaskStandaloneComponent {
     @Input()
     hasCompletePermission: boolean = true;
 
+    // TODO: rename all with show prefix
     /** Toggles rendering of the `Cancel` button. */
     @Input()
     hideCancelButton: boolean = true;
@@ -49,6 +54,10 @@ export class TaskStandaloneComponent {
     /** Emitted when the form associated with the task is completed. */
     @Output()
     complete: EventEmitter<void> = new EventEmitter<void>();
+
+    /** Emitted when the form associated with the form task is attached. */
+    @Output()
+    showAttachForm: EventEmitter<void> = new EventEmitter<void>();
 
     constructor() { }
 
@@ -66,5 +75,13 @@ export class TaskStandaloneComponent {
 
     hasCancelButton(): boolean {
         return !this.hideCancelButton && !this.isCompleted;
+    }
+
+    hasAttachFormButton(): boolean {
+        return !this.isCompleted;
+    }
+
+    onShowAttachForm() {
+        this.showAttachForm.emit();
     }
 }

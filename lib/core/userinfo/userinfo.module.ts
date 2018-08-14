@@ -22,22 +22,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { PipeModule } from '../pipes/pipe.module';
 import { UserInfoComponent } from './components/user-info.component';
-import { BpmUserService } from './services/bpm-user.service';
-import { EcmUserService } from './services/ecm-user.service';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         PipeModule
     ],
     declarations: [
         UserInfoComponent
-    ],
-    providers: [
-        EcmUserService,
-        BpmUserService
     ],
     exports: [
         UserInfoComponent

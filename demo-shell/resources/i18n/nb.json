@@ -6,14 +6,27 @@
       "PROPERTIES": "Egenskaper",
       "VERSIONS": "Versjoner"
     },
+    "HOME": {
+      "TITLE": "Vinkelkomponenter for Alfresco",
+      "DOCUMENTATION": "Dokumentasjon"
+    },
+    "LOGOUT": {
+      "TITLE": "Avloggingsside",
+      "SUB_TITLE": "Du er nå logget av",
+      "LOGIN": "Logg på",
+      "HOME": "Hjem"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Tillat sletting",
       "SHOW_COMMENTS": "Vis kommentarer om versjoner",
-      "ALLOW_DOWNLOAD": "Tillat versjonsnedlasting",
-      "READ_ONLY": "Skrivebeskyttet"
+      "ALLOW_DOWNLOAD": "Tillat nedlasting",
+      "READ_ONLY": "Skrivebeskyttet",
+      "COMMENTS": "Vis kommentarer"
     },
     "PERSONAL-FILES": "Personlige filer",
     "WARN-MULTIPLE-UPLOADS": "Vis advarsel for flere opplastinger.",
+    "CUSTOM-PERMISSION-MESSAGE": "Aktiver tilpasset tillatelsesmelding",
+    "MEDIUM-TIME-FORMAT": "Aktiver medium tidsformat for dokumentliste",
     "SEARCH": {
       "RADIO": {
         "NONE": "Ingen",
@@ -42,8 +55,13 @@
   "APP_LAYOUT": {
     "APP_NAME": "ADF-demoprogam",
     "HOME": "Hjem",
+    "NODE-SELECTOR": "Nodevelger",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Søkebane",
+    "NOTIFICATIONS": "Varsler",
+    "TASK_LIST": "Oppgaveliste",
+    "PROCESS_LIST": "Prosessliste",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Logg på",
     "CUSTOM_SOURCES": "Tilpassede kilder",
@@ -58,13 +76,15 @@
     "TRASHCAN": "Søppelkurv",
     "SOCIAL": "Sosial",
     "SETTINGS": "Innstillinger",
+    "CONFIG-EDITOR": "Konfigurasjonsredigering",
     "OVERLAY_VIEWER": "Overleggsfremviser",
     "ABOUT": "Om",
     "SEARCH": "Utvidet søk",
     "EXTENDED_SEARCH_QUERY_BODY": "Utvidet søk med spørringsuttrykk",
     "WORD_TO_SEARCH": "Søkeord",
     "SEARCH_CREATED_BY": "Opprettet av",
-    "SEARCH_SERVICE_APPROACH": "Velg dette for å deaktivere inndataegenskapen og konfigurere ved hjelp av tjenesten"
+    "SEARCH_SERVICE_APPROACH": "Velg dette for å deaktivere inndataegenskapen og konfigurere ved hjelp av tjenesten",
+    "HEADER_DATA": "Overskriftsdata"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -79,6 +99,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multivalg (med avskrysningsbokser)",
+    "THUMBNAILS": "Aktiver miniatyrbilder",
     "MULTIPLE_FILE_UPLOAD": "Opplasting av flere filer",
     "FOLDER_UPLOAD": "Opplasting av mappe",
     "CUSTOM_FILTER": "Tilpasset utvidelsesfilter",
@@ -154,7 +175,8 @@
     "START-TASK": "Start oppgave",
     "START-PROCESS": "Start prosess",
     "PROCESS-AUDIT-LOG": "Prosessrevisjonslogg",
-    "TASK-AUDIT-LOG": "Oppgaverevisjonslogg"
+    "TASK-AUDIT-LOG": "Oppgaverevisjonslogg",
+    "TASK-SHOW-HEADER": "Vis detaljoverskrift"
   },
   "FORM-LIST": {
     "STORE": "Lagre",
@@ -170,7 +192,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Bunntekt pålogging"
+    "LOGIN_FOOTER": "Bunntekt pålogging",
+    "SHOW_REMEMBERME": "Vis husk meg",
+    "SHOW_SUCCESS_ROUTE": "Vis riktig rute",
+    "CUSTOM_LOGO": "Egendefinert logo"
   },
   "SEARCH": {
     "RESULTS": "Søkeresultater",
@@ -188,5 +213,15 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Arv tillatelse",
     "INHERITED_PERMISSIONS_BUTTON": "Tillatelse arvet"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
+    "APP_ID_TYPE_ERROR": "App-ID må være et tall"
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
+    "APP_ID_TYPE_ERROR": "App-ID må være et tall"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Egendefinert tittel, oversettelse én",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Egendefinert tittel, oversettelse to"
 }

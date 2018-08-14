@@ -18,8 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule } from '@ngx-translate/core';
-import { DataTableModule, PaginationModule, ToolbarModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
 import { UploadModule } from '../upload/upload.module';
@@ -33,22 +32,13 @@ import { DocumentListComponent } from './components/document-list.component';
 import { EmptyFolderContentDirective } from './components/empty-folder/empty-folder-content.directive';
 import { NoPermissionContentDirective } from './components/no-permission/no-permission-content.directive';
 
-import { DocumentActionsService } from './services/document-actions.service';
-import { DocumentListService } from './services/document-list.service';
-import { FolderActionsService } from './services/folder-actions.service';
-import { NodeActionsService } from './services/node-actions.service';
-import { CustomResourcesService } from './services/custom-resources.service';
-
 @NgModule({
     imports: [
-        ToolbarModule,
+        CoreModule.forChild(),
         CommonModule,
-        DataTableModule,
         FlexLayoutModule,
         MaterialModule,
-        UploadModule,
-        TranslateModule,
-        PaginationModule
+        UploadModule
     ],
     declarations: [
         DocumentListComponent,
@@ -58,13 +48,6 @@ import { CustomResourcesService } from './services/custom-resources.service';
         ContentActionListComponent,
         EmptyFolderContentDirective,
         NoPermissionContentDirective
-    ],
-    providers: [
-        DocumentListService,
-        FolderActionsService,
-        DocumentActionsService,
-        NodeActionsService,
-        CustomResourcesService
     ],
     exports: [
         DocumentListComponent,

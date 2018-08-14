@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiServiceMock, AppConfigService, StorageService, ContentService, setupTestBed, CoreModule, TranslationMock } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';

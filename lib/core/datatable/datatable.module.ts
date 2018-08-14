@@ -44,7 +44,7 @@ import { EmptyCustomContentDirective } from './directives/empty-custom-content.d
         RouterModule,
         MaterialModule,
         CommonModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         ContextMenuModule,
         PipeModule,
         DirectiveModule

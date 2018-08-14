@@ -40,11 +40,15 @@ import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actions.component';
 
+import * as pdfjsLib from 'pdfjs-dist';
+pdfjsLib.PDFJS.workerSrc = 'pdf.worker.min.js';
+pdfjsLib.PDFJS.disableFontFace = true;
+
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
         ToolbarModule,

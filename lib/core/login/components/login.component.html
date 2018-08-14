@@ -13,7 +13,7 @@
                                              ngFor [ngForOf]="[data]"
                                              [ngForTemplate]="headerTemplate">
                                 </ng-template>
-                                <img *ngIf="!headerTemplate" class="adf-img-logo" [src]="logoImageUrl"
+                                <img *ngIf="!headerTemplate" id="adf-login-img-logo" class="adf-img-logo" [src]="logoImageUrl"
                                      alt="{{'LOGIN.LOGO' | translate }}">
                             </div>
                         </mat-card-title>
@@ -61,11 +61,11 @@
                                            data-automation-id="password"
                                            tabindex="2">
                                     <mat-icon *ngIf="isPasswordShow" matSuffix class="adf-login-password-icon"
-                                              data-automation-id="hide_password" (click)="toggleShowPassword()">
+                                              data-automation-id="hide_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()" tabindex="3">
                                         visibility
                                     </mat-icon>
                                     <mat-icon *ngIf="!isPasswordShow" matSuffix class="adf-login-password-icon"
-                                              data-automation-id="show_password" (click)="toggleShowPassword()">
+                                              data-automation-id="show_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()" tabindex="3">
                                         visibility_off
                                     </mat-icon>
                                 </mat-form-field>
@@ -79,7 +79,7 @@
                             <ng-content></ng-content>
 
                             <br>
-                            <button type="submit" id="login-button" tabindex="3"
+                            <button type="submit" id="login-button" tabindex="4"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     [class.isChecking]="actualLoginStep === LoginSteps.Checking"

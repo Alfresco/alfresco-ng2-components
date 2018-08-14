@@ -19,8 +19,8 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { RatingBody } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
+import { from, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class RatingService {
@@ -35,9 +35,10 @@ export class RatingService {
      * @returns The rating value
      */
     getRating(nodeId: string, ratingType: any): any {
-        return Observable.fromPromise(this.apiService.getInstance().core.ratingsApi.getRating(nodeId, ratingType))
-            .map(res => res)
-            .catch(this.handleError);
+        return from(this.apiService.getInstance().core.ratingsApi.getRating(nodeId, ratingType))
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 
     /**
@@ -52,9 +53,10 @@ export class RatingService {
             'id': ratingType,
             'myRating': vote
         };
-        return Observable.fromPromise(this.apiService.getInstance().core.ratingsApi.rate(nodeId, ratingBody))
-            .map(res => res)
-            .catch(this.handleError);
+        return from(this.apiService.getInstance().core.ratingsApi.rate(nodeId, ratingBody))
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 
     /**
@@ -64,13 +66,14 @@ export class RatingService {
      * @returns Null response indicating that the operation is complete
      */
     deleteRating(nodeId: string, ratingType: any): any {
-        return Observable.fromPromise(this.apiService.getInstance().core.ratingsApi.removeRating(nodeId, ratingType))
-            .map(res => res)
-            .catch(this.handleError);
+        return from(this.apiService.getInstance().core.ratingsApi.removeRating(nodeId, ratingType))
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 
     private handleError(error: Response): any {
         console.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

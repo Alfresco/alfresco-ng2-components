@@ -27,7 +27,7 @@ import { HostSettingsComponent } from './host-settings.component';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule
     ],

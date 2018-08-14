@@ -106,6 +106,12 @@
                             {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
                         </mat-error>
                     </mat-form-field>
+
+                    <mat-form-field class="full-width" floatLabel="Redirect Uri Logout">
+                        <mat-label>{{ 'CORE.HOST_SETTINGS.REDIRECT_LOGOUT'| translate }}</mat-label>
+                        <input matInput placeholder="{{ 'CORE.HOST_SETTINGS.REDIRECT_LOGOUT'| translate }}"
+                               name="redirectUriLogout" formControlName="redirectUriLogout">
+                    </mat-form-field>
                 </div>
             </ng-container>
             <mat-card-actions class="adf-actions">

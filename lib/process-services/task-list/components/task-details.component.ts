@@ -37,13 +37,14 @@ import {
     ViewChild
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer } from 'rxjs';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
+import { UserRepresentation } from 'alfresco-js-api';
+import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-task-details',
@@ -95,7 +96,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     /** Toggles rendering of the form title. */
     @Input()
-    showFormTitle: boolean = true;
+    showFormTitle: boolean = false;
 
     /** Toggles rendering of the `Complete` outcome button. */
     @Input()
@@ -173,11 +174,15 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     showAssignee: boolean = false;
+    showAttachForm: boolean = false;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
     public errorDialogRef: MatDialogRef<TemplateRef<any>>;
 
     peopleSearch: Observable<UserProcessModel[]>;
+
+    currentLoggedUser: UserRepresentation;
+    data: any;
 
     constructor(private taskListService: TaskListService,
                 private authService: AuthenticationService,
@@ -189,7 +194,11 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
         this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
-        this.peopleSearch = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer).share();
+        this.peopleSearch = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer)
+            .pipe(share());
+        this.authService.getBpmLoggedUser().subscribe((user: UserRepresentation) => {
+            this.currentLoggedUser = user;
+        });
     }
 
     ngOnInit() {
@@ -208,9 +217,32 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         if (taskId && !taskId.currentValue) {
             this.reset();
         } else if (taskId && taskId.currentValue) {
-            this.taskFormName = null;
             this.loadDetails(taskId.currentValue);
         }
+    }
+
+    isStandaloneTask(): boolean {
+        return !(this.taskDetails && (!!this.taskDetails.processDefinitionId));
+    }
+
+    isStandaloneTaskWithForm(): boolean {
+        return this.isStandaloneTask() && this.hasFormKey();
+    }
+
+    isStandaloneTaskWithoutForm(): boolean {
+        return this.isStandaloneTask() && !this.hasFormKey();
+    }
+
+    isFormComponentVisible(): boolean {
+        return this.hasFormKey() && !this.isShowAttachForm();
+    }
+
+    isTaskStandaloneComponentVisible(): boolean {
+        return this.isStandaloneTaskWithoutForm() && !this.isShowAttachForm();
+    }
+
+    isShowAttachForm(): boolean {
+        return this.showAttachForm;
     }
 
     /**
@@ -223,10 +255,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     /**
      * Check if the task has a form
      */
-    hasFormKey(): TaskDetailsModel | string | boolean {
-        return (this.taskDetails
-            && this.taskDetails.formKey
-            && this.taskDetails.formKey !== 'null');
+    hasFormKey(): boolean {
+        return (this.taskDetails && (!!this.taskDetails.formKey));
     }
 
     isTaskActive() {
@@ -251,6 +281,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         if (clickNotification.target.key === 'assignee') {
             this.showAssignee = true;
         }
+        if (clickNotification.target.key === 'formName') {
+            this.showAttachForm = true;
+        }
     }
 
     /**
@@ -260,10 +293,12 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     private loadDetails(taskId: string) {
         this.taskPeople = [];
         this.readOnlyForm = false;
+        this.taskFormName = null;
 
         if (taskId) {
             this.taskListService.getTaskDetails(taskId).subscribe(
                 (res: TaskDetailsModel) => {
+                    this.showAttachForm = false;
                     this.taskDetails = res;
 
                     if (this.taskDetails.name === 'null') {
@@ -282,11 +317,25 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     isAssigned(): boolean {
-        return this.taskDetails.assignee ? true : false;
+        return !!this.taskDetails.assignee;
+    }
+
+    private hasEmailAddress(): boolean {
+        return this.taskDetails.assignee.email ? true : false;
     }
 
     isAssignedToMe(): boolean {
-        return this.isAssigned() ? this.taskDetails.assignee.email === this.authService.getBpmUsername() : false;
+        return this.isAssigned() && this.hasEmailAddress() ?
+                    this.isEmailEqual(this.taskDetails.assignee.email, this.currentLoggedUser.email) :
+                    this.isExternalIdEqual(this.taskDetails.assignee.externalId, this.currentLoggedUser.externalId);
+    }
+
+    private isEmailEqual(assigneeMail, currentLoggedEmail): boolean {
+        return assigneeMail.toLocaleLowerCase() === currentLoggedEmail.toLocaleLowerCase();
+    }
+
+    private isExternalIdEqual(assigneeExternalId, currentUserExternalId): boolean {
+        return assigneeExternalId.toLocaleLowerCase() === currentUserExternalId.toLocaleLowerCase();
     }
 
     isCompleteButtonEnabled(): boolean {
@@ -340,6 +389,19 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.taskListService.completeTask(this.taskId).subscribe(
             (res) => this.onFormCompleted(null)
         );
+    }
+
+    onShowAttachForm() {
+        this.showAttachForm = true;
+    }
+
+    onCancelAttachForm() {
+        this.showAttachForm = false;
+    }
+
+    onCompleteAttachForm() {
+        this.showAttachForm = false;
+        this.loadDetails(this.taskId);
     }
 
     onFormContentClick(content: ContentLinkModel): void {

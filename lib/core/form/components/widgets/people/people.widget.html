@@ -7,6 +7,7 @@
         <input #inputValue
                matInput
                class="adf-input"
+               data-automation-id="adf-people-search-input"
                type="text"
                [id]="field.id"
                [(ngModel)]="value"
@@ -14,7 +15,7 @@
                placeholder="{{field.placeholder}}"
                [matAutocomplete]="auto">
         <mat-autocomplete class="adf-people-widget-list" #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
-            <mat-option *ngFor="let user of users$ | async; let i = index" [value]="user">
+            <mat-option *ngFor="let user of users$ | async; let i = index" [value]="getDisplayName(user)">
                 <div class="adf-people-widget-row" id="adf-people-widget-user-{{i}}">
                     <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
                     <div *ngIf="user.pictureId" class="adf-people-widget-image-row">

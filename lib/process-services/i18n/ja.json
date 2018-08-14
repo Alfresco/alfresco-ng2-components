@@ -19,6 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "タスクが見つかりません",
+        "SUBTITLE": "後で簡単に見つけられるよう、新しいタスクを作成してください",
         "NONE": "タスクリストが見つかりません"
       }
     },
@@ -150,6 +152,11 @@
       "NO_FORM_MESSAGE": "フォームが添付されていません",
       "COMPLETE_TASK_MESSAGE": "タスク {{taskName}} が完了しました",
       "COMPLETE_TASK_SUB_MESSAGE": "フォームは追加されません"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "添付するフォームを選択してください",
+      "REMOVE_FORM": "フォームの削除",
+      "SELECT_OPTION": "オプションを選択してください"
     }
   },
   "ADF_PROCESS_LIST": {

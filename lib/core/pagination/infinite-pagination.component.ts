@@ -24,9 +24,10 @@ import {
 
 import { PaginatedComponent } from './paginated-component.interface';
 import { Pagination } from 'alfresco-js-api';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { PaginationModel } from '../models/pagination.model';
+import { UserPreferencesService } from '../services/user-preferences.service';
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -68,7 +69,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     private paginationSubscription: Subscription;
 
-    constructor(private cdr: ChangeDetectorRef) {
+    constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
@@ -76,7 +77,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
             this.paginationSubscription = this.target.pagination.subscribe(pagination => {
                 this.isLoading = false;
                 this.pagination = pagination;
-                this.pageSize = pagination.maxItems;
+                this.pageSize = this.userPreferencesService.paginationSize || this.pageSize;
                 this.cdr.detectChanges();
             });
         }
@@ -87,12 +88,12 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     }
 
     onLoadMore() {
-        this.pagination.skipCount += this.pageSize;
-        this.pagination.skipCount = this.pagination.skipCount;
+        this.pagination.skipCount = 0;
+        this.pagination.maxItems = this.pagination.maxItems + this.pageSize;
         this.pagination.merge = true;
         this.loadMore.next(this.pagination);
 
-        if ((this.pagination.skipCount + this.pageSize) > this.pagination.totalItems) {
+        if (this.pagination.maxItems >= this.pagination.totalItems) {
             this.pagination.hasMoreItems = false;
         }
 

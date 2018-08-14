@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import { LogService, UserPreferencesService, UserProcessModel } from '@alfresco/adf-core';
+import { LogService, UserPreferencesService, UserProcessModel, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
+import { switchMap, defaultIfEmpty } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-start-task',
@@ -68,6 +69,8 @@ export class StartTaskComponent implements OnInit {
 
     dateError: boolean;
 
+    field: FormFieldModel;
+
     /**
      * Constructor
      * @param auth
@@ -81,6 +84,7 @@ export class StartTaskComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.field = new FormFieldModel(new FormModel(), {id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee'});
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
@@ -93,11 +97,17 @@ export class StartTaskComponent implements OnInit {
                 this.startTaskmodel.category = this.appId.toString();
             }
             this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel))
-                .switchMap((createRes: any) =>
-                    this.attachForm(createRes.id, this.formKey).defaultIfEmpty(createRes)
-                        .switchMap((attachRes: any) =>
-                            this.assignTaskByUserId(createRes.id, this.assigneeId).defaultIfEmpty(attachRes ? attachRes : createRes)
+                .pipe(
+                    switchMap((createRes: any) =>
+                        this.attachForm(createRes.id, this.formKey).pipe(
+                            defaultIfEmpty(createRes),
+                            switchMap((attachRes: any) =>
+                                this.assignTaskByUserId(createRes.id, this.assigneeId).pipe(
+                                    defaultIfEmpty(attachRes ? attachRes : createRes)
+                                )
+                            )
                         )
+                    )
                 )
                 .subscribe(
                     (res: any) => {
@@ -110,8 +120,12 @@ export class StartTaskComponent implements OnInit {
         }
     }
 
+    getAssigneeId(userId) {
+        this.assigneeId = userId;
+    }
+
     private attachForm(taskId: string, formKey: number): Observable<any> {
-        let response = Observable.of();
+        let response = of();
         if (taskId && formKey) {
             response = this.taskService.attachFormToATask(taskId, formKey);
         }
@@ -119,7 +133,7 @@ export class StartTaskComponent implements OnInit {
     }
 
     private assignTaskByUserId(taskId: string, userId: any): Observable<any> {
-        let response = Observable.of();
+        let response = of();
         if (taskId && userId) {
             response = this.taskService.assignTaskByUserId(taskId, userId);
         }

@@ -27,7 +27,8 @@ import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { debounceTime } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
+import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 
 export type ValidationFunction = (entry: MinimalNodeEntryEntity) => boolean;
 
@@ -120,6 +121,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private apiService: AlfrescoApiService,
+                private customResourcesService: CustomResourcesService,
                 private preferences: UserPreferencesService) {
         this.searchInput.valueChanges
             .pipe(
@@ -255,8 +257,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     private querySearch(): void {
         this.loadingSearchResults = true;
 
-        if (this.dropdownSiteList) {
-            this.documentList.getCorrespondingNodeIds(this.siteId)
+        if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
+            this.customResourcesService.getCorrespondingNodeIds(this.siteId)
                 .subscribe(nodeIds => {
                         this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize, nodeIds)
                             .subscribe(this.showSearchResults.bind(this));

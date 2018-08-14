@@ -5033,22 +5033,6 @@
     },
     {
         "position": {
-            "line": 21,
-            "character": 9,
-            "fileName": "lib/content-services/search/public-api.ts"
-        },
-        "name": "ResponseFacetField"
-    },
-    {
-        "position": {
-            "line": 22,
-            "character": 9,
-            "fileName": "lib/content-services/search/public-api.ts"
-        },
-        "name": "ResponseFacetQuery"
-    },
-    {
-        "position": {
             "line": 25,
             "character": 0,
             "fileName": "lib/core/form/components/widgets/dynamic-table/editors/row.editor.ts"

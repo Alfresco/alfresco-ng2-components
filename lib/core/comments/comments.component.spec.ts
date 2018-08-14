@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { CommentProcessService } from '../services/comment-process.service';
 import { CommentsComponent } from './comments.component';
 import { CommentContentService } from '../services/comment-content.service';
@@ -48,24 +48,24 @@ describe('CommentsComponent', () => {
         commentProcessService = fixture.debugElement.injector.get(CommentProcessService);
         commentContentService = fixture.debugElement.injector.get(CommentContentService);
 
-        addContentCommentSpy = spyOn(commentContentService, 'addNodeComment').and.returnValue(Observable.of({
+        addContentCommentSpy = spyOn(commentContentService, 'addNodeComment').and.returnValue(of({
             id: 123,
             message: 'Test Comment',
             createdBy: {id: '999'}
         }));
 
-        getContentCommentsSpy = spyOn(commentContentService, 'getNodeComments').and.returnValue(Observable.of([
+        getContentCommentsSpy = spyOn(commentContentService, 'getNodeComments').and.returnValue(of([
             {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
         ]));
 
-        getProcessCommentsSpy = spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of([
+        getProcessCommentsSpy = spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([
             {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
         ]));
-        addProcessCommentSpy = spyOn(commentProcessService, 'addTaskComment').and.returnValue(Observable.of({
+        addProcessCommentSpy = spyOn(commentProcessService, 'addTaskComment').and.returnValue(of({
             id: 123,
             message: 'Test Comment',
             createdBy: {id: '999'}
@@ -92,7 +92,7 @@ describe('CommentsComponent', () => {
 
     it('should emit an error when an error occurs loading comments', () => {
         let emitSpy = spyOn(component.error, 'emit');
-        getProcessCommentsSpy.and.returnValue(Observable.throw({}));
+        getProcessCommentsSpy.and.returnValue(throwError({}));
 
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'taskId': change});
@@ -128,7 +128,7 @@ describe('CommentsComponent', () => {
 
     it('should not display comments when the task has no comments', async(() => {
         component.taskId = '123';
-        getProcessCommentsSpy.and.returnValue(Observable.of([]));
+        getProcessCommentsSpy.and.returnValue(of([]));
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.nativeElement.querySelector('#comment-container')).toBeNull();
@@ -219,11 +219,43 @@ describe('CommentsComponent', () => {
             fixture.whenStable();
         }));
 
-        it('should call service to add a comment when enter key is pressed', async(() => {
-            let event = new KeyboardEvent('keyup', {'key': 'Enter'});
-            let element = fixture.nativeElement.querySelector('#comment-input');
+        it('should sanitize comment when user input contains html elements', async(() => {
+            let element = fixture.nativeElement.querySelector('.adf-comments-input-add');
+            component.message = '<div class="text-class"><button onclick=""><h1>action</h1></button></div>';
+            element.dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(addProcessCommentSpy).toHaveBeenCalledWith('123', 'action');
+            });
+        }));
+
+        it('should normalize comment when user input contains spaces sequence', async(() => {
+            let element = fixture.nativeElement.querySelector('.adf-comments-input-add');
+            component.message = 'test    comment';
+            element.dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(addProcessCommentSpy).toHaveBeenCalledWith('123', 'test comment');
+            });
+        }));
+
+        it('should add break lines to comment when user input contains new line characters', async(() => {
+            let element = fixture.nativeElement.querySelector('.adf-comments-input-add');
+            component.message = 'these\nare\nparagraphs\n';
+            element.dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(addProcessCommentSpy).toHaveBeenCalledWith('123', 'these<br/>are<br/>paragraphs');
+            });
+        }));
+
+        it('should call service to add a comment when add button is pressed', async(() => {
+            let element = fixture.nativeElement.querySelector('.adf-comments-input-add');
             component.message = 'Test Comment';
-            element.dispatchEvent(event);
+            element.dispatchEvent(new Event('click'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -235,10 +267,9 @@ describe('CommentsComponent', () => {
         }));
 
         it('should not call service to add a comment when comment is empty', async(() => {
-            let event = new KeyboardEvent('keyup', {'key': 'Enter'});
-            let element = fixture.nativeElement.querySelector('#comment-input');
+            let element = fixture.nativeElement.querySelector('.adf-comments-input-add');
             component.message = '';
-            element.dispatchEvent(event);
+            element.dispatchEvent(new Event('click'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -249,7 +280,6 @@ describe('CommentsComponent', () => {
         it('should clear comment when escape key is pressed', async(() => {
             let event = new KeyboardEvent('keyup', {'key': 'Escape'});
             let element = fixture.nativeElement.querySelector('#comment-input');
-            component.message = 'Test comment';
             element.dispatchEvent(event);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -261,7 +291,7 @@ describe('CommentsComponent', () => {
 
         it('should emit an error when an error occurs adding the comment', () => {
             let emitSpy = spyOn(component.error, 'emit');
-            addProcessCommentSpy.and.returnValue(Observable.throw({}));
+            addProcessCommentSpy.and.returnValue(throwError({}));
             component.message = 'Test comment';
             component.add();
             expect(emitSpy).toHaveBeenCalled();
@@ -277,11 +307,10 @@ describe('CommentsComponent', () => {
             fixture.whenStable();
         }));
 
-        it('should call service to add a comment when enter key is pressed', async(() => {
-            let event = new KeyboardEvent('keyup', {'key': 'Enter'});
-            let element = fixture.nativeElement.querySelector('#comment-input');
+        it('should call service to add a comment when add button is pressed', async(() => {
+            let element = fixture.nativeElement.querySelector('.adf-comments-input-add');
             component.message = 'Test Comment';
-            element.dispatchEvent(event);
+            element.dispatchEvent(new Event('click'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -292,11 +321,43 @@ describe('CommentsComponent', () => {
             });
         }));
 
+        it('should sanitize comment when user input contains html elements', async(() => {
+            let element = fixture.nativeElement.querySelector('.adf-comments-input-add');
+            component.message = '<div class="text-class"><button onclick=""><h1>action</h1></button></div>';
+            element.dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(addContentCommentSpy).toHaveBeenCalledWith('123', 'action');
+            });
+        }));
+
+        it('should normalize comment when user input contains spaces sequence', async(() => {
+            let element = fixture.nativeElement.querySelector('.adf-comments-input-add');
+            component.message = 'test    comment';
+            element.dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(addContentCommentSpy).toHaveBeenCalledWith('123', 'test comment');
+            });
+        }));
+
+        it('should add break lines to comment when user input contains new line characters', async(() => {
+            let element = fixture.nativeElement.querySelector('.adf-comments-input-add');
+            component.message = 'these\nare\nparagraphs\n';
+            element.dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(addContentCommentSpy).toHaveBeenCalledWith('123', 'these<br/>are<br/>paragraphs');
+            });
+        }));
+
         it('should not call service to add a comment when comment is empty', async(() => {
-            let event = new KeyboardEvent('keyup', {'key': 'Enter'});
-            let element = fixture.nativeElement.querySelector('#comment-input');
+            let element = fixture.nativeElement.querySelector('.adf-comments-input-add');
             component.message = '';
-            element.dispatchEvent(event);
+            element.dispatchEvent(new Event('click'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -307,7 +368,6 @@ describe('CommentsComponent', () => {
         it('should clear comment when escape key is pressed', async(() => {
             let event = new KeyboardEvent('keyup', {'key': 'Escape'});
             let element = fixture.nativeElement.querySelector('#comment-input');
-            component.message = 'Test comment';
             element.dispatchEvent(event);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -319,7 +379,7 @@ describe('CommentsComponent', () => {
 
         it('should emit an error when an error occurs adding the comment', () => {
             let emitSpy = spyOn(component.error, 'emit');
-            addContentCommentSpy.and.returnValue(Observable.throw({}));
+            addContentCommentSpy.and.returnValue(throwError({}));
             component.message = 'Test comment';
             component.add();
             expect(emitSpy).toHaveBeenCalled();

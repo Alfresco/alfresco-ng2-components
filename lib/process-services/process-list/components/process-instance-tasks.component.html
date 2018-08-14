@@ -35,7 +35,7 @@
     <!--IF START TASK COMPLETED -->
     <div class="menu-container">
         <mat-list>
-            <mat-list-item class="process-tasks__task-item" (click)="clickStartTask($event)">
+            <mat-list-item class="process-tasks__task-item" (click)="clickStartTask()">
                 <mat-icon mat-list-icon>assignment</mat-icon>
                 <h3 matLine>{{ 'ADF_PROCESS_LIST.DETAILS.LABELS.START_FORM'|translate }}</h3>
                 <span matLine>
@@ -75,7 +75,7 @@
         <div mat-dialog-content class="adf-start-process-dialog-content">
             <adf-start-form [processId]="processId"
                                  [showRefreshButton]="false" [readOnlyForm]="true"
-                                 (formContentClicked)='onFormContentClick($event)'>
+                                 (formContentClicked)='onFormContentClick()'>
             </adf-start-form>
         </div>
         <div mat-dialog-actions class="adf-start-process-dialog-actions">

@@ -41,7 +41,10 @@ describe('UploadService', () => {
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm',
             files: {
-                excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git']
+                excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git', '*.SWF'],
+                'match-options': {
+                    nocase: true
+                }
             }
         };
 
@@ -77,6 +80,14 @@ describe('UploadService', () => {
 
     it('should skip hidden macOS files', () => {
         const file1 = new FileModel(new File([''], '.git'));
+        const file2 = new FileModel(new File([''], 'readme.md'));
+        const result = service.addToQueue(file1, file2);
+        expect(result.length).toBe(1);
+        expect(result[0]).toBe(file2);
+    });
+
+    it('should match the extension in case insensitive way', () => {
+        const file1 = new FileModel(new File([''], 'test.swf'));
         const file2 = new FileModel(new File([''], 'readme.md'));
         const result = service.addToQueue(file1, file2);
         expect(result.length).toBe(1);
@@ -175,7 +186,7 @@ describe('UploadService', () => {
         expect(uploadFileSpy).toHaveBeenCalledWith({
             name: 'fake-name',
             size: 10
-        }, undefined, undefined, null, {
+        }, undefined, undefined, { newVersion: true }, {
             renditions: 'doclib',
             include: [ 'allowableOperations' ],
             overwrite: true,
@@ -209,6 +220,39 @@ describe('UploadService', () => {
             contentType: 'text/plain',
             responseText: 'File uploaded'
         });
+    });
+
+    it('should append to the request the extra upload options', () => {
+        let uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
+        let emitter = new EventEmitter();
+
+        let filesFake = new FileModel(
+            <File> { name: 'fake-name', size: 10 },
+            <FileUploadOptions> { parentId: '123', path: 'fake-dir',
+                                    secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
+                                    association: { assocType: 'fake-assoc' },
+                                    targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+                                }
+        );
+        service.addToQueue(filesFake);
+        service.uploadFilesInTheQueue(emitter);
+
+        expect(uploadFileSpy).toHaveBeenCalledWith({
+            name: 'fake-name',
+            size: 10
+        }, 'fake-dir', '123', {
+            newVersion: false,
+                parentId: '123',
+                path: 'fake-dir',
+                secondaryChildren: [
+                    { assocType: 'assoc-1', childId: 'child-id' }],
+                    association: { assocType: 'fake-assoc' },
+                    targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+            }, {
+                renditions: 'doclib',
+                include: ['allowableOperations'],
+                autoRename: true
+            });
     });
 
     it('should start downloading the next one if a file of the list is aborted', (done) => {

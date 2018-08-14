@@ -118,6 +118,12 @@
       "ERROR_PLURAL": "{{ number }} elementer kan ikke slettes"
     },
     "HOST_SETTINGS": {
+      "TYPE-AUTH": "Godkjenningstype",
+      "BASIC": "Grunnleggende godkjenning",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implisitt flyt",
+      "PROVIDER": "Leverandør",
+      "REQUIRED": "Dette feltet er påkrevd",
       "CS_URL_ERROR": "Adressen til innholdstjenesten stemmer ikke med URL-formatet",
       "PS_URL_ERROR": "Adressen til prosesstjenestene stemmer ikke med URL-formatet",
       "TITLE": "Innstillinger",
@@ -125,9 +131,19 @@
       "BP-HOST": "URL prosesstjenester",
       "BACK": "Tilbake",
       "APPLY": "Bruk",
-      "NOT_VALID": "http(s)://host|ip:port(/path) ikke gjenkjent, prøv en annen URL."
+      "NOT_VALID": "http(s)://host|ip:port(/path) ikke gjenkjent, prøv en annen URL.",
+      "REDIRECT": "Omdirigerings-URI",
+      "REDIRECT_LOGOUT": "Omdirigerings-URI avlogging",
+      "SILENT": "Stille pålogging",
+      "SCOPE": "Område",
+      "CLIENT": "Klient-ID"
     },
     "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Legg til ny",
+        "NAME": "Navn",
+        "VALUE": "Verdi"
+      },
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Bruk et nummerformat",
         "INT_VALIDATION_ERROR": "Bruk heltall"
@@ -157,7 +173,7 @@
   },
   "COMMENTS": {
     "NONE": "Ingen kommentarer",
-    "ADD": "Legg til kommentar",
+    "ADD": "Legg til",
     "HEADER": "Kommentarer ({{ count }})",
     "CREATED_BY_HEADER": "Opprettet av",
     "MESSAGE_HEADER": "Melding",
@@ -193,7 +209,8 @@
     "BUTTON": {
       "LOGIN": "Logg på",
       "CHECKING": "Kontrollerer",
-      "WELCOME": "Velkommen"
+      "WELCOME": "Velkommen",
+      "SSO": "Påloggings-SSO"
     },
     "ACTION": {
       "HELP": "Trenger hjelp?",
@@ -277,36 +294,30 @@
       "TITLE": "Det oppstod en feil",
       "DESCRIPTION": "Noe gikk galt.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbake til startsiden",
-        "ROUTE": "Hjem"
+        "TEXT": "Tilbake til startsiden"
       }
     },
     "403": {
       "TITLE": "Du har ikke tillatelse for tilgang til denne serveren.",
       "DESCRIPTION": "Du har ikke lov til å få tilgang til denne ressursen på serveren.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Rapporter problem",
-        "URL": ""
+        "TEXT": "Rapporter problem"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbake til startsiden",
-        "ROUTE": "Hjem"
+        "TEXT": "Tilbake til startsiden"
       }
     },
     "404": {
       "TITLE": "Det oppstod en feil.",
       "DESCRIPTION": "Vi kunne ikke finne siden du så etter.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Tilbake til startsiden",
-        "ROUTE": "Hjem"
+        "TEXT": "Tilbake til startsiden"
       }
     }
   }

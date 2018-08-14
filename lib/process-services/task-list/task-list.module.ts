@@ -18,7 +18,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessCommentsModule } from '../process-comments/process-comments.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,10 +25,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { PeopleModule } from '../people/people.module';
 import { ContentWidgetModule } from '../content-widget/content-widget.module';
-import { TaskUploadService } from './services/task-upload.service';
-import { ProcessUploadService } from './services/process-upload.service';
-import { TaskListService } from './services/tasklist.service';
-import { TaskFilterService } from './services/task-filter.service';
 
 import { ChecklistComponent } from './components/checklist.component';
 import { NoTaskDetailsTemplateDirective } from './components/no-task-detail-template.directive';
@@ -40,16 +35,16 @@ import { TaskFiltersComponent } from './components/task-filters.component';
 import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
 import { TaskStandaloneComponent } from './components/task-standalone.component';
+import { AttachFormComponent } from './components/attach-form.component';
 
 @NgModule({
     imports: [
-        CoreModule,
         CommonModule,
         FlexLayoutModule,
         MaterialModule,
-        TranslateModule,
         FormsModule,
         ReactiveFormsModule,
+        CoreModule.forChild(),
         PeopleModule,
         ProcessCommentsModule,
         ContentWidgetModule
@@ -63,13 +58,8 @@ import { TaskStandaloneComponent } from './components/task-standalone.component'
         ChecklistComponent,
         TaskHeaderComponent,
         StartTaskComponent,
-        TaskStandaloneComponent
-    ],
-    providers: [
-        TaskListService,
-        TaskFilterService,
-        TaskUploadService,
-        ProcessUploadService
+        TaskStandaloneComponent,
+        AttachFormComponent
     ],
     exports: [
         NoTaskDetailsTemplateDirective,
@@ -80,7 +70,8 @@ import { TaskStandaloneComponent } from './components/task-standalone.component'
         ChecklistComponent,
         TaskHeaderComponent,
         StartTaskComponent,
-        TaskStandaloneComponent
+        TaskStandaloneComponent,
+        AttachFormComponent
     ]
 })
 export class TaskListModule {

@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { Pagination } from 'alfresco-js-api';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
@@ -100,7 +100,7 @@ describe('InfinitePaginationComponent', () => {
             fixture.detectChanges();
 
             component.loadMore.subscribe((newPagination: Pagination) => {
-                expect(newPagination.skipCount).toBe(10);
+                expect(newPagination.skipCount).toBe(0);
                 done();
             });
 
@@ -130,7 +130,7 @@ describe('InfinitePaginationComponent', () => {
             fixture.detectChanges();
 
             expect(component.pagination).toBe(pagination);
-            expect(component.pageSize).toBe(pagination.maxItems);
+            expect(component.pageSize).toBe(25);
         });
 
         it('should call the target\'s updatePagination on invoking the onLoadMore', () => {
@@ -139,7 +139,7 @@ describe('InfinitePaginationComponent', () => {
 
             component.onLoadMore();
 
-            expect(testTarget.updatePagination).toHaveBeenCalledWith({ maxItems: 444, skipCount: 444, totalItems: 888, hasMoreItems: true, merge: true });
+            expect(testTarget.updatePagination).toHaveBeenCalledWith({ maxItems: 469, skipCount: 0, totalItems: 888, hasMoreItems: true, merge: true });
         });
 
         it('should unsubscribe from the target\'s pagination on onDestroy', () => {

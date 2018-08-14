@@ -17,10 +17,9 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-import { Observable } from 'rxjs/Observable';
-import { defer } from 'rxjs/observable/defer';
+import { Observable, defer, forkJoin } from 'rxjs';
 import { PropertyGroup, PropertyGroupContainer } from '../interfaces/content-metadata.interfaces';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class PropertyDescriptorsService {
@@ -32,8 +31,9 @@ export class PropertyDescriptorsService {
             .map(groupName => groupName.replace(':', '_'))
             .map(groupName => defer( () => this.alfrescoApiService.classesApi.getClass(groupName)) );
 
-        return forkJoin(groupFetchStreams)
-            .map(this.convertToObject);
+        return forkJoin(groupFetchStreams).pipe(
+            map(this.convertToObject)
+        );
     }
 
     private convertToObject(propertyGroupsArray: PropertyGroup[]): PropertyGroupContainer {

@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { UserProcessModel } from '../../../../models';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
@@ -204,6 +204,34 @@ describe('PeopleWidgetComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).toBeNull();
+            });
+        });
+
+        it('should display two options if we tap one letter', async(() => {
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            peopleHTMLElement.focus();
+            peopleHTMLElement.value = 'T';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
+            });
+        }));
+
+        it('should emit peopleSelected if option is valid', async() => {
+            let selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            peopleHTMLElement.focus();
+            peopleHTMLElement.value = 'Test01 Test01';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(selectEmitSpy).toHaveBeenCalledWith(1001);
             });
         });
     });

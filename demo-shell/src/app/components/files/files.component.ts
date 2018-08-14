@@ -25,20 +25,26 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
-    AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
+    AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues, InfinitePaginationComponent
+    PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent
 } from '@alfresco/adf-core';
 
-import { DocumentListComponent, PermissionStyleModel, UploadFilesEvent, ConfirmDialogComponent } from '@alfresco/adf-content-services';
+import {
+    DocumentListComponent,
+    PermissionStyleModel,
+    UploadFilesEvent,
+    ConfirmDialogComponent
+} from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
+import { debounceTime } from 'rxjs/operators';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -172,10 +178,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
-    supportedPages: number[];
     currentSiteid = '';
     warnOnMultipleUploads = false;
     thumbnails = false;
+    enableCustomPermissionMessage = false;
+    enableMediumTimeFormat = false;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -192,11 +199,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private preference: UserPreferencesService,
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
-                public authenticationService: AuthenticationService) {
-        this.preference.select(UserPreferenceValues.SupportedPageSizes)
-            .subscribe((pages) => {
-                this.supportedPages = pages;
-            });
+                public authenticationService: AuthenticationService,
+                public alfrescoApiService: AlfrescoApiService) {
+
+        this.alfrescoApiService.nodeUpdated.subscribe(() => {
+            this.documentList.reload();
+        });
     }
 
     showFile(event) {
@@ -238,12 +246,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         // this.disableDragArea = false;
-        this.uploadService.fileUploadComplete.asObservable().debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
+        this.uploadService.fileUploadComplete.asObservable()
+            .pipe(debounceTime(300))
+            .subscribe(value => this.onFileUploadEvent(value));
         this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
         this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));
         this.onEditFolder = this.contentService.folderEdit.subscribe(value => this.onFolderAction(value));
-        this.supportedPages = this.supportedPages ? this.supportedPages : this.preference.getDefaultPageSizes();
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
@@ -362,22 +371,18 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onContentActionSuccess(message) {
         const translatedMessage: any = this.translateService.get(message);
         this.openSnackMessage(translatedMessage.value);
-        this.reloadForInfiniteScrolling();
+        this.documentList.reload();
     }
 
     onDeleteActionSuccess(message) {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
-        this.reloadForInfiniteScrolling();
+        this.documentList.reload();
         this.openSnackMessage(message);
     }
 
     onPermissionRequested(node) {
         this.router.navigate(['/permissions', node.value.entry.id]);
-    }
-
-    private reloadForInfiniteScrolling() {
-        this.documentList.reload();
     }
 
     onManageVersions(event) {
@@ -474,6 +479,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     }
 
+    closeStartProcess() {
+        this.processId = null;
+    }
+
     onChangePageSize(event: Pagination): void {
         this.preference.paginationSize = event.maxItems;
         this.changedPageSize.emit(event);
@@ -508,7 +517,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onInfiniteScrolling(): void {
         this.infiniteScrolling = !this.infiniteScrolling;
         this.infinitePaginationComponent.reset();
-        this.reloadForInfiniteScrolling();
+        this.documentList.reload();
     }
 
     canDownloadNode = (node: MinimalNodeEntity): boolean => {

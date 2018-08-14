@@ -1,5 +1,15 @@
 <h1>Overlay Viewer</h1>
 
+<p class="toggle">
+    <mat-slide-toggle
+        id="adf-viewer-overlay"
+        [color]="'primary'"
+        (change)="toggleOverlay()"
+        [checked]="isOverlay">
+        Overlay
+    </mat-slide-toggle>
+</p>
+
 <adf-document-list
     currentFolderId="-my-"
     (preview)="showPreview($event)">
@@ -7,6 +17,6 @@
 
 <adf-viewer
     [(showViewer)]="showViewer"
-    [overlayMode]="true"
+    [overlayMode]="isOverlay"
     [fileNodeId]="nodeId">
 </adf-viewer>

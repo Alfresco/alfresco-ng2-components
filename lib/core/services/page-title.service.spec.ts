@@ -75,4 +75,16 @@ describe('AppTitle service', () => {
         translationService.translate.onLangChange.next(<any> {});
         expect(titleServiceSpy).toHaveBeenCalledWith('привет - My application');
     });
+
+    it('should update title on new content download', () => {
+        spyOn(translationService, 'instant').and.returnValues('hello', 'привет');
+
+        pageTitleService.setTitle('key');
+        expect(titleServiceSpy).toHaveBeenCalledWith('hello - My application');
+
+        (<any> titleService).setTitle.calls.reset();
+
+        translationService.translate.onTranslationChange.next(<any> {});
+        expect(titleServiceSpy).toHaveBeenCalledWith('привет - My application');
+    });
 });

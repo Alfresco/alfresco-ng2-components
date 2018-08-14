@@ -19,6 +19,8 @@
     },
     "LIST": {
       "MESSAGES": {
+        "TITLE": "Nenhuma tarefa encontrada",
+        "SUBTITLE": "Crie uma tarefa que você consiga encontrar facilmente depois",
         "NONE": "Nenhuma lista de tarefas encontrada"
       }
     },
@@ -150,6 +152,11 @@
       "NO_FORM_MESSAGE": "Sem formulários anexados",
       "COMPLETE_TASK_MESSAGE": "Tarefa {{taskName}} concluída",
       "COMPLETE_TASK_SUB_MESSAGE": "Sem formulários a serem adicionados"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Selecionar formulário para anexar",
+      "REMOVE_FORM": "Remover formulário",
+      "SELECT_OPTION": "Selecionar uma opção"
     }
   },
   "ADF_PROCESS_LIST": {

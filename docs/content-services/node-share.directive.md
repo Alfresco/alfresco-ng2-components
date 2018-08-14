@@ -32,8 +32,8 @@ Creates and manages public shared links for files.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| node | [`MinimalNodeEntity`](../content-services/document-library.model.md) |  | Nodes to share. |
 | baseShareUrl | `string` |  | baseShareUrl to add as prefix to the generated link |
+| node | [`MinimalNodeEntity`](../content-services/document-library.model.md) |  | Node to share. |
 
 ## Details
 

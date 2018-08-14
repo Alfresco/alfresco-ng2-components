@@ -2,12 +2,88 @@
 
     <ng-template let-node="node" #sidebarTemplate>
         <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
+
             <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.COMMENTS' | translate">
                 <adf-comments [nodeId]="nodeId"></adf-comments>
             </adf-info-drawer-tab>
 
             <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.PROPERTIES' | translate">
-                <adf-content-metadata-card [node]="node"></adf-content-metadata-card>
+                <adf-content-metadata-card *ngIf="isPreset" [node]="node"
+                                           [multi]="multi"
+                                           [preset]="customPreset"
+                                           [readOnly]="isReadOnly"
+                                           [displayDefaultProperties]="displayDefaultProperties"
+                                           [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
+
+                <adf-content-metadata-card *ngIf="!isPreset" [node]="node"
+                                           [multi]="multi"
+                                           [readOnly]="isReadOnly"
+                                           [displayDefaultProperties]="displayDefaultProperties"
+                                           [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
+
+                <p class="toggle">
+                    <mat-slide-toggle
+                        id="adf-metadata-default-properties"
+                        [color]="'primary'"
+                        (change)="toggleDisplayProperties()"
+                        [checked]="displayDefaultProperties">
+                        Display Default Properties
+                    </mat-slide-toggle>
+                </p>
+
+                <p class="toggle">
+                    <mat-slide-toggle
+                        id="adf-metadata-empty"
+                        [color]="'primary'"
+                        (change)="toggleEmptyMetadata()"
+                        [checked]="displayEmptyMetadata">
+                        Display Empty Metadata
+                    </mat-slide-toggle>
+                </p>
+
+                <p class="toggle">
+                    <mat-slide-toggle
+                        id="adf-metadata-multi"
+                        [color]="'primary'"
+                        (change)="toggleMulti()"
+                        [checked]="multi">
+                        multi accordion
+                    </mat-slide-toggle>
+                </p>
+
+                <p class="toggle">
+                    <mat-slide-toggle
+                        id="adf-metadata-readonly"
+                        [color]="'primary'"
+                        (change)="toggleReadOnly()"
+                        [checked]="isReadOnly">
+                        Editable
+                    </mat-slide-toggle>
+                </p>
+
+                <p class="toggle">
+                    <mat-slide-toggle
+                        id="adf-toggle-custom-preset"
+                        [color]="'primary'"
+                        (change)="togglePreset()"
+                        [checked]="isPreset">
+                        Custom preset
+                    </mat-slide-toggle>
+                </p>
+                <p class="toggle">
+                    <ng-container *ngIf="isPreset">
+                        <mat-form-field floatPlaceholder="float">
+                            <input matInput
+                                   placeholder="Custom Preset"
+                                   [(ngModel)]="customPreset"
+                                   data-automation-id="adf-text-custom-preset">
+                        </mat-form-field>
+
+                        <button  mat-raised-button  id="adf-metadata-aplly" (click)="applyCustomPreset()" color="primary">Apply</button>
+
+                    </ng-container>
+                </p>
+
             </adf-info-drawer-tab>
 
             <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.VERSIONS' | translate">

@@ -82,14 +82,14 @@ export class AccordionGroupComponent implements AfterViewInit {
     }
 
     hasHeadingIcon() {
-        return this.headingIcon ? true : false;
+        return !!this.headingIcon;
     }
 
     onHeaderClick(): void {
         this.headingClick.emit(this.heading);
     }
 
-    isExpandable(event: any) {
+    isExpandable() {
         if (!this.hasContent || !this.isOpen) {
             this.expandPanel();
         }

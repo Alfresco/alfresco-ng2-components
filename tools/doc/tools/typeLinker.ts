@@ -1,10 +1,12 @@
 import * as path from "path";
 import * as fs from "fs";
 
+
 import * as remark from "remark";
 import * as stringify from "remark-stringify";
 import * as frontMatter from "remark-frontmatter";
 
+/*
 import {
     Application,
     ProjectReflection,
@@ -17,6 +19,9 @@ import {
     Decorator
  } from "typedoc";
 import { CommentTag } from "typedoc/dist/lib/models";
+*/
+
+import * as ProgressBar from "progress";
 
 import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
@@ -34,7 +39,26 @@ const adfLibNames = ["core", "content-services", "insights", "process-services"]
 
 let externalNameLinks;
 
-export function initPhase(aggData) {
+export function processDocs(mdCache, aggData, errorMessages) {
+    initPhase(aggData);
+
+    var pathnames = Object.keys(mdCache);
+
+    let progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
+        total: pathnames.length,
+        width: 50,
+        clear: true
+    });
+
+    pathnames.forEach(pathname => {
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        progress.tick();
+        progress.render();
+    });
+}
+
+
+function initPhase(aggData) {
     externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
@@ -53,6 +77,7 @@ export function initPhase(aggData) {
         });
     });
 
+    /*
     let classes = aggData.projData.getReflectionsByKind(ReflectionKind.Class);
 
     classes.forEach(currClass => {
@@ -60,19 +85,22 @@ export function initPhase(aggData) {
             aggData.nameLookup.addName(currClass.name);
         }
     });
+    */
 
+    let classNames = Object.keys(aggData.classInfo);
+
+    classNames.forEach(currClassName => {
+        if (currClassName.match(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/)) {
+            aggData.nameLookup.addName(currClassName);
+        }
+    });
     //console.log(JSON.stringify(aggData.nameLookup));
 }
 
-export function readPhase(tree, pathname, aggData) {}
 
 
-export function aggPhase(aggData) {
 
-}
-
-
-export function updatePhase(tree, pathname, aggData) {
+function updateFile(tree, pathname, aggData, _errorMessages) {
     traverseMDTree(tree);
     return true;
 
@@ -347,13 +375,19 @@ function resolveTypeLink(aggData, text): string {
         return "";
     }
 
+    /*
     let ref: Reflection = aggData.projData.findReflectionByName(possTypeName);
+*/
+    let classInfo = aggData.classInfo[possTypeName];
 
-    if (ref && isLinkable(ref.kind)) {
+    //if (ref && isLinkable(ref.kind)) {
+    if (classInfo) {
         let kebabName = ngHelpers.kebabifyClassName(possTypeName);
         let possDocFile = aggData.docFiles[kebabName];
-        let url = "../../lib/" + ref.sources[0].fileName;
-        
+        //let url = "../../lib/" + ref.sources[0].fileName;
+
+        let url = "../../" + classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
+
         if (possDocFile) {
             url = "../" + possDocFile;
         }
@@ -377,13 +411,14 @@ function cleanTypeName(text) {
     }
 }
 
-
+/*
 function isLinkable(kind: ReflectionKind) {
     return (kind === ReflectionKind.Class) ||
     (kind === ReflectionKind.Interface) ||
     (kind === ReflectionKind.Enum) ||
     (kind === ReflectionKind.TypeAlias);
 }
+*/
 
 function convertNodeToTypeLink(node, text, url, title = null) {
     let linkDisplayText = unist.makeInlineCode(text);

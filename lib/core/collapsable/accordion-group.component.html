@@ -1,13 +1,13 @@
 <mat-accordion class="adf-panel">
-    <mat-expansion-panel #expansionPanel 
+    <mat-expansion-panel #expansionPanel
         id="adf-expansion-panel-id"
-        (click)="isExpandable($event)"
+        (click)="isExpandable()"
         [expanded]="toggleExpansion()"
         (opened)="onHeaderClick()"
         [hideToggle]="!hasAccordionIcon">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <div class="adf-panel-heading" [ngClass]="{'adf-panel-heading-selected': isSelected}">
+                <div class="adf-panel-heading" data-automation-id="adf-panel-heading" [ngClass]="{'adf-panel-heading-selected': isSelected}">
                     <div id="heading-icon" *ngIf="hasHeadingIcon()" class="adf-panel-heading-icon">
                         <mat-icon class="material-icons"
                             [matTooltip]="headingIconTooltip"
@@ -19,8 +19,8 @@
                 </div>
             </mat-panel-title>
         </mat-expansion-panel-header>
-            <div id="adf-expansion-panel-content-id" #contentWrapper>
-                <ng-content></ng-content>
-            </div>
+        <div id="adf-expansion-panel-content-id" #contentWrapper>
+            <ng-content></ng-content>
+        </div>
     </mat-expansion-panel>
 </mat-accordion>

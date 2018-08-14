@@ -1,7 +1,7 @@
 ---
 Added: v2.1.0
 Status: Active
-Last reviewed: 2018-04-16
+Last reviewed: 2018-08-07
 ---
 
 # Content Metadata Card component
@@ -15,6 +15,7 @@ Displays and edits metadata related to a node.
 ```html
 <adf-content-metadata-card
     [displayEmpty]="false"
+    [toggleDisplayProperties]="displayDefaultProperties"
     [preset]="'*'"
     [node]="node">
 </adf-content-metadata-card>
@@ -25,11 +26,12 @@ Displays and edits metadata related to a node.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | displayEmpty | `boolean` | false | Toggles whether to display empty values in the card view |
+| displayDefaultProperties | `boolean` | true | Toggles whether to display metadata fields values in the card view |
 | editable | `boolean` | false | Toggles whether the edit button should be shown |
 | expanded | `boolean` | false | Toggles between expanded (ie, full information) and collapsed (ie, reduced information) in the display |
-| multi | `boolean` | false | The multi parameter of the underlying material expansion panel |
+| multi | `boolean` | false | The multi parameter of the underlying material expansion panel, set to true to allow multi accordion to be expanded at the same time |
 | node | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | (required) The node entity to fetch metadata about |
 | preset | `string` |  | Name of the metadata preset, which defines aspects and their properties |
 
@@ -124,7 +126,7 @@ A final example shows the same process applied to a custom preset called "kitten
 ### Layout oriented config
 
 You can also go beyond the aspect oriented configuration if you need to configure the groups and properties in a more detailed way. With this type of configuration any property of any aspect/type
-can be "cherry picked" and grouped into an accordion drawer, along wwith a translatable title
+can be "cherry picked" and grouped into an accordion drawer, along with a translatable title
 defined in the preset configuration.
 
 #### Basic elements

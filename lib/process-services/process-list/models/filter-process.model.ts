@@ -49,6 +49,7 @@ export class FilterProcessRepresentationModel implements UserProcessInstanceFilt
 export class ProcessFilterParamRepresentationModel implements ProcessFilterRequestRepresentation {
 
     processDefinitionId?: number;
+    processInstanceId?: number|string;
     appDefinitionId?: number;
     state?: string;
     sort?: string;
@@ -58,6 +59,7 @@ export class ProcessFilterParamRepresentationModel implements ProcessFilterReque
     constructor(obj?: any) {
         this.processDefinitionId = obj.processDefinitionId || null;
         this.appDefinitionId = obj.appDefinitionId || null;
+        this.processInstanceId = obj.processInstanceId || null;
         this.state = obj.state || null;
         this.sort = obj.sort || null;
         this.page = obj.page || null;

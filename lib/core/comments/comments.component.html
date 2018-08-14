@@ -4,8 +4,19 @@
     </div>
     <div class="adf-comments-input-container" *ngIf="!isReadOnly()">
             <mat-form-field class="adf-full-width">
-                <input matInput id="comment-input" placeholder="{{'COMMENTS.ADD' | translate}}" [(ngModel)]="message" (keyup.enter)="add()" (keyup.esc)="clear()">
+                <textarea (keyup.escape)="clear()" matInput id="comment-input" placeholder="{{'COMMENTS.ADD' | translate}}" [(ngModel)]="message"></textarea>
             </mat-form-field>
+
+            <div class="adf-comments-input-actions">
+                <button mat-button
+                    class="adf-comments-input-add"
+                    data-automation-id="comments-input-add"
+                    color="primary"
+                    (click)="add()"
+                    [disabled]="!message">
+                    {{ 'COMMENTS.ADD' | translate }}
+                </button>
+            </div>
     </div>
 
     <div *ngIf="comments.length > 0">

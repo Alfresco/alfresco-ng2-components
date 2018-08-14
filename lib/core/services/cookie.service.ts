@@ -31,7 +31,7 @@ export class CookieService {
         }
 
         document.cookie = 'test-cookie';
-        return document.cookie.indexOf('test-cookie') > 0;
+        return document.cookie.indexOf('test-cookie') >= 0;
     }
 
     /**

@@ -29,6 +29,13 @@ import { MatSnackBar } from '@angular/material';
 export class FileViewComponent implements OnInit {
 
     nodeId: string = null;
+    displayEmptyMetadata = false;
+    expanded: boolean;
+    multi = false;
+    isReadOnly = false;
+    isPreset = false;
+    customPreset: string = null;
+    displayDefaultProperties = true;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -57,5 +64,35 @@ export class FileViewComponent implements OnInit {
 
     onUploadError(errorMessage: string) {
         this.snackBar.open(errorMessage, '', { duration: 4000 });
+    }
+
+    toggleEmptyMetadata() {
+        this.displayEmptyMetadata = !this.displayEmptyMetadata;
+    }
+
+    toggleMulti() {
+        this.multi = !this.multi;
+    }
+
+    toggleReadOnly() {
+        this.isReadOnly = !this.isReadOnly;
+    }
+
+    toggleDisplayProperties() {
+        this.displayDefaultProperties = !this.displayDefaultProperties;
+    }
+
+    togglePreset() {
+        this.isPreset = !this.isPreset;
+        if (!this.isPreset) {
+            this.customPreset = null;
+        }
+    }
+
+    applyCustomPreset() {
+        this.isPreset = false;
+        setTimeout(() => {
+            this.isPreset = true;
+        }, 100);
     }
 }

@@ -1,3 +1,20 @@
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -6,9 +23,8 @@ import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
 import { AppComponent } from './app.component';
-import { AdfModule } from './adf.module';
 import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -34,13 +50,11 @@ import { AppsViewComponent } from './components/process-service/apps-view.compon
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { TrashcanComponent } from './components/trashcan/trashcan.component';
 import { FilesComponent } from './components/files/files.component';
-import { FileViewComponent } from './components/file-view/file-view.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
 import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
-import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
 
@@ -52,7 +66,19 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { PreviewService } from './services/preview.service';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
+import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
+import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
+import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ReportIssueComponent } from './components/report-issue/report-issue.component';
+import { CardViewComponent } from './components/card-view/card-view.component';
+import { HeaderDataComponent } from './components/header-data/header-data.component';
+import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
+import { HeaderDataService } from './components/header-data/header-data.service';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { ContentModule } from '@alfresco/adf-content-services';
+import { InsightsModule } from '@alfresco/adf-insights';
+import { ProcessModule } from '@alfresco/adf-process-services';
 
 @NgModule({
     imports: [
@@ -61,12 +87,16 @@ import { NotificationsComponent } from './components/notifications/notifications
         ReactiveFormsModule,
         routing,
         FormsModule,
-        MaterialModule,
-        ThemePickerModule,
-        FlexLayoutModule,
-        ChartsModule,
         HttpClientModule,
-        AdfModule
+        MaterialModule,
+        FlexLayoutModule,
+        CoreModule.forRoot(),
+        ContentModule.forRoot(),
+        InsightsModule.forRoot(),
+        ProcessModule.forRoot(),
+        ThemePickerModule,
+        ChartsModule,
+        MonacoEditorModule.forRoot(),
     ],
     declarations: [
         AppComponent,
@@ -87,7 +117,6 @@ import { NotificationsComponent } from './components/notifications/notifications
         AppsViewComponent,
         DataTableComponent,
         FilesComponent,
-        FileViewComponent,
         TrashcanComponent,
         FormComponent,
         FormListComponent,
@@ -104,9 +133,15 @@ import { NotificationsComponent } from './components/notifications/notifications
         FormLoadingComponent,
         DemoPermissionComponent,
         FormLoadingComponent,
-        BlobPreviewComponent,
         BreadcrumbDemoComponent,
-        NotificationsComponent
+        NotificationsComponent,
+        CardViewComponent,
+        ContentNodeSelectorComponent,
+        ReportIssueComponent,
+        TaskListDemoComponent,
+        ProcessListDemoComponent,
+        HeaderDataComponent,
+        ConfigEditorComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
@@ -126,9 +161,13 @@ import { NotificationsComponent } from './components/notifications/notifications
                 source: 'resources/lazy-loading'
             }
         },
-        PreviewService
+        PreviewService,
+        HeaderDataService
     ],
-    entryComponents: [VersionManagerDialogAdapterComponent, MetadataDialogAdapterComponent],
+    entryComponents: [
+        VersionManagerDialogAdapterComponent,
+        MetadataDialogAdapterComponent
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

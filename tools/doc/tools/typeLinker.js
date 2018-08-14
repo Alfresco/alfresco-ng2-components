@@ -1,8 +1,22 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var path = require("path");
 var fs = require("fs");
-var typedoc_1 = require("typedoc");
+/*
+import {
+    Application,
+    ProjectReflection,
+    Reflection,
+    DeclarationReflection,
+    SignatureReflection,
+    ParameterReflection,
+    ReflectionKind,
+    TraverseProperty,
+    Decorator
+ } from "typedoc";
+import { CommentTag } from "typedoc/dist/lib/models";
+*/
+var ProgressBar = require("progress");
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
 var includedNodeTypes = [
@@ -13,6 +27,21 @@ var includedNodeTypes = [
 var docFolder = path.resolve("docs");
 var adfLibNames = ["core", "content-services", "insights", "process-services"];
 var externalNameLinks;
+function processDocs(mdCache, aggData, errorMessages) {
+    initPhase(aggData);
+    var pathnames = Object.keys(mdCache);
+    var progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
+        total: pathnames.length,
+        width: 50,
+        clear: true
+    });
+    pathnames.forEach(function (pathname) {
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        progress.tick();
+        progress.render();
+    });
+}
+exports.processDocs = processDocs;
 function initPhase(aggData) {
     externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
@@ -28,21 +57,24 @@ function initPhase(aggData) {
             }
         });
     });
-    var classes = aggData.projData.getReflectionsByKind(typedoc_1.ReflectionKind.Class);
-    classes.forEach(function (currClass) {
+    /*
+    let classes = aggData.projData.getReflectionsByKind(ReflectionKind.Class);
+
+    classes.forEach(currClass => {
         if (currClass.name.match(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/)) {
             aggData.nameLookup.addName(currClass.name);
         }
     });
+    */
+    var classNames = Object.keys(aggData.classInfo);
+    classNames.forEach(function (currClassName) {
+        if (currClassName.match(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/)) {
+            aggData.nameLookup.addName(currClassName);
+        }
+    });
     //console.log(JSON.stringify(aggData.nameLookup));
 }
-exports.initPhase = initPhase;
-function readPhase(tree, pathname, aggData) { }
-exports.readPhase = readPhase;
-function aggPhase(aggData) {
-}
-exports.aggPhase = aggPhase;
-function updatePhase(tree, pathname, aggData) {
+function updateFile(tree, pathname, aggData, _errorMessages) {
     traverseMDTree(tree);
     return true;
     function traverseMDTree(node) {
@@ -86,7 +118,6 @@ function updatePhase(tree, pathname, aggData) {
         */
     }
 }
-exports.updatePhase = updatePhase;
 var SplitNameNode = /** @class */ (function () {
     function SplitNameNode(key, value) {
         if (key === void 0) { key = ""; }
@@ -281,11 +312,16 @@ function resolveTypeLink(aggData, text) {
     if (possTypeName === 'constructor') {
         return "";
     }
-    var ref = aggData.projData.findReflectionByName(possTypeName);
-    if (ref && isLinkable(ref.kind)) {
+    /*
+    let ref: Reflection = aggData.projData.findReflectionByName(possTypeName);
+*/
+    var classInfo = aggData.classInfo[possTypeName];
+    //if (ref && isLinkable(ref.kind)) {
+    if (classInfo) {
         var kebabName = ngHelpers.kebabifyClassName(possTypeName);
         var possDocFile = aggData.docFiles[kebabName];
-        var url = "../../lib/" + ref.sources[0].fileName;
+        //let url = "../../lib/" + ref.sources[0].fileName;
+        var url = "../../" + classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
         if (possDocFile) {
             url = "../" + possDocFile;
         }
@@ -307,12 +343,14 @@ function cleanTypeName(text) {
         return text.replace(/\[\]$/, "");
     }
 }
-function isLinkable(kind) {
-    return (kind === typedoc_1.ReflectionKind.Class) ||
-        (kind === typedoc_1.ReflectionKind.Interface) ||
-        (kind === typedoc_1.ReflectionKind.Enum) ||
-        (kind === typedoc_1.ReflectionKind.TypeAlias);
+/*
+function isLinkable(kind: ReflectionKind) {
+    return (kind === ReflectionKind.Class) ||
+    (kind === ReflectionKind.Interface) ||
+    (kind === ReflectionKind.Enum) ||
+    (kind === ReflectionKind.TypeAlias);
 }
+*/
 function convertNodeToTypeLink(node, text, url, title) {
     if (title === void 0) { title = null; }
     var linkDisplayText = unist.makeInlineCode(text);

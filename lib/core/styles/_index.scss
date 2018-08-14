@@ -22,13 +22,14 @@
 @import '../viewer/components/txtViewer.component';
 @import '../viewer/components/imgViewer.component';
 @import '../form/components/form.component';
-@import '../sidenav-layout/components/sidebar-action/sidebar-action-menu.component';
+@import '../layout/components/sidebar-action/sidebar-action-menu.component';
+@import '../layout/components/header/header.component';
 @import '../comments/comment-list.component';
 @import '../comments/comments.component';
-@import '../sidenav-layout/components/layout-container/layout-container.component';
-@import "../templates/empty-content/empty-content.component";
-@import "../templates/error-content/error-content.component";
-@import "../buttons-menu/buttons-menu.component";
+@import '../layout/components/layout-container/layout-container.component';
+@import '../templates/empty-content/empty-content.component';
+@import '../templates/error-content/error-content.component';
+@import '../buttons-menu/buttons-menu.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
@@ -60,6 +61,5 @@
     @include adf-empty-content-theme($theme);
     @include adf-error-content-theme($theme);
     @include adf-buttons-menu-theme($theme);
+    @include adf-header-layout-theme($theme);
 }
-
-

@@ -17,11 +17,13 @@
 
 import { TaskDetailsModel } from './task-details.model';
 
-export interface TaskListModel {
+export class TaskListModel {
     size: number;
     total: number;
     start: number;
     length: number;
-    data: TaskDetailsModel [];
+    data: TaskDetailsModel[] = [];
 
+    constructor() {
+    }
 }

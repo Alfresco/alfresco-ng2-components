@@ -19,12 +19,10 @@
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, DeletedNodeEntity, DeletedNodeMinimalEntry } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, forkJoin, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/observable/forkJoin';
-import 'rxjs/add/operator/catch';
+import { map, catchError } from 'rxjs/operators';
 
 interface ProcessedNodeData {
     entry: MinimalNodeEntryEntity | DeletedNodeMinimalEntry;
@@ -93,7 +91,7 @@ export class NodeDeleteDirective implements OnChanges {
 
             const batch = this.getDeleteNodesBatch(selection);
 
-            Observable.forkJoin(...batch)
+            forkJoin(...batch)
                 .subscribe((data: ProcessedNodeData[]) => {
                     const processedItems: ProcessStatus = this.processStatus(data);
                     const message = this.getMessage(processedItems);
@@ -118,17 +116,16 @@ export class NodeDeleteDirective implements OnChanges {
             promise = this.alfrescoApiService.nodesApi.deleteNode(id, { permanent: this.permanent });
         }
 
-        return Observable.fromPromise(promise)
-            .map(() => ({
+        return from(promise).pipe(
+            map(() => ({
                 entry: node.entry,
                 status: 1
+            })),
+            catchError(() => of({
+                entry: node.entry,
+                status: 0
             }))
-            .catch((error: any) => {
-                return Observable.of({
-                    entry: node.entry,
-                    status: 0
-                });
-            });
+        );
     }
 
     private processStatus(data): ProcessStatus {

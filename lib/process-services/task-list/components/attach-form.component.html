@@ -1,0 +1,36 @@
+<div class="adf-attach-form">
+    <mat-card>
+        <mat-card-content>
+            <div class="adf-no-form-message-container">
+                <mat-card-title class="mat-card-title">
+                    <h4 class="adf-form-title">{{ 'ADF_TASK_LIST.ATTACH_FORM.SELECT_FORM' | translate }}</h4>
+                </mat-card-title>
+                <div class="adf-attach-form-row">
+                    <mat-form-field class="adf-grid-full-width">
+                        <mat-select [formControl]="attachFormControl" placeholder="{{ 'ADF_TASK_LIST.ATTACH_FORM.SELECT_OPTION' | translate }}" id="form_id" [(ngModel)]="selectedFormId">
+                            <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <adf-form *ngIf="this.attachFormControl.valid"
+                    [formId]="selectedFormId"
+                    [readOnly]="true"
+                    [showCompleteButton]="false"
+                    [showRefreshButton]="false"
+                    [showValidationIcon]="false">
+                </adf-form>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions class="adf-no-form-mat-card-actions">
+            <div>
+                <button mat-button id="adf-no-form-remove-button" color="warn" *ngIf="formKey" (click)="onRemoveButtonClick()">{{ 'ADF_TASK_LIST.ATTACH_FORM.REMOVE_FORM' | translate }}</button>
+            </div>
+            <div>
+                <button mat-button id="adf-no-form-cancel-button" (click)="onCancelButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL' | translate }}</button>
+                <button mat-button id="adf-no-form-attach-form-button" [disabled]="disableSubmit" color="primary" (click)="onAttachFormButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ATTACHFORM' | translate }}</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -17,7 +17,6 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { DiagramEndEventComponent } from './components/events/diagram-end-event.component';
 import { DiagramEventComponent } from './components/events/diagram-event.component';
@@ -83,11 +82,6 @@ import { DiagramLanesComponent } from './components/swimlanes/diagram-lanes.comp
 
 import { DiagramTooltipComponent } from './components/tooltip/diagram-tooltip.component';
 
-import { DiagramColorService } from './services/diagram-color.service';
-import { DiagramsService } from './services/diagrams.service';
-
-import { RaphaelService } from './components/raphael/raphael.service';
-
 import { RaphaelCircleDirective } from './components/raphael/raphael-circle.component';
 import { RaphaelCrossDirective } from './components/raphael/raphael-cross.component';
 import { RaphaelFlowArrowDirective } from './components/raphael/raphael-flow-arrow.component';
@@ -115,11 +109,12 @@ import { RaphaelIconServiceDirective } from './components/raphael/icons/raphael-
 import { RaphaelIconSignalDirective } from './components/raphael/icons/raphael-icon-signal.component';
 import { RaphaelIconTimerDirective } from './components/raphael/icons/raphael-icon-timer.component';
 import { RaphaelIconUserDirective } from './components/raphael/icons/raphael-icon-user.component';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
         CommonModule,
-        TranslateModule
+        CoreModule.forChild()
     ],
     declarations: [
         DiagramComponent,
@@ -201,11 +196,6 @@ import { RaphaelIconUserDirective } from './components/raphael/icons/raphael-ico
         RaphaelIconErrorDirective,
         RaphaelIconSignalDirective,
         RaphaelIconMessageDirective
-    ],
-    providers: [
-        DiagramsService,
-        DiagramColorService,
-        RaphaelService
     ],
     exports: [
         DiagramComponent,

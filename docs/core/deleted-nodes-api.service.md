@@ -12,7 +12,7 @@ Gets a list of Content Services nodes currently in the trash.
 
 ### Methods
 
--   **getDeletedNodes**(options?: `Object` = `null`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+-   **getDeletedNodes**(options?: `Object`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets a list of nodes in the trash.
     -   _options:_ `Object`  - (Optional) Options for JSAPI call
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of nodes in the trash

@@ -11,16 +11,13 @@ Represents a main container component for custom search and faceted search setti
 ## Contents
 
 -   [Basic usage](#basic-usage)
-
 -   [Details](#details)
-
     -   [Configuration](#configuration)
     -   [Extra fields and filter queries](#extra-fields-and-filter-queries)
     -   [Sorting](#sorting)
     -   [Categories and widgets](#categories-and-widgets)
     -   [Facet Fields](#facet-fields)
     -   [Facet Queries](#facet-queries)
-
 -   [See also](#see-also)
 
 ## Basic usage
@@ -64,12 +61,15 @@ A typical configuration is shown below:
             { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
             { "query": "NOT cm:creator:System" }
         ],
-        "facetFields": [
+        "facetFields": {
+          "expanded": true,
+          "fields": [
             { "field": "content.mimetype", "mincount": 1, "label": "Type" },
             { "field": "content.size", "mincount": 1, "label": "Size" },
             { "field": "creator", "mincount": 1, "label": "Creator" },
             { "field": "modifier", "mincount": 1, "label": "Modifier" }
-        ],
+          ]
+        },
         "facetQueries": {
             "label": "My facet queries",
             "pageSize": 4,
@@ -178,7 +178,7 @@ for further details.
 
 ### Categories and widgets
 
-The Search Settings component and Query Builder require a `categories` section in the
+The Search [Settings component](../../demo-shell/src/app/components/settings/settings.component.ts) and Query Builder require a `categories` section in the
 configuration.
 
 Categories are used to configure the UI widgets that let the user edit the search query

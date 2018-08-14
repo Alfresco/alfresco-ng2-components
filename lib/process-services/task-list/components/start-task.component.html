@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="adf-grid-column adf-grid-half-width">
-                    <adf-people-selector [(peopleId)]="assigneeId" id="assignee_id"></adf-people-selector>
+                    <people-widget (peopleSelected)="getAssigneeId($event)" [field]="field"></people-widget>
                 </div>
             </div>
         </div>

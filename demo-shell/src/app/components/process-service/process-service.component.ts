@@ -54,7 +54,7 @@ import {
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
 import { PreviewService } from '../../services/preview.service';
@@ -127,8 +127,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     paginationPageSize = 0;
     processSchemaColumns: any[] = [];
 
-    supportedPages: number[];
-
     defaultProcessDefinitionName: string;
     defaultProcessName: string;
 
@@ -140,7 +138,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     blobFile: any;
     flag = true;
 
-    presetColoum = 'default';
+    presetColumn = 'default';
 
     showTaskTab: boolean;
     showProcessTab: boolean;
@@ -192,7 +190,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                         validateDynamicTableRowEvent.preventDefault();
                     }
                 }
-            )
+            ),
+
+            formService.formContentClicked.subscribe(content => {
+                this.showContentPreview(content);
+            })
         );
 
         // Uncomment this block to see form event handling in action
@@ -225,7 +227,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.currentProcessInstanceId = null;
         });
         this.layoutType = AppsListComponent.LAYOUT_GRID;
-        this.supportedPages = this.preferenceService.getDefaultPageSizes();
     }
 
     ngOnDestroy() {
@@ -399,6 +400,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onContentClick(content: any): void {
+        this.showContentPreview(content);
+    }
+
+    private showContentPreview(content: any) {
         if (content.contentBlob) {
             this.preview.showBlob(content.name, content.contentBlob);
         } else {

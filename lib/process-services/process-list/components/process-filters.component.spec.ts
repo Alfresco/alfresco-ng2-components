@@ -15,32 +15,53 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AppsProcessService } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { from } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
+import { setupTestBed } from '../../../core/testing/setupTestBed';
+import { CoreModule } from '../../../core/core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 describe('ProcessFiltersComponent', () => {
 
     let filterList: ProcessFiltersComponent;
+    let fixture: ComponentFixture<ProcessFiltersComponent>;
     let processFilterService: ProcessFilterService;
     let appsProcessService: AppsProcessService;
     let fakeGlobalFilterPromise;
     let mockErrorFilterPromise;
 
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [ProcessFiltersComponent],
+        providers: [AppsProcessService, ProcessFilterService],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
+
     beforeEach(() => {
+        fixture = TestBed.createComponent(ProcessFiltersComponent);
+        filterList = fixture.componentInstance;
+
         fakeGlobalFilterPromise = Promise.resolve([
             new FilterProcessRepresentationModel({
+                id: 10,
                 name: 'FakeInvolvedTasks',
                 filter: { state: 'open', assignment: 'fake-involved' }
             }),
             new FilterProcessRepresentationModel({
+                id: 20,
                 name: 'FakeMyTasks',
                 filter: { state: 'open', assignment: 'fake-assignee' }
             }),
             new FilterProcessRepresentationModel({
+                id: 30,
                 name: 'Running',
                 filter: { state: 'open', assignment: 'fake-running' }
             })
@@ -55,8 +76,12 @@ describe('ProcessFiltersComponent', () => {
         filterList = new ProcessFiltersComponent(processFilterService, appsProcessService);
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should return the filter task list', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -75,7 +100,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should select the Running process filter', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -92,8 +117,8 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should return the filter task list, filtered By Name', (done) => {
-        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(Promise.resolve({ id: 1 })));
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(Promise.resolve({ id: 1 })));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test', true);
         filterList.ngOnChanges({ 'appName': change });
@@ -109,7 +134,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(mockErrorFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(mockErrorFilterPromise));
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -124,7 +149,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(mockErrorFilterPromise));
+        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(mockErrorFilterPromise));
 
         const appId = 'fake-app';
         let change = new SimpleChange(null, appId, true);
@@ -140,10 +165,9 @@ describe('ProcessFiltersComponent', () => {
 
     it('should emit an event when a filter is selected', (done) => {
         let currentFilter = new FilterProcessRepresentationModel({
-            filter: {
-                state: 'open',
-                assignment: 'fake-involved'
-            }
+            id: 10,
+            name: 'FakeInvolvedTasks',
+            filter: { state: 'open', assignment: 'fake-involved' }
         });
 
         filterList.filterClick.subscribe((filter: FilterProcessRepresentationModel) => {
@@ -196,4 +220,63 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.getCurrentFilter()).toBe(filter);
     });
 
+    it('should select the filter passed as input by id', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+
+        filterList.filterParam = new FilterProcessRepresentationModel({ id: 20 });
+
+        const appId = 1;
+        let change = new SimpleChange(null, appId, true);
+
+        filterList.ngOnChanges({ 'appId': change });
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(filterList.filters).toBeDefined();
+            expect(filterList.filters.length).toEqual(3);
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeMyTasks');
+            done();
+        });
+    });
+
+    it('should select the filter passed as input by name', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+
+        filterList.filterParam = new FilterProcessRepresentationModel({ name: 'FakeMyTasks' });
+
+        const appId = 1;
+        let change = new SimpleChange(null, appId, true);
+
+        filterList.ngOnChanges({ 'appId': change });
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(filterList.filters).toBeDefined();
+            expect(filterList.filters.length).toEqual(3);
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeMyTasks');
+            done();
+        });
+    });
+
+    it('should select first filter if filterParam is empty', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+
+        filterList.filterParam = new FilterProcessRepresentationModel({});
+
+        const appId = 1;
+        let change = new SimpleChange(null, appId, true);
+
+        filterList.ngOnChanges({ 'appId': change });
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(filterList.filters).toBeDefined();
+            expect(filterList.filters.length).toEqual(3);
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
+            done();
+        });
+    });
 });

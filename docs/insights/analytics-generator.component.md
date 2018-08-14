@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Analytics Generator Component
 
 Generates and shows charts
@@ -22,11 +23,11 @@ Generates and shows charts
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | reportId | `number` |  |  |
-| reportParamQuery | `ReportQuery` | `undefined` |  |
+| reportParamQuery | [`ReportQuery`](../../lib/insights/diagram/models/report/reportQuery.model.ts) | undefined |  |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| success | `EventEmitter<{}>` |  |
-| error | `EventEmitter<{}>` |  |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |

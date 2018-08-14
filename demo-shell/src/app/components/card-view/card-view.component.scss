@@ -1,0 +1,28 @@
+.main-content {
+    padding: 0 15px;
+}
+
+.card-view {
+    width: 30%;
+    display: inline-block;
+}
+
+.console {
+    width: 60%;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
+    height: 500px;
+    overflow: scroll;
+    padding-bottom: 30px;
+
+    h3 {
+        margin-top: 0;
+    }
+
+    p {
+        display: block;
+        font-family: monospace, monospace;
+        margin: 0;
+    }
+}

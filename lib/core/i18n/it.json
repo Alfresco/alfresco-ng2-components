@@ -118,6 +118,12 @@
       "ERROR_PLURAL": "Impossibile eliminare {{ number }} elementi"
     },
     "HOST_SETTINGS": {
+      "TYPE-AUTH": "Tipo di autenticazione",
+      "BASIC": "Autenticazione di base",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Flusso implicito",
+      "PROVIDER": "Fornitore",
+      "REQUIRED": "Questo campo è obbligatorio",
       "CS_URL_ERROR": "L'indirizzo Content Services non corrisponde al formato dell'URL",
       "PS_URL_ERROR": "L'indirizzo Process Services non corrisponde al formato dell'URL",
       "TITLE": "Impostazioni",
@@ -125,9 +131,19 @@
       "BP-HOST": "URL Process Services",
       "BACK": "Indietro",
       "APPLY": "Applica",
-      "NOT_VALID": "http(s)://host|ip:port(/path) non riconosciuto, provare un URL diverso."
+      "NOT_VALID": "http(s)://host|ip:port(/path) non riconosciuto, provare un URL diverso.",
+      "REDIRECT": "Reindirizza URI",
+      "REDIRECT_LOGOUT": "Reindirizza uscita URI",
+      "SILENT": "Accesso invisibile",
+      "SCOPE": "Ambito",
+      "CLIENT": "ID cliente"
     },
     "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Aggiungi nuova",
+        "NAME": "Nome",
+        "VALUE": "Valore"
+      },
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizzare un formato numerico",
         "INT_VALIDATION_ERROR": "Utilizzare numeri interi"
@@ -157,7 +173,7 @@
   },
   "COMMENTS": {
     "NONE": "Nessun commento",
-    "ADD": "Aggiungi commento",
+    "ADD": "Aggiungi",
     "HEADER": "Commenti ({{ count }})",
     "CREATED_BY_HEADER": "Creato da",
     "MESSAGE_HEADER": "Messaggio",
@@ -193,7 +209,8 @@
     "BUTTON": {
       "LOGIN": "Accedi",
       "CHECKING": "Verifica in corso",
-      "WELCOME": "Benvenuto"
+      "WELCOME": "Benvenuto",
+      "SSO": "Accedi con SSO"
     },
     "ACTION": {
       "HELP": "Hai bisogno di aiuto?",
@@ -277,36 +294,30 @@
       "TITLE": "Si è verificato un errore.",
       "DESCRIPTION": "Si è verificato un errore.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Torna alla home",
-        "ROUTE": "Home"
+        "TEXT": "Torna alla home"
       }
     },
     "403": {
       "TITLE": "Non si dispone delle autorizzazioni per accedere al server.",
       "DESCRIPTION": "Accesso alla risorsa sul server non consentito.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Segnala errore",
-        "URL": ""
+        "TEXT": "Segnala errore"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Torna alla home",
-        "ROUTE": "Home"
+        "TEXT": "Torna alla home"
       }
     },
     "404": {
       "TITLE": "Si è verificato un errore.",
       "DESCRIPTION": "Impossibile trovare la pagina.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Torna alla home",
-        "ROUTE": "Home"
+        "TEXT": "Torna alla home"
       }
     }
   }

@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { VersionListComponent } from './version-list.component';
 import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('VersionListComponent', () => {
@@ -32,6 +32,15 @@ describe('VersionListComponent', () => {
 
     const nodeId = 'test-id';
     const versionId = '1.0';
+
+    const versionTest = [
+        {
+            entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+        },
+        {
+            entry: { name: 'test-file-name-two', id: '1.0', versionComment: 'test-version-comment' }
+        }
+    ];
 
     setupTestBed({
         imports: [
@@ -64,9 +73,12 @@ describe('VersionListComponent', () => {
     });
 
     it('should raise confirmation dialog on delete', () => {
+        fixture.detectChanges();
+        component.versions = versionTest;
+
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
-                return Observable.of(false);
+                return of(false);
             }
         });
 
@@ -76,10 +88,11 @@ describe('VersionListComponent', () => {
     });
 
     it('should delete the version if user confirms', () => {
-        spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({ list: { entries: [] } }));
+        fixture.detectChanges();
+        component.versions = versionTest;
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
-                return Observable.of(true);
+                return of(true);
             }
         });
 
@@ -92,9 +105,11 @@ describe('VersionListComponent', () => {
     });
 
     it('should not delete version if user rejects', () => {
+        component.versions = versionTest;
+
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
-                return Observable.of(false);
+                return of(false);
             }
         });
 
@@ -106,21 +121,21 @@ describe('VersionListComponent', () => {
         expect(alfrescoApiService.versionsApi.deleteVersion).not.toHaveBeenCalled();
     });
 
-    it('should reload and raise version-deleted DOM event', (done) => {
+    it('should reload and raise deleted event', (done) => {
         spyOn(component, 'loadVersionHistory').and.stub();
-        fixture.nativeElement.addEventListener('version-deleted', () => {
+        component.deleted.subscribe(() => {
             expect(component.loadVersionHistory).toHaveBeenCalled();
             done();
         });
         fixture.detectChanges();
-        component.onVersionDeleted();
+        component.onVersionDeleted({});
     });
 
     describe('Version history fetching', () => {
 
         it('should use loading bar', () => {
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: [] } }));
+                .callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
             let loadingProgressBar = fixture.debugElement.query(By.css('[data-automation-id="version-history-loading-bar"]'));
             expect(loadingProgressBar).toBeNull();
@@ -134,7 +149,7 @@ describe('VersionListComponent', () => {
 
         it('should load the versions for a given id', () => {
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: [] } }));
+                .callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
             component.ngOnChanges();
             fixture.detectChanges();
@@ -241,12 +256,12 @@ describe('VersionListComponent', () => {
 
         it('should reload and raise version-restored DOM event', (done) => {
             spyOn(component, 'loadVersionHistory').and.stub();
-            fixture.nativeElement.addEventListener('version-restored', () => {
+            component.restored.subscribe(() => {
                 expect(component.loadVersionHistory).toHaveBeenCalled();
                 done();
             });
             fixture.detectChanges();
-            component.onVersionRestored();
+            component.onVersionRestored({});
         });
 
         it('should restore version only when restore allowed', () => {
@@ -258,8 +273,8 @@ describe('VersionListComponent', () => {
 
         it('should load the versions for a given id', () => {
             fixture.detectChanges();
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: [] } }));
+            component.versions = versionTest;
+
             const spyOnRevertVersion = spyOn(alfrescoApiService.versionsApi, 'revertVersion').and
                 .callFake(() => Promise.resolve(
                     { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } }));
@@ -271,8 +286,10 @@ describe('VersionListComponent', () => {
 
         it('should reload the version list after a version restore', (done) => {
             fixture.detectChanges();
+            component.versions = versionTest;
+
             const spyOnListVersionHistory = spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: [] } }));
+                .callFake(() => Promise.resolve({ list: { entries: versionTest } }));
             spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve());
 
             component.restore(versionId);
@@ -307,12 +324,14 @@ describe('VersionListComponent', () => {
             });
 
             it('should show Actions if showActions is true', (done) => {
+                component.versions = versionTest;
+
                 component.showActions = true;
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
+                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.0"]');
 
                     expect(menuButton).not.toBeNull();
                     done();
@@ -325,7 +344,7 @@ describe('VersionListComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
+                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.0"]');
 
                     expect(menuButton).toBeNull();
                     done();
@@ -343,6 +362,9 @@ describe('VersionListComponent', () => {
                         list: {
                             entries: [
                                 {
+                                    entry: { name: 'test-file-two', id: '1.1', versionComment: 'test-version-comment' }
+                                },
+                                {
                                     entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
                                 }
                             ]
@@ -356,12 +378,12 @@ describe('VersionListComponent', () => {
             it('should disable delete action if is not allowed', (done) => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
-                    menuButton.nativeElement.click();
+                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
+                    menuButton.click();
 
-                    let deleteButton = fixture.debugElement.query(By.css('#adf-version-list-action-delete-0'));
+                    let deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
 
-                    expect(deleteButton.nativeElement.disabled).toBe(true);
+                    expect(deleteButton.disabled).toBe(true);
                     done();
                 });
             });
@@ -369,12 +391,12 @@ describe('VersionListComponent', () => {
             it('should disable restore action if is not allowed', (done) => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
-                    menuButton.nativeElement.click();
+                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
+                    menuButton.click();
 
-                    let restoreButton = fixture.debugElement.query(By.css('#adf-version-list-action-restore-0'));
+                    let restoreButton: any = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
 
-                    expect(restoreButton.nativeElement.disabled).toBe(true);
+                    expect(restoreButton.disabled).toBe(true);
                     done();
                 });
             });
@@ -390,6 +412,9 @@ describe('VersionListComponent', () => {
                         list: {
                             entries: [
                                 {
+                                    entry: { name: 'test-file-name', id: '1.1', versionComment: 'test-version-comment' }
+                                },
+                                {
                                     entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
                                 }
                             ]
@@ -403,12 +428,12 @@ describe('VersionListComponent', () => {
             it('should enable delete action if is allowed', (done) => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
-                    menuButton.nativeElement.click();
+                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
+                    menuButton.click();
 
-                    let deleteButton = fixture.debugElement.query(By.css('#adf-version-list-action-delete-0'));
+                    let deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
 
-                    expect(deleteButton.nativeElement.disabled).toBe(false);
+                    expect(deleteButton.disabled).toBe(false);
                     done();
                 });
             });
@@ -416,12 +441,12 @@ describe('VersionListComponent', () => {
             it('should enable restore action if is allowed', (done) => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.debugElement.query(By.css('#adf-version-list-action-menu-button-0'));
-                    menuButton.nativeElement.click();
+                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
+                    menuButton.click();
 
-                    let restoreButton = fixture.debugElement.query(By.css('#adf-version-list-action-restore-0'));
+                    let restoreButton: any = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
 
-                    expect(restoreButton.nativeElement.disabled).toBe(false);
+                    expect(restoreButton.disabled).toBe(false);
                     done();
                 });
             });

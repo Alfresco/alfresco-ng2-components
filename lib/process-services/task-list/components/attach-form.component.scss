@@ -1,0 +1,17 @@
+.adf-attach-form {
+    .mat-form-field {
+        width: 100%;
+    }
+
+    &-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+    }
+
+    .adf-no-form-mat-card-actions {
+        justify-content: space-between;
+        margin-top: 30px;
+        text-align: right;
+    }
+}

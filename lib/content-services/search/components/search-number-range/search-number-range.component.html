@@ -5,7 +5,7 @@
             matInput [formControl]="from" [errorStateMatcher]="matcher"
             placeholder="{{ 'SEARCH.FILTER.RANGE.FROM' | translate }}"
             autocomplete="off">
-        <mat-error *ngIf="from.hasError('pattern')">
+        <mat-error *ngIf="from.hasError('pattern') || from.hasError('min')">
             {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
         </mat-error>
         <mat-error *ngIf="from.hasError('required')">
@@ -18,7 +18,7 @@
             matInput [formControl]="to" [errorStateMatcher]="matcher"
             placeholder="{{ 'SEARCH.FILTER.RANGE.TO' | translate }}"
             autocomplete="off">
-        <mat-error *ngIf="to.hasError('pattern')">
+        <mat-error *ngIf="to.hasError('pattern') || to.hasError('min')">
             {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
         </mat-error>
         <mat-error *ngIf="to.hasError('required')">

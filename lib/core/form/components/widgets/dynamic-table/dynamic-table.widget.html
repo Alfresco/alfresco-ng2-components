@@ -17,7 +17,13 @@
                         [class.adf-dynamic-table-widget__row-selected]="row.selected" (keyup)="onKeyPressed($event, row)">
                         <td *ngFor="let column of content.visibleColumns"
                             (click)="onRowClicked(row)">
-                            {{ getCellValue(row, column) }}
+                            <span *ngIf="column.type !== 'Boolean' else checkbox">
+                                {{ getCellValue(row, column) }}
+                            </span>
+                            <ng-template #checkbox>
+                                <mat-checkbox disabled [checked]="getCellValue(row, column)">
+                                </mat-checkbox>
+                            </ng-template>
                         </td>
                     </tr>
                 </tbody>
@@ -57,7 +63,6 @@
      <row-editor *ngIf="editMode"
         [table]="content"
         [row]="editRow"
-        [column]="column"
         (save)="onSaveChanges()"
         (cancel)="onCancelChanges()">
      </row-editor>

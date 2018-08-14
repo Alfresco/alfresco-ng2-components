@@ -22,13 +22,13 @@ Allows a user to add ratings to an item.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | nodeId | `string` |  | Identifier of the node to apply the rating to. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | changeVote | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the "vote" gets changed. |
 
 ## See also

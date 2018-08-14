@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
+import { Observable, of, throwError } from 'rxjs';
 import { RedirectionModel } from '../models/redirection.model';
 
 // TODO: should be extending AuthenticationService
@@ -34,11 +33,11 @@ export class AuthenticationMock /*extends AuthenticationService*/ {
     // TODO: real auth service returns Observable<string>
     login(username: string, password: string): Observable<{ type: string, ticket: any }> {
         if (username === 'fake-username' && password === 'fake-password') {
-            return Observable.of({ type: 'type', ticket: 'ticket'});
+            return of({ type: 'type', ticket: 'ticket'});
         }
 
         if (username === 'fake-username-CORS-error' && password === 'fake-password') {
-            return Observable.throw({
+            return throwError({
                 error: {
                     crossDomain: true,
                     message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
@@ -47,13 +46,13 @@ export class AuthenticationMock /*extends AuthenticationService*/ {
         }
 
         if (username === 'fake-username-CSRF-error' && password === 'fake-password') {
-            return Observable.throw({message: 'ERROR: Invalid CSRF-token', status: 403});
+            return throwError({message: 'ERROR: Invalid CSRF-token', status: 403});
         }
 
         if (username === 'fake-username-ECM-access-error' && password === 'fake-password') {
-            return Observable.throw({message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode', status: 403});
+            return throwError({message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode', status: 403});
         }
 
-        return Observable.throw('Fake server error');
+        return throwError('Fake server error');
     }
 }

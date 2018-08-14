@@ -27,15 +27,9 @@ import {
 } from '@alfresco/adf-core';
 
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
-
+import { Subject, BehaviorSubject, Subscription, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
-
 import { presetsDefaultModel } from '../models/preset.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
@@ -416,7 +410,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (changes.node && changes.node.currentValue) {
                 this.data.loadPage(changes.node.currentValue);
                 this.onDataReady(changes.node.currentValue);
-            } else if (changes.rowFilter) {
+            } else if (changes.rowFilter && changes.rowFilter.currentValue !== changes.rowFilter.previousValue) {
                 this.data.setFilter(changes.rowFilter.currentValue);
                 if (this.currentFolderId) {
                     this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pagination.getValue()).catch(err => this.error.emit(err));
@@ -446,7 +440,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
-
         if (node && node.entry) {
             let target = null;
 
@@ -559,10 +552,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (typeof action.handler === 'function') {
                 handlerSub = action.handler(node, this, action.permission);
             } else {
-                handlerSub = Observable.of(true);
+                handlerSub = of(true);
             }
 
-            if (typeof action.execute === 'function') {
+            if (typeof action.execute === 'function' && handlerSub) {
                 handlerSub.subscribe(() => {
                     action.execute(node);
                 });
@@ -818,22 +811,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private resetNewFolderPagination() {
         this.folderNode = null;
         this.pagination.value.skipCount = 0;
-    }
-
-    // TODO: remove it from here
-    getCorrespondingNodeIds(nodeId: string): Observable<string[]> {
-        if (this.customResourcesService.isCustomSource(nodeId)) {
-            return this.customResourcesService.getCorrespondingNodeIds(nodeId, this.pagination.getValue());
-        } else if (nodeId) {
-            return new Observable(observer => {
-                this.documentListService.getFolderNode(nodeId, this.includeFields)
-                    .subscribe((node: MinimalNodeEntryEntity) => {
-                        observer.next([node.id]);
-                        observer.complete();
-                    });
-            });
-        }
-
     }
 
     ngOnDestroy() {

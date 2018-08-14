@@ -16,19 +16,13 @@
  */
 
 import {
-    DataColumn,
+    DataTableSchema,
     DataRowEvent,
-    DataSorting,
-    DataTableComponent,
     DataTableAdapter,
-    ObjectDataColumn,
-    ObjectDataRow,
-    ObjectDataTableAdapter,
     EmptyCustomContentDirective
 } from '@alfresco/adf-core';
 import {
     AppConfigService,
-    DataColumnListComponent,
     PaginatedComponent,
     PaginationComponent,
     PaginationModel,
@@ -43,13 +37,12 @@ import {
     Input,
     OnChanges,
     Output,
-    SimpleChanges,
-    ViewChild
+    SimpleChanges
 } from '@angular/core';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { ProcessListModel } from '../models/process-list.model';
 
 @Component({
@@ -57,21 +50,29 @@ import { ProcessListModel } from '../models/process-list.model';
     styleUrls: ['./process-list.component.css'],
     templateUrl: './process-list.component.html'
 })
-export class ProcessInstanceListComponent implements OnChanges, AfterContentInit, PaginatedComponent {
+export class ProcessInstanceListComponent extends DataTableSchema  implements OnChanges, AfterContentInit, PaginatedComponent {
 
-    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+    static PRESET_KEY = 'adf-process-list.presets';
 
     @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
-
-    @ViewChild('dataTable') dataTable: DataTableComponent;
 
     /** The id of the app. */
     @Input()
     appId: number;
 
-    /** The processDefinitionKey of the process. */
+    /** The Definition Key of the process.
+     * @deprecated 2.4.0
+     */
     @Input()
     processDefinitionKey: string;
+
+    /** The Definition Id of the process. */
+    @Input()
+    processDefinitionId: string;
+
+    /** The id of the process instance. */
+    @Input()
+    processInstanceId: number|string;
 
     /** Defines the state of the processes. Possible values are `running`, `completed` and `all` */
     @Input()
@@ -83,10 +84,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     sort: string;
 
-    /** The name of the list. */
-    @Input()
-    name: string;
-
     /** The page number of the processes to fetch. */
     @Input()
     page: number = 0;
@@ -94,10 +91,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     /** The number of processes to fetch in each page. */
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
-
-    /** Name of a custom schema to fetch from `app.config.json`. */
-    @Input()
-    presetColumn: string;
 
     /** Data source to define the datatable. */
     @Input()
@@ -133,14 +126,15 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     requestNode: ProcessFilterParamRepresentationModel;
     currentInstanceId: string;
     isLoading: boolean = true;
-    layoutPresets = {};
+    rows: any[] = [];
     sorting: any[] = ['created', 'desc'];
 
     pagination: BehaviorSubject<PaginationModel>;
 
     constructor(private processService: ProcessService,
                 private userPreferences: UserPreferencesService,
-                private appConfig: AppConfigService) {
+                appConfig: AppConfigService) {
+        super(appConfig, ProcessInstanceListComponent.PRESET_KEY, processPresetsDefaultModel);
         this.size = this.userPreferences.paginationSize;
 
         this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
@@ -151,24 +145,13 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     }
 
     ngAfterContentInit() {
-        this.loadLayoutPresets();
-        this.setupSchema();
-
-        if (this.appId) {
-            this.reload();
+        this.createDatatableSchema();
+        if (this.data && this.data.getColumns().length === 0) {
+            this.data.setColumns(this.columns);
         }
-    }
 
-    /**
-     * Setup html-based (html definitions) or code behind (data adapter) schema.
-     * If component is assigned with an empty data adater the default schema settings applied.
-     */
-    setupSchema() {
-        let schema = this.getSchema();
-        if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema);
-        } else if (this.data.getColumns().length === 0) {
-            this.data.setColumns(schema);
+        if (this.appId != null) {
+            this.reload();
         }
     }
 
@@ -191,21 +174,24 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
         let appId = changes['appId'];
         let processDefinitionKey = changes['processDefinitionKey'];
+        let processDefinitionId = changes['processDefinitionId'];
+        let processInstanceId = changes['processInstanceId'];
         let state = changes['state'];
         let sort = changes['sort'];
-        let name = changes['name'];
         let page = changes['page'];
         let size = changes['size'];
 
         if (appId && appId.currentValue) {
             changed = true;
-        } else if (processDefinitionKey && processDefinitionKey.currentValue) {
+        } else if (processDefinitionKey) {
+            changed = true;
+        } else if (processDefinitionId) {
+            changed = true;
+        } else if (processInstanceId) {
             changed = true;
         } else if (state && state.currentValue) {
             changed = true;
         } else if (sort && sort.currentValue) {
-            changed = true;
-        } else if (name && name.currentValue) {
             changed = true;
         } else if (page && page.currentValue !== page.previousValue) {
             changed = true;
@@ -225,8 +211,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         this.processService.getProcessInstances(requestNode, this.processDefinitionKey)
             .subscribe(
                 (response) => {
-                    let instancesRow = this.createDataRow(response.data);
-                    this.renderInstances(instancesRow);
+                    this.rows = this.optimizeNames(response.data);
                     this.selectFirst();
                     this.success.emit(response);
                     this.isLoading = false;
@@ -244,58 +229,15 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     }
 
     /**
-     * Create an array of ObjectDataRow
-     * @param instances
-     */
-    private createDataRow(instances: any[]): ObjectDataRow[] {
-        let instancesRows: ObjectDataRow[] = [];
-        instances.forEach((row) => {
-            instancesRows.push(new ObjectDataRow(row));
-        });
-        return instancesRows;
-    }
-
-    /**
-     * Render the instances list
-     *
-     * @param instances
-     */
-    private renderInstances(instances: any[]) {
-        instances = this.optimizeNames(instances);
-        this.dataTable.resetSelection();
-        this.setDatatableSorting();
-        this.data.setRows(instances);
-    }
-
-    /**
-     * Sort the datatable rows based on current value of 'sort' property
-     */
-    private setDatatableSorting() {
-        if (!this.sort) {
-            return;
-        }
-        let sortingParams: string[] = this.sort.split('-');
-        if (sortingParams.length === 2) {
-            let sortColumn = sortingParams[0] === 'created' ? 'started' : sortingParams[0];
-            let sortOrder = sortingParams[1];
-            this.data.setSorting(new DataSorting(sortColumn, sortOrder));
-        }
-    }
-
-    /**
      * Select the first instance of a list if present
      */
     selectFirst() {
         if (this.selectFirstRow) {
             if (!this.isListEmpty()) {
-                let row = this.data.getRows()[0];
-                row.isSelected = true;
-                this.data.selectedRow = row;
-                this.currentInstanceId = row.getValue('id');
+                let dataRow = this.rows[0];
+                dataRow.isSelected = true;
+                this.currentInstanceId = dataRow['id'];
             } else {
-                if (this.data) {
-                    this.data.selectedRow = null;
-                }
                 this.currentInstanceId = null;
             }
         }
@@ -312,8 +254,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      * Check if the list is empty
      */
     isListEmpty(): boolean {
-        return this.data === undefined ||
-            (this.data && this.data.getRows() && this.data.getRows().length === 0);
+        return !this.rows || this.rows.length === 0;
     }
 
     /**
@@ -343,9 +284,9 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      * @param instances
      */
     private optimizeNames(instances: any[]): any[] {
-        instances = instances.map(t => {
-            t.obj.name = this.getProcessNameOrDescription(t.obj, 'medium');
-            return t;
+        instances = instances.map(instance => {
+            instance.name = this.getProcessNameOrDescription(instance, 'medium');
+            return instance;
         });
         return instances;
     }
@@ -371,6 +312,8 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     private createRequestNode() {
         let requestNode = {
             appDefinitionId: this.appId,
+            processDefinitionId: this.processDefinitionId,
+            processInstanceId: this.processInstanceId,
             state: this.state,
             sort: this.sort,
             page: this.page,
@@ -378,41 +321,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
             start: 0
         };
         return new ProcessFilterParamRepresentationModel(requestNode);
-    }
-
-    private loadLayoutPresets(): void {
-        const externalSettings = this.appConfig.get('adf-process-list.presets', null);
-
-        if (externalSettings) {
-            this.layoutPresets = Object.assign({}, processPresetsDefaultModel, externalSettings);
-        } else {
-            this.layoutPresets = processPresetsDefaultModel;
-        }
-    }
-
-    getSchema(): any {
-        let customSchemaColumns = [];
-        customSchemaColumns = this.getSchemaFromConfig(this.presetColumn).concat(this.getSchemaFromHtml());
-        if (customSchemaColumns.length === 0) {
-            customSchemaColumns = this.getDefaultLayoutPreset();
-        }
-        return customSchemaColumns;
-    }
-
-    getSchemaFromHtml(): any {
-        let schema = [];
-        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
-            schema = this.columnList.columns.map(c => <DataColumn> c);
-        }
-        return schema;
-    }
-
-    private getSchemaFromConfig(name: string): DataColumn[] {
-        return name ? (this.layoutPresets[name]).map(col => new ObjectDataColumn(col)) : [];
-    }
-
-    private getDefaultLayoutPreset(): DataColumn[] {
-        return (this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 
     updatePagination(params: PaginationModel) {
@@ -426,9 +334,5 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     currentPage(skipCount: number, maxItems: number): number {
         return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
-    }
-
-    get supportedPageSizes(): number[] {
-        return this.userPreferences.getDefaultPageSizes();
     }
 }

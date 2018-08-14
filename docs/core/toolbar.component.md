@@ -13,19 +13,14 @@ Simple container for headers, titles, actions and breadcrumbs.
 ## Contents
 
 -   [Basic Usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
-
 -   [Details](#details)
-
     -   [Custom title](#custom-title)
     -   [Divider](#divider)
     -   [Spacer](#spacer)
     -   [Dropdown menu](#dropdown-menu)
     -   [Custom color](#custom-color)
-
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -46,7 +41,7 @@ Simple container for headers, titles, actions and breadcrumbs.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | color | `string` |  | Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. |
 | title | `string` | "" | Toolbar title. |
 

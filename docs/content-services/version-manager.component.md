@@ -27,7 +27,7 @@ Displays the version history of a node with the ability to upload a new version.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | allowDownload | `boolean` | true | Enable/disable downloading a version of the current node. |
 | node | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | Target node to manage version history. |
 | showComments | `boolean` | true | Toggles showing/hiding of comments. |
@@ -35,9 +35,9 @@ Displays the version history of a node with the ability to upload a new version.
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
-| uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs during upload. |
-| uploadSuccess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a file is uploaded successfully. |
+| ---- | ---- | ----------- |
+| uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when an error occurs during upload. |
+| uploadSuccess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when a file is uploaded successfully. |
 
 ## Details
 

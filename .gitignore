@@ -4,6 +4,8 @@ bundles
 workspace.xml
 .idea/
 dist/
+e2e-output/
+e2e/downloads/
 ng2-components/coverage/
 !systemjs.config.js
 demo-shell-ng2/app/components/router/
@@ -24,3 +26,5 @@ src/environments/
 /lib/config/exportCheck.js
 /lib/config/export-check/export-new.json
 /lib/config/export-check/exportCheck.js
+/docs/sourceinfo
+/docs/docs.json

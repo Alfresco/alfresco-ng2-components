@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { ContainerModel } from '../core/container.model';
 import { FormFieldTypes } from '../core/form-field-types';
@@ -123,7 +123,7 @@ describe('RadioButtonsWidgetComponent', () => {
     });
 
     it('should update the field value when an option is selected', () => {
-        spyOn(widget, 'onFieldChanged').and.returnValue(Observable.of({}));
+        spyOn(widget, 'onFieldChanged').and.returnValue(of({}));
         widget.onOptionClick('fake-opt');
 
         expect(widget.field.value).toEqual('fake-opt');
@@ -153,7 +153,7 @@ describe('RadioButtonsWidgetComponent', () => {
 
             beforeEach(async(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
-                spyOn(stubFormService, 'getRestFieldValues').and.returnValue(Observable.of(restOption));
+                spyOn(stubFormService, 'getRestFieldValues').and.returnValue(of(restOption));
                 radioButtonWidget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }), {
                     id: 'radio-id',
                     name: 'radio-name',
@@ -196,7 +196,7 @@ describe('RadioButtonsWidgetComponent', () => {
                     restUrl: 'rest-url'
                 });
                 stubFormService = fixture.debugElement.injector.get(FormService);
-                spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.of(restOption));
+                spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(of(restOption));
                 radioButtonWidget.field.isVisible = true;
                 fixture.detectChanges();
             }));

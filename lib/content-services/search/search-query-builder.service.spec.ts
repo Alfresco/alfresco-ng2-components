@@ -18,6 +18,7 @@
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { SearchConfiguration } from './search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
+import { FacetField } from './facet-field.interface';
 
 describe('SearchQueryBuilder', () => {
 
@@ -189,10 +190,10 @@ describe('SearchQueryBuilder', () => {
     it('should fetch facet from the config by label', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetFields: [
+            facetFields: { 'fields': [
                 { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
                 { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
-            ]
+            ]}
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const field = builder.getFacetField('Size');
@@ -204,15 +205,15 @@ describe('SearchQueryBuilder', () => {
     it('should not fetch facet from the config by label', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetFields: [
+            facetFields: { 'fields': [
                 { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
                 { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
-            ]
+            ]}
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const field = builder.getFacetField('Missing');
 
-        expect(field).toBeUndefined();
+        expect(field).toBeFalsy();
     });
 
     xit('should build query and raise an event on update', async () => {
@@ -358,16 +359,16 @@ describe('SearchQueryBuilder', () => {
             categories: [
                 <any> { id: 'cat1', enabled: true }
             ],
-            facetFields: [
+            facetFields: { fields: [
                 { field: 'field1', label: 'field1', mincount: 1, limit: null, offset: 0, prefix: null },
                 { field: 'field2', label: 'field2', mincount: 1, limit: null, offset: 0, prefix: null }
-            ]
+            ]}
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
-        expect(compiled.facetFields.facets).toEqual(jasmine.objectContaining(config.facetFields));
+        expect(compiled.facetFields.facets).toEqual(jasmine.objectContaining(config.facetFields.fields));
     });
 
     it('should build query with sorting', () => {
@@ -418,6 +419,45 @@ describe('SearchQueryBuilder', () => {
 
         const compiled = builder.buildQuery();
         expect(compiled.query.query).toBe('(my query) AND (cm:name:test)');
+    });
+
+    it('should group facet buckets by field', () => {
+        const field1: FacetField = {
+            field: 'f1',
+            label: 'f1'
+        };
+
+        const field1buckets = [
+            { checked: true, filterQuery: 'f1-q1', label: 'f1-q1', count: 1 },
+            { checked: true, filterQuery: 'f1-q2', label: 'f1-q2', count: 1 }
+        ];
+
+        const field2: FacetField = {
+            field: 'f2',
+            label: 'f2'
+        };
+
+        const field2buckets = [
+            { checked: true, filterQuery: 'f2-q1', label: 'f2-q1', count: 1 },
+            { checked: true, filterQuery: 'f2-q2', label: 'f2-q2', count: 1 }
+        ];
+
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ]
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+
+        builder.addUserFacetBucket(field1, field1buckets[0]);
+        builder.addUserFacetBucket(field1, field1buckets[1]);
+        builder.addUserFacetBucket(field2, field2buckets[0]);
+        builder.addUserFacetBucket(field2, field2buckets[1]);
+
+        const compiledQuery = builder.buildQuery();
+        const expectedResult = '(f1-q1 OR f1-q2) AND (f2-q1 OR f2-q2)';
+
+        expect(compiledQuery.query.query).toBe(expectedResult);
     });
 
 });

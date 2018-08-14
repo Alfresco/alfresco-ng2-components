@@ -29,7 +29,8 @@ import {
     SearchRequest
 } from 'alfresco-js-api';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class CustomResourcesService {
@@ -86,7 +87,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).catch(err => this.handleError(err));
+        }).pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -132,7 +133,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).catch(err => this.handleError(err));
+        }).pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -171,7 +172,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).catch(err => this.handleError(err));
+        }).pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -202,7 +203,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).catch(err => this.handleError(err));
+        }).pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -220,7 +221,8 @@ export class CustomResourcesService {
             skipCount: pagination.skipCount
         };
 
-        return Observable.fromPromise(this.apiService.nodesApi.getDeletedNodes(options)).catch(err => this.handleError(err));
+        return from(this.apiService.nodesApi.getDeletedNodes(options))
+            .pipe(catchError(err => this.handleError(err)));
 
     }
 
@@ -239,7 +241,8 @@ export class CustomResourcesService {
             skipCount: pagination.skipCount
         };
 
-        return Observable.fromPromise(this.apiService.sharedLinksApi.findSharedLinks(options)).catch(err => this.handleError(err));
+        return from(this.apiService.sharedLinksApi.findSharedLinks(options))
+            .pipe(catchError(err => this.handleError(err)));
     }
 
     /**
@@ -256,6 +259,17 @@ export class CustomResourcesService {
         }
 
         return isCustomSources;
+    }
+
+    isSupportedSource(folderId: string): boolean {
+        let isSupportedSources = false;
+        const sources = ['-my-', '-root-', '-shared-'];
+
+        if (sources.indexOf(folderId) > -1) {
+            isSupportedSources = true;
+        }
+
+        return isSupportedSources;
     }
 
     /**
@@ -289,40 +303,35 @@ export class CustomResourcesService {
      * @param pagination Specifies how to paginate the results
      * @returns List of node IDs
      */
-    getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel): Observable<string[]> {
-        if (nodeId === '-trashcan-') {
-            return Observable.fromPromise(this.apiService.nodesApi.getDeletedNodes()
-                .then(result => result.list.entries.map(node => node.entry.id)));
+    getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel = {}): Observable<string[]> {
+        if (this.isCustomSource(nodeId)) {
 
-        } else if (nodeId === '-sharedlinks-') {
-            return Observable.fromPromise(this.apiService.sharedLinksApi.findSharedLinks()
-                .then(result => result.list.entries.map(node => node.entry.nodeId)));
+            return this.loadFolderByNodeId(nodeId, pagination, [])
+                .pipe(map(result => result.list.entries.map((node: any) => {
+                    if (nodeId === '-sharedlinks-') {
+                        return node.entry.nodeId;
 
-        } else if (nodeId === '-sites-') {
-            return Observable.fromPromise(this.apiService.sitesApi.getSites()
-                .then(result => result.list.entries.map(node => node.entry.guid)));
+                    } else if (nodeId === '-sites-' || nodeId === '-mysites-') {
+                        return node.entry.guid;
 
-        } else if (nodeId === '-mysites-') {
-            return Observable.fromPromise(this.apiService.peopleApi.getSiteMembership('-me-')
-                .then(result => result.list.entries.map(node => node.entry.guid)));
+                    } else if (nodeId === '-favorites-') {
+                        return node.entry.targetGuid;
+                    }
 
-        } else if (nodeId === '-favorites-') {
-            return Observable.fromPromise(this.apiService.favoritesApi.getFavorites('-me-')
-                .then(result => result.list.entries.map(node => node.entry.targetGuid)));
+                    return node.entry.id;
+                })));
 
-        } else if (nodeId === '-recent-') {
-            return new Observable(observer => {
-                this.getRecentFiles('-me-', pagination)
-                    .subscribe((recentFiles) => {
-                        let recentFilesIdS = recentFiles.list.entries.map(node => node.entry.id);
-                        observer.next(recentFilesIdS);
-                        observer.complete();
-                    });
-            });
-
+        } else if (nodeId) {
+            // cases when nodeId is '-my-', '-root-' or '-shared-'
+            return from(this.apiService.nodesApi.getNode(nodeId)
+                .then(node => [node.entry.id]));
         }
 
-        return Observable.of([]);
+        return of([]);
+    }
+
+    hasCorrespondingNodeIds(nodeId: string): boolean {
+        return this.isCustomSource(nodeId) || this.isSupportedSource(nodeId);
     }
 
     private getIncludesFields(includeFields: string[]): string[] {
@@ -331,9 +340,7 @@ export class CustomResourcesService {
     }
 
     private handleError(error: Response) {
-        // in a real world app, we may send the error to some remote logging infrastructure
-        // instead of just logging it to the console
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 }

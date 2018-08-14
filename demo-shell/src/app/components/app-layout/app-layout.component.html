@@ -1,32 +1,30 @@
-<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="false"[expandedSidenav]= "expandedSidenav" (expanded)="setState($event)">
+<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="hideSidenav" [expandedSidenav]= "expandedSidenav" (expanded)="setState($event)">
 
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu="toggleMenu">
-            <mat-toolbar color="primary" class="adf-app-layout-toolbar mat-elevation-z6">
-                <button mat-icon-button (click)="toggleMenu()">
-                    <mat-icon>menu</mat-icon>
-                </button>
+            <adf-layout-header  id="adf-header" [title]="title | translate" [redirectUrl]="redirectUrl" [logo]="logo" [tooltip]="tooltip | translate" [showSidenavToggle]="showMenu" [color]="color" (clicked)=toggleMenu($event) >
 
-                <span fxFlex="1 1 auto" fxShow fxHide.lt-sm="true">{{'APP_LAYOUT.APP_NAME' | translate }}</span>
+            <div class="adf-app-layout-menu-spacer"></div>
 
-                <div class="adf-app-layout-menu-spacer"></div>
+            <app-search-bar fxFlex="0 1 auto"></app-search-bar>
 
-                <app-search-bar fxFlex="0 1 auto"></app-search-bar>
+            <div class="adf-header-delimiter"></div>
 
-                <adf-userinfo
-                    class="adf-app-layout-user-profile"
-                    [menuPositionX]="'before'"
-                    [menuPositionY]="'above'">
-                </adf-userinfo>
+            <adf-userinfo
+                class="adf-app-layout-user-profile"
+                [menuPositionX]="'before'"
+                [menuPositionY]="'above'">
+            </adf-userinfo>
 
-                <app-theme-picker></app-theme-picker>
-                <button mat-icon-button [matMenuTriggerFor]="langMenu">
-                    <mat-icon>language</mat-icon>
-                </button>
-                <mat-menu #langMenu="matMenu" class="adf-menu">
-                    <adf-language-menu></adf-language-menu>
-                </mat-menu>
-            </mat-toolbar>
+            <app-theme-picker></app-theme-picker>
+            <button data-automation-id="language-menu-button" mat-icon-button [matMenuTriggerFor]="langMenu">
+                <mat-icon>language</mat-icon>
+            </button>
+            <mat-menu #langMenu="matMenu" class="adf-menu">
+                <adf-language-menu></adf-language-menu>
+            </mat-menu>
+
+            </adf-layout-header>
         </ng-template>
     </adf-sidenav-layout-header>
 
@@ -45,7 +43,7 @@
         </ng-template>
     </adf-sidenav-layout-navigation>
 
-    <adf-sidenav-layout-content>
+    <adf-sidenav-layout-content >
         <ng-template>
             <router-outlet></router-outlet>
         </ng-template>

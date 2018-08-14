@@ -23,11 +23,10 @@ import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { CoreModule } from '../../core.module';
 
-import { Observable } from 'rxjs/Observable';
+import { throwError } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
-import 'rxjs/add/observable/throw';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
@@ -143,7 +142,7 @@ describe('ViewerComponent', () => {
             {
                 provide: RenditionsService, useValue: {
                 getRendition: () => {
-                    return Observable.throw('throwed');
+                    return throwError('throwed');
                 }
             }
             },
@@ -176,14 +175,14 @@ describe('ViewerComponent', () => {
         tick();
 
         expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id1', {include: [ 'allowableOperations' ]});
-        expect(component.displayName).toBe('file1');
+        expect(component.fileTitle).toBe('file1');
 
         component.fileNodeId = 'id2';
         component.ngOnChanges({});
         tick();
 
         expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id2', {include: [ 'allowableOperations' ]});
-        expect(component.displayName).toBe('file2');
+        expect(component.fileTitle).toBe('file2');
     }));
 
     describe('Viewer Example Component Rendering', () => {
@@ -233,7 +232,7 @@ describe('ViewerComponent', () => {
 
         beforeEach(() => {
             component.showToolbar = true;
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = 'fake-test-file.pdf';
             component.mimeType = 'application/pdf';
 
             fixture.detectChanges();
@@ -285,27 +284,27 @@ describe('ViewerComponent', () => {
         describe('Toolbar', () => {
 
             it('should render fullscreen button', () => {
-                expect(element.querySelector('[data-automation-id="toolbar-fullscreen"]')).toBeDefined();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-fullscreen"]')).toBeDefined();
             });
 
             it('should not render fullscreen button', () => {
                 component.allowFullScreen = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-fullscreen"]')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-fullscreen"]')).toBeNull();
             });
 
             it('should render default download button', () => {
                 component.allowDownload = true;
 
-                expect(element.querySelector('[data-automation-id="toolbar-download"]')).toBeDefined();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-download"]')).toBeDefined();
             });
 
             it('should not render default download button', () => {
                 component.allowDownload = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-download"]')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-download"]')).toBeNull();
             });
 
             it('should invoke download action with the toolbar button', () => {
@@ -313,7 +312,7 @@ describe('ViewerComponent', () => {
                 spyOn(component, 'downloadContent').and.stub();
                 fixture.detectChanges();
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-download"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-download"]') as HTMLButtonElement;
                 button.click();
 
                 expect(component.downloadContent).toHaveBeenCalled();
@@ -327,7 +326,7 @@ describe('ViewerComponent', () => {
                     expect(e).not.toBeNull();
                 });
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-download"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-download"]') as HTMLButtonElement;
                 button.click();
             }));
 
@@ -335,14 +334,14 @@ describe('ViewerComponent', () => {
                 component.allowPrint = true;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-print"]')).toBeDefined();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-print"]')).toBeDefined();
             });
 
             it('should not render default print button', () => {
                 component.allowPrint = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-print"]')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-print"]')).toBeNull();
             });
 
             it('should invoke print action with the toolbar button', () => {
@@ -351,7 +350,7 @@ describe('ViewerComponent', () => {
 
                 spyOn(component, 'printContent').and.stub();
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-print"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-print"]') as HTMLButtonElement;
                 button.click();
 
                 expect(component.printContent).toHaveBeenCalled();
@@ -365,7 +364,7 @@ describe('ViewerComponent', () => {
                     expect(e).not.toBeNull();
                 });
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-print"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-print"]') as HTMLButtonElement;
                 button.click();
             }));
 
@@ -373,14 +372,14 @@ describe('ViewerComponent', () => {
                 component.allowShare = true;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-share"]')).toBeDefined();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-share"]')).toBeDefined();
             });
 
             it('should not render default share button', () => {
                 component.allowShare = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="toolbar-share"]')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-share"]')).toBeNull();
             });
 
             it('should invoke share action with the toolbar button', () => {
@@ -389,7 +388,7 @@ describe('ViewerComponent', () => {
 
                 spyOn(component, 'shareContent').and.stub();
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-share"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-share"]') as HTMLButtonElement;
                 button.click();
 
                 expect(component.shareContent).toHaveBeenCalled();
@@ -403,7 +402,7 @@ describe('ViewerComponent', () => {
                     expect(e).not.toBeNull();
                 });
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-share"]') as HTMLButtonElement;
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-share"]') as HTMLButtonElement;
                 button.click();
             }));
 
@@ -454,10 +453,6 @@ describe('ViewerComponent', () => {
                 beforeEach(() => {
                     component.overlayMode = false;
                     fixture.detectChanges();
-                });
-
-                it('should header be NOT be present if is not overlay mode', () => {
-                    expect(element.querySelector('header')).toBeNull();
                 });
 
                 it('should Esc button not hide the viewer if is not overlay mode', () => {
@@ -514,7 +509,7 @@ describe('ViewerComponent', () => {
         describe('Extension Type Test', () => {
 
             it('should  extension file pdf  be loaded', async(() => {
-                component.urlFile = 'base/src/assets/fake-test-file.pdf';
+                component.urlFile = 'fake-test-file.pdf';
                 component.ngOnChanges(null);
                 fixture.detectChanges();
 
@@ -592,6 +587,41 @@ describe('ViewerComponent', () => {
             }));
         });
 
+        describe('error handling', () => {
+
+            it('should show unknown view when node file not found', async(() => {
+                spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo')
+                    .and.returnValue(Promise.reject({}));
+
+                component.nodeId = 'the-node-id-of-the-file-to-preview';
+                component.urlFile = null;
+                component.mimeType = null;
+
+                component.ngOnChanges(null);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
+                });
+            }));
+
+            it('should show unknown view when sharedLink file not found', async(() => {
+                spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
+                    .and.returnValue(Promise.reject({}));
+
+                component.sharedLinkId = 'the-Shared-Link-id';
+                component.urlFile = null;
+                component.mimeType = null;
+
+                component.ngOnChanges(null);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
+                });
+
+            }));
+
+        });
+
         describe('MimeType handling', () => {
 
             it('should display a PDF file identified by mimetype when the filename has no extension', async(() => {
@@ -667,7 +697,7 @@ describe('ViewerComponent', () => {
                 });
             });
 
-            it('should display the media player if the file identified by mimetype is a media when the filename has no extension', async(() => {
+            xit('should display the media player if the file identified by mimetype is a media when the filename has no extension', async(() => {
                 component.urlFile = 'content';
                 component.mimeType = 'video/mp4';
                 fixture.detectChanges();
@@ -679,7 +709,7 @@ describe('ViewerComponent', () => {
                 });
             }));
 
-            it('should node without content show unkonwn', async(() => {
+            xit('should node without content show unkonwn', async(() => {
                 const displayName = 'the-name';
                 const nodeDetails = { name: displayName, id: '12' };
                 const contentUrl = '/content/url/path';
@@ -719,7 +749,7 @@ describe('ViewerComponent', () => {
         describe('display name property override by urlFile', () => {
 
             it('should displayName override the default name if is present and urlFile is set', async(() => {
-                component.urlFile = 'base/src/assets/fake-test-file.pdf';
+                component.urlFile = 'fake-test-file.pdf';
                 component.displayName = 'test name';
                 fixture.detectChanges();
                 component.ngOnChanges(null);
@@ -731,7 +761,7 @@ describe('ViewerComponent', () => {
             }));
 
             it('should use the urlFile name if displayName is NOT set and urlFile is set', async(() => {
-                component.urlFile = 'base/src/assets/fake-test-file.pdf';
+                component.urlFile = 'fake-test-file.pdf';
                 component.displayName = null;
                 fixture.detectChanges();
                 component.ngOnChanges(null);
@@ -804,7 +834,7 @@ describe('ViewerComponent', () => {
             component = fixture.componentInstance;
 
             component.showToolbar = true;
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = 'fake-test-file.pdf';
             component.mimeType = 'application/pdf';
             fixture.detectChanges();
         });

@@ -33,7 +33,7 @@
         </adf-sites-dropdown>
     </div>
 
-    <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+    <div id="document-list-container" class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
         <adf-upload-drag-area fxFlex="1 1 auto"
                               [disabled]="disableDragArea"
                               [acceptedFilesType]="getFileFiltering()"
@@ -68,6 +68,7 @@
                 <div fxFlex="0 0 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
                     <button
                         mat-icon-button
+                        data-automation-id="document-list-grid-view"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}"
                         (click)="toogleGalleryView()">
                         <mat-icon *ngIf="displayMode === 'list'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}">view_comfy</mat-icon>
@@ -78,6 +79,7 @@
                         [disabled]="!canCreateContent(documentList.folderNode)"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
                         (error)="openSnackMessage($event)"
+                        (success)="documentList.reload()"
                         [adf-create-folder]="getDocumentListCurrentFolderId()"
                         matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}">
                         <mat-icon>create_new_folder</mat-icon>
@@ -87,6 +89,7 @@
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
                             (error)="openSnackMessage($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry"
+                            (success)="documentList.reload()"
                             matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}">
                         <mat-icon>create</mat-icon>
                     </button>
@@ -116,7 +119,7 @@
                         </mat-icon>
                     </button>
                     <button mat-icon-button
-                            [disabled]="!documentList.selection.length"
+                            disabled
                             [baseShareUrl]="baseShareUrl"
                             [adf-share]="documentList.selection[0]"
                             matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHARE' | translate }}">
@@ -207,6 +210,11 @@
                 (preview)="showFile($event)"
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)">
+                <no-permission-content *ngIf="enableCustomPermissionMessage">
+                    <ng-template>
+                    <h1>Cris you don't have permissions</h1>
+                    </ng-template>
+                </no-permission-content>
                 <empty-folder-content *ngIf="disableDragArea">
                     <ng-template>
                         <div class="adf-empty_template">
@@ -273,7 +281,7 @@
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
                         key="createdAt"
                         type="date"
-                        format="timeAgo"
+                        [format]="enableMediumTimeFormat ? 'medium' : 'timeAgo'"
                         class="desktop-only">
                     </data-column>
 
@@ -337,6 +345,13 @@
                         title="DOCUMENT_LIST.ACTIONS.METADATA"
                         (execute)="onManageMetadata($event)">
                     </content-action>
+                    <content-action
+                        icon="settings_input_component"
+                        title="DOCUMENT_LIST.ACTIONS.PERMISSION"
+                        permission="copy"
+                        (error)="onContentActionError($event)"
+                        (execute)="onPermissionRequested($event)">
+                    </content-action>
                     <!-- document actions -->
                     <content-action
                         icon="storage"
@@ -345,6 +360,7 @@
                         (execute)="onManageVersions($event)">
                     </content-action>
                     <content-action
+                        target="document" 
                         *ngIf="authenticationService.isBpmLoggedIn()"
                         icon="play_arrow"
                         target="document" 
@@ -352,13 +368,7 @@
                         (execute)="startProcesAction($event)">
                     </content-action>
                     <content-action
-                        icon="settings_input_component"
-                        title="DOCUMENT_LIST.ACTIONS.PERMISSION"
-                        permission="copy"
-                        (error)="onContentActionError($event)"
-                        (execute)="onPermissionRequested($event)">
-                    </content-action>
-                    <content-action
+                        target="document" 
                         icon="lock"
                         permission="lock"
                         handler="lock"
@@ -371,7 +381,6 @@
                 *ngIf="!infiniteScrolling"
                 class="adf-documentlist-pagination"
                 [target]="documentList"
-                [supportedPageSizes]="supportedPages"
                 (changePageSize)="onChangePageSize($event)"
                 (changePageNumber)="onChangePageNumber($event)"
                 (nextPage)="onNextPage($event)"
@@ -388,7 +397,7 @@
         <adf-info-drawer-layout *ngIf="showVersions" class="adf-manage-versions-sidebar" fxFlex="0 0 auto">
             <div info-drawer-content>
 
-                <adf-info-drawer [title]="'Details'">
+                <adf-info-drawer [title]="'Details'"  *ngIf="documentList.selection[0]" >
                     <adf-info-drawer-tab [label]="'Properties'">
                         <adf-content-metadata-card
                             [node]="documentList.selection[0].entry">
@@ -428,7 +437,9 @@
 <div *ngIf="processId">
     <adf-start-process
         [values]="formValues"
-        [appId]="processId">
+        [appId]="processId"
+        (start)="closeStartProcess()"
+        (cancel)="closeStartProcess()">
     </adf-start-process>
 </div>
 
@@ -483,7 +494,7 @@
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" (click)="toggleThumbnails()" >{{'DOCUMENT_LIST.THUMBNAILS' |
+            <mat-slide-toggle [color]="'primary'" (click)="toggleThumbnails()" id="enableThumbnails">{{'DOCUMENT_LIST.THUMBNAILS' |
                 translate}}
             </mat-slide-toggle>
         </section>
@@ -515,6 +526,18 @@
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="warnOnMultipleUploads">
                 {{'APP.WARN-MULTIPLE-UPLOADS' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="enableCustomPermissionMessage">
+                {{'APP.CUSTOM-PERMISSION-MESSAGE' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="enableMediumTimeFormat" id="enableMediumTimeFormat">
+                {{'APP.MEDIUM-TIME-FORMAT' | translate}}
             </mat-slide-toggle>
         </section>
 
@@ -569,7 +592,7 @@
             </adf-upload-button>
         </div>
         <section>
-            <mat-checkbox [(ngModel)]="enableUpload">
+            <mat-checkbox id="adf-disable-upload" [(ngModel)]="enableUpload">
                 {{'DOCUMENT_LIST.DESCRIPTION_UPLOAD' | translate}}
             </mat-checkbox>
         </section>

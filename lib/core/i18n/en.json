@@ -119,11 +119,11 @@
     },
     "HOST_SETTINGS": {
       "TYPE-AUTH": "Authentication type",
-      "BASIC": "Basic Auth",
+      "BASIC": "Basic Authentication",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "implicitFlow",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Provider",
-      "REQUIRED": "The field is required",
+      "REQUIRED": "This field is required",
       "CS_URL_ERROR": "Content Services address doesn't match the URL format",
       "PS_URL_ERROR": "Process Services address doesn't match the URL format",
       "TITLE": "Settings",
@@ -132,12 +132,18 @@
       "BACK": "Back",
       "APPLY": "APPLY",
       "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL.",
-      "REDIRECT": "Redirect Uri",
+      "REDIRECT": "Redirect URI",
+      "REDIRECT_LOGOUT": "Redirect URI Logout",
       "SILENT": "Silent Login",
       "SCOPE": "Scope",
-      "CLIENT": "ClientId"
+      "CLIENT": "Client ID"
     },
     "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Add New",
+        "NAME": "Name",
+        "VALUE": "Value"
+      },
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Use a number format",
         "INT_VALIDATION_ERROR": "Use an integer format"
@@ -167,7 +173,7 @@
   },
   "COMMENTS": {
     "NONE": "No comments",
-    "ADD": "Add a comment",
+    "ADD": "Add",
     "HEADER": "Comments ({{ count }})",
     "CREATED_BY_HEADER": "Created by",
     "MESSAGE_HEADER": "Message",
@@ -288,36 +294,30 @@
       "TITLE": "We hit a problem.",
       "DESCRIPTION": "Looks like something went wrong.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home",
-        "ROUTE": "Home"
+        "TEXT": "Back to home"
       }
     },
     "403": {
       "TITLE": "You don't have permission to access this server.",
       "DESCRIPTION": "You're not allowed access to this resource on the server.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Report issue",
-        "URL": ""
+        "TEXT": "Report issue"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home",
-        "ROUTE": "Home"
+        "TEXT": "Back to home"
       }
     },
     "404": {
       "TITLE": "An error occurred.",
       "DESCRIPTION": "We couldn’t find the page you were looking for.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home",
-        "ROUTE": "Home"
+        "TEXT": "Back to home"
       }
     }
   }

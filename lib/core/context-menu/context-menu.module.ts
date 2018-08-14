@@ -22,24 +22,25 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
 import { ContextMenuDirective } from './context-menu.directive';
-import { ContextMenuService } from './context-menu.service';
+import { ContextMenuListComponent } from './context-menu-list.component';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     declarations: [
         ContextMenuHolderComponent,
-        ContextMenuDirective
+        ContextMenuDirective,
+        ContextMenuListComponent
     ],
     exports: [
         ContextMenuHolderComponent,
         ContextMenuDirective
     ],
-    providers: [
-        ContextMenuService
+    entryComponents: [
+        ContextMenuListComponent
     ]
 })
 export class ContextMenuModule {}

@@ -17,8 +17,9 @@
 
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from } from 'rxjs';
 import { NodeMetadata } from '../models/node-metadata.model';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class NodeService {
@@ -31,7 +32,8 @@ export class NodeService {
      * @param nodeId Node Id
      */
     public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId)).map(this.cleanMetadataFromSemicolon);
+        return from(this.apiService.getInstance().nodes.getNodeInfo(nodeId))
+            .pipe(map(this.cleanMetadataFromSemicolon));
     }
 
     /**
@@ -69,7 +71,7 @@ export class NodeService {
 
         // TODO: requires update to alfresco-js-api typings
         let apiService: any = this.apiService.getInstance();
-        return Observable.fromPromise(apiService.nodes.addNode('-root-', body, {}));
+        return from(apiService.nodes.addNode('-root-', body, {}));
     }
 
     private generateUuid() {

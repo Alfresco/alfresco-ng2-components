@@ -31,7 +31,7 @@
                 }
             }
 
-            .mat-input-underline .mat-input-ripple {
+            .mat-form-field-underline .mat-form-field-ripple {
                 height: 1px;
                 transition: none;
             }
@@ -153,7 +153,7 @@
                             }
 
                             & .adf-name-location-cell-name {
-                                padding: 18px 0 2px 0;
+                                padding: 5px 0 2px 0;
                             }
 
                             &.adf-content-selector-modified-cell {

@@ -6,14 +6,27 @@
       "PROPERTIES": "Eigenschappen",
       "VERSIONS": "Versies"
     },
+    "HOME": {
+      "TITLE": "Angular-componenten voor Alfresco",
+      "DOCUMENTATION": "Documentatie"
+    },
+    "LOGOUT": {
+      "TITLE": "Afmeldingspagina",
+      "SUB_TITLE": "U bent nu afgemeld",
+      "LOGIN": "Aanmelden",
+      "HOME": "Home"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Verwijderen toestaan",
       "SHOW_COMMENTS": "Opmerkingen over versies tonen",
-      "ALLOW_DOWNLOAD": "Downloaden van versies toestaan",
-      "READ_ONLY": "Alleen-lezen"
+      "ALLOW_DOWNLOAD": "Downloaden toestaan",
+      "READ_ONLY": "Alleen-lezen",
+      "COMMENTS": "Opmerkingen weergeven"
     },
     "PERSONAL-FILES": "Persoonlijke bestanden",
     "WARN-MULTIPLE-UPLOADS": "Waarschuwing weergeven bij meerdere uploads.",
+    "CUSTOM-PERMISSION-MESSAGE": "Aangepast machtigingsbericht inschakelen",
+    "MEDIUM-TIME-FORMAT": "Middellange tijdnotatie voor lijst met documenten inschakelen",
     "SEARCH": {
       "RADIO": {
         "NONE": "Geen",
@@ -42,8 +55,13 @@
   "APP_LAYOUT": {
     "APP_NAME": "ADF-demotoepassing",
     "HOME": "Home",
+    "NODE-SELECTOR": "Selectiefunctie voor node",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Navigatiepad",
+    "NOTIFICATIONS": "Meldingen",
+    "TASK_LIST": "Lijst met taken",
+    "PROCESS_LIST": "Lijst met processen",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Aanmelden",
     "CUSTOM_SOURCES": "Aangepaste bronnen",
@@ -58,13 +76,15 @@
     "TRASHCAN": "Prullenbak",
     "SOCIAL": "Sociaal",
     "SETTINGS": "Instellingen",
+    "CONFIG-EDITOR": "Configuratie-editor",
     "OVERLAY_VIEWER": "Overlay-viewer",
     "ABOUT": "Info",
     "SEARCH": "Uitgebreid zoeken",
     "EXTENDED_SEARCH_QUERY_BODY": "Uitgebreid zoeken met queryhoofdcode",
     "WORD_TO_SEARCH": "Zoekterm",
     "SEARCH_CREATED_BY": "Gemaakt door",
-    "SEARCH_SERVICE_APPROACH": "Schakel dit in om de invoereigenschap uit te schakelen en om te configureren via de service"
+    "SEARCH_SERVICE_APPROACH": "Schakel dit in om de invoereigenschap uit te schakelen en om te configureren via de service",
+    "HEADER_DATA": "Koptekstgegevens"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -79,6 +99,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (met selectievakjes)",
+    "THUMBNAILS": "Miniaturen inschakelen",
     "MULTIPLE_FILE_UPLOAD": "Meerdere bestanden uploaden",
     "FOLDER_UPLOAD": "Map uploaden",
     "CUSTOM_FILTER": "Aangepast extensiefilter",
@@ -154,7 +175,8 @@
     "START-TASK": "Taak starten",
     "START-PROCESS": "Proces starten",
     "PROCESS-AUDIT-LOG": "Auditlog van proces",
-    "TASK-AUDIT-LOG": "Auditlog van taak"
+    "TASK-AUDIT-LOG": "Auditlog van taak",
+    "TASK-SHOW-HEADER": "Detailkoptekst weergeven"
   },
   "FORM-LIST": {
     "STORE": "Opslaan",
@@ -170,7 +192,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Voettekst aanmeldingspagina"
+    "LOGIN_FOOTER": "Voettekst aanmeldingspagina",
+    "SHOW_REMEMBERME": "'Mij onthouden' weergeven",
+    "SHOW_SUCCESS_ROUTE": "Succesroute weergeven",
+    "CUSTOM_LOGO": "Aangepast logo"
   },
   "SEARCH": {
     "RESULTS": "Zoekresultaten",
@@ -188,5 +213,15 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Machtiging overnemen",
     "INHERITED_PERMISSIONS_BUTTON": "Machtiging overgenomen"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "App-id invoegen",
+    "APP_ID_TYPE_ERROR": "App-id moet een getal zijn"
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "App-id invoegen",
+    "APP_ID_TYPE_ERROR": "App-id moet een getal zijn"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Aangepaste titel vertaling één",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Aangepaste titel vertaling twee"
 }

@@ -20,10 +20,14 @@
       "ALLOW_DELETE": "Allow delete",
       "SHOW_COMMENTS": "Show comments on versions",
       "ALLOW_DOWNLOAD": "Enable version download",
-      "READ_ONLY": "Read-only"
+      "READ_ONLY": "Read-only",
+      "ALLOW_DOWNLOAD": "Allow Download",
+      "COMMENTS": "Show comments"
     },
     "PERSONAL-FILES": "Personal Files",
     "WARN-MULTIPLE-UPLOADS": "Display warning for multiple uploads.",
+    "CUSTOM-PERMISSION-MESSAGE": "Enable custom permission message",
+    "MEDIUM-TIME-FORMAT": "Enable medium time format for document list",
     "SEARCH": {
       "RADIO": {
         "NONE": "None",
@@ -52,8 +56,13 @@
   "APP_LAYOUT": {
     "APP_NAME": "ADF Demo Application",
     "HOME": "Home",
+    "NODE-SELECTOR": "Node Selector",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Breadcrumb",
+    "NOTIFICATIONS": "Notifications",
+    "TASK_LIST": "Task List",
+    "PROCESS_LIST": "Process List",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
     "CUSTOM_SOURCES": "Custom Sources",
@@ -68,6 +77,7 @@
     "TRASHCAN": "Trashcan",
     "SOCIAL": "Social",
     "SETTINGS": "Settings",
+    "CONFIG-EDITOR": "Configuration Editor",
     "OVERLAY_VIEWER": "Overlay Viewer",
     "ABOUT": "About",
     "SEARCH": "Extended Search",
@@ -75,7 +85,8 @@
     "EXTENDED_SEARCH_QUERY_BODY": "Extended Search with Query Body",
     "WORD_TO_SEARCH": "Search Word",
     "SEARCH_CREATED_BY": "Created By",
-    "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and configure using the service"
+    "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and configure using the service",
+    "HEADER_DATA": "Header Data"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -90,7 +101,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (with checkboxes)",
-    "THUMBNAILS" :"Enable Thumbnails",
+    "THUMBNAILS": "Enable Thumbnails",
     "MULTIPLE_FILE_UPLOAD": "Multiple File Upload",
     "FOLDER_UPLOAD": "Folder upload",
     "CUSTOM_FILTER": "Custom extensions filter",
@@ -166,7 +177,8 @@
     "START-TASK": "Start task",
     "START-PROCESS": "Start process",
     "PROCESS-AUDIT-LOG": "Process Audit log",
-    "TASK-AUDIT-LOG": "Task Audit log"
+    "TASK-AUDIT-LOG": "Task Audit log",
+    "TASK-SHOW-HEADER": "Show details header"
   },
   "FORM-LIST": {
     "STORE": "Store",
@@ -182,7 +194,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Login footer"
+    "LOGIN_FOOTER": "Login footer",
+    "SHOW_REMEMBERME": "Show remember me",
+    "SHOW_SUCCESS_ROUTE": "Show success route",
+    "CUSTOM_LOGO": "Custom Logo"
   },
   "SEARCH": {
     "RESULTS": "Search results",
@@ -200,5 +215,21 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Inherit Permission",
     "INHERITED_PERMISSIONS_BUTTON": "Permission Inherited"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insert App ID",
+      "APP_ID_TYPE_ERROR": "App ID must be a number",
+      "NUMBER_TYPE_ERROR": "Value must be a number"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Starting page"
+    }
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Insert App ID",
+    "APP_ID_TYPE_ERROR": "App ID must be a number"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION ONE",
+  "GROUP-TITLE2-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION TWO"
 }

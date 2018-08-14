@@ -44,7 +44,7 @@ mkdir -p $DIR/../node_modules/@alfresco/adf-content-services
 mkdir -p $DIR/../node_modules/@alfresco/adf-process-services
 mkdir -p $DIR/../node_modules/@alfresco/adf-insights
 
-cp -R $DIR/../lib/dist/core/* $DIR/..//node_modules/@alfresco/adf-core
+cp -R $DIR/../lib/dist/core/* $DIR/../node_modules/@alfresco/adf-core
 cp -R $DIR/../lib/dist/content-services/* $DIR/../node_modules/@alfresco/adf-content-services
 cp -R $DIR/../lib/dist/process-services/* $DIR/../node_modules/@alfresco/adf-process-services
 cp -R $DIR/../lib/dist/insights/* $DIR/../node_modules/@alfresco/adf-insights
@@ -52,7 +52,7 @@ cp -R $DIR/../lib/dist/insights/* $DIR/../node_modules/@alfresco/adf-insights
 echo "====== Build dist demo shell ===== "
 
 npm run server-versions
-ng build --prod --app dist --base-href=$NAME/ -op demo-shell/dist/$NAME || exit 1
+ng build dist --base-href=$NAME/ --output-path demo-shell/dist/$NAME || exit 1
 
 echo "====== e2e test ===== "
 

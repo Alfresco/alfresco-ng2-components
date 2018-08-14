@@ -19,8 +19,8 @@ import { CommentProcessService } from '../services/comment-process.service';
 import { CommentContentService } from '../services/comment-content.service';
 import { CommentModel } from '../models/comment.model';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer } from 'rxjs';
+import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-comments',
@@ -55,7 +55,8 @@ export class CommentsComponent implements OnChanges {
     beingAdded: boolean = false;
 
     constructor(private commentProcessService: CommentProcessService, private commentContentService: CommentContentService) {
-        this.comment$ = new Observable<CommentModel>(observer => this.commentObserver = observer).share();
+        this.comment$ = new Observable<CommentModel>(observer => this.commentObserver = observer)
+            .pipe(share());
         this.comment$.subscribe((comment: CommentModel) => {
             this.comments.push(comment);
         });
@@ -126,9 +127,11 @@ export class CommentsComponent implements OnChanges {
 
     add(): void {
         if (this.message && this.message.trim() && !this.beingAdded) {
+            const comment = this.sanitize(this.message);
+
             this.beingAdded = true;
             if (this.isATask()) {
-                this.commentProcessService.addTaskComment(this.taskId, this.message)
+                this.commentProcessService.addTaskComment(this.taskId, comment)
                     .subscribe(
                         (res: CommentModel) => {
                             this.comments.unshift(res);
@@ -144,7 +147,7 @@ export class CommentsComponent implements OnChanges {
             }
 
             if (this.isANode()) {
-                this.commentContentService.addNodeComment(this.nodeId, this.message)
+                this.commentContentService.addNodeComment(this.nodeId, comment)
                     .subscribe(
                         (res: CommentModel) => {
                             this.comments.unshift(res);
@@ -175,5 +178,11 @@ export class CommentsComponent implements OnChanges {
 
     isANode(): boolean {
         return this.nodeId ? true : false;
+    }
+
+    private sanitize(input: string) {
+        return input.replace(/<[^>]+>/g, '')
+            .replace(/^\s+|\s+$|\s+(?=\s)/g, '')
+            .replace(/\r?\n/g, '<br/>');
     }
 }

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { AssocChildBody, AssocTargetBody } from 'alfresco-js-api';
+
 export interface FileUploadProgress {
     loaded: number;
     total: number;
@@ -28,6 +30,10 @@ export interface FileUploadOptions {
     parentId?: string;
     path?: string;
     nodeType?: string;
+    properties?: any;
+    association?: any;
+    secondaryChildren?: AssocChildBody[];
+    targets?: AssocTargetBody[];
 }
 
 export enum FileUploadStatus {

@@ -29,7 +29,7 @@ import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'adf-viewer',
@@ -175,7 +175,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
      * There is a delay of at least one second between attempts.
      */
     @Input()
-    maxRetries = 5;
+    maxRetries = 10;
 
     /** Emitted when user clicks the 'Back' button. */
     @Output()
@@ -219,6 +219,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     otherMenu: any;
     extension: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
+    fileTitle: string;
 
     private cacheBusterNumber;
 
@@ -298,16 +299,21 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 );
             } else if (this.sharedLinkId) {
 
-                this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(details => {
-                    this.setUpSharedLinkFile(details);
-                    this.isLoading = false;
-                });
+                this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
+                    details => {
+                        this.setUpSharedLinkFile(details);
+                        this.isLoading = false;
+                    },
+                    () => {
+                        this.isLoading = false;
+                        this.logService.error('This sharedLink does not exist');
+                    });
             }
         }
     }
 
     private setUpBlobData() {
-        this.displayName = this.getDisplayName('Unknown');
+        this.fileTitle = this.getDisplayName('Unknown');
         this.mimeType = this.blobFile.type;
         this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
 
@@ -320,7 +326,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private setUpUrlFile() {
         let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
-        this.displayName = this.getDisplayName(filenameFromUrl);
+        this.fileTitle = this.getDisplayName(filenameFromUrl);
         this.extension = this.getFileExtension(filenameFromUrl);
         this.urlFileContent = this.urlFile;
 
@@ -343,7 +349,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.mimeType = data.content.mimeType;
         }
 
-        this.displayName = data.name;
+        this.fileTitle = this.getDisplayName(data.name);
 
         this.urlFileContent = this.apiService.contentApi.getContentUrl(data.id);
         this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + this.cacheBusterNumber : this.urlFileContent;
@@ -371,7 +377,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private setUpSharedLinkFile(details: any) {
         this.mimeType = details.entry.content.mimeType;
-        this.displayName = this.getDisplayName(details.entry.name);
+        this.fileTitle = this.getDisplayName(details.entry.name);
         this.extension = this.getFileExtension(details.entry.name);
         this.fileName = details.entry.name;
 
@@ -401,7 +407,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private getDisplayName(name) {
-        return this.displayName || name;
+        return this.displayName || name ;
     }
 
     scrollTop() {
@@ -648,7 +654,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private async resolveRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
+    private async resolveRendition(nodeId: string, renditionId: string) {
         renditionId = renditionId.toLowerCase();
 
         const supported = await this.apiService.renditionsApi.getRenditions(nodeId);
@@ -664,7 +670,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
             if (status === 'NOT_CREATED') {
                 try {
-                    await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId });
+                    await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId }).then(() => {
+                        this.viewerType = 'in_creation';
+                    });
                     rendition = await this.waitRendition(nodeId, renditionId, 0);
                 } catch (err) {
                     this.logService.error(err);
@@ -676,23 +684,33 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
-        const rendition = await this.apiService.renditionsApi.getRendition(nodeId, renditionId);
+        let currentRetry = 0;
+        return new Promise((resolve, reject) => {
+            let intervalId = setInterval(() => {
+                currentRetry++;
+                if (this.maxRetries >= currentRetry) {
+                    this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition) => {
+                        const status = rendition.entry.status.toString();
+                        if (status === 'CREATED') {
 
-        if (this.maxRetries < retries) {
-            const status = rendition.entry.status.toString();
+                            if (renditionId === 'pdf') {
+                                this.viewerType = 'pdf';
+                            } else if (renditionId === 'imgpreview') {
+                                this.viewerType = 'image';
+                            }
 
-            if (status === 'CREATED') {
-                return rendition;
-            } else {
-                retries += 1;
-                await this.wait(1000);
-                return await this.waitRendition(nodeId, renditionId, retries);
-            }
-        }
-    }
+                            this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
 
-    private wait(ms: number): Promise<any> {
-        return new Promise(resolve => setTimeout(resolve, ms));
+                            clearInterval(intervalId);
+                            return resolve(rendition);
+                        }
+                    }, () => {
+                        this.viewerType = 'error_in_creation';
+                        return reject();
+                    });
+                }
+            }, 1000);
+        });
     }
 
     getSideBarStyle(): string {

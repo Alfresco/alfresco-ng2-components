@@ -20,7 +20,7 @@ Provides a generic "Empty Content" placeholder for components.
                 icon="star_rate"
                 title="APP.BROWSE.FAVORITES.EMPTY_STATE.TITLE"
                 subtitle="APP.BROWSE.FAVORITES.EMPTY_STATE.TEXT">
-            </adf-empty-folder>
+            </adf-empty-content>
         </ng-template>
     </empty-folder-content>
 </adf-document-list>
@@ -31,7 +31,7 @@ Provides a generic "Empty Content" placeholder for components.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | icon | `string` | "cake" | Material Icon to use |
 | subtitle | `string` | "" | String or Resource Key for the title |
 | title | `string` | "" | String or Resource Key for the subtitle |
@@ -48,7 +48,7 @@ Provides a generic "Empty Content" placeholder for components.
                 icon="star_rate"
                 title="APP.BROWSE.FAVORITES.EMPTY_STATE.TITLE"
                 subtitle="APP.BROWSE.FAVORITES.EMPTY_STATE.TEXT">
-            </adf-empty-folder>
+            </adf-empty-content>
         </ng-template>
     </empty-folder-content>
 </adf-document-list>

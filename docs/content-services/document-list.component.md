@@ -13,14 +13,10 @@ Displays the documents from a repository.
 ## Contents
 
 -   [Basic Usage](#basic-usage)
-
 -   [Class members](#class-members)
-
     -   [Properties](#properties)
     -   [Events](#events)
-
 -   [Details](#details)
-
     -   [DOM Events](#dom-events)
     -   [Conditional visibility](#conditional-visibility)
     -   [Card view](#card-view)
@@ -34,14 +30,11 @@ Displays the documents from a repository.
     -   [Location Column](#location-column)
     -   [Actions](#actions)
     -   [Navigation mode](#navigation-mode)
-
 -   [Advanced usage and customization](#advanced-usage-and-customization)
-
     -   [Custom row filter](#custom-row-filter)
     -   [Custom image resolver](#custom-image-resolver)
     -   [Custom 'empty folder' template](#custom-empty-folder-template)
     -   [Custom 'permission denied' template](#custom-permission-denied-template)
-
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -60,46 +53,46 @@ Displays the documents from a repository.
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| ---- | ---- | ------------- | ----------- |
 | allowDropFiles | `boolean` | false | Toggle file drop support for rows (see [Upload Directive](../core/upload.directive.md) for further details |
 | contentActions | `boolean` | false | Toggles content actions for each row |
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
 | contextMenuActions | `boolean` | false | Toggles context menus for each row |
-| currentFolderId | `string` |  null | The ID of the folder node to display or a reserved string alias for special sources |
-| display | `string` |  [`DisplayMode`](../../lib/core/datatable/components/datatable/datatable.component.ts).List | Change the display mode of the table. Can be "list" or "gallery". |
-| emptyFolderImageUrl | `string` | "./assets/images/empty_doc_lib.svg" | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
+| currentFolderId | `string` | null | The ID of the folder node to display or a reserved string alias for special sources |
+| display | `string` | DisplayMode.List | Change the display mode of the table. Can be "list" or "gallery". |
+| emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
 | enableInfiniteScrolling | `boolean` | false | Set document list to work in infinite scrolling mode |
-| folderNode | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  null | Currently displayed folder node |
-| imageResolver | `any \| null` |  null | Custom image resolver |
+| folderNode | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) | null | Currently displayed folder node |
+| imageResolver | `any \| null` | null | Custom image resolver |
 | includeFields | `string[]` |  | Include additional information about the node in the server request.for example: association, isLink, isLocked and others. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | locationFormat | `string` | "/" | The default route for all the location-based columns (if declared). |
 | maxItems | `number` |  | Default value is stored into user preference settings use it only if you are not using the pagination |
 | multiselect | `boolean` | false | Toggles multiselect mode |
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |
-| navigationMode | `string` |  [`DocumentListComponent`](../content-services/document-list.component.md).DOUBLE_CLICK_NAVIGATION | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
-| node | [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) |  null | The Document list will show all the nodes contained in the [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) entity |
-| permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` |  \[] | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
-| rowFilter | `any \| null` |  null | Custom row filter |
+| navigationMode | `string` |  | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
+| node | [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) | null | The Document list will show all the nodes contained in the [NodePaging](../../lib/content-services/document-list/models/document-library.model.ts) entity |
+| permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
+| rowFilter | `any \| null` | null | Custom row filter |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
 | selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `boolean` | true | Toggles the header |
 | skipCount | `number` | 0 | Number of elements to skip over for pagination purposes |
-| sorting | `string[]` |  ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
+| sorting | `string[]` | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | sortingMode | `string` | "client" | Defines sorting mode. Can be either `client` or `server`. |
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the API fails to get the Document List data |
 | folderChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the current display folder changes |
 | nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
 | nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
-| preview | `EventEmitter<NodeEntityEvent>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the Viewer component. |
-| ready | `EventEmitter<NodePaging>` | Emitted when the Document List has loaded all items and is ready for use |
+| preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../core/viewer.component.md). |
+| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the Document List has loaded all items and is ready for use |
 
 ## Details
 

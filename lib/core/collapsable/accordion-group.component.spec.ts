@@ -115,4 +115,15 @@ describe('AccordionGroupComponent', () => {
         header.click();
     }));
 
+    it('should display icon if is present', (done) => {
+        component.headingIcon = 'assignment';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(component.hasHeadingIcon()).toBe(true);
+            let headerText = element.querySelector('.adf-panel-heading-icon');
+            expect(headerText).toBeDefined();
+            done();
+        });
+    });
 });

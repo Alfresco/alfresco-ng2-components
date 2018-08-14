@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { QueryBody, RequestFacetFields, RequestFacetField, RequestSortDefinitionInner } from 'alfresco-js-api';
 import { SearchCategory } from './search-category.interface';
@@ -26,6 +26,7 @@ import { SearchConfiguration } from './search-configuration.interface';
 import { FacetQuery } from './facet-query.interface';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
 import { FacetField } from './facet-field.interface';
+import { FacetFieldBucket } from './facet-field-bucket.interface';
 
 @Injectable()
 export class SearchQueryBuilderService {
@@ -41,6 +42,9 @@ export class SearchQueryBuilderService {
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: Array<SearchSortingDefinition> = [];
 
+    protected userFacetQueries: FacetQuery[] = [];
+    protected userFacetBuckets: { [key: string]: Array<FacetFieldBucket> } = {};
+
     get userQuery(): string {
         return this._userQuery;
     }
@@ -55,27 +59,62 @@ export class SearchQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    constructor(appConfig: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
-        this.config = appConfig.get<SearchConfiguration>('search');
+    constructor(private appConfig: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
         this.resetToDefaults();
     }
 
     resetToDefaults() {
-        if (this.config) {
-            this.categories =
-                (this.config.categories || [])
-                    .filter(category => category.enabled)
-                    .map(category => { return { ...category }; });
-
-            this.filterQueries =
-                (this.config.filterQueries || [])
-                    .map(query => { return {...query}; });
-
+        const template = this.appConfig.get<SearchConfiguration>('search');
+        if (template) {
+            this.config = JSON.parse(JSON.stringify(template));
+            this.categories = (this.config.categories || []).filter(category => category.enabled);
+            this.filterQueries = this.config.filterQueries || [];
+            this.userFacetBuckets = {};
+            this.userFacetQueries = [];
             if (this.config.sorting) {
-                this.sorting =
-                    (this.config.sorting.defaults || [])
-                        .map(sorting => { return { ...sorting }; });
+                this.sorting = this.config.sorting.defaults || [];
             }
+        }
+    }
+
+    addUserFacetQuery(query: FacetQuery) {
+        if (query) {
+            const existing = this.userFacetQueries.find(facetQuery => facetQuery.label === query.label);
+            if (existing) {
+                existing.query = query.query;
+            } else {
+                this.userFacetQueries.push({ ...query });
+            }
+        }
+    }
+
+    removeUserFacetQuery(query: FacetQuery) {
+        if (query) {
+            this.userFacetQueries = this.userFacetQueries
+                .filter(facetQuery => facetQuery.label !== query.label);
+        }
+    }
+
+    addUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
+        if (field && field.field && bucket) {
+            const buckets = this.userFacetBuckets[field.field] || [];
+            const existing = buckets.find(facetBucket => facetBucket.label === bucket.label);
+            if (!existing) {
+                buckets.push(bucket);
+            }
+            this.userFacetBuckets[field.field] = buckets;
+        }
+    }
+
+    getUserFacetBuckets(field: string) {
+        return this.userFacetBuckets[field] || [];
+    }
+
+    removeUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
+        if (field && field.field && bucket) {
+            const buckets = this.userFacetBuckets[field.field] || [];
+            this.userFacetBuckets[field.field] = buckets
+                .filter(facetBucket => facetBucket.label !== bucket.label);
         }
     }
 
@@ -97,15 +136,21 @@ export class SearchQueryBuilderService {
 
     getFacetQuery(label: string): FacetQuery {
         if (label && this.hasFacetQueries) {
-            return this.config.facetQueries.queries.find(query => query.label === label);
+            const result = this.config.facetQueries.queries.find(query => query.label === label);
+            if (result) {
+                return { ...result };
+            }
         }
         return null;
     }
 
     getFacetField(label: string): FacetField {
         if (label) {
-            const fields = this.config.facetFields || [];
-            return fields.find(field => field.label === label);
+            const fields = this.config.facetFields.fields || [];
+            const result = fields.find(field => field.label === label);
+            if (result) {
+                return { ...result };
+            }
         }
         return null;
     }
@@ -117,8 +162,10 @@ export class SearchQueryBuilderService {
 
     async execute() {
         const query = this.buildQuery();
-        const data = await this.alfrescoApiService.searchApi.search(query);
-        this.executed.next(data);
+        if (query) {
+            const data = await this.alfrescoApiService.searchApi.search(query);
+            this.executed.next(data);
+        }
     }
 
     buildQuery(): QueryBody {
@@ -183,7 +230,7 @@ export class SearchQueryBuilderService {
         return false;
     }
 
-    private get sort(): RequestSortDefinitionInner[] {
+    protected get sort(): RequestSortDefinitionInner[] {
         return this.sorting.map(def => {
             return {
                 type: def.type,
@@ -193,7 +240,7 @@ export class SearchQueryBuilderService {
         });
     }
 
-    private get facetQueries(): FacetQuery[] {
+    protected get facetQueries(): FacetQuery[] {
         if (this.hasFacetQueries) {
             return this.config.facetQueries.queries.map(query => {
                 return <FacetQuery> { ...query };
@@ -203,7 +250,7 @@ export class SearchQueryBuilderService {
         return null;
     }
 
-    private getFinalQuery(): string {
+    protected getFinalQuery(): string {
         let query = '';
 
         this.categories.forEach(facet => {
@@ -216,15 +263,36 @@ export class SearchQueryBuilderService {
             }
         });
 
-        const result = [this.userQuery, query]
+        let result = [this.userQuery, query]
             .filter(entry => entry)
             .join(' AND ');
+
+        if (this.userFacetQueries && this.userFacetQueries.length > 0) {
+            const combined = this.userFacetQueries
+                .map(userQuery => userQuery.query)
+                .join(' OR ');
+            result += ` AND (${combined})`;
+        }
+
+        if (this.userFacetBuckets) {
+            Object.keys(this.userFacetBuckets).forEach(key => {
+                const subQuery = (this.userFacetBuckets[key] || [])
+                    .map(bucket => bucket.filterQuery)
+                    .join(' OR ');
+                if (subQuery) {
+                    if (result.length > 0) {
+                        result += ' AND ';
+                    }
+                    result += `(${subQuery})`;
+                }
+            });
+        }
 
         return result;
     }
 
-    private get facetFields(): RequestFacetFields {
-        const facetFields = this.config.facetFields;
+    protected get facetFields(): RequestFacetFields {
+        const facetFields = this.config.facetFields && this.config.facetFields.fields;
 
         if (facetFields && facetFields.length > 0) {
             return {

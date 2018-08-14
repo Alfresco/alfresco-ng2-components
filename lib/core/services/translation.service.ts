@@ -17,17 +17,9 @@
 
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/concat';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/merge';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/toArray';
-import 'rxjs/add/operator/take';
 
 export const TRANSLATION_PROVIDER = new InjectionToken('Injection token for translation providers.');
 
@@ -56,7 +48,7 @@ export class TranslationService {
             }
         }
 
-        userPreference.locale$.subscribe( (locale) => {
+        userPreference.locale$.subscribe((locale) => {
             this.userLang = locale;
             this.use(this.userLang);
         });
@@ -70,20 +62,16 @@ export class TranslationService {
     addTranslationFolder(name: string = '', path: string = '') {
         if (!this.customLoader.providerRegistered(name)) {
             this.customLoader.registerProvider(name, path);
-            if (this.userLang !== this.defaultLang) {
-                this.translate.getTranslation(this.defaultLang).subscribe(() => {
-                    this.translate.getTranslation(this.userLang).subscribe(
-                        () => {
-                            this.translate.use(this.userLang);
-                            this.onTranslationChanged(this.userLang);
-                        }
-                    );
-                });
-            } else {
-                this.translate.getTranslation(this.userLang).subscribe(
-                    () => {
+            if (this.userLang) {
+                this.translate.getTranslation(this.userLang).subscribe(() => {
                         this.translate.use(this.userLang);
                         this.onTranslationChanged(this.userLang);
+                    }
+                );
+            } else {
+                this.translate.getTranslation(this.defaultLang).subscribe(() => {
+                        this.translate.use(this.defaultLang);
+                        this.onTranslationChanged(this.defaultLang);
                     }
                 );
             }
@@ -117,7 +105,7 @@ export class TranslationService {
      * @param interpolateParams String(s) to be interpolated into the main message
      * @returns Translated text
      */
-    get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
+    get(key: string | Array<string>, interpolateParams?: Object): Observable<string | any> {
         return this.translate.get(key, interpolateParams);
     }
 

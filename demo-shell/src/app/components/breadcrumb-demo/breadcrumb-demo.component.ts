@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 
 @Component({
     templateUrl: './breadcrumb-demo.component.html',
-    styleUrls: [`./breadcrumb-demo.component.scss`],
+    styleUrls: [`./breadcrumb-demo.component.scss`]
 })
 export class BreadcrumbDemoComponent {
 

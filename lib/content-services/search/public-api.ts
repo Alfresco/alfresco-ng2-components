@@ -19,8 +19,6 @@ export { FacetFieldBucket } from './facet-field-bucket.interface';
 export { FacetField } from './facet-field.interface';
 export { FacetQuery } from './facet-query.interface';
 export { FilterQuery } from './filter-query.interface';
-export { ResponseFacetField } from './response-facet-field.interface';
-export { ResponseFacetQuery } from './response-facet-query.interface';
 export { SearchCategory } from './search-category.interface';
 export { SearchWidgetSettings } from './search-widget-settings.interface';
 export { SearchWidget } from './search-widget.interface';
@@ -33,6 +31,7 @@ export * from './components/search-control.component';
 export * from './components/search-trigger.directive';
 export * from './components/empty-search-result.component';
 export * from './components/search-filter/search-filter.component';
+export * from './components/search-filter/search-filter.service';
 export * from './components/search-chip-list/search-chip-list.component';
 export * from './components/search-sorting-picker/search-sorting-picker.component';
 

@@ -19,7 +19,7 @@ import {
     AlfrescoApiService, AuthenticationService, ContentService,
     SettingsService, LogService, ThumbnailService
 } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, throwError } from 'rxjs';
 import { NodePaging, DocumentListService } from '../document-list';
 import { PageNode } from './document-library.model.mock';
 
@@ -40,7 +40,7 @@ export class DocumentListServiceMock extends DocumentListService {
 
     getFolder(folder: string) {
         if (this.getFolderReject) {
-            return Observable.throw(this.getFolderRejectError);
+            return throwError(this.getFolderRejectError);
         }
         return Observable.create(observer => {
             observer.next(this.getFolderResult);

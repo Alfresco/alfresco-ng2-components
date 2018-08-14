@@ -1,0 +1,22 @@
+.card-view {
+    &__key-value-pairs {
+        &__col {
+            display: inline-block;
+            width: 39%;
+
+            .mat-form-field {
+                width: 100%;
+            }
+        }
+
+        &__read-only {
+            .mat-table {
+                box-shadow: none;
+            }
+
+            .mat-header-row, .mat-row {
+                padding: 0;
+            }
+        }
+    }
+}

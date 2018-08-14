@@ -1,5 +1,5 @@
 <div class="adf-amount-widget__container adf-amount-widget {{field.className}}" [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
-    <mat-form-field floatPlaceholder="never" class="adf-amount-widget__input">
+    <mat-form-field class="adf-amount-widget__input">
         <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
         <span matPrefix class="adf-amount-widget__prefix-spacing"> {{currency }}</span>
         <input matInput
@@ -7,13 +7,12 @@
                 type="text"
                 [id]="field.id"
                 [required]="isRequired()"
+                [placeholder]="field.placeholder"
                 [value]="field.value"
                 [(ngModel)]="field.value"
                 (ngModelChange)="onFieldChanged(field)"
-                [disabled]="field.readOnly"
-                placeholder="{{field.placeholder}}">
+                [disabled]="field.readOnly">
     </mat-form-field>
     <error-widget [error]="field.validationSummary" ></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>
-

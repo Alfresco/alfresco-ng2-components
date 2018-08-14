@@ -5,18 +5,25 @@
         width: 100%;
         vertical-align: baseline !important;
 
-        .mat-input-element {
-            margin-left: 11px;
-        }
-
-        .mat-input-prefix {
-            position: absolute;
-            margin-top: 58px;
-        }
-
         .mat-input-placeholder {
             margin-top: 5px;
             display: none;
+        }
+
+        .mat-form-field-flex{
+            position: relative;
+            padding-top: 18.5px;
+        }
+
+        .mat-form-field-infix{
+            position: static;
+            padding-top: 19px;
+        }
+
+        .adf-label{
+            position: absolute;
+            top: 18.5px;
+            left:0;
         }
 
     }
@@ -24,12 +31,8 @@
     &-amount-widget__container {
         max-width: 100%;
 
-        .mat-input-placeholder-wrapper {
-            top: -6px !important;
-        }
-
-        .mat-input-placeholder-wrapper {
-            top: 0 !important;
+        .mat-form-field-label-wrapper {
+            top: 34px !important;
             left: 13px;
         }
     }

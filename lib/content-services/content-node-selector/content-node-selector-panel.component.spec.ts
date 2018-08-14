@@ -20,8 +20,7 @@ import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from 'alfresco-js-api';
 import { SearchService, SitesService, setupTestBed } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer, of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
@@ -29,6 +28,7 @@ import { NodePaging } from 'alfresco-js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
+import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 
 const ONE_FOLDER_RESULT = {
     list: {
@@ -119,9 +119,9 @@ describe('ContentNodeSelectorComponent', () => {
                 expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
                 documentListService = TestBed.get(DocumentListService);
                 sitesService = TestBed.get(SitesService);
-                spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(expectedDefaultFolderNode));
-                spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw('No results for test'));
-                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries: [] } }));
+                spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
+                spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
+                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -290,18 +290,19 @@ describe('ContentNodeSelectorComponent', () => {
                 const documentListService = TestBed.get(DocumentListService);
                 const expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
 
-                spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(expectedDefaultFolderNode));
+                spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
 
                 const sitesService = TestBed.get(SitesService);
-                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries: [] } }));
+                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
 
-                getCorrespondingNodeIdsSpy = spyOn(component.documentList, 'getCorrespondingNodeIds').and
+                const customResourcesService = TestBed.get(CustomResourcesService);
+                getCorrespondingNodeIdsSpy = spyOn(customResourcesService, 'getCorrespondingNodeIds').and
                     .callFake(id => {
                         if (id === '-sites-') {
-                            return Observable.of(['123456testId', '09876543testId']);
+                            return of(['123456testId', '09876543testId']);
                         }
-                        return Observable.of([id]);
+                        return of([id]);
                     });
 
                 component.currentFolderId = 'cat-girl-nuku-nuku';
@@ -350,7 +351,8 @@ describe('ContentNodeSelectorComponent', () => {
 
                 expect(cnSearchSpy).toHaveBeenCalled();
                 expect(cnSearchSpy.calls.count()).toBe(2);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25);
+                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', undefined, 0, 25);
+                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId']);
             }));
 
             it('should call the content node selector\'s search with the right parameters on changing the site selectbox\'s value from a custom dropdown menu', fakeAsync(() => {
@@ -367,10 +369,21 @@ describe('ContentNodeSelectorComponent', () => {
 
                 expect(cnSearchSpy).toHaveBeenCalled();
                 expect(cnSearchSpy.calls.count()).toBe(2);
+                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', undefined, 0, 25);
                 expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId']);
             }));
 
-            it('should get the corresponding node ids before the search call on changing the site selectbox\'s value from a custom dropdown menu', fakeAsync(() => {
+            it('should get the corresponding node ids on search when a known alias is selected from dropdown', fakeAsync(() => {
+                typeToSearchBox('vegeta');
+
+                tick(debounceSearch);
+
+                component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
+                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1, 'getCorrespondingNodeIdsSpy calls count should be one after the site changes to known alias \'-sites\-');
+                expect(getCorrespondingNodeIdsSpy.calls.mostRecent().args[0]).toEqual('-sites-');
+            }));
+
+            it('should get the corresponding node ids on search when a known alias is selected from CUSTOM dropdown', fakeAsync(() => {
                 component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
                 fixture.detectChanges();
 
@@ -378,15 +391,37 @@ describe('ContentNodeSelectorComponent', () => {
 
                 tick(debounceSearch);
 
-                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1, 'getCorrespondingNodeIdsSpy calls count should be one after only one search');
+                component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
+                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1);
+                expect(getCorrespondingNodeIdsSpy.calls.mostRecent().args[0]).toEqual('-sites-');
+            }));
+
+            it('should NOT get the corresponding node ids on search when NOTHING is selected from dropdown', fakeAsync(() => {
+                component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
+                fixture.detectChanges();
+
+                typeToSearchBox('vegeta');
+
+                tick(debounceSearch);
+
+                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy calls count should be 0 when no site is selected');
+            }));
+
+            it('should NOT get the corresponding node ids on search when NO known alias is selected from dropdown', fakeAsync(() => {
+                typeToSearchBox('vegeta');
+                tick(debounceSearch);
+
+                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy should not be called');
 
                 component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
 
-                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(2, 'getCorrespondingNodeIdsSpy calls count should be two after the site change');
-                expect(getCorrespondingNodeIdsSpy.calls.allArgs()).toEqual([[undefined], ['namek']]);
+                expect(getCorrespondingNodeIdsSpy).not.toHaveBeenCalled();
             }));
 
-            it('should NOT get the corresponding node ids before the search call on changing the site selectbox\'s value from default dropdown menu', fakeAsync(() => {
+            it('should NOT get the corresponding node ids on search when NO known alias is selected from CUSTOM dropdown', fakeAsync(() => {
+                component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
+                fixture.detectChanges();
+
                 typeToSearchBox('vegeta');
                 tick(debounceSearch);
 
@@ -659,7 +694,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             beforeEach(() => {
                 const sitesService = TestBed.get(SitesService);
-                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries: [] } }));
+                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
             });
 
             describe('in the case when isSelectionValid is a custom function for checking permissions,', () => {

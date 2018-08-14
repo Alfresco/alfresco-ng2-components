@@ -15,14 +15,17 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation,
-    ChangeDetectorRef, OnDestroy, HostBinding } from '@angular/core';
+import {
+    ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation,
+    ChangeDetectorRef, OnDestroy, HostBinding
+} from '@angular/core';
 
 import { Pagination } from 'alfresco-js-api';
 import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
+import { UserPreferencesService } from '../services/user-preferences.service';
 
 @Component({
     selector: 'adf-pagination',
@@ -53,11 +56,11 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
     /** An array of page sizes. */
     @Input()
-    supportedPageSizes: number[] = [5, 25, 50, 100];
+    supportedPageSizes: number[];
 
     /** Pagination object. */
     @Input()
-    pagination: PaginationModel = PaginationComponent.DEFAULT_PAGINATION;
+    pagination: PaginationModel;
 
     /** Emitted when pagination changes in any way. */
     @Output()
@@ -81,10 +84,20 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
     private paginationSubscription: Subscription;
 
-    constructor(private cdr: ChangeDetectorRef) {
+    constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
+        if (!this.pagination) {
+            let defaultPagination = PaginationComponent.DEFAULT_PAGINATION;
+            defaultPagination.maxItems = this.userPreferencesService.paginationSize;
+            this.pagination = defaultPagination;
+        }
+
+        if (!this.supportedPageSizes) {
+            this.supportedPageSizes =  this.userPreferencesService.getDefaultPageSizes();
+        }
+
         if (this.target) {
             this.paginationSubscription = this.target.pagination.subscribe((pagination: PaginationModel) => {
 

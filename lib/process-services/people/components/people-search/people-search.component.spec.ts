@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserProcessModel, setupTestBed } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { PeopleSearchComponent } from './people-search.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
@@ -51,7 +51,7 @@ describe('PeopleSearchComponent', () => {
         fixture = TestBed.createComponent(PeopleSearchComponent);
         peopleSearchComponent = fixture.componentInstance;
         element = fixture.nativeElement;
-        peopleSearchComponent.results = Observable.of([]);
+        peopleSearchComponent.results = of([]);
         fixture.detectChanges();
     }));
 
@@ -70,7 +70,7 @@ describe('PeopleSearchComponent', () => {
     });
 
     it('should show user which can be involved ', (done) => {
-        peopleSearchComponent.results = Observable.of(userArray);
+        peopleSearchComponent.results = of(userArray);
         peopleSearchComponent.ngOnInit();
         fixture.detectChanges();
 
@@ -93,7 +93,7 @@ describe('PeopleSearchComponent', () => {
             expect(user.firstName).toBe('fake-name');
             done();
         });
-        peopleSearchComponent.results = Observable.of(userArray);
+        peopleSearchComponent.results = of(userArray);
         peopleSearchComponent.ngOnInit();
         fixture.detectChanges();
         fixture.whenStable()
@@ -105,7 +105,7 @@ describe('PeopleSearchComponent', () => {
     });
 
     it('should remove clicked user', (done) => {
-        peopleSearchComponent.results = Observable.of(userArray);
+        peopleSearchComponent.results = of(userArray);
         peopleSearchComponent.ngOnInit();
         fixture.detectChanges();
 

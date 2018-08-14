@@ -39,7 +39,7 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormModule } from './form/form.module';
-import { SidenavLayoutModule } from './sidenav-layout/sidenav-layout.module';
+import { SidenavLayoutModule } from './layout/layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
 import { TemplateModule } from './templates/template.module';
@@ -83,6 +83,18 @@ import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
 import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
+import { AppConfigService } from './app-config/app-config.service';
+import { ContextMenuService } from './context-menu/context-menu.service';
+import { ContextMenuOverlayService } from './context-menu/context-menu-overlay.service';
+import { ActivitiContentService } from './form/services/activiti-alfresco.service';
+import { EcmModelService } from './form/services/ecm-model.service';
+import { FormRenderingService } from './form/services/form-rendering.service';
+import { FormService } from './form/services/form.service';
+import { NodeService } from './form/services/node.service';
+import { ProcessContentService } from './form/services/process-content.service';
+import { WidgetVisibilityService } from './form/services/widget-visibility.service';
+import { EcmUserService } from './userinfo/services/ecm-user.service';
+import { BpmUserService } from './userinfo/services/bpm-user.service';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -124,7 +136,19 @@ export function providers() {
         CommentProcessService,
         CommentContentService,
         SearchConfigurationService,
-        DatePipe
+        DatePipe,
+        AppConfigService,
+        ContextMenuService,
+        ContextMenuOverlayService,
+        ActivitiContentService,
+        EcmModelService,
+        FormRenderingService,
+        FormService,
+        NodeService,
+        ProcessContentService,
+        WidgetVisibilityService,
+        EcmUserService,
+        BpmUserService
     ];
 }
 

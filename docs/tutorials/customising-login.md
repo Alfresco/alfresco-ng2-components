@@ -23,7 +23,7 @@ you can customize the `Login` component can be customised via CSS, HTML and Type
 example, we will customize the header (as described also in the
 [technical documentation](https://alfresco.github.io/adf-component-catalog/components/LoginComponent.html)).
 
-Open the `login.component.html` file and change the content to match the following source code:
+Open the [`login.component`](../core/login.component.md)`.html` file and change the content to match the following source code:
 
 ```html
 <adf-login ...>
@@ -41,4 +41,3 @@ As mentioned earlier, this is a very basic example and the `Login` component can
 much more extensively than this. For a complete and detailed description, full of examples, check the
 [technical documentation about the component](https://alfresco.github.io/adf-component-catalog/components/LoginComponent.html).
 This describes every customization available for the `Login` component.
-

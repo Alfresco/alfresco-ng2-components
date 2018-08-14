@@ -30,7 +30,8 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search',
@@ -110,7 +111,9 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     constructor(private searchService: SearchService,
                 private _elementRef: ElementRef) {
         this.keyPressedStream.asObservable()
-            .debounceTime(200)
+            .pipe(
+                debounceTime(200)
+            )
             .subscribe((searchedWord: string) => {
                 this.loadSearchResults(searchedWord);
             });

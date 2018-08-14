@@ -19,10 +19,11 @@ import { SimpleInheritedPermissionTestComponent } from '../../mock/inherited-per
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { InheritPermissionDirective } from './inherited-button.directive';
 import { NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
-const fakeNodeWithInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}};
-const fakeNodeNoInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : false}};
+const fakeNodeWithInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}, allowableOperations: ['updatePermissions']};
+const fakeNodeNoInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : false}, allowableOperations: ['updatePermissions']};
+const fakeNodeWithInheritNoPermission: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}};
 
 describe('InheritPermissionDirective', () => {
 
@@ -55,12 +56,12 @@ describe('InheritPermissionDirective', () => {
     }));
 
     it('should be able to add inherited permission', async(() => {
-        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeNoInherit));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeNoInherit));
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, nodeBody) => {
             if (nodeBody.permissions.isInheritanceEnabled) {
-                return Observable.of(fakeNodeWithInherit);
+                return of(fakeNodeWithInherit);
             } else {
-                return Observable.of(fakeNodeNoInherit);
+                return of(fakeNodeNoInherit);
             }
         });
         fixture.detectChanges();
@@ -75,12 +76,12 @@ describe('InheritPermissionDirective', () => {
     }));
 
     it('should be able to remove inherited permission', async(() => {
-        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithInherit));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithInherit));
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, nodeBody) => {
             if (nodeBody.permissions.isInheritanceEnabled) {
-                return Observable.of(fakeNodeWithInherit);
+                return of(fakeNodeWithInherit);
             } else {
-                return Observable.of(fakeNodeNoInherit);
+                return of(fakeNodeNoInherit);
             }
         });
         component.updatedNode = true;
@@ -92,6 +93,21 @@ describe('InheritPermissionDirective', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(element.querySelector('#update-notification')).toBeNull();
+        });
+    }));
+
+    it('should not update the node when node has no permission', async(() => {
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithInheritNoPermission));
+        let spyUpdateNode = spyOn(nodeService, 'updateNode');
+        component.updatedNode = true;
+        fixture.detectChanges();
+        const buttonPermission: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#sample-button-permission');
+        expect(buttonPermission).not.toBeNull();
+        expect(element.querySelector('#update-notification')).not.toBeNull();
+        buttonPermission.click();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(spyUpdateNode).not.toHaveBeenCalled();
         });
     }));
 

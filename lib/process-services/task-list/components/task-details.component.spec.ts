@@ -18,14 +18,14 @@
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormService, setupTestBed, BpmUserService } from '@alfresco/adf-core';
-import { CommentProcessService, LogService } from '@alfresco/adf-core';
+import { CommentProcessService, LogService, AuthenticationService } from '@alfresco/adf-core';
 
 import { UserProcessModel } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
+import { noDataMock, taskDetailsMock, standaloneTaskWithForm, standaloneTaskWithoutForm, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
@@ -51,6 +51,7 @@ describe('TaskDetailsComponent', () => {
     let logService: LogService;
     let commentProcessService: CommentProcessService;
     let peopleProcessService: PeopleProcessService;
+    let authService: AuthenticationService;
 
     setupTestBed({
         imports: [
@@ -63,24 +64,27 @@ describe('TaskDetailsComponent', () => {
         logService = TestBed.get(LogService);
 
         const userService: BpmUserService = TestBed.get(BpmUserService);
-        spyOn(userService, 'getCurrentUserInfo').and.returnValue(Observable.of({}));
+        spyOn(userService, 'getCurrentUserInfo').and.returnValue(of({}));
 
         service = TestBed.get(TaskListService);
-        spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of(noDataMock));
+        spyOn(service, 'getTaskChecklist').and.returnValue(of(noDataMock));
 
         formService = TestBed.get(FormService);
 
-        getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(Observable.of(taskDetailsMock));
-        spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
+        getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(of(taskDetailsMock));
+        spyOn(formService, 'getTaskForm').and.returnValue(of(taskFormMock));
         taskDetailsMock.processDefinitionId = null;
-        spyOn(formService, 'getTask').and.returnValue(Observable.of(taskDetailsMock));
+        spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
 
-        getTasksSpy = spyOn(service, 'getTasks').and.returnValue(Observable.of(tasksMock));
-        assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(Observable.of(fakeUser));
-        completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(Observable.of({}));
+        getTasksSpy = spyOn(service, 'getTasks').and.returnValue(of(tasksMock));
+        assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(of(fakeUser));
+        completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(of({}));
         commentProcessService = TestBed.get(CommentProcessService);
 
-        spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of([
+        authService = TestBed.get(AuthenticationService);
+        spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email'}));
+
+        spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([
             {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
             {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
@@ -147,19 +151,37 @@ describe('TaskDetailsComponent', () => {
 
     it('should display task standalone component when the task does not have an associated form', async(() => {
         component.taskId = '123';
+        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithoutForm));
+
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
+            expect(component.isStandaloneTaskWithoutForm()).toBeTruthy();
             expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
         });
     }));
 
-    it('should not display task standalone component when the task have an associated form', async(() => {
+    it('should not display task standalone component when the task has a form', async(() => {
         component.taskId = '123';
+        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithForm));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
+            expect(component.isStandaloneTaskWithForm()).toBeTruthy();
+            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).toBeDefined();
             expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
+        });
+    }));
+
+    it('should display the AttachFormComponent when standaloneTaskWithForm and click on attach button', async(() => {
+        component.taskId = '123';
+        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithForm));
+        fixture.detectChanges();
+        component.onShowAttachForm();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(component.isStandaloneTaskWithForm()).toBeTruthy();
+            expect(fixture.debugElement.query(By.css('adf-attach-form'))).toBeDefined();
         });
     }));
 
@@ -267,7 +289,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should show placeholder message if there is no next task', () => {
-            getTasksSpy.and.returnValue(Observable.of([]));
+            getTasksSpy.and.returnValue(of([]));
             component.onComplete();
             fixture.detectChanges();
             expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
@@ -275,7 +297,7 @@ describe('TaskDetailsComponent', () => {
 
         it('should emit an error event if an error occurs fetching the next task', () => {
             let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
-            getTasksSpy.and.returnValue(Observable.throw({}));
+            getTasksSpy.and.returnValue(throwError({}));
             component.onComplete();
             expect(emitSpy).toHaveBeenCalled();
         });
@@ -414,7 +436,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should return an observable with user search results', (done) => {
-            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.of([{
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([{
                     id: 1,
                     firstName: 'fake-test-1',
                     lastName: 'fake-last-1',
@@ -438,7 +460,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should return an empty list for not valid search', (done) => {
-            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.of([]));
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
 
             component.peopleSearch.subscribe((users) => {
                 expect(users.length).toBe(0);
@@ -448,7 +470,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should log error message when search fails', async(() => {
-            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(Observable.throw(''));
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError(''));
 
             component.peopleSearch.subscribe(() => {
                 expect(logService.error).toHaveBeenCalledWith('Could not load users');

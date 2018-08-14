@@ -6,14 +6,27 @@
       "PROPERTIES": "Propriedades",
       "VERSIONS": "Versões"
     },
+    "HOME": {
+      "TITLE": "Componentes do Angular para Alfresco",
+      "DOCUMENTATION": "Documentação"
+    },
+    "LOGOUT": {
+      "TITLE": "Página de logout",
+      "SUB_TITLE": "Você está desconectado",
+      "LOGIN": "Login",
+      "HOME": "Página Inicial"
+    },
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Permitir apagar",
       "SHOW_COMMENTS": "Mostrar comentários em versões",
-      "ALLOW_DOWNLOAD": "Permitir download da versão",
-      "READ_ONLY": "Somente leitura"
+      "ALLOW_DOWNLOAD": "Permitir download",
+      "READ_ONLY": "Somente leitura",
+      "COMMENTS": "Mostrar comentários"
     },
     "PERSONAL-FILES": "Arquivos pessoais",
     "WARN-MULTIPLE-UPLOADS": "Exibir alerta para vários uploads.",
+    "CUSTOM-PERMISSION-MESSAGE": "Ativar mensagem de permissão personalizada",
+    "MEDIUM-TIME-FORMAT": "Ativar formato de tempo regular para lista de documento",
     "SEARCH": {
       "RADIO": {
         "NONE": "Nenhum",
@@ -42,8 +55,13 @@
   "APP_LAYOUT": {
     "APP_NAME": "Aplicativo Demo ADF",
     "HOME": "Página Inicial",
+    "NODE-SELECTOR": "Seletor de nó",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Trilha de navegação",
+    "NOTIFICATIONS": "Notificações",
+    "TASK_LIST": "Lista de tarefas",
+    "PROCESS_LIST": "Lista de processos",
+    "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
     "CUSTOM_SOURCES": "Origens Personalizadas",
@@ -58,13 +76,15 @@
     "TRASHCAN": "Lixeira",
     "SOCIAL": "Social",
     "SETTINGS": "Configurações",
+    "CONFIG-EDITOR": "Editor de configuração",
     "OVERLAY_VIEWER": "Visualizador de sobreposição",
     "ABOUT": "Sobre",
     "SEARCH": "Pesquisa estendida",
     "EXTENDED_SEARCH_QUERY_BODY": "Pesquisa estendida com corpo de consulta",
     "WORD_TO_SEARCH": "Pesquisar palavras",
     "SEARCH_CREATED_BY": "Criado por",
-    "SEARCH_SERVICE_APPROACH": "Marque essa opção para desativar a inserção e configurar a utilização do serviço"
+    "SEARCH_SERVICE_APPROACH": "Marque essa opção para desativar a inserção e configurar a utilização do serviço",
+    "HEADER_DATA": "Dados do cabeçalho"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -79,6 +99,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Seleção Múltipla (com caixas de seleção)",
+    "THUMBNAILS": "Ativar miniaturas",
     "MULTIPLE_FILE_UPLOAD": "Carregamento de Vários Arquivos",
     "FOLDER_UPLOAD": "Carregamento de Pasta",
     "CUSTOM_FILTER": "Filtro de extensões personalizado",
@@ -154,7 +175,8 @@
     "START-TASK": "Iniciar tarefa",
     "START-PROCESS": "Iniciar processo",
     "PROCESS-AUDIT-LOG": "Log de auditoria de processo",
-    "TASK-AUDIT-LOG": "Log de auditoria de tarefa"
+    "TASK-AUDIT-LOG": "Log de auditoria de tarefa",
+    "TASK-SHOW-HEADER": "Mostrar cabeçalho de detalhes"
   },
   "FORM-LIST": {
     "STORE": "Armazenar",
@@ -170,7 +192,10 @@
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Rodapé de login"
+    "LOGIN_FOOTER": "Rodapé de login",
+    "SHOW_REMEMBERME": "Mostrar o recurso Lembrar-me",
+    "SHOW_SUCCESS_ROUTE": "Mostrar rota de sucesso",
+    "CUSTOM_LOGO": "Logo personalizada"
   },
   "SEARCH": {
     "RESULTS": "Resultados da pesquisa",
@@ -188,5 +213,15 @@
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Herdar permissão",
     "INHERITED_PERMISSIONS_BUTTON": "Permissão herdada"
-  }
+  },
+  "TASK_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Inserir ID do Aplicativo",
+    "APP_ID_TYPE_ERROR": "O ID do aplicativo deve ser um número"
+  },
+  "PROCESS_LIST_DEMO": {
+    "APP_ID_REQUIRED_ERROR": "Inserir ID do Aplicativo",
+    "APP_ID_TYPE_ERROR": "O ID do aplicativo deve ser um número"
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Tradução um de título personalizado",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Tradução dois de título personalizado"
 }

@@ -55,7 +55,8 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
         this.validators = Validators.compose([
             Validators.required,
-            Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+            Validators.pattern(/^-?(0|[1-9]\d*)?$/),
+            Validators.min(0)
         ]);
 
         this.from = new FormControl('', this.validators);
@@ -78,9 +79,8 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             map.set('TO', model.to);
 
             const value = this.formatString(this.format, map);
-            const query = `${this.field}:${value}`;
 
-            this.context.queryFragments[this.id] = query;
+            this.context.queryFragments[this.id] = `${this.field}:${value}`;
             this.context.update();
         }
     }

@@ -17,6 +17,8 @@
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { UserPreferencesService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
+import { HeaderDataService } from '../header-data/header-data.service';
+
 
 @Component({
     templateUrl: 'app-layout.component.html',
@@ -34,6 +36,11 @@ export class AppLayoutComponent implements OnInit {
         { href: '/files', icon: 'folder_open', title: 'APP_LAYOUT.CONTENT_SERVICES' },
         { href: '/breadcrumb', icon: 'label', title: 'APP_LAYOUT.BREADCRUMB' },
         { href: '/notifications', icon: 'alarm', title: 'APP_LAYOUT.NOTIFICATIONS'},
+        { href: '/card-view', icon: 'view_headline', title: 'APP_LAYOUT.CARD_VIEW'},
+        { href: '/header-data', icon: 'edit', title: 'APP_LAYOUT.HEADER_DATA'},
+        { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
+        { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
+        { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES' },
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/trashcan', icon: 'delete', title: 'APP_LAYOUT.TRASHCAN' },
@@ -47,6 +54,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/tag', icon: 'local_offer', title: 'APP_LAYOUT.TAG' },
         { href: '/social', icon: 'thumb_up', title: 'APP_LAYOUT.SOCIAL' },
         { href: '/settings-layout', icon: 'settings', title: 'APP_LAYOUT.SETTINGS' },
+        { href: '/config-editor', icon: 'code', title: 'APP_LAYOUT.CONFIG-EDITOR' },
         { href: '/extendedSearch', icon: 'search', title: 'APP_LAYOUT.SEARCH' },
         { href: '/overlay-viewer', icon: 'pageview', title: 'APP_LAYOUT.OVERLAY_VIEWER' },
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
@@ -54,7 +62,15 @@ export class AppLayoutComponent implements OnInit {
 
     expandedSidenav = false;
 
+    hideSidenav = false;
+    showMenu = true;
+
     enabelRedirect = true;
+    color = 'primary';
+    title = 'APP_LAYOUT.APP_NAME';
+    logo: string;
+    redirectUrl: string | any[] = ['/home'];
+    tooltip = 'APP_LAYOUT.APP_NAME';
 
     ngOnInit() {
         const expand = this.config.get<boolean>('sideNav.expandedSidenav');
@@ -65,9 +81,20 @@ export class AppLayoutComponent implements OnInit {
         } else if (expand) {
             this.expandedSidenav = expand;
         }
+
+        this.headerService.hideMenu.subscribe(show => this.showMenu = show);
+        this.headerService.color.subscribe(color => this.color = color);
+        this.headerService.title.subscribe(title => this.title = title);
+        this.headerService.logo.subscribe(path => this.logo = path);
+        this.headerService.redirectUrl.subscribe(redirectUrl => this.redirectUrl = redirectUrl);
+        this.headerService.tooltip.subscribe(tooltip => this.tooltip = tooltip);
     }
 
-    constructor(private userpreference: UserPreferencesService, private config: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
+    constructor(
+        private userpreference: UserPreferencesService,
+        private config: AppConfigService,
+        private alfrescoApiService: AlfrescoApiService,
+        private headerService: HeaderDataService) {
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
             this.enabelRedirect = false;
         }
@@ -78,4 +105,4 @@ export class AppLayoutComponent implements OnInit {
             this.userpreference.set('expandedSidenav', state);
         }
     }
-}
+ }

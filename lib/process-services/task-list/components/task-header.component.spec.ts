@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { BpmUserService } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import {
     completedTaskDetailsMock,
     taskDetailsMock,
@@ -67,7 +67,7 @@ describe('TaskHeaderComponent', () => {
         component = fixture.componentInstance;
         service = TestBed.get(TaskListService);
         userBpmService = TestBed.get(BpmUserService);
-        spyOn(userBpmService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeBpmAssignedUser));
+        spyOn(userBpmService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmAssignedUser));
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
         appConfigService = TestBed.get(AppConfigService);
     });
@@ -241,7 +241,7 @@ describe('TaskHeaderComponent', () => {
     }));
 
     it('should call the service\'s unclaim method on unclaiming', async(() => {
-        spyOn(service, 'unclaimTask').and.returnValue(Observable.of(true));
+        spyOn(service, 'unclaimTask').and.returnValue(of(true));
         component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
         component.refreshData();
         fixture.detectChanges();
@@ -254,9 +254,9 @@ describe('TaskHeaderComponent', () => {
         });
     }));
 
-    it('should trigger the unclaim event on successfull unclaiming', async(() => {
+    it('should trigger the unclaim event on successful unclaiming', async(() => {
         let unclaimed: boolean = false;
-        spyOn(service, 'unclaimTask').and.returnValue(Observable.of(true));
+        spyOn(service, 'unclaimTask').and.returnValue(of(true));
         component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
         component.refreshData();
         fixture.detectChanges();
@@ -301,7 +301,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
+            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-clickable-value'));
             expect(valueEl.nativeElement.innerText).toBe('test form');
         });
     }));

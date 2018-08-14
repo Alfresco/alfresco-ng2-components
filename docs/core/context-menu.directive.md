@@ -47,9 +47,9 @@ export class MyComponent implements OnInit {
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| context-menu-enabled | `boolean` | false | Is the menu enabled? |
-| context-menu | `any[]` |  | Items for the menu. |
+| ---- | ---- | ------------- | ----------- |
+| enabled | `boolean` | false | Is the menu enabled? |
+| links | `any[]` |  | Items for the menu. |
 
 ## Details
 

@@ -3,8 +3,8 @@
         <div class="adf-pdf-viewer__thumbnails">
             <div class="thumbnails-template__container">
                 <div class="thumbnails-template__buttons">
-                    <button mat-icon-button (click)="toggleThumbnails()">
-                            <mat-icon>close</mat-icon>
+                    <button mat-icon-button data-automation-id='adf-thumbnails-close' (click)="toggleThumbnails()">
+                        <mat-icon>close</mat-icon>
                     </button>
                 </div>
 
@@ -37,8 +37,9 @@
 
         <ng-container *ngIf="allowThumbnails">
             <button mat-icon-button
-                [disabled]="isPanelDisabled"
-                (click)="toggleThumbnails()">
+                    data-automation-id="adf-thumbnails-button"
+                    [disabled]="isPanelDisabled"
+                    (click)="toggleThumbnails()">
                 <mat-icon>dashboard</mat-icon>
             </button>
             <adf-toolbar-divider></adf-toolbar-divider>
@@ -65,14 +66,15 @@
         <div class="adf-pdf-viewer__toolbar-page-selector">
             <span>{{ 'ADF_VIEWER.PAGE_LABEL.SHOWING' | translate }}</span>
             <input #page
-                type="text"
-                pattern="-?[0-9]*(\.[0-9]+)?"
-                value="{{ displayPage }}"
-                (keyup.enter)="inputPage(page.value)">
+                   type="text"
+                   data-automation-id="adf-page-selector"
+                   pattern="-?[0-9]*(\.[0-9]+)?"
+                   value="{{ displayPage }}"
+                   (keyup.enter)="inputPage(page.value)">
             <span>{{ 'ADF_VIEWER.PAGE_LABEL.OF' | translate }} {{ totalPages }}</span>
         </div>
 
-        <div class="adf-viewer__toolbar-page-scale">
+        <div class="adf-viewer__toolbar-page-scale" data-automation-id="adf-page-scale">
             {{ currentScaleText }}
         </div>
 

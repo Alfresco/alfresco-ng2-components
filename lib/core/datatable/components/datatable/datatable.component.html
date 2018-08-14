@@ -33,16 +33,16 @@
             </div>
         </div>
         <mat-form-field *ngIf="display === 'gallery'">
-            <mat-select [value]="getSortingKey()">
+            <mat-select [value]="getSortingKey()" [attr.data-automation-id]="'grid-view-sorting'">
                 <mat-option *ngFor="let col of getSortableColumns()"
                             [value]="col.key"
+                            [attr.data-automation-id]="'grid-view-sorting-'+col.title"
                             (click)="onColumnHeaderClick(col)"
                             (keyup.enter)="onColumnHeaderClick(col)">
                     {{ col.title | translate}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-
     </div>
 
     <div class="adf-datatable-body">
@@ -190,6 +190,9 @@
                     </ng-template>
                     <ng-content select="adf-empty-list"></ng-content>
                 </div>
+            </div>
+            <div *ngFor="let row of fakeRows"
+                 class="adf-datatable-row adf-datatable-row-empty-card">
             </div>
         </ng-container>
         <div *ngIf="!loading && noPermission"

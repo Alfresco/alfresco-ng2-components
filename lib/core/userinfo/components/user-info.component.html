@@ -5,8 +5,8 @@
           class="adf-userinfo-name">{{ecmUser.fullNameDisplay}}</span>
     <span *ngIf="bpmUser && !ecmUser && showName" id="adf-userinfo-bpm-name-display"
           class="adf-userinfo-name">{{bpmUser.fullNameDisplay}}</span>
-    <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button">
-        <div class="adf-userinfo-button-profile" id="user-profile" data-automation-id="user-profile">
+    <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button" data-automation-id="adf-user-profile">
+        <div class="adf-userinfo-button-profile" id="user-profile">
             <div *ngIf="bpmUser && !ecmUser" id="bpm-user-image">
                 <div *ngIf="!hasBpmUserPictureId()" [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-pic'"></div>
                 <div *ngIf="hasBpmUserPictureId()" class="adf-userinfo-profile-container">
@@ -15,7 +15,8 @@
                 </div>
             </div>
             <div *ngIf="ecmUser" id="ecm-user-image">
-                    <div *ngIf="!hasEcmUserAvatarId()" [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'"></div>
+                    <div *ngIf="!hasEcmUserAvatarId()"
+                         [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'"></div>
                     <div *ngIf="hasEcmUserAvatarId()" class="adf-userinfo-profile-container">
                         <img id="logged-user-img" [src]="ecmUserImage" alt="user-info-profile-button"
                             class="adf-userinfo-profile-image"/>
@@ -29,7 +30,9 @@
             <mat-tab id="ecm-panel" label="{{ 'USER_PROFILE.TAB.CS' | translate }}" *ngIf="ecmUser">
                 <mat-card class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + ecmBackgroundImage + ')'">
-                        <div *ngIf="!hasEcmUserAvatarId()" [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
+                        <div *ngIf="!hasEcmUserAvatarId()"
+                             [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'">
+                        </div>
                         <div *ngIf="hasEcmUserAvatarId()" class="adf-userinfo-profile-container adf-hide-small">
                             <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"
                                 alt="ecm-profile-image" [src]="ecmUserImage" />

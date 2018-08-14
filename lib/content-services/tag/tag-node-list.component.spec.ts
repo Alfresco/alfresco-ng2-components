@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from './services/tag.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('TagNodeList', () => {
@@ -57,7 +57,7 @@ describe('TagNodeList', () => {
         fixture = TestBed.createComponent(TagNodeListComponent);
 
         tagService = TestBed.get(TagService);
-        spyOn(tagService, 'getTagsByNodeId').and.returnValue(Observable.of(dataTag));
+        spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(dataTag));
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
@@ -76,9 +76,9 @@ describe('TagNodeList', () => {
                 expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
                 expect(element.querySelector('#tag_name_2').innerHTML).toBe('test3');
 
-                expect(element.querySelector('#tag_delete_0')).not.toBe(null);
-                expect(element.querySelector('#tag_delete_1')).not.toBe(null);
-                expect(element.querySelector('#tag_delete_2')).not.toBe(null);
+                expect(element.querySelector('#tag_chips_delete_test1')).not.toBe(null);
+                expect(element.querySelector('#tag_chips_delete_test2')).not.toBe(null);
+                expect(element.querySelector('#tag_chips_delete_test3')).not.toBe(null);
 
                 done();
             });
@@ -89,12 +89,12 @@ describe('TagNodeList', () => {
         it('Tag list click on delete button should delete the tag', (done) => {
             component.nodeId = 'fake-node-id';
 
-            spyOn(tagService, 'removeTag').and.returnValue(Observable.of(true));
+            spyOn(tagService, 'removeTag').and.returnValue(of(true));
 
             component.results.subscribe(() => {
                 fixture.detectChanges();
 
-                let deleteButton: any = element.querySelector('#tag_delete_0');
+                let deleteButton: any = element.querySelector('#tag_chips_delete_test1');
                 deleteButton.click();
 
                 expect(tagService.removeTag).toHaveBeenCalledWith('fake-node-id', '0ee933fa-57fc-4587-8a77-b787e814f1d2');

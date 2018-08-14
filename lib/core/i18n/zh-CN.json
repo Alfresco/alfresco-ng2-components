@@ -118,6 +118,12 @@
       "ERROR_PLURAL": "{{ number }} 个项目无法删除"
     },
     "HOST_SETTINGS": {
+      "TYPE-AUTH": "身份验证类型",
+      "BASIC": "基本身份验证",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "隐式流",
+      "PROVIDER": "提供程序",
+      "REQUIRED": "此字段为必填项",
       "CS_URL_ERROR": "Content Services 地址与 URL 格式不匹配",
       "PS_URL_ERROR": "Process Services 地址与 URL 格式不匹配",
       "TITLE": "设置",
@@ -125,9 +131,19 @@
       "BP-HOST": "Process Services URL",
       "BACK": "返回",
       "APPLY": "应用",
-      "NOT_VALID": "http(s)://host|ip:port(/path) 无法识别，请使用其他 URL。"
+      "NOT_VALID": "http(s)://host|ip:port(/path) 无法识别，请使用其他 URL。",
+      "REDIRECT": "重定向 URI",
+      "REDIRECT_LOGOUT": "重定向 URI 注销",
+      "SILENT": "静默登录",
+      "SCOPE": "范围",
+      "CLIENT": "客户端 ID"
     },
     "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "新增",
+        "NAME": "名称",
+        "VALUE": "值"
+      },
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "使用数字格式",
         "INT_VALIDATION_ERROR": "使用整数格式"
@@ -193,7 +209,8 @@
     "BUTTON": {
       "LOGIN": "登录",
       "CHECKING": "正在检验",
-      "WELCOME": "欢迎使用"
+      "WELCOME": "欢迎使用",
+      "SSO": "登录 SSO"
     },
     "ACTION": {
       "HELP": "是否需要帮助？",
@@ -277,36 +294,30 @@
       "TITLE": "出现错误。",
       "DESCRIPTION": "看似发生错误。",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "返回到主页",
-        "ROUTE": "主页"
+        "TEXT": "返回到主页"
       }
     },
     "403": {
       "TITLE": "您没有访问此服务器的权限。",
       "DESCRIPTION": "不允许您访问服务器上的此资源。",
       "SECONDARY_BUTTON": {
-        "TEXT": "报告问题",
-        "URL": ""
+        "TEXT": "报告问题"
       },
       "RETURN_BUTTON": {
-        "TEXT": "返回到主页",
-        "ROUTE": "主页"
+        "TEXT": "返回到主页"
       }
     },
     "404": {
       "TITLE": "出现错误。",
       "DESCRIPTION": "我们无法找到您正在查找的页面。",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "返回到主页",
-        "ROUTE": "主页"
+        "TEXT": "返回到主页"
       }
     }
   }

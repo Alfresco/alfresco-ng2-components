@@ -16,7 +16,7 @@
  */
 
 import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 export interface ContentNodeSelectorComponentData {
     title: string;

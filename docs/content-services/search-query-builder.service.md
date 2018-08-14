@@ -12,40 +12,59 @@ Stores information from all the custom search and faceted search widgets, compil
 
 ### Methods
 
--   **addFilterQuery**(query: `string` = `null`)<br/>
-    Adds a new filter query.
-    -   _query:_ `string`  - Text of the query to add
+-   **addFilterQuery**(query: `string`)<br/>
+
+    -   _query:_ `string`  - 
+
+-   **addUserFacetBucket**(field: `FacetField`, bucket: `FacetFieldBucket`)<br/>
+
+    -   _field:_ `FacetField`  - 
+    -   _bucket:_ `FacetFieldBucket`  - 
+
+-   **addUserFacetQuery**(query: `FacetQuery`)<br/>
+
+    -   _query:_ `FacetQuery`  - 
 
 -   **buildQuery**(): `QueryBody`<br/>
-    Builds a new query using the added elements.
-    -   **Returns** `QueryBody` - The resulting query
+
+    -   **Returns** `QueryBody` - 
 
 -   **execute**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<void>`<br/>
-    Executes the query.
-    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<void>` - Notification of query completion
 
--   **getFacetField**(label: `string` = `null`): [`FacetField`](../../lib/content-services/search/facet-field.interface.ts)<br/>
-    Gets the details of a facet field.
-    -   _label:_ `string`  - Identifying label of the facet field
-    -   **Returns** [`FacetField`](../../lib/content-services/search/facet-field.interface.ts) - Facet field details
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<void>` - 
 
--   **getFacetQuery**(label: `string` = `null`): [`FacetQuery`](../../lib/content-services/search/facet-query.interface.ts)<br/>
-    Gets the details of a facet query
-    -   _label:_ `string`  - Identifying label of the facet query
-    -   **Returns** [`FacetQuery`](../../lib/content-services/search/facet-query.interface.ts) - Details of the facet query
+-   **getFacetField**(label: `string`): `FacetField`<br/>
 
--   **getPrimarySorting**(): [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts)<br/>
+    -   _label:_ `string`  - 
+    -   **Returns** `FacetField` - 
+
+-   **getFacetQuery**(label: `string`): `FacetQuery`<br/>
+
+    -   _label:_ `string`  - 
+    -   **Returns** `FacetQuery` - 
+
+-   **getPrimarySorting**(): `SearchSortingDefinition`<br/>
     Returns primary sorting definition.
-    -   **Returns** [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts) - Sorting definition
--   **getSortingOptions**(): [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts)`[]`<br/>
+    -   **Returns** `SearchSortingDefinition` - 
+-   **getSortingOptions**(): `SearchSortingDefinition[]`<br/>
     Returns all pre-configured sorting options that users can choose from.
-    -   **Returns** [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts)`[]` - List of available sorting options
--   **removeFilterQuery**(query: `string` = `null`)<br/>
-    Removes a previously added filter query.
-    -   _query:_ `string`  - The query to remove
+    -   **Returns** `SearchSortingDefinition[]` - 
+-   **removeFilterQuery**(query: `string`)<br/>
+
+    -   _query:_ `string`  - 
+
+-   **removeUserFacetBucket**(field: `FacetField`, bucket: `FacetFieldBucket`)<br/>
+
+    -   _field:_ `FacetField`  - 
+    -   _bucket:_ `FacetFieldBucket`  - 
+
+-   **removeUserFacetQuery**(query: `FacetQuery`)<br/>
+
+    -   _query:_ `FacetQuery`  - 
+
+-   **resetToDefaults**()<br/>
 
 -   **update**()<br/>
-    Builds the query and notifies subscribers when complete.
 
 ## Details
 
@@ -81,5 +100,5 @@ constructor(queryBuilder: SearchQueryBuilderService) {
 
 ## See also
 
-- [Search filter component](search-filter.component.md)
-- [Search Widget interface](search-widget.interface.md)
+-   [Search filter component](search-filter.component.md)
+-   [Search Widget interface](search-widget.interface.md)

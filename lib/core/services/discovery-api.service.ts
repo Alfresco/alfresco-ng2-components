@@ -16,12 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { from, throwError } from 'rxjs';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class DiscoveryApiService {
@@ -32,25 +31,23 @@ export class DiscoveryApiService {
      * Gets product information for Content Services.
      * @returns ProductVersionModel containing product details
      */
-    public getEcmProductInfo() {
-        return Observable.fromPromise(
-            this.apiService.getInstance().discovery.discoveryApi.getRepositoryInformation())
-            .map(res => new EcmProductVersionModel(res))
-            .catch(this.handleError);
+    public getEcmProductInfo(): Observable<EcmProductVersionModel> {
+        return from(this.apiService.getInstance().discovery.discoveryApi.getRepositoryInformation())
+            .pipe(
+                map(res => new EcmProductVersionModel(res)),
+                catchError(err => throwError(err))
+            );
     }
 
     /**
      * Gets product information for Process Services.
      * @returns ProductVersionModel containing product details
      */
-    public getBpmProductInfo() {
-        return Observable.fromPromise(
-            this.apiService.getInstance().activiti.aboutApi.getAppVersion())
-            .map(res => new BpmProductVersionModel(res))
-            .catch(this.handleError);
-    }
-
-    private handleError(error): Observable<any> {
-        return Observable.throw(error);
+    public getBpmProductInfo(): Observable<BpmProductVersionModel> {
+        return from(this.apiService.getInstance().activiti.aboutApi.getAppVersion())
+            .pipe(
+                map(res => new BpmProductVersionModel(res)),
+                catchError(err => throwError(err))
+            );
     }
 }

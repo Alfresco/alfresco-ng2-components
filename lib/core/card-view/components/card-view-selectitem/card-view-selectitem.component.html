@@ -1,0 +1,13 @@
+<div [attr.data-automation-id]="'card-select-label-' + property.key" class="adf-property-label">{{ property.label | translate }}</div>
+<div class="adf-property-value">
+    <div *ngIf="!isEditable()" data-automation-class="read-only-value">{{ property.displayValue | async }}</div>
+    <div *ngIf="isEditable()">
+        <mat-form-field>
+            <mat-select [(value)]="value" (selectionChange)="onChange($event)" data-automation-class="select-box">
+              <mat-option *ngFor="let option of getOptions() | async" [value]="option.key">
+                {{ option.label | translate }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+</div>

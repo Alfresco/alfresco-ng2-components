@@ -17,10 +17,7 @@
 
     .adf-new-task-layout-card {
         width: 66%;
-        margin-right: auto;
-        margin-left: auto;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin: 10px auto;
 
         &-content {
             display: flex;
@@ -61,7 +58,19 @@
     }
 
     .adf-mat-select {
-        padding-top: 0px;
+        padding-top: 0;
+    }
+
+    #people-widget-content {
+        .mat-form-field {
+            width: 100%;
+        }
+        .adf-label {
+            line-height: 0;
+        }
+        .adf-error-text-container {
+            margin-top: -10px;
+        }
     }
 
     adf-start-task {
@@ -73,7 +82,7 @@
                 }
             }
 
-            &-start-task-input-container .mat-input-wrapper {
+            &-start-task-input-container .mat-form-field-wrapper {
                 padding-top: 8px;
             }
 
@@ -110,7 +119,7 @@
 
             &-invalid {
 
-                .mat-input-underline {
+                .mat-form-field-underline {
                     background-color: #f44336 !important;
                 }
 
@@ -118,7 +127,7 @@
                     border-color: mat-color($warn);
                 }
 
-                .mat-input-prefix {
+                .mat-form-field-prefix {
                     color: mat-color($warn);
                 }
 

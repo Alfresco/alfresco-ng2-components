@@ -12,7 +12,7 @@ npm install -g verdaccio-auth-memory
 
 echo "====== Update version ===== "
 
-$DIR/update-version.sh -nextalpha
+$DIR/update-version.sh -nextbeta -components
 
 echo "====== Change registry ===== "
 
@@ -20,4 +20,4 @@ npm set registry http://localhost:4873/
 
 echo "====== Run verdaccio ===== "
 
-concurrently "verdaccio --listen 4873 --config $DIR/config/config-verdaccio.yaml" "$DIR/npm-publish.sh"
+concurrently "verdaccio --listen 4873 --config $DIR/config/config-verdaccio.yaml" "$DIR/npm-publish.sh --sleep 20 -f"

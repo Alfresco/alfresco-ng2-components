@@ -17,11 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { AppDefinitionRepresentation } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/throw';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AppsProcessService {
@@ -35,11 +34,11 @@ export class AppsProcessService {
      * @returns The list of deployed apps
      */
     getDeployedApplications(): Observable<AppDefinitionRepresentation[]> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
-            .map((response: any) => {
-                return response.data;
-            })
-            .catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+            .pipe(
+                map((response: any) => <AppDefinitionRepresentation[]> response.data),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -48,11 +47,11 @@ export class AppsProcessService {
      * @returns The list of deployed apps
      */
     getDeployedApplicationsByName(name: string): Observable<AppDefinitionRepresentation> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
-            .map((response: any) => {
-                return response.data.find(app => app.name === name);
-            })
-            .catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+            .pipe(
+                map((response: any) => <AppDefinitionRepresentation> response.data.find(app => app.name === name)),
+                catchError(err => this.handleError(err))
+            );
     }
 
     /**
@@ -61,16 +60,16 @@ export class AppsProcessService {
      * @returns Details of the app
      */
     getApplicationDetailsById(appId: number): Observable<AppDefinitionRepresentation> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
-            .map((response: any) => {
-                return response.data.find(app => app.id === appId);
-            })
-            .catch(err => this.handleError(err));
+        return from(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+            .pipe(
+                map((response: any) => response.data.find(app => app.id === appId)),
+                catchError(err => this.handleError(err))
+            );
     }
 
     private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error');
     }
 
 }

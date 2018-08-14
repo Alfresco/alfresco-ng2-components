@@ -22,7 +22,7 @@ import { ChecklistComponent } from './checklist.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskListService } from './../services/tasklist.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('ChecklistComponent', () => {
 
@@ -38,7 +38,10 @@ describe('ChecklistComponent', () => {
 
     beforeEach(async(() => {
         service = TestBed.get(TaskListService);
-        spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of([{ id: 'fake-check-changed-id', name: 'fake-check-changed-name' }] ));
+        spyOn(service, 'getTaskChecklist').and.returnValue(of([{
+            id: 'fake-check-changed-id',
+            name: 'fake-check-changed-name'
+        }]));
 
         fixture = TestBed.createComponent(ChecklistComponent);
         checklistComponent = fixture.componentInstance;
@@ -48,8 +51,8 @@ describe('ChecklistComponent', () => {
     }));
 
     it('should show checklist component title', () => {
-        expect(element.querySelector('#checklist-label')).toBeDefined();
-        expect(element.querySelector('#checklist-label')).not.toBeNull();
+        expect(element.querySelector('[data-automation-id=checklist-label]')).toBeDefined();
+        expect(element.querySelector('[data-automation-id=checklist-label]')).not.toBeNull();
     });
 
     it('should show no checklist message', () => {
@@ -167,8 +170,8 @@ describe('ChecklistComponent', () => {
         });
 
         it('should add checklist', async(() => {
-            spyOn(service, 'addTask').and.returnValue(Observable.of({
-              id: 'fake-check-added-id', name: 'fake-check-added-name'
+            spyOn(service, 'addTask').and.returnValue(of({
+                id: 'fake-check-added-id', name: 'fake-check-added-name'
             }));
 
             showChecklistDialog.click();
@@ -183,7 +186,7 @@ describe('ChecklistComponent', () => {
         }));
 
         it('should remove a checklist element', async(() => {
-            spyOn(service, 'deleteTask').and.returnValue(Observable.of(''));
+            spyOn(service, 'deleteTask').and.returnValue(of(''));
 
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(new TaskDetailsModel({
@@ -203,7 +206,7 @@ describe('ChecklistComponent', () => {
         }));
 
         it('should send an event when the checklist is deleted', (done) => {
-            spyOn(service, 'deleteTask').and.returnValue(Observable.of(''));
+            spyOn(service, 'deleteTask').and.returnValue(of(''));
             let disposableDelete = checklistComponent.checklistTaskDeleted.subscribe(() => {
                 expect(element.querySelector('#fake-check-id')).toBeNull();
                 disposableDelete.unsubscribe();
@@ -262,7 +265,7 @@ describe('ChecklistComponent', () => {
         }));
 
         it('should emit checklist task created event when the checklist is successfully added', (done) => {
-            spyOn(service, 'addTask').and.returnValue(Observable.of({ id: 'fake-check-added-id', name: 'fake-check-added-name' }));
+            spyOn(service, 'addTask').and.returnValue(of({ id: 'fake-check-added-id', name: 'fake-check-added-name' }));
 
             let disposableCreated = checklistComponent.checklistTaskCreated.subscribe((taskAdded: TaskDetailsModel) => {
                 fixture.detectChanges();

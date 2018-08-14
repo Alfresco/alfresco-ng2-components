@@ -21,10 +21,12 @@ import { FormsModule } from '@angular/forms';
 import {
     MatButtonModule,
     MatDatepickerModule,
+    MatTableModule,
     MatIconModule,
     MatInputModule,
     MatCheckboxModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
 } from '@angular/material';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -37,18 +39,22 @@ import { CardViewDateItemComponent } from './components/card-view-dateitem/card-
 import { CardViewItemDispatcherComponent } from './components/card-view-item-dispatcher/card-view-item-dispatcher.component';
 import { CardViewMapItemComponent } from './components/card-view-mapitem/card-view-mapitem.component';
 import { CardViewTextItemComponent } from './components/card-view-textitem/card-view-textitem.component';
+import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
+import { CardViewSelectItemComponent } from './components/card-view-selectitem/card-view-selectitem.component';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         FlexLayoutModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         MatDatepickerModule,
         MatNativeDateModule,
         MatCheckboxModule,
         MatInputModule,
+        MatTableModule,
         MatIconModule,
+        MatSelectModule,
         MatButtonModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule
@@ -59,6 +65,8 @@ import { CardViewTextItemComponent } from './components/card-view-textitem/card-
         CardViewDateItemComponent,
         CardViewMapItemComponent,
         CardViewTextItemComponent,
+        CardViewKeyValuePairsItemComponent,
+        CardViewSelectItemComponent,
         CardViewItemDispatcherComponent,
         CardViewContentProxyDirective
     ],
@@ -66,14 +74,18 @@ import { CardViewTextItemComponent } from './components/card-view-textitem/card-
         CardViewBoolItemComponent,
         CardViewDateItemComponent,
         CardViewMapItemComponent,
-        CardViewTextItemComponent
+        CardViewTextItemComponent,
+        CardViewSelectItemComponent,
+        CardViewKeyValuePairsItemComponent
     ],
     exports: [
         CardViewComponent,
         CardViewBoolItemComponent,
         CardViewDateItemComponent,
         CardViewMapItemComponent,
-        CardViewTextItemComponent
+        CardViewTextItemComponent,
+        CardViewSelectItemComponent,
+        CardViewKeyValuePairsItemComponent
     ]
 })
 export class CardViewModule {}
