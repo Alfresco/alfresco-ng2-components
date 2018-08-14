@@ -102,27 +102,16 @@ export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
 export FOLDER=$FOLDER'/'
 export SELENIUM_SERVER=$SELENIUM_SERVER
+export NAME_TEST=$NAME_TEST
 
 npm run lint-e2e || exit 1
 
 if [[  $DEVELOPMENT == "true" ]]; then
   echo "====== Run against local development  ====="
-  if [[  $SINGLE_TEST == "true" ]]; then
-    echo "====== Single test run $NAME_TEST ====="
-    npm run e2e-lib -- --specs ./e2e/$NAME_TEST || exit 1
-  else
     npm run e2e-lib || exit 1
-  fi
 else
-  if [[  $SINGLE_TEST == "true" ]]; then
-   npm install --save-dev jasmine2-protractor-utils -g
-    echo "====== Single test run $NAME_TEST ====="
-     webdriver-manager update --gecko=false --versions.chrome=2.38
-     ./node_modules/protractor/bin/protractor  protractor.conf.js  --specs ./e2e/$NAME_TEST || exit 1
-  else
      webdriver-manager update --gecko=false --versions.chrome=2.38
      ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
-  fi
 fi
 
 

@@ -42,6 +42,7 @@ export class TaskStandaloneComponent {
     @Input()
     hasCompletePermission: boolean = true;
 
+    // TODO: rename all with show prefix
     /** Toggles rendering of the `Cancel` button. */
     @Input()
     hideCancelButton: boolean = true;
