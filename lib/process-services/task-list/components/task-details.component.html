@@ -58,7 +58,7 @@
                                      (showAttachForm)="onShowAttachForm()">
                 </adf-task-standalone>
 
-                <mat-card class="adf-message-card" *ngIf="!isTaskStandaloneComponentVisible() && !isCompletedTask()" >
+                <mat-card class="adf-message-card" *ngIf="!isTaskStandaloneComponentVisible() && !isCompletedTask() && !isFormComponentVisible()" >
                     <mat-card-content>
                         <div class="adf-no-form-message-container">
                             <div class="adf-no-form-message-list">
