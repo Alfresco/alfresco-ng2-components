@@ -37,7 +37,7 @@ import { NodeActions } from '../../actions/ACS/node.actions';
 import Util = require('../../util/util');
 import CONSTANTS = require('../../util/constants');
 
-describe('Version component', () => {
+describe('Version component permissions', () => {
 
     const loginPage = new LoginPage();
     const contentListPage = new ContentListPage();
@@ -127,11 +127,6 @@ describe('Version component', () => {
 
         await uploadActions.uploadFile(this.alfrescoJsApi, differentCreatoFile.location, differentCreatoFile.name, site.entry.guid);
 
-        done();
-    });
-
-    afterAll(async(done) => {
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
         done();
     });
 
