@@ -60,6 +60,21 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
                 private userPreferencesService: UserPreferencesService) {
     }
 
+    getFromValidationMessage(): string {
+        return this.from.hasError('matDatepickerParse') ? 'SEARCH.FILTER.VALIDATION.INVALID-DATE' :
+            this.from.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE' :
+            this.from.hasError('required') ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' :
+            '';
+    }
+
+    getToValidationMessage(): string {
+        return this.to.hasError('matDatepickerParse') ? 'SEARCH.FILTER.VALIDATION.INVALID-DATE' :
+            this.to.hasError('matDatepickerMin') ? 'SEARCH.FILTER.VALIDATION.NO-DAYS' :
+            this.to.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE' :
+            this.to.hasError('required') ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' :
+            '';
+    }
+
     ngOnInit() {
         if (this.settings) {
             this.datePickerDateFormat = this.settings.dateFormat || DEFAULT_FORMAT_DATE;
@@ -107,13 +122,17 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         }
     }
 
-    onChangedHandler(event: any, formControl) {
+    onChangedHandler(event: any, formControl: FormControl) {
         const inputValue = event.srcElement.value;
 
         if (inputValue) {
             const formatDate = this.dateAdapter.parse(inputValue, this.datePickerDateFormat);
             if (formatDate && formatDate.isValid()) {
                 formControl.setValue(formatDate);
+            } else {
+                formControl.setErrors({
+                    'matDatepickerParse': true
+                });
             }
         }
     }
@@ -121,10 +140,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     setLocale(locale) {
         this.dateAdapter.setLocale(locale);
         moment.locale(locale);
-    }
-
-    hasParseError(formControl) {
-        return formControl.hasError('matDatepickerParse') && formControl.getError('matDatepickerParse').text;
     }
 
     forcePlaceholder(event: any) {
