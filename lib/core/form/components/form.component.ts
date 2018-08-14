@@ -438,7 +438,9 @@ export class FormComponent implements OnInit, OnChanges {
             if (!json.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
-            if (this.fieldValidators && this.fieldValidators.length > 0) {
+            if (this.readOnly) {
+                form.fieldValidators = [];
+            } else if (this.fieldValidators && this.fieldValidators.length > 0) {
                 form.fieldValidators = this.fieldValidators;
             }
             return form;

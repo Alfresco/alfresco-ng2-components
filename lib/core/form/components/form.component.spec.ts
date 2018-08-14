@@ -856,4 +856,17 @@ describe('FormComponent', () => {
         radioFieldById = formFields.find(field => field.id === 'radio');
         expect(radioFieldById.value).toBe('option_3');
     });
+
+    it('should remove fieldsValidators if form is read-only', () => {
+        formComponent.readOnly = true;
+
+        let parsedForm = formComponent.parseForm({
+            id: '<id>',
+            fields: [
+                { id: 'field1', type: FormFieldTypes.CONTAINER }
+            ]
+        });
+
+        expect(parsedForm.fieldValidators.length).toBe(0);
+    });
 });
