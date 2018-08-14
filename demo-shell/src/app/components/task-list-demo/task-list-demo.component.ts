@@ -18,7 +18,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { NotificationService } from '@alfresco/adf-core';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -82,8 +81,7 @@ export class TaskListDemoComponent implements OnInit {
     ];
 
     constructor(private route: ActivatedRoute,
-                private formBuilder: FormBuilder,
-                private notificationService: NotificationService) {
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
