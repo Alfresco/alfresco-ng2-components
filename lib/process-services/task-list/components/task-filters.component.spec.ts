@@ -366,7 +366,7 @@ describe('TaskFiltersComponent', () => {
             expect(component.filters.length).toBe(3);
             let filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
             expect(filters.length).toBe(3);
-            expect(filters[0].nativeElement.innerText).toContain('format_align_left');
+            expect(filters[0].nativeElement.innerText).toContain('favorite_border');
             expect(filters[1].nativeElement.innerText).toContain('check_circle');
             expect(filters[2].nativeElement.innerText).toContain('inbox');
             done();
