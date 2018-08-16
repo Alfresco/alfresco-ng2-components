@@ -20,7 +20,7 @@
                             <adf-task-filters
                                 [filterParam]="filterSelected"
                                 [appId]="appId"
-                                [hasIcon]="false"
+                                [hasIcon]="showTaskFilterIcon"
                                 (filterClick)="onTaskFilterClick($event)"
                                 (success)="onSuccessTaskFilterList($event)"
                                 #activitifilter>
@@ -133,7 +133,7 @@
                                 #activitiprocessfilter
                                 [appId]="appId"
                                 [filterParam]="filterSelected"
-                                [showIcon]="false"
+                                [showIcon]="showProcessFilterIcon"
                                 (filterClick)="onProcessFilterChange($event)"
                                 (filterSelected)="onProcessFilterChange($event)"
                                 (success)="onSuccessProcessFilterList($event)">
@@ -237,6 +237,22 @@
                 </adf-analytics>
                 <div *ngIf="!report">
                     <span>{{'ANALYTICS_REPORT.NO_REPORT_MESSAGE' | translate}}</span>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab id="settings-header" href="#settings"
+             label="{{'PS-TAB.SETTINGS-TAB' | translate}}">
+        <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
+            <div class="adf-grid-item adf-settings-menu" fxFlex.gt-md="300px">
+                <span><h3>Settings Menu</h3></span>
+            </div>
+            <div class="adf-grid-item adf-settings-details" fxFlex.gt-md="1 1 auto">
+                <div>
+                    <mat-slide-toggle (change)="changeTaskFilterIcon()">Show task filters icons</mat-slide-toggle>
+                </div>
+                <div>
+                    <mat-slide-toggle (change)="changeProcessFilterIcon()">Show process filters icons</mat-slide-toggle>
                 </div>
             </div>
         </div>
