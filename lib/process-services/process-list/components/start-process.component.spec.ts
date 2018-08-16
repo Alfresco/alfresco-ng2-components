@@ -143,7 +143,7 @@ describe('StartFormComponent', () => {
                 });
             }));
 
-            it('should have start button disabled if the process is not seleted', async(() => {
+            it('should have start button disabled if the process is not selected', async(() => {
                 component.name = 'My new process';
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -154,7 +154,7 @@ describe('StartFormComponent', () => {
 
             it('should emit cancel event on cancel Button', async(() => {
                 fixture.detectChanges();
-                let cancelButton = fixture.nativeElement.querySelector('#cancle_process');
+                let cancelButton = fixture.nativeElement.querySelector('#cancel_process');
                 let cancelSpy: jasmine.Spy = spyOn(component.cancel, 'emit');
                 cancelButton.click();
                 fixture.detectChanges();
@@ -222,8 +222,7 @@ describe('StartFormComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            let selectElement = fixture.nativeElement.querySelector('mat-select');
-            expect(selectElement.children.length).toBe(1);
+            expect(component.processDefinitions.length).toBe(2);
         });
 
         it('should display the option def details', () => {
@@ -232,7 +231,7 @@ describe('StartFormComponent', () => {
             component.processDefinitions = testMultipleProcessDefs;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                let selectElement = fixture.nativeElement.querySelector('mat-autocomplete');
                 let optionElement = fixture.nativeElement.querySelectorAll('mat-option');
                 selectElement.click();
                 expect(selectElement).not.toBeNull();
@@ -242,7 +241,7 @@ describe('StartFormComponent', () => {
             });
         });
 
-        it('should indicate an error to the user if process defs cannot be loaded', async(() => {
+        it('should indicate an error to the user if process definitions cannot be loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(throwError({}));
             component.appId = 123;
             component.ngOnChanges({});
@@ -279,13 +278,24 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should select automatically the processDefinition if the app contain oly one', async(() => {
+        it('should select automatically the processDefinition if the app contain only one', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testProcessDefinitions));
             component.appId = 123;
             component.ngOnChanges({});
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.selectedProcessDef.name).toBe(JSON.parse(JSON.stringify(testProcessDefinitions[0])).name);
+            });
+        }));
+
+        it('should have start button enabled when process is selected', async(() => {
+            component.selectedProcessDef = testProcessDefRepr;
+            component.name = 'My process';
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let startBtn = fixture.nativeElement.querySelector('#button-start');
+                expect(startBtn.disabled).toBe(false);
             });
         }));
 
@@ -298,12 +308,12 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                    let selectElement = fixture.nativeElement.querySelector('mat-autocomplete');
                     expect(selectElement).toBeNull();
                 });
             }));
 
-            it('should show the process dropdown if showSelectProcessDropdown is false', async(() => {
+            it('should show the process dropdown if showSelectProcessDropdown is true', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
                 component.appId = 123;
                 component.processDefinitionName = 'My Process 2';
@@ -311,7 +321,7 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                    let selectElement = fixture.nativeElement.querySelector('mat-autocomplete');
                     expect(selectElement).not.toBeNull();
                 });
             }));
@@ -323,7 +333,7 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                    let selectElement = fixture.nativeElement.querySelector('mat-autocomplete');
                     expect(selectElement).not.toBeNull();
                 });
             }));
@@ -351,7 +361,7 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should get current processDeff', () => {
+        it('should get current processDef', () => {
             component.appId = 456;
             component.ngOnChanges({ appId: change });
             fixture.detectChanges();
@@ -392,7 +402,7 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should call service to start process with the variables setted', async(() => {
+        it('should call service to start process with the variables set up', async(() => {
             let inputProcessVariable: ProcessInstanceVariable[] = [];
 
             let variable: ProcessInstanceVariable = {};

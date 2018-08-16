@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges,
+import { Component, EventEmitter, Input, AfterViewInit, OnChanges,
     Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { ActivitiContentService, AppConfigService, AppConfigValues,
@@ -26,6 +26,9 @@ import { ProcessDefinitionRepresentation } from './../models/process-definition.
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith, delay } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-start-process',
@@ -33,7 +36,7 @@ import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../co
     styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartProcessInstanceComponent implements OnChanges {
+export class StartProcessInstanceComponent implements AfterViewInit, OnChanges {
 
     /** (optional) Limit the list of processes that can be started to those
      * contained in the specified app.
@@ -84,6 +87,9 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     errorMessageId: string = '';
 
+    processControl = new FormControl();
+    filteredOptions: Observable<any>;
+
     constructor(private activitiProcess: ProcessService,
                 private formRenderingService: FormRenderingService,
                 private activitiContentService: ActivitiContentService,
@@ -92,12 +98,40 @@ export class StartProcessInstanceComponent implements OnChanges {
         this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
     }
 
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.filteredOptions = this.processControl.valueChanges
+                .pipe(
+                    startWith(''),
+                    delay(0),
+                    map(value => this._filter(value))
+                );
+        });
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (changes['values'] && changes['values'].currentValue) {
             this.moveNodeFromCStoPS();
         }
 
         this.loadStartProcess();
+    }
+
+    private _filter(value) {
+        let filterValue = '';
+        if (value && value.name) {
+            filterValue = value.name.toLowerCase();
+        } else if (value) {
+            filterValue = value.toLowerCase();
+        }
+        let processDefArray = this.processDefinitions.filter(option => option.name.toLowerCase() === filterValue);
+        this.selectedProcessDef = processDefArray.length ? processDefArray[0] : null;
+
+        return this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
+    }
+
+    displayFn(processDef): string {
+        return processDef ? processDef.name : '';
     }
 
     public loadStartProcess() {
@@ -217,6 +251,10 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     hasProcessName(): boolean {
-        return this.name ? true : false;
+        return !!this.name;
+    }
+
+    onItemSelect(item) {
+        this.selectedProcessDef = item;
     }
 }
