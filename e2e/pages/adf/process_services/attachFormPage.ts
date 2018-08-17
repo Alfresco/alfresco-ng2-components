@@ -72,4 +72,8 @@ export class AttachFormPage {
         Util.waitUntilElementIsVisible(this.cancelButton);
         return this.cancelButton.click();
     }
+
+    checkAttachFormButtonIsDisabled() {
+        return Util.waitUntilElementIsVisible(element(by.css('button[id="adf-no-form-attach-form-button"][disabled]')));
+    }
 }
