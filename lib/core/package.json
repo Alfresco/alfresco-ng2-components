@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-core",
   "description": "Alfresco ADF core",
-  "version": "2.5.0",
+  "version": "2.6.0-beta1",
   "author": "Alfresco Software, Ltd.",
   "main": "bundles/adf-core.js",
   "repository": {
@@ -27,7 +27,7 @@
     "@angular/router": ">=5.1.1",
     "@mat-datetimepicker/core": "2.0.1",
     "@mat-datetimepicker/moment": "2.0.1",
-    "alfresco-js-api": "2.5.0",
+    "alfresco-js-api": "2.6.0-beta1",
     "rxjs": ">=6.2.2",
     "@ngx-translate/core": "^10.0.2",
     "core-js": "2.4.1",
