@@ -28,6 +28,7 @@ import resources = require('../../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Comment Component', () => {
 
@@ -53,7 +54,8 @@ describe('Comment Component', () => {
         First name: <input type="text" name="fname"><br>
             Last name: <input type="text" name="lname"><br>
         <input type="submit" value="Submit">
-        </form>`
+        </form>`,
+        test: 'Test'
     };
 
     beforeAll(async (done) => {
@@ -94,6 +96,26 @@ describe('Comment Component', () => {
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
 
         done();
+    });
+
+    it('[C276947] Should be able to add a comment on ACS and view on ADF', () => {
+
+        browser.controlFlow().execute(async() => {
+            await this.alfrescoJsApi.core.commentsApi.addComment(nodeId, {content: comments.test});
+        });
+
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+
+        commentsPage.checkCommentsTabIsSelected();
+        commentsPage.checkCommentInputIsDisplayed();
+
+        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        expect(commentsPage.getMessage(0)).toEqual(comments.test);
+        expect(commentsPage.getUserName(0)).toEqual(userFullName);
+        expect(commentsPage.getTime(0)).toContain('ago');
+
     });
 
     it('[C276948] Should be able to add a comment on a file', () => {
