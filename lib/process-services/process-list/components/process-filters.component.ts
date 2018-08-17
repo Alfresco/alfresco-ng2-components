@@ -16,18 +16,19 @@
  */
 
 import { AppsProcessService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import { Observable } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './../services/process-filter.service';
+import { IconModel } from '../../app-list/icon.model';
 
 @Component({
     selector: 'adf-process-instance-filters',
     templateUrl: './process-filters.component.html',
     styleUrls: ['process-filters.component.scss']
 })
-export class ProcessFiltersComponent implements OnChanges {
+export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /** The parameters to filter the task filter. If there is no match then the default one
      * (ie, the first filter in the list) is selected.
@@ -68,8 +69,14 @@ export class ProcessFiltersComponent implements OnChanges {
 
     filters: UserProcessInstanceFilterRepresentation [] = [];
 
+    private iconsMDL: IconModel;
+
     constructor(private processFilterService: ProcessFilterService,
                 private appsProcessService: AppsProcessService) {
+    }
+
+    ngOnInit() {
+        this.iconsMDL = new IconModel();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -202,5 +209,12 @@ export class ProcessFiltersComponent implements OnChanges {
 
     private isCurrentFilterEmpty(): boolean {
         return this.currentFilter === undefined || null;
+    }
+
+    /**
+     * Return current filter icon
+     */
+    getFilterIcon(icon): string {
+        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 }
