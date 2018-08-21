@@ -91,7 +91,7 @@ describe('Task Filters Test', () => {
         done();
     });
 
-    it('[C260330] Should display task list when app is in task section', () => {
+    it('[C260330] Should display Task Filter List when app is in Task Tab', () => {
         tasksPage.clickOnCreateButton();
         taskFiltersPage.clickNewTaskButton();
         tasksPage.createNewTask().addName('Test').clickStartButton();
@@ -116,7 +116,7 @@ describe('Task Filters Test', () => {
         expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
     });
 
-    it('[C260348] Should display task list when app is in task section', () => {
+    it('[C260348] Should display task in Complete Tasks List when task is completed', () => {
         expect(taskFiltersPage.checkMyTasksItem()).toBeDefined();
         expect(taskFiltersPage.checkQueuedTaskItem()).toBeDefined();
         expect(taskFiltersPage.checkInvolvedTaskItem()).toBeDefined();
@@ -156,7 +156,7 @@ describe('Task Filters Test', () => {
         expect(taskFiltersPage.checkEmptyTaskDetails()).toBe('No task details found');
     });
 
-    it('[C260349] Should display task list when app is in task section', () => {
+    it('[C260349] Should sort task by name when Name sorting is clicked', () => {
         tasksPage.clickOnCreateButton();
         taskFiltersPage.clickNewTaskButton();
         tasksPage.createNewTask().addName('Test1').clickStartButton();
