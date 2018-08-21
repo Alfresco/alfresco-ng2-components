@@ -35,12 +35,13 @@ describe('Task Details - Form', () => {
     let tasksListPage = new TasksListPage();
     let taskDetailsPage = new TaskDetailsPage();
     let filtersPage = new FiltersPage();
-    let task, user, newForm, attachedForm;
+    let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
 
     beforeAll(async(done) => {
         let users = new UsersActions();
-        let taskModel = new TaskModel();
         let attachedFormModel = {'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0};
+        let otherTaskModel = new TaskModel();
+        let otherAttachedFormModel = {'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0};
         let newFormModel = {'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0};
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -54,29 +55,39 @@ describe('Task Details - Form', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        let emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
-
         attachedForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(attachedFormModel);
 
-        await this.alfrescoJsApi.activiti.taskApi.attachForm(emptyTask.id, {'formId': attachedForm.id});
-
-        task = await this.alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
-
-        await this.alfrescoJsApi.activiti.taskApi.getTaskForm(task.id);
-
         newForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(newFormModel);
+
+        let otherEmptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(otherTaskModel);
+
+        otherAttachedForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(otherAttachedFormModel);
+
+        await this.alfrescoJsApi.activiti.taskApi.attachForm(otherEmptyTask.id, {'formId': otherAttachedForm.id});
+
+        otherTask = await this.alfrescoJsApi.activiti.taskApi.getTask(otherEmptyTask.id);
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
         done();
     });
 
-    beforeEach(() => {
+    beforeEach(async (done) => {
+        let taskModel = new TaskModel();
+
+        let emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
+
+        await this.alfrescoJsApi.activiti.taskApi.attachForm(emptyTask.id, {'formId': attachedForm.id});
+
+        task = await this.alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
+
         processServicesPage.goToProcessServices();
         processServicesPage.goToTaskApp();
         tasksListPage.checkTaskListIsLoaded();
         filtersPage.goToFilter('Involved Tasks');
         tasksListPage.checkTaskListIsLoaded();
+
+        done();
     });
 
     it('[C280018] Should be able to change the form in a task', () => {
@@ -86,9 +97,13 @@ describe('Task Details - Form', () => {
         taskDetailsPage.clickEditFormButton();
 
         taskDetailsPage.checkAttachFormDropdownIsDisplayed();
+        taskDetailsPage.checkAttachFormButtonIsDisabled();
+
         taskDetailsPage.clickAttachFormDropdown();
 
         taskDetailsPage.selectAttachFormOption(newForm.name);
+        taskDetailsPage.checkSelectedForm(newForm.name);
+        taskDetailsPage.checkAttachFormButtonIsEnabled();
 
         taskDetailsPage.checkCancelAttachFormIsDisplayed();
         taskDetailsPage.clickCancelAttachForm();
@@ -119,5 +134,17 @@ describe('Task Details - Form', () => {
         taskDetailsPage.clickRemoveAttachForm();
 
         taskDetailsPage.checkFormIsAttached('No form');
+    });
+
+    it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', () => {
+        tasksListPage.selectTaskFromTasksList(task.name);
+
+        taskDetailsPage.checkEditFormButtonIsDisplayed();
+        taskDetailsPage.clickEditFormButton();
+
+        taskDetailsPage.checkRemoveAttachFormIsDisplayed();
+
+        tasksListPage.selectTaskFromTasksList(otherTask.name);
+        taskDetailsPage.checkFormIsAttached(otherAttachedForm.name);
     });
 });
