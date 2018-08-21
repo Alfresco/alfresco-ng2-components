@@ -22,6 +22,7 @@ import {
 import {
     AfterContentInit, Component, ContentChild, EventEmitter,
     Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import moment from 'moment-es6';
 
 import { Observable, BehaviorSubject } from 'rxjs';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
@@ -37,6 +38,7 @@ import { TaskListService } from './../services/tasklist.service';
 export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
 
     static PRESET_KEY = 'adf-task-list.presets';
+    DATE_FORMAT = 'DD-MM-YYYY';
 
     @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
 
@@ -150,6 +152,14 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
+    /** Filter the tasks. Display only tasks with created_date after dueAfter. */
+    @Input()
+    dueAfter: string;
+
+    /** Filter the tasks. Display only tasks with created_date before dueBefore. */
+    @Input()
+    dueBefore: string;
+
     rows: any[] = [];
     isLoading: boolean = true;
     sorting: any[] = ['created', 'desc'];
@@ -241,6 +251,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.loadTasksByState().subscribe(
             (tasks) => {
                 this.rows = this.optimizeNames(tasks.data);
+                this.rows = this.filterByDate(this.rows);
                 this.selectTask(this.landingTaskId);
                 this.success.emit(tasks);
                 this.isLoading = false;
@@ -297,7 +308,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * @param taskId
      */
     isEqualToCurrentId(taskId: string): boolean {
-        return this.currentInstanceId === taskId ? true : false;
+        return this.currentInstanceId === taskId;
     }
 
     /**
@@ -328,6 +339,25 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             this.currentInstanceId = event.detail.row.getValue('id');
             this.rowClick.emit(this.currentInstanceId);
         }
+    }
+
+    /**
+     * Filter tasks array by created date
+     * @param tasks
+     */
+    private filterByDate(tasks: any[]) {
+        const afterDate = this.dueAfter ? moment(this.dueAfter).format(this.DATE_FORMAT) : null;
+        const beforeDate = this.dueBefore ? moment(this.dueBefore).format(this.DATE_FORMAT) : null;
+
+        let array = [];
+        tasks.forEach(task => {
+            const newDate = moment(task.created).format(this.DATE_FORMAT);
+            if ((afterDate && afterDate > newDate) || (beforeDate && beforeDate < newDate)) {} else {
+                array.push(task);
+            }
+        });
+
+        return array;
     }
 
     /**
