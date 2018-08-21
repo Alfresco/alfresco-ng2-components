@@ -6,12 +6,13 @@
     $header-border: 1px solid mat-color($foreground, divider);
 
     .adf-new-task-heading {
-        padding-top: 12px;
+        padding: 12px 20px;
+        font-weight: bold;
         border-bottom: $header-border;
-        .mat-card-title {
-            font-weight: bold;
-            font-size: 18px;
-        }
+        font-size: 18px;
+        float: left;
+        text-align: left;
+        width: calc(100% - 40px);
     }
 
     .adf-new-task-form {
@@ -19,13 +20,46 @@
     }
 
     .adf-new-task-layout-card {
+
+        width: 66%;
         margin: 10px auto;
+
+        &-content {
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .adf-grid-row {
+                display: flex;
+                flex-flow: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin-bottom: 8px;
+            }
+
+            .adf-grid-column {
+                display: flex;
+                flex-flow: column;
+            }
+
+            .adf-grid-full-width {
+                width: 100%;
+            }
+
+            .adf-grid-half-width {
+                width: 49%;
+            }
+        }
     }
 
     .adf-new-task-footer {
         padding: 4px;
         font-size: 18px;
         border-top: 1px solid #eee;
+        float: left;
+        width: calc(100% - 40px);
+        text-align: right;
     }
 
     .adf-mat-select {
@@ -122,5 +156,13 @@
                 }
             }
         }
+    }
+}
+
+@media (max-width: 600px) {
+    .adf-new-task-layout-card {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
