@@ -17,6 +17,7 @@
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
+
 import LoginPage = require('../pages/adf/loginPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
@@ -40,38 +41,57 @@ describe('Task Filters Test', () => {
     let taskDetailsPage = new TaskDetailsPage();
 
     let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
+    let appId, tenantId;
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: TestConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-        let user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-
-        await loginPage.loginToProcessServicesUsingUserModel(user);
-
         done();
     });
 
     beforeEach(async (done) => {
+
+        let apps = new AppsActions();
+        let users = new UsersActions();
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        let user = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        tenantId = user.tenantId;
+
+        await this.alfrescoJsApi.login(user.email, user.password);
+
+        let appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+
+        appId = appModel.id;
+
+        await loginPage.loginToProcessServicesUsingUserModel(user);
+
         navigationBarPage.clickProcessServicesButton();
+
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
 
         done();
     });
 
-    it('[C260330] Should display task list when app is in task section', () => {
+    afterEach(async(done) => {
+
+        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+
+        done();
+    });
+
+    it('[C260330] Should display Task Filter List when app is in Task Tab', () => {
         tasksPage.clickOnCreateButton();
         taskFiltersPage.clickNewTaskButton();
         tasksPage.createNewTask().addName('Test').clickStartButton();
@@ -96,7 +116,7 @@ describe('Task Filters Test', () => {
         expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
     });
 
-    it('[C260348] Should display task list when app is in task section', () => {
+    it('[C260348] Should display task in Complete Tasks List when task is completed', () => {
         expect(taskFiltersPage.checkMyTasksItem()).toBeDefined();
         expect(taskFiltersPage.checkQueuedTaskItem()).toBeDefined();
         expect(taskFiltersPage.checkInvolvedTaskItem()).toBeDefined();
@@ -136,7 +156,7 @@ describe('Task Filters Test', () => {
         expect(taskFiltersPage.checkEmptyTaskDetails()).toBe('No task details found');
     });
 
-    it('[C260349] Should display task list when app is in task section', () => {
+    it('[C260349] Should sort task by name when Name sorting is clicked', () => {
         tasksPage.clickOnCreateButton();
         taskFiltersPage.clickNewTaskButton();
         tasksPage.createNewTask().addName('Test1').clickStartButton();

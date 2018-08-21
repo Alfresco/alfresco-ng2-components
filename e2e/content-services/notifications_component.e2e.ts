@@ -31,6 +31,7 @@ describe('Notifications Component', () => {
     let notificationPage = new NotificationPage();
 
     let acsUser = new AcsUserModel();
+    let message = {default: 'Message'};
 
     beforeAll(async (done) => {
 
@@ -45,6 +46,10 @@ describe('Notifications Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
+        done();
+    });
+
+    beforeEach(async(done) => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         notificationPage.goToNotificationsPage();
@@ -59,6 +64,7 @@ describe('Notifications Component', () => {
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', () => {
+        notificationPage.clearMessage(message.default);
         notificationPage.enterMessageField('');
         notificationPage.clickDefaultNotificationButton();
         notificationPage.checkNotificationSnackBarIsNotDisplayed();

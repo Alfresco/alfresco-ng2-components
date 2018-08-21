@@ -24,10 +24,10 @@ var TaskFiltersPage = function () {
     var completedTask = element(by.css("span[data-automation-id='Completed Tasks_filter']"));
     var involvedTask = element(by.css("span[data-automation-id='Involved Tasks_filter']"));
     var tasksAccordionButton = element(by.css("div[data-automation-id='adf-panel-heading']"));
-    var tasksAccordionExpanded = element(by.xpath("mat-expansion-panel[contains(@class, 'mat-expanded')]"));
+    var tasksAccordionExpanded = element(by.css(`mat-expansion-panel[class*="mat-expanded"]`));
     var startTaskButton = element(by.css("button[id='button-start']"));
     var newTaskButton = element(by.css("button[data-automation-id='btn-start-task']"));
-    var activeFilter = element(by.xpath("mat-list-item[contains(@class, 'active')]"));
+    var activeFilter = element(by.css(`mat-list-item[class*="active"]`));
     var emptyTaskDetails = element(by.css("adf-task-details > div > div"));
     var emptyTaskList = element(by.css("p[class='adf-empty-content__title']"));
     
