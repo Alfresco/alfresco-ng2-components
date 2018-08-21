@@ -499,7 +499,7 @@
     },
     "adf-start-task": {
         "name": "My Task Name",
-        "maxTaskNameLength": 455
+        "maxTaskNameLength": 255
     },
     "adf-task-list": {
         "presets": {
