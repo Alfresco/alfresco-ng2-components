@@ -498,7 +498,7 @@
         }
     },
     "adf-start-task": {
-        "name": "My Task Name",
+        "name": "ADF_TASK_LIST.START_TASK.DEFAULT_NAME",
         "maxTaskNameLength": 255
     },
     "adf-task-list": {
