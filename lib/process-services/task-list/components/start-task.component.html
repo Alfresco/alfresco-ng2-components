@@ -6,29 +6,35 @@
     </mat-grid-list>
     <mat-card-content>
         <div class="adf-new-task-layout-card-content">
-            <div class="adf-grid-full-width adf-grid-row">
-                <mat-form-field class="adf-grid-full-width adf-grid-column">
-                    <input matInput
-                        class="adf-grid-full-width"
-                        placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME'|translate}}"
-                        [(ngModel)]="startTaskModel.name"
-                        required
-                        id="name_id">
-                </mat-form-field>
-            </div>
+            <form [formGroup]="taskModelForm" class="adf-new-task-form">
+                <div class="adf-grid-full-width adf-grid-row">
+                    <mat-form-field class="adf-grid-full-width adf-grid-column">
+                        <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate}}</mat-label>
+                        <input matInput
+                            class="adf-grid-full-width"
+                            id="name_id"
+                            formControlName="taskModelName">
+                                    <mat-error *ngIf="taskName.hasError('required')">
+                                        {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}
+                                    </mat-error>
+                                    <mat-error *ngIf="taskName.hasError('maxlength')">
+                                        {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxTaskNameLength } }}
+                                    </mat-error>
+                    </mat-form-field>
+                </div>
 
-            <div class="adf-grid-full-width adf-grid-row">
-                <mat-form-field class="adf-grid-full-width adf-grid-column">
-                    <textarea
-                        matInput
-                        class="adf-grid-full-width"
-                        placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION'|translate}}"
-                        [(ngModel)]="startTaskModel.description"
-                        rows="1"
-                        id="description_id">
-                    </textarea>
-                </mat-form-field>
-            </div>
+                <div class="adf-grid-full-width adf-grid-row">
+                    <mat-form-field class="adf-grid-full-width adf-grid-column">
+                            <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
+                            <textarea
+                                matInput
+                                class="adf-grid-full-width form-control"
+                                rows="1"
+                                id="description_id"
+                                formControlName="taskModelDescription">
+                            </textarea>
+                    </mat-form-field>
+                </div>
 
             <div class="adf-grid-full-width adf-grid-row">
                 <div class="adf-grid-column adf-grid-half-width">
@@ -53,33 +59,44 @@
                                     <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.DATE.ERROR'|translate}}</div>
                                     <mat-icon class="adf-error-icon">warning</mat-icon>
                                 </div>
-                            </div>
-                        </mat-form-field>
+                            </mat-form-field>
+                        </div>
+                        <div class="adf-grid-full-width adf-grid-row">
+                            <mat-form-field class="adf-grid-full-width">
+                                    <mat-label id="form_id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
+                                    <mat-select
+                                    class="form-control"
+                                    formControlName="taskModelFormKey" >
+                                    <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
+                                    <mat-option *ngFor="let form of forms$ | async" [value]="form.id">{{ form.name }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="adf-grid-full-width adf-grid-row">
-                        <mat-form-field class="adf-grid-full-width">
-                            <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey">
-                                <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
-                                <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                </div>
 
-                <div class="adf-grid-column adf-grid-half-width">
-                    <people-widget (peopleSelected)="getAssigneeId($event)" [field]="field"></people-widget>
+                    <div class="adf-grid-column adf-grid-half-width">
+                        <people-widget (peopleSelected)="getAssigneeId($event)" [field]="field"></people-widget>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </mat-card-content>
     <mat-card-actions>
         <mat-grid-list cols="1" rowHeight="60px">
             <mat-grid-tile>
                 <div class="adf-new-task-footer">
-                    <button mat-button (click)="onCancel()" id="button-cancel">
+                    <button
+                        mat-button
+                        (click)="onCancel()"
+                        id="button-cancle">
                         {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL'|translate}}
                     </button>
-                    <button color="primary" mat-button [disabled]="!startTaskModel.name || dateError" (click)="start()" id="button-start">
+                    <button
+                        color="primary"
+                        mat-button
+                        [disabled]="!isFormValid() || dateError"
+                        (click)="saveTask()"
+                        id="button-start">
                         {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
                     </button>
                 </div>

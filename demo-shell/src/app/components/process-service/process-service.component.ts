@@ -159,6 +159,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         new DemoFieldValidator()
     ];
 
+    defaultTaskName: string;
+    maxTaskNameLength: number;
+
     private subscriptions: Subscription[] = [];
 
     constructor(private elementRef: ElementRef,
@@ -175,6 +178,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
+
+        this.defaultTaskName = this.appConfig.get<string>('adf-start-task.name');
+        this.maxTaskNameLength = this.appConfig.get<number>('adf-start-task.maxTaskNameLength');
 
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);

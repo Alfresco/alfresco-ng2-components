@@ -189,12 +189,8 @@ export class TaskListService {
 
         return from(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
             .pipe(
-                map((response: any) => {
-                    let forms: Form[] = [];
-                    response.data.forEach((form) => {
-                        forms.push(new Form(form.id, form.name));
-                    });
-                    return forms;
+                map((res: any) => {
+                    return res.data;
                 }),
                 catchError((err) => this.handleError(err))
             );
