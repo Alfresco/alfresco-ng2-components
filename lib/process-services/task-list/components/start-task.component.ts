@@ -102,6 +102,7 @@ export class StartTaskComponent implements OnInit {
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
+        this.defaultTaskNameTranslated = this.translateService.instant(this.defaultTaskName);
         this.loadFormsTask();
         this.buildForm();
         this.validateName();
