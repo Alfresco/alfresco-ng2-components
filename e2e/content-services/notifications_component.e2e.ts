@@ -24,7 +24,6 @@ import TestConfig = require('../test.config');
 import AlfrescoApi = require('alfresco-js-api-node');
 
 import NotificationPage = require('../pages/adf/notificationPage');
-import { browserDetection } from '../../node_modules/@angular/platform-browser/testing/src/browser_util';
 
 describe('Notifications Component', () => {
 
@@ -46,10 +45,6 @@ describe('Notifications Component', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-        // loginPage.loginToContentServicesUsingUserModel(acsUser);
-        //
-        // notificationPage.goToNotificationsPage();
 
         done();
     });
