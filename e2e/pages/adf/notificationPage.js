@@ -123,6 +123,13 @@ var NotificationPage = function () {
     this.clickActionButton = function () {
         actionButton.click();
     };
+
+    this.clearMessage = function (inputText) {
+        Util.waitUntilElementIsVisible(messageField);
+        for (var i = inputText.length; i >= 0; i--) {
+                messageField.sendKeys(protractor.Key.BACK_SPACE);
+        };
+    };
 };
 
 module.exports = NotificationPage;

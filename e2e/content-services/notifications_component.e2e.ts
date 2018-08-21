@@ -24,6 +24,7 @@ import TestConfig = require('../test.config');
 import AlfrescoApi = require('alfresco-js-api-node');
 
 import NotificationPage = require('../pages/adf/notificationPage');
+import { browserDetection } from '../../node_modules/@angular/platform-browser/testing/src/browser_util';
 
 describe('Notifications Component', () => {
 
@@ -31,6 +32,7 @@ describe('Notifications Component', () => {
     let notificationPage = new NotificationPage();
 
     let acsUser = new AcsUserModel();
+    let message = {default: 'Message'};
 
     beforeAll(async (done) => {
 
@@ -45,6 +47,14 @@ describe('Notifications Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
+        // loginPage.loginToContentServicesUsingUserModel(acsUser);
+        //
+        // notificationPage.goToNotificationsPage();
+
+        done();
+    });
+
+    beforeEach(async(done) => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         notificationPage.goToNotificationsPage();
@@ -59,6 +69,7 @@ describe('Notifications Component', () => {
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', () => {
+        notificationPage.clearMessage(message.default);
         notificationPage.enterMessageField('');
         notificationPage.clickDefaultNotificationButton();
         notificationPage.checkNotificationSnackBarIsNotDisplayed();
