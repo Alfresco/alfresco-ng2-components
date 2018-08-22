@@ -194,5 +194,4 @@ describe('Task Filters Test', () => {
         tasksListPage.checkTaskIsDisplayedInTasksList('Test3');
         tasksListPage.checkTaskIsDisplayedInTasksList('Test4');
     });
-
 });
