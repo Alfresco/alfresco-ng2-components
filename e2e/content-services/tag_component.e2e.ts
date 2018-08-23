@@ -72,7 +72,7 @@ describe('Tag component', () => {
         done();
     });
 
-    it('[C260374] Tag node ID', () => {
+    xit('[C260374] Tag node ID', () => {
         expect(tagPage.getNodeId()).toEqual('');
         expect(tagPage.getNewTagPlaceholder()).toEqual('New Tag');
         expect(tagPage.addTagButtonIsEnabled()).toEqual(false);
@@ -82,7 +82,7 @@ describe('Tag component', () => {
         expect(tagPage.getNewTagInput()).toEqual('a');
     });
 
-    it('[C268151] New tag for specific Node ID', () => {
+    xit('[C268151] New tag for specific Node ID', () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[0]);
 
@@ -90,7 +90,7 @@ describe('Tag component', () => {
         tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[0]);
     });
 
-    it('[C260377] Tag name already exists', () => {
+    xit('[C260377] Tag name already exists', () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(sameTag);
         tagPage.checkTagIsDisplayedInTagList(sameTag);
@@ -98,14 +98,14 @@ describe('Tag component', () => {
         expect(tagPage.getErrorMessage()).toEqual('Tag already exists');
     });
 
-    it('[C260378] Multiple tags', () => {
+    xit('[C260378] Multiple tags', () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.checkTagListIsOrderedAscending();
         tagPage.checkTagListByNodeIdIsOrderedAscending();
         tagPage.checkTagListContentServicesIsOrderedAscending();
     });
 
-    it('[C91326] Tag text field', () => {
+    xit('[C91326] Tag text field', () => {
         tagPage.insertNodeId(pdfFileModel.id);
 
         tagPage.addTag(uppercaseTag);
@@ -128,7 +128,7 @@ describe('Tag component', () => {
         tagPage.checkTagIsDisplayedInTagListByNodeId(nonLatinTag);
     });
 
-    it('[C260375] Delete tag', () => {
+    xit('[C260375] Delete tag', () => {
         let deleteTag = Util.generateRandomStringToUpperCase();
 
         tagPage.insertNodeId(deleteFile.id);

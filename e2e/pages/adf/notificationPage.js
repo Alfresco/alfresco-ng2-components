@@ -16,7 +16,7 @@
  */
 
 var Util = require('../../util/util');
-var protractor = require('protractor');
+var protractor = require("protractor");
 
 var NotificationPage = function () {
 

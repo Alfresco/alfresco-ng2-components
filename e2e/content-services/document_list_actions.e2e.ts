@@ -83,7 +83,7 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
-        it('[C213257] - Copy File', () => {
+        xit('[C213257] - Copy File', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentListPage.rightClickOnRowNamed(pdfUploadedNode.entry.name);
@@ -188,7 +188,7 @@ describe('Document List Component - Actions', () => {
             contentListPage.checkContextActionIsVisible('Permission');
         });
 
-        it('[C260138] - Copy - folder', () => {
+        xit('[C260138] - Copy - folder', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentListPage.copyContent(folderName);
