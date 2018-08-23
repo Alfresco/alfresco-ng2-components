@@ -102,7 +102,7 @@ describe('Search component - Search Page', () => {
         done();
     });
 
-    it('[C260264] \'No results found searching for\' message is displayed on Search Page', () => {
+    xit('[C260264] \'No results found searching for\' message is displayed on Search Page', () => {
         let notExistentFileName = Util.generateRandomString();
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
@@ -110,7 +110,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C260265] File previewer is displayed', () => {
+    xit('[C260265] File previewer is displayed', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
@@ -127,7 +127,7 @@ describe('Search component - Search Page', () => {
         filePreviewPage.closePreviewWithButton();
     });
 
-    it('[C272810] Only the searched file is displayed', () => {
+    xit('[C272810] Only the searched file is displayed', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
@@ -140,7 +140,7 @@ describe('Search component - Search Page', () => {
         expect(searchResultPage.numberOfResultsDisplayed()).toBe(1);
     });
 
-    it('[C260267] Folder content is displayed', () => {
+    xit('[C260267] Folder content is displayed', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog.checkSearchBarIsNotVisible()
@@ -156,7 +156,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    it('[C260261] Delete a file from the Search Results Page', () => {
+    xit('[C260261] Delete a file from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
@@ -178,7 +178,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C272809] Delete a folder from the Search Results Page', () => {
+    xit('[C272809] Delete a folder from the Search Results Page', () => {
         searchDialog.checkSearchBarIsNotVisible()
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -276,7 +276,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
     });
 
-    it('[C272808] Try to delete a folder without rights from the Search Results Page', () => {
+    xit('[C272808] Try to delete a folder without rights from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible();
         searchDialog.checkSearchIconIsVisible();

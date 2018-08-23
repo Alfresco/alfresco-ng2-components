@@ -108,26 +108,26 @@ describe('Search component - Search Bar', () => {
     //     });
     // });
 
-    it('[C272798] Search bar is visible', () => {
+    xit('[C272798] Search bar is visible', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon().checkSearchBarIsNotVisible().checkSearchIconIsVisible();
     });
 
-    it('[C272799] Add input and close', () => {
+    xit('[C272799] Add input and close', () => {
         searchDialog.checkSearchIconIsVisible().clickOnSearchIcon().enterText(firstFolderModel.shortName);
         searchDialog.clickOnSearchIcon().checkSearchBarIsNotVisible().checkSearchIconIsVisible();
         contentServicesPage.checkAcsContainer();
     });
 
-    it('[C260255] Search for content that does not exist', () => {
+    xit('[C260255] Search for content that does not exist', () => {
         searchDialog.checkSearchBarIsNotVisible().clickOnSearchIcon().checkNoResultMessageIsNotDisplayed()
             .enterText(search.inactive.name).checkNoResultMessageIsDisplayed();
         searchDialog.clearText();
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('[C260256] Existing folder and file are displayed in search suggestion when typing the first 4 letters', () => {
+    xit('[C260256] Existing folder and file are displayed in search suggestion when typing the first 4 letters', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.shortName);
 
@@ -152,7 +152,7 @@ describe('Search component - Search Bar', () => {
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('[C272800] Existing folder and file are displayed in search suggestion', () => {
+    xit('[C272800] Existing folder and file are displayed in search suggestion', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.name);
         searchDialog.resultTableContainsRow(firstFolderModel.name);
@@ -175,7 +175,7 @@ describe('Search component - Search Bar', () => {
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('[C260257] Folder content is displayed when clicking on existing folder', () => {
+    xit('[C260257] Folder content is displayed when clicking on existing folder', () => {
         searchDialog.clickOnSearchIcon().enterText(firstFolderModel.shortName);
         searchDialog.resultTableContainsRow(firstFolderModel.name);
         searchDialog.clickOnSpecificRow(firstFolderModel.name);
@@ -193,28 +193,28 @@ describe('Search component - Search Bar', () => {
         filePreviewPage.closePreviewWithButton();
     });
 
-    it('[C272801] Non-existent folder is not displayed in search page', () => {
+    xit('[C272801] Non-existent folder is not displayed in search page', () => {
         searchDialog.checkSearchIconIsVisible().clickOnSearchIcon();
         searchDialog.enterTextAndPressEnter(search.inactive.name);
         searchResultPage.checkNoResultMessageIsDisplayed();
         contentServicesPage.goToDocumentList();
     });
 
-    it('[C272802] Existing folder is displayed in search page', () => {
+    xit('[C272802] Existing folder is displayed in search page', () => {
         searchDialog.clickOnSearchIcon();
         browser.driver.sleep(1000);
         searchDialog.enterTextAndPressEnter(firstFolderModel.name);
         searchResultPage.checkContentIsDisplayed(firstFolderModel.name);
     });
 
-    it('[C260258] Existing file is displayed in search page', () => {
+    xit('[C260258] Existing file is displayed in search page', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon();
         searchDialog.enterTextAndPressEnter(firstFileModel.name);
         searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
 
-    it('[C91321] Should be able to use down arrow key when navigating throw suggestions', () => {
+    xit('[C91321] Should be able to use down arrow key when navigating throw suggestions', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
@@ -226,7 +226,7 @@ describe('Search component - Search Bar', () => {
         expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 
-    it('[C260254] The search bar gets closed when clicking on another browser tab', () => {
+    xit('[C260254] The search bar gets closed when clicking on another browser tab', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
