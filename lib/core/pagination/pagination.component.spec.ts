@@ -265,7 +265,7 @@ describe('PaginationComponent', () => {
             component.ngOnInit();
 
             customComponent.pagination.next(pagination);
-            expect(component.pagination).toBe(pagination);
+            expect(component.pagination).toEqual(pagination);
         });
 
         it('should update pagination by subscription', () => {
@@ -280,17 +280,18 @@ describe('PaginationComponent', () => {
             component.ngOnInit();
 
             customComponent.pagination.next(pagination1);
-            expect(component.pagination).toBe(pagination1);
+            expect(component.pagination).toEqual(pagination1);
 
             customComponent.pagination.next(pagination2);
-            expect(component.pagination).toBe(pagination2);
+            expect(component.pagination).toEqual(pagination2);
         });
 
         it('should send pagination event to paginated component', () => {
             const customComponent = <PaginatedComponent> {
                 pagination: new BehaviorSubject<Pagination>({}),
                 updatePagination() {},
-                supportedPageSizes: []
+                supportedPageSizes: [],
+                rows: []
             };
             spyOn(customComponent, 'updatePagination').and.stub();
 
@@ -302,13 +303,14 @@ describe('PaginationComponent', () => {
 
             component.goNext();
             expect(customComponent.updatePagination).toHaveBeenCalled();
-            expect(component.current).toBe(2);
+            expect(component.current).toBe(1);
         });
 
         it('should go to previous page if current page has 0 items', () => {
             const customComponent = <PaginatedComponent> {
                 updatePagination() {},
-                pagination: new BehaviorSubject<Pagination>({})
+                pagination: new BehaviorSubject<Pagination>({}),
+                rows: []
             };
 
             component.target = customComponent;
