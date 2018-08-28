@@ -44,6 +44,7 @@ var TaskDetailsPage = function () {
     var taskDetailsSection = element(by.css("div[data-automation-id='adf-tasks-details']"));
     var taskDetailsEmptySection = element(by.css("div[data-automation-id='adf-tasks-details--empty']"));
     var completeTask = element(by.css("button[id='adf-no-form-complete-button']"));
+    var taskDetailsTitle = element(by.css('h2[class="activiti-task-details__header"] span'));
     var auditLogButton = element(by.css("button[adf-task-audit]"));
     var noPeopleInvolved = element(by.id('no-people-label'));
     var cancelInvolvePeopleButton = element(by.id('close-people-search'));
@@ -58,6 +59,11 @@ var TaskDetailsPage = function () {
     var removeAttachForm = element(by.id("adf-no-form-remove-button"));
     var attachFormName = element(by.css("span[class='adf-form-title ng-star-inserted']"));
 
+    this.getTaskDetailsTitle = function () {
+        Util.waitUntilElementIsVisible(taskDetailsTitle);
+        return taskDetailsTitle.getText();
+    };
+    
     this.checkSelectedForm = function (formName) {
         Util.waitUntilElementIsVisible(attachFormName);
         expect(formName).toEqual(attachFormName.getText());

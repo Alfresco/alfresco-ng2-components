@@ -29,6 +29,7 @@ import TaskDetailsPage = require('../pages/adf/process_services/taskDetailsPage'
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
+import { browser } from 'protractor';
 
 describe('Task Filters Test', () => {
 
@@ -91,66 +92,73 @@ describe('Task Filters Test', () => {
         done();
     });
 
+    it('[C279967] Should display default filters when an app is deployed', () => {
+        taskFiltersPage.checkTaskFilterDisplayed('Involved Tasks');
+        taskFiltersPage.checkTaskFilterDisplayed('My Tasks');
+        taskFiltersPage.checkTaskFilterDisplayed('Queued Tasks');
+        taskFiltersPage.checkTaskFilterDisplayed('Completed Tasks');
+    });
+
     it('[C260330] Should display Task Filter List when app is in Task Tab', () => {
         tasksPage.clickOnCreateButton();
         taskFiltersPage.clickNewTaskButton();
         tasksPage.createNewTask().addName('Test').clickStartButton();
-        taskFiltersPage.clickMyTaskTaskItem();
+        taskFiltersPage.clickMyTaskTaskFilter();
         tasksListPage.checkTaskIsDisplayedInTasksList('Test');
         expect(taskFiltersPage.checkActiveFilterActive()).toBe('My Tasks');
         expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
-        taskFiltersPage.clickQueuedTaskItem();
+        taskFiltersPage.clickQueuedTaskFilter();
         expect(taskFiltersPage.checkActiveFilterActive()).toBe('Queued Tasks');
         tasksListPage.checkTaskIsNotDisplayedInTasksList('Test');
         expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
 
-        taskFiltersPage.clickInvolvedTaskItem();
+        taskFiltersPage.clickInvolvedTaskFilter();
         expect(taskFiltersPage.checkActiveFilterActive()).toBe('Involved Tasks');
         tasksListPage.checkTaskIsDisplayedInTasksList('Test');
         expect( taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
-        taskFiltersPage.clickCompletedTaskItem();
+        taskFiltersPage.clickCompletedTaskFilter();
         expect(taskFiltersPage.checkActiveFilterActive()).toBe('Completed Tasks');
         tasksListPage.checkTaskIsNotDisplayedInTasksList('Test');
         expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
     });
 
     it('[C260348] Should display task in Complete Tasks List when task is completed', () => {
-        expect(taskFiltersPage.checkMyTasksItem()).toBeDefined();
-        expect(taskFiltersPage.checkQueuedTaskItem()).toBeDefined();
-        expect(taskFiltersPage.checkInvolvedTaskItem()).toBeDefined();
-        expect(taskFiltersPage.checkCompletedTaskItem()).toBeDefined();
+        expect(taskFiltersPage.checkMyTasksFilter()).toBeDefined();
+        expect(taskFiltersPage.checkQueuedTaskFilter()).toBeDefined();
+        expect(taskFiltersPage.checkInvolvedTaskFilter()).toBeDefined();
+        expect(taskFiltersPage.checkCompletedTaskFilter()).toBeDefined();
         expect(taskFiltersPage.checkTasksAccordionExtended()).toBeDefined();
 
         taskFiltersPage.clickTasksAccordionButton();
         expect(taskFiltersPage.checkTasksAccordionClosed()).toBeDefined();
 
         taskFiltersPage.clickTasksAccordionButton();
-        expect(taskFiltersPage.checkMyTasksItem()).toBeDefined();
-        expect(taskFiltersPage.checkQueuedTaskItem()).toBeDefined();
-        expect(taskFiltersPage.checkInvolvedTaskItem()).toBeDefined();
-        expect(taskFiltersPage.checkCompletedTaskItem()).toBeDefined();
+        expect(taskFiltersPage.checkMyTasksFilter()).toBeDefined();
+        expect(taskFiltersPage.checkQueuedTaskFilter()).toBeDefined();
+        expect(taskFiltersPage.checkInvolvedTaskFilter()).toBeDefined();
+        expect(taskFiltersPage.checkCompletedTaskFilter()).toBeDefined();
 
         tasksPage.clickOnCreateButton();
         taskFiltersPage.clickNewTaskButton();
         tasksPage.createNewTask().addName('Test').clickStartButton();
-        taskFiltersPage.clickMyTaskTaskItem();
+        taskFiltersPage.clickMyTaskTaskFilter();
         tasksListPage.checkTaskIsDisplayedInTasksList('Test');
         expect(taskFiltersPage.checkActiveFilterActive()).toBe('My Tasks');
         expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
-        taskFiltersPage.clickQueuedTaskItem();
+        taskFiltersPage.clickQueuedTaskFilter();
         expect(taskFiltersPage.checkActiveFilterActive()).toBe('Queued Tasks');
         expect(taskFiltersPage.checkEmptyTaskList()).toBe('No Tasks Found');
         expect(taskFiltersPage.checkEmptyTaskDetails()).toBe('No task details found');
 
-        taskFiltersPage.clickInvolvedTaskItem();
+        taskFiltersPage.clickInvolvedTaskFilter();
         expect(taskFiltersPage.checkActiveFilterActive()).toBe('Involved Tasks');
         tasksListPage.checkTaskIsDisplayedInTasksList('Test');
         expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
-        taskFiltersPage.clickCompletedTaskItem();
+        taskFiltersPage.clickCompletedTaskFilter();
         expect(taskFiltersPage.checkActiveFilterActive()).toBe('Completed Tasks');
         expect(taskFiltersPage.checkEmptyTaskList()).toBe('No Tasks Found');
         expect(taskFiltersPage.checkEmptyTaskDetails()).toBe('No task details found');
@@ -182,7 +190,7 @@ describe('Task Filters Test', () => {
         tasksListPage.clickSortByName();
         expect(tasksListPage.firstTaskOnTaskList()).toBe('Test4');
 
-        taskFiltersPage.clickCompletedTaskItem();
+        taskFiltersPage.clickCompletedTaskFilter();
         tasksListPage.checkTaskIsDisplayedInTasksList('Test1');
         tasksListPage.checkTaskIsDisplayedInTasksList('Test2');
         expect(tasksListPage.firstTaskOnTaskList()).toBe('Test2');
@@ -190,9 +198,175 @@ describe('Task Filters Test', () => {
         tasksListPage.clickSortByName();
         expect(tasksListPage.firstTaskOnTaskList()).toBe('Test1');
 
-        taskFiltersPage.clickInvolvedTaskItem();
+        taskFiltersPage.clickInvolvedTaskFilter();
         tasksListPage.checkTaskIsDisplayedInTasksList('Test3');
         tasksListPage.checkTaskIsDisplayedInTasksList('Test4');
+    });
+
+    it('[C260355] Should display task list when app is in task section', () => {
+        taskFiltersPage.clickQueuedTaskFilter();
+        expect(taskFiltersPage.checkActiveFilterActive()).toBe('Queued Tasks');
+    });
+
+    it('[C277264] Should display task filter results when task filter is selected', () => {
+        tasksPage.clickOnCreateButton();
+        taskFiltersPage.clickNewTaskButton();
+        tasksPage.createNewTask().addName('Test').clickStartButton();
+
+        taskFiltersPage.clickTaskFilter('My Tasks');
+        tasksListPage.checkTaskIsDisplayedInTasksList('Test');
+        expect(taskDetailsPage.getTaskDetailsTitle()).toBe('Test');
+    });
+});
+
+xdescribe('Custom Filters Test', () => {
+
+    let loginPage = new LoginPage();
+    let navigationBarPage = new NavigationBarPage();
+    let processServicesPage = new ProcessServicesPage();
+    let tasksPage = new TasksPage();
+    let tasksListPage = new TasksListPage();
+    let taskFiltersPage = new TaskFiltersPage();
+    let taskDetailsPage = new TaskDetailsPage();
+
+    let tenantId;
+    let user;
+    let appId;
+    let importedApp;
+
+    let taskFilterId;
+
+    let app = resources.Files.APP_WITH_PROCESSES;
+
+    beforeAll(async (done) => {
+        let apps = new AppsActions();
+        let users = new UsersActions();
+
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: TestConfig.adf.url
+        });
+
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        tenantId = user.tenantId;
+
+        await this.alfrescoJsApi.login(user.email, user.password);
+
+        importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+
+        let appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+
+        appId = appDefinitions.data.find((currentApp) => {
+            return currentApp.modelId === importedApp.id;
+        }).id;
+
+        await loginPage.loginToProcessServicesUsingUserModel(user);
+
+        done();
+
+    });
+
+    // afterAll(async(done) => {
+    //     await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+    //     done();
+    // });
+    beforeEach(async () => {
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+        processServicesPage.goToApp(app.title);
+    });
+
+    it('[C260350] Should display a new filter when a filter is added', () => {
+        browser.controlFlow().execute(async () => {
+            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            newFilter.name = 'New Task Filter';
+            newFilter.appId = appId;
+            newFilter.icon = 'glyphicon-filter';
+            newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
+
+            let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+
+            taskFilterId = result.id;
+            return result;
+        });
+
+        browser.refresh();
+
+        taskFiltersPage.checkTaskFilterDisplayed('New Task Filter');
+
+        browser.controlFlow().execute(() => {
+            let result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
+            return result;
+        });
+    });
+
+    it('[C260353] Should display changes on a filter when this filter is edited', () => {
+        browser.controlFlow().execute(async () => {
+            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            newFilter.name = 'New Task Filter';
+            newFilter.appId = appId;
+            newFilter.icon = 'glyphicon-filter';
+            newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
+
+            let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+
+            taskFilterId = result.id;
+            return result;
+        });
+
+        browser.refresh();
+
+        taskFiltersPage.checkTaskFilterDisplayed('New Task Filter');
+
+        browser.controlFlow().execute(() => {
+            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            newFilter.name = 'Task Filter Edited';
+            newFilter.appId = appId;
+            newFilter.icon = 'glyphicon-filter';
+            newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
+
+            let result = this.alfrescoJsApi.activiti.userFiltersApi.updateUserTaskFilter(taskFilterId, newFilter);
+            return result;
+        });
+
+        browser.refresh();
+
+        taskFiltersPage.checkTaskFilterDisplayed('Task Filter Edited');
+
+        browser.controlFlow().execute(() => {
+            let result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
+            return result;
+        });
+    });
+
+    it('[C260354] Should not display task filter when this filter is deleted', () => {
+        browser.controlFlow().execute(async () => {
+            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            newFilter.name = 'New Task Filter';
+            newFilter.appId = appId;
+            newFilter.icon = 'glyphicon-filter';
+            newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
+
+            let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+
+            taskFilterId = result.id;
+            return result;
+        });
+
+        browser.refresh();
+
+        taskFiltersPage.checkTaskFilterDisplayed('New Task Filter');
+
+        browser.controlFlow().execute(() => {
+            let result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
+            return result;
+        });
+
+        browser.refresh();
+
+        taskFiltersPage.checkTaskFilterNotDisplayed('New Task Filter');
     });
 
 });
