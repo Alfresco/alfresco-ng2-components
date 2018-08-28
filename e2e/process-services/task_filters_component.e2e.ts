@@ -219,7 +219,7 @@ describe('Task Filters Test', () => {
     });
 });
 
-xdescribe('Custom Filters Test', () => {
+describe('Custom Filters Test', () => {
 
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();
