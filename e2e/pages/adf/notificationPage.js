@@ -122,6 +122,8 @@ var NotificationPage = function () {
     };
 
     this.clickActionButton = function () {
+        Util.waitUntilElementIsVisible(actionButton);
+        Util.waitUntilElementIsClickable(actionButton);
         actionButton.click();
     };
 
