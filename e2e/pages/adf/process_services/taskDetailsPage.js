@@ -51,6 +51,15 @@ var TaskDetailsPage = function () {
     var involvePeopleHeader = element(by.css("div[class='search-text-header']"));
     var removeInvolvedPeople = element(by.css("button[data-automation-id='Remove']"));
     var peopleTitle = element(by.id("people-title"));
+    var taskDetailsSection = element(by.css('div[class="adf-task-details ng-star-inserted"]'));
+    var taskDetailsEmptySection = element(by.css('div[class="full-width adf-data-table ng-star-inserted adf-data-table--empty"]'));
+    var completeTask = element(by.css('button[id="adf-no-form-complete-button"]'));
+    var taskDetailsTitle = element(by.css('h2[class="activiti-task-details__header"] span'));
+
+    this.getTaskDetailsTitle = function () {
+        Util.waitUntilElementIsVisible(taskDetailsTitle);
+        return taskDetailsTitle.getText();
+    };
 
     this.getFormName = function () {
         Util.waitUntilElementIsVisible(formNameField);

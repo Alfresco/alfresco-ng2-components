@@ -19,54 +19,72 @@ var Util = require('../../../util/util');
 
 var TaskFiltersPage = function () {
 
-    var myTasks = element(by.css("span[data-automation-id='My Tasks_filter']"));
-    var queuedTask = element(by.css("span[data-automation-id='Queued Tasks_filter']"));
-    var completedTask = element(by.css("span[data-automation-id='Completed Tasks_filter']"));
-    var involvedTask = element(by.css("span[data-automation-id='Involved Tasks_filter']"));
-    var tasksAccordionButton = element(by.css("div[data-automation-id='adf-panel-heading']"));
-    var tasksAccordionExpanded = element(by.xpath("mat-expansion-panel[contains(@class, 'mat-expanded')]"));
-    var startTaskButton = element(by.css("button[id='button-start']"));
-    var newTaskButton = element(by.css("button[data-automation-id='btn-start-task']"));
-    var activeFilter = element(by.xpath("mat-list-item[contains(@class, 'active')]"));
-    var emptyTaskDetails = element(by.css("adf-task-details > div > div"));
-    var emptyTaskList = element(by.css("p[class='adf-empty-content__title']"));
-    
-    this.checkMyTasksItem = function() {
+    var myTasks = element(by.css('span[data-automation-id="My Tasks_filter"]'));
+    var queuedTask = element(by.css('span[data-automation-id="Queued Tasks_filter"]'));
+    var completedTask = element(by.css('span[data-automation-id="Completed Tasks_filter"]'));
+    var involvedTask = element(by.css('span[data-automation-id="Involved Tasks_filter"]'));
+    var tasksAccordionButton = element(by.css('div[class="adf-panel-heading adf-panel-heading-selected"]'));
+    var tasksAccordionExpanded = element(by.css("mat-expansion-panel[class*='mat-expanded']"));
+    var startTaskButton = element(by.css('button[id="button-start"]'));
+    var newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
+    var activeFilter = element(by.css("mat-list-item[class*='active']"));
+    var emptyTaskList = element(by.css('p[class="adf-empty-content__title"]'));
+    var emptyTaskDetails = element(by.css('adf-task-details > div > div'));
+
+    this.checkTaskFilterDisplayed = function(name) {
+        var customTask = element(by.css(`span[data-automation-id="${name}_filter"]`));
+        Util.waitUntilElementIsVisible(customTask);
+        return customTask;
+    };
+
+    this.clickTaskFilter = function(name) {
+        var customTask = element(by.css(`span[data-automation-id="${name}_filter"]`));
+        Util.waitUntilElementIsVisible(customTask);
+        return customTask.click();
+    };
+
+    this.checkTaskFilterNotDisplayed = function(name) {
+        var customTask = element(by.css(`span[data-automation-id="${name}_filter"]`));
+        Util.waitUntilElementIsNotVisible(customTask);
+        return customTask;
+    };
+
+    this.checkMyTasksFilter = function() {
         Util.waitUntilElementIsVisible(myTasks);
         return myTasks;
     };
 
-    this.checkQueuedTaskItem = function() {
+    this.checkQueuedTaskFilter = function() {
         Util.waitUntilElementIsVisible(queuedTask);
         return queuedTask;
     };
     
-    this.clickMyTaskTaskItem = function() {
+    this.clickMyTaskTaskFilter = function() {
         Util.waitUntilElementIsVisible(myTasks);
         return myTasks.click();
     };
 
-    this.clickCompletedTaskItem = function() {
+    this.clickCompletedTaskFilter = function() {
         Util.waitUntilElementIsVisible(completedTask);
         return completedTask.click();
     };
 
-    this.checkCompletedTaskItem = function() {
+    this.checkCompletedTaskFilter = function() {
         Util.waitUntilElementIsVisible(completedTask);
         return completedTask;
     };
 
-    this.clickQueuedTaskItem = function() {
+    this.clickQueuedTaskFilter = function() {
         Util.waitUntilElementIsVisible(queuedTask);
         return queuedTask.click();
     };
 
-    this.clickInvolvedTaskItem = function() {
+    this.clickInvolvedTaskFilter = function() {
         Util.waitUntilElementIsVisible(involvedTask);
         return involvedTask.click();
     };
 
-    this.checkInvolvedTaskItem = function() {
+    this.checkInvolvedTaskFilter = function() {
         Util.waitUntilElementIsVisible(involvedTask);
         return involvedTask;
     };
@@ -109,6 +127,10 @@ var TaskFiltersPage = function () {
     this.checkEmptyTaskDetails = function() {
         Util.waitUntilElementIsVisible(emptyTaskDetails);
         return emptyTaskDetails.getText();
+    }
+
+    this.getCurrentUrl = function() {
+        return browser.getCurrentUrl();
     }
 };
 
