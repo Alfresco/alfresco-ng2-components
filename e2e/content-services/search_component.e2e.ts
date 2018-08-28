@@ -108,13 +108,13 @@ describe('Search component - Search Bar', () => {
     //     });
     // });
 
-    xit('[C272798] Search bar is visible', () => {
+    it('[C272798] Search bar is visible', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon().checkSearchBarIsNotVisible().checkSearchIconIsVisible();
     });
 
-    xit('[C272799] Add input and close', () => {
+    it('[C272799] Add input and close', () => {
         searchDialog.checkSearchIconIsVisible().clickOnSearchIcon().enterText(firstFolderModel.shortName);
         searchDialog.clickOnSearchIcon().checkSearchBarIsNotVisible().checkSearchIconIsVisible();
         contentServicesPage.checkAcsContainer();
