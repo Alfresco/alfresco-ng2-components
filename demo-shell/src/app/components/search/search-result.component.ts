@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination } from 'alfresco-js-api';
-import { SearchComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
-import { UserPreferencesService, SearchService, SearchConfigurationService } from '@alfresco/adf-core';
+import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
+import { UserPreferencesService, SearchService } from '@alfresco/adf-core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -30,15 +30,11 @@ import { Subscription } from 'rxjs';
 })
 export class SearchResultComponent implements OnInit, OnDestroy {
 
-    @ViewChild('searchResult')
-    searchResult: SearchComponent;
-
     queryParamName = 'q';
     searchedWord = '';
-    resultNodePageList: NodePaging;
+    data: NodePaging;
     pagination: Pagination;
-    maxItems: number;
-    skipCount = 0;
+    isLoading = true;
 
     sorting = ['name', 'asc'];
 
@@ -47,9 +43,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     constructor(public router: Router,
                 private preferences: UserPreferencesService,
                 private queryBuilder: SearchQueryBuilderService,
-                private searchConfiguration: SearchConfigurationService,
                 @Optional() private route: ActivatedRoute) {
-        this.maxItems = this.preferences.paginationSize;
         queryBuilder.paging = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0
@@ -63,20 +57,40 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.queryBuilder.updated.subscribe(() => {
                 this.sorting = this.getSorting();
+                this.isLoading = true;
+            }),
+
+            this.queryBuilder.executed.subscribe(data => {
+                this.onSearchResultLoaded(data);
+                this.isLoading = false;
             })
         );
 
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
-                if (this.searchedWord) {
-                    const queryBody = this.searchConfiguration.generateQueryBody(this.searchedWord, 0, 100);
+                const query = this.formatSearchQuery(this.searchedWord);
 
-                    this.queryBuilder.userQuery = queryBody.query.query;
+                if (query) {
+                    this.queryBuilder.userQuery = query;
                     this.queryBuilder.update();
+                } else {
+                    this.queryBuilder.userQuery = null;
+                    this.queryBuilder.executed.next( {list: { pagination: { totalItems: 0 }, entries: []}} );
                 }
             });
         }
+    }
+
+    private formatSearchQuery(userInput: string) {
+        if (!userInput) {
+            return null;
+        }
+
+        const suffix = userInput.lastIndexOf('*') >= 0 ? '' : '*';
+        const query = `${userInput}${suffix} OR name:${userInput}${suffix}`;
+
+        return query;
     }
 
     ngOnDestroy() {
@@ -85,14 +99,11 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     }
 
     onSearchResultLoaded(nodePaging: NodePaging) {
-        this.resultNodePageList = nodePaging;
+        this.data = nodePaging;
         this.pagination = {...nodePaging.list.pagination };
     }
 
     onRefreshPagination(pagination: Pagination) {
-        this.maxItems = pagination.maxItems;
-        this.skipCount = pagination.skipCount;
-
         this.queryBuilder.paging = {
             maxItems: pagination.maxItems,
             skipCount: pagination.skipCount
@@ -100,8 +111,8 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         this.queryBuilder.update();
     }
 
-    onDeleteElementSuccess(element: any) {
-        this.searchResult.reload();
+    onDeleteElementSuccess() {
+        this.queryBuilder.execute();
     }
 
     private getSorting(): string[] {
