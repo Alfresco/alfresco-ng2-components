@@ -25,6 +25,7 @@ var NotificationPage = function () {
     var durationField = element(by.css("input[data-automation-id='notification-duration']"));
     var direction = element(by.css("mat-select[data-automation-id='notification-direction']"));
     var actionToggle = element(by.css("mat-slide-toggle[data-automation-id='notification-action-toggle']"));
+    var actionToggleChecked = element(by.css("mat-slide-toggle[class*='mat-checked']"));
     var notificationSnackBar = element.all(by.css("simple-snack-bar")).first();
     var actionOutput = element(by.css("div[data-automation-id='notification-action-output']"));
     var actionButton = element(by.css("simple-snack-bar > div > button"));
@@ -115,12 +116,18 @@ var NotificationPage = function () {
         return this;
     };
 
+    this.checkActionToggleChecked = function () {
+        Util.waitUntilElementIsVisible(actionToggleChecked);
+        return this;
+    };
+
     this.clickActionToggle = function () {
         Util.waitUntilElementIsVisible(actionToggle);
         actionToggle.click();
     };
 
     this.clickActionButton = function () {
+        Util.waitUntilElementIsVisible(actionButton);
         actionButton.click();
     };
 };
