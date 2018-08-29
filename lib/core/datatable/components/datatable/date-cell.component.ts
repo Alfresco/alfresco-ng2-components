@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { DataTableCellComponent } from './datatable-cell.component';
 import { UserPreferencesService, UserPreferenceValues } from '../../../services/user-preferences.service';
 
@@ -24,22 +24,23 @@ import { UserPreferencesService, UserPreferenceValues } from '../../../services/
 
     template: `
         <ng-container>
-            <span title="{{ tooltip | date:'medium' }}" *ngIf="column?.format === 'timeAgo' else standard_date">
+            <span title="{{ tooltip | date:'medium' }}" *ngIf="format === 'timeAgo' else standard_date">
                 {{ value | adfTimeAgo: currentLocale }}
             </span>
         </ng-container>
         <ng-template #standard_date>
-            <span title="{{ tooltip | date:'medium' }}">
-                {{ value | date:'medium' }}
+            <span title="{{ tooltip | date:format }}">
+                {{ value | date:format }}
             </span>
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-date-cell' }
 })
-export class DateCellComponent extends DataTableCellComponent {
+export class DateCellComponent extends DataTableCellComponent implements OnInit {
 
     currentLocale;
+    format = 'medium';
 
     constructor(userPreferenceService: UserPreferencesService) {
         super();
@@ -47,6 +48,14 @@ export class DateCellComponent extends DataTableCellComponent {
         userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.currentLocale = locale;
          });
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+
+        if (this.column) {
+            this.format = this.column.format || 'medium';
+        }
     }
 
 }
