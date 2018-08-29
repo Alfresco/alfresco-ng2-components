@@ -100,7 +100,6 @@ describe('Notifications Component', () => {
         notificationPage.clickActionToggle();
         notificationPage.clickCustomNotificationButton();
         notificationPage.clickActionButton();
-
         notificationPage.checkActionEvent();
         notificationPage.clickDefaultNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
