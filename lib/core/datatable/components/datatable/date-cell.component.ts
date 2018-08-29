@@ -41,6 +41,7 @@ import {
     host: { class: 'adf-date-cell' }
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
+
     currentLocale;
     format = 'medium';
 
@@ -63,4 +64,5 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
             this.format = this.column.format || 'medium';
         }
     }
+
 }
