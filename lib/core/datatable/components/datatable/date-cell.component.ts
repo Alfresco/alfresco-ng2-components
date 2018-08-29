@@ -17,7 +17,10 @@
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { DataTableCellComponent } from './datatable-cell.component';
-import { UserPreferencesService, UserPreferenceValues } from '../../../services/user-preferences.service';
+import {
+    UserPreferencesService,
+    UserPreferenceValues
+} from '../../../services/user-preferences.service';
 
 @Component({
     selector: 'adf-date-cell',
@@ -38,16 +41,19 @@ import { UserPreferencesService, UserPreferenceValues } from '../../../services/
     host: { class: 'adf-date-cell' }
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
-
     currentLocale;
     format = 'medium';
 
     constructor(userPreferenceService: UserPreferencesService) {
         super();
 
-        userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.currentLocale = locale;
-         });
+        if (userPreferenceService) {
+            userPreferenceService
+                .select(UserPreferenceValues.Locale)
+                .subscribe(locale => {
+                    this.currentLocale = locale;
+                });
+        }
     }
 
     ngOnInit() {
@@ -57,5 +63,4 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
             this.format = this.column.format || 'medium';
         }
     }
-
 }
