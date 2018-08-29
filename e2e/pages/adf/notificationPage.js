@@ -60,7 +60,7 @@ var NotificationPage = function () {
     };
 
     this.checkNotificationSnackBarIsDisplayedWithMessage = function (message) {
-        let notificationSnackBarMessage = element(by.cssContainingText("simple-snack-bar", message));
+        var notificationSnackBarMessage = element(by.cssContainingText("simple-snack-bar", message));
         Util.waitUntilElementIsVisible(notificationSnackBarMessage);
         return this;
     };
@@ -122,6 +122,7 @@ var NotificationPage = function () {
     };
 
     this.clickActionButton = function () {
+        Util.waitUntilElementIsClickable(actionButton);
         actionButton.click();
     };
 
