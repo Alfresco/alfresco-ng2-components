@@ -88,7 +88,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         }
 
         const suffix = userInput.lastIndexOf('*') >= 0 ? '' : '*';
-        const query = `${userInput}${suffix} OR name:${userInput}${suffix}`;
+        const query = `=cm:name:${userInput}${suffix}`;
 
         return query;
     }
