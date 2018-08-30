@@ -65,8 +65,12 @@ describe('Notifications Component', () => {
     });
 
     it('[C279978] Should show notification with action when the message is not empty and button is clicked', () => {
-        notificationPage.enterMessageField('Notification test');
+        notificationPage.enterDurationField(1000);
         notificationPage.clickActionToggle();
+        notificationPage.checkActionToggleChecked();
+        notificationPage.enterMessageField('Notification test');
+        browser.sleep(2000);
+        notificationPage.clickDefaultNotificationButton();
         notificationPage.clickDefaultNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
         notificationPage.clickActionButton();
@@ -90,8 +94,9 @@ describe('Notifications Component', () => {
     });
 
     it('[C280000] Should show notification with action when the message is not empty and custom button is clicked', () => {
-        notificationPage.enterMessageField('Notification test');
         notificationPage.clickActionToggle();
+        notificationPage.checkActionToggleChecked();
+        notificationPage.enterMessageField('Notification test');
         notificationPage.clickCustomNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
         notificationPage.clickActionButton();
