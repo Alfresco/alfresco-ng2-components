@@ -71,6 +71,7 @@ describe('Notifications Component', () => {
         notificationPage.enterMessageField('Notification test');
         browser.sleep(2000);
         notificationPage.clickDefaultNotificationButton();
+        notificationPage.clickDefaultNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
         notificationPage.clickActionButton();
         notificationPage.checkActionEvent();
