@@ -65,9 +65,9 @@ describe('Notifications Component', () => {
     });
 
     it('[C279978] Should show notification with action when the message is not empty and button is clicked', () => {
-        notificationPage.enterDurationField(1000);
         notificationPage.clickActionToggle();
         notificationPage.checkActionToggleChecked();
+        browser.sleep(200);
         notificationPage.enterMessageField('Notification test');
         notificationPage.clickDefaultNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
