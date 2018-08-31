@@ -3,10 +3,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/..
 
-echo "====== lint ====="
-
-npm run lint-lib || exit 1
-
 echo "====== clean ====="
 
 rm -rf node_modules/@alfresco

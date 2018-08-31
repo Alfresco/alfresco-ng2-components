@@ -44,35 +44,29 @@ describe('Comment component for Processes', () => {
             hostBpm: TestConfig.adf.url
         });
 
+       let apps = new AppsActions();
+       let users = new UsersActions();
+
+       await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+       user = await users.createTenantAndUser(this.alfrescoJsApi);
+
+       tenantId = user.tenantId;
+
+       await this.alfrescoJsApi.login(user.email, user.password);
+
+       let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+       appId = importedApp.id;
+
+       let processWithComment = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Comment APS');
+       processInstanceId = processWithComment.id;
+
+       await loginPage.loginToProcessServicesUsingUserModel(user);
+
        done();
     });
 
-    beforeEach(async(done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
-
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        tenantId = user.tenantId;
-
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-        appId = importedApp.id;
-
-        let processWithComment = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Comment APS');
-        processInstanceId = processWithComment.id;
-
-        await loginPage.loginToProcessServicesUsingUserModel(user);
-
-        done();
-    });
-
-    afterEach(async(done) => {
-        await loginPage.loginToProcessServicesUsingUserModel(user);
-
+    afterAll(async(done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);

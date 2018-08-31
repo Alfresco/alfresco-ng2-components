@@ -22,7 +22,7 @@ import { debounceTime } from 'rxjs/operators';
 
 @Component({
     templateUrl: './process-list-demo.component.html',
-    styleUrls: [`./process-list-demo.component.scss`],
+    styleUrls: [`./process-list-demo.component.scss`]
 })
 
 export class ProcessListDemoComponent implements OnInit {

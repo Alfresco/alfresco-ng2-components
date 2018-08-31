@@ -53,10 +53,6 @@ describe('Comment component for Processes', () => {
             hostBpm: TestConfig.adf.url
         });
 
-        done();
-    });
-
-    beforeEach(async(done) => {
         let apps = new AppsActions();
         let users = new UsersActions();
 
@@ -78,9 +74,7 @@ describe('Comment component for Processes', () => {
         done();
     });
 
-    afterEach(async(done) => {
-        await loginPage.loginToProcessServicesUsingUserModel(user);
-
+    afterAll(async(done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);

@@ -28,9 +28,9 @@ export class FakeFormService extends FormService {
     executeOutcome = new Subject<FormOutcomeEvent>();
 
     constructor(appConfig: AppConfigService,
-        ecmModelService: EcmModelService,
-        apiService: AlfrescoApiService,
-        protected logService: LogService) {
+                ecmModelService: EcmModelService,
+                apiService: AlfrescoApiService,
+                protected logService: LogService) {
         super(ecmModelService, apiService, logService);
     }
 

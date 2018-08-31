@@ -227,7 +227,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit() {
         if (!this.pagination) {
-            this.pagination = <Pagination>{
+            this.pagination = <Pagination> {
                 maxItems: this.preference.paginationSize,
                 skipCount: 0
             };
@@ -265,7 +265,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.nodeResult && changes.nodeResult.currentValue) {
-            this.nodeResult = <NodePaging>changes.nodeResult.currentValue;
+            this.nodeResult = <NodePaging> changes.nodeResult.currentValue;
             this.pagination = this.nodeResult.list.pagination;
         }
         if (!this.pagination) {
@@ -558,7 +558,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     runCustomAction(event) {
-        console.log(event);
+        this.logService.log(event);
     }
 
     getFileFiltering() {

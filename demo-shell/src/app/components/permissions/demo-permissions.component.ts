@@ -16,7 +16,7 @@
  */
 
 import { Component, Optional, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params} from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { PermissionListComponent, NodePermissionDialogService } from '@alfresco/adf-content-services';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { NodesApiService, NotificationService } from '@alfresco/adf-core';

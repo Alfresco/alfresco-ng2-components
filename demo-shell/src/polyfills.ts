@@ -84,6 +84,6 @@ import 'intl/locale-data/jsonp/en';
 /**
  * Support custom event in IE11
  *
- * */
+ */
 
 import 'custom-event-polyfill/custom-event-polyfill'; // Run `npm install --save custom-event-polyfill`.
