@@ -4,7 +4,7 @@ sudo: required
 node_js:
  # Use the explicit NodeJS LTS version 8.9.4 to avoid any automatic upgrade of the version.
   - '8.9.4'
-  
+
 addons:
     chrome: stable
 before_script:
@@ -26,72 +26,56 @@ env:
     - MODULE=demo-shell
     - MODULE=packaging
 
-install:
-    - if ([ "$MODULE" != "demo-shell" ]); then
-        if ([ "$TRAVIS_BRANCH" = "master" ]); then
-            (./scripts/npm-build-all.sh  || exit 1;);
-        else
-            (./scripts/npm-build-all.sh  -vjsapi alpha -sb || exit 1;);
-        fi
-      fi
-
-script:
-    - if ([ "$MODULE" == "core" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "core" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "process-services" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process-services" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "insights" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "insights" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "content-services" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "content-services" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "packaging" ]); then
-            (npm run build-lib || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "demo-shell" ]); then
-       if ([ "$TRAVIS_BRANCH" = "master" ]); then
-            (./scripts/start.sh -t -ss || exit 1;);
-       else
-            (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
-       fi
-      fi
-
 jobs:
     include:
+        - stage: prepare cache
+            if ([ "$TRAVIS_BRANCH" = "master" ]); then
+                (./scripts/npm-build-all.sh  || exit 1;);
+            else
+                (./scripts/npm-build-all.sh  -vjsapi alpha -sb || exit 1;);
+            fi
+        - stage: Unit test
+         (./scripts/npm-build-all.sh -si -sb -t "core" || exit 1;);
+        - stage: Unit test
+         (./scripts/npm-build-all.sh -si -sb -t "process-services" || exit 1;);
+        - stage: Unit test
+          (./scripts/npm-build-all.sh -si -sb -t "insights" || exit 1;);
+        - stage: Unit test
+           (./scripts/npm-build-all.sh -si -sb -t "content-services" || exit 1;);
+        - stage: Unit test
+           if ([ "$TRAVIS_BRANCH" = "master" ]); then
+                (./scripts/start.sh -t -ss || exit 1;);
+           else
+                (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
+           fi
+        - stage: Packaging test
+           (npm run build-lib || exit 1;);
         - stage: Test Update version 2.0.0
           script: ./scripts/test-e2e-bc.sh
-        - # Test expors
+        - stage: Test Update version 2.0.0
           script: npm run test-export
-        - # Test Update generator-ng2-alfresco-app
+        - stage: Update children projects dependency
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
-        - # Test Update alfresco-content-app
+        - stage: Update children projects dependency
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-content-app
-        - # Test Update adf-app-manager-ui
+        - stage: Update children projects dependency
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n adf-app-manager-ui
-        - # Test Update aalfresco-ng2-components
+        - stage: Update children projects dependency
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
-        - # Test Update alfresco-modeler-app
+        - stage: Update children projects dependency
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-modeler-app
         - stage: e2e Test
           script: ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save -dev -timeout 40000 --folder core
-        - # Test process-services
+        - stage: e2e Test
           script: ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save -dev -timeout 40000 --folder process-services
-        - # Test content-services
+        - stage: e2e Test
           script: ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save -dev -timeout 40000 --folder content-services
-        - # Test insights
+        - stage: e2e Test
           script: ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save -dev -timeout 40000 --folder insights
         - stage: Create Docker PR
           script: ./scripts/test-dist.sh -n $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
