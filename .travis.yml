@@ -20,6 +20,12 @@ before_install:
 
 jobs:
     include:
+        - stage: prepare cache
+            if ([ "$TRAVIS_BRANCH" = "master" ]); then
+                (./scripts/npm-build-all.sh  || exit 1;);
+            else
+                (./scripts/npm-build-all.sh  -vjsapi alpha -sb || exit 1;);
+            fi
         - stage: Test Update version 2.0.0
           script: ./scripts/test-e2e-bc.sh
         - # Test expors
