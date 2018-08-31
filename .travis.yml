@@ -27,9 +27,9 @@ jobs:
                 (./scripts/npm-build-all.sh  -vjsapi alpha -sb || exit 1;);
             fi
         - stage: Unit test
-          script:  (./scripts/npm-build-all.sh -si -sb -t "core" || exit 1;);
+          script:  eval export core; (./scripts/npm-build-all.sh -si -sb -t "core" || exit 1;);
         - stage: Unit test
-          script:  (./scripts/npm-build-all.sh -si -sb -t "process-services" || exit 1;);
+          script:  eval export process-services; (./scripts/npm-build-all.sh -si -sb -t "process-services" || exit 1;);
         - stage: Unit test
           script:  (./scripts/npm-build-all.sh -si -sb -t "insights" || exit 1;);
         - stage: Unit test
