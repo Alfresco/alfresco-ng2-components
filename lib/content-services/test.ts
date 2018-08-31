@@ -23,7 +23,6 @@ import {
     BrowserDynamicTestingModule,
     platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
-import pdfjsLib = require('pdfjs-dist');
 
 declare const require: any;
 
@@ -33,7 +32,8 @@ getTestBed().initTestEnvironment(
     platformBrowserDynamicTesting()
 );
 
-pdfjsLib.PDFJS.workerSrc = 'base/pdfjs-dist/build/pdf.worker.js';
+declare const pdfjsLib: any;
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'base/pdfjs-dist/build/pdf.worker.js';
 
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
