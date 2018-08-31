@@ -52,7 +52,7 @@ describe('Test Media player component ', () => {
         fixture.destroy();
     });
 
-    xit('should thrown an error If no url or no blob are passed', () => {
+    it('should thrown an error If no url or no blob are passed', () => {
         expect(() => {
             component.ngOnChanges({});
         }).toThrow(new Error('Attribute urlFile or blobFile is required'));
