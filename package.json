@@ -20,7 +20,7 @@
     "start:dist": "ng lint dist && npm run validate-config && npm run server-versions && ng serve dist --prod --host 0.0.0.0 --disable-host-check --proxy-config ./demo-shell/proxy.conf.js --open",
     "build": "npm run validate-config && npm run server-versions && ng build dist",
     "build:dev": "npm run validate-config  && npm run style:dev && npm run server-versions && ng build dev",
-    "build:dist": "npm run validate-config && npm run server-versions && ng build dist --prod --stats-json ",
+    "build:dist": "npm run validate-config && npm run server-versions && node --max-old-space-size=8192 node_modules/@angular/cli/bin/ng build dist --prod --stats-json ",
     "style:dev": "npm run webpack -- --config  ./lib/config/webpack.style.js --progress --profile --bail",
     "webpack-bundle-analyzer": "webpack-bundle-analyzer demo-shell/dist/stats.json",
     "test": "npm run validate-config && ng test dev --watch=false",
@@ -30,7 +30,8 @@
     "clean": "rimraf dist ./node_modules typings",
     "clean-lock": "rimraf package-lock.json",
     "webpack": "node ./node_modules/webpack/bin/webpack.js",
-    "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js"
+    "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js",
+    "lite-server-e2e": "lite-server --baseDir='demo-shell/dist' -c ./e2e/lite-server-proxy.js"
   },
   "config": {
     "ghooks": {
@@ -103,7 +104,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.7.2",
-    "@angular/cli": "^6.1.3",
+    "@angular/cli": "v6.2.0-rc.1",
     "@angular/compiler-cli": "6.1.2",
     "@types/hammerjs": "2.0.35",
     "@types/jasmine": "~2.8.3",
@@ -119,9 +120,11 @@
     "codelyzer": "4.3.0",
     "commander": "^2.15.1",
     "concurrently": "^3.5.1",
+    "connect-history-api-fallback": "^1.5.0",
     "ejs": "^2.6.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "fs-extra": "^4.0.2",
+    "http-proxy-middleware": "^0.19.0",
     "jasmine-ajax": "3.2.0",
     "jasmine-core": "~2.8.0",
     "jasmine-reporters": "^2.3.1",
@@ -139,6 +142,7 @@
     "karma-mocha-reporter": "2.2.5",
     "karma-remap-istanbul": "0.6.0",
     "karma-systemjs": "0.16.0",
+    "lite-server": "^2.4.0",
     "markdown-toc": "1.1.0",
     "markdownlint-cli": "^0.12.0",
     "mdast-util-compact": "^1.0.1",

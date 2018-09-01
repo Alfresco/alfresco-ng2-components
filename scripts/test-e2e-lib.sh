@@ -5,6 +5,7 @@ cd "$DIR/../"
 BROWSER_RUN=false
 DEVELOPMENT=false
 EXECLINT=true
+LITESERVER=false
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
@@ -76,6 +77,10 @@ skip_lint(){
     EXECLINT=false
 }
 
+lite_server(){
+    LITESERVER=true
+}
+
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
@@ -87,6 +92,7 @@ while [[ $1 == -* ]]; do
       -b|--browser)  set_browser; shift;;
       -dev|--dev)  set_development; shift;;
       -s|--spec)  set_test $2; shift 2;;
+      -ud|--use-dist)  lite_server; shift;;
       -save)   set_save_screenshot; shift;;
       -proxy|--proxy)  set_proxy $2; shift 2;;
       -s|--seleniumServer) set_selenium $2; shift 2;;
@@ -119,8 +125,14 @@ if [[  $DEVELOPMENT == "true" ]]; then
     echo "====== Run against local development  ====="
     npm run e2e-lib || exit 1
 else
-     webdriver-manager update --gecko=false --versions.chrome=2.38
-     ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
+    webdriver-manager update --gecko=false --versions.chrome=2.38
+    if [[  $LITESERVER == "true" ]]; then
+        echo "====== Run dist in lite-server ====="
+        ls demo-shell/dist
+        npm run lite-server-e2e>/dev/null & ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
+    else
+         ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
+    fi
 fi
 
 

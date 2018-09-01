@@ -5,20 +5,20 @@ var fs = require('fs');
 var path = require('path');
 var archiver = require('archiver');
 
-writeZipLib = async function (zipName, zipFolder) {
+writeZipLib = async function (zipFolder) {
 
     if (!fs.existsSync(zipFolder)) {
         fs.mkdirSync(zipFolder);
     }
 
     // create a file to stream archive data to.
-    let output = fs.createWriteStream(path.join(zipFolder, `${zipName}.zip`));
+    let output = fs.createWriteStream(path.join(zipFolder, `demo.zip`));
     let archive = archiver('zip', {
         zlib: {level: 9} // Sets the compression level.
     });
 
     archive.pipe(output);
-    archive.directory(path.join(__dirname, `../lib/dist/${zipName}`), zipName);
+    archive.directory(path.join(__dirname, `../demo-shell/dist/`), `demo.zip`);
 
     return archive.finalize();
 };
@@ -38,14 +38,11 @@ async function main() {
         hostEcm: program.host
     });
 
-    let zipFolder = path.join(__dirname, '/../lib/dist/zip/');
+    let zipFolder = path.join(__dirname, '../demo-shell/zip/');
 
-    await this.writeZipLib('core', zipFolder);
-    await this.writeZipLib('content-services', zipFolder);
-    await this.writeZipLib('process-services', zipFolder);
-    await this.writeZipLib('insights', zipFolder);
+    await this.writeZipLib(zipFolder);
 
-    let files = fs.readdirSync(path.join(__dirname, '../lib/dist/zip'));
+    let files = fs.readdirSync(path.join(__dirname, '../demo-shell/zip'));
 
     if (files && files.length > 0) {
 
@@ -70,7 +67,7 @@ async function main() {
 
         for (const fileName of files) {
 
-            let pathFile = path.join(__dirname, '../lib/dist/zip', fileName);
+            let pathFile = path.join(__dirname, '../demo-shell/zip/demo.zip');
 
             console.log('Upload  ' + pathFile);
             let file = fs.createReadStream(pathFile);
