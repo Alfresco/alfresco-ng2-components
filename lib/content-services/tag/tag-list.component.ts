@@ -62,10 +62,14 @@ export class TagListComponent implements OnInit {
 
         this.defaultPagination = {
             skipCount: 0,
-            maxItems: this.size
+            maxItems: this.size,
+            hasMoreItems: false
         };
 
+        this.pagination = this.defaultPagination;
+
         this.tagService.refresh.subscribe(() => {
+            this.tagsEntries = [];
             this.refreshTag(this.defaultPagination);
         });
     }
@@ -96,7 +100,7 @@ export class TagListComponent implements OnInit {
     loadLessTags() {
         this.isSizeMinimum = false;
 
-        this.tagsEntries = this.tagsEntries.slice(0, this.tagsEntries.length - this.size);
+        this.tagsEntries = this.tagsEntries.slice(0, this.tagsEntries.length - this.pagination.count);
 
         this.pagination.skipCount = this.pagination.skipCount - this.pagination.count;
 
