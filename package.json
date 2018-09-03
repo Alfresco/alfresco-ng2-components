@@ -31,7 +31,7 @@
     "clean-lock": "rimraf package-lock.json",
     "webpack": "node ./node_modules/webpack/bin/webpack.js",
     "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js",
-    "lite-server-e2e": "lite-server --baseDir='demo-shell/dist' -c ./e2e/lite-server-proxy.js"
+    "lite-server-e2e": "lite-server --baseDir='demo-shell/dist/demo.zip' -c ./e2e/lite-server-proxy.js"
   },
   "config": {
     "ghooks": {
@@ -169,6 +169,7 @@
     "tslint": "5.9.1",
     "typedoc": "^0.11.1",
     "typescript": "2.9.2",
+    "unzipper": "^0.9.3",
     "url-join": "^4.0.0",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",

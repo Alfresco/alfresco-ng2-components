@@ -1,27 +1,11 @@
 var program = require('commander');
 var AlfrescoApi = require('alfresco-js-api-node');
+var http = require('http');
 
 var fs = require('fs');
 var path = require('path');
 var archiver = require('archiver');
-
-writeZipLib = async function (zipFolder) {
-
-    if (!fs.existsSync(zipFolder)) {
-        fs.mkdirSync(zipFolder);
-    }
-
-    // create a file to stream archive data to.
-    let output = fs.createWriteStream(path.join(zipFolder, `demo.zip`));
-    let archive = archiver('zip', {
-        zlib: {level: 9} // Sets the compression level.
-    });
-
-    archive.pipe(output);
-    archive.directory(path.join(__dirname, `../demo-shell/dist/`), `demo.zip`);
-
-    return archive.finalize();
-};
+var unzipper = require('unzipper');
 
 async function main() {
 
@@ -38,56 +22,32 @@ async function main() {
         hostEcm: program.host
     });
 
-    let zipFolder = path.join(__dirname, '../demo-shell/zip/');
+    alfrescoJsApi.login(program.username, program.password);
 
-    await this.writeZipLib(zipFolder);
+    let zipDemoNode;
 
-    let files = fs.readdirSync(path.join(__dirname, '../demo-shell/zip'));
-
-    if (files && files.length > 0) {
-
-        alfrescoJsApi.login(program.username, program.password);
-        let folder;
-
-        if (!program.folder) {
-            program.folder = Date.now();
-        }
-
-        try {
-            folder = await alfrescoJsApi.nodes.addNode('-my-', {
-                'name': program.folder,
-                'relativePath': `Builds`,
-                'nodeType': 'cm:folder'
-            }, {}, {
-                'overwrite': true
-            });
-        } catch (error) {
-            console.log('error' + error);
-        }
-
-        for (const fileName of files) {
-
-            let pathFile = path.join(__dirname, '../demo-shell/zip/demo.zip');
-
-            console.log('Upload  ' + pathFile);
-            let file = fs.createReadStream(pathFile);
-
-            try {
-                await  alfrescoJsApi.upload.uploadFile(
-                    file,
-                    '',
-                    folder.entry.id,
-                    null,
-                    {
-                        'name': file.name,
-                        'nodeType': 'cm:content'
-                    });
-
-            } catch (error) {
-                console.log('error' + error);
-            }
-        }
+    try {
+        zipDemoNode = await alfrescoJsApi.nodes.getNode('-my-', {
+            'relativePath': `Builds/${program.folder}/demo.zip`
+        });
+    } catch (error) {
+        console.log('error:  ' + error);
     }
+
+    const url = await alfrescoJsApi.content.getContentUrl(zipDemoNode.entry.id, true);
+
+    console.log('Download zip');
+
+    var file = fs.createWriteStream('demo.zip');
+    var request = http.get(`http://${url}`, (response) => {
+        response.pipe(file);
+        file.on('finish', () => {
+            console.log('Unzip Demo ' + path.join(__dirname, '../demo.zip'));
+         fs.createReadStream(path.join(__dirname, '../demo.zip')).pipe(unzipper.Extract({path: path.join(__dirname, '../demo-shell/dist')}));
+        });
+    });
+
+
 }
 
 main();
