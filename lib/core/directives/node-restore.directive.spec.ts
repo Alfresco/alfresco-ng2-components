@@ -24,6 +24,7 @@ import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
     template: `
@@ -46,6 +47,7 @@ describe('NodeRestoreDirective', () => {
     let coreApi;
     let directiveInstance;
     let restoreNodeSpy: any;
+    let translationService: TranslationService;
 
     setupTestBed({
         imports: [
@@ -75,6 +77,8 @@ describe('NodeRestoreDirective', () => {
             list: { entries: [] }
         }));
 
+        translationService = TestBed.get(TranslationService);
+        spyOn(translationService, 'instant').and.callFake(key => { return key; });
     });
 
     it('should not restore when selection is empty', () => {
