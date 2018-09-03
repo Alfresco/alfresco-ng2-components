@@ -47,8 +47,8 @@ export class TagService {
      * Gets a list of all the tags already defined in the repository.
      * @returns TagPaging object (defined in JSAPI) containing the tags
      */
-    getAllTheTags(): Observable<TagPaging> {
-        return from(this.apiService.getInstance().core.tagsApi.getTags())
+    getAllTheTags(opts?: any): Observable<TagPaging> {
+        return from(this.apiService.getInstance().core.tagsApi.getTags(opts))
             .pipe(catchError(err => this.handleError(err)));
     }
 
