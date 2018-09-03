@@ -303,9 +303,9 @@
   },
   "APP":{
     "DIALOG" :{
-      "START" : "Start",
-      "TITLE" : "Select a process",
-      "LIST": "Process list",
+      "START" : "Continue",
+      "TITLE" : "Select a process app",
+      "LIST": "Process App list",
       "ERROR" : "There is a problem connecting to Process Services"
     }
   }
