@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnDestroy, OnChanges, ViewEncapsulation, SimpleChanges } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
 
@@ -26,7 +26,7 @@ import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
     encapsulation: ViewEncapsulation.None,
     animations: [ sidenavAnimation, contentAnimation ]
 })
-export class LayoutContainerComponent implements OnInit, OnDestroy {
+export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     @Input() sidenavMin: number;
     @Input() sidenavMax: number;
 
@@ -49,16 +49,42 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.SIDENAV_STATES.MOBILE = { value: 'expanded', params: { width: this.sidenavMax } };
-        this.SIDENAV_STATES.EXPANDED = { value: 'expanded', params: { width: this.sidenavMax } };
-        this.SIDENAV_STATES.COMPACT = { value: 'compact', params: {width: this.sidenavMin } };
-
         this.CONTENT_STATES.MOBILE = { value: 'expanded', params: { marginLeft: 0 } };
-        this.CONTENT_STATES.EXPANDED = { value: 'expanded', params: { marginLeft: this.sidenavMin } };
-        this.CONTENT_STATES.COMPACT = { value: 'compact', params: { marginLeft: this.sidenavMax } };
-
+        this.configureSidenavMax(this.sidenavMax);
+        this.configureSidenavMin(this.sidenavMin);
         this.mediaQueryList.addListener(this.onMediaQueryChange);
+        this.updateSideNavAnimationState();
+    }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.sidenavMax &&
+            changes.sidenavMax.currentValue !== changes.sidenavMax.previousValue) {
+            this.configureSidenavMax(changes.sidenavMax.currentValue);
+            this.updateSideNavAnimationState();
+        }
+        if (changes.sidenavMin &&
+            changes.sidenavMin.currentValue !== changes.sidenavMin.previousValue) {
+            this.configureSidenavMin(changes.sidenavMin.currentValue);
+            this.updateSideNavAnimationState();
+        }
+    }
+
+    ngOnDestroy(): void {
+        this.mediaQueryList.removeListener(this.onMediaQueryChange);
+    }
+
+    private configureSidenavMax(sidenavMax: number) {
+        this.SIDENAV_STATES.MOBILE = { value: 'expanded', params: { width: sidenavMax } };
+        this.SIDENAV_STATES.EXPANDED = { value: 'expanded', params: { width: sidenavMax } };
+        this.CONTENT_STATES.COMPACT = { value: 'compact', params: { marginLeft: sidenavMax } };
+    }
+
+    private configureSidenavMin(sidenavMin: number) {
+        this.SIDENAV_STATES.COMPACT = { value: 'compact', params: {width: sidenavMin } };
+        this.CONTENT_STATES.EXPANDED = { value: 'expanded', params: { marginLeft: sidenavMin } };
+    }
+
+    private updateSideNavAnimationState() {
         if (this.isMobileScreenSize) {
             this.sidenavAnimationState = this.SIDENAV_STATES.MOBILE;
             this.contentAnimationState = this.CONTENT_STATES.MOBILE;
@@ -69,10 +95,6 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
             this.sidenavAnimationState = this.SIDENAV_STATES.COMPACT;
             this.contentAnimationState = this.CONTENT_STATES.EXPANDED;
         }
-    }
-
-    ngOnDestroy(): void {
-        this.mediaQueryList.removeListener(this.onMediaQueryChange);
     }
 
     toggleMenu(): void {

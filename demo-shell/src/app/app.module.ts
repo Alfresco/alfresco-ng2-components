@@ -53,6 +53,7 @@ import { FilesComponent } from './components/files/files.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
 import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
+import { SidenavSizerComponent } from './components/sidenav-sizer/sidenav-sizer.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
 
@@ -65,6 +66,7 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { PreviewService } from './services/preview.service';
+import { SidenavSizerService } from './services/sidenav-sizer.service';
 import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
@@ -123,6 +125,7 @@ import { ProcessModule } from '@alfresco/adf-process-services';
         WebscriptComponent,
         TagComponent,
         SocialComponent,
+        SidenavSizerComponent,
         CustomSourcesComponent,
         VersionManagerDialogAdapterComponent,
         MetadataDialogAdapterComponent,
@@ -162,7 +165,8 @@ import { ProcessModule } from '@alfresco/adf-process-services';
             }
         },
         PreviewService,
-        HeaderDataService
+        HeaderDataService,
+        SidenavSizerService
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,

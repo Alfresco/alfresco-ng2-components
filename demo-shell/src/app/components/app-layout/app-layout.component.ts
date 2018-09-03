@@ -18,7 +18,7 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { UserPreferencesService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { HeaderDataService } from '../header-data/header-data.service';
-
+import { SidenavSizerService } from '../../services/sidenav-sizer.service';
 
 @Component({
     templateUrl: 'app-layout.component.html',
@@ -53,6 +53,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },
         { href: '/tag', icon: 'local_offer', title: 'APP_LAYOUT.TAG' },
         { href: '/social', icon: 'thumb_up', title: 'APP_LAYOUT.SOCIAL' },
+        { href: '/sidenavsizer', icon: 'weekend', title: 'APP_LAYOUT.SIDENAV-SIZER' },
         { href: '/settings-layout', icon: 'settings', title: 'APP_LAYOUT.SETTINGS' },
         { href: '/config-editor', icon: 'code', title: 'APP_LAYOUT.CONFIG-EDITOR' },
         { href: '/extendedSearch', icon: 'search', title: 'APP_LAYOUT.SEARCH' },
@@ -71,6 +72,9 @@ export class AppLayoutComponent implements OnInit {
     logo: string;
     redirectUrl: string | any[] = ['/home'];
     tooltip = 'APP_LAYOUT.APP_NAME';
+
+    maxSidenav = 220;
+    minSidenav = 70;
 
     ngOnInit() {
         const expand = this.config.get<boolean>('sideNav.expandedSidenav');
@@ -94,10 +98,16 @@ export class AppLayoutComponent implements OnInit {
         private userpreference: UserPreferencesService,
         private config: AppConfigService,
         private alfrescoApiService: AlfrescoApiService,
+        private sidenavSizerService: SidenavSizerService,
         private headerService: HeaderDataService) {
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
             this.enabelRedirect = false;
         }
+
+        this.sidenavSizerService.sidenavMaxChanges.subscribe((newMax) => {
+            this.maxSidenav = newMax;
+        });
+        this.sidenavSizerService.sidenavMinChanges.subscribe((newMin) => this.minSidenav = newMin);
     }
 
     setState(state) {
