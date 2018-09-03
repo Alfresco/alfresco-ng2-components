@@ -32,9 +32,6 @@ getTestBed().initTestEnvironment(
     platformBrowserDynamicTesting()
 );
 
-declare const pdfjsLib: any;
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'base/node_modules/pdfjs-dist/build/pdf.worker.js';
-
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
 // And load the modules.
