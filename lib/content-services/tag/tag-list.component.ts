@@ -17,12 +17,12 @@
 
 import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from './services/tag.service';
+import { PaginationModel } from '@alfresco/adf-core';
 
 /**
  *
  * This component provide a list of all the tag inside the ECM
  */
-
 @Component({
     selector: 'adf-tag-list',
     templateUrl: './tag-list.component.html',
@@ -31,30 +31,79 @@ import { TagService } from './services/tag.service';
 })
 export class TagListComponent implements OnInit {
 
-    tagsEntries: any;
-
     /** Emitted when a tag is selected. */
     @Output()
     result = new EventEmitter();
+
+    /**
+     * Array of tags that are displayed
+     */
+    tagsEntries: any = [];
+
+    /**
+     * Number of items per iteration
+     */
+    size: number = 10;
+
+    defaultPagination: PaginationModel;
+
+    pagination: PaginationModel;
+
+    /**
+     * Flag to display Fewer tags button.
+     */
+    isSizeMinimum = true;
 
     /**
      * Constructor
      * @param tagService
      */
     constructor(private tagService: TagService) {
+
+        this.defaultPagination = {
+            skipCount: 0,
+            maxItems: this.size
+        };
+
         this.tagService.refresh.subscribe(() => {
-            this.refreshTag();
+            this.refreshTag(this.defaultPagination);
         });
     }
 
     ngOnInit() {
-        return this.refreshTag();
+        return this.refreshTag(this.defaultPagination);
     }
 
-    refreshTag() {
-        this.tagService.getAllTheTags().subscribe((data: any) => {
-            this.tagsEntries = data.list.entries;
+    refreshTag(opts?: any) {
+        this.tagService.getAllTheTags(opts).subscribe((tags: any) => {
+            this.tagsEntries = this.tagsEntries.concat(tags.list.entries);
+            this.pagination = tags.list.pagination;
             this.result.emit(this.tagsEntries);
         });
+    }
+
+    loadMoreTags() {
+        if (this.pagination.hasMoreItems) {
+            this.isSizeMinimum = false;
+
+            this.refreshTag({
+                skipCount: this.pagination.skipCount + this.pagination.count,
+                maxItems: this.size
+            });
+        }
+    }
+
+    loadLessTags() {
+        this.isSizeMinimum = false;
+
+        this.tagsEntries = this.tagsEntries.slice(0, this.tagsEntries.length - this.size);
+
+        this.pagination.skipCount = this.pagination.skipCount - this.pagination.count;
+
+        this.pagination.hasMoreItems = true;
+
+        if (this.tagsEntries.length <= this.size) {
+            this.isSizeMinimum = true;
+        }
     }
 }
