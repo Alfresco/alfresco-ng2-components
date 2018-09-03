@@ -49,6 +49,8 @@ export class TagListComponent implements OnInit {
 
     pagination: PaginationModel;
 
+    isLoading = false;
+
     /**
      * Flag to display Fewer tags button.
      */
@@ -83,11 +85,13 @@ export class TagListComponent implements OnInit {
             this.tagsEntries = this.tagsEntries.concat(tags.list.entries);
             this.pagination = tags.list.pagination;
             this.result.emit(this.tagsEntries);
+            this.isLoading = false;
         });
     }
 
     loadMoreTags() {
         if (this.pagination.hasMoreItems) {
+            this.isLoading = true;
             this.isSizeMinimum = false;
 
             this.refreshTag({
