@@ -26,7 +26,7 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
         const defaultQueryBody: QueryBody = {
             query: {
-                query: searchTerm ? `authorityName:${searchTerm}* OR userName:${searchTerm}*` : searchTerm
+                query: searchTerm ? `authorityName:*${searchTerm}* OR userName:*${searchTerm}*` : searchTerm
             },
             include: ['properties', 'aspectNames'],
             paging: {
