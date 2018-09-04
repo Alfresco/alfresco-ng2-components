@@ -67,20 +67,6 @@ import 'core-js/es7/array';
  */
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
-/***************************************************************************************************
- * APPLICATION IMPORTS
- */
-
-/**
- * Date, currency, decimal and percent pipes.
- * Needed for: All but Chrome, Firefox, Edge, IE11 and Safari 10
- */
-import 'intl';  // Run `npm install --save intl`.
-/**
- * Need to import at least one locale-data with intl.
- */
-import 'intl/locale-data/jsonp/en';
-
 /**
  * Support custom event in IE11
  *
