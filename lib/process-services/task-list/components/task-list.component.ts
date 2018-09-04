@@ -38,7 +38,6 @@ import { TaskListService } from './../services/tasklist.service';
 export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
 
     static PRESET_KEY = 'adf-task-list.presets';
-    DATE_FORMAT = 'DD-MM-YYYY';
 
     @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
 
@@ -152,13 +151,13 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
-    /** Filter the tasks. Display only tasks with created_date after dueAfter. */
+    /** Filter the tasks. Display only tasks with created_date after dueDate. */
     @Input()
-    dueAfter: string;
+    dueDate: string;
 
-    /** Filter the tasks. Display only tasks with created_date before dueBefore. */
+    /** Filter the tasks. Display only tasks with created_date before endDate. */
     @Input()
-    dueBefore: string;
+    endDate: string;
 
     rows: any[] = [];
     isLoading: boolean = true;
@@ -251,7 +250,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.loadTasksByState().subscribe(
             (tasks) => {
                 this.rows = this.optimizeNames(tasks.data);
-                this.rows = this.filterByDate(this.rows);
                 this.selectTask(this.landingTaskId);
                 this.success.emit(tasks);
                 this.isLoading = false;
@@ -342,25 +340,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     /**
-     * Filter tasks array by created date
-     * @param tasks
-     */
-    private filterByDate(tasks: any[]) {
-        const afterDate = this.dueAfter ? moment(this.dueAfter).format(this.DATE_FORMAT) : null;
-        const beforeDate = this.dueBefore ? moment(this.dueBefore).format(this.DATE_FORMAT) : null;
-
-        let array = [];
-        tasks.forEach(task => {
-            const newDate = moment(task.created).format(this.DATE_FORMAT);
-            if ((afterDate && afterDate > newDate) || (beforeDate && beforeDate < newDate)) {} else {
-                array.push(task);
-            }
-        });
-
-        return array;
-    }
-
-    /**
      * Optimize name field
      * @param instances
      */
@@ -378,6 +357,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
         let requestNode = {
             appDefinitionId: this.appId,
+            dueAfter: this.dueDate ? moment(this.dueDate).toDate() : null,
+            dueBefore: this.endDate ? moment(this.endDate).toDate() : null,
             processInstanceId: this.processInstanceId,
             processDefinitionId: this.processDefinitionId,
             processDefinitionKey: this.processDefinitionKey,

@@ -106,7 +106,6 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
                 }
 
                 this.pagination = pagination;
-                this.pagination.totalItems = this.target['rows'].length;
                 if (!this.pagination.skipCount) { this.pagination.skipCount = 0; }
 
                 this.cdr.detectChanges();

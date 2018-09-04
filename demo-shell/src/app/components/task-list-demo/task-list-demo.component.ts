@@ -55,9 +55,9 @@ export class TaskListDemoComponent implements OnInit {
 
     page: number;
 
-    dueAfter: string;
+    dueDate: string;
 
-    dueBefore: string;
+    endDate: string;
 
     includeProcessInstance: boolean;
 
@@ -115,8 +115,8 @@ export class TaskListDemoComponent implements OnInit {
             taskSort: new FormControl(''),
             taskSize: new FormControl(''),
             taskPage: new FormControl(''),
-            taskDueAfter: new FormControl(''),
-            taskDueBefore: new FormControl(''),
+            taskDueDate: new FormControl(''),
+            taskEndDate: new FormControl(''),
             taskStart: new FormControl('', [Validators.pattern('^[0-9]*$')]),
             taskIncludeProcessInstance: new FormControl('')
         });
@@ -144,8 +144,8 @@ export class TaskListDemoComponent implements OnInit {
         this.start = taskFilter.taskStart;
         this.size = taskFilter.taskSize;
         this.page = taskFilter.taskPage;
-        this.dueAfter = taskFilter.taskDueAfter;
-        this.dueBefore = taskFilter.taskDueBefore;
+        this.dueDate = taskFilter.taskDueDate;
+        this.endDate = taskFilter.taskEndDate;
 
         this.includeProcessInstance = taskFilter.taskIncludeProcessInstance === 'include';
     }
@@ -167,8 +167,8 @@ export class TaskListDemoComponent implements OnInit {
         this.start = null;
         this.size = null;
         this.page = null;
-        this.dueAfter = null;
-        this.dueBefore = null;
+        this.dueDate = null;
+        this.endDate = null;
     }
 
     isFormValid() {
@@ -223,11 +223,11 @@ export class TaskListDemoComponent implements OnInit {
         return this.taskListForm.get('taskPage');
     }
 
-    get taskDueAfter(): AbstractControl {
-        return this.taskListForm.get('taskDueAfter');
+    get taskDueDate(): AbstractControl {
+        return this.taskListForm.get('taskDueDate');
     }
 
-    get taskDueBefore(): AbstractControl {
-        return this.taskListForm.get('taskDueBefore');
+    get taskEndDate(): AbstractControl {
+        return this.taskListForm.get('taskEndDate');
     }
 }
