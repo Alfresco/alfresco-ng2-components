@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { UserProcessModel } from '../../../../models';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
@@ -27,6 +27,7 @@ import { PeopleWidgetComponent } from './people.widget';
 import { setupTestBed } from '../../../../testing/setupTestBed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('PeopleWidgetComponent', () => {
 
@@ -34,6 +35,7 @@ describe('PeopleWidgetComponent', () => {
     let fixture: ComponentFixture<PeopleWidgetComponent>;
     let element: HTMLElement;
     let formService: FormService;
+    let translationService: TranslateService;
 
     setupTestBed({
         imports: [
@@ -45,6 +47,10 @@ describe('PeopleWidgetComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleWidgetComponent);
         formService = TestBed.get(FormService);
+
+        translationService = TestBed.get(TranslateService);
+        spyOn(translationService, 'instant').and.callFake(key => { return key; });
+        spyOn(translationService, 'get').and.callFake(key => { return of(key); });
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;

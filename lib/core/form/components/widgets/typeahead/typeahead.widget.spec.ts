@@ -28,11 +28,13 @@ import { TypeaheadWidgetComponent } from './typeahead.widget';
 import { setupTestBed } from '../../../../testing/setupTestBed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('TypeaheadWidgetComponent', () => {
 
     let formService: FormService;
     let widget: TypeaheadWidgetComponent;
+    let translationService: TranslateService;
 
     setupTestBed({
         imports: [
@@ -42,6 +44,10 @@ describe('TypeaheadWidgetComponent', () => {
     });
 
     beforeEach(() => {
+        translationService = TestBed.get(TranslateService);
+        spyOn(translationService, 'instant').and.callFake(key => { return key; });
+        spyOn(translationService, 'get').and.callFake(key => { return of(key); });
+
         formService = new FormService(null, null, null);
         widget = new TypeaheadWidgetComponent(formService, null);
         widget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }));

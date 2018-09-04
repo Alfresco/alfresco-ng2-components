@@ -37,7 +37,9 @@ import { CookieServiceMock } from '../mock/cookie.service.mock';
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock },
         { provide: CookieService, useClass: CookieServiceMock }
+    ],
+    exports: [
+        NoopAnimationsModule
     ]
-
 })
 export class CoreTestingModule {}
