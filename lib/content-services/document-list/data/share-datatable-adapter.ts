@@ -104,7 +104,12 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             const node = (<ShareDataRow> row).node;
 
             if (node.entry.isFolder) {
-                return this.documentListService.getMimeTypeIcon('folder');
+                if (node.entry.aspectNames.indexOf('smf:customConfigSmartFolder') > -1 ||
+                    (node.entry.aspectNames.indexOf('smf:systemConfigSmartFolder') > -1)) {
+                    return this.documentListService.getMimeTypeIcon('smartFolder');
+                } else {
+                    return this.documentListService.getMimeTypeIcon('folder');
+                }
             }
 
             if (node.entry.isFile) {
