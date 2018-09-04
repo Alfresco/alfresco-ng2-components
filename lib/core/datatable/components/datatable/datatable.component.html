@@ -49,6 +49,7 @@
         <ng-container *ngIf="!loading && !noPermission">
             <div *ngFor="let row of data.getRows(); let idx = index"
                  class="adf-datatable-row"
+                 [class.adf-datatable-row-thumbnail]="data.thumbnails"
                  role="button"
                  [class.is-selected]="row.isSelected"
                  [adf-upload]="allowDropFiles && rowAllowsDrop(row)" [adf-upload-data]="row"
@@ -80,8 +81,9 @@
                         (change)="onCheckboxChange(row, $event)">
                     </mat-checkbox>
                 </div>
-                <div *ngFor="let col of data.getColumns()"
+                <div *ngFor="let col of data.getColumns(), let first = first;"
                      class="adf-data-table-cell adf-datatable-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
+                     [class.cell-thumbnail]="data.thumbnails && first"
                      [attr.title]="col.title | translate"
                      [attr.filename]="getFilename(row)"
                      tabindex="0"
@@ -91,7 +93,9 @@
                      [context-menu-enabled]="contextMenu">
                     <div *ngIf="!col.template" class="cell-container">
                         <ng-container [ngSwitch]="col.type">
-                            <div *ngSwitchCase="'image'" class="cell-value">
+                            <div *ngSwitchCase="'image'" 
+                                class="cell-value" 
+                                [class.adf-image-gallery-cell]="data.thumbnails">
                                 <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}
                                 </mat-icon>
                                 <ng-template #no_iconvalue>
@@ -100,6 +104,7 @@
                                     </mat-icon>
                                     <ng-template #no_selected_row>
                                         <img
+                                            [class.adf-image-gallery]="data.thumbnails"
                                             alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
                                             src="{{ data.getValue(row, col) }}"
                                             (error)="onImageLoadingError($event, row)">
@@ -178,7 +183,6 @@
                         </button>
                     </mat-menu>
                 </div>
-
             </div>
             <div *ngIf="isEmpty()"
                  [class.adf-datatable-row]="display === 'list'"

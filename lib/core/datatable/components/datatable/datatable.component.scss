@@ -55,6 +55,10 @@
                 @include mat-overridable-elevation(2);
             }
 
+            .adf-datatable-row-thumbnail {
+                height: 300px !important;
+            }
+
             .adf-datatable-row-empty-card {
                 height: 0 !important;
                 padding-top: 0;
@@ -117,12 +121,24 @@
                 }
 
             }
+            
             .alfresco-datatable__actions-cell {
                 position: absolute;
                 height: 42px !important;
                 width: 42px !important;
                 right: 0px;
                 text-align: right;
+            }
+
+            .adf-image-gallery {
+                height: 100px;
+            }
+
+            .adf-image-gallery-cell {
+                display: flex;
+                width: 265px;
+                flex: 0 0 auto;
+                justify-content: center;
             }
 
             .image-table-cell {
@@ -147,6 +163,13 @@
                     text-overflow: ellipsis;
                     overflow: hidden;
                 }
+            }
+
+            .cell-thumbnail {
+                flex: 0 0 auto;
+                display: flex;
+                flex-direction: column-reverse;
+                justify-content: space-between;
             }
 
             .adf-datatable-table-checkbox {
