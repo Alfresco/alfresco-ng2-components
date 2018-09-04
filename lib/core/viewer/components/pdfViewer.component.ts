@@ -160,23 +160,25 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     initPDFViewer(pdfDocument: any) {
         const viewer: any = document.getElementById('viewer-viewerPdf');
+        const container = document.getElementById('viewer-pdf-viewer');
 
-        this.documentContainer = document.getElementById('viewer-pdf-viewer');
-        this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
-        this.documentContainer.addEventListener('pagesloaded', this.onPagesLoaded, true);
-        this.documentContainer.addEventListener('textlayerrendered', this.onPagerendered, true);
+        if (viewer && container) {
+            this.documentContainer = container;
 
-        this.pdfViewer = new pdfjsViewer.PDFViewer({
-            container: this.documentContainer,
-            viewer: viewer,
-            renderingQueue: this.renderingQueueServices
-        });
+            this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
+            this.documentContainer.addEventListener('pagesloaded', this.onPagesLoaded, true);
+            this.documentContainer.addEventListener('textlayerrendered', this.onPagerendered, true);
 
-        this.renderingQueueServices.setViewer(this.pdfViewer);
+            this.pdfViewer = new pdfjsViewer.PDFViewer({
+                container: this.documentContainer,
+                viewer: viewer,
+                renderingQueue: this.renderingQueueServices
+            });
 
-        this.pdfViewer.setDocument(pdfDocument);
-
-        this.pdfThumbnailsContext.viewer = this.pdfViewer;
+            this.renderingQueueServices.setViewer(this.pdfViewer);
+            this.pdfViewer.setDocument(pdfDocument);
+            this.pdfThumbnailsContext.viewer = this.pdfViewer;
+        }
     }
 
     ngOnDestroy() {
@@ -184,10 +186,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
             this.documentContainer.removeEventListener('pagesloaded', this.onPagesLoaded, true);
             this.documentContainer.removeEventListener('textlayerrendered', this.onPagerendered, true);
-        }
-
-        if (this.loadingTask) {
-            this.loadingTask.destroy();
         }
     }
 
