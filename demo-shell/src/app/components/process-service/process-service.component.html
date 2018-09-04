@@ -30,6 +30,14 @@
                 </div>
                 <div class="adf-grid-item adf-tasks-list" fxFlex.gt-md="380px" [ngClass.gt-md]="{'small-pagination': true}"
                      *ngIf="taskFilter && !isStartTaskMode()">
+                     <mat-slide-toggle
+                        class="adf-task-details-toggle"
+                        id="showHeaderToggle"
+                        [color]="'primary'"
+                        (change)="toggleHeaderContent()"
+                        [checked]="showHeaderContent">
+                        {{ 'PS-TAB.TASK-SHOW-HEADER'| translate }}
+                    </mat-slide-toggle>
                     <adf-tasklist
                         [appId]="taskFilter?.appId"
                         [presetColumn]="presetColumn"
@@ -67,6 +75,7 @@
                                            [debugMode]="true"
                                            [taskId]="currentTaskId"
                                            [fieldValidators]="fieldValidators"
+                                           [showHeaderContent]="showHeaderContent"
                                            (formCompleted)="onFormCompleted($event)"
                                            (formContentClicked)="onContentClick($event)"
                                            (taskCreated)="onTaskCreated($event)"
