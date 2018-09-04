@@ -22,7 +22,7 @@ import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
 
-declare let PDFJS: any;
+declare const pdfjsViewer: any;
 
 describe('PdfThumbListComponent', () => {
 
@@ -57,7 +57,7 @@ describe('PdfThumbListComponent', () => {
             page(9), page(10), page(11), page(12),
             page(13), page(14), page(15), page(16)
         ],
-        eventBus: new PDFJS.EventBus()
+        eventBus: new pdfjsViewer.EventBus()
     };
 
     setupTestBed({

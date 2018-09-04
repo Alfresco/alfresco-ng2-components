@@ -22,7 +22,7 @@ import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-declare let PDFJS: any;
+declare const pdfjsLib: any;
 
 describe('PdfPasswordDialogComponent', () => {
     let component: PdfPasswordDialogComponent;
@@ -68,13 +68,13 @@ describe('PdfPasswordDialogComponent', () => {
         });
 
         it('should return false', () => {
-            component.data.reason = PDFJS.PasswordResponses.NEED_PASSWORD;
+            component.data.reason = pdfjsLib.PasswordResponses.NEED_PASSWORD;
 
             expect(component.isError()).toBe(false);
         });
 
         it('should return true', () => {
-            component.data.reason = PDFJS.PasswordResponses.INCORRECT_PASSWORD;
+            component.data.reason = pdfjsLib.PasswordResponses.INCORRECT_PASSWORD;
 
             expect(component.isError()).toBe(true);
         });

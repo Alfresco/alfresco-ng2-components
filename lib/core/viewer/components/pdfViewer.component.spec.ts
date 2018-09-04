@@ -28,7 +28,7 @@ import { CoreModule } from '../../core.module';
 import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
 
-declare let PDFJS: any;
+declare const pdfjsLib: any;
 
 @Component({
     selector: 'adf-test-dialog-component',
@@ -528,13 +528,13 @@ describe('Test PdfViewer component', () => {
             componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
             spyOn(dialog, 'open').and.callFake((comp, context) => {
-                if (context.data.reason === PDFJS.PasswordResponses.NEED_PASSWORD) {
+                if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
                     return {
                         afterClosed: () => of('wrong_password')
                     };
                 }
 
-                if (context.data.reason === PDFJS.PasswordResponses.INCORRECT_PASSWORD) {
+                if (context.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD) {
                     return {
                         afterClosed: () => of('password')
                     };
@@ -563,7 +563,7 @@ describe('Test PdfViewer component', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
-                    reason: PDFJS.PasswordResponses.NEED_PASSWORD
+                    reason: pdfjsLib.PasswordResponses.NEED_PASSWORD
                 });
                 done();
             });
@@ -574,7 +574,7 @@ describe('Test PdfViewer component', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
-                    reason: PDFJS.PasswordResponses.INCORRECT_PASSWORD
+                    reason: pdfjsLib.PasswordResponses.INCORRECT_PASSWORD
                 });
                 done();
             });

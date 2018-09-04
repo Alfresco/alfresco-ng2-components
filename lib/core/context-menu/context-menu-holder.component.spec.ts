@@ -22,6 +22,7 @@ import { ContextMenuHolderComponent } from './context-menu-holder.component';
 import { ContextMenuModule } from './context-menu.module';
 import { ContextMenuService } from './context-menu.service';
 import { CoreModule } from '../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ContextMenuHolderComponent', () => {
     let fixture: ComponentFixture<ContextMenuHolderComponent>;
@@ -54,6 +55,7 @@ describe('ContextMenuHolderComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
                 imports: [
+                    NoopAnimationsModule,
                     CoreModule.forRoot(),
                     ContextMenuModule
                 ],
