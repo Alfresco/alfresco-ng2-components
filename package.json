@@ -24,7 +24,7 @@
     "style:dev": "npm run webpack -- --config  ./lib/config/webpack.style.js --progress --profile --bail",
     "webpack-bundle-analyzer": "webpack-bundle-analyzer demo-shell/dist/stats.json",
     "test": "npm run validate-config && ng test dev --watch=false",
-    "e2e": "ng e2e demo-shell-e2e",
+    "e2e": "./scripts/test-e2e-lib.sh -host 'localhost:4200' -dev --folder demo-shell",
     "e2e-lib": "ng e2e lib-e2e --port=4200",
     "server-versions": "rimraf ./demo-shell/src/versions.json && npm list --depth=0 --json=true --prod=true > ./demo-shell/src/versions.json  || exit 0",
     "clean": "rimraf dist ./node_modules typings",
@@ -103,7 +103,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.7.2",
-    "@angular/cli": "v6.2.0-rc.1",
+    "@angular/cli": "^6.1.3",
     "@angular/compiler-cli": "6.1.2",
     "@types/hammerjs": "2.0.35",
     "@types/jasmine": "~2.8.3",
