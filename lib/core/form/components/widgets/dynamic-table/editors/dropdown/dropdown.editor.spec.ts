@@ -28,7 +28,7 @@ import { DropdownEditorComponent } from './dropdown.editor';
 import { setupTestBed } from '../../../../../../testing/setupTestBed';
 import { CoreModule } from '../../../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-/*tslint:disable*/
+
 describe('DropdownEditorComponent', () => {
 
     let component: DropdownEditorComponent;

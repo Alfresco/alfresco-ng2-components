@@ -67,7 +67,7 @@ describe('DateEditorComponent', () => {
     });
 
     it('should update row value upon user input', () => {
-        const input = '14-03-2016';
+        const input = {value: '14-03-2016' };
 
         component.ngOnInit();
         component.onDateChanged(input);
@@ -78,7 +78,7 @@ describe('DateEditorComponent', () => {
 
     it('should flush value on user input', () => {
         spyOn(table, 'flushValue').and.callThrough();
-        const input = '14-03-2016';
+        const input = {value: '14-03-2016' };
 
         component.ngOnInit();
         component.onDateChanged(input);
