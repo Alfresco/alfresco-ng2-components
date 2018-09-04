@@ -303,7 +303,7 @@ describe('PaginationComponent', () => {
 
             component.goNext();
             expect(customComponent.updatePagination).toHaveBeenCalled();
-            expect(component.current).toBe(1);
+            expect(component.current).toBe(2);
         });
 
         it('should go to previous page if current page has 0 items', () => {
