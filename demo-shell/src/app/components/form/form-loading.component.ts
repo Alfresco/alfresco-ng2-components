@@ -26,7 +26,7 @@ import { FakeFormService } from './fake-form.service';
     templateUrl: 'form-loading.component.html',
     styleUrls: ['form-loading.component.scss'],
     providers: [
-        { provide: FormService, useClass: FakeFormService },
+        { provide: FormService, useClass: FakeFormService }
     ]
 })
 export class FormLoadingComponent implements OnInit {

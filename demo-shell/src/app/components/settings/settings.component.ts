@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { LogService, } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 
 @Component({

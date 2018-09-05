@@ -1,0 +1,7138 @@
+[
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/about/about.component.ts"
+        },
+        "name": "AboutComponent"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/core/about/about.module.ts"
+        },
+        "name": "AboutComponent"
+    },
+    {
+        "position": {
+            "line": 266,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "AboutModule"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/about/about.module.ts"
+        },
+        "name": "AboutModule"
+    },
+    {
+        "position": {
+            "line": 193,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "AboutModule"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 8,
+            "fileName": "lib/core/collapsable/collapsable.module.ts"
+        },
+        "name": "AccordionComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/collapsable/accordion.component.ts"
+        },
+        "name": "AccordionComponent"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/core/collapsable/collapsable.module.ts"
+        },
+        "name": "AccordionGroupComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/collapsable/accordion-group.component.ts"
+        },
+        "name": "AccordionGroupComponent"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/core/form/services/activiti-alfresco.service.ts"
+        },
+        "name": "ActivitiContentService"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/content-services/permission-manager/components/add-permission/add-permission.component.ts"
+        },
+        "name": "AddPermissionComponent"
+    },
+    {
+        "position": {
+            "line": 57,
+            "character": 8,
+            "fileName": "lib/content-services/permission-manager/permission-manager.module.ts"
+        },
+        "name": "AddPermissionComponent"
+    },
+    {
+        "position": {
+            "line": 58,
+            "character": 8,
+            "fileName": "lib/content-services/permission-manager/permission-manager.module.ts"
+        },
+        "name": "AddPermissionDialogComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/permission-manager/components/add-permission/add-permission-dialog.component.ts"
+        },
+        "name": "AddPermissionDialogComponent"
+    },
+    {
+        "position": {
+            "line": 55,
+            "character": 8,
+            "fileName": "lib/content-services/permission-manager/permission-manager.module.ts"
+        },
+        "name": "AddPermissionPanelComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/permission-manager/components/add-permission/add-permission-panel.component.ts"
+        },
+        "name": "AddPermissionPanelComponent"
+    },
+    {
+        "position": {
+            "line": 18,
+            "character": 0,
+            "fileName": "lib/core/mock/AlfrescoApi.mock.ts"
+        },
+        "name": "AlfrescoApiMock"
+    },
+    {
+        "position": {
+            "line": 41,
+            "character": 0,
+            "fileName": "lib/core/services/alfresco-api.service.ts"
+        },
+        "name": "AlfrescoApiService"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/mock/alfresco-api.service.mock.ts"
+        },
+        "name": "AlfrescoApiServiceMock"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/amount/amount.widget.ts"
+        },
+        "name": "AmountWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 64,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "AnalyticsComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/insights/analytics-process/components/analytics.component.ts"
+        },
+        "name": "AnalyticsComponent"
+    },
+    {
+        "position": {
+            "line": 67,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "AnalyticsGeneratorComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/insights/analytics-process/components/analytics-generator.component.ts"
+        },
+        "name": "AnalyticsGeneratorComponent"
+    },
+    {
+        "position": {
+            "line": 40,
+            "character": 0,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "AnalyticsProcessModule"
+    },
+    {
+        "position": {
+            "line": 111,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "AnalyticsProcessModule"
+    },
+    {
+        "position": {
+            "line": 67,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "AnalyticsProcessModule"
+    },
+    {
+        "position": {
+            "line": 68,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "AnalyticsReportHeatMapComponent"
+    },
+    {
+        "position": {
+            "line": 65,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "AnalyticsReportListComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/insights/analytics-process/components/analytics-report-list.component.ts"
+        },
+        "name": "AnalyticsReportListComponent"
+    },
+    {
+        "position": {
+            "line": 41,
+            "character": 0,
+            "fileName": "lib/insights/analytics-process/components/analytics-report-parameters.component.ts"
+        },
+        "name": "AnalyticsReportParametersComponent"
+    },
+    {
+        "position": {
+            "line": 66,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "AnalyticsReportParametersComponent"
+    },
+    {
+        "position": {
+            "line": 32,
+            "character": 0,
+            "fileName": "lib/insights/analytics-process/services/analytics.service.ts"
+        },
+        "name": "AnalyticsService"
+    },
+    {
+        "position": {
+            "line": 278,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "AppConfigModule"
+    },
+    {
+        "position": {
+            "line": 205,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "AppConfigModule"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/app-config/app-config.module.ts"
+        },
+        "name": "AppConfigModule"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/app-config/app-config.pipe.ts"
+        },
+        "name": "AppConfigPipe"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 8,
+            "fileName": "lib/core/app-config/app-config.module.ts"
+        },
+        "name": "AppConfigPipe"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 0,
+            "fileName": "lib/core/app-config/app-config.service.ts"
+        },
+        "name": "AppConfigService"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/mock/app-config.service.mock.ts"
+        },
+        "name": "AppConfigServiceMock"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/filter.model.ts"
+        },
+        "name": "AppDefinitionRepresentationModel"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/process-services/app-list/apps-list.component.ts"
+        },
+        "name": "AppsListComponent"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 8,
+            "fileName": "lib/process-services/app-list/apps-list.module.ts"
+        },
+        "name": "AppsListComponent"
+    },
+    {
+        "position": {
+            "line": 131,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "AppsListModule"
+    },
+    {
+        "position": {
+            "line": 80,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "AppsListModule"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/process-services/app-list/apps-list.module.ts"
+        },
+        "name": "AppsListModule"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/services/apps-process.service.ts"
+        },
+        "name": "AppsProcessService"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/content-services/content-metadata/services/config/aspect-oriented-config.service.ts"
+        },
+        "name": "AspectOrientedConfigService"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 8,
+            "fileName": "lib/process-services/content-widget/content-widget.module.ts"
+        },
+        "name": "AttachFileWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 0,
+            "fileName": "lib/process-services/content-widget/attach-file-widget.component.ts"
+        },
+        "name": "AttachFileWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/process-services/content-widget/attach-folder-widget.component.ts"
+        },
+        "name": "AttachFolderWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 39,
+            "character": 8,
+            "fileName": "lib/process-services/content-widget/content-widget.module.ts"
+        },
+        "name": "AttachFolderWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 73,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "AttachFormComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/attach-form.component.ts"
+        },
+        "name": "AttachFormComponent"
+    },
+    {
+        "position": {
+            "line": 43,
+            "character": 8,
+            "fileName": "lib/process-services/attachment/attachment.module.ts"
+        },
+        "name": "AttachmentComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/process-services/attachment/create-task-attachment.component.ts"
+        },
+        "name": "AttachmentComponent"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/process-services/attachment/attachment.module.ts"
+        },
+        "name": "AttachmentModule"
+    },
+    {
+        "position": {
+            "line": 132,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "AttachmentModule"
+    },
+    {
+        "position": {
+            "line": 81,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "AttachmentModule"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/mock/authentication.service.mock.ts"
+        },
+        "name": "AuthenticationMock"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/core/services/authentication.service.ts"
+        },
+        "name": "AuthenticationService"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/core/services/auth-guard.service.ts"
+        },
+        "name": "AuthGuard"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/services/auth-guard-bpm.service.ts"
+        },
+        "name": "AuthGuardBpm"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/services/auth-guard-ecm.service.ts"
+        },
+        "name": "AuthGuardEcm"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/chart/barChart.model.ts"
+        },
+        "name": "BarChart"
+    },
+    {
+        "position": {
+            "line": 18,
+            "character": 0,
+            "fileName": "lib/core/events/base.event.ts"
+        },
+        "name": "BaseEvent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/events/base-ui.event.ts"
+        },
+        "name": "BaseUIEvent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/content-services/content-metadata/services/basic-properties.service.ts"
+        },
+        "name": "BasicPropertiesService"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/dynamic-table/editors/boolean/boolean.editor.ts"
+        },
+        "name": "BooleanEditorComponent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/core/models/product-version.model.ts"
+        },
+        "name": "BpmProductVersionModel"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/core/userinfo/services/bpm-user.service.ts"
+        },
+        "name": "BpmUserService"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/content-services/breadcrumb/breadcrumb.component.ts"
+        },
+        "name": "BreadcrumbComponent"
+    },
+    {
+        "position": {
+            "line": 32,
+            "character": 8,
+            "fileName": "lib/content-services/breadcrumb/breadcrumb.module.ts"
+        },
+        "name": "BreadcrumbComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/breadcrumb/breadcrumb.module.ts"
+        },
+        "name": "BreadcrumbModule"
+    },
+    {
+        "position": {
+            "line": 112,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "BreadcrumbModule"
+    },
+    {
+        "position": {
+            "line": 166,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "BreadcrumbModule"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 8,
+            "fileName": "lib/core/buttons-menu/buttons-menu.module.ts"
+        },
+        "name": "ButtonsMenuComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/buttons-menu/buttons-menu.component.ts"
+        },
+        "name": "ButtonsMenuComponent"
+    },
+    {
+        "position": {
+            "line": 292,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "ButtonsMenuModule"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/buttons-menu/buttons-menu.module.ts"
+        },
+        "name": "ButtonsMenuModule"
+    },
+    {
+        "position": {
+            "line": 219,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "ButtonsMenuModule"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/core/card-view/services/card-item-types.service.ts"
+        },
+        "name": "CardItemTypeService"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/card-view/models/card-view-baseitem.model.ts"
+        },
+        "name": "CardViewBaseItemModel"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 4,
+            "fileName": "lib/core/card-view/public-api.ts"
+        },
+        "name": "CardViewBoolItemComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/card-view/components/card-view-boolitem/card-view-boolitem.component.ts"
+        },
+        "name": "CardViewBoolItemComponent"
+    },
+    {
+        "position": {
+            "line": 82,
+            "character": 8,
+            "fileName": "lib/core/card-view/card-view.module.ts"
+        },
+        "name": "CardViewBoolItemComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/card-view/models/card-view-boolitem.model.ts"
+        },
+        "name": "CardViewBoolItemModel"
+    },
+    {
+        "position": {
+            "line": 18,
+            "character": 4,
+            "fileName": "lib/core/card-view/public-api.ts"
+        },
+        "name": "CardViewComponent"
+    },
+    {
+        "position": {
+            "line": 81,
+            "character": 8,
+            "fileName": "lib/core/card-view/card-view.module.ts"
+        },
+        "name": "CardViewComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/card-view/components/card-view/card-view.component.ts"
+        },
+        "name": "CardViewComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/card-view/directives/card-view-content-proxy.directive.ts"
+        },
+        "name": "CardViewContentProxyDirective"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts"
+        },
+        "name": "CardViewDateItemComponent"
+    },
+    {
+        "position": {
+            "line": 83,
+            "character": 8,
+            "fileName": "lib/core/card-view/card-view.module.ts"
+        },
+        "name": "CardViewDateItemComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 4,
+            "fileName": "lib/core/card-view/public-api.ts"
+        },
+        "name": "CardViewDateItemComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/card-view/models/card-view-dateitem.model.ts"
+        },
+        "name": "CardViewDateItemModel"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/card-view/models/card-view-datetimeitem.model.ts"
+        },
+        "name": "CardViewDatetimeItemModel"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/card-view/models/card-view-floatitem.model.ts"
+        },
+        "name": "CardViewFloatItemModel"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/card-view/models/card-view-intitem.model.ts"
+        },
+        "name": "CardViewIntItemModel"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/core/card-view/components/card-view-item-dispatcher/card-view-item-dispatcher.component.ts"
+        },
+        "name": "CardViewItemDispatcherComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/card-view/validators/card-view-item-float.validator.ts"
+        },
+        "name": "CardViewItemFloatValidator"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/card-view/validators/card-view-item-int.validator.ts"
+        },
+        "name": "CardViewItemIntValidator"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 4,
+            "fileName": "lib/core/card-view/public-api.ts"
+        },
+        "name": "CardViewKeyValuePairsItemComponent"
+    },
+    {
+        "position": {
+            "line": 87,
+            "character": 8,
+            "fileName": "lib/core/card-view/card-view.module.ts"
+        },
+        "name": "CardViewKeyValuePairsItemComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component.ts"
+        },
+        "name": "CardViewKeyValuePairsItemComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/card-view/models/card-view-keyvaluepairs.model.ts"
+        },
+        "name": "CardViewKeyValuePairsItemModel"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/card-view/components/card-view-mapitem/card-view-mapitem.component.ts"
+        },
+        "name": "CardViewMapItemComponent"
+    },
+    {
+        "position": {
+            "line": 84,
+            "character": 8,
+            "fileName": "lib/core/card-view/card-view.module.ts"
+        },
+        "name": "CardViewMapItemComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 4,
+            "fileName": "lib/core/card-view/public-api.ts"
+        },
+        "name": "CardViewMapItemComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/card-view/models/card-view-mapitem.model.ts"
+        },
+        "name": "CardViewMapItemModel"
+    },
+    {
+        "position": {
+            "line": 282,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CardViewModule"
+    },
+    {
+        "position": {
+            "line": 44,
+            "character": 0,
+            "fileName": "lib/core/card-view/card-view.module.ts"
+        },
+        "name": "CardViewModule"
+    },
+    {
+        "position": {
+            "line": 209,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CardViewModule"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/card-view/components/card-view-selectitem/card-view-selectitem.component.ts"
+        },
+        "name": "CardViewSelectItemComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 4,
+            "fileName": "lib/core/card-view/public-api.ts"
+        },
+        "name": "CardViewSelectItemComponent"
+    },
+    {
+        "position": {
+            "line": 86,
+            "character": 8,
+            "fileName": "lib/core/card-view/card-view.module.ts"
+        },
+        "name": "CardViewSelectItemComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/card-view/models/card-view-selectitem.model.ts"
+        },
+        "name": "CardViewSelectItemModel"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts"
+        },
+        "name": "CardViewTextItemComponent"
+    },
+    {
+        "position": {
+            "line": 85,
+            "character": 8,
+            "fileName": "lib/core/card-view/card-view.module.ts"
+        },
+        "name": "CardViewTextItemComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 4,
+            "fileName": "lib/core/card-view/public-api.ts"
+        },
+        "name": "CardViewTextItemComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/card-view/models/card-view-textitem.model.ts"
+        },
+        "name": "CardViewTextItemModel"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 0,
+            "fileName": "lib/core/card-view/services/card-view-update.service.ts"
+        },
+        "name": "CardViewUpdateService"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/chart/chart.model.ts"
+        },
+        "name": "Chart"
+    },
+    {
+        "position": {
+            "line": 72,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "CheckboxWidgetAanalyticsComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/checkbox/checkbox.widget.ts"
+        },
+        "name": "CheckboxWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 69,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "ChecklistComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/checklist.component.ts"
+        },
+        "name": "ChecklistComponent"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/core/collapsable/collapsable.module.ts"
+        },
+        "name": "CollapsableModule"
+    },
+    {
+        "position": {
+            "line": 210,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CollapsableModule"
+    },
+    {
+        "position": {
+            "line": 283,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CollapsableModule"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/services/comment-content.service.ts"
+        },
+        "name": "CommentContentService"
+    },
+    {
+        "position": {
+            "line": 45,
+            "character": 8,
+            "fileName": "lib/core/comments/comments.module.ts"
+        },
+        "name": "CommentListComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 9,
+            "fileName": "lib/process-services/index.ts"
+        },
+        "name": "CommentListComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/comments/comment-list.component.ts"
+        },
+        "name": "CommentListComponent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/core/models/comment.model.ts"
+        },
+        "name": "CommentModel"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/models/comment-process.model.ts"
+        },
+        "name": "CommentProcessModel"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/services/comment-process.service.ts"
+        },
+        "name": "CommentProcessService"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 9,
+            "fileName": "lib/process-services/index.ts"
+        },
+        "name": "CommentsComponent"
+    },
+    {
+        "position": {
+            "line": 46,
+            "character": 8,
+            "fileName": "lib/core/comments/comments.module.ts"
+        },
+        "name": "CommentsComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/comments/comments.component.ts"
+        },
+        "name": "CommentsComponent"
+    },
+    {
+        "position": {
+            "line": 18,
+            "character": 9,
+            "fileName": "lib/process-services/index.ts"
+        },
+        "name": "CommentsModule"
+    },
+    {
+        "position": {
+            "line": 212,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CommentsModule"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/comments/comments.module.ts"
+        },
+        "name": "CommentsModule"
+    },
+    {
+        "position": {
+            "line": 285,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CommentsModule"
+    },
+    {
+        "position": {
+            "line": 74,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "CommonModule"
+    },
+    {
+        "position": {
+            "line": 125,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "CommonModule"
+    },
+    {
+        "position": {
+            "line": 270,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CommonModule"
+    },
+    {
+        "position": {
+            "line": 62,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "CommonModule"
+    },
+    {
+        "position": {
+            "line": 197,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CommonModule"
+    },
+    {
+        "position": {
+            "line": 106,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "CommonModule"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/content-services/dialogs/confirm.dialog.ts"
+        },
+        "name": "ConfirmDialogComponent"
+    },
+    {
+        "position": {
+            "line": 53,
+            "character": 8,
+            "fileName": "lib/content-services/dialogs/dialog.module.ts"
+        },
+        "name": "ConfirmDialogComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/container-column.model.ts"
+        },
+        "name": "ContainerColumnModel"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/container.model.ts"
+        },
+        "name": "ContainerModel"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/container/container.widget.ts"
+        },
+        "name": "ContainerWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 55,
+            "character": 8,
+            "fileName": "lib/content-services/document-list/document-list.module.ts"
+        },
+        "name": "ContentActionComponent"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/content-action/content-action.component.ts"
+        },
+        "name": "ContentActionComponent"
+    },
+    {
+        "position": {
+            "line": 56,
+            "character": 8,
+            "fileName": "lib/content-services/document-list/document-list.module.ts"
+        },
+        "name": "ContentActionListComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/content-action/content-action-list.component.ts"
+        },
+        "name": "ContentActionListComponent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/content-action.model.ts"
+        },
+        "name": "ContentActionModel"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/content-column/content-column.component.ts"
+        },
+        "name": "ContentColumnComponent"
+    },
+    {
+        "position": {
+            "line": 53,
+            "character": 8,
+            "fileName": "lib/content-services/document-list/document-list.module.ts"
+        },
+        "name": "ContentColumnComponent"
+    },
+    {
+        "position": {
+            "line": 54,
+            "character": 8,
+            "fileName": "lib/content-services/document-list/document-list.module.ts"
+        },
+        "name": "ContentColumnListComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/content-column/content-column-list.component.ts"
+        },
+        "name": "ContentColumnListComponent"
+    },
+    {
+        "position": {
+            "line": 117,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "ContentDirectiveModule"
+    },
+    {
+        "position": {
+            "line": 171,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "ContentDirectiveModule"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/directives/content-directive.module.ts"
+        },
+        "name": "ContentDirectiveModule"
+    },
+    {
+        "position": {
+            "line": 63,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/document-library.model.ts"
+        },
+        "name": "ContentInfo"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 1,
+            "fileName": "lib/core/form/components/widgets/core/content-link.model.ts"
+        },
+        "name": "ContentLinkModel"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts"
+        },
+        "name": "ContentMetadataCardComponent"
+    },
+    {
+        "position": {
+            "line": 34,
+            "character": 8,
+            "fileName": "lib/content-services/content-metadata/content-metadata.module.ts"
+        },
+        "name": "ContentMetadataCardComponent"
+    },
+    {
+        "position": {
+            "line": 33,
+            "character": 8,
+            "fileName": "lib/content-services/content-metadata/content-metadata.module.ts"
+        },
+        "name": "ContentMetadataComponent"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/content-services/content-metadata/services/config/content-metadata-config.factory.ts"
+        },
+        "name": "ContentMetadataConfigFactory"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/content-metadata/content-metadata.module.ts"
+        },
+        "name": "ContentMetadataModule"
+    },
+    {
+        "position": {
+            "line": 168,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "ContentMetadataModule"
+    },
+    {
+        "position": {
+            "line": 114,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "ContentMetadataModule"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/content-services/content-metadata/services/content-metadata.service.ts"
+        },
+        "name": "ContentMetadataService"
+    },
+    {
+        "position": {
+            "line": 124,
+            "character": 0,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "ContentModule"
+    },
+    {
+        "position": {
+            "line": 81,
+            "character": 0,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "ContentModuleLazy"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/content-services/content-node-selector/content-node-dialog.service.ts"
+        },
+        "name": "ContentNodeDialogService"
+    },
+    {
+        "position": {
+            "line": 44,
+            "character": 8,
+            "fileName": "lib/content-services/content-node-selector/content-node-selector.module.ts"
+        },
+        "name": "ContentNodeSelectorComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/content-services/content-node-selector/content-node-selector.component.ts"
+        },
+        "name": "ContentNodeSelectorComponent"
+    },
+    {
+        "position": {
+            "line": 113,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "ContentNodeSelectorModule"
+    },
+    {
+        "position": {
+            "line": 167,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "ContentNodeSelectorModule"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/content-services/content-node-selector/content-node-selector.module.ts"
+        },
+        "name": "ContentNodeSelectorModule"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 0,
+            "fileName": "lib/content-services/content-node-selector/content-node-selector-panel.component.ts"
+        },
+        "name": "ContentNodeSelectorPanelComponent"
+    },
+    {
+        "position": {
+            "line": 42,
+            "character": 8,
+            "fileName": "lib/content-services/content-node-selector/content-node-selector.module.ts"
+        },
+        "name": "ContentNodeSelectorPanelComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/content-node-selector/content-node-selector.service.ts"
+        },
+        "name": "ContentNodeSelectorService"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/services/content.service.ts"
+        },
+        "name": "ContentService"
+    },
+    {
+        "position": {
+            "line": 69,
+            "character": 8,
+            "fileName": "lib/core/form/form.module.ts"
+        },
+        "name": "ContentWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/content/content.widget.ts"
+        },
+        "name": "ContentWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/process-services/content-widget/content-widget.module.ts"
+        },
+        "name": "ContentWidgetModule"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/context-menu/context-menu.directive.ts"
+        },
+        "name": "ContextMenuDirective"
+    },
+    {
+        "position": {
+            "line": 39,
+            "character": 8,
+            "fileName": "lib/core/context-menu/context-menu.module.ts"
+        },
+        "name": "ContextMenuDirective"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 8,
+            "fileName": "lib/core/context-menu/context-menu.module.ts"
+        },
+        "name": "ContextMenuHolderComponent"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/core/context-menu/context-menu-holder.component.ts"
+        },
+        "name": "ContextMenuHolderComponent"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/core/context-menu/context-menu.module.ts"
+        },
+        "name": "ContextMenuModule"
+    },
+    {
+        "position": {
+            "line": 281,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "ContextMenuModule"
+    },
+    {
+        "position": {
+            "line": 208,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "ContextMenuModule"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/context-menu/context-menu.service.ts"
+        },
+        "name": "ContextMenuService"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/services/cookie.service.ts"
+        },
+        "name": "CookieService"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/mock/cookie.service.mock.ts"
+        },
+        "name": "CookieServiceMock"
+    },
+    {
+        "position": {
+            "line": 227,
+            "character": 0,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CoreModule"
+    },
+    {
+        "position": {
+            "line": 154,
+            "character": 0,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CoreModuleLazy"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/process-services/attachment/create-process-attachment.component.ts"
+        },
+        "name": "CreateProcessAttachmentComponent"
+    },
+    {
+        "position": {
+            "line": 42,
+            "character": 8,
+            "fileName": "lib/process-services/attachment/attachment.module.ts"
+        },
+        "name": "CreateProcessAttachmentComponent"
+    },
+    {
+        "position": {
+            "line": 41,
+            "character": 8,
+            "fileName": "lib/process-services/attachment/attachment.module.ts"
+        },
+        "name": "CreateProcessAttachmentComponent"
+    },
+    {
+        "position": {
+            "line": 34,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/services/custom-resources.service.ts"
+        },
+        "name": "CustomResourcesService"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/data-cell.event.ts"
+        },
+        "name": "DataCellEvent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/data-cell.event.ts"
+        },
+        "name": "DataCellEventModel"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/data-column/data-column.component.ts"
+        },
+        "name": "DataColumnComponent"
+    },
+    {
+        "position": {
+            "line": 32,
+            "character": 8,
+            "fileName": "lib/core/data-column/data-column.module.ts"
+        },
+        "name": "DataColumnComponent"
+    },
+    {
+        "position": {
+            "line": 33,
+            "character": 8,
+            "fileName": "lib/core/data-column/data-column.module.ts"
+        },
+        "name": "DataColumnListComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/data-column/data-column-list.component.ts"
+        },
+        "name": "DataColumnListComponent"
+    },
+    {
+        "position": {
+            "line": 289,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "DataColumnModule"
+    },
+    {
+        "position": {
+            "line": 216,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "DataColumnModule"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/data-column/data-column.module.ts"
+        },
+        "name": "DataColumnModule"
+    },
+    {
+        "position": {
+            "line": 31,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/data-row-action.event.ts"
+        },
+        "name": "DataRowActionEvent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/data-row-action.event.ts"
+        },
+        "name": "DataRowActionModel"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/datatable/data/data-row-event.model.ts"
+        },
+        "name": "DataRowEvent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/core/datatable/data/data-sorting.model.ts"
+        },
+        "name": "DataSorting"
+    },
+    {
+        "position": {
+            "line": 72,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "DataTableCellComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/datatable-cell.component.ts"
+        },
+        "name": "DataTableCellComponent"
+    },
+    {
+        "position": {
+            "line": 67,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "DataTableComponent"
+    },
+    {
+        "position": {
+            "line": 41,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/datatable.component.ts"
+        },
+        "name": "DataTableComponent"
+    },
+    {
+        "position": {
+            "line": 217,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "DataTableModule"
+    },
+    {
+        "position": {
+            "line": 290,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "DataTableModule"
+    },
+    {
+        "position": {
+            "line": 41,
+            "character": 0,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "DataTableModule"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/datatable/data/data-table.schema.ts"
+        },
+        "name": "DataTableSchema"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/date-cell.component.ts"
+        },
+        "name": "DateCellComponent"
+    },
+    {
+        "position": {
+            "line": 73,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "DateCellComponent"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/dynamic-table/editors/date/date.editor.ts"
+        },
+        "name": "DateEditorComponent"
+    },
+    {
+        "position": {
+            "line": 133,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "DateFieldValidator"
+    },
+    {
+        "position": {
+            "line": 73,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "DateRangeWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 32,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/dynamic-table/editors/datetime/datetime.editor.ts"
+        },
+        "name": "DateTimeEditorComponent"
+    },
+    {
+        "position": {
+            "line": 31,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/date-time/date-time.widget.ts"
+        },
+        "name": "DateTimeWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/date/date.widget.ts"
+        },
+        "name": "DateWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/app-config/debug-app-config.service.ts"
+        },
+        "name": "DebugAppConfigService"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/services/deleted-nodes-api.service.ts"
+        },
+        "name": "DeletedNodesApiService"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/chart/detailsTableChart.model.ts"
+        },
+        "name": "DetailsTableChart"
+    },
+    {
+        "position": {
+            "line": 212,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramAlfrescoPublishTaskComponent"
+    },
+    {
+        "position": {
+            "line": 243,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramBoundaryEventComponent"
+    },
+    {
+        "position": {
+            "line": 215,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramBoxPublishTaskComponent"
+    },
+    {
+        "position": {
+            "line": 218,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramBusinessRuleTaskComponent"
+    },
+    {
+        "position": {
+            "line": 210,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramCamelTaskComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/services/diagram-color.service.ts"
+        },
+        "name": "DiagramColorService"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/insights/diagram/components/diagram.component.ts"
+        },
+        "name": "DiagramComponent"
+    },
+    {
+        "position": {
+            "line": 200,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramComponent"
+    },
+    {
+        "position": {
+            "line": 238,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramContainerIconEventTaskComponent"
+    },
+    {
+        "position": {
+            "line": 204,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramContainerServiceTaskComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/diagram/diagramElement.model.ts"
+        },
+        "name": "DiagramElementModel"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/diagram/diagramElementProperty.model.ts"
+        },
+        "name": "DiagramElementPropertyModel"
+    },
+    {
+        "position": {
+            "line": 203,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramEndEventComponent"
+    },
+    {
+        "position": {
+            "line": 201,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramEventComponent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/diagram/diagramEventDefinition.model.ts"
+        },
+        "name": "DiagramEventDefinitionModel"
+    },
+    {
+        "position": {
+            "line": 224,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramEventGatewayComponent"
+    },
+    {
+        "position": {
+            "line": 247,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramEventSubprocessComponent"
+    },
+    {
+        "position": {
+            "line": 221,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramExclusiveGatewayComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/diagram/diagramFlowElement.model.ts"
+        },
+        "name": "DiagramFlowElementModel"
+    },
+    {
+        "position": {
+            "line": 220,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramGatewayComponent"
+    },
+    {
+        "position": {
+            "line": 214,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramGoogleDrivePublishTaskComponent"
+    },
+    {
+        "position": {
+            "line": 231,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconAlfrescoPublishTaskComponent"
+    },
+    {
+        "position": {
+            "line": 234,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconBoxPublishTaskComponent"
+    },
+    {
+        "position": {
+            "line": 237,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconBusinessRuleTaskComponent"
+    },
+    {
+        "position": {
+            "line": 229,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconCamelTaskComponent"
+    },
+    {
+        "position": {
+            "line": 240,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconErrorComponent"
+    },
+    {
+        "position": {
+            "line": 233,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconGoogleDrivePublishTaskComponent"
+    },
+    {
+        "position": {
+            "line": 228,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconManualTaskComponent"
+    },
+    {
+        "position": {
+            "line": 242,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconMessageComponent"
+    },
+    {
+        "position": {
+            "line": 230,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconMuleTaskComponent"
+    },
+    {
+        "position": {
+            "line": 235,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconReceiveTaskComponent"
+    },
+    {
+        "position": {
+            "line": 232,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconRestCallTaskComponent"
+    },
+    {
+        "position": {
+            "line": 236,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconScriptTaskComponent"
+    },
+    {
+        "position": {
+            "line": 226,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconSendTaskComponent"
+    },
+    {
+        "position": {
+            "line": 225,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconServiceTaskComponent"
+    },
+    {
+        "position": {
+            "line": 241,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconSignalComponent"
+    },
+    {
+        "position": {
+            "line": 239,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconTimerComponent"
+    },
+    {
+        "position": {
+            "line": 227,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIconUserTaskComponent"
+    },
+    {
+        "position": {
+            "line": 222,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramInclusiveGatewayComponent"
+    },
+    {
+        "position": {
+            "line": 245,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramIntermediateCatchingEventComponent"
+    },
+    {
+        "position": {
+            "line": 251,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramLaneComponent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/diagram/diagramLaneElement.model.ts"
+        },
+        "name": "DiagramLaneElementModel"
+    },
+    {
+        "position": {
+            "line": 250,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramLanesComponent"
+    },
+    {
+        "position": {
+            "line": 209,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramManualTaskComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/diagram/diagram.model.ts"
+        },
+        "name": "DiagramModel"
+    },
+    {
+        "position": {
+            "line": 211,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramMuleTaskComponent"
+    },
+    {
+        "position": {
+            "line": 223,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramParallelGatewayComponent"
+    },
+    {
+        "position": {
+            "line": 249,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramPoolComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/diagram/diagramPoolElement.model.ts"
+        },
+        "name": "DiagramPoolElementModel"
+    },
+    {
+        "position": {
+            "line": 248,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramPoolsComponent"
+    },
+    {
+        "position": {
+            "line": 216,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramReceiveTaskComponent"
+    },
+    {
+        "position": {
+            "line": 213,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramRestCallTaskComponent"
+    },
+    {
+        "position": {
+            "line": 217,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramScriptTaskComponent"
+    },
+    {
+        "position": {
+            "line": 207,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramSendTaskComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/insights/diagram/components/diagram-sequence-flow.component.ts"
+        },
+        "name": "DiagramSequenceFlowComponent"
+    },
+    {
+        "position": {
+            "line": 219,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramSequenceFlowComponent"
+    },
+    {
+        "position": {
+            "line": 206,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramServiceTaskComponent"
+    },
+    {
+        "position": {
+            "line": 110,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "DiagramsModule"
+    },
+    {
+        "position": {
+            "line": 66,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "DiagramsModule"
+    },
+    {
+        "position": {
+            "line": 113,
+            "character": 0,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramsModule"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/insights/diagram/services/diagrams.service.ts"
+        },
+        "name": "DiagramsService"
+    },
+    {
+        "position": {
+            "line": 202,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramStartEventComponent"
+    },
+    {
+        "position": {
+            "line": 246,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramSubprocessComponent"
+    },
+    {
+        "position": {
+            "line": 205,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramTaskComponent"
+    },
+    {
+        "position": {
+            "line": 244,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramThrowEventComponent"
+    },
+    {
+        "position": {
+            "line": 252,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramTooltipComponent"
+    },
+    {
+        "position": {
+            "line": 208,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "DiagramUserTaskComponent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/diagram/diagramWayPoint.model.ts"
+        },
+        "name": "DiagramWayPointModel"
+    },
+    {
+        "position": {
+            "line": 169,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "DialogModule"
+    },
+    {
+        "position": {
+            "line": 31,
+            "character": 0,
+            "fileName": "lib/content-services/dialogs/dialog.module.ts"
+        },
+        "name": "DialogModule"
+    },
+    {
+        "position": {
+            "line": 115,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "DialogModule"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/directives/directive.module.ts"
+        },
+        "name": "DirectiveModule"
+    },
+    {
+        "position": {
+            "line": 271,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "DirectiveModule"
+    },
+    {
+        "position": {
+            "line": 198,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "DirectiveModule"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/services/discovery-api.service.ts"
+        },
+        "name": "DiscoveryApiService"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/display-text/display-text.widget.ts"
+        },
+        "name": "DisplayTextWidgetComponentComponent"
+    },
+    {
+        "position": {
+            "line": 57,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/content-action.model.ts"
+        },
+        "name": "DocumentActionModel"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/services/document-actions.service.ts"
+        },
+        "name": "DocumentActionsService"
+    },
+    {
+        "position": {
+            "line": 45,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/document-list.component.ts"
+        },
+        "name": "DocumentListComponent"
+    },
+    {
+        "position": {
+            "line": 52,
+            "character": 8,
+            "fileName": "lib/content-services/document-list/document-list.module.ts"
+        },
+        "name": "DocumentListComponent"
+    },
+    {
+        "position": {
+            "line": 162,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "DocumentListModule"
+    },
+    {
+        "position": {
+            "line": 108,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "DocumentListModule"
+    },
+    {
+        "position": {
+            "line": 34,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/document-list.module.ts"
+        },
+        "name": "DocumentListModule"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/services/document-list.service.ts"
+        },
+        "name": "DocumentListService"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/document/document.widget.ts"
+        },
+        "name": "DocumentWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/content-services/dialogs/download-zip.dialog.ts"
+        },
+        "name": "DownloadZipDialogComponent"
+    },
+    {
+        "position": {
+            "line": 49,
+            "character": 8,
+            "fileName": "lib/content-services/dialogs/dialog.module.ts"
+        },
+        "name": "DownloadZipDialogComponent"
+    },
+    {
+        "position": {
+            "line": 33,
+            "character": 8,
+            "fileName": "lib/content-services/breadcrumb/breadcrumb.module.ts"
+        },
+        "name": "DropdownBreadcrumbComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts"
+        },
+        "name": "DropdownBreadcrumbComponent"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/dynamic-table/editors/dropdown/dropdown.editor.ts"
+        },
+        "name": "DropdownEditorComponent"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/content-services/site-dropdown/sites-dropdown.component.ts"
+        },
+        "name": "DropdownSitesComponent"
+    },
+    {
+        "position": {
+            "line": 34,
+            "character": 8,
+            "fileName": "lib/content-services/site-dropdown/sites-dropdown.module.ts"
+        },
+        "name": "DropdownSitesComponent"
+    },
+    {
+        "position": {
+            "line": 69,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "DropdownWidgetAanalyticsComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/dropdown/dropdown.widget.ts"
+        },
+        "name": "DropdownWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 71,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "DurationWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/services/dynamic-component-mapper.service.ts"
+        },
+        "name": "DynamicComponentMapper"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/services/dynamic-component-mapper.service.ts"
+        },
+        "name": "DynamicComponentResolver"
+    },
+    {
+        "position": {
+            "line": 32,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.model.ts"
+        },
+        "name": "DynamicTableModel"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.ts"
+        },
+        "name": "DynamicTableWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/core/models/ecm-company.model.ts"
+        },
+        "name": "EcmCompanyModel"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/form/services/ecm-model.service.ts"
+        },
+        "name": "EcmModelService"
+    },
+    {
+        "position": {
+            "line": 119,
+            "character": 0,
+            "fileName": "lib/core/models/product-version.model.ts"
+        },
+        "name": "EcmProductVersionModel"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/core/userinfo/services/ecm-user.service.ts"
+        },
+        "name": "EcmUserService"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 8,
+            "fileName": "lib/core/templates/template.module.ts"
+        },
+        "name": "EmptyContentComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/templates/empty-content/empty-content.component.ts"
+        },
+        "name": "EmptyContentComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/datatable/directives/empty-custom-content.directive.ts"
+        },
+        "name": "EmptyCustomContentDirective"
+    },
+    {
+        "position": {
+            "line": 79,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "EmptyCustomContentDirective"
+    },
+    {
+        "position": {
+            "line": 57,
+            "character": 8,
+            "fileName": "lib/content-services/document-list/document-list.module.ts"
+        },
+        "name": "EmptyFolderContentDirective"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/empty-folder/empty-folder-content.directive.ts"
+        },
+        "name": "EmptyFolderContentDirective"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/empty-list.component.ts"
+        },
+        "name": "EmptyListBodyDirective"
+    },
+    {
+        "position": {
+            "line": 70,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "EmptyListBodyDirective"
+    },
+    {
+        "position": {
+            "line": 68,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "EmptyListComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/empty-list.component.ts"
+        },
+        "name": "EmptyListComponent"
+    },
+    {
+        "position": {
+            "line": 71,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "EmptyListFooterDirective"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/empty-list.component.ts"
+        },
+        "name": "EmptyListFooterDirective"
+    },
+    {
+        "position": {
+            "line": 69,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "EmptyListHeaderDirective"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/empty-list.component.ts"
+        },
+        "name": "EmptyListHeaderDirective"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/content-services/search/components/empty-search-result.component.ts"
+        },
+        "name": "EmptySearchResultComponent"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 8,
+            "fileName": "lib/core/templates/template.module.ts"
+        },
+        "name": "ErrorContentComponent"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/templates/error-content/error-content.component.ts"
+        },
+        "name": "ErrorContentComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/error-message.model.ts"
+        },
+        "name": "ErrorMessageModel"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/error/error.component.ts"
+        },
+        "name": "ErrorWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/core/mock/event.mock.ts"
+        },
+        "name": "EventMock"
+    },
+    {
+        "position": {
+            "line": 18,
+            "character": 9,
+            "fileName": "lib/content-services/search/public-api.ts"
+        },
+        "name": "FacetField"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 9,
+            "fileName": "lib/content-services/search/public-api.ts"
+        },
+        "name": "FacetFieldBucket"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 9,
+            "fileName": "lib/content-services/search/public-api.ts"
+        },
+        "name": "FacetQuery"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/services/favorites-api.service.ts"
+        },
+        "name": "FavoritesApiService"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/content-services/upload/directives/file-draggable.directive.ts"
+        },
+        "name": "FileDraggableDirective"
+    },
+    {
+        "position": {
+            "line": 47,
+            "character": 8,
+            "fileName": "lib/content-services/upload/upload.module.ts"
+        },
+        "name": "FileDraggableDirective"
+    },
+    {
+        "position": {
+            "line": 49,
+            "character": 0,
+            "fileName": "lib/core/models/file.model.ts"
+        },
+        "name": "FileModel"
+    },
+    {
+        "position": {
+            "line": 74,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "FileSizeCellComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/filesize-cell.component.ts"
+        },
+        "name": "FileSizeCellComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/pipes/file-size.pipe.ts"
+        },
+        "name": "FileSizePipe"
+    },
+    {
+        "position": {
+            "line": 48,
+            "character": 8,
+            "fileName": "lib/core/pipes/pipe.module.ts"
+        },
+        "name": "FileSizePipe"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/events/file.event.ts"
+        },
+        "name": "FileUploadCompleteEvent"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 0,
+            "fileName": "lib/core/events/file.event.ts"
+        },
+        "name": "FileUploadDeleteEvent"
+    },
+    {
+        "position": {
+            "line": 45,
+            "character": 0,
+            "fileName": "lib/core/events/file.event.ts"
+        },
+        "name": "FileUploadErrorEvent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/events/file.event.ts"
+        },
+        "name": "FileUploadEvent"
+    },
+    {
+        "position": {
+            "line": 51,
+            "character": 8,
+            "fileName": "lib/content-services/upload/upload.module.ts"
+        },
+        "name": "FileUploadingDialogComponent"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/content-services/upload/components/file-uploading-dialog.component.ts"
+        },
+        "name": "FileUploadingDialogComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/content-services/upload/components/file-uploading-list.component.ts"
+        },
+        "name": "FileUploadingListComponent"
+    },
+    {
+        "position": {
+            "line": 52,
+            "character": 8,
+            "fileName": "lib/content-services/upload/upload.module.ts"
+        },
+        "name": "FileUploadingListComponent"
+    },
+    {
+        "position": {
+            "line": 53,
+            "character": 8,
+            "fileName": "lib/content-services/upload/upload.module.ts"
+        },
+        "name": "FileUploadingListRowComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/content-services/upload/components/file-uploading-list-row.component.ts"
+        },
+        "name": "FileUploadingListRowComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/utils/file-utils.ts"
+        },
+        "name": "FileUtils"
+    },
+    {
+        "position": {
+            "line": 59,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/filter.model.ts"
+        },
+        "name": "FilterParamRepresentationModel"
+    },
+    {
+        "position": {
+            "line": 45,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/filter.model.ts"
+        },
+        "name": "FilterParamsModel"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/models/filter-process.model.ts"
+        },
+        "name": "FilterProcessRepresentationModel"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 9,
+            "fileName": "lib/content-services/search/public-api.ts"
+        },
+        "name": "FilterQuery"
+    },
+    {
+        "position": {
+            "line": 83,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/filter.model.ts"
+        },
+        "name": "FilterRepresentationModel"
+    },
+    {
+        "position": {
+            "line": 483,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "FixedValueFieldValidator"
+    },
+    {
+        "position": {
+            "line": 64,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/content-action.model.ts"
+        },
+        "name": "FolderActionModel"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/services/folder-actions.service.ts"
+        },
+        "name": "FolderActionsService"
+    },
+    {
+        "position": {
+            "line": 34,
+            "character": 8,
+            "fileName": "lib/content-services/folder-directive/folder-directive.module.ts"
+        },
+        "name": "FolderCreateDirective"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/content-services/folder-directive/folder-create.directive.ts"
+        },
+        "name": "FolderCreateDirective"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/content-services/dialogs/folder.dialog.ts"
+        },
+        "name": "FolderDialogComponent"
+    },
+    {
+        "position": {
+            "line": 50,
+            "character": 8,
+            "fileName": "lib/content-services/dialogs/dialog.module.ts"
+        },
+        "name": "FolderDialogComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/content-services/folder-directive/folder-directive.module.ts"
+        },
+        "name": "FolderDirectiveModule"
+    },
+    {
+        "position": {
+            "line": 170,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "FolderDirectiveModule"
+    },
+    {
+        "position": {
+            "line": 116,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "FolderDirectiveModule"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 8,
+            "fileName": "lib/content-services/folder-directive/folder-directive.module.ts"
+        },
+        "name": "FolderEditDirective"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/content-services/folder-directive/folder-edit.directive.ts"
+        },
+        "name": "FolderEditDirective"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/form.model.ts"
+        },
+        "name": "Form"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/form/components/form.component.ts"
+        },
+        "name": "FormComponent"
+    },
+    {
+        "position": {
+            "line": 71,
+            "character": 8,
+            "fileName": "lib/core/form/form.module.ts"
+        },
+        "name": "FormComponent"
+    },
+    {
+        "position": {
+            "line": 18,
+            "character": 9,
+            "fileName": "lib/core/form/events/index.ts"
+        },
+        "name": "FormErrorEvent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 9,
+            "fileName": "lib/core/form/events/index.ts"
+        },
+        "name": "FormEvent"
+    },
+    {
+        "position": {
+            "line": 70,
+            "character": 8,
+            "fileName": "lib/core/form/form.module.ts"
+        },
+        "name": "FormFieldComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 9,
+            "fileName": "lib/core/form/events/index.ts"
+        },
+        "name": "FormFieldEvent"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field.model.ts"
+        },
+        "name": "FormFieldModel"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-types.ts"
+        },
+        "name": "FormFieldTypes"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/form/components/form-list.component.ts"
+        },
+        "name": "FormListComponent"
+    },
+    {
+        "position": {
+            "line": 72,
+            "character": 8,
+            "fileName": "lib/core/form/form.module.ts"
+        },
+        "name": "FormListComponent"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form.model.ts"
+        },
+        "name": "FormModel"
+    },
+    {
+        "position": {
+            "line": 211,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "FormModule"
+    },
+    {
+        "position": {
+            "line": 40,
+            "character": 0,
+            "fileName": "lib/core/form/form.module.ts"
+        },
+        "name": "FormModule"
+    },
+    {
+        "position": {
+            "line": 284,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "FormModule"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-outcome-event.model.ts"
+        },
+        "name": "FormOutcomeEvent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-outcome.model.ts"
+        },
+        "name": "FormOutcomeModel"
+    },
+    {
+        "position": {
+            "line": 42,
+            "character": 0,
+            "fileName": "lib/core/form/services/form-rendering.service.ts"
+        },
+        "name": "FormRenderingService"
+    },
+    {
+        "position": {
+            "line": 33,
+            "character": 0,
+            "fileName": "lib/core/form/services/form.service.ts"
+        },
+        "name": "FormService"
+    },
+    {
+        "position": {
+            "line": 63,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "FormsModule"
+    },
+    {
+        "position": {
+            "line": 107,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "FormsModule"
+    },
+    {
+        "position": {
+            "line": 127,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "FormsModule"
+    },
+    {
+        "position": {
+            "line": 199,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "FormsModule"
+    },
+    {
+        "position": {
+            "line": 40,
+            "character": 8,
+            "fileName": "lib/content-services/version-manager/version-manager.module.ts"
+        },
+        "name": "FormsModule"
+    },
+    {
+        "position": {
+            "line": 272,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "FormsModule"
+    },
+    {
+        "position": {
+            "line": 76,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "FormsModule"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-widget.model.ts"
+        },
+        "name": "FormWidgetModel"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/functional-group/functional-group.widget.ts"
+        },
+        "name": "FunctionalGroupWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 45,
+            "character": 8,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "HeaderLayoutComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/chart/heatMapChart.model.ts"
+        },
+        "name": "HeatMapChart"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/directives/highlight.directive.ts"
+        },
+        "name": "HighlightDirective"
+    },
+    {
+        "position": {
+            "line": 44,
+            "character": 8,
+            "fileName": "lib/core/directives/directive.module.ts"
+        },
+        "name": "HighlightDirective"
+    },
+    {
+        "position": {
+            "line": 49,
+            "character": 8,
+            "fileName": "lib/core/pipes/pipe.module.ts"
+        },
+        "name": "HighlightPipe"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/pipes/text-highlight.pipe.ts"
+        },
+        "name": "HighlightPipe"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/services/highlight-transform.service.ts"
+        },
+        "name": "HighlightTransformService"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/core/settings/host-settings.module.ts"
+        },
+        "name": "HostSettingsComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/settings/host-settings.component.ts"
+        },
+        "name": "HostSettingsComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/settings/host-settings.module.ts"
+        },
+        "name": "HostSettingsModule"
+    },
+    {
+        "position": {
+            "line": 202,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "HostSettingsModule"
+    },
+    {
+        "position": {
+            "line": 275,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "HostSettingsModule"
+    },
+    {
+        "position": {
+            "line": 201,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "HttpClientModule"
+    },
+    {
+        "position": {
+            "line": 274,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "HttpClientModule"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/hyperlink/hyperlink.widget.ts"
+        },
+        "name": "HyperlinkWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/imgViewer.component.ts"
+        },
+        "name": "ImgViewerComponent"
+    },
+    {
+        "position": {
+            "line": 79,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "ImgViewerComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/content-services/content-metadata/services/config/indifferent-config.service.ts"
+        },
+        "name": "IndifferentConfigService"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 8,
+            "fileName": "lib/core/pagination/pagination.module.ts"
+        },
+        "name": "InfinitePaginationComponent"
+    },
+    {
+        "position": {
+            "line": 31,
+            "character": 0,
+            "fileName": "lib/core/pagination/infinite-pagination.component.ts"
+        },
+        "name": "InfinitePaginationComponent"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/info-drawer/info-drawer-layout.component.ts"
+        },
+        "name": "InfoDrawerButtonsDirective"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 0,
+            "fileName": "lib/core/info-drawer/info-drawer.component.ts"
+        },
+        "name": "InfoDrawerComponent"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/core/info-drawer/info-drawer-layout.component.ts"
+        },
+        "name": "InfoDrawerContentDirective"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/info-drawer/info-drawer-layout.component.ts"
+        },
+        "name": "InfoDrawerLayoutComponent"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 0,
+            "fileName": "lib/core/info-drawer/info-drawer.module.ts"
+        },
+        "name": "InfoDrawerModule"
+    },
+    {
+        "position": {
+            "line": 288,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "InfoDrawerModule"
+    },
+    {
+        "position": {
+            "line": 215,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "InfoDrawerModule"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/info-drawer/info-drawer.component.ts"
+        },
+        "name": "InfoDrawerTabComponent"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/info-drawer/info-drawer-layout.component.ts"
+        },
+        "name": "InfoDrawerTitleDirective"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/content-services/permission-manager/components/inherited-button.directive.ts"
+        },
+        "name": "InheritPermissionDirective"
+    },
+    {
+        "position": {
+            "line": 56,
+            "character": 8,
+            "fileName": "lib/content-services/permission-manager/permission-manager.module.ts"
+        },
+        "name": "InheritPermissionDirective"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/pipes/user-initial.pipe.ts"
+        },
+        "name": "InitialUsernamePipe"
+    },
+    {
+        "position": {
+            "line": 52,
+            "character": 8,
+            "fileName": "lib/core/pipes/pipe.module.ts"
+        },
+        "name": "InitialUsernamePipe"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/text/text-mask.component.ts"
+        },
+        "name": "InputMaskDirective"
+    },
+    {
+        "position": {
+            "line": 40,
+            "character": 0,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "InsightsModule"
+    },
+    {
+        "position": {
+            "line": 95,
+            "character": 0,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "InsightsModuleLazy"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/language-menu/language-menu.component.ts"
+        },
+        "name": "LanguageMenuComponent"
+    },
+    {
+        "position": {
+            "line": 32,
+            "character": 8,
+            "fileName": "lib/core/language-menu/language-menu.module.ts"
+        },
+        "name": "LanguageMenuComponent"
+    },
+    {
+        "position": {
+            "line": 287,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "LanguageMenuModule"
+    },
+    {
+        "position": {
+            "line": 214,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "LanguageMenuModule"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/language-menu/language-menu.module.ts"
+        },
+        "name": "LanguageMenuModule"
+    },
+    {
+        "position": {
+            "line": 40,
+            "character": 8,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "LayoutContainerComponent"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "LayoutModule"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/content-metadata/services/config/layout-oriented-config.service.ts"
+        },
+        "name": "LayoutOrientedConfigService"
+    },
+    {
+        "position": {
+            "line": 57,
+            "character": 0,
+            "fileName": "lib/core/models/product-version.model.ts"
+        },
+        "name": "LicenseModel"
+    },
+    {
+        "position": {
+            "line": 31,
+            "character": 8,
+            "fileName": "lib/content-services/social/social.module.ts"
+        },
+        "name": "LikeComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/content-services/social/like.component.ts"
+        },
+        "name": "LikeComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/chart/lineChart.model.ts"
+        },
+        "name": "LineChart"
+    },
+    {
+        "position": {
+            "line": 78,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "LoadingContentTemplateDirective"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/datatable/directives/loading-template.directive.ts"
+        },
+        "name": "LoadingContentTemplateDirective"
+    },
+    {
+        "position": {
+            "line": 75,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "LocationCellComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/location-cell.component.ts"
+        },
+        "name": "LocationCellComponent"
+    },
+    {
+        "position": {
+            "line": 43,
+            "character": 8,
+            "fileName": "lib/core/login/login.module.ts"
+        },
+        "name": "LoginComponent"
+    },
+    {
+        "position": {
+            "line": 44,
+            "character": 0,
+            "fileName": "lib/core/login/components/login.component.ts"
+        },
+        "name": "LoginComponent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/core/login/models/login-error.event.ts"
+        },
+        "name": "LoginErrorEvent"
+    },
+    {
+        "position": {
+            "line": 44,
+            "character": 8,
+            "fileName": "lib/core/login/login.module.ts"
+        },
+        "name": "LoginFooterDirective"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/login/directives/login-footer.directive.ts"
+        },
+        "name": "LoginFooterDirective"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/login/directives/login-header.directive.ts"
+        },
+        "name": "LoginHeaderDirective"
+    },
+    {
+        "position": {
+            "line": 45,
+            "character": 8,
+            "fileName": "lib/core/login/login.module.ts"
+        },
+        "name": "LoginHeaderDirective"
+    },
+    {
+        "position": {
+            "line": 213,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "LoginModule"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/login/login.module.ts"
+        },
+        "name": "LoginModule"
+    },
+    {
+        "position": {
+            "line": 286,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "LoginModule"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/core/login/models/login-submit.event.ts"
+        },
+        "name": "LoginSubmitEvent"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/core/login/models/login-success.event.ts"
+        },
+        "name": "LoginSuccessEvent"
+    },
+    {
+        "position": {
+            "line": 45,
+            "character": 8,
+            "fileName": "lib/core/directives/directive.module.ts"
+        },
+        "name": "LogoutDirective"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/directives/logout.directive.ts"
+        },
+        "name": "LogoutDirective"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/services/log.service.ts"
+        },
+        "name": "LogService"
+    },
+    {
+        "position": {
+            "line": 277,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "MaterialModule"
+    },
+    {
+        "position": {
+            "line": 204,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "MaterialModule"
+    },
+    {
+        "position": {
+            "line": 65,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "MaterialModule"
+    },
+    {
+        "position": {
+            "line": 109,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "MaterialModule"
+    },
+    {
+        "position": {
+            "line": 212,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "MaxDateFieldValidator"
+    },
+    {
+        "position": {
+            "line": 299,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "MaxDateTimeFieldValidator"
+    },
+    {
+        "position": {
+            "line": 372,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "MaxLengthFieldValidator"
+    },
+    {
+        "position": {
+            "line": 428,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "MaxValueFieldValidator"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/mediaPlayer.component.ts"
+        },
+        "name": "MediaPlayerComponent"
+    },
+    {
+        "position": {
+            "line": 81,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "MediaPlayerComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/pipes/mime-type-icon.pipe.ts"
+        },
+        "name": "MimeTypeIconPipe"
+    },
+    {
+        "position": {
+            "line": 51,
+            "character": 8,
+            "fileName": "lib/core/pipes/pipe.module.ts"
+        },
+        "name": "MimeTypeIconPipe"
+    },
+    {
+        "position": {
+            "line": 165,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "MinDateFieldValidator"
+    },
+    {
+        "position": {
+            "line": 253,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "MinDateTimeFieldValidator"
+    },
+    {
+        "position": {
+            "line": 346,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "MinLengthFieldValidator"
+    },
+    {
+        "position": {
+            "line": 398,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "MinValueFieldValidator"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/utils/momentDateAdapter.ts"
+        },
+        "name": "MomentDateAdapter"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/chart/multiBarChart.model.ts"
+        },
+        "name": "MultiBarChart"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts"
+        },
+        "name": "MultilineTextWidgetComponentComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/content-services/content-node-selector/name-location-cell/name-location-cell.component.ts"
+        },
+        "name": "NameLocationCellComponent"
+    },
+    {
+        "position": {
+            "line": 43,
+            "character": 8,
+            "fileName": "lib/content-services/content-node-selector/content-node-selector.module.ts"
+        },
+        "name": "NameLocationCellComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/datatable/directives/no-content-template.directive.ts"
+        },
+        "name": "NoContentTemplateDirective"
+    },
+    {
+        "position": {
+            "line": 76,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "NoContentTemplateDirective"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/services/node-actions.service.ts"
+        },
+        "name": "NodeActionsService"
+    },
+    {
+        "position": {
+            "line": 46,
+            "character": 8,
+            "fileName": "lib/core/directives/directive.module.ts"
+        },
+        "name": "NodeDeleteDirective"
+    },
+    {
+        "position": {
+            "line": 48,
+            "character": 0,
+            "fileName": "lib/core/directives/node-delete.directive.ts"
+        },
+        "name": "NodeDeleteDirective"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/content-services/directives/node-download.directive.ts"
+        },
+        "name": "NodeDownloadDirective"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 8,
+            "fileName": "lib/content-services/directives/content-directive.module.ts"
+        },
+        "name": "NodeDownloadDirective"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/node.event.ts"
+        },
+        "name": "NodeEntityEvent"
+    },
+    {
+        "position": {
+            "line": 32,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/node.event.ts"
+        },
+        "name": "NodeEntryEvent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/directives/node-favorite.directive.ts"
+        },
+        "name": "NodeFavoriteDirective"
+    },
+    {
+        "position": {
+            "line": 47,
+            "character": 8,
+            "fileName": "lib/core/directives/directive.module.ts"
+        },
+        "name": "NodeFavoriteDirective"
+    },
+    {
+        "position": {
+            "line": 51,
+            "character": 8,
+            "fileName": "lib/content-services/dialogs/dialog.module.ts"
+        },
+        "name": "NodeLockDialogComponent"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/content-services/dialogs/node-lock.dialog.ts"
+        },
+        "name": "NodeLockDialogComponent"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 8,
+            "fileName": "lib/content-services/directives/content-directive.module.ts"
+        },
+        "name": "NodeLockDirective"
+    },
+    {
+        "position": {
+            "line": 42,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/document-library.model.ts"
+        },
+        "name": "NodeMinimal"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/document-library.model.ts"
+        },
+        "name": "NodeMinimalEntry"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/pipes/node-name-tooltip.pipe.ts"
+        },
+        "name": "NodeNameTooltipPipe"
+    },
+    {
+        "position": {
+            "line": 53,
+            "character": 8,
+            "fileName": "lib/core/pipes/pipe.module.ts"
+        },
+        "name": "NodeNameTooltipPipe"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/document-library.model.ts"
+        },
+        "name": "NodePaging"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/document-library.model.ts"
+        },
+        "name": "NodePagingList"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/content-services/permission-manager/services/node-permission-dialog.service.ts"
+        },
+        "name": "NodePermissionDialogService"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/directives/node-permission.directive.ts"
+        },
+        "name": "NodePermissionDirective"
+    },
+    {
+        "position": {
+            "line": 48,
+            "character": 8,
+            "fileName": "lib/core/directives/directive.module.ts"
+        },
+        "name": "NodePermissionDirective"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/permission-manager/services/node-permission.service.ts"
+        },
+        "name": "NodePermissionService"
+    },
+    {
+        "position": {
+            "line": 32,
+            "character": 0,
+            "fileName": "lib/core/directives/node-restore.directive.ts"
+        },
+        "name": "NodeRestoreDirective"
+    },
+    {
+        "position": {
+            "line": 49,
+            "character": 8,
+            "fileName": "lib/core/directives/directive.module.ts"
+        },
+        "name": "NodeRestoreDirective"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/services/nodes-api.service.ts"
+        },
+        "name": "NodesApiService"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/form/services/node.service.ts"
+        },
+        "name": "NodeService"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/directives/node-share.directive.ts"
+        },
+        "name": "NodeSharedDirective"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/content-services/directives/content-directive.module.ts"
+        },
+        "name": "NodeSharedDirective"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/no-permission/no-permission-content.directive.ts"
+        },
+        "name": "NoPermissionContentDirective"
+    },
+    {
+        "position": {
+            "line": 58,
+            "character": 8,
+            "fileName": "lib/content-services/document-list/document-list.module.ts"
+        },
+        "name": "NoPermissionContentDirective"
+    },
+    {
+        "position": {
+            "line": 54,
+            "character": 8,
+            "fileName": "lib/content-services/permission-manager/permission-manager.module.ts"
+        },
+        "name": "NoPermissionTemplateComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/content-services/permission-manager/components/permission-list/no-permission.component.ts"
+        },
+        "name": "NoPermissionTemplateComponent"
+    },
+    {
+        "position": {
+            "line": 77,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "NoPermissionTemplateDirective"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/datatable/directives/no-permission-template.directive.ts"
+        },
+        "name": "NoPermissionTemplateDirective"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/no-task-detail-template.directive.ts"
+        },
+        "name": "NoTaskDetailsTemplateDirective"
+    },
+    {
+        "position": {
+            "line": 64,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "NoTaskDetailsTemplateDirective"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/services/notification.service.ts"
+        },
+        "name": "NotificationService"
+    },
+    {
+        "position": {
+            "line": 92,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "NumberFieldValidator"
+    },
+    {
+        "position": {
+            "line": 70,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+        },
+        "name": "NumberWidgetAanlyticsComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/number/number.widget.ts"
+        },
+        "name": "NumberWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/datatable/data/object-datacolumn.model.ts"
+        },
+        "name": "ObjectDataColumn"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/datatable/data/object-datarow.model.ts"
+        },
+        "name": "ObjectDataRow"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/core/datatable/data/object-datatable-adapter.ts"
+        },
+        "name": "ObjectDataTableAdapter"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/core/utils/object-utils.ts"
+        },
+        "name": "ObjectUtils"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/services/page-title.service.ts"
+        },
+        "name": "PageTitleService"
+    },
+    {
+        "position": {
+            "line": 34,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/document-library.model.ts"
+        },
+        "name": "Pagination"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 8,
+            "fileName": "lib/core/pagination/pagination.module.ts"
+        },
+        "name": "PaginationComponent"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/pagination/pagination.component.ts"
+        },
+        "name": "PaginationComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/models/pagination.model.ts"
+        },
+        "name": "PaginationModel"
+    },
+    {
+        "position": {
+            "line": 279,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "PaginationModule"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/pagination/pagination.module.ts"
+        },
+        "name": "PaginationModule"
+    },
+    {
+        "position": {
+            "line": 206,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "PaginationModule"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/report/parameterValue.model.ts"
+        },
+        "name": "ParameterValueModel"
+    },
+    {
+        "position": {
+            "line": 76,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/document-library.model.ts"
+        },
+        "name": "PathElementEntity"
+    },
+    {
+        "position": {
+            "line": 70,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/document-library.model.ts"
+        },
+        "name": "PathInfoEntity"
+    },
+    {
+        "position": {
+            "line": 83,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "PdfPasswordDialogComponent"
+    },
+    {
+        "position": {
+            "line": 84,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "PdfThumbComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/pdfViewer-thumb.component.ts"
+        },
+        "name": "PdfThumbComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/pdfViewer-thumbnails.component.ts"
+        },
+        "name": "PdfThumbListComponent"
+    },
+    {
+        "position": {
+            "line": 85,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "PdfThumbListComponent"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/pdfViewer.component.ts"
+        },
+        "name": "PdfViewerComponent"
+    },
+    {
+        "position": {
+            "line": 82,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "PdfViewerComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/process-services/people/components/people/people.component.ts"
+        },
+        "name": "PeopleComponent"
+    },
+    {
+        "position": {
+            "line": 50,
+            "character": 8,
+            "fileName": "lib/process-services/people/people.module.ts"
+        },
+        "name": "PeopleComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/services/people-content.service.ts"
+        },
+        "name": "PeopleContentService"
+    },
+    {
+        "position": {
+            "line": 56,
+            "character": 8,
+            "fileName": "lib/process-services/people/people.module.ts"
+        },
+        "name": "PeopleListComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/process-services/people/components/people-list/people-list.component.ts"
+        },
+        "name": "PeopleListComponent"
+    },
+    {
+        "position": {
+            "line": 32,
+            "character": 0,
+            "fileName": "lib/process-services/people/people.module.ts"
+        },
+        "name": "PeopleModule"
+    },
+    {
+        "position": {
+            "line": 133,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "PeopleModule"
+    },
+    {
+        "position": {
+            "line": 82,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "PeopleModule"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/services/people-process.service.ts"
+        },
+        "name": "PeopleProcessService"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/process-services/people/directives/people-search-action-label.directive.ts"
+        },
+        "name": "PeopleSearchActionLabelDirective"
+    },
+    {
+        "position": {
+            "line": 55,
+            "character": 8,
+            "fileName": "lib/process-services/people/people.module.ts"
+        },
+        "name": "PeopleSearchActionLabelDirective"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/process-services/people/components/people-search/people-search.component.ts"
+        },
+        "name": "PeopleSearchComponent"
+    },
+    {
+        "position": {
+            "line": 51,
+            "character": 8,
+            "fileName": "lib/process-services/people/people.module.ts"
+        },
+        "name": "PeopleSearchComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/process-services/people/components/people-search-field/people-search-field.component.ts"
+        },
+        "name": "PeopleSearchFieldComponent"
+    },
+    {
+        "position": {
+            "line": 52,
+            "character": 8,
+            "fileName": "lib/process-services/people/people.module.ts"
+        },
+        "name": "PeopleSearchFieldComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/process-services/people/directives/people-search-title.directive.ts"
+        },
+        "name": "PeopleSearchTitleDirective"
+    },
+    {
+        "position": {
+            "line": 54,
+            "character": 8,
+            "fileName": "lib/process-services/people/people.module.ts"
+        },
+        "name": "PeopleSearchTitleDirective"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/process-services/people/components/people-selector/people-selector.component.ts"
+        },
+        "name": "PeopleSelectorComponent"
+    },
+    {
+        "position": {
+            "line": 53,
+            "character": 8,
+            "fileName": "lib/process-services/people/people.module.ts"
+        },
+        "name": "PeopleSelectorComponent"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/people/people.widget.ts"
+        },
+        "name": "PeopleWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/content-services/permission-manager/models/permission.model.ts"
+        },
+        "name": "PermissionDisplayModel"
+    },
+    {
+        "position": {
+            "line": 53,
+            "character": 8,
+            "fileName": "lib/content-services/permission-manager/permission-manager.module.ts"
+        },
+        "name": "PermissionListComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/permission-manager/components/permission-list/permission-list.component.ts"
+        },
+        "name": "PermissionListComponent"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/content-services/permission-manager/permission-manager.module.ts"
+        },
+        "name": "PermissionManagerModule"
+    },
+    {
+        "position": {
+            "line": 172,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "PermissionManagerModule"
+    },
+    {
+        "position": {
+            "line": 118,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "PermissionManagerModule"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/permissions.model.ts"
+        },
+        "name": "PermissionModel"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/core/models/permissions.enum.ts"
+        },
+        "name": "PermissionsEnum"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/permissions-style.model.ts"
+        },
+        "name": "PermissionStyleModel"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/chart/pieChart.model.ts"
+        },
+        "name": "PieChart"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/core/pipes/pipe.module.ts"
+        },
+        "name": "PipeModule"
+    },
+    {
+        "position": {
+            "line": 196,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "PipeModule"
+    },
+    {
+        "position": {
+            "line": 269,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "PipeModule"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/process-services/attachment/process-attachment-list.component.ts"
+        },
+        "name": "ProcessAttachmentListComponent"
+    },
+    {
+        "position": {
+            "line": 40,
+            "character": 8,
+            "fileName": "lib/process-services/attachment/attachment.module.ts"
+        },
+        "name": "ProcessAttachmentListComponent"
+    },
+    {
+        "position": {
+            "line": 62,
+            "character": 8,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
+        },
+        "name": "ProcessAuditDirective"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/components/process-audit.directive.ts"
+        },
+        "name": "ProcessAuditDirective"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/process-services/process-comments/process-comments.module.ts"
+        },
+        "name": "ProcessCommentsComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/process-services/process-comments/process-comments.component.ts"
+        },
+        "name": "ProcessCommentsComponent"
+    },
+    {
+        "position": {
+            "line": 126,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "ProcessCommentsModule"
+    },
+    {
+        "position": {
+            "line": 75,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "ProcessCommentsModule"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/process-services/process-comments/process-comments.module.ts"
+        },
+        "name": "ProcessCommentsModule"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/form/services/process-content.service.ts"
+        },
+        "name": "ProcessContentService"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/models/process-definition.model.ts"
+        },
+        "name": "ProcessDefinitionRepresentation"
+    },
+    {
+        "position": {
+            "line": 48,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/models/filter-process.model.ts"
+        },
+        "name": "ProcessFilterParamRepresentationModel"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/models/process-instance-filter.model.ts"
+        },
+        "name": "ProcessFilterRequestRepresentation"
+    },
+    {
+        "position": {
+            "line": 60,
+            "character": 8,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
+        },
+        "name": "ProcessFiltersComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/components/process-filters.component.ts"
+        },
+        "name": "ProcessFiltersComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/services/process-filter.service.ts"
+        },
+        "name": "ProcessFilterService"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/models/process-instance.model.ts"
+        },
+        "name": "ProcessInstance"
+    },
+    {
+        "position": {
+            "line": 61,
+            "character": 8,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
+        },
+        "name": "ProcessInstanceDetailsComponent"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/components/process-instance-details.component.ts"
+        },
+        "name": "ProcessInstanceDetailsComponent"
+    },
+    {
+        "position": {
+            "line": 63,
+            "character": 8,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
+        },
+        "name": "ProcessInstanceHeaderComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/components/process-instance-header.component.ts"
+        },
+        "name": "ProcessInstanceHeaderComponent"
+    },
+    {
+        "position": {
+            "line": 47,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/components/process-list.component.ts"
+        },
+        "name": "ProcessInstanceListComponent"
+    },
+    {
+        "position": {
+            "line": 59,
+            "character": 8,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
+        },
+        "name": "ProcessInstanceListComponent"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/components/process-instance-tasks.component.ts"
+        },
+        "name": "ProcessInstanceTasksComponent"
+    },
+    {
+        "position": {
+            "line": 64,
+            "character": 8,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
+        },
+        "name": "ProcessInstanceTasksComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/models/process-instance-variable.model.ts"
+        },
+        "name": "ProcessInstanceVariable"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
+        },
+        "name": "ProcessListModule"
+    },
+    {
+        "position": {
+            "line": 129,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "ProcessListModule"
+    },
+    {
+        "position": {
+            "line": 78,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "ProcessListModule"
+    },
+    {
+        "position": {
+            "line": 48,
+            "character": 0,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "ProcessModule"
+    },
+    {
+        "position": {
+            "line": 110,
+            "character": 0,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "ProcessModuleLazy"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/services/process.service.ts"
+        },
+        "name": "ProcessService"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/services/process-upload.service.ts"
+        },
+        "name": "ProcessUploadService"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/content-metadata/services/property-descriptors.service.ts"
+        },
+        "name": "PropertyDescriptorsService"
+    },
+    {
+        "position": {
+            "line": 41,
+            "character": 0,
+            "fileName": "lib/content-services/content-metadata/services/property-groups-translator.service.ts"
+        },
+        "name": "PropertyGroupTranslatorService"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/radio-buttons/radio-buttons.widget.ts"
+        },
+        "name": "RadioButtonsWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 253,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelCircleDirective"
+    },
+    {
+        "position": {
+            "line": 258,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelCrossDirective"
+    },
+    {
+        "position": {
+            "line": 257,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelFlowArrowDirective"
+    },
+    {
+        "position": {
+            "line": 268,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconAlfrescoPublishDirective"
+    },
+    {
+        "position": {
+            "line": 271,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconBoxPublishDirective"
+    },
+    {
+        "position": {
+            "line": 274,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconBusinessRuleDirective"
+    },
+    {
+        "position": {
+            "line": 266,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconCamelDirective"
+    },
+    {
+        "position": {
+            "line": 276,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconErrorDirective"
+    },
+    {
+        "position": {
+            "line": 270,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconGoogleDrivePublishDirective"
+    },
+    {
+        "position": {
+            "line": 265,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconManualDirective"
+    },
+    {
+        "position": {
+            "line": 278,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconMessageDirective"
+    },
+    {
+        "position": {
+            "line": 267,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconMuleDirective"
+    },
+    {
+        "position": {
+            "line": 272,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconReceiveDirective"
+    },
+    {
+        "position": {
+            "line": 269,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconRestCallDirective"
+    },
+    {
+        "position": {
+            "line": 273,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconScriptDirective"
+    },
+    {
+        "position": {
+            "line": 263,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconSendDirective"
+    },
+    {
+        "position": {
+            "line": 262,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconServiceDirective"
+    },
+    {
+        "position": {
+            "line": 277,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconSignalDirective"
+    },
+    {
+        "position": {
+            "line": 275,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconTimerDirective"
+    },
+    {
+        "position": {
+            "line": 264,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelIconUserDirective"
+    },
+    {
+        "position": {
+            "line": 256,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelMultilineTextDirective"
+    },
+    {
+        "position": {
+            "line": 261,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelPentagonDirective"
+    },
+    {
+        "position": {
+            "line": 259,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelPlusDirective"
+    },
+    {
+        "position": {
+            "line": 254,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelRectDirective"
+    },
+    {
+        "position": {
+            "line": 260,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelRhombusDirective"
+    },
+    {
+        "position": {
+            "line": 255,
+            "character": 8,
+            "fileName": "lib/insights/diagram/diagram.module.ts"
+        },
+        "name": "RaphaelTextDirective"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/content-services/social/rating.component.ts"
+        },
+        "name": "RatingComponent"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 8,
+            "fileName": "lib/content-services/social/social.module.ts"
+        },
+        "name": "RatingComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/content-services/social/services/rating.service.ts"
+        },
+        "name": "RatingService"
+    },
+    {
+        "position": {
+            "line": 64,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "ReactiveFormsModule"
+    },
+    {
+        "position": {
+            "line": 108,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "ReactiveFormsModule"
+    },
+    {
+        "position": {
+            "line": 273,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "ReactiveFormsModule"
+    },
+    {
+        "position": {
+            "line": 77,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "ReactiveFormsModule"
+    },
+    {
+        "position": {
+            "line": 128,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "ReactiveFormsModule"
+    },
+    {
+        "position": {
+            "line": 200,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "ReactiveFormsModule"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/models/redirection.model.ts"
+        },
+        "name": "RedirectionModel"
+    },
+    {
+        "position": {
+            "line": 458,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "RegExFieldValidator"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/services/renditions.service.ts"
+        },
+        "name": "RenditionsService"
+    },
+    {
+        "position": {
+            "line": 17,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/report/reportDateRange.model.ts"
+        },
+        "name": "ReportDateRange"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/report/reportDefinition.model.ts"
+        },
+        "name": "ReportDefinitionModel"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/report/reportParameterDetails.model.ts"
+        },
+        "name": "ReportParameterDetailsModel"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/report/reportParameters.model.ts"
+        },
+        "name": "ReportParametersModel"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/report/reportQuery.model.ts"
+        },
+        "name": "ReportQuery"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/form-field-validator.ts"
+        },
+        "name": "RequiredFieldValidator"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/core/directives/node-restore.directive.ts"
+        },
+        "name": "RestoreMessageModel"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/dynamic-table/editors/row.editor.ts"
+        },
+        "name": "RowEditorComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 9,
+            "fileName": "lib/content-services/search/public-api.ts"
+        },
+        "name": "SearchCategory"
+    },
+    {
+        "position": {
+            "line": 75,
+            "character": 8,
+            "fileName": "lib/content-services/search/search.module.ts"
+        },
+        "name": "SearchCheckListComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/content-services/search/components/search-chip-list/search-chip-list.component.ts"
+        },
+        "name": "SearchChipListComponent"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 0,
+            "fileName": "lib/content-services/search/components/search.component.ts"
+        },
+        "name": "SearchComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 9,
+            "fileName": "lib/content-services/search/public-api.ts"
+        },
+        "name": "SearchConfiguration"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/services/search-configuration.service.ts"
+        },
+        "name": "SearchConfigurationService"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/content-services/search/components/search-control.component.ts"
+        },
+        "name": "SearchControlComponent"
+    },
+    {
+        "position": {
+            "line": 76,
+            "character": 8,
+            "fileName": "lib/content-services/search/search.module.ts"
+        },
+        "name": "SearchDateRangeComponent"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/content-services/search/components/search-filter/search-filter.component.ts"
+        },
+        "name": "SearchFilterComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/search/components/search-filter/search-filter.service.ts"
+        },
+        "name": "SearchFilterService"
+    },
+    {
+        "position": {
+            "line": 49,
+            "character": 0,
+            "fileName": "lib/content-services/search/search.module.ts"
+        },
+        "name": "SearchModule"
+    },
+    {
+        "position": {
+            "line": 164,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "SearchModule"
+    },
+    {
+        "position": {
+            "line": 110,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "SearchModule"
+    },
+    {
+        "position": {
+            "line": 74,
+            "character": 8,
+            "fileName": "lib/content-services/search/search.module.ts"
+        },
+        "name": "SearchNumberRangeComponent"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/content-services/search/search-query-builder.service.ts"
+        },
+        "name": "SearchQueryBuilderService"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 9,
+            "fileName": "lib/content-services/search/public-api.ts"
+        },
+        "name": "SearchQueryBuilderService"
+    },
+    {
+        "position": {
+            "line": 72,
+            "character": 8,
+            "fileName": "lib/content-services/search/search.module.ts"
+        },
+        "name": "SearchRadioComponent"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 9,
+            "fileName": "lib/content-services/search/public-api.ts"
+        },
+        "name": "SearchRange"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/services/search.service.ts"
+        },
+        "name": "SearchService"
+    },
+    {
+        "position": {
+            "line": 73,
+            "character": 8,
+            "fileName": "lib/content-services/search/search.module.ts"
+        },
+        "name": "SearchSliderComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/content-services/search/components/search-sorting-picker/search-sorting-picker.component.ts"
+        },
+        "name": "SearchSortingPickerComponent"
+    },
+    {
+        "position": {
+            "line": 77,
+            "character": 8,
+            "fileName": "lib/content-services/search/search.module.ts"
+        },
+        "name": "SearchSortingPickerComponent"
+    },
+    {
+        "position": {
+            "line": 71,
+            "character": 8,
+            "fileName": "lib/content-services/search/search.module.ts"
+        },
+        "name": "SearchTextComponent"
+    },
+    {
+        "position": {
+            "line": 43,
+            "character": 0,
+            "fileName": "lib/content-services/search/components/search-trigger.directive.ts"
+        },
+        "name": "SearchTriggerDirective"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 9,
+            "fileName": "lib/content-services/search/public-api.ts"
+        },
+        "name": "SearchWidget"
+    },
+    {
+        "position": {
+            "line": 70,
+            "character": 8,
+            "fileName": "lib/content-services/search/search.module.ts"
+        },
+        "name": "SearchWidgetContainerComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 9,
+            "fileName": "lib/content-services/search/public-api.ts"
+        },
+        "name": "SearchWidgetSettings"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/process-services/app-list/select-apps-dialog-component.ts"
+        },
+        "name": "SelectAppsDialogComponent"
+    },
+    {
+        "position": {
+            "line": 39,
+            "character": 8,
+            "fileName": "lib/process-services/app-list/apps-list.module.ts"
+        },
+        "name": "SelectAppsDialogComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/services/settings.service.ts"
+        },
+        "name": "SettingsService"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/data/share-data-row.model.ts"
+        },
+        "name": "ShareDataRow"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/data/share-datatable-adapter.ts"
+        },
+        "name": "ShareDataTableAdapter"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/content-services/dialogs/share.dialog.ts"
+        },
+        "name": "ShareDialogComponent"
+    },
+    {
+        "position": {
+            "line": 52,
+            "character": 8,
+            "fileName": "lib/content-services/dialogs/dialog.module.ts"
+        },
+        "name": "ShareDialogComponent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/services/shared-links-api.service.ts"
+        },
+        "name": "SharedLinksApiService"
+    },
+    {
+        "position": {
+            "line": 41,
+            "character": 8,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "SidebarActionMenuComponent"
+    },
+    {
+        "position": {
+            "line": 42,
+            "character": 8,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "SidebarMenuDirective"
+    },
+    {
+        "position": {
+            "line": 43,
+            "character": 8,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "SidebarMenuExpandIconDirective"
+    },
+    {
+        "position": {
+            "line": 44,
+            "character": 8,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "SidebarMenuTitleIconDirective"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts"
+        },
+        "name": "SidenavLayoutComponent"
+    },
+    {
+        "position": {
+            "line": 39,
+            "character": 8,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "SidenavLayoutComponent"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "SidenavLayoutContentDirective"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 8,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "SidenavLayoutHeaderDirective"
+    },
+    {
+        "position": {
+            "line": 61,
+            "character": 9,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "SidenavLayoutModule"
+    },
+    {
+        "position": {
+            "line": 268,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "SidenavLayoutModule"
+    },
+    {
+        "position": {
+            "line": 195,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "SidenavLayoutModule"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 8,
+            "fileName": "lib/core/layout/layout.module.ts"
+        },
+        "name": "SidenavLayoutNavigationDirective"
+    },
+    {
+        "position": {
+            "line": 111,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "SitesDropdownModule"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/site-dropdown/sites-dropdown.module.ts"
+        },
+        "name": "SitesDropdownModule"
+    },
+    {
+        "position": {
+            "line": 165,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "SitesDropdownModule"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/services/sites.service.ts"
+        },
+        "name": "SitesService"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/content-services/social/social.module.ts"
+        },
+        "name": "SocialModule"
+    },
+    {
+        "position": {
+            "line": 159,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "SocialModule"
+    },
+    {
+        "position": {
+            "line": 105,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "SocialModule"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/sorting-picker/sorting-picker.component.ts"
+        },
+        "name": "SortingPickerComponent"
+    },
+    {
+        "position": {
+            "line": 33,
+            "character": 8,
+            "fileName": "lib/core/sorting-picker/sorting-picker.module.ts"
+        },
+        "name": "SortingPickerComponent"
+    },
+    {
+        "position": {
+            "line": 221,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "SortingPickerModule"
+    },
+    {
+        "position": {
+            "line": 294,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "SortingPickerModule"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/sorting-picker/sorting-picker.module.ts"
+        },
+        "name": "SortingPickerModule"
+    },
+    {
+        "position": {
+            "line": 41,
+            "character": 0,
+            "fileName": "lib/core/form/components/start-form.component.ts"
+        },
+        "name": "StartFormComponent"
+    },
+    {
+        "position": {
+            "line": 73,
+            "character": 8,
+            "fileName": "lib/core/form/form.module.ts"
+        },
+        "name": "StartFormComponent"
+    },
+    {
+        "position": {
+            "line": 74,
+            "character": 8,
+            "fileName": "lib/core/form/form.module.ts"
+        },
+        "name": "StartFormCustomButtonDirective"
+    },
+    {
+        "position": {
+            "line": 65,
+            "character": 8,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
+        },
+        "name": "StartProcessInstanceComponent"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/components/start-process.component.ts"
+        },
+        "name": "StartProcessInstanceComponent"
+    },
+    {
+        "position": {
+            "line": 71,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "StartTaskComponent"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/start-task.component.ts"
+        },
+        "name": "StartTaskComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/start-task.model.ts"
+        },
+        "name": "StartTaskModel"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/services/storage.service.ts"
+        },
+        "name": "StorageService"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/insights/diagram/models/chart/tableChart.model.ts"
+        },
+        "name": "TableChart"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/core/tab.model.ts"
+        },
+        "name": "TabModel"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/tabs/tabs.widget.ts"
+        },
+        "name": "TabsWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 8,
+            "fileName": "lib/content-services/tag/tag.module.ts"
+        },
+        "name": "TagActionsComponent"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/content-services/tag/tag-actions.component.ts"
+        },
+        "name": "TagActionsComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/tag/tag-list.component.ts"
+        },
+        "name": "TagListComponent"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/content-services/tag/tag.module.ts"
+        },
+        "name": "TagListComponent"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/content-services/tag/tag.module.ts"
+        },
+        "name": "TagModule"
+    },
+    {
+        "position": {
+            "line": 106,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "TagModule"
+    },
+    {
+        "position": {
+            "line": 160,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "TagModule"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/tag/tag-node-list.component.ts"
+        },
+        "name": "TagNodeListComponent"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 8,
+            "fileName": "lib/content-services/tag/tag.module.ts"
+        },
+        "name": "TagNodeListComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/tag/services/tag.service.ts"
+        },
+        "name": "TagService"
+    },
+    {
+        "position": {
+            "line": 39,
+            "character": 8,
+            "fileName": "lib/process-services/attachment/attachment.module.ts"
+        },
+        "name": "TaskAttachmentListComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/process-services/attachment/task-attachment-list.component.ts"
+        },
+        "name": "TaskAttachmentListComponent"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/task-audit.directive.ts"
+        },
+        "name": "TaskAuditDirective"
+    },
+    {
+        "position": {
+            "line": 68,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "TaskAuditDirective"
+    },
+    {
+        "position": {
+            "line": 67,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "TaskDetailsComponent"
+    },
+    {
+        "position": {
+            "line": 48,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/task-details.component.ts"
+        },
+        "name": "TaskDetailsComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/task-details.event.ts"
+        },
+        "name": "TaskDetailsEvent"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/task-details.model.ts"
+        },
+        "name": "TaskDetailsModel"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/task-filters.component.ts"
+        },
+        "name": "TaskFiltersComponent"
+    },
+    {
+        "position": {
+            "line": 65,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "TaskFiltersComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/services/task-filter.service.ts"
+        },
+        "name": "TaskFilterService"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/task-header.component.ts"
+        },
+        "name": "TaskHeaderComponent"
+    },
+    {
+        "position": {
+            "line": 70,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "TaskHeaderComponent"
+    },
+    {
+        "position": {
+            "line": 31,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/task-list.component.ts"
+        },
+        "name": "TaskListComponent"
+    },
+    {
+        "position": {
+            "line": 66,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "TaskListComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/task-list.model.ts"
+        },
+        "name": "TaskListModel"
+    },
+    {
+        "position": {
+            "line": 39,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "TaskListModule"
+    },
+    {
+        "position": {
+            "line": 130,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "TaskListModule"
+    },
+    {
+        "position": {
+            "line": 79,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "TaskListModule"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/services/tasklist.service.ts"
+        },
+        "name": "TaskListService"
+    },
+    {
+        "position": {
+            "line": 109,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/filter.model.ts"
+        },
+        "name": "TaskQueryRequestRepresentationModel"
+    },
+    {
+        "position": {
+            "line": 72,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "TaskStandaloneComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/task-standalone.component.ts"
+        },
+        "name": "TaskStandaloneComponent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/services/task-upload.service.ts"
+        },
+        "name": "TaskUploadService"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/templates/template.module.ts"
+        },
+        "name": "TemplateModule"
+    },
+    {
+        "position": {
+            "line": 220,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "TemplateModule"
+    },
+    {
+        "position": {
+            "line": 293,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "TemplateModule"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/dynamic-table/editors/text/text.editor.ts"
+        },
+        "name": "TextEditorComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/text/text.widget.ts"
+        },
+        "name": "TextWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/services/thumbnail.service.ts"
+        },
+        "name": "ThumbnailService"
+    },
+    {
+        "position": {
+            "line": 50,
+            "character": 8,
+            "fileName": "lib/core/pipes/pipe.module.ts"
+        },
+        "name": "TimeAgoPipe"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/pipes/time-ago.pipe.ts"
+        },
+        "name": "TimeAgoPipe"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 8,
+            "fileName": "lib/core/toolbar/toolbar.module.ts"
+        },
+        "name": "ToolbarComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/toolbar/toolbar.component.ts"
+        },
+        "name": "ToolbarComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/toolbar/toolbar-divider.component.ts"
+        },
+        "name": "ToolbarDividerComponent"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 8,
+            "fileName": "lib/core/toolbar/toolbar.module.ts"
+        },
+        "name": "ToolbarDividerComponent"
+    },
+    {
+        "position": {
+            "line": 280,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "ToolbarModule"
+    },
+    {
+        "position": {
+            "line": 207,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "ToolbarModule"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/toolbar/toolbar.module.ts"
+        },
+        "name": "ToolbarModule"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/toolbar/toolbar-title.component.ts"
+        },
+        "name": "ToolbarTitleComponent"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/core/toolbar/toolbar.module.ts"
+        },
+        "name": "ToolbarTitleComponent"
+    },
+    {
+        "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/core/services/translate-loader.service.ts"
+        },
+        "name": "TranslateLoaderService"
+    },
+    {
+        "position": {
+            "line": 218,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "TranslateModule"
+    },
+    {
+        "position": {
+            "line": 291,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "TranslateModule"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/core/mock/translation.service.mock.ts"
+        },
+        "name": "TranslationMock"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/core/services/translation.service.ts"
+        },
+        "name": "TranslationService"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/txtViewer.component.ts"
+        },
+        "name": "TxtViewerComponent"
+    },
+    {
+        "position": {
+            "line": 80,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "TxtViewerComponent"
+    },
+    {
+        "position": {
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/typeahead/typeahead.widget.ts"
+        },
+        "name": "TypeaheadWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 87,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "UnknownFormatComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/unknown-format/unknown-format.component.ts"
+        },
+        "name": "UnknownFormatComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/unknown/unknown.widget.ts"
+        },
+        "name": "UnknownWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/upload/components/base-upload/upload-base.ts"
+        },
+        "name": "UploadBase"
+    },
+    {
+        "position": {
+            "line": 49,
+            "character": 8,
+            "fileName": "lib/content-services/upload/upload.module.ts"
+        },
+        "name": "UploadButtonComponent"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/content-services/upload/components/upload-button.component.ts"
+        },
+        "name": "UploadButtonComponent"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/directives/upload.directive.ts"
+        },
+        "name": "UploadDirective"
+    },
+    {
+        "position": {
+            "line": 50,
+            "character": 8,
+            "fileName": "lib/core/directives/directive.module.ts"
+        },
+        "name": "UploadDirective"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/content-services/upload/components/upload-drag-area.component.ts"
+        },
+        "name": "UploadDragAreaComponent"
+    },
+    {
+        "position": {
+            "line": 48,
+            "character": 8,
+            "fileName": "lib/content-services/upload/upload.module.ts"
+        },
+        "name": "UploadDragAreaComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/content-services/upload/components/upload-files.event.ts"
+        },
+        "name": "UploadFilesEvent"
+    },
+    {
+        "position": {
+            "line": 163,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "UploadModule"
+    },
+    {
+        "position": {
+            "line": 109,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "UploadModule"
+    },
+    {
+        "position": {
+            "line": 31,
+            "character": 0,
+            "fileName": "lib/content-services/upload/upload.module.ts"
+        },
+        "name": "UploadModule"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/core/services/upload.service.ts"
+        },
+        "name": "UploadService"
+    },
+    {
+        "position": {
+            "line": 50,
+            "character": 8,
+            "fileName": "lib/content-services/upload/upload.module.ts"
+        },
+        "name": "UploadVersionButtonComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/upload/components/upload-version-button.component.ts"
+        },
+        "name": "UploadVersionButtonComponent"
+    },
+    {
+        "position": {
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/upload/upload.widget.ts"
+        },
+        "name": "UploadWidgetComponent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/user-event.model.ts"
+        },
+        "name": "UserEventModel"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/models/user-group.model.ts"
+        },
+        "name": "UserGroupModel"
+    },
+    {
+        "position": {
+            "line": 58,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/models/document-library.model.ts"
+        },
+        "name": "UserInfo"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/userinfo/components/user-info.component.ts"
+        },
+        "name": "UserInfoComponent"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 8,
+            "fileName": "lib/core/userinfo/userinfo.module.ts"
+        },
+        "name": "UserInfoComponent"
+    },
+    {
+        "position": {
+            "line": 203,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "UserInfoModule"
+    },
+    {
+        "position": {
+            "line": 276,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "UserInfoModule"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/userinfo/userinfo.module.ts"
+        },
+        "name": "UserInfoModule"
+    },
+    {
+        "position": {
+            "line": 30,
+            "character": 0,
+            "fileName": "lib/core/services/user-preferences.service.ts"
+        },
+        "name": "UserPreferencesService"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/core/models/user-process.model.ts"
+        },
+        "name": "UserProcessModel"
+    },
+    {
+        "position": {
+            "line": 22,
+            "character": 9,
+            "fileName": "lib/core/form/events/index.ts"
+        },
+        "name": "ValidateDynamicTableRowEvent"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 9,
+            "fileName": "lib/core/form/events/index.ts"
+        },
+        "name": "ValidateFormEvent"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 9,
+            "fileName": "lib/core/form/events/index.ts"
+        },
+        "name": "ValidateFormFieldEvent"
+    },
+    {
+        "position": {
+            "line": 39,
+            "character": 8,
+            "fileName": "lib/content-services/version-manager/version-manager.module.ts"
+        },
+        "name": "VersionListComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/version-manager/version-list.component.ts"
+        },
+        "name": "VersionListComponent"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 8,
+            "fileName": "lib/content-services/version-manager/version-manager.module.ts"
+        },
+        "name": "VersionManagerComponent"
+    },
+    {
+        "position": {
+            "line": 23,
+            "character": 0,
+            "fileName": "lib/content-services/version-manager/version-manager.component.ts"
+        },
+        "name": "VersionManagerComponent"
+    },
+    {
+        "position": {
+            "line": 119,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "VersionManagerModule"
+    },
+    {
+        "position": {
+            "line": 173,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "VersionManagerModule"
+    },
+    {
+        "position": {
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/content-services/version-manager/version-manager.module.ts"
+        },
+        "name": "VersionManagerModule"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 0,
+            "fileName": "lib/core/models/product-version.model.ts"
+        },
+        "name": "VersionModel"
+    },
+    {
+        "position": {
+            "line": 95,
+            "character": 0,
+            "fileName": "lib/core/models/product-version.model.ts"
+        },
+        "name": "VersionModuleModel"
+    },
+    {
+        "position": {
+            "line": 79,
+            "character": 0,
+            "fileName": "lib/core/models/product-version.model.ts"
+        },
+        "name": "VersionStatusModel"
+    },
+    {
+        "position": {
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/content-services/version-manager/version-upload.component.ts"
+        },
+        "name": "VersionUploadComponent"
+    },
+    {
+        "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/content-services/version-manager/version-manager.module.ts"
+        },
+        "name": "VersionUploadComponent"
+    },
+    {
+        "position": {
+            "line": 33,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/viewer.component.ts"
+        },
+        "name": "ViewerComponent"
+    },
+    {
+        "position": {
+            "line": 78,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "ViewerComponent"
+    },
+    {
+        "position": {
+            "line": 86,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "ViewerExtensionDirective"
+    },
+    {
+        "position": {
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/viewer/directives/viewer-extension.directive.ts"
+        },
+        "name": "ViewerExtensionDirective"
+    },
+    {
+        "position": {
+            "line": 267,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "ViewerModule"
+    },
+    {
+        "position": {
+            "line": 194,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "ViewerModule"
+    },
+    {
+        "position": {
+            "line": 46,
+            "character": 0,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "ViewerModule"
+    },
+    {
+        "position": {
+            "line": 91,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "ViewerMoreActionsComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/viewer-more-actions.component.ts"
+        },
+        "name": "ViewerMoreActionsComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/viewer-open-with.component.ts"
+        },
+        "name": "ViewerOpenWithComponent"
+    },
+    {
+        "position": {
+            "line": 90,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "ViewerOpenWithComponent"
+    },
+    {
+        "position": {
+            "line": 89,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "ViewerSidebarComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/viewer-sidebar.component.ts"
+        },
+        "name": "ViewerSidebarComponent"
+    },
+    {
+        "position": {
+            "line": 92,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "ViewerToolbarActionsComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/viewer-toolbar-actions.component.ts"
+        },
+        "name": "ViewerToolbarActionsComponent"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/viewer-toolbar.component.ts"
+        },
+        "name": "ViewerToolbarComponent"
+    },
+    {
+        "position": {
+            "line": 88,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
+        },
+        "name": "ViewerToolbarComponent"
+    },
+    {
+        "position": {
+            "line": 41,
+            "character": 0,
+            "fileName": "lib/content-services/webscript/webscript.component.ts"
+        },
+        "name": "WebscriptComponent"
+    },
+    {
+        "position": {
+            "line": 31,
+            "character": 8,
+            "fileName": "lib/content-services/webscript/webscript.module.ts"
+        },
+        "name": "WebscriptComponent"
+    },
+    {
+        "position": {
+            "line": 107,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "WebScriptModule"
+    },
+    {
+        "position": {
+            "line": 161,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "WebScriptModule"
+    },
+    {
+        "position": {
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/content-services/webscript/webscript.module.ts"
+        },
+        "name": "WebScriptModule"
+    },
+    {
+        "position": {
+            "line": 38,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/widget.component.ts"
+        },
+        "name": "WidgetComponent"
+    }
+]

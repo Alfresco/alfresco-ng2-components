@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 
 @Component({
     templateUrl: './report-issue.component.html',
-    styleUrls: [`./report-issue.component.scss`],
+    styleUrls: [`./report-issue.component.scss`]
 })
 export class ReportIssueComponent {
 

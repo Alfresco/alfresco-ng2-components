@@ -18,7 +18,7 @@ var SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 var DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
 var NAME_TEST = process.env.NAME_TEST ? true : false
 
-var specsToRun = './e2e/' + FOLDER + '**/*.e2e.ts';
+var specsToRun = './**/' + FOLDER + '**/*.e2e.ts';
 
 if (process.env.NAME_TEST) {
     specsToRun =   './e2e/**/' + process.env.NAME_TEST;

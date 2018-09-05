@@ -366,6 +366,13 @@ export class FilesComponent implements OnInit {
 }
 ```
 
+```html
+<adf-document-list
+    [currentFolderId]="currentFolderId">
+</adf-document-list>
+```
+
+
 The `console.log(node)` for the `getNodeInfo` callback is just for study and debug purposes. 
 It is useful for examining other information that you can access if necessary:
 
