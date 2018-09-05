@@ -268,10 +268,12 @@ describe('Search component - Search Page', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.no_permission.noPermFile);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
-        searchResultPage.deleteContent(search.no_permission.noPermFile);
+        searchResultPage.checkDeleteIsDisabled(search.no_permission.noPermFile);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
-            .enterTextAndPressEnter(search.no_permission.noPermFile);
+        searchDialog.checkSearchBarIsNotVisible();
+        searchDialog.checkSearchIconIsVisible();
+        searchDialog.clickOnSearchIcon();
+        searchDialog.enterTextAndPressEnter(search.no_permission.noPermFile);
         searchResultPage.checkNoResultMessageIsNotDisplayed();
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
     });
@@ -284,9 +286,8 @@ describe('Search component - Search Page', () => {
         searchDialog.enterTextAndPressEnter(search.no_permission.noPermFolder);
 
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
-        searchResultPage.deleteContent(search.no_permission.noPermFolder);
+        searchResultPage.checkDeleteIsDisabled(search.no_permission.noPermFolder);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
-        searchResultPage.closeActionButton();
 
         searchDialog.checkSearchBarIsNotVisible()
             .checkSearchIconIsVisible()
