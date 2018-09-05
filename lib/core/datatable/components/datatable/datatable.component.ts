@@ -152,6 +152,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     rowMenuCacheEnabled = true;
 
+    @Input()
+    thumbnails: boolean = false;
+
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
     loadingTemplate: TemplateRef<any>;
