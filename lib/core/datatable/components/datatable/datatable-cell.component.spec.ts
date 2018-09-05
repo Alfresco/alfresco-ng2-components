@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
-import 'core-js/es7/reflect';
-import 'zone.js/dist/zone';
-import 'zone.js/dist/zone-testing';
-import { getTestBed } from '@angular/core/testing';
-import {
-    BrowserDynamicTestingModule,
-    platformBrowserDynamicTesting
-} from '@angular/platform-browser-dynamic/testing';
+import { DateCellComponent } from './date-cell.component';
 
-declare const require: any;
+describe('DataTableCellComponent', () => {
+    it('should use medium format by default', () => {
+        const component = new DateCellComponent(null);
+        expect(component.format).toBe('medium');
+    });
 
-// First, initialize the Angular testing environment.
-getTestBed().initTestEnvironment(
-    BrowserDynamicTestingModule,
-    platformBrowserDynamicTesting()
-);
+    it('should use column format', () => {
+        const component = new DateCellComponent(null);
+        component.column = {
+            key: 'created',
+            type: 'date',
+            format: 'longTime'
+        };
 
-// Then we find all the tests.
-const context = require.context('./', true, /\.spec\.ts$/);
-// And load the modules.
-context.keys().map(context);
+        component.ngOnInit();
+        expect(component.format).toBe('longTime');
+    });
+});

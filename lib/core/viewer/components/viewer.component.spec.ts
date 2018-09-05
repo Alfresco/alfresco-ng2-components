@@ -159,6 +159,10 @@ describe('ViewerComponent', () => {
         alfrescoApiService = TestBed.get(AlfrescoApiService);
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should change display name every time node changes', fakeAsync(() => {
         spyOn(alfrescoApiService.nodesApi, 'getNodeInfo').and.returnValues(
             Promise.resolve({ name: 'file1', content: {} }),
