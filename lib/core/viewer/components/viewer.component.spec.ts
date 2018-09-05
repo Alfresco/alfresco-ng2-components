@@ -118,8 +118,8 @@ class ViewerWithCustomOpenWithComponent {
 })
 class ViewerWithCustomMoreActionsComponent {
 }
-/*tslint:disable*/
-fdescribe('ViewerComponent', () => {
+
+describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
