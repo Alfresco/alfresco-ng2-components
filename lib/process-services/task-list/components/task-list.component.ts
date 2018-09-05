@@ -151,13 +151,13 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
-    /** Filter the tasks. Display only tasks with created_date after dueDate. */
+    /** Filter the tasks. Display only tasks with created_date after dueAfter. */
     @Input()
-    dueDate: string;
+    dueAfter: string;
 
-    /** Filter the tasks. Display only tasks with created_date before endDate. */
+    /** Filter the tasks. Display only tasks with created_date before dueBefore. */
     @Input()
-    endDate: string;
+    dueBefore: string;
 
     rows: any[] = [];
     isLoading: boolean = true;
@@ -357,8 +357,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
         let requestNode = {
             appDefinitionId: this.appId,
-            dueAfter: this.dueDate ? moment(this.dueDate).toDate() : null,
-            dueBefore: this.endDate ? moment(this.endDate).toDate() : null,
+            dueAfter: this.dueAfter ? moment(this.dueAfter).toDate() : null,
+            dueBefore: this.dueBefore ? moment(this.dueBefore).toDate() : null,
             processInstanceId: this.processInstanceId,
             processDefinitionId: this.processDefinitionId,
             processDefinitionKey: this.processDefinitionKey,

@@ -75,15 +75,15 @@
         </mat-form-field>
 
          <mat-form-field>
-             <mat-label>Due Date</mat-label>
-             <input matInput class="form-control" [matDatepicker]="pickerAfter" placeholder="Choose a date" [formControl]="taskDueDate">
+             <mat-label>Due After</mat-label>
+             <input matInput class="form-control" [matDatepicker]="pickerAfter" placeholder="Choose a date" [formControl]="taskDueAfter">
              <mat-datepicker-toggle matSuffix [for]="pickerAfter"></mat-datepicker-toggle>
              <mat-datepicker #pickerAfter></mat-datepicker>
          </mat-form-field>
 
          <mat-form-field>
-             <mat-label>End Date</mat-label>
-             <input matInput class="form-control" [matDatepicker]="pickerBefore" placeholder="Choose a date" [formControl]="taskEndDate">
+             <mat-label>Due Before</mat-label>
+             <input matInput class="form-control" [matDatepicker]="pickerBefore" placeholder="Choose a date" [formControl]="taskDueBefore">
              <mat-datepicker-toggle matSuffix [for]="pickerBefore"></mat-datepicker-toggle>
              <mat-datepicker #pickerBefore></mat-datepicker>
          </mat-form-field>
@@ -142,8 +142,8 @@
         [start]="start"
         [page]="page"
         [size]="size"
-        [dueDate]="dueDate"
-        [endDate]="endDate"
+        [dueAfter]="dueAfter"
+        [dueBefore]="dueBefore"
         [includeProcessInstance]="includeProcessInstance"
         #taskList>
         <data-columns>
