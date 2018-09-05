@@ -22,6 +22,7 @@ import {
 import {
     AfterContentInit, Component, ContentChild, EventEmitter,
     Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import moment from 'moment-es6';
 
 import { Observable, BehaviorSubject } from 'rxjs';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
@@ -149,6 +150,14 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     /** The number of tasks to fetch. Default value: 25. */
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
+
+    /** Filter the tasks. Display only tasks with created_date after dueAfter. */
+    @Input()
+    dueAfter: string;
+
+    /** Filter the tasks. Display only tasks with created_date before dueBefore. */
+    @Input()
+    dueBefore: string;
 
     rows: any[] = [];
     isLoading: boolean = true;
@@ -297,7 +306,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * @param taskId
      */
     isEqualToCurrentId(taskId: string): boolean {
-        return this.currentInstanceId === taskId ? true : false;
+        return this.currentInstanceId === taskId;
     }
 
     /**
@@ -348,6 +357,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
         let requestNode = {
             appDefinitionId: this.appId,
+            dueAfter: this.dueAfter ? moment(this.dueAfter).toDate() : null,
+            dueBefore: this.dueBefore ? moment(this.dueBefore).toDate() : null,
             processInstanceId: this.processInstanceId,
             processDefinitionId: this.processDefinitionId,
             processDefinitionKey: this.processDefinitionKey,
