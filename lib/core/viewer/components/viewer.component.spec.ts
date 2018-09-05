@@ -118,8 +118,8 @@ class ViewerWithCustomOpenWithComponent {
 })
 class ViewerWithCustomMoreActionsComponent {
 }
-
-describe('ViewerComponent', () => {
+/*tslint:disable*/
+fdescribe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
@@ -623,6 +623,21 @@ describe('ViewerComponent', () => {
                 });
 
             }));
+
+            it('should raise an event when the shared link is invalid', (done) => {
+                spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
+                    .and.returnValue(Promise.reject({}));
+
+                component.invalidSharedLink.subscribe(() => {
+                    done();
+                });
+
+                component.sharedLinkId = 'the-Shared-Link-id';
+                component.urlFile = null;
+                component.mimeType = null;
+
+                component.ngOnChanges(null);
+            });
 
         });
 
