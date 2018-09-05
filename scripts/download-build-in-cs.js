@@ -66,9 +66,12 @@ async function main() {
                 .pipe(unzipper.Extract({path: path.join(__dirname, '../demo-shell')}))
                 .on('finish', () => {
 
-                    console.log(`mv demo-shell/demo.zip demo-shell/${outputFolder}`);
+                    let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
+                    let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
 
-                    exec(`mv demo-shell/demo.zip demo-shell/${outputFolder}`, (err, stdout, stderr) => {
+                    console.log(`mv ${oldFolder} ${newFolder}`);
+
+                    exec(`mv ${oldFolder} ${newFolder}`, (err, stdout, stderr) => {
                         if (err) {
                             console.log(`err: ${err}`);
                             return;
