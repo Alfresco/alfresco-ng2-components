@@ -94,7 +94,7 @@
               "extractLicenses": true,
               "vendorChunk": true,
               "buildOptimizer": true,
-              "verbose": true,
+              "verbose": false,
               "fileReplacements": [
                 {
                   "replace": "demo-shell/src/environments/environment.ts",
@@ -325,7 +325,7 @@
               "extractLicenses": true,
               "vendorChunk": true,
               "buildOptimizer": true,
-              "verbose": true,
+              "verbose": false,
               "fileReplacements": [
                 {
                   "replace": "demo-shell/src/environments/environment.ts",
@@ -458,29 +458,6 @@
             "tsConfig": [
               "./demo-shell/src/tsconfig.app.json"
             ],
-            "exclude": [
-              "**/node_modules/**/*"
-            ]
-          }
-        }
-      }
-    },
-    "demo-shell-e2e": {
-      "root": "demo-shell",
-      "sourceRoot": "demo-shell/e2e",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "dist:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [],
             "exclude": [
               "**/node_modules/**/*"
             ]

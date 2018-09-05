@@ -13,6 +13,7 @@ eval GIT_ISH=""
 eval SINGLE_TEST=""
 eval EXEC_VERSION_JSAPI=false
 eval JSAPI_VERSION=""
+eval EXECLINT=true
 
 eval projects=( "core"
     "content-services"
@@ -53,13 +54,11 @@ enable_testbrowser(){
 
 test_project() {
     echo "====== test project: $1 ====="
-    ng lint $1 || exit 1
     ng test $1 --watch=false || exit 1
 }
 
 debug_project() {
     echo "====== debug project: $1 ====="
-    ng lint $1 || exit 1
     ng test $1 || exit 1
 }
 
@@ -92,6 +91,10 @@ exec_install(){
     EXEC_INSTALL=false
 }
 
+skip_lint(){
+    EXECLINT=false
+}
+
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
@@ -107,11 +110,16 @@ while [[ $1 == -* ]]; do
       -c|--clean)  clean; shift;;
       -si|--skipinstall)  exec_install; shift;;
       -sb|--skipbuild)  exclude_build; shift;;
+      -sl|--skip-lint)  skip_lint; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
 
 cd "$DIR/../"
+
+if [[  EXECLINT == "true" ]]; then
+    npm run lint-lib || exit 1
+fi
 
 if $EXEC_CLEAN == true; then
   echo "====== Clean components ====="

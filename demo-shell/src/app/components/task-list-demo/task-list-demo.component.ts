@@ -22,7 +22,7 @@ import { debounceTime } from 'rxjs/operators';
 
 @Component({
     templateUrl: './task-list-demo.component.html',
-    styleUrls: [`./task-list-demo.component.scss`],
+    styleUrls: [`./task-list-demo.component.scss`]
 })
 
 export class TaskListDemoComponent implements OnInit {

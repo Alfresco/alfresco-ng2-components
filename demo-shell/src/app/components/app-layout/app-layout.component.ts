@@ -19,7 +19,6 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { UserPreferencesService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { HeaderDataService } from '../header-data/header-data.service';
 
-
 @Component({
     templateUrl: 'app-layout.component.html',
     styleUrls: ['app-layout.component.scss'],

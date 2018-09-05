@@ -96,7 +96,7 @@ import { ProcessModule } from '@alfresco/adf-process-services';
         ProcessModule.forRoot(),
         ThemePickerModule,
         ChartsModule,
-        MonacoEditorModule.forRoot(),
+        MonacoEditorModule.forRoot()
     ],
     declarations: [
         AppComponent,
