@@ -7,12 +7,29 @@ var path = require('path');
 var archiver = require('archiver');
 var unzipper = require('unzipper');
 
+var exec = require('child_process').exec;
+
+replaceHrefInIndex = (folder) => {
+    fs.readFile(`demo-shell/${folder}/index.html`, 'utf8', function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+
+        var result = data.replace(`base href="/"`, `base href=\"/${folder}/\"`);
+
+        fs.writeFile(`demo-shell/${folder}/index.html`, result, 'utf8', function (err) {
+            if (err) return console.log(err);
+        });
+    });
+}
+
 async function main() {
 
     program
         .version('0.1.0')
         .option('-p, --password [type]', 'password')
         .option('-u, --username  [type]', 'username')
+        .option('--base-href  [type]', '')
         .option('-f, --folder [type]', 'Name of the folder')
         .option('-host, --host [type]', 'URL of the CS')
         .parse(process.argv);
@@ -38,15 +55,29 @@ async function main() {
 
     console.log('Download zip');
 
+    let outputFolder = program.baseHref ? program.baseHref : 'dist';
+
     var file = fs.createWriteStream('demo.zip');
-    var request = http.get(`http://${url}`, (response) => {
+    http.get(`http://${url}`, (response) => {
         response.pipe(file);
-        file.on('finish', () => {
+        file.on('finish', async () => {
             console.log('Unzip Demo ' + path.join(__dirname, '../demo.zip'));
-         fs.createReadStream(path.join(__dirname, '../demo.zip')).pipe(unzipper.Extract({path: path.join(__dirname, '../demo-shell/dist')}));
+            fs.createReadStream(path.join(__dirname, '../demo.zip'))
+                .pipe(unzipper.Extract({path: path.join(__dirname, '../demo-shell')}))
+                .on('finish', () => {
+                    exec(`mv demo-shell/demo.zip demo-shell/${outputFolder}`, (err, stdout, stderr) => {
+                        if (err) {
+                            console.log(`err: ${err}`);
+                            return;
+                        }
+
+                        if(program.baseHref) {
+                            replaceHrefInIndex(outputFolder);
+                        }
+                    });
+                })
         });
     });
-
 
 }
 

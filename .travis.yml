@@ -73,18 +73,18 @@ jobs:
           script: ./copy-dist-node.sh; npm run build:dist; node ./scripts/upload-build-in-cs.js -u $E2E_USERNAME  -p $E2E_PASSWORD --host $E2E_HOST -f  $TRAVIS_BUILD_NUMBER
         - stage: e2e Test # Test core
           env: STAGE=core
-          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save -timeout 40000 --folder core --skip-lint --use-dist
+          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save --folder core --skip-lint --use-dist
         - stage: e2e Test # Test process-services
           env: STAGE=process-services
-          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save -timeout 40000 --folder process-services --skip-lint --use-dist
+          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save --folder process-services --skip-lint --use-dist
         - stage: e2e Test # Test content-services
           env: STAGE=content-services
-          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save -timeout 40000 --folder content-services --skip-lint --use-dist
+          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save --folder content-services --skip-lint --use-dist
         - stage: e2e Test # Test insights
           env: STAGE=insights
-          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save -timeout 40000 --folder insights --skip-lint --use-dist
+          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save -folder insights --skip-lint --use-dist
         - stage: Create Docker PR
-          script: ./scripts/test-dist.sh -n $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
+          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER --base-href $TRAVIS_BUILD_NUMBER; -n $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
         - stage: Deploy Docker PR
           script: node ./scripts/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1
 
