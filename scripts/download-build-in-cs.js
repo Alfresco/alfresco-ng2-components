@@ -5,7 +5,8 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var archiver = require('archiver');
-var unzipper = require('unzipper');
+var unzip = require('unzip-stream');
+var stream = require('unzip-stream');
 
 var exec = require('child_process').exec;
 
@@ -63,28 +64,26 @@ async function main() {
         file.on('finish', async () => {
             console.log('Unzip Demo ' + path.join(__dirname, '../demo.zip'));
             fs.createReadStream(path.join(__dirname, '../demo.zip'))
-                .pipe(unzipper.Extract({path: path.join(__dirname, '../demo-shell')}))
+                .pipe(unzip.Extract({path: path.join(__dirname, '../demo-shell')}))
                 .on('finish', () => {
 
-                    let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
-                    let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
+                    setTimeout(() => {
+                        let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
+                        let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
 
-                    console.log(`mv ${oldFolder} ${newFolder}`);
+                        fs.rename(oldFolder, newFolder, (err) => {
+                            // if (err) throw err;
+                            console.log('renamed complete');
+                        });
 
-                    exec(`mv ${oldFolder} ${newFolder}`, (err, stdout, stderr) => {
-                        if (err) {
-                            console.log(`err: ${err}`);
-                            return;
-                        }
-
-                        if(program.baseHref) {
+                        if (program.baseHref) {
                             replaceHrefInIndex(outputFolder);
                         }
-                    });
+                    }, 10000);
+
                 })
         });
     });
-
 }
 
 main();
