@@ -65,6 +65,9 @@ async function main() {
             fs.createReadStream(path.join(__dirname, '../demo.zip'))
                 .pipe(unzipper.Extract({path: path.join(__dirname, '../demo-shell')}))
                 .on('finish', () => {
+
+                    console.log(`mv demo-shell/demo.zip demo-shell/${outputFolder}`);
+
                     exec(`mv demo-shell/demo.zip demo-shell/${outputFolder}`, (err, stdout, stderr) => {
                         if (err) {
                             console.log(`err: ${err}`);
