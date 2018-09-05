@@ -22,6 +22,7 @@ import { Subject } from 'rxjs';
 
 export interface DataTableAdapter {
     rowsChanged?: Subject<Array<DataRow>>;
+    thumbnails?: boolean;
 
     selectedRow: DataRow;
     getRows(): Array<DataRow>;
