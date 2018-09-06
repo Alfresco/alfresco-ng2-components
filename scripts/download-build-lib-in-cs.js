@@ -21,18 +21,18 @@ downloadZip = async(url, pacakge) => {
             console.log(`Unzip  ${pacakge}` + path.join(__dirname, `../${pacakge}.zip`));
             fs.createReadStream(path.join(__dirname,  `../${pacakge}.zip`))
                 .pipe(unzip.Extract({path: path.join(__dirname, '../node_modules/@alfresco/')}))
-                // .on('finish', () => {
-                //     setTimeout(() => {
-                //         let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
-                //         let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
-                //
-                //         fs.rename(oldFolder, newFolder, (err) => {
-                //             console.log('renamed complete');
-                //         });
-                //
-                //     }, 10000);
-                //
-                // })
+                .on('finish', () => {
+                    setTimeout(() => {
+                        let oldFolder = path.join(__dirname, `../node_modules/@alfresco/${pacakge}`)
+                        let newFolder = path.join(__dirname, `../node_modules/@alfresco/adf-${pacakge}`)
+
+                        fs.rename(oldFolder, newFolder, (err) => {
+                            console.log('renamed complete');
+                        });
+
+                    }, 10000);
+
+                })
         });
     });
 }
