@@ -36,6 +36,39 @@ Simple container for headers, titles, actions and breadcrumbs.
 </adf-toolbar>
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+You can set the title content using an `<adf-toolbar-title>` element (although
+you can also set a simple textual title with the `title` attribute).
+All other content in the toolbar is free-form but you can use one or more
+`<adf-toolbar-divider>` elements between your own elements to add a visual
+separator. Also, any content following a `<div>` element with the CSS class
+`adf-toolbar--spacer` will be pushed across to the right-hand side of the
+toolbar:
+
+```html
+<adf-toolbar>
+    <adf-toolbar-title>
+        <adf-breadcrumb ...></adf-breadcrumb>
+    </adf-toolbar-title>
+
+    <adf-toolbar-divider></adf-toolbar-divider>
+
+    <button></button>
+    <button></button>
+
+    <div class="adf-toolbar--spacer"></div>
+
+    <button></button>
+</adf-toolbar>
+```
+
+For example, the image below shows a toolbar with a
+[Breadcrumb component](../content-services/breadcrumb.component.md) title, and then some buttons
+pushed to the right by a spacer:
+
+![](../docassets/images/adf-toolbar-02.png)
+
 ## Class members
 
 ### Properties
@@ -46,55 +79,6 @@ Simple container for headers, titles, actions and breadcrumbs.
 | title | `string` | "" | Toolbar title. |
 
 ## Details
-
-### Custom title
-
-You can use any HTML layout or Angular component as the content of the title section by
-using the `<adf-toolbar-title>` subcomponent instead of the "title" attribute:
-
-```html
-<adf-toolbar>
-    <adf-toolbar-title>
-        <adf-breadcrumb ...></adf-breadcrumb>
-    </adf-toolbar-title>
-    ...
-</adf-toolbar>
-```
-
-![](../docassets/images/adf-toolbar-02.png)
-
-### Divider
-
-You can divide groups of elements with a visual separator `<adf-toolbar-divider>`:
-
-```html
-<adf-toolbar>
-    <button></button>
-    <button></button>
-    <adf-toolbar-divider></adf-toolbar-divider>
-    <button></button>
-</adf-toolbar>
-```
-
-### Spacer
-
-You can split the toolbar into separate sections at the left and right of the screen
-with the `adf-toolbar--spacer` CSS class. In the following example, the toolbar title
-element is rendered to the left but all the buttons are pushed to the right side:
-
-```html
-<adf-toolbar>
-    <adf-toolbar-title>
-        ...
-    <adf-toolbar-title>
-    
-    <div class="adf-toolbar--spacer"></div>
-
-    <button></button>
-    <adf-toolbar-divider></adf-toolbar-divider>
-    <button></button>
-</adf-toolbar>
-```
 
 ### Dropdown menu
 

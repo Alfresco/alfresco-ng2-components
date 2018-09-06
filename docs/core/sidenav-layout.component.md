@@ -23,6 +23,11 @@ Displays the standard three-region ADF application layout.
 
 ## Basic Usage
 
+### [Transclusions](../user-guide/transclusion.md)
+
+The content for the header, navigation area, and main content are transcluded using three special
+sub-components (note the use of `<ng-template>` in the sub-components' body sections): 
+
 ```html
 <adf-sidenav-layout
     [sidenavMin]="70"

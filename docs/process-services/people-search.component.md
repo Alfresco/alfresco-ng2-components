@@ -13,6 +13,18 @@ Searches users/people.
 <adf-people-search></adf-people-search>
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+You can provide a title for the search header and a label for the action button using
+special sub-components in the body of the `<adf-people-search>` element:
+
+```html
+<adf-people-search ...>
+    <header-title>Custom title</header-title>
+    <action-button-label>Custom label</action-button-label>
+</adf-people-search>
+```
+
 ## Class members
 
 ### Properties
@@ -41,7 +53,7 @@ Searches users/people.
        [results]="peopleSearch$">
            <header-title>{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</header-title>
            <action-button-label>{{ 'PEOPLE.ADD_USER' | translate }}</action-button-label>
-       </adf-people-search>
+</adf-people-search>
 ```
 
 <!-- {% endraw %} -->

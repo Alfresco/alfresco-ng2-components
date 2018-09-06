@@ -33,6 +33,19 @@ Renders a list containing all the tasks matched by the parameters specified.
 </adf-tasklist>
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+Any content inside an `<adf-empty-custom-content>` sub-component will be shown
+when the task list is empty:
+
+```html
+<adf-tasklist>
+    <adf-empty-custom-content>
+        Your Content
+    </adf-empty-custom-content>
+<adf-tasklist>
+```
+
 ## Class members
 
 ### Properties
@@ -212,18 +225,6 @@ typical tasklist.
 ### DataColumn Features
 
 You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) page for more information about these features.
-
-### Show custom template when tasklist is empty
-
-You can add your own template or message as shown in the example below:
-
-```html
-<adf-tasklist>
-    <adf-empty-custom-content>
-        Your Content
-    </adf-empty-custom-content>
-<adf-tasklist>
-```
 
 ## See also
 

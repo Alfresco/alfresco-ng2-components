@@ -245,6 +245,63 @@ export class DataTableDemo {
 </adf-datatable>
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+You can add [Data column component](data-column.component.md) instances to define columns for the
+table as described in the usage examples and the [Customizing columns](#customizing-columns) section.
+
+You can also supply a `<no-content-template>` or an
+[Empty list component](empty-list-component.md) sub-component to show when the table is empty:
+
+```html
+<adf-datatable ...>
+    <no-content-template>
+        <!--Add your custom empty template here-->
+        <ng-template>
+            <h1>Sorry, no content</h1>
+        </ng-template>
+    </no-content-template>
+</adf-datatable>
+```
+
+```html
+<adf-datatable ...>        
+    <adf-empty-list>
+        <adf-empty-list-header>"'My custom Header'"</adf-empty-list-header>
+        <adf-empty-list-body>"'My custom body'"</adf-empty-list-body>
+        <adf-empty-list-footer>"'My custom footer'"</adf-empty-list-footer>
+        <ng-content>"'HTML Layout'"</ng-content>
+    </adf-empty-list>
+</adf-datatable>
+```
+
+Another useful transclusion is the `<loading-content-template>`, which is shown
+while the data for the table is loading:
+
+```html
+<adf-datatable ...>
+    <loading-content-template>
+        <ng-template>
+            <!--Add your custom loading template here-->
+            <mat-progress-spinner
+                class="adf-document-list-loading-margin"
+                [color]="'primary'"
+                [mode]="'indeterminate'">
+            </mat-progress-spinner>
+        </ng-template>
+    </loading-content-template>
+</adf-datatable>
+```
+
+```js
+    isLoading(): boolean {
+        //your custom logic to identify if you are in a loading state 
+    }
+```
+
+Note that you can use both the `<no-content-template>` and the `<loading-content-template>`
+together in the same datatable.
+
 ## Class members
 
 ### Properties
@@ -339,106 +396,6 @@ Set the `display` property to "gallery" to enable Card View mode:
 ```
 
 ![card-view](../docassets/images/document-list-card-view.png)
-
-### Custom Empty content template
-
-You can add a template that will be shown when there are no rows in your datatable:
-
-```html
-<adf-datatable
-    [data]="data"
-    [actions]="contentActions"
-    [multiselect]="multiselect"
-    (showRowContextMenu)="onShowRowContextMenu($event)"
-    (showRowActionsMenu)="onShowRowActionsMenu($event)"
-    (executeRowAction)="onExecuteRowAction($event)"
-    (rowClick)="onRowClick($event)"
-    (rowDblClick)="onRowDblClick($event)">
-    
-    
-        <no-content-template>
-            <!--Add your custom empty template here-->
-            <ng-template>
-                <h1>Sorry, no content</h1>
-            </ng-template>
-        </no-content-template>
-        
-</adf-datatable>
-```
-
-You can use the [empty list component](../../lib/core/datatable/components/datatable/empty-list.component.ts) to show the default ADF empty template.
-
-You can place any HTML layout or Angular component as content in the empty template section
-by using the `<adf-empty-list-header>`, `<adf-empty-list-body>`, and `<adf-empty-list-footer>`
-elements:
-
-```html
-<adf-datatable
-    [data]="data"
-    [actions]="contentActions"
-    [multiselect]="multiselect"
-    (showRowContextMenu)="onShowRowContextMenu($event)"
-    (showRowActionsMenu)="onShowRowActionsMenu($event)"
-    (executeRowAction)="onExecuteRowAction($event)"
-    (rowClick)="onRowClick($event)"
-    (rowDblClick)="onRowDblClick($event)">
-        
-        <adf-empty-list>
-            <adf-empty-list-header>"'My custom Header'"</adf-empty-list-header>
-            <adf-empty-list-body>"'My custom body'"</adf-empty-list-body>
-            <adf-empty-list-footer>"'My custom footer'"</adf-empty-list-footer>
-            <ng-content>"'HTML Layout'"</ng-content>
-        </adf-empty-list>
-        
-</adf-datatable>
-```
-
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| emptyListImageUrl | String | empty_doc_lib.svg | The default image used as the background |
-| emptyMsg | String | This list is empty | The default title message |
-| dragDropMsg | String | Drag and drop | The default drag and drop message |
-| additionalMsg | String | Drag and drop | The default additional message |
-
-![](../docassets/images/adf-empty-list.png)
-
-### Loading content template
-
-You can add a template to be shown while your data is loading:
-
-```html
-<adf-datatable
-    [data]="data"
-    [actions]="contentActions"
-    [multiselect]="multiselect"
-    [loading]=isLoading()"
-    (showRowContextMenu)="onShowRowContextMenu($event)"
-    (showRowActionsMenu)="onShowRowActionsMenu($event)"
-    (executeRowAction)="onExecuteRowAction($event)"
-    (rowClick)="onRowClick($event)"
-    (rowDblClick)="onRowDblClick($event)">
-    
-        <loading-content-template>
-            <ng-template>
-               <!--Add your custom loading template here-->
-                <mat-progress-spinner
-                    class="adf-document-list-loading-margin"
-                    [color]="'primary'"
-                    [mode]="'indeterminate'">
-                </mat-progress-spinner>
-            </ng-template>
-        </loading-content-template>
-        
-</adf-datatable>
-```
-
-```js
-    isLoading(): boolean {
-        //your custom logic to identify if you are in a loading state 
-    }
-```
-
-Note: the `<loading-content-template>` and `<no-content-template>` can be used together.
 
 ### Using events
 

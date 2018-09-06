@@ -29,6 +29,19 @@ export class AppComponent {
 }
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+You can supply any content in the `<adf-upload-drag-area>` to display
+as the drag/drop target:
+
+```html
+<adf-upload-drag-area (success)="onSuccess($event)">
+    <div style="width: 200px; height: 100px; border: 1px solid #888888">
+        DRAG HERE
+    </div>
+</adf-upload-drag-area>
+```
+
 ## Class members
 
 ### Properties

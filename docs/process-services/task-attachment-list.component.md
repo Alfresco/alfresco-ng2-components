@@ -19,6 +19,24 @@ Displays attached documents on a specified task.
 </adf-task-attachment-list>
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+Any content inside the `<adf-task-attachment-list>` element will be displayed
+when the list is empty:
+
+```html
+<adf-task-attachment-list ...>
+    <div><!-- Custom empty list message goes here --></div>
+</adf-task-attachment-list>
+```
+
+![custom-no-content-drag-drop-template-sample](../docassets/images/custom-no-content-drag-drop-template.png)
+
+A default "no content" template is displayed if you don't supply one to override it:
+
+![default-no-content-template-sample](../docassets/images/default-no-content-template.png)
+
+
 ## Class members
 
 ### Properties
@@ -37,10 +55,6 @@ Displays attached documents on a specified task.
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments. |
 
 ## Details
-
-If the List is empty, a default "no content" template is displayed.
-
-![default-no-content-template-sample](../docassets/images/default-no-content-template.png)
 
 ### How to Add Drag and Drop Functionality
 
@@ -91,6 +105,3 @@ export class MyCustomTaskAttachmentComponent {
 
 [Upload Drag Area Component](../content-services/upload-drag-area.component.md)
 
-If the List is empty, the custom no-content template we passed is displayed. 
-
-![custom-no-content-drag-drop-template-sample](../docassets/images/custom-no-content-drag-drop-template.png)

@@ -32,6 +32,20 @@ Shows a [`Form`](../../lib/process-services/task-list/models/form.model.ts) from
 </adf-form>
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+Any content in the body of `<adf-form>` will be shown when no form definition is found:
+
+```html
+<adf-form .... >
+
+    <div empty-form >
+        <h2>Empty form</h2>
+    </div>
+
+</adf-form>
+```
+
 ## Class members
 
 ### Properties
@@ -163,20 +177,6 @@ The `nameNode` parameter is optional.
 
 Here, the node metadata is shown in an APS [Form,](../../lib/process-services/task-list/models/form.model.ts)
 with the form fields themselves saved as metadata. The `nameNode` parameter is optional.
-
-### Custom empty form template
-
-You can add a template that will be shown when no form definition is found:
-
-```html
-<adf-form .... >
-
-    <div empty-form >
-        <h2>Empty form</h2>
-    </div>
-
-</adf-form>
-```
 
 ### Controlling outcome execution behaviour
 

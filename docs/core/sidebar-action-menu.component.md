@@ -12,6 +12,15 @@ Displays a sidebar-action menu information panel.
 
 ## Basic usage
 
+### [Transclusions](../user-guide/transclusion.md)
+
+There are three regions where you can add your own content in `<div>` elements with
+the following names:
+
+-   sidebar-menu-title-icon
+-   sidebar-menu-options
+-   sidebar-menu-expand-icon
+
 ```html
 <adf-sidebar-action-menu>
     <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
@@ -39,8 +48,4 @@ Displays a sidebar-action menu information panel.
 
 ## Details
 
-As the name suggests, this is basically just a layout with CSS styling. There are three regions where you can add your own content, as shown in the example:
-
--   sidebar-menu-title-icon
--   sidebar-menu-options
--   sidebar-menu-expand-icon
+As the name suggests, this is basically just a layout with CSS styling. 
