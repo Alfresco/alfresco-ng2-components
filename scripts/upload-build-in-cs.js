@@ -72,9 +72,6 @@ async function main() {
             });
         }
 
-        console.log('folder' +folder );
-
-
         for (const fileName of files) {
 
             let pathFile = path.join(__dirname, '../demo-shell/zip/demo.zip');
