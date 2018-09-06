@@ -36,12 +36,9 @@
         background-color: mat-color($background,background);
     }
 
-    mat-sidenav-content {
-        margin-left: 0px !important;
-    }
-
-    .mat-sidenav-content,
+    mat-sidenav-content.mat-sidenav-content,
     .mat-drawer-transition .mat-drawer-content {
+        margin-left: 0px !important;
         transform: unset !important;
         transition-property: unset !important;
         transition-duration: unset !important;
