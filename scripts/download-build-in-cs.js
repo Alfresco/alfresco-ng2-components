@@ -6,7 +6,6 @@ var fs = require('fs');
 var path = require('path');
 var archiver = require('archiver');
 var unzip = require('unzip-stream');
-var stream = require('unzip-stream');
 
 replaceHrefInIndex = (folder) => {
     fs.readFile(`demo-shell/${folder}/index.html`, 'utf8', function (err, data) {
@@ -61,24 +60,29 @@ async function main() {
         response.pipe(file);
         file.on('finish', async () => {
             console.log('Unzip Demo ' + path.join(__dirname, '../demo.zip'));
-            fs.createReadStream(path.join(__dirname, '../demo.zip'))
-                .pipe(unzip.Extract({path: path.join(__dirname, '../demo-shell')}))
-                .on('finish', () => {
 
-                    setTimeout(() => {
-                        let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
-                        let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
+            setTimeout(() => {
+                fs.createReadStream(path.join(__dirname, '../demo.zip'))
+                    .pipe(unzip.Extract({path: path.join(__dirname, '../demo-shell')}))
+                    .on('finish', () => {
 
-                        fs.rename(oldFolder, newFolder, (err) => {
-                            console.log('renamed complete');
-                        });
+                        setTimeout(() => {
+                            let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
+                            let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
 
-                        if (program.baseHref) {
-                            replaceHrefInIndex(outputFolder);
-                        }
-                    }, 10000);
+                            fs.rename(oldFolder, newFolder, (err) => {
+                                console.log('renamed complete');
+                            });
 
-                })
+                            if (program.baseHref) {
+                                replaceHrefInIndex(outputFolder);
+                            }
+                        }, 10000);
+
+                    })
+            }, 10000);
+
+
         });
     });
 }
