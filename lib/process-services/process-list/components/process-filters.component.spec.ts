@@ -96,7 +96,7 @@ describe('ProcessFiltersComponent', () => {
             done();
         });
 
-        filterList.ngOnInit();
+        fixture.detectChanges();
     });
 
     it('should select the Running process filter', (done) => {
@@ -113,7 +113,24 @@ describe('ProcessFiltersComponent', () => {
             done();
         });
 
-        filterList.ngOnInit();
+        fixture.detectChanges();
+    });
+
+    it('should emit an event when a filter is selected', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        expect(filterList.currentFilter).toBeUndefined();
+
+        filterList.filterSelected.subscribe((filter) => {
+            expect(filter.name).toEqual('FakeInvolvedTasks');
+            done();
+        });
+
+        fixture.detectChanges();
+        filterList.selectRunningFilter();
     });
 
     it('should return the filter task list, filtered By Name', (done) => {
@@ -130,7 +147,7 @@ describe('ProcessFiltersComponent', () => {
             done();
         });
 
-        filterList.ngOnInit();
+        fixture.detectChanges();
     });
 
     it('should emit an error with a bad response', (done) => {
@@ -145,7 +162,7 @@ describe('ProcessFiltersComponent', () => {
             done();
         });
 
-        filterList.ngOnInit();
+        fixture.detectChanges();
     });
 
     it('should emit an error with a bad response', (done) => {
@@ -160,7 +177,7 @@ describe('ProcessFiltersComponent', () => {
             done();
         });
 
-        filterList.ngOnInit();
+        fixture.detectChanges();
     });
 
     it('should emit an event when a filter is selected', (done) => {

@@ -125,6 +125,7 @@
                                 [filterParam]="filterSelected"
                                 [appId]="appId"
                                 (filterClick)="onProcessFilterClick($event)"
+                                (filterSelected)="onProcessFilterClick($event)"
                                 (success)="onSuccessProcessFilterList($event)">
                             </adf-process-instance-filters>
                         </adf-accordion-group>
