@@ -8,8 +8,6 @@ var archiver = require('archiver');
 var unzip = require('unzip-stream');
 var stream = require('unzip-stream');
 
-var exec = require('child_process').exec;
-
 replaceHrefInIndex = (folder) => {
     fs.readFile(`demo-shell/${folder}/index.html`, 'utf8', function (err, data) {
         if (err) {
@@ -72,7 +70,6 @@ async function main() {
                         let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
 
                         fs.rename(oldFolder, newFolder, (err) => {
-                            // if (err) throw err;
                             console.log('renamed complete');
                         });
 
