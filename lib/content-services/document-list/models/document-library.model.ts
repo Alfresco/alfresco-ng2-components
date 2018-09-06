@@ -54,6 +54,7 @@ export class NodeMinimal implements MinimalNodeEntryEntity {
     content: ContentInfo;
     path: PathInfoEntity;
     properties: NodeProperties = {};
+    aspectNames: string[];
 }
 
 export class UserInfo {
