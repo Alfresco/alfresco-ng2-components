@@ -20,7 +20,6 @@ import { TagService } from './services/tag.service';
 import { PaginationModel } from '@alfresco/adf-core';
 
 /**
- *
  * This component provide a list of all the tag inside the ECM
  */
 @Component({
@@ -46,14 +45,9 @@ export class TagListComponent implements OnInit {
     size: number = 10;
 
     defaultPagination: PaginationModel;
-
     pagination: PaginationModel;
 
     isLoading = false;
-
-    /**
-     * Flag to display Fewer tags button.
-     */
     isSizeMinimum = true;
 
     /**
@@ -103,11 +97,8 @@ export class TagListComponent implements OnInit {
 
     loadLessTags() {
         this.isSizeMinimum = false;
-
         this.tagsEntries = this.tagsEntries.slice(0, this.tagsEntries.length - this.pagination.count);
-
         this.pagination.skipCount = this.pagination.skipCount - this.pagination.count;
-
         this.pagination.hasMoreItems = true;
 
         if (this.tagsEntries.length <= this.size) {
