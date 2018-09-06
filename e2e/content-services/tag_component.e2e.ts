@@ -38,7 +38,10 @@ describe('Tag component', () => {
     let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     let deleteFile = new FileModel({ 'name': Util.generateRandomString() });
     let sameTag = Util.generateRandomStringToLowerCase();
-    let tagList = [Util.generateRandomStringToLowerCase(), Util.generateRandomStringToLowerCase(), Util.generateRandomStringToLowerCase()];
+    let tagList = [
+        Util.generateRandomStringToLowerCase(),
+        Util.generateRandomStringToLowerCase(),
+        Util.generateRandomStringToLowerCase()];
     let uppercaseTag = Util.generateRandomStringToUpperCase();
     let digitsTag = Util.generateRandomStringDigits();
     let nonLatinTag = Util.generateRandomStringNonLatin();
