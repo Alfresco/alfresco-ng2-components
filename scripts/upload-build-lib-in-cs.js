@@ -66,7 +66,14 @@ async function main() {
                 'overwrite': true
             });
         } catch (error) {
-            console.log('error' + error);
+            console.log('Folder already present');
+
+            folder = await alfrescoJsApi.nodes.getNode('-my-', {
+                'relativePath': `Builds/${program.folder}`,
+                'nodeType': 'cm:folder'
+            }, {}, {
+                'overwrite': true
+            });
         }
 
         for (const fileName of files) {
