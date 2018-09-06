@@ -455,10 +455,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.loadDetails(taskId);
     }
 
-    toggleHeaderContent(): void {
-        this.showHeaderContent = !this.showHeaderContent;
-    }
-
     isCompletedTask(): boolean {
         return this.taskDetails && this.taskDetails.endDate ? true : undefined;
     }
