@@ -49,6 +49,7 @@ jobs:
         - stage: Packaging test
           script:  (npm run build-lib || exit 1;) && node ./scripts/upload-build-lib-in-cs.js -u $E2E_USERNAME  -p $E2E_PASSWORD --host $E2E_HOST -f $TRAVIS_BUILD_NUMBER
         - stage: Test Update version 2.0.0
+          if: branch = development
           env: STAGE=test-BC
           script: ./scripts/test-e2e-bc.sh
         - stage: Test Update version 2.0.0
