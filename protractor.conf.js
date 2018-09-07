@@ -4,7 +4,13 @@
 const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const jasmineReporters = require('jasmine-reporters');
+const htmlReporter = require('protractor-html-reporter-2');
 const retry = require('protractor-retry').retry;
+
+const AlfrescoApi = require('alfresco-js-api-node');
+const TestConfig = require('./e2e/test.config');
+
+const fs = require('fs');
 
 const projectRoot = path.resolve(__dirname);
 
@@ -44,8 +50,6 @@ exports.config = {
     capabilities: {
         browserName: 'chrome',
 
-        shardTestFiles: true,
-        maxInstances: 1,
         chromeOptions: {
             prefs: {
                 'credentials_enable_service': false,
@@ -128,6 +132,79 @@ exports.config = {
             style.appendChild(document.createTextNode(css));
             head.appendChild(style);
         }
+
+    },
+
+    onComplete: async function( ) {
+
+        let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
+        let saveScreenshot = process.env.SAVE_SCREENSHOT;
+
+
+        if (saveScreenshot === 'true') {
+            if (!buildNumber) {
+                buildNumber = Date.now();
+            }
+
+            let alfrescoJsApi = new AlfrescoApi({
+                provider: 'ECM',
+                hostEcm: TestConfig.adf.url
+            });
+
+            let files = fs.readdirSync(path.join(__dirname, './e2e-output/screenshots'));
+
+            if (files && files.length > 0) {
+                alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+                let folder = await alfrescoJsApi.nodes.addNode('-my-', {
+                    'name': 'allScreenshots',
+                    'relativePath': 'Build-screenshot/Screenshot-e2e-' + buildNumber,
+                    'nodeType': 'cm:folder'
+                }, {}, {
+                    'overwrite': true
+                });
+
+                for (const fileName of files) {
+
+                    let pathFile = path.join(__dirname, './e2e-output/screenshots', fileName);
+                    let file = fs.createReadStream(pathFile);
+
+                    await alfrescoJsApi.upload.uploadFile(
+                        file,
+                        '',
+                        folder.entry.id,
+                        null,
+                        {
+                            'name': file.name,
+                            'nodeType': 'cm:content'
+                        }
+                    );
+                };
+            }
+        };
+
+        testConfig = {
+            reportTitle: 'Protractor Test Execution Report',
+            outputPath: `${projectRoot}/e2e-output/junit-report`,
+            outputFilename: 'ProtractorTestReport',
+            screenshotPath: '`${projectRoot}/e2e-output/screenshots/`',
+            screenshotsOnlyOnFailure: true
+        };
+        new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfig);
+
+        let pathFile = path.join(__dirname, './e2e-output/junit-report', "ProtractorTestReport.html");
+        let file = fs.createReadStream(pathFile);
+
+        await alfrescoJsApi.upload.uploadFile(
+            file,
+            '',
+            folder.entry.id,
+            null,
+            {
+                'name': file.name,
+                'nodeType': 'cm:content'
+            }
+        );
 
     },
 
