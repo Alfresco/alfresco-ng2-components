@@ -124,8 +124,8 @@
                                 #activitiprocessfilter
                                 [filterParam]="filterSelected"
                                 [appId]="appId"
-                                (filterClick)="onProcessFilterClick($event)"
-                                (filterSelected)="onProcessFilterClick($event)"
+                                (filterClick)="onProcessFilterChange($event)"
+                                (filterSelected)="onProcessFilterChange($event)"
                                 (success)="onSuccessProcessFilterList($event)">
                             </adf-process-instance-filters>
                         </adf-accordion-group>
