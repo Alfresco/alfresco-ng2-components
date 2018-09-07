@@ -112,7 +112,6 @@
     "adm-zip": "^0.4.11",
     "ajv-cli": "^3.0.0",
     "angular2-template-loader": "0.6.2",
-    "archiver": "^3.0.0",
     "astrolabe": "^0.3.6",
     "autoprefixer": "6.5.4",
     "bundlesize": "^0.15.3",

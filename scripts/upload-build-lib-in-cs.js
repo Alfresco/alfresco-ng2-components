@@ -3,7 +3,8 @@ var AlfrescoApi = require('alfresco-js-api-node');
 
 var fs = require('fs');
 var path = require('path');
-var archiver = require('archiver');
+var AdmZip = require('adm-zip');
+var writeZip = new AdmZip();
 
 writeZipLib = async function (zipName, zipFolder) {
 
@@ -11,16 +12,8 @@ writeZipLib = async function (zipName, zipFolder) {
         fs.mkdirSync(zipFolder);
     }
 
-    // create a file to stream archive data to.
-    let output = fs.createWriteStream(path.join(zipFolder, `${zipName}.zip`));
-    let archive = archiver('zip', {
-        zlib: {level: 9} // Sets the compression level.
-    });
-
-    archive.pipe(output);
-    archive.directory(path.join(__dirname, `../lib/dist/${zipName}`), zipName);
-
-    return archive.finalize();
+    writeZip.addFile(path.join(__dirname, `../lib/dist/${zipName}`), Buffer.alloc(0));
+    return writeZip.writeZip(`${zipName}.zip`);
 };
 
 async function main() {

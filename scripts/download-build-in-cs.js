@@ -63,12 +63,6 @@ async function main() {
 
             var zip = new AdmZip(path.join(__dirname, '../demo.zip'));
             zip.extractAllToAsync(path.join(__dirname, '../demo-shell'), true, ()=>{
-                let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
-                let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
-
-                fs.rename(oldFolder, newFolder, (err) => {
-                    console.log('renamed complete');
-                });
 
                 if (program.baseHref) {
                     replaceHrefInIndex(outputFolder);
