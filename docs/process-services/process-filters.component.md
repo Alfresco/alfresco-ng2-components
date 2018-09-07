@@ -45,6 +45,7 @@ Collection of criteria used to filter process instances, which may be customized
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<ProcessInstanceFilterRepresentation>` | Emitted when the user selects a filter from the list. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<ProcessInstanceFilterRepresentation[]>` | Emitted when the list of filters has been successfully loaded from the server. |
+| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<ProcessInstanceFilterRepresentation>` | Emitted when a process filter is selected. |
 
 ## Details
 

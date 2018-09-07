@@ -16,7 +16,7 @@
  */
 
 import { AppsProcessService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import { Observable } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
@@ -27,7 +27,7 @@ import { ProcessFilterService } from './../services/process-filter.service';
     templateUrl: './process-filters.component.html',
     styleUrls: ['process-filters.component.scss']
 })
-export class ProcessFiltersComponent implements OnInit, OnChanges {
+export class ProcessFiltersComponent implements OnChanges {
 
     /** The parameters to filter the task filter. If there is no match then the default one
      * (ie, the first filter in the list) is selected.
@@ -37,7 +37,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /** Emitted when the user selects a filter from the list. */
     @Output()
-    filterClick: EventEmitter<ProcessInstanceFilterRepresentation> = new EventEmitter<ProcessInstanceFilterRepresentation>();
+    filterClick: EventEmitter<UserProcessInstanceFilterRepresentation> = new EventEmitter<UserProcessInstanceFilterRepresentation>();
 
     /** Emitted when the list of filters has been successfully loaded from the server. */
     @Output()
@@ -59,6 +59,9 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     @Input()
     showIcon: boolean = true;
 
+    @Output()
+    filterSelected: EventEmitter<ProcessInstanceFilterRepresentation> = new EventEmitter<ProcessInstanceFilterRepresentation>();
+
     filter$: Observable<ProcessInstanceFilterRepresentation>;
 
     currentFilter: ProcessInstanceFilterRepresentation;
@@ -68,8 +71,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     constructor(private processFilterService: ProcessFilterService,
                 private appsProcessService: AppsProcessService) {
     }
-
-    ngOnInit() {}
 
     ngOnChanges(changes: SimpleChanges) {
         const appId = changes['appId'];
@@ -151,6 +152,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                     filterParam.id === processFilter.id ||
                     filterParam.index === index) {
                     this.currentFilter = processFilter;
+                    this.filterSelected.emit(processFilter);
                 }
             });
         }
@@ -172,6 +174,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     public selectDefaultTaskFilter() {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
+            this.filterSelected.emit(this.filters[0]);
         }
     }
 
