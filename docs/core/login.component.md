@@ -13,12 +13,12 @@ Authenticates to Alfresco Content Services and or Alfresco Process Services.
 ## Contents
 
 -   [Basic usage](#basic-usage)
+    -   [Transclusions](#transclusions)
 -   [Class members](#class-members)
     -   [Properties](#properties)
     -   [Events](#events)
 -   [Details](#details)
     -   [Handling events](#handling-events)
-    -   [Changing content](#changing-content)
     -   [Custom logo and background](#custom-logo-and-background)
     -   [Customizing validation rules](#customizing-validation-rules)
     -   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
@@ -44,6 +44,7 @@ You can replace the content of the header and footer of the [Login component](..
     <login-footer><ng-template>My custom HTML for the footer</ng-template></login-footer>
 </adf-login>`
 ```
+
 Header:
 
 ![Login with custom header](../docassets/images/custom-header.png)

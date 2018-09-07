@@ -8,6 +8,17 @@ Last reviewed: 2018-08-07
 
 Adds a drag and drop area to upload files to ACS.
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+    -   [Transclusions](#transclusions)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Intercepting uploads](#intercepting-uploads)
+    -   [Example](#example)
+
 ## Basic Usage
 
 ```html

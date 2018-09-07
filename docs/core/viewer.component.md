@@ -13,6 +13,7 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 ## Contents
 
 -   [Basic usage](#basic-usage)
+    -   [Transclusions](#transclusions)
 -   [Class members](#class-members)
     -   [Properties](#properties)
     -   [Events](#events)
@@ -23,13 +24,8 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
     -   [Supported file formats](#supported-file-formats)
     -   [Content Renditions](#content-renditions)
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
-    -   [Custom toolbar](#custom-toolbar)
-    -   [Custom toolbar buttons](#custom-toolbar-buttons)
-    -   [Custom sidebar](#custom-sidebar)
-    -   [Custom thumbnails](#custom-thumbnails)
-    -   [Custom "Open With" menu](#custom-open-with-menu)
-    -   [Custom "More actions" menu](#custom-more-actions-menu)
     -   [Extending the Viewer](#extending-the-viewer)
+    -   [Custom layout](#custom-layout)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -68,7 +64,7 @@ URL with `urlFile`.
 
 ### [Transclusions](../user-guide/transclusion.md)
 
-The Viewer component lets you transclude content for the toolbar (and toolbar buttons),
+The [Viewer component](../core/viewer.component.md) lets you transclude content for the toolbar (and toolbar buttons),
 the sidebar, thumbnails, and the "Open with" and "More actions" menus.
 See the [Custom layout](#custom-layout) section for full details of all available tranclusions.
 
@@ -314,7 +310,7 @@ You can define multiple `adf-viewer-extension` templates if required:
 
 ### Custom layout
 
-The Viewer component lets you transclude custom content in several different places as
+The [Viewer component](../core/viewer.component.md) lets you transclude custom content in several different places as
 explained in the sections below.
 
 #### Custom toolbar
@@ -372,7 +368,6 @@ transclusion, which will display all content placed inside the `<adf-viewer-side
     </adf-viewer-sidebar>
 </adf-viewer>
 ```
-
 
 The second way to customize the sidebar is to use template injection but note that this only works
 when using the viewer with `fileNodeId`.

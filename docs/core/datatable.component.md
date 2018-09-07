@@ -16,6 +16,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 
 -   [Basic usage](#basic-usage)
     -   [Setting the rows and column schema](#setting-the-rows-and-column-schema)
+    -   [Transclusions](#transclusions)
 -   [Class members](#class-members)
     -   [Properties](#properties)
     -   [Events](#events)
@@ -24,8 +25,6 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
     -   [Customizing columns](#customizing-columns)
     -   [DataTable DOM Events](#datatable-dom-events)
     -   [Card view](#card-view)
-    -   [Custom Empty content template](#custom-empty-content-template)
-    -   [Loading content template](#loading-content-template)
     -   [Using events](#using-events)
 -   [See also](#see-also)
 

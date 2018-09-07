@@ -13,10 +13,12 @@
 <% child.decorators.forEach(dec => { -%>
       - name: <%= dec.name %>
         arguments:
+<%_if (typeof dec.arguments !== "undefined") { -%>
 <% Object.keys(dec.arguments).forEach(argName => { -%>
           - id: <%= argName %>
             value: <%- dec.arguments[argName] %>
 <% }) %>
+<% } -%>
 <%_ }) -%>
 <% } -%>
     syntax:

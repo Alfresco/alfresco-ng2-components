@@ -36,7 +36,6 @@ A default "no content" template is displayed if you don't supply one to override
 
 ![default-no-content-template-sample](../docassets/images/default-no-content-template.png)
 
-
 ## Class members
 
 ### Properties
@@ -104,4 +103,3 @@ export class MyCustomTaskAttachmentComponent {
 ```
 
 [Upload Drag Area Component](../content-services/upload-drag-area.component.md)
-

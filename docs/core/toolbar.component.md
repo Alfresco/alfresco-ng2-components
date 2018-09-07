@@ -13,12 +13,10 @@ Simple container for headers, titles, actions and breadcrumbs.
 ## Contents
 
 -   [Basic Usage](#basic-usage)
+    -   [Transclusions](#transclusions)
 -   [Class members](#class-members)
     -   [Properties](#properties)
 -   [Details](#details)
-    -   [Custom title](#custom-title)
-    -   [Divider](#divider)
-    -   [Spacer](#spacer)
     -   [Dropdown menu](#dropdown-menu)
     -   [Custom color](#custom-color)
 -   [See also](#see-also)

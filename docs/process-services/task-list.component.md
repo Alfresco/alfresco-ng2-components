@@ -11,6 +11,7 @@ Renders a list containing all the tasks matched by the parameters specified.
 ## Contents
 
 -   [Basic Usage](#basic-usage)
+    -   [Transclusions](#transclusions)
 -   [Class members](#class-members)
     -   [Properties](#properties)
     -   [Events](#events)
@@ -20,7 +21,6 @@ Renders a list containing all the tasks matched by the parameters specified.
     -   [Pagination strategy](#pagination-strategy)
     -   [DataTableAdapter example](#datatableadapter-example)
     -   [DataColumn Features](#datacolumn-features)
-    -   [Show custom template when tasklist is empty](#show-custom-template-when-tasklist-is-empty)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -60,13 +60,10 @@ when the task list is empty:
 | multiselect | `boolean` | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | name | `string` |  | Name of the tasklist. |
 | page | `number` | 0 | The page number of the tasks to fetch. |
-| start | `number` | 0 | Another approach to specify which page you want load.  |
 | processDefinitionId | `string` |  | The Definition Id of the process. |
 | processDefinitionKey | `string` |  | (**Deprecated:** 2.4.0) The Definition Key of the process. |
 | processInstanceId | `string` |  | The Instance Id of the process. |
-| taskId | `string` |  | The taskId you want to be fetched. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
-| includeProcessInstance | `boolean` | false | Include the process instance info |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | size | `number` |  | The number of tasks to fetch. Default value: 25. |
 | sort | `string` |  | Define the sort order of the tasks. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
