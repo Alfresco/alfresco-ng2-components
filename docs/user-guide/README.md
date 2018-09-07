@@ -9,6 +9,7 @@ on an item below to see the corresponding guide page.
 -   [Form Extensibility and Customisation](extensibility.md)
 -   [Internationalization in ADF](internationalization.md)
 -   [Theming](theming.md)
+-   [Transclusion](transclusion.md)
 -   [Typography](typography.md)
 -   [Walkthrough - adding indicators to highlight information about a node](metadata-indicators.md)
 
