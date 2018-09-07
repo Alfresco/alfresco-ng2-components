@@ -61,14 +61,14 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     }
 
     getFromValidationMessage(): string {
-        return this.from.hasError('matDatepickerParse') ? 'SEARCH.FILTER.VALIDATION.INVALID-DATE' :
+        return this.from.hasError('invalidOnChange') || this.hasParseError(this.from) ? 'SEARCH.FILTER.VALIDATION.INVALID-DATE' :
             this.from.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE' :
             this.from.hasError('required') ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' :
             '';
     }
 
     getToValidationMessage(): string {
-        return this.to.hasError('matDatepickerParse') ? 'SEARCH.FILTER.VALIDATION.INVALID-DATE' :
+        return this.to.hasError('invalidOnChange') || this.hasParseError(this.to) ? 'SEARCH.FILTER.VALIDATION.INVALID-DATE' :
             this.to.hasError('matDatepickerMin') ? 'SEARCH.FILTER.VALIDATION.NO-DAYS' :
             this.to.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE' :
             this.to.hasError('required') ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' :
@@ -125,21 +125,27 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     onChangedHandler(event: any, formControl: FormControl) {
         const inputValue = event.srcElement.value;
 
-        if (inputValue) {
-            const formatDate = this.dateAdapter.parse(inputValue, this.datePickerDateFormat);
-            if (formatDate && formatDate.isValid()) {
-                formControl.setValue(formatDate);
-            } else {
-                formControl.setErrors({
-                    'matDatepickerParse': true
-                });
-            }
+        const formatDate = this.dateAdapter.parse(inputValue, this.datePickerDateFormat);
+        if (formatDate && formatDate.isValid()) {
+            formControl.setValue(formatDate);
+        } else if (formatDate) {
+            formControl.setErrors({
+                'invalidOnChange': true
+            });
+        } else {
+            formControl.setErrors({
+                'required': true
+            });
         }
     }
 
     setLocale(locale) {
         this.dateAdapter.setLocale(locale);
         moment.locale(locale);
+    }
+
+    hasParseError(formControl) {
+        return formControl.hasError('matDatepickerParse') && formControl.getError('matDatepickerParse').text;
     }
 
     forcePlaceholder(event: any) {
