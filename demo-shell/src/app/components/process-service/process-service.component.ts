@@ -297,7 +297,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.currentTaskId = this.taskList.getCurrentId();
     }
 
-    onProcessFilterClick(event: UserProcessInstanceFilterRepresentation): void {
+    onProcessFilterChange(event: UserProcessInstanceFilterRepresentation): void {
         this.processFilter = event;
         this.resetProcessPaginationPage();
         this.relocateLocationToProcess();
