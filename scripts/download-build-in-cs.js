@@ -4,7 +4,7 @@ var http = require('http');
 
 var fs = require('fs');
 var path = require('path');
-var archiver = require('archiver');
+
 var AdmZip = require('adm-zip');
 
 replaceHrefInIndex = (folder) => {
