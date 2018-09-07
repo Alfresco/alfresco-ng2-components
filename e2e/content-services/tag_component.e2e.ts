@@ -98,7 +98,7 @@ describe('Tag component', () => {
         expect(tagPage.getErrorMessage()).toEqual('Tag already exists');
     });
 
-    it('[C260378] Multiple tags', () => {
+    xit('[C260378] Multiple tags', () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.checkTagListIsOrderedAscending();
         tagPage.checkTagListByNodeIdIsOrderedAscending();

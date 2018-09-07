@@ -31,6 +31,7 @@ describe('Notifications Component', () => {
     let notificationPage = new NotificationPage();
 
     let acsUser = new AcsUserModel();
+    let message = {default: 'Message'};
 
     beforeAll(async (done) => {
 
@@ -45,6 +46,10 @@ describe('Notifications Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
+        done();
+    });
+
+    beforeEach(async(done) => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         notificationPage.goToNotificationsPage();
@@ -59,6 +64,7 @@ describe('Notifications Component', () => {
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', () => {
+        notificationPage.clearMessage(message.default);
         notificationPage.enterMessageField('');
         notificationPage.clickDefaultNotificationButton();
         notificationPage.checkNotificationSnackBarIsNotDisplayed();
@@ -68,10 +74,10 @@ describe('Notifications Component', () => {
         notificationPage.enterMessageField('Notification test');
         notificationPage.clickActionToggle();
         notificationPage.clickDefaultNotificationButton();
-        notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
         notificationPage.clickActionButton();
         notificationPage.checkActionEvent();
-        notificationPage.clickActionToggle();
+        notificationPage.clickDefaultNotificationButton();
+        notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
     });
 
     it('[C279981] Should show notification with action when the message is not empty and custom configuration button is clicked', () => {
@@ -93,10 +99,10 @@ describe('Notifications Component', () => {
         notificationPage.enterMessageField('Notification test');
         notificationPage.clickActionToggle();
         notificationPage.clickCustomNotificationButton();
-        notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
         notificationPage.clickActionButton();
         notificationPage.checkActionEvent();
-        notificationPage.clickActionToggle();
+        notificationPage.clickDefaultNotificationButton();
+        notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
     });
 
     it('[C280001] Should meet configuration when a custom notification is set', () => {

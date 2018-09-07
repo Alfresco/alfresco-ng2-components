@@ -102,6 +102,7 @@ describe('Upload - User permission', () => {
             dragAndDrop.dropFolder(dragAndDropArea, folder.location);
 
             contentServicesPage.checkContentIsDisplayed(emptyFile.name);
+
             contentServicesPage.checkContentIsDisplayed(folder.name);
 
             contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');

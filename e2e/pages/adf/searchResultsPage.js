@@ -70,6 +70,11 @@ var SearchResultsPage = function () {
         contentList.deleteContent(content);
      };
 
+    this.checkDeleteIsDisabled = function(content) {
+        contentList.checkDeleteIsDisabled(content);
+        this.closeActionButton();
+    };
+
     this.copyContent = function(content) { 
         contentList.copyContent(content);
      };
@@ -95,16 +100,26 @@ var SearchResultsPage = function () {
      */
     this.sortBy = function (sortOrder, option) {
 
-        Util.waitUntilElementIsVisible(sortingArrow);
-        sortingArrow.click();
+        let selectedSortingOption = element(by.css("adf-sorting-picker div[class='mat-select-value'] span span"));
 
-        element.all(sortDropdownLocator).each(function(element) {
-            element.getText().then(function(text) {
-                if (text === option) {
-                    element.click();
-                }
-            });
-         });
+        Util.waitUntilElementIsVisible(selectedSortingOption);
+
+        selectedSortingOption.getText().then((selectedOption) => {
+
+            if(selectedOption !== option)
+            {
+                Util.waitUntilElementIsVisible(sortingArrow);
+                sortingArrow.click();
+
+                element.all(sortDropdownLocator).each(function(element) {
+                    element.getText().then(function(text) {
+                        if (text === option) {
+                            element.click();
+                        }
+                    });
+                });
+            }
+        });
 
         this.sortByOrder(sortOrder);
     };
