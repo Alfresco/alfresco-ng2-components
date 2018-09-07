@@ -11,7 +11,7 @@ var exec = require('child_process').exec;
 
 var alfrescoJsApi;
 
-downloadZip = async (url, pacakge) => {
+downloadZip = async (url, outputFolder, pacakge) => {
     console.log(`Download ${pacakge}`)
     var file = fs.createWriteStream(`${pacakge}.zip`);
     return await http.get(`http://${url}`, (response) => {
@@ -19,12 +19,13 @@ downloadZip = async (url, pacakge) => {
         file.on('finish', async () => {
             setTimeout(() => {
                 console.log(`Unzip  ${pacakge}` + path.join(__dirname, `../${pacakge}.zip`));
+
                 fs.createReadStream(path.join(__dirname, `../${pacakge}.zip`))
-                    .pipe(unzip.Extract({path: path.join(__dirname, '../node_modules/@alfresco/')}))
+                    .pipe(unzip.Extract({path: path.join(__dirname, '../', outputFolder, `@alfresco/`)}))
                     .on('finish', () => {
                         setTimeout(() => {
-                            let oldFolder = path.join(__dirname, `../node_modules/@alfresco/${pacakge}`)
-                            let newFolder = path.join(__dirname, `../node_modules/@alfresco/adf-${pacakge}`)
+                            let oldFolder = path.join(__dirname, '../', outputFolder, `@alfresco/${pacakge}`)
+                            let newFolder = path.join(__dirname, '../', outputFolder, `@alfresco/adf-${pacakge}`)
 
                             fs.rename(oldFolder, newFolder, (err) => {
                                 console.log('renamed complete');
@@ -57,6 +58,7 @@ async function main() {
         .version('0.1.0')
         .option('-p, --password [type]', 'password')
         .option('-u, --username  [type]', 'username')
+        .option('-o, --output  [type]', 'oputput folder')
         .option('--base-href  [type]', '')
         .option('-f, --folder [type]', 'Name of the folder')
         .option('-host, --host [type]', 'URL of the CS')
@@ -67,19 +69,23 @@ async function main() {
         hostEcm: program.host
     });
 
+    if (!program.output) {
+        program.output = path.join(__dirname, '../node_modules/@alfresco/')
+    }
+
     alfrescoJsApi.login(program.username, program.password);
 
     let coreUrl = await getUrl(program.folder, 'core');
-    downloadZip(coreUrl, 'core');
+    downloadZip(coreUrl, program.output, 'core');
 
     let contentUrl = await getUrl(program.folder, 'content-services');
-    downloadZip(contentUrl, 'content-services');
+    downloadZip(contentUrl, program.output, 'content-services');
 
     let processUrl = await getUrl(program.folder, 'process-services');
-    downloadZip(processUrl, 'process-services');
+    downloadZip(processUrl, program.output, 'process-services');
 
     let insightUrl = await getUrl(program.folder, 'insights');
-    downloadZip(insightUrl, 'insights');
+    downloadZip(insightUrl, program.output, 'insights');
 }
 
 main();

@@ -1,9 +1,23 @@
 #!/usr/bin/env bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-#echo "====== Build ADF ===== "
+show_help() {
+    echo "Usage: test-e2e.bc.sh"
+    echo ""
+    echo "-b or --build build number"
+}
 
-npm run build-lib || exit 1
+build_number(){
+    BUILD_NUMBER=$1
+}
+
+while [[ $1 == -* ]]; do
+    case "$1" in
+      -h|--help|-\?) show_help; exit 0;;
+      -b|--build)  build_number $2; shift 2;;
+    esac
+done
+
 
 cd $DIR/../integration/base_ver_2_app
 
@@ -35,18 +49,7 @@ npm install --save alfresco-js-api@alpha
 echo "====== COPY new build in node_modules ===== "
 
 rm -rf $DIR/../integration/base_ver_2_app/node_modules/@alfresco
-
-mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/ && \
-cp -R  $DIR/../lib/dist/core/*  $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/
-
-mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-content-services/ && \
-cp -R $DIR/../lib/dist/content-services/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-content-services/
-
-mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-process-services/ && \
-cp -R $DIR/../lib/dist/process-services/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-process-services/
-
-mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-insights/ && \
-cp -R $DIR/../lib/dist/insights/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-insights/
+node $DIR/download-build-lib-in-cs.js -u admin  -p admin --host adfdev.envalfresco.com -f ${BUILD_NUMBER} -o integration/base_ver_2_app/node_modules
 
 rm -rf $DIR/../node_modules/@angular
 rm -rf $DIR/../node_modules/@alfresco
