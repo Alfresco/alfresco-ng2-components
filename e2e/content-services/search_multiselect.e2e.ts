@@ -22,6 +22,7 @@ import Util = require('../util/util');
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import { UploadActions } from '../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 import LoginPage = require('../pages/adf/loginPage');
 import SearchDialog = require('../pages/adf/dialog/searchDialog');
@@ -72,16 +73,14 @@ describe('Search Component - Multi-Select Facet', () => {
             });
 
             jpgFile = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, '-my-');
-            await browser.driver.sleep(5000);
 
             jpgFileSite = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
-            await browser.driver.sleep(5000);
 
             txtFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, '-my-');
-            await browser.driver.sleep(5000);
 
             txtFileSite = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, site.entry.guid);
-            await browser.driver.sleep(5000);
+
+            await browser.driver.sleep(15000);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -159,13 +158,11 @@ describe('Search Component - Multi-Select Facet', () => {
 
             txtFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await browser.driver.sleep(10000);
-
             await this.alfrescoJsApi.login(userUploadingImg.id, userUploadingImg.password);
 
             jpgFile = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
-            await browser.driver.sleep(10000);
+            await browser.driver.sleep(15000);
 
             loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
 
@@ -229,7 +226,7 @@ describe('Search Component - Multi-Select Facet', () => {
             });
 
             txtFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, '-my-');
-            await browser.driver.sleep(10000);
+            await browser.driver.sleep(15000);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
