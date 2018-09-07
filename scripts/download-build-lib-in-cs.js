@@ -5,9 +5,7 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var archiver = require('archiver');
-var unzip = require('unzip-stream');
-
-var exec = require('child_process').exec;
+var AdmZip = require('adm-zip');
 
 var alfrescoJsApi;
 
@@ -18,21 +16,24 @@ downloadZip = async (url, outputFolder, pacakge) => {
         response.pipe(file);
         file.on('finish', async () => {
             setTimeout(() => {
+
+                var zip = new AdmZip(path.join(__dirname, `../${pacakge}.zip`));
                 console.log(`Unzip  ${pacakge}` + path.join(__dirname, `../${pacakge}.zip`));
 
-                fs.createReadStream(path.join(__dirname, `../${pacakge}.zip`))
-                    .pipe(unzip.Extract({path: path.join(__dirname, '../', outputFolder, `@alfresco/`)}))
-                    .on('finish', () => {
-                        setTimeout(() => {
-                            let oldFolder = path.join(__dirname, '../', outputFolder, `@alfresco/${pacakge}`)
-                            let newFolder = path.join(__dirname, '../', outputFolder, `@alfresco/adf-${pacakge}`)
+                zip.extractAllToAsync(path.join(__dirname, '../', outputFolder, `@alfresco/`), true, () => {
 
-                            fs.rename(oldFolder, newFolder, (err) => {
-                                console.log('renamed complete');
-                            });
+                    setTimeout(() => {
+                        let oldFolder = path.join(__dirname, '../', outputFolder, `@alfresco/${pacakge}`)
+                        let newFolder = path.join(__dirname, '../', outputFolder, `@alfresco/adf-${pacakge}`)
 
-                        }, 10000);
-                    })
+                        fs.rename(oldFolder, newFolder, (err) => {
+                            console.log('renamed complete');
+                        });
+
+                    }, 10000);
+
+                });
+
             })
         });
     });
