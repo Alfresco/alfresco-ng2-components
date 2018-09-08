@@ -5,7 +5,7 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var archiver = require('archiver');
-var AdmZip = require('adm-zip');
+var unzip = require('unzip-stream');
 
 replaceHrefInIndex = (folder) => {
     fs.readFile(`demo-shell/${folder}/index.html`, 'utf8', function (err, data) {
@@ -61,19 +61,27 @@ async function main() {
         file.on('finish', async () => {
             console.log('Unzip Demo ' + path.join(__dirname, '../demo.zip'));
 
-            var zip = new AdmZip(path.join(__dirname, '../demo.zip'));
-            zip.extractAllToAsync(path.join(__dirname, '../demo-shell'), true, ()=>{
-                let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
-                let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
+            setTimeout(() => {
+                fs.createReadStream(path.join(__dirname, '../demo.zip'))
+                    .pipe(unzip.Extract({path: path.join(__dirname, '../demo-shell')}))
+                    .on('finish', () => {
 
-                fs.rename(oldFolder, newFolder, (err) => {
-                    console.log('renamed complete');
-                });
+                        setTimeout(() => {
+                            let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
+                            let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
 
-                if (program.baseHref) {
-                    replaceHrefInIndex(outputFolder);
-                }
-            });
+                            fs.rename(oldFolder, newFolder, (err) => {
+                                console.log('renamed complete');
+                            });
+
+                            if (program.baseHref) {
+                                replaceHrefInIndex(outputFolder);
+                            }
+                        }, 10000);
+
+                    })
+            }, 10000);
+
 
         });
     });

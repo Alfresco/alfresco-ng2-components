@@ -12,20 +12,21 @@ var exec = require('child_process').exec;
 var alfrescoJsApi;
 
 downloadZip = async (url, outputFolder, pacakge) => {
-    console.log(`Download ${pacakge}`)
+
+     console.log(`Download ${pacakge}`)
+     console.log(`OutputFolder ${outputFolder}`)
     var file = fs.createWriteStream(`${pacakge}.zip`);
     return await http.get(`http://${url}`, (response) => {
         response.pipe(file);
         file.on('finish', async () => {
             setTimeout(() => {
                 console.log(`Unzip  ${pacakge}` + path.join(__dirname, `../${pacakge}.zip`));
-
                 fs.createReadStream(path.join(__dirname, `../${pacakge}.zip`))
-                    .pipe(unzip.Extract({path: path.join(__dirname, '../', outputFolder, `@alfresco/`)}))
+                    .pipe(unzip.Extract({path: path.join(__dirname, `../${outputFolder}/@alfresco/`)}))
                     .on('finish', () => {
                         setTimeout(() => {
-                            let oldFolder = path.join(__dirname, '../', outputFolder, `@alfresco/${pacakge}`)
-                            let newFolder = path.join(__dirname, '../', outputFolder, `@alfresco/adf-${pacakge}`)
+                            let oldFolder = path.join(__dirname, `../${outputFolder}/@alfresco/${pacakge}`)
+                            let newFolder = path.join(__dirname, `../${outputFolder}/@alfresco/adf-${pacakge}`)
 
                             fs.rename(oldFolder, newFolder, (err) => {
                                 console.log('renamed complete');
@@ -70,7 +71,7 @@ async function main() {
     });
 
     if (!program.output) {
-        program.output = path.join(__dirname, '../node_modules/@alfresco/')
+        program.output = 'node_modules'
     }
 
     alfrescoJsApi.login(program.username, program.password);
