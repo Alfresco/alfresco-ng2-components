@@ -12,6 +12,8 @@ writeZipLib = async function (zipName, zipFolder) {
         fs.mkdirSync(zipFolder);
     }
 
+    console.log(`zip  ../lib/dist/${zipName}`);
+
     writeZip.addFile(path.join(__dirname, `../lib/dist/${zipName}`), Buffer.alloc(0));
     return writeZip.writeZip(`${zipName}.zip`);
 };
@@ -27,12 +29,16 @@ async function main() {
         .option('-host, --host [type]', 'URL of the CS')
         .parse(process.argv);
 
+    console.log('Start');
+
     let alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: program.host
     });
 
     let zipFolder = path.join(__dirname, '/../lib/dist/zip/');
+
+    console.log(`zipFolder ${zipFolder}`);
 
     await this.writeZipLib('core', zipFolder);
     await this.writeZipLib('content-services', zipFolder);
