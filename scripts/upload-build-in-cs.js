@@ -3,8 +3,7 @@ var AlfrescoApi = require('alfresco-js-api-node');
 
 var fs = require('fs');
 var path = require('path');
-var AdmZip = require('adm-zip');
-var writeZip = new AdmZip();
+var archiver = require('archiver');
 
 writeZipLib = async function (zipFolder) {
 
@@ -12,8 +11,14 @@ writeZipLib = async function (zipFolder) {
         fs.mkdirSync(zipFolder);
     }
 
-    writeZip.addLocalFolder(path.join(__dirname, `../demo-shell/dist/`), 'dist');
-    return writeZip.writeZip('demo-shell/zip/demo.zip');
+    // create a file to stream archive data to.
+    let output = fs.createWriteStream(path.join(zipFolder, `demo.zip`));
+    let archive = archiver('zip');
+
+    archive.pipe(output);
+    archive.directory(path.join(__dirname, `../demo-shell/dist/`), `demo.zip`);
+
+    return archive.finalize();
 };
 
 async function main() {
@@ -33,15 +38,11 @@ async function main() {
 
     let zipFolder = path.join(__dirname, '../demo-shell/zip/');
 
-    console.log('Write demo zip');
-
     await this.writeZipLib(zipFolder);
 
     let files = fs.readdirSync(path.join(__dirname, '../demo-shell/zip'));
 
     if (files && files.length > 0) {
-
-        console.log('Upload demo zip');
 
         alfrescoJsApi.login(program.username, program.password);
         let folder;

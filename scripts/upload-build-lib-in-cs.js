@@ -3,8 +3,7 @@ var AlfrescoApi = require('alfresco-js-api-node');
 
 var fs = require('fs');
 var path = require('path');
-var AdmZip = require('adm-zip');
-var writeZip = new AdmZip();
+var archiver = require('archiver');
 
 writeZipLib = async function (zipName, zipFolder) {
 
@@ -12,10 +11,14 @@ writeZipLib = async function (zipName, zipFolder) {
         fs.mkdirSync(zipFolder);
     }
 
-    console.log(`zip  ../lib/dist/${zipName}`);
+    // create a file to stream archive data to.
+    let output = fs.createWriteStream(path.join(zipFolder, `${zipName}.zip`));
+    let archive = archiver('zip');
 
-    writeZip.addFile(path.join(__dirname, `../lib/dist/${zipName}`), Buffer.alloc(0));
-    return writeZip.writeZip(path.join(__dirname, `../lib/dist/` ,`${zipName}.zip`));
+    archive.pipe(output);
+    archive.directory(path.join(__dirname, `../lib/dist/${zipName}`), zipName);
+
+    return archive.finalize();
 };
 
 async function main() {
@@ -29,8 +32,6 @@ async function main() {
         .option('-host, --host [type]', 'URL of the CS')
         .parse(process.argv);
 
-    console.log('Start');
-
     let alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: program.host
@@ -38,16 +39,12 @@ async function main() {
 
     let zipFolder = path.join(__dirname, '/../lib/dist/zip/');
 
-    console.log(`zipFolder ${zipFolder}`);
-
     await this.writeZipLib('core', zipFolder);
     await this.writeZipLib('content-services', zipFolder);
     await this.writeZipLib('process-services', zipFolder);
     await this.writeZipLib('insights', zipFolder);
 
     let files = fs.readdirSync(path.join(__dirname, '../lib/dist/zip'));
-
-    console.log(`files ${files}`);
 
     if (files && files.length > 0) {
 
@@ -57,8 +54,6 @@ async function main() {
         if (!program.folder) {
             program.folder = Date.now();
         }
-
-        console.log(`addNode Builds/${program.folder}`);
 
         try {
             folder = await alfrescoJsApi.nodes.addNode('-my-', {
