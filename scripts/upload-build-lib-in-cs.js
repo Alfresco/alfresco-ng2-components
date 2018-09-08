@@ -47,6 +47,8 @@ async function main() {
 
     let files = fs.readdirSync(path.join(__dirname, '../lib/dist/zip'));
 
+    console.log(`files ${files}`);
+
     if (files && files.length > 0) {
 
         alfrescoJsApi.login(program.username, program.password);
@@ -55,6 +57,8 @@ async function main() {
         if (!program.folder) {
             program.folder = Date.now();
         }
+
+        console.log(`addNode Builds/${program.folder}`);
 
         try {
             folder = await alfrescoJsApi.nodes.addNode('-my-', {
