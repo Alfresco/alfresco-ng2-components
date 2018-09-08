@@ -15,7 +15,7 @@ writeZipLib = async function (zipName, zipFolder) {
     console.log(`zip  ../lib/dist/${zipName}`);
 
     writeZip.addFile(path.join(__dirname, `../lib/dist/${zipName}`), Buffer.alloc(0));
-    return writeZip.writeZip(`${zipName}.zip`);
+    return writeZip.writeZip(path.join(__dirname, `../lib/dist/` ,`${zipName}.zip`));
 };
 
 async function main() {
