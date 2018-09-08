@@ -47,7 +47,7 @@ jobs:
                             (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
                     fi
         - stage: Packaging test
-          script: npm run build-lib; node ./scripts/upload-build-lib-in-cs.js -u $E2E_USERNAME  -p $E2E_PASSWORD --host $E2E_HOST -f $TRAVIS_BUILD_NUMBER
+          script: ./scripts/packaging-test.sh
         - stage: Update children projects dependency #Update generator-ng2-alfresco-app
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
@@ -120,5 +120,3 @@ after_success:
 cache:
   directories:
   - node_modules
-  - lib/dist
-  - demo-shell/dist
