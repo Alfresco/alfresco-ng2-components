@@ -82,6 +82,13 @@ var ContentList = function () {
         deleteContent.click();
     };
 
+    this.checkDeleteIsDisabled = function (content) {
+        this.clickOnActionMenu(content);
+        this.waitForContentOptions();
+        let disabledDelete = element(by.css("button[data-automation-id*='DELETE'][disabled='true']"));
+        Util.waitUntilElementIsVisible(disabledDelete);
+    };
+
     this.metadataContent = function (content) {
         this.clickOnActionMenu(content);
         this.waitForContentOptions();
