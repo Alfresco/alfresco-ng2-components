@@ -65,12 +65,12 @@ export class DateEditorComponent implements OnInit {
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplyaFormat = this.DATE_FORMAT;
 
-        this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT);
+        this.value = moment(this.table.getCellValue(this.row, this.column), 'YYYY-MM-DD');
     }
 
     onDateChanged(newDateValue) {
-        if (newDateValue) {
-            let momentDate = moment(newDateValue, this.DATE_FORMAT, true);
+        if (newDateValue && newDateValue.value) {
+            let momentDate = moment(newDateValue.value, this.DATE_FORMAT, true);
 
             if (!momentDate.isValid()) {
                 this.row.value[this.column.id] = '';
