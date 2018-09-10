@@ -112,6 +112,7 @@ URL with `urlFile`.
 | print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
 | share | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Share' button. |
 | showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
+| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the shared link used is not valid. |
 
 ## Keyboard shortcuts
 

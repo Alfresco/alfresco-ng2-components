@@ -209,6 +209,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     navigateNext = new EventEmitter();
 
+    @Output()
+    invalidSharedLink = new EventEmitter();
+
     viewerType = 'unknown';
     isLoading = false;
     node: MinimalNodeEntryEntity;
@@ -307,6 +310,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     () => {
                         this.isLoading = false;
                         this.logService.error('This sharedLink does not exist');
+                        this.invalidSharedLink.next();
                     });
             }
         }

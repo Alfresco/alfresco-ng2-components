@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-shared-link-view',
@@ -30,12 +30,16 @@ export class SharedLinkViewComponent implements OnInit {
 
     sharedLinkId: string = null;
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.sharedLinkId = params.id;
         });
+    }
+
+    redirectTo404() {
+        this.router.navigate(['error/404']);
     }
 
 }
