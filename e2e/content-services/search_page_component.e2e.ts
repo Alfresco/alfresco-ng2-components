@@ -95,6 +95,8 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, adminFileNames, newFolderModelUploaded.entry.id);
 
+        browser.driver.sleep(12000);
+
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.goToDocumentList();
@@ -195,7 +197,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    xit('[C272803] Sort content ascending by name.', () => {
+    it('[C272803] Sort content ascending by name.', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog
@@ -209,7 +211,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('[C272804] Sort content descending by name.', () => {
+    it('[C272804] Sort content descending by name.', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog.checkSearchBarIsNotVisible()
@@ -223,7 +225,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('[C272805] Sort content ascending by author.', () => {
+    it('[C272805] Sort content ascending by author.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -233,7 +235,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('[C272806] Sort content descending by author.', () => {
+    it('[C272806] Sort content descending by author.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -243,7 +245,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('[C272807] Sort content ascending by created date.', () => {
+    it('[C272807] Sort content ascending by created date.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -253,7 +255,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('[C260260] Sort content descending by created date.', () => {
+    it('[C260260] Sort content descending by created date.', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -263,12 +265,12 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    xit('[C260262] Try to delete a file without rights from the Search Results Page', () => {
+    it('[C260262] Try to delete a file without rights from the Search Results Page', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.no_permission.noPermFile);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
-        searchResultPage.deleteContent(search.no_permission.noPermFile);
+        searchResultPage.checkDeleteIsDisabled(search.no_permission.noPermFile);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.no_permission.noPermFile);
@@ -284,9 +286,8 @@ describe('Search component - Search Page', () => {
         searchDialog.enterTextAndPressEnter(search.no_permission.noPermFolder);
 
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
-        searchResultPage.deleteContent(search.no_permission.noPermFolder);
+        searchResultPage.checkDeleteIsDisabled(search.no_permission.noPermFolder);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
-        searchResultPage.closeActionButton();
 
         searchDialog.checkSearchBarIsNotVisible()
             .checkSearchIconIsVisible()
