@@ -35,6 +35,11 @@ export class MyComponent implements OnInit {
 }
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+Any content can be trancluded inside this component, since its purpose is to
+define a section in a surrounding [Accordion component](accordion.component.md).
+
 ## Class members
 
 ### Properties

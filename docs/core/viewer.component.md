@@ -13,6 +13,7 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 ## Contents
 
 -   [Basic usage](#basic-usage)
+    -   [Transclusions](#transclusions)
 -   [Class members](#class-members)
     -   [Properties](#properties)
     -   [Events](#events)
@@ -23,13 +24,8 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
     -   [Supported file formats](#supported-file-formats)
     -   [Content Renditions](#content-renditions)
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
-    -   [Custom toolbar](#custom-toolbar)
-    -   [Custom toolbar buttons](#custom-toolbar-buttons)
-    -   [Custom sidebar](#custom-sidebar)
-    -   [Custom thumbnails](#custom-thumbnails)
-    -   [Custom "Open With" menu](#custom-open-with-menu)
-    -   [Custom "More actions" menu](#custom-more-actions-menu)
     -   [Extending the Viewer](#extending-the-viewer)
+    -   [Custom layout](#custom-layout)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -65,6 +61,12 @@ Using with shared link:
 Note that if you have a URL which contains a shared link ID, you should extract the
 ID portion and use it with the `sharedLinkId` property rather than using the whole
 URL with `urlFile`.
+
+### [Transclusions](../user-guide/transclusion.md)
+
+The [Viewer component](../core/viewer.component.md) lets you transclude content for the toolbar (and toolbar buttons),
+the sidebar, thumbnails, and the "Open with" and "More actions" menus.
+See the [Custom layout](#custom-layout) section for full details of all available tranclusions.
 
 ## Class members
 
@@ -261,164 +263,6 @@ new CopyWebpackPlugin([
 
 The [Viewer component](../core/viewer.component.md) now should be able to display PDF files.
 
-### Custom toolbar
-
-You can replace the standard viewer toolbar with your own custom implementation:
-
-```html
-<adf-viewer>
-    <adf-viewer-toolbar>
-        <h1>toolbar</h1>
-    </adf-viewer-toolbar>
-</adf-viewer>
-```
-
-Everything you put inside the "adf-viewer-toolbar" tags will be rendered instead of the
-standard toolbar.
-
-### Custom toolbar buttons
-
-If you are happy with the custom toolbar's behaviour but want to add some extra buttons
-then you can do so as shown in the following example:
-
-```html
-<adf-viewer>
-    <adf-viewer-toolbar-actions>
-        <button mat-icon-button>
-            <mat-icon>alarm</mat-icon>
-        </button>
-        <button mat-icon-button>
-            <mat-icon>backup</mat-icon>
-        </button>
-        <button mat-icon-button>
-            <mat-icon>bug_report</mat-icon>
-        </button>
-    </adf-viewer-toolbar-actions>
-</adf-viewer>
-```
-
-The result should look like this:
-
-![Custom Toolbar Actions](../docassets/images/viewer-toolbar-actions.png)
-
-### Custom sidebar
-
-The [Viewer component](../core/viewer.component.md) also supports custom sidebar components and layouts.
-Set the `allowSidebar` property to `true` to enable this feature.
-
-The custom sidebar can be injected in two different ways:
-
--   using transclusion
--   using a template **(only works when using the viewer with fileNodeId)**
-
-#### Using transclusion
-
-```html
-<adf-viewer [allowSidebar]="true">
-    <adf-viewer-sidebar>
-        <h1>My info</h1>
-    </adf-viewer-sidebar>
-</adf-viewer>
-```
-
-Everything you put inside the "adf-viewer-sidebar" tags will be rendered.
-
-#### Using template injection (only works when using the viewer with fileNodeId)
-
-```html
-<ng-template let-node="node" #sidebarTemplate>
-    <adf-content-metadata-card [node]="node"></adf-content-metadata-card>
-</ng-template>
-<adf-viewer [allowSidebar]="true" [sidebarTemplate]="sidebarTemplate"></adf-viewer>
-```
-
-### Custom thumbnails
-
-The PDF viewer comes with its own default list of thumbnails but you can replace this
-by providing a custom template and binding to the context property `viewer` to access the PDFJS.PDFViewer
-instance.
-
-![PDF thumbnails](../docassets/images/pdf-thumbnails.png)
-
-#### Using template injection
-
-```javascript
-import { Component, Input } from '@angular/core';
-
-@Component({
-    selector: 'custom-thumbnails',
-    template: '<p> Custom Thumbnails Component </p>'
-})
-export class CustomThumbnailsComponent {
-    @Input() pdfViewer: any;
-
-    ...
-}
-```
-
-```html
-<ng-template #customThumbnailsTemplate let-pdfViewer="viewer">
-    <custom-thumbnails [pdfViewer]="pdfViewer"></custom-thumbnails>
-</ng-template>
-
-<adf-viewer [thumbnailsTemplate]="customThumbnailsTemplate"></adf-viewer>
-```
-
-### Custom "Open With" menu
-
-You can enable a custom "Open With" menu by providing at least one action inside the
-`adf-viewer-open-with` tag:
-
-```html
-<adf-viewer [fileNodeId]="nodeId">
-
-    <adf-viewer-open-with>
-        <button mat-menu-item>
-            <mat-icon>dialpad</mat-icon>
-            <span>Option 1</span>
-        </button>
-        <button mat-menu-item disabled>
-            <mat-icon>voicemail</mat-icon>
-            <span>Option 2</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>notifications_off</mat-icon>
-            <span>Option 3</span>
-        </button>
-    </adf-viewer-open-with>
-
-</adf-viewer>
-```
-
-![Open with](../docassets/images/viewer-open-with.png)
-
-### Custom "More actions" menu
-
-You can enable a custom "More actions" menu by providing at least one action inside the `adf-viewer-more-actions` tag:
-
-```html
-<adf-viewer [fileNodeId]="nodeId">
-
-    <adf-viewer-more-actions>
-        <button mat-menu-item>
-            <mat-icon>dialpad</mat-icon>
-            <span>Action One</span>
-        </button>
-        <button mat-menu-item disabled>
-            <mat-icon>voicemail</mat-icon>
-            <span>Action Two</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>notifications_off</mat-icon>
-            <span>Action Three</span>
-        </button>
-    </adf-viewer-more-actions>
-
-</adv-viewer>
-```
-
-![More actions](../docassets/images/viewer-more-actions.png)
-
 ### Extending the Viewer
 
 You can define your own custom handle to handle other file formats that are not yet supported by
@@ -464,6 +308,164 @@ You can define multiple `adf-viewer-extension` templates if required:
     </adf-viewer-extension>
 </adf-viewer> 
 ```
+
+### Custom layout
+
+The [Viewer component](../core/viewer.component.md) lets you transclude custom content in several different places as
+explained in the sections below.
+
+#### Custom toolbar
+
+You can replace the standard viewer toolbar with your own custom implementation:
+
+```html
+<adf-viewer>
+    <adf-viewer-toolbar>
+        <h1>toolbar</h1>
+    </adf-viewer-toolbar>
+</adf-viewer>
+```
+
+Everything you put inside the "adf-viewer-toolbar" tags will be rendered instead of the
+standard toolbar.
+
+#### Custom toolbar buttons
+
+If you are happy with the custom toolbar's behaviour but want to add some extra buttons
+then you can do so as shown in the following example:
+
+```html
+<adf-viewer>
+    <adf-viewer-toolbar-actions>
+        <button mat-icon-button>
+            <mat-icon>alarm</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon>backup</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon>bug_report</mat-icon>
+        </button>
+    </adf-viewer-toolbar-actions>
+</adf-viewer>
+```
+
+The result should look like this:
+
+![Custom Toolbar Actions](../docassets/images/viewer-toolbar-actions.png)
+
+#### Custom sidebar
+
+The [Viewer component](../core/viewer.component.md) also supports custom sidebar components and layouts.
+Set the `allowSidebar` property to `true` to enable this feature.
+
+The custom sidebar can be injected in two different ways. The first way is to use
+transclusion, which will display all content placed inside the `<adf-viewer-sidebar>` element:
+
+```html
+<adf-viewer [allowSidebar]="true">
+    <adf-viewer-sidebar>
+        <h1>My info</h1>
+    </adf-viewer-sidebar>
+</adf-viewer>
+```
+
+The second way to customize the sidebar is to use template injection but note that this only works
+when using the viewer with `fileNodeId`.
+
+```html
+<ng-template let-node="node" #sidebarTemplate>
+    <adf-content-metadata-card [node]="node"></adf-content-metadata-card>
+</ng-template>
+<adf-viewer [allowSidebar]="true" [sidebarTemplate]="sidebarTemplate"></adf-viewer>
+```
+
+#### Custom thumbnails
+
+The PDF viewer comes with its own default list of thumbnails but you can replace this
+by providing a custom template and binding to the context property `viewer` to access the PDFJS.PDFViewer
+instance.
+
+![PDF thumbnails](../docassets/images/pdf-thumbnails.png)
+
+Provide the custom template as in the following example:
+
+```javascript
+import { Component, Input } from '@angular/core';
+
+@Component({
+    selector: 'custom-thumbnails',
+    template: '<p> Custom Thumbnails Component </p>'
+})
+export class CustomThumbnailsComponent {
+    @Input() pdfViewer: any;
+
+    ...
+}
+```
+
+```html
+<ng-template #customThumbnailsTemplate let-pdfViewer="viewer">
+    <custom-thumbnails [pdfViewer]="pdfViewer"></custom-thumbnails>
+</ng-template>
+
+<adf-viewer [thumbnailsTemplate]="customThumbnailsTemplate"></adf-viewer>
+```
+
+#### Custom "Open With" menu
+
+You can enable a custom "Open With" menu by providing at least one action inside the
+`adf-viewer-open-with` tag:
+
+```html
+<adf-viewer [fileNodeId]="nodeId">
+
+    <adf-viewer-open-with>
+        <button mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Option 1</span>
+        </button>
+        <button mat-menu-item disabled>
+            <mat-icon>voicemail</mat-icon>
+            <span>Option 2</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Option 3</span>
+        </button>
+    </adf-viewer-open-with>
+
+</adf-viewer>
+```
+
+![Open with](../docassets/images/viewer-open-with.png)
+
+#### Custom "More actions" menu
+
+You can enable a custom "More actions" menu by providing at least one action inside the `adf-viewer-more-actions` tag:
+
+```html
+<adf-viewer [fileNodeId]="nodeId">
+
+    <adf-viewer-more-actions>
+        <button mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Action One</span>
+        </button>
+        <button mat-menu-item disabled>
+            <mat-icon>voicemail</mat-icon>
+            <span>Action Two</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Action Three</span>
+        </button>
+    </adf-viewer-more-actions>
+
+</adv-viewer>
+```
+
+![More actions](../docassets/images/viewer-more-actions.png)
 
 ## See also
 

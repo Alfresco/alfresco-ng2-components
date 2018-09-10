@@ -20,6 +20,21 @@ Displays a input text which shows find-as-you-type suggestions.
 </adf-search-control>
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+You can show your own custom template when no results are found for the search:
+
+```html
+<adf-search-control [highlight]="true"
+                    (optionClicked)="onItemClicked($event)"
+                    (submit)="onSearchSubmit($event)">
+    <adf-empty-search-result>
+        <!-- YOUR CUSTOM TEMPLATE HERE -->
+        <span>YOUR CUSTOM MESSAGE</span>
+    </adf-empty-search-result>
+</adf-search-control>
+```
+
 ## Class members
 
 ### Properties
@@ -53,21 +68,3 @@ Below is an example of a component that uses the search control. In this example
     (submit)="onSearchSubmit($event)">
 </adf-search-control>
 ```
-
-### Customizable template for no result
-
-You can show your own custom template when no results are found for the search:
-
-```html
-<adf-search-control [highlight]="true"
-                    (optionClicked)="onItemClicked($event)"
-                    (submit)="onSearchSubmit($event)">
-    <adf-empty-search-result>
-        <!-- YOUR CUSTOM TEMPLATE HERE -->
-        <span>YOUR CUSTOM MESSAGE</span>
-    </adf-empty-search-result>
-</adf-search-control>
-```
-
-Place the `adf-empty-search-result` tag inside the `adf-search-control` and then within it, put
-whatever content you want to show for an "empty" result.

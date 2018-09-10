@@ -33,7 +33,7 @@ for more information about installing and using the source code.
 | [Task filters component](task-filters.component.md) | Shows all available filters. | [Source](../../lib/process-services/task-list/components/task-filters.component.ts) |
 | [Task header component](task-header.component.md) | Shows all the information related to a task. | [Source](../../lib/process-services/task-list/components/task-header.component.ts) |
 | [Task list component](task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../../lib/process-services/task-list/components/task-list.component.ts) |
-| [Task standalone component](task-standalone.component.md) | This component can be used when there is no form attached to a task. | [Source](../../lib/process-services/task-list/components/task-standalone.component.ts) |
+| [Task standalone component](task-standalone.component.md) | This component can be used when the task doesn't belong to any processes. | [Source](../../lib/process-services/task-list/components/task-standalone.component.ts) |
 
 ## Directives
 

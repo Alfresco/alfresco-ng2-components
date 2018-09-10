@@ -4,6 +4,7 @@ var fs = require("fs");
 var remark = require("remark");
 //var tocGenerator = require("mdast-util-toc");
 var replaceSection = require("mdast-util-heading-range");
+var tostring = require("mdast-util-to-string");
 
 var ejs = require("ejs");
 
@@ -117,18 +118,26 @@ function makeToc(tree) {
 
     var headings = nav.headings(h => 
         (h.depth > 1) &&
-        (h.depth <= maxTocHeadingDepth) &&
-        !((h.children[0].type === "text") && (h.children[0].value === "Contents"))
+        (h.depth <= maxTocHeadingDepth) //&&
+        //!((h.children[0].type === "text") && (h.children[0].value === "Contents"))
     );
 
     var context = {headings: []};
 
     headings.forEach(heading => {
-        context.headings.push({
-            "level": heading.item.depth - 2,
-            "title": heading.textValue,
-            "anchor": "#" + heading.textValue.toLowerCase().replace(/ /g, "-").replace(/[\.,'"`$]/g ,"")
-        })
+        var linkTitle = "";
+
+        if (!((heading.item.children[0].type === "text") && (heading.item.children[0].value === "Contents"))) {
+            linkTitle = tostring(heading.item).trim();
+        }
+
+        if (linkTitle !== "") {
+            context.headings.push({
+                "level": heading.item.depth - 2,
+                "title": linkTitle,
+                "anchor": "#" + linkTitle.toLowerCase().replace(/ /g, "-").replace(/[\.,'"`$]/g ,"")
+            })
+        };
     });
 
     var templateName = path.resolve(templateFolder, "toc.ejs");

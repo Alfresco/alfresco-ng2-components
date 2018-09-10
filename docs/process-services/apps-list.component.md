@@ -18,7 +18,10 @@ Shows all available apps.
 </adf-apps>
 ```
 
-You can also show a custom template if there are no apps present:
+### [Transclusions](../user-guide/transclusion.md)
+
+You can show custom content when there are no apps available by supplying an
+`<adf-empty-custom-content>` section:
 
 ```html
 <adf-apps

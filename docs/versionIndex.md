@@ -6,11 +6,21 @@ of components organized by ADF libraries.
 
 ## Versions
 
+-   [v2.5.0](#v250)
 -   [v2.4.0](#v240)
 -   [v2.3.0](#v230)
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+
+## v2.5.0
+
+**Released:** 2018-08-14 ([Release notes](https://community.alfresco.com/docs/DOC-7993))<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.3<br/>
+
+No new components added.
 
 ## v2.4.0
 
@@ -166,6 +176,7 @@ of components organized by ADF libraries.
 -   [Dropdown breadcrumb component](content-services/dropdown-breadcrumb.component.md)
 -   [Ecm user model](core/ecm-user.model.md)
 -   [Ecm user service](core/ecm-user.service.md)
+-   [Empty list component](core/empty-list.component.md)
 -   [Favorites api service](core/favorites-api.service.md)
 -   [File draggable directive](content-services/file-draggable.directive.md)
 -   [File size pipe](core/file-size.pipe.md)
