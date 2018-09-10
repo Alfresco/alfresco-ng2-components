@@ -592,7 +592,7 @@ var ContentServicesPage = function () {
     }
 
     this.clickContentNodeSelectorResult = function(name){
-        let resultElement = element(by.css(`div[data-automation-id="content-node-selector-content-list"] div[filename="${name}"`));
+        let resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[filename="${name}"`)).first();
         Util.waitUntilElementIsVisible(resultElement);
         resultElement.click();
     }
