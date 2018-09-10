@@ -118,6 +118,7 @@ describe('Attach Form Component', () => {
         attachFormPage.checkDefaultFormTitleIsDisplayed(testNames.formTitle);
         attachFormPage.checkFormDropdownIsDisplayed();
         attachFormPage.checkCancelButtonIsDisplayed();
+        attachFormPage.checkAttachFormButtonIsDisabled();
         attachFormPage.clickAttachFormDropdown();
         attachFormPage.selectAttachFormOption(testNames.formName);
 
