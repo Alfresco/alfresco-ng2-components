@@ -35,14 +35,19 @@ export class MyComponent implements OnInit {
 }
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+Content for the accordion menu is transcluded within one or more
+[Accordion group components](accordion-group.component.md)
+
 ## Details
 
 An accordion menu contains several panels of content, only one of which is visible at any time. The
 hidden panels are collapsed down to just the title and pushed together (like the bellows of an accordion)
 while the visible panel fills the remaining space in the menu.
 
-Use one or more [Accordion Group](accordion-group.component.md) subcomponents to define the panels and set their
-properties (title, selection status, etc).
+Use one or more [Accordion Group](accordion-group.component.md) subcomponents to transclude the content
+for the panels and set their properties (title, selection status, etc).
 
 ### Example
 

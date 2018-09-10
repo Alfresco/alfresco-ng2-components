@@ -12,12 +12,14 @@ Displays buttons on a responsive menu.
 
 ## Basic Usage
 
+### [Transclusions](../user-guide/transclusion.md)
+
 Place the buttons for the menu inside this component's HTML tags.
 They must use the following structure:
 
 ```html
 <adf-buttons-action-menu>
-     <button mat-menu-item (click)="showSettings()">
+    <button mat-menu-item (click)="showSettings()">
         <mat-icon>settings</mat-icon><span>Settings</span>
     </button>
     <button mat-menu-item (click)="delete()">
@@ -26,7 +28,8 @@ They must use the following structure:
 </adf-buttons-action-menu>  
 ```
 
-Notice that the buttons have an icon and a label for the button inside a `<span>` tag.
+Note that the buttons themselves also have an icon (supplied as a `<mat-icon`)
+and a label (supplied as a `<span>`).
 They also make use of the Angular material directive `mat-menu-item`.
 
 ```html

@@ -6,7 +6,7 @@ Last reviewed: 2018-08-07
 
 # Header component 
 
-Reusable header for Alfresco applications
+Reusable header for Alfresco applications.
 
 ## Basic usage
 
@@ -17,10 +17,20 @@ Reusable header for Alfresco applications
     [redirectUrl]="'/home'"
     color="primary"
     (toggled)=toggleMenu($event)>
-    .......
-
 </adf-layout-header>
 ```
+
+### [Transclusions](../user-guide/transclusion.md)
+
+The right-hand side of the header has free-form content that you supply in the
+body of the element:
+
+```html
+<adf-layout-header>
+    <div>Optional content for right-hand side</div>
+</adf-layout-header>
+```
+
 
 ## Class members
 
@@ -44,6 +54,5 @@ Reusable header for Alfresco applications
 ## Details
 
 This component displays a customizable header that can be reused. Use the input properties to
-configure the left side (title, button) and the primary color of the header. 
-
-The right part of the header can contain other components which are transcluded in the header component. 
+configure the left side (title, button) and the primary color of the header. The right part of the
+header can contain other components which are transcluded in the header component. 

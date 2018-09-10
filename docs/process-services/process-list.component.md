@@ -11,13 +11,13 @@ Renders a list containing all the process instances matched by the parameters sp
 ## Contents
 
 -   [Basic Usage](#basic-usage)
+    -   [Transclusions](#transclusions)
 -   [Class members](#class-members)
     -   [Properties](#properties)
     -   [Events](#events)
 -   [Details](#details)
     -   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
     -   [Pagination strategy](#pagination-strategy)
-    -   [Show custom template when processList is empty](#show-custom-template-when-processlist-is-empty)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -29,6 +29,19 @@ Renders a list containing all the process instances matched by the parameters sp
     [appId]="'1'"
     [state]="'all'">
 </adf-process-instance-list>
+```
+
+### [Transclusions](../user-guide/transclusion.md)
+
+Any content inside an `<adf-empty-custom-content>` sub-component will be shown
+when the process list is empty:
+
+```html
+<adf-process-instance-list>
+    <adf-empty-custom-content>
+        Your Content
+    </adf-empty-custom-content>
+<adf-process-instance-list>
 ```
 
 ## Class members
@@ -168,18 +181,6 @@ The Process Instance List also supports pagination:
     [supportedPageSizes]="supportedPages"
     #processListPagination>
 </adf-pagination>
-```
-
-### Show custom template when processList is empty
-
-You can add your own template or message as shown in the example below:
-
-```html
-<adf-process-instance-list>
-    <adf-empty-custom-content>
-        Your Content
-    </adf-empty-custom-content>
-<adf-process-instance-list>
 ```
 
 ## See also

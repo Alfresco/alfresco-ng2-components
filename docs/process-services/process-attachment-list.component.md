@@ -36,6 +36,23 @@ export class MyCustomProcessAttachmentComponent {
 }
 ```
 
+### [Transclusions](../user-guide/transclusion.md)
+
+Any content inside the `<adf-process-attachment-list>` element will be shown when
+the list is empty:
+
+```html
+<adf-process-attachment-list ...>
+    <div><!-- Custom empty list message goes here --></div>
+</adf-process-attachment-list>
+```
+
+![custom-no-content-drag-drop-template-sample](../docassets/images/custom-no-content-drag-drop-template.png)
+
+A default template will be used if you don't supply a custom one to override it:
+
+![default-no-content-template-sample](../docassets/images/default-no-content-template.png)
+
 ## Class members
 
 ### Properties
@@ -84,11 +101,3 @@ a custom _no content template_ (using &lt;adf-empty-list>) to invite the user to
 ```
 
 <!-- {% endraw %} -->
-
-If the List is empty, the custom no-content template we passed is displayed.
-
-![custom-no-content-drag-drop-template-sample](../docassets/images/custom-no-content-drag-drop-template.png)
-
-A default template will be used if you don't supply a custom one to override it:
-
-![default-no-content-template-sample](../docassets/images/default-no-content-template.png)

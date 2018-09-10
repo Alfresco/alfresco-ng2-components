@@ -12,6 +12,15 @@ Displays a sidebar-style information panel.
 
 ## Basic usage
 
+### [Transclusions](../user-guide/transclusion.md)
+
+There are three regions where you can add your own content using `<div>` elements
+with the following names:
+
+-   info-drawer-title
+-   info-drawer-buttons
+-   info-drawer-content
+
 ```html
 <adf-info-drawer-layout>
     <div info-drawer-title>File info</div>
@@ -30,15 +39,9 @@ Displays a sidebar-style information panel.
 
 ## Details
 
-As the name suggests, this is basically just a layout with CSS styling. There are three
-regions where you can add your own content, as shown in the example:
+As the name suggests, this is basically just a layout with CSS styling.
 
--   info-drawer-title
--   info-drawer-buttons
--   info-drawer-content
-
-See the [Info drawer layout component](../core/info-drawer-layout.component.md) for an alternative approach that uses tabs to
-structure the content of the info drawer.
+See the [Info drawer layout component](../core/info-drawer-layout.component.md) for an alternative approach that uses tabs to structure the content of the info drawer.
 
 ## See also
 
