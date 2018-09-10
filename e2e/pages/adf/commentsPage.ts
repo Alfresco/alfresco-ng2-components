@@ -28,6 +28,7 @@ export class CommentsPage {
     commentTime = element.all(by.id('comment-time'));
     commentInput = element(by.id('comment-input'));
     addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
+    commentsTab = element(by.cssContainingText("div[id*='mat-tab-label']", 'Comments'));
 
     getTotalNumberOfComments() {
         Util.waitUntilElementIsVisible(this.numberOfComments);
@@ -62,5 +63,15 @@ export class CommentsPage {
         Util.waitUntilElementIsVisible(this.commentInput);
         this.commentInput.sendKeys(comment);
         return this.addCommentButton.click();
+    }
+
+    checkCommentsTabIsSelected() {
+        this.commentsTab.getAttribute('aria-selected').then((result) => {
+            expect(result).toBe('true');
+        });
+    }
+
+    checkCommentInputIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.commentInput);
     }
 }
