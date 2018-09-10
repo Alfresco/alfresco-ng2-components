@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from './datatable-cell.component';
 import {
     UserPreferencesService,
@@ -40,9 +40,15 @@ import {
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-date-cell' }
 })
-export class DateCellComponent extends DataTableCellComponent implements OnInit {
+export class DateCellComponent extends DataTableCellComponent {
     currentLocale;
-    format = 'medium';
+
+    get format(): string {
+        if (this.column) {
+            return this.column.format || 'medium';
+        }
+        return 'medium';
+    }
 
     constructor(userPreferenceService: UserPreferencesService) {
         super();
@@ -53,14 +59,6 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
                 .subscribe(locale => {
                     this.currentLocale = locale;
                 });
-        }
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-
-        if (this.column) {
-            this.format = this.column.format || 'medium';
         }
     }
 }
