@@ -31,6 +31,9 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     static STEP_OVER = 600;
 
+    /** The side that the drawer is attached to 'start' | 'end' page */
+    @Input() position = 'start';
+
     @Input() sidenavMin: number;
     @Input() sidenavMax: number;
     @Input() stepOver: number;

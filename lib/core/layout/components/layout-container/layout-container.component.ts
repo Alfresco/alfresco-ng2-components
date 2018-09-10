@@ -24,7 +24,7 @@ import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
     templateUrl: './layout-container.component.html',
     styleUrls: ['./layout-container.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations: [ sidenavAnimation, contentAnimation ]
+    animations: [sidenavAnimation, contentAnimation]
 })
 export class LayoutContainerComponent implements OnInit, OnDestroy {
     @Input() sidenavMin: number;
@@ -35,6 +35,10 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
 
     @Input() hideSidenav = false;
     @Input() expandedSidenav = true;
+
+    /** The side that the drawer is attached to 'start' | 'end' page*/
+    @Input() position = 'start';
+
 
     @ViewChild(MatSidenav) sidenav: MatSidenav;
 
@@ -51,7 +55,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.SIDENAV_STATES.MOBILE = { value: 'expanded', params: { width: this.sidenavMax } };
         this.SIDENAV_STATES.EXPANDED = { value: 'expanded', params: { width: this.sidenavMax } };
-        this.SIDENAV_STATES.COMPACT = { value: 'compact', params: {width: this.sidenavMin } };
+        this.SIDENAV_STATES.COMPACT = { value: 'compact', params: { width: this.sidenavMin } };
 
         this.CONTENT_STATES.MOBILE = { value: 'expanded', params: { marginLeft: 0 } };
         this.CONTENT_STATES.EXPANDED = { value: 'expanded', params: { marginLeft: this.sidenavMin } };

@@ -32,6 +32,9 @@ export class HeaderLayoutComponent implements OnInit {
     @Input() showSidenavToggle: boolean = true;
     @Output() clicked = new EventEmitter<any>();
 
+    /** The side that the drawer is attached to 'start' | 'end' page*/
+    @Input() position = 'start';
+
     toggleMenu() {
         this.clicked.emit(true);
     }
