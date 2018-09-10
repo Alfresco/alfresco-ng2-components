@@ -16,14 +16,11 @@
  */
 
 import LoginPage = require('../pages/adf/loginPage');
-
 import AcsUserModel = require('../models/ACS/acsUserModel');
-
 import TestConfig = require('../test.config');
-
 import AlfrescoApi = require('alfresco-js-api-node');
-
 import NotificationPage = require('../pages/adf/notificationPage');
+import { browser } from 'protractor';
 
 describe('Notifications Component', () => {
 
@@ -45,6 +42,10 @@ describe('Notifications Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
+        done();
+    });
+
+    beforeEach(async(done) => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         notificationPage.goToNotificationsPage();
@@ -59,7 +60,7 @@ describe('Notifications Component', () => {
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', () => {
-        notificationPage.enterMessageField('');
+        notificationPage.clearMessage();
         notificationPage.clickDefaultNotificationButton();
         notificationPage.checkNotificationSnackBarIsNotDisplayed();
     });
