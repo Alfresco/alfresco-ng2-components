@@ -80,7 +80,7 @@ jobs:
         - stage: Test Update version 2.0.0
           if: branch = development
           env: STAGE=test-BC
-          script: ./scripts/test-e2e-bc.sh
+          script: ./scripts/test-e2e-bc.sh -b $TRAVIS_BUILD_NUMBER
         - stage: Test Update version 2.0.0
           env: STAGE=test-export
           script: npm run test-export
