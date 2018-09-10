@@ -26,6 +26,10 @@
 
     .adf {
 
+        &-dynamic-table-scrolling {
+            overflow: auto;
+        }
+
         &-dynamic-table {
             width: 100%;
             position: relative;
