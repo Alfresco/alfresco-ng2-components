@@ -80,12 +80,16 @@ describe('Document List Component - Actions', () => {
             pdfUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
             testFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
             uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
             done();
         });
 
         it('[C213257] - Copy File', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            browser.driver.sleep(12000);
+
             contentListPage.rightClickOnRowNamed(pdfUploadedNode.entry.name);
             contentListPage.pressContextMenuActionNamed('Copy');
             contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
@@ -99,16 +103,12 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C280561] - Delete File', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
             contentListPage.deleteContent(pdfFileModel.name);
             contentListPage.checkContentIsNotDisplayed(pdfFileModel.name);
             pdfUploadedNode = null;
         });
 
         it('[C280562] - Multiple Files Delete - Dropdown Menu', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
             contentListPage.clickRowToSelect(pdfFileModel.name);
             contentListPage.clickRowToSelect(testFileModel.name);
             contentListPage.deleteContent(pdfFileModel.name);
@@ -117,8 +117,6 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C280565] - Delete - Right Click', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
             contentListPage.rightClickOnRowNamed(pdfFileModel.name);
             contentListPage.pressContextMenuActionNamed('Delete');
             contentListPage.checkContentIsNotDisplayed(pdfFileModel.name);
@@ -126,8 +124,6 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C280566] - Context Menu - Actions for file', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
             contentListPage.rightClickOnRowNamed(pdfFileModel.name);
             contentListPage.checkContextActionIsVisible('Download');
             contentListPage.checkContextActionIsVisible('Copy');
@@ -140,8 +136,6 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C280567] - Delete - Right click after multiselection of files', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
             contentListPage.clickRowToSelect(pdfFileModel.name);
             contentListPage.clickRowToSelect(testFileModel.name);
             contentListPage.rightClickOnRowNamed(pdfFileModel.name);
@@ -165,20 +159,20 @@ describe('Document List Component - Actions', () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
             secondUploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, secondfolderName, '-my-');
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
             done();
         });
 
         it('[C260123] - Delete - Dropdown Menu', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
             contentListPage.deleteContent(folderName);
             contentListPage.checkContentIsNotDisplayed(folderName);
             uploadedFolder = null;
         });
 
         it('[C280566] - Context Menu - Actions for folder', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
             contentListPage.rightClickOnRowNamed(folderName);
             contentListPage.checkContextActionIsVisible('Download');
             contentListPage.checkContextActionIsVisible('Copy');
@@ -189,8 +183,8 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C260138] - Copy - folder', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            browser.driver.sleep(12000);
+
             contentListPage.copyContent(folderName);
             contentServicesPage.typeIntoNodeSelectorSearchField(secondfolderName);
             contentServicesPage.clickContentNodeSelectorResult(secondfolderName);
