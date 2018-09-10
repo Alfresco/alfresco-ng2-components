@@ -45,12 +45,89 @@ var TaskDetailsPage = function () {
     var taskDetailsEmptySection = element(by.css("div[data-automation-id='adf-tasks-details--empty']"));
     var completeTask = element(by.css("button[id='adf-no-form-complete-button']"));
     var auditLogButton = element(by.css("button[adf-task-audit]"));
-
     var noPeopleInvolved = element(by.id('no-people-label'));
     var cancelInvolvePeopleButton = element(by.id('close-people-search'));
     var involvePeopleHeader = element(by.css("div[class='search-text-header']"));
     var removeInvolvedPeople = element(by.css("button[data-automation-id='Remove']"));
     var peopleTitle = element(by.id("people-title"));
+    var editFormButton = element.all(by.css("mat-icon[data-automation-id='card-textitem-edit-icon-create']")).last();
+    var attachFormDropdown = element(by.css("div[class='adf-attach-form-row']"));
+    var cancelAttachForm = element(by.id("adf-no-form-cancel-button"));
+    var attachFormButton = element(by.id("adf-no-form-attach-form-button"));
+    var disabledAttachFormButton = element(by.css("button[id='adf-no-form-attach-form-button'][disabled]"));
+    var removeAttachForm = element(by.id("adf-no-form-remove-button"));
+    var attachFormName = element(by.css("span[class='adf-form-title ng-star-inserted']"));
+
+    this.checkSelectedForm = function (formName) {
+        Util.waitUntilElementIsVisible(attachFormName);
+        expect(formName).toEqual(attachFormName.getText());
+    };
+
+    this.checkAttachFormButtonIsDisabled = function () {
+        Util.waitUntilElementIsVisible(disabledAttachFormButton);
+    };
+
+    this.checkAttachFormButtonIsEnabled = function () {
+        Util.waitUntilElementIsClickable(attachFormButton);
+    };
+
+    this.checkEditFormButtonIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(editFormButton);
+    };
+
+    this.clickEditFormButton = function () {
+        Util.waitUntilElementIsClickable(editFormButton);
+        return editFormButton.click();
+    };
+
+    this.checkAttachFormDropdownIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(attachFormDropdown);
+    };
+
+    this.clickAttachFormDropdown = function () {
+        Util.waitUntilElementIsClickable(attachFormDropdown);
+        return attachFormDropdown.click();
+    };
+
+    this.selectAttachFormOption = function (option) {
+        let selectedOption = element(by.cssContainingText("mat-option[role='option']", option));
+        Util.waitUntilElementIsClickable(selectedOption);
+        return selectedOption.click();
+    };
+
+    this.checkCancelAttachFormIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(cancelAttachForm);
+    };
+
+    this.clickCancelAttachForm = function () {
+        Util.waitUntilElementIsClickable(cancelAttachForm);
+        return cancelAttachForm.click();
+    };
+
+    this.checkRemoveAttachFormIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(removeAttachForm);
+    };
+
+    this.clickRemoveAttachForm = function () {
+        Util.waitUntilElementIsClickable(removeAttachForm);
+        return removeAttachForm.click();
+    };
+
+    this.checkAttachFormButtonIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(attachFormButton);
+    };
+
+    this.clickAttachFormButton = function () {
+        Util.waitUntilElementIsClickable(attachFormButton);
+        return attachFormButton.click();
+    };
+
+    this.checkFormIsAttached = function (formName) {
+        Util.waitUntilElementIsVisible(formNameField);
+        formNameField.getText().then(function (attachedFormName){
+            expect(attachedFormName).toEqual(formName);
+        })
+    };
 
     this.getFormName = function () {
         Util.waitUntilElementIsVisible(formNameField);
@@ -267,7 +344,7 @@ var TaskDetailsPage = function () {
         Util.waitUntilElementIsVisible(pic);
         return pic.getText();
     }
-    
+
     this.checkTaskDetails = function () {
         Util.waitUntilElementIsVisible(taskDetailsSection);
         return taskDetailsSection.getText();
