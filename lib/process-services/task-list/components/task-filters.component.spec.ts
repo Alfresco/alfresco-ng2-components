@@ -24,6 +24,7 @@ import { TaskListService } from '../services/tasklist.service';
 import { TaskFilterService } from '../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { By } from '@angular/platform-browser';
 
 describe('TaskFiltersComponent', () => {
 
@@ -34,16 +35,19 @@ describe('TaskFiltersComponent', () => {
     let fakeGlobalFilter = [];
     fakeGlobalFilter.push(new FilterRepresentationModel({
         name: 'FakeInvolvedTasks',
+        icon: 'glyphicon-align-left',
         id: 10,
         filter: { state: 'open', assignment: 'fake-involved' }
     }));
     fakeGlobalFilter.push(new FilterRepresentationModel({
         name: 'FakeMyTasks1',
+        icon: 'glyphicon-ok-sign',
         id: 11,
         filter: { state: 'open', assignment: 'fake-assignee' }
     }));
     fakeGlobalFilter.push(new FilterRepresentationModel({
         name: 'FakeMyTasks2',
+        icon: 'glyphicon-inbox',
         id: 12,
         filter: { state: 'open', assignment: 'fake-assignee' }
     }));
@@ -350,4 +354,36 @@ describe('TaskFiltersComponent', () => {
 
         expect(component.currentFilter).toBe(filter);
     }));
+
+    it('should attach specific icon for each filter if hasIcon is true', (done) => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        component.hasIcon = true;
+        let change = new SimpleChange(undefined, 1, true);
+        component.ngOnChanges({ 'appId': change });
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(component.filters.length).toBe(3);
+            let filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            expect(filters.length).toBe(3);
+            expect(filters[0].nativeElement.innerText).toContain('format_align_left');
+            expect(filters[1].nativeElement.innerText).toContain('check_circle');
+            expect(filters[2].nativeElement.innerText).toContain('inbox');
+            done();
+        });
+    });
+
+    it('should not attach icons for each filter if hasIcon is false', (done) => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        component.hasIcon = false;
+        let change = new SimpleChange(undefined, 1, true);
+        component.ngOnChanges({ 'appId': change });
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            expect(filters.length).toBe(0);
+            done();
+        });
+    });
 });
