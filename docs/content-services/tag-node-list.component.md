@@ -24,6 +24,7 @@ Shows tags for a node.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | nodeId | `string` |  | The identifier of a node. |
+| showDelete | `boolean` | true | Show delete button |
 
 ### Events
 
