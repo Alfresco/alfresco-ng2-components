@@ -9,8 +9,9 @@ To correctly use this demo check that on your machine you have [Node](https://no
 
 ```sh
 git clone https://github.com/Alfresco/alfresco-ng2-components.git
-cd alfresco-ng2-components/demo-shell/
+cd alfresco-ng2-components
 npm install
+npm start
 ```
 
 ## Proxy settings and CORS
