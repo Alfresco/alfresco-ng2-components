@@ -11,14 +11,14 @@ var exec = require('child_process').exec;
 
 var alfrescoJsApi;
 
-unzipRetry = (tentativeNumber, pacakge, outputFolder) => {
+unzipRetry = (url, outputFolder, pacakge, tentativeNumber) => {
     console.log(`Unzip  ${pacakge}` + path.join(__dirname, `../${pacakge}.zip`));
     fs.createReadStream(path.join(__dirname, `../${pacakge}.zip`))
         .pipe(unzip.Extract({path: path.join(__dirname, `../${outputFolder}/@alfresco/`)}))
         .on('error', () => {
             if (tentativeNumber <= 4) {
                 setTimeout(() => {
-                    unzipRetry(tentativeNumber++, pacakge, outputFolder);
+                    downloadZip(tentativeNumber, url, outputFolder, pacakge);
                 }, 10000);
             }
         })
@@ -35,15 +35,20 @@ unzipRetry = (tentativeNumber, pacakge, outputFolder) => {
         })
 }
 
-downloadZip = async (url, outputFolder, pacakge) => {
+downloadZip = async (url, outputFolder, pacakge, tentativeNumber) => {
+    if (!tentativeNumber) {
+        tentativeNumber = 0;
+    }
 
-    console.log(`Download ${pacakge}`)
-    console.log(`OutputFolder ${outputFolder}`)
+    tentativeNumber++;
+
+    console.log(`Download ${pacakge} in OutputFolder ${outputFolder}`)
+
     var file = fs.createWriteStream(`${pacakge}.zip`);
     return await http.get(`http://${url}`, (response) => {
         response.pipe(file);
         file.on('finish', async () => {
-            unzipRetry(1, pacakge, outputFolder);
+            unzipRetry(url, outputFolder, pacakge, tentativeNumber);
         });
     });
 }

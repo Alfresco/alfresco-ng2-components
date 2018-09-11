@@ -21,37 +21,43 @@ replaceHrefInIndex = (folder) => {
     });
 }
 
-unzipRetry = (tentativeNumber, outputFolder) => {
+unzipRetry = (tentativeNumber, outputFolder, url) => {
+    var file = fs.createWriteStream('demo.zip');
+    http.get(`http://${url}`, (response) => {
+        response.pipe(file);
+        file.on('finish', async () => {
 
-    console.log('Unzip Demo ' + path.join(__dirname, '../demo.zip'));
-    setTimeout(() => {
-        fs.createReadStream(path.join(__dirname, '../demo.zip'))
-            .pipe(unzip.Extract({path: path.join(__dirname, '../demo-shell')}))
-            .on('error', () => {
-                if (tentativeNumber <= 4) {
+            console.log('Unzip Demo ' + path.join(__dirname, '../demo.zip'));
+            setTimeout(() => {
+                fs.createReadStream(path.join(__dirname, '../demo.zip'))
+                    .pipe(unzip.Extract({path: path.join(__dirname, '../demo-shell')}))
+                    .on('error', () => {
 
-                    setTimeout(() => {
-                        unzipRetry(tentativeNumber++, outputFolder);
-                    }, 10000);
-                }
-            })
-            .on('finish', () => {
+                        if (tentativeNumber <= 4) {
+                            tentativeNumber++;
+                            unzipRetry(tentativeNumber, outputFolder);
+                        }
+                    })
+                    .on('finish', () => {
 
-                setTimeout(() => {
-                    let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
-                    let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
+                        setTimeout(() => {
+                            let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
+                            let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
 
-                    fs.rename(oldFolder, newFolder, (err) => {
-                        console.log('renamed complete');
-                    });
+                            fs.rename(oldFolder, newFolder, (err) => {
+                                console.log('renamed complete');
+                            });
 
-                    if (program.baseHref) {
-                        replaceHrefInIndex(outputFolder);
-                    }
-                }, 10000);
+                            if (program.baseHref) {
+                                replaceHrefInIndex(outputFolder);
+                            }
+                        }, 10000);
 
-            })
-    }, 10000);
+                    })
+            }, 10000);
+
+        });
+    });
 }
 
 async function main() {
@@ -88,13 +94,7 @@ async function main() {
 
     let outputFolder = program.baseHref ? program.baseHref : 'dist';
 
-    var file = fs.createWriteStream('demo.zip');
-    http.get(`http://${url}`, (response) => {
-        response.pipe(file);
-        file.on('finish', async () => {
-            unzipRetry(1, outputFolder);
-        });
-    });
+    unzipRetry(0, outputFolder, url);
 }
 
 main();
