@@ -112,7 +112,7 @@ describe('TagNodeList', () => {
                 fixture.detectChanges();
 
                 let deleteButton: any = element.querySelector('#tag_chips_delete_test1');
-                expect(deleteButton).toBeNull()
+                expect(deleteButton).toBeNull();
                 done();
             });
 
