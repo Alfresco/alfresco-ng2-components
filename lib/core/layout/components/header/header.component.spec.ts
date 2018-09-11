@@ -133,7 +133,7 @@ describe('HeaderLayoutComponent', () => {
         });
 
         it('if position is start the button menu should be at the start', () => {
-            component.position = 'end';
+            component.position = 'start';
             fixture.detectChanges();
 
             const buttonStart = fixture.nativeElement.querySelector('#adf-sidebar-toggle-start');
