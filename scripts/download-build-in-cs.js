@@ -76,7 +76,7 @@ async function main() {
         hostEcm: program.host
     });
 
-    alfrescoJsApi.login(program.username, program.password);
+    await alfrescoJsApi.login(program.username, program.password);
 
     let zipDemoNode;
 
