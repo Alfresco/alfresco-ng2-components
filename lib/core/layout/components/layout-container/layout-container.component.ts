@@ -17,14 +17,14 @@
 
 import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MatSidenav } from '@angular/material';
-import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
+import { sidenavAnimation, contentAnimationLeft, contentAnimationRight } from '../../helpers/animations';
 
 @Component({
     selector: 'adf-layout-container',
     templateUrl: './layout-container.component.html',
     styleUrls: ['./layout-container.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations: [sidenavAnimation, contentAnimation]
+    animations: [sidenavAnimation, contentAnimationLeft, contentAnimationRight]
 })
 export class LayoutContainerComponent implements OnInit, OnDestroy {
     @Input() sidenavMin: number;
@@ -36,9 +36,8 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
     @Input() hideSidenav = false;
     @Input() expandedSidenav = true;
 
-    /** The side that the drawer is attached to 'start' | 'end' page*/
+    /** The side that the drawer is attached to 'start' | 'end' page */
     @Input() position = 'start';
-
 
     @ViewChild(MatSidenav) sidenav: MatSidenav;
 
@@ -57,9 +56,9 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
         this.SIDENAV_STATES.EXPANDED = { value: 'expanded', params: { width: this.sidenavMax } };
         this.SIDENAV_STATES.COMPACT = { value: 'compact', params: { width: this.sidenavMin } };
 
-        this.CONTENT_STATES.MOBILE = { value: 'expanded', params: { marginLeft: 0 } };
-        this.CONTENT_STATES.EXPANDED = { value: 'expanded', params: { marginLeft: this.sidenavMin } };
-        this.CONTENT_STATES.COMPACT = { value: 'compact', params: { marginLeft: this.sidenavMax } };
+        this.CONTENT_STATES.MOBILE = { value: 'expanded', params: { margin: 0 } };
+        this.CONTENT_STATES.EXPANDED = { value: 'expanded', params: { margin: this.sidenavMin } };
+        this.CONTENT_STATES.COMPACT = { value: 'compact', params: { margin: this.sidenavMax } };
 
         this.mediaQueryList.addListener(this.onMediaQueryChange);
 
@@ -113,5 +112,22 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
     private onMediaQueryChange() {
         this.sidenavAnimationState = this.SIDENAV_STATES.EXPANDED;
         this.contentAnimationState = this.toggledContentAnimation;
+    }
+
+    getContentAnimationStateLeft() {
+        if (this.position === 'start') {
+            return this.contentAnimationState;
+        } else {
+            return { value: 'compact', params: { width: this.sidenavMin } };
+        }
+    }
+
+    getContentAnimationStateRight() {
+        if (this.position === 'end') {
+            return this.contentAnimationState;
+
+        } else {
+            return { value: 'compact', params: { width: this.sidenavMin } };
+        }
     }
 }

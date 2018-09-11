@@ -1,6 +1,6 @@
 <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="hideSidenav"
                     [expandedSidenav]="expandedSidenav" (expanded)="setState($event)"
-                    [position]="position?'start':'end'">
+                    [position]="position">
 
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu=" toggleMenu">
@@ -12,7 +12,7 @@
                                [tooltip]="tooltip | translate"
                                [showSidenavToggle]="showMenu"
                                [color]="color"
-                               [position]="position?'start':'end'"
+                               [position]="position"
                                (clicked)=toggleMenu($event)>
 
                 <div class="adf-app-layout-menu-spacer"></div>
@@ -54,18 +54,6 @@
                     <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Logout</div>
                 </a>
             </mat-nav-list>
-
-            <div class="toggle">
-                Right
-                <mat-slide-toggle
-                    id="adf-sidebar-position"
-                    [color]="'primary'"
-                    (change)="togglePosition()"
-                    [checked]="position">
-                    Position
-                </mat-slide-toggle>
-                Left
-            </div>
 
         </ng-template>
     </adf-sidenav-layout-navigation>

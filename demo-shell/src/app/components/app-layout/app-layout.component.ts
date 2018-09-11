@@ -89,6 +89,7 @@ export class AppLayoutComponent implements OnInit {
         this.headerService.logo.subscribe(path => this.logo = path);
         this.headerService.redirectUrl.subscribe(redirectUrl => this.redirectUrl = redirectUrl);
         this.headerService.tooltip.subscribe(tooltip => this.tooltip = tooltip);
+        this.headerService.position.subscribe(position => this.position = position);
     }
 
     constructor(
@@ -105,9 +106,5 @@ export class AppLayoutComponent implements OnInit {
         if (this.config.get('sideNav.preserveState')) {
             this.userpreference.set('expandedSidenav', state);
         }
-    }
-
-    togglePosition(state) {
-        this.position = this.position ? false : true;
     }
 }

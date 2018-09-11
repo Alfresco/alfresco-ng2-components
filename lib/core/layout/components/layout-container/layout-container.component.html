@@ -10,7 +10,7 @@
     </mat-sidenav>
 
     <div>
-        <div [@contentAnimation]="contentAnimationState">
+        <div [@contentAnimationLeft]="getContentAnimationStateLeft()" [@contentAnimationRight]="getContentAnimationStateRight()">
             <ng-content select="[app-layout-content]"></ng-content>
         </div>
     </div>
