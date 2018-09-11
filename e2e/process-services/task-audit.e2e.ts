@@ -31,7 +31,7 @@ import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 
 import path = require('path');
-import Util = require('./util/util');
+import Util = require('../util/util');
 
 describe('Start Task - Task App', () => {
 
