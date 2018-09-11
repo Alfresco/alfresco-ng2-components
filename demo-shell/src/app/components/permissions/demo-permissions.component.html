@@ -5,7 +5,7 @@
             (error)="showErrorMessage($event)"
             (updated)="onUpdatedPermissions($event)">
             {{ (toggleStatus?'DEMO_PERMISSION.INHERITED_PERMISSIONS_BUTTON':'DEMO_PERMISSION.INHERIT_PERMISSION_BUTTON') | translate}}</button>
-    <button mat-button color="primary" (click)="openAddPermissionDialog($event)">Add User or Group</button>
+    <button mat-button color="primary" (click)="openAddPermissionDialog($event)" data-automation-id="adf-add-permission-button">Add User or Group</button>
 </div>
 
 <div>
