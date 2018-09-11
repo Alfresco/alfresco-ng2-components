@@ -25,4 +25,9 @@ import { Component } from '@angular/core';
 export class TagComponent {
 
     nodeId = '';
+    showDelete = true;
+
+    toggleDeleteButton() {
+        this.showDelete = !this.showDelete;
+    }
 }
