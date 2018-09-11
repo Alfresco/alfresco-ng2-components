@@ -1,6 +1,5 @@
 # Alfresco Application Development Framework, version 2.5.0 Release Note
 
- 
 These release notes provide information about the **2.5.0 release**
 of the Alfresco Application Development Framework.
 This is the latest **General Available**
@@ -10,7 +9,6 @@ The release can be found on GitHub at 
 
  
 ### New name packages
-
  
 ```
 "@alfresco/adf-content-services" : "2.5.0"
@@ -21,7 +19,6 @@ The release can be found on GitHub at 
  
 ## Goals for this release
 
- 
 In this release we have focused on updating the version of the Angular and Material libraries from 5 to 6. The team has also spent part of the sprints improving the e2e test coverage.
 
 We truly believe in TDD and the whole library has a unit test coverage of 90%. The e2e coverage is still partly achieved with manual work but this is due to a technical debt that we want to fix. The commitment of the team to increasing the coverage of the automatic e2e tests is an added guarantee of the quality and stability that we want delivery in ADF.
@@ -29,16 +26,14 @@ We truly believe in TDD and the whole library has a unit test coverage of 90%. T
 Amongst all this hard work, we also found a little time to add some new functionality and fix bugs.
  
 Please report issues with this release in the 
-[issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new)
-. You can collaborate on this release or share feedback by using the discussion tools on 
-[Gitter](http://gitter.im/Alfresco/alfresco-ng2-components)
-.
+[issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new).
+You can collaborate on this release or share feedback by using the discussion tools on
+[Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
  
  
 ## Notable new features
 
 Below are the most important new features of this release:
- 
 
 -   **Update Angular 6 and Material 6**
 -   **Search Improvements**
@@ -117,7 +112,7 @@ new CardViewSelectItemModel({
 KeyValuePairs is a map key value that is rendered as shown in the image to the left. It uses a nicely-formatted table that allows also for easy editing.ViewSelectItem is a selectBox that allows you to limit the set of possible values for a property.
 
 ![Card view](images/cardview.gif)
- 
+
 For more information about this component please refer to the 
 [official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/card-view.component.md).
 
@@ -137,7 +132,7 @@ For more information about this component please refer to the
 [official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/notification.service.md).
 
 ### Dynamic Table - Datetime widget
- 
+
 You can now render DateTime items in the dynamic table of a form.
 
 ![Datetime datatable](images/date_time_datatable.gif)
@@ -171,11 +166,10 @@ For example, you should use "CoreModule.forRoot()" in the main application modul
 ### Localization
 
 This release includes: French, German, Italian, Spanish, Japanese, Dutch, Norwegian (BokmÅl), Russian, Brazilian Portuguese and Simplified Chinese versions.
- 
+
 ## References
 
-Below you can find a brief list of references to help you start using the new release.
- 
+Below you can find a brief list of references to help you start using the new release:
 
 [Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 
@@ -193,13 +187,12 @@ Below you can find a brief list of references to help you start using the new
 
 [ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
- 
 Please refer to the 
 [official documentation](http://docs.alfresco.com/)
 for further details and suggestions.
  
 ## Issues addressed
- 
+
 Release Notes - Apps Development Framework - Version 2.5.0
 
 ### Documentation
