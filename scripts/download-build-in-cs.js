@@ -21,6 +21,39 @@ replaceHrefInIndex = (folder) => {
     });
 }
 
+unzipRetry = (tentativeNumber, outputFolder) => {
+
+    console.log('Unzip Demo ' + path.join(__dirname, '../demo.zip'));
+    setTimeout(() => {
+        fs.createReadStream(path.join(__dirname, '../demo.zip'))
+            .pipe(unzip.Extract({path: path.join(__dirname, '../demo-shell')}))
+            .on('error', () => {
+                if (tentativeNumber <= 4) {
+
+                    setTimeout(() => {
+                        unzipRetry(tentativeNumber++, outputFolder);
+                    }, 10000);
+                }
+            })
+            .on('finish', () => {
+
+                setTimeout(() => {
+                    let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
+                    let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
+
+                    fs.rename(oldFolder, newFolder, (err) => {
+                        console.log('renamed complete');
+                    });
+
+                    if (program.baseHref) {
+                        replaceHrefInIndex(outputFolder);
+                    }
+                }, 10000);
+
+            })
+    }, 10000);
+}
+
 async function main() {
 
     program
@@ -59,30 +92,7 @@ async function main() {
     http.get(`http://${url}`, (response) => {
         response.pipe(file);
         file.on('finish', async () => {
-            console.log('Unzip Demo ' + path.join(__dirname, '../demo.zip'));
-
-            setTimeout(() => {
-                fs.createReadStream(path.join(__dirname, '../demo.zip'))
-                    .pipe(unzip.Extract({path: path.join(__dirname, '../demo-shell')}))
-                    .on('finish', () => {
-
-                        setTimeout(() => {
-                            let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
-                            let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
-
-                            fs.rename(oldFolder, newFolder, (err) => {
-                                console.log('renamed complete');
-                            });
-
-                            if (program.baseHref) {
-                                replaceHrefInIndex(outputFolder);
-                            }
-                        }, 10000);
-
-                    })
-            }, 10000);
-
-
+            unzipRetry(1, outputFolder);
         });
     });
 }

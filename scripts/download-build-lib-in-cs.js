@@ -11,30 +11,39 @@ var exec = require('child_process').exec;
 
 var alfrescoJsApi;
 
+unzipRetry = (tentativeNumber, pacakge, outputFolder) => {
+    console.log(`Unzip  ${pacakge}` + path.join(__dirname, `../${pacakge}.zip`));
+    fs.createReadStream(path.join(__dirname, `../${pacakge}.zip`))
+        .pipe(unzip.Extract({path: path.join(__dirname, `../${outputFolder}/@alfresco/`)}))
+        .on('error', () => {
+            if (tentativeNumber <= 4) {
+                setTimeout(() => {
+                    unzipRetry(tentativeNumber++, pacakge, outputFolder);
+                }, 10000);
+            }
+        })
+        .on('finish', () => {
+            setTimeout(() => {
+                let oldFolder = path.join(__dirname, `../${outputFolder}/@alfresco/${pacakge}`)
+                let newFolder = path.join(__dirname, `../${outputFolder}/@alfresco/adf-${pacakge}`)
+
+                fs.rename(oldFolder, newFolder, (err) => {
+                    console.log('renamed complete');
+                });
+
+            }, 10000);
+        })
+}
+
 downloadZip = async (url, outputFolder, pacakge) => {
 
-     console.log(`Download ${pacakge}`)
-     console.log(`OutputFolder ${outputFolder}`)
+    console.log(`Download ${pacakge}`)
+    console.log(`OutputFolder ${outputFolder}`)
     var file = fs.createWriteStream(`${pacakge}.zip`);
     return await http.get(`http://${url}`, (response) => {
         response.pipe(file);
         file.on('finish', async () => {
-            setTimeout(() => {
-                console.log(`Unzip  ${pacakge}` + path.join(__dirname, `../${pacakge}.zip`));
-                fs.createReadStream(path.join(__dirname, `../${pacakge}.zip`))
-                    .pipe(unzip.Extract({path: path.join(__dirname, `../${outputFolder}/@alfresco/`)}))
-                    .on('finish', () => {
-                        setTimeout(() => {
-                            let oldFolder = path.join(__dirname, `../${outputFolder}/@alfresco/${pacakge}`)
-                            let newFolder = path.join(__dirname, `../${outputFolder}/@alfresco/adf-${pacakge}`)
-
-                            fs.rename(oldFolder, newFolder, (err) => {
-                                console.log('renamed complete');
-                            });
-
-                        }, 10000);
-                    })
-            })
+            unzipRetry(1, pacakge, outputFolder);
         });
     });
 }
