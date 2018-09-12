@@ -152,4 +152,28 @@
             }
         }
     }
+
+    .adf-datatable-gallery-thumbnails {
+        .adf-data-table-card .adf-datatable-row {
+            height: 300px !important;
+
+            img {
+                height: 100px;
+            }
+            
+            :first-child .cell-container .cell-value {
+                display: flex;
+                width: 265px;
+                flex: 0 0 auto;
+                justify-content: center;
+            }
+
+            .adf-data-table-cell.adf-datatable-table-cell.adf-data-table-cell--image {
+                flex: 0 0 auto;
+                display: flex;
+                flex-direction: column-reverse;
+                justify-content: space-between;
+            }
+        }
+    }
 }
