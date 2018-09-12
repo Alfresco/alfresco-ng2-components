@@ -24,8 +24,10 @@ import { HeaderDataService } from './header-data.service';
 })
 export class HeaderDataComponent {
     checkbox = true;
+    position = 'start';
 
-    constructor(private headerService: HeaderDataService) {}
+    constructor(private headerService: HeaderDataService) {
+    }
 
     hideButton() {
         this.headerService.hideMenuButton();
@@ -58,5 +60,9 @@ export class HeaderDataComponent {
         if (tooltip) {
             this.headerService.changeTooltip(tooltip);
         }
+    }
+
+    changePosition() {
+        this.headerService.changePosition(this.position);
     }
 }

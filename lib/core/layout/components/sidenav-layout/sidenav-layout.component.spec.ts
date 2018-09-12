@@ -38,6 +38,7 @@ import { CommonModule } from '@angular/common';
 export class DummyLayoutContainerComponent {
     @Input() sidenavMin: number;
     @Input() sidenavMax: number;
+    @Input() position: string;
     @Input() mediaQueryList: MediaQueryList;
     @Input() hideSidenav: boolean;
     @Input() expandedSidenav: boolean;

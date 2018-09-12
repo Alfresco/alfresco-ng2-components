@@ -1,5 +1,6 @@
 <mat-sidenav-container>
     <mat-sidenav
+        [position]="position"
         [disableClose]="!isMobileScreenSize"
         [ngClass]="{ 'sidenav--hidden': hideSidenav }"
         [@sidenavAnimation]="sidenavAnimationState"
@@ -9,7 +10,7 @@
     </mat-sidenav>
 
     <div>
-        <div [@contentAnimation]="contentAnimationState">
+        <div [@contentAnimationLeft]="getContentAnimationStateLeft()" [@contentAnimationRight]="getContentAnimationStateRight()">
             <ng-content select="[app-layout-content]"></ng-content>
         </div>
     </div>

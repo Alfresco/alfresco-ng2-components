@@ -34,9 +34,9 @@ export class AppLayoutComponent implements OnInit {
         { href: '/home', icon: 'home', title: 'APP_LAYOUT.HOME' },
         { href: '/files', icon: 'folder_open', title: 'APP_LAYOUT.CONTENT_SERVICES' },
         { href: '/breadcrumb', icon: 'label', title: 'APP_LAYOUT.BREADCRUMB' },
-        { href: '/notifications', icon: 'alarm', title: 'APP_LAYOUT.NOTIFICATIONS'},
-        { href: '/card-view', icon: 'view_headline', title: 'APP_LAYOUT.CARD_VIEW'},
-        { href: '/header-data', icon: 'edit', title: 'APP_LAYOUT.HEADER_DATA'},
+        { href: '/notifications', icon: 'alarm', title: 'APP_LAYOUT.NOTIFICATIONS' },
+        { href: '/card-view', icon: 'view_headline', title: 'APP_LAYOUT.CARD_VIEW' },
+        { href: '/header-data', icon: 'edit', title: 'APP_LAYOUT.HEADER_DATA' },
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
         { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
@@ -60,6 +60,8 @@ export class AppLayoutComponent implements OnInit {
     ];
 
     expandedSidenav = false;
+
+    position = 'start';
 
     hideSidenav = false;
     showMenu = true;
@@ -87,6 +89,7 @@ export class AppLayoutComponent implements OnInit {
         this.headerService.logo.subscribe(path => this.logo = path);
         this.headerService.redirectUrl.subscribe(redirectUrl => this.redirectUrl = redirectUrl);
         this.headerService.tooltip.subscribe(tooltip => this.tooltip = tooltip);
+        this.headerService.position.subscribe(position => this.position = position);
     }
 
     constructor(
@@ -104,4 +107,4 @@ export class AppLayoutComponent implements OnInit {
             this.userpreference.set('expandedSidenav', state);
         }
     }
- }
+}
