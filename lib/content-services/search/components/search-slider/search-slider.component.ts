@@ -38,6 +38,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     max: number;
     thumbLabel = false;
 
+    /** The numeric value represented by the slider. */
     @Input()
     value: number | null;
 
