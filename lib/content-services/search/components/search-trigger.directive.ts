@@ -33,7 +33,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { Observable, Subject, Subscription, merge, of, fromEvent } from 'rxjs';
 import { SearchComponent } from './search.component';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
 export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -55,6 +55,7 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     providers: [SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR]
 })
 export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
+    private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
     @Input('searchAutocomplete')
     searchPanel: SearchComponent;
@@ -76,6 +77,9 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
                 @Optional() @Inject(DOCUMENT) private document: any) { }
 
     ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+
         if (this.escapeEventStream) {
             this.escapeEventStream.unsubscribe();
             this.escapeEventStream = null;
@@ -187,6 +191,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
         return merge(firstStable, optionChanges)
             .pipe(
+                takeUntil(this.onDestroy$),
                 switchMap(() => {
                     this.searchPanel.setVisibility();
                     return this.panelClosingActions;
