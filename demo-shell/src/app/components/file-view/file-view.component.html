@@ -98,7 +98,11 @@
         </adf-info-drawer>
     </ng-template>
 
-    <adf-viewer [nodeId]="nodeId" [allowSidebar]="true" [sidebarTemplate]="sidebarTemplate">
+    <adf-viewer
+        [nodeId]="nodeId"
+        [allowPrint]="true"
+        [allowSidebar]="true"
+        [sidebarTemplate]="sidebarTemplate">
 
         <adf-viewer-toolbar-actions>
             <button mat-icon-button>
