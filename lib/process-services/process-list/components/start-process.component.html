@@ -9,27 +9,25 @@
 			<input matInput placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME'|translate}}" [(ngModel)]="name" id="processName" required />
 		</mat-form-field>
 
-        <div *ngIf="showSelectProcessDropdown">
-            <mat-form-field>
-                <mat-select [(value)]="selectedProcessDef" placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE'|translate}}" required>
-                    <mat-option *ngIf="!hasSingleProcessDefinition()">{{'ADF_PROCESS_LIST.START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</mat-option>
-                    <mat-option *ngFor="let processDef of processDefinitions" [value]="processDef">
-                        {{ processDef.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+        <mat-form-field *ngIf="showSelectProcessDropdown">
+            <input type="text" placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE'|translate}}" required aria-label="Number" matInput [formControl]="processControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onItemSelect($event.option.value)">
+                <mat-option *ngIf="!hasSingleProcessDefinition()">{{'ADF_PROCESS_LIST.START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</mat-option>
+                <mat-option *ngFor="let processDef of filteredOptions | async" [value]="processDef">
+                    {{ processDef.name }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
 
         <adf-start-form
             #startForm
             *ngIf="hasStartForm()"
-                        [data]="values"
+            [data]="values"
             [disableStartProcessButton]="!hasProcessName()"
             [processDefinitionId]="selectedProcessDef.id"
 			(outcomeClick)="onOutcomeClick($event)"
 		    [showRefreshButton]="false">
-		<button form-custom-button mat-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
-		</adf-start-form>
+        <button form-custom-button mat-button (click)="cancelStartProcess()" id="cancel_process" class=""> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>		</adf-start-form>
 	</mat-card-content>
 	<mat-card-content *ngIf="hasErrorMessage()">
 		<mat-card-subtitle class="error-message" id="no-process-message">
@@ -37,7 +35,7 @@
 		</mat-card-subtitle>
 	</mat-card-content>
 	<mat-card-actions *ngIf="!hasStartForm()">
-		<button mat-button *ngIf="!hasStartForm()" (click)="cancelStartProcess()" id="cancle_process" class=""> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
+        <button mat-button *ngIf="!hasStartForm()" (click)="cancelStartProcess()" id="cancel_process" class=""> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
 		<button color="primary" mat-button *ngIf="!hasStartForm()" [disabled]="!validateForm()" (click)="startProcess()" data-automation-id="btn-start" id="button-start" class="btn-start"> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate}} </button>
 	</mat-card-actions>
 </mat-card>
