@@ -74,10 +74,13 @@ describe('Upload - User permission', () => {
 
     beforeEach(async (done) => {
         acsUser = new AcsUserModel();
+        acsUserTwo = new AcsUserModel();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUserTwo);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -162,8 +165,6 @@ describe('Upload - User permission', () => {
     describe('full permissions', () => {
 
         beforeEach(async (done) => {
-            loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
             contentServicesPage.goToDocumentList();
 
             done();
@@ -205,10 +206,6 @@ describe('Upload - User permission', () => {
     describe('multiple users', () => {
 
         beforeEach(async (done) => {
-            acsUserTwo = new AcsUserModel();
-
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUserTwo);
-
             contentServicesPage.goToDocumentList();
 
             done();
