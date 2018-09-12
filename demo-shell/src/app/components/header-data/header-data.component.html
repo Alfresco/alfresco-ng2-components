@@ -13,34 +13,46 @@
                 <option value="warn">Warn</option>
             </select>
             OR
-            <input type="text" name="color" (keyup.enter)="changeColor($event.target.value)" placeholder="hex color code">
+            <input type="text" name="color" (keyup.enter)="changeColor($event.target.value)"
+                   placeholder="hex color code">
             <p>*Choose only one value at a time: either hex code or theme color.</p>
             <p>*press enter for submitting new hex color</p>
         </div>
 
         <div>
             <label>Change title</label>
-            <input type="text" name="title" (keyup.enter)="submitTitle($event.target.value)" placeholder ="{{ 'APP_LAYOUT.APP_NAME' | translate}}">
+            <input type="text" name="title" (keyup.enter)="submitTitle($event.target.value)"
+                   placeholder="{{ 'APP_LAYOUT.APP_NAME' | translate}}">
             <p>*press enter for submitting new title</p>
         </div>
 
         <div>
             <label>Change logo</label>
-            <input type="text" placeholder="URL path" (keyup.enter)="submitLogo($event.target.value)" >
+            <input type="text" placeholder="URL path" (keyup.enter)="submitLogo($event.target.value)">
             <p>*press enter for submitting new logo</p>
         </div>
 
         <div>
             <label>Change logo link</label>
-            <input type="url" placeholder="Redirect URL" (keyup.enter)="submitRedirectUrl($event.target.value)" >
+            <input type="url" placeholder="Redirect URL" (keyup.enter)="submitRedirectUrl($event.target.value)">
             <p>*Input JSON friendly array or explicit string. E.g. ["/test", 33, "user", 11] or "/test"</p>
             <p>*press enter for submitting new link on logo</p>
         </div>
 
         <div>
             <label>Change logo tooltip</label>
-            <input type="text" placeholder="Tooltip text" (keyup.enter)="submitTooltip($event.target.value)" >
+            <input type="text" placeholder="Tooltip text" (keyup.enter)="submitTooltip($event.target.value)">
             <p>*press enter for submitting new tooltip</p>
         </div>
+
+        <div>
+            <label>Sidebar Position </label>
+
+            <mat-radio-group [(ngModel)]="position" (change)="changePosition()">
+                <mat-radio-button value="start">Start</mat-radio-button>
+                <mat-radio-button value="end">End</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
     </mat-card>
 </div>

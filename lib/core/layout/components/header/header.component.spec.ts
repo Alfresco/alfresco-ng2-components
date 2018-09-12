@@ -114,12 +114,32 @@ describe('HeaderLayoutComponent', () => {
             expect(button === null).toBeFalsy();
         });
 
-        it('if showSidenavToggle is false the button menu should  not be displayed', () => {
+        it('if showSidenavToggle is false the button menu should not be displayed', () => {
             component.showSidenavToggle = false;
             fixture.detectChanges();
 
             const button = fixture.nativeElement.querySelector('.adf-menu-icon');
             expect(button === null).toBeTruthy();
+        });
+
+        it('if position is end the button menu should be at the end', () => {
+            component.position = 'end';
+            fixture.detectChanges();
+
+            const buttonStart = fixture.nativeElement.querySelector('#adf-sidebar-toggle-start');
+            const buttonEnd = fixture.nativeElement.querySelector('#adf-sidebar-toggle-end');
+            expect(buttonStart === null).toBeTruthy();
+            expect(buttonEnd === null).toBeFalsy();
+        });
+
+        it('if position is start the button menu should be at the start', () => {
+            component.position = 'start';
+            fixture.detectChanges();
+
+            const buttonStart = fixture.nativeElement.querySelector('#adf-sidebar-toggle-start');
+            const buttonEnd = fixture.nativeElement.querySelector('#adf-sidebar-toggle-end');
+            expect(buttonStart === null).toBeFalsy();
+            expect(buttonEnd === null).toBeTruthy();
         });
     });
 

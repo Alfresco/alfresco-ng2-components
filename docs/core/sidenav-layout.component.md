@@ -73,6 +73,7 @@ sub-components (note the use of `<ng-template>` in the sub-components' body sect
 | sidenavMax | `number` |  | Maximum size of the navigation region |
 | sidenavMin | `number` |  | Minimum size of the navigation region |
 | stepOver | `number` |  | Screen size at which display switches from small screen to large screen configuration |
+| position | `string` | 'start' | The side that the drawer is attached to 'start' or 'end' page |
 
 ### Events
 

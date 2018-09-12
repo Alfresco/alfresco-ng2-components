@@ -23,8 +23,14 @@ export const sidenavAnimation: AnimationTriggerMetadata = trigger('sidenavAnimat
     transition('compact <=> expanded', animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'))
 ]);
 
-export const contentAnimation: AnimationTriggerMetadata = trigger('contentAnimation', [
-    state('expanded', style({ 'margin-left': '{{ marginLeft }}px' }), { params : { marginLeft: 0 } }),
-    state('compact',  style({'margin-left': '{{ marginLeft }}px' }), { params : { marginLeft: 0 } }),
+export const contentAnimationLeft: AnimationTriggerMetadata = trigger('contentAnimationLeft', [
+    state('expanded', style({ 'margin-left': '{{ margin }}px' }), { params : { margin: 0 } }),
+    state('compact',  style({'margin-left': '{{ margin }}px' }), { params : { margin: 0 } }),
+    transition('expanded <=> compact', animate('400ms cubic-bezier(0.25, 0.8, 0.25, 1)'))
+]);
+
+export const contentAnimationRight: AnimationTriggerMetadata = trigger('contentAnimationRight', [
+    state('expanded', style({ 'margin-right': '{{ margin }}px' }), { params : { margin: 0 } }),
+    state('compact',  style({'margin-right': '{{ margin }}px' }), { params : { margin: 0 } }),
     transition('expanded <=> compact', animate('400ms cubic-bezier(0.25, 0.8, 0.25, 1)'))
 ]);
