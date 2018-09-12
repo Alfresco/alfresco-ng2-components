@@ -179,7 +179,7 @@ The working demo can be found in the "demo shell" application.
 
 This is a new component that allows you to display a list of chips reflecting the facet queries and facet buckets user has selected in the Search Filter component. It is possible to remove the chips to perform an automatic data update.
 
-![Selected Facets](images/https://github.com/Alfresco/alfresco-ng2-components/raw/development/docs/docassets/images/selected-facets.png)
+![Selected Facets](images/selected-facets.png)
 
 ### Version Management Enhancements
 

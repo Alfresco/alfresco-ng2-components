@@ -104,7 +104,7 @@ In this release, the Viewer component has received the following set of improvem
 -   Support for "carousel" modes and document navigation options (extra buttons you can enable and provide handlers for). This feature will be fully demonstrated in the upcoming "Alfresco Content Application" release.
 -   It is now possible to provide custom menu buttons for the Viewer toolbar. See more details in the docs: [alfresco-ng2-components/viewer.component.md at development · Alfresco/alfresco-ng2-components · GitHub ](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/viewer.component.md#custom-toolbar-buttons)
 
-![PDF thumbnails](images/https://github.com/Alfresco/alfresco-ng2-components/raw/development/docs/docassets/images/pdf-thumbnails.png)
+![PDF thumbnails](images/pdf-thumbnails.png)
 
 ### Destination Picker enhancements
 

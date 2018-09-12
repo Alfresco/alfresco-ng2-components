@@ -4,9 +4,8 @@ These release notes provide information about the **2.5.0 release**
 of the Alfresco Application Development Framework.
 This is the latest **General Available**
 release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Platform.
-The release can be found on GitHub at 
+The release can be found on GitHub at
 [this location.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
-
  
 ### New name packages
  
@@ -24,13 +23,12 @@ In this release we have focused on updating the version of the Angular and Mater
 We truly believe in TDD and the whole library has a unit test coverage of 90%. The e2e coverage is still partly achieved with manual work but this is due to a technical debt that we want to fix. The commitment of the team to increasing the coverage of the automatic e2e tests is an added guarantee of the quality and stability that we want delivery in ADF.
 
 Amongst all this hard work, we also found a little time to add some new functionality and fix bugs.
- 
+
 Please report issues with this release in the 
 [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new).
 You can collaborate on this release or share feedback by using the discussion tools on
 [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
- 
- 
+
 ## Notable new features
 
 Below are the most important new features of this release:
@@ -73,7 +71,7 @@ This component is a reusable header for Alfresco applications. It displays a cu
 ```
 
 ![Empty Page State](images/header.gif)
- 
+
 For more information about this component please refer to the 
 [official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/header.component.md).
 
@@ -83,8 +81,7 @@ In ADF 2.5.0 you can now customize the metadata card with the option of showin
  
 ```
 <adf-content-metadata-card .......
-                           [displayEmpty]="false">
-
+    [displayEmpty]="false">
 </adf-content-metadata-card>
 ```
 
@@ -109,6 +106,7 @@ new CardViewSelectItemModel({
     editable: this.isEditable
 }),
 ```
+
 KeyValuePairs is a map key value that is rendered as shown in the image to the left. It uses a nicely-formatted table that allows also for easy editing.ViewSelectItem is a selectBox that allows you to limit the set of possible values for a property.
 
 ![Card view](images/cardview.gif)
@@ -196,7 +194,6 @@ for further details and suggestions.
 Release Notes - Apps Development Framework - Version 2.5.0
 
 ### Documentation
-
 
 -   [
 [ADF-3288](https://issues.alfresco.com/jira/browse/ADF-3288)
