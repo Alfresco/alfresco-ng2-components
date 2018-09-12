@@ -19,7 +19,18 @@
             <div class="adf-tag-example-title">
                 {{'TAG.NODE_LIST' | translate }}
             </div>
-            <adf-tag-node-list [nodeId]="nodeId"></adf-tag-node-list>
+            <adf-tag-node-list [showDelete]="showDelete" [nodeId]="nodeId"></adf-tag-node-list>
         </mat-card>
+
+        <p class="toggle">
+            <mat-slide-toggle
+                id="adf-remove-button-tag"
+                [color]="'primary'"
+                (change)="toggleDeleteButton()"
+                [checked]="isReadOnly">
+                Show Delete Button
+            </mat-slide-toggle>
+        </p>
+
     </div>
 </div>

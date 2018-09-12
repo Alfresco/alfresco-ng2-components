@@ -103,5 +103,35 @@ describe('TagNodeList', () => {
 
             component.ngOnChanges();
         });
+
+        it('Should not show the delete tag button if showDelete is false', (done) => {
+            component.nodeId = 'fake-node-id';
+            component.showDelete = false;
+
+            component.results.subscribe(() => {
+                fixture.detectChanges();
+
+                let deleteButton: any = element.querySelector('#tag_chips_delete_test1');
+                expect(deleteButton).toBeNull();
+                done();
+            });
+
+            component.ngOnChanges();
+        });
+
+        it('Should show the delete tag button if showDelete is true', (done) => {
+            component.nodeId = 'fake-node-id';
+            component.showDelete = true;
+
+            component.results.subscribe(() => {
+                fixture.detectChanges();
+
+                let deleteButton: any = element.querySelector('#tag_chips_delete_test1');
+                expect(deleteButton).not.toBeNull();
+                done();
+            });
+
+            component.ngOnChanges();
+        });
     });
 });
