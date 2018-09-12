@@ -41,7 +41,6 @@ export class ViewUtilService {
     /**
      * Based on ViewerComponent Implementation, this value is used to determine how many times we try
      * to get the rendition of a file for preview, or printing.
-     * @type {number}
      */
     maxRetries = 5;
 
@@ -63,10 +62,8 @@ export class ViewUtilService {
      * This method takes a url to trigger the print dialog against, and the type of artifact that it
      * is.
      * This URL should be one that can be rendered in the browser, for example PDF, Image, or Text
-     * @param {string} url
-     * @param {string} type
      */
-    printFile(url: string, type: string) {
+    printFile(url: string, type: string): void {
         const pwa = window.open(url, ViewUtilService.TARGET);
         if (pwa) {
             // Because of the way chrome focus and close image window vs. pdf preview window
@@ -90,10 +87,8 @@ export class ViewUtilService {
      * These are: images, PDF files, or PDF rendition of files.
      * We also force PDF rendition for TEXT type objects, otherwise the default URL is to download.
      * TODO there are different TEXT type objects, (HTML, plaintext, xml, etc. we should determine how these are handled)
-     * @param {string} objectId
-     * @param {string} objectType
      */
-    printFileGeneric(objectId: string, mimeType: string) {
+    printFileGeneric(objectId: string, mimeType: string): void {
         const nodeId = objectId;
         const type: string = this.getViewerTypeByMimeType(mimeType);
 
@@ -117,13 +112,6 @@ export class ViewUtilService {
             this.apiService.contentApi.getContentUrl(nodeId, false);
     }
 
-    /**
-     * From ViewerComponent
-     * @param {string} nodeId
-     * @param {string} renditionId
-     * @param {number} retries
-     * @returns {Promise<AlfrescoApi.RenditionEntry>}
-     */
     private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
         const rendition = await this.apiService.renditionsApi.getRendition(nodeId, renditionId);
 
@@ -140,12 +128,7 @@ export class ViewUtilService {
         }
     }
 
-    /**
-     * From ViewerComponent
-     * @param {string} mimeType
-     * @returns {string}
-     */
-    getViewerTypeByMimeType(mimeType: string) {
+    getViewerTypeByMimeType(mimeType: string): string {
         if (mimeType) {
             mimeType = mimeType.toLowerCase();
 
@@ -159,20 +142,10 @@ export class ViewUtilService {
         return 'unknown';
     }
 
-    /**
-     * From ViewerComponent
-     * @param {number} ms
-     * @returns {Promise<any>}
-     */
     wait(ms: number): Promise<any> {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    /**
-     * From ViewerComponent
-     * @param {string} nodeId
-     * @returns {string}
-     */
     async getRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
         const supported = await this.apiService.renditionsApi.getRenditions(nodeId);
         let rendition = supported.list.entries.find(obj => obj.entry.id.toLowerCase() === renditionId);
