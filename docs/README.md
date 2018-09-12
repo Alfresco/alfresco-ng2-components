@@ -6,7 +6,8 @@ libraries. Click the name of an item to see its documentation or click the sourc
 its main source file. Note that ADF is developed continuously, so the source files for some items may be listed here before their documentation is available.
 
 See the [Version Index](versionIndex.md) for a list of components ordered by
-the ADF version where they were introduced.
+the ADF version where they were introduced. You can see the full details of each release
+in the [Release notes](release-notes/README.md) section.
 
 Components are sometimes marked with an icon to show their status. No icon indicates
 that the component is complete and suitable for normal use. The other status levels are:
