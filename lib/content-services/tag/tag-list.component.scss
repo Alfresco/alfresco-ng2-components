@@ -1,4 +1,20 @@
+.adf-tag-chips-list {
+    display: flex;
+    flex-direction: column;
+
+    & div {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .adf-list-tag{
-    padding: 16px;
+    display: block;
     font-size: 16px;
+}
+
+.adf-tag-list-controls {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
 }

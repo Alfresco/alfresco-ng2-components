@@ -30,7 +30,7 @@ var TagPage = function () {
     var errorMessage = element(by.css("mat-hint[data-automation-id='errorMessage']"));
     var tagListRowLocator = by.css("adf-tag-node-actions-list mat-list-item div");
     var tagListByNodeIdRowLocator = by.css("adf-tag-node-list mat-chip span");
-    var tagListContentServicesRowLocator = by.css("div[class='adf-list-tag']");
+    var tagListContentServicesRowLocator = by.css("div[class*='adf-list-tag']");
 
     this.goToTagPage = function () {
         browser.driver.get(tagURL);
