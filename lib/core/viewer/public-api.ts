@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './services/view-util.service';
 export * from './components/viewer.component';
 export * from './components/imgViewer.component';
 export * from './components/mediaPlayer.component';

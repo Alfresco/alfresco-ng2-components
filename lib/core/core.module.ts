@@ -95,6 +95,7 @@ import { ProcessContentService } from './form/services/process-content.service';
 import { WidgetVisibilityService } from './form/services/widget-visibility.service';
 import { EcmUserService } from './userinfo/services/ecm-user.service';
 import { BpmUserService } from './userinfo/services/bpm-user.service';
+import { ViewUtilService } from './viewer/services/view-util.service';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -148,7 +149,8 @@ export function providers() {
         ProcessContentService,
         WidgetVisibilityService,
         EcmUserService,
-        BpmUserService
+        BpmUserService,
+        ViewUtilService
     ];
 }
 
