@@ -30,6 +30,7 @@ import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { Subscription } from 'rxjs';
+import { ViewUtilService } from '../services/view-util.service';
 
 @Component({
     selector: 'adf-viewer',
@@ -245,6 +246,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     };
 
     constructor(private apiService: AlfrescoApiService,
+                private viewUtils: ViewUtilService,
                 private logService: LogService,
                 private location: Location,
                 private el: ElementRef) {
@@ -588,6 +590,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         if (this.allowPrint) {
             const args = new BaseEvent();
             this.print.next(args);
+
+            if (!args.defaultPrevented) {
+                this.viewUtils.printFileGeneric(this.nodeId, this.mimeType);
+            }
         }
     }
 
