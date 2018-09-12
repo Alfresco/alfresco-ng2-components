@@ -27,7 +27,7 @@
 <adf-search #search [searchTerm]="searchedWord"
         id="adf-add-permission-authority-results"
         class="adf-permission-result-list"
-        *ngIf="searchedWord.length !== 0">
+        [class.adf-permission-result-list-search]="searchedWord.length === 0">
 <ng-template let-data>
     <mat-selection-list class="adf-permission-result-list-elements">
         <mat-list-option
