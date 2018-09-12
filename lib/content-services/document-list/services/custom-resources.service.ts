@@ -261,6 +261,11 @@ export class CustomResourcesService {
         return isCustomSources;
     }
 
+    /**
+     * Is the folder ID a "-my", "-root-", or "-shared-" alias?
+     * @param folderId Folder ID name to check
+     * @returns True if the ID is one of the suppored sources, false otherwise
+     */
     isSupportedSource(folderId: string): boolean {
         let isSupportedSources = false;
         const sources = ['-my-', '-root-', '-shared-'];
@@ -330,6 +335,11 @@ export class CustomResourcesService {
         return of([]);
     }
 
+    /**
+     * Does the well-known alias have a corresponding node ID?
+     * @param nodeId Node to check
+     * @returns True if the alias has a corresponding node ID, false otherwise
+     */
     hasCorrespondingNodeIds(nodeId: string): boolean {
         return this.isCustomSource(nodeId) || this.isSupportedSource(nodeId);
     }

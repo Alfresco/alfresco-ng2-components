@@ -29,12 +29,15 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 })
 export class InheritPermissionDirective {
 
+    /** ID of the node to add/remove inherited permissions. */
     @Input()
     nodeId: string;
 
+    /** Emitted when the node is updated. */
     @Output()
     updated: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
