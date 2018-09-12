@@ -68,24 +68,18 @@ export class ViewUtilService {
      */
     printFile(url: string, type: string) {
         const pwa = window.open(url, ViewUtilService.TARGET);
-        // Because of the way chrome focus and close image window vs. pdf preview window
-        if (type === ViewUtilService.ContentGroup.IMAGE) {
-            pwa.onfocus = () => {
-                setTimeout( () => {
-                    pwa.close();
-                }, 500);
-            };
-            pwa.onload = () => {
-                pwa.print();
-            };
-        } else {
-            pwa.onload = () => {
-                pwa.print();
-                pwa.onfocus =  () => {
+        if (pwa) {
+            // Because of the way chrome focus and close image window vs. pdf preview window
+            if (type === ViewUtilService.ContentGroup.IMAGE) {
+                pwa.onfocus = () => {
                     setTimeout( () => {
                         pwa.close();
-                    }, 10);
+                    }, 500);
                 };
+            }
+
+            pwa.onload = () => {
+                pwa.print();
             };
         }
     }
