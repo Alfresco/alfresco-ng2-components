@@ -34,6 +34,10 @@ export class TagNodeListComponent implements OnChanges {
     @Input()
     nodeId: string;
 
+    /** Show delete button */
+    @Input()
+    showDelete = true;
+
     tagsEntries: any;
 
     /** Emitted when a tag is selected. */

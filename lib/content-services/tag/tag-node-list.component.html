@@ -1,7 +1,7 @@
 <mat-chip-list>
     <mat-chip class="adf-tag-chips adf-primary-background-color" *ngFor="let currentEntry of tagsEntries; let idx = index">
         <span id="tag_name_{{idx}}">{{currentEntry.entry.tag}}</span>
-        <button class="adf-tag-chips-delete" id="tag_chips_delete_{{currentEntry.entry.tag}}" type="button" (click)="removeTag(currentEntry.entry.id)">
+        <button *ngIf="showDelete" class="adf-tag-chips-delete" id="tag_chips_delete_{{currentEntry.entry.tag}}" type="button" (click)="removeTag(currentEntry.entry.id)">
             <mat-icon class="adf-tag-chips-delete-icon adf-primary-contrast-text-color" matChipRemove>cancel</mat-icon>
         </button>
     </mat-chip>
