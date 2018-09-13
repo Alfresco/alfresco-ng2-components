@@ -5,9 +5,9 @@
     "loginRoute": "login",
     "providers": "ALL",
     "contextRootBpm": "activiti-app",
-    "authType" : "BASIC",
+    "authType" : "OAUTH",
     "oauth2": {
-      "host": "http://localhost:30081/auth/realms/myrealm",
+      "host": "http://aps2dev.envalfresco.com/auth/realms/springboot",
       "clientId": "activiti",
       "scope": "openid",
       "secret": "",

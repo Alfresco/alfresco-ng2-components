@@ -20,7 +20,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
@@ -79,6 +79,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
+import { AuthenticationService, AuthTokenProcessorService, AuthBearerInterceptor } from './services';
 
 @NgModule({
     imports: [
@@ -144,6 +145,12 @@ import { ProcessModule } from '@alfresco/adf-process-services';
         ConfigEditorComponent
     ],
     providers: [
+        AuthenticationService,
+        AuthTokenProcessorService,
+        {
+            provide: HTTP_INTERCEPTORS, useClass:
+            AuthBearerInterceptor, multi: true
+        },
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         {
             provide: TRANSLATION_PROVIDER,
