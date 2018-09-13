@@ -37,7 +37,6 @@ export class ExtensionLoaderService {
 
                 const override = sessionStorage.getItem('aca.extension.config');
                 if (override) {
-                    console.log('overriding extension config');
                     config = JSON.parse(override);
                 }
 
@@ -86,7 +85,6 @@ export class ExtensionLoaderService {
                     });
                 },
                 error => {
-                    console.log(error);
                     resolve(null);
                 }
             );
