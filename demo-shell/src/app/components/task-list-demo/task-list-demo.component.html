@@ -1,40 +1,40 @@
 <div class="task-list-demo-inputs">
 
-     <form [formGroup]="taskListForm">
+    <form [formGroup]="taskListForm">
         <mat-form-field>
             <mat-label>App Id</mat-label>
-                <input
+            <input
                 matInput
                 class="form-control"
                 [formControl]="taskAppId">
-                <mat-error *ngIf="taskAppId.hasError('pattern')">
-                    {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.APP_ID_TYPE_ERROR' | translate }}
-                </mat-error>
+            <mat-error *ngIf="taskAppId.hasError('pattern')">
+                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.APP_ID_TYPE_ERROR' | translate }}
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Task Name</mat-label>
             <input
-            matInput
-            class="form-control"
-            [formControl]="taskName">
+                matInput
+                class="form-control"
+                [formControl]="taskName">
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Task Id</mat-label>
             <input
-            matInput
-            class="form-control"
-            [formControl]="taskId">
+                matInput
+                class="form-control"
+                [formControl]="taskId">
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Start</mat-label>
             <input
-            matInput
-            class="form-control"
-            matTooltip="{{ 'TASK_LIST_DEMO.TOOLTIP_MESSAGE.START_INPUT' | translate }}"
-            [formControl]="taskStart">
+                matInput
+                class="form-control"
+                matTooltip="{{ 'TASK_LIST_DEMO.TOOLTIP_MESSAGE.START_INPUT' | translate }}"
+                [formControl]="taskStart">
             <mat-error *ngIf="taskStart.hasError('pattern')">
                 {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_TYPE_ERROR' | translate }}
             </mat-error>
@@ -43,85 +43,94 @@
         <mat-form-field>
             <mat-label>ProcessDefinitionId</mat-label>
             <input
-            matInput
-            class="form-control"
-            [formControl]="taskProcessDefinitionId">
+                matInput
+                class="form-control"
+                [formControl]="taskProcessDefinitionId">
             <mat-hint>E.g. SimpleProcess:1:2</mat-hint>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>ProcessInstanceId</mat-label>
             <input
-            matInput
-            class="form-control"
-            [formControl]="taskProcessInstanceId">
+                matInput
+                class="form-control"
+                [formControl]="taskProcessInstanceId">
             <mat-hint>E.g. 12345</mat-hint>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Items per page</mat-label>
             <input
-            matInput
-            class="form-control"
-            [formControl]="taskSize">
+                matInput
+                class="form-control"
+                [formControl]="taskSize">
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Page</mat-label>
             <input
-            matInput
-            class="form-control"
-            [formControl]="taskPage">
+                matInput
+                class="form-control"
+                [formControl]="taskPage">
         </mat-form-field>
 
-         <mat-form-field>
-             <mat-label>Due After</mat-label>
-             <input matInput class="form-control" [matDatepicker]="pickerAfter" placeholder="Choose a date" [formControl]="taskDueAfter">
-             <mat-datepicker-toggle matSuffix [for]="pickerAfter"></mat-datepicker-toggle>
-             <mat-datepicker #pickerAfter></mat-datepicker>
-         </mat-form-field>
-         <mat-form-field>
-             <mat-label>Due Before</mat-label>
-             <input matInput class="form-control" [matDatepicker]="pickerBefore" placeholder="Choose a date" [formControl]="taskDueBefore">
-             <mat-datepicker-toggle matSuffix [for]="pickerBefore"></mat-datepicker-toggle>
-             <mat-datepicker #pickerBefore></mat-datepicker>
-         </mat-form-field>
-         <mat-form-field>
+        <mat-form-field>
+            <mat-label>Due After</mat-label>
+            <input matInput class="form-control" [matDatepicker]="pickerAfter" placeholder="Choose a date"
+                   [formControl]="taskDueAfter">
+            <mat-datepicker-toggle matSuffix [for]="pickerAfter"></mat-datepicker-toggle>
+            <mat-datepicker #pickerAfter></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Due Before</mat-label>
+            <input matInput class="form-control" [matDatepicker]="pickerBefore" placeholder="Choose a date"
+                   [formControl]="taskDueBefore">
+            <mat-datepicker-toggle matSuffix [for]="pickerBefore"></mat-datepicker-toggle>
+            <mat-datepicker #pickerBefore></mat-datepicker>
+        </mat-form-field>
 
         <mat-form-field>
-                <mat-label>Process Instance</mat-label>
-                <mat-select
+            <mat-label>Process Instance</mat-label>
+            <mat-select
                 class="form-control"
                 [formControl]="taskIncludeProcessInstance">
-                 <mat-option *ngFor="let includeProcessInstanceOption of includeProcessInstanceOptions" [value]="includeProcessInstanceOption.value">{{ includeProcessInstanceOption.title }}</mat-option>
-                </mat-select>
+                <mat-option *ngFor="let includeProcessInstanceOption of includeProcessInstanceOptions"
+                            [value]="includeProcessInstanceOption.value">{{ includeProcessInstanceOption.title }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-                <mat-label>Assignment</mat-label>
-                <mat-select
+            <mat-label>Assignment</mat-label>
+            <mat-select
                 class="form-control"
                 [formControl]="taskAssignment">
-                 <mat-option *ngFor="let assignmentOption of assignmentOptions" [value]="assignmentOption.value">{{ assignmentOption.title }}</mat-option>
-                </mat-select>
+                <mat-option *ngFor="let assignmentOption of assignmentOptions" [value]="assignmentOption.value">{{
+                    assignmentOption.title }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-                <mat-label>State</mat-label>
-                <mat-select
+            <mat-label>State</mat-label>
+            <mat-select
                 class="form-control"
                 [formControl]="taskState">
-                    <mat-option *ngFor="let stateOption of stateOptions" [value]="stateOption.value">{{ stateOption.title }}</mat-option>
-                </mat-select>
+                <mat-option *ngFor="let stateOption of stateOptions" [value]="stateOption.value">{{
+                    stateOption.title }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-                <mat-label>Sort</mat-label>
-                <mat-select
+            <mat-label>Sort</mat-label>
+            <mat-select
                 class="form-control"
                 [formControl]="taskSort">
-                    <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title }}</mat-option>
-                </mat-select>
+                <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title
+                    }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
     </form>
 </div>
@@ -147,14 +156,14 @@
         [includeProcessInstance]="includeProcessInstance"
         #taskList>
         <data-columns>
-                <data-column key="id" title="Id"></data-column>
-                <data-column key="name" title="Name"></data-column>
-                <data-column key="description" title="Description"></data-column>
-                <data-column key="created" title="Created"></data-column>
-                <data-column key="dueDate" title="Due Date"></data-column>
-                <data-column key="processInstanceId" title="Process Instance Id"></data-column>
-                <data-column key="processDefinitionId" title="Process Definition Id"></data-column>
-            </data-columns>
+            <data-column key="id" title="Id"></data-column>
+            <data-column key="name" title="Name"></data-column>
+            <data-column key="description" title="Description"></data-column>
+            <data-column key="created" title="Created"></data-column>
+            <data-column key="dueDate" title="Due Date"></data-column>
+            <data-column key="processInstanceId" title="Process Instance Id"></data-column>
+            <data-column key="processDefinitionId" title="Process Definition Id"></data-column>
+        </data-columns>
     </adf-tasklist>
 
     <adf-pagination
