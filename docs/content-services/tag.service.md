@@ -17,9 +17,10 @@ Manages tags in Content Services.
     -   _nodeId:_ `string`  - ID of the target node
     -   _tagName:_ `string`  - Name of the tag to add
     -   **Returns** `any` - TagEntry object (defined in JSAPI) with details of the new tag
--   **getAllTheTags**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **getAllTheTags**(opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<TagPaging>`<br/>
     Gets a list of all the tags already defined in the repository.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - TagPaging object (defined in JSAPI) containing the tags
+    -   _opts:_ `any`  - (Optional) Options supported by JSAPI
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagPaging>` - TagPaging object (defined in JSAPI) containing the tags
 -   **getTagsByNodeId**(nodeId: `string`): `any`<br/>
     Gets a list of tags added to a node.
     -   _nodeId:_ `string`  - ID of the target node

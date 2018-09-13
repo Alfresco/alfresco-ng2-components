@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-16
+Last reviewed: 2018-09-13
 ---
 
 # Document List service
@@ -12,11 +12,11 @@ Implements node operations used by the [Document List component](../content-serv
 
 ### Methods
 
--   **copyNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **copyNode**(nodeId: `string`, targetParentId: `string`): `any`<br/>
     Copy a node to destination node
     -   _nodeId:_ `string`  - The id of the node to be copied
     -   _targetParentId:_ `string`  - The id of the folder where the node will be copied
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - NodeEntry for the copied node
+    -   **Returns** `any` - [NodeEntry](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) for the copied node
 -   **createFolder**(name: `string`, parentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntity`](../content-services/document-library.model.md)`>`<br/>
     Creates a new folder in the path.
     -   _name:_ `string`  - Folder name
@@ -40,7 +40,7 @@ Implements node operations used by the [Document List component](../content-serv
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - Details of the folder
 -   **getFolderNode**(nodeId: `string`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
-    (**Deprecated:** 2.3.0 Gets a folder node via its node ID.) 
+    (**Deprecated:** 2.3.0. Gets a folder node via its node ID.) 
     -   _nodeId:_ `string`  - ID of the folder node
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Details of the folder
@@ -54,15 +54,15 @@ Implements node operations used by the [Document List component](../content-serv
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
 -   **hasPermission**(node: `any`, permission: [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
-    (**Deprecated:** 2.3.0 use the one in the content service Checks if a node has the specified permission.) 
+    (**Deprecated:** 2.3.0 - use the equivalent in the content service. Checks if a node has the specified permission.) 
     -   _node:_ `any`  - Target node
     -   _permission:_ [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`  - Permission level to query
     -   **Returns** `boolean` - True if the node has the permission, false otherwise
--   **moveNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **moveNode**(nodeId: `string`, targetParentId: `string`): `any`<br/>
     Moves a node to destination node.
     -   _nodeId:_ `string`  - The id of the node to be moved
     -   _targetParentId:_ `string`  - The id of the folder where the node will be moved
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - NodeEntry for the moved node
+    -   **Returns** `any` - [NodeEntry](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) for the moved node
 
 ## Details
 
