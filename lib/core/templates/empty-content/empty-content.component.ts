@@ -27,12 +27,15 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@a
 })
 export class EmptyContentComponent {
 
+    /** Material Icon to use. */
     @Input()
     icon = 'cake';
 
+    /** String or Resource Key for the title. */
     @Input()
     title = '';
 
+    /** String or Resource Key for the subtitle. */
     @Input()
     subtitle = '';
 
