@@ -25,6 +25,13 @@ export class SearchConfigurationService implements SearchConfigurationInterface 
     constructor() {
     }
 
+    /**
+     * Generates a QueryBody object with custom search parameters.
+     * @param searchTerm Term text to search for
+     * @param maxResults Maximum number of search results to show in a page
+     * @param skipCount The offset of the start of the page within the results list
+     * @returns Query body defined by the parameters
+     */
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
         let defaultQueryBody: QueryBody = {
             query: {

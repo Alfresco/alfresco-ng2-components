@@ -35,6 +35,10 @@ export class HostSettingsComponent implements OnInit {
 
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 
+    /**
+     * Tells the component which provider options are available. Possible valid values
+     * are "ECM" (Content), "BPM" (Process) , "ALL" (Content and Process), 'OAUTH2' SSO.
+     */
     @Input()
     providers: string[] = ['BPM', 'ECM', 'ALL'];
 
@@ -52,9 +56,11 @@ export class HostSettingsComponent implements OnInit {
     @Output()
     ecmHostChange = new EventEmitter<string>();
 
+    /** Emitted when the user cancels the changes. */
     @Output()
     cancel = new EventEmitter<boolean>();
 
+    /** Emitted when the changes are successfully applied. */
     @Output()
     success = new EventEmitter<boolean>();
 
