@@ -223,6 +223,28 @@ describe('TaskListComponent', () => {
         });
     });
 
+    it('should return the filtered task list by created date', (done) => {
+        let state = new SimpleChange(null, 'open', true);
+        let afterDate = new SimpleChange(null, '28-02-2017', true);
+        component.success.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.rows).toBeDefined();
+            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('nameFake1');
+            expect(component.rows[0]['processDefinitionId']).toEqual('myprocess:1:4');
+            done();
+        });
+        component.ngAfterContentInit();
+        component.ngOnChanges({ 'state': state, 'afterDate': afterDate });
+        fixture.detectChanges();
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeGlobalTask)
+        });
+    });
+
     it('should return the filtered task list for all state', (done) => {
         let state = new SimpleChange(null, 'all', true);
         let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);

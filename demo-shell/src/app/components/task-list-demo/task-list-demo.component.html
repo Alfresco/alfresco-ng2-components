@@ -3,7 +3,7 @@
      <form [formGroup]="taskListForm">
         <mat-form-field>
             <mat-label>App Id</mat-label>
-                <input 
+                <input
                 matInput
                 class="form-control"
                 [formControl]="taskAppId">
@@ -11,10 +11,10 @@
                     {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.APP_ID_TYPE_ERROR' | translate }}
                 </mat-error>
         </mat-form-field>
-        
+
         <mat-form-field>
             <mat-label>Task Name</mat-label>
-            <input 
+            <input
             matInput
             class="form-control"
             [formControl]="taskName">
@@ -22,16 +22,16 @@
 
         <mat-form-field>
             <mat-label>Task Id</mat-label>
-            <input 
-            matInput 
+            <input
+            matInput
             class="form-control"
             [formControl]="taskId">
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Start</mat-label>
-            <input 
-            matInput 
+            <input
+            matInput
             class="form-control"
             matTooltip="{{ 'TASK_LIST_DEMO.TOOLTIP_MESSAGE.START_INPUT' | translate }}"
             [formControl]="taskStart">
@@ -42,7 +42,7 @@
 
         <mat-form-field>
             <mat-label>ProcessDefinitionId</mat-label>
-            <input 
+            <input
             matInput
             class="form-control"
             [formControl]="taskProcessDefinitionId">
@@ -51,8 +51,8 @@
 
         <mat-form-field>
             <mat-label>ProcessInstanceId</mat-label>
-            <input 
-            matInput 
+            <input
+            matInput
             class="form-control"
             [formControl]="taskProcessInstanceId">
             <mat-hint>E.g. 12345</mat-hint>
@@ -68,15 +68,29 @@
 
         <mat-form-field>
             <mat-label>Page</mat-label>
-            <input 
-            matInput 
+            <input
+            matInput
             class="form-control"
             [formControl]="taskPage">
         </mat-form-field>
 
+         <mat-form-field>
+             <mat-label>Due After</mat-label>
+             <input matInput class="form-control" [matDatepicker]="pickerAfter" placeholder="Choose a date" [formControl]="taskDueAfter">
+             <mat-datepicker-toggle matSuffix [for]="pickerAfter"></mat-datepicker-toggle>
+             <mat-datepicker #pickerAfter></mat-datepicker>
+         </mat-form-field>
+         <mat-form-field>
+             <mat-label>Due Before</mat-label>
+             <input matInput class="form-control" [matDatepicker]="pickerBefore" placeholder="Choose a date" [formControl]="taskDueBefore">
+             <mat-datepicker-toggle matSuffix [for]="pickerBefore"></mat-datepicker-toggle>
+             <mat-datepicker #pickerBefore></mat-datepicker>
+         </mat-form-field>
+         <mat-form-field>
+
         <mat-form-field>
                 <mat-label>Process Instance</mat-label>
-                <mat-select 
+                <mat-select
                 class="form-control"
                 [formControl]="taskIncludeProcessInstance">
                  <mat-option *ngFor="let includeProcessInstanceOption of includeProcessInstanceOptions" [value]="includeProcessInstanceOption.value">{{ includeProcessInstanceOption.title }}</mat-option>
@@ -85,7 +99,7 @@
 
         <mat-form-field>
                 <mat-label>Assignment</mat-label>
-                <mat-select 
+                <mat-select
                 class="form-control"
                 [formControl]="taskAssignment">
                  <mat-option *ngFor="let assignmentOption of assignmentOptions" [value]="assignmentOption.value">{{ assignmentOption.title }}</mat-option>
@@ -94,7 +108,7 @@
 
         <mat-form-field>
                 <mat-label>State</mat-label>
-                <mat-select 
+                <mat-select
                 class="form-control"
                 [formControl]="taskState">
                     <mat-option *ngFor="let stateOption of stateOptions" [value]="stateOption.value">{{ stateOption.title }}</mat-option>
@@ -103,7 +117,7 @@
 
         <mat-form-field>
                 <mat-label>Sort</mat-label>
-                <mat-select 
+                <mat-select
                 class="form-control"
                 [formControl]="taskSort">
                     <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title }}</mat-option>
@@ -128,6 +142,8 @@
         [start]="start"
         [page]="page"
         [size]="size"
+        [dueAfter]="dueAfter"
+        [dueBefore]="dueBefore"
         [includeProcessInstance]="includeProcessInstance"
         #taskList>
         <data-columns>
@@ -140,7 +156,7 @@
                 <data-column key="processDefinitionId" title="Process Definition Id"></data-column>
             </data-columns>
     </adf-tasklist>
-    
+
     <adf-pagination
         [target]="taskList">
     </adf-pagination>

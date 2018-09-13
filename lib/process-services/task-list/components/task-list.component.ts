@@ -28,6 +28,7 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
+import moment from 'moment-es6';
 
 @Component({
     selector: 'adf-tasklist',
@@ -149,6 +150,14 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     /** The number of tasks to fetch. Default value: 25. */
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
+
+    /** Filter the tasks. Display only tasks with created_date after dueAfter. */
+    @Input()
+    dueAfter: string;
+
+    /** Filter the tasks. Display only tasks with created_date before dueBefore. */
+    @Input()
+    dueBefore: string;
 
     rows: any[] = [];
     isLoading: boolean = true;
@@ -297,7 +306,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * @param taskId
      */
     isEqualToCurrentId(taskId: string): boolean {
-        return this.currentInstanceId === taskId ? true : false;
+        return this.currentInstanceId === taskId;
     }
 
     /**
@@ -348,6 +357,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
         let requestNode = {
             appDefinitionId: this.appId,
+            dueAfter: this.dueAfter ? moment(this.dueAfter).toDate() : null,
+            dueBefore: this.dueBefore ? moment(this.dueBefore).toDate() : null,
             processInstanceId: this.processInstanceId,
             processDefinitionId: this.processDefinitionId,
             processDefinitionKey: this.processDefinitionKey,
