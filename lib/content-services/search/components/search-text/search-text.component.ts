@@ -29,6 +29,7 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 })
 export class SearchTextComponent implements SearchWidget, OnInit {
 
+    /** The content of the text box. */
     @Input()
     value = '';
 

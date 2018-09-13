@@ -37,6 +37,7 @@ export class PermissionListComponent implements OnInit {
     @Output()
     update: EventEmitter<PermissionElement> = new EventEmitter();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 

@@ -58,6 +58,7 @@ export class CookieService {
             (path ? `;path=${path}` : ';path=/');
     }
 
+    /** Placeholder for testing purposes - do not use. */
     clear() {
         /* placeholder for testing purposes */
     }

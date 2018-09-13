@@ -1,7 +1,7 @@
 ---
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-06-08
+Last reviewed: 2018-09-13
 ---
 
 # Inherit Permission directive
@@ -23,14 +23,14 @@ Update the current node by adding/removing the inherited permissions.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | ID of the node to add/remove inherited permissions |
+| nodeId | `string` |  | ID of the node to add/remove inherited permissions. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` |  |
-| updated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the node is updated |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| updated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the node is updated. |
 
 ## Details
 

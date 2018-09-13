@@ -45,6 +45,7 @@ export class TagService {
 
     /**
      * Gets a list of all the tags already defined in the repository.
+     * @param opts Options supported by JSAPI
      * @returns TagPaging object (defined in JSAPI) containing the tags
      */
     getAllTheTags(opts?: any): Observable<TagPaging> {

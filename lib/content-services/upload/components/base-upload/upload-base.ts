@@ -72,6 +72,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     @Output()
     error = new EventEmitter();
 
+    /** Emitted when the upload begins. */
     @Output()
     beginUpload = new EventEmitter<UploadFilesEvent>();
 

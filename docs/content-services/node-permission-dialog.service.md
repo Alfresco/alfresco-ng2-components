@@ -1,7 +1,7 @@
 ---
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-05-23
+Last reviewed: 2018-09-13
 ---
 
 # Node permission dialog service
@@ -16,7 +16,7 @@ Displays dialogs to let the user set node permissions.
     Closes the currently-open dialog.
 -   **openAddPermissionDialog**(node: `Node`, title?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntity`](../content-services/document-library.model.md)`[]>`<br/>
     Opens a dialog to add permissions to a node.
-    -   _node:_ `Node`  - 
+    -   _node:_ `Node`  - ID of the target node
     -   _title:_ `string`  - (Optional) Dialog title
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntity`](../content-services/document-library.model.md)`[]>` - Node with updated permissions
 -   **updateNodePermissionByDialog**(nodeId?: `string`, title?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>

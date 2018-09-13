@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-08-07
+Last reviewed: 2018-09-13
 ---
 
 # Upload Drag Area Component
@@ -72,7 +72,7 @@ as the drag/drop target:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` | Raised after files or folders dropped and before the upload process starts. |
+| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
 | createFolder | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a folder is created. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the file is uploaded successfully. |
