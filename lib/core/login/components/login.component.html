@@ -79,7 +79,7 @@
                             <ng-content></ng-content>
 
                             <br>
-                            <button type="submit" id="login-button" tabindex="4"
+                            <button *ngIf="showLoginButton" type="submit" id="login-button" tabindex="4"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     [class.isChecking]="actualLoginStep === LoginSteps.Checking"

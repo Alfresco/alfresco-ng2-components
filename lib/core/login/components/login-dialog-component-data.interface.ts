@@ -15,15 +15,12 @@
  * limitations under the License.
  */
 
-export * from './directives/login-header.directive';
-export * from './directives/login-footer.directive';
+import { Subject } from 'rxjs/Subject';
+import { ExternalAlfrescoApiService } from '../../services/external-alfresco-api.service';
 
-export * from './components/login.component';
-export * from './components/login-dialog.component';
-export * from './components/login-dialog-component-data.interface';
-
-export * from './models/login-error.event';
-export * from './models/login-submit.event';
-export * from './models/login-success.event';
-
-export * from './login.module';
+export interface LoginDialogComponentData {
+    title: string;
+    actionName?: string;
+    logged: Subject<string>;
+    externalAlfrescoApiservice: ExternalAlfrescoApiService;
+}

@@ -26,7 +26,11 @@ import {
     ProcessContentService,
     ActivitiContentService,
     ContentService,
-    FormEvent
+    FormEvent,
+    AppConfigValues,
+    AppConfigService,
+    LoginDialogService,
+    AlfrescoApiService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
@@ -61,7 +65,9 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 public processContentService: ProcessContentService,
                 private activitiContentService: ActivitiContentService,
                 private contentService: ContentService,
-                private contentDialog: ContentNodeDialogService) {
+                private contentDialog: ContentNodeDialogService,
+                private appConfigService: AppConfigService,
+                private loginDialogService: LoginDialogService) {
         super(formService, logger, thumbnails, processContentService);
     }
 
@@ -172,13 +178,26 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
     }
 
-    openSelectDialog(repoId: string, repoName: string) {
-        const accountIdentifier = 'alfresco-' + repoId + '-' + repoName;
-        this.contentDialog.openFileBrowseDialogBySite().subscribe(
-            (selections: MinimalNodeEntryEntity[]) => {
-                this.tempFilesList.push(...selections);
-                this.uploadFileFromCS(selections, accountIdentifier);
+    openSelectDialog(repository) {
+        const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
+        let currentECMHost = this.appConfigService.get(AppConfigValues.ECMHOST);
+        if (repository.repositoryUrl.replace('/alfresco', '') !== currentECMHost) {
+            this.loginDialogService.openLogin('LOGMEIN').subscribe((result) => {
+                /*tslint:disable-next-line*/
+                console.log('LOGGED');
+                this.contentDialog.openFileBrowseDialogBySite().subscribe(
+                    (selections: MinimalNodeEntryEntity[]) => {
+                        this.tempFilesList.push(...selections);
+                        this.uploadFileFromCS(selections, accountIdentifier);
+                    });
             });
+        } else {
+            this.contentDialog.openFileBrowseDialogBySite().subscribe(
+                (selections: MinimalNodeEntryEntity[]) => {
+                    this.tempFilesList.push(...selections);
+                    this.uploadFileFromCS(selections, accountIdentifier);
+                });
+        }
     }
 
     private uploadFileFromCS(fileNodeList: MinimalNodeEntryEntity[], accountId: string, siteId?: string) {

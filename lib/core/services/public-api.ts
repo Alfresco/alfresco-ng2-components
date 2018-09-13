@@ -48,3 +48,4 @@ export * from './discovery-api.service';
 export * from './comment-process.service';
 export * from './search-configuration.service';
 export * from './comment-content.service';
+export * from './login-dialog.service';

@@ -46,7 +46,7 @@
                 <div *ngIf="!isDefinedSourceFolder()">
                     <button mat-menu-item *ngFor="let repo of repositoryList"
                             id="attach-{{repo?.name}}"
-                           (click)="openSelectDialog(repo.id, repo.name)">
+                           (click)="openSelectDialog(repo)">
                             {{repo.name}}
                             <mat-icon>
                                 <img class="adf-attach-widget__image-logo" src="../assets/images/alfresco-flower.svg">

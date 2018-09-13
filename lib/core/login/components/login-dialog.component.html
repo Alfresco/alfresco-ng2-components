@@ -1,0 +1,28 @@
+<header
+    mat-dialog-title
+    data-automation-id="content-node-selector-title">{{title || data?.title}}
+</header>
+
+<mat-dialog-content>
+    <adf-login #adfLogin
+               [showRememberMe]="false"
+               [showLoginActions]="false"
+               [backgroundImageUrl]="''"
+               [externalLoginService]="data?.externalLoginService"
+               [showLoginButton]="false">
+    </adf-login>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button
+        mat-button
+        (click)="close()"
+        data-automation-id="content-node-selector-actions-cancel">CANCEL
+    </button>
+
+    <button mat-button
+        class="choose-action"
+        [disabled]="!login?.form.valid"
+        (click)="submitForm()">{{ data.actionName }}
+    </button>
+</mat-dialog-actions>
