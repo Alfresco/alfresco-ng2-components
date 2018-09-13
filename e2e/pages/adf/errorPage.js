@@ -67,6 +67,10 @@ var ErrorPage = function(){
         return errorPageDescription.getText();
     };
 
+    this.checkBackButton = function () {
+        return Util.waitUntilElementIsVisible(backButton);
+    };
+
 };
 
 module.exports = ErrorPage;

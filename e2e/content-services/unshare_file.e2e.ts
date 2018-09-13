@@ -94,5 +94,6 @@ describe('Unshare file', () => {
         browser.get(sharedLink);
 
         errorPage.checkErrorPage();
+        errorPage.checkBackButton();
     });
 });
