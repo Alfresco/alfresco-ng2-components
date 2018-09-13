@@ -16,16 +16,34 @@
  */
 
 /* tslint:disable */
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges, OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { FormErrorEvent, FormEvent } from './../events/index';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { ContentLinkModel } from './widgets/core/content-link.model';
-import { FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues, FormFieldValidator } from './widgets/core/index';
+import {
+    FormFieldModel,
+    FormModel,
+    FormOutcomeEvent,
+    FormOutcomeModel,
+    FormValues,
+    FormFieldValidator
+} from './widgets/core/index';
 import { Observable, of } from 'rxjs';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { switchMap } from 'rxjs/operators';
+import { ValidateFormEvent } from './../events/validate-form.event';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'adf-form',
@@ -33,14 +51,14 @@ import { switchMap } from 'rxjs/operators';
     styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FormComponent implements OnInit, OnChanges {
+export class FormComponent implements OnInit, OnChanges, OnDestroy {
 
     static SAVE_OUTCOME_ID: string = '$save';
     static COMPLETE_OUTCOME_ID: string = '$complete';
     static START_PROCESS_OUTCOME_ID: string = '$startProcess';
     static CUSTOM_OUTCOME_ID: string = '$custom';
     static COMPLETE_BUTTON_COLOR: string = 'primary';
-    static COMPLETE_OUTCOME_NAME: string ='Complete'
+    static COMPLETE_OUTCOME_NAME: string = 'Complete'
 
     /** Underlying form model instance. */
     @Input()
@@ -138,6 +156,10 @@ export class FormComponent implements OnInit, OnChanges {
     @Output()
     formDataRefreshed: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
+    /** Emitted when form validations has error. s*/
+    @Output()
+    formError: EventEmitter<FormFieldModel[]> = new EventEmitter<FormFieldModel[]>();
+
     /** Emitted when any outcome is executed. Default behaviour can be prevented
      * via `event.preventDefault()`.
      */
@@ -149,6 +171,8 @@ export class FormComponent implements OnInit, OnChanges {
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     debugMode: boolean = false;
+
+    protected subscriptions: Subscription[] = [];
 
     constructor(protected formService: FormService,
                 protected visibilityService: WidgetVisibilityService,
@@ -214,9 +238,21 @@ export class FormComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.formService.formContentClicked.subscribe((content: ContentLinkModel) => {
-            this.formContentClicked.emit(content);
-        });
+        this.subscriptions.push(
+            this.formService.formContentClicked.subscribe((content: ContentLinkModel) => {
+                this.formContentClicked.emit(content);
+            }),
+            this.formService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
+                if (validateFormEvent.errorsField.length > 0) {
+                    this.formError.next(validateFormEvent.errorsField);
+                }
+            })
+        );
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -338,12 +374,12 @@ export class FormComponent implements OnInit, OnChanges {
 
     getFormByTaskId(taskId: string): Promise<FormModel> {
         return new Promise<FormModel>((resolve, reject) => {
-            this.findProcessVariablesByTaskId(taskId).subscribe( (processVariables) => {
+            this.findProcessVariablesByTaskId(taskId).subscribe((processVariables) => {
                 this.formService
                     .getTaskForm(taskId)
                     .subscribe(
                         form => {
-                            const parsedForm =  this.parseForm(form);
+                            const parsedForm = this.parseForm(form);
                             this.visibilityService.refreshVisibility(parsedForm);
                             parsedForm.validateForm();
                             this.form = parsedForm;
@@ -364,16 +400,16 @@ export class FormComponent implements OnInit, OnChanges {
         this.formService
             .getFormDefinitionById(formId)
             .subscribe(
-            form => {
-                this.formName = form.name;
-                this.form = this.parseForm(form);
-                this.visibilityService.refreshVisibility(this.form);
-                this.form.validateForm();
-                this.onFormLoaded(this.form);
-            },
-            (error) => {
-                this.handleError(error);
-            }
+                form => {
+                    this.formName = form.name;
+                    this.form = this.parseForm(form);
+                    this.visibilityService.refreshVisibility(this.form);
+                    this.form.validateForm();
+                    this.onFormLoaded(this.form);
+                },
+                (error) => {
+                    this.handleError(error);
+                }
             );
     }
 
@@ -381,22 +417,22 @@ export class FormComponent implements OnInit, OnChanges {
         this.formService
             .getFormDefinitionByName(formName)
             .subscribe(
-            id => {
-                this.formService.getFormDefinitionById(id).subscribe(
-                    form => {
-                        this.form = this.parseForm(form);
-                        this.visibilityService.refreshVisibility(this.form);
-                        this.form.validateForm();
-                        this.onFormLoaded(this.form);
-                    },
-                    (error) => {
-                        this.handleError(error);
-                    }
-                );
-            },
-            (error) => {
-                this.handleError(error);
-            }
+                id => {
+                    this.formService.getFormDefinitionById(id).subscribe(
+                        form => {
+                            this.form = this.parseForm(form);
+                            this.visibilityService.refreshVisibility(this.form);
+                            this.form.validateForm();
+                            this.onFormLoaded(this.form);
+                        },
+                        (error) => {
+                            this.handleError(error);
+                        }
+                    );
+                },
+                (error) => {
+                    this.handleError(error);
+                }
             );
     }
 
@@ -405,11 +441,11 @@ export class FormComponent implements OnInit, OnChanges {
             this.formService
                 .saveTaskForm(this.form.taskId, this.form.values)
                 .subscribe(
-                () => {
-                    this.onTaskSaved(this.form);
-                    this.storeFormAsMetadata();
-                },
-                error => this.onTaskSavedError(this.form, error)
+                    () => {
+                        this.onTaskSaved(this.form);
+                        this.storeFormAsMetadata();
+                    },
+                    error => this.onTaskSavedError(this.form, error)
                 );
         }
     }
@@ -419,11 +455,11 @@ export class FormComponent implements OnInit, OnChanges {
             this.formService
                 .completeTaskForm(this.form.taskId, this.form.values, outcome)
                 .subscribe(
-                () => {
-                    this.onTaskCompleted(this.form);
-                    this.storeFormAsMetadata();
-                },
-                error => this.onTaskCompletedError(this.form, error)
+                    () => {
+                        this.onTaskCompleted(this.form);
+                        this.storeFormAsMetadata();
+                    },
+                    error => this.onTaskCompletedError(this.form, error)
                 );
         }
     }
@@ -470,9 +506,9 @@ export class FormComponent implements OnInit, OnChanges {
 
     private loadFormForEcmNode(nodeId: string): void {
         this.nodeService.getNodeMetadata(nodeId).subscribe(data => {
-            this.data = data.metadata;
-            this.loadFormFromActiviti(data.nodeType);
-        },
+                this.data = data.metadata;
+                this.loadFormFromActiviti(data.nodeType);
+            },
             this.handleError);
     }
 
@@ -501,8 +537,8 @@ export class FormComponent implements OnInit, OnChanges {
     private storeFormAsMetadata() {
         if (this.saveMetadata) {
             this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(type => {
-                this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
-            },
+                    this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
+                },
                 (error) => {
                     this.handleError(error);
                 }

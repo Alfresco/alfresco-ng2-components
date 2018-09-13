@@ -16,9 +16,7 @@
  */
 
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-    FormModel, FormService, FormOutcomeEvent, ValidateFormEvent, LogService
-} from '@alfresco/adf-core';
+import { FormModel, FormFieldModel, FormService, FormOutcomeEvent } from '@alfresco/adf-core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
 import { Subscription } from 'rxjs';
@@ -26,7 +24,7 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-form',
     templateUrl: 'form.component.html',
-    styleUrls: ['form.component.css'],
+    styleUrls: ['form.component.scss'],
     providers: [
         { provide: FormService, useClass: InMemoryFormService }
     ],
@@ -35,18 +33,20 @@ import { Subscription } from 'rxjs';
 export class FormComponent implements OnInit, OnDestroy {
 
     form: FormModel;
+    errorFields: FormFieldModel[] = [];
     private subscriptions: Subscription[] = [];
 
-    constructor(@Inject(FormService) private formService: InMemoryFormService, private logService: LogService) {
+    constructor(@Inject(FormService) private formService: InMemoryFormService) {
 
         this.subscriptions.push(
             formService.executeOutcome.subscribe((formOutcomeEvent: FormOutcomeEvent) => {
                 formOutcomeEvent.preventDefault();
-            }),
-            formService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
-                this.logService.log('Error form:' + validateFormEvent.errorsField);
             })
         );
+    }
+
+    logErrors(errorFields: FormFieldModel[]) {
+        this.errorFields = errorFields;
     }
 
     ngOnInit() {
