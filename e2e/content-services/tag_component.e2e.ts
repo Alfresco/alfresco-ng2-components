@@ -28,7 +28,6 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 
 import Util = require('../util/util');
-import { browser } from "protractor";
 
 describe('Tag component', () => {
 
