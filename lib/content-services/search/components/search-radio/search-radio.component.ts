@@ -37,6 +37,7 @@ export interface SearchRadioOption {
 })
 export class SearchRadioComponent implements SearchWidget, OnInit {
 
+    /** The value of the selected radio button. */
     @Input()
     value: string;
 

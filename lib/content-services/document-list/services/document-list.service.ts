@@ -150,8 +150,7 @@ export class DocumentListService {
     }
 
     /**
-     * @deprecated 2.3.0
-     * Gets a folder node via its node ID.
+     * @deprecated 2.3.0. Gets a folder node via its node ID.
      * @param nodeId ID of the folder node
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
@@ -195,8 +194,7 @@ export class DocumentListService {
     }
 
     /**
-     * @Deprecated 2.3.0 use the one in the content service
-     * Checks if a node has the specified permission.
+     * @Deprecated 2.3.0 - use the equivalent in the content service. Checks if a node has the specified permission.
      * @param node Target node
      * @param permission Permission level to query
      * @returns True if the node has the permission, false otherwise

@@ -1,7 +1,7 @@
 ---
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-05-03
+Last reviewed: 2018-09-13
 ---
 
 # Permission List Component
@@ -42,7 +42,7 @@ but you can also supply your own content:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` |  |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | update | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<PermissionElement>` | Emitted when the permission is updated. |
 
 ## Details

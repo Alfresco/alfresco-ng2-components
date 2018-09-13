@@ -35,7 +35,7 @@ export class NodePermissionDialogService {
 
     /**
      * Opens a dialog to add permissions to a node.
-     * @param nodeId ID of the target node
+     * @param node ID of the target node
      * @param title Dialog title
      * @returns Node with updated permissions
      */
