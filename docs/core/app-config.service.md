@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-09-13
 ---
 
 # App Config service
@@ -24,7 +25,7 @@ Supports app configuration settings, stored server side.
     -   **Returns** `string` - Port with prefix
 -   **getLocationProtocol**(): `string`<br/>
     Gets the location.protocol value.
-    -   **Returns** `string` - 
+    -   **Returns** `string` - The location.protocol string
 -   **load**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>`<br/>
     Loads the config file.
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>` - Notification when loading is complete
@@ -38,14 +39,14 @@ Supports app configuration settings, stored server side.
 The [`AppConfigService`](../core/app-config.service.md) service provides support for loading and accessing global application configuration settings that you store on the server side in the form of a JSON file.
 
 You may need this service when deploying your ADF-based application to production servers.
-
 There can be more than one server running web apps with different settings, like different addresses for Alfresco Content/Process services.
 
-Or there is a need to change global settings for all the clients.
+You may also use the service if there is a need to change global settings for all the clients.
 
-The service is already pre-configured to look for the "app.config.json" file in the application root address.
-
-That allows deploying ADF-based web applications to multiple servers together with different settings files, for example having development, staging or production environments.
+The service is already pre-configured to look for the "app.config.json" file in the application
+root address. This allows you to deploy ADF-based web applications to multiple servers together with
+different settings files. You could use this, for example, to create separate development, staging,
+and production environments.
 
 Example of the default settings file content:
 
@@ -61,10 +62,10 @@ Example of the default settings file content:
 }
 ```
 
-Please note that settings above are default ones coming with the server. 
-You can override the values in your custom `app.config.json` file if needed. 
+Note that the settings in the example above are the default ones supplied with the server.
+You can override the values in your custom `app.config.json` file if necessary. 
 
-You can also change the path or name of the configuration file when importing the [`CoreModule`](../../lib/core/core.module.ts) in your main application.
+You can change the path or name of the configuration file when importing the [`CoreModule`](../../lib/core/core.module.ts) in your main application.
 
 ```ts
 ...
@@ -102,12 +103,12 @@ export class AppComponent {
 }
 ```
 
-Your custom components can also benefit from the [`AppConfigService`](../core/app-config.service.md),
-you can put an unlimited number of settings and optionally a nested JSON hierarchy.
+Your custom components can also benefit from the [`AppConfigService`](../core/app-config.service.md).
+You can create an unlimited number of settings and optionally organize them as a nested JSON hierarchy.
 
 ### Variable substitution in configuration strings
 
-The [`AppConfigService`](../core/app-config.service.md) also supports a limited set of variable substitutions to greatly simplify certain scenarios.
+The [`AppConfigService`](../core/app-config.service.md) supports a limited set of variable substitutions to greatly simplify certain scenarios.
 
 ```json
 {
@@ -129,7 +130,9 @@ The supported variables are:
 
 ## App Config onLoad Stream
 
-When the app config is loaded correctly an onChange event is sent with the whole set app config properties. This comes in handy when a component wants to react to some property change or interact with the app config when it's correctly loaded.
+When the app config is loaded correctly, an `onChange` event is emitted with the whole set of app
+config properties. This comes in handy when a component needs to react to some property change or
+interact with the app config when it is finished loading:
 
 ```ts
     appConfig.onLoad.subscribe((appConfig) => {
@@ -137,7 +140,8 @@ When the app config is loaded correctly an onChange event is sent with the whole
     });
 ```
 
-We have added also the `select` method where the user can give the property name which wants to be notified the when the app config is loaded and get the value.
+The `select` method lets you specify the name of a variable that should be set with the value
+of a property when the app config is loaded:
 
 ```json
     appconfig : {

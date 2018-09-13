@@ -53,18 +53,34 @@ export class AuthenticationService {
             return this.alfrescoApi.getInstance().isLoggedIn();
     }
 
+    /**
+     * Does the provider support OAuth?
+     * @returns True if supported, false otherwise
+     */
     isOauth(): boolean {
         return this.alfrescoApi.getInstance().isOauthConfiguration();
     }
 
+    /**
+     * Does the provider support ECM?
+     * @returns True if supported, false otherwise
+     */
     isECMProvider(): boolean {
         return this.alfrescoApi.getInstance().isEcmConfiguration();
     }
 
+    /**
+     * Does the provider support BPM?
+     * @returns True if supported, false otherwise
+     */
     isBPMProvider(): boolean {
         return this.alfrescoApi.getInstance().isBpmConfiguration();
     }
 
+    /**
+     * Does the provider support both ECM and BPM?
+     * @returns True if both are supported, false otherwise
+     */
     isALLProvider(): boolean {
         return this.alfrescoApi.getInstance().isEcmBpmConfiguration();
     }
@@ -137,9 +153,6 @@ export class AuthenticationService {
             );
     }
 
-    /**
-     *
-     */
     private callApiLogout(): Promise<any> {
         if (this.alfrescoApi.getInstance()) {
             return this.alfrescoApi.getInstance().logout();
@@ -233,6 +246,10 @@ export class AuthenticationService {
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
     }
 
+    /**
+     * Gets information about the user currently logged into APS.
+     * @returns User information
+     */
     getBpmLoggedUser(): Observable<UserRepresentation> {
         return from(this.alfrescoApi.getInstance().activiti.profileApi.getProfile());
     }

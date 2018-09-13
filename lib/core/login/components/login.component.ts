@@ -86,8 +86,9 @@ export class LoginComponent implements OnInit {
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
-    /** @deprecated 3.0.0 Possible valid values are ECM, BPM or ALL.
-     * deprecated in 3.0.0 use the providers property in the the app.config.json
+    /**
+     * Possible valid values are ECM, BPM or ALL.
+     * @deprecated 3.0.0 - use the providers property in the the app.config.json
      */
     @Input()
     providers: string;
@@ -96,7 +97,10 @@ export class LoginComponent implements OnInit {
     @Input()
     fieldsValidation: any;
 
-    /** @depreated 3.0.0 Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. */
+    /**
+     * Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services.
+     * @deprecated 3.0.0
+     */
     @Input()
     disableCsrf: boolean;
 

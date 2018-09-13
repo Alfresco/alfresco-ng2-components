@@ -1,7 +1,7 @@
 ---
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-06-08
+Last reviewed: 2018-09-13
 ---
 
 # Empty Content Component
@@ -32,9 +32,9 @@ Provides a generic "Empty Content" placeholder for components.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| icon | `string` | "cake" | Material Icon to use |
-| subtitle | `string` | "" | String or Resource Key for the title |
-| title | `string` | "" | String or Resource Key for the subtitle |
+| icon | `string` | "cake" | Material Icon to use. |
+| subtitle | `string` | "" | String or Resource Key for the subtitle. |
+| title | `string` | "" | String or Resource Key for the title. |
 
 ## Details
 

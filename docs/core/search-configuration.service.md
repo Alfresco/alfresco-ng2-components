@@ -1,6 +1,7 @@
 ---
 Added: v2.1.0
 Status: Active
+Last reviewed: 2018-09-13
 ---
 
 # Search Configuration service
@@ -12,11 +13,11 @@ Provides fine control of parameters to a search.
 ### Methods
 
 -   **generateQueryBody**(searchTerm: `string`, maxResults: `number`, skipCount: `number`): `QueryBody`<br/>
-
-    -   _searchTerm:_ `string`  - 
-    -   _maxResults:_ `number`  - 
-    -   _skipCount:_ `number`  - 
-    -   **Returns** `QueryBody` -
+    Generates a QueryBody object with custom search parameters.
+    -   _searchTerm:_ `string`  - Term text to search for
+    -   _maxResults:_ `number`  - Maximum number of search results to show in a page
+    -   _skipCount:_ `number`  - The offset of the start of the page within the results list
+    -   **Returns** `QueryBody` - Query body defined by the parameters
 
 ## Details
 

@@ -1,7 +1,7 @@
 ---
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-06-13
+Last reviewed: 2018-09-13
 ---
 
 # Error Content Component
@@ -16,19 +16,19 @@ Once you have caught the error in your server you will need to redirect to `/err
 this.router.navigate(['/error', errorCode]);
 ```
 
-## Properties
+## Class members
 
-### Error Content Component
+### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- |---- | ----------- |
-| errorCode | string |  |Error code |
-| returnButtonUrl | string | "/"  |URL for the return button |
-| secondaryButtonUrl | string | "report-issue" |(Optional) URL for the secondary button |
-
-Note that you will also have to provide values for the variables used in the view template.
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| errorCode | `string` |  | Error code associated with this error. |
+| returnButtonUrl | `string` | "/" | Target URL for the return button. |
+| secondaryButtonUrl | `string` | "report-issue" | Target URL for the secondary button. |
 
 ## Details
+
+Note that you need to provide values for the variables used in the view template.
 
 You can customize your error messages by adding them to the translate files inside
 `lib/core/i18n`:
@@ -50,4 +50,4 @@ You can customize your error messages by adding them to the translate files insi
 
 ## See also
 
-- [Empty Content component](empty-content.component.md)
+-   [Empty Content component](empty-content.component.md)
