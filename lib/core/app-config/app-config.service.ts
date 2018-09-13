@@ -94,6 +94,7 @@ export class AppConfigService {
 
     /**
      * Gets the location.protocol value.
+     * @returns The location.protocol string
      */
     getLocationProtocol(): string {
         return location.protocol;
