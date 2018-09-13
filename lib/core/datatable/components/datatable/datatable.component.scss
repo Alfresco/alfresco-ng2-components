@@ -411,6 +411,7 @@
             .cell-value {
                 display: block;
                 position: absolute;
+                top: 25px;
                 max-width: calc(100% - 2em);
                 white-space: nowrap;
                 overflow: hidden;
