@@ -149,6 +149,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     noPermission: boolean = false;
 
+    /**
+     * Should the items for the row actions menu be cached for reuse after they are loaded
+     * the first time?
+     */
     @Input()
     rowMenuCacheEnabled = true;
 

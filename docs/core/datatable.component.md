@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-16
+Last reviewed: 2018-09-13
 ---
 
 # DataTable component
@@ -318,7 +318,7 @@ together in the same datatable.
 | loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row. |
 | noPermission | `boolean` | false | Flag that indicates if the datatable should show the "no permission" template. |
-| rowMenuCacheEnabled | `boolean` | true |  |
+| rowMenuCacheEnabled | `boolean` | true | Should the items for the row actions menu be cached for reuse after they are loaded the first time? |
 | rowStyle | `string` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
 | rows | `any[]` | \[] | The rows that the datatable will show. |

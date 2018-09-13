@@ -127,7 +127,7 @@ function makeToc(tree) {
     headings.forEach(heading => {
         var linkTitle = "";
 
-        if (!((heading.item.children[0].type === "text") && (heading.item.children[0].value === "Contents"))) {
+        if (!((heading.item.children.length > 0) && (heading.item.children[0].type === "text") && (heading.item.children[0].value === "Contents"))) {
             linkTitle = tostring(heading.item).trim();
         }
 

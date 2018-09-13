@@ -31,6 +31,7 @@ export class NodeSharedDirective implements OnChanges {
     @Input('adf-share')
     node: MinimalNodeEntity;
 
+    /** Prefix to add to the generated link. */
     @Input()
     baseShareUrl: string;
 

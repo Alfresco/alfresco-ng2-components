@@ -28,8 +28,9 @@ export class NodeService {
     }
 
     /**
-     * Get All the metadata and the nodeType for a nodeId cleaned by the prefix
-     * @param nodeId Node Id
+     * Get the metadata and the nodeType for a nodeId cleaned by the prefix.
+     * @param nodeId ID of the target node
+     * @returns Node metadata
      */
     public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
         return from(this.apiService.getInstance().nodes.getNodeInfo(nodeId))
@@ -37,11 +38,13 @@ export class NodeService {
     }
 
     /**
-     * Create a new Node from form metadata
-     * @param path path
-     * @param nodeType node type
-     * @param nameSpace namespace node
-     * @param data data to store
+     * Create a new Node from form metadata.
+     * @param path Path to the node
+     * @param nodeType Node type
+     * @param name Node name
+     * @param nameSpace Namespace for properties
+     * @param data Property data to store in the node under namespace
+     * @returns The created node
      */
     public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<any> {
         let properties = {};
@@ -56,10 +59,11 @@ export class NodeService {
 
     /**
      * Create a new Node from form metadata
-     * @param name path
-     * @param nodeType node type
-     * @param properties namespace node
-     * @param path path
+     * @param name Node name
+     * @param nodeType Node type
+     * @param properties Node body properties
+     * @param path Path to the node
+     * @returns The created node
      */
     public createNode(name: string, nodeType: string, properties: any, path: string): Observable<any> {
         let body = {

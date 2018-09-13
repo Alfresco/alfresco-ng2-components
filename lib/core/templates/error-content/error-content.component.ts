@@ -36,12 +36,15 @@ import { TranslationService } from '../../services/translation.service';
 })
 export class ErrorContentComponent implements OnInit, AfterContentChecked {
 
+    /** Target URL for the secondary button. */
     @Input()
     secondaryButtonUrl: string = 'report-issue';
 
+    /** Target URL for the return button. */
     @Input()
     returnButtonUrl: string = '/';
 
+    /** Error code associated with this error. */
     @Input()
     errorCode: string;
 

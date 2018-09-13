@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-08-07
+Last reviewed: 2018-09-13
 ---
 
 # Login component
@@ -77,11 +77,11 @@ with custom input fields handled by your application or parent component:
 | ---- | ---- | ------------- | ----------- |
 | backgroundImageUrl | `string` |  | Path to a custom background image. |
 | copyrightText | `string` |  | The copyright text below the login box. |
-| disableCsrf | `boolean` |  | Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. |
+| disableCsrf | `boolean` |  | (**Deprecated:** 3.0.0) Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. |
 | fieldsValidation | `any` |  | Custom validation rules for the login form. |
 | logoImageUrl | `string` |  | Path to a custom logo image. |
 | needHelpLink | `string` | "" | Sets the URL of the NEED HELP link in the footer. |
-| providers | `string` |  | (**Deprecated:** 3.0.0 Possible valid values are ECM, BPM or ALL. deprecated in 3.0.0 use the providers property in the the app.config.json) |
+| providers | `string` |  | (**Deprecated:** 3.0.0 - use the providers property in the the app.config.json) Possible valid values are ECM, BPM or ALL. |
 | registerLink | `string` | "" | Sets the URL of the REGISTER link in the footer. |
 | showLoginActions | `boolean` | true | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
 | showRememberMe | `boolean` | true | Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly. |
