@@ -1,11 +1,14 @@
 <header
     mat-dialog-title
-    data-automation-id="content-node-selector-title">{{title || data?.title}}
+    data-automation-id="content-node-selector-title">{{data?.title}}
 </header>
 
 <mat-dialog-content class="adf-login-dialog-content">
-    <adf-login-dialog-panel #adfLoginPanel *ngIf="showLogin"></adf-login-dialog-panel>
-    <adf-content-node-selector-panel *ngIf="!showLogin"></adf-content-node-selector-panel>
+    <adf-login-dialog-panel #adfLoginPanel *ngIf="!isLoggedIn()">
+    </adf-login-dialog-panel>
+    <adf-content-node-selector-panel *ngIf="isLoggedIn()"
+                                     (select)="onSelect($event)">
+    </adf-content-node-selector-panel>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
@@ -15,10 +18,16 @@
         data-automation-id="content-node-selector-actions-cancel">CANCEL
     </button>
 
-    <button *ngIf="showLogin"
+    <button *ngIf="!isLoggedIn()"
         mat-button
         (click)="performLogin()"
         data-automation-id="content-node-selector-actions-login">LOGIN
+    </button>
+
+    <button *ngIf="isLoggedIn()"
+        mat-button
+        (click)="onClick()"
+        data-automation-id="content-node-selector-actions-login">CHOOSE
     </button>
 
 </mat-dialog-actions>

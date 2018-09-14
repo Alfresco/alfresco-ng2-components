@@ -17,15 +17,22 @@
 
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { ExternalAlfrescoApiService, AlfrescoApiService, AuthenticationService, LoginDialogPanelComponent } from '@alfresco/adf-core';
+import { ExternalAlfrescoApiService, AlfrescoApiService, AuthenticationService, LoginDialogPanelComponent, SitesService, SearchService } from '@alfresco/adf-core';
+import { DocumentListService, ContentNodeSelectorService } from '@alfresco/adf-content-services';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
     selector: 'adf-attach-file-widget-dialog',
     templateUrl: './attach-file-widget-dialog.component.html',
     styleUrls: ['./attach-file-widget-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    providers: [ { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService} ]
+    providers: [ AuthenticationService,
+                 DocumentListService,
+                 SitesService,
+                 ContentNodeSelectorService,
+                 SearchService,
+                 { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService} ]
 })
 export class AttachFileWidgetDialogComponent {
 
@@ -33,6 +40,7 @@ export class AttachFileWidgetDialogComponent {
     loginPanel: LoginDialogPanelComponent;
 
     showLogin = true;
+    chosenNode: MinimalNodeEntryEntity[];
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
                 private externalApiService: AlfrescoApiService) {
@@ -49,7 +57,16 @@ export class AttachFileWidgetDialogComponent {
     }
 
     close() {
-        this.externalApiService.getInstance().logout();
+
+        this.data.selected.complete();
+    }
+
+    onSelect(nodeList: MinimalNodeEntryEntity[]) {
+        this.chosenNode = nodeList;
+    }
+
+    onClick(event: any) {
+        this.data.selected.next(this.chosenNode);
         this.data.selected.complete();
     }
 

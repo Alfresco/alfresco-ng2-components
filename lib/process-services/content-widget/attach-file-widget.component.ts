@@ -179,17 +179,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     openSelectDialog(repository) {
         const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
-        let currentECMHost = this.appConfigService.get(AppConfigValues.ECMHOST);
-        let chosenRepositoryHost = repository.repositoryUrl.replace('/alfresco', '');
+        let currentECMHost = this.getDomainHost(this.appConfigService.get(AppConfigValues.ECMHOST));
+        let chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);
         if (chosenRepositoryHost !== currentECMHost) {
-            // this.loginDialogService.openLogin('Login', chosenRepositoryHost).subscribe((loginEvent) => {
-            //     this.contentDialog.openFileBrowseDialogBySite().subscribe(
-            //         (selections: MinimalNodeEntryEntity[]) => {
-            //             this.tempFilesList.push(...selections);
-            //             this.uploadFileFromCS(selections, accountIdentifier);
-            //         });
-            // });
-            this.attachDialogService.openLogin('Login', chosenRepositoryHost).subscribe(
+            this.attachDialogService.openLogin('LOGIN', repository.repositoryUrl.replace('/alfresco', '')).subscribe(
                 (selections: MinimalNodeEntryEntity[]) => {
                     this.tempFilesList.push(...selections);
                     this.uploadFileFromCS(selections, accountIdentifier);
@@ -225,6 +218,11 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             this.field.json.value = filesSaved;
             this.hasFile = true;
         });
+    }
+
+    private getDomainHost(urlToCheck) {
+        let result = urlToCheck.match('^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)');
+        return result[1];
     }
 
 }

@@ -42,11 +42,15 @@ export class ExternalAlfrescoApiService {
     }
 
     init(ecmHost: string, contextRoot: string) {
+
+        let domainPrefix = this.createPrefixFromHost(ecmHost);
+
         const config = {
             provider: 'ECM',
             hostEcm: ecmHost,
             authType: 'BASIC',
-            contextRoot: contextRoot
+            contextRoot: contextRoot,
+            domainPrefix
         };
         this.initAlfrescoApi(config);
     }
@@ -57,5 +61,14 @@ export class ExternalAlfrescoApiService {
         } else {
             this.alfrescoApi = <AlfrescoApi> new alfrescoApi(config);
         }
+    }
+
+    private createPrefixFromHost(url: string): string {
+        let match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
+        let result = null;
+        if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
+            result = match[2];
+        }
+        return result;
     }
 }
