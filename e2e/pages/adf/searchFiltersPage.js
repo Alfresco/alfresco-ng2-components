@@ -94,5 +94,19 @@ var SearchFiltersPage = function () {
         this.searchInCreatorFilter(`${creatorFirstName} ${creatorLastName}`);
         this.selectCreator(`${creatorFirstName} ${creatorLastName}`);
     };
+
+    this.removeCreatorFilter = function (creatorFirstName, creatorLastName) {
+        let cancelChipButton = element(by.cssContainingText('mat-chip',` ${creatorFirstName} ${creatorLastName} `)).element(by.css('mat-icon'));
+        Util.waitUntilElementIsClickable(cancelChipButton);
+        return cancelChipButton.click();
+    };
+
+    this.checkCreatorChipIsDisplayed = function (creatorFirstName, creatorLastName) {
+        return Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip',` ${creatorFirstName} ${creatorLastName} `)).element(by.css('mat-icon')));
+    };
+
+    this.checkCreatorChipIsNotDisplayed = function (creatorFirstName, creatorLastName) {
+        return Util.waitUntilElementIsNotOnPage(element(by.cssContainingText('mat-chip',` ${creatorFirstName} ${creatorLastName} `)).element(by.css('mat-icon')));
+    };
 };
 module.exports = SearchFiltersPage;
