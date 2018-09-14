@@ -22,8 +22,6 @@ import {
     NodesApi
 } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
-// import { Subject } from 'rxjs';
-
 /* tslint:disable:adf-file-name */
 
 @Injectable()
@@ -43,7 +41,7 @@ export class ExternalAlfrescoApiService {
         return this.getInstance().nodes;
     }
 
-    constructor(ecmHost: string, contextRoot: string) {
+    init(ecmHost: string, contextRoot: string) {
         const config = {
             provider: 'ECM',
             hostEcm: ecmHost,

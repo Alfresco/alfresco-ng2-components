@@ -112,7 +112,10 @@ export class LoginComponent implements OnInit {
     showLoginButton = true;
 
     @Input()
-    externalLoginService: any;
+    showLogo = true;
+
+    @Input()
+    showCopyright = true;
 
     /** Emitted when the login is successful. */
     @Output()

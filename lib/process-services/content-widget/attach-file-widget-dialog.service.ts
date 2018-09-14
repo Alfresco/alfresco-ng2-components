@@ -18,11 +18,12 @@
 import { MatDialog } from '@angular/material';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { LoginDialogComponent } from '../login/components/login-dialog.component';
-import { LoginDialogComponentData } from '../login/components/login-dialog-component-data.interface';
+import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
 
 @Injectable()
-export class LoginDialogService {
+export class AttachFileWidgetDialogService {
 
     /** Emitted when an error occurs. */
     @Output()
@@ -37,32 +38,31 @@ export class LoginDialogService {
      * @param contentEntry Item to upload
      * @returns Information about the chosen file(s)
      */
-    openLogin(actionName: string, ecmHost: string, context?: string): Observable<string> {
+    openLogin(actionName: string, ecmHost: string, context?: string): Observable<MinimalNodeEntryEntity[]> {
         let titleString: string = `Please log in for ${ecmHost}`;
-        const logged = new Subject<string>();
-        logged.subscribe({
+        const selected = new Subject<MinimalNodeEntryEntity[]>();
+        selected.subscribe({
             complete: this.close.bind(this)
         });
 
-        const data: LoginDialogComponentData = {
+        const data: AttachFileWidgetDialogComponentData = {
             title : titleString,
             actionName,
-            logged,
+            selected,
             ecmHost,
             context
         };
 
-        this.openLoginDialog(data, 'adf-login-dialog', '630px');
-        return logged;
+        this.openLoginDialog(data, 'adf-attach-file-widget-dialog', '630px');
+        return selected;
     }
 
-    private openLoginDialog(data: LoginDialogComponentData, currentPanelClass: string, chosenWidth: string) {
-        this.dialog.open(LoginDialogComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+    private openLoginDialog(data: AttachFileWidgetDialogComponentData, currentPanelClass: string, chosenWidth: string) {
+        this.dialog.open(AttachFileWidgetDialogComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
     }
 
     /** Closes the currently open dialog. */
     close() {
-        // this.externalLogin.getInstance().logout();
         this.dialog.closeAll();
     }
 

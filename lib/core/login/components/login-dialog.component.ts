@@ -18,8 +18,7 @@
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { LoginDialogComponentData } from './login-dialog-component-data.interface';
-import { LoginComponent } from './login.component';
-
+import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 @Component({
     selector: 'adf-login-dialog',
     templateUrl: './login-dialog.component.html',
@@ -28,8 +27,8 @@ import { LoginComponent } from './login.component';
 })
 export class LoginDialogComponent {
 
-    @ViewChild('adfLogin')
-    login: LoginComponent;
+    @ViewChild('adfLoginPanel')
+    loginPanel: LoginDialogPanelComponent;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: LoginDialogComponentData) {
     }
@@ -39,6 +38,15 @@ export class LoginDialogComponent {
     }
 
     submitForm(): void {
-        this.login.submit();
+        this.loginPanel.submitForm();
+    }
+
+    onLoginSuccess(event: any) {
+        this.data.logged.next(event);
+        this.close();
+    }
+
+    isFormValid() {
+        return this.loginPanel ? this.loginPanel.isValid() : false;
     }
 }

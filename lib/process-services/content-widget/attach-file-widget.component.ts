@@ -28,14 +28,13 @@ import {
     ContentService,
     FormEvent,
     AppConfigValues,
-    AppConfigService,
-    LoginDialogService,
-    AlfrescoApiService
+    AppConfigService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { from, zip, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 
 @Component({
     selector: 'attach-widget',
@@ -67,7 +66,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 private contentService: ContentService,
                 private contentDialog: ContentNodeDialogService,
                 private appConfigService: AppConfigService,
-                private loginDialogService: LoginDialogService) {
+                private attachDialogService: AttachFileWidgetDialogService) {
         super(formService, logger, thumbnails, processContentService);
     }
 
@@ -181,16 +180,20 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     openSelectDialog(repository) {
         const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
         let currentECMHost = this.appConfigService.get(AppConfigValues.ECMHOST);
-        if (repository.repositoryUrl.replace('/alfresco', '') !== currentECMHost) {
-            this.loginDialogService.openLogin('LOGMEIN').subscribe((result) => {
-                /*tslint:disable-next-line*/
-                console.log('LOGGED');
-                this.contentDialog.openFileBrowseDialogBySite().subscribe(
-                    (selections: MinimalNodeEntryEntity[]) => {
-                        this.tempFilesList.push(...selections);
-                        this.uploadFileFromCS(selections, accountIdentifier);
-                    });
-            });
+        let chosenRepositoryHost = repository.repositoryUrl.replace('/alfresco', '');
+        if (chosenRepositoryHost !== currentECMHost) {
+            // this.loginDialogService.openLogin('Login', chosenRepositoryHost).subscribe((loginEvent) => {
+            //     this.contentDialog.openFileBrowseDialogBySite().subscribe(
+            //         (selections: MinimalNodeEntryEntity[]) => {
+            //             this.tempFilesList.push(...selections);
+            //             this.uploadFileFromCS(selections, accountIdentifier);
+            //         });
+            // });
+            this.attachDialogService.openLogin('Login', chosenRepositoryHost).subscribe(
+                (selections: MinimalNodeEntryEntity[]) => {
+                    this.tempFilesList.push(...selections);
+                    this.uploadFileFromCS(selections, accountIdentifier);
+                });
         } else {
             this.contentDialog.openFileBrowseDialogBySite().subscribe(
                 (selections: MinimalNodeEntryEntity[]) => {

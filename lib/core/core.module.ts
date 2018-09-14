@@ -97,6 +97,7 @@ import { EcmUserService } from './userinfo/services/ecm-user.service';
 import { BpmUserService } from './userinfo/services/bpm-user.service';
 import { ViewUtilService } from './viewer/services/view-util.service';
 import { LoginDialogService } from './services/login-dialog.service';
+import { ExternalAlfrescoApiService } from './services/external-alfresco-api.service';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -152,7 +153,8 @@ export function providers() {
         EcmUserService,
         BpmUserService,
         ViewUtilService,
-        LoginDialogService
+        LoginDialogService,
+        ExternalAlfrescoApiService
     ];
 }
 

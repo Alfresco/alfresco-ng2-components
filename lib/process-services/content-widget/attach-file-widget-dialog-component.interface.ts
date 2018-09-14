@@ -16,11 +16,12 @@
  */
 
 import { Subject } from 'rxjs/Subject';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
-export interface LoginDialogComponentData {
+export interface AttachFileWidgetDialogComponentData {
     title: string;
     actionName?: string;
-    logged: Subject<string>;
+    selected: Subject<MinimalNodeEntryEntity[]>;
     ecmHost: string;
     context?: string;
 }

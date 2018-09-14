@@ -34,6 +34,7 @@ import { TaskListService } from './task-list/services/tasklist.service';
 import { TaskFilterService } from './task-list/services/task-filter.service';
 import { TaskUploadService } from './task-list/services/task-upload.service';
 import { ProcessUploadService } from './task-list/services/process-upload.service';
+import { AttachFileWidgetDialogService } from './content-widget/attach-file-widget-dialog.service';
 
 export function providers() {
     return [
@@ -42,7 +43,8 @@ export function providers() {
         TaskListService,
         TaskFilterService,
         TaskUploadService,
-        ProcessUploadService
+        ProcessUploadService,
+        AttachFileWidgetDialogService
     ];
 }
 
