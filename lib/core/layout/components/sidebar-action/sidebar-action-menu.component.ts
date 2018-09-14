@@ -36,6 +36,7 @@ export class SidebarActionMenuComponent {
     @Input()
     expanded: boolean;
 
+    /** Width in pixels for sidebar action menu options. */
     @Input()
     width: number = 272;
 

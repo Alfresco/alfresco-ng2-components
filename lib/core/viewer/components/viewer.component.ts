@@ -210,6 +210,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     navigateNext = new EventEmitter();
 
+    /** Emitted when the shared link used is not valid. */
     @Output()
     invalidSharedLink = new EventEmitter();
 

@@ -63,7 +63,7 @@ export class TaskListService {
     /**
      * Checks if a taskId is filtered with the given filter.
      * @param taskId ID of the target task
-     * @param filter The filter you want to check
+     * @param filterModel The filter you want to check
      * @returns The filter if it is related or null otherwise
      */
     isTaskRelatedToFilter(taskId: string, filterModel: FilterRepresentationModel): Observable<FilterRepresentationModel> {

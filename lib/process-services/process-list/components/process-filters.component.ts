@@ -59,6 +59,7 @@ export class ProcessFiltersComponent implements OnChanges {
     @Input()
     showIcon: boolean = true;
 
+    /** Emitted when a process filter is selected. */
     @Output()
     filterSelected: EventEmitter<ProcessInstanceFilterRepresentation> = new EventEmitter<ProcessInstanceFilterRepresentation>();
 

@@ -32,18 +32,23 @@ export class AttachFormComponent implements OnInit, OnChanges {
                 private logService: LogService,
                 private formService: FormService) { }
 
+    /** Id of the task. */
     @Input()
     taskId;
 
+    /** Identifier of the form to attach. */
     @Input()
     formKey;
 
+    /** Emitted when the "Cancel" button is clicked. */
     @Output()
     cancelAttachForm: EventEmitter<void> = new EventEmitter<void>();
 
+    /** Emitted when the form is attached successfully. */
     @Output()
     success: EventEmitter<void> = new EventEmitter<void>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

@@ -1,6 +1,7 @@
 ---
 Added: v2.1.0
 Status: Active
+Last reviewed: 2018-09-14
 ---
 
 # Sidebar action menu component
@@ -44,7 +45,7 @@ the following names:
 | ---- | ---- | ------------- | ----------- |
 | expanded | `boolean` |  | Toggle the sidebar action menu on expand. |
 | title | `string` |  | The title of the sidebar action. |
-| width | `number` | 272 | Width in pixels for sidebar action menu options |
+| width | `number` | 272 | Width in pixels for sidebar action menu options. |
 
 ## Details
 
