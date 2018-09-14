@@ -16,7 +16,7 @@
  */
 
 import { DataColumn, DataRow, DataSorting, ContentService } from '@alfresco/adf-core';
-import { FileNode, FolderNode } from './../../mock';
+import { FileNode, FolderNode, SmartFolderNode } from './../../mock';
 import { DocumentListService } from './../services/document-list.service';
 import { ShareDataRow } from './share-data-row.model';
 import { ShareDataTableAdapter } from './share-datatable-adapter';
@@ -206,6 +206,19 @@ describe('ShareDataTableAdapter', () => {
 
         let value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_folder`);
+        expect(value).toContain(`svg`);
+    });
+
+    it('should resolve smart folder icon', () => {
+        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_smart_folder.svg`);
+
+        let adapter = new ShareDataTableAdapter(documentListService, null, null);
+
+        let row = new ShareDataRow(new SmartFolderNode(), documentListService, null);
+        let col = <DataColumn> { type: 'folder', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toContain(`assets/images/ft_ic_smart_folder`);
         expect(value).toContain(`svg`);
     });
 

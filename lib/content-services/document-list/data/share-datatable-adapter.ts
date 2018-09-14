@@ -104,7 +104,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             const node = (<ShareDataRow> row).node;
 
             if (node.entry.isFolder) {
-                return this.documentListService.getMimeTypeIcon('folder');
+                if (this.isSmartFolder(node)) {
+                    return this.documentListService.getMimeTypeIcon('smartFolder');
+                } else {
+                    return this.documentListService.getMimeTypeIcon('folder');
+                }
             }
 
             if (node.entry.isFile) {
@@ -161,6 +165,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     setImageResolver(resolver: any) {
         this.imageResolver = resolver;
+    }
+
+    isSmartFolder(node: any) {
+        return node.entry.aspectNames.indexOf('smf:customConfigSmartFolder') > -1 ||
+            (node.entry.aspectNames.indexOf('smf:systemConfigSmartFolder') > -1);
     }
 
     private sortRows(rows: DataRow[], sorting: DataSorting) {

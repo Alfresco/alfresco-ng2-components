@@ -55,5 +55,19 @@ export class FolderNode extends NodeMinimalEntry {
         this.entry.isFolder = true;
         this.entry.name = name;
         this.entry.path = new PathInfoEntity();
+        this.entry.aspectNames = ['cm:folder'];
+    }
+}
+
+export class SmartFolderNode extends NodeMinimalEntry {
+    constructor(name?: string) {
+        super();
+        this.entry = new NodeMinimal();
+        this.entry.id = 'smart-folder-id';
+        this.entry.isFile = false;
+        this.entry.isFolder = true;
+        this.entry.name = name;
+        this.entry.path = new PathInfoEntity();
+        this.entry.aspectNames = ['smf:systemConfigSmartFolder'];
     }
 }

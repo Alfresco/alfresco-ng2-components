@@ -145,6 +145,7 @@ export class ThumbnailService {
         'application/wordperfect': './assets/images/ft_ic_document.svg',
         'application/x-cpio': './assets/images/ft_ic_document.svg',
         'folder': './assets/images/ft_ic_folder.svg',
+        'smartFolder': './assets/images/ft_ic_smart_folder.svg',
         'disable/folder': './assets/images/ft_ic_folder_disable.svg',
         'selected': './assets/images/ft_ic_selected.svg'
     };
