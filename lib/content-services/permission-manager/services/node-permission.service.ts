@@ -51,7 +51,7 @@ export class NodePermissionService {
     }
 
     /**
-     * Updates the permission for a node.
+     * Updates the permission role for a node.
      * @param node Target node
      * @param updatedPermissionRole Permission role to update or add
      * @returns Node with updated permission
@@ -68,6 +68,12 @@ export class NodePermissionService {
         return this.nodeService.updateNode(node.id, permissionBody);
     }
 
+    /**
+     * Update permissions for a node.
+     * @param nodeId ID of the target node
+     * @param permissionList New permission settings
+     * @returns Node with updated permissions
+     */
     updateNodePermissions(nodeId: string, permissionList: MinimalNodeEntity[]): Observable<MinimalNodeEntryEntity> {
        return this.nodeService.getNode(nodeId).pipe(
            switchMap(node => {
@@ -79,6 +85,13 @@ export class NodePermissionService {
         );
     }
 
+    /**
+     * Updates the locally set permissions for a node.
+     * @param node ID of the target node
+     * @param nodes Permission settings
+     * @param nodeRole Permission role
+     * @returns Node with updated permissions
+     */
     updateLocallySetPermissions(node: MinimalNodeEntryEntity, nodes: MinimalNodeEntity[], nodeRole: string[]): Observable<MinimalNodeEntryEntity> {
         let permissionBody = { permissions: { locallySet: []} };
         const permissionList = this.transformNodeToPermissionElement(nodes, nodeRole[0]);
@@ -124,6 +137,12 @@ export class NodePermissionService {
         });
     }
 
+    /**
+     * Removes a permission setting from a node.
+     * @param node ID of the target node
+     * @param permissionToRemove Permission setting to remove
+     * @returns Node with modified permissions
+     */
     removePermission(node: MinimalNodeEntryEntity, permissionToRemove: PermissionElement): Observable<MinimalNodeEntryEntity> {
         let permissionBody = { permissions: { locallySet: [] } };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(permissionToRemove.authorityId);

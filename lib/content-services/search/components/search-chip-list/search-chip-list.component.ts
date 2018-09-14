@@ -26,6 +26,7 @@ import { SearchFilterComponent } from '../../components/search-filter/search-fil
 })
 export class SearchChipListComponent {
 
+    /** Search filter to supply the data for the chips. */
     @Input()
     searchFilter: SearchFilterComponent;
 }
