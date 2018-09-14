@@ -21,8 +21,8 @@ var StartProcessPage = function () {
 
     var defaultProcessName = element(by.css("input[id='processName']"));
     var processNameInput = element(by.id('processName'));
-    var selectProcessDropdownArrow = element(by.css("input[aria-label='Number']"));
-    var cancelProcessButton = element(by.id('cancel_process'));
+    var selectProcessDropdownArrow = element(by.css("div[class='mat-select-arrow-wrapper'] div"));
+    var cancelProcessButton = element(by.id('cancle_process'));
     var formStartProcessButton = element(by.css('button[data-automation-id="adf-form-start process"]'));
     var startProcessButton = element(by.css("button[data-automation-id='btn-start']"));
     var noProcess = element(by.id('no-process-message'));
