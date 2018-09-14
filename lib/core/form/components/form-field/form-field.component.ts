@@ -37,7 +37,6 @@ import { WidgetComponent } from './../widgets/widget.component';
 
 declare var adf: any;
 
-
 @Component({
     selector: 'adf-form-field',
     template: `
