@@ -24,8 +24,6 @@ import ProcessDetailsPage = require('../pages/adf/process_services/processDetail
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-import Util = require('../util/util');
-
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -56,7 +54,6 @@ describe('Process List - Pagination', function () {
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let nrOfProcesses = 20;
     let page, totalPages, processNameBase = 'process';
-    let processNames = Util.generateSeqeunceFiles(10, nrOfProcesses + 9, processNameBase, '');
 
     beforeAll(async (done) => {
         let apps = new AppsActions();
@@ -102,7 +99,7 @@ describe('Process List - Pagination', function () {
             await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
             for (let i = 0; i < nrOfProcesses; i++) {
-                await apps.startProcess(this.alfrescoJsApi, deployedTestApp);
+                await apps.startProcess(this.alfrescoJsApi, deployedTestApp, processNameBase + (i < 10 ? `0${i}` : i));
             }
 
             done();
@@ -370,25 +367,44 @@ describe('Process List - Pagination', function () {
             paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        xit('[C261048] Sorting by Name', function () {
+        it('[C261048] Sorting by Name', function () {
             processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
             processFiltersPage.waitForTableBody();
+
             paginationPage.selectItemsPerPage(itemsPerPage.twenty);
             processDetailsPage.checkProcessTitleIsDisplayed();
             processFiltersPage.waitForTableBody();
+
             processFiltersPage.sortByName(true);
             processFiltersPage.waitForTableBody();
-            processFiltersPage.getAllRowsNameColumn().then(function (list) {
-                expect(JSON.stringify(list) === JSON.stringify(processNames)).toEqual(true);
-            });
+            processFiltersPage.checkProcessesSortedByNameAsc();
+
             processFiltersPage.sortByName(false);
-            processFiltersPage.getAllRowsNameColumn().then(function (list) {
-                processNames.reverse();
-                expect(JSON.stringify(list) === JSON.stringify(processNames)).toEqual(true);
-            });
+            processFiltersPage.waitForTableBody();
+            processFiltersPage.checkProcessesSortedByNameDesc();
+        });
+
+        it('[C286260] Sorting chosen should remain when changing \'Items per page\'', function () {
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+
+            paginationPage.selectItemsPerPage(itemsPerPage.twenty);
+            processDetailsPage.checkProcessTitleIsDisplayed();
+            processFiltersPage.waitForTableBody();
+
+            processFiltersPage.sortByName(true);
+            processFiltersPage.waitForTableBody();
+            processFiltersPage.checkProcessesSortedByNameAsc();
+
+            paginationPage.selectItemsPerPage(itemsPerPage.five);
+            processFiltersPage.waitForTableBody();
+            processFiltersPage.checkProcessesSortedByNameAsc();
         });
     });
 });
