@@ -27,7 +27,11 @@ export class HeaderPage {
     iconInput = element(by.css('input[placeholder="URL path"]'));
     hexColorInput = element(by.css('input[placeholder="hex color code"]'));
     logoHyperlinkInput = element(by.css('input[placeholder="Redirect URL"]'));
-    logoTooltipInput =  element(by.css('input[placeholder="Tooltip text"]'));
+    logoTooltipInput = element(by.css('input[placeholder="Tooltip text"]'));
+    positionStart = element(by.css('mat-radio-button[value="start"]'));
+    positionEnd = element(by.css('mat-radio-button[value="end"]'));
+    sideBarPositionRight = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
+    sideBarPositionLeft = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
 
     checkShowMenuCheckBoxIsDisplayed() {
         return Util.waitUntilElementIsVisible(this.checkBox);
@@ -106,4 +110,24 @@ export class HeaderPage {
         Util.waitUntilElementIsVisible(this.logoTooltipInput);
         return this.logoTooltipInput.click().sendKeys(tooltip).sendKeys(protractor.Key.ENTER);
     }
+
+    sideBarPositionStart() {
+        Util.waitUntilElementIsVisible(this.positionStart);
+        return this.positionStart.click();
+    }
+
+    sideBarPositionEnd() {
+        Util.waitUntilElementIsVisible(this.positionEnd);
+        return this.positionEnd.click();
+    }
+
+    checkSidebarPositionStart() {
+        return Util.waitUntilElementIsVisible(this.sideBarPositionLeft);
+    }
+
+    checkSidebarPositionEnd() {
+        return Util.waitUntilElementIsVisible(this.sideBarPositionRight);
+    }
+
 }
+
