@@ -109,6 +109,8 @@ export class FilterRepresentationModel implements UserTaskFilterRepresentation {
 
 export class TaskQueryRequestRepresentationModel implements TaskQueryRequestRepresentation {
     appDefinitionId: string;
+    dueAfter: string;
+    dueBefore: string;
     processInstanceId: string;
     processDefinitionId: string;
     text: string;
@@ -124,6 +126,8 @@ export class TaskQueryRequestRepresentationModel implements TaskQueryRequestRepr
     constructor(obj?: any) {
         if (obj) {
             this.appDefinitionId = obj.appDefinitionId || null;
+            this.dueAfter = obj.dueAfter || null;
+            this.dueBefore = obj.dueBefore || null;
             this.processInstanceId = obj.processInstanceId || null;
             this.processDefinitionId = obj.processDefinitionId || null;
             this.text = obj.text || null;

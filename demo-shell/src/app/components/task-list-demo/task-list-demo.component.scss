@@ -1,12 +1,9 @@
 .task-list-demo-inputs {
-    margin: 100px auto 0 auto;
-    width: 80%;
-    display: flex;
-    flex: wrap;
-    justify-content: space-evenly;
+    margin: 20px auto 0;
+    max-width: 1200px;
 
     & mat-form-field {
-        margin: 20px 0;
+        margin: 20px 5px;
         width: calc(100% * (1/4) - 10px);
     }
 }
