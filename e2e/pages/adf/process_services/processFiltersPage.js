@@ -29,11 +29,11 @@ var ProcessFiltersPage = function () {
     var processesPage = element(by.css("div[class='adf-grid'] > div[class='adf-grid-item adf-processes-menu']"));
     var accordionMenu = element(by.css(".adf-processes-menu adf-accordion"));
     var buttonWindow = element(by.css("div > button[data-automation-id='btn-start-process'] > div"));
-    var noContentMessage = element(by.css("p[class='adf-empty-content__title']"));
+    var noContentMessage = element.all(by.css("p[class='adf-empty-content__title']")).first();
     var rows = by.css("adf-process-instance-list div[class='adf-datatable-body'] div[class*='adf-datatable-row']");
     var tableBody = element.all(by.css("adf-datatable div[class='adf-datatable-body']")).first();
     var contentList = new ContentList();
-    var nameColumn = by.css("div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[class*='--text'] span");
+    var nameColumn = by.css("div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Name'] span");
 
     this.startProcess = function () {
         this.clickCreateProcessButton();
@@ -119,6 +119,22 @@ var ProcessFiltersPage = function () {
     this.checkFilterIsNotDisplayed = function (name) {
         var filterName = element(by.css("span[data-automation-id='" + name + "_filter']"));
         return Util.waitUntilElementIsNotVisible(filterName);
+    };
+
+    this.checkProcessesSortedByNameAsc = function () {
+        this.getAllRowsNameColumn().then(function (list) {
+            for (let i = 1 ; i < list.length ; i++) {
+                expect(JSON.stringify(list[i]) > JSON.stringify(list[i - 1])).toEqual(true);
+            }
+        });
+    };
+
+    this.checkProcessesSortedByNameDesc = function () {
+        this.getAllRowsNameColumn().then(function (list) {
+            for (let i = 1 ; i < list.length ; i++) {
+                expect(JSON.stringify(list[i]) < JSON.stringify(list[i - 1])).toEqual(true);
+            }
+        });
     };
 };
 
