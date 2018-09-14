@@ -41,6 +41,7 @@ describe('Tag component', () => {
     let tagList = [
         Util.generateRandomStringToLowerCase(),
         Util.generateRandomStringToLowerCase(),
+        Util.generateRandomStringToLowerCase(),
         Util.generateRandomStringToLowerCase()];
     let uppercaseTag = Util.generateRandomStringToUpperCase();
     let digitsTag = Util.generateRandomStringDigits();
@@ -158,5 +159,17 @@ describe('Tag component', () => {
 
         tagPage.checkTagIsNotDisplayedInTagList(deleteTag.toLowerCase());
         tagPage.checkTagIsNotDisplayedInTagListByNodeId(deleteTag.toLowerCase());
+    });
+
+    it('[C286290] Should be able to hide the delete option from a tag component', () => {
+        tagPage.insertNodeId(pdfFileModel.id);
+        tagPage.addTag(tagList[3]);
+
+        tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[3]);
+        tagPage.checkDeleteTagFromTagListByNodeIdIsDisplayed(tagList[3]);
+
+        tagPage.clickShowDeleteButtonSwitch();
+
+        tagPage.checkDeleteTagFromTagListByNodeIdIsNotDisplayed(tagList[3]);
     });
 });
