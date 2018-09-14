@@ -17,14 +17,8 @@
 
 /* tslint:disable */
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges, OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
+    Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit,
+    Output, SimpleChanges, ViewEncapsulation
 } from '@angular/core';
 import { FormErrorEvent, FormEvent } from './../events/index';
 import { EcmModelService } from './../services/ecm-model.service';
@@ -32,12 +26,8 @@ import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { ContentLinkModel } from './widgets/core/content-link.model';
 import {
-    FormFieldModel,
-    FormModel,
-    FormOutcomeEvent,
-    FormOutcomeModel,
-    FormValues,
-    FormFieldValidator
+    FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel,
+    FormValues, FormFieldValidator
 } from './widgets/core/index';
 import { Observable, of } from 'rxjs';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
@@ -156,7 +146,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     formDataRefreshed: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
-    /** Emitted when form validations has error. s*/
+    /** Emitted when form validations has validation error.*/
     @Output()
     formError: EventEmitter<FormFieldModel[]> = new EventEmitter<FormFieldModel[]>();
 
@@ -168,7 +158,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when any error occurs. */
     @Output()
-    onError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     debugMode: boolean = false;
 

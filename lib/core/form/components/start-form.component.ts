@@ -33,7 +33,6 @@ import { WidgetVisibilityService } from './../services/widget-visibility.service
 import { FormComponent } from './form.component';
 import { ContentLinkModel } from './widgets/core/content-link.model';
 import { FormOutcomeModel } from './widgets/core/index';
-import { Subscription } from 'rxjs';
 import { ValidateFormEvent } from './../events/validate-form.event';
 
 @Component({
@@ -74,7 +73,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
     /** Emitted when any error occurs. */
     @Output()
-    onError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;

@@ -37,8 +37,9 @@ import { WidgetComponent } from './../widgets/widget.component';
 
 declare var adf: any;
 
+
 @Component({
-    selector: 'adf-form-field, form-field',
+    selector: 'adf-form-field',
     template: `
         <div [id]="'field-'+field?.id+'-container'"
             [hidden]="!field?.isVisible"
