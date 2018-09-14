@@ -25,6 +25,7 @@ import { setupTestBed } from '../../../core/testing/setupTestBed';
 import { CoreModule } from '../../../core/core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 describe('ProcessFiltersComponent', () => {
 
@@ -53,16 +54,19 @@ describe('ProcessFiltersComponent', () => {
             new FilterProcessRepresentationModel({
                 id: 10,
                 name: 'FakeInvolvedTasks',
+                icon: 'glyphicon-th',
                 filter: { state: 'open', assignment: 'fake-involved' }
             }),
             new FilterProcessRepresentationModel({
                 id: 20,
                 name: 'FakeMyTasks',
+                icon: 'glyphicon-random',
                 filter: { state: 'open', assignment: 'fake-assignee' }
             }),
             new FilterProcessRepresentationModel({
                 id: 30,
                 name: 'Running',
+                icon: 'glyphicon-ok-sign',
                 filter: { state: 'open', assignment: 'fake-running' }
             })
         ]);
@@ -71,9 +75,8 @@ describe('ProcessFiltersComponent', () => {
             error: 'wrong request'
         });
 
-        processFilterService = new ProcessFilterService(null);
-        appsProcessService = new AppsProcessService(null, null);
-        filterList = new ProcessFiltersComponent(processFilterService, appsProcessService);
+        processFilterService = TestBed.get(ProcessFilterService);
+        appsProcessService = TestBed.get(AppsProcessService);
     });
 
     afterEach(() => {
@@ -293,6 +296,37 @@ describe('ProcessFiltersComponent', () => {
             expect(filterList.filters.length).toEqual(3);
             expect(filterList.currentFilter).toBeDefined();
             expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
+            done();
+        });
+    });
+
+    it('should attach specific icon for each filter if hasIcon is true', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        filterList.showIcon = true;
+        let change = new SimpleChange(undefined, 1, true);
+        filterList.ngOnChanges({ 'appId': change });
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(filterList.filters.length).toBe(3);
+            let filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            expect(filters.length).toBe(3);
+            expect(filters[0].nativeElement.innerText).toContain('dashboard');
+            expect(filters[1].nativeElement.innerText).toContain('shuffle');
+            expect(filters[2].nativeElement.innerText).toContain('check_circle');
+            done();
+        });
+    });
+    it('should not attach icons for each filter if hasIcon is false', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        filterList.showIcon = false;
+        let change = new SimpleChange(undefined, 1, true);
+        filterList.ngOnChanges({ 'appId': change });
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            expect(filters.length).toBe(0);
             done();
         });
     });
