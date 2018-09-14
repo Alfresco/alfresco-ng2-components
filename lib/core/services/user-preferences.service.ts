@@ -112,6 +112,7 @@ export class UserPreferencesService {
     /**
      * Check if an item is present in the storage
      * @param property Name of the property
+     * @returns True if the item is present, false otherwise
      */
     hasItem(property: string) {
         if (!property) {
