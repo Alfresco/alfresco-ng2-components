@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-16
+Last reviewed: 2018-09-14
 ---
 
 # User Preferences Service
@@ -33,7 +33,7 @@ Stores preferences for components.
 -   **hasItem**(property: `string`): `boolean`<br/>
     Check if an item is present in the storage
     -   _property:_ `string`  - Name of the property
-    -   **Returns** `boolean` - 
+    -   **Returns** `boolean` - True if the item is present, false otherwise
 -   **select**(property: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Sets up a callback to notify when a property has changed.
     -   _property:_ `string`  - The property to watch

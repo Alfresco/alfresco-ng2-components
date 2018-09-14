@@ -31,15 +31,25 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     static STEP_OVER = 600;
 
-    /** The side that the drawer is attached to 'start' | 'end' page */
+    /** The side that the drawer is attached to. Possible values are 'start' and 'end'. */
     @Input() position = 'start';
 
+    /** Minimum size of the navigation region. */
     @Input() sidenavMin: number;
+
+    /** Maximum size of the navigation region. */
     @Input() sidenavMax: number;
+
+    /** Screen size at which display switches from small screen to large screen configuration. */
     @Input() stepOver: number;
+
+    /** Toggles showing/hiding the navigation region. */
     @Input() hideSidenav = false;
+
+    /** Should the navigation region be expanded initially? */
     @Input() expandedSidenav = true;
 
+    /** Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes. */
     @Output() expanded = new EventEmitter<boolean>();
 
     @ContentChild(SidenavLayoutHeaderDirective) headerDirective: SidenavLayoutHeaderDirective;

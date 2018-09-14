@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-07
+Last reviewed: 2018-09-14
 ---
 
 # Viewer component
@@ -109,12 +109,12 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | download | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Download' button. |
 | extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
 | goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
+| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the shared link used is not valid. |
 | navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
 | navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when user clicks 'Navigate Next' (">") button. |
 | print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
 | share | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Share' button. |
 | showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
-| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the shared link used is not valid. |
 
 ## Keyboard shortcuts
 
@@ -179,7 +179,7 @@ You can provide custom file parameters, for example a value for the `mimeType` o
 
 ### Supported file formats
 
-The [Viewer component](../core/viewer.component.md) consists of separate Views that handle particular types of type families based on either a file extension or a mime type:
+The [Viewer component](../core/viewer.component.md) consists of separate Views that handle particular types or type families based on either a file extension or a mime type:
 
 -   PDF View
     -   application/pdf
@@ -265,7 +265,7 @@ The [Viewer component](../core/viewer.component.md) now should be able to displa
 
 ### Extending the Viewer
 
-You can define your own custom handle to handle other file formats that are not yet supported by
+You can define your own custom handler to handle other file formats that are not yet supported by
 the [Viewer component](../core/viewer.component.md). Below is an example that shows how to use the `adf-viewer-extension`
 to handle 3D data files:
 
