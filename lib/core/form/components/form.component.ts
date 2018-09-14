@@ -156,9 +156,10 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
+    /** @deprecated in 2.4.0, will be renamed in error in 3.x.x */
     /** Emitted when any error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    onError: EventEmitter<any> = new EventEmitter<any>();
 
     debugMode: boolean = false;
 

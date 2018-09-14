@@ -192,10 +192,6 @@ export class FormModel {
     validateForm(): void {
         const validateFormEvent: any = new ValidateFormEvent(this);
 
-        if (validateFormEvent.defaultPrevented) {
-            return;
-        }
-
         let errorsField: FormFieldModel[] = [];
 
         let fields = this.getFormFields();

@@ -271,27 +271,6 @@ describe('FormModel', () => {
         form.validateField(field);
     });
 
-    it('should skip form validation when default behaviour prevented', () => {
-        const form = new FormModel({}, null, false, formService);
-
-        let prevented = false;
-
-        formService.validateForm.subscribe((event: ValidateFormEvent) => {
-            event.isValid = false;
-            event.preventDefault();
-            prevented = true;
-        });
-
-        const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
-        spyOn(form, 'getFormFields').and.returnValue([field]);
-
-        form.validateForm();
-
-        expect(prevented).toBeTruthy();
-        expect(form.isValid).toBeFalsy();
-        expect(field.validate).not.toHaveBeenCalled();
-    });
-
     it('should skip field validation when default behaviour prevented', () => {
         const form = new FormModel({}, null, false, formService);
 

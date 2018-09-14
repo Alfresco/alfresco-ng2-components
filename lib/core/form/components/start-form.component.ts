@@ -71,9 +71,10 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     @Output()
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
 
+    /** @deprecated in 2.4.0, will be renamed in error in 3.x.x */
     /** Emitted when any error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    onError: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
