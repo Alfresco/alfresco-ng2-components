@@ -106,8 +106,6 @@ describe('Process Filters Test', () => {
         startProcessPage.selectFromProcessDropdown(app.process_title);
         startProcessPage.clickFormStartProcessButton();
 
-        processFiltersPage.clickRunningFilterButton();
-
         processFiltersPage.checkFilterIsHighlighted(processFilter.running);
         processFiltersPage.selectFromProcessList(processTitle.running);
 

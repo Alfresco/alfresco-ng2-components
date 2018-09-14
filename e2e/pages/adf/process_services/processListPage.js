@@ -26,7 +26,7 @@ var ProcessListPage = function () {
     var processListTitle = element(by.css("p[class='adf-empty-content__title']"));
     var processListSubtitle = element(by.css("p[class='adf-empty-content__subtitle']"));
     var processDetailsMessage = element(by.css("adf-process-instance-details div[class='ng-star-inserted']"));
-    var openProcessDropdown = element(by.css("input[aria-label='Number']"));
+    var openProcessDropdown = element(by.css('mat-select[aria-label="Select Process"]'));
     var selectProcessDropdown = element.all(by.css('span[class="mat-option-text"]'));
     var startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
 
