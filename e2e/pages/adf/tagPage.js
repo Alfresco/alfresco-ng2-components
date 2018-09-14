@@ -31,6 +31,7 @@ var TagPage = function () {
     var tagListRowLocator = by.css("adf-tag-node-actions-list mat-list-item div");
     var tagListByNodeIdRowLocator = by.css("adf-tag-node-list mat-chip span");
     var tagListContentServicesRowLocator = by.css("div[class*='adf-list-tag']");
+    var showDeleteButton = element(by.id('adf-remove-button-tag'));
 
     this.goToTagPage = function () {
         browser.driver.get(tagURL);
@@ -158,5 +159,20 @@ var TagPage = function () {
         return deferred.promise;
     };
 
+    this.checkDeleteTagFromTagListByNodeIdIsDisplayed = function (name) {
+        var deleteChip = element(by.css('button[id="tag_chips_delete_' + name + '"]'));
+        return Util.waitUntilElementIsVisible(deleteChip);
+    };
+
+    this.clickShowDeleteButtonSwitch = function () {
+        Util.waitUntilElementIsVisible(showDeleteButton);
+        Util.waitUntilElementIsClickable(showDeleteButton);
+        showDeleteButton.click();
+    };
+
+    this.checkDeleteTagFromTagListByNodeIdIsNotDisplayed = function (name) {
+        var deleteChip = element(by.css('button[id="tag_chips_delete_' + name + '"]'));
+        return Util.waitUntilElementIsNotVisible(deleteChip);
+    };
 };
 module.exports = TagPage;
