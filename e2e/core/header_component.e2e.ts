@@ -148,4 +148,11 @@ describe('Header Component', () => {
 
         navigationBarPage.checkLogoTooltip(names.logo_tooltip);
     });
+
+    it('[C286297] Should be able to change the position of the sidebar menu', () => {
+        headerPage.sideBarPositionEnd();
+        headerPage.checkSidebarPositionEnd();
+        headerPage.sideBarPositionStart();
+        headerPage.checkSidebarPositionStart();
+    });
 });
