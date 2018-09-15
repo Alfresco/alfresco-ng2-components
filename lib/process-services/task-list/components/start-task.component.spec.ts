@@ -302,10 +302,10 @@ describe('StartTaskComponent', () => {
 
     it('should cancel start task on cancel button click', () => {
         let emitSpy = spyOn(component.cancel, 'emit');
-        let cancleTaskButton =  fixture.nativeElement.querySelector('#button-cancle');
+        let cancelTaskButton =  fixture.nativeElement.querySelector('#button-cancel');
         component.startTaskmodel.name = '';
         fixture.detectChanges();
-        cancleTaskButton.click();
+        cancelTaskButton.click();
         expect(emitSpy).not.toBeNull();
         expect(emitSpy).toHaveBeenCalled();
     });
