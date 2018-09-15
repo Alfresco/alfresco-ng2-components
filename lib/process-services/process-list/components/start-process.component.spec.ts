@@ -154,7 +154,7 @@ describe('StartFormComponent', () => {
 
             it('should emit cancel event on cancel Button', async(() => {
                 fixture.detectChanges();
-                let cancelButton = fixture.nativeElement.querySelector('#cancle_process');
+                let cancelButton = fixture.nativeElement.querySelector('#cancel_process');
                 let cancelSpy: jasmine.Spy = spyOn(component.cancel, 'emit');
                 cancelButton.click();
                 fixture.detectChanges();
