@@ -23,6 +23,7 @@ export class ShareDialog {
     dialogTitle = element(by.id('adf-share-title'));
     shareToggle = element(by.id('adf-share-toggle'));
     shareLink = element(by.id('adf-share-link'));
+    closeButton = element(by.css('button[class="mat-button mat-primary"]'));
 
     checkDialogIsDisplayed() {
         return Util.waitUntilElementIsVisible(this.dialogTitle);
@@ -42,5 +43,10 @@ export class ShareDialog {
     getShareLink() {
         Util.waitUntilElementIsVisible(this.shareLink)
         return this.shareLink.getAttribute('value');
+    }
+
+    clickCloseButton() {
+        Util.waitUntilElementIsVisible(this.closeButton);
+        return this.closeButton.click();
     }
 }

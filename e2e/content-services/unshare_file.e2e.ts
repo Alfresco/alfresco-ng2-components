@@ -90,10 +90,11 @@ describe('Unshare file', () => {
         let sharedLink = await shareDialog.getShareLink();
 
         shareDialog.clickShareToggle();
+        shareDialog.clickCloseButton();
 
         browser.get(sharedLink);
+        browser.sleep(300);
 
-        errorPage.checkErrorPage();
-        errorPage.checkBackButton();
+        errorPage.checkErrorCode();
     });
 });
