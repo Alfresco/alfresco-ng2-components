@@ -19,7 +19,8 @@ eval GIT_ISH=""
 
 eval projects=( "@alfresco/core"
     "@alfresco/content-service"
-    "@alfresco/process-service" )
+    "@alfresco/process-service"
+    "@alfresco/extensions" )
 
 show_help() {
     echo "Usage: start.sh"

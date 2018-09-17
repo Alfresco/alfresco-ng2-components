@@ -5,7 +5,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval projects=( "@alfresco/adf-core"
     "@alfresco/adf-content-services"
     "@alfresco/adf-insights"
-    "@alfresco/adf-process-services" )
+    "@alfresco/adf-process-services"
+    "@alfresco/adf-extensions" )
 
 show_help() {
     echo "Usage: npm-clean.sh"
