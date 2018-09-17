@@ -663,9 +663,9 @@
     },
     "extensions": {
       "root": "lib/extensions",
-      "sourceRoot": "lib/extensions/src",
+      "sourceRoot": "lib/extensions/src/lib",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "adf",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
