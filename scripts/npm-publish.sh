@@ -20,7 +20,8 @@ eval projects=(
     "core"
     "insights"
     "content-services"
-    "process-services" )
+    "process-services"
+    "extensions" )
 
 cd "$DIR/../"
 
