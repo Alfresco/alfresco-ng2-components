@@ -25,6 +25,7 @@ export class PermissionsPage {
     addPermissionDialog = element(by.css('adf-add-permission-dialog'));
     searchUserInput = element(by.id('searchInput'));
     searchResults = element.all(by.id('adf-search-results-content')).first();
+    addButton =  element(by.id('add-permission-dialog-confirm-button'));
 
     checkAddPermissionButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.addPermissionButton);
@@ -50,6 +51,19 @@ export class PermissionsPage {
 
     checkResultListIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchResults);
+    }
+
+    clickUserOrGroup(name) {
+        let userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
+        Util.waitUntilElementIsVisible(userOrGroupName);
+        userOrGroupName.click();
+        Util.waitUntilElementIsVisible(this.addButton);
+        return this.addButton.click();
+    }
+
+    checkUserOrGroupIsAdded(name) {
+        let userOrGroupName = element(by.css('div[data-automation-id="text_'+ name +'"]'));
+        Util.waitUntilElementIsVisible(userOrGroupName);
     }
 
 }
