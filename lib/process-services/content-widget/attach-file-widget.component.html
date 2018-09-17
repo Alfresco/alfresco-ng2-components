@@ -76,6 +76,7 @@
             </button>
             <mat-menu #fileActionMenu="matMenu" xPosition="before">
                 <button id="{{'file-'+file.id+'-show-file'}}"
+                    [disabled]="file.isExternal"
                     mat-menu-item (click)="onAttachFileClicked(file)">
                     <mat-icon>image</mat-icon>
                     <span>{{ 'FORM.FIELD.SHOW_FILE' | translate }}</span>

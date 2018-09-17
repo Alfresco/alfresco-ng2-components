@@ -155,6 +155,9 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     onAttachFileClicked(file: any) {
+        if (file.isExternal) {
+            return;
+        }
         if (this.isTemporaryFile(file)) {
             this.formService.formContentClicked.next(file);
         } else {
@@ -184,6 +187,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         if (chosenRepositoryHost !== currentECMHost) {
             this.attachDialogService.openLogin('LOGIN', repository.repositoryUrl.replace('/alfresco', '')).subscribe(
                 (selections: MinimalNodeEntryEntity[]) => {
+                    selections[0].isExternal = true;
                     this.tempFilesList.push(...selections);
                     this.uploadFileFromCS(selections, accountIdentifier);
                 });

@@ -50,7 +50,8 @@ export class AttachFileWidgetDialogService {
             actionName,
             selected,
             ecmHost,
-            context
+            context,
+            isSelectionValid: this.isNodeFile.bind(this)
         };
 
         this.openLoginDialog(data, 'adf-attach-file-widget-dialog', '630px');
@@ -64,6 +65,10 @@ export class AttachFileWidgetDialogService {
     /** Closes the currently open dialog. */
     close() {
         this.dialog.closeAll();
+    }
+
+    private isNodeFile(entry: MinimalNodeEntryEntity): boolean {
+        return entry.isFile;
     }
 
 }

@@ -24,4 +24,5 @@ export interface AttachFileWidgetDialogComponentData {
     selected: Subject<MinimalNodeEntryEntity[]>;
     ecmHost: string;
     context?: string;
+    isSelectionValid?: (entry: MinimalNodeEntryEntity) => boolean;
 }

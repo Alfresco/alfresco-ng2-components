@@ -44,7 +44,7 @@ export class DocumentListService {
             rootNodeId = opts.rootFolderId;
         }
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
         let params: any = {
@@ -157,7 +157,7 @@ export class DocumentListService {
      */
     getFolderNode(nodeId: string, includeFields: string[] = []): Observable<MinimalNodeEntryEntity> {
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
         let opts: any = {

@@ -57,12 +57,15 @@ export class AttachFileWidgetDialogComponent {
     }
 
     close() {
-
         this.data.selected.complete();
     }
 
     onSelect(nodeList: MinimalNodeEntryEntity[]) {
-        this.chosenNode = nodeList;
+        if (nodeList && nodeList[0].isFile) {
+            this.chosenNode = nodeList;
+        } else {
+            this.chosenNode = null;
+        }
     }
 
     onClick(event: any) {
