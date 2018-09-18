@@ -40,6 +40,7 @@ export class AttachFileWidgetDialogComponent {
     loginPanel: LoginDialogPanelComponent;
 
     showLogin = true;
+    isLoading = false;
     chosenNode: MinimalNodeEntryEntity[];
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,

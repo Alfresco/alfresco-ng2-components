@@ -156,6 +156,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     onAttachFileClicked(file: any) {
         if (file.isExternal) {
+            this.logger.info(`The file ${file.name} comes from an external source and cannot be showed at this moment`);
             return;
         }
         if (this.isTemporaryFile(file)) {
@@ -186,8 +187,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         let chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);
         if (chosenRepositoryHost !== currentECMHost) {
             this.attachDialogService.openLogin('LOGIN', repository.repositoryUrl.replace('/alfresco', '')).subscribe(
-                (selections: MinimalNodeEntryEntity[]) => {
-                    selections[0].isExternal = true;
+                (selections: any[]) => {
+                    selections.forEach((node) => node.isExternal = true);
                     this.tempFilesList.push(...selections);
                     this.uploadFileFromCS(selections, accountIdentifier);
                 });
@@ -200,18 +201,20 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
     }
 
-    private uploadFileFromCS(fileNodeList: MinimalNodeEntryEntity[], accountId: string, siteId?: string) {
+    private uploadFileFromCS(fileNodeList: any[], accountId: string, siteId?: string) {
         const filesSaved = [];
         from(fileNodeList).pipe(
             mergeMap(node =>
                 zip(
                     of(node.content.mimeType),
-                    this.activitiContentService.applyAlfrescoNode(node, siteId, accountId)
+                    this.activitiContentService.applyAlfrescoNode(node, siteId, accountId),
+                    of(node.isExternal)
                 )
             )
         )
-        .subscribe(([mymeType, res]) => {
+        .subscribe(([mymeType, res, isExternal]) => {
             res.mimeType = mymeType;
+            res.isExternal = isExternal;
             filesSaved.push(res);
         },
         (error) => {
