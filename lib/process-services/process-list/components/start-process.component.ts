@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges,
+import {
+    Component, EventEmitter, Input, OnChanges, OnInit,
     Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { ActivitiContentService, AppConfigService, AppConfigValues,
+import {
+    ActivitiContentService, AppConfigService, AppConfigValues,
     StartFormComponent, FormRenderingService, FormValues
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -26,6 +28,10 @@ import { ProcessDefinitionRepresentation } from './../models/process-definition.
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
+import { FormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { MatAutocompleteTrigger } from '@angular/material';
 
 @Component({
     selector: 'adf-start-process',
@@ -33,7 +39,7 @@ import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../co
     styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartProcessInstanceComponent implements OnChanges {
+export class StartProcessInstanceComponent implements OnChanges, OnInit {
 
     /** (optional) Limit the list of processes that can be started to those
      * contained in the specified app.
@@ -44,6 +50,10 @@ export class StartProcessInstanceComponent implements OnChanges {
     /** (optional) Definition name of the process to start. */
     @Input()
     processDefinitionName: string;
+
+    /** (optional) Definition name of the process to start. */
+    @Input()
+    defaultProcessSelected: boolean;
 
     /** Variables in input to the process
      * [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md).
@@ -57,11 +67,15 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     /** (optional) Name to assign to the current process. */
     @Input()
-    name: string;
+    name: string = '';
 
-    /** Hide or show the process selection drodown. */
+    /** Hide or show the process selection dropdown. */
     @Input()
     showSelectProcessDropdown: boolean = true;
+
+    /** (optional) Parameter to enable selection of process when filtering. */
+    @Input()
+    processFilterSelector: boolean = true;
 
     /** Emitted when the process starts. */
     @Output()
@@ -78,11 +92,18 @@ export class StartProcessInstanceComponent implements OnChanges {
     @ViewChild('startForm')
     startForm: StartFormComponent;
 
+    @ViewChild(MatAutocompleteTrigger)
+    inputAutocomplete: MatAutocompleteTrigger;
+
     processDefinitions: ProcessDefinitionRepresentation[] = [];
 
     selectedProcessDef: ProcessDefinitionRepresentation = new ProcessDefinitionRepresentation();
 
     errorMessageId: string = '';
+
+    processNameInput: FormControl;
+    processDefinitionInput: FormControl;
+    filteredProcesses: Observable<ProcessDefinitionRepresentation[]>;
 
     constructor(private activitiProcess: ProcessService,
                 private formRenderingService: FormRenderingService,
@@ -92,12 +113,47 @@ export class StartProcessInstanceComponent implements OnChanges {
         this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
     }
 
+    ngOnInit() {
+        this.processNameInput = new FormControl(this.name, Validators.required);
+        this.processDefinitionInput = new FormControl();
+
+        this.loadStartProcess();
+
+        this.processNameInput.valueChanges.subscribe(name => this.name = name);
+        this.filteredProcesses = this.processDefinitionInput.valueChanges
+            .pipe(
+                map(value => this._filter(value))
+            );
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (changes['values'] && changes['values'].currentValue) {
             this.moveNodeFromCStoPS();
         }
 
-        this.loadStartProcess();
+        if (changes['appId'] && changes['appId'].currentValue) {
+            this.appId = changes['appId'].currentValue;
+            this.loadStartProcess();
+        }
+    }
+
+    private _filter(value: string): ProcessDefinitionRepresentation[] {
+        const filterValue = value.toLowerCase();
+        let filteredProcess = this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
+
+        if (this.processFilterSelector) {
+            this.selectedProcessDef = this.getSelectedProcess(filterValue);
+        }
+        return filteredProcess;
+    }
+
+    getSelectedProcess(selectedProcess) {
+        let process = this.processDefinitions.find(process => process.name.toLowerCase() === selectedProcess);
+
+        if (!process) {
+            process = new ProcessDefinitionRepresentation();
+        }
+        return process;
     }
 
     public loadStartProcess() {
@@ -109,17 +165,22 @@ export class StartProcessInstanceComponent implements OnChanges {
                 this.processDefinitions = processDefinitionRepresentations;
 
                 if (this.hasSingleProcessDefinition()) {
-                    this.selectedProcessDef = this.processDefinitions[0];
-                } else {
-                    this.selectedProcessDef = this.processDefinitions.find((currentProcessDefinition) => {
-                        return currentProcessDefinition.name === this.processDefinitionName;
-                    });
+                    if (this.processDefinitionName && this.defaultProcessSelected) {
+                        this.selectedProcessDef = this.getSelectedProcess(this.processDefinitionName);
+
+                        if (!this.selectedProcessDef.id) {
+                            this.selectedProcessDef = this.processDefinitions[0];
+                        }
+                    } else {
+                        this.selectedProcessDef = this.processDefinitions[0];
+                    }
+
+                    this.processDefinitionInput.setValue(this.selectedProcessDef.name);
                 }
             },
             () => {
                 this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
             });
-
     }
 
     hasSingleProcessDefinition(): boolean {
@@ -218,5 +279,25 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     hasProcessName(): boolean {
         return this.name ? true : false;
+    }
+
+    displayFn(process: any) {
+        if (process) {
+            let processName = process;
+            if (typeof process !== 'string') {
+                processName = process.name;
+            }
+            return processName;
+        }
+    }
+
+    displayDropdown(event) {
+        event.stopPropagation();
+        if (!this.inputAutocomplete.panelOpen) {
+            this.processDefinitionInput.setValue('');
+            this.inputAutocomplete.openPanel();
+        } else {
+            this.inputAutocomplete.closePanel();
+        }
     }
 }

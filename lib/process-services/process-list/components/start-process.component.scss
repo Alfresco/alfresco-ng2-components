@@ -26,6 +26,15 @@
             width: 100%;
         }
     }
+    &-process-input-autocomplete {
+        display: flex;
+
+        button {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    }
     &-start-form-container {
         .mat-card {
             box-shadow: none !important;
