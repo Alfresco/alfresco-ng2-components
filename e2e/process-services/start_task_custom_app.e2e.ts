@@ -50,7 +50,6 @@ describe('Start Task - Custom App', () => {
     let attachmentListPage = new AttachmentListPage();
     let appNavigationBarPage = new AppNavigationBarPage();
 
-
     let processUserModel, assigneeUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let formTextField = app.form_fields.form_fieldId;
