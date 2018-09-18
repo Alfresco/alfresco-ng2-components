@@ -103,7 +103,7 @@ describe('Version component', () => {
         expect(versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
     });
 
-    it('[C279995] Should show/hide the new upload file options when click on add New version/canclel button', () => {
+    it('[C279995] Should show/hide the new upload file options when click on add New version/cancel button', () => {
         versionManagePage.showNewVersionButton.click();
 
         browser.driver.sleep(300);

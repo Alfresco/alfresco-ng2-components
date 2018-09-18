@@ -26,7 +26,7 @@ var StartTaskDialog = function () {
     var formDropDown = element(by.css("mat-select[id='form_id']"));
     var startButton = element(by.css("button[id='button-start']"));
     var startButtonEnabled = element(by.css("button[id='button-start']:not(disabled)"));
-    var cancelButton = element(by.css("button[id='button-cancle']"));
+    var cancelButton = element(by.css("button[id='button-cancel']"));
     var removeAssigneeIcon = element(by.css("button[data-automation-id='adf-people-selector-deselect']"));
 
     this.addName = function (userName) {
