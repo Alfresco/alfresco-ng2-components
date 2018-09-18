@@ -77,6 +77,7 @@ describe('ProcessFiltersComponent', () => {
 
         processFilterService = TestBed.get(ProcessFilterService);
         appsProcessService = TestBed.get(AppsProcessService);
+        filterList = new ProcessFiltersComponent(processFilterService, appsProcessService);
     });
 
     afterEach(() => {
