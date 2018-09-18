@@ -25,6 +25,7 @@ var DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
 var NAME_TEST = process.env.NAME_TEST ? true : false
 
 var specsToRun = './**/' + FOLDER + '**/*.e2e.ts';
+var retryNumber = 0;
 
 if (process.env.NAME_TEST) {
     specsToRun = './e2e/**/' + process.env.NAME_TEST;
@@ -136,6 +137,7 @@ exports.config = {
     },
 
     onComplete: async function () {
+        retryNumber = retryNumber +1;
 
         let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
         let saveScreenshot = process.env.SAVE_SCREENSHOT;
@@ -196,9 +198,9 @@ exports.config = {
         testConfig = {
             reportTitle: 'Protractor Test Execution Report',
             outputPath: `${projectRoot}/e2e-output/junit-report`,
-            outputFilename: 'ProtractorTestReport',
+            outputFilename: `ProtractorTestReport-${retryNumber}`,
             screenshotPath: '`${projectRoot}/e2e-output/screenshots/`',
-            screenshotsOnlyOnFailure: true
+            screenshotsOnlyOnFailure: true,
         };
 
         new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfig);
