@@ -70,7 +70,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 );
         }),
         map((list: UserProcessModel[]) => {
-           // let value = (this.input.nativeElement as HTMLInputElement).value;
             let value = this.searchTerm.value;
             this.checkUserAndValidateForm(list, value);
             return list;
