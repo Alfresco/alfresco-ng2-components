@@ -62,7 +62,7 @@ export class PermissionsPage {
     }
 
     checkUserOrGroupIsAdded(name) {
-        let userOrGroupName = element(by.css('div[data-automation-id="text_'+ name +'"]'));
+        let userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
         Util.waitUntilElementIsVisible(userOrGroupName);
     }
 
