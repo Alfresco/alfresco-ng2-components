@@ -205,7 +205,7 @@ exports.config = {
 
         new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfig);
 
-        let pathFile = path.join(__dirname, './e2e-output/junit-report', 'ProtractorTestReport.html');
+        let pathFile = path.join(__dirname, './e2e-output/junit-report', `ProtractorTestReport-${retryNumber}.html`);
         let reportFile = fs.createReadStream(pathFile);
 
         let reportFolder;
