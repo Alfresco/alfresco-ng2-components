@@ -95,22 +95,6 @@ exports.config = {
         screenshotPath: `${projectRoot}/e2e-output/screenshots/`
     }],
 
-    beforeLaunch: function () {
-        var htmlReporterFolder = `${projectRoot}/e2e-output/junit-report/`;
-
-        fs.exists(htmlReporterFolder, function(exists, error) {
-            if (exists) {
-                rimraf(htmlReporterFolder, function(err) {
-                    console.log('[ERROR] rimraf: ', err);
-                });
-            }
-
-            if(error) {
-                console.log('[ERROR] fs', error);
-            }
-        });
-    },
-
     onCleanUp(results) {
         retry.onCleanUp(results);
     },

@@ -104,6 +104,7 @@ done
 
 rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/screenshots/
+rm -rf "./e2e-output/junit-report"
 
 export URL_HOST_ADF=$HOST
 export USERNAME_ADF=$USERNAME
