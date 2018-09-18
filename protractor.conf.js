@@ -213,7 +213,7 @@ exports.config = {
         try {
             reportFolder = await alfrescoJsApi.nodes.addNode('-my-', {
                 'name': 'report',
-                'relativePath': `Builds/${buildNumber}`,
+                'relativePath': `Builds/${buildNumber}/${FOLDER}`,
                 'nodeType': 'cm:folder'
             }, {}, {
                 'overwrite': true
@@ -222,7 +222,7 @@ exports.config = {
             console.log('Folder report already present' + error);
 
             reportFolder = await alfrescoJsApi.nodes.getNode('-my-', {
-                'relativePath': `Builds/${buildNumber}/report`,
+                'relativePath': `Builds/${buildNumber}/report/${FOLDER}`,
                 'nodeType': 'cm:folder'
             }, {}, {
                 'overwrite': true
