@@ -16,6 +16,5 @@
  */
 
 export * from './auth-bearer.interceptor';
-export * from './admin-auth-bearer-guard.service';
 export * from './authentication.service';
 export * from './auth-token-processor.service';

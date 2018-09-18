@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable, Observer, of } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import moment from 'moment-es6';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 

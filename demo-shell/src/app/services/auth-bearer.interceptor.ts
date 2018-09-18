@@ -19,10 +19,10 @@ import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable, Injector } from '@angular/core';
 import {
   HttpHandler, HttpInterceptor, HttpRequest,
-  HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpErrorResponse
+  HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent
 } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service';
-import { catchError, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, mergeMap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthBearerInterceptor implements HttpInterceptor {
@@ -68,34 +68,10 @@ export class AuthBearerInterceptor implements HttpInterceptor {
         return next.handle(kcReq)
           .pipe(
             catchError(error => {
-              if (error instanceof HttpErrorResponse && (<HttpErrorResponse> error).status === 401) {
-                  return this.handle401Error(req, next);
-              } else {
                 return observableThrowError(error);
-              }
             })
           );
       })
       );
-  }
-
-  handle401Error(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    return this.authService.refreshToken()
-      .pipe
-      (switchMap((newToken: string) => {
-        if (newToken) {
-          return this.authService.addTokenToHeader(req.headers)
-            .pipe(
-              mergeMap(headersWithBearer => {
-                const kcReq = req.clone({ headers: headersWithBearer });
-                return next.handle(kcReq);
-              })
-            );
-        }
-      }),
-      catchError((e) => {
-        this.authService.logout();
-        return next.handle(req);
-      }));
   }
 }
