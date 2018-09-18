@@ -144,6 +144,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     showTaskTab: boolean;
     showProcessTab: boolean;
 
+    showProcessFilterIcon: boolean;
+    showTaskFilterIcon: boolean;
+
     fieldValidators = [
         ...FORM_FIELD_VALIDATORS,
         new DemoFieldValidator()
@@ -491,4 +494,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.currentTaskId = null;
     }
 
+    changeTaskFilterIcon() {
+        this.showTaskFilterIcon = !this.showTaskFilterIcon;
+    }
+    changeProcessFilterIcon() {
+        this.showProcessFilterIcon = !this.showProcessFilterIcon;
+    }
 }

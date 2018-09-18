@@ -22,6 +22,7 @@ var AppNavigationBarPage = function () {
     var tasksButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Tasks")).first();
     var processButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Process")).first();
     var reportsButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Reports")).first();
+    var settingsButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Settings")).first();
     var reportsButtonSelected = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div[aria-selected='true']", "Reports")).first();
 
     this.clickTasksButton = function () {
@@ -31,6 +32,10 @@ var AppNavigationBarPage = function () {
 
     this.clickProcessButton = function () {
         return processButton.click();
+    };
+
+    this.clickSettingsButton = function () {
+        return settingsButton.click();
     };
 
     this.clickReportsButton = function () {
