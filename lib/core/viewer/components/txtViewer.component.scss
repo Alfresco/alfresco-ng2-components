@@ -5,5 +5,7 @@
         background-color: mat-color($background, background);
         overflow: hidden;
         overflow-y: scroll;
+        height: 100%;
+        width: 100%;
     }
 }

@@ -234,7 +234,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
         media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
-        text: ['txt', 'xml', 'js', 'html', 'json', 'ts'],
+        text: ['txt', 'xml', 'js', 'html', 'json', 'ts', 'css', 'md'],
         pdf: ['pdf']
     };
 
