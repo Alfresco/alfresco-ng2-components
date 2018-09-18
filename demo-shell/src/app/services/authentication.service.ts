@@ -28,7 +28,7 @@ export class AuthenticationService {
         private alfrescoApiService: AlfrescoApiService) { }
 
     private bearerExcludedUrls: string[] = ['app.config.json', 'assets/', 'assets/adf-core/i18n/',
-        'auth/realms', 'resources/', 'assets/adf-process-services/i18n/'];
+        'auth/realms', 'resources/', 'assets/adf-insights/i18n/', 'assets/adf-process-services/i18n/', 'resources/lazy-loading/i18n'];
 
     token: string;
 
