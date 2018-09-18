@@ -1,4 +1,7 @@
 {
+  "SAVE": "SAVE",
+  "START": "COMPLETE",
+  "START PROCESS": "START PROCESS",
   "FORM": {
     "START_FORM": {
       "TITLE": "Start Form"

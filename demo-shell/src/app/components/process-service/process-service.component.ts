@@ -29,7 +29,11 @@ import {
     Output
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProcessInstanceFilterRepresentation, Pagination, UserProcessInstanceFilterRepresentation } from 'alfresco-js-api';
+import {
+    ProcessInstanceFilterRepresentation,
+    Pagination,
+    UserProcessInstanceFilterRepresentation
+} from 'alfresco-js-api';
 import {
     FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues
@@ -53,7 +57,7 @@ import {
     TaskListComponent
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
-import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, UserPreferencesService, ValidateFormEvent } from '@alfresco/adf-core';
 import { Subscription } from 'rxjs';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
@@ -198,6 +202,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
             formService.formContentClicked.subscribe(content => {
                 this.showContentPreview(content);
+            }),
+
+            formService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
+                this.logService.log('Error form:' + validateFormEvent.errorsField);
             })
         );
 
@@ -257,7 +265,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.showTaskTab = event.index === this.tabs.tasks;
             this.relocateLocationToTask();
         } else if (index === PROCESS_ROUTE) {
-            this.showProcessTab =  event.index === this.tabs.processes;
+            this.showProcessTab = event.index === this.tabs.processes;
             this.relocateLocationToProcess();
         } else if (index === REPORT_ROUTE) {
             this.relocateLocationToReport();

@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import { FormFieldEvent, ValidateFormEvent, ValidateFormFieldEvent } from './../../../events/index';
+import { FormFieldEvent } from './../../../events/form-field.event';
+import { ValidateFormFieldEvent } from './../../../events/validate-form-field.event';
+import { ValidateFormEvent } from './../../../events/validate-form.event';
 import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';
 import { FormFieldTemplates } from './form-field-templates';
@@ -120,9 +122,21 @@ export class FormModel {
             }
 
             if (json.fields) {
-                let saveOutcome = new FormOutcomeModel(this, { id: FormModel.SAVE_OUTCOME, name: 'Save', isSystem: true });
-                let completeOutcome = new FormOutcomeModel(this, { id: FormModel.COMPLETE_OUTCOME, name: 'Complete', isSystem: true });
-                let startProcessOutcome = new FormOutcomeModel(this, { id: FormModel.START_PROCESS_OUTCOME, name: 'Start Process', isSystem: true });
+                let saveOutcome = new FormOutcomeModel(this, {
+                    id: FormModel.SAVE_OUTCOME,
+                    name: 'Save',
+                    isSystem: true
+                });
+                let completeOutcome = new FormOutcomeModel(this, {
+                    id: FormModel.COMPLETE_OUTCOME,
+                    name: 'Complete',
+                    isSystem: true
+                });
+                let startProcessOutcome = new FormOutcomeModel(this, {
+                    id: FormModel.START_PROCESS_OUTCOME,
+                    name: 'Start Process',
+                    isSystem: true
+                });
 
                 let customOutcomes = (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj));
 
@@ -176,27 +190,27 @@ export class FormModel {
      * @memberof FormModel
      */
     validateForm(): void {
-        const validateFormEvent = new ValidateFormEvent(this);
+        const validateFormEvent: any = new ValidateFormEvent(this);
+
+        let errorsField: FormFieldModel[] = [];
+
+        let fields = this.getFormFields();
+        for (let i = 0; i < fields.length; i++) {
+            if (!fields[i].validate()) {
+                errorsField.push(fields[i]);
+            }
+        }
+
+        if (errorsField.length > 0) {
+            this._isValid = false;
+        }
 
         if (this.formService) {
+            validateFormEvent.isValid = this._isValid;
+            validateFormEvent.errorsField = errorsField;
             this.formService.validateForm.next(validateFormEvent);
         }
 
-        this._isValid = validateFormEvent.isValid;
-
-        if (validateFormEvent.defaultPrevented) {
-            return;
-        }
-
-        if (validateFormEvent.isValid) {
-            let fields = this.getFormFields();
-            for (let i = 0; i < fields.length; i++) {
-                if (!fields[i].validate()) {
-                    this._isValid = false;
-                    return;
-                }
-            }
-        }
     }
 
     /**
@@ -227,8 +241,8 @@ export class FormModel {
 
         if (!field.validate()) {
             this._isValid = false;
-            return;
         }
+
         this.validateForm();
     }
 

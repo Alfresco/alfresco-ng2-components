@@ -2,7 +2,7 @@
     <mat-tab-group>
         <mat-tab *ngFor="let tab of visibleTabs" [label]="tab.title">
             <div *ngFor="let field of tab.fields">
-                <form-field [field]="field.field"></form-field>
+                <adf-form-field [field]="field.field"></adf-form-field>
              </div>
         </mat-tab>
     </mat-tab-group>

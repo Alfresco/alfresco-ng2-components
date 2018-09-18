@@ -80,6 +80,7 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
 | formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
 | formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
+| formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../core/form-field.model.md)`[]>` | Emitted when form validations has validation error. |
 | formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
 | formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
 | onError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
