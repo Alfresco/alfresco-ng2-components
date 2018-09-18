@@ -10,8 +10,7 @@
                data-automation-id="adf-people-search-input"
                type="text"
                [id]="field.id"
-               [(ngModel)]="value"
-               [formControl] ="searchTerm"
+               [formControl]="searchTerm"
                placeholder="{{field.placeholder}}"
                [matAutocomplete]="auto">
         <mat-autocomplete class="adf-people-widget-list" #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
