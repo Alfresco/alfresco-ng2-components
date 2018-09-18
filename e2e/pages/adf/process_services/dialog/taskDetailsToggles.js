@@ -20,8 +20,8 @@ var ToggleState = require('../../core/toggleState');
 var TaskDetailsToggles = function () {
 
     var toggleState = new ToggleState();
-    
-    var showDetailsHeaderToggle = element(by.id("showHeaderToggle-input"));
+
+    var showDetailsHeaderToggle = element(by.id('adf-show-header-input'));
 
     this.enableShowHeader = function () {
         toggleState.enableToggle(showDetailsHeaderToggle);

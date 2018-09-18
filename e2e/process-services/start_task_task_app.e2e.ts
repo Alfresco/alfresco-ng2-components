@@ -21,6 +21,7 @@ import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
+import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
 
 import CONSTANTS = require('../util/constants');
 
@@ -43,9 +44,12 @@ import path = require('path');
 describe('Start Task - Task App', () => {
 
     let TASKDATAFORMAT = 'mmm dd yyyy';
+
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let attachmentListPage = new AttachmentListPage();
+    let appNavigationBarPage = new AppNavigationBarPage();
+
     let processUserModel, assigneeUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let formTextField = app.form_fields.form_fieldId;
@@ -215,10 +219,16 @@ describe('Start Task - Task App', () => {
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(showHeaderTask).selectTaskFromTasksList(showHeaderTask);
 
+        appNavigationBarPage.clickSettingsButton();
         taskPage.usingTaskDetails().usingTaskDetailsToggles().disableShowHeader();
+        appNavigationBarPage.clickTasksButton();
+
         taskPage.usingTaskDetails().taskInfoDrawerIsNotDisplayed();
 
+        appNavigationBarPage.clickSettingsButton();
         taskPage.usingTaskDetails().usingTaskDetailsToggles().enableShowHeader();
+        appNavigationBarPage.clickTasksButton();
+
         taskPage.usingTaskDetails().taskInfoDrawerIsDisplayed();
     });
 
