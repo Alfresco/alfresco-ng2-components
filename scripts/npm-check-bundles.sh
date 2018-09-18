@@ -7,6 +7,7 @@ eval VERSION=""
 eval projects=( "adf-core"
     "adf-insights"
     "adf-content-services"
+    "extensions"
     "adf-process-services" )
 
 show_help() {

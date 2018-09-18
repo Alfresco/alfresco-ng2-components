@@ -18,7 +18,8 @@ eval EXECLINT=true
 eval projects=( "core"
     "content-services"
     "insights"
-    "process-services" )
+    "process-services"
+    "extensions" )
 
 show_help() {
     echo "Usage: npm-build-all.sh"

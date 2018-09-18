@@ -9,21 +9,31 @@ rm -rf node_modules/@alfresco
 
 echo "====== Build lib ====="
 
+echo "------ Build core -----"
 npm run ng-packagr -- -p ./lib/core/ && \
 mkdir -p ./node_modules/@alfresco/adf-core/ && \
 cp -R ./lib/dist/core/* ./node_modules/@alfresco/adf-core/
 
+echo "------ Build content-services -----"
 npm run ng-packagr -- -p ./lib/content-services/ && \
 mkdir -p ./node_modules/@alfresco/adf-content-services/ && \
 cp -R ./lib/dist/content-services/* ./node_modules/@alfresco/adf-content-services/
 
+echo "------ Build process-services -----"
 npm run ng-packagr -- -p ./lib/process-services/ && \
 mkdir -p ./node_modules/@alfresco/adf-process-services/ && \
 cp -R ./lib/dist/process-services/* ./node_modules/@alfresco/adf-process-services/
 
+echo "------ Build insights -----"
 npm run ng-packagr -- -p ./lib/insights/ && \
 mkdir -p ./node_modules/@alfresco/adf-insights/ && \
 cp -R ./lib/dist/insights/* ./node_modules/@alfresco/adf-insights/
+
+echo "------ Build extensions -----"
+npm run ng-packagr -- -p ./lib/extensions/ && \
+mkdir -p ./node_modules/@alfresco/adf-extensions/ && \
+cp -R ./lib/dist/extensions/* ./node_modules/@alfresco/adf-extensions/
+
 
 echo "====== Build style ====="
 
@@ -44,6 +54,7 @@ cp -R ./lib/process-services/i18n/* ./lib/dist/process-services/bundles/assets/a
 
 mkdir -p ./lib/dist/insights/bundles/assets/adf-insights/i18n
 cp -R ./lib/insights/i18n/* ./lib/dist/insights/bundles/assets/adf-insights/i18n
+
 
 echo "====== Copy assets ====="
 

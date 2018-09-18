@@ -1,0 +1,13 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist/extensions/",
+  "deleteDestPath": false,
+  "lib": {
+    "languageLevel": ["dom", "es2017"],
+    "entryFile": "src/public_api.ts",
+    "flatModuleFile": "adf-extensions",
+    "umdModuleIds": {
+      "alfresco-js-api": "alfresco-js-api"
+    }
+  }
+}

@@ -10,7 +10,8 @@ eval TOTAL_BUILD=true;
 eval projects=( "core"
     "content-services"
     "process-services"
-    "insights" )
+    "insights"
+    "extensions" )
 
 cd `dirname $0`
 
