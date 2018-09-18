@@ -21,7 +21,7 @@ import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
-import CONSTANTS = require('../util/constants');
+import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
 
 import Task = require('../models/APS/Task');
 import Tenant = require('../models/APS/Tenant');
@@ -39,12 +39,18 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
+import CONSTANTS = require('../util/constants');
+
 describe('Start Task - Custom App', () => {
 
     let TASKDATAFORMAT = 'mmm dd yyyy';
+
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let attachmentListPage = new AttachmentListPage();
+    let appNavigationBarPage = new AppNavigationBarPage();
+
+
     let processUserModel, assigneeUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let formTextField = app.form_fields.form_fieldId;
@@ -212,10 +218,16 @@ describe('Start Task - Custom App', () => {
         taskPage.createNewTask().addName(showHeaderTask).clickStartButton();
         taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(showHeaderTask).selectTaskFromTasksList(showHeaderTask);
 
+        appNavigationBarPage.clickSettingsButton();
         taskPage.usingTaskDetails().usingTaskDetailsToggles().disableShowHeader();
+        appNavigationBarPage.clickTasksButton();
+
         taskPage.usingTaskDetails().taskInfoDrawerIsNotDisplayed();
 
+        appNavigationBarPage.clickSettingsButton();
         taskPage.usingTaskDetails().usingTaskDetailsToggles().enableShowHeader();
+        appNavigationBarPage.clickTasksButton();
+
         taskPage.usingTaskDetails().taskInfoDrawerIsDisplayed();
     });
 
