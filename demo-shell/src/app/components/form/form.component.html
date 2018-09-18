@@ -1,6 +1,19 @@
-<div class="form-container">
-    <adf-form
-        [showRefreshButton]="false"
-        [form]="form">
-    </adf-form>
+<div class="main-content">
+    <h1>Form Component</h1>
+
+    <div class="form-container">
+        <adf-form
+            [showRefreshButton]="false"
+            [form]="form"
+            (formError)="logErrors($event)">
+        </adf-form>
+    </div>
+
+    <div class="console" #console>
+        <h3>Error log:</h3>
+        <p *ngFor="let error of errorFields">Error {{ error.name }} {{error.validationSummary.message | translate}}</p>
+    </div>
+
 </div>
+
+

@@ -15,30 +15,26 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation,
+    OnDestroy
+} from '@angular/core';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { FormComponent } from './form.component';
 import { ContentLinkModel } from './widgets/core/content-link.model';
 import { FormOutcomeModel } from './widgets/core/index';
-import { Subscription } from 'rxjs';
+import { ValidateFormEvent } from './../events/validate-form.event';
 
-/**
- * Displays the start form for a named process definition, which can be used to retrieve values to start a new process.
- *
- * After the form has been completed the form values are available from the attribute component.form.values and
- * component.form.isValid (boolean) can be used to check the if the form is valid or not. Both of these properties are
- * updated as the user types into the form.
- *
- * @Input
- * {processDefinitionId} string: The process definition ID
- * {showOutcomeButtons} boolean: Whether form outcome buttons should be shown, this is now always active to show form outcomes
- *  @Output
- *  {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
- *  {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
- *  {formCompleted} EventEmitter - This event is fired when the form is completed, it pass all the value in the form.
- *
- */
 @Component({
     selector: 'adf-start-form',
     templateUrl: './start-form.component.html',
@@ -46,8 +42,6 @@ import { Subscription } from 'rxjs';
     encapsulation: ViewEncapsulation.None
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {
-
-    private subscriptions: Subscription[] = [];
 
     /** Definition ID of the process to start. */
     @Input()
@@ -90,6 +84,11 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         this.subscriptions.push(
             this.formService.formContentClicked.subscribe(content => {
                 this.formContentClicked.emit(content);
+            }),
+            this.formService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
+                if (validateFormEvent.errorsField.length > 0) {
+                    this.formError.next(validateFormEvent.errorsField);
+                }
             })
         );
     }
@@ -155,8 +154,8 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
     /** @override */
     isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
-        if (outcome && outcome.isSystem && ( outcome.name === FormOutcomeModel.SAVE_ACTION ||
-            outcome.name === FormOutcomeModel.COMPLETE_ACTION )) {
+        if (outcome && outcome.isSystem && (outcome.name === FormOutcomeModel.SAVE_ACTION ||
+            outcome.name === FormOutcomeModel.COMPLETE_ACTION)) {
             return false;
         } else if (outcome && outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
             return true;
