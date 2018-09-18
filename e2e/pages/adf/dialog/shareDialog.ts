@@ -41,7 +41,7 @@ export class ShareDialog {
     }
 
     getShareLink() {
-        Util.waitUntilElementIsVisible(this.shareLink)
+        Util.waitUntilElementIsVisible(this.shareLink);
         return this.shareLink.getAttribute('value');
     }
 

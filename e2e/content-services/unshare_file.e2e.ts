@@ -29,7 +29,7 @@ import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
-import { browser } from "protractor";
+import { browser } from 'protractor';
 
 describe('Unshare file', () => {
 
@@ -72,13 +72,13 @@ describe('Unshare file', () => {
         done();
     });
 
-    afterAll(async(done) =>{
+    afterAll(async(done) => {
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
 
         done();
     });
 
-    it('[C280556] Unshared file should show 404 page', async()=> {
+    it('[C280556] Unshared file should show 404 page', async() => {
         contentListPage.clickRowToSelect(pngFileModel.name);
 
         contentServicesPage.clickShareButton();
