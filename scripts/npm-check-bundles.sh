@@ -7,7 +7,7 @@ eval VERSION=""
 eval projects=( "adf-core"
     "adf-insights"
     "adf-content-services"
-    "extensions"
+    "adf-extensions"
     "adf-process-services" )
 
 show_help() {
@@ -106,8 +106,12 @@ do
  fi
 
   if [ ! -f package/_theming.scss ]; then
-    error_out '31;1' "$PACKAGE style not found!" >&2
-    exit 1
+    if [ $PACKAGE == 'adf-extensions' ]; then
+       echo "no style needed"
+    else
+       error_out '31;1' "$PACKAGE style not found!" >&2
+       exit 1
+    fi
  else
      echo "style ok!"
  fi
