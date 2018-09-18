@@ -9,8 +9,8 @@ npm run lint-lib || exit 1
 
 echo "====== lint E2E ====="
 
-npm run lint-e2e
+npm run lint-e2e || exit 1
 
 echo "====== lint Demo shell ====="
 
-ng lint dev --fix
+ng lint dev || exit 1

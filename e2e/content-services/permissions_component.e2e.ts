@@ -25,6 +25,7 @@ import ContentListPage = require('../pages/adf/dialog/contentList');
 import AlfrescoApi = require('alfresco-js-api-node');
 import FileModel = require('../models/ACS/fileModel');
 import { UploadActions } from '../actions/ACS/upload.actions';
+import Util = require('../util/util.js');
 
 describe('Permissions Component', function () {
 
@@ -40,19 +41,33 @@ describe('Permissions Component', function () {
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
-    beforeAll(() => {
+    let groupBody = {
+        id: Util.generateRandomString(),
+        displayName: Util.generateRandomString()
+    };
+
+    let groupId;
+
+    beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
         });
-    });
 
-    beforeEach(async (done) => {
         acsUser = new AcsUserModel();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
+        let group = await this.alfrescoJsApi.core.groupsApi.createGroup(groupBody);
+
+        groupId = group.entry.id;
+
+        done();
+    });
+
+    beforeEach(async (done) => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         file = await uploadActions.uploadFile(this.alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
@@ -69,6 +84,14 @@ describe('Permissions Component', function () {
 
     afterEach(async (done) => {
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, file.entry.id);
+
+        done();
+    });
+
+    afterAll(async (done) => {
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.groupsApi.deleteGroup(groupId);
         done();
     });
 
@@ -79,6 +102,16 @@ describe('Permissions Component', function () {
         permissionsPage.checkSearchUserInputIsDisplayed();
         permissionsPage.searchUserOrGroup('a');
         permissionsPage.checkResultListIsDisplayed();
+    });
+
+    it('[C276979] Should be able to give permissions to a group of people', () => {
+        permissionsPage.checkAddPermissionButtonIsDisplayed();
+        permissionsPage.clickAddPermissionButton();
+        permissionsPage.checkAddPermissionDialogIsDisplayed();
+        permissionsPage.checkSearchUserInputIsDisplayed();
+        permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
+        permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
+        permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
     });
 
 });
