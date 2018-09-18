@@ -16,4 +16,3 @@
  */
 
 export * from './auth-bearer.interceptor';
-export * from './auth-token-processor.service';
