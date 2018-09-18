@@ -25,6 +25,7 @@ import ContentListPage = require('../pages/adf/dialog/contentList');
 import AlfrescoApi = require('alfresco-js-api-node');
 import FileModel = require('../models/ACS/fileModel');
 import { UploadActions } from '../actions/ACS/upload.actions';
+import Util = require('../util/util.js');
 
 describe('Permissions Component', function () {
 
@@ -41,8 +42,8 @@ describe('Permissions Component', function () {
     });
 
     let groupBody = {
-        id: 'TEST_ID',
-        displayName: 'TEST'
+        id: Util.generateRandomString(),
+        displayName: Util.generateRandomString()
     };
 
     let groupId;
@@ -109,7 +110,7 @@ describe('Permissions Component', function () {
         permissionsPage.checkAddPermissionDialogIsDisplayed();
         permissionsPage.checkSearchUserInputIsDisplayed();
         permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
-        permissionsPage.clickUserOrGroup('GROUP_' + groupBody.displayName);
+        permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
         permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
     });
 
