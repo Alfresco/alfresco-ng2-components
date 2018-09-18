@@ -79,7 +79,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
-import { AuthenticationService, AuthTokenProcessorService, AuthBearerInterceptor } from './services';
+import { AuthTokenProcessorService, AuthBearerInterceptor } from './services';
 
 @NgModule({
     imports: [
@@ -145,7 +145,6 @@ import { AuthenticationService, AuthTokenProcessorService, AuthBearerInterceptor
         ConfigEditorComponent
     ],
     providers: [
-        AuthenticationService,
         AuthTokenProcessorService,
         {
             provide: HTTP_INTERCEPTORS, useClass:

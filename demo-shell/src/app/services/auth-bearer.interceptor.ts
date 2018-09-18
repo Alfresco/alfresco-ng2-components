@@ -21,7 +21,7 @@ import {
   HttpHandler, HttpInterceptor, HttpRequest,
   HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent
 } from '@angular/common/http';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '@alfresco/adf-core';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 @Injectable()
