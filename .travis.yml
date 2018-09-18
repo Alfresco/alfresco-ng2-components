@@ -31,6 +31,9 @@ jobs:
           env: STAGE=core
           script:  (./scripts/npm-build-all.sh -si -sb -t "core" --skip-lint || exit 1;);
         - stage: Unit test
+          env: STAGE=extensions
+          script:  (./scripts/npm-build-all.sh -si -sb -t "extensions" --skip-lint || exit 1;);
+        - stage: Unit test
           env: STAGE=process-services
           script: (./scripts/npm-build-all.sh -si -sb -t "process-services" --skip-lint|| exit 1;);
         - stage: Unit test

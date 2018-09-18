@@ -1,0 +1,10 @@
+{
+  "name": "@alfresco/adf-extensions",
+  "version": "0.1.0",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0",
+    "@angular/core": "^6.0.0",
+    "@angular/http": "^6.1.4",
+    "alfresco-js-api": "^2.5.0"
+  }
+}
