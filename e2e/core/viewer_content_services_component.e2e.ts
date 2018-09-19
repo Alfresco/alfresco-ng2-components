@@ -121,13 +121,13 @@ describe('Content Services Viewer', () => {
     afterAll(async (done) => {
         let uploadActions = new UploadActions();
 
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfFile.getId())
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, protectedFile.getId())
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, docxFile.getId())
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jpgFile.getId())
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, mp4File.getId())
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFile.getId())
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, unsupportedFile.getId())
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfFile.getId());
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, protectedFile.getId());
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, docxFile.getId());
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jpgFile.getId());
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, mp4File.getId());
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFile.getId());
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, unsupportedFile.getId());
 
         done();
     });
