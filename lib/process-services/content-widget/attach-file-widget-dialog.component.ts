@@ -39,8 +39,6 @@ export class AttachFileWidgetDialogComponent {
     @ViewChild('adfLoginPanel')
     loginPanel: LoginDialogPanelComponent;
 
-    showLogin = true;
-    isLoading = false;
     chosenNode: MinimalNodeEntryEntity[];
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
@@ -53,7 +51,6 @@ export class AttachFileWidgetDialogComponent {
     }
 
     performLogin() {
-        this.showLogin = false;
         this.loginPanel.submitForm();
     }
 

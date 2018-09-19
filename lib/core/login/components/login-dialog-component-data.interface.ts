@@ -20,7 +20,5 @@ import { Subject } from 'rxjs/Subject';
 export interface LoginDialogComponentData {
     title: string;
     actionName?: string;
-    logged: Subject<string>;
-    ecmHost: string;
-    context?: string;
+    logged: Subject<any>;
 }

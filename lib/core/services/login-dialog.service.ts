@@ -16,17 +16,13 @@
  */
 
 import { MatDialog } from '@angular/material';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { LoginDialogComponent } from '../login/components/login-dialog.component';
 import { LoginDialogComponentData } from '../login/components/login-dialog-component-data.interface';
 
 @Injectable()
 export class LoginDialogService {
-
-    /** Emitted when an error occurs. */
-    @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private dialog: MatDialog) {
     }
@@ -37,19 +33,16 @@ export class LoginDialogService {
      * @param contentEntry Item to upload
      * @returns Information about the chosen file(s)
      */
-    openLogin(actionName: string, ecmHost: string, context?: string): Observable<string> {
-        let titleString: string = `Please log in for ${ecmHost}`;
+    openLogin(actionName: string, title: string): Observable<string> {
         const logged = new Subject<string>();
         logged.subscribe({
             complete: this.close.bind(this)
         });
 
         const data: LoginDialogComponentData = {
-            title : titleString,
+            title,
             actionName,
-            logged,
-            ecmHost,
-            context
+            logged
         };
 
         this.openLoginDialog(data, 'adf-login-dialog', '630px');
@@ -62,7 +55,6 @@ export class LoginDialogService {
 
     /** Closes the currently open dialog. */
     close() {
-        // this.externalLogin.getInstance().logout();
         this.dialog.closeAll();
     }
 

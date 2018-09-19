@@ -4,9 +4,10 @@
 </header>
 
 <mat-dialog-content class="adf-login-dialog-content">
-    <adf-login-dialog-panel #adfLoginPanel *ngIf="!isLoggedIn()">
+    <adf-login-dialog-panel id="attach-file-login-panel" #adfLoginPanel *ngIf="!isLoggedIn()">
     </adf-login-dialog-panel>
     <adf-content-node-selector-panel *ngIf="isLoggedIn()"
+                                     id="attach-file-content-node"
                                      [isSelectionValid]="data?.isSelectionValid"
                                      (select)="onSelect($event)">
     </adf-content-node-selector-panel>
@@ -16,13 +17,13 @@
     <button
         mat-button
         (click)="close()"
-        data-automation-id="content-node-selector-actions-cancel">CANCEL
+        data-automation-id="attach-file-dialog-actions-cancel">CANCEL
     </button>
 
     <button *ngIf="!isLoggedIn()"
         mat-button
         (click)="performLogin()"
-        data-automation-id="content-node-selector-actions-login">LOGIN
+        data-automation-id="attach-file-dialog-actions-login">LOGIN
     </button>
 
     <button *ngIf="isLoggedIn()"
@@ -30,7 +31,7 @@
         [disabled]="!chosenNode"
         class="choose-action"
         (click)="onClick()"
-        data-automation-id="content-node-selector-actions-login">CHOOSE
+        data-automation-id="attach-file-dialog-actions-choose">CHOOSE
     </button>
 
 </mat-dialog-actions>

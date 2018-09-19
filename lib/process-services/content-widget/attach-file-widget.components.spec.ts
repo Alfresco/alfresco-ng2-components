@@ -39,13 +39,15 @@ const fakeRepositoryListAnswer = [
         'authorized': true,
         'serviceId': 'alfresco-9999-SHAREME',
         'metaDataAllowed': true,
-        'name': 'SHAREME'
+        'name': 'SHAREME',
+        'repositoryUrl' : 'http://localhost:0000/SHAREME'
     },
     {
         'authorized': true,
         'serviceId': 'alfresco-0000-GOKUSHARE',
         'metaDataAllowed': true,
-        'name': 'GOKUSHARE'
+        'name': 'GOKUSHARE',
+        'repositoryUrl' : 'http://localhost:0000/GOKUSHARE'
     }];
 
 const onlyLocalParams = {
