@@ -37,7 +37,7 @@
                             <input matInput
                                 [matDatepicker]="taskDatePicker"
                                 (keydown)="true"
-                                (focusout)="onDateChanged($event.srcElement.value)"
+                                (keyup)="onDateChanged($event.srcElement.value)"
                                 placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
                                 [(ngModel)]="startTaskmodel.dueDate"
                                 id="date_id">
