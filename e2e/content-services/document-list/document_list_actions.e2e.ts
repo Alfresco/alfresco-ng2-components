@@ -16,16 +16,16 @@
  */
 
 import { browser } from 'protractor';
-import LoginPage = require('../pages/adf/loginPage');
-import ContentServicesPage = require('../pages/adf/contentServicesPage');
-import ContentListPage = require('../pages/adf/dialog/contentList');
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import TestConfig = require('../test.config');
-import resources = require('../util/resources');
+import LoginPage = require('../../pages/adf/loginPage');
+import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import ContentListPage = require('../../pages/adf/dialog/contentList');
+import AcsUserModel = require('../../models/ACS/acsUserModel');
+import TestConfig = require('../../test.config');
+import resources = require('../../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from '../actions/ACS/upload.actions';
-import FileModel = require('../models/ACS/fileModel');
-import Util = require('../util/util');
+import { UploadActions } from '../../actions/ACS/upload.actions';
+import FileModel = require('../../models/ACS/fileModel');
+import Util = require('../../util/util');
 
 describe('Document List Component - Actions', () => {
 

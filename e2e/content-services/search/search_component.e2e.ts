@@ -17,21 +17,21 @@
 
 import { browser } from 'protractor';
 
-import LoginPage = require('../pages/adf/loginPage');
-import SearchDialog = require('../pages/adf/dialog/searchDialog');
-import ContentServicesPage = require('../pages/adf/contentServicesPage');
-import filePreviewPage = require('../pages/adf/filePreviewPage');
-import SearchResultPage = require('../pages/adf/searchResultsPage');
+import LoginPage = require('../../pages/adf/loginPage');
+import SearchDialog = require('../../pages/adf/dialog/searchDialog');
+import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import filePreviewPage = require('../../pages/adf/filePreviewPage');
+import SearchResultPage = require('../../pages/adf/searchResultsPage');
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import FileModel = require('../models/ACS/fileModel');
-import FolderModel = require('../models/ACS/folderModel');
+import AcsUserModel = require('../../models/ACS/acsUserModel');
+import FileModel = require('../../models/ACS/fileModel');
+import FolderModel = require('../../models/ACS/folderModel');
 
-import TestConfig = require('../test.config');
-import Util = require('../util/util');
+import TestConfig = require('../../test.config');
+import Util = require('../../util/util');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from '../actions/ACS/upload.actions';
+import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Search component - Search Bar', () => {
 
