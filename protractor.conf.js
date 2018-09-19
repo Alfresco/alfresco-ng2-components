@@ -143,6 +143,8 @@ exports.config = {
 
         let filenameReport = `ProtractorTestReport-${FOLDER.replace('/', '')}-${retryCount}`;
 
+        console.log(filenameReport);
+
         let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
         let saveScreenshot = process.env.SAVE_SCREENSHOT;
 
