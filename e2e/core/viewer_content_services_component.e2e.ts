@@ -118,23 +118,19 @@ describe('Content Services Viewer', () => {
         done();
     });
 
-    /*afterAll((done) => {
-        NodesAPI.deleteContent(acsUser, pdfFile.getId(), () => {
-            done();
-        });
-        NodesAPI.deleteContent(acsUser, jpgFile.getId(), () => {
-            done();
-        });
-        NodesAPI.deleteContent(acsUser, mp4File.getId(), () => {
-            done();
-        });
-        NodesAPI.deleteContent(acsUser, pagesFile.getId(), () => {
-            done();
-        });
-        NodesAPI.deleteContent(acsUser, pptFile.getId(), () => {
-            done();
-        });
-    });*/
+    afterAll(async (done) => {
+        let uploadActions = new UploadActions();
+
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfFile.getId())
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, protectedFile.getId())
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, docxFile.getId())
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jpgFile.getId())
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, mp4File.getId())
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFile.getId())
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, unsupportedFile.getId())
+
+        done();
+    });
 
     it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', () => {
         contentServicesPage.checkAcsContainer();
@@ -276,6 +272,8 @@ describe('Content Services Viewer', () => {
     it('[C260054] Should display "Preview couldn\'t be loaded" and viewer toolbar when opening an unsupported file', () => {
         viewerPage.viewFile(unsupportedFile.name);
 
+        browser.driver.sleep(3000); // wait open file
+
         viewerPage.checkCloseButtonIsDisplayed();
         viewerPage.checkFileNameIsDisplayed(unsupportedFile.name);
         viewerPage.checkFileThumbnailIsDisplayed();
@@ -347,6 +345,8 @@ describe('Content Services Viewer', () => {
 
     it('[C269109] Should not be able to open thumbnail pane before the pdf is loaded', () => {
         viewerPage.viewFile(pdfFile.name);
+
+        browser.driver.sleep(3000); // wait open file
 
         viewerPage.checkThumbnailsBtnIsDisabled();
 
