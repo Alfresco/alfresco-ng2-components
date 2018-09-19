@@ -73,7 +73,7 @@ describe('User Info component', () => {
         done();
     });
 
-    it('1. Enable Process Services and Content Services ', () => {
+    it('[C260111] Enable Process Services and Content Services ', () => {
         loginPage.goToLoginPage();
         adfSettingsPage.setProviderEcmBpm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
@@ -104,7 +104,7 @@ describe('User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('2. Enable Content Services and disable Process Services ', () => {
+    it('[C260113] Enable Content Services and disable Process Services ', () => {
         loginPage.goToLoginPage();
         adfSettingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
@@ -121,7 +121,7 @@ describe('User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('3. Enable Process Services and disable Content Services ', () => {
+    it('[C260115] Enable Process Services and disable Content Services ', () => {
         loginPage.goToLoginPage();
         adfSettingsPage.setProviderBpm();
         loginPage.login(processUserModel.email, processUserModel.password);
@@ -140,7 +140,7 @@ describe('User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('4. Enable Process Services and Content Services ', async(done) => {
+    it('[C260117] Enable Process Services and Content Services ', async(done) => {
         browser.controlFlow().execute(async() => {
             await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
             await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function (result) {});
@@ -156,7 +156,7 @@ describe('User Info component', () => {
         done();
     });
 
-    it('5. The profile picture is changed from APS', async () => {
+    it('[C260118] The profile picture is changed from APS', async () => {
         let users = new UsersActions();
         await this.alfrescoJsApi.login(contentUserModel.email, contentUserModel.password);
         await users.changeProfilePictureAps(this.alfrescoJsApi, apsAvatarFileModel.getLocation());
@@ -171,7 +171,7 @@ describe('User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('6. Delete the profile picture from ACS', () => {
+    it('[C260120] Delete the profile picture from ACS', () => {
         PeopleAPI.deleteAvatarViaAPI(contentUserModel, '-me-');
         loginPage.goToLoginPage();
         adfSettingsPage.setProviderEcm();
