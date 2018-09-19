@@ -77,7 +77,6 @@ describe('ProcessFiltersComponent', () => {
 
         processFilterService = TestBed.get(ProcessFilterService);
         appsProcessService = TestBed.get(AppsProcessService);
-        filterList = new ProcessFiltersComponent(processFilterService, appsProcessService);
     });
 
     afterEach(() => {
@@ -318,6 +317,7 @@ describe('ProcessFiltersComponent', () => {
             done();
         });
     });
+
     it('should not attach icons for each filter if hasIcon is false', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         filterList.showIcon = false;
