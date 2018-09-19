@@ -9,6 +9,7 @@ const retry = require('protractor-retry').retry;
 
 const AlfrescoApi = require('alfresco-js-api-node');
 const TestConfig = require('./e2e/test.config');
+var argv = require('yargs').argv;
 
 const fs = require('fs');
 
@@ -23,7 +24,6 @@ var FOLDER = process.env.FOLDER || '';
 var SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 var DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
 var NAME_TEST = process.env.NAME_TEST ? true : false
-
 var specsToRun = './**/' + FOLDER + '**/*.e2e.ts';
 
 if (process.env.NAME_TEST) {
@@ -136,6 +136,14 @@ exports.config = {
     },
 
     onComplete: async function () {
+        var retryCount = 1;
+        if (argv.retry) {
+            retryCount = ++argv.retry;
+        }
+
+        let filenameReport = `ProtractorTestReport-${FOLDER.replace('/', '')}-${retryCount}`;
+
+        console.log(filenameReport);
 
         let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
         let saveScreenshot = process.env.SAVE_SCREENSHOT;
@@ -196,14 +204,14 @@ exports.config = {
         testConfig = {
             reportTitle: 'Protractor Test Execution Report',
             outputPath: `${projectRoot}/e2e-output/junit-report`,
-            outputFilename: 'ProtractorTestReport',
+            outputFilename: filenameReport,
             screenshotPath: '`${projectRoot}/e2e-output/screenshots/`',
-            screenshotsOnlyOnFailure: true
+            screenshotsOnlyOnFailure: true,
         };
 
         new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfig);
 
-        let pathFile = path.join(__dirname, './e2e-output/junit-report', 'ProtractorTestReport.html');
+        let pathFile = path.join(__dirname, './e2e-output/junit-report', filenameReport + '.html');
         let reportFile = fs.createReadStream(pathFile);
 
         let reportFolder;
