@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
+import TestConfig = require('../../test.config');
 import AlfrescoApi = require('alfresco-js-api-node');
 
-import Util = require('../util/util');
-import resources = require('../util/resources');
-import CONSTANTS = require('../util/constants');
-import { UploadActions } from '../actions/ACS/upload.actions';
+import Util = require('../../util/util');
+import resources = require('../../util/resources');
+import CONSTANTS = require('../../util/constants');
+import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
-import LoginPage = require('../pages/adf/loginPage');
-import SearchDialog = require('../pages/adf/dialog/searchDialog');
-import SearchResultPage = require('../pages/adf/searchResultsPage');
-import SearchFiltersPage = require('../pages/adf/searchFiltersPage');
+import LoginPage = require('../../pages/adf/loginPage');
+import SearchDialog = require('../../pages/adf/dialog/searchDialog');
+import SearchResultPage = require('../../pages/adf/searchResultsPage');
+import SearchFiltersPage = require('../../pages/adf/searchFiltersPage');
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import FileModel = require('../models/ACS/fileModel');
+import AcsUserModel = require('../../models/ACS/acsUserModel');
+import FileModel = require('../../models/ACS/fileModel');
 
 describe('Search Component - Multi-Select Facet', () => {
     let loginPage = new LoginPage();

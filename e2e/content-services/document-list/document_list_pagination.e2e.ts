@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import ContentServicesPage = require('../pages/adf/contentServicesPage');
-import PaginationPage = require('../pages/adf/paginationPage');
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import LoginPage = require('../../pages/adf/loginPage');
+import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import PaginationPage = require('../../pages/adf/paginationPage');
+import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import FolderModel = require('../models/ACS/folderModel');
+import AcsUserModel = require('../../models/ACS/acsUserModel');
+import FolderModel = require('../../models/ACS/folderModel');
 
-import TestConfig = require('../test.config');
-import Util = require('../util/util');
+import TestConfig = require('../../test.config');
+import Util = require('../../util/util');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from '../actions/ACS/upload.actions';
+import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Document List - Pagination', function () {
     let pagination = {
