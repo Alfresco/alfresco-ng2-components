@@ -1,6 +1,3 @@
-// Protractor configuration file, see link for more information
-// https://github.com/angular/protractor/blob/master/lib/config.ts
-
 const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const jasmineReporters = require('jasmine-reporters');
@@ -24,10 +21,11 @@ var FOLDER = process.env.FOLDER || '';
 var SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 var DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
 var NAME_TEST = process.env.NAME_TEST ? true : false
+
 var specsToRun = './**/' + FOLDER + '**/*.e2e.ts';
 
 if (process.env.NAME_TEST) {
-    specsToRun = './e2e/**/' + process.env.NAME_TEST;
+    specsToRun =   './e2e/**/' + process.env.NAME_TEST;
 }
 
 var args_options = [];
@@ -50,6 +48,8 @@ exports.config = {
     capabilities: {
         browserName: 'chrome',
 
+        shardTestFiles: true,
+        maxInstances: 1,
         chromeOptions: {
             prefs: {
                 'credentials_enable_service': false,
