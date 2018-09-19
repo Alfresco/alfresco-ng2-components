@@ -178,7 +178,7 @@ describe('Task Filters Sorting', () => {
         expect(tasksListPage.taskOnTaskListInPosition(3)).toBe(tasks[0].name);
     });
 
-    it('[C277257] Should display tasks under new filter from oldest to newest when they are completed', () => {
+    it('[C277257] Should display tasks under new filter from farthest due date to closest when they are completed', () => {
         browser.controlFlow().execute(async () => {
             let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Due last';
@@ -270,7 +270,7 @@ describe('Task Filters Sorting', () => {
         expect(tasksListPage.taskOnTaskListInPosition(3)).toBe(tasks[3].name);
     });
 
-    it('[C277261] Should display tasks under new filter from oldest to newest when they are open', () => {
+    it('[C277261] Should display tasks under new filter from farthest due date to closest when they are open', () => {
         browser.controlFlow().execute(async () => {
             let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Due last Open';
