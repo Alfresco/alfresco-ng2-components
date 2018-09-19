@@ -9,6 +9,7 @@ const retry = require('protractor-retry').retry;
 
 const AlfrescoApi = require('alfresco-js-api-node');
 const TestConfig = require('./e2e/test.config');
+var argv = require('yargs').argv;
 
 const fs = require('fs');
 
@@ -23,9 +24,7 @@ var FOLDER = process.env.FOLDER || '';
 var SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 var DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
 var NAME_TEST = process.env.NAME_TEST ? true : false
-
 var specsToRun = './**/' + FOLDER + '**/*.e2e.ts';
-var retryNumber = 0;
 
 if (process.env.NAME_TEST) {
     specsToRun = './e2e/**/' + process.env.NAME_TEST;
@@ -137,7 +136,12 @@ exports.config = {
     },
 
     onComplete: async function () {
-        retryNumber = retryNumber +1;
+        var retryCount = 1;
+        if (argv.retry) {
+            retryCount = ++argv.retry;
+        }
+
+        let filenameReport = `ProtractorTestReport-${FOLDER.replace('/', '')}-${retryCount}`;
 
         let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
         let saveScreenshot = process.env.SAVE_SCREENSHOT;
@@ -198,14 +202,14 @@ exports.config = {
         testConfig = {
             reportTitle: 'Protractor Test Execution Report',
             outputPath: `${projectRoot}/e2e-output/junit-report`,
-            outputFilename: `ProtractorTestReport-${retryNumber}`,
+            outputFilename: filenameReport,
             screenshotPath: '`${projectRoot}/e2e-output/screenshots/`',
             screenshotsOnlyOnFailure: true,
         };
 
         new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfig);
 
-        let pathFile = path.join(__dirname, './e2e-output/junit-report', `ProtractorTestReport-${retryNumber}.html`);
+        let pathFile = path.join(__dirname, './e2e-output/junit-report', filenameReport + '.html');
         let reportFile = fs.createReadStream(pathFile);
 
         let reportFolder;
@@ -213,7 +217,7 @@ exports.config = {
         try {
             reportFolder = await alfrescoJsApi.nodes.addNode('-my-', {
                 'name': 'report',
-                'relativePath': `Builds/${buildNumber}/${FOLDER}`,
+                'relativePath': `Builds/${buildNumber}`,
                 'nodeType': 'cm:folder'
             }, {}, {
                 'overwrite': true
@@ -222,7 +226,7 @@ exports.config = {
             console.log('Folder report already present' + error);
 
             reportFolder = await alfrescoJsApi.nodes.getNode('-my-', {
-                'relativePath': `Builds/${buildNumber}/report/${FOLDER}`,
+                'relativePath': `Builds/${buildNumber}/report`,
                 'nodeType': 'cm:folder'
             }, {}, {
                 'overwrite': true
