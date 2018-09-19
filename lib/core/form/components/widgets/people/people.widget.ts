@@ -70,7 +70,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 );
         }),
         map((list: UserProcessModel[]) => {
-            let value = (this.input.nativeElement as HTMLInputElement).value;
+            let value = this.searchTerm.value;
             this.checkUserAndValidateForm(list, value);
             return list;
         })
@@ -83,7 +83,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field) {
-            this.value = this.getDisplayName(this.field.value);
+            this.searchTerm.setValue(this.getDisplayName(this.field.value));
             if (this.field.readOnly) {
                 this.searchTerm.disable();
             }
@@ -97,7 +97,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     checkUserAndValidateForm(list, value) {
         const isValidUser = this.isValidUser(list, value);
-        if (isValidUser) {
+        if (isValidUser || value === '') {
             this.field.validationSummary.message = '';
             this.field.validate();
             this.field.form.validateForm();
@@ -131,7 +131,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     onItemSelect(item) {
         if (item) {
             this.field.value = item;
-            this.value = item;
+            this.searchTerm.setValue(item);
         }
     }
 }
