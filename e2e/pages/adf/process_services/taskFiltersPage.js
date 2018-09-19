@@ -128,10 +128,6 @@ var TaskFiltersPage = function () {
         Util.waitUntilElementIsVisible(emptyTaskDetails);
         return emptyTaskDetails.getText();
     }
-
-    this.getCurrentUrl = function() {
-        return browser.getCurrentUrl();
-    }
 };
 
 module.exports = TaskFiltersPage;

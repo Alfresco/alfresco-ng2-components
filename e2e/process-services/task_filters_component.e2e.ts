@@ -203,11 +203,6 @@ describe('Task Filters Test', () => {
         tasksListPage.checkTaskIsDisplayedInTasksList('Test4');
     });
 
-    it('[C260355] Should display task list when app is in task section', () => {
-        taskFiltersPage.clickQueuedTaskFilter();
-        expect(taskFiltersPage.checkActiveFilterActive()).toBe('Queued Tasks');
-    });
-
     it('[C277264] Should display task filter results when task filter is selected', () => {
         tasksPage.clickOnCreateButton();
         taskFiltersPage.clickNewTaskButton();
