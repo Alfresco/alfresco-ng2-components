@@ -45,7 +45,7 @@ export class AttachFileWidgetDialogComponent {
     constructor(@Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
                 private externalApiService: AlfrescoApiService) {
         (<any> externalApiService).init(data.ecmHost, data.context);
-        this.buttonActionName = data.actionName ? `ATTACH_FILE.ACTIONS.${data.actionName.toUpperCase()}` : 'ATTACH_FILE.ACTIONS.CHOOSE';
+        this.buttonActionName = data.actionName ? `ATTACH-FILE.ACTIONS.${data.actionName.toUpperCase()}` : 'ATTACH-FILE.ACTIONS.CHOOSE';
     }
 
     isLoggedIn() {

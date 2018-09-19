@@ -309,8 +309,8 @@
       "ERROR" : "There is a problem connecting to Process Services"
     }
   },
-  "ATTACH_FILE": {
-    "ACTIONS" : {
+  "ATTACH-FILE": {
+    "ACTIONS": {
       "LOGIN": "Login",
       "CANCEL": "Cancel",
       "CHOOSE": "Choose"

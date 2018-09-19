@@ -17,13 +17,13 @@
     <button
         mat-button
         (click)="close()"
-        data-automation-id="attach-file-dialog-actions-cancel">{{ ATTACH_FILE.ACTIONS.CANCEL | translate }}
+        data-automation-id="attach-file-dialog-actions-cancel">{{ 'ATTACH-FILE.ACTIONS.CANCEL' | translate }}
     </button>
 
     <button *ngIf="!isLoggedIn()"
         mat-button
         (click)="performLogin()"
-        data-automation-id="attach-file-dialog-actions-login">{{ ATTACH_FILE.ACTIONS.LOGIN | translate }}
+        data-automation-id="attach-file-dialog-actions-login">{{ 'ATTACH-FILE.ACTIONS.LOGIN' | translate }}
     </button>
 
     <button *ngIf="isLoggedIn()"
