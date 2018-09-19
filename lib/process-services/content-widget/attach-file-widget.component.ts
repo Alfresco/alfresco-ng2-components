@@ -186,7 +186,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         let currentECMHost = this.getDomainHost(this.appConfigService.get(AppConfigValues.ECMHOST));
         let chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);
         if (chosenRepositoryHost !== currentECMHost) {
-            this.attachDialogService.openLogin('LOGIN', repository.repositoryUrl.replace('/alfresco', '')).subscribe(
+            let formattedReporistoryHost = repository.repositoryUrl.replace('/alfresco', '');
+            this.attachDialogService.openLogin(formattedReporistoryHost).subscribe(
                 (selections: any[]) => {
                     selections.forEach((node) => node.isExternal = true);
                     this.tempFilesList.push(...selections);

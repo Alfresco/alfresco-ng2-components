@@ -38,7 +38,7 @@ export class AttachFileWidgetDialogService {
      * @param contentEntry Item to upload
      * @returns Information about the chosen file(s)
      */
-    openLogin(actionName: string, ecmHost: string, context?: string): Observable<MinimalNodeEntryEntity[]> {
+    openLogin(ecmHost: string, actionName?: string, context?: string): Observable<MinimalNodeEntryEntity[]> {
         let titleString: string = `Please log in for ${ecmHost}`;
         const selected = new Subject<MinimalNodeEntryEntity[]>();
         selected.subscribe({

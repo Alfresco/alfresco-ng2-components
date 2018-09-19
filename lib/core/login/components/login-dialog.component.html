@@ -13,13 +13,13 @@
     <button
         mat-button
         (click)="close()"
-        data-automation-id="login-dialog-actions-cancel">CANCEL
+        data-automation-id="login-dialog-actions-cancel">{{ 'LOGIN.DIALOG.CANCEL' | translate }}
     </button>
 
     <button mat-button
         class="choose-action"
         data-automation-id="login-dialog-actions-perform"
         [disabled]="!isFormValid()"
-        (click)="submitForm()">{{ data.actionName }}
+        (click)="submitForm()">{{ buttonActionName | translate}}
     </button>
 </mat-dialog-actions>

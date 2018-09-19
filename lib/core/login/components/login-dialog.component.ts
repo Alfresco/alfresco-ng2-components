@@ -30,7 +30,10 @@ export class LoginDialogComponent {
     @ViewChild('adfLoginPanel')
     loginPanel: LoginDialogPanelComponent;
 
+    buttonActionName = '';
+
     constructor(@Inject(MAT_DIALOG_DATA) public data: LoginDialogComponentData) {
+        this.buttonActionName = data.actionName ? `LOGIN.DIALOG.${data.actionName.toUpperCase()}` : 'LOGIN.DIALOG.CHOOSE';
     }
 
     close() {

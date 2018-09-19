@@ -40,10 +40,12 @@ export class AttachFileWidgetDialogComponent {
     loginPanel: LoginDialogPanelComponent;
 
     chosenNode: MinimalNodeEntryEntity[];
+    buttonActionName;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
                 private externalApiService: AlfrescoApiService) {
         (<any> externalApiService).init(data.ecmHost, data.context);
+        this.buttonActionName = data.actionName ? `ATTACH_FILE.ACTIONS.${data.actionName.toUpperCase()}` : 'ATTACH_FILE.ACTIONS.CHOOSE';
     }
 
     isLoggedIn() {
