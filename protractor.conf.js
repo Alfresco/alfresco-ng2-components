@@ -11,11 +11,14 @@ const AlfrescoApi = require('alfresco-js-api-node');
 const TestConfig = require('./e2e/test.config');
 
 const fs = require('fs');
+var rimraf = require('rimraf');
 
 const projectRoot = path.resolve(__dirname);
 
 const width = 1366;
 const height = 768;
+var randomReportName = "";
+const possible = "0123456789";
 
 var HOST = process.env.URL_HOST_ADF;
 var BROWSER_RUN = process.env.BROWSER_RUN;
@@ -193,17 +196,21 @@ exports.config = {
             }
         }
 
+        for (var i = 0; i < 3; i++)
+            randomReportName += possible.charAt(Math.floor(Math.random() * possible.length));
+
+
         testConfig = {
             reportTitle: 'Protractor Test Execution Report',
             outputPath: `${projectRoot}/e2e-output/junit-report`,
-            outputFilename: 'ProtractorTestReport',
+            outputFilename: randomReportName + 'ProtractorTestReport',
             screenshotPath: '`${projectRoot}/e2e-output/screenshots/`',
             screenshotsOnlyOnFailure: true
         };
 
         new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfig);
 
-        let pathFile = path.join(__dirname, './e2e-output/junit-report', 'ProtractorTestReport.html');
+        let pathFile = path.join(__dirname, './e2e-output/junit-report', randomReportName + 'ProtractorTestReport.html');
         let reportFile = fs.createReadStream(pathFile);
 
         let reportFolder;
