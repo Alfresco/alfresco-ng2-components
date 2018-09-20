@@ -170,6 +170,7 @@ for more information about installing and using the source code.
 | [User preferences service](core/user-preferences.service.md) | Stores preferences for components. | [Source](../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](core/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](core/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
+| _View util service_ | _Not currently documented_ | [Source](../lib/core/viewer/services/view-util.service.ts) |
 
 ## Widgets
 
@@ -184,7 +185,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Data Table Adapter interface](core/datatable-adapter.interface.md) | Defines how table data is supplied to DataTable and Tasklist components. | [Source](../lib/core/datatable/data/datatable-adapter.ts) |
-| [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of Form and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
+| [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of [Form](../../lib/process-services/task-list/models/form.model.ts) and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
 | [Search Configuration interface](core/search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 
 [(Back to Contents)](#contents)
@@ -204,7 +205,7 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Breadcrumb component](content-services/breadcrumb.component.md) | Indicates the current position within a navigation hierarchy. | [Source](../lib/content-services/breadcrumb/breadcrumb.component.ts) |
 | [Dropdown breadcrumb component](content-services/dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
-| [Content metadata component](content-services/content-metadata.component.md) | Displays and edits metadata related to a node. | [Source](../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts) |
+| [Content metadata card component](content-services/content-metadata-card.component.md) | Displays and edits metadata related to a node. | [Source](../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
 | [Content node selector panel component](content-services/content-node-selector-panel.component.md) | Opens a Content Node Selector in its own dialog window. | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
 | [Content node selector component](content-services/content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../lib/content-services/content-node-selector/content-node-selector.component.ts) |
 | [Content action component](content-services/content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../lib/content-services/document-list/components/content-action/content-action.component.ts) |
@@ -279,7 +280,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
+| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
 
 [(Back to Contents)](#contents)
 
