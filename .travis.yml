@@ -43,6 +43,9 @@ jobs:
           env: STAGE=content-services
           script:  (./scripts/npm-build-all.sh -si -sb -t "content-services" --skip-lint|| exit 1;);
         - stage: Unit test
+          env: STAGE=process-services-cloud
+          script: (./scripts/npm-build-all.sh -si -sb -t "process-services-cloud" --skip-lint|| exit 1;);
+        - stage: Unit test
           env: STAGE=demo-shell
           script:   if ([ "$TRAVIS_BRANCH" = "master" ]); then
                             (./scripts/start.sh -t -ss || exit 1;);
