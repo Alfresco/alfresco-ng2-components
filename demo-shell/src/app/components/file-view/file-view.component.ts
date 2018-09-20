@@ -139,7 +139,7 @@ export class FileViewComponent implements OnInit {
         this.customName = !this.customName;
 
         if (!this.customName) {
-            this.displayName = null
+            this.displayName = null;
         }
     }
 
@@ -147,7 +147,7 @@ export class FileViewComponent implements OnInit {
         this.fileUrlSwitch = !this.fileUrlSwitch;
 
         if (!this.fileUrlSwitch) {
-            this.urlFile = null
+            this.urlFile = null;
         }
     }
 
