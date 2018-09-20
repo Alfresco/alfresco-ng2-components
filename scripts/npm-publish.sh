@@ -21,6 +21,7 @@ eval projects=(
     "insights"
     "content-services"
     "process-services"
+    "process-services-cloud"
     "extensions" )
 
 cd "$DIR/../"
