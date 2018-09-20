@@ -21,6 +21,7 @@ var PaginationPage = function () {
 
     var itemsPerPageDropdown = element(by.css("div[class*='adf-pagination__perpage-block'] button"));
     var pageSelectorDropDown = element(by.css("div[class*='adf-pagination__page-selector']"));
+    var pageSelectorArrow = element(by.css("button[aria-label='Current page selector']"));
     var itemsPerPage = element(by.css("span[class='adf-pagination__max-items']"));
     var currentPage = element(by.css("span[class='adf-pagination__current-page']"));
     var totalPages = element(by.css("span[class='adf-pagination__total-pages']"));
@@ -51,6 +52,14 @@ var PaginationPage = function () {
         Util.waitUntilElementIsVisible(itemsPerPage);
         itemsPerPage.click();
         return this;
+    };
+
+    this.checkPageSelectorIsNotDisplayed = function() {
+        Util.waitUntilElementIsNotOnPage(pageSelectorArrow);
+    };
+
+    this.checkPageSelectorIsDisplayed = function() {
+        Util.waitUntilElementIsVisible(pageSelectorArrow);
     };
 
     this.checkPaginationIsNotDisplayed = function () {

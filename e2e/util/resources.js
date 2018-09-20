@@ -86,6 +86,7 @@ exports.Files = {
 
     WIDGETS_SMOKE_TEST: {
         file_location: "/resources/apps/Widgets smoke test.zip",
+        title: "Widgets smoke test",
         formName: "Widgets smoke test",
         title: "Widgets smoke test",
         form_fields: {
