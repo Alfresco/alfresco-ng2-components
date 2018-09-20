@@ -168,13 +168,13 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     isSmartFolder(node: any) {
-        return this.hasAspectNames(node) &&
-            node.entry.aspectNames.indexOf('smf:customConfigSmartFolder') > -1 ||
-            (node.entry.aspectNames.indexOf('smf:systemConfigSmartFolder') > -1);
+        let nodeAspects = this.getNodeAspectNames(node);
+        return nodeAspects.indexOf('smf:customConfigSmartFolder') > -1 ||
+            (nodeAspects.indexOf('smf:systemConfigSmartFolder') > -1);
     }
 
-    private hasAspectNames(node: any) {
-        return node.entry ? !!node.entry.aspectNames : !!node.aspectNames;
+    private getNodeAspectNames(node: any): any[] {
+        return node.entry && node.entry.aspectNames ? node.entry.aspectNames : node.aspectNames ? node.aspectNames : [];
     }
 
     private sortRows(rows: DataRow[], sorting: DataSorting) {
