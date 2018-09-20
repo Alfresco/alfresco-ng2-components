@@ -95,6 +95,13 @@ exports.Files = {
         }
     },
 
+    DYNAMIC_TABLE_APP: {
+        file_location: "/resources/apps/Dynamic Table App.zip",
+        title: "Dynamic Table App",
+        formName: "Dynamic Table App",
+        process_se_name: "DynamicTableProcess"
+    },
+
     ADF_DOCUMENTS: {
         PDF: {
             file_location: "/resources/adf/allFileTypes/a_file_supported.pdf",
