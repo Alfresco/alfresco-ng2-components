@@ -26,6 +26,8 @@ import { debounceTime } from 'rxjs/operators';
 })
 
 export class TaskListDemoComponent implements OnInit {
+    DEFAULT_SIZE = 20;
+
     taskListForm: FormGroup;
 
     errorMessage: string;
@@ -40,7 +42,7 @@ export class TaskListDemoComponent implements OnInit {
     name: string;
     sort: string;
     start: number;
-    size: number = 10;
+    size: number = this.DEFAULT_SIZE;
     page: number = 0;
     dueAfter: string;
     dueBefore: string;
@@ -156,7 +158,7 @@ export class TaskListDemoComponent implements OnInit {
         this.state = null;
         this.sort = null;
         this.start = null;
-        this.size = null;
+        this.size = this.DEFAULT_SIZE;
         this.page = null;
         this.dueAfter = null;
         this.dueBefore = null;
