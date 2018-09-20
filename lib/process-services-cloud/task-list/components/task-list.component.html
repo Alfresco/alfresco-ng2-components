@@ -1,0 +1,36 @@
+<div *ngIf="!requestNode">{{ 'ADF_TASK_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
+<ng-container *ngIf="requestNode">
+        <adf-datatable
+            [data]="data"
+            [rows]="rows"
+            [columns]="columns"
+            [sorting]="sorting"
+            [loading]="isLoading"
+            [multiselect]="multiselect"
+            [selectionMode]="selectionMode"
+            (row-select)="onRowSelect($event)"
+            (row-unselect)="onRowUnselect($event)"
+            (rowClick)="onRowClick($event)"
+            (row-keyup)="onRowKeyUp($event)">
+            <loading-content-template>
+                <ng-template>
+                    <!--Add your custom loading template here-->
+                    <mat-progress-spinner
+                    class="adf-task-list-loading-margin"
+                    [color]="'primary'"
+                    [mode]="'indeterminate'">
+                    </mat-progress-spinner>
+                </ng-template>
+            </loading-content-template>
+            <no-content-template>
+                <ng-template>
+                    <adf-empty-content *ngIf="!emptyCustomContent"
+                        icon="assignment"
+                        [title]="'ADF_TASK_LIST.LIST.MESSAGES.TITLE' | translate"
+                        [subtitle]="'ADF_TASK_LIST.LIST.MESSAGES.SUBTITLE' | translate">
+                    </adf-empty-content>
+                    <ng-content select="adf-empty-custom-content"></ng-content>
+                </ng-template>
+            </no-content-template>
+        </adf-datatable>
+</ng-container>
