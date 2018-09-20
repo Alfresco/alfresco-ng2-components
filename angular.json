@@ -58,6 +58,11 @@
               },
               {
                 "glob": "**/*",
+                "input": "node_modules/@alfresco/adf-process-services-cloud/bundles/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
                 "input": "node_modules/@alfresco/adf-content-services/bundles/assets",
                 "output": "/assets"
               },
@@ -176,6 +181,11 @@
               },
               {
                 "glob": "**/*",
+                "input": "node_modules/@alfresco/adf-process-services-cloud/bundles/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
                 "input": "node_modules/@alfresco/adf-content-services/bundles/assets",
                 "output": "/assets"
               },
@@ -269,6 +279,11 @@
               },
               {
                 "glob": "**/*",
+                "input": "lib/process-services-cloud/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
                 "input": "lib/content-services/assets",
                 "output": "/assets"
               },
@@ -286,6 +301,11 @@
                 "glob": "**/*",
                 "input": "lib/process-services/i18n",
                 "output": "/assets/adf-process-services/i18n"
+              },
+              {
+                "glob": "**/*",
+                "input": "lib/process-services-cloud/i18n",
+                "output": "/assets/adf-process-services-cloud/i18n"
               },
               {
                 "glob": "**/*",
@@ -416,6 +436,11 @@
               },
               {
                 "glob": "**/*",
+                "input": "lib/process-services-cloud/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
                 "input": "lib/content-services/assets",
                 "output": "/assets"
               },
@@ -433,6 +458,11 @@
                 "glob": "**/*",
                 "input": "lib/process-services/i18n",
                 "output": "/assets/adf-process-services/i18n"
+              },
+              {
+                "glob": "**/*",
+                "input": "lib/process-services-cloud/i18n",
+                "output": "/assets/adf-process-services-cloud/i18n"
               },
               {
                 "glob": "**/*",
@@ -613,6 +643,46 @@
             "tsConfig": [
               "lib/process-services/tsconfig.json",
               "lib/process-services/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "process-services-cloud": {
+      "root": "lib/process-services-cloud",
+      "sourceRoot": "lib/process-services-cloud/src",
+      "projectType": "library",
+      "prefix": "adf",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "lib/process-services-cloud/tsconfig.json",
+            "project": "lib/process-services-cloud/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "lib/process-services-cloud/ng-package.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "lib/process-services-cloud/test.ts",
+            "tsConfig": "lib/process-services-cloud/tsconfig.json",
+            "karmaConfig": "lib/process-services-cloud/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "lib/process-services-cloud/tsconfig.json",
+              "lib/process-services-cloud/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
