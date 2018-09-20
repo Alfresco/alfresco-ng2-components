@@ -13,7 +13,7 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Breadcrumb component](breadcrumb.component.md) | Indicates the current position within a navigation hierarchy. | [Source](../../lib/content-services/breadcrumb/breadcrumb.component.ts) |
 | [Dropdown breadcrumb component](dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
-| [Content metadata component](content-metadata.component.md) | Displays and edits metadata related to a node. | [Source](../../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts) |
+| [Content metadata card component](content-metadata-card.component.md) | Displays and edits metadata related to a node. | [Source](../../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
 | [Content node selector panel component](content-node-selector-panel.component.md) | Opens a Content Node Selector in its own dialog window. | [Source](../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
 | [Content node selector component](content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../../lib/content-services/content-node-selector/content-node-selector.component.ts) |
 | [Content action component](content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../../lib/content-services/document-list/components/content-action/content-action.component.ts) |
@@ -88,4 +88,4 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search Widget interface](search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../../lib/content-services/search/search-widget.interface.ts) |
+| [Search Widget interface](search-widget.interface.md) | Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets. | [Source](../../lib/content-services/search/search-widget.interface.ts) |

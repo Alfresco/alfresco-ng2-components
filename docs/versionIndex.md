@@ -13,7 +13,6 @@ of components organized by ADF libraries.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
-
 ## v2.5.0
 
 **Released:** 2018-08-14 ([Release notes](release-notes/RelNote250.md))<br/>
@@ -109,7 +108,7 @@ No new components added.
 
 <!--v210 start-->
 
--   [Content metadata component](content-services/content-metadata.component.md)
+-   [Content metadata card component](content-services/content-metadata-card.component.md)
 -   [Content node dialog service](content-services/content-node-dialog.service.md)
 -   [Content node selector panel component](content-services/content-node-selector-panel.component.md)
 -   [Search configuration service](core/search-configuration.service.md)
