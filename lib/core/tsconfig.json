@@ -25,6 +25,9 @@
       ],
       "@alfresco/adf-content-services": [
         "../content-services"
+      ],
+      "@alfresco/adf-process-services-cloud": [
+        "../process-services-cloud"
       ]
     },
     "lib": [
