@@ -20,6 +20,7 @@ eval GIT_ISH=""
 eval projects=( "@alfresco/core"
     "@alfresco/content-service"
     "@alfresco/process-service"
+    "@alfresco/process-service-cloud"
     "@alfresco/extensions" )
 
 show_help() {
