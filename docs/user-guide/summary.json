@@ -3,6 +3,7 @@
     { "title": "Form Extensibility and Customisation", "file": "extensibility.md" },
     { "title": "Internationalization in ADF", "file": "internationalization.md" },
     { "title": "Theming", "file": "theming.md" },
+    { "title": "Transclusion", "file": "transclusion.md" },
     { "title": "Typography", "file": "typography.md" },
     { "title": "Walkthrough - adding indicators to highlight information about a node", "file": "metadata-indicators.md" },
     { "title": "Tutorials", "file": "tutorialIndex.md",

@@ -38,6 +38,7 @@ See the [Tutorials index](tutorials/README.md) for the full list.
 -   [Form Extensibility and Customisation](user-guide/extensibility.md)
 -   [Internationalization in ADF](user-guide/internationalization.md)
 -   [Theming](user-guide/theming.md)
+-   [Transclusion](user-guide/transclusion.md)
 -   [Typography](user-guide/typography.md)
 -   [Walkthrough - adding indicators to highlight information about a node](user-guide/metadata-indicators.md)
 
