@@ -38,13 +38,13 @@
                                 [matDatepicker]="taskDatePicker"
                                 (keydown)="true"
                                 (keyup)="onDateChanged($event.srcElement.value)"
+                                (dateInput)="onDateChanged($event.value)"
                                 placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
                                 [(ngModel)]="startTaskmodel.dueDate"
                                 id="date_id">
                             <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
                             <mat-datepicker #taskDatePicker
-                                [touchUi]="true"
-                                (dateChanged)="onDateChanged($event)">
+                                [touchUi]="true">
                             </mat-datepicker>
                             <div class="adf-error-text-container">
                                 <div *ngIf="dateError">
