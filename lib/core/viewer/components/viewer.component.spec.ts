@@ -141,10 +141,10 @@ describe('ViewerComponent', () => {
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
             {
                 provide: RenditionsService, useValue: {
-                getRendition: () => {
-                    return throwError('throwed');
+                    getRendition: () => {
+                        return throwError('throwed');
+                    }
                 }
-            }
             },
             RenderingQueueServices,
             { provide: Location, useClass: SpyLocation }
@@ -178,14 +178,14 @@ describe('ViewerComponent', () => {
         component.ngOnChanges({});
         tick();
 
-        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id1', {include: [ 'allowableOperations' ]});
+        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id1', { include: ['allowableOperations'] });
         expect(component.fileTitle).toBe('file1');
 
         component.fileNodeId = 'id2';
         component.ngOnChanges({});
         tick();
 
-        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id2', {include: [ 'allowableOperations' ]});
+        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id2', { include: ['allowableOperations'] });
         expect(component.fileTitle).toBe('file2');
     }));
 
@@ -251,37 +251,44 @@ describe('ViewerComponent', () => {
             it('should NOT display sidebar if is not allowed', () => {
                 component.showSidebar = true;
                 component.allowSidebar = false;
-                component.sidebarPosition = 'left';
                 fixture.detectChanges();
-                let sidebar = element.querySelector('.adf-viewer__sidebar');
-                expect(sidebar).toBeNull();
-            });
 
-            it('should display sidebar on the left side', () => {
-                component.showSidebar = true;
-                component.allowSidebar = true;
-                component.sidebarPosition = 'left';
-                fixture.detectChanges();
-                let sidebar = element.querySelector('.adf-viewer__sidebar');
-                expect(getComputedStyle(sidebar).order).toEqual('1');
+                fixture.whenStable().then(() => {
+                    let sidebar = element.querySelector('#adf-right-sidebar');
+                    expect(sidebar).toBeNull();
+                });
             });
 
             it('should display sidebar on the right side', () => {
                 component.showSidebar = true;
-                component.allowSidebar = true;
-                component.sidebarPosition = 'right';
                 fixture.detectChanges();
-                let sidebar = element.querySelector('.adf-viewer__sidebar');
-                expect(getComputedStyle(sidebar).order).toEqual('4');
+
+                fixture.whenStable().then(() => {
+                    let sidebar = element.querySelector('#adf-right-sidebar');
+                    expect(getComputedStyle(sidebar).order).toEqual('4');
+                });
             });
 
-            it('should display sidebar on the right side as fallback', () => {
-                component.showSidebar = true;
-                component.allowSidebar = true;
-                component.sidebarPosition = 'unknown-value';
+            it('should NOT display left sidebar if is not allowed', () => {
+                component.showLeftSidebar = true;
+                component.allowSidebar = false;
                 fixture.detectChanges();
-                let sidebar = element.querySelector('.adf-viewer__sidebar');
-                expect(getComputedStyle(sidebar).order).toEqual('4');
+
+                fixture.whenStable().then(() => {
+                    let sidebar = element.querySelector('#adf-left-sidebar');
+                    expect(sidebar).toBeNull();
+                });
+
+            });
+
+            it('should display sidebar on the left side', () => {
+                component.showLeftSidebar = true;
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    let sidebar = element.querySelector('#adf-left-sidebar');
+                    expect(getComputedStyle(sidebar).order).toEqual('4');
+                });
             });
         });
 
