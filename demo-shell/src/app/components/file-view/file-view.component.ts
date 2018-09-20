@@ -48,7 +48,7 @@ export class FileViewComponent implements OnInit {
     moreActions = true;
     customName = false;
     fileUrlSwitch = false;
-    showLeftSidebar = false;
+    showLeftSidebar = null;
     showRightSidebar = false;
 
     constructor(private router: Router,
@@ -58,7 +58,6 @@ export class FileViewComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.route.params.subscribe(params => {
             const id = params.nodeId;
             if (id) {
@@ -128,8 +127,12 @@ export class FileViewComponent implements OnInit {
         this.showRightSidebar = !this.showRightSidebar;
     }
 
-    toggleShowLeftSidebar() {
-        this.showLeftSidebar = !this.showLeftSidebar;
+    hideLeftSidebar() {
+        this.showLeftSidebar = false;
+    }
+
+    toggleAllowSidebar() {
+        this.allowSidebar = !this.allowSidebar;
     }
 
     toggleCustomName() {

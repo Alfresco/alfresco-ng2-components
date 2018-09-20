@@ -31,7 +31,7 @@ import AcsUserModel = require('../models/ACS/acsUserModel');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 
-fdescribe('Viewer - properties', () => {
+describe('Viewer - properties', () => {
 
     let acsUser = new AcsUserModel();
     let viewerPage = new ViewerPage();
@@ -146,15 +146,15 @@ fdescribe('Viewer - properties', () => {
     });
 
     it('[C260090] Sould showSidebar allow right info-drawer to be shown', () => {
-        viewerPage.enableShowRightSidebar();
-        viewerPage.checkInfoSideBarIsDisplayed()
+        viewerPage.clickToggleRightSidebar();
+        viewerPage.checkInfoSideBarIsDisplayed();
 
-        viewerPage.disableShowRightSidebar();
-        viewerPage.checkInfoSideBarIsNotDisplayed()
+        viewerPage.clickToggleRightSidebar();
+        viewerPage.checkInfoSideBarIsNotDisplayed();
     });
 
     it('[C286442] Sould showLeftSidebar allow left info-drawer to be shown', () => {
-        viewerPage.disableShowLeftSidebar();
+        viewerPage.clickToggleLeftSidebar();
         viewerPage.checkLeftSideBarIsNotDisplayed();
         viewerPage.clickLeftSidebarButton();
         viewerPage.checkLeftSideBarIsDisplayed();
@@ -175,6 +175,6 @@ fdescribe('Viewer - properties', () => {
         viewerPage.checkLeftSideBarButtonIsNotDisplayed();
 
         viewerPage.checkLeftSideBarIsNotDisplayed();
-        viewerPage.checkInfoSideBarIsNotDisplayed()
+        viewerPage.checkInfoSideBarIsNotDisplayed();
     });
 });

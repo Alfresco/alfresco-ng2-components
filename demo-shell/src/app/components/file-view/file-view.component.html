@@ -228,23 +228,15 @@
                 </p>
 
                 <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-showrightsidebar"
-                        [color]="'primary'"
-                        (change)="toggleShowRightSidebar()"
-                        [checked]="showRightSidebar">
-                        Show Right Sidebar
-                    </mat-slide-toggle>
+                    <button mat-raised-button id="adf-switch-showrightsidebar" (click)="toggleShowRightSidebar()" color="primary">
+                      Toggle Right Sidebar
+                    </button>
                 </p>
 
                 <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-showleftsidebar"
-                        [color]="'primary'"
-                        (change)="toggleShowLeftSidebar()"
-                        [checked]="showLeftSidebar">
-                        Show Left Sidebar
-                    </mat-slide-toggle>
+                    <button mat-raised-button id="adf-switch-showleftsidebar" (click)="hideLeftSidebar()" color="primary">
+                         Hide Left Sidebar
+                    </button>
                 </p>
 
             </adf-info-drawer-tab>

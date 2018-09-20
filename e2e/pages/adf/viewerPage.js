@@ -721,40 +721,14 @@ var ViewerToolbarPage = function () {
         });
     }
 
-    this.disableShowRightSidebar = function () {
+    this.clickToggleRightSidebar = function () {
         Util.waitUntilElementIsVisible(showRightSidebarSwitch);
-        showRightSidebarSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') >= 0) {
-                showRightSidebarSwitch.click();
-            }
-        });
+        showRightSidebarSwitch.click();
     }
 
-    this.enableShowRightSidebar = function () {
-        Util.waitUntilElementIsVisible(showRightSidebarSwitch);
-        showRightSidebarSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') < 0) {
-                showRightSidebarSwitch.click();
-            }
-        });
-    }
-
-    this.disableShowLeftSidebar = function () {
+    this.clickToggleLeftSidebar = function () {
         Util.waitUntilElementIsVisible(showLeftSidebarSwitch);
-        showLeftSidebarSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') >= 0) {
-                showLeftSidebarSwitch.click();
-            }
-        });
-    }
-
-    this.enableShowLeftSidebar = function () {
-        Util.waitUntilElementIsVisible(showLeftSidebarSwitch);
-        showLeftSidebarSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') < 0) {
-                showLeftSidebarSwitch.click();
-            }
-        });
+        showLeftSidebarSwitch.click();
     }
 
     this.enterCustomName = function (text) {
