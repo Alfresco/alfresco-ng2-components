@@ -1,0 +1,4 @@
+.adf-task-list-loading-margin {
+    margin-left: calc((100% - 100px) / 2);
+    margin-right: calc((100% - 100px) / 2);
+}
