@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, Subject, from, throwError } from 'rxjs';
+import { Observable, Subject, from, throwError, Observer } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
@@ -24,6 +24,7 @@ import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { UserRepresentation } from 'alfresco-js-api';
 import { map, catchError, tap } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
@@ -31,6 +32,8 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
 @Injectable()
 export class AuthenticationService {
     private redirectUrl: RedirectionModel = null;
+
+    private bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/'];
 
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
@@ -270,5 +273,30 @@ export class AuthenticationService {
     handleError(error: any): Observable<any> {
         this.logService.error('Error when logging in', error);
         return throwError(error || 'Server error');
+    }
+
+    getBearerExcludedUrls(): string[] {
+        return this.bearerExcludedUrls;
+    }
+
+    getToken(): string {
+        return localStorage.getItem('access_token');
+    }
+
+    addTokenToHeader(headersArg?: HttpHeaders): Observable<HttpHeaders> {
+        return Observable.create(async (observer: Observer<any>) => {
+            let headers = headersArg;
+            if (!headers) {
+                headers = new HttpHeaders();
+            }
+            try {
+                const token: string = this.getToken();
+                headers = headers.set('Authorization', 'bearer ' + token);
+                observer.next(headers);
+                observer.complete();
+            } catch (error) {
+                observer.error(error);
+            }
+        });
     }
 }
