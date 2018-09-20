@@ -8,7 +8,7 @@
 @import '../../lib/process-services/styles/index';
 @import '../../lib/insights/styles/index';
 @import '../../lib/core/styles/index';
-@import '../../lib/process-services-cloud/src/lib/styles/index';
+@import '../../lib/process-services-cloud/styles/index';
 
 @import '~@angular/material/theming';
 
@@ -28,9 +28,9 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 @include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);
-@include adf-process-services-cloud-theme($theme);
 @include adf-insights-theme($theme);
 @include adf-core-theme($theme);
+@include adf-process-services-cloud-theme($theme);
 
 body, html {
     margin: 0;
