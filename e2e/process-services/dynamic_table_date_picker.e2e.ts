@@ -121,4 +121,5 @@ describe('Dynamic Table - Date Picker', () => {
         dynamicTable.clickSaveButton();
         dynamicTable.getTableRow(rowPosition);
     });
+
 });
