@@ -26,37 +26,23 @@ import { debounceTime } from 'rxjs/operators';
 })
 
 export class TaskListDemoComponent implements OnInit {
-
-    defaultAppId: number;
-
     taskListForm: FormGroup;
 
     errorMessage: string;
 
     appId: number;
-
+    defaultAppId: number;
     id: string;
-
     processDefinitionId: string;
-
     processInstanceId: string;
-
     state: string;
-
     assignment: string;
-
     name: string;
-
     sort: string;
-
     start: number;
-
-    size: number;
-
-    page: number;
-
+    size: number = 10;
+    page: number = 0;
     dueAfter: string;
-
     dueBefore: string;
 
     includeProcessInstance: boolean;
@@ -129,7 +115,7 @@ export class TaskListDemoComponent implements OnInit {
                 if (this.isFormValid()) {
                     this.filterTasks(taskFilter);
                 }
-        });
+            });
     }
 
     filterTasks(taskFilter: any) {
@@ -142,8 +128,13 @@ export class TaskListDemoComponent implements OnInit {
         this.state = taskFilter.taskState;
         this.sort = taskFilter.taskSort;
         this.start = taskFilter.taskStart;
-        this.size = taskFilter.taskSize;
-        this.page = taskFilter.taskPage;
+        this.size = +taskFilter.taskSize;
+
+        if (taskFilter.page > 0) {
+            this.page = +taskFilter.taskPage - 1;
+        } else {
+            this.page = +taskFilter.taskPage;
+        }
         this.dueAfter = taskFilter.taskDueAfter;
         this.dueBefore = taskFilter.taskDueBefore;
 
