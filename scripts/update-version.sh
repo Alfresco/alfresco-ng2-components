@@ -10,6 +10,7 @@ eval TOTAL_BUILD=true;
 eval projects=( "core"
     "content-services"
     "process-services"
+    "process-services-cloud"
     "insights"
     "extensions" )
 
