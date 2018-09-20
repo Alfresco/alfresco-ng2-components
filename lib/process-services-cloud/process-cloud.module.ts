@@ -21,7 +21,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
-import { HelloCloudModule } from './hello/hello.module';
 
 export function providers() {
     return [
@@ -34,8 +33,7 @@ export function providers() {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule,
-        HelloCloudModule
+        MaterialModule
     ],
     providers: [
         ...providers(),
@@ -51,8 +49,7 @@ export function providers() {
     exports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule,
-        HelloCloudModule
+        ReactiveFormsModule
     ]
 })
 export class ProcessCloudModule {
@@ -86,14 +83,12 @@ export class ProcessCloudModule {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule,
-        HelloCloudModule
+        MaterialModule
     ],
     exports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule,
-        HelloCloudModule
+        ReactiveFormsModule
     ]
 })
 export class ProcessCloudModuleLazy {}
