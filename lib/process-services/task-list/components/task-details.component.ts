@@ -304,6 +304,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                         this.taskDetails.name = 'No name';
                     }
 
+                    let endDate: any = res.endDate;
                     if (endDate && !isNaN(endDate.getTime())) {
                         this.readOnlyForm = true;
                     }
