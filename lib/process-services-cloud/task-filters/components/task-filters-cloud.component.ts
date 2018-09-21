@@ -62,13 +62,11 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges {
     @Input()
     hasIcon: boolean;
 
-    filter$: Observable<FilterRepresentationModel>;
+    filters$: Observable<FilterRepresentationModel[]>;
 
     currentFilter: FilterRepresentationModel;
 
     filters: FilterRepresentationModel [] = [];
-
-    private iconsMDL: IconModel;
 
     constructor(private taskFilterService: TaskFilterService,
                 private taskListService: TaskListService,
@@ -76,7 +74,6 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.iconsMDL = new IconModel();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -106,7 +103,9 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges {
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
-        this.taskFilterService.getTaskListFilters(appId).subscribe(
+        this.filters$ = this.taskFilterService.getTaskListFilters(appId);
+
+        this.filters$.subscribe(
             (res: FilterRepresentationModel[]) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
                     this.createFiltersByAppId(appId);
@@ -161,7 +160,7 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges {
      */
     public selectFilter(newFilter: FilterParamsModel) {
         if (newFilter) {
-            this.currentFilter = this.filters.find( (filter, index) =>
+            this.currentFilter = this.filters.find((filter, index) =>
                 newFilter.index === index ||
                 newFilter.id === filter.id ||
                 (newFilter.name &&
@@ -229,12 +228,5 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
-    }
-
-    /**
-     * Return current filter icon
-     */
-    getFilterIcon(icon): string {
-        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 }
