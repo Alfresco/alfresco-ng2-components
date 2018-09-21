@@ -63,8 +63,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
-import { AppListCloudModule } from '@alfresco/adf-process-services-cloud';
-import { CloudComponent } from './components/cloud/cloud.component';
+import { ProcessCloudModule } from '@alfresco/adf-process-services-cloud';
 
 @NgModule({
     imports: [
@@ -83,12 +82,11 @@ import { CloudComponent } from './components/cloud/cloud.component';
         ThemePickerModule,
         ChartsModule,
         MonacoEditorModule.forRoot(),
-        AppListCloudModule
+        ProcessCloudModule.forRoot()
     ],
     declarations: [
         AppComponent,
         LoginComponent,
-        CloudComponent,
         LogoutComponent,
         AppLayoutComponent,
         HomeComponent,

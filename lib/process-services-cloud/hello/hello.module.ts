@@ -14,6 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './process-cloud.module';
 
-export * from './hello/index';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '../material.module';
+import { CoreModule } from '@alfresco/adf-core';
+import { HelloCloudComponent } from './components/hello.component';
+
+@NgModule({
+    imports: [
+        CoreModule.forChild(),
+        MaterialModule
+    ],
+    declarations: [
+        HelloCloudComponent
+    ],
+    exports: [
+        HelloCloudComponent
+    ]
+})
+export class HelloCloudModule {}
