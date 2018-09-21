@@ -30,7 +30,7 @@
         mat-button
         [disabled]="!chosenNode"
         class="choose-action"
-        (click)="onClick()"
+        (click)="onClick($event)"
         data-automation-id="attach-file-dialog-actions-choose">{{ buttonActionName | translate }}
     </button>
 
