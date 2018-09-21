@@ -1,0 +1,34 @@
+@mixin adf-task-list-filters-task-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .adf {
+
+        &-filters__entry {
+            cursor: pointer;
+            font-size: 14px!important;
+            font-weight: bold;
+            opacity: .54;
+            padding-left: 30px;
+
+            .mat-list-item-content {
+                height: 34px;
+            }
+        }
+
+        &-filters__entry-icon {
+            padding-right: 12px !important;
+            padding-left: 0px !important;
+        }
+
+        &-filters__entry {
+            &.active, &:hover {
+                color: mat-color($primary);
+                opacity: 1;
+            }
+        }
+
+        &-menu-list {
+            padding-top: 0px!important;
+        }
+    }
+}

@@ -31,7 +31,7 @@ import { NoTaskDetailsTemplateDirective } from './components/no-task-detail-temp
 import { StartTaskComponent } from './components/start-task.component';
 import { TaskAuditDirective } from './components/task-audit.directive';
 import { TaskDetailsComponent } from './components/task-details.component';
-import { TaskFiltersComponent } from './components/task-filters.component';
+import { TaskFiltersComponent } from './components/task-filters-cloud.component';
 import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
 import { TaskStandaloneComponent } from './components/task-standalone.component';
