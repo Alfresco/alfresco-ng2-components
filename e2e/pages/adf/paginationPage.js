@@ -91,6 +91,11 @@ var PaginationPage = function () {
     this.clickOnNextPage = function () {
         Util.waitUntilElementIsVisible(nextPageButton);
         Util.waitUntilElementIsClickable(nextPageButton);
+        browser.actions().mouseMove(nextPageButton).perform();
+        Util.waitUntilElementIsVisible(nextPageButton);
+        Util.waitUntilElementIsClickable(nextPageButton).then(()=> {
+            browser.driver.sleep(2000);
+        });
         return nextPageButton.click();
     };
 

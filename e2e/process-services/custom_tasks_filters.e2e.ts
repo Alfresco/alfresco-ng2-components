@@ -60,7 +60,7 @@ describe('Start Task - Custom App', () => {
     let secondApp = resources.Files.WIDGETS_SMOKE_TEST;
     let appModel, secondAppModel;
     let paginationTasksName = ["t01", "t02", "t03", "t04", "t05", "t06", "t07", "t08", "t09", "t10", "t11", "t12", "t13", "taskOne", "taskTwo", "taskOne"];
-    let allTasksName = ["taskOne", "taskTwo", "taskOne", "t13", "t12", "t11", "t10", "t09", "t08", "t07", "t06", "t05", "t04", "t03", "t02", "t01", "User Task", "User Task", "User Task", "User Task"];
+    let allTasksName = ["t01", "taskOne", "taskTwo", "taskOne", "t13", "t12", "t11", "t10", "t09", "t08", "t07", "t06", "t05", "t04", "t03", "t02", "User Task", "User Task", "User Task", "User Task"];
     let invalidAppId = "1234567890", invalidName = "invalidName";
     let noTasksFoundMessage = "No Tasks Found";
     let nrOfTasks = 20, currentPage = 1, totalNrOfPages = 'of 4';
@@ -165,7 +165,7 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.usingDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(nrOfTasks);
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
         taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(0, 5))).toEqual(true);
         });
@@ -175,7 +175,7 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.usingDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(nrOfTasks);
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
         taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(5, 10))).toEqual(true);
         });
@@ -185,7 +185,7 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.usingDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(nrOfTasks);
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
         taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(10, 15))).toEqual(true);
         });
@@ -195,7 +195,7 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.usingDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(nrOfTasks);
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
         taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(15, 20))).toEqual(true);
         });
@@ -206,7 +206,7 @@ describe('Start Task - Custom App', () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 
-        taskListSinglePage.typeItemsPerPage(itemsPerPage.fiveValue);
+        taskListSinglePage.typeItemsPerPage(itemsPerPage.tenValue);
         taskListSinglePage.usingDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
@@ -230,7 +230,7 @@ describe('Start Task - Custom App', () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 
-        taskListSinglePage.typeItemsPerPage(itemsPerPage.fiveValue);
+        taskListSinglePage.typeItemsPerPage(itemsPerPage.fifteenValue);
         taskListSinglePage.usingDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * currentPage + ' of ' + nrOfTasks);
