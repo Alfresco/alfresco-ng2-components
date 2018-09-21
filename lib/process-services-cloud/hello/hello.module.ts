@@ -15,10 +15,21 @@
  * limitations under the License.
  */
 
-export * from './components/task-list.component';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '../material.module';
+import { CoreModule } from '@alfresco/adf-core';
+import { HelloCloudComponent } from './components/hello.component';
 
-export * from './services/tasklist.service';
-
-export * from './models/task-list.model';
-
-export * from './task-list.module';
+@NgModule({
+    imports: [
+        CoreModule.forChild(),
+        MaterialModule
+    ],
+    declarations: [
+        HelloCloudComponent
+    ],
+    exports: [
+        HelloCloudComponent
+    ]
+})
+export class HelloCloudModule {}
