@@ -1,20 +1,32 @@
 <div *ngIf="showViewer"
-    class="adf-viewer-container"
-    [class.adf-viewer-overlay-container]="overlayMode"
-    [class.adf-viewer-inline-container]="!overlayMode">
+     class="adf-viewer-container"
+     [class.adf-viewer-overlay-container]="overlayMode"
+     [class.adf-viewer-inline-container]="!overlayMode">
 
     <div class="adf-viewer-content" fxLayout="column">
         <ng-content select="adf-viewer-toolbar"></ng-content>
         <ng-container *ngIf="showToolbar && !toolbar">
-            <adf-toolbar color="default" class="adf-viewer-toolbar">
+            <adf-toolbar color="default" id="adf-viewer-toolbar" class="adf-viewer-toolbar">
 
                 <adf-toolbar-title>
+
+                    <ng-container *ngIf="allowSidebar">
+                        <button
+                            mat-icon-button
+                            title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
+                            data-automation-id="adf-toolbar-left-sidebar"
+                            [color]="showLeftSidebar ? 'accent' : 'default'"
+                            (click)="toggleLeftSidebar()">
+                            <mat-icon>info_outline</mat-icon>
+                        </button>
+                    </ng-container>
+
                     <button *ngIf="allowGoBack"
-                        class="adf-viewer-close-button"
-                        data-automation-id="adf-toolbar-back"
-                        mat-icon-button
-                        title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
-                        (click)="onBackButtonClick()">
+                            class="adf-viewer-close-button"
+                            data-automation-id="adf-toolbar-back"
+                            mat-icon-button
+                            title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
+                            (click)="onBackButtonClick()">
                         <mat-icon>close</mat-icon>
                     </button>
                 </adf-toolbar-title>
@@ -44,6 +56,7 @@
 
                 <ng-container *ngIf="mnuOpenWith" data-automation-id='adf-toolbar-custom-btn'>
                     <button
+                        id="adf-viewer-openwith"
                         mat-button
                         [matMenuTriggerFor]="mnuOpenWith"
                         data-automation-id="adf-toolbar-open-with">
@@ -58,6 +71,7 @@
                 <adf-toolbar-divider></adf-toolbar-divider>
 
                 <button
+                    id="adf-viewer-download"
                     *ngIf="allowDownload"
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}"
@@ -67,6 +81,7 @@
                 </button>
 
                 <button
+                    id="adf-viewer-print"
                     *ngIf="allowPrint"
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.PRINT' | translate }}"
@@ -76,6 +91,7 @@
                 </button>
 
                 <button
+                    id="adf-viewer-share"
                     *ngIf="allowShare"
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.SHARE' | translate }}"
@@ -85,6 +101,7 @@
                 </button>
 
                 <button
+                    id="adf-viewer-fullscreen"
                     *ngIf="viewerType !== 'media' && allowFullScreen"
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
@@ -95,6 +112,7 @@
 
                 <ng-container *ngIf="mnuMoreActions">
                     <button
+                        id="adf-viewer-moreactions"
                         mat-icon-button
                         [matMenuTriggerFor]="mnuMoreActions"
                         title="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}"
@@ -117,19 +135,31 @@
                         (click)="toggleSidebar()">
                         <mat-icon>info_outline</mat-icon>
                     </button>
+
                 </ng-container>
 
             </adf-toolbar>
         </ng-container>
 
         <div fxLayout="row" fxFlex="1 1 auto">
+            showSidebar 1 {{showSidebar}}
 
             <ng-container *ngIf="allowSidebar && showSidebar">
-                <div class="adf-viewer__sidebar" [ngClass]="getSideBarStyle()" fxFlexOrder="{{sidebarPosition === 'left'? 1 : 4 }}">
+                showSidebar {{showSidebar}}
+                <div class="adf-viewer__sidebar" [ngClass]="'adf-viewer__sidebar__right'" fxFlexOrder="4"  id="adf-right-sidebar" >
                     <ng-container *ngIf="sidebarTemplate">
                         <ng-container *ngTemplateOutlet="sidebarTemplate;context:sidebarTemplateContext"></ng-container>
                     </ng-container>
                     <ng-content *ngIf="!sidebarTemplate" select="adf-viewer-sidebar"></ng-content>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="allowSidebar && showLeftSidebar">
+                <div class="adf-viewer__sidebar" [ngClass]="'adf-viewer__sidebar__left'" fxFlexOrder="1"  id="adf-left-sidebar" >
+                    <ng-container *ngIf="sidebarLeftTemplate">
+                        <ng-container *ngTemplateOutlet="sidebarLeftTemplate;context:sidebarLeftTemplateContext"></ng-container>
+                    </ng-container>
+                    <ng-content *ngIf="!sidebarLeftTemplate" select="adf-viewer-sidebar"></ng-content>
                 </div>
             </ng-container>
 
@@ -169,12 +199,12 @@
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'in_creation'">
-                                    <div class="adf-viewer__loading-screen" fxFlex="1 1 auto">
-                                        <h2>{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
-                                        <div>
-                                            <mat-spinner></mat-spinner>
-                                        </div>
-                                    </div>
+                            <div class="adf-viewer__loading-screen" fxFlex="1 1 auto">
+                                <h2>{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
+                                <div>
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'custom'">

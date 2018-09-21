@@ -28,6 +28,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 
 import Util = require('../util/util');
+import { browser } from 'protractor';
 
 describe('Tag component', () => {
 
@@ -105,6 +106,9 @@ describe('Tag component', () => {
     it('[C260378] Multiple tags', () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[2]);
+
+        browser.driver.sleep(3000); // wait CS return tags
+
         tagPage.checkTagListIsOrderedAscending();
         tagPage.checkTagListByNodeIdIsOrderedAscending();
         tagPage.checkTagListContentServicesIsOrderedAscending();

@@ -114,6 +114,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     allowPrint = false;
 
+    /**  @deprecated 2.5.0 inkect the share button directive as custom button */
     /** Toggles sharing. */
     @Input()
     allowShare = false;
@@ -144,17 +145,28 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     allowThumbnails = true;
 
+    /** @deprecated 2.5.0 will be renamed showRightSidebar in 3.0.0  */
     /** Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. */
     @Input()
     showSidebar = false;
 
+    /** Toggles left sidebar visibility. Requires `allowSidebar` to be set to `true`. */
+    @Input()
+    showLeftSidebar = false;
+
+    /** @deprecated 2.5.0 use sidebarTemplateLeft */
     /** The position of the sidebar. Can be `left` or `right`. */
     @Input()
     sidebarPosition = 'right';
 
+    /**  @deprecated 2.5.0 rename sidebarRight */
     /** The template for the sidebar. The template context contains the loaded node data. */
     @Input()
     sidebarTemplate: TemplateRef<any> = null;
+
+    /** The template for the left sidebar. The template context contains the loaded node data. */
+    @Input()
+    sidebarLeftTemplate: TemplateRef<any> = null;
 
     /** The template for the pdf thumbnails. */
     @Input()
@@ -224,6 +236,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     otherMenu: any;
     extension: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
+    sidebarLeftTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
     fileTitle: string;
 
     private cacheBusterNumber;
@@ -377,6 +390,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
         this.extensionChange.emit(this.extension);
         this.sidebarTemplateContext.node = data;
+        this.sidebarLeftTemplateContext.node = data;
         this.scrollTop();
 
         return setupNode;
@@ -409,6 +423,16 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.apiService.getInstance().nodes.getNodeInfo(this.nodeId, { include: ['allowableOperations'] })
                 .then((data: MinimalNodeEntryEntity) => {
                     this.sidebarTemplateContext.node = data;
+                });
+        }
+    }
+
+    toggleLeftSidebar() {
+        this.showLeftSidebar = !this.showLeftSidebar;
+        if (this.showSidebar && this.nodeId) {
+            this.apiService.getInstance().nodes.getNodeInfo(this.nodeId, { include: ['allowableOperations'] })
+                .then((data: MinimalNodeEntryEntity) => {
+                    this.sidebarLeftTemplateContext.node = data;
                 });
         }
     }
@@ -722,10 +746,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 }
             }, 1000);
         });
-    }
-
-    getSideBarStyle(): string {
-        return this.sidebarPosition === 'left' ? 'adf-viewer__sidebar__left' : 'adf-viewer__sidebar__right';
     }
 
     private generateCacheBusterNumber() {

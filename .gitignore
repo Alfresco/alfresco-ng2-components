@@ -28,3 +28,4 @@ src/environments/
 /lib/config/export-check/exportCheck.js
 /docs/sourceinfo
 /docs/docs.json
+/protractorFailuresReport
