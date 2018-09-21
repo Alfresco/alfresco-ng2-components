@@ -15,3 +15,5 @@
  * limitations under the License.
  */
 export * from './process-cloud.module';
+
+export * from './hello/index';

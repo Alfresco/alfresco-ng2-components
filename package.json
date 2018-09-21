@@ -12,7 +12,7 @@
     "bundlesize-check": "bundlesize",
     "lint-lib": "./node_modules/.bin/tslint -p ./lib/tsconfig.json -c ./lib/tslint.json",
     "lint-e2e": "./node_modules/.bin/tslint  -p ./e2e/tsconfig.e2e.json -c ./tslint.json",
-    "test-export": "ts-node ./tools/export-check/exportCheck.ts ./lib/core/public-api.ts ./lib/process-services/public-api.ts ./lib/content-services/public-api.ts ./lib/insights/public-api.ts",
+    "test-export": "ts-node ./tools/export-check/exportCheck.ts ./lib/core/public-api.ts ./lib/process-services/public-api.ts ./lib/content-services/public-api.ts ./lib/insights/public-api.ts ./lib/process-services-cloud/public-api.ts",
     "ng": "ng",
     "validate-config": "ajv validate -s ./lib/core/app-config/schema.json -d ./demo-shell/src/app.config.json --errors=text --verbose",
     "start": "ng lint dist && npm run validate-config && npm run server-versions  && ng serve dist --host 0.0.0.0 --proxy-config ./demo-shell/proxy.conf.js --open",
@@ -52,7 +52,8 @@
     "alfresco",
     "activiti",
     "content services",
-    "process services"
+    "process services",
+    "process services-cloud"
   ],
   "dependencies": {
     "@alfresco/adf-content-services": "2.6.0",

@@ -15,15 +15,6 @@
  * limitations under the License.
  */
 
-import { TaskDetailsModel } from './task-details.model';
+export * from './components/hello.component';
 
-export class TaskListModel {
-    size: number;
-    total: number;
-    start: number;
-    length: number;
-    data: TaskDetailsModel[] = [];
-
-    constructor() {
-    }
-}
+export * from './hello.module';
