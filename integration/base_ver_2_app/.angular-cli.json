@@ -40,6 +40,11 @@
         },
         {
           "glob": "**/*",
+          "input": "../node_modules/@alfresco/adf-process-services-cloud/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
           "input": "../node_modules/@alfresco/adf-content-services/bundles/assets",
           "output": "./assets/"
         },
