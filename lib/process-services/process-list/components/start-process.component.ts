@@ -28,10 +28,6 @@ import { ProcessDefinitionRepresentation } from './../models/process-definition.
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
-import { FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { MatAutocompleteTrigger } from '@angular/material';
 
 @Component({
     selector: 'adf-start-process',
@@ -133,8 +129,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
 
         if (changes['appId'] && changes['appId'].currentValue) {
             this.appId = changes['appId'].currentValue;
-            this.loadStartProcess();
         }
+
+        this.loadStartProcess();
     }
 
     private _filter(value: string): ProcessDefinitionRepresentation[] {
