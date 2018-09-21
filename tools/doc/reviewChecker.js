@@ -20,7 +20,7 @@ var angFilePattern = /(component)|(directive)|(model)|(pipe)|(service)|(widget)/
 var srcData = {};
 var stoplist = new stoplist_1.Stoplist(stoplistFilePath);
 var docsFolderPath = path.resolve("docs");
-var libFolders = ["core", "content-services", "process-services", "insights"];
+var libFolders = ["core", "content-services", "process-services", "insights", "process-services-cloud"];
 libsearch(srcData, path.resolve(libFolder));
 /*
 let keys = Object.keys(srcData);
