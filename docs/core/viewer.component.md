@@ -93,9 +93,11 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | nodeId | `string` | null | Node Id of the file to load. |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
 | sharedLinkId | `string` | null | Shared link id (to display shared file). |
+| showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowSidebar` to be set to `true`. |
 | showSidebar | `boolean` | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
 | showToolbar | `boolean` | true | Hide or show the toolbar |
 | showViewer | `boolean` | true | Hide or show the viewer |
+| sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data. |
 | sidebarPosition | `string` | "right" | The position of the sidebar. Can be `left` or `right`. |
 | sidebarTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the sidebar. The template context contains the loaded node data. |
 | thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
