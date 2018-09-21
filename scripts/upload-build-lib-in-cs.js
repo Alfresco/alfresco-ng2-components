@@ -43,6 +43,7 @@ async function main() {
     await this.writeZipLib('content-services', zipFolder);
     await this.writeZipLib('process-services', zipFolder);
     await this.writeZipLib('insights', zipFolder);
+    await this.writeZipLib('process-services-cloud', zipFolder);
 
     let files = fs.readdirSync(path.join(__dirname, '../lib/dist/zip'));
 

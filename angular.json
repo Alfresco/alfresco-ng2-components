@@ -655,7 +655,7 @@
       "root": "lib/process-services-cloud",
       "sourceRoot": "lib/process-services-cloud/src",
       "projectType": "library",
-      "prefix": "adf",
+      "prefix": "adf-cloud",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
