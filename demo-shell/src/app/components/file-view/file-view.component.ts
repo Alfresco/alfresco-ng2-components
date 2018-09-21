@@ -36,6 +36,20 @@ export class FileViewComponent implements OnInit {
     isPreset = false;
     customPreset: string = null;
     displayDefaultProperties = true;
+    showToolbar = true;
+    displayName = null;
+    urlFile = null;
+    allowGoBack = true;
+    openWith = false;
+    allowDownload = true;
+    allowPrint = true;
+    allowShare = true;
+    allowSidebar = true;
+    moreActions = true;
+    customName = false;
+    fileUrlSwitch = false;
+    showLeftSidebar = null;
+    showRightSidebar = false;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -44,7 +58,6 @@ export class FileViewComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.route.params.subscribe(params => {
             const id = params.nodeId;
             if (id) {
@@ -80,6 +93,62 @@ export class FileViewComponent implements OnInit {
 
     toggleDisplayProperties() {
         this.displayDefaultProperties = !this.displayDefaultProperties;
+    }
+
+    toggleShowToolbar() {
+        this.showToolbar = !this.showToolbar;
+    }
+
+    toggleAllowGoBack() {
+        this.allowGoBack = !this.allowGoBack;
+    }
+
+    toggleOpenWith() {
+        this.openWith = !this.openWith;
+    }
+
+    toggleAllowDownload() {
+        this.allowDownload = !this.allowDownload;
+    }
+
+    toggleAllowPrint() {
+        this.allowPrint = !this.allowPrint;
+    }
+
+    toggleAllowShare() {
+        this.allowShare = !this.allowShare;
+    }
+
+    toggleOpenMoreActions() {
+        this.moreActions = !this.moreActions;
+    }
+
+    toggleShowRightSidebar() {
+        this.showRightSidebar = !this.showRightSidebar;
+    }
+
+    hideLeftSidebar() {
+        this.showLeftSidebar = false;
+    }
+
+    toggleAllowSidebar() {
+        this.allowSidebar = !this.allowSidebar;
+    }
+
+    toggleCustomName() {
+        this.customName = !this.customName;
+
+        if (!this.customName) {
+            this.displayName = null;
+        }
+    }
+
+    toggleFileUrl() {
+        this.fileUrlSwitch = !this.fileUrlSwitch;
+
+        if (!this.fileUrlSwitch) {
+            this.urlFile = null;
+        }
     }
 
     togglePreset() {

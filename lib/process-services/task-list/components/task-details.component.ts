@@ -292,7 +292,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
      */
     private loadDetails(taskId: string) {
         this.taskPeople = [];
-        this.readOnlyForm = false;
         this.taskFormName = null;
 
         if (taskId) {
@@ -305,8 +304,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                         this.taskDetails.name = 'No name';
                     }
 
-                    let endDate: any = res.endDate;
-                    this.readOnlyForm = this.readOnlyForm ? this.readOnlyForm : !!(endDate && !isNaN(endDate.getTime()));
+                    if (endDate && !isNaN(endDate.getTime())) {
+                        this.readOnlyForm = true;
+                    }
+
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
                         this.taskDetails.involvedPeople.forEach((user) => {
                             this.taskPeople.push(new UserProcessModel(user));
@@ -326,8 +327,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     isAssignedToMe(): boolean {
         return this.isAssigned() && this.hasEmailAddress() ?
-                    this.isEmailEqual(this.taskDetails.assignee.email, this.currentLoggedUser.email) :
-                    this.isExternalIdEqual(this.taskDetails.assignee.externalId, this.currentLoggedUser.externalId);
+            this.isEmailEqual(this.taskDetails.assignee.email, this.currentLoggedUser.email) :
+            this.isExternalIdEqual(this.taskDetails.assignee.externalId, this.currentLoggedUser.externalId);
     }
 
     private isEmailEqual(assigneeMail, currentLoggedEmail): boolean {

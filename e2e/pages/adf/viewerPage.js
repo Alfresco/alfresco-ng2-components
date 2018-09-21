@@ -21,8 +21,8 @@ var ViewerToolbarPage = function () {
 
     var closeButton = element(by.css("button[data-automation-id='adf-toolbar-back']"));
     var fileName = element(by.id("adf-viewer-display-name"));
-    var downloadButton = element(by.css("button[data-automation-id='adf-toolbar-download'] > span > mat-icon"));
     var infoButton = element(by.css("button[data-automation-id='adf-toolbar-sidebar']"));
+    var leftSideBarButton = element(by.css("button[data-automation-id='adf-toolbar-left-sidebar']"));
     var previousPageButton = element(by.id("viewer-previous-page-button"));
     var nextPageButton = element(by.id("viewer-next-page-button"));
     var zoomInButton = element(by.id("viewer-zoom-in-button"));
@@ -50,12 +50,42 @@ var ViewerToolbarPage = function () {
     var passwordSubmitDisabled = element(by.css("button[data-automation-id='adf-password-dialog-submit'][disabled]"));
     var passwordInput = element(by.css("input[data-automation-id='adf-password-dialog-input']"));
     var passwordError = element(by.css("mat-error[data-automation-id='adf-password-dialog-error']"));
-    var infoSideBar = element(by.css("div[class='adf-info-drawer-layout-header']"));
+    var infoSideBar = element(by.id("adf-right-sidebar"));
+    var leftSideBar = element(by.id("adf-left-sidebar"));
     var unsupportedFileContainer = element(by.cssContainingText(".label", "Document preview could not be loaded"));
     var pageCanvas = element.all(by.css("div[class='canvasWrapper']")).first();
     var activeTab = element(by.css("div[class*='mat-tab-label-active']"));
     var uploadNewVersionButton = element(by.css("input[data-automation-id='upload-single-file']"));
     var rightChevron = element(by.css("div[class*='header-pagination-after']"));
+    var toolbarSwitch = element(by.id('adf-switch-toolbar'));
+    var toolbar = element(by.id('adf-viewer-toolbar'));
+    var goBackSwitch = element(by.id('adf-switch-goback'));
+
+    var openWithSwitch = element(by.id('adf-switch-openwith'));
+    var openWith = element(by.id('adf-viewer-openwith'));
+
+    var customNameSwitch = element(by.id('adf-switch-custoname'));
+
+    var showRightSidebarSwitch = element(by.id('adf-switch-showrightsidebar'));
+    var showLeftSidebarSwitch = element(by.id('adf-switch-showleftsidebar'));
+
+    var moreActionsSwitch = element(by.id('adf-switch-moreactions'));
+    var moreActions = element(by.id('adf-viewer-moreactions'));
+
+    var downloadSwitch = element(by.id('adf-switch-download'));
+    var downloadButton = element(by.id('adf-viewer-download'));
+
+    var printSwitch = element(by.id('adf-switch-print'));
+    var printButton = element(by.id('adf-viewer-print'));
+
+    var allowSidebarSwitch = element(by.id('adf-switch-allowsidebar'));
+
+    var shareSwitch = element(by.id('adf-switch-share'));
+    var shareButton = element(by.id('adf-viewer-share'));
+
+    var uploadButton = element(by.id('adf-viewer-upload'));
+    var timeButton = element(by.id('adf-viewer-time'));
+    var bugButton = element(by.id('adf-viewer-bug'));
 
     this.canvasHeight = function () {
         var deferred = protractor.promise.defer();
@@ -162,6 +192,10 @@ var ViewerToolbarPage = function () {
 
     this.checkInfoButtonIsDisplayed = function () {
         Util.waitUntilElementIsVisible(infoButton);
+    };
+
+    this.checkInfoButtonIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(infoButton);
     };
 
     this.checkFileThumbnailIsDisplayed = function () {
@@ -287,9 +321,30 @@ var ViewerToolbarPage = function () {
         Util.waitUntilElementIsNotOnPage(infoSideBar);
     };
 
+    this.checkLeftSideBarButtonIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotOnPage(leftSideBarButton);
+    };
+
+    this.checkLeftSideBarButtonIsDisplayed = function () {
+        Util.waitUntilElementIsOnPage(leftSideBarButton);
+    };
+
     this.clickInfoButton = function () {
         Util.waitUntilElementIsVisible(infoButton);
         return infoButton.click();
+    };
+
+    this.clickLeftSidebarButton = function () {
+        Util.waitUntilElementIsVisible(leftSideBarButton);
+        return leftSideBarButton.click();
+    };
+
+    this.checkLeftSideBarIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(leftSideBar);
+    };
+
+    this.checkLeftSideBarIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotOnPage(leftSideBar);
     };
 
     this.clickPasswordSubmit = function () {
@@ -391,7 +446,7 @@ var ViewerToolbarPage = function () {
             .map((element) => element.getAttribute('innerText'))
             .then((texts) => {
                 for (let text of texts) {
-                    if (text === tabName ) {
+                    if (text === tabName) {
                         break;
                     }
                     this.clickRightChevron();
@@ -399,13 +454,13 @@ var ViewerToolbarPage = function () {
             });
     };
 
-    this.clickRightChevron = function() {
+    this.clickRightChevron = function () {
         Util.waitUntilElementIsVisible(rightChevron);
         rightChevron.click();
         return this;
     };
 
-    this.clickOnVersionsTab = function() {
+    this.clickOnVersionsTab = function () {
         this.clickRightChevronToGetToTab('Versions');
         var versionsTab = element(by.cssContainingText("div[id*='mat-tab-label']", "Versions"));
         Util.waitUntilElementIsVisible(versionsTab);
@@ -413,23 +468,276 @@ var ViewerToolbarPage = function () {
         return this;
     };
 
-    this.checkUploadVersionsButtonIsDisplayed = function() {
+    this.checkUploadVersionsButtonIsDisplayed = function () {
         Util.waitUntilElementIsVisible(uploadNewVersionButton);
         return this;
     };
 
-    this.checkVersionIsDisplayed = function(version) {
+    this.checkVersionIsDisplayed = function (version) {
         Util.waitUntilElementIsVisible(element(by.cssContainingText("h4[class*='adf-version-list-item-name']", version)));
         return this;
     };
 
-    this.clickOnCommentsTab = function() {
+    this.clickOnCommentsTab = function () {
         var commentsTab = element(by.cssContainingText("div[id*='mat-tab-label']", "Comments"));
         Util.waitUntilElementIsVisible(commentsTab);
         commentsTab.click();
         return this;
     };
 
+    this.disableToolbar = function () {
+        Util.waitUntilElementIsVisible(toolbarSwitch);
+        toolbarSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
+                toolbarSwitch.click();
+            }
+        });
+    }
+
+    this.enableToolbar = function () {
+        Util.waitUntilElementIsVisible(toolbarSwitch);
+        toolbarSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
+                toolbarSwitch.click();
+            }
+        });
+    }
+
+    this.checkToolbarIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(toolbar);
+        return this;
+    };
+
+    this.checkToolbarIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(toolbar);
+        return this;
+    };
+
+    this.disableGoBack = function () {
+        Util.waitUntilElementIsVisible(goBackSwitch);
+        goBackSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
+                goBackSwitch.click();
+            }
+        });
+    }
+
+    this.enableGoBack = function () {
+        Util.waitUntilElementIsVisible(goBackSwitch);
+        goBackSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
+                goBackSwitch.click();
+            }
+        });
+    }
+
+    this.checkGoBackIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(closeButton);
+        return this;
+    };
+
+    this.checkGoBackIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(closeButton);
+        return this;
+    };
+
+    this.disableToolbarOptions = function () {
+        Util.waitUntilElementIsVisible(openWithSwitch);
+        openWithSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
+                openWithSwitch.click();
+            }
+        });
+    }
+
+    this.enableToolbarOptions = function () {
+        Util.waitUntilElementIsVisible(openWithSwitch);
+        openWithSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
+                openWithSwitch.click();
+            }
+        });
+    }
+
+    this.checkToolbarOptionsIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(openWith);
+        return this;
+    };
+
+    this.checkToolbarOptionsIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(openWith);
+        return this;
+    };
+
+    this.disableDownload = function () {
+        Util.waitUntilElementIsVisible(downloadSwitch);
+        downloadSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
+                downloadSwitch.click();
+            }
+        });
+    }
+
+    this.enableDownload = function () {
+        Util.waitUntilElementIsVisible(openWithSwitch);
+        downloadSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
+                downloadSwitch.click();
+            }
+        });
+    }
+
+    this.checkDownloadButtonDisplayed = function () {
+        Util.waitUntilElementIsVisible(downloadButton);
+        return this;
+    };
+
+    this.checkDownloadButtonIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(downloadButton);
+        return this;
+    };
+
+    this.disablePrint = function () {
+        Util.waitUntilElementIsVisible(printSwitch);
+        printSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
+                printSwitch.click();
+            }
+        });
+    }
+
+    this.enablePrint = function () {
+        Util.waitUntilElementIsVisible(printSwitch);
+        printSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
+                printSwitch.click();
+            }
+        });
+    }
+
+    this.checkPrintButtonIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(printButton);
+        return this;
+    };
+
+    this.checkPrintButtonIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(printButton);
+        return this;
+    };
+
+    this.disableShare = function () {
+        Util.waitUntilElementIsVisible(shareSwitch);
+        shareSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
+                shareSwitch.click();
+            }
+        });
+    }
+
+    this.enableShare = function () {
+        Util.waitUntilElementIsVisible(shareSwitch);
+        shareSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
+                shareSwitch.click();
+            }
+        });
+    }
+
+    this.disableAllowSidebar = function () {
+        Util.waitUntilElementIsVisible(allowSidebarSwitch);
+        allowSidebarSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
+                allowSidebarSwitch.click();
+            }
+        });
+    }
+
+    this.enableAllowSidebar = function () {
+        Util.waitUntilElementIsVisible(allowSidebarSwitch);
+        allowSidebarSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
+                allowSidebarSwitch.click();
+            }
+        });
+    }
+
+    this.checkShareButtonDisplayed = function () {
+        Util.waitUntilElementIsVisible(shareButton);
+        return this;
+    };
+
+    this.checkShareButtonIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(shareButton);
+        return this;
+    };
+
+    this.checkMoreActionsDisplayed = function () {
+        Util.waitUntilElementIsVisible(bugButton);
+        Util.waitUntilElementIsVisible(timeButton);
+        Util.waitUntilElementIsVisible(uploadButton);
+        return this;
+    };
+
+    this.checkMoreActionsIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(bugButton);
+        Util.waitUntilElementIsNotVisible(timeButton);
+        Util.waitUntilElementIsNotVisible(uploadButton);
+        return this;
+    };
+
+    this.disableMoreActions = function () {
+        Util.waitUntilElementIsVisible(moreActionsSwitch);
+        moreActionsSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
+                moreActionsSwitch.click();
+            }
+        });
+    }
+
+    this.enableMoreActions = function () {
+        Util.waitUntilElementIsVisible(moreActionsSwitch);
+        moreActionsSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
+                moreActionsSwitch.click();
+            }
+        });
+    }
+
+    this.disableCustomName = function () {
+        Util.waitUntilElementIsVisible(customNameSwitch);
+        customNameSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
+                customNameSwitch.click();
+            }
+        });
+    }
+
+    this.enableCustomName = function () {
+        Util.waitUntilElementIsVisible(customNameSwitch);
+        customNameSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
+                customNameSwitch.click();
+            }
+        });
+    }
+
+    this.clickToggleRightSidebar = function () {
+        Util.waitUntilElementIsVisible(showRightSidebarSwitch);
+        showRightSidebarSwitch.click();
+    }
+
+    this.clickToggleLeftSidebar = function () {
+        Util.waitUntilElementIsVisible(showLeftSidebarSwitch);
+        showLeftSidebarSwitch.click();
+    }
+
+    this.enterCustomName = function (text) {
+        const textField = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
+        Util.waitUntilElementIsVisible(textField);
+        textField.sendKeys('');
+        textField.clear().sendKeys(text);
+        return this;
+    };
 };
 
 module.exports = ViewerToolbarPage;

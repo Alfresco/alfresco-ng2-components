@@ -96,7 +96,7 @@ export class VersionManagePage {
     }
 
     /**
-     * disables download
+     * disables readOnly
      */
     disableReadOnly() {
         Util.waitUntilElementIsVisible(this.readOnlySwitch);
@@ -108,7 +108,7 @@ export class VersionManagePage {
     }
 
     /**
-     * enables download
+     * enables readOnly
      */
     enableReadOnly() {
         Util.waitUntilElementIsVisible(this.readOnlySwitch);
