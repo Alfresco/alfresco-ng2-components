@@ -24,7 +24,7 @@ var configFileName = "doctool.config.json";
 var defaultFolder = path.resolve("docs");
 var sourceInfoFolder = path.resolve("docs", "sourceinfo");
 
-var libFolders = ["core", "content-services", "process-services", "insights"];
+var libFolders = ["core", "content-services", "process-services", "insights", "process-services-cloud"];
 
 var excludePatterns = [
     "**/*.spec.ts"
@@ -41,7 +41,7 @@ function updatePhase(mdCache, aggData) {
     });
 
     var filenames = Object.keys(mdCache);
-    
+
 
     for (var i = 0; i < filenames.length; i++) {
         var pathname = filenames[i];
@@ -164,8 +164,8 @@ function initSourceInfo(aggData, mdCache) {
 
     let sources = app.expandInputFiles(libFolders.map(folder => {
         return path.resolve("lib", folder);
-    }));    
-    
+    }));
+
     aggData.projData = app.convert(sources);
 
 
@@ -188,7 +188,7 @@ function initSourceInfo(aggData, mdCache) {
         }
 /*
         if (classRef) {
-           aggData.classInfo[className] = new si.ComponentInfo(classRef); 
+           aggData.classInfo[className] = new si.ComponentInfo(classRef);
         }
         */
 
@@ -204,7 +204,7 @@ function initClassInfo(aggData) {
     yamlFilenames.forEach(yamlFilename => {
         var classYamlText = fs.readFileSync(path.resolve(sourceInfoFolder, yamlFilename), "utf8");
         var classYaml = jsyaml.safeLoad(classYamlText);
-        
+
         if (program.verbose) {
             console.log(classYaml.items[0].name);
         }
@@ -264,7 +264,7 @@ if (sourceInfo.isDirectory()) {
     files = [ sourcePath ];
 }
 
-files = files.filter(filename => 
+files = files.filter(filename =>
     (filename !== undefined) &&
     (path.extname(filename) === ".md") &&
     (filename !== "README.md")
