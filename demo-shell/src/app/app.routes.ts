@@ -40,9 +40,11 @@ import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { AppComponent } from './app.component';
+import { HelloCloudComponent } from '@alfresco/adf-process-services-cloud';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
+    { path: 'hello', component: HelloCloudComponent },
     { path: 'logout', component: LogoutComponent },
     {
         path: 'settings',
