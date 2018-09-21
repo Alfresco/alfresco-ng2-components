@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-export * from './components/task-list.component';
+export * from './components/hello.component';
 
-export * from './services/tasklist.service';
-
-export * from './models/task-list.model';
-
-export * from './task-list.module';
+export * from './hello.module';
