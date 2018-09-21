@@ -124,7 +124,7 @@
             <div *ngIf="showHeaderContent" class="adf-task-details-core-sidebar-checklist">
                 <div *ngIf="showChecklist">
                     <adf-checklist #activitichecklist
-                                   [readOnly]="readOnlyForm"
+                                   [readOnly]="internalReadOnlyForm"
                                    [taskId]="taskDetails.id"
                                    [assignee]="taskDetails?.assignee?.id"
                                    (checklistTaskCreated)="onChecklistTaskCreated($event)"

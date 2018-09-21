@@ -201,9 +201,7 @@ export class FormModel {
             }
         }
 
-        if (errorsField.length > 0) {
-            this._isValid = false;
-        }
+        this._isValid = errorsField.length > 0 ? false : true;
 
         if (this.formService) {
             validateFormEvent.isValid = this._isValid;
