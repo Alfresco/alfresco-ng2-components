@@ -309,7 +309,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                     if (endDate && !isNaN(endDate.getTime())) {
                         this.internalReadOnlyForm = true;
                     } else {
-                        this.internalReadOnlyForm = this.readOnlyForm
+                        this.internalReadOnlyForm = this.readOnlyForm;
                     }
 
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
