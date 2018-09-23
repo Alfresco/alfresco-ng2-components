@@ -50,7 +50,7 @@ jobs:
                             (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
                     fi
         - stage: Packaging test
-          script:  (npm run build-lib || exit 1;) && node ./scripts/upload-build-lib-in-cs.js -u $E2E_USERNAME  -p $E2E_PASSWORD --host $E2E_HOST -f $TRAVIS_BUILD_NUMBER
+          script:  (npm run build-lib || exit 1;) && node ./scripts/upload-build-lib-in-cs.js -u '$E2E_USERNAME'  -p '$E2E_PASSWORD' --host '$E2E_HOST' -f $TRAVIS_BUILD_NUMBER
         - stage: Update children projects dependency #Update generator-ng2-alfresco-app
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
@@ -67,19 +67,19 @@ jobs:
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-modeler-app
         - stage: Create Shell dist
-          script: rm -rf ./node_modules/@alfresco; node ./scripts/download-build-lib-in-cs.js -u $E2E_USERNAME  -p $E2E_PASSWORD --host $E2E_HOST -f $TRAVIS_BUILD_NUMBER || exit 1; npm run build:dist || exit 1; node ./scripts/upload-build-in-cs.js -u $E2E_USERNAME  -p $E2E_PASSWORD --host $E2E_HOST -f  $TRAVIS_BUILD_NUMBER || exit 1
+          script: rm -rf ./node_modules/@alfresco; node ./scripts/download-build-lib-in-cs.js -u '$E2E_USERNAME'  -p '$E2E_PASSWORD' --host '$E2E_HOST' -f $TRAVIS_BUILD_NUMBER || exit 1; npm run build:dist || exit 1; node ./scripts/upload-build-in-cs.js -u '$E2E_USERNAME'  -p '$E2E_PASSWORD' --host '$E2E_HOST' -f  $TRAVIS_BUILD_NUMBER || exit 1
         - stage: e2e Test # Test core
           env: STAGE=core
-          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save --folder core --skip-lint --use-dist
+          script: node ./scripts/download-build-in-cs.js --username '$E2E_USERNAME' --password '$E2E_USERNAME' --host '$E2E_HOST' --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy '$E2E_HOST' -u '$E2E_USERNAME' -p '$E2E_PASSWORD' -e $E2E_EMAIL -b -save --folder core --skip-lint --use-dist
         - stage: e2e Test # Test process-services
           env: STAGE=process-services
-          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save --folder process-services --skip-lint --use-dist
+          script: node ./scripts/download-build-in-cs.js --username '$E2E_USERNAME' --password '$E2E_USERNAME' --host '$E2E_HOST' --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy '$E2E_HOST' -u '$E2E_USERNAME' -p '$E2E_PASSWORD' -e $E2E_EMAIL -b -save --folder process-services --skip-lint --use-dist
         - stage: e2e Test # Test content-services
           env: STAGE=content-services
-          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save --folder content-services --skip-lint --use-dist
+          script: node ./scripts/download-build-in-cs.js --username '$E2E_USERNAME' --password '$E2E_USERNAME' --host '$E2E_HOST' --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy '$E2E_HOST' -u '$E2E_USERNAME' -p '$E2E_PASSWORD' -e $E2E_EMAIL -b -save --folder content-services --skip-lint --use-dist
         - stage: e2e Test # Test insights
           env: STAGE=insights
-          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save --folder insights --skip-lint --use-dist
+          script: node ./scripts/download-build-in-cs.js --username '$E2E_USERNAME' --password '$E2E_USERNAME' --host '$E2E_HOST' --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy '$E2E_HOST' -u '$E2E_USERNAME' -p '$E2E_PASSWORD' -e $E2E_EMAIL -b -save --folder insights --skip-lint --use-dist
         - stage: Test Update version 2.0.0
           if: branch = development
           env: STAGE=test-BC
@@ -88,7 +88,7 @@ jobs:
           env: STAGE=test-export
           script: npm run test-export
         - stage: Create Docker PR
-          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER --base-href $TRAVIS_BUILD_NUMBER; -n $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
+          script: node ./scripts/download-build-in-cs.js --username '$E2E_USERNAME' --password '$E2E_USERNAME' --host '$E2E_HOST' --folder $TRAVIS_BUILD_NUMBER --base-href $TRAVIS_BUILD_NUMBER; -n $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
         - stage: Deploy Docker PR
           script: node ./scripts/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1
 
