@@ -60,7 +60,7 @@ async function main() {
                 'overwrite': true
             });
         } catch (error) {
-            console.log(`Folder Builds/${program.folder} creation error ${error}` );
+            console.log(`Folder Builds/${program.folder} creation error ${JSON.stringify(error)}` );
 
             folder = await alfrescoJsApi.nodes.getNode('-my-', {
                 'relativePath': `Builds/${program.folder}`,
