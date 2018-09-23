@@ -24,6 +24,7 @@ import { NodeService } from './../services/node.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { FormComponent } from './form.component';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets/index';
+import { ContainerModel } from './widgets/core/container.model';
 
 describe('FormComponent', () => {
 
@@ -738,12 +739,15 @@ describe('FormComponent', () => {
 
     it('should always enable save outcome for writeable form', () => {
         let formModel = new FormModel();
+
         let field = new FormFieldModel(formModel, {
             type: 'text',
             value: null,
             required: true
         });
 
+        let containerModel = new ContainerModel(field);
+        formModel.fields.push(containerModel);
         formComponent.form = formModel;
         formModel.onFormFieldChanged(field);
 
@@ -766,6 +770,8 @@ describe('FormComponent', () => {
             required: true
         });
 
+        let containerModel = new ContainerModel(field);
+        formModel.fields.push(containerModel);
         formComponent.form = formModel;
         formModel.onFormFieldChanged(field);
 
