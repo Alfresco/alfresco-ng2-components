@@ -23,7 +23,9 @@ import { RouteRef } from '../config/routing.extensions';
 import { ActionRef } from '../config/action.extensions';
 import * as core from '../evaluators/core.evaluators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ExtensionService {
     configPath = 'assets/app.extensions.json';
     pluginsPath = 'assets/plugins';
