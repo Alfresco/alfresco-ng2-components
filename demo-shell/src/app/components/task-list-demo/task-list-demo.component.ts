@@ -130,12 +130,14 @@ export class TaskListDemoComponent implements OnInit {
         this.state = taskFilter.taskState;
         this.sort = taskFilter.taskSort;
         this.start = taskFilter.taskStart;
-        this.size = +taskFilter.taskSize;
-
-        if (taskFilter.page > 0) {
-            this.page = +taskFilter.taskPage - 1;
+        if (taskFilter.taskSize) {
+            this.size = parseInt(taskFilter.taskSize, 10);
+        }
+        let pageValue = parseInt(taskFilter.taskPage, 10);
+        if ( pageValue > 0) {
+            this.page = pageValue - 1;
         } else {
-            this.page = +taskFilter.taskPage;
+            this.page = pageValue;
         }
         this.dueAfter = taskFilter.taskDueAfter;
         this.dueBefore = taskFilter.taskDueBefore;
