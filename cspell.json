@@ -51,7 +51,16 @@
     "swimlanes",
     "datepicker",
     "waypoints",
-    "hotfix"
+    "waypoint",
+    "hotfix",
+    "typeahead",
+    "gridster",
+    "Collapsable",
+    "rowspan",
+    "typeahead",
+    "tabindex",
+    "Arial",
+    "swsdp"
   ],
   "dictionaries": ["html", "en-gb", "en_US"]
 }

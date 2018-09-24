@@ -44,6 +44,7 @@ describe('Diagrams activities', () => {
     beforeEach(() => {
         jasmine.Ajax.install();
         component.processInstanceId = '38399';
+        // cspell: disable-next
         component.processDefinitionId = 'fakeprocess:24:38399';
         component.metricPercentages = { startEvent: 0 };
     });

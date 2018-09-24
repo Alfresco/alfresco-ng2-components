@@ -281,7 +281,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         this.showingSearchResults = true;
         this.loadingSearchResults = false;
 
-        // Documentlist hack, since data displaying for preloaded nodes is a little bit messy there
+        // DocumentList hack, since data displaying for preloaded nodes is a little bit messy there
         if (!this.nodes) {
             this.nodes = nodePaging;
         } else {
@@ -293,7 +293,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     }
 
     /**
-     * Hightlight the actual searchterm in the next frame
+     * Highlight the actual search term in the next frame
      */
     highlight(): void {
         setTimeout(() => {

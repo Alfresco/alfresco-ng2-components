@@ -182,7 +182,7 @@ describe('ContextMenuHolderComponent', () => {
             });
         }));
 
-        it('should ajust position relative to right margin of the screen', fakeAsync(() => {
+        it('should adjust position relative to right margin of the screen', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 1000,
                 clientY: 210
@@ -197,7 +197,7 @@ describe('ContextMenuHolderComponent', () => {
             });
         }));
 
-        it('should ajust position relative to bottom margin of the screen', fakeAsync(() => {
+        it('should adjust position relative to bottom margin of the screen', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 100,
                 clientY: 600
@@ -212,7 +212,7 @@ describe('ContextMenuHolderComponent', () => {
             });
         }));
 
-        it('should ajust position relative to bottom - right margin of the screen', fakeAsync(() => {
+        it('should adjust position relative to bottom - right margin of the screen', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 900,
                 clientY: 610
@@ -248,7 +248,7 @@ describe('ContextMenuHolderComponent', () => {
             expect(component.menuTrigger.menu.yPosition).toBe('below');
         }));
 
-        it('should ajust direction relative to right margin of the screen', fakeAsync(() => {
+        it('should adjust direction relative to right margin of the screen', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 1000,
                 clientY: 210

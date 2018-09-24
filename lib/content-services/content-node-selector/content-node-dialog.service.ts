@@ -162,7 +162,7 @@ export class ContentNodeDialogService {
      * Opens a dialog to choose folders to upload.
      * @param action Name of the action to show in the title
      * @param contentEntry  Item to upload
-     * @returns Information about the chosed folder(s)
+     * @returns Information about the chosen folder(s)
      */
     openUploadFolderDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
         const select = new Subject<MinimalNodeEntryEntity[]>();

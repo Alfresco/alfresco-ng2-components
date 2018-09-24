@@ -95,8 +95,8 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         }
     }
 
-    private isEnterOrSpacePressed(keycode) {
-        return this.selectArrayCode.indexOf(keycode) !== -1;
+    private isEnterOrSpacePressed(keyCode) {
+        return this.selectArrayCode.indexOf(keyCode) !== -1;
     }
 
     hasSelection(): boolean {

@@ -140,9 +140,9 @@ export class UploadDirective implements OnInit, OnDestroy {
             this.element.classList.remove(this.cssClassName);
             this.isDragging = false;
 
-            const dataTranfer = this.getDataTransfer(event);
-            if (dataTranfer) {
-                this.getFilesDropped(dataTranfer).then(files => {
+            const dataTransfer = this.getDataTransfer(event);
+            if (dataTransfer) {
+                this.getFilesDropped(dataTransfer).then(files => {
                     this.onUploadFiles(files);
                 });
 

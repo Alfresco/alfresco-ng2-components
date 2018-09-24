@@ -1519,8 +1519,8 @@ export class DemoForm {
                     '1': [
                       {
                         'fieldType': 'RestFieldRepresentation',
-                        'id': 'typeahedField',
-                        'name': 'TypeahedField',
+                        'id': 'typeaheadField',
+                        'name': 'TypeaheadField',
                         'type': 'typeahead',
                         'value': null,
                         'required': false,

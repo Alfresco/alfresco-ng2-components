@@ -51,7 +51,7 @@ export class FormLoadingComponent implements OnInit {
 
     onLoadButtonClicked() {
         this.formattedData = {
-                               'typeahedField': this.typeaheadFieldValue,
+                               'typeaheadField': this.typeaheadFieldValue,
                                'selectBox': this.selectFieldValue,
                                'radioButton': this.radioButtonFieldValue
                             };

@@ -72,7 +72,7 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
     }
 
     /**
-     * Clear all bound eventlisteners
+     * Clear all bound event listeners
      */
     ngOnDestroy() {
         window.removeEventListener('scroll', this.boundMouseLeaveAndScrollHandler, true);
@@ -94,7 +94,7 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
     }
 
     /**
-     * Calculates the tooltip's position and displays it
+     * Calculates the tooltip position and displays it
      *
      * @param event mouseenter/touchend event
      */
