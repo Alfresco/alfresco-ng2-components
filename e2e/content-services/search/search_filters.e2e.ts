@@ -87,4 +87,19 @@ describe('Search Filters', () => {
         searchFiltersPage.removeCreatorFilter(acsUser.firstName, acsUser.lastName);
         searchFiltersPage.checkCreatorChipIsNotDisplayed(acsUser.firstName, acsUser.lastName);
     });
+
+    it('[C277146] Show more/less buttons are hidden when inactive', () => {
+        browser.get(TestConfig.adf.url + '/search;q=*');
+
+        searchFiltersPage.checkShowLessButtonIsNotDisplayed();
+        searchFiltersPage.checkSizeShowMoreButtonIsDisplayed();
+
+        searchFiltersPage.clickSizeShowMoreButtonUntilIsNotDisplayed();
+        searchFiltersPage.checkSizeShowMoreButtonIsNotDisplayed();
+        searchFiltersPage.checkShowLessButtonIsDisplayed();
+
+        searchFiltersPage.clickSizeShowLessButtonUntilIsNotDisplayed();
+        searchFiltersPage.checkShowLessButtonIsNotDisplayed();
+    });
+
 });
