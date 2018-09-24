@@ -268,15 +268,16 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             component.appId = 123;
+            component.processNameInput.setValue('My Process 2');
             component.processDefinitionInput.setValue('My Process 2');
-            component.ngOnChanges({});
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.selectedProcessDef.name).toBe(JSON.parse(JSON.stringify(testMultipleProcessDefs[1])).name);
             });
         }));
 
-        it('should select automatically the processDefinition if the app contain oly one', async(() => {
+        it('should select automatically the processDefinition if the app contain only one', async(() => {
+            fixture.detectChanges();
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testProcessDefinitions));
             component.appId = 123;
             component.ngOnChanges({});
@@ -289,6 +290,7 @@ describe('StartFormComponent', () => {
         describe('dropdown', () => {
 
             it('should hide the process dropdown button if showSelectProcessDropdown is false', async(() => {
+                fixture.detectChanges();
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([testProcessDefRepr]));
                 component.appId = 123;
                 component.showSelectProcessDropdown = false;
