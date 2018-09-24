@@ -328,11 +328,11 @@ describe('Form service', () => {
         });
 
         it('should search for Form with modelType=2', (done) => {
-            let response = { data: [{ id: 1, name: 'findme' }, { id: 2, name: 'testform' }] };
+            let response = { data: [{ id: 1, name: 'findMe' }, { id: 2, name: 'testForm' }] };
 
-            service.searchFrom('findme').subscribe(result => {
+            service.searchFrom('findMe').subscribe(result => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
-                expect(result.name).toEqual('findme');
+                expect(result.name).toEqual('findMe');
                 expect(result.id).toEqual(1);
                 done();
             });

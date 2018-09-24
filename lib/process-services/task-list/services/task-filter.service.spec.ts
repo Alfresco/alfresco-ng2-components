@@ -174,14 +174,14 @@ describe('Activiti Task filter Service', () => {
         it('should add a filter', (done) => {
             let filterFake = new FilterRepresentationModel({
                 name: 'FakeNameFilter',
-                assignment: 'fake-assignement'
+                assignment: 'fake-assignment'
             });
 
             service.addFilter(filterFake).subscribe((res: FilterRepresentationModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).not.toEqual(null);
                 expect(res.name).toEqual('FakeNameFilter');
-                expect(res.filter.assignment).toEqual('fake-assignement');
+                expect(res.filter.assignment).toEqual('fake-assignment');
                 done();
             });
 
@@ -189,7 +189,7 @@ describe('Activiti Task filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    id: '2233', name: 'FakeNameFilter', filter: { assignment: 'fake-assignement' }
+                    id: '2233', name: 'FakeNameFilter', filter: { assignment: 'fake-assignment' }
                 })
             });
         });

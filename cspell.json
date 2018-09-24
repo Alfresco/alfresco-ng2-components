@@ -60,7 +60,25 @@
     "typeahead",
     "tabindex",
     "Arial",
-    "swsdp"
+    "swsdp",
+    "Datetimepicker",
+    "mimetype",
+    "multiselect",
+    "arrowup",
+    "arrowdown",
+    "dialpad",
+    "backend",
+    "Unclaim",
+    "transclusion",
+    "auditable",
+    "taggable",
+    "datarow",
+    "datacolumn",
+    "textitem",
+    "checkboxes",
+    "tasklist",
+    "dateitem",
+    "webscript"
   ],
   "dictionaries": ["html", "en-gb", "en_US"]
 }

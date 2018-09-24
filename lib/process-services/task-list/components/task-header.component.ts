@@ -226,7 +226,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     /**
-     * Returns true if the task is assigne to logged in user
+     * Returns true if the task is assigned to logged in user
      */
     public isAssignedTo(userId): boolean {
         return this.hasAssignee() ? this.taskDetails.assignee.id === userId : false;

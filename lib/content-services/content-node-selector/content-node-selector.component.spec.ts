@@ -82,13 +82,13 @@ describe('ContentNodeSelectorDialogComponent', () => {
             expect(actionButton.nativeElement.innerText).toBe('NODE_SELECTOR.MOVE');
         });
 
-        it('should pass through the injected currentFolderId to the documentlist', () => {
+        it('should pass through the injected currentFolderId to the documentList', () => {
             let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
             expect(documentList).not.toBeNull('Document list should be shown');
             expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
         });
 
-        xit('should pass through the injected rowFilter to the documentlist', (done) => {
+        xit('should pass through the injected rowFilter to the documentList', (done) => {
             fixture.whenStable().then(() => {
                 let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
@@ -98,7 +98,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
 
         });
 
-        it('should pass through the injected imageResolver to the documentlist', () => {
+        it('should pass through the injected imageResolver to the documentList', () => {
             let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
             expect(documentList).not.toBeNull('Document list should be shown');
             expect(documentList.componentInstance.imageResolver).toBe(data.imageResolver);

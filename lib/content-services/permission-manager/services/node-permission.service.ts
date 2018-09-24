@@ -172,7 +172,7 @@ export class NodePermissionService {
     /**
      * Gets all members related to a group name.
      * @param groupName Name of group to look for members
-     * @param opts Extra options supported by JSAPI
+     * @param opts Extra options supported by JS-API
      * @returns List of members
      */
     getGroupMemeberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging> {

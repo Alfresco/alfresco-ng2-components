@@ -58,7 +58,7 @@ export class NodePermissionDirective implements OnChanges {
     }
 
     /**
-     * Updates disabled state for the decorated elememtn
+     * Updates disabled state for the decorated element
      *
      * @memberof NodePermissionDirective
      */

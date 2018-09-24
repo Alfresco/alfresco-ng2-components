@@ -92,7 +92,7 @@ describe('DropdownSitesComponent', () => {
                 component = fixture.componentInstance;
             }));
 
-            function openSelectbox() {
+            function openSelectBox() {
                 const selectBox = debug.query(By.css(('[data-automation-id="site-my-files-select"] .mat-select-trigger')));
                 selectBox.triggerEventHandler('click', null);
             }
@@ -137,7 +137,7 @@ describe('DropdownSitesComponent', () => {
             it('should show the default placeholder label by default', async(() => {
                 fixture.detectChanges();
 
-                openSelectbox();
+                openSelectBox();
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -151,7 +151,7 @@ describe('DropdownSitesComponent', () => {
                 component.placeholder = 'NODE_SELECTOR.SELECT_LOCATION';
                 fixture.detectChanges();
 
-                openSelectbox();
+                openSelectBox();
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -181,7 +181,7 @@ describe('DropdownSitesComponent', () => {
 
                 fixture.detectChanges();
 
-                openSelectbox();
+                openSelectBox();
 
                 let options: any = [];
                 fixture.whenStable().then(() => {

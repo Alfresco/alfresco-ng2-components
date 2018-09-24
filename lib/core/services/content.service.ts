@@ -186,7 +186,7 @@ export class ContentService {
     /**
      * Gets a Node via its node ID.
      * @param nodeId ID of the target node
-     * @param opts Options supported by JSAPI
+     * @param opts Options supported by JS-API
      * @returns Details of the folder
      */
     getNode(nodeId: string, opts?: any): Observable<NodeEntry> {

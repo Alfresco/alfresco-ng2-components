@@ -105,7 +105,7 @@ describe('PeopleComponent', () => {
                 });
         }));
 
-        it('should remove pepole involved', async(() => {
+        it('should remove people involved', async(() => {
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
@@ -119,7 +119,7 @@ describe('PeopleComponent', () => {
                 });
         }));
 
-        it('should involve pepole', async(() => {
+        it('should involve people', async(() => {
             activitiPeopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200

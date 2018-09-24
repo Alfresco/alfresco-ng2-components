@@ -47,7 +47,7 @@ export class ChecklistComponent implements OnChanges {
     @Output()
     checklistTaskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
 
-    /** Emitted when a checklitst task is deleted. */
+    /** Emitted when a checklist task is deleted. */
     @Output()
     checklistTaskDeleted: EventEmitter<string> = new EventEmitter<string>();
 

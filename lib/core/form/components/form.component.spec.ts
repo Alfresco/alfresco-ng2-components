@@ -762,7 +762,7 @@ describe('FormComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
     });
 
-    it('should disable oucome buttons for invalid form', () => {
+    it('should disable outcome buttons for invalid form', () => {
         let formModel = new FormModel();
         let field = new FormFieldModel(formModel, {
             type: 'text',

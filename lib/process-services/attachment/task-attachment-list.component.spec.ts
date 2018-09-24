@@ -32,7 +32,7 @@ describe('TaskAttachmentList', () => {
     let mockAttachment: any;
     let deleteContentSpy: jasmine.Spy;
     let getFileRawContentSpy: jasmine.Spy;
-    let disposablelSuccess: any;
+    let disposableSuccess: any;
 
     setupTestBed({
         imports: [ProcessTestingModule],
@@ -96,8 +96,8 @@ describe('TaskAttachmentList', () => {
             overlayContainer.innerHTML = '';
         });
 
-        if (disposablelSuccess) {
-            disposablelSuccess.unsubscribe();
+        if (disposableSuccess) {
+            disposableSuccess.unsubscribe();
         }
     });
 
@@ -117,7 +117,7 @@ describe('TaskAttachmentList', () => {
 
     it('should emit a success event when the attachments are loaded', () => {
         let change = new SimpleChange(null, '123', true);
-        disposablelSuccess = component.success.subscribe((attachments) => {
+        disposableSuccess = component.success.subscribe((attachments) => {
             expect(attachments[0].name).toEqual(mockAttachment.data[0].name);
             expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
         });

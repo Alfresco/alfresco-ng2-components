@@ -185,7 +185,7 @@ describe('WidgetVisibilityService', () => {
         });
     });
 
-    describe('should retrive the process variables', () => {
+    describe('should retrieve the process variables', () => {
         let fakeFormWithField = new FormModel(fakeFormJson);
         let visibilityObjTest: WidgetVisibilityModel;
         let chainedVisibilityObj = new WidgetVisibilityModel();

@@ -212,7 +212,7 @@ export class FormFieldModel extends FormWidgetModel {
         return originalType === FormFieldTypes.DATETIME ? this.deafultDateTimeFormat : this.defaultDateFormat;
     }
 
-    private isTypeaHeadFieldType(type: string): boolean {
+    private isTypeaheadFieldType(type: string): boolean {
         return type === 'typeahead' ? true : false;
     }
 
@@ -222,7 +222,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     private getProcessVariableValue(field: any, form: FormModel) {
         let fieldName = field.name;
-        if (this.isTypeaHeadFieldType(field.type)) {
+        if (this.isTypeaheadFieldType(field.type)) {
             fieldName = this.getFieldNameWithLabel(field.id);
         }
         return this.findProcessVariableValue(fieldName, form);

@@ -312,7 +312,7 @@ export class DemoForm {
                                 'maxLength': 0,
                                 'minValue': null,
                                 'maxValue': null,
-                                'regexPatt§12212ern': null,
+                                'regexPattern': null,
                                 'optionType': null,
                                 'hasEmptyValue': null,
                                 'options': [

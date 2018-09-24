@@ -102,7 +102,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
-        this.onPagerendered = this.onPagerendered.bind(this);
+        this.onPageRendered = this.onPageRendered.bind(this);
     }
 
     ngOnChanges(changes) {
@@ -165,9 +165,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (viewer && container) {
             this.documentContainer = container;
 
+            // cspell: disable-next
             this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
+            // cspell: disable-next
             this.documentContainer.addEventListener('pagesloaded', this.onPagesLoaded, true);
-            this.documentContainer.addEventListener('textlayerrendered', this.onPagerendered, true);
+            // cspell: disable-next
+            this.documentContainer.addEventListener('textlayerrendered', this.onPageRendered, true);
 
             this.pdfViewer = new pdfjsViewer.PDFViewer({
                 container: this.documentContainer,
@@ -183,9 +186,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     ngOnDestroy() {
         if (this.documentContainer) {
+            // cspell: disable-next
             this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
+            // cspell: disable-next
             this.documentContainer.removeEventListener('pagesloaded', this.onPagesLoaded, true);
-            this.documentContainer.removeEventListener('textlayerrendered', this.onPagerendered, true);
+            // cspell: disable-next
+            this.documentContainer.removeEventListener('textlayerrendered', this.onPageRendered, true);
         }
 
         if (this.loadingTask) {
@@ -421,7 +427,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Page Rendered Event
      */
-    onPagerendered() {
+    onPageRendered() {
         this.rendered.emit();
     }
 
@@ -435,7 +441,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     /**
-     * Litener Keyboard Event
+     * Keyboard Event Listener
      * @param KeyboardEvent event
      */
     @HostListener('document:keydown', ['$event'])

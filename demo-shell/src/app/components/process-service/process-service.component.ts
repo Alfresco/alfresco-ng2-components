@@ -460,10 +460,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     loadStencilScriptsInPageFromProcessService() {
         this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(response => {
             if (response) {
-                const stencilSript = document.createElement('script');
-                stencilSript.type = 'text/javascript';
-                stencilSript.text = response;
-                this.elementRef.nativeElement.appendChild(stencilSript);
+                const stencilScript = document.createElement('script');
+                stencilScript.type = 'text/javascript';
+                stencilScript.text = response;
+                this.elementRef.nativeElement.appendChild(stencilScript);
             }
         });
     }

@@ -35,9 +35,9 @@ export class LanguageMenuComponent implements OnInit {
     }
 
     ngOnInit() {
-        const languagesCongifApp = this.appConfig.get<Array<any>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
-        if (languagesCongifApp) {
-            this.languages = languagesCongifApp;
+        const languagesConfigApp = this.appConfig.get<Array<any>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
+        if (languagesConfigApp) {
+            this.languages = languagesConfigApp;
         }
     }
 

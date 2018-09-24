@@ -215,7 +215,7 @@ describe('UploadButtonComponent', () => {
         expect(compiled.querySelector('#uploadFolder-label-static').textContent).toEqual('test-text');
     });
 
-    describe('filesize', () => {
+    describe('fileSize', () => {
 
         const files: File[] = [
             <File> { name: 'bigFile.png', size: 1000 },

@@ -193,7 +193,7 @@ export class FormService {
         )
         .pipe(
             map(function (forms: any) {
-                return forms.data.find(formdata => formdata.name === name);
+                return forms.data.find(formData => formData.name === name);
             }),
             catchError(err => this.handleError(err))
         );

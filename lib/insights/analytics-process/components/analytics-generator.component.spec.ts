@@ -90,7 +90,7 @@ describe('AnalyticsGeneratorComponent', () => {
         });
     });
 
-    it('Should render the Process definition overview report when onchanges is called ', (done) => {
+    it('Should render the Process definition overview report when [onChanges] is called ', (done) => {
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res.length).toEqual(3);

@@ -178,7 +178,7 @@ export class CustomResourcesService {
     }
 
     /**
-     * Gets all sites in the respository.
+     * Gets all sites in the repository.
      * @param pagination Specifies how to paginate the results
      * @returns List of sites
      */
@@ -266,7 +266,7 @@ export class CustomResourcesService {
     /**
      * Is the folder ID a "-my", "-root-", or "-shared-" alias?
      * @param folderId Folder ID name to check
-     * @returns True if the ID is one of the suppored sources, false otherwise
+     * @returns True if the ID is one of the supported sources, false otherwise
      */
     isSupportedSource(folderId: string): boolean {
         let isSupportedSources = false;
