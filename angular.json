@@ -524,7 +524,9 @@
           "options": {
             "main": "lib/core/test.ts",
             "tsConfig": "lib/core/tsconfig.json",
-            "karmaConfig": "lib/core/karma.conf.js"
+            "karmaConfig": "lib/core/karma.conf.js",
+            "codeCoverage": true,
+            "sourceMap": true
           }
         },
         "lint": {
@@ -564,7 +566,9 @@
           "options": {
             "main": "lib/content-services/test.ts",
             "tsConfig": "lib/content-services/tsconfig.json",
-            "karmaConfig": "lib/content-services/karma.conf.js"
+            "karmaConfig": "lib/content-services/karma.conf.js",
+            "codeCoverage": true,
+            "sourceMap": true
           }
         },
         "lint": {
@@ -604,7 +608,9 @@
           "options": {
             "main": "lib/process-services/test.ts",
             "tsConfig": "lib/process-services/tsconfig.json",
-            "karmaConfig": "lib/process-services/karma.conf.js"
+            "karmaConfig": "lib/process-services/karma.conf.js",
+            "codeCoverage": true,
+            "sourceMap": true
           }
         },
         "lint": {
@@ -644,7 +650,9 @@
           "options": {
             "main": "lib/insights/test.ts",
             "tsConfig": "lib/insights/tsconfig.json",
-            "karmaConfig": "lib/insights/karma.conf.js"
+            "karmaConfig": "lib/insights/karma.conf.js",
+            "codeCoverage": true,
+            "sourceMap": true
           }
         },
         "lint": {
@@ -680,6 +688,7 @@
             "main": "lib/extensions/src/test.ts",
             "tsConfig": "lib/extensions/tsconfig.spec.json",
             "karmaConfig": "lib/extensions/karma.conf.js",
+            "codeCoverage": true,
             "sourceMap": true
           }
         },
