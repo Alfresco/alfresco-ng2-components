@@ -77,9 +77,9 @@ describe('Document List - Pagination', function () {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         let folderThreeUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, folderThreeModel.name, '-my-');
-        let newFolderUploadeModel = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+        let newFolderUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
-        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderUploadeModel.entry.id);
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderUploadedModel.entry.id);
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderThreeUploadedModel.entry.id);
 

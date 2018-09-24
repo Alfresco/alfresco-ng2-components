@@ -42,7 +42,7 @@ export class FolderDialogComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when the edit/create folder is successfully created/mmodified
+    /** Emitted when the edit/create folder is successfully created/modified
      */
     @Output()
     success: EventEmitter<any> = new EventEmitter<MinimalNodeEntryEntity>();

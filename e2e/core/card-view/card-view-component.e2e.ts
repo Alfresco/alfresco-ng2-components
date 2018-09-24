@@ -88,7 +88,7 @@ describe('CardView Component', () => {
         });
     });
 
-    describe('Selectbox', () => {
+    describe('SelectBox', () => {
 
         it('[C279939] Should the label be present', () => {
             let label = element(by.xpath('div[data-automation-id="card-select-label-select"]'));
@@ -96,7 +96,7 @@ describe('CardView Component', () => {
             Util.waitUntilElementIsPresent(label);
         });
 
-        it('[C279899] Should be possible edit selectbox item', () => {
+        it('[C279899] Should be possible edit selectBox item', () => {
             cardViewPageComponent.clickSelectBox();
             cardViewPageComponent.selectValueFromComboBox(1);
 

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/* spellchecker: disable */
 export class IconModel {
     public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
 

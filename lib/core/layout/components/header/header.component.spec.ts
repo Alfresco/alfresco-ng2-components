@@ -143,7 +143,7 @@ describe('HeaderLayoutComponent', () => {
         });
     });
 
-    describe('Template tranclusion', () => {
+    describe('Template transclusion', () => {
 
         @Component({
             selector: 'adf-test-layout-header',
@@ -159,7 +159,7 @@ describe('HeaderLayoutComponent', () => {
             .compileComponents();
           }));
 
-        it('should transclude the provided nodes into the component', () => {
+        it('should project the provided nodes into the component', () => {
             const hostFixture = TestBed.createComponent(HeaderLayoutTesterComponent);
             hostFixture.detectChanges();
             const innerText = hostFixture.nativeElement.querySelector('mat-toolbar>p').innerText;

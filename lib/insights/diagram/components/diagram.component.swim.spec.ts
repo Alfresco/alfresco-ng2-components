@@ -95,7 +95,7 @@ describe('Diagrams swim', () => {
 
                     let shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
                     expect(shapeText).not.toBeNull();
-                    expect(shapeText.attributes[2].value).toEqual('Beckend');
+                    expect(shapeText.attributes[2].value).toEqual('Backend');
                 });
             });
             component.ngOnChanges();
@@ -137,7 +137,7 @@ describe('Diagrams swim', () => {
 
                     let shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
                     expect(shapeText).not.toBeNull();
-                    expect(shapeText.attributes[2].value).toEqual('Beckend');
+                    expect(shapeText.attributes[2].value).toEqual('Backend');
                 });
             });
             component.ngOnChanges();

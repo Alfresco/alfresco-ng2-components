@@ -113,7 +113,7 @@ export class NodesApiService {
      * Updates the information about a node.
      * @param nodeId ID of the target node
      * @param nodeBody New data for the node
-     * @param options Optional parameters supported by JSAPI
+     * @param options Optional parameters supported by JS-API
      * @returns Updated node information
      */
     updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
@@ -134,7 +134,7 @@ export class NodesApiService {
     /**
      * Moves a node to the trashcan.
      * @param nodeId ID of the target node
-     * @param options Optional parameters supported by JSAPI
+     * @param options Optional parameters supported by JS-API
      * @returns Empty result that notifies when the deletion is complete
      */
     deleteNode(nodeId: string, options: any = {}): Observable<any> {

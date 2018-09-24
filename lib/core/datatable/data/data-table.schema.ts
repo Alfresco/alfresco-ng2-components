@@ -70,8 +70,8 @@ export abstract class DataTableSchema {
         return schema;
     }
 
-   public getSchemaFromConfig(presetColoumn: string): DataColumn[] {
-        return presetColoumn ? (this.layoutPresets[presetColoumn]).map(col => new ObjectDataColumn(col)) : [];
+   public getSchemaFromConfig(presetColumn: string): DataColumn[] {
+        return presetColumn ? (this.layoutPresets[presetColumn]).map(col => new ObjectDataColumn(col)) : [];
     }
 
     private getDefaultLayoutPreset(): DataColumn[] {

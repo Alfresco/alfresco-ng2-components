@@ -240,7 +240,7 @@ describe('TaskHeaderComponent', () => {
         });
     }));
 
-    it('should call the service\'s unclaim method on unclaiming', async(() => {
+    it('should call the service unclaim method on un-claiming', async(() => {
         spyOn(service, 'unclaimTask').and.returnValue(of(true));
         component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
         component.refreshData();
@@ -254,7 +254,7 @@ describe('TaskHeaderComponent', () => {
         });
     }));
 
-    it('should trigger the unclaim event on successful unclaiming', async(() => {
+    it('should trigger the unclaim event on successful un-claiming', async(() => {
         let unclaimed: boolean = false;
         spyOn(service, 'unclaimTask').and.returnValue(of(true));
         component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);

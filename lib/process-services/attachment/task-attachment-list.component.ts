@@ -34,7 +34,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
     @Input()
     taskId: string;
 
-    /** Disable/Enable read only mode for attachement list. */
+    /** Disable/Enable read only mode for attachment list. */
     @Input()
     disabled: boolean = false;
 

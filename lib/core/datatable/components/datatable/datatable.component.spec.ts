@@ -262,7 +262,7 @@ describe('DataTable', () => {
     });
 
     it('should set custom sort order', () => {
-        const dataSortObj = new DataSorting('dummayName', 'asc');
+        const dataSortObj = new DataSorting('dummyName', 'asc');
         const dataRows =
             [
                 { name: 'test1' },
@@ -270,7 +270,7 @@ describe('DataTable', () => {
                 { name: 'test3' },
                 { name: 'test4' }
             ];
-        dataTable.sorting = [ 'dummayName', 'asc' ];
+        dataTable.sorting = [ 'dummyName', 'asc' ];
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
         });

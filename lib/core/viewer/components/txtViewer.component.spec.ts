@@ -42,7 +42,7 @@ describe('Text View component', () => {
 
     describe('View', () => {
 
-        it('Should text container be present with urlfile', (done) => {
+        it('Should text container be present with urlFile', (done) => {
             fixture.detectChanges();
             let urlFile = './fake-test-file.txt';
             let change = new SimpleChange(null, urlFile, true);

@@ -36,7 +36,7 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
  * @InputParam {string} servicePath path where Web Script service is mapped default value 'service'
  * @InputParam {string} contentType JSON | HTML | DATATABLE | TEXT
  *
- * @Output - success - The event is emitted when the data are recived
+ * @Output - success - The event is emitted when the data are received
  *
  */
 @Component({
@@ -91,13 +91,13 @@ export class WebscriptComponent implements OnChanges {
         }
 
         return new Promise((resolve, reject) => {
-            this.apiService.getInstance().webScript.executeWebScript('GET', this.scriptPath, this.scriptArgs, this.contextRoot, this.servicePath).then((webScriptdata) => {
+            this.apiService.getInstance().webScript.executeWebScript('GET', this.scriptPath, this.scriptArgs, this.contextRoot, this.servicePath).then((webScriptData) => {
 
-                this.data = webScriptdata;
+                this.data = webScriptData;
 
                 if (this.showData) {
                     if (this.contentType === 'DATATABLE') {
-                        this.data = this.showDataAsDataTable(webScriptdata);
+                        this.data = this.showDataAsDataTable(webScriptData);
                     }
                 }
 
@@ -116,7 +116,7 @@ export class WebscriptComponent implements OnChanges {
      *
      * @param data
      *
-     * @retutns the data as datatable
+     * @returns the data as datatable
      */
     showDataAsDataTable(data: any) {
         let datatableData: any = null;

@@ -328,7 +328,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.chosenNode).toBeNull();
             }));
 
-            it('should call the search api on changing the site selectbox\'s value', fakeAsync(() => {
+            it('should call the search api on changing the site selectBox value', fakeAsync(() => {
                 typeToSearchBox('vegeta');
 
                 tick(debounceSearch);
@@ -355,7 +355,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId']);
             }));
 
-            it('should call the content node selector\'s search with the right parameters on changing the site selectbox\'s value from a custom dropdown menu', fakeAsync(() => {
+            it('should call the content node selector\'s search with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
                 component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
                 fixture.detectChanges();
 
@@ -608,7 +608,7 @@ describe('ContentNodeSelectorComponent', () => {
                 }, 300);
             });
 
-            it('should reload the original documentlist when clearing the search input', fakeAsync(() => {
+            it('should reload the original documentList when clearing the search input', fakeAsync(() => {
                 typeToSearchBox('shenron');
 
                 tick(debounceSearch);

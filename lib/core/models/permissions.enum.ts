@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+ /* spellchecker: disable */
 export class PermissionsEnum extends String {
     static DELETE: string = 'delete';
     static UPDATE: string = 'update';

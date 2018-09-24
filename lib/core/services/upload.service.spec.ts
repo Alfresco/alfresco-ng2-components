@@ -269,15 +269,15 @@ describe('UploadService', () => {
 
         let fileFake1 = new FileModel(<File> { name: 'fake-name1', size: 10 });
         let fileFake2 = new FileModel(<File> { name: 'fake-name2', size: 10 });
-        let filelist = [fileFake1, fileFake2];
-        service.addToQueue(...filelist);
+        let fileList = [fileFake1, fileFake2];
+        service.addToQueue(...fileList);
         service.uploadFilesInTheQueue(emitter);
 
         let file = service.getQueue();
         service.cancelUpload(...file);
     });
 
-    it('should remove from the queue all the files in the exluded list', () => {
+    it('should remove from the queue all the files in the excluded list', () => {
         const file1 = new FileModel(new File([''], '.git'));
         const file2 = new FileModel(new File([''], '.DS_Store'));
         const file3 = new FileModel(new File([''], 'desktop.ini'));

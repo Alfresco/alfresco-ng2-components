@@ -38,7 +38,7 @@ export class DeletedNodesApiService {
 
     /**
      * Gets a list of nodes in the trash.
-     * @param options Options for JSAPI call
+     * @param options Options for JS-API call
      * @returns List of nodes in the trash
      */
     getDeletedNodes(options?: Object): Observable<NodePaging> {

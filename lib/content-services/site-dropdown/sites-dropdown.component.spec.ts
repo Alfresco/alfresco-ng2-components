@@ -228,7 +228,7 @@ describe('DropdownSitesComponent', () => {
                 });
             });
 
-            it('should be possiblle to select the default value', (done) => {
+            it('should be possible to select the default value', (done) => {
                 component.value = 'swsdp';
                 fixture.detectChanges();
 

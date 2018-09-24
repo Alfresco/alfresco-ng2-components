@@ -28,8 +28,8 @@ describe('AnalyticsReportHeatMapComponent', () => {
     let fixture: ComponentFixture<AnalyticsReportHeatMapComponent>;
     let element: HTMLElement;
 
-    let totalCountPerc: any = { 'sid-fake-id': 0, 'fake-start-event': 100 };
-    let totalTimePerc: any = { 'sid-fake-id': 10, 'fake-start-event': 30 };
+    let totalCountPercent: any = { 'sid-fake-id': 0, 'fake-start-event': 100 };
+    let totalTimePercent: any = { 'sid-fake-id': 10, 'fake-start-event': 30 };
     let avgTimePercentages: any = { 'sid-fake-id': 5, 'fake-start-event': 50 };
 
     let totalCountValues: any = { 'sid-fake-id': 2, 'fake-start-event': 3 };
@@ -46,9 +46,9 @@ describe('AnalyticsReportHeatMapComponent', () => {
         element = fixture.nativeElement;
 
         component.report = {
-            totalCountsPercentages: totalCountPerc,
+            totalCountsPercentages: totalCountPercent,
             totalCountValues: totalCountValues,
-            totalTimePercentages: totalTimePerc,
+            totalTimePercentages: totalTimePercent,
             totalTimeValues: totalTimeValues,
             avgTimeValues: avgTimeValues,
             avgTimePercentages: avgTimePercentages
@@ -90,21 +90,21 @@ describe('AnalyticsReportHeatMapComponent', () => {
             expect(component.hasMetric()).toBeTruthy();
         }));
 
-        it('should change the currentmetric width totalCount', async(() => {
+        it('should change the currentMetric width totalCount', async(() => {
             let field = { value: 'totalCount' };
             component.onMetricChanges(field);
             expect(component.currentMetric).toEqual(totalCountValues);
-            expect(component.currentMetricColors).toEqual(totalCountPerc);
+            expect(component.currentMetricColors).toEqual(totalCountPercent);
         }));
 
-        it('should change the currentmetric width totalTime', async(() => {
+        it('should change the currentMetric width totalTime', async(() => {
             let field = { value: 'totalTime' };
             component.onMetricChanges(field);
             expect(component.currentMetric).toEqual(totalTimeValues);
-            expect(component.currentMetricColors).toEqual(totalTimePerc);
+            expect(component.currentMetricColors).toEqual(totalTimePercent);
         }));
 
-        it('should change the currentmetric width avgTime', async(() => {
+        it('should change the currentMetric width avgTime', async(() => {
             let field = { value: 'avgTime' };
             component.onMetricChanges(field);
             expect(component.currentMetric).toEqual(avgTimeValues);

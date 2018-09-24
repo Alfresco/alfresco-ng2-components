@@ -528,7 +528,7 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should return undefined for not existing form variable', () => {
-            let varValue = service.getVariableValue(fakeForm, 'MISTERY_FORM_VARIABLE', null);
+            let varValue = service.getVariableValue(fakeForm, 'MYSTERY_FORM_VARIABLE', null);
 
             expect(varValue).toBeUndefined();
         });
