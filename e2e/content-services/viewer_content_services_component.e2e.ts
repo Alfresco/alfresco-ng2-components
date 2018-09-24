@@ -153,6 +153,8 @@ describe('Content Services Viewer', () => {
         viewerPage.checkZoomInButtonIsDisplayed();
         viewerPage.checkZoomOutButtonIsDisplayed();
         viewerPage.checkScalePageButtonIsDisplayed();
+
+        viewerPage.clickCloseButton();
     });
 
     it('[C260040] Should be able to change pages and zoom when .pdf file is open', () => {
@@ -219,6 +221,8 @@ describe('Content Services Viewer', () => {
         viewerPage.checkRotateLeftButtonIsDisplayed();
         viewerPage.checkRotateRightButtonIsDisplayed();
         viewerPage.checkScaleImgButtonIsDisplayed();
+
+        viewerPage.clickCloseButton();
     });
 
     it('[C260483] Should be able to zoom and rotate image when .jpg file is open', () => {
@@ -283,6 +287,7 @@ describe('Content Services Viewer', () => {
         viewerPage.checkZoomInButtonIsDisplayed();
         viewerPage.checkZoomOutButtonIsDisplayed();
         viewerPage.checkScalePageButtonIsDisplayed();
+
         viewerPage.clickCloseButton();
     });
 
@@ -346,6 +351,8 @@ describe('Content Services Viewer', () => {
         viewerPage.clickThumbnailsBtn();
         viewerPage.checkThumbnailsCloseIsDisplayed();
         viewerPage.clickThumbnailsClose();
+
+        viewerPage.clickCloseButton();
     });
 
     it('[C268105] Should display current thumbnail when getting to the page following the last visible thumbnail', () => {
@@ -393,5 +400,7 @@ describe('Content Services Viewer', () => {
         viewerPage.enterPassword(protectedFile.password);
         viewerPage.clickPasswordSubmit();
         viewerPage.checkFileContent('1', protectedFile.firstPageText);
+
+        viewerPage.clickCloseButton();
     });
 });

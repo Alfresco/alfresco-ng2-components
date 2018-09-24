@@ -129,9 +129,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, archiveFolderUploaded.entry.id);
-            browser.refresh();
-            contentServicesPage.checkAcsContainer();
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, archiveFolderUploaded.entry.id);
             done();
         });
 
@@ -139,7 +137,7 @@ describe('Viewer', () => {
             uploadedArchives.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.checkZoomInButtonIsDisplayed(15000);
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -165,9 +163,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, excelFolderUploaded.entry.id);
-            browser.refresh();
-            contentServicesPage.checkAcsContainer();
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, excelFolderUploaded.entry.id);
             done();
         });
 
@@ -175,7 +171,7 @@ describe('Viewer', () => {
             uploadedExcels.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.checkZoomInButtonIsDisplayed(15000);
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -201,9 +197,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFolderUploaded.entry.id);
-            browser.refresh();
-            contentServicesPage.checkAcsContainer();
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFolderUploaded.entry.id);
             done();
         });
 
@@ -211,7 +205,7 @@ describe('Viewer', () => {
             uploadedPpts.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.checkZoomInButtonIsDisplayed(15000);
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -237,9 +231,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, textFolderUploaded.entry.id);
-            browser.refresh();
-            contentServicesPage.checkAcsContainer();
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, textFolderUploaded.entry.id);
             done();
         });
 
@@ -247,7 +239,7 @@ describe('Viewer', () => {
             uploadedTexts.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.checkZoomInButtonIsDisplayed(15000);
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -273,9 +265,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, wordFolderUploaded.entry.id);
-            browser.refresh();
-            contentServicesPage.checkAcsContainer();
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, wordFolderUploaded.entry.id);
             done();
         });
 
@@ -283,7 +273,7 @@ describe('Viewer', () => {
             uploadedWords.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.checkZoomInButtonIsDisplayed(15000);
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -309,9 +299,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, otherFolderUploaded.entry.id);
-            browser.refresh();
-            contentServicesPage.checkAcsContainer();
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, otherFolderUploaded.entry.id);
             done();
         });
 
@@ -319,7 +307,7 @@ describe('Viewer', () => {
             uploadedOthers.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.checkZoomInButtonIsDisplayed(15000);
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -345,9 +333,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, imgFolderUploaded.entry.id);
-            browser.refresh();
-            contentServicesPage.checkAcsContainer();
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, imgFolderUploaded.entry.id);
             done();
         });
 
@@ -355,7 +341,7 @@ describe('Viewer', () => {
             uploadedImages.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(150000);
+                    viewerPage.checkZoomInButtonIsDisplayed(15000);
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
