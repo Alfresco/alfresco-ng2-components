@@ -148,7 +148,7 @@ describe('Start Process Component', () => {
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.selectFromProcessDropdown('Choose one...');
+            startProcessPage.enterProcessName('');
             startProcessPage.checkStartProcessButtonIsDisabled();
             startProcessPage.clickCancelProcessButton();
             processFiltersPage.checkNoContentMessage();
