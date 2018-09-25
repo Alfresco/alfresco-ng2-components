@@ -164,14 +164,14 @@ describe('Version component permissions', () => {
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
-            versionManagePage.chekFileVersionExist('1.1');
+            versionManagePage.checkFileVersionExist('1.1');
             expect(versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
             expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             versionManagePage.deleteFileVersion('1.1');
             versionManagePage.clickAcceptConfirm();
 
-            versionManagePage.chekFileVersionNotExist('1.1');
+            versionManagePage.checkFileVersionNotExist('1.1');
 
             versionManagePage.closeVersionDialog();
 
@@ -185,7 +185,7 @@ describe('Version component permissions', () => {
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
-            versionManagePage.chekFileVersionNotExist('1.1');
+            versionManagePage.checkFileVersionNotExist('1.1');
 
             versionManagePage.closeVersionDialog();
 
@@ -199,14 +199,14 @@ describe('Version component permissions', () => {
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
-            versionManagePage.chekFileVersionExist('1.1');
+            versionManagePage.checkFileVersionExist('1.1');
             expect(versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
             expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             versionManagePage.deleteFileVersion('1.1');
             versionManagePage.clickAcceptConfirm();
 
-            versionManagePage.chekFileVersionNotExist('1.1');
+            versionManagePage.checkFileVersionNotExist('1.1');
 
             versionManagePage.closeVersionDialog();
 
@@ -271,14 +271,14 @@ describe('Version component permissions', () => {
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
-            versionManagePage.chekFileVersionExist('1.1');
+            versionManagePage.checkFileVersionExist('1.1');
             expect(versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
             expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             versionManagePage.deleteFileVersion('1.1');
             versionManagePage.clickAcceptConfirm();
 
-            versionManagePage.chekFileVersionNotExist('1.1');
+            versionManagePage.checkFileVersionNotExist('1.1');
 
             versionManagePage.closeVersionDialog();
 
@@ -331,14 +331,14 @@ describe('Version component permissions', () => {
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
-            versionManagePage.chekFileVersionExist('1.1');
+            versionManagePage.checkFileVersionExist('1.1');
             expect(versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
             expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             versionManagePage.deleteFileVersion('1.1');
             versionManagePage.clickAcceptConfirm();
 
-            versionManagePage.chekFileVersionNotExist('1.1');
+            versionManagePage.checkFileVersionNotExist('1.1');
 
             versionManagePage.closeVersionDialog();
 
@@ -352,7 +352,7 @@ describe('Version component permissions', () => {
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
-            versionManagePage.chekFileVersionNotExist('1.1');
+            versionManagePage.checkFileVersionNotExist('1.1');
 
             versionManagePage.closeVersionDialog();
 
@@ -366,7 +366,7 @@ describe('Version component permissions', () => {
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
-            versionManagePage.chekFileVersionExist('1.1');
+            versionManagePage.checkFileVersionExist('1.1');
             expect(versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
             expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 

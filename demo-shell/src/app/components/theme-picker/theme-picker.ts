@@ -80,7 +80,9 @@ export class ThemePickerComponent {
         {
             primary: '#c2185b',
             accent: '#b0bec5',
+            /* cspell:disable-next-line */
             name: 'Pink Bluegrey Dark',
+            /* cspell:disable-next-line */
             href: 'adf-pink-bluegrey.css',
             isDark: false
         },

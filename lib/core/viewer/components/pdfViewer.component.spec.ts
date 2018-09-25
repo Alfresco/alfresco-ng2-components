@@ -223,6 +223,7 @@ describe('Test PdfViewer component', () => {
 
             fixtureUrlTestComponent.detectChanges();
             fixtureUrlTestComponent.whenStable().then(() => {
+                /* cspell:disable-next-line */
                 expect(elementUrlTestComponent.querySelector('.viewer-pagenumber-input')).toBeDefined();
                 expect(elementUrlTestComponent.querySelector('.viewer-total-pages')).toBeDefined();
 
@@ -292,6 +293,7 @@ describe('Test PdfViewer component', () => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
+                /* cspell:disable-next-line */
                 expect(elementBlobTestComponent.querySelector('.viewer-pagenumber-input')).toBeDefined();
                 expect(elementBlobTestComponent.querySelector('.viewer-total-pages')).toBeDefined();
 
@@ -486,7 +488,7 @@ describe('Test PdfViewer component', () => {
 
         describe('Viewer events', () => {
 
-            it('should react on the emit of pagechange event', (done) => {
+            it('should react on the emit of pageChange event', (done) => {
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
                     const args = {
@@ -496,6 +498,7 @@ describe('Test PdfViewer component', () => {
                         }
                     };
 
+                    /* cspell:disable-next-line */
                     componentUrlTestComponent.pdfViewerComponent.pdfViewer.eventBus.dispatch('pagechange', args);
                     fixtureUrlTestComponent.detectChanges();
 
@@ -507,7 +510,7 @@ describe('Test PdfViewer component', () => {
                 });
             }, 5000);
 
-            it('should react on the emit of pagesloaded event', (done) => {
+            it('should react on the emit of pagesLoaded event', (done) => {
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
                     expect(componentUrlTestComponent.pdfViewerComponent.isPanelDisabled).toBeFalsy();
@@ -519,6 +522,7 @@ describe('Test PdfViewer component', () => {
                         }
                     };
 
+                    /* cspell:disable-next-line */
                     componentUrlTestComponent.pdfViewerComponent.pdfViewer.eventBus.dispatch('pagesloaded', args);
                     fixtureUrlTestComponent.detectChanges();
 

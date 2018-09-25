@@ -103,7 +103,9 @@
     "DISABLECSRF",
     "printf",
     "mincount",
-    "listgrid"
+    "listgrid",
+    "filesize",
+    "Theming"
   ],
   "dictionaries": ["html", "en-gb", "en_US"]
 }
