@@ -16,9 +16,9 @@
  */
 
 import { FileModel, UploadService } from '@alfresco/adf-core';
+import { EventEmitter } from '@angular/core';
 
 export class UploadFilesEvent {
-
     private isDefaultPrevented: boolean = false;
 
     get defaultPrevented() {
@@ -29,8 +29,11 @@ export class UploadFilesEvent {
         this.isDefaultPrevented = true;
     }
 
-    constructor(public files: Array<FileModel>, private uploadService: UploadService) {
-    }
+    constructor(
+        public files: Array<FileModel>,
+        private uploadService: UploadService,
+        private callback: EventEmitter<any>
+    ) {}
 
     pauseUpload() {
         this.preventDefault();
@@ -39,7 +42,7 @@ export class UploadFilesEvent {
     resumeUpload() {
         if (this.files && this.files.length > 0) {
             this.uploadService.addToQueue(...this.files);
-            this.uploadService.uploadFilesInTheQueue();
+            this.uploadService.uploadFilesInTheQueue(this.callback);
         }
     }
 }
