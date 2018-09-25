@@ -119,8 +119,8 @@ var ProcessFiltersPage = function () {
 
     this.checkFilterHasNoIcon = function(name) {
         var filterName = element(by.css("span[data-automation-id='" + name + "_filter']"));
-        return Util.waitUntilElementIsVisible(filterName);
-        Util.waitUntilElementIsNotOnPage(customTask.element(processIcon));
+        Util.waitUntilElementIsVisible(filterName);
+        return Util.waitUntilElementIsNotOnPage(filterName.element(processIcon));
     };
 
     this.getFilterIcon = function (name) {

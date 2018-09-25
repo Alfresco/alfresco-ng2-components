@@ -201,6 +201,8 @@ describe('New Process Filters', () => {
     });
 
     it('[C286452] Should display process filter icons only when showIcon property is set on true', () => {
+        loginPage.loginToProcessServicesUsingUserModel(user);
+        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processFiltersPage.checkFilterHasNoIcon(processFilter.all);
 
         appNavigationBarPage.clickSettingsButton();
