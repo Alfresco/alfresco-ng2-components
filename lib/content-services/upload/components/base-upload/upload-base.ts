@@ -128,7 +128,8 @@ export abstract class UploadBase implements OnInit, OnDestroy {
         this.ngZone.run(() => {
             const event = new UploadFilesEvent(
                 [...filteredFiles],
-                this.uploadService
+                this.uploadService,
+                this.success
             );
             this.beginUpload.emit(event);
 

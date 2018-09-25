@@ -127,6 +127,26 @@ describe('UploadBase', () => {
             expect(uploadFilesInTheQueue).toHaveBeenCalled();
         }));
 
+        it('should emit callback events on resume', fakeAsync((done) => {
+            spyOn(uploadService, 'addToQueue').and.stub();
+            spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
+
+            let uploadEvent: UploadFilesEvent;
+            component.beginUpload.subscribe(event => {
+                uploadEvent = event;
+                event.preventDefault();
+            });
+            const file = <File> { name: 'bigFile.png', size: 1000 };
+            component.uploadFiles([file]);
+
+            tick();
+            uploadEvent.resumeUpload();
+
+            component.success.subscribe(() => {
+                done();
+            });
+        }));
+
     });
 
     describe('filesize', () => {
