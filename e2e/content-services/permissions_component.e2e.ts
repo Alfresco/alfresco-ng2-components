@@ -65,7 +65,7 @@ describe('Permissions Component', function () {
 
         groupId = group.entry.id;
 
-        browser.driver.sleep(15000);//wait search get the groups
+        browser.driver.sleep(15000); // wait search get the groups
 
         done();
     });
