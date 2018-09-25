@@ -15,17 +15,15 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, StorageService } from '@alfresco/adf-core';
+import { LogService, StorageService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, from, throwError } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter.model';
-import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class TaskFilterService {
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService,
+    constructor(private logService: LogService,
                 private storage: StorageService) {
     }
 
@@ -86,34 +84,12 @@ export class TaskFilterService {
      * @returns Array of task filter details
      */
     getTaskListFilters(appId?: number): Observable<FilterRepresentationModel[]> {
-        let key = appId + 'task-filters';
-        return from(JSON.parse(this.storage.getItem(key)));
-    }
-
-    /**
-     * Gets a task filter by ID.
-     * @param filterId ID of the filter
-     * @param appId ID of the app for the filter
-     * @returns Details of task filter
-     */
-    getTaskFilterById(filterId: number, appId?: number): Observable<FilterRepresentationModel> {
-        return from(this.callApiTaskFilters(appId)).pipe(
-            map(response => response.data.find(filter => filter.id === filterId)),
-            catchError(err => this.handleError(err))
-        );
-    }
-
-    /**
-     * Gets a task filter by name.
-     * @param taskName Name of the filter
-     * @param appId ID of the app for the filter
-     * @returns Details of task filter
-     */
-    getTaskFilterByName(taskName: string, appId?: number): Observable<FilterRepresentationModel> {
-        return from(this.callApiTaskFilters(appId)).pipe(
-            map(response => response.data.find(filter => filter.name === taskName)),
-            catchError(err => this.handleError(err))
-        );
+        let key = 'task-filters-' + appId;
+        const filters = JSON.parse(this.storage.getItem(key) || '[]');
+        return Observable.create(function(observer) {
+            observer.next(filters);
+            observer.complete();
+        });
     }
 
     /**
@@ -122,26 +98,17 @@ export class TaskFilterService {
      * @returns Details of task filter just added
      */
     addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        return from(this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(filter))
-            .pipe(
-                map((response: FilterRepresentationModel) => {
-                    return response;
-                }),
-                catchError(err => this.handleError(err))
-            );
-    }
+        const key = 'task-filters-' + filter.appId;
+        let filters = JSON.parse(this.storage.getItem(key) || '[]');
 
-    /**
-     * Calls `getUserTaskFilters` from the Alfresco JS API.
-     * @param appId ID of the target app
-     * @returns List of task filters
-     */
-    callApiTaskFilters(appId?: number): Promise<any> {
-        if (appId) {
-            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
-        } else {
-            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters();
-        }
+        filters.push(filter);
+
+        this.storage.setItem(key, JSON.stringify(filters));
+
+        return Observable.create(function(observer) {
+            observer.next(filter);
+            observer.complete();
+        });
     }
 
     /**
@@ -154,7 +121,7 @@ export class TaskFilterService {
             'name': 'Involved Tasks',
             'appId': appId,
             'recent': false,
-            'icon': 'glyphicon-align-left',
+            'icon': 'view_headline',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved'}
         });
     }
@@ -169,7 +136,7 @@ export class TaskFilterService {
             'name': 'My Tasks',
             'appId': appId,
             'recent': false,
-            'icon': 'glyphicon-inbox',
+            'icon': 'inbox',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee'}
         });
     }
@@ -184,7 +151,7 @@ export class TaskFilterService {
             'name': 'Queued Tasks',
             'appId': appId,
             'recent': false,
-            'icon': 'glyphicon-record',
+            'icon': 'adjust',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate'}
         });
     }
@@ -199,14 +166,8 @@ export class TaskFilterService {
             'name': 'Completed Tasks',
             'appId': appId,
             'recent': true,
-            'icon': 'glyphicon-ok-sign',
+            'icon': 'done',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved'}
         });
     }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
-    }
-
 }

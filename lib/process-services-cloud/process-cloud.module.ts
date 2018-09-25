@@ -22,9 +22,12 @@ import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 import { HelloCloudModule } from './hello';
+import { TaskFiltersCloudModule } from './task-filters';
+import { TaskFilterService } from './task-filters/services/task-filter.service';
 
 export function providers() {
     return [
+        TaskFilterService
     ];
 }
 
@@ -35,7 +38,8 @@ export function providers() {
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        HelloCloudModule
+        HelloCloudModule,
+        TaskFiltersCloudModule
     ],
     providers: [
         ...providers(),
@@ -52,7 +56,8 @@ export function providers() {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HelloCloudModule
+        HelloCloudModule,
+        TaskFiltersCloudModule
     ]
 })
 export class ProcessCloudModule {
@@ -87,13 +92,15 @@ export class ProcessCloudModule {
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        HelloCloudModule
+        HelloCloudModule,
+        TaskFiltersCloudModule
     ],
     exports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HelloCloudModule
+        HelloCloudModule,
+        TaskFiltersCloudModule
     ]
 })
 export class ProcessCloudModuleLazy {}

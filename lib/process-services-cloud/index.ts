@@ -17,3 +17,5 @@
 export * from './process-cloud.module';
 
 export * from './hello/index';
+
+export * from './task-filters/index';

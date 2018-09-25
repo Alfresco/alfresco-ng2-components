@@ -19,14 +19,13 @@ import { AppsProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
-import { TaskFilterService } from './../services/task-filter.service';
-import { TaskListService } from './../services/tasklist.service';
+import { TaskFilterService } from '../services/task-filter.service';
 
 /**
  * @deprecated: in 2.4.0 'adf-filters' selector was deprecated, use adf-task-filters instead.
  */
 @Component({
-    selector: 'adf-task-filters, adf-filters',
+    selector: 'adf-cloud-task-filters',
     templateUrl: './task-filters-cloud.component.html',
     styleUrls: ['task-filters-cloud.component.scss']
 })
@@ -69,11 +68,11 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges {
     filters: FilterRepresentationModel [] = [];
 
     constructor(private taskFilterService: TaskFilterService,
-                private taskListService: TaskListService,
                 private appsProcessService: AppsProcessService) {
     }
 
     ngOnInit() {
+        this.getFilters(0, 'test app 1');
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -141,7 +140,9 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges {
      * @param appId
      */
     createFiltersByAppId(appId?: number) {
-        this.taskFilterService.createDefaultFilters(appId).subscribe(
+        this.filters$ =  this.taskFilterService.createDefaultFilters(appId);
+
+        this.filters$.subscribe(
             (resDefault: FilterRepresentationModel[]) => {
                 this.resetFilter();
                 this.filters = resDefault;
@@ -175,27 +176,6 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges {
     public selectFilterAndEmit(newFilter: FilterParamsModel) {
         this.selectFilter(newFilter);
         this.filterClick.emit(this.currentFilter);
-    }
-
-    /**
-     * Select filter with task
-     * @param taskId
-     */
-    public selectFilterWithTask(taskId: string) {
-        let filteredFilterList: FilterRepresentationModel[] = [];
-        this.taskListService.getFilterForTaskById(taskId, this.filters).subscribe(
-            (filter: FilterRepresentationModel) => {
-                filteredFilterList.push(filter);
-            },
-            (err) => {
-                this.error.emit(err);
-            },
-            () => {
-                if (filteredFilterList.length > 0) {
-                    this.selectFilter(filteredFilterList[0]);
-                    this.filterClick.emit(this.currentFilter);
-                }
-            });
     }
 
     /**

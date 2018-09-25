@@ -15,15 +15,21 @@
  * limitations under the License.
  */
 
-import { TaskDetailsModel } from './task-details.model';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '../material.module';
+import { CoreModule } from '@alfresco/adf-core';
+import { TaskFiltersCloudComponent } from './components/task-filters-cloud.component';
 
-export class TaskListModel {
-    size: number;
-    total: number;
-    start: number;
-    length: number;
-    data: TaskDetailsModel[] = [];
-
-    constructor() {
-    }
-}
+@NgModule({
+    imports: [
+        CoreModule.forChild(),
+        MaterialModule
+    ],
+    declarations: [
+        TaskFiltersCloudComponent
+    ],
+    exports: [
+        TaskFiltersCloudComponent
+    ]
+})
+export class TaskFiltersCloudModule {}
