@@ -61,8 +61,8 @@ Displays the documents from a repository.
 | currentFolderId | `string` | null | The ID of the folder node to display or a reserved string alias for special sources |
 | display | `string` | DisplayMode.List | Change the display mode of the table. Can be "list" or "gallery". |
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
-| enableInfiniteScrolling | `boolean` | false | Set document list to work in infinite scrolling mode |
-| folderNode | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) | null | Currently displayed folder node |
+| enableInfiniteScrolling | `boolean` | false | (**Deprecated:** 2.3.0) Set document list to work in infinite scrolling mode |
+| folderNode | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) | null | (**Deprecated:** 2.3.0 - use currentFolderId or node) Currently displayed folder node |
 | imageResolver | `any \| null` | null | Custom image resolver |
 | includeFields | `string[]` |  | Include additional information about the node in the server request.for example: association, isLink, isLocked and others. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
@@ -78,7 +78,7 @@ Displays the documents from a repository.
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
 | selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `boolean` | true | Toggles the header |
-| skipCount | `number` | 0 | Number of elements to skip over for pagination purposes |
+| skipCount | `number` | 0 | (**Deprecated:** 2.3.0 - define it in pagination) Number of elements to skip over for pagination purposes |
 | sorting | `string[]` | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | sortingMode | `string` | "client" | Defines sorting mode. Can be either `client` or `server`. |
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
@@ -371,7 +371,6 @@ export class FilesComponent implements OnInit {
     [currentFolderId]="currentFolderId">
 </adf-document-list>
 ```
-
 
 The `console.log(node)` for the `getNodeInfo` callback is just for study and debug purposes. 
 It is useful for examining other information that you can access if necessary:

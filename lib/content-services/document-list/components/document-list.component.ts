@@ -166,8 +166,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     currentFolderId: string = null;
 
-    /** @deprecated 2.3.0 use currentFolderId or node */
-    /** Currently displayed folder node */
+    /**
+     * Currently displayed folder node
+     * @deprecated 2.3.0 - use currentFolderId or node
+     */
     @Input()
     folderNode: MinimalNodeEntryEntity = null;
 
@@ -179,13 +181,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     maxItems: number;
 
-    /** @deprecated 2.3.0 define it in pagination */
-    /** Number of elements to skip over for pagination purposes */
+    /**
+     * Number of elements to skip over for pagination purposes
+     * @deprecated 2.3.0 - define it in pagination
+     */
     @Input()
     skipCount: number = 0;
 
-    /** @deprecated 2.3.0 */
-    /** Set document list to work in infinite scrolling mode */
+    /**
+     * Set document list to work in infinite scrolling mode
+     * @deprecated 2.3.0
+     */
     @Input()
     enableInfiniteScrolling: boolean = false;
 

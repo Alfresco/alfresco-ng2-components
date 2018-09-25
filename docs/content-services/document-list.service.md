@@ -40,7 +40,7 @@ Implements node operations used by the [Document List component](../content-serv
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - Details of the folder
 -   **getFolderNode**(nodeId: `string`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
-    (**Deprecated:** 2.3.0. Gets a folder node via its node ID.) 
+    (**Deprecated:** 2.3.0) Gets a folder node via its node ID.
     -   _nodeId:_ `string`  - ID of the folder node
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Details of the folder
@@ -54,7 +54,7 @@ Implements node operations used by the [Document List component](../content-serv
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
 -   **hasPermission**(node: `any`, permission: [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
-    (**Deprecated:** 2.3.0 - use the equivalent in the content service. Checks if a node has the specified permission.) 
+    (**Deprecated:** 2.3.0 - use the equivalent in the content service) Checks if a node has the specified permission.
     -   _node:_ `any`  - Target node
     -   _permission:_ [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`  - Permission level to query
     -   **Returns** `boolean` - True if the node has the permission, false otherwise

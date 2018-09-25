@@ -47,7 +47,10 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         merge: true
     };
 
-    /**  @deprecated 2.3.0  Pagination object. */
+    /**
+     * Pagination object.
+     * @deprecated 2.3.0
+     */
     @Input()
     pagination: PaginationModel;
 
