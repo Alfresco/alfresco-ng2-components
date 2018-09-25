@@ -24,10 +24,12 @@ var ToggleState = function () {
     this.enableToggle = function (toggle) {
         Util.waitUntilElementIsVisible(toggle);
         Util.waitUntilElementIsPresent(toggle);
-        var finalToggleButton = toggle.element(toggleButton);
-        finalToggleButton.getAttribute('class').then(function (value) {
+        toggle.getAttribute('class').then(function (value) {
+            Util.waitUntilElementIsVisible(toggle);
+            Util.waitUntilElementIsPresent(toggle);
+            Util.waitUntilElementIsClickable(toggle);
             if (value.indexOf('mat-checked')===-1) {
-                finalToggleButton.click();
+                toggle.click();
             }
         });
         return this;

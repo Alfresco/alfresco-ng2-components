@@ -22,7 +22,6 @@ var UploadToggles = function () {
 
     var toggleState = new ToggleState();
 
-    var toggleButton = by.xpath("ancestor::mat-slide-toggle");
     var multipleFileUploadToggle = element(by.cssContainingText("span[class*='toggle-content']", "Multiple File Upload"));
     var uploadFolderToggle = element(by.cssContainingText("span[class*='toggle-content']", "Folder upload"));
     var extensionFilterToggle = element(by.cssContainingText("span[class*='toggle-content']", "Custom extensions filter"));
@@ -31,9 +30,10 @@ var UploadToggles = function () {
     var extensionAcceptedField = element(by.css("input[data-automation-id='accepted-files-type']"));
     var maxSizeField = element(by.css("input[data-automation-id='max-files-size']"));
     var disableUploadCheckbox = element(by.css("[id='adf-disable-upload']"));
+    var ancestorToggle = by.xpath("ancestor::mat-slide-toggle");
 
     this.enableMultipleFileUpload = function () {
-        toggleState.enableToggle(multipleFileUploadToggle);
+        toggleState.enableToggle(multipleFileUploadToggle.element(ancestorToggle));
         return this;
     };
 
@@ -43,7 +43,7 @@ var UploadToggles = function () {
     };
 
     this.enableFolderUpload = function () {
-        toggleState.enableToggle(uploadFolderToggle);
+        toggleState.enableToggle(uploadFolderToggle.element(ancestorToggle));
         return this;
     };
 
@@ -53,7 +53,7 @@ var UploadToggles = function () {
     };
 
     this.enableExtensionFilter = function () {
-        toggleState.enableToggle(extensionFilterToggle);
+        toggleState.enableToggle(extensionFilterToggle.element(ancestorToggle));
         return this;
     };
 
@@ -63,7 +63,7 @@ var UploadToggles = function () {
     };
 
     this.enableMaxSize = function () {
-        toggleState.enableToggle(maxSizeToggle);
+        toggleState.enableToggle(maxSizeToggle.element(ancestorToggle));
         return this;
     };
 
@@ -73,7 +73,7 @@ var UploadToggles = function () {
     };
 
     this.enableVersioning = function () {
-        toggleState.enableToggle(versioningToggle);
+        toggleState.enableToggle(versioningToggle.element(ancestorToggle));
         return this;
     };
 
