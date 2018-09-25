@@ -36,21 +36,31 @@ describe('Tag component', () => {
     let tagPage = new TagPage();
 
     let acsUser = new AcsUserModel();
+    let uploadActions = new UploadActions();
     let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     let deleteFile = new FileModel({ 'name': Util.generateRandomString() });
     let sameTag = Util.generateRandomStringToLowerCase();
+
     let tagList = [
         Util.generateRandomStringToLowerCase(),
         Util.generateRandomStringToLowerCase(),
         Util.generateRandomStringToLowerCase(),
         Util.generateRandomStringToLowerCase()];
+
+    let tags = [
+        {tag: 'test-tag-01'}, {tag: 'test-tag-02'}, {tag: 'test-tag-03'}, {tag: 'test-tag-04'}, {tag: 'test-tag-05'},
+        {tag: 'test-tag-06'}, {tag: 'test-tag-07'}, {tag: 'test-tag-08'}, {tag: 'test-tag-09'}, {tag: 'test-tag-10'},
+        {tag: 'test-tag-11'}, {tag: 'test-tag-12'}, {tag: 'test-tag-13'}, {tag: 'test-tag-14'}, {tag: 'test-tag-15'},
+        {tag: 'test-tag-16'}, {tag: 'test-tag-17'}, {tag: 'test-tag-18'}, {tag: 'test-tag-19'}, {tag: 'test-tag-20'},
+        {tag: 'test-tag-21'}, {tag: 'test-tag-22'}, {tag: 'test-tag-23'}, {tag: 'test-tag-24'}, {tag: 'test-tag-25'},
+        {tag: 'test-tag-26'}, {tag: 'test-tag-27'}, {tag: 'test-tag-28'}, {tag: 'test-tag-29'}, {tag: 'test-tag-30'}];
+
     let uppercaseTag = Util.generateRandomStringToUpperCase();
     let digitsTag = Util.generateRandomStringDigits();
     let nonLatinTag = Util.generateRandomStringNonLatin();
+    let pdfUploadedFile, nodeId;
 
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
-
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
@@ -62,7 +72,9 @@ describe('Tag component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+        pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+
+        nodeId = pdfUploadedFile.entry.id;
 
         let uploadedDeleteFile = await uploadActions.uploadFile(this.alfrescoJsApi, deleteFile.location, deleteFile.name, '-my-');
 
@@ -70,9 +82,17 @@ describe('Tag component', () => {
 
         Object.assign(deleteFile, uploadedDeleteFile.entry);
 
+        await this.alfrescoJsApi.core.tagsApi.addTag(nodeId, tags);
+
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         tagPage.goToTagPage();
+
+        done();
+    });
+
+    afterAll(async (done) => {
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedFile.entry.id);
 
         done();
     });
@@ -176,4 +196,37 @@ describe('Tag component', () => {
 
         tagPage.checkDeleteTagFromTagListByNodeIdIsNotDisplayed(tagList[3]);
     });
+
+    it('[C286472] Should be able to click Show more/less button on "List Tags Content Services"', async() => {
+        await browser.refresh();
+
+        await tagPage.checkShowMoreButtonIsDisplayed();
+        await tagPage.checkShowLessButtonIsNotDisplayed();
+
+        expect(tagPage.checkTagsOnList()).toEqual(10);
+
+        await tagPage.clickShowMoreButton();
+        await tagPage.checkShowMoreButtonIsDisplayed();
+        await tagPage.checkShowLessButtonIsDisplayed();
+
+        await tagPage.clickShowMoreButtonUntilNotDisplayed();
+        await tagPage.checkShowLessButtonIsDisplayed();
+        await tagPage.checkShowMoreButtonIsNotDisplayed();
+
+        let totalTags = await this.alfrescoJsApi.core.tagsApi.getTags({maxItems: 400});
+        let totalNumberOfTags = totalTags.list.pagination.count;
+
+        expect(tagPage.checkTagsOnList()).toEqual(totalNumberOfTags);
+
+        await tagPage.clickShowLessButton();
+        await tagPage.checkShowMoreButtonIsDisplayed();
+        await tagPage.checkShowLessButtonIsDisplayed();
+
+        expect(tagPage.checkTagsOnList()).toBeLessThan(totalNumberOfTags);
+
+        await tagPage.clickShowLessButtonUntilNotDisplayed();
+        await tagPage.checkShowMoreButtonIsDisplayed();
+        await tagPage.checkShowLessButtonIsNotDisplayed();
+    });
+
 });

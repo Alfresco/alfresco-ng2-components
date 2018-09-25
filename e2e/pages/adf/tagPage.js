@@ -32,6 +32,9 @@ var TagPage = function () {
     var tagListByNodeIdRowLocator = by.css("adf-tag-node-list mat-chip span");
     var tagListContentServicesRowLocator = by.css("div[class*='adf-list-tag']");
     var showDeleteButton = element(by.id('adf-remove-button-tag'));
+    var showMoreButton = element(by.css('button[data-automation-id="show-more-tags"]'));
+    var showLessButton = element(by.css('button[data-automation-id="show-fewer-tags"]'));
+    var tagsOnPage = element.all(by.css('div[class*="adf-list-tag"]'));
 
     this.goToTagPage = function () {
         browser.driver.get(tagURL);
@@ -173,6 +176,56 @@ var TagPage = function () {
     this.checkDeleteTagFromTagListByNodeIdIsNotDisplayed = function (name) {
         var deleteChip = element(by.css('button[id="tag_chips_delete_' + name + '"]'));
         return Util.waitUntilElementIsNotVisible(deleteChip);
+    };
+
+    this.checkShowMoreButtonIsDisplayed = function () {
+        return Util.waitUntilElementIsVisible(showMoreButton);
+    };
+
+    this.checkShowMoreButtonIsNotDisplayed = function () {
+        return Util.waitUntilElementIsNotVisible(showMoreButton);
+    };
+
+    this.clickShowMoreButton = function () {
+        Util.waitUntilElementIsClickable(showMoreButton);
+        return showMoreButton.click();
+    };
+
+    this.clickShowLessButton = function () {
+        Util.waitUntilElementIsClickable(showLessButton);
+        return showLessButton.click();
+    };
+    
+    this.checkTagsOnList = function () {
+        return tagsOnPage.count();
+    };
+
+    this.checkShowLessButtonIsDisplayed = function () {
+        return Util.waitUntilElementIsVisible(showLessButton);
+    };
+
+    this.checkShowLessButtonIsNotDisplayed = function () {
+        return Util.waitUntilElementIsNotVisible(showLessButton);
+    };
+    
+    this.clickShowMoreButtonUntilNotDisplayed = function () {
+        showMoreButton.isDisplayed().then((visible) => {
+            if(visible){
+                showMoreButton.click();
+
+                this.clickShowMoreButtonUntilNotDisplayed();
+            }
+        }, err => {})
+    };
+
+    this.clickShowLessButtonUntilNotDisplayed = function () {
+        showLessButton.isDisplayed().then((visible) => {
+            if(visible){
+                showLessButton.click();
+
+                this.clickShowLessButtonUntilNotDisplayed();
+            }
+        }, err => {})
     };
 };
 module.exports = TagPage;
