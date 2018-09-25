@@ -1,0 +1,37 @@
+<header
+    mat-dialog-title
+    data-automation-id="content-node-selector-title">{{data?.title}}
+</header>
+
+<mat-dialog-content class="adf-login-dialog-content">
+    <adf-login-dialog-panel id="attach-file-login-panel" #adfLoginPanel *ngIf="!isLoggedIn()">
+    </adf-login-dialog-panel>
+    <adf-content-node-selector-panel *ngIf="isLoggedIn()"
+                                     id="attach-file-content-node"
+                                     [isSelectionValid]="data?.isSelectionValid"
+                                     (select)="onSelect($event)">
+    </adf-content-node-selector-panel>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button
+        mat-button
+        (click)="close()"
+        data-automation-id="attach-file-dialog-actions-cancel">{{ 'ATTACH-FILE.ACTIONS.CANCEL' | translate }}
+    </button>
+
+    <button *ngIf="!isLoggedIn()"
+        mat-button
+        (click)="performLogin()"
+        data-automation-id="attach-file-dialog-actions-login">{{ 'ATTACH-FILE.ACTIONS.LOGIN' | translate }}
+    </button>
+
+    <button *ngIf="isLoggedIn()"
+        mat-button
+        [disabled]="!chosenNode"
+        class="choose-action"
+        (click)="onClick($event)"
+        data-automation-id="attach-file-dialog-actions-choose">{{ buttonActionName | translate }}
+    </button>
+
+</mat-dialog-actions>

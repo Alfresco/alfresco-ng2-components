@@ -218,6 +218,10 @@
     "ACTION": {
       "HELP": "NEED HELP?",
       "REGISTER": "REGISTER"
+    },
+    "DIALOG": {
+      "CANCEL": "Cancel",
+      "CHOOSE": "Choose"
     }
   },
   "ADF-DATATABLE": {

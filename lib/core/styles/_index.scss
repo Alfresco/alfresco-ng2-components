@@ -30,6 +30,8 @@
 @import '../templates/empty-content/empty-content.component';
 @import '../templates/error-content/error-content.component';
 @import '../buttons-menu/buttons-menu.component';
+@import '../login/components/login-dialog.component';
+@import '../login/components/login-dialog-panel.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
@@ -62,4 +64,6 @@
     @include adf-error-content-theme($theme);
     @include adf-buttons-menu-theme($theme);
     @include adf-header-layout-theme($theme);
+    @include adf-login-dialog-theme($theme);
+    @include adf-login-dialog-panel-theme($theme);
 }

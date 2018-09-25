@@ -1,0 +1,14 @@
+@mixin adf-login-dialog-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $text-color-primary: mat-color($foreground, text);
+
+
+    .adf-login-dialog-content adf-login .adf-login-content .adf-login-card-wide {
+        padding: 0px;
+        box-shadow: none;
+    }
+}
