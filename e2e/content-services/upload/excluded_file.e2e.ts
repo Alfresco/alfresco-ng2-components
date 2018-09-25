@@ -78,7 +78,7 @@ describe('Upload component - Excluded Files', () => {
 
         dragAndDrop.dropFile(dragAndDropArea, iniExcludedFile.location);
 
-        browser.driver.sleep(2000);
+        browser.driver.sleep(5000);
 
         uploadDialog.dialogIsNotDisplayed();
 
