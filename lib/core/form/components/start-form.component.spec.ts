@@ -126,7 +126,7 @@ describe('StartFormComponent', () => {
         expect(component.outcomesContainer).toBeTruthy();
     });
 
-    it('should fetch start form detasils by processDefinitionId ', () => {
+    it('should fetch start form details by processDefinitionId ', () => {
         getStartFormSpy.and.returnValue(of(startMockForm));
         component.processDefinitionId = exampleId1;
         component.showOutcomeButtons = true;
@@ -136,7 +136,7 @@ describe('StartFormComponent', () => {
         expect(getStartFormSpy).toHaveBeenCalled();
     });
 
-    describe('Disply widgets', () => {
+    describe('Display widgets', () => {
 
         it('should be able to display a textWidget from a process definition', () => {
             getStartFormSpy.and.returnValue(of(startFormTextDefinitionMock));
@@ -323,7 +323,7 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should difine custom-tabs ', async(() => {
+        it('should define custom-tabs ', async(() => {
             getStartFormSpy.and.returnValue(of(startMockFormWithTab));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;

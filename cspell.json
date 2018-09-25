@@ -90,6 +90,7 @@
     "doclib",
     "fullname",
     "firstname",
+    "lastname",
     "userinfo",
     "qshare",
     "imgpreview",
@@ -100,7 +101,9 @@
     "CONTEXTROOTBPM",
     "CONTEXTROOTECM",
     "DISABLECSRF",
-    "printf"
+    "printf",
+    "mincount",
+    "listgrid"
   ],
   "dictionaries": ["html", "en-gb", "en_US"]
 }

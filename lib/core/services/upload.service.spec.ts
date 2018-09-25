@@ -43,6 +43,7 @@ describe('UploadService', () => {
             files: {
                 excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git', '*.SWF'],
                 'match-options': {
+                    /* cspell:disable-next-line */
                     nocase: true
                 }
             }

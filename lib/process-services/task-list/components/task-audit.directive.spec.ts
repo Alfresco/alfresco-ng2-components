@@ -120,7 +120,8 @@ describe('TaskAuditDirective', () => {
         component.fileName = 'FakeAuditName';
         component.format = 'json';
         component.download = true;
-        const auditJson = { taskId: '77', taskName: 'Fake Task Naem', assignee: 'FirstName LastName', formData: [], selectedOutcome: null, comments: [] };
+
+        const auditJson = { taskId: '77', taskName: 'Fake Task Name', assignee: 'FirstName LastName', formData: [], selectedOutcome: null, comments: [] };
         spyOn(service, 'fetchTaskAuditJsonById').and.returnValue(of(auditJson));
         spyOn(component, 'onAuditClick').and.callThrough();
 
@@ -137,7 +138,7 @@ describe('TaskAuditDirective', () => {
 
     }));
 
-    it('should fetch the pdf Blob as default when the format is UNKNOW', fakeAsync(() => {
+    it('should fetch the pdf Blob as default when the format is UNKNOWN', fakeAsync(() => {
         component.fileName = 'FakeAuditName';
         component.format = 'fakeFormat';
         let blob = createFakePdfBlob();
