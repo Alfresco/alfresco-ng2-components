@@ -170,7 +170,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
                 }
 
                 if (this.selectedProcessDef) {
-                    if( this.processDefinitionInput){
+                    if (this.processDefinitionInput) {
                         this.processDefinitionInput.setValue(this.selectedProcessDef.name);
                     }
                 }

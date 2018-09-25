@@ -244,7 +244,7 @@ describe('Start Task - Custom App', () => {
             .createNewTask()
             .addName(tasks[5])
             .addAssignee(assigneeUserModel.firstName)
-            .clickStartButton()
+            .clickStartButton();
 
         taskPage
             .usingTasksListPage()
