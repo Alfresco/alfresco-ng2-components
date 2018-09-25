@@ -1,0 +1,9 @@
+@mixin adf-login-dialog-panel-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $text-color-primary: mat-color($foreground, text);
+
+}

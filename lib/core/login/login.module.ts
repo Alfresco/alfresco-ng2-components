@@ -25,6 +25,8 @@ import { MaterialModule } from '../material.module';
 import { LoginComponent } from './components/login.component';
 import { LoginFooterDirective } from './directives/login-footer.directive';
 import { LoginHeaderDirective } from './directives/login-header.directive';
+import { LoginDialogComponent } from './components/login-dialog.component';
+import { LoginDialogPanelComponent } from './components/login-dialog-panel.component';
 
 @NgModule({
     imports: [
@@ -38,12 +40,17 @@ import { LoginHeaderDirective } from './directives/login-header.directive';
     declarations: [
         LoginComponent,
         LoginFooterDirective,
-        LoginHeaderDirective
+        LoginHeaderDirective,
+        LoginDialogComponent,
+        LoginDialogPanelComponent
     ],
+    entryComponents: [LoginDialogComponent, LoginDialogPanelComponent],
     exports: [
         LoginComponent,
         LoginFooterDirective,
-        LoginHeaderDirective
+        LoginHeaderDirective,
+        LoginDialogComponent,
+        LoginDialogPanelComponent
     ]
 })
 export class LoginModule {

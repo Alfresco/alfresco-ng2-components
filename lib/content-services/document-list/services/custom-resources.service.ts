@@ -182,7 +182,7 @@ export class CustomResourcesService {
      */
     loadSites(pagination: PaginationModel): Observable<NodePaging> {
         const options = {
-            include: ['properties'],
+            include: ['properties', 'aspectNames'],
             maxItems: pagination.maxItems,
             skipCount: pagination.skipCount
         };
@@ -345,7 +345,7 @@ export class CustomResourcesService {
     }
 
     private getIncludesFields(includeFields: string[]): string[] {
-        return ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+        return ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
     }
 

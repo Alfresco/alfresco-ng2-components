@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-export * from './attach-file-widget.component';
-export * from './attach-folder-widget.component';
-export * from './attach-file-widget-dialog-component.interface';
-export * from './attach-file-widget-dialog.component';
-export * from './attach-file-widget-dialog.service';
+import { Subject } from 'rxjs/Subject';
 
-export * from './content-widget.module';
+export interface LoginDialogComponentData {
+    title: string;
+    actionName?: string;
+    logged: Subject<any>;
+}

@@ -108,6 +108,15 @@ export class LoginComponent implements OnInit {
     @Input()
     successRoute: string = null;
 
+    @Input()
+    showLoginButton = true;
+
+    @Input()
+    showLogo = true;
+
+    @Input()
+    showCopyright = true;
+
     /** Emitted when the login is successful. */
     @Output()
     success = new EventEmitter<LoginSuccessEvent>();
@@ -172,6 +181,10 @@ export class LoginComponent implements OnInit {
             this.initFormFieldsMessagesDefault();
         }
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
+    }
+
+    submit() {
+        this.onSubmit(this.form.value);
     }
 
     /**

@@ -15,10 +15,14 @@
  * limitations under the License.
  */
 
-export * from './attach-file-widget.component';
-export * from './attach-folder-widget.component';
-export * from './attach-file-widget-dialog-component.interface';
-export * from './attach-file-widget-dialog.component';
-export * from './attach-file-widget-dialog.service';
+import { Subject } from 'rxjs/Subject';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
-export * from './content-widget.module';
+export interface AttachFileWidgetDialogComponentData {
+    title: string;
+    actionName?: string;
+    selected: Subject<MinimalNodeEntryEntity[]>;
+    ecmHost: string;
+    context?: string;
+    isSelectionValid?: (entry: MinimalNodeEntryEntity) => boolean;
+}
