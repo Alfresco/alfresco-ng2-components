@@ -141,9 +141,6 @@
         </div>
     </form>
 </div>
-<div class="adf-reset-button">
-    <button mat-raised-button (click)="resetTaskForm()">Reset</button>
-</div>
 
 <div>
     <adf-tasklist
@@ -163,15 +160,6 @@
         [includeProcessInstance]="includeProcessInstance"
         [presetColumn]="getPresetColumn()"
         #taskList>
-        <data-columns>
-            <data-column key="id" title="Id"></data-column>
-            <data-column key="name" title="Name"></data-column>
-            <data-column key="description" title="Description"></data-column>
-            <data-column key="created" title="Created"></data-column>
-            <data-column key="dueDate" title="Due Date"></data-column>
-            <data-column key="processInstanceId" title="Process Instance Id"></data-column>
-            <data-column key="processDefinitionId" title="Process Definition Id"></data-column>
-        </data-columns>
     </adf-tasklist>
 
     <adf-pagination

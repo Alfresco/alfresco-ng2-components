@@ -281,6 +281,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         return change && change.currentValue !== change.previousValue;
     }
 
+    private checkDataHasSchema(): void {
+        this.hasDataWithoutSchema = this.data && this.data.getColumns().length === 0;
+    }
+
     reload(): void {
         if (!this.hasCustomDataSource) {
             this.requestNode = this.createRequestNode();

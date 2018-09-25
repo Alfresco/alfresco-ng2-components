@@ -487,15 +487,35 @@
                     "key": "name",
                     "type": "text",
                     "title": "ADF_TASK_LIST.PROPERTIES.NAME",
+                    "cssClass": "full-width ellipsis-cell",
+                    "sortable": true
+                },
+                {
+                    "key": "created",
+                    "type": "date",
+                    "title": "ADF_TASK_LIST.PROPERTIES.CREATED",
+                    "format": "timeAgo",
                     "sortable": true
                 }
             ],
             "detailed": [
                 {
+                    "key": "id",
+                    "type": "text",
+                    "title": "ADF_TASK_LIST.PROPERTIES.ID",
+                    "sortable": true
+                },
+                {
                     "key": "name",
                     "type": "text",
                     "title": "ADF_TASK_LIST.PROPERTIES.NAME",
                     "cssClass": "full-width ellipsis-cell",
+                    "sortable": true
+                },
+                {
+                    "key": "description",
+                    "type": "text",
+                    "title": "ADF_TASK_LIST.PROPERTIES.DESCRIPTION",
                     "sortable": true
                 },
                 {
