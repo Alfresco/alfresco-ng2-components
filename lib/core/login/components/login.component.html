@@ -5,7 +5,7 @@
             <mat-card class="adf-login-card-wide">
                 <form id="adf-login-form" [formGroup]="form" (submit)="onSubmit(form.value)" autocomplete="off">
 
-                    <mat-card-header *ngIf="showLogo">
+                    <mat-card-header>
                         <mat-card-title>
                             <div class="adf-alfresco-logo">
                                 <!--HEADER TEMPLATE-->
@@ -79,7 +79,7 @@
                             <ng-content></ng-content>
 
                             <br>
-                            <button *ngIf="showLoginButton" type="submit" id="login-button" tabindex="4"
+                            <button type="submit" id="login-button" tabindex="4"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     [class.isChecking]="actualLoginStep === LoginSteps.Checking"
@@ -147,7 +147,7 @@
                 </form>
             </mat-card>
 
-            <div *ngIf="showCopyright" class="copyright" data-automation-id="login-copyright">
+            <div class="copyright" data-automation-id="login-copyright">
                 {{ copyrightText }}
             </div>
 
