@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { AuthenticationService, AlfrescoApiService, PageTitleService } from '@alfresco/adf-core';
+import { AuthenticationService, AlfrescoApiService, PageTitleService, TranslationService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,10 +30,16 @@ export class AppComponent implements OnInit {
     constructor(private pageTitleService: PageTitleService,
                 private alfrescoApiService: AlfrescoApiService,
                 private authenticationService: AuthenticationService,
+                private translationService: TranslationService,
                 private router: Router) {
     }
 
     ngOnInit() {
+
+        // workaround for https://github.com/ngx-translate/core/issues/575
+        this.translationService.translate.getTranslation('en').subscribe(() => {
+            this.translationService.translate.setDefaultLang('en');
+        });
 
         this.pageTitleService.setTitle('title');
 
