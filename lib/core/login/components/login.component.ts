@@ -108,15 +108,6 @@ export class LoginComponent implements OnInit {
     @Input()
     successRoute: string = null;
 
-    @Input()
-    showLoginButton = true;
-
-    @Input()
-    showLogo = true;
-
-    @Input()
-    showCopyright = true;
-
     /** Emitted when the login is successful. */
     @Output()
     success = new EventEmitter<LoginSuccessEvent>();

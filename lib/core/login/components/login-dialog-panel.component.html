@@ -3,9 +3,8 @@
                [showRememberMe]="false"
                [showLoginActions]="false"
                [backgroundImageUrl]="''"
-               [showLoginButton]="false"
-               [showLogo]="false"
-               [showCopyright]="false"
                (success)="onLoginSuccess($event)">
+        <login-header><ng-template></ng-template></login-header>
+        <login-footer><ng-template></ng-template></login-footer>
     </adf-login>
 </div>
