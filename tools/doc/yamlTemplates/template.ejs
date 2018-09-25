@@ -29,16 +29,20 @@ items:
 <% } -%>
 <%- include("methodSig", {sig: sig}); -%>
 <% }); %>
-<% } else if (child.kindString === "Property") { -%>
+<% } else if ((child.kindString === "Property") || (child.kindString === "Accessor")) { -%>
   - uid: <%= name %>.<%= child.name %>
     name: <%= child.name %>
     type: <%= child.kindString.toLowerCase() %>
 <%- include("property", {child: child}); -%>
-<% } else if ((child.kindString === "Accessor") && (typeof child.getSignature !== "undefined")) { -%>
-  - uid: <%= name %>.<%= child.name %>
-    name: <%= child.name %>
-    type: <%= child.kindString.toLowerCase() %>
-<%- include("property", {child: child.getSignature}); -%>
+<% if (child.kindString === "Accessor") { -%>
+<% if (typeof child.getSignature !== "undefined") { -%>
+<%- include("propSyntaxSection", {child: child.getSignature}); -%>
+<% } else if (typeof child.setSignature !== "undefined") { -%>
+<%- include("propSyntaxSection", {child: child.setSignature}); -%>
+<% } -%>
+<% } else { -%>
+<%- include("propSyntaxSection", {child: child}); -%>
+<% } -%>
 <% } -%>
 <% }) -%>
 <% } -%>

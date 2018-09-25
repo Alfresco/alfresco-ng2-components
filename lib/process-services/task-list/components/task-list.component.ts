@@ -55,7 +55,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     processDefinitionId: string;
 
-    /** The Definition Key of the process.
+    /**
+     * The Definition Key of the process.
      * @deprecated 2.4.0
      */
     @Input()
@@ -89,7 +90,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     landingTaskId: string;
 
-    /** Data source object that represents the number and the type of the columns that
+    /**
+     * Data source object that represents the number and the type of the columns that
      * you want to show.
      * @deprecated 2.4.0
      */

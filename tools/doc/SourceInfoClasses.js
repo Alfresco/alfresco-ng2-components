@@ -294,6 +294,7 @@ var ComponentInfo = /** @class */ (function () {
         sourceData.items.forEach(function (item) {
             switch (item.type) {
                 case "property":
+                case "accessor":
                     var prop = new PropInfo(item);
                     _this.properties.push(prop);
                     if (prop.isInput) {
