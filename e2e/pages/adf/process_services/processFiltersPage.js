@@ -34,6 +34,7 @@ var ProcessFiltersPage = function () {
     var tableBody = element.all(by.css("adf-datatable div[class='adf-datatable-body']")).first();
     var contentList = new ContentList();
     var nameColumn = by.css("div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Name'] span");
+    var processIcon = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
 
     this.startProcess = function () {
         this.clickCreateProcessButton();
@@ -114,6 +115,20 @@ var ProcessFiltersPage = function () {
     this.checkFilterIsDisplayed = function (name) {
         var filterName = element(by.css("span[data-automation-id='" + name + "_filter']"));
         return Util.waitUntilElementIsVisible(filterName);
+    };
+
+    this.checkFilterHasNoIcon = function(name) {
+        var filterName = element(by.css("span[data-automation-id='" + name + "_filter']"));
+        return Util.waitUntilElementIsVisible(filterName);
+        Util.waitUntilElementIsNotOnPage(customTask.element(processIcon));
+    };
+
+    this.getFilterIcon = function (name) {
+        var filterName = element(by.css("span[data-automation-id='" + name + "_filter']"));
+        Util.waitUntilElementIsVisible(filterName);
+        var icon = filterName.element(processIcon);
+        Util.waitUntilElementIsVisible(icon);
+        return icon.getText();
     };
 
     this.checkFilterIsNotDisplayed = function (name) {

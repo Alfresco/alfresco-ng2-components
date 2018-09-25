@@ -17,11 +17,13 @@
 
 var ToggleState = require('../../core/toggleState');
 
-var TaskDetailsToggles = function () {
+var AppSettingsToggles = function () {
 
     var toggleState = new ToggleState();
 
     var showDetailsHeaderToggle = element(by.id('adf-show-header-input'));
+    var showTaskFilterIconsToggle = element(by.id('adf-show-task-filter-icon'));
+    var showProcessFilterIconsToggle = element(by.id('adf-show-process-filter-icon'));
 
     this.enableShowHeader = function () {
         toggleState.enableToggle(showDetailsHeaderToggle);
@@ -33,7 +35,27 @@ var TaskDetailsToggles = function () {
         return this;
     };
 
+    this.enableTaskFiltersIcon = function () {
+        toggleState.enableToggle(showTaskFilterIconsToggle);
+        return this;
+    };
+
+    this.disableTaskFiltersIcon = function () {
+        toggleState.disableToggle(showTaskFilterIconsToggle);
+        return this;
+    };
+
+    this.enableProcessFiltersIcon = function () {
+        toggleState.enableToggle(showProcessFilterIconsToggle);
+        return this;
+    };
+
+    this.disableProcessFiltersIcon = function () {
+        toggleState.disableToggle(showProcessFilterIconsToggle);
+        return this;
+    };
+
 };
-module.exports = TaskDetailsToggles;
+module.exports = AppSettingsToggles;
 
 

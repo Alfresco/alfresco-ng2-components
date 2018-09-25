@@ -25,6 +25,8 @@ import TasksPage = require('../pages/adf/process_services/tasksPage');
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import TaskFiltersPage = require('../pages/adf/process_services/taskFiltersPage');
 import TaskDetailsPage = require('../pages/adf/process_services/taskDetailsPage');
+import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
+import AppSettingsToggles = require('../pages/adf/process_services/dialog/appSettingsToggles');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -223,6 +225,8 @@ describe('Custom Filters Test', () => {
     let tasksListPage = new TasksListPage();
     let taskFiltersPage = new TaskFiltersPage();
     let taskDetailsPage = new TaskDetailsPage();
+    let appNavigationBarPage = new AppNavigationBarPage();
+    let appSettingsToggles = new AppSettingsToggles();
 
     let tenantId;
     let user;
@@ -297,6 +301,45 @@ describe('Custom Filters Test', () => {
         });
     });
 
+    it('[C286447] Should display the task filter icon when a custom filter is added', () => {
+        browser.controlFlow().execute(async () => {
+            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            newFilter.name = 'New Task Filter with icon';
+            newFilter.appId = appId;
+            newFilter.icon = 'glyphicon-cloud';
+            newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
+
+            let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+
+            taskFilterId = result.id;
+            return result;
+        });
+
+        browser.refresh();
+        appNavigationBarPage.clickSettingsButton();
+        appSettingsToggles.enableTaskFiltersIcon();
+        appNavigationBarPage.clickTasksButton();
+
+        taskFiltersPage.checkTaskFilterDisplayed('New Task Filter with icon');
+        expect(taskFiltersPage.getTaskFilterIcon('New Task Filter with icon')).toEqual('cloud');
+
+        browser.controlFlow().execute(() => {
+            let result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
+            return result;
+        });
+    });
+
+    it('[C286449] Should display task filter icons only when ... property is set on true', () => {
+        taskFiltersPage.checkTaskFilterHasNoIcon('My Tasks');
+
+        appNavigationBarPage.clickSettingsButton();
+        appSettingsToggles.enableTaskFiltersIcon();
+        appNavigationBarPage.clickTasksButton();
+
+        taskFiltersPage.checkTaskFilterDisplayed('My Tasks');
+        expect(taskFiltersPage.getTaskFilterIcon('My Tasks')).toEqual('inbox');
+    });
+
     it('[C260353] Should display changes on a filter when this filter is edited', () => {
         browser.controlFlow().execute(async () => {
             let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
@@ -334,6 +377,44 @@ describe('Custom Filters Test', () => {
             let result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
             return result;
         });
+    });
+
+    it('[C286448] Should display changes on a task filter when this filter icon is edited', () => {
+        browser.controlFlow().execute(async () => {
+            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            newFilter.name = 'Task Filter Edited icon';
+            newFilter.appId = appId;
+            newFilter.icon = 'glyphicon-filter';
+            newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
+
+            let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+
+            taskFilterId = result.id;
+            return result;
+        });
+
+        browser.refresh();
+
+        taskFiltersPage.checkTaskFilterDisplayed('Task Filter Edited icon');
+
+        browser.controlFlow().execute(() => {
+            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            newFilter.name = 'Task Filter Edited icon';
+            newFilter.appId = appId;
+            newFilter.icon = 'glyphicon-cloud';
+            newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
+
+            let result = this.alfrescoJsApi.activiti.userFiltersApi.updateUserTaskFilter(taskFilterId, newFilter);
+            return result;
+        });
+
+        browser.refresh();
+        appNavigationBarPage.clickSettingsButton();
+        appSettingsToggles.enableTaskFiltersIcon();
+        appNavigationBarPage.clickTasksButton();
+
+        taskFiltersPage.checkTaskFilterDisplayed('Task Filter Edited icon');
+        expect(taskFiltersPage.getTaskFilterIcon('Task Filter Edited icon')).toEqual('cloud');
     });
 
     it('[C260354] Should not display task filter when this filter is deleted', () => {
