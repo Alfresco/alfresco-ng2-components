@@ -149,66 +149,134 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263947] Start task with no form', () => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[2]).clickStartButton()
-            .then(() => {
-                taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[2]);
-                taskPage.usingFormFields().noFormIsDisplayed();
-                expect(taskPage.usingTaskDetails().getFormName()).toEqual(CONSTANTS.TASKDETAILS.NO_FORM);
-            });
+        processServicesPage
+            .goToProcessServices()
+            .goToApp(appModel.name)
+            .clickTasksButton();
+
+        taskPage
+            .usingFiltersPage()
+            .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+
+        taskPage
+            .createNewTask()
+            .addName(tasks[2])
+            .clickStartButton();
+
+        taskPage
+            .usingTasksListPage()
+            .checkTaskIsDisplayedInTasksList(tasks[2]);
+
+        taskPage
+            .usingFormFields()
+            .noFormIsDisplayed();
+
+        expect(taskPage.usingTaskDetails().getFormName()).toEqual(CONSTANTS.TASKDETAILS.NO_FORM);
     });
 
     it('[C263948] Start task buttons', () => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.createNewTask().checkStartButtonIsDisabled().addName(tasks[3])
-            .checkStartButtonIsEnabled().clickCancelButton()
-            .then(() => {
-                taskPage.usingTasksListPage().checkTaskIsNotDisplayedInTasksList(tasks[3]);
-                expect(taskPage.usingFiltersPage().getActiveFilter()).toEqual(CONSTANTS.TASKFILTERS.MY_TASKS);
-            });
+        processServicesPage.goToProcessServices()
+            .goToApp(appModel.name)
+            .clickTasksButton();
+
+        taskPage
+            .usingFiltersPage()
+            .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+
+        taskPage
+            .createNewTask()
+            .checkStartButtonIsDisabled()
+            .addName(tasks[3])
+            .checkStartButtonIsEnabled()
+            .clickCancelButton();
+
+        taskPage.usingTasksListPage()
+            .checkTaskIsNotDisplayedInTasksList(tasks[3]);
+
+        expect(taskPage.usingFiltersPage().getActiveFilter()).toEqual(CONSTANTS.TASKFILTERS.MY_TASKS);
     });
 
     it('[C263949] Refreshing the form', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.usingFiltersPage()
+            .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+
         taskPage.createNewTask()
-            .addForm(app.formName).addName(tasks[4]).clickStartButton()
-            .then(() => {
-                taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[4]);
-                expect(taskPage.usingFormFields().setFieldValue(by.id, formTextField, formFieldValue)
-                    .getFieldValue(formTextField)).toEqual(formFieldValue);
-                taskPage.usingFormFields().refreshForm().checkFieldValue(by.id, formTextField, '');
-                taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[4]);
-                taskPage.usingFormFields().setFieldValue(by.id, formTextField, formFieldValue)
-                    .checkFieldValue(by.id, formTextField, formFieldValue);
-                taskPage.usingFormFields().saveForm().checkFieldValue(by.id, formTextField, formFieldValue);
-            });
+            .addForm(app.formName)
+            .addName(tasks[4])
+            .clickStartButton();
+
+        taskPage
+            .usingTasksListPage()
+            .checkTaskIsDisplayedInTasksList(tasks[4]);
+
+        expect(taskPage.usingFormFields()
+            .setFieldValue(by.id, formTextField, formFieldValue)
+            .getFieldValue(formTextField)).toEqual(formFieldValue);
+
+        taskPage
+            .usingFormFields()
+            .refreshForm()
+            .checkFieldValue(by.id, formTextField, '');
+
+        taskPage
+            .usingTasksListPage()
+            .checkTaskIsDisplayedInTasksList(tasks[4]);
+
+        taskPage
+            .usingFormFields()
+            .setFieldValue(by.id, formTextField, formFieldValue)
+            .checkFieldValue(by.id, formTextField, formFieldValue);
+
+        taskPage
+            .usingFormFields()
+            .saveForm()
+            .checkFieldValue(by.id, formTextField, formFieldValue);
     });
 
     it('[C263951] Assign User', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[5]).addAssignee(assigneeUserModel.firstName).clickStartButton()
-            .then(() => {
-                taskPage.usingTasksListPage().checkTaskListIsLoaded();
-                taskPage.usingTasksListPage().waitForTableBody();
-                taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
-                taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[5]).selectTaskFromTasksList(tasks[5]);
-                taskPage.checkTaskTitle(tasks[5]);
-                expect(taskPage.usingTaskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-            });
+        taskPage
+            .usingFiltersPage()
+            .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+
+        taskPage
+            .createNewTask()
+            .addName(tasks[5])
+            .addAssignee(assigneeUserModel.firstName)
+            .clickStartButton();
+
+        taskPage
+            .usingTasksListPage()
+            .checkTaskListIsLoaded();
+
+        taskPage
+            .usingTasksListPage()
+            .waitForTableBody();
+
+        taskPage
+            .usingFiltersPage()
+            .goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+
+        taskPage.usingTasksListPage()
+            .checkTaskIsDisplayedInTasksList(tasks[5])
+            .selectTaskFromTasksList(tasks[5]);
+
+        taskPage.checkTaskTitle(tasks[5]);
+
+        expect(taskPage.usingTaskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
     });
 
     it('Attach a file', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[6]).clickStartButton()
-            .then(() => {
-                attachmentListPage.clickAttachFileButton(pngFile.location);
-                attachmentListPage.checkFileIsAttached(pngFile.name);
-            });
+        taskPage
+            .createNewTask()
+            .addName(tasks[6])
+            .clickStartButton();
+
+        attachmentListPage.clickAttachFileButton(pngFile.location);
+        attachmentListPage.checkFileIsAttached(pngFile.name);
     });
 
     it('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', () => {

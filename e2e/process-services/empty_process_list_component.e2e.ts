@@ -63,7 +63,7 @@ describe('Empty Process List Test', () => {
         done();
     });
 
-    it('[C260494] Should add process to list when a process is created', () => {
+    fit('[C260494] Should add process to list when a process is created', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
@@ -74,7 +74,7 @@ describe('Empty Process List Test', () => {
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
         processListPage.openProcessDropdown();
-        processListPage.selectProcessDropdown(1);
+        processListPage.selectProcessDropdown(0);
         processListPage.startProcess();
         expect(processFiltersPage.numberOfProcessRows()).toEqual(1);
 
