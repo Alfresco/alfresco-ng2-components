@@ -162,17 +162,17 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
                 this.processDefinitions = processDefinitionRepresentations;
 
                 if (this.hasSingleProcessDefinition()) {
-                    if (!this.selectedProcessDef.id) {
-                        this.selectedProcessDef = this.processDefinitions[0];
-                    }
-                } else if (this.processDefinitionName) {
+                    this.selectedProcessDef = this.processDefinitions[0];
+                } else {
                     this.selectedProcessDef = this.processDefinitions.find((currentProcessDefinition) => {
                         return currentProcessDefinition.name === this.processDefinitionName;
                     });
                 }
 
-                if (this.selectedProcessDef && this.processDefinitionInput) {
-                    this.processDefinitionInput.setValue(this.selectedProcessDef.name);
+                if (this.selectedProcessDef) {
+                    if( this.processDefinitionInput){
+                        this.processDefinitionInput.setValue(this.selectedProcessDef.name);
+                    }
                 }
             },
             () => {
