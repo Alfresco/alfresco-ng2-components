@@ -105,7 +105,8 @@
     "mincount",
     "listgrid",
     "filesize",
-    "Theming"
+    "Theming",
+    "quicktime"
   ],
   "dictionaries": ["html", "en-gb", "en_US"]
 }

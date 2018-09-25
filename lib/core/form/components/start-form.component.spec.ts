@@ -280,7 +280,7 @@ describe('StartFormComponent', () => {
             });
         });
 
-        it('should disply start form with fields ', async(() => {
+        it('should display start form with fields ', async(() => {
             getStartFormSpy.and.returnValue(of(startMockForm));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
@@ -315,6 +315,7 @@ describe('StartFormComponent', () => {
                 const refreshElement = fixture.debugElement.nativeElement.querySelector('.mat-card-actions>button');
                 refreshElement.click();
                 fixture.detectChanges();
+                /* cspell:disable-next-line */
                 const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
                 const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
                 expect(refreshElement).toBeDefined();
@@ -341,7 +342,7 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should difine title and [custom-action-buttons]', async(() => {
+        it('should define title and [custom-action-buttons]', async(() => {
             getStartFormSpy.and.returnValue(of(startMockFormWithTab));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;

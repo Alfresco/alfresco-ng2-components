@@ -79,6 +79,7 @@ export let chartTaskOverview = {
         'type': 'masterDetailTable',
         'title': 'Detailed task statistics',
         'titleKey': 'REPORTING.DEFAULT-REPORTS.TASK-OVERVIEW.DETAILED-TASK-STATS-TITLE',
+        /* cspell:disable-next-line */
         'columnNames': ['Task', 'Count', 'Sum', 'Min duration', 'Max duration', 'Average duration', 'Stddev duration'],
         'columnNameKeys': [
             'REPORTING.DEFAULT-REPORTS.TASK-OVERVIEW.DETAILED-TASK-STATS-TASK',
@@ -87,6 +88,7 @@ export let chartTaskOverview = {
             'REPORTING.DEFAULT-REPORTS.TASK-OVERVIEW.MIN-DURATION',
             'REPORTING.DEFAULT-REPORTS.TASK-OVERVIEW.MAX-DURATION',
             'REPORTING.DEFAULT-REPORTS.TASK-OVERVIEW.AVERAGE',
+            /* cspell:disable-next-line */
             'REPORTING.DEFAULT-REPORTS.TASK-OVERVIEW.STDDE'],
         'columnsCentered': [false, false, false, false],
         'rows': [
