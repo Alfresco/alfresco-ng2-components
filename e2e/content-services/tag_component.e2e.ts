@@ -48,12 +48,12 @@ describe('Tag component', () => {
         Util.generateRandomStringToLowerCase()];
 
     let tags = [
-        {tag: "test-tag-01"}, {tag: "test-tag-02"}, {tag: "test-tag-03"}, {tag: "test-tag-04"}, {tag: "test-tag-05"},
-        {tag: "test-tag-06"}, {tag: "test-tag-07"}, {tag: "test-tag-08"}, {tag: "test-tag-09"}, {tag: "test-tag-10"},
-        {tag: "test-tag-11"}, {tag: "test-tag-12"}, {tag: "test-tag-13"}, {tag: "test-tag-14"}, {tag: "test-tag-15"},
-        {tag: "test-tag-16"}, {tag: "test-tag-17"}, {tag: "test-tag-18"}, {tag: "test-tag-19"}, {tag: "test-tag-20"},
-        {tag: "test-tag-21"}, {tag: "test-tag-22"}, {tag: "test-tag-23"}, {tag: "test-tag-24"}, {tag: "test-tag-25"},
-        {tag: "test-tag-26"}, {tag: "test-tag-27"}, {tag: "test-tag-28"}, {tag: "test-tag-29"}, {tag: "test-tag-30"}];
+        {tag: 'test-tag-01'}, {tag: 'test-tag-02'}, {tag: 'test-tag-03'}, {tag: 'test-tag-04'}, {tag: 'test-tag-05'},
+        {tag: 'test-tag-06'}, {tag: 'test-tag-07'}, {tag: 'test-tag-08'}, {tag: 'test-tag-09'}, {tag: 'test-tag-10'},
+        {tag: 'test-tag-11'}, {tag: 'test-tag-12'}, {tag: 'test-tag-13'}, {tag: 'test-tag-14'}, {tag: 'test-tag-15'},
+        {tag: 'test-tag-16'}, {tag: 'test-tag-17'}, {tag: 'test-tag-18'}, {tag: 'test-tag-19'}, {tag: 'test-tag-20'},
+        {tag: 'test-tag-21'}, {tag: 'test-tag-22'}, {tag: 'test-tag-23'}, {tag: 'test-tag-24'}, {tag: 'test-tag-25'},
+        {tag: 'test-tag-26'}, {tag: 'test-tag-27'}, {tag: 'test-tag-28'}, {tag: 'test-tag-29'}, {tag: 'test-tag-30'}];
 
     let uppercaseTag = Util.generateRandomStringToUpperCase();
     let digitsTag = Util.generateRandomStringDigits();
