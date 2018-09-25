@@ -16,6 +16,7 @@
  */
 
 var Util = require("../../util/util");
+var CardViewPage = require("./cardViewPageComponent");
 
 var ViewerToolbarPage = function () {
 
@@ -54,11 +55,15 @@ var ViewerToolbarPage = function () {
     var leftSideBar = element(by.id("adf-left-sidebar"));
     var unsupportedFileContainer = element(by.cssContainingText(".label", "Document preview could not be loaded"));
     var pageCanvas = element.all(by.css("div[class='canvasWrapper']")).first();
+    var viewer = element(by.css("adf-viewer"));
+    var pdfViewer = element(by.css("adf-pdf-viewer"));
+    var imgViewer = element(by.css("adf-img-viewer"));
     var activeTab = element(by.css("div[class*='mat-tab-label-active']"));
     var uploadNewVersionButton = element(by.css("input[data-automation-id='upload-single-file']"));
     var rightChevron = element(by.css("div[class*='header-pagination-after']"));
     var toolbarSwitch = element(by.id('adf-switch-toolbar'));
     var toolbar = element(by.id('adf-viewer-toolbar'));
+    var datatableHeader = element(by.css("div.adf-datatable-header"))
     var goBackSwitch = element(by.id('adf-switch-goback'));
 
     var openWithSwitch = element(by.id('adf-switch-openwith'));
@@ -131,6 +136,30 @@ var ViewerToolbarPage = function () {
         Util.waitUntilElementIsVisible(passwordInput);
         passwordInput.clear();
         passwordInput.sendKeys(password);
+    };
+
+    this.checkDatatableHeaderIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(datatableHeader);
+    }
+
+    this.checkPageCanvasIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(pageCanvas);
+    };
+
+    this.checkToolbarIsDisplayed = function (timeout) {
+        Util.waitUntilElementIsVisible(toolbar, timeout);
+    };
+
+    this.checkViewerIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotOnPage(viewer);
+    };
+
+    this.checkPdfViewerIsDisplayed = function () {
+        Util.waitUntilElementIsOnPage(pdfViewer);
+    };
+
+    this.checkImgViewerIsDisplayed = function () {
+        Util.waitUntilElementIsOnPage(imgViewer);
     };
 
     this.checkPasswordErrorIsDisplayed = function () {
@@ -217,6 +246,10 @@ var ViewerToolbarPage = function () {
 
     this.checkZoomInButtonIsDisplayed = function () {
         Util.waitUntilElementIsVisible(zoomInButton);
+    };
+
+    this.checkZoomInButtonIsDisplayed = function (timeout) {
+        Util.waitUntilElementIsVisible(zoomInButton, timeout);
     };
 
     this.checkZoomInButtonIsNotDisplayed = function () {
@@ -349,67 +382,68 @@ var ViewerToolbarPage = function () {
 
     this.clickPasswordSubmit = function () {
         Util.waitUntilElementIsVisible(passwordSubmit);
-        passwordSubmit.click();
+        return passwordSubmit.click();
     };
 
     this.clickSecondThumbnail = function () {
         Util.waitUntilElementIsClickable(secondThumbnail);
-        secondThumbnail.click();
+        return secondThumbnail.click();
     };
 
     this.clickLastThumbnailDisplayed = function () {
         Util.waitUntilElementIsClickable(lastThumbnailDisplayed);
-        lastThumbnailDisplayed.click();
+        return lastThumbnailDisplayed.click();
     };
 
     this.clickThumbnailsClose = function () {
         Util.waitUntilElementIsClickable(thumbnailsClose);
-        thumbnailsClose.click();
+        return thumbnailsClose.click();
     };
 
     this.clickThumbnailsBtn = function () {
         Util.waitUntilElementIsVisible(thumbnailsBtn);
         Util.waitUntilElementIsClickable(thumbnailsBtn);
-        thumbnailsBtn.click();
+        return thumbnailsBtn.click();
     };
 
     this.clickScaleImgButton = function () {
         Util.waitUntilElementIsClickable(scaleImg);
-        scaleImg.click();
+        return scaleImg.click();
     };
 
     this.clickScalePdfButton = function () {
         Util.waitUntilElementIsClickable(scalePageButton);
-        scalePageButton.click();
+        return scalePageButton.click();
     };
 
     this.clickDownloadButton = function () {
         Util.waitUntilElementIsVisible(downloadButton);
-        downloadButton.click();
+        return downloadButton.click();
     };
 
     this.clickCloseButton = function () {
-        closeButton.click();
+        Util.waitUntilElementIsVisible(closeButton);
+        return closeButton.click();
     };
 
     this.clickPreviousPageButton = function () {
         Util.waitUntilElementIsVisible(previousPageButton);
-        previousPageButton.click();
+        return previousPageButton.click();
     };
 
     this.clickNextPageButton = function () {
         Util.waitUntilElementIsVisible(nextPageButton);
-        nextPageButton.click();
+        return nextPageButton.click();
     };
 
     this.clickZoomInButton = function () {
         Util.waitUntilElementIsVisible(zoomInButton);
-        zoomInButton.click();
+        return zoomInButton.click();
     };
 
     this.clickZoomOutButton = function () {
         Util.waitUntilElementIsVisible(zoomOutButton);
-        zoomOutButton.click();
+        return zoomOutButton.click();
     };
 
     this.clickScalePageButton = function () {
@@ -419,17 +453,17 @@ var ViewerToolbarPage = function () {
 
     this.clickFullScreenButton = function () {
         Util.waitUntilElementIsClickable(fullScreenButton);
-        fullScreenButton.click();
+        return fullScreenButton.click();
     };
 
     this.clickRotateLeftButton = function () {
         Util.waitUntilElementIsClickable(rotateLeft);
-        rotateLeft.click();
+        return rotateLeft.click();
     };
 
     this.clickRotateRightButton = function () {
         Util.waitUntilElementIsClickable(rotateRight);
-        rotateRight.click();
+        return rotateRight.click();
     };
 
     this.getActiveTab = function () {

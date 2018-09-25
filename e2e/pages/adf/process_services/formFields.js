@@ -39,7 +39,7 @@ var FormFields = function () {
     };
 
     this.getWidget = function (fieldId) {
-        var widget = element(by.css("form-field div[id='field-" + fieldId + "-container']"));
+        var widget = element(by.css("adf-form-field div[id='field-" + fieldId + "-container']"));
         Util.waitUntilElementIsVisible(widget);
         return widget;
     };
@@ -119,7 +119,7 @@ var FormFields = function () {
     };
 
     this.checkWidgetIsReadOnlyMode = function (fieldId) {
-        var widget = element(by.css("form-field div[id='field-" + fieldId + "-container']"));
+        var widget = element(by.css("adf-form-field div[id='field-" + fieldId + "-container']"));
         var widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
         Util.waitUntilElementIsVisible(widgetReadOnly);
         return widgetReadOnly;

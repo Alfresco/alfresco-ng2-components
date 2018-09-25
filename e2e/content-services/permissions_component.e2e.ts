@@ -26,6 +26,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import FileModel = require('../models/ACS/fileModel');
 import { UploadActions } from '../actions/ACS/upload.actions';
 import Util = require('../util/util.js');
+import { browser } from 'protractor';
 
 describe('Permissions Component', function () {
 
@@ -63,6 +64,8 @@ describe('Permissions Component', function () {
         let group = await this.alfrescoJsApi.core.groupsApi.createGroup(groupBody);
 
         groupId = group.entry.id;
+
+        browser.driver.sleep(15000); // wait search get the groups
 
         done();
     });

@@ -22,6 +22,7 @@ import ProcessServicesPage = require('../pages/adf/process_services/processServi
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage.js');
 import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
 import AppSettingsToggles = require('../pages/adf/process_services/dialog/appSettingsToggles');
+import FiltersPage = require('../pages/adf/process_services/filtersPage.js');
 
 import TestConfig = require('../test.config');
 
