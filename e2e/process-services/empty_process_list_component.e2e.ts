@@ -74,9 +74,9 @@ describe('Empty Process List Test', () => {
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
         processListPage.openProcessDropdown();
-        processListPage.selectProcessDropdown(1);
+        processListPage.selectProcessDropdown(0);
         processListPage.startProcess();
-        expect(processFiltersPage.numberOfProcessRows()).toEqual(1);
+        expect(processFiltersPage.numberOfProcessRows()).toEqual(0);
 
         processDetailsPage.checkProcessDetailsCard();
         navigationBarPage.clickProcessServicesButton();

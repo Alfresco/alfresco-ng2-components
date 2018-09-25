@@ -51,10 +51,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     @Input()
     processDefinitionName: string;
 
-    /** (optional) Definition name of the process to start. */
-    @Input()
-    defaultProcessSelected: boolean;
-
     /** Variables in input to the process
      * [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md).
      */
@@ -166,16 +162,16 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
                 this.processDefinitions = processDefinitionRepresentations;
 
                 if (this.hasSingleProcessDefinition()) {
-                    if (this.processDefinitionName && this.defaultProcessSelected) {
-                        this.selectedProcessDef = this.getSelectedProcess(this.processDefinitionName);
-
-                        if (!this.selectedProcessDef.id) {
-                            this.selectedProcessDef = this.processDefinitions[0];
-                        }
-                    } else {
+                    if (!this.selectedProcessDef.id) {
                         this.selectedProcessDef = this.processDefinitions[0];
                     }
+                } else if (this.processDefinitionName) {
+                    this.selectedProcessDef = this.processDefinitions.find((currentProcessDefinition) => {
+                        return currentProcessDefinition.name === this.processDefinitionName;
+                    });
+                }
 
+                if (this.selectedProcessDef && this.processDefinitionInput) {
                     this.processDefinitionInput.setValue(this.selectedProcessDef.name);
                 }
             },
