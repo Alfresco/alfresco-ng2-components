@@ -50,7 +50,7 @@ Restores deleted nodes to their original location.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| location | `string` | "" | (**Deprecated:** 2.4.0 Path to restored node.) |
+| location | `string` | "" | (**Deprecated:** 2.4.0) Path to restored node. |
 | selection | `DeletedNodeEntry[]` |  | Array of deleted nodes to restore. |
 
 ### Events

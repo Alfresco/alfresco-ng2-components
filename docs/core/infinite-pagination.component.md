@@ -39,7 +39,7 @@ Adds "infinite" pagination to the component it is used with.
 | ---- | ---- | ------------- | ----------- |
 | isLoading | `boolean` | false | Is a new page loading? |
 | pageSize | `number` |  | Number of items that are added with each "load more" event. |
-| pagination | [`PaginationModel`](../../lib/core/models/pagination.model.ts) |  | (**Deprecated:** 2.3.0  [Pagination](../../lib/content-services/document-list/models/document-library.model.ts) object.) |
+| pagination | [`PaginationModel`](../../lib/core/models/pagination.model.ts) |  | (**Deprecated:** 2.3.0) [Pagination](../../lib/content-services/document-list/models/document-library.model.ts) object. |
 | target | `PaginatedComponent` |  | Component that provides custom pagination support. |
 
 ### Events

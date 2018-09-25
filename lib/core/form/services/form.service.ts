@@ -164,8 +164,8 @@ export class FormService {
     }
 
     /**
+     * Add Fields to a form
      * @deprecated in 1.7.0, use saveForm API instead
-     * Add Fields to A form
      * @param formId ID of the form
      * @param formModel Form definition
      */

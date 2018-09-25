@@ -21,9 +21,3 @@
 <% } -%>
 <%_ }) -%>
 <% } -%>
-    syntax:
-      return:
-        type: >-
-          <%- include("type", {type: child.type}).trim() %>
-        defaultValue: >-
-          <%- (child.defaultValue || "").length < 20 ? child.defaultValue : "" %>

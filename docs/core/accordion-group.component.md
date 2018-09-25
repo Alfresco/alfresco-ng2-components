@@ -50,6 +50,8 @@ define a section in a surrounding [Accordion component](accordion.component.md).
 | heading | `string` |  | Title heading for the group. |
 | headingIcon | `string` |  | The material design icon. |
 | headingIconTooltip | `string` |  | Tooltip message to be shown for headingIcon |
+| isOpen | `boolean` |  | Is this group currently open? |
+| isSelected | `boolean` |  | Is this group currently selected? |
 
 ### Events
 

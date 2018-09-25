@@ -370,6 +370,7 @@ export class ComponentInfo {
         sourceData.items.forEach(item => {
             switch(item.type) {
                 case "property":
+                case "accessor":
                     var prop = new PropInfo(item);
                     this.properties.push(prop);
 
