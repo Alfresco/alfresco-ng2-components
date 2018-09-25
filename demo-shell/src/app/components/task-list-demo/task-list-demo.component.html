@@ -64,6 +64,12 @@
                 matInput
                 class="form-control"
                 [formControl]="taskSize">
+            <mat-error *ngIf="taskSize.hasError('min')">
+                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
+            </mat-error>
+            <mat-error *ngIf="taskSize.hasError('pattern')">
+                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_TYPE_ERROR' | translate }}
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -72,6 +78,12 @@
                 matInput
                 class="form-control"
                 [formControl]="taskPage">
+            <mat-error *ngIf="taskPage.hasError('min')">
+                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
+            </mat-error>
+            <mat-error *ngIf="taskPage.hasError('pattern')">
+                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_TYPE_ERROR' | translate }}
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field>

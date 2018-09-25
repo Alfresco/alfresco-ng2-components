@@ -31,6 +31,7 @@ export class TaskListDemoComponent implements OnInit {
     taskListForm: FormGroup;
 
     errorMessage: string;
+    minValue = 1;
 
     appId: number;
     defaultAppId: number;
@@ -101,8 +102,8 @@ export class TaskListDemoComponent implements OnInit {
             taskAssignment: new FormControl(''),
             taskState: new FormControl(''),
             taskSort: new FormControl(''),
-            taskSize: new FormControl(''),
-            taskPage: new FormControl(''),
+            taskSize: new FormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
+            taskPage: new FormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
             taskDueAfter: new FormControl(''),
             taskDueBefore: new FormControl(''),
             taskStart: new FormControl('', [Validators.pattern('^[0-9]*$')]),
@@ -130,23 +131,19 @@ export class TaskListDemoComponent implements OnInit {
         this.state = taskFilter.taskState;
         this.sort = taskFilter.taskSort;
         this.start = taskFilter.taskStart;
+        this.dueAfter = taskFilter.taskDueAfter;
+        this.dueBefore = taskFilter.taskDueBefore;
+
         if (taskFilter.taskSize) {
             this.size = parseInt(taskFilter.taskSize, 10);
         }
 
         if (taskFilter.taskPage) {
             let pageValue = parseInt(taskFilter.taskPage, 10);
-            if ( pageValue > 0) {
-                this.page = pageValue - 1;
-            } else {
-                this.page = pageValue;
-            }
+            this.page = pageValue > 0 ? pageValue - 1 : pageValue;
         } else {
             this.page = 0;
         }
-
-        this.dueAfter = taskFilter.taskDueAfter;
-        this.dueBefore = taskFilter.taskDueBefore;
 
         this.includeProcessInstance = taskFilter.taskIncludeProcessInstance === 'include';
     }
