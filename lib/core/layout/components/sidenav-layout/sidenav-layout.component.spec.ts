@@ -214,7 +214,7 @@ describe('SidenavLayoutComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should pass through input paramters', () => {
+        it('should pass through input parameters', () => {
             component.sidenavMin = 1;
             component.sidenavMax = 2;
             component.hideSidenav = true;
@@ -304,7 +304,7 @@ describe('SidenavLayoutComponent', () => {
             });
         });
 
-        it('should be the same as the expandedSidenav\'s value by default', (done) => {
+        it('should be the same as the expanded Sidenav value by default', (done) => {
             component.expandedSidenav = false;
             fixture.detectChanges();
 

@@ -140,7 +140,7 @@ describe('DropdownEditorComponent', () => {
         expect(component.value).toBe(row.value[column.id]);
     });
 
-    it('should handle REST error gettig options with task id', () => {
+    it('should handle REST error getting options with task id', () => {
         column.optionType = 'rest';
         const error = 'error';
 

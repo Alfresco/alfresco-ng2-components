@@ -40,6 +40,7 @@ describe('PdfThumbListComponent', () => {
         _currentPageNumber: null,
         set currentPageNumber(pageNum) {
             this._currentPageNumber = pageNum;
+            /* cspell:disable-next-line */
             this.eventBus.dispatch('pagechange', { pageNumber: pageNum });
         },
         get currentPageNumber() {
@@ -123,6 +124,7 @@ describe('PdfThumbListComponent', () => {
 
         expect(renderedIds).toContain(12);
 
+        /* cspell:disable-next-line */
         viewerMock.eventBus.dispatch('pagechange', { pageNumber: 12 });
 
         const newRenderedIds = component.renderItems.map(item => item.id);

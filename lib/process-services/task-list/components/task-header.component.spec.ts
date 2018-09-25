@@ -214,7 +214,7 @@ describe('TaskHeaderComponent', () => {
         });
     }));
 
-    it('should display the claime button if the task is claimable by candidates members', async(() => {
+    it('should display the claim button if the task is claimable by candidates members', async(() => {
         component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
         component.refreshData();
         fixture.detectChanges();

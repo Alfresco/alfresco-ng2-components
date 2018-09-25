@@ -163,7 +163,7 @@ describe('Test PdfViewer component', () => {
     });
 
     describe('Required values', () => {
-        it('should thrown an error If urlfile is not present', () => {
+        it('should thrown an error If urlFile is not present', () => {
             change = new SimpleChange(null, null, true);
 
             expect(() => {

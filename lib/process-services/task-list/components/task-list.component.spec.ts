@@ -151,6 +151,7 @@ describe('TaskListComponent', () => {
 
     it('should return the filtered task list by processDefinitionKey', (done) => {
         let state = new SimpleChange(null, 'open', true);
+        /* cspell:disable-next-line */
         let processDefinitionKey = new SimpleChange(null, 'fakeprocess', true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
 
@@ -250,6 +251,7 @@ describe('TaskListComponent', () => {
 
     it('should return the filtered task list for all state', (done) => {
         let state = new SimpleChange(null, 'all', true);
+        /* cspell:disable-next-line */
         let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
 
         component.success.subscribe((res) => {

@@ -89,9 +89,18 @@
     "minlength",
     "doclib",
     "fullname",
+    "firstname",
     "userinfo",
     "qshare",
-    "imgpreview"
+    "imgpreview",
+    "AUTHTYPE",
+    "ECMHOST",
+    "BPMHOST",
+    "OAUTHCONFIG",
+    "CONTEXTROOTBPM",
+    "CONTEXTROOTECM",
+    "DISABLECSRF",
+    "printf"
   ],
   "dictionaries": ["html", "en-gb", "en_US"]
 }

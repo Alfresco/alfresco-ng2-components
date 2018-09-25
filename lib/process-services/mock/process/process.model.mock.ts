@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/* spell-checker: disable */
 import { ProcessInstance } from '../../process-list/models/process-instance.model';
 
 export class ProcessList {
