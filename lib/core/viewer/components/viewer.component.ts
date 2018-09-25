@@ -170,7 +170,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * The template for the sidebar. The template context contains the loaded node data.
      * @deprecated 2.5.0 renamed as sidebarRight
-     * */
+     */
     @Input()
     sidebarTemplate: TemplateRef<any> = null;
 
