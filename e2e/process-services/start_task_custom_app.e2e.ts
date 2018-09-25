@@ -218,13 +218,13 @@ describe('Start Task - Custom App', () => {
         taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(showHeaderTask).selectTaskFromTasksList(showHeaderTask);
 
         appNavigationBarPage.clickSettingsButton();
-        taskPage.usingTaskDetails().usingTaskDetailsToggles().disableShowHeader();
+        taskPage.usingTaskDetails().usingAppSettingsToggles().disableShowHeader();
         appNavigationBarPage.clickTasksButton();
 
         taskPage.usingTaskDetails().taskInfoDrawerIsNotDisplayed();
 
         appNavigationBarPage.clickSettingsButton();
-        taskPage.usingTaskDetails().usingTaskDetailsToggles().enableShowHeader();
+        taskPage.usingTaskDetails().usingAppSettingsToggles().enableShowHeader();
         appNavigationBarPage.clickTasksButton();
 
         taskPage.usingTaskDetails().taskInfoDrawerIsDisplayed();

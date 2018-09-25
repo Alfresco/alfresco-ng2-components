@@ -16,7 +16,7 @@
  */
 
 var Util = require('../../../util/util');
-var TaskDetailsToggles = require('./dialog/taskDetailsToggles');
+var AppSettingsToggles = require('./dialog/appSettingsToggles');
 
 var TaskDetailsPage = function () {
 
@@ -63,7 +63,7 @@ var TaskDetailsPage = function () {
         Util.waitUntilElementIsVisible(taskDetailsTitle);
         return taskDetailsTitle.getText();
     };
-    
+
     this.checkSelectedForm = function (formName) {
         Util.waitUntilElementIsVisible(attachFormName);
         expect(formName).toEqual(attachFormName.getText());
@@ -290,8 +290,8 @@ var TaskDetailsPage = function () {
         auditLogButton.click();
     };
 
-    this.usingTaskDetailsToggles = function () {
-        return new TaskDetailsToggles();
+    this.usingAppSettingsToggles = function () {
+        return new AppSettingsToggles();
     };
 
     this.taskInfoDrawerIsDisplayed = function () {
