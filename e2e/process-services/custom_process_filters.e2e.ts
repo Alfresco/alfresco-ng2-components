@@ -200,7 +200,7 @@ describe('New Process Filters', () => {
         expect(processFiltersPage.getFilterIcon(processFilter.edit_icon)).toEqual('cloud');
     });
 
-    it('[C286452] Should display process filter icons only when ... property is set on true', () => {
+    it('[C286452] Should display process filter icons only when showIcon property is set on true', () => {
         processFiltersPage.checkFilterHasNoIcon(processFilter.all);
 
         appNavigationBarPage.clickSettingsButton();

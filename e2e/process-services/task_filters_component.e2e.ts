@@ -329,7 +329,7 @@ describe('Custom Filters Test', () => {
         });
     });
 
-    it('[C286449] Should display task filter icons only when ... property is set on true', () => {
+    it('[C286449] Should display task filter icons only when showIcon property is set on true', () => {
         taskFiltersPage.checkTaskFilterHasNoIcon('My Tasks');
 
         appNavigationBarPage.clickSettingsButton();
