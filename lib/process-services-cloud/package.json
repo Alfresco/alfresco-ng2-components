@@ -28,7 +28,6 @@
     "alfresco-js-api": "2.5.0",
     "rxjs": ">=6.2.2",
     "@alfresco/adf-core": "2.5.0",
-    "@alfresco/adf-content-services": "2.5.0",
     "@ngx-translate/core": "^10.0.2",
     "core-js": "2.4.1",
     "hammerjs": "2.0.8",
