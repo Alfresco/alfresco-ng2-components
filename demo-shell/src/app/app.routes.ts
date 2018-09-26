@@ -57,12 +57,11 @@ import { HeaderDataComponent } from './components/header-data/header-data.compon
 import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
 import { AppComponent } from './app.component';
 import { HelloCloudComponent } from '@alfresco/adf-process-services-cloud';
-import { TaskFiltersCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { CloudDemoComponent } from './components/cloud-demo/cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'hello', component: HelloCloudComponent },
-    { path: 'taskFilters', component: TaskFiltersCloudComponent },
     { path: 'logout', component: LogoutComponent },
     { path: 'settings', component: SettingsComponent },
     {
@@ -195,6 +194,11 @@ export const appRoutes: Routes = [
                 path: 'extendedSearch',
                 component: SearchExtendedComponent,
                 canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'activiti-cloud',
+                component: CloudDemoComponent,
+                canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti',

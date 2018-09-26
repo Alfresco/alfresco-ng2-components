@@ -98,7 +98,7 @@ export class TaskFilterService {
      * @returns Details of task filter just added
      */
     addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        const key = 'task-filters-' + filter.appId;
+        const key = 'task-filters-' + filter.appId || '0';
         let filters = JSON.parse(this.storage.getItem(key) || '[]');
 
         filters.push(filter);

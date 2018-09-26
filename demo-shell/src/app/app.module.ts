@@ -81,6 +81,7 @@ import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
 import { ProcessCloudModule } from '@alfresco/adf-process-services-cloud';
+import { CloudDemoComponent } from './components/cloud-demo/cloud-demo.component';
 
 @NgModule({
     imports: [
@@ -144,7 +145,8 @@ import { ProcessCloudModule } from '@alfresco/adf-process-services-cloud';
         TaskListDemoComponent,
         ProcessListDemoComponent,
         HeaderDataComponent,
-        ConfigEditorComponent
+        ConfigEditorComponent,
+        CloudDemoComponent
     ],
     providers: [
         {

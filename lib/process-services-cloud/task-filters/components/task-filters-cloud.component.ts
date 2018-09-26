@@ -16,7 +16,7 @@
  */
 
 import { AppsProcessService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from '../services/task-filter.service';
@@ -29,7 +29,7 @@ import { TaskFilterService } from '../services/task-filter.service';
     templateUrl: './task-filters-cloud.component.html',
     styleUrls: ['task-filters-cloud.component.scss']
 })
-export class TaskFiltersCloudComponent implements OnInit, OnChanges {
+export class TaskFiltersCloudComponent implements OnChanges {
 
     /** Parameters to use for the task filter. If there is no match then
      * the default filter (the first one the list) is selected.
@@ -59,7 +59,7 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges {
 
     /** Toggles display of the filter's icon. */
     @Input()
-    hasIcon: boolean;
+    showIcons: boolean = false;
 
     filters$: Observable<FilterRepresentationModel[]>;
 
@@ -161,9 +161,10 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges {
      */
     public selectFilter(newFilter: FilterParamsModel) {
         if (newFilter) {
-            this.currentFilter = this.filters.find((filter, index) =>
-                newFilter.index === index ||
-                newFilter.id === filter.id ||
+            this.currentFilter = this.filters.find((filter) =>
+                (newFilter.id &&
+                    (newFilter.id === filter.id)
+                ) ||
                 (newFilter.name &&
                     (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
                 ));
