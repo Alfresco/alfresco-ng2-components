@@ -99,7 +99,6 @@ export class FormPage {
         Util.waitUntilElementIsVisible(this.numberWidgetLabel4);
 
         this.numberWidgetInput.getAttribute('value').then((result) => {
-            console.log(result);
             for (let i = result.length; i >= 0; i--) {
                 this.numberWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
             }
