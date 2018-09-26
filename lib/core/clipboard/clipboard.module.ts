@@ -17,24 +17,22 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-
-import { NodeDownloadDirective } from './node-download.directive';
-import { NodeLockDirective } from './node-lock.directive';
+import { ClipboardDirective } from './clipboard.directive';
+import { ClipboardService } from './clipboard.service';
 
 @NgModule({
     imports: [
-        CommonModule,
-        MaterialModule
+        CommonModule
+    ],
+    providers: [
+        ClipboardService
     ],
     declarations: [
-        NodeDownloadDirective,
-        NodeLockDirective
+        ClipboardDirective
     ],
     exports: [
-        NodeDownloadDirective,
-        NodeLockDirective
+        ClipboardDirective
     ]
 })
-export class ContentDirectiveModule {
-}
+
+export class ClipboardModule {}

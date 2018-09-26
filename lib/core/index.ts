@@ -39,6 +39,7 @@ export * from './templates/index';
 export * from './pipes/index';
 export * from './services/index';
 export * from './directives/index';
+export * from './clipboard/index';
 
 export * from './utils/index';
 export * from './interface/index';

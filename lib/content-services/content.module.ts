@@ -32,6 +32,7 @@ import { SitesDropdownModule } from './site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
 import { VersionManagerModule } from './version-manager/version-manager.module';
 import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
+import { ContentNodeShareModule } from './content-node-share/content-node-share.module';
 import { ContentDirectiveModule } from './directives/content-directive.module';
 import { DialogModule } from './dialogs/dialog.module';
 import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
@@ -96,6 +97,7 @@ export function providers() {
         SitesDropdownModule,
         BreadcrumbModule,
         ContentNodeSelectorModule,
+        ContentNodeShareModule,
         ContentMetadataModule,
         FolderDirectiveModule,
         ContentDirectiveModule,
@@ -112,6 +114,7 @@ export function providers() {
         SitesDropdownModule,
         BreadcrumbModule,
         ContentNodeSelectorModule,
+        ContentNodeShareModule,
         ContentMetadataModule,
         DialogModule,
         FolderDirectiveModule,
@@ -139,6 +142,7 @@ export class ContentModuleLazy {}
         SitesDropdownModule,
         BreadcrumbModule,
         ContentNodeSelectorModule,
+        ContentNodeShareModule,
         ContentMetadataModule,
         FolderDirectiveModule,
         ContentDirectiveModule,
@@ -166,6 +170,7 @@ export class ContentModuleLazy {}
         SitesDropdownModule,
         BreadcrumbModule,
         ContentNodeSelectorModule,
+        ContentNodeShareModule,
         ContentMetadataModule,
         DialogModule,
         FolderDirectiveModule,

@@ -1,0 +1,65 @@
+@mixin adf-share-link-typography {
+    letter-spacing: -0.4px;
+    line-height: 2;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    font-size: 16px;
+    opacity: 0.87;
+}
+
+.adf-share-link-dialog {
+
+    .adf-share-link {
+        &__dialog-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__label {
+            @include adf-share-link-typography;
+            flex: 1 1 auto;
+        }
+
+        &__title {
+            @include adf-share-link-typography;
+        }
+
+        &__info {
+            @include adf-share-link-typography;
+            opacity: 0.54;
+            font-size: 13px;
+        }
+
+        &--row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        &__input {
+            opacity: 0.54;
+        }
+    }
+
+    .input-action {
+        cursor: pointer;
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    .mat-form-field-infix {
+        border-top: unset;
+    }
+
+    .mat-dialog-actions {
+        justify-content: flex-end;
+    }
+
+    .mat-form-field-flex {
+        align-items: center;
+    }
+}

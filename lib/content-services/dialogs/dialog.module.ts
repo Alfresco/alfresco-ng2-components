@@ -24,7 +24,6 @@ import { MaterialModule } from '../material.module';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { FolderDialogComponent } from './folder.dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
-import { ShareDialogComponent } from './share.dialog';
 import { ConfirmDialogComponent } from './confirm.dialog';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
@@ -43,21 +42,18 @@ import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
         DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ShareDialogComponent,
         ConfirmDialogComponent
     ],
     exports: [
         DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ShareDialogComponent,
         ConfirmDialogComponent
     ],
     entryComponents: [
         DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ShareDialogComponent,
         ConfirmDialogComponent
     ]
 })

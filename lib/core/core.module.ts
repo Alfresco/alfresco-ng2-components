@@ -43,6 +43,7 @@ import { SidenavLayoutModule } from './layout/layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
 import { TemplateModule } from './templates/template.module';
+import { ClipboardModule } from './clipboard/clipboard.module';
 
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
@@ -166,6 +167,7 @@ export function providers() {
         PipeModule,
         CommonModule,
         DirectiveModule,
+        ClipboardModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -203,6 +205,7 @@ export function providers() {
         PipeModule,
         CommonModule,
         DirectiveModule,
+        ClipboardModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -276,6 +279,7 @@ export class CoreModuleLazy {
         PipeModule,
         CommonModule,
         DirectiveModule,
+        ClipboardModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,

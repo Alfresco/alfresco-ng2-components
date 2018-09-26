@@ -135,6 +135,7 @@
       "DELETE": "Delete",
       "FAVORITES": "Add to favorites",
       "SHARE": "Share",
+      "SHARE_EDIT": "Edit settings",
       "THEME": "Select a theme",
       "SHOW_VERSION": "Show version",
       "HIDE_VERSION": "Hide version",
