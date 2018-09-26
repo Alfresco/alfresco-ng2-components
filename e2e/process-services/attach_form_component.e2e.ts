@@ -96,8 +96,8 @@ describe('Attach Form Component', () => {
     it('[C280047] Should be able to view the attach-form component after creating a standalone task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(testNames.taskName);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(testNames.taskName);
 
         attachFormPage.checkNoFormMessageIsDisplayed();
         attachFormPage.checkAttachFormButtonIsDisplayed();
@@ -107,8 +107,8 @@ describe('Attach Form Component', () => {
     it('[C280048] Should be able to view the attach-form component after clicking cancel button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(testNames.taskName);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(testNames.taskName);
 
         attachFormPage.clickAttachFormButton();
         attachFormPage.checkDefaultFormTitleIsDisplayed(testNames.formTitle);
@@ -127,8 +127,8 @@ describe('Attach Form Component', () => {
     it('[C280017] Should be able to attach a form on a standalone task and complete', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(testNames.taskName);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(testNames.taskName);
 
         attachFormPage.clickAttachFormButton();
         attachFormPage.clickAttachFormDropdown();
@@ -138,8 +138,8 @@ describe('Attach Form Component', () => {
         formFields.setFieldValue(by.id, formTextField, testNames.formFieldValue);
         formFields.completeForm();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(testNames.taskName);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(testNames.taskName);
 
         expect(formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);
     });

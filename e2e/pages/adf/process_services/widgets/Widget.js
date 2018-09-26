@@ -25,45 +25,45 @@ var Hyperlink = require('./Hyperlink');
 var Dropdown = require('./Dropdown');
 var DynamicTable = require('./DynamicTable');
 
-var UsingWidget = function () {
+var Widget = function () {
 
-    this.usingMultilineTextWidget = function () {
+    this.multilineTextWidget = function () {
         return new MultilineText();
     };
 
-    this.usingHeaderWidget = function () {
+    this.headerWidget = function () {
         return new Header();
     };
 
-    this.usingDisplayTextWidget = function () {
+    this.displayTextWidget = function () {
         return new DisplayText();
     };
 
-    this.usingAttachFileWidget = function () {
+    this.attachFileWidget = function () {
         return new AttachFile();
     };
 
-    this.usingDisplayValueWidget = function () {
+    this.displayValueWidget = function () {
         return new DisplayValue();
     };
 
-    this.usingRadioWidget = function () {
+    this.radioWidget = function () {
         return new RadioButtons();
     };
 
-    this.usingHyperlink = function () {
+    this.hyperlink = function () {
         return new Hyperlink();
     };
 
-    this.usingDropdown = function () {
+    this.dropdown = function () {
         return new Dropdown();
     };
 
-    this.usingDynamicTable = function () {
+    this.dynamicTable = function () {
         return new DynamicTable();
     };
 
 };
 
-module.exports = UsingWidget;
+module.exports = Widget;
 
