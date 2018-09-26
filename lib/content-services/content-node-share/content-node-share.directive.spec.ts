@@ -76,7 +76,6 @@ describe('NodeSharedDirective', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     beforeEach(() => {
@@ -90,72 +89,66 @@ describe('NodeSharedDirective', () => {
     });
 
     it('should have share button disabled when selection is empty', async() => {
-        await fixture.whenStable();
-        fixture.detectChanges();
-
-        expect(shareButtonElement.disabled).toBe(true);
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(shareButtonElement.disabled).toBe(true);
+        });
     });
 
-    it('should have button enabled when selection is not empty', async() => {
+    it('should have button enabled when selection is not empty', () => {
         component.documentList.selection = [selection];
         fixture.detectChanges();
-        await fixture.whenStable();
 
-        fixture.detectChanges();
-        expect(shareButtonElement.disabled).toBe(false);
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(shareButtonElement.disabled).toBe(false);
+        });
     });
 
-    it('should have button disabled when selection is not a file', async() => {
+    it('should have button disabled when selection is not a file', () => {
         selection.entry.isFile = false;
         component.documentList.selection = [selection];
         fixture.detectChanges();
-        await fixture.whenStable();
 
-        fixture.detectChanges();
-        expect(shareButtonElement.disabled).toBe(true);
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(shareButtonElement.disabled).toBe(true);
+        });
     });
 
-    it('should have button disabled when selection is not a file', async() => {
-        selection.entry.isFile = false;
+    it('should indicate if file is not shared', () => {
         component.documentList.selection = [selection];
         fixture.detectChanges();
-        await fixture.whenStable();
 
-        fixture.detectChanges();
-        expect(shareButtonElement.disabled).toBe(true);
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(shareButtonElement.title).toBe('Not Shared');
+        });
     });
 
-    it('should indicate if file is not shared', async() => {
-        component.documentList.selection = [selection];
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        fixture.detectChanges();
-        expect(shareButtonElement.title).toBe('Not Shared');
-    });
-
-    it('should indicate if file is already shared', async() => {
-        selection.entry.properties['qshare:sharedId'] = 'someId';
-        component.documentList.selection = [selection];
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        fixture.detectChanges();
-        expect(shareButtonElement.title).toBe('Shared');
-    });
-
-    it('should open share dialog on click event', async() => {
+    it('should indicate if file is already shared', () => {
         selection.entry.properties['qshare:sharedId'] = 'someId';
         component.documentList.selection = [selection];
         fixture.detectChanges();
 
-        await fixture.whenStable();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(shareButtonElement.title).toBe('Shared');
+        });
+    });
+
+    it('should open share dialog on click event', () => {
+        selection.entry.properties['qshare:sharedId'] = 'someId';
+        component.documentList.selection = [selection];
         fixture.detectChanges();
 
-        shareButtonElement.click();
-        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
 
-        expect(document.querySelector('.adf-share-link-dialog')).not.toBe(null);
+            shareButtonElement.click();
+            fixture.detectChanges();
+
+            expect(document.querySelector('.adf-share-link-dialog')).not.toBe(null);
+        });
     });
 });
