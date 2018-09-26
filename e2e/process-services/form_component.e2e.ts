@@ -17,7 +17,7 @@
 
 import LoginPage = require('../pages/adf/loginPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
-import { FormPage } from '../pages/adf/process_services/FormPage';
+import { FormPage } from '../pages/adf/process_services/formPage';
 
 import TestConfig = require('../test.config');
 
