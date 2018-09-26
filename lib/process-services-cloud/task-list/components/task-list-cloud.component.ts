@@ -1,3 +1,4 @@
+
 /*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
@@ -15,29 +16,71 @@
  * limitations under the License.
  */
 
-import {
-    Component, ContentChild, EventEmitter,
-    OnChanges, Output, SimpleChanges, Input } from '@angular/core';
-import { DataRowEvent, DataTableSchema, EmptyCustomContentDirective } from '@alfresco/adf-core';
-import { AppConfigService, PaginatedComponent, UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
+import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild } from '@angular/core';
+import { AppConfigService, UserPreferencesService,
+         DataTableSchema, UserPreferenceValues,
+         PaginatedComponent, PaginationModel,
+         DataRowEvent, EmptyCustomContentDirective } from '@alfresco/adf-core';
+import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
+import { TaskQueryCloudRequestModel } from '../models/filter-cloud.model';
 import { BehaviorSubject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
-import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 
 @Component({
-    selector: 'adf-tasklist',
-    templateUrl: './task-list.component.html',
-    styleUrls: ['./task-list.component.css']
+    selector: 'adf-cloud-task-list',
+    templateUrl: './task-list-cloud.component.html',
+    styleUrls: ['./task-list-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class TaskListComponent extends DataTableSchema implements OnChanges, PaginatedComponent {
+export class TaskListCloudComponent extends DataTableSchema implements OnChanges, PaginatedComponent {
 
     static PRESET_KEY = 'adf-task-list.presets';
+
+    @ContentChild(EmptyCustomContentDirective)
+    emptyCustomContent: EmptyCustomContentDirective;
 
     @Input()
     applicationName: string = '';
 
-    @ContentChild(EmptyCustomContentDirective)
-    emptyCustomContent: EmptyCustomContentDirective;
+    @Input()
+    assignee: string = '';
+
+    @Input()
+    createdDate: string = '';
+
+    @Input()
+    dueDate: string = '';
+
+    @Input()
+    id: string = '';
+
+    @Input()
+    name: string = '';
+
+    @Input()
+    parentTaskId: string = '';
+
+    @Input()
+    processDefinitionId: string = '';
+
+    @Input()
+    processInstanceId: string = '';
+
+    @Input()
+    status: string = '';
+
+    @Input()
+    selectFirstRow: boolean = true;
+
+    @Input()
+    landingTaskId: string;
+
+    @Input()
+    selectionMode: string = 'single'; // none|single|multiple
+
+    /** Toggles multiple row selection, renders checkboxes at the beginning of each row */
+    @Input()
+    multiselect: boolean = false;
 
     /** Emitted when a task in the list is clicked */
     @Output()
@@ -57,79 +100,93 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Pag
 
     pagination: BehaviorSubject<PaginationModel>;
 
+    requestNode: TaskQueryCloudRequestModel;
+    rows: any[];
     size: number;
-    currentInstanceId: string;
+    currentInstanceId: any;
+    isLoading = false;
     selectedInstances: any[];
-    isLoading: boolean = true;
 
     constructor(private taskListCloudService: TaskListCloudService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
-        super(appConfigService, TaskListComponent.PRESET_KEY, taskPresetsCloudDefaultModel);
+        super(appConfigService, TaskListCloudComponent.PRESET_KEY, taskPresetsCloudDefaultModel);
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;
+            this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
+                maxItems: this.size,
+                skipCount: 0,
+                totalItems: 0
+            });
         });
 
-        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel>{
-            maxItems: this.size,
-            skipCount: 0,
-            totalItems: 0
-        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
-            // if (this.isSortChanged(changes)) {
-            //     this.sorting = this.sort ? this.sort.split('-') : this.sorting;
-            // }
             this.reload();
         }
     }
 
-    // private isSortChanged(changes: SimpleChanges): boolean {
-    //     const actualSort = changes['sort'];
-    //     return actualSort && actualSort.currentValue && actualSort.currentValue !== actualSort.previousValue;
-    // }
-
     private isPropertyChanged(changes: SimpleChanges): boolean {
-        let changed: boolean = true;
-
-        let landingTaskId = changes['landingTaskId'];
-        let page = changes['page'];
-        let size = changes['size'];
-        if (landingTaskId && landingTaskId.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
-            changed = false;
-        } else if (page && page.currentValue !== page.previousValue) {
-            changed = true;
-        } else if (size && size.currentValue !== size.previousValue) {
-            changed = true;
+        for (let property in changes) {
+            if (changes.hasOwnProperty(property)) {
+                if (changes[property] &&
+                    (changes[property].currentValue !== changes[property].previousValue)) {
+                    return true;
+                }
+            }
         }
-
-        return changed;
+        return false;
     }
 
     reload(): void {
-        this.load();
+        this.requestNode = this.createRequestNode();
+        this.load(this.requestNode);
     }
 
-    private load(requestNode: TaskQueryRequestRepresentationModel) {
+    private load(requestNode: TaskQueryCloudRequestModel) {
         this.isLoading = true;
-        this.loadTasksByState().subscribe(
+        this.taskListCloudService.getTaskByRequest(requestNode).subscribe(
             (tasks) => {
-                this.rows = this.optimizeNames(tasks.data);
+                this.rows = tasks.list.entries;
                 this.selectTask(this.landingTaskId);
                 this.success.emit(tasks);
                 this.isLoading = false;
-                this.pagination.next({
-                    count: tasks.data.length,
-                    maxItems: this.size,
-                    skipCount: this.page * this.size,
-                    totalItems: tasks.total
-                });
+                this.pagination.next(tasks.list.pagination);
             }, (error) => {
                 this.error.emit(error);
                 this.isLoading = false;
             });
+    }
+
+    selectTask(taskIdSelected: string): void {
+        if (!this.isListEmpty()) {
+            let dataRow = null;
+            if (taskIdSelected) {
+                dataRow = this.rows.find((currentRow: any) => {
+                    return currentRow['id'] === taskIdSelected;
+                });
+            }
+            if (!dataRow && this.selectFirstRow) {
+                dataRow = this.rows[0];
+            }
+            if (dataRow) {
+                dataRow.isSelected = true;
+                this.currentInstanceId = dataRow['id'];
+            }
+        } else {
+            this.currentInstanceId = null;
+        }
+    }
+
+    isListEmpty(): boolean {
+        return !this.rows || this.rows.length === 0;
+    }
+
+    updatePagination(pagination: PaginationModel) {
+        this.pagination.next(pagination);
+        this.reload();
     }
 
     onRowClick(item: DataRowEvent) {
@@ -155,33 +212,20 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Pag
         }
     }
 
-    updatePagination(params: PaginationModel) {
-
-    }
-
     private createRequestNode() {
 
         let requestNode = {
-            appName: '',
-            appVersion: '',
-            assignee: '',
-            claimedDate: null,
-            createdDate: null,
-            description: '',
-            dueDate: null,
-            id: '',
-            name: '',
-            owner: '',
-            parentTaskId: '',
-            priority: 0,
-            processDefinitionId: '',
-            processInstanceId: '',
-            serviceFullName: '',
-            serviceName: '',
-            serviceType: '',
-            serviceVersion: '',
-            status: ''
+            appName: this.applicationName,
+            assignee: this.assignee,
+            createdDate: this.createdDate,
+            dueDate: this.dueDate,
+            id: this.id,
+            name: this.name,
+            parentTaskId: this.parentTaskId,
+            processDefinitionId: this.processDefinitionId,
+            processInstanceId: this.processInstanceId,
+            status: this.status
         };
-        return new TaskQueryRequestRepresentationModel(requestNode);
+        return new TaskQueryCloudRequestModel(requestNode);
     }
 }

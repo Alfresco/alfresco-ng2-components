@@ -38,7 +38,25 @@ export class TaskQueryCloudRequestModel {
 
     constructor(obj?: any) {
         if (obj) {
-
+            this.appName = obj.appName;
+            this.appVersion = obj.appVersion;
+            this.assignee = obj.assignee;
+            this.claimedDate = obj.claimedDate;
+            this.createdDate = obj.createdDate;
+            this.description = obj.description;
+            this.dueDate = obj.dueDate;
+            this.id = obj.id;
+            this.name = obj.name;
+            this.owner = obj.owner;
+            this.parentTaskId = obj.parentTaskId;
+            this.priority = obj.priority;
+            this.processDefinitionId = obj.processDefinitionId;
+            this.processInstanceId = obj.processInstanceId;
+            this.serviceFullName = obj.serviceFullName;
+            this.serviceName = obj.serviceName;
+            this.serviceType = obj.serviceType;
+            this.serviceVersion = obj.serviceVersion;
+            this.status = obj.status;
         }
     }
 }

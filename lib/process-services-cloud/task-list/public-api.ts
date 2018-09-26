@@ -14,8 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './process-cloud.module';
 
-export * from './hello/index';
+export * from './components/task-list-cloud.component';
 
-export * from './task-list/index';
+export * from './services/task-list-cloud.service';
+
+export * from './models/filter-cloud.model';
+export * from './models/task-preset-cloud.model';
+
+export * from './task-list-cloud.module';

@@ -57,6 +57,7 @@ import { HeaderDataComponent } from './components/header-data/header-data.compon
 import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
 import { AppComponent } from './app.component';
 import { HelloCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -307,6 +308,11 @@ export const appRoutes: Routes = [
             {
                 path: 'process-list/:id',
                 component: ProcessListDemoComponent,
+                canActivate: [AuthGuardBpm]
+            },
+            {
+                path: 'tasklist-cloud',
+                component: TaskListCloudDemoComponent,
                 canActivate: [AuthGuardBpm]
             },
             {

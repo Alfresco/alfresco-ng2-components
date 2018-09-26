@@ -1,0 +1,7 @@
+<h2>TASK LIST CLOUD DEMO</h2>
+<adf-cloud-task-list #taskCloud
+[applicationName]="'awesome-app'">
+</adf-cloud-task-list>
+<adf-pagination [target]="taskCloud"
+                (changePageSize)="onChangePageSize($event)">
+</adf-pagination>

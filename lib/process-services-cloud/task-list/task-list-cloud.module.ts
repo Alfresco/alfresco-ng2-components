@@ -16,19 +16,25 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
+import { TaskListCloudComponent } from './components/task-list-cloud.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
     imports: [
         CoreModule.forChild(),
-        MaterialModule
+        CommonModule,
+        FormsModule,
+        MaterialModule,
+        ReactiveFormsModule
     ],
     declarations: [
-
+        TaskListCloudComponent
     ],
     exports: [
-
+        TaskListCloudComponent
     ]
 })
 export class TaskListCloudModule {}

@@ -14,8 +14,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './process-cloud.module';
 
-export * from './hello/index';
-
-export * from './task-list/index';
+export * from './public-api';

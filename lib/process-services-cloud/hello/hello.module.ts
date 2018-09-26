@@ -16,14 +16,10 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { CoreModule } from '@alfresco/adf-core';
 import { HelloCloudComponent } from './components/hello.component';
 
 @NgModule({
     imports: [
-        CoreModule.forChild(),
-        MaterialModule
     ],
     declarations: [
         HelloCloudComponent

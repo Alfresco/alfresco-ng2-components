@@ -19,12 +19,14 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
-
 import { MaterialModule } from './material.module';
 import { HelloCloudModule } from './hello';
+import { TaskListCloudService } from './task-list/services/task-list-cloud.service';
+import { TaskListCloudModule } from './task-list';
 
 export function providers() {
     return [
+        TaskListCloudService
     ];
 }
 
@@ -35,7 +37,8 @@ export function providers() {
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        HelloCloudModule
+        HelloCloudModule,
+        TaskListCloudModule
     ],
     providers: [
         ...providers(),
@@ -52,7 +55,8 @@ export function providers() {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HelloCloudModule
+        HelloCloudModule,
+        TaskListCloudModule
     ]
 })
 export class ProcessCloudModule {
@@ -87,13 +91,15 @@ export class ProcessCloudModule {
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        HelloCloudModule
+        HelloCloudModule,
+        TaskListCloudModule
     ],
     exports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HelloCloudModule
+        HelloCloudModule,
+        TaskListCloudModule
     ]
 })
 export class ProcessCloudModuleLazy {}
