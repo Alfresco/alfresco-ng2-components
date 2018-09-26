@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders} from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
-
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { NodeSharedDirective } from './content-node-share.directive';
 
