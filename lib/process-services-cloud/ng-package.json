@@ -16,7 +16,6 @@
       "@mat-datetimepicker": "@mat-datetimepicker",
       "@angular/flex-layout": "@angular/flex-layout",
       "@alfresco/adf-core": "@alfresco/adf-core",
-      "@alfresco/adf-content-services": "@alfresco/adf-content-services",
       "@angular/material-moment-adapter": "@angular/material-moment-adapter",
       "@angular/animations": "@angular/animations",
       "@angular/cdk/platform": "@angular/cdk/platform",
