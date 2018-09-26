@@ -26,7 +26,7 @@ var ToggleState = function () {
                 toggle.click();
             }
         });
-    }
+    };
 
     this.disableToggle = function (toggle) {
         Util.waitUntilElementIsVisible(toggle);
@@ -35,7 +35,7 @@ var ToggleState = function () {
                 toggle.click();
             }
         });
-    }
+    };
 
 };
 module.exports = ToggleState;
