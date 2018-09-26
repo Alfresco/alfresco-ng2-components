@@ -154,7 +154,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     private createSharedLinks(nodeId: string) {
         this.isDisabled = true;
 
-        this.sharedLinksApiService.createSharedLinks({ nodeId })
+        this.sharedLinksApiService.createSharedLinks(nodeId)
             .subscribe((sharedLink: SharedLinkEntry) => {
 
                 if (sharedLink.entry) {
