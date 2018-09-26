@@ -396,7 +396,6 @@ var ContentServicesPage = function () {
         Util.waitUntilElementIsVisible(errorSnackBar);
         var deferred = protractor.promise.defer();
         errorSnackBar.getText().then(function (text) {
-            /*tslint:disable-next-line*/
             deferred.fulfill(text);
         });
         return deferred.promise;
