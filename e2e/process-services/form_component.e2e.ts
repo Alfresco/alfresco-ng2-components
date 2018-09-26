@@ -23,7 +23,6 @@ import TestConfig = require('../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
-import { browser } from "protractor";
 
 describe('Form Component', () => {
 
@@ -34,13 +33,13 @@ describe('Form Component', () => {
     let tenantId, user;
 
     let message = {
-        test: "Text Test",
-        warningNumberAndAmount: "Use a different number format",
-        warningDate: "D-M-YYYY",
-        errorLogNumber: "Error Label4 Use a different number format",
-        errorLogDate: "Error Label7 D-M-YYYY",
-        errorLogAmount: "Error Label11 Use a different number format",
-        errorLabel: "Error Label4"
+        test: 'Text Test',
+        warningNumberAndAmount: 'Use a different number format',
+        warningDate: 'D-M-YYYY',
+        errorLogNumber: 'Error Label4 Use a different number format',
+        errorLogDate: 'Error Label7 D-M-YYYY',
+        errorLogAmount: 'Error Label11 Use a different number format',
+        errorLabel: 'Error Label4'
     };
 
     beforeAll(async(done) => {
