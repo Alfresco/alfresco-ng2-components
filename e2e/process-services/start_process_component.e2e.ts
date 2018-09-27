@@ -259,7 +259,7 @@ describe('Start Process Component', () => {
             processFiltersPage.selectFromProcessList('Type');
         });
 
-        it('[C91321] Should be able to use down arrow key when navigating throw suggestions', () => {
+        it('[C286513] Should be able to use down arrow key when navigating throw suggestions', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -270,7 +270,7 @@ describe('Start Process Component', () => {
             expect(startProcessPage.getProcessDefinitionValue()).toBe("process_without_se");
         });
 
-        it('[C91321] Should the process definition input be cleared when clicking on options drop down ', () => {
+        it('[C286514] Should the process definition input be cleared when clicking on options drop down ', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
