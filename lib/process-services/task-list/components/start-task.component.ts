@@ -178,4 +178,10 @@ export class StartTaskComponent implements OnInit {
             }
         }
     }
+
+    clearDateInput() {
+        const emptyValue = '';
+        this.startTaskmodel.dueDate = emptyValue;
+        this.onDateChanged(emptyValue);
+    }
 }
