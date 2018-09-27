@@ -29,7 +29,7 @@ let stoplist = new Stoplist(stoplistFilePath);
 
 let docsFolderPath = path.resolve("docs");
 
-let libFolders = ["core", "content-services", "process-services", "insights"];
+let libFolders = ["core", "content-services", "process-services", "insights", "process-services-cloud"];
 
 libsearch(srcData, path.resolve(libFolder));
 
@@ -148,7 +148,7 @@ function getDocFilePaths(folderPath) {
     let libPath = path.resolve(folderPath, element);
     let files = fs.readdirSync(libPath);
 
-    files = files.filter(filename => 
+    files = files.filter(filename =>
       (path.extname(filename) === ".md") &&
       (filename !== "README.md") &&
       (filename.match(angFilePattern))
@@ -158,7 +158,7 @@ function getDocFilePaths(folderPath) {
       result.push(path.join(libPath, element));
     });
   });
-  
+
 
   return result;
 }

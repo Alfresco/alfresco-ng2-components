@@ -20,7 +20,7 @@ import {
 } from "../SourceInfoClasses"
 
 
-let libFolders = ["core", "content-services", "process-services", "insights"];
+let libFolders = ["core", "content-services", "process-services", "insights", "process-services-cloud"];
 let templateFolder = path.resolve("tools", "doc", "templates");
 
 let excludePatterns = [
@@ -33,9 +33,9 @@ let nameExceptions;
 
 export function processDocs(mdCache, aggData, _errorMessages) {
     //initPhase(aggData);
-    
+
     nameExceptions = aggData.config.typeNameExceptions;
-    
+
     let pathnames = Object.keys(mdCache);
     let internalErrors;
 
@@ -74,8 +74,8 @@ function initPhase(aggData) {
 
     let sources = app.expandInputFiles(libFolders.map(folder => {
         return path.resolve("lib", folder);
-    }));    
-    
+    }));
+
     aggData.projData = app.convert(sources);
 }
 
@@ -106,7 +106,7 @@ function updateFile(tree, pathname, aggData, errorMessages) {
         let inputMD = getPropDocsFromMD(tree, "Properties", 3);
         let outputMD = getPropDocsFromMD(tree, "Events", 2);
         updatePropDocsFromMD(compData, inputMD, outputMD, errorMessages);
-       
+
         if (classType === "service") {
             let methodMD = getMethodDocsFromMD(tree);
             updateMethodDocsFromMD(compData, methodMD, errorMessages);
@@ -146,24 +146,24 @@ function angNameToClassName(rawName: string) {
         return nameExceptions[rawName];
 
 	var name = rawName.replace(/\]|\(|\)/g, '');
-	
+
     var fileNameSections = name.split('.');
     var compNameSections = fileNameSections[0].split('-');
-    
+
     var outCompName = '';
-    
+
     for (var i = 0; i < compNameSections.length; i++) {
         outCompName = outCompName + initialCap(compNameSections[i]);
     }
-    
+
     var itemTypeIndicator = '';
-    
+
     if (fileNameSections.length > 1) {
         itemTypeIndicator = initialCap(fileNameSections[1]);
     }
-	
+
     var finalName = outCompName + itemTypeIndicator;
-	
+
     return finalName;
 }
 */
@@ -205,7 +205,7 @@ function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
         propTableRow = propsTable.childNav
         .tableRow(()=>true, i).childNav;
     }
-    
+
     return result;
 }
 
@@ -331,7 +331,7 @@ function updateMethodDocsFromMD(comp: ComponentInfo, methodDocs, errorMessages) 
             meth.docText = currMethMD.docText;
             errorMessages.push(`Warning: empty JSDocs for method sig "${meth.name}" may need sync with the .md file.`);
         }
-        
+
         meth.params.forEach(param => {
             if (!param.docText && currMethMD && currMethMD.params[param.name])
             {

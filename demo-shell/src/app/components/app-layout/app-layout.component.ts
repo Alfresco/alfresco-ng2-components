@@ -41,6 +41,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
         { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES' },
+        { href: '/activiti-cloud', icon: 'cloud', title: 'APP_LAYOUT.CLOUD_COMPONENTS' },
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/trashcan', icon: 'delete', title: 'APP_LAYOUT.TRASHCAN' },
         { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },

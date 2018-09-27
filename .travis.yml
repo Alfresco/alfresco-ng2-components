@@ -43,6 +43,9 @@ jobs:
           env: STAGE=content-services
           script:  (./scripts/npm-build-all.sh -si -sb -t "content-services" --skip-lint|| exit 1;);
         - stage: Unit test
+          env: STAGE=process-services-cloud
+          script: (./scripts/npm-build-all.sh -si -sb -t "process-services-cloud" --skip-lint|| exit 1;);
+        - stage: Unit test
           env: STAGE=demo-shell
           script:   if ([ "$TRAVIS_BRANCH" = "master" ]); then
                             (./scripts/start.sh -t -ss || exit 1;);
@@ -79,7 +82,10 @@ jobs:
           script: node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder content-services --skip-lint --use-dist --timeout 10000
         - stage: e2e Test # Test insights
           env: STAGE=insights
-          script: node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder insights --skip-lint --use-dist --timeout 10000
+          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save --folder insights --skip-lint --use-dist
+        - stage: e2e Test # Test process-services
+          env: STAGE=process-services-cloud
+          script: node ./scripts/download-build-in-cs.js --username $E2E_USERNAME --password $E2E_USERNAME --host $E2E_HOST --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy $E2E_HOST -u $E2E_USERNAME -p $E2E_PASSWORD -e $E2E_EMAIL -b -save --folder process-services-cloud --skip-lint --use-dist
         - stage: Test Update version 2.0.0
           if: branch = development
           env: STAGE=test-BC

@@ -32,6 +32,9 @@
       ],
       "@alfresco/adf-insights": [
         "../../lib/insights"
+      ],
+      "@alfresco/adf-process-services-cloud": [
+        "../../lib/process-services-cloud"
       ]
     }
   },
