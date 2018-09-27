@@ -125,6 +125,10 @@ var StartProcessPage = function () {
         expect(startProcessButton.isEnabled()).toBe(false);
     };
 
+    this.clickStartProcessButton = function () {
+        return startProcessButton.click();
+    };
+
 };
 
 module.exports = StartProcessPage;

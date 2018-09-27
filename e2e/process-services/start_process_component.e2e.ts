@@ -253,7 +253,8 @@ describe('Start Process Component', () => {
             startProcessPage.typeProcessDefinition("process_without_se");
             startProcessPage.selectOption("process_without_se");
             startProcessPage.checkStartProcessButtonIsEnabled();
-            startProcessPage.clickFormStartProcessButton();
+            expect(startProcessPage.getProcessDefinitionValue()).toBe("process_without_se");
+            startProcessPage.clickStartProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.selectFromProcessList('Type');
         });
