@@ -54,6 +54,7 @@ describe('Start Process Component', () => {
     let app = resources.Files.APP_WITH_PROCESSES;
     let simpleApp = resources.Files.WIDGETS_SMOKE_TEST;
     let appId, procUserModel, secondProcUserModel, tenantId, simpleAppCreated;
+    let processModelWithSe = 'process_with_se', processModelWithoutSe = 'process_without_se';
 
     let auditLogFile = path.join('../e2e/download/', 'Audit.pdf');
 
@@ -159,7 +160,7 @@ describe('Start Process Component', () => {
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.selectFromProcessDropdown('process_without_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
             startProcessPage.deleteDefaultName('My Default Name');
             startProcessPage.checkStartProcessButtonIsDisabled();
         });
@@ -169,7 +170,7 @@ describe('Start Process Component', () => {
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.selectFromProcessDropdown('process_without_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
             expect(startProcessPage.getDefaultName()).toEqual('My Default Name');
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
@@ -180,7 +181,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Test');
-            startProcessPage.selectFromProcessDropdown('process_with_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithSe);
             startProcessPage.clickFormStartProcessButton()
                 .then(() => {
                     processDetailsPage.getId()
@@ -206,7 +207,7 @@ describe('Start Process Component', () => {
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.typeProcessDefinition("nonexistent");
+            startProcessPage.typeProcessDefinition('nonexistent');
             startProcessPage.checkNoProcessDefinitionOptionIsDisplayed();
             startProcessPage.checkStartProcessButtonIsDisabled();
         });
@@ -216,10 +217,10 @@ describe('Start Process Component', () => {
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.typeProcessDefinition("process");
-            startProcessPage.checkOptionIsDisplayed("process_without_se");
-            startProcessPage.checkOptionIsDisplayed("process_with_se");
-            startProcessPage.selectOption("process_without_se");
+            startProcessPage.typeProcessDefinition('process');
+            startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
+            startProcessPage.checkOptionIsDisplayed(processModelWithSe);
+            startProcessPage.selectOption(processModelWithoutSe);
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
@@ -228,10 +229,10 @@ describe('Start Process Component', () => {
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.typeProcessDefinition("process_without_se");
-            startProcessPage.checkOptionIsDisplayed("process_without_se");
-            startProcessPage.checkOptionIsNotDisplayed("process_with_se");
-            startProcessPage.selectOption("process_without_se");
+            startProcessPage.typeProcessDefinition(processModelWithoutSe);
+            startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
+            startProcessPage.checkOptionIsNotDisplayed(processModelWithSe);
+            startProcessPage.selectOption(processModelWithoutSe);
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
@@ -250,10 +251,10 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Type');
-            startProcessPage.typeProcessDefinition("process_without_se");
-            startProcessPage.selectOption("process_without_se");
+            startProcessPage.typeProcessDefinition(processModelWithoutSe);
+            startProcessPage.selectOption(processModelWithoutSe);
             startProcessPage.checkStartProcessButtonIsEnabled();
-            expect(startProcessPage.getProcessDefinitionValue()).toBe("process_without_se");
+            expect(startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
             startProcessPage.clickStartProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.selectFromProcessList('Type');
@@ -264,10 +265,10 @@ describe('Start Process Component', () => {
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.typeProcessDefinition("process");
+            startProcessPage.typeProcessDefinition('process');
 
             startProcessPage.pressDownArrowAndEnter();
-            expect(startProcessPage.getProcessDefinitionValue()).toBe("process_without_se");
+            expect(startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
         });
 
         it('[C286514] Should the process definition input be cleared when clicking on options drop down ', () => {
@@ -275,12 +276,12 @@ describe('Start Process Component', () => {
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.typeProcessDefinition("process");
-            startProcessPage.selectOption("process_without_se");
-            expect(startProcessPage.getProcessDefinitionValue()).toBe("process_without_se");
+            startProcessPage.typeProcessDefinition('process');
+            startProcessPage.selectOption(processModelWithoutSe);
+            expect(startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
             startProcessPage.clickProcessDropdownArrow();
 
-            expect(startProcessPage.getProcessDefinitionValue()).toBe("");
+            expect(startProcessPage.getProcessDefinitionValue()).toBe('');
         });
 
         it('[C260453] Add a comment on an active process', () => {
@@ -289,7 +290,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Comment Process');
-            startProcessPage.selectFromProcessDropdown('process_with_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithSe);
             startProcessPage.clickFormStartProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.selectFromProcessList('Comment Process');
@@ -303,7 +304,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Audit Log');
-            startProcessPage.selectFromProcessDropdown('process_with_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithSe);
             startProcessPage.clickFormStartProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.selectFromProcessList('Audit Log');
@@ -321,7 +322,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickNewProcessDropdown();
 
             startProcessPage.enterProcessName('Attach File');
-            startProcessPage.selectFromProcessDropdown('process_with_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithSe);
             startProcessPage.clickFormStartProcessButton();
 
             processFiltersPage.clickRunningFilterButton();
@@ -340,7 +341,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickNewProcessDropdown();
 
             startProcessPage.enterProcessName('Show Diagram');
-            startProcessPage.selectFromProcessDropdown('process_with_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithSe);
             startProcessPage.clickFormStartProcessButton();
 
             processFiltersPage.clickRunningFilterButton();
@@ -355,7 +356,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Active Task');
-            startProcessPage.selectFromProcessDropdown('process_with_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithSe);
             startProcessPage.clickFormStartProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.selectFromProcessList('Active Task');
@@ -372,7 +373,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Cancel Process');
-            startProcessPage.selectFromProcessDropdown('process_with_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithSe);
             startProcessPage.clickFormStartProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.selectFromProcessList('Cancel Process');
@@ -388,7 +389,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Comment Process 2');
-            startProcessPage.selectFromProcessDropdown('process_with_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithSe);
             startProcessPage.clickFormStartProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.selectFromProcessList('Comment Process 2');
@@ -405,7 +406,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('File');
-            startProcessPage.selectFromProcessDropdown('process_with_se');
+            startProcessPage.selectFromProcessDropdown(processModelWithSe);
             startProcessPage.clickFormStartProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.selectFromProcessList('File');
