@@ -21,7 +21,7 @@ import { BasicPropertiesService } from './basic-properties.service';
 import { Observable, of } from 'rxjs';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
 import { CardViewItem } from '@alfresco/adf-core';
-import { CardViewGroup } from '../interfaces/content-metadata.interfaces';
+import { CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { map } from 'rxjs/operators';
@@ -53,11 +53,19 @@ export class ContentMetadataService {
             if (groupNames.length > 0) {
                 groupedProperties = this.propertyDescriptorsService.load(groupNames).pipe(
                     map(groups => config.reorganiseByConfig(groups)),
+                    map(groups => this.setTitleToNameIfNotSet(groups)),
                     map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties))
                 );
             }
         }
 
         return groupedProperties;
+    }
+
+    setTitleToNameIfNotSet(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
+        propertyGroups.map(propertyGroup => {
+            propertyGroup.title = propertyGroup.title || propertyGroup.name;
+        });
+        return propertyGroups;
     }
 }
