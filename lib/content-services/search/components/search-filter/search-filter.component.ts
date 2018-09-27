@@ -213,39 +213,10 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private parseFacetFields(context: any) {
         if (!this.responseFacetFields) {
-        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
+            const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
 
-        const bkpResponseFacetFields =  [...this.responseFacetFields || []];
-        this.responseFacetFields = configFacetFields
-            .map(field => {
-
-                const bkpField = bkpResponseFacetFields.find(item => item.field === field.field);
-
-                let bkpBuckets = (bkpField && bkpField.buckets.items || [])
-                    .map(bucket => {
-                        const currentlySelected = this.selectedBuckets.find(facetBucket => facetBucket.bucket.label === bucket.label);
-                        bucket.count = (currentlySelected ? 0 : null);
-
-                        return bucket;
-                    });
-
-                let responseField = (context.facetsFields || []).find(response => response.label === field.label);
-
-                if (!responseField && bkpBuckets.length) {
-                    responseField = { buckets: [...bkpBuckets] };
-                }
-
-                if (responseField && this.selectedBuckets.length) {
-                    responseField.buckets = bkpBuckets.map(bkpBucket => {
-                        const responseBucket = responseField.buckets.find(respBucket => respBucket.label === bkpBucket.label);
-
-                        if (responseBucket) {
-                            bkpBucket.count = responseBucket.count;
-                        }
-                        return bkpBucket;
-                    });
-                }
-
+            this.responseFacetFields = configFacetFields.map(field => {
+                const responseField = (context.facetsFields || []).find(response => response.label === field.label);
                 const buckets: FacetFieldBucket[] = ((responseField && responseField.buckets) || []).map(bucket => {
                     const selectedBucket = this.selectedBuckets.find(facetBucket =>
                         facetBucket.bucket.label === bucket.label && facetBucket.field.field === field.field);
