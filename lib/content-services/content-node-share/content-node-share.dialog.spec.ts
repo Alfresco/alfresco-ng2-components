@@ -16,7 +16,7 @@
  */
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { of } from 'rxjs';
 import { setupTestBed, CoreModule, SharedLinksApiService, NodesApiService } from '@alfresco/adf-core';
@@ -63,6 +63,10 @@ describe('ShareDialogComponent', () => {
                 properties: {}
             }
         };
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it(`should toggle share action when property 'sharedId' does not exists`, () => {
@@ -162,7 +166,7 @@ describe('ShareDialogComponent', () => {
         expect(matDialog.open).toHaveBeenCalled();
     });
 
-    it('should unshare file when confirmation dialog returns true', () => {
+    it('should unshare file when confirmation dialog returns true', fakeAsync(() => {
         spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(true) });
         spyOn(sharedLinksApiService, 'deleteSharedLink');
         node.entry.properties['qshare:sharedId'] = 'sharedId';
@@ -180,9 +184,9 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
 
         expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
-    });
+    }));
 
-    it('should not unshare file when confirmation dialog returns false', () => {
+    it('should not unshare file when confirmation dialog returns false', fakeAsync(() => {
         spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(false) });
         spyOn(sharedLinksApiService, 'deleteSharedLink');
         node.entry.properties['qshare:sharedId'] = 'sharedId';
@@ -200,7 +204,7 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
 
         expect(sharedLinksApiService.deleteSharedLink).not.toHaveBeenCalled();
-    });
+    }));
 
     it('should not allow unshare when node has no update permission', () => {
         node.entry.properties['qshare:sharedId'] = 'sharedId';
