@@ -19,6 +19,7 @@
                 <ng-template let-entry="$implicit">
                     <mat-form-field *ngIf="!entry.row.getValue('isInherited') else show_only_label">
                         <mat-select id="adf-select-role-permission"
+                                    [placeholder]="entry.data.getValue(entry.row, entry.col)"
                                     value="{{entry.data.getValue(entry.row, entry.col)}}"
                                     (selectionChange)="saveNewRole($event, entry.row.obj)">
                           <mat-option *ngFor="let role of settableRoles" [value]="role">

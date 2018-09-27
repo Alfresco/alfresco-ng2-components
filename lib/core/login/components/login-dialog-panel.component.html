@@ -1,0 +1,10 @@
+<div>
+    <adf-login #adfLogin
+               [showRememberMe]="false"
+               [showLoginActions]="false"
+               [backgroundImageUrl]="''"
+               (success)="onLoginSuccess($event)">
+        <login-header><ng-template></ng-template></login-header>
+        <login-footer><ng-template></ng-template></login-footer>
+    </adf-login>
+</div>

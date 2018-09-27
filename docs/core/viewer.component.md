@@ -79,7 +79,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | allowGoBack | `boolean` | true | Allows `back` navigation |
 | allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
 | allowPrint | `boolean` | false | Toggles printing. |
-| allowShare | `boolean` | false | Toggles sharing. |
+| allowShare | `boolean` | false | (**Deprecated:** 2.5.0 - inject the share button directive as custom button) Toggles sharing. |
 | allowSidebar | `boolean` | false | Toggles the sidebar. |
 | allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
 | blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
@@ -94,15 +94,16 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
 | sharedLinkId | `string` | null | Shared link id (to display shared file). |
 | showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowSidebar` to be set to `true`. |
-| showSidebar | `boolean` | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
+| showSidebar | `boolean` | false | (**Deprecated:** 2.5.0 - will be renamed showRightSidebar in 3.0.0) Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
 | showToolbar | `boolean` | true | Hide or show the toolbar |
 | showViewer | `boolean` | true | Hide or show the viewer |
 | sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data. |
-| sidebarPosition | `string` | "right" | The position of the sidebar. Can be `left` or `right`. |
-| sidebarTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the sidebar. The template context contains the loaded node data. |
+| sidebarPosition | `string` | "right" | (**Deprecated:** 2.5.0 use sidebarTemplateLeft) The position of the sidebar. Can be `left` or `right`. |
+| sidebarTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | (**Deprecated:** 2.5.0 renamed as sidebarRight) The template for the sidebar. The template context contains the loaded node data. |
 | thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
 | urlFileViewer | `string` | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
+| fileNodeId | `void` |  | (**Deprecated:** 2.4.0 use nodeId) Node Id of the file to load. |
 
 ### Events
 

@@ -44,7 +44,7 @@ export class DocumentListService {
             rootNodeId = opts.rootFolderId;
         }
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
         let params: any = {
@@ -150,14 +150,15 @@ export class DocumentListService {
     }
 
     /**
-     * @deprecated 2.3.0. Gets a folder node via its node ID.
+     * Gets a folder node via its node ID.
+     * @deprecated 2.3.0
      * @param nodeId ID of the folder node
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
     getFolderNode(nodeId: string, includeFields: string[] = []): Observable<MinimalNodeEntryEntity> {
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
         let opts: any = {
@@ -194,7 +195,8 @@ export class DocumentListService {
     }
 
     /**
-     * @Deprecated 2.3.0 - use the equivalent in the content service. Checks if a node has the specified permission.
+     * Checks if a node has the specified permission.
+     * @deprecated 2.3.0 - use the equivalent in the content service
      * @param node Target node
      * @param permission Permission level to query
      * @returns True if the node has the permission, false otherwise

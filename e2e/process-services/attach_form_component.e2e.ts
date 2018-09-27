@@ -61,7 +61,6 @@ describe('Attach Form Component', () => {
     });
 
     beforeEach(async(done) => {
-
         let users = new UsersActions();
         let appsActions = new AppsActions();
 
@@ -85,7 +84,6 @@ describe('Attach Form Component', () => {
     });
 
     afterEach(async(done) => {
-
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -96,7 +94,6 @@ describe('Attach Form Component', () => {
     });
 
     it('[C280047] Should be able to view the attach-form component after creating a standalone task', () => {
-
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
@@ -108,7 +105,6 @@ describe('Attach Form Component', () => {
     });
 
     it('[C280048] Should be able to view the attach-form component after clicking cancel button', () => {
-
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
@@ -129,7 +125,6 @@ describe('Attach Form Component', () => {
     });
 
     it('[C280017] Should be able to attach a form on a standalone task and complete', () => {
-
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
         taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);

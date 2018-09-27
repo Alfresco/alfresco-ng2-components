@@ -174,6 +174,10 @@ export class LoginComponent implements OnInit {
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
     }
 
+    submit() {
+        this.onSubmit(this.form.value);
+    }
+
     /**
      * Method called on submit form
      * @param values

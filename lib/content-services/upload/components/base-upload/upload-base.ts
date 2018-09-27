@@ -63,8 +63,10 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     @Output()
     success = new EventEmitter();
 
-    /** @deprecated 2.4.0 No longer used by the framework */
-    /** Emitted when a folder is created. */
+    /**
+     * Emitted when a folder is created.
+     * @deprecated 2.4.0 No longer used by the framework
+     */
     @Output()
     createFolder = new EventEmitter();
 
@@ -128,7 +130,8 @@ export abstract class UploadBase implements OnInit, OnDestroy {
         this.ngZone.run(() => {
             const event = new UploadFilesEvent(
                 [...filteredFiles],
-                this.uploadService
+                this.uploadService,
+                this.success
             );
             this.beginUpload.emit(event);
 

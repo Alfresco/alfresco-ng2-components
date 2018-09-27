@@ -30,11 +30,26 @@ var TaskFiltersPage = function () {
     var activeFilter = element(by.css("mat-list-item[class*='active']"));
     var emptyTaskList = element(by.css('p[class="adf-empty-content__title"]'));
     var emptyTaskDetails = element(by.css('adf-task-details > div > div'));
+    var taskIcon = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
 
     this.checkTaskFilterDisplayed = function(name) {
         var customTask = element(by.css(`span[data-automation-id="${name}_filter"]`));
         Util.waitUntilElementIsVisible(customTask);
         return customTask;
+    };
+
+    this.getTaskFilterIcon = function(name) {
+        var customTask = element(by.css(`span[data-automation-id="${name}_filter"]`));
+        Util.waitUntilElementIsVisible(customTask);
+        var icon = customTask.element(taskIcon);
+        Util.waitUntilElementIsVisible(icon);
+        return icon.getText();
+    };
+
+    this.checkTaskFilterHasNoIcon = function(name) {
+        var customTask = element(by.css(`span[data-automation-id="${name}_filter"]`));
+        Util.waitUntilElementIsVisible(customTask);
+        Util.waitUntilElementIsNotOnPage(customTask.element(taskIcon));
     };
 
     this.clickTaskFilter = function(name) {

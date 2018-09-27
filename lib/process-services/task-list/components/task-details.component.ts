@@ -175,6 +175,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     showAssignee: boolean = false;
     showAttachForm: boolean = false;
+    internalReadOnlyForm: boolean = false;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
     public errorDialogRef: MatDialogRef<TemplateRef<any>>;
@@ -306,7 +307,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
                     let endDate: any = res.endDate;
                     if (endDate && !isNaN(endDate.getTime())) {
-                        this.readOnlyForm = true;
+                        this.internalReadOnlyForm = true;
+                    } else {
+                        this.internalReadOnlyForm = this.readOnlyForm;
                     }
 
                     if (this.taskDetails && this.taskDetails.involvedPeople) {

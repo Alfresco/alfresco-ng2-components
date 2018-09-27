@@ -24,6 +24,10 @@ var SearchFiltersPage = function () {
     var searchFileTypeFilter = element(by.css("input[data-automation-id='facet-result-filter-1:Type'"));
     var creatorFilter = element(by.css("mat-expansion-panel[data-automation-id='expansion-panel-3:Creator'"));
     var searchCreatorFilter = element(by.css("input[data-automation-id='facet-result-filter-3:Creator'"));
+    var fileSizeFilter = element(by.css("mat-expansion-panel[data-automation-id='expansion-panel-2:Size'"));
+    var showMoreButtonForSize = fileSizeFilter.element(by.css('button[title="Show more"]'));
+    var showLessButtonForSize = fileSizeFilter.element(by.css('button[title="Show less"]'));
+    var numberOfCheckboxesforSize = element.all(by.css('mat-checkbox[data-automation-id*="checkbox-2:Size"]'));
 
     this.checkSearchFiltersIsDisplayed = function () {
         Util.waitUntilElementIsVisible(searchFilters);
@@ -108,5 +112,57 @@ var SearchFiltersPage = function () {
     this.checkCreatorChipIsNotDisplayed = function (creatorFirstName, creatorLastName) {
         return Util.waitUntilElementIsNotOnPage(element(by.cssContainingText('mat-chip',` ${creatorFirstName} ${creatorLastName} `)).element(by.css('mat-icon')));
     };
+
+    this.clickSizeShowMoreButtonUntilIsNotDisplayed = function () {
+        Util.waitUntilElementIsVisible(fileSizeFilter);
+
+        showMoreButtonForSize.isDisplayed().then(async (visible) => {
+            if (visible) {
+                for (var checkboxes = 5; checkboxes <= totalNumberOfCheckboxes; checkboxes + 5) {
+                    var totalNumberOfCheckboxes = await numberOfCheckboxesforSize.count();
+
+                    expect(totalNumberOfCheckboxes).toEqual(checkboxes);
+                }
+                showMoreButtonForSize.click();
+
+                this.clickSizeShowMoreButtonUntilIsNotDisplayed();
+            }
+        }, err => {})
+    };
+
+    this.checkSizeShowMoreButtonIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(showMoreButtonForSize);
+    };
+
+    this.checkSizeShowMoreButtonIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(showMoreButtonForSize);
+    };
+
+    this.clickSizeShowLessButtonUntilIsNotDisplayed = function () {
+        Util.waitUntilElementIsVisible(fileSizeFilter);
+
+        showLessButtonForSize.isDisplayed().then(async (visible) => {
+            if (visible) {
+                var totalNumberOfCheckboxes = await numberOfCheckboxesforSize.count();
+
+                for (var checkboxes = totalNumberOfCheckboxes; checkboxes > 10; checkboxes = totalNumberOfCheckboxes - checkboxes){
+                    expect(totalNumberOfCheckboxes).toEqual(checkboxes);
+                }
+
+                showLessButtonForSize.click();
+
+                this.clickSizeShowLessButtonUntilIsNotDisplayed();
+            }
+        }, err => {})
+    };
+
+    this.checkShowLessButtonIsNotDisplayed = function () {
+        Util.waitUntilElementIsNotVisible(showLessButtonForSize);
+    };
+
+    this.checkShowLessButtonIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(showLessButtonForSize);
+    }
+
 };
 module.exports = SearchFiltersPage;

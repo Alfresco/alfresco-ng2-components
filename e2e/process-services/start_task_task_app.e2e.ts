@@ -220,16 +220,16 @@ describe('Start Task - Task App', () => {
         taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(showHeaderTask).selectTaskFromTasksList(showHeaderTask);
 
         appNavigationBarPage.clickSettingsButton();
-        taskPage.usingTaskDetails().usingTaskDetailsToggles().disableShowHeader();
+        taskPage.usingTaskDetails().usingAppSettingsToggles().disableShowHeader();
         appNavigationBarPage.clickTasksButton();
 
         taskPage.usingTaskDetails().taskInfoDrawerIsNotDisplayed();
 
         appNavigationBarPage.clickSettingsButton();
-        taskPage.usingTaskDetails().usingTaskDetailsToggles().enableShowHeader();
+        taskPage.usingTaskDetails().usingAppSettingsToggles().disableShowHeader();
         appNavigationBarPage.clickTasksButton();
 
-        taskPage.usingTaskDetails().taskInfoDrawerIsDisplayed();
+        taskPage.usingTaskDetails().taskInfoDrawerIsNotDisplayed();
     });
 
     it('[C260424] Should be able to see Spinner loading on task list when clicking on Tasks', () => {

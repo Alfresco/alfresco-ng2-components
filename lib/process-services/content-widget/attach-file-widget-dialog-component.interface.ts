@@ -15,25 +15,14 @@
  * limitations under the License.
  */
 
-var ToggleState = require('../../core/toggleState');
+import { Subject } from 'rxjs/Subject';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
-var TaskDetailsToggles = function () {
-
-    var toggleState = new ToggleState();
-
-    var showDetailsHeaderToggle = element(by.id('adf-show-header-input'));
-
-    this.enableShowHeader = function () {
-        toggleState.enableToggle(showDetailsHeaderToggle);
-        return this;
-    };
-
-    this.disableShowHeader = function () {
-        toggleState.disableToggle(showDetailsHeaderToggle);
-        return this;
-    };
-
-};
-module.exports = TaskDetailsToggles;
-
-
+export interface AttachFileWidgetDialogComponentData {
+    title: string;
+    actionName?: string;
+    selected: Subject<MinimalNodeEntryEntity[]>;
+    ecmHost: string;
+    context?: string;
+    isSelectionValid?: (entry: MinimalNodeEntryEntity) => boolean;
+}

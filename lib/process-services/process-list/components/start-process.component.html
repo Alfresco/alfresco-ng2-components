@@ -6,19 +6,38 @@
             {{errorMessageId|translate}}
         </mat-card-subtitle>
         <mat-form-field class="adf-process-input-container">
-            <input matInput placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME'|translate}}" [(ngModel)]="name" id="processName" required />
+            <input
+                matInput
+                placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME' | translate}}"
+                [formControl]="processNameInput"
+                id="processName"
+                required/>
         </mat-form-field>
-
-        <div *ngIf="showSelectProcessDropdown">
-            <mat-form-field>
-                <mat-select [(value)]="selectedProcessDef" placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE'|translate}}" required>
-                    <mat-option *ngIf="!hasSingleProcessDefinition()">{{'ADF_PROCESS_LIST.START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</mat-option>
-                    <mat-option *ngFor="let processDef of processDefinitions" [value]="processDef">
+        <mat-form-field class="adf-process-input-container">
+            <input
+                type="text"
+                placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE'|translate}}"
+                matInput
+                [formControl]="processDefinitionInput"
+                [matAutocomplete]="auto"
+                #inputAutocomplete>
+            <div class="adf-process-input-autocomplete">
+                <mat-autocomplete
+                    #auto="matAutocomplete"
+                    [displayWith]="displayFn">
+                    <mat-option *ngFor="let processDef of filteredProcesses | async" [value]="processDef.name">
                         {{ processDef.name }}
                     </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+                </mat-autocomplete>
+                <button
+                    id="adf-select-process-dropdown"
+                    *ngIf="showSelectProcessDropdown"
+                    mat-icon-button
+                    (click)="displayDropdown($event)">
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </button>
+            </div>
+        </mat-form-field>
 
         <adf-start-form
             #startForm
@@ -28,7 +47,13 @@
             [processDefinitionId]="selectedProcessDef.id"
             (outcomeClick)="onOutcomeClick($event)"
             [showRefreshButton]="false">
-            <button form-custom-button mat-button (click)="cancelStartProcess()" id="cancel_process" class=""> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
+            <button
+                form-custom-button
+                mat-button
+                (click)="cancelStartProcess()"
+                id="cancel_process">
+                {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}}
+            </button>
         </adf-start-form>
     </mat-card-content>
     <mat-card-content *ngIf="hasErrorMessage()">
@@ -37,7 +62,23 @@
         </mat-card-subtitle>
     </mat-card-content>
     <mat-card-actions *ngIf="!hasStartForm()">
-        <button mat-button *ngIf="!hasStartForm()" (click)="cancelStartProcess()" id="cancel_process" class=""> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
-        <button color="primary" mat-button *ngIf="!hasStartForm()" [disabled]="!validateForm()" (click)="startProcess()" data-automation-id="btn-start" id="button-start" class="btn-start"> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate}} </button>
+        <button
+            mat-button
+            *ngIf="!hasStartForm()"
+            (click)="cancelStartProcess()"
+            id="cancel_process">
+            {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}}
+        </button>
+        <button
+            color="primary"
+            mat-button
+            *ngIf="!hasStartForm()"
+            [disabled]="!validateForm()"
+            (click)="startProcess()"
+            data-automation-id="btn-start"
+            id="button-start"
+            class="btn-start">
+            {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate}}
+        </button>
     </mat-card-actions>
 </mat-card>

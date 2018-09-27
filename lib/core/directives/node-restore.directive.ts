@@ -40,7 +40,10 @@ export class NodeRestoreDirective {
     @Input('adf-restore')
     selection: DeletedNodeEntry[];
 
-    /** @deprecated 2.4.0 Path to restored node. */
+    /**
+     * Path to restored node.
+     * @deprecated 2.4.0
+     */
     @Input()
     location: string = '';
 

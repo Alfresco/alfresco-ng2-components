@@ -69,8 +69,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     blobFile: Blob;
 
-    /** @deprecated 2.4.0 use nodeId */
-    /** Node Id of the file to load. */
+    /**
+     * Node Id of the file to load.
+     * @deprecated 2.4.0 use nodeId
+     */
     @Input()
     set fileNodeId(nodeId: string) {
         this.nodeId = nodeId;
@@ -114,8 +116,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     allowPrint = false;
 
-    /**  @deprecated 2.5.0 inkect the share button directive as custom button */
-    /** Toggles sharing. */
+    /**
+     * Toggles sharing.
+     * @deprecated 2.5.0 - inject the share button directive as custom button
+     */
     @Input()
     allowShare = false;
 
@@ -145,8 +149,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     allowThumbnails = true;
 
-    /** @deprecated 2.5.0 will be renamed showRightSidebar in 3.0.0  */
-    /** Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. */
+    /**
+     * Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`.
+     * @deprecated 2.5.0 - will be renamed showRightSidebar in 3.0.0
+     */
     @Input()
     showSidebar = false;
 
@@ -154,13 +160,17 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     showLeftSidebar = false;
 
-    /** @deprecated 2.5.0 use sidebarTemplateLeft */
-    /** The position of the sidebar. Can be `left` or `right`. */
+    /**
+     * The position of the sidebar. Can be `left` or `right`.
+     * @deprecated 2.5.0 use sidebarTemplateLeft
+     */
     @Input()
     sidebarPosition = 'right';
 
-    /**  @deprecated 2.5.0 rename sidebarRight */
-    /** The template for the sidebar. The template context contains the loaded node data. */
+    /**
+     * The template for the sidebar. The template context contains the loaded node data.
+     * @deprecated 2.5.0 renamed as sidebarRight
+     */
     @Input()
     sidebarTemplate: TemplateRef<any> = null;
 

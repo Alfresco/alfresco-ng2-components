@@ -83,7 +83,7 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../core/form-field.model.md)`[]>` | Emitted when form validations has validation error. |
 | formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
 | formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
-| onError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
+| onError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | (**Deprecated:** in 2.4.0, will be renamed as "error" in 3.x.x) Emitted when any error occurs. |
 
 ## Details
 
