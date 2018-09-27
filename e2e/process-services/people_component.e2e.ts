@@ -78,86 +78,86 @@ describe('People component', () => {
 
     it('[C279989] Should no people be involved when no user is typed', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
-        taskPage.usingTaskDetails().clickInvolvePeopleButton();
-        taskPage.usingTaskDetails().clickAddInvolvedUserButton();
-        taskPage.usingTaskDetails().checkNoPeopleIsInvolved();
+        taskPage.taskDetails().clickInvolvePeopleButton();
+        taskPage.taskDetails().clickAddInvolvedUserButton();
+        taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
     it('[C279990] Should no people be involved when clicking on Cancel button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
-        taskPage.usingTaskDetails().clickInvolvePeopleButton()
+        taskPage.taskDetails().clickInvolvePeopleButton()
             .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
             .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
             .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.usingTaskDetails().clickCancelInvolvePeopleButton();
-        taskPage.usingTaskDetails().checkNoPeopleIsInvolved();
+        taskPage.taskDetails().clickCancelInvolvePeopleButton();
+        taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
     it('[C261029] Should People dialog be displayed when clicking on add people button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
-        taskPage.usingTaskDetails().clickInvolvePeopleButton();
-        expect(taskPage.usingTaskDetails().getInvolvePeopleHeader()).toEqual('Add people and groups');
-        expect(taskPage.usingTaskDetails().getInvolvePeoplePlaceholder()).toEqual('Search user');
-        taskPage.usingTaskDetails().checkAddPeopleButtonIsEnabled().checkCancelButtonIsEnabled();
-        taskPage.usingTaskDetails().clickCancelInvolvePeopleButton();
+        taskPage.taskDetails().clickInvolvePeopleButton();
+        expect(taskPage.taskDetails().getInvolvePeopleHeader()).toEqual('Add people and groups');
+        expect(taskPage.taskDetails().getInvolvePeoplePlaceholder()).toEqual('Search user');
+        taskPage.taskDetails().checkAddPeopleButtonIsEnabled().checkCancelButtonIsEnabled();
+        taskPage.taskDetails().clickCancelInvolvePeopleButton();
     });
 
     it('[C279991] Should not be able to involve a user when is the creator of the task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
-        taskPage.usingTaskDetails().clickInvolvePeopleButton()
+        taskPage.taskDetails().clickInvolvePeopleButton()
             .typeUser(processUserModel.firstName + ' ' + processUserModel.lastName)
             .noUserIsDisplayedInSearchInvolvePeople(processUserModel.firstName + ' ' + processUserModel.lastName);
-        taskPage.usingTaskDetails().clickAddInvolvedUserButton();
-        taskPage.usingTaskDetails().checkNoPeopleIsInvolved();
+        taskPage.taskDetails().clickAddInvolvedUserButton();
+        taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
     it('[C261030] Should involved user be removed when clicking on remove button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
-        taskPage.usingTaskDetails().clickInvolvePeopleButton()
+        taskPage.taskDetails().clickInvolvePeopleButton()
             .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
             .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
             .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.usingTaskDetails().clickAddInvolvedUserButton();
+        taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(taskPage.usingTaskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
-        taskPage.usingTaskDetails().removeInvolvedUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.usingTaskDetails().checkNoPeopleIsInvolved();
+        taskPage.taskDetails().removeInvolvedUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
     it('[C280013] Should not be able to complete a task by a involved user', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[1]).selectTaskFromTasksList(tasks[1]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[1]).selectTaskFromTasksList(tasks[1]);
 
-        taskPage.usingTaskDetails().clickInvolvePeopleButton()
+        taskPage.taskDetails().clickInvolvePeopleButton()
             .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
             .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
             .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.usingTaskDetails().clickAddInvolvedUserButton();
+        taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(taskPage.usingTaskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
         loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[1]).selectTaskFromTasksList(tasks[1]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[1]).selectTaskFromTasksList(tasks[1]);
 
         taskPage.completeTaskNoFormNotDisplayed();
     });
@@ -165,62 +165,62 @@ describe('People component', () => {
     it('[C261031] Should be able to involve multiple users to a task', () => {
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[2]).selectTaskFromTasksList(tasks[2]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[2]).selectTaskFromTasksList(tasks[2]);
 
-        taskPage.usingTaskDetails().clickInvolvePeopleButton()
+        taskPage.taskDetails().clickInvolvePeopleButton()
             .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
             .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
             .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.usingTaskDetails().clickAddInvolvedUserButton();
+        taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(taskPage.usingTaskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
-        expect(taskPage.usingTaskDetails().getInvolvedUserEditAction(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        expect(taskPage.taskDetails().getInvolvedUserEditAction(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual('can edit');
-        expect(taskPage.usingTaskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(1)');
+        expect(taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(1)');
 
-        taskPage.usingTaskDetails().clickInvolvePeopleButton()
+        taskPage.taskDetails().clickInvolvePeopleButton()
             .typeUser(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName)
             .selectUserToInvolve(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName)
             .checkUserIsSelected(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName);
-        taskPage.usingTaskDetails().clickAddInvolvedUserButton();
+        taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(taskPage.usingTaskDetails().getInvolvedUserEmail(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
+        expect(taskPage.taskDetails().getInvolvedUserEmail(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
             .toEqual(secondAssigneeUserModel.email);
 
-        expect(taskPage.usingTaskDetails().getInvolvedUserEditAction(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
+        expect(taskPage.taskDetails().getInvolvedUserEditAction(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
             .toEqual('can edit');
-        expect(taskPage.usingTaskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(2)');
+        expect(taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(2)');
     });
 
     it('[C280014] Should involved user see the task in completed filters when the task is completed', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]).selectTaskFromTasksList(tasks[3]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]).selectTaskFromTasksList(tasks[3]);
 
-        taskPage.usingTaskDetails().clickInvolvePeopleButton()
+        taskPage.taskDetails().clickInvolvePeopleButton()
             .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
             .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
             .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.usingTaskDetails().clickAddInvolvedUserButton();
+        taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(taskPage.usingTaskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
         taskPage.completeTaskNoForm();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(tasks[3]);
-        expect(taskPage.usingTaskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(tasks[3]);
+        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
         loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]).selectTaskFromTasksList(tasks[3]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]).selectTaskFromTasksList(tasks[3]);
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsNotDisplayedInTasksList(tasks[3]);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.tasksListPage().checkTaskIsNotDisplayedInTasksList(tasks[3]);
     });
 
 });

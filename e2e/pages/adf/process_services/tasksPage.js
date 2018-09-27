@@ -67,19 +67,19 @@ var TasksPage = function () {
         return this;
     };
 
-    this.usingFormFields = function () {
+    this.formFields = function () {
       return new FormFields();
     };
 
-    this.usingTaskDetails = function () {
+    this.taskDetails = function () {
         return new TaskDetails();
     };
 
-    this.usingFiltersPage = function () {
+    this.filtersPage = function () {
         return new FiltersPage();
     };
 
-    this.usingTasksListPage = function () {
+    this.tasksListPage = function () {
         return new TasksListPage();
     };
 

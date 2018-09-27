@@ -19,31 +19,22 @@ var Util = require('../../../util/util');
 
 var ToggleState = function () {
 
-    var toggleButton = by.xpath("ancestor::mat-slide-toggle");
-
     this.enableToggle = function (toggle) {
         Util.waitUntilElementIsVisible(toggle);
-        Util.waitUntilElementIsPresent(toggle);
-        toggle.getAttribute('class').then(function (value) {
-            Util.waitUntilElementIsVisible(toggle);
-            Util.waitUntilElementIsPresent(toggle);
-            Util.waitUntilElementIsClickable(toggle);
-            if (value.indexOf('mat-checked')===-1) {
+        toggle.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') < 0) {
                 toggle.click();
             }
         });
-        return this;
     };
 
     this.disableToggle = function (toggle) {
         Util.waitUntilElementIsVisible(toggle);
-        var finalToggleButton = toggle.element(toggleButton);
-        finalToggleButton.getAttribute('class').then(function (value) {
-            if (value.indexOf('mat-checked')!==-1) {
-                finalToggleButton.click();
+        toggle.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') >= 0) {
+                toggle.click();
             }
         });
-        return this;
     };
 
 };

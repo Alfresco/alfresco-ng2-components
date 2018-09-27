@@ -74,24 +74,24 @@ describe('Start Task - Task App', () => {
 
     it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(taskTaskApp);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskTaskApp);
 
-        taskPage.usingTaskDetails().clickAuditLogButton();
+        taskPage.taskDetails().clickAuditLogButton();
         expect(Util.fileExists(auditLogFile, 10)).toBe(true);
     });
 
     it('[C260389] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone completed task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(taskTaskApp);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskTaskApp);
 
         taskPage.completeTaskNoForm();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(taskTaskApp);
-        expect(taskPage.usingFormFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskTaskApp + ' completed');
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(taskTaskApp);
+        expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskTaskApp + ' completed');
 
-        taskPage.usingTaskDetails().clickAuditLogButton();
+        taskPage.taskDetails().clickAuditLogButton();
         expect(Util.fileExists(auditLogFile, 20)).toBe(true);
     });
 
@@ -100,15 +100,15 @@ describe('Start Task - Task App', () => {
 
         taskPage.createNewTask().addName(taskCompleteCustomApp).clickStartButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(taskCompleteCustomApp);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskCompleteCustomApp);
 
         taskPage.completeTaskNoForm();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(taskCompleteCustomApp);
-        expect(taskPage.usingFormFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskCompleteCustomApp + ' completed');
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(taskCompleteCustomApp);
+        expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskCompleteCustomApp + ' completed');
 
-        taskPage.usingTaskDetails().clickAuditLogButton();
+        taskPage.taskDetails().clickAuditLogButton();
         expect(Util.fileExists(auditLogFile, 20)).toBe(true);
     });
 
@@ -117,10 +117,10 @@ describe('Start Task - Task App', () => {
 
         taskPage.createNewTask().addName(taskCustomApp).clickStartButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList(taskCustomApp);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskCustomApp);
 
-        taskPage.usingTaskDetails().clickAuditLogButton();
+        taskPage.taskDetails().clickAuditLogButton();
         expect(Util.fileExists(auditLogFile, 10)).toBe(true);
     });
 

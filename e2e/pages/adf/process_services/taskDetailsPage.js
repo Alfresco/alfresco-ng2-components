@@ -40,7 +40,7 @@ var TaskDetailsPage = function () {
     var emailInvolvedUser = by.xpath("following-sibling::div[@class='people-email ng-star-inserted']");
     var editActionInvolvedUser = by.xpath("following-sibling::div[@class='people-edit-label ng-star-inserted']");
     var involvedUserPic = by.xpath("ancestor::div/ancestor::div/preceding-sibling::div//div[@class='adf-people-search-people-pic ng-star-inserted']");
-    var infoDrawer = element(by.css("adf-info-drawer"));
+    var tadkDetailsInfoDrawer = element(by.tagName("adf-info-drawer"));
     var taskDetailsSection = element(by.css("div[data-automation-id='adf-tasks-details']"));
     var taskDetailsEmptySection = element(by.css("div[data-automation-id='adf-tasks-details--empty']"));
     var completeTask = element(by.css("button[id='adf-no-form-complete-button']"));
@@ -290,16 +290,16 @@ var TaskDetailsPage = function () {
         auditLogButton.click();
     };
 
-    this.usingAppSettingsToggles = function () {
+    this.appSettingsToggles = function () {
         return new AppSettingsToggles();
     };
 
     this.taskInfoDrawerIsDisplayed = function () {
-        Util.waitUntilElementIsVisible(infoDrawer);
+        Util.waitUntilElementIsVisible(tadkDetailsInfoDrawer);
     };
 
     this.taskInfoDrawerIsNotDisplayed = function () {
-        Util.waitUntilElementIsNotOnPage(infoDrawer);
+        Util.waitUntilElementIsNotOnPage(tadkDetailsInfoDrawer);
     };
 
     this.checkNoPeopleIsInvolved = function () {

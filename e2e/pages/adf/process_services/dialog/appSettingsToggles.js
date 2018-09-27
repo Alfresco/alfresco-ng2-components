@@ -21,7 +21,7 @@ var AppSettingsToggles = function () {
 
     var toggleState = new ToggleState();
 
-    var showDetailsHeaderToggle = element(by.id('adf-show-header-input'));
+    var showDetailsHeaderToggle = element(by.id('adf-show-header'));
     var showTaskFilterIconsToggle = element(by.id('adf-show-task-filter-icon'));
     var showProcessFilterIconsToggle = element(by.id('adf-show-process-filter-icon'));
 

@@ -93,7 +93,7 @@ describe('Task List Pagination', () => {
 
     it('[C260304] Items per page set to 5', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + nrOfTasks);
@@ -115,13 +115,13 @@ describe('Task List Pagination', () => {
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
 
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
     });
 
     it('[C260303] Items per page set to 10', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue + ' of ' + nrOfTasks);
@@ -132,13 +132,13 @@ describe('Task List Pagination', () => {
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
 
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
     });
 
     it('[C260302] Items per page set to 15', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + nrOfTasks);
@@ -149,7 +149,7 @@ describe('Task List Pagination', () => {
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
 
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
@@ -157,10 +157,10 @@ describe('Task List Pagination', () => {
         currentPage = 1;
         totalPages = 2;
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
-        taskPage.usingTasksListPage().waitForTableBody();
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.tasksListPage().waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
-        taskPage.usingTasksListPage().waitForTableBody();
+        taskPage.tasksListPage().waitForTableBody();
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
@@ -173,7 +173,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
         currentPage = 2;
         paginationPage.clickOnPageDropdownOption('2');
-        taskPage.usingTasksListPage().waitForTableBody();
+        taskPage.tasksListPage().waitForTableBody();
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
@@ -186,7 +186,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
         currentPage = 1;
         paginationPage.clickOnPageDropdownOption('1');
-        taskPage.usingTasksListPage().waitForTableBody();
+        taskPage.tasksListPage().waitForTableBody();
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);

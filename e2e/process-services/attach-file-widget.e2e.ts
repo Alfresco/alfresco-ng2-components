@@ -18,7 +18,7 @@
 import LoginPage = require('../pages/adf/loginPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
 import ViewerPage = require('../pages/adf/viewerPage');
-import UsingWidget = require('../pages/adf/process_services/widgets/usingWidget');
+import Widget = require('../pages/adf/process_services/widgets/widget');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 
 import CONSTANTS = require('../util/constants');
@@ -36,7 +36,7 @@ describe('Start Task - Task App', () => {
 
     let loginPage = new LoginPage();
     let viewerPage = new ViewerPage();
-    let usingWidget = new UsingWidget();
+    let widget = new Widget();
     let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
 
@@ -83,22 +83,22 @@ describe('Start Task - Task App', () => {
     it('[C274690] Task List attachment - View file', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
 
-        taskPage.createNewTask()
+        taskPage
+            .createNewTask()
             .addName('View file')
             .addForm(app.formName)
-            .clickStartButton()
-            .then(() => {
-                usingWidget.usingAttachFileWidget().attachFile(appFields.attachfile_id, pdfFile.location);
-                usingWidget.usingAttachFileWidget().checkFileIsAttached(appFields.attachfile_id, pdfFile.name);
+            .clickStartButton();
 
-                usingWidget.usingAttachFileWidget().viewFile(pdfFile.name);
-                viewerPage.checkFileContent('1', pdfFile.firstPageText);
-                viewerPage.checkCloseButtonIsDisplayed();
-                viewerPage.clickCloseButton();
-                taskPage.usingTasksListPage().checkTaskIsDisplayedInTasksList('View file');
-            });
+        widget.attachFileWidget().attachFile(appFields.attachfile_id, pdfFile.location);
+        widget.attachFileWidget().checkFileIsAttached(appFields.attachfile_id, pdfFile.name);
+
+        widget.attachFileWidget().viewFile(pdfFile.name);
+        viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        viewerPage.checkCloseButtonIsDisplayed();
+        viewerPage.clickCloseButton();
+        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList('View file');
     });
 
 });
