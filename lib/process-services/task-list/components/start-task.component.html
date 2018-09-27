@@ -44,7 +44,9 @@
                                 id="date_id">
                             <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
                             <mat-datepicker #taskDatePicker
-                                [touchUi]="true">
+                                [touchUi]="true"
+                                (dateChanged)="onDateChanged($event)"
+                                (opened)="clearDateInput()">
                             </mat-datepicker>
                             <div class="adf-error-text-container">
                                 <div *ngIf="dateError">
