@@ -212,6 +212,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     private parseFacetFields(context: any) {
+        if (!this.responseFacetFields) {
         const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
 
         const bkpResponseFacetFields =  [...this.responseFacetFields || []];
@@ -273,6 +274,25 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                     buckets: bucketList
                 };
             });
+
+        } else {
+
+            this.responseFacetFields = this.responseFacetFields
+                .map(field => {
+
+                    let responseField = (context.facetsFields || []).find(response => response.label === field.label);
+
+                    (field && field.buckets && field.buckets.items || [])
+                        .map(bucket => {
+                            const responseBucket = ((responseField && responseField.buckets) || []).find(respBucket => respBucket.label === bucket.label);
+
+                            bucket.count = responseBucket ? responseBucket.count : 0;
+                            return bucket;
+                        });
+
+                    return field;
+                });
+        }
     }
 
     private parseFacetQueries(context: any) {
