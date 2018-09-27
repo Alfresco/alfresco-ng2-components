@@ -143,6 +143,14 @@ describe('Header Component', () => {
         settingsPage.checkProviderDropdownIsDisplayed();
     });
 
+    it('[C286517] Should be able to set a hyperlink to the logo text', () => {
+        headerPage.addLogoHyperlink(names.urlPath_logo_link);
+
+        navigationBarPage.clickAppLogoText();
+
+        settingsPage.checkProviderDropdownIsDisplayed();
+    });
+
     it('[C280554] Should be able to customise the tooltip-text of the logo', () => {
         headerPage.addLogoTooltip(names.logo_tooltip);
 

@@ -156,6 +156,11 @@ var NavigationBarPage = function () {
         appLogo.click();
     };
 
+    this.clickAppLogoText = function () {
+        Util.waitUntilElementIsVisible(appTitle);
+        appTitle.click();
+    };
+
     this.checkLogoTooltip = function (logoTooltip) {
         var logoTooltip = element(by.css('a[title="'+ logoTooltip +'"]'));
         Util.waitUntilElementIsVisible(logoTooltip);
