@@ -71,10 +71,6 @@ export class TaskFiltersCloudComponent implements OnChanges {
                 private appsProcessService: AppsProcessService) {
     }
 
-    ngOnInit() {
-        this.getFilters(0, 'test app 1');
-    }
-
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
         const appId = changes['appId'];
