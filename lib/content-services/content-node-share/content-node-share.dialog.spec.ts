@@ -16,7 +16,7 @@
  */
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TestBed, fakeAsync, } from '@angular/core/testing';
+import { TestBed, fakeAsync } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { of } from 'rxjs';
 import { setupTestBed, CoreModule, SharedLinksApiService, NodesApiService } from '@alfresco/adf-core';
