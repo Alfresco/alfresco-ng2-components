@@ -20,10 +20,12 @@
                 matInput
                 [formControl]="processDefinitionInput"
                 [matAutocomplete]="auto"
+                id="processDefinitionName"
                 #inputAutocomplete>
             <div class="adf-process-input-autocomplete">
                 <mat-autocomplete
                     #auto="matAutocomplete"
+                    id="processDefinitionOptions"
                     [displayWith]="displayFn">
                     <mat-option *ngFor="let processDef of filteredProcesses | async" [value]="processDef.name">
                         {{ processDef.name }}

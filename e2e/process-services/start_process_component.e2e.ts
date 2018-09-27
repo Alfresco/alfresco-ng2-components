@@ -27,6 +27,7 @@ import ProcessFiltersPage = require('../pages/adf/process_services/processFilter
 import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
 import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
+import { AppsActions } from '../actions/APS/apps.actions';
 
 import User = require('../models/APS/User');
 import AppPublish = require('../models/APS/AppPublish');
@@ -49,8 +50,10 @@ describe('Start Process Component', () => {
     let appNavigationBarPage = new AppNavigationBarPage();
     let processDetailsPage = new ProcessDetailsPage();
     let attachmentListPage = new AttachmentListPage();
+    const apps = new AppsActions();
     let app = resources.Files.APP_WITH_PROCESSES;
-    let appId, procUserModel, secondProcUserModel, tenantId;
+    let simpleApp = resources.Files.WIDGETS_SMOKE_TEST;
+    let appId, procUserModel, secondProcUserModel, tenantId, simpleAppCreated;
 
     let auditLogFile = path.join('../e2e/download/', 'Audit.pdf');
 
@@ -83,16 +86,11 @@ describe('Start Process Component', () => {
 
         await this.alfrescoJsApiUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
 
-        let pathFile = path.join(TestConfig.main.rootPath + app.file_location);
-        let file = fs.createReadStream(pathFile);
+        let appCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, app.file_location);
 
-        let appCreated = await this.alfrescoJsApiUserTwo.activiti.appsApi.importAppDefinition(file);
+        let simpleAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, simpleApp.file_location);
 
         appId = appCreated.id;
-
-        let publishApp = await this.alfrescoJsApiUserTwo.activiti.appsApi.publishAppDefinition(appId, new AppPublish());
-
-        await this.alfrescoJsApiUserTwo.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         done();
 
@@ -100,6 +98,8 @@ describe('Start Process Component', () => {
 
     afterAll(async (done) => {
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(appId);
+
+        await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(simpleAppCreated.id);
 
         // await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(secondModelId);
         //
@@ -199,6 +199,87 @@ describe('Start Process Component', () => {
                             expect(processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.getName());
                         });
                 });
+        });
+
+        it('[C286503] No options are displayed when typing a process that does not exist', () => {
+            processServicesPage.goToApp(app.title);
+            appNavigationBarPage.clickProcessButton();
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+            startProcessPage.typeProcessDefinition("nonexistent");
+            startProcessPage.checkNoProcessDefinitionOptionIsDisplayed();
+            startProcessPage.checkStartProcessButtonIsDisabled();
+        });
+
+        it('[C286504] Proper options are displayed when typing a part of existent process definitions', () => {
+            processServicesPage.goToApp(app.title);
+            appNavigationBarPage.clickProcessButton();
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+            startProcessPage.typeProcessDefinition("process");
+            startProcessPage.checkOptionIsDisplayed("process_without_se");
+            startProcessPage.checkOptionIsDisplayed("process_with_se");
+            startProcessPage.selectOption("process_without_se");
+            startProcessPage.checkStartProcessButtonIsEnabled();
+        });
+
+        it('[C286508] Only one option is displayed when typing an existent process definition', () => {
+            processServicesPage.goToApp(app.title);
+            appNavigationBarPage.clickProcessButton();
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+            startProcessPage.typeProcessDefinition("process_without_se");
+            startProcessPage.checkOptionIsDisplayed("process_without_se");
+            startProcessPage.checkOptionIsNotDisplayed("process_with_se");
+            startProcessPage.selectOption("process_without_se");
+            startProcessPage.checkStartProcessButtonIsEnabled();
+        });
+
+        it('[C286509] Should select automatically the processDefinition when the app contains only one', () => {
+            processServicesPage.goToApp(simpleApp.title);
+            appNavigationBarPage.clickProcessButton();
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+            expect(startProcessPage.getProcessDefinitionValue()).toBe(simpleApp.title);
+            startProcessPage.checkStartProcessButtonIsEnabled();
+        });
+
+        it('[C286511] Should be able to type the process definition and start a process', () => {
+            processServicesPage.goToApp(app.title);
+            appNavigationBarPage.clickProcessButton();
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+            startProcessPage.enterProcessName('Type');
+            startProcessPage.typeProcessDefinition("process_without_se");
+            startProcessPage.selectOption("process_without_se");
+            startProcessPage.checkStartProcessButtonIsEnabled();
+            startProcessPage.clickFormStartProcessButton();
+            processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.selectFromProcessList('Type');
+        });
+
+        it('[C91321] Should be able to use down arrow key when navigating throw suggestions', () => {
+            processServicesPage.goToApp(app.title);
+            appNavigationBarPage.clickProcessButton();
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+            startProcessPage.typeProcessDefinition("process");
+
+            startProcessPage.pressDownArrowAndEnter();
+            expect(startProcessPage.getProcessDefinitionValue()).toBe("process_without_se");
+        });
+
+        it('[C91321] Should the process definition input be cleared when clicking on options drop down ', () => {
+            processServicesPage.goToApp(app.title);
+            appNavigationBarPage.clickProcessButton();
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+            startProcessPage.typeProcessDefinition("process");
+            startProcessPage.selectOption("process_without_se");
+            expect(startProcessPage.getProcessDefinitionValue()).toBe("process_without_se");
+            startProcessPage.clickProcessDropdownArrow();
+
+            expect(startProcessPage.getProcessDefinitionValue()).toBe("");
         });
 
         it('[C260453] Add a comment on an active process', () => {

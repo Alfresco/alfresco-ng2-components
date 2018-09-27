@@ -26,10 +26,21 @@ var StartProcessPage = function () {
     var formStartProcessButton = element(by.css('button[data-automation-id="adf-form-start process"]'));
     var startProcessButton = element(by.css("button[data-automation-id='btn-start']"));
     var noProcess = element(by.id('no-process-message'));
+    var processDefinition = element(by.css("input[id='processDefinitionName']"));
+    var processDefinitionOptionsPanel = element(by.css("div[class*='processDefinitionOptions']"));
 
     this.checkNoProcessMessage = function () {
         Util.waitUntilElementIsVisible(noProcess);
-    }
+    };
+
+    this.pressDownArrowAndEnter = function () {
+        processDefinition.sendKeys(protractor.Key.ARROW_DOWN);
+        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    };
+
+    this.checkNoProcessDefinitionOptionIsDisplayed = function () {
+        Util.waitUntilElementIsNotOnPage(processDefinitionOptionsPanel);
+    };
 
     this.getDefaultName = function () {
         Util.waitUntilElementIsVisible(defaultProcessName);
@@ -52,14 +63,47 @@ var StartProcessPage = function () {
     };
 
     this.selectFromProcessDropdown = function (name) {
+        this.clickProcessDropdownArrow();
+        return this.selectOption(name);
+    };
+
+    this.clickProcessDropdownArrow = function() {
         Util.waitUntilElementIsVisible(selectProcessDropdownArrow);
         Util.waitUntilElementIsClickable(selectProcessDropdownArrow)
         selectProcessDropdownArrow.click();
+    };
+
+    this.checkOptionIsDisplayed = function (name) {
+        var selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        Util.waitUntilElementIsVisible(selectProcessDropdown);
+        Util.waitUntilElementIsClickable(selectProcessDropdown);
+        return this;
+    };
+
+    this.checkOptionIsNotDisplayed = function (name) {
+        var selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        Util.waitUntilElementIsNotOnPage(selectProcessDropdown);
+        return this;
+    };
+
+    this.selectOption = function (name) {
         var selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         Util.waitUntilElementIsVisible(selectProcessDropdown);
         Util.waitUntilElementIsClickable(selectProcessDropdown);
         selectProcessDropdown.click();
         return this;
+    };
+
+    this.typeProcessDefinition = function (name) {
+        Util.waitUntilElementIsVisible(processDefinition);
+        Util.waitUntilElementIsClickable(processDefinition);
+        processDefinition.sendKeys(name);
+        return this;
+    };
+
+    this.getProcessDefinitionValue = function () {
+        Util.waitUntilElementIsVisible(processDefinition);
+        return processDefinition.getAttribute('value');
     };
 
     this.clickCancelProcessButton = function () {
