@@ -93,7 +93,7 @@ describe('Attachment list action menu for tasks', () => {
     it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', () => {
         processServicesPage.goToProcessServices().goToApp(app.title).clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.active).clickStartButton();
 
         attachmentListPage.clickAttachFileButton(pngFile.location);
@@ -102,14 +102,14 @@ describe('Attachment list action menu for tasks', () => {
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
 
         attachmentListPage.doubleClickFile(pngFile.name);
 
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
 
         attachmentListPage.downloadFile(pngFile.name);
 
@@ -124,15 +124,15 @@ describe('Attachment list action menu for tasks', () => {
     it('[C260236] Should be able to View /Download /Remove from Attachment List on a completed task', () => {
         processServicesPage.goToProcessServices().goToApp(app.title).clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.completed).clickStartButton();
 
         attachmentListPage.clickAttachFileButton(pngFile.location);
         attachmentListPage.checkFileIsAttached(pngFile.name);
 
         taskPage.completeTaskNoForm();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(taskName.completed);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(taskName.completed);
 
         attachmentListPage.checkAttachFileButtonIsNotDisplayed();
         attachmentListPage.viewFile(pngFile.name);
@@ -140,8 +140,8 @@ describe('Attachment list action menu for tasks', () => {
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(taskName.completed);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(taskName.completed);
 
         attachmentListPage.downloadFile(pngFile.name);
 
@@ -156,7 +156,7 @@ describe('Attachment list action menu for tasks', () => {
     it('[C260225] Should be able to upload a file in the Attachment list on Task App', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.taskApp).clickStartButton();
 
         attachmentListPage.clickAttachFileButton(pngFile.location);
@@ -166,7 +166,7 @@ describe('Attachment list action menu for tasks', () => {
     it('[C279884] Should be able to view the empty attachment list for tasks', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.emptyList).clickStartButton();
 
         attachmentListPage.checkEmptyAttachmentList();
@@ -193,8 +193,8 @@ describe('Attachment list action menu for tasks', () => {
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList('SHARE KNOWLEDGE');
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList('SHARE KNOWLEDGE');
 
         attachmentListPage.checkFileIsAttached(pngFile.name);
 
@@ -204,8 +204,8 @@ describe('Attachment list action menu for tasks', () => {
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList('SHARE KNOWLEDGE');
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList('SHARE KNOWLEDGE');
 
         attachmentListPage.checkEmptyAttachmentList();
     });

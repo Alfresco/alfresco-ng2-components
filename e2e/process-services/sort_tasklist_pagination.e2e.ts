@@ -79,17 +79,17 @@ describe('Task List Pagination - Sorting', () => {
 
     it('[C260308] Sorting by Name', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
-        taskPage.usingTasksListPage().waitForTableBody();
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.tasksListPage().waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        taskPage.usingTasksListPage().waitForTableBody();
-        taskPage.usingFiltersPage().sortByName(true);
-        taskPage.usingTasksListPage().waitForTableBody();
-        taskPage.usingFiltersPage().getAllRowsNameColumn().then(function (list) {
+        taskPage.tasksListPage().waitForTableBody();
+        taskPage.filtersPage().sortByName(true);
+        taskPage.tasksListPage().waitForTableBody();
+        taskPage.filtersPage().getAllRowsNameColumn().then(function (list) {
             expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
         });
-        taskPage.usingFiltersPage().sortByName(false);
-        taskPage.usingFiltersPage().getAllRowsNameColumn().then(function (list) {
+        taskPage.filtersPage().sortByName(false);
+        taskPage.filtersPage().getAllRowsNameColumn().then(function (list) {
             taskNames.reverse();
             expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
         });

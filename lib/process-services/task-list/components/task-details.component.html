@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="adf-task-details-core-sidebar">
-            <adf-info-drawer *ngIf="showHeaderContent" title="{{ 'ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TITLE' | translate }}" class="adf-task-details-core-sidebar-drawer">
+            <adf-info-drawer *ngIf="showHeaderContent" title="{{ 'ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TITLE' | translate }}" id="adf-task-details-core-sidebar-drawer" class="adf-task-details-core-sidebar-drawer">
                 <adf-info-drawer-tab label="{{ 'ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TAB_DETAILS_TITLE' | translate }}">
                     <div class="assignment-container" *ngIf="showAssignee">
                         <adf-people-search

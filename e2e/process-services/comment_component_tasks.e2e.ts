@@ -95,8 +95,8 @@ describe('Comment component for Processes', () => {
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(taskName.completed_task);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(taskName.completed_task);
 
         commentsPage.checkCommentInputIsNotDisplayed();
     });
@@ -118,9 +118,9 @@ describe('Comment component for Processes', () => {
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(taskName.multiple_users);
-        taskPage.usingTaskDetails().selectActivityTab();
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(taskName.multiple_users);
+        taskPage.taskDetails().selectActivityTab();
 
         browser.controlFlow().execute(async() => {
             let totalComments = await this.alfrescoJsApi.activiti.taskApi.getTaskComments(newTaskId, {'latestFirst': true});
@@ -148,9 +148,9 @@ describe('Comment component for Processes', () => {
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.usingFiltersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
-        taskPage.usingTasksListPage().selectTaskFromTasksList(taskName.multiple_users);
-        taskPage.usingTaskDetails().selectActivityTab();
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.tasksListPage().selectTaskFromTasksList(taskName.multiple_users);
+        taskPage.taskDetails().selectActivityTab();
 
         browser.controlFlow().execute(async() => {
             let totalComments = await this.alfrescoJsApi.activiti.taskApi.getTaskComments(newTaskId, {'latestFirst': true});
