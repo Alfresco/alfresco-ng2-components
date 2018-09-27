@@ -88,7 +88,7 @@ describe('Start Process Component', () => {
 
         let appCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, app.file_location);
 
-        let simpleAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, simpleApp.file_location);
+        simpleAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, simpleApp.file_location);
 
         appId = appCreated.id;
 
