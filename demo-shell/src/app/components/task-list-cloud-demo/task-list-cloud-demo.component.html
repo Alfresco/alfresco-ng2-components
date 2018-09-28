@@ -1,7 +1,72 @@
 <h2>TASK LIST CLOUD DEMO</h2>
-<adf-cloud-task-list #taskCloud
-[applicationName]="'awesome-app'">
-</adf-cloud-task-list>
-<adf-pagination [target]="taskCloud"
-                (changePageSize)="onChangePageSize($event)">
-</adf-pagination>
+<div class="app-task-list-cloud-demo-selection">
+    <div class="task-cloud-demo-select">
+        <mat-form-field>
+            <mat-select placeholder="Application Name" [(ngModel)]="appChosen">
+                <mat-option>No App</mat-option>
+                <mat-option *ngFor="let app of appDefinitionList | async" [value]="app.name">
+                    {{app.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="task-cloud-demo-select">
+        <mat-form-field>
+            <mat-select placeholder="Status" [(ngModel)]="status">
+                <mat-option value="">
+                    ALL
+                </mat-option>
+                <mat-option value="CREATED">
+                    CREATED
+                </mat-option>
+                <mat-option value="CANCELLED">
+                    CANCELLED
+                </mat-option>
+                <mat-option value="ASSIGNED">
+                    ASSIGNED
+                </mat-option>
+                <mat-option value="SUSPENDED">
+                    SUSPENDED
+                </mat-option>
+                <mat-option value="COMPLETED">
+                    COMPLETED
+                </mat-option>
+                <mat-option value="DELETED">
+                    DELETED
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="task-cloud-demo-select">
+        <mat-form-field>
+            <input matInput placeholder="Task to select" [(ngModel)]="selectTask">
+        </mat-form-field>
+    </div>
+    <!-- <div class="task-cloud-demo-select">
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Created Date" [(ngModel)]="createdDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div> -->
+    <div class="task-cloud-demo-select task-row-clicked">
+        <span *ngIf="clickedRow">clicked task {{clickedRow}}</span>
+    </div>
+</div>
+<div>
+    <adf-cloud-task-list #taskCloud
+                         [applicationName]="appChosen"
+                         [status]="status"
+                         [landingTaskId]="selectTask"
+                         (rowClick)="onRowClick($event)">
+        <data-columns>
+            <data-column key="entry.id" title="Id"></data-column>
+            <data-column key="entry.name" title="Name"></data-column>
+            <data-column key="entry.createdDate" title="Created Date"></data-column>
+            <data-column key="entry.status" title="Status"></data-column>
+        </data-columns>
+    </adf-cloud-task-list>
+    <adf-pagination [target]="taskCloud"
+                    (changePageSize)="onChangePageSize($event)">
+    </adf-pagination>
+</div>

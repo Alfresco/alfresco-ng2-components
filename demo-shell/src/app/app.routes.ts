@@ -157,6 +157,10 @@ export const appRoutes: Routes = [
                 component: SettingsComponent
             },
             {
+                path: 'tasklist-cloud',
+                component: TaskListCloudDemoComponent
+            },
+            {
                 path: 'trashcan',
                 component: TrashcanComponent,
                 canActivate: [AuthGuardEcm]
@@ -308,11 +312,6 @@ export const appRoutes: Routes = [
             {
                 path: 'process-list/:id',
                 component: ProcessListDemoComponent,
-                canActivate: [AuthGuardBpm]
-            },
-            {
-                path: 'tasklist-cloud',
-                component: TaskListCloudDemoComponent,
                 canActivate: [AuthGuardBpm]
             },
             {

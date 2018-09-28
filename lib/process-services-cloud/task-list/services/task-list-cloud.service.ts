@@ -16,86 +16,46 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud.model';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 
 @Injectable()
 export class TaskListCloudService {
 
     constructor(private apiService: AlfrescoApiService,
+                private appConfigService: AppConfigService,
                 private logService: LogService) {
     }
 
     contentTypes = ['application/json'];
     accepts = ['application/json'];
 
-    // mockResponse = {
-    //     list: {
-    //         entries: [
-    //             {
-    //                 entry: {
-    //                     serviceName: 'test-francesco-rb',
-    //                     serviceFullName: 'test-francesco-rb',
-    //                     serviceVersion: '',
-    //                     appName: 'test-francesco',
-    //                     appVersion: '',
-    //                     serviceType: null,
-    //                     id: '5153d835-bce2-11e8-855e-0a58646001d6',
-    //                     assignee: null,
-    //                     name: 'My Parent Task',
-    //                     description: 'My Parent Task',
-    //                     createdDate: 1537454084786,
-    //                     dueDate: null,
-    //                     claimedDate: null,
-    //                     priority: 15,
-    //                     category: null,
-    //                     processDefinitionId: null,
-    //                     processInstanceId: null,
-    //                     status: 'CREATED',
-    //                     owner: 'superadminuser',
-    //                     parentTaskId: null,
-    //                     lastModified: 1537454084786,
-    //                     lastModifiedTo: null,
-    //                     lastModifiedFrom: null,
-    //                     standAlone: true
-    //                 }
-    //             }
-    //         ],
-    //         pagination: {
-    //             skipCount: 0,
-    //             maxItems: 100,
-    //             count: 1,
-    //             hasMoreItems: false,
-    //             totalItems: 1
-    //         }
-    //     }
-    // };
-
     getTaskByRequest(requestNode: TaskQueryCloudRequestModel): Observable<any> {
-        let queryUrl = this.buildQueryUrl(requestNode);
-        let queryParams = this.buildQueryParams(requestNode);
-        this.logService.log('Performin Call');
-        return from(this.apiService.getInstance()
+        if (requestNode.appName) {
+            let queryUrl = this.buildQueryUrl(requestNode);
+            let queryParams = this.buildQueryParams(requestNode);
+            return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                                    null, queryParams, null ,
-                                    null, null, null, ['application/json'],
-                                    ['application/json'], Object, null, null)
-        );
+                    null, queryParams, null,
+                    null, null, null, ['application/json'],
+                    ['application/json'], Object, null, null)
+            );
+        } else {
+            this.logService.error('Appname is mandatory for querying task');
+            throwError('Appname not configured');
+        }
     }
 
     private buildQueryUrl(requestNode: TaskQueryCloudRequestModel) {
-        return `${this.apiService.getInstance().config.hostBpm}/${requestNode.appName}-query/v1/tasks`;
+        return `${this.appConfigService.get('backend')}/${requestNode.appName}-query/v1/tasks`;
     }
 
     private buildQueryParams(requestNode: TaskQueryCloudRequestModel) {
         let queryParam = {};
         for (let property in requestNode) {
-            /*tslint:disable-next-line*/
-            console.log(property);
-            if (requestNode.hasOwnProperty(property) &&
-                property.toString().toLocaleLowerCase() !== 'appName' &&
-                requestNode[property]) {
+            if (requestNode.hasOwnProperty(property) && property !== 'appName' &&
+                (requestNode[property] !== null || requestNode[property] !== undefined) ) {
                 queryParam[property] = requestNode[property];
             }
         }

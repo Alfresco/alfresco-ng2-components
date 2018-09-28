@@ -1,5 +1,5 @@
-<div *ngIf="!rows; else show_list">{{ 'ADF_TASK_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
-<ng-template #show_list>
+<div *ngIf="!rows">{{ 'ADF_TASK_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
+<ng-container *ngIf="rows">
         <adf-datatable
             [rows]="rows"
             [columns]="columns"
@@ -10,12 +10,6 @@
             (row-unselect)="onRowUnselect($event)"
             (rowClick)="onRowClick($event)"
             (row-keyup)="onRowKeyUp($event)">
-            <data-columns>
-                <data-column key="entry.id" title="Id"></data-column>
-                <data-column key="entry.name" title="Name"></data-column>
-                <data-column key="entry.appName" title="App" class="full-width name-column"></data-column>
-                <data-column key="entry.status" title="Status"></data-column>
-            </data-columns>
             <loading-content-template>
                 <ng-template>
                     <!-- Add your custom loading template here -->
@@ -36,4 +30,4 @@
                 </ng-template>
             </no-content-template>
         </adf-datatable>
-</ng-template>
+</ng-container>

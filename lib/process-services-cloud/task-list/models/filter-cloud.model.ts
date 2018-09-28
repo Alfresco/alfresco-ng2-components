@@ -17,24 +17,26 @@
 
 export class TaskQueryCloudRequestModel {
     appName: string;
-    appVersion: string;
-    assignee: string;
-    claimedDate: Date;
-    createdDate: Date;
-    description: string;
-    dueDate: null;
-    id: string;
-    name: string;
-    owner: string;
-    parentTaskId: string;
-    priority: number;
-    processDefinitionId: string;
-    processInstanceId: string;
-    serviceFullName: string;
-    serviceName: string;
-    serviceType: string;
-    serviceVersion: string;
-    status: string;
+    appVersion?: string;
+    assignee?: string;
+    claimedDate?: string;
+    createdDate?: Date;
+    description?: string;
+    dueDate?: null;
+    id?: string;
+    name?: string;
+    owner?: string;
+    parentTaskId?: string;
+    priority?: number;
+    processDefinitionId?: string;
+    processInstanceId?: string;
+    serviceFullName?: string;
+    serviceName?: string;
+    serviceType?: string;
+    serviceVersion?: string;
+    status?: string;
+    maxItems: number;
+    skipCount: number;
 
     constructor(obj?: any) {
         if (obj) {
@@ -57,6 +59,8 @@ export class TaskQueryCloudRequestModel {
             this.serviceType = obj.serviceType;
             this.serviceVersion = obj.serviceVersion;
             this.status = obj.status;
+            this.maxItems = obj.maxItems;
+            this.skipCount = obj.skipCount;
         }
     }
 }

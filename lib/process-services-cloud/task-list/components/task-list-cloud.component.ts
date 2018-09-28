@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild } from '@angular/core';
+import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild, AfterContentInit } from '@angular/core';
 import { AppConfigService, UserPreferencesService,
          DataTableSchema, UserPreferenceValues,
          PaginatedComponent, PaginationModel,
@@ -25,6 +25,8 @@ import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model'
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud.model';
 import { BehaviorSubject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
+import { MinimalNodeEntity } from 'alfresco-js-api';
+// import moment from 'moment-es6';
 
 @Component({
     selector: 'adf-cloud-task-list',
@@ -32,7 +34,7 @@ import { TaskListCloudService } from '../services/task-list-cloud.service';
     styleUrls: ['./task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskListCloudComponent extends DataTableSchema implements OnChanges, PaginatedComponent {
+export class TaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
 
     static PRESET_KEY = 'adf-task-list.presets';
 
@@ -102,7 +104,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     requestNode: TaskQueryCloudRequestModel;
     rows: any[];
-    size: number;
+    size: number = 25;
+    skipCount: number = 0;
     currentInstanceId: any;
     isLoading = false;
     selectedInstances: any[];
@@ -113,6 +116,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         super(appConfigService, TaskListCloudComponent.PRESET_KEY, taskPresetsCloudDefaultModel);
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;
+
             this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
                 maxItems: this.size,
                 skipCount: 0,
@@ -126,6 +130,10 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         if (this.isPropertyChanged(changes)) {
             this.reload();
         }
+    }
+
+    ngAfterContentInit() {
+        this.createDatatableSchema();
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
@@ -142,7 +150,9 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     reload(): void {
         this.requestNode = this.createRequestNode();
-        this.load(this.requestNode);
+        if (this.requestNode.appName) {
+            this.load(this.requestNode);
+        }
     }
 
     private load(requestNode: TaskQueryCloudRequestModel) {
@@ -162,10 +172,10 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     selectTask(taskIdSelected: string): void {
         if (!this.isListEmpty()) {
-            let dataRow = null;
+            let dataRow: any = null;
             if (taskIdSelected) {
-                dataRow = this.rows.find((currentRow: any) => {
-                    return currentRow['id'] === taskIdSelected;
+                dataRow = this.rows.find((currentRow: MinimalNodeEntity) => {
+                    return currentRow.entry.id === taskIdSelected;
                 });
             }
             if (!dataRow && this.selectFirstRow) {
@@ -173,7 +183,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             }
             if (dataRow) {
                 dataRow.isSelected = true;
-                this.currentInstanceId = dataRow['id'];
+                this.currentInstanceId = dataRow.entry.id;
             }
         } else {
             this.currentInstanceId = null;
@@ -185,12 +195,14 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     }
 
     updatePagination(pagination: PaginationModel) {
+        this.size = pagination.maxItems;
+        this.skipCount = pagination.skipCount;
         this.pagination.next(pagination);
         this.reload();
     }
 
     onRowClick(item: DataRowEvent) {
-        this.currentInstanceId = item.value.getValue('id');
+        this.currentInstanceId = item.value.getValue('entry.id');
         this.rowClick.emit(this.currentInstanceId);
     }
 
@@ -207,7 +219,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     onRowKeyUp(event: CustomEvent) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
-            this.currentInstanceId = event.detail.row.getValue('id');
+            this.currentInstanceId = event.detail.row.getValue('entry.id');
             this.rowClick.emit(this.currentInstanceId);
         }
     }
@@ -217,14 +229,16 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         let requestNode = {
             appName: this.applicationName,
             assignee: this.assignee,
-            createdDate: this.createdDate,
-            dueDate: this.dueDate,
+            // createdDate: this.createdDate ? moment(this.createdDate).valueOf() : null,
+            // dueDate: this.dueDate ? moment(this.dueDate).valueOf() : null,
             id: this.id,
             name: this.name,
             parentTaskId: this.parentTaskId,
             processDefinitionId: this.processDefinitionId,
             processInstanceId: this.processInstanceId,
-            status: this.status
+            status: this.status,
+            maxItems: this.size,
+            skipCount: this.skipCount
         };
         return new TaskQueryCloudRequestModel(requestNode);
     }

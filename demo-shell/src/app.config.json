@@ -6,9 +6,9 @@
     "loginRoute": "login",
     "providers": "BPM",
     "authType": "OAUTH",
+    "backend":"http://aps2dev.envalfresco.com",
     "oauth2": {
       "host": "http://aps2dev.envalfresco.com/auth/realms/springboot",
-      "authPath": "/protocol/openid-connect/token/",
       "clientId": "activiti",
       "scope": "openid",
       "secret": "",

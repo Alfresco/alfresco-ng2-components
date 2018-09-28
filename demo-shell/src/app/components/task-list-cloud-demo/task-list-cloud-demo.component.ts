@@ -15,30 +15,55 @@
  * limitations under the License.
  */
 
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { TaskListCloudComponent } from '@alfresco/adf-process-services-cloud';
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { UserPreferencesService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { Observable, from } from 'rxjs';
 
 @Component({
     selector: 'app-task-list-cloud-demo',
     templateUrl: 'task-list-cloud-demo.component.html',
     styleUrls: ['task-list-cloud-demo.component.scss']
 })
-export class TaskListCloudDemoComponent implements AfterViewInit {
-
-    constructor(private userPreference: UserPreferencesService) {
-    }
+export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
 
     @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
 
+    appDefinitionList: Observable<any>;
+    appChosen: string = '';
+    status: string = '';
+    clickedRow: string = '';
+    selectTask: string = '';
+
+    constructor(private alfrescoApi: AlfrescoApiService,
+                private appConfigService: AppConfigService,
+                private userPreference: UserPreferencesService) {
+    }
+
+    ngOnInit() {
+        this.appDefinitionList = this.getAppDefinitionList();
+    }
+
     ngAfterViewInit() {
         /*tslint:disable-next-line*/
-        this.taskCloud ? this.taskCloud.reload() : console.log('FAIL');
+        this.taskCloud && this.appChosen ? this.taskCloud.reload() : console.log('FAIL');
     }
 
     onChangePageSize(event) {
         this.userPreference.paginationSize = event.maxItems;
+    }
+
+    private getAppDefinitionList(): Observable<any> {
+        let appUrl = `${this.appConfigService.get('backend')}/alfresco-deployment-service/v1/applications`;
+        return from(this.alfrescoApi.getInstance()
+                    .oauth2Auth.callCustomApi(appUrl, 'GET',
+                    null, null, null, null, null, null,
+                    ['application/json'], ['application/json'], Object, null, null ));
+    }
+
+    onRowClick($event) {
+        this.clickedRow = $event;
     }
 
 }
