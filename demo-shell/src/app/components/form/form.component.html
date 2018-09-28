@@ -1,19 +1,55 @@
 <div class="main-content">
-    <h1>Form Component</h1>
 
-    <div class="form-container">
-        <adf-form
-            [showRefreshButton]="false"
-            [form]="form"
-            (formError)="logErrors($event)">
-        </adf-form>
-    </div>
+    <mat-tab-group>
+        <mat-tab label="Form">
+            <div class="form-container">
+                <adf-form
+                    [showRefreshButton]="false"
+                    [form]="form"
+                    (formError)="logErrors($event)">
+                </adf-form>
+            </div>
 
-    <div class="console" #console>
-        <h3>Error log:</h3>
-        <p *ngFor="let error of errorFields">Error {{ error.name }} {{error.validationSummary.message | translate}}</p>
-    </div>
+            <div class="console" #console>
+                <h3>Error log:</h3>
+                <p *ngFor="let error of errorFields">Error {{ error.name }} {{error.validationSummary.message |
+                    translate}}</p>
+            </div>
+        </mat-tab>
+        <mat-tab label="Editor">
+            <ngx-monaco-editor
+                id="adf-form-config-editor"
+                class="adf-form-config-editor"
+                [options]="editorOptions"
+                [(ngModel)]="formConfig"
+                (onInit)="onInitFormEditor($event)">
+            </ngx-monaco-editor>
+            <div class="form-editor-buttons">
+                <button mat-raised-button id="adf-form-config-save" (click)="onSaveFormConfig()" color="primary">Save
+                    form config
+                </button>
+                <button mat-raised-button id="adf-form-config-clear" (click)="onClearFormConfig()" color="primary">Clear
+                    form config
+                </button>
+            </div>
+            <div class="upload-config-button">
+                <a mat-raised-button color="primary" >
+                    <mat-icon>file_upload</mat-icon>
+                    <label for="upload-config-file">Upload JSON File</label>
+                    <input
+                        id="upload-config-file"
+                        data-automation-id="upload-single-file"
+                        type="file"
+                        name="uploadConfig"
+                        accept=".json"
+                        (change)="onConfigAdded($event)">
+                </a>
+            </div>
 
+        </mat-tab>
+
+    </mat-tab-group>
 </div>
+
 
 

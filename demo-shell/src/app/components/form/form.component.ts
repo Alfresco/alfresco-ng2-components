@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormModel, FormFieldModel, FormService, FormOutcomeEvent } from '@alfresco/adf-core';
+import { FormModel, FormFieldModel, FormService, FormOutcomeEvent, NotificationService } from '@alfresco/adf-core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
 import { Subscription } from 'rxjs';
@@ -26,7 +26,7 @@ import { Subscription } from 'rxjs';
     templateUrl: 'form.component.html',
     styleUrls: ['form.component.scss'],
     providers: [
-        { provide: FormService, useClass: InMemoryFormService }
+        {provide: FormService, useClass: InMemoryFormService}
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -34,9 +34,21 @@ export class FormComponent implements OnInit, OnDestroy {
 
     form: FormModel;
     errorFields: FormFieldModel[] = [];
+    formConfig: string;
+    editor: any;
     private subscriptions: Subscription[] = [];
 
-    constructor(@Inject(FormService) private formService: InMemoryFormService) {
+    editorOptions = {
+        theme: 'vs-dark',
+        language: 'json',
+        autoIndent: true,
+        formatOnPaste: true,
+        formatOnType: true,
+        automaticLayout: true
+    };
+
+    constructor(@Inject(FormService) private formService: InMemoryFormService,
+                private notificationService: NotificationService) {
 
         this.subscriptions.push(
             formService.executeOutcome.subscribe((formOutcomeEvent: FormOutcomeEvent) => {
@@ -51,7 +63,8 @@ export class FormComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         const formDefinitionJSON: any = DemoForm.getDefinition();
-        this.form = this.formService.parseForm(formDefinitionJSON);
+        this.formConfig = JSON.stringify(formDefinitionJSON);
+        this.parseForm();
     }
 
     ngOnDestroy() {
@@ -59,4 +72,43 @@ export class FormComponent implements OnInit, OnDestroy {
         this.subscriptions = [];
     }
 
+    onInitFormEditor(editor) {
+        this.editor = editor;
+        setTimeout(() => {
+            this.editor.getAction('editor.action.formatDocument').run();
+        }, 1000);
+    }
+
+    parseForm() {
+        this.form = this.formService.parseForm(JSON.parse(this.formConfig));
+    }
+
+    onSaveFormConfig() {
+        try {
+            this.parseForm();
+        } catch (error) {
+            this.notificationService.openSnackMessage(
+                'Wrong form configuration',
+                2000
+            );
+        }
+    }
+
+    onClearFormConfig() {
+        this.formConfig = '';
+    }
+
+    onConfigAdded($event: any): void {
+        let file = $event.currentTarget.files[0];
+
+        let fileReader = new FileReader();
+        fileReader.onload = () => {
+            this.formConfig = <string> fileReader.result;
+        };
+        fileReader.readAsText(file);
+
+        this.onInitFormEditor(this.editor);
+
+        $event.target.value = '';
+    }
 }
