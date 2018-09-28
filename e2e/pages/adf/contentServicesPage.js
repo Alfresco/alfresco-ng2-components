@@ -61,6 +61,10 @@ var ContentServicesPage = function () {
     var searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"'));
     var shareNodeButton = element(by.cssContainingText("mat-icon", " share "));
 
+    this.getContentList = function () {
+        return contentList;
+    };
+
     this.checkRecentFileToBeShowed = function () {
         Util.waitUntilElementIsVisible(recentFiles);
     };
@@ -86,6 +90,7 @@ var ContentServicesPage = function () {
     this.checkRecentFileToBeOpened = function () {
         Util.waitUntilElementIsVisible(recentFilesExpanded);
     };
+
 
     this.getRecentFileIcon = async function () {
         await Util.waitUntilElementIsVisible(recentFileIcon);

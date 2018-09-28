@@ -302,9 +302,15 @@ var ContentList = function () {
         return this;
     };
 
-    this.checkContentIsNotDisplayed = function (content) {
-        Util.waitUntilElementIsNotVisible(element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + content + "']")).first());
+    this.checkContentIsNotDisplayed = function (filename) {
+        Util.waitUntilElementIsNotVisible(element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + filename + "']")).first());
         return this;
+    };
+
+    this.getNodeIdByFilename = async function (filename) {
+        var nodeIdColumn = element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + filename + "' and @title='Node id']"));
+        var text = await nodeIdColumn.getText();
+        return text;
     };
 
     this.checkEmptyFolderMessageIsDisplayed = function () {
@@ -323,25 +329,25 @@ var ContentList = function () {
         Util.waitUntilElementIsVisible(row.element(by.css("div[class*='--image'] img[alt*='" + extension + "']")));
     };
 
-    this.rightClickOnRowNamed = function(rowName) {
+    this.rightClickOnRowNamed = function (rowName) {
         let row = this.getRowByRowName(rowName);
         browser.actions().click(row, protractor.Button.RIGHT).perform();
         Util.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
 
-    this.checkContextActionIsVisible = function(actionName) {
+    this.checkContextActionIsVisible = function (actionName) {
         let actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
         Util.waitUntilElementIsVisible(actionButton);
         Util.waitUntilElementIsClickable(actionButton);
         return actionButton;
     }
 
-    this.pressContextMenuActionNamed = function(actionName) {
+    this.pressContextMenuActionNamed = function (actionName) {
         let actionButton = this.checkContextActionIsVisible(actionName);
         actionButton.click();
     }
 
-    this.clickRowToSelect = function(rowName) {
+    this.clickRowToSelect = function (rowName) {
         let row = this.getRowByRowName(rowName);
         browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
         this.checkRowIsSelected(rowName);

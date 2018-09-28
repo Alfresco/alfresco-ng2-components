@@ -30,6 +30,16 @@ export class ConfigEditorPage {
         return this;
     }
 
+    enterExcludedFileConfiguration(text) {
+        let textField = element(by.css('#adf-excluded-file div.overflow-guard > textarea'));
+        browser.driver.sleep(1000);
+        Util.waitUntilElementIsVisible(textField);
+        textField.sendKeys('');
+        textField.clear();
+        textField.sendKeys(text);
+        return this;
+    }
+
     clickSaveMetadataButton() {
         let saveButton = element(by.xpath('//*[@id="adf-metadata-save"]'));
         Util.waitUntilElementIsVisible(saveButton);
@@ -39,6 +49,20 @@ export class ConfigEditorPage {
 
     clickClearMetadataButton() {
         let clearButton = element(by.xpath('//*[@id="adf-metadata-clear"]'));
+        Util.waitUntilElementIsVisible(clearButton);
+        Util.waitUntilElementIsClickable(clearButton);
+        return clearButton.click();
+    }
+
+    clickSaveExcludedFileButton() {
+        let saveButton = element(by.xpath('//*[@id="adf-excluded-file-save"]'));
+        Util.waitUntilElementIsVisible(saveButton);
+        Util.waitUntilElementIsClickable(saveButton);
+        return saveButton.click();
+    }
+
+    clickClearExcludedFileButton() {
+        let clearButton = element(by.xpath('//*[@id="adf-excluded-file-clear"]'));
         Util.waitUntilElementIsVisible(clearButton);
         Util.waitUntilElementIsClickable(clearButton);
         return clearButton.click();

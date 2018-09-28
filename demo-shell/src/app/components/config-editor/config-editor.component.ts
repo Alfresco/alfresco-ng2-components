@@ -110,6 +110,6 @@ export class ConfigEditorComponent {
     }
 
     onClearExcludedFile() {
-        this.searchConf = '';
+        this.excludedFileConf = '';
     }
 }

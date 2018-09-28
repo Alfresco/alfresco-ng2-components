@@ -21,6 +21,7 @@ import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
 import UploadToggles = require('../../pages/adf/dialog/uploadToggles');
+import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -31,6 +32,7 @@ import resources = require('../../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { DropActions } from '../../actions/drop.actions';
+import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 
 describe('Upload component - Excluded Files', () => {
 
@@ -39,6 +41,8 @@ describe('Upload component - Excluded Files', () => {
     let uploadToggles = new UploadToggles();
     let loginPage = new LoginPage();
     let acsUser = new AcsUserModel();
+    let navigationBarPage = new NavigationBarPage();
+    let configEditorPage = new ConfigEditorPage();
 
     let iniExcludedFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.INI.file_name,
@@ -48,6 +52,11 @@ describe('Upload component - Excluded Files', () => {
     let folderWithExcludedFile = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.FOLDER_EXCLUDED.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.FOLDER_EXCLUDED.folder_location
+    });
+
+    let txtFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     beforeAll(async (done) => {
@@ -97,5 +106,34 @@ describe('Upload component - Excluded Files', () => {
         contentServicesPage.uploadFolder(folderWithExcludedFile.location).checkContentIsDisplayed(folderWithExcludedFile.name);
 
         contentServicesPage.doubleClickRow(folderWithExcludedFile.name).checkContentIsNotDisplayed(iniExcludedFile.name).checkContentIsDisplayed('a_file.txt');
+    });
+
+    fit('[C212862] Should not allow upload file excluded in the files extension of app.config.json', () => {
+        navigationBarPage.clickConfigEditorButton();
+
+        configEditorPage.clickClearExcludedFileButton();
+
+        browser.driver.sleep(1000);
+
+        configEditorPage.enterExcludedFileConfiguration('{' +
+            '    "excluded": [' +
+            '        ".DS_Store",' +
+            '        "desktop.ini",' +
+            '        ".txt"' +
+            '    ],' +
+            '    "match-options": {' +
+            '        "nocase": true' +
+            '    }' +
+            '}');
+
+        browser.driver.sleep(1000);
+
+        configEditorPage.clickSaveExcludedFileButton();
+
+        contentServicesPage.goToDocumentList();
+
+        contentServicesPage
+            .uploadFile(txtFileModel.location)
+            .checkContentIsNotDisplayed(txtFileModel.name);
     });
 });

@@ -22,18 +22,17 @@ var UploadToggles = function () {
 
     var toggleState = new ToggleState();
 
-    var multipleFileUploadToggle = element(by.cssContainingText("span[class*='toggle-content']", "Multiple File Upload"));
-    var uploadFolderToggle = element(by.cssContainingText("span[class*='toggle-content']", "Folder upload"));
-    var extensionFilterToggle = element(by.cssContainingText("span[class*='toggle-content']", "Custom extensions filter"));
-    var maxSizeToggle = element(by.cssContainingText("span[class*='toggle-content']", "Max size filter"));
-    var versioningToggle = element(by.cssContainingText("span[class*='toggle-content']", "Enable versioning"));
+    var multipleFileUploadToggle = element(by.id("adf-multiple-upload-switch"));
+    var uploadFolderToggle = element(by.id("adf-folder-upload-switch"));
+    var extensionFilterToggle = element(by.id("adf-extension-filter-upload-switch"));
+    var maxSizeToggle = element(by.id("adf-max-size-filter-upload-switch"));
+    var versioningToggle = element(by.id("adf-version-upload-switch"));
     var extensionAcceptedField = element(by.css("input[data-automation-id='accepted-files-type']"));
     var maxSizeField = element(by.css("input[data-automation-id='max-files-size']"));
     var disableUploadCheckbox = element(by.css("[id='adf-disable-upload']"));
-    var ancestorToggle = by.xpath("ancestor::mat-slide-toggle");
 
     this.enableMultipleFileUpload = function () {
-        toggleState.enableToggle(multipleFileUploadToggle.element(ancestorToggle));
+        toggleState.enableToggle(multipleFileUploadToggle);
         return this;
     };
 
@@ -43,7 +42,7 @@ var UploadToggles = function () {
     };
 
     this.enableFolderUpload = function () {
-        toggleState.enableToggle(uploadFolderToggle.element(ancestorToggle));
+        toggleState.enableToggle(uploadFolderToggle);
         return this;
     };
 
@@ -53,7 +52,7 @@ var UploadToggles = function () {
     };
 
     this.enableExtensionFilter = function () {
-        toggleState.enableToggle(extensionFilterToggle.element(ancestorToggle));
+        toggleState.enableToggle(extensionFilterToggle);
         return this;
     };
 
@@ -63,7 +62,7 @@ var UploadToggles = function () {
     };
 
     this.enableMaxSize = function () {
-        toggleState.enableToggle(maxSizeToggle.element(ancestorToggle));
+        toggleState.enableToggle(maxSizeToggle);
         return this;
     };
 
@@ -73,7 +72,7 @@ var UploadToggles = function () {
     };
 
     this.enableVersioning = function () {
-        toggleState.enableToggle(versioningToggle.element(ancestorToggle));
+        toggleState.enableToggle(versioningToggle);
         return this;
     };
 

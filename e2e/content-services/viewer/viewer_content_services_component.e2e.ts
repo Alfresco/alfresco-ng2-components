@@ -17,19 +17,19 @@
 
 import { browser } from 'protractor';
 
-import TestConfig = require('../test.config');
+import TestConfig = require('../../test.config');
 
-import LoginPage = require('../pages/adf/loginPage');
-import ContentServicesPage = require('../pages/adf/contentServicesPage');
-import ViewerPage = require('../pages/adf/viewerPage');
+import LoginPage = require('../../pages/adf/loginPage');
+import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import ViewerPage = require('../../pages/adf/viewerPage');
 
-import resources = require('../util/resources');
+import resources = require('../../util/resources');
 
-import FileModel = require('../models/ACS/fileModel');
-import AcsUserModel = require('../models/ACS/acsUserModel');
+import FileModel = require('../../models/ACS/fileModel');
+import AcsUserModel = require('../../models/ACS/acsUserModel');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from '../actions/ACS/upload.actions';
+import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Content Services Viewer', () => {
 
