@@ -257,6 +257,7 @@
     "DIALOG-TITLE": "Share",
     "DESCRIPTION": "Clicking the link bellow, will copy it to the clipboard.",
     "TITLE": "Link to share",
+    "EXPIRES": "Expires on",
     "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Remove this shared link",
