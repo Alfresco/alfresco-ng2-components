@@ -15,30 +15,25 @@
  * limitations under the License.
  */
 
-var Util = require('../../../util/util');
+import { element, by } from 'protractor';
+import Util = require('../../../util/util');
 
-var ToggleState = function () {
-
-    this.enableToggle = function (toggle) {
+export class FormControllersPage {
+    enableToggle(toggle) {
         Util.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') < 0) {
                 toggle.click();
             }
         });
-    };
+    }
 
-    this.disableToggle = function (toggle) {
+    disableToggle(toggle) {
         Util.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') >= 0) {
                 toggle.click();
             }
         });
-    };
-
-};
-module.exports = ToggleState;
-
-
-
+    }
+}

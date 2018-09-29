@@ -20,51 +20,31 @@ import Util = require('../../util/util');
 
 export class ConfigEditorPage {
 
-    enterMetadataConfiguration(text) {
-        let textField = element(by.css('#adf-metadata-editor div.overflow-guard > textarea'));
-        browser.driver.sleep(1000);
+    enterConfiguration(text) {
+        let textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
         Util.waitUntilElementIsVisible(textField);
-        textField.sendKeys('');
-        textField.clear();
         textField.sendKeys(text);
         return this;
     }
 
-    enterExcludedFileConfiguration(text) {
-        let textField = element(by.css('#adf-excluded-file div.overflow-guard > textarea'));
-        browser.driver.sleep(1000);
-        Util.waitUntilElementIsVisible(textField);
-        textField.sendKeys('');
-        textField.clear();
-        textField.sendKeys(text);
-        return this;
-    }
-
-    clickSaveMetadataButton() {
-        let saveButton = element(by.xpath('//*[@id="adf-metadata-save"]'));
+    clickSaveButton() {
+        let saveButton = element(by.id('adf-configuration-save'));
         Util.waitUntilElementIsVisible(saveButton);
         Util.waitUntilElementIsClickable(saveButton);
         return saveButton.click();
     }
 
-    clickClearMetadataButton() {
-        let clearButton = element(by.xpath('//*[@id="adf-metadata-clear"]'));
+    clickClearButton() {
+        let clearButton = element(by.id('adf-configuration-clear'));
         Util.waitUntilElementIsVisible(clearButton);
         Util.waitUntilElementIsClickable(clearButton);
         return clearButton.click();
     }
 
-    clickSaveExcludedFileButton() {
-        let saveButton = element(by.xpath('//*[@id="adf-excluded-file-save"]'));
-        Util.waitUntilElementIsVisible(saveButton);
-        Util.waitUntilElementIsClickable(saveButton);
-        return saveButton.click();
-    }
-
-    clickClearExcludedFileButton() {
-        let clearButton = element(by.xpath('//*[@id="adf-excluded-file-clear"]'));
-        Util.waitUntilElementIsVisible(clearButton);
-        Util.waitUntilElementIsClickable(clearButton);
-        return clearButton.click();
+    clickFileConfiguration() {
+        let button = element(by.id('adf-file-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
     }
 }

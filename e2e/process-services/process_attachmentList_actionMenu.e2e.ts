@@ -20,7 +20,7 @@ import ProcessServicesPage = require('../pages/adf/process_services/processServi
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage.js');
 import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage.js');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
-import ViewerPage = require('../pages/adf/viewerPage.js');
+import { ViewerPage } from '../pages/adf/viewerPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

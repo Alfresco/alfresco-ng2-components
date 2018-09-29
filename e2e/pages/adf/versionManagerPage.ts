@@ -20,16 +20,19 @@ import TestConfig = require('../../test.config');
 import path = require('path');
 import remote = require('selenium-webdriver/remote');
 import { browser, by, element, protractor } from 'protractor';
+import { FormControllersPage } from './material/formControllersPage';
 
 export class VersionManagePage {
 
-    showNewVersionButton = element(by.css('#adf-show-version-upload-button'));
+    formControllersPage = new FormControllersPage();
+
+    showNewVersionButton = element(by.id('adf-show-version-upload-button'));
     uploadNewVersionButton = element(by.css('adf-upload-version-button input[data-automation-id="upload-single-file"]'));
-    uploadNewVersionContainer = element(by.css('#adf-new-version-uploader-container'));
-    cancelButton = element(by.css('#adf-new-version-cancel'));
-    majorRadio = element(by.css('#adf-new-version-major'));
-    minorRadio = element(by.css('#adf-new-version-minor'));
-    commentText = element(by.css('#adf-new-version-text-area'));
+    uploadNewVersionContainer = element(by.id('adf-new-version-uploader-container'));
+    cancelButton = element(by.id('adf-new-version-cancel'));
+    majorRadio = element(by.id('adf-new-version-major'));
+    minorRadio = element(by.id('adf-new-version-minor'));
+    commentText = element(by.id('adf-new-version-text-area'));
     readOnlySwitch = element(by.id('adf-version-manager-switch-readonly'));
     downloadSwitch = element(by.id('adf-version-manager-switch-download'));
     commentsSwitch = element(by.id('adf-version-manager-switch-comments'));
@@ -54,23 +57,23 @@ export class VersionManagePage {
     }
 
     chekFileVersionExist(version) {
-        let fileVersion = element(by.css(`[id="adf-version-list-item-version-${version}"]`));
+        let fileVersion = element(by.id(`adf-version-list-item-version-${version}`));
         return Util.waitUntilElementIsVisible(fileVersion);
     }
 
     chekFileVersionNotExist(version) {
-        let fileVersion = element(by.css(`[id="adf-version-list-item-version-${version}"]`));
+        let fileVersion = element(by.id(`adf-version-list-item-version-${version}`));
         return Util.waitUntilElementIsNotVisible(fileVersion);
     }
 
     getFileVersionComment(version) {
-        let fileComment = element(by.css(`[id="adf-version-list-item-comment-${version}"]`));
+        let fileComment = element(by.id(`adf-version-list-item-comment-${version}`));
         Util.waitUntilElementIsVisible(fileComment);
         return fileComment.getText();
     }
 
     getFileVersionDate(version) {
-        let fileDate = element(by.css(`[id="adf-version-list-item-date-${version}"]`));
+        let fileDate = element(by.id(`adf-version-list-item-date-${version}`));
         Util.waitUntilElementIsVisible(fileDate);
         return fileDate.getText();
     }
@@ -84,13 +87,13 @@ export class VersionManagePage {
     }
 
     clickMajorChange() {
-        let radioMajor = element(by.css(`[id="adf-new-version-major"]`));
+        let radioMajor = element(by.id(`adf-new-version-major`));
         Util.waitUntilElementIsVisible(radioMajor);
         radioMajor.click();
     }
 
     clickMinorChange() {
-        let radioMinor = element(by.css(`[id="adf-new-version-minor"]`));
+        let radioMinor = element(by.id(`adf-new-version-minor`));
         Util.waitUntilElementIsVisible(radioMinor);
         radioMinor.click();
     }
@@ -99,48 +102,28 @@ export class VersionManagePage {
      * disables readOnly
      */
     disableReadOnly() {
-        Util.waitUntilElementIsVisible(this.readOnlySwitch);
-        this.readOnlySwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') >= 0) {
-                this.readOnlySwitch.click();
-            }
-        });
+        this.formControllersPage.disableToggle(this.readOnlySwitch);
     }
 
     /**
      * enables readOnly
      */
     enableReadOnly() {
-        Util.waitUntilElementIsVisible(this.readOnlySwitch);
-        this.readOnlySwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') < 0) {
-                this.readOnlySwitch.click();
-            }
-        });
+        this.formControllersPage.enableToggle(this.readOnlySwitch);
     }
 
     /**
      * disables download
      */
     disableDownload() {
-        Util.waitUntilElementIsVisible(this.downloadSwitch);
-        this.downloadSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') >= 0) {
-                this.downloadSwitch.click();
-            }
-        });
+        this.formControllersPage.disableToggle(this.downloadSwitch);
     }
 
     /**
      * enables download
      */
     enableDownload() {
-        Util.waitUntilElementIsVisible(this.downloadSwitch);
-        this.downloadSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') < 0) {
-                this.downloadSwitch.click();
-            }
-        });
+        this.formControllersPage.enableToggle(this.downloadSwitch);
     }
 
     /**
@@ -148,41 +131,31 @@ export class VersionManagePage {
      * disables comments
      */
     disableComments() {
-        Util.waitUntilElementIsVisible(this.commentsSwitch);
-        this.commentsSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') >= 0) {
-                this.commentsSwitch.click();
-            }
-        });
+        this.formControllersPage.disableToggle(this.commentsSwitch);
     }
 
     /**
      * enables comments
      */
     enableComments() {
-        Util.waitUntilElementIsVisible(this.commentsSwitch);
-        this.commentsSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') < 0) {
-                this.commentsSwitch.click();
-            }
-        });
+        this.formControllersPage.enableToggle(this.commentsSwitch);
     }
 
     clickActionButton(version) {
-        Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-menu-button-${version}"]`)));
-        element(by.css(`[id="adf-version-list-action-menu-button-${version}"]`)).click();
+        Util.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-menu-button-${version}`)));
+        element(by.id(`adf-version-list-action-menu-button-${version}`)).click();
         return this;
     }
 
     clickAcceptConfirm() {
-        Util.waitUntilElementIsVisible(element(by.css(`[id="adf-confirm-accept"]`)));
-        element(by.css(`[id="adf-confirm-accept"]`)).click();
+        Util.waitUntilElementIsVisible(element(by.id(`adf-confirm-accept`)));
+        element(by.id(`adf-confirm-accept`)).click();
         return this;
     }
 
     clickCancelConfirm() {
-        Util.waitUntilElementIsVisible(element(by.css(`[id="adf-confirm-cancel"]`)));
-        element(by.css(`[id="adf-confirm-cancel"]`)).click();
+        Util.waitUntilElementIsVisible(element(by.id(`adf-confirm-cancel`)));
+        element(by.id(`adf-confirm-cancel`)).click();
         return this;
     }
 
@@ -196,7 +169,7 @@ export class VersionManagePage {
 
     downloadFileVersion(version) {
         this.clickActionButton(version);
-        let downloadButton = element(by.css(`[id="adf-version-list-action-download-${version}"]`));
+        let downloadButton = element(by.id(`adf-version-list-action-download-${version}`));
         Util.waitUntilElementIsVisible(downloadButton);
         browser.driver.sleep(500);
         downloadButton.click();
@@ -205,7 +178,7 @@ export class VersionManagePage {
 
     deleteFileVersion(version) {
         this.clickActionButton(version);
-        let deleteButton = element(by.css(`[id="adf-version-list-action-delete-${version}"]`));
+        let deleteButton = element(by.id(`adf-version-list-action-delete-${version}`));
         Util.waitUntilElementIsVisible(deleteButton);
         browser.driver.sleep(500);
         deleteButton.click();
@@ -214,7 +187,7 @@ export class VersionManagePage {
 
     restoreFileVersion(version) {
         this.clickActionButton(version);
-        let restoreButton = element(by.css(`[id="adf-version-list-action-restore-${version}"]`));
+        let restoreButton = element(by.id(`adf-version-list-action-restore-${version}`));
         Util.waitUntilElementIsVisible(restoreButton);
         browser.driver.sleep(500);
         restoreButton.click();
@@ -222,9 +195,9 @@ export class VersionManagePage {
     }
 
     checkActionsArePresent(version) {
-        Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-download-${version}"]`)));
-        Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-delete-${version}"]`)));
-        Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-restore-${version}"]`)));
+        Util.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-download-${version}`)));
+        Util.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-delete-${version}`)));
+        Util.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-restore-${version}`)));
     }
 
     closeVersionDialog() {

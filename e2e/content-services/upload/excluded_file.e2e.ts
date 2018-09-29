@@ -20,7 +20,7 @@ import { element, by, browser } from 'protractor';
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
-import UploadToggles = require('../../pages/adf/dialog/uploadToggles');
+import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
@@ -108,27 +108,25 @@ describe('Upload component - Excluded Files', () => {
         contentServicesPage.doubleClickRow(folderWithExcludedFile.name).checkContentIsNotDisplayed(iniExcludedFile.name).checkContentIsDisplayed('a_file.txt');
     });
 
-    fit('[C212862] Should not allow upload file excluded in the files extension of app.config.json', () => {
+    it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', () => {
         navigationBarPage.clickConfigEditorButton();
 
-        configEditorPage.clickClearExcludedFileButton();
+        configEditorPage.clickFileConfiguration('adf-file-conf');
 
-        browser.driver.sleep(1000);
+        configEditorPage.clickClearButton();
 
-        configEditorPage.enterExcludedFileConfiguration('{' +
+        configEditorPage.enterConfiguration('{' +
             '    "excluded": [' +
             '        ".DS_Store",' +
             '        "desktop.ini",' +
-            '        ".txt"' +
+            '        "*.txt"' +
             '    ],' +
             '    "match-options": {' +
             '        "nocase": true' +
             '    }' +
             '}');
 
-        browser.driver.sleep(1000);
-
-        configEditorPage.clickSaveExcludedFileButton();
+        configEditorPage.clickSaveButton();
 
         contentServicesPage.goToDocumentList();
 

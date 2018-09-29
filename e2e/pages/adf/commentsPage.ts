@@ -18,9 +18,11 @@
 import { element, by } from 'protractor';
 
 import Util = require('../../util/util');
+import { TabsPage } from './material/tabsPage';
 
 export class CommentsPage {
 
+    tabsPage = new TabsPage();
     numberOfComments = element(by.id('comment-header'));
     commentUserIcon = element.all(by.id('comment-user-icon'));
     commentUserName = element.all(by.id('comment-user'));
@@ -28,7 +30,6 @@ export class CommentsPage {
     commentTime = element.all(by.id('comment-time'));
     commentInput = element(by.id('comment-input'));
     addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
-    commentsTab = element(by.cssContainingText("div[id*='mat-tab-label']", 'Comments'));
 
     getTotalNumberOfComments() {
         Util.waitUntilElementIsVisible(this.numberOfComments);
@@ -66,9 +67,7 @@ export class CommentsPage {
     }
 
     checkCommentsTabIsSelected() {
-        this.commentsTab.getAttribute('aria-selected').then((result) => {
-            expect(result).toBe('true');
-        });
+        this.tabsPage.checkTabIsSelectedByTitle('Comments');
     }
 
     checkCommentInputIsDisplayed() {

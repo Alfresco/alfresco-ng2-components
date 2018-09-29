@@ -52,10 +52,7 @@ export class UploadService {
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
 
-    constructor(protected apiService: AlfrescoApiService,
-                appConfigService: AppConfigService) {
-        this.excludedFileList = <string[]> appConfigService.get('files.excluded');
-        this.matchingOptions = appConfigService.get('files.match-options');
+    constructor(protected apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
     }
 
     /**
@@ -89,7 +86,10 @@ export class UploadService {
     private filterElement(file: FileModel) {
         let isAllowed = true;
 
+        this.excludedFileList = <string[]> this.appConfigService.get('files.excluded');
         if (this.excludedFileList) {
+
+            this.matchingOptions = this.appConfigService.get('files.match-options');
 
             isAllowed = this.excludedFileList.filter((pattern) => {
                 let minimatch = new Minimatch(pattern, this.matchingOptions);

@@ -279,7 +279,7 @@ describe('Start Task - Custom App', () => {
         attachmentListPage.checkFileIsAttached(pngFile.name);
     });
 
-    fit('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', () => {
+    it('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(showHeaderTask).clickStartButton();

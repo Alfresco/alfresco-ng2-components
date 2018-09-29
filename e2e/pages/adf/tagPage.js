@@ -36,12 +36,6 @@ var TagPage = function () {
     var showLessButton = element(by.css('button[data-automation-id="show-fewer-tags"]'));
     var tagsOnPage = element.all(by.css('div[class*="adf-list-tag"]'));
 
-    this.goToTagPage = function () {
-        browser.driver.get(tagURL);
-        Util.waitUntilElementIsVisible(addTagButton);
-        return this;
-    };
-
     this.getNodeId = function () {
         Util.waitUntilElementIsVisible(insertNodeId);
         return insertNodeId.getAttribute('value');
@@ -195,7 +189,7 @@ var TagPage = function () {
         Util.waitUntilElementIsClickable(showLessButton);
         return showLessButton.click();
     };
-    
+
     this.checkTagsOnList = function () {
         return tagsOnPage.count();
     };
@@ -207,7 +201,7 @@ var TagPage = function () {
     this.checkShowLessButtonIsNotDisplayed = function () {
         return Util.waitUntilElementIsNotVisible(showLessButton);
     };
-    
+
     this.clickShowMoreButtonUntilNotDisplayed = function () {
         showMoreButton.isDisplayed().then((visible) => {
             if(visible){

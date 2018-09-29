@@ -637,7 +637,7 @@ describe('Document List Component', () => {
             expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toContain('ago');
 
             expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
-            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`770.35 KB`);
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`81.05 KB`);
             expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
             expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toContain('ago');

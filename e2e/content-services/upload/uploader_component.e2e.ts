@@ -20,7 +20,7 @@ import { element, by, browser } from 'protractor';
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
-import UploadToggles = require('../../pages/adf/dialog/uploadToggles');
+import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -90,8 +90,6 @@ describe('Upload component', () => {
     let nodeIdToDelete = [];
 
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
-
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
@@ -119,7 +117,7 @@ describe('Upload component', () => {
         nodeIdToDelete.forEach(async (currentNodePormise) => {
             let currentNode = await currentNodePormise;
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
-        })
+        });
 
         nodeIdToDelete = [];
         done();
