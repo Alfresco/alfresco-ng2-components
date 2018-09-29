@@ -42,7 +42,7 @@ var ContentServicesPage = function () {
     var contentServicesURL = TestConfig.adf.url + TestConfig.adf.port + "/files";
     var loadMoreButton = element(by.css("button[data-automation-id='adf-infinite-pagination-button']"));
     var emptyPagination = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
-    var dragAndDrop = element(by.css("adf-upload-drag-area div"));
+    var dragAndDrop = element.all(by.css("adf-upload-drag-area div")).first();
     var nameHeader = element(by.css("div[data-automation-id='auto_id_name'] > span"));
     var sizeHeader = element(by.css("div[data-automation-id='auto_id_content.sizeInBytes'] > span"));
     var createdByHeader = element(by.css("div[data-automation-id='auto_id_createdByUser.displayName'] > span"));
@@ -310,7 +310,6 @@ var ContentServicesPage = function () {
         var breadcrumb = element(by.css("a[data-automation-id='breadcrumb_" + folder + "']"));
         Util.waitUntilElementIsVisible(breadcrumb);
         breadcrumb.click();
-        contentList.tableIsLoaded();
         return this;
     };
 

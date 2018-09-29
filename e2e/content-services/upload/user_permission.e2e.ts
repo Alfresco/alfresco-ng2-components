@@ -99,7 +99,7 @@ describe('Upload - User permission', () => {
             contentServicesPage.checkDandDIsDisplayed();
 
             let dragAndDrop = new DropActions();
-            let dragAndDropArea = element(by.css('adf-upload-drag-area div'));
+            let dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
 
             dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
             dragAndDrop.dropFolder(dragAndDropArea, folder.location);
@@ -108,6 +108,8 @@ describe('Upload - User permission', () => {
             contentServicesPage.checkContentIsDisplayed(folder.name);
 
             contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+
+            browser.sleep(5000);
 
             dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
             dragAndDrop.dropFolder(dragAndDropArea, folder.location);
@@ -122,12 +124,6 @@ describe('Upload - User permission', () => {
         });
 
         it('[C279915] Should not be allowed to upload a file in a restricted user folder with limited permissions', () => {
-            navigationBarPage.clickLoginButton();
-
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-            contentServicesPage.goToDocumentList();
-
             contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
 
             uploadDialog.fileIsUploaded(emptyFile.name);
@@ -135,6 +131,8 @@ describe('Upload - User permission', () => {
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
             contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+
+            browser.sleep(5000);
 
             contentServicesPage.uploadFile(emptyFile.location);
 
@@ -153,6 +151,8 @@ describe('Upload - User permission', () => {
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
             contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+
+            browser.sleep(5000);
 
             uploadToggles.enableFolderUpload();
 
@@ -175,7 +175,7 @@ describe('Upload - User permission', () => {
 
             let dragAndDrop = new DropActions();
 
-            let dragAndDropArea = element(by.css('adf-upload-drag-area div'));
+            let dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
 
             dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
             dragAndDrop.dropFolder(dragAndDropArea, folder.location);

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/* tslint:disable */
 import { element, by, browser } from 'protractor';
 
 import LoginPage = require('../../pages/adf/loginPage');
@@ -113,10 +114,10 @@ describe('Upload component', () => {
     });
 
     afterEach(async (done) => {
-
         nodeIdToDelete.forEach(async (currentNodePormise) => {
             let currentNode = await currentNodePormise;
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
+            console.log('currentNode ' + currentNode); //dis
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNodePormise);
         });
 
         nodeIdToDelete = [];

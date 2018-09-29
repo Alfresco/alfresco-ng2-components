@@ -81,7 +81,7 @@ describe('Upload component - Excluded Files', () => {
     it('[C279914] Should not allow upload default excluded files using D&D', () => {
         contentServicesPage.checkDandDIsDisplayed();
 
-        let dragAndDropArea = element(by.css('adf-upload-drag-area div'));
+        let dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
 
         let dragAndDrop = new DropActions();
 
