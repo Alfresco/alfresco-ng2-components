@@ -116,7 +116,7 @@ describe('Upload component', () => {
 
         nodersPromise.forEach(async (currentNodePormise) => {
             await currentNodePormise.then(async (currentNode) => {
-                console.log('currentNode ' + currentNode)
+                console.log('currentNode ' + currentNode);
                 if (currentNode && currentNode !== 'Node id') {
                     await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
                 }
