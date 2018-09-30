@@ -45,7 +45,6 @@ export class ViewerPage {
     pageSelectorInput = element(by.css('input[data-automation-id="adf-page-selector"]'));
     imgContainer = element(by.css('div[data-automation-id="adf-image-container"]'));
     mediaContainer = element(by.css('adf-media-player[class="adf-media-player ng-star-inserted"]'));
-    allPages = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
     percentage = element(by.css('div[data-automation-id="adf-page-scale"'));
     thumbnailsBtn = element(by.css('button[data-automation-id="adf-thumbnails-button"]'));
     thumbnailsContent = element(by.css('div[data-automation-id="adf-thumbnails-content"]'));
@@ -290,6 +289,7 @@ export class ViewerPage {
     }
 
     checkFileContent(pageNumber, text) {
+        let allPages = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
         let pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
         let textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div')).first();
         let specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div', text)).first();
@@ -313,11 +313,11 @@ export class ViewerPage {
     }
 
     checkZoomedIn(zoom) {
-        expect(percentage.getText()).toBeGreaterThan(this.zoom);
+        expect(this.percentage.getText()).toBeGreaterThan(this.zoom);
     }
 
     checkZoomedOut(zoom) {
-        expect(percentage.getText()).toBeLessThan(this.zoom);
+        expect(this.percentage.getText()).toBeLessThan(this.zoom);
     }
 
     checkRotateLeftButtonIsDisplayed() {
@@ -329,7 +329,7 @@ export class ViewerPage {
     }
 
     checkScaled(zoom) {
-        expect(percentage.getText()).toEqual(this.zoom);
+        expect(this.percentage.getText()).toEqual(this.zoom);
     }
 
     checkScaleImgButtonIsDisplayed() {

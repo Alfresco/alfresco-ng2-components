@@ -88,8 +88,6 @@ describe('Upload component', () => {
     let filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
     let filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
-    let nodeIdToDelete = [];
-
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -114,13 +112,17 @@ describe('Upload component', () => {
     });
 
     afterEach(async (done) => {
-        nodeIdToDelete.forEach(async (currentNodePormise) => {
-            let currentNode = await currentNodePormise;
-            console.log('currentNode ' + currentNode); //dis
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNodePormise);
+        let nodersPromise = await contentServicesPage.getContentList().getAllNodeIdInList();
+
+        nodersPromise.forEach(async (currentNodePormise) => {
+            await currentNodePormise.then(async (currentNode) => {
+                console.log('currentNode ' + currentNode)
+                if (currentNode && currentNode !== 'Node id') {
+                    await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
+                }
+            });
         });
 
-        nodeIdToDelete = [];
         done();
     });
 
@@ -130,8 +132,6 @@ describe('Upload component', () => {
         contentServicesPage
             .checkUploadButton()
             .checkContentIsDisplayed(firstPdfFileModel.name);
-
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(firstPdfFileModel.name));
     });
 
     it('[C260173] Enable folder upload', () => {
@@ -155,8 +155,6 @@ describe('Upload component', () => {
         uploadDialog.fileIsUploaded(pdfFileModel.name);
 
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(pdfFileModel.name));
     });
 
     it('[C272790] Upload a text file', () => {
@@ -166,8 +164,6 @@ describe('Upload component', () => {
 
         uploadDialog.fileIsUploaded(docxFileModel.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(docxFileModel.name));
     });
 
     it('[C260141] Upload a png file', () => {
@@ -177,8 +173,6 @@ describe('Upload component', () => {
 
         uploadDialog.fileIsUploaded(pngFileModel.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(pngFileModel.name));
     });
 
     it('[C260143] Minimize and maximize the upload dialog box', () => {
@@ -199,9 +193,6 @@ describe('Upload component', () => {
         expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
         expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
         uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
-
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(docxFileModel.name));
-
     });
 
     it('[C260168] Cancel the uploaded file through the upload dialog icon', () => {
@@ -302,9 +293,6 @@ describe('Upload component', () => {
             .clickOnCloseButton()
             .dialogIsNotDisplayed();
 
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(pdfFileModel.name));
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(pdfFileModel.getVersionName()));
-
         pdfFileModel.setVersion('');
     });
 
@@ -331,8 +319,6 @@ describe('Upload component', () => {
         contentServicesPage
             .checkContentIsNotDisplayed(pdfFileModel.getVersionName());
 
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(pdfFileModel.name));
-
         pdfFileModel.setVersion('');
         uploadToggles.disableVersioning();
     });
@@ -351,10 +337,6 @@ describe('Upload component', () => {
 
         uploadDialog.fileIsUploaded(pdfFileModel.name).fileIsNotDisplayedInDialog(pngFileModel.name).fileIsNotDisplayedInDialog(pngFileModelTwo.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(pngFileModelTwo.name));
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(pdfFileModel.name));
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(pngFileModel.name));
     });
 
     it('[C260170] Upload files on the same time', () => {
@@ -389,8 +371,6 @@ describe('Upload component', () => {
         contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
         uploadDialog.fileIsUploaded(emptyFile.name).clickOnCloseButton().dialogIsNotDisplayed();
 
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(emptyFile.name));
-
         uploadToggles.disableMaxSize();
     });
 
@@ -404,8 +384,6 @@ describe('Upload component', () => {
         uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
         contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
         uploadDialog.fileIsUploaded(emptyFile.name).clickOnCloseButton().dialogIsNotDisplayed();
-
-        nodeIdToDelete.push(contentServicesPage.getContentList().getNodeIdByFilename(emptyFile.name));
 
         uploadToggles.disableMaxSize();
     });

@@ -307,10 +307,17 @@ var ContentList = function () {
         return this;
     };
 
-    this.getNodeIdByFilename = async function (filename) {
+    this.getNodeIdByFilename = function (filename) {
         var nodeIdColumn = element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + filename + "' and @title='Node id']"));
-        var text = await nodeIdColumn.getText();
+        var text = nodeIdColumn.getText();
         return text;
+    };
+
+    this.getAllNodeIdInList = async function (filename) {
+        var nodeIdColumns = await element.all(by.xpath("//div[@id='document-list-container']//div[@title='Node id']"));
+        return await nodeIdColumns.map( (currentElement) => {
+            return currentElement.getText();
+        });
     };
 
     this.checkEmptyFolderMessageIsDisplayed = function () {
