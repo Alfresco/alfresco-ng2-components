@@ -68,7 +68,7 @@ export class HeaderDataComponent {
     }
 
     changeSidenavVisibility() {
-        this.hideSidenavToggle= !this.hideSidenavToggle;
+        this.hideSidenavToggle = !this.hideSidenavToggle;
         this.headerService.changeSidenavVisibility(this.hideSidenavToggle);
     }
 }

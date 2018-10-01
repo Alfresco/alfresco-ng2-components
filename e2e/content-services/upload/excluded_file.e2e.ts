@@ -139,7 +139,7 @@ describe('Upload component - Excluded Files', () => {
             .uploadFile(txtFileModel.location)
             .checkContentIsNotDisplayed(txtFileModel.name);
     });
-    
+
     it('[C274688] Should extension type added as excluded and accepted not be uploaded', () => {
         navigationBarPage.clickConfigEditorButton();
 
