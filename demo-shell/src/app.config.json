@@ -2,6 +2,7 @@
     "$schema": "../../lib/core/app-config/schema.json",
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
+    "baseShareUrl": null,
     "loginRoute": "login",
     "providers": "ALL",
     "contextRootBpm": "activiti-app",

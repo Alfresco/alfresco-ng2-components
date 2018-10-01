@@ -119,10 +119,13 @@
                         </mat-icon>
                     </button>
                     <button mat-icon-button
-                            disabled
+                            [disabled]="!shareRef.isFile"
                             [baseShareUrl]="baseShareUrl"
+                            #shareRef="adfShare"
                             [adf-share]="documentList.selection[0]"
-                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHARE' | translate }}">
+                            [matTooltip]="(shareRef.isShared
+                                ? 'DOCUMENT_LIST.TOOLBAR.SHARE_EDIT'
+                                : 'DOCUMENT_LIST.TOOLBAR.SHARE') | translate">
                         <mat-icon>
                             share
                         </mat-icon>

@@ -15,60 +15,57 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, ElementRef, OnChanges } from '@angular/core';
+import { Directive, Input, HostListener, OnChanges, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 
-import { ShareDialogComponent } from '../dialogs/share.dialog';
+import { ShareDialogComponent } from './content-node-share.dialog';
 
 @Directive({
-    selector: '[adf-share]'
+    selector: '[adf-share]',
+    exportAs: 'adfShare'
 })
 export class NodeSharedDirective implements OnChanges {
+
+    isFile: boolean = false;
+    isShared: boolean = false;
 
     /** Node to share. */
     // tslint:disable-next-line:no-input-rename
     @Input('adf-share')
     node: MinimalNodeEntity;
 
-    /** Prefix to add to the generated link. */
     @Input()
     baseShareUrl: string;
 
     @HostListener('click')
     onClick() {
-        this.shareNode(this.node);
+        if (this.node) {
+            this.shareNode(this.node);
+        }
     }
 
-    constructor(private dialog: MatDialog,
-                private elementRef: ElementRef) {
-    }
+    constructor(private dialog: MatDialog, private zone: NgZone) {}
 
     shareNode(node: MinimalNodeEntity) {
         if (node && node.entry && node.entry.isFile) {
             this.dialog.open(ShareDialogComponent, {
                 width: '600px',
-                disableClose: true,
+                panelClass: 'adf-share-link-dialog',
                 data: {
                     node: node,
                     baseShareUrl: this.baseShareUrl
                 }
             });
-        } else {
-            this.setDisableAttribute(true);
         }
     }
 
     ngOnChanges() {
-        if (!this.node || this.node.entry.isFolder) {
-            this.setDisableAttribute(true);
-        } else {
-            this.setDisableAttribute(false);
-        }
+        this.zone.onStable.subscribe(() => {
+            if (this.node) {
+                this.isFile = this.node.entry.isFile;
+                this.isShared = this.node.entry.properties['qshare:sharedId'];
+            }
+        });
     }
-
-    private setDisableAttribute(disable: boolean) {
-        this.elementRef.nativeElement.disabled = disable;
-    }
-
 }

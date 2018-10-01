@@ -62,7 +62,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     displayMode = DisplayMode.List;
     includeFields = ['isFavorite', 'isLocked', 'aspectNames'];
 
-    baseShareUrl = this.appConfig.get<string>(AppConfigValues.ECMHOST) + '/preview/s/';
+    baseShareUrl = (
+        this.appConfig.get<string>(AppConfigValues.BASESHAREURL) ||
+        this.appConfig.get<string>(AppConfigValues.ECMHOST)) + '/preview/s/';
 
     toolbarColor = 'default';
 

@@ -26,6 +26,7 @@ export enum AppConfigValues {
     PROVIDERS = 'providers',
     OAUTHCONFIG = 'oauth2',
     ECMHOST = 'ecmHost',
+    BASESHAREURL = 'baseShareUrl',
     BPMHOST = 'bpmHost',
     AUTHTYPE = 'authType',
     CONTEXTROOTECM = 'contextRootEcm',

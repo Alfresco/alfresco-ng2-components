@@ -1,0 +1,50 @@
+<div class="adf-share-link__dialog-content">
+    <h1 data-automation-id="adf-share-dialog-title"
+        class="adf-share-link__title">
+        {{ 'SHARE.DIALOG-TITLE' | translate }} {{ fileName }}
+    </h1>
+
+    <mat-dialog-content>
+        <p class="adf-share-link__info">{{ 'SHARE.DESCRIPTION' | translate }}</p>
+
+        <div class="adf-share-link--row">
+            <h1 class="adf-share-link__label">{{ 'SHARE.TITLE' | translate }}</h1>
+
+            <mat-slide-toggle
+                color="primary"
+                id="adf-share-toggle"
+                [checked]="isFileShared"
+                [disabled]="!canUpdate || isDisabled"
+                (change)="onSlideShareChange($event)">
+            </mat-slide-toggle>
+        </div>
+
+        <form [formGroup]="form">
+            <mat-form-field class="full-width">
+                <input #sharedLinkInput
+                    data-automation-id="adf-share-link"
+                    class="adf-share-link__input"
+                    matInput
+                    cdkFocusInitial
+                    placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}"
+                    formControlName="sharedUrl">
+                    <mat-icon class="input-action" matSuffix
+                          [clipboard-notification]="'SHARE.CLIPBOARD-MESSAGE' | translate"
+                          [adf-clipboard]="sharedLinkInput">
+                        link
+                    </mat-icon>
+            </mat-form-field>
+
+            <h1 class="adf-share-link__label">{{ 'SHARE.EXPIRES' | translate }}</h1>
+            <mat-form-field class="full-width">
+                <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+                <mat-datetimepicker #datetimePicker type="datetime" openOnFocus="true" timeInterval="1"></mat-datetimepicker>
+                <input class="adf-share-link__input"
+                    matInput
+                    [min]="minDate"
+                    formControlName="time"
+                    [matDatetimepicker]="datetimePicker">
+            </mat-form-field>
+        </form>
+    </mat-dialog-content>
+</div>

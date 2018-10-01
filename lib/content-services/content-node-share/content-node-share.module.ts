@@ -15,26 +15,41 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
-
-import { NodeDownloadDirective } from './node-download.directive';
-import { NodeLockDirective } from './node-lock.directive';
+import { ShareDialogComponent } from './content-node-share.dialog';
+import { NodeSharedDirective } from './content-node-share.directive';
 
 @NgModule({
     imports: [
+        CoreModule.forChild(),
         CommonModule,
         MaterialModule
     ],
     declarations: [
-        NodeDownloadDirective,
-        NodeLockDirective
+        ShareDialogComponent,
+        NodeSharedDirective
     ],
     exports: [
-        NodeDownloadDirective,
-        NodeLockDirective
+        ShareDialogComponent,
+        NodeSharedDirective
+    ],
+    entryComponents: [
+        ShareDialogComponent
     ]
 })
-export class ContentDirectiveModule {
+export class ContentNodeShareModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ContentNodeShareModule
+        };
+    }
+
+    static forChild(): ModuleWithProviders {
+        return {
+            ngModule: ContentNodeShareModule
+        };
+    }
 }

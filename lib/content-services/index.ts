@@ -30,5 +30,6 @@ export * from './dialogs/index';
 export * from './folder-directive/index';
 export * from './content-metadata/index';
 export * from './permission-manager/index';
+export * from './content-node-share/index';
 
 export * from './content.module';
