@@ -411,12 +411,18 @@
             .cell-value {
                 display: block;
                 position: absolute;
-                top: 25px;
                 max-width: calc(100% - 2em);
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 line-height: 1.12em;
+            }
+
+            /* query for Microsoft IE 11*/
+            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+                .cell-value {
+                    top: 100%;
+                }
             }
 
             /* cell stretching content */
