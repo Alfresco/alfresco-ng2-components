@@ -131,13 +131,13 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Card view mode",
+      "SHARE_EDIT": "Edit settings",
       "NEW_FOLDER": "New folder",
       "EDIT_FOLDER": "Edit folder",
       "DOWNLOAD": "Download",
       "DELETE": "Delete",
       "FAVORITES": "Add to favorites",
       "SHARE": "Share",
-      "SHARE_EDIT": "Edit settings",
       "THEME": "Select a theme",
       "SHOW_VERSION": "Show version",
       "HIDE_VERSION": "Hide version",
@@ -224,8 +224,7 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Insert App ID",
       "APP_ID_TYPE_ERROR": "App ID must be a number",
-      "NUMBER_TYPE_ERROR": "Value must be a number",
-      "NUMBER_GREATER_THAN": "Value must be greater than or equal to {{ value }}"
+      "NUMBER_TYPE_ERROR": "Value must be a number"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Starting page"

@@ -1,4 +1,7 @@
 {
+  "SAVE": "Speichern",
+  "START": "Abschließen",
+  "START PROCESS": "Prozess starten",
   "FORM": {
     "START_FORM": {
       "TITLE": "Startformular"
@@ -173,7 +176,7 @@
   },
   "COMMENTS": {
     "NONE": "Keine Kommentare vorhanden",
-    "ADD": "Hinzufügen",
+    "ADD": "Kommentar hinzufügen",
     "HEADER": "Kommentare ({{ count }})",
     "CREATED_BY_HEADER": "Erstellt von",
     "MESSAGE_HEADER": "Fehlermeldung",
@@ -294,12 +297,10 @@
       "TITLE": "Es ist ein Fehler aufgetreten.",
       "DESCRIPTION": "Es scheint ein Fehler aufgetreten zu sein.",
       "SECONDARY_BUTTON": {
-        "TEXT": "",
-        "URL": ""
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Zurück zur Startseite",
-        "ROUTE": "Startseite"
+        "TEXT": "Zurück zur Startseite"
       }
     },
     "403": {

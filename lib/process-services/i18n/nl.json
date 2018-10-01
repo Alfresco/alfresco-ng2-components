@@ -303,9 +303,9 @@
   },
   "APP": {
     "DIALOG": {
-      "START": "Start",
-      "TITLE": "Proces selecteren",
-      "LIST": "Proceslijst",
+      "START": "Doorgaan",
+      "TITLE": "App selecteren",
+      "LIST": "Lijst met apps",
       "ERROR": "Er is een probleem opgetreden bij het verbinden met Process Services"
     }
   }

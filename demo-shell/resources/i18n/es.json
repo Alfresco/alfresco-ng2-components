@@ -172,6 +172,7 @@
     "TASKS-TAB": "Tareas",
     "PROCESSES-TAB": "Proceso",
     "REPORTS-TAB": "Informes",
+    "SETTINGS-TAB": "Configuración",
     "START-TASK": "Iniciar tarea",
     "START-PROCESS": "Iniciar proceso",
     "PROCESS-AUDIT-LOG": "Registro de auditoría de procesos",
@@ -218,10 +219,10 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Insertar ID de aplicación",
       "APP_ID_TYPE_ERROR": "El ID de aplicación debe ser un número",
-      "NUMBER_TYPE_ERROR": "El valor ingresado debe ser numérico"
+      "NUMBER_TYPE_ERROR": "El valor debe ser un número"
     },
     "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Página de inicio"
+      "START_INPUT": "Inicio de página"
     }
   },
   "PROCESS_LIST_DEMO": {

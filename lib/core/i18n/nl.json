@@ -1,4 +1,7 @@
 {
+  "SAVE": "Opslaan",
+  "START": "Voltooid",
+  "START PROCESS": "Proces starten",
   "FORM": {
     "START_FORM": {
       "TITLE": "Beginformulier"

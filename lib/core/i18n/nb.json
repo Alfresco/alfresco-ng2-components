@@ -1,4 +1,7 @@
 {
+  "SAVE": "Lagre",
+  "START": "Fullfør",
+  "START PROCESS": "Start prosess",
   "FORM": {
     "START_FORM": {
       "TITLE": "Start skjema"

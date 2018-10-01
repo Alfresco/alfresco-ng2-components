@@ -1,4 +1,7 @@
 {
+  "SAVE": "保存",
+  "START": "完了",
+  "START PROCESS": "プロセスの開始",
   "FORM": {
     "START_FORM": {
       "TITLE": "開始フォーム"

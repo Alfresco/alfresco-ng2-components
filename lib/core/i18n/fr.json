@@ -1,4 +1,7 @@
 {
+  "SAVE": "Enregistrer",
+  "START": "Terminer",
+  "START PROCESS": "Démarrer le processus",
   "FORM": {
     "START_FORM": {
       "TITLE": "Démarrer le formulaire"

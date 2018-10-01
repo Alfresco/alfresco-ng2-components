@@ -1,4 +1,7 @@
 {
+  "SAVE": "Salvar",
+  "START": "Completar",
+  "START PROCESS": "Iniciar processo",
   "FORM": {
     "START_FORM": {
       "TITLE": "Iniciar formulário"
@@ -304,7 +307,7 @@
       "TITLE": "Você não tem permissão para acessar este servidor.",
       "DESCRIPTION": "Você não tem permissão para acessar este recurso no servidor.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Relatar problema""
+        "TEXT": "Relatar problema"
       },
       "RETURN_BUTTON": {
         "TEXT": "Voltar para a página inicial"

@@ -1,7 +1,7 @@
 {
-  "SAVE": "SALVA",
-  "COMPLETE": "COMPLETA",
-  "START PROCESS": "INIZIA PROCESSO",
+  "SAVE": "Salva",
+  "START": "Completa",
+  "START PROCESS": "Avvia processo",
   "FORM": {
     "START_FORM": {
       "TITLE": "Modulo di inizio"
