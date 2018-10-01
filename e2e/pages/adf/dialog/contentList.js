@@ -318,7 +318,10 @@ var ContentList = function () {
         return await nodeIdColumns.map(async (currentElement) => {
             console.log('currentElement ' + currentElement);
             console.log('currentElement.getText( ' + currentElement.getText());
-            let nodeId = await currentElement.getText();
+            let nodeId = await currentElement.getText().then((nodeText)=>{
+                console.log('nodeId ' + nodeText);
+                return nodeText;
+            });
             console.log('getAllNodeIdInList ' + nodeId);
             return nodeId;
         });
