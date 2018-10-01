@@ -34,7 +34,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { DropActions } from '../../actions/drop.actions';
 
-fdescribe('Upload component', () => {
+describe('Upload component', () => {
 
     let contentServicesPage = new ContentServicesPage();
     let uploadDialog = new UploadDialog();
@@ -116,7 +116,6 @@ fdescribe('Upload component', () => {
 
         nodersPromise.forEach(async (currentNodePormise) => {
             await currentNodePormise.then(async (currentNode) => {
-                console.log('currentNode ' + currentNode);
                 if (currentNode && currentNode !== 'Node id') {
                     await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
                 }

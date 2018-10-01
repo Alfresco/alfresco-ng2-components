@@ -316,14 +316,9 @@ var ContentList = function () {
     this.getAllNodeIdInList = async function (filename) {
         var nodeIdColumns = await element.all(by.xpath("//div[@id='document-list-container']//div[@title='Node id']"));
         return await nodeIdColumns.map(async (currentElement) => {
-            console.log('currentElement ' + currentElement);
-            console.log('currentElement.getText( ' + currentElement.getText());
-            let nodeId = await currentElement.getText().then((nodeText)=>{
-                console.log('nodeId ' + nodeText);
+            return await currentElement.getText().then((nodeText)=>{
                 return nodeText;
             });
-            console.log('getAllNodeIdInList ' + nodeId);
-            return nodeId;
         });
     };
 
