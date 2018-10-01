@@ -20,7 +20,7 @@ import Util = require('../../../util/util');
 
 export class ShareDialog {
 
-    dialogTitle = element(by.id('adf-share-title'));
+    dialogTitle = element(by.id('adf-share-dialog-title'));
     shareToggle = element(by.id('adf-share-toggle'));
     shareLink = element(by.id('adf-share-link'));
     closeButton = element(by.css('button[class="mat-button mat-primary"]'));

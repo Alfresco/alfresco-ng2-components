@@ -15,6 +15,8 @@ Creates and manages public shared links for files.
 ```html
 <adf-toolbar>
     <button mat-icon-button
+            #shared="adfShare"
+            [disabled]="!shared.isFile"
             [baseShareUrl]="http://localhost:8080/myrouteForShareFile/"
             [adf-share]="documentList.selection[0]">
             <mat-icon>share</mat-icon>
@@ -33,7 +35,9 @@ Creates and manages public shared links for files.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | baseShareUrl | `string` |  | Prefix to add to the generated link. |
-| node | [`MinimalNodeEntity`](../content-services/document-library.model.md) |  | Node to share. |
+| adf-share | [`MinimalNodeEntity`](../content-services/document-library.model.md) |  | Node to share. |
+| isFile | `boolean` | false | bound to 'adfShare' exportAs |
+| isShared | `boolean` | false | bound to 'adfShare' exportAs |
 
 ## Details
 
@@ -41,6 +45,14 @@ This dialog will generate a link with the form "baseShareUrl + sharedId".
 For example, if you set the input parameter as follows:
 
     [baseShareUrl]="http://localhost:8080/myrouteForShareFile/"
+
+...or through `app.config.json`:
+
+    {
+        ...
+        "baseShareUrl": 'http://external/url',
+        ...
+    }
 
 ...then the directive will ask the [Content service](../core/content.service.md) to generate
 a `sharedId` for the file. This will create a URL like the following:

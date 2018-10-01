@@ -15,26 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
+export * from './content-node-share.dialog';
+export * from './content-node-share.directive';
 
-import { NodeDownloadDirective } from './node-download.directive';
-import { NodeLockDirective } from './node-lock.directive';
-
-@NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule
-    ],
-    declarations: [
-        NodeDownloadDirective,
-        NodeLockDirective
-    ],
-    exports: [
-        NodeDownloadDirective,
-        NodeLockDirective
-    ]
-})
-export class ContentDirectiveModule {
-}
+export * from './content-node-share.module';
