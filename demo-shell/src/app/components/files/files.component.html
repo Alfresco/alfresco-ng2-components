@@ -197,7 +197,7 @@
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
                 [contentActions]="true"
-                [allowDropFiles]="true"
+                [allowDropFiles]="allowDropFiles"
                 [selectionMode]="selectionMode"
                 [multiselect]="multiselect"
                 [display]="displayMode"
@@ -503,8 +503,14 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-thumbnails-upload-switch" [color]="'primary'" (click)="toggleThumbnails()" id="enableThumbnails">
+            <mat-slide-toggle id="adf-thumbnails-upload-switch" [color]="'primary'" (click)="toggleThumbnails()">
                 {{'DOCUMENT_LIST.THUMBNAILS' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" (click)="toggleAllowDropFiles()" >
+                {{'DOCUMENT_LIST.ALLOW_DROP_FILES' | translate}}
             </mat-slide-toggle>
         </section>
 

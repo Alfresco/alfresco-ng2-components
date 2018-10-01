@@ -59,6 +59,11 @@ describe('Upload component - Excluded Files', () => {
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
+    let pngFile = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+    });
+
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -133,5 +138,37 @@ describe('Upload component - Excluded Files', () => {
         contentServicesPage
             .uploadFile(txtFileModel.location)
             .checkContentIsNotDisplayed(txtFileModel.name);
+    });
+
+
+    it('[C274688] Should extension type added as excluded and accepted not be uploaded', () => {
+        navigationBarPage.clickConfigEditorButton();
+
+        configEditorPage.clickFileConfiguration('adf-file-conf');
+
+        configEditorPage.clickClearButton();
+
+        configEditorPage.enterConfiguration('{' +
+            '    "excluded": [' +
+            '        ".DS_Store",' +
+            '        "desktop.ini",' +
+            '        "*.png"' +
+            '    ],' +
+            '    "match-options": {' +
+            '        "nocase": true' +
+            '    }' +
+            '}');
+
+        configEditorPage.clickSaveButton();
+
+        contentServicesPage.goToDocumentList();
+
+        uploadToggles.enableExtensionFilter();
+        browser.driver.sleep(1000);
+        uploadToggles.addExtension('.png');
+
+        contentServicesPage.uploadFile(pngFile.location);
+        browser.driver.sleep(1000);
+        contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
     });
 });

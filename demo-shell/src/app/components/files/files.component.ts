@@ -59,6 +59,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     fileNodeId: any;
     showViewer = false;
     showVersions = false;
+    allowDropFiles = true;
     displayMode = DisplayMode.List;
     includeFields = ['isFavorite', 'isLocked', 'aspectNames'];
 
@@ -224,6 +225,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     toggleThumbnails() {
         this.thumbnails = !this.thumbnails;
+        this.documentList.reload();
+    }
+
+    toggleAllowDropFiles() {
+        this.allowDropFiles = !this.allowDropFiles;
         this.documentList.reload();
     }
 

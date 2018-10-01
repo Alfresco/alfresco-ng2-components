@@ -29,6 +29,7 @@ export class HeaderDataService {
     @Output() redirectUrl: EventEmitter<string | any[]> = new EventEmitter();
     @Output() tooltip: EventEmitter<string> = new EventEmitter();
     @Output() position: EventEmitter<string> = new EventEmitter();
+    @Output() hideSidenav: EventEmitter<string> = new EventEmitter();
 
     hideMenuButton() {
         this.show = !this.show;
@@ -58,5 +59,9 @@ export class HeaderDataService {
 
     changePosition(position) {
         this.position.emit(position);
+    }
+
+    changeSidenavVisibility(hideSidenav) {
+        this.hideSidenav.emit(hideSidenav);
     }
 }
