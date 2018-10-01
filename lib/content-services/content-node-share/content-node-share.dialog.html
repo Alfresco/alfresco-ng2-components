@@ -27,7 +27,8 @@
                     matInput
                     cdkFocusInitial
                     placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}"
-                    formControlName="sharedUrl">
+                    formControlName="sharedUrl"
+                    readonly="readonly">
                     <mat-icon class="input-action" matSuffix
                           [clipboard-notification]="'SHARE.CLIPBOARD-MESSAGE' | translate"
                           [adf-clipboard]="sharedLinkInput">
