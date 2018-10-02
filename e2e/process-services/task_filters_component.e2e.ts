@@ -75,7 +75,7 @@ describe('Task', () => {
 
             appId = appModel.id;
 
-            await loginPage.loginToProcessServicesUsingUserModel(user);
+            loginPage.loginToProcessServicesUsingUserModel(user);
 
             navigationBarPage.clickProcessServicesButton();
 
