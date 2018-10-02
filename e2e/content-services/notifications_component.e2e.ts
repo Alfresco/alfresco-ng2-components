@@ -42,10 +42,6 @@ describe('Notifications Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        done();
-    });
-
-    beforeEach(async(done) => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         notificationPage.goToNotificationsPage();
@@ -86,7 +82,7 @@ describe('Notifications Component', () => {
         notificationPage.enterDurationField(1000);
         notificationPage.clickCustomNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayed();
-        browser.sleep(1000);
+        browser.sleep(1500);
         notificationPage.checkNotificationSnackBarIsNotDisplayed();
     });
 

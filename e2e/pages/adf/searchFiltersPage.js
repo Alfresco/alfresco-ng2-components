@@ -72,13 +72,13 @@ var SearchFiltersPage = function () {
     };
 
     this.selectFileType = function (fileType) {
-        let result = element(by.css(`mat-checkbox[data-automation-id='checkbox-1:Type-${fileType}']`));
+        let result = element(by.css(`mat-checkbox[data-automation-id='checkbox-1:Type-${fileType}'] .mat-checkbox-inner-container`));
         Util.waitUntilElementIsClickable(result);
         result.click();
     };
 
     this.selectCreator = function (creatorName) {
-        let result = element(by.css(`mat-checkbox[data-automation-id='checkbox-3:Creator-${creatorName}']`));
+        let result = element(by.css(`mat-checkbox[data-automation-id='checkbox-3:Creator-${creatorName}'] .mat-checkbox-inner-container`));
         Util.waitUntilElementIsClickable(result);
         result.click();
     };

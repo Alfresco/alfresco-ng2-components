@@ -84,7 +84,6 @@ describe('Unshare file', () => {
         contentServicesPage.clickShareButton();
 
         shareDialog.checkDialogIsDisplayed();
-        shareDialog.clickShareToggle();
         shareDialog.checkShareLinkIsDisplayed();
 
         let sharedLink = await shareDialog.getShareLink();

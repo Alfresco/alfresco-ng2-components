@@ -120,6 +120,7 @@
       "DISPLAY_NAME": "Display name",
       "IS_LOCKED": "Lock",
       "TAG": "Tag",
+      "NODE_ID": "Node id",
       "CREATED_BY": "Created by",
       "CREATED_ON": "Created on",
       "CREATED": "Created",
