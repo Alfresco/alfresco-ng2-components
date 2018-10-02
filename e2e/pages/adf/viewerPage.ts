@@ -129,7 +129,7 @@ export class ViewerPage {
     }
 
     getZoom() {
-        return percentage.getText();
+        return this.percentage.getText();
     }
 
     exitFullScreen() {
@@ -140,7 +140,7 @@ export class ViewerPage {
     enterPassword(password) {
         Util.waitUntilElementIsVisible(this.passwordInput);
         this.passwordInput.clear();
-        this.passwordInput.sendKeys(this.password);
+        this.passwordInput.sendKeys(password);
     }
 
     checkDatatableHeaderIsDisplayed() {
@@ -185,7 +185,7 @@ export class ViewerPage {
 
     checkAllThumbnailsDisplayed(nbPages) {
         let defaultThumbnailHeight = 143;
-        expect(thumbnailsContent.getAttribute('style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
+        expect(this.thumbnailsContent.getAttribute('style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
     }
 
     checkCurrentThumbnailIsSelected() {
@@ -270,7 +270,7 @@ export class ViewerPage {
     }
 
     checkPageSelectorInputIsDisplayed(checkNumber) {
-        Util.waitUntilElementIsVisible(pageSelectorInput);
+        Util.waitUntilElementIsVisible(this.pageSelectorInput);
         this.pageSelectorInput.getAttribute('value').then(function (pageNumber) {
             expect(pageNumber).toEqual(checkNumber);
         });
@@ -313,11 +313,11 @@ export class ViewerPage {
     }
 
     checkZoomedIn(zoom) {
-        expect(this.percentage.getText()).toBeGreaterThan(this.zoom);
+        expect(this.percentage.getText()).toBeGreaterThan(zoom);
     }
 
     checkZoomedOut(zoom) {
-        expect(this.percentage.getText()).toBeLessThan(this.zoom);
+        expect(this.percentage.getText()).toBeLessThan(zoom);
     }
 
     checkRotateLeftButtonIsDisplayed() {
@@ -329,7 +329,7 @@ export class ViewerPage {
     }
 
     checkScaled(zoom) {
-        expect(this.percentage.getText()).toEqual(this.zoom);
+        expect(this.percentage.getText()).toEqual(zoom);
     }
 
     checkScaleImgButtonIsDisplayed() {
@@ -338,7 +338,7 @@ export class ViewerPage {
 
     checkRotation(text) {
         let rotation = imgContainer.getAttribute('style');
-        expect(rotation).toEqual(this.text);
+        expect(rotation).toEqual(text);
     }
 
     checkCustomBtnDisplayed() {
@@ -398,8 +398,8 @@ export class ViewerPage {
     }
 
     clickLastThumbnailDisplayed() {
-        Util.waitUntilElementIsClickable(lastThumbnailDisplayed);
-        return lastThumbnailDisplayed.click();
+        Util.waitUntilElementIsClickable(this.lastThumbnailDisplayed);
+        return this.lastThumbnailDisplayed.click();
     }
 
     clickThumbnailsClose() {
