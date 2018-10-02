@@ -1,5 +1,5 @@
 ---
-Added: v2.4.0
+Added: v2.5.0
 Status: Experimental
 Last reviewed: 2018-08-07
 ---

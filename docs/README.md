@@ -80,6 +80,8 @@ for more information about installing and using the source code.
 | [Header component](core/header.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Reusable header for Alfresco applications. | [Source](../lib/core/layout/components/header/header.component.ts) |
 | [Sidebar action menu component](core/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav layout component](core/sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts) |
+| [Login dialog panel component](core/login-dialog-panel.component.md) | Shows and manages a login dialog. | [Source](../lib/core/login/components/login-dialog-panel.component.ts) |
+| [Login dialog component](core/login-dialog.component.md) | Allows a user to perform a login via a dialog. | [Source](../lib/core/login/components/login-dialog.component.ts) |
 | [Login component](core/login.component.md) | Authenticates to Alfresco Content Services and or Alfresco Process Services. | [Source](../lib/core/login/components/login.component.ts) |
 | [Infinite pagination component](core/infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../lib/core/pagination/infinite-pagination.component.ts) |
 | [Pagination component](core/pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/pagination/pagination.component.ts) |
@@ -154,6 +156,7 @@ for more information about installing and using the source code.
 | [Favorites api service](core/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/services/favorites-api.service.ts) |
 | [Highlight transform service](core/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/services/highlight-transform.service.ts) |
 | [Log service](core/log.service.md) | Provides log functionality. | [Source](../lib/core/services/log.service.ts) |
+| [Login dialog service](core/login-dialog.service.md) | Manages login dialogs. | [Source](../lib/core/services/login-dialog.service.ts) |
 | [Nodes api service](core/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/services/nodes-api.service.ts) |
 | [Notification service](core/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/services/notification.service.ts) |
 | [Page title service](core/page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
@@ -170,7 +173,6 @@ for more information about installing and using the source code.
 | [User preferences service](core/user-preferences.service.md) | Stores preferences for components. | [Source](../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](core/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](core/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
-| _View util service_ | _Not currently documented_ | [Source](../lib/core/viewer/services/view-util.service.ts) |
 
 ## Widgets
 
@@ -185,7 +187,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Data Table Adapter interface](core/datatable-adapter.interface.md) | Defines how table data is supplied to DataTable and Tasklist components. | [Source](../lib/core/datatable/data/datatable-adapter.ts) |
-| [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of [Form](../../lib/process-services/task-list/models/form.model.ts) and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
+| [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of Form and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
 | [Search Configuration interface](core/search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 
 [(Back to Contents)](#contents)
@@ -205,6 +207,7 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Breadcrumb component](content-services/breadcrumb.component.md) | Indicates the current position within a navigation hierarchy. | [Source](../lib/content-services/breadcrumb/breadcrumb.component.ts) |
 | [Dropdown breadcrumb component](content-services/dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
+| [Content metadata component](content-services/content-metadata.component.md) | Displays and edits metadata related to a node. | [Source](../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts) |
 | [Content metadata card component](content-services/content-metadata-card.component.md) | Displays and edits metadata related to a node. | [Source](../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
 | [Content node selector panel component](content-services/content-node-selector-panel.component.md) | Opens a Content Node Selector in its own dialog window. | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
 | [Content node selector component](content-services/content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../lib/content-services/content-node-selector/content-node-selector.component.ts) |
@@ -245,7 +248,6 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Node download directive](content-services/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/content-services/directives/node-download.directive.ts) |
 | [Node lock directive](content-services/node-lock.directive.md) | Locks a node. | [Source](../lib/content-services/directives/node-lock.directive.ts) |
-| [Node share directive](content-services/node-share.directive.md) | Creates and manages public shared links for files. | [Source](../lib/content-services/directives/node-share.directive.ts) |
 | [Folder create directive](content-services/folder-create.directive.md) | Creates folders. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](content-services/folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [Inherited button directive](content-services/inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../lib/content-services/permission-manager/components/inherited-button.directive.ts) |
@@ -280,7 +282,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
+| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
 
 [(Back to Contents)](#contents)
 

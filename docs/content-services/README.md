@@ -13,6 +13,7 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Breadcrumb component](breadcrumb.component.md) | Indicates the current position within a navigation hierarchy. | [Source](../../lib/content-services/breadcrumb/breadcrumb.component.ts) |
 | [Dropdown breadcrumb component](dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
+| [Content metadata component](content-metadata.component.md) | Displays and edits metadata related to a node. | [Source](../../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts) |
 | [Content metadata card component](content-metadata-card.component.md) | Displays and edits metadata related to a node. | [Source](../../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
 | [Content node selector panel component](content-node-selector-panel.component.md) | Opens a Content Node Selector in its own dialog window. | [Source](../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
 | [Content node selector component](content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../../lib/content-services/content-node-selector/content-node-selector.component.ts) |
@@ -53,7 +54,6 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Node download directive](node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../../lib/content-services/directives/node-download.directive.ts) |
 | [Node lock directive](node-lock.directive.md) | Locks a node. | [Source](../../lib/content-services/directives/node-lock.directive.ts) |
-| [Node share directive](node-share.directive.md) | Creates and manages public shared links for files. | [Source](../../lib/content-services/directives/node-share.directive.ts) |
 | [Folder create directive](folder-create.directive.md) | Creates folders. | [Source](../../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](folder-edit.directive.md) | Allows folders to be edited. | [Source](../../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [Inherited button directive](inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../../lib/content-services/permission-manager/components/inherited-button.directive.ts) |
@@ -88,4 +88,4 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search Widget interface](search-widget.interface.md) | Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets. | [Source](../../lib/content-services/search/search-widget.interface.ts) |
+| [Search Widget interface](search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../../lib/content-services/search/search-widget.interface.ts) |

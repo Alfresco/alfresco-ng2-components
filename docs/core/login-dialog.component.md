@@ -1,20 +1,20 @@
 ---
-Added: v2.0.0
+Added: v2.6.0
 Status: Active
-Last reviewed: 2018-04-18
+Last reviewed: 2018-10-02
 ---
 
-# Content Node Selector component
+# Login Dialog component
 
 Allows a user to perform a login via a dialog.
 
 ## Details
 
-The [Login Dialog component](../core/login-dialog.component.md) allow you to perform a login via a dialog.
+The [Login Dialog component](../core/login-dialog.component.md) allows you to perform a login via a dialog.
 
 ### Showing the dialog
 
-Unlike most components, the Login Dialog Component is typically shown in a dialog box
+Unlike most components, the [Login Dialog Component](../core/login-dialog.component.md) is typically shown in a dialog box
 rather than the main page and you are responsible for opening the dialog yourself. You can use the
 [Angular Material Dialog](https://material.angular.io/components/dialog/overview) for this,
 as shown in the usage example. ADF provides the [`LoginDialogComponentData`](../../lib/core/login/components/login-dialog-component-data.interface.ts) interface
@@ -35,7 +35,7 @@ The properties are described in the table below:
 | ---- | ---- | ------------- | ----------- |
 | title | `string` | "" | Dialog title |
 | actionName | `string` | "" | Text to appear on the dialog's main action button ("Login", "Access", etc) |
-| logged | [`EventEmitter<any>`]|  | Event emitted when the login succeeds. |
+| logged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` |  | Event emitted when the login succeeds. |
 
 If you don't want to manage the dialog yourself then it is easier to use the
 [Login Dialog Panel component](login-dialog-panel.component.md), or the
@@ -52,7 +52,7 @@ import { Subject } from 'rxjs/Subject';
 
 constructor(dialog: MatDialog ... ) {}
 
-openSelectorDialog() {
+openLoginDialog() {
     data: LoginDialogComponentData = {
         title: "Perform a Login",
         actionName: "Access",
@@ -62,7 +62,7 @@ openSelectorDialog() {
     this.dialog.open(
         LoginDialogComponent,
         {
-            data, panelClass: 'adf-content-node-selector-dialog',
+            data, panelClass: 'adf-login-dialog',
             width: '630px'
         }
     );
@@ -82,3 +82,7 @@ openSelectorDialog() {
 
 All the results will be streamed to the logged [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present in the [`LoginDialogComponentData`](../../lib/core/login/components/login-dialog-component-data.interface.ts) object passed to the dialog.
 When the dialog action is selected by clicking, the `data.logged` stream will be completed.
+
+## See also
+
+-   [Login component](login.component.md)
