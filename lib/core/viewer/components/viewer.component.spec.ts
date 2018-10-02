@@ -159,10 +159,6 @@ describe('ViewerComponent', () => {
         alfrescoApiService = TestBed.get(AlfrescoApiService);
     });
 
-    afterEach(() => {
-        fixture.destroy();
-    });
-
     it('should change display name every time node changes', fakeAsync(() => {
         spyOn(alfrescoApiService.nodesApi, 'getNodeInfo').and.returnValues(
             Promise.resolve({ name: 'file1', content: {} }),
@@ -191,44 +187,63 @@ describe('ViewerComponent', () => {
 
     describe('Viewer Example Component Rendering', () => {
 
-        it('should use custom toolbar', () => {
+        it('should use custom toolbar', (done) => {
             let customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
             let customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
-            expect(customElement.querySelector('.custom-toolbar-element')).toBeDefined();
+            fixture.whenStable().then(() => {
+                expect(customElement.querySelector('.custom-toolbar-element')).toBeDefined();
+                done();
+            });
         });
 
-        it('should use custom toolbar actions', () => {
+        it('should use custom toolbar actions', (done) => {
             let customFixture = TestBed.createComponent(ViewerWithCustomToolbarActionsComponent);
             let customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
-            expect(customElement.querySelector('#custom-button')).toBeDefined();
+            fixture.whenStable().then(() => {
+                expect(customElement.querySelector('#custom-button')).toBeDefined();
+                done();
+            });
         });
 
-        it('should use custom info drawer', () => {
+        it('should use custom info drawer', (done) => {
             let customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
             let customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
-            expect(customElement.querySelector('.custom-info-drawer-element')).toBeDefined();
+
+            fixture.whenStable().then(() => {
+                expect(customElement.querySelector('.custom-info-drawer-element')).toBeDefined();
+                done();
+            });
         });
 
-        it('should use custom open with menu', () => {
+        it('should use custom open with menu', (done) => {
             let customFixture = TestBed.createComponent(ViewerWithCustomOpenWithComponent);
             let customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
-            expect(customElement.querySelector('.adf-viewer-container-open-with')).toBeDefined();
+
+            fixture.whenStable().then(() => {
+                expect(customElement.querySelector('.adf-viewer-container-open-with')).toBeDefined();
+                done();
+            });
         });
 
-        it('should use custom more actions menu', () => {
+        it('should use custom more actions menu', (done) => {
             let customFixture = TestBed.createComponent(ViewerWithCustomMoreActionsComponent);
             let customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
-            expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
+
+            fixture.whenStable().then(() => {
+                expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
+                done();
+            });
+
         });
     });
 
@@ -242,13 +257,9 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
         });
 
-        afterEach(() => {
-            fixture.destroy();
-        });
-
         describe('SideBar Test', () => {
 
-            it('should NOT display sidebar if is not allowed', () => {
+            it('should NOT display sidebar if is not allowed', (done) => {
                 component.showSidebar = true;
                 component.allowSidebar = false;
                 fixture.detectChanges();
@@ -256,20 +267,23 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     let sidebar = element.querySelector('#adf-right-sidebar');
                     expect(sidebar).toBeNull();
+                    done();
                 });
             });
 
-            it('should display sidebar on the right side', () => {
+            it('should display sidebar on the right side', (done) => {
+                component.allowSidebar = true;
                 component.showSidebar = true;
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
                     let sidebar = element.querySelector('#adf-right-sidebar');
                     expect(getComputedStyle(sidebar).order).toEqual('4');
+                    done();
                 });
             });
 
-            it('should NOT display left sidebar if is not allowed', () => {
+            it('should NOT display left sidebar if is not allowed', (done) => {
                 component.showLeftSidebar = true;
                 component.allowSidebar = false;
                 fixture.detectChanges();
@@ -277,17 +291,20 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     let sidebar = element.querySelector('#adf-left-sidebar');
                     expect(sidebar).toBeNull();
+                    done();
                 });
 
             });
 
-            it('should display sidebar on the left side', () => {
+            it('should display sidebar on the left side', (done) => {
+                component.allowSidebar = true;
                 component.showLeftSidebar = true;
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
                     let sidebar = element.querySelector('#adf-left-sidebar');
-                    expect(getComputedStyle(sidebar).order).toEqual('4');
+                    expect(getComputedStyle(sidebar).order).toEqual('1');
+                    done();
                 });
             });
         });
@@ -441,8 +458,13 @@ describe('ViewerComponent', () => {
                     });
                 }));
 
-                it('should Close button be present if overlay mode', () => {
-                    expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
+                it('should Close button be present if overlay mode', (done) => {
+                    fixture.detectChanges();
+                    fixture.whenStable().then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
+                        done();
+                    });
                 });
 
                 it('should Click on close button hide the viewer', () => {
@@ -723,7 +745,7 @@ describe('ViewerComponent', () => {
                 });
             });
 
-            xit('should display the media player if the file identified by mimetype is a media when the filename has no extension', async(() => {
+            it('should display the media player if the file identified by mimetype is a media when the filename has no extension', (done) => {
                 component.urlFile = 'content';
                 component.mimeType = 'video/mp4';
                 fixture.detectChanges();
@@ -732,10 +754,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-media-player')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            xit('should node without content show unkonwn', async(() => {
+            it('should node without content show unkonwn', async(() => {
                 const displayName = 'the-name';
                 const nodeDetails = { name: displayName, id: '12' };
                 const contentUrl = '/content/url/path';
@@ -863,10 +886,6 @@ describe('ViewerComponent', () => {
             component.urlFile = 'fake-test-file.pdf';
             component.mimeType = 'application/pdf';
             fixture.detectChanges();
-        });
-
-        afterEach(() => {
-            fixture.destroy();
         });
 
         it('should request only if enabled', () => {
