@@ -17,7 +17,7 @@
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSnackBar } from '@angular/material';
 import { of } from 'rxjs';
 import { setupTestBed, CoreModule, SharedLinksApiService, NodesApiService } from '@alfresco/adf-core';
 import { ContentNodeShareModule } from './content-node-share.module';
@@ -27,6 +27,9 @@ import moment from 'moment-es6';
 describe('ShareDialogComponent', () => {
     let node;
     let matDialog: MatDialog;
+    let matSnackBarMock = {
+        open: jasmine.createSpy('open')
+    };
     let sharedLinksApiService: SharedLinksApiService;
     let nodesApiService: NodesApiService;
     let fixture;
@@ -41,6 +44,7 @@ describe('ShareDialogComponent', () => {
         providers: [
             NodesApiService,
             SharedLinksApiService,
+            { provide: MatSnackBar, useValue: matSnackBarMock},
             { provide: MatDialogRef, useValue: {} },
             { provide: MAT_DIALOG_DATA, useValue: {} }
         ]
@@ -121,8 +125,7 @@ describe('ShareDialogComponent', () => {
         tick(100);
 
         expect(document.execCommand).toHaveBeenCalledWith('copy');
-        expect(document.body.querySelector('simple-snack-bar').innerHTML)
-            .toContain('SHARE.CLIPBOARD-MESSAGE');
+        expect(matSnackBarMock.open.calls.argsFor(0)[0]).toBe('SHARE.CLIPBOARD-MESSAGE');
     }));
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
