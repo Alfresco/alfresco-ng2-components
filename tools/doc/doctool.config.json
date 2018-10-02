@@ -111,6 +111,10 @@
         "sidenav-layout-",
         "layout-container",
         "search-",
-        "empty-custom-content"
+        "empty-custom-content",
+        "view-util",
+        "clipboard",
+        "external-alfresco",
+        "content-node-share"
     ]
 }
