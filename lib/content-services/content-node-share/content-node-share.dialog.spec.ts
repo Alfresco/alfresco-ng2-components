@@ -103,28 +103,6 @@ describe('ShareDialogComponent', () => {
         expect(fixture.nativeElement.querySelector('.mat-slide-toggle').classList).toContain('mat-checked');
     });
 
-    it(`should copy shared link automatically and notify`, () => {
-        jasmine.clock().uninstall();
-        jasmine.clock().install();
-
-        spyOn(document, 'execCommand');
-
-        node.entry.properties['qshare:sharedId'] = 'sharedId';
-        component.data = {
-            node,
-            baseShareUrl: 'some-url/'
-        };
-
-        fixture.detectChanges();
-        jasmine.clock().tick(100);
-
-        expect(document.execCommand).toHaveBeenCalledWith('copy');
-        expect(document.body.querySelector('snack-bar-container span').innerHTML)
-            .toBe('SHARE.CLIPBOARD-MESSAGE');
-
-        jasmine.clock().uninstall();
-    });
-
     it(`should copy shared link and notify on button event`, () => {
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         spyOn(document, 'execCommand').and.callThrough();

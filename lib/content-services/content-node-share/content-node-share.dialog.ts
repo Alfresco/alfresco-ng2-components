@@ -29,9 +29,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { tap, skip } from 'rxjs/operators';
 import {
-    TranslationService,
     SharedLinksApiService,
-    ClipboardService,
     NodesApiService,
     ContentService
 } from '@alfresco/adf-core';
@@ -67,9 +65,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         private dialogRef: MatDialogRef<ShareDialogComponent>,
         private dialog: MatDialog,
         private nodesApiService: NodesApiService,
-        private clipboardService: ClipboardService,
         private contentService: ContentService,
-        private translation: TranslationService,
         @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
@@ -103,7 +99,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                 this.isFileShared = true;
 
                 this.updateForm();
-                this.copyToClipboard();
             }
         }
     }
@@ -164,7 +159,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                     this.isFileShared = true;
 
                     this.updateForm();
-                    this.copyToClipboard();
 
                 }
             },
@@ -188,13 +182,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             });
     }
 
-    private copyToClipboard() {
-        setTimeout(() => this.clipboardService.copyToClipboard(
-            this.sharedLinkInput.nativeElement,
-            this.translation.instant('SHARE.CLIPBOARD-MESSAGE')
-        ), 0);
-    }
-
     private updateForm() {
         const { entry } = this.data.node;
         const expiryDate = entry.properties['qshare:expiryDate'];
@@ -210,7 +197,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             this.data.node.entry.id,
             {
                 properties: {
-                    'qshare:expiryDate': updates.time ? updates.time.toDate() : null
+                    'qshare:expiryDate': updates.time ? updates.time.format() : null
                 }
             }
         );
@@ -220,7 +207,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         const { properties } = this.data.node.entry;
 
         properties['qshare:expiryDate'] = updates.time
-            ? updates.time.toDate()
+            ? updates.time.format()
             : null;
     }
 }
