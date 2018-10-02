@@ -116,6 +116,8 @@ describe('Upload component - Excluded Files', () => {
     it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', () => {
         navigationBarPage.clickConfigEditorButton();
 
+        browser.refresh();
+
         configEditorPage.clickFileConfiguration('adf-file-conf');
 
         configEditorPage.clickClearButton();
@@ -142,6 +144,8 @@ describe('Upload component - Excluded Files', () => {
 
     it('[C274688] Should extension type added as excluded and accepted not be uploaded', () => {
         navigationBarPage.clickConfigEditorButton();
+
+        browser.refresh();
 
         configEditorPage.clickFileConfiguration('adf-file-conf');
 

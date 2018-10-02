@@ -360,12 +360,13 @@ describe('Upload component', () => {
         contentServicesPage.checkAcsContainer();
         uploadToggles.enableMaxSize();
         uploadToggles.addMaxSize('400');
-        contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsDisplayed(fileWithSpecificSize.name);
+        contentServicesPage.uploadFile(fileWithSpecificSize.location);
         uploadDialog.fileIsUploaded(fileWithSpecificSize.name).clickOnCloseButton().dialogIsNotDisplayed();
         contentServicesPage.deleteContent(fileWithSpecificSize.name).checkContentIsNotDisplayed(fileWithSpecificSize.name);
         uploadToggles.addMaxSize('399');
-        contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsNotDisplayed(fileWithSpecificSize.name);
+        contentServicesPage.uploadFile(fileWithSpecificSize.location);
         expect(contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
+        contentServicesPage.checkContentIsNotDisplayed(fileWithSpecificSize.name);
         uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
         contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
         uploadDialog.fileIsUploaded(emptyFile.name).clickOnCloseButton().dialogIsNotDisplayed();
@@ -377,7 +378,7 @@ describe('Upload component', () => {
         contentServicesPage.goToDocumentList();
         uploadToggles.enableMaxSize();
         uploadToggles.addMaxSize('0');
-        contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsNotDisplayed(fileWithSpecificSize.name);
+        contentServicesPage.uploadFile(fileWithSpecificSize.location);
         expect(contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
 
         uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
@@ -392,8 +393,9 @@ describe('Upload component', () => {
         browser.driver.sleep(1000);
         uploadToggles.addMaxSize('1');
         uploadToggles.disableMaxSize();
-        contentServicesPage.uploadFile(fileWithSpecificSize.location).checkContentIsDisplayed(fileWithSpecificSize.name);
+        contentServicesPage.uploadFile(fileWithSpecificSize.location);
         uploadDialog.fileIsUploaded(fileWithSpecificSize.name).clickOnCloseButton().dialogIsNotDisplayed();
+        contentServicesPage.checkContentIsDisplayed(fileWithSpecificSize.name);
     });
 
     it('[C91318] Should Enable/Disable upload button when change the disable property', () => {

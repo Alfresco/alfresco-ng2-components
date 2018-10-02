@@ -30,6 +30,7 @@
                         </adf-accordion-group>
                     </adf-accordion>
                 </div>
+                multiSelectTask {{multiSelectTask}}
                 <div class="adf-grid-item adf-tasks-list" fxFlex.gt-md="380px"
                      [ngClass.gt-md]="{'small-pagination': true}"
                      *ngIf="taskFilter && !isStartTaskMode()">
@@ -48,6 +49,7 @@
                         (success)="onSuccessTaskList($event)"
                         (row-click)="onRowClick($event)"
                         (row-dblclick)="onTaskRowDblClick($event)"
+                        [multiselect]="multiSelectTask"
                         #taskList>
                         <!-- Custom column definition demo -->
 
@@ -153,6 +155,7 @@
                         [sort]="processFilter?.filter?.sort"
                         (rowClick)="onProcessRowClick($event)"
                         (row-dblclick)="onProcessRowDblClick($event)"
+                        [multiselect]="multiSelectProcess"
                         (success)="onSuccessProcessList($event)">
                         <!-- Custom column definition demo -->
 
@@ -256,6 +259,12 @@
                 </div>
                 <div>
                     <mat-slide-toggle id="adf-show-header" (change)="toggleHeaderContent()" [checked]="showHeaderContent">{{ 'PS-TAB.TASK-SHOW-HEADER'| translate }}</mat-slide-toggle>
+                </div>
+                <div>
+                    <mat-slide-toggle id="adf-process-multiselect"  (change)="toggleTasProcesssMultiselect()" [checked]="multiSelectProcess">Multiselect Process List</mat-slide-toggle>
+                </div>
+                <div>
+                    <mat-slide-toggle id="adf-task-multiselect"  (change)="toggleTaskMultiselect()" [checked]="multiSelectTask">Multiselect Task List</mat-slide-toggle>
                 </div>
             </div>
         </div>

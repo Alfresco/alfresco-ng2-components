@@ -431,7 +431,7 @@ var ContentServicesPage = function () {
     };
 
     this.enableThumbnails = function () {
-        var thumbnailSlide = element(by.css('#enableThumbnails'));
+        var thumbnailSlide = element(by.css('#adf-thumbnails-upload-switch'));
         Util.waitUntilElementIsVisible(thumbnailSlide);
         thumbnailSlide.click();
         return this;

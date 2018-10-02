@@ -190,7 +190,7 @@ export class ViewerPage {
 
     checkCurrentThumbnailIsSelected() {
         let selectedThumbnail = element(by.css('adf-pdf-thumb[class="pdf-thumbnails__thumb ng-star-inserted pdf-thumbnails__thumb--selected"] > img'));
-        pageSelectorInput.getAttribute('value').then(function (pageNumber) {
+        this.pageSelectorInput.getAttribute('value').then(function (pageNumber) {
             expect('Page ' + pageNumber).toEqual(selectedThumbnail.getAttribute('title'));
         });
     }
@@ -337,7 +337,7 @@ export class ViewerPage {
     }
 
     checkRotation(text) {
-        let rotation = imgContainer.getAttribute('style');
+        let rotation = this.imgContainer.getAttribute('style');
         expect(rotation).toEqual(text);
     }
 
