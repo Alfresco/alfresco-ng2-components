@@ -17,7 +17,7 @@
 
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
-import ViewerPage = require('../../pages/adf/viewerPage');
+import { ViewerPage } from '../../pages/adf/viewerPage';
 import { CommentsPage } from '../../pages/adf/commentsPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');

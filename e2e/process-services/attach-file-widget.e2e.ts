@@ -17,7 +17,6 @@
 
 import LoginPage = require('../pages/adf/loginPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
-import ViewerPage = require('../pages/adf/viewerPage');
 import Widget = require('../pages/adf/process_services/widgets/widget');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 
@@ -28,6 +27,7 @@ import FileModel = require('../models/ACS/fileModel');
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
+import { ViewerPage } from '../pages/adf/viewerPage';
 import { AppsActions } from '../actions/APS/apps.actions';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';

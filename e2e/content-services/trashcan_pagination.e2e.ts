@@ -16,7 +16,8 @@
  */
 
 import LoginPage = require('../pages/adf/loginPage');
-import TrashcanPage = require('../pages/adf/trashcanPage');
+import { TrashcanPage } from '../pages/adf/trashcanPage';
+
 import PaginationPage = require('../pages/adf/paginationPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 

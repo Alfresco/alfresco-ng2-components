@@ -26,8 +26,9 @@ import { AppConfigService, NotificationService } from '@alfresco/adf-core';
 export class ConfigEditorComponent {
 
     editor: any;
-    editorSearch: any;
-    editorExcludedFile: any;
+    code: any;
+    field = 'content-metadata';
+    invalidJson = false;
 
     editorOptions = {
         theme: 'vs-dark',
@@ -37,79 +38,59 @@ export class ConfigEditorComponent {
         formatOnType: true
     };
 
-    metadataConf: string;
-    searchConf: string;
-    excludedFileConf: string;
-
-    onInitMetadata(editor) {
+    onInit(editor) {
         this.editor = editor;
-        setTimeout(() => {
-            this.editor.getAction('editor.action.formatDocument').run();
-        }, 1000);
-    }
-
-    onInitSearch(editor) {
-        this.editorSearch = editor;
-        setTimeout(() => {
-            this.editorSearch.getAction('editor.action.formatDocument').run();
-        }, 1000);
-    }
-
-    onInitExcludedFile(excludedFile) {
-        this.editorExcludedFile = excludedFile;
-        setTimeout(() => {
-            this.editorExcludedFile.getAction('editor.action.formatDocument').run();
-        }, 1000);
+        this.indentCode();
     }
 
     constructor(private appConfig: AppConfigService, private notificationService: NotificationService) {
-        this.metadataConf = JSON.stringify(appConfig.config['content-metadata']);
-        this.searchConf = JSON.stringify(appConfig.config['search']);
-        this.excludedFileConf = JSON.stringify(appConfig.config['files']);
+        this.code = JSON.stringify(appConfig.config['content-metadata']);
     }
 
-    onSaveMetadata() {
+    onSave() {
         try {
-            this.appConfig.config['content-metadata'] = JSON.parse(this.editor.getValue());
+            this.appConfig.config[this.field] = JSON.parse(this.editor.getValue());
         } catch (error) {
+            this.invalidJson = true;
             this.notificationService.openSnackMessage(
-                'Wrong metadata configuration',
+                'Wrong Code configuration ' + error,
                 4000
             );
+        } finally {
+            if (!this.invalidJson) {
+                this.notificationService.openSnackMessage(
+                    'Saved'
+                );
+            }
         }
     }
 
-    onSaveSearch() {
-        try {
-            this.appConfig.config['search'] = JSON.parse(this.editorSearch.getValue());
-        } catch (error) {
-            this.notificationService.openSnackMessage(
-                'Wrong search configuration',
-                4000
-            );
-        }
+    onClear() {
+        this.code = '';
     }
 
-    onSaveExcludedFile() {
-        try {
-            this.appConfig.config['files'] = JSON.parse(this.editorExcludedFile.getValue());
-        } catch (error) {
-            this.notificationService.openSnackMessage(
-                'Wrong exclude file configuration',
-                4000
-            );
-        }
+    fileConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['files']);
+        this.field = 'files';
+        this.indentCode();
     }
 
-    onClearMetadata() {
-        this.metadataConf = '';
+    searchConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['search']);
+        this.field = 'search';
+        this.indentCode();
     }
 
-    onClearSearch() {
-        this.searchConf = '';
+    metadataConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['content-metadata']);
+        this.field = 'content-metadata';
+        this.indentCode();
     }
 
-    onClearExcludedFile() {
-        this.searchConf = '';
+    indentCode() {
+        setTimeout(() => {
+            this.editor.getAction('editor.action.formatDocument').run();
+        }, 300);
     }
+
 }

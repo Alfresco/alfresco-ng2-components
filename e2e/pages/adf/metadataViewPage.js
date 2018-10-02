@@ -154,19 +154,6 @@ var MetadataViewPage = function () {
         return this;
     };
 
-    this.clickRightChevronToGetToTab = (tabName) => {
-        element.all(by.css('.mat-tab-label'))
-            .map((element) => element.getAttribute('innerText'))
-            .then((texts) => {
-                for (let text of texts) {
-                    if (text === tabName) {
-                        break;
-                    }
-                    this.clickRightChevron();
-                }
-            });
-    };
-
     this.getEditIconTooltip = function () {
         return editIcon.getAttribute('title');
     };

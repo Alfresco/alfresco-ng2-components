@@ -118,6 +118,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     changePageSize: EventEmitter<Pagination> = new EventEmitter();
 
     selectFirstReport = false;
+    multiSelectTask = false;
+    multiSelectProcess = false;
 
     private tabs = { tasks: 0, processes: 1, reports: 2 };
 
@@ -505,7 +507,16 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     changeTaskFilterIcon() {
         this.showTaskFilterIcon = !this.showTaskFilterIcon;
     }
+
     changeProcessFilterIcon() {
         this.showProcessFilterIcon = !this.showProcessFilterIcon;
+    }
+
+    toggleTasProcesssMultiselect() {
+        this.multiSelectProcess = !this.multiSelectProcess;
+    }
+
+    toggleTaskMultiselect() {
+        this.multiSelectTask = !this.multiSelectTask;
     }
 }

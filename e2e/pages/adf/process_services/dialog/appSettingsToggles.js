@@ -15,43 +15,43 @@
  * limitations under the License.
  */
 
-var ToggleState = require('../../core/toggleState');
+import {FormControllersPage} from "../../material/formControllersPage";
 
 var AppSettingsToggles = function () {
 
-    var toggleState = new ToggleState();
+    var formControllersPage = new FormControllersPage();
 
     var showDetailsHeaderToggle = element(by.id('adf-show-header'));
     var showTaskFilterIconsToggle = element(by.id('adf-show-task-filter-icon'));
     var showProcessFilterIconsToggle = element(by.id('adf-show-process-filter-icon'));
 
     this.enableShowHeader = function () {
-        toggleState.enableToggle(showDetailsHeaderToggle);
+        formControllersPage.enableToggle(showDetailsHeaderToggle);
         return this;
     };
 
     this.disableShowHeader = function () {
-        toggleState.disableToggle(showDetailsHeaderToggle);
+        formControllersPage.disableToggle(showDetailsHeaderToggle);
         return this;
     };
 
     this.enableTaskFiltersIcon = function () {
-        toggleState.enableToggle(showTaskFilterIconsToggle);
+        formControllersPage.enableToggle(showTaskFilterIconsToggle);
         return this;
     };
 
     this.disableTaskFiltersIcon = function () {
-        toggleState.disableToggle(showTaskFilterIconsToggle);
+        formControllersPage.disableToggle(showTaskFilterIconsToggle);
         return this;
     };
 
     this.enableProcessFiltersIcon = function () {
-        toggleState.enableToggle(showProcessFilterIconsToggle);
+        formControllersPage.enableToggle(showProcessFilterIconsToggle);
         return this;
     };
 
     this.disableProcessFiltersIcon = function () {
-        toggleState.disableToggle(showProcessFilterIconsToggle);
+        formControllersPage.disableToggle(showProcessFilterIconsToggle);
         return this;
     };
 

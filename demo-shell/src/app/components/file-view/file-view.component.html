@@ -70,6 +70,7 @@
                         Custom preset
                     </mat-slide-toggle>
                 </p>
+
                 <p class="toggle">
                     <ng-container *ngIf="isPreset">
                         <mat-form-field floatPlaceholder="float">
@@ -228,6 +229,16 @@
                 </p>
 
                 <p class="toggle">
+                    <mat-slide-toggle
+                        id="adf-toggle-custom-toolbar"
+                        [color]="'primary'"
+                        (change)="toggleToolbar()"
+                        [checked]="customToolbar">
+                        Custom Toolbar
+                    </mat-slide-toggle>
+                </p>
+
+                <p class="toggle">
                     <button mat-raised-button id="adf-switch-showrightsidebar" (click)="toggleShowRightSidebar()" color="primary">
                       Toggle Right Sidebar
                     </button>
@@ -244,6 +255,8 @@
         </adf-info-drawer>
     </ng-template>
 
+    <ng-template let-node="node" #sidebarTemplate> <adf-info-drawer-layout> <div info-drawer-content> <mat-card> My info </mat-card> </div> </adf-info-drawer-layout> </ng-template>
+
     <adf-viewer
         [nodeId]="nodeId"
         [showSidebar]="showRightSidebar"
@@ -258,6 +271,10 @@
         [urlFile]="urlFile"
         [sidebarLeftTemplate]="sidebarLeftTemplate"
         [sidebarTemplate]="sidebarRightTemplate">
+
+        <adf-viewer-toolbar *ngIf="customToolbar">
+            <h1>My custom toolbar</h1>
+        </adf-viewer-toolbar>
 
         <adf-viewer-toolbar-actions *ngIf="moreActions">
             <button mat-icon-button id="adf-viewer-time">

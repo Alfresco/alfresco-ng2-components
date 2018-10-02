@@ -102,6 +102,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (with checkboxes)",
     "THUMBNAILS": "Enable Thumbnails",
+    "ALLOW_DROP_FILES": "Enable file drop support for rows",
     "MULTIPLE_FILE_UPLOAD": "Multiple File Upload",
     "FOLDER_UPLOAD": "Folder upload",
     "CUSTOM_FILTER": "Custom extensions filter",
@@ -119,6 +120,7 @@
     "COLUMNS": {
       "DISPLAY_NAME": "Display name",
       "IS_LOCKED": "Lock",
+      "NODE_ID": "Node id",
       "TAG": "Tag",
       "CREATED_BY": "Created by",
       "CREATED_ON": "Created on",

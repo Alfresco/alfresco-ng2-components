@@ -59,6 +59,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     fileNodeId: any;
     showViewer = false;
     showVersions = false;
+    allowDropFiles = true;
     displayMode = DisplayMode.List;
     includeFields = ['isFavorite', 'isLocked', 'aspectNames'];
 
@@ -227,6 +228,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.documentList.reload();
     }
 
+    toggleAllowDropFiles() {
+        this.allowDropFiles = !this.allowDropFiles;
+        this.documentList.reload();
+    }
+
     ngOnInit() {
         if (!this.pagination) {
             this.pagination = <Pagination> {
@@ -340,7 +346,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     openSnackMessage(event: any) {
         this.notificationService.openSnackMessage(
             event,
-            4000
+            6000
         );
     }
 

@@ -21,7 +21,7 @@ import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
-import ViewerPage = require('../pages/adf/viewerPage.js');
+import { ViewerPage } from '../pages/adf/viewerPage';
 
 import CONSTANTS = require('../util/constants');
 

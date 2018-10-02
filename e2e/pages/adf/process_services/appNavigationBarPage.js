@@ -20,6 +20,7 @@ var Util = require('../../../util/util');
 var AppNavigationBarPage = function () {
 
     var tasksButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Tasks")).first();
+    var tagButton = element.all(by.css("[data-automation-id='Tag']"));
     var processButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Process")).first();
     var reportsButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Reports")).first();
     var settingsButton = element.all(by.cssContainingText("div[class*='mat-tab-label'] .mat-tab-labels div", "Settings")).first();
@@ -32,6 +33,10 @@ var AppNavigationBarPage = function () {
 
     this.clickProcessButton = function () {
         return processButton.click();
+    };
+
+    this.clickTagButton = function () {
+        return tagButton.click();
     };
 
     this.clickSettingsButton = function () {

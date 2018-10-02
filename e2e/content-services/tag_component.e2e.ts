@@ -20,6 +20,7 @@ import FileModel = require('../models/ACS/fileModel');
 
 import LoginPage = require('../pages/adf/loginPage');
 import TagPage = require('../pages/adf/tagPage');
+import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -34,6 +35,7 @@ describe('Tag component', () => {
 
     let loginPage = new LoginPage();
     let tagPage = new TagPage();
+    let appNavigationBarPage = new AppNavigationBarPage();
 
     let acsUser = new AcsUserModel();
     let uploadActions = new UploadActions();
@@ -48,12 +50,12 @@ describe('Tag component', () => {
         Util.generateRandomStringToLowerCase()];
 
     let tags = [
-        {tag: 'test-tag-01'}, {tag: 'test-tag-02'}, {tag: 'test-tag-03'}, {tag: 'test-tag-04'}, {tag: 'test-tag-05'},
-        {tag: 'test-tag-06'}, {tag: 'test-tag-07'}, {tag: 'test-tag-08'}, {tag: 'test-tag-09'}, {tag: 'test-tag-10'},
-        {tag: 'test-tag-11'}, {tag: 'test-tag-12'}, {tag: 'test-tag-13'}, {tag: 'test-tag-14'}, {tag: 'test-tag-15'},
-        {tag: 'test-tag-16'}, {tag: 'test-tag-17'}, {tag: 'test-tag-18'}, {tag: 'test-tag-19'}, {tag: 'test-tag-20'},
-        {tag: 'test-tag-21'}, {tag: 'test-tag-22'}, {tag: 'test-tag-23'}, {tag: 'test-tag-24'}, {tag: 'test-tag-25'},
-        {tag: 'test-tag-26'}, {tag: 'test-tag-27'}, {tag: 'test-tag-28'}, {tag: 'test-tag-29'}, {tag: 'test-tag-30'}];
+        { tag: 'test-tag-01' }, { tag: 'test-tag-02' }, { tag: 'test-tag-03' }, { tag: 'test-tag-04' }, { tag: 'test-tag-05' },
+        { tag: 'test-tag-06' }, { tag: 'test-tag-07' }, { tag: 'test-tag-08' }, { tag: 'test-tag-09' }, { tag: 'test-tag-10' },
+        { tag: 'test-tag-11' }, { tag: 'test-tag-12' }, { tag: 'test-tag-13' }, { tag: 'test-tag-14' }, { tag: 'test-tag-15' },
+        { tag: 'test-tag-16' }, { tag: 'test-tag-17' }, { tag: 'test-tag-18' }, { tag: 'test-tag-19' }, { tag: 'test-tag-20' },
+        { tag: 'test-tag-21' }, { tag: 'test-tag-22' }, { tag: 'test-tag-23' }, { tag: 'test-tag-24' }, { tag: 'test-tag-25' },
+        { tag: 'test-tag-26' }, { tag: 'test-tag-27' }, { tag: 'test-tag-28' }, { tag: 'test-tag-29' }, { tag: 'test-tag-30' }];
 
     let uppercaseTag = Util.generateRandomStringToUpperCase();
     let digitsTag = Util.generateRandomStringDigits();
@@ -86,7 +88,7 @@ describe('Tag component', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        tagPage.goToTagPage();
+        appNavigationBarPage.clickTagButton();
 
         done();
     });
@@ -197,36 +199,19 @@ describe('Tag component', () => {
         tagPage.checkDeleteTagFromTagListByNodeIdIsNotDisplayed(tagList[3]);
     });
 
-    it('[C286472] Should be able to click Show more/less button on "List Tags Content Services"', async() => {
-        await browser.refresh();
+    it('[C286472] Should be able to click Show more/less button on "List Tags Content Services"', () => {
+        tagPage.insertNodeId(pdfFileModel.id);
 
-        await tagPage.checkShowMoreButtonIsDisplayed();
-        await tagPage.checkShowLessButtonIsNotDisplayed();
+        tagPage.checkShowMoreButtonIsDisplayed();
+        tagPage.checkShowLessButtonIsNotDisplayed();
 
         expect(tagPage.checkTagsOnList()).toEqual(10);
 
-        await tagPage.clickShowMoreButton();
-        await tagPage.checkShowMoreButtonIsDisplayed();
-        await tagPage.checkShowLessButtonIsDisplayed();
+        tagPage.clickShowMoreButton();
+        tagPage.checkShowLessButtonIsDisplayed();
 
-        await tagPage.clickShowMoreButtonUntilNotDisplayed();
-        await tagPage.checkShowLessButtonIsDisplayed();
-        await tagPage.checkShowMoreButtonIsNotDisplayed();
-
-        let totalTags = await this.alfrescoJsApi.core.tagsApi.getTags({maxItems: 400});
-        let totalNumberOfTags = totalTags.list.pagination.count;
-
-        expect(tagPage.checkTagsOnList()).toEqual(totalNumberOfTags);
-
-        await tagPage.clickShowLessButton();
-        await tagPage.checkShowMoreButtonIsDisplayed();
-        await tagPage.checkShowLessButtonIsDisplayed();
-
-        expect(tagPage.checkTagsOnList()).toBeLessThan(totalNumberOfTags);
-
-        await tagPage.clickShowLessButtonUntilNotDisplayed();
-        await tagPage.checkShowMoreButtonIsDisplayed();
-        await tagPage.checkShowLessButtonIsNotDisplayed();
+        tagPage.clickShowMoreButtonUntilNotDisplayed();
+        tagPage.checkShowLessButtonIsDisplayed();
     });
 
 });

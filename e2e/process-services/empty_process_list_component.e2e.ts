@@ -63,7 +63,7 @@ describe('Empty Process List Test', () => {
         done();
     });
 
-    fit('[C260494] Should add process to list when a process is created', () => {
+    it('[C260494] Should add process to list when a process is created', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();

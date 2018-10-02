@@ -90,7 +90,7 @@
     "moment": "2.22.2",
     "moment-es6": "^1.0.0",
     "ng2-charts": "1.6.0",
-    "ngx-monaco-editor": "^5.0.0",
+    "ngx-monaco-editor": "6.0.0",
     "pdfjs-dist": "^2.0.489",
     "protractor-retry": "^1.2.0",
     "raphael": "2.2.7",

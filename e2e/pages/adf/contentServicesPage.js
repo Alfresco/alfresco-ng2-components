@@ -42,7 +42,7 @@ var ContentServicesPage = function () {
     var contentServicesURL = TestConfig.adf.url + TestConfig.adf.port + "/files";
     var loadMoreButton = element(by.css("button[data-automation-id='adf-infinite-pagination-button']"));
     var emptyPagination = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
-    var dragAndDrop = element(by.css("adf-upload-drag-area div"));
+    var dragAndDrop = element.all(by.css("adf-upload-drag-area div")).first();
     var nameHeader = element(by.css("div[data-automation-id='auto_id_name'] > span"));
     var sizeHeader = element(by.css("div[data-automation-id='auto_id_content.sizeInBytes'] > span"));
     var createdByHeader = element(by.css("div[data-automation-id='auto_id_createdByUser.displayName'] > span"));
@@ -60,6 +60,10 @@ var ContentServicesPage = function () {
     var copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     var searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"'));
     var shareNodeButton = element(by.cssContainingText("mat-icon", " share "));
+
+    this.getContentList = function () {
+        return contentList;
+    };
 
     this.checkRecentFileToBeShowed = function () {
         Util.waitUntilElementIsVisible(recentFiles);
@@ -86,6 +90,7 @@ var ContentServicesPage = function () {
     this.checkRecentFileToBeOpened = function () {
         Util.waitUntilElementIsVisible(recentFilesExpanded);
     };
+
 
     this.getRecentFileIcon = async function () {
         await Util.waitUntilElementIsVisible(recentFileIcon);
@@ -305,7 +310,6 @@ var ContentServicesPage = function () {
         var breadcrumb = element(by.css("a[data-automation-id='breadcrumb_" + folder + "']"));
         Util.waitUntilElementIsVisible(breadcrumb);
         breadcrumb.click();
-        contentList.tableIsLoaded();
         return this;
     };
 
@@ -427,7 +431,7 @@ var ContentServicesPage = function () {
     };
 
     this.enableThumbnails = function () {
-        var thumbnailSlide = element(by.css('#enableThumbnails'));
+        var thumbnailSlide = element(by.css('#adf-thumbnails-upload-switch'));
         Util.waitUntilElementIsVisible(thumbnailSlide);
         thumbnailSlide.click();
         return this;
