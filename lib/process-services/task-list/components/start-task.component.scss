@@ -16,6 +16,7 @@
     }
 
     .adf-new-task-layout-card {
+
         width: 66%;
         margin: 10px auto;
 
@@ -74,6 +75,14 @@
     }
 
     adf-start-task {
+
+        people-widget {
+            width: 100%;
+            .mat-form-field-label-wrapper {
+                top: -14px !important;
+            }
+        }
+
         .adf {
 
             &-new-task-footer {

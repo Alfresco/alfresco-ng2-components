@@ -38,6 +38,7 @@
                         [presetColumn]="presetColumn"
                         [page]="taskPage"
                         [size]="paginationPageSize"
+                        [selectionMode]="selectionMode"
                         [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
                         [name]="taskFilter?.filter?.name"
                         [assignment]="taskFilter?.filter?.assignment"
@@ -146,6 +147,7 @@
                     <adf-process-instance-list
                         #processList
                         *ngIf="processFilter?.filter" [appId]="processFilter?.appId"
+                        [selectionMode]="selectionMode"
                         [processDefinitionKey]="processFilter?.filter?.processDefinitionKey"
                         [presetColumn]="presetColumn"
                         [state]="processFilter?.filter?.state"
@@ -251,20 +253,32 @@
             </div>
             <div class="adf-grid-item adf-settings-details" fxFlex.gt-md="1 1 auto">
                 <div>
-                    <mat-slide-toggle id="adf-show-task-filter-icon" (change)="changeTaskFilterIcon()" [checked]="showTaskFilterIcon">Show task filters icons</mat-slide-toggle>
+                    <mat-slide-toggle id="adf-show-task-filter-icon" [(ngModel)]="showTaskFilterIcon">Show task filters icons
+                    </mat-slide-toggle>
                 </div>
                 <div>
-                    <mat-slide-toggle id="adf-show-process-filter-icon" (change)="changeProcessFilterIcon()" [checked]="showProcessFilterIcon">Show process filters icons</mat-slide-toggle>
+                    <mat-slide-toggle id="adf-show-process-filter-icon" [(ngModel)]="showProcessFilterIcon">Show process filters icons
+                    </mat-slide-toggle>
                 </div>
                 <div>
-                    <mat-slide-toggle id="adf-show-header" (change)="toggleHeaderContent()" [checked]="showHeaderContent">{{ 'PS-TAB.TASK-SHOW-HEADER'| translate }}</mat-slide-toggle>
+                    <mat-slide-toggle id="adf-show-header" (change)="toggleHeaderContent()"
+                                      [checked]="showHeaderContent">{{ 'PS-TAB.TASK-SHOW-HEADER'| translate }}
+                    </mat-slide-toggle>
                 </div>
                 <div>
-                    <mat-slide-toggle id="adf-process-multiselect"  (change)="toggleTasProcesssMultiselect()" [checked]="multiSelectProcess">Multiselect Process List</mat-slide-toggle>
+                    <mat-slide-toggle id="adf-process-multiselect"  [(ngModel)]="multiSelectProcess" >Multiselect Process List
+                    </mat-slide-toggle>
                 </div>
                 <div>
-                    <mat-slide-toggle id="adf-task-multiselect"  (change)="toggleTaskMultiselect()" [checked]="multiSelectTask">Multiselect Task List</mat-slide-toggle>
+                    <mat-slide-toggle id="adf-task-multiselect" [(ngModel)]="multiSelectTask" >Multiselect Task List
+                    </mat-slide-toggle>
                 </div>
+                <br>
+                <mat-radio-group [(ngModel)]="selectionMode">
+                    <mat-radio-button value="multiple">multiple</mat-radio-button>
+                    <mat-radio-button value="single">single</mat-radio-button>
+                    <mat-radio-button value="none">none</mat-radio-button>
+                </mat-radio-group>
             </div>
         </div>
     </mat-tab>

@@ -7,6 +7,10 @@
 
         &-people-widget {
             width: 100%;
+
+            .mat-form-field-label-wrapper {
+                top: 10px;
+            }
         }
 
         &-people-widget-list {
