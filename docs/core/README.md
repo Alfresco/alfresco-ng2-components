@@ -32,6 +32,8 @@ for more information about installing and using the source code.
 | [Header component](header.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Reusable header for Alfresco applications. | [Source](../../lib/core/layout/components/header/header.component.ts) |
 | [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav layout component](sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../../lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts) |
+| [Login dialog panel component](login-dialog-panel.component.md) | Shows and manages a login dialog. | [Source](../../lib/core/login/components/login-dialog-panel.component.ts) |
+| [Login dialog component](login-dialog.component.md) | Allows a user to perform a login via a dialog. | [Source](../../lib/core/login/components/login-dialog.component.ts) |
 | [Login component](login.component.md) | Authenticates to Alfresco Content Services and or Alfresco Process Services. | [Source](../../lib/core/login/components/login.component.ts) |
 | [Infinite pagination component](infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../../lib/core/pagination/infinite-pagination.component.ts) |
 | [Pagination component](pagination.component.md) | Adds pagination to the component it is used with. | [Source](../../lib/core/pagination/pagination.component.ts) |
@@ -106,6 +108,7 @@ for more information about installing and using the source code.
 | [Favorites api service](favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../../lib/core/services/favorites-api.service.ts) |
 | [Highlight transform service](highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../../lib/core/services/highlight-transform.service.ts) |
 | [Log service](log.service.md) | Provides log functionality. | [Source](../../lib/core/services/log.service.ts) |
+| [Login dialog service](login-dialog.service.md) | Manages login dialogs. | [Source](../../lib/core/services/login-dialog.service.ts) |
 | [Nodes api service](nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../../lib/core/services/nodes-api.service.ts) |
 | [Notification service](notification.service.md) | Shows a notification message with optional feedback. | [Source](../../lib/core/services/notification.service.ts) |
 | [Page title service](page-title.service.md) | Sets the page title. | [Source](../../lib/core/services/page-title.service.ts) |

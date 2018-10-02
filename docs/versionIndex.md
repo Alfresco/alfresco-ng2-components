@@ -6,6 +6,7 @@ of components organized by ADF libraries.
 
 ## Versions
 
+-   [v2.6.0](#v260)
 -   [v2.5.0](#v250)
 -   [v2.4.0](#v240)
 -   [v2.3.0](#v230)
@@ -13,13 +14,31 @@ of components organized by ADF libraries.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
+## v2.6.0
+
+**Release:** Forthcoming<br/>
+**APS compatible version:** v1.6.4+<br/>
+**ACS compatible version:** v5.2.3<br/>
+
+<!--v260 start-->
+
+-   [Login dialog panel component](core/login-dialog-panel.component.md)
+-   [Login dialog component](core/login-dialog.component.md)
+-   [Login dialog service](core/login-dialog.service.md)
+
+<!--v260 end-->
+
 ## v2.5.0
 
 **Released:** 2018-08-14 ([Release notes](release-notes/RelNote250.md))<br/>
 **APS compatible version:** v1.6.4+<br/>
 **ACS compatible version:** v5.2.3<br/>
 
-No new components added.
+<!--v250 start-->
+
+-   [Header component](core/header.component.md)
+
+<!--v250 end-->
 
 ## v2.4.0
 
@@ -39,7 +58,6 @@ No new components added.
 -   [Buttons menu component](core/buttons-menu.component.md)
 -   [Empty content component](core/empty-content.component.md)
 -   [Error content component](core/error-content.component.md)
--   [Header component](core/header.component.md)
 -   [Info drawer tab component](core/info-drawer-tab.component.md)
 -   [Node permission dialog service](content-services/node-permission-dialog.service.md)
 -   [Search check list component](content-services/search-check-list.component.md)
@@ -109,6 +127,7 @@ No new components added.
 <!--v210 start-->
 
 -   [Content metadata card component](content-services/content-metadata-card.component.md)
+-   [Content metadata component](content-services/content-metadata.component.md)
 -   [Content node dialog service](content-services/content-node-dialog.service.md)
 -   [Content node selector panel component](content-services/content-node-selector-panel.component.md)
 -   [Search configuration service](core/search-configuration.service.md)
