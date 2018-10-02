@@ -53,10 +53,6 @@ describe('Header Component', () => {
             hostBpm: TestConfig.adf.url
         });
 
-        done();
-    });
-
-    beforeEach(async(done) => {
         let users = new UsersActions();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -67,14 +63,19 @@ describe('Header Component', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        done();
+    });
 
-        await navigationBarPage.clickHeaderDataButton();
+    beforeEach(async(done) => {
+
+        loginPage.loginToProcessServicesUsingUserModel(user);
+
+        navigationBarPage.clickHeaderDataButton();
 
         done();
     });
 
-    afterEach(async(done) => {
+    afterAll(async(done) => {
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
