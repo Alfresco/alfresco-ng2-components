@@ -1,4 +1,7 @@
 {
+  "SAVE": "Enregistrer",
+  "START": "Terminer",
+  "START PROCESS": "Démarrer le processus",
   "FORM": {
     "START_FORM": {
       "TITLE": "Démarrer le formulaire"
@@ -215,6 +218,10 @@
     "ACTION": {
       "HELP": "Besoin d'aide ?",
       "REGISTER": "S'inscrire"
+    },
+    "DIALOG": {
+      "CANCEL": "Annuler",
+      "CHOOSE": "Choisir"
     }
   },
   "ADF-DATATABLE": {

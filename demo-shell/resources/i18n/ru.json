@@ -52,9 +52,6 @@
       "TITLE": "Метаданные"
     }
   },
-  "COMMENTS": {
-    "ADD_COMMENT": "Добавить"
-  },
   "APP_LAYOUT": {
     "APP_NAME": "Демонстрационное приложение ADF",
     "HOME": "Домашняя",
@@ -130,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Режим просмотра карты",
+      "SHARE_EDIT": "Изменить параметры",
       "NEW_FOLDER": "Новая папка",
       "EDIT_FOLDER": "Редактировать папку",
       "DOWNLOAD": "Скачать",
@@ -175,6 +173,7 @@
     "TASKS-TAB": "Задачи",
     "PROCESSES-TAB": "Процесс",
     "REPORTS-TAB": "Отчеты",
+    "SETTINGS-TAB": "Параметры",
     "START-TASK": "Начать задачу",
     "START-PROCESS": "Начать процесс",
     "PROCESS-AUDIT-LOG": "Журнал проверки процесса",
@@ -218,8 +217,14 @@
     "INHERITED_PERMISSIONS_BUTTON": "Разрешение унаследовано"
   },
   "TASK_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
-    "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
+      "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом",
+      "NUMBER_TYPE_ERROR": "Значение должно быть числом"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Начальная страница"
+    }
   },
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",

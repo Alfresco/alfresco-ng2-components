@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Mode d'affichage Carte",
+      "SHARE_EDIT": "Modifier les paramètres",
       "NEW_FOLDER": "Nouveau Dossier",
       "EDIT_FOLDER": "Modifier le dossier",
       "DOWNLOAD": "Télécharger",
@@ -172,6 +173,7 @@
     "TASKS-TAB": "Tâches",
     "PROCESSES-TAB": "Processus",
     "REPORTS-TAB": "Rapports",
+    "SETTINGS-TAB": "Paramètres",
     "START-TASK": "Démarrer la tâche",
     "START-PROCESS": "Démarrer le processus",
     "PROCESS-AUDIT-LOG": "Journal d'audit des processus",
@@ -218,10 +220,10 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
       "APP_ID_TYPE_ERROR": "L'ID d'application doit être un numéro",
-      "NUMBER_TYPE_ERROR": "La valeur saisie doit être numérique"
+      "NUMBER_TYPE_ERROR": "La valeur doit être un numéro"
     },
     "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Page d'accueil"
+      "START_INPUT": "Démarrage de la page"
     }
   },
   "PROCESS_LIST_DEMO": {

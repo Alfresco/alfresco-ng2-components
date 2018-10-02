@@ -254,15 +254,16 @@
     }
   },
   "SHARE": {
-    "TITLE": "Condividi",
-    "PUBLIC-LINK": "Link pubblico",
-    "UNSHARED": "File non condiviso",
-    "DESCRIPTION": "Link al file",
-    "ALERT": "Tutti possono accedere a questo link",
-    "ACTIONS": {
-      "SHARE": "Condividi",
-      "CLOSE": "Chiudi",
-      "COPY-LINK": "Copia link"
+    "DIALOG-TITLE": "Condividi",
+    "DESCRIPTION": "Per copiarlo negli appunti, fai clic sul link seguente.",
+    "TITLE": "Link da condividere",
+    "EXPIRES": "Scade il",
+    "CLIPBOARD-MESSAGE": "Link copiato negli appunti",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Rimuovi link condiviso",
+      "MESSAGE": "Il link verrà eliminato e verrà creato un nuovo link per il prossimo file condiviso",
+      "CANCEL": "Annulla",
+      "REMOVE": "Rimuovi"
     }
   },
   "PERMISSION_MANAGER": {

@@ -1,4 +1,7 @@
 {
+  "SAVE": "Сохранить",
+  "START": "Завершить",
+  "START PROCESS": "Запустить процесс",
   "FORM": {
     "START_FORM": {
       "TITLE": "Запустить форму"
@@ -215,6 +218,10 @@
     "ACTION": {
       "HELP": "Справка?",
       "REGISTER": "Регистрация"
+    },
+    "DIALOG": {
+      "CANCEL": "Отмена",
+      "CHOOSE": "Выбрать"
     }
   },
   "ADF-DATATABLE": {

@@ -303,10 +303,17 @@
   },
   "APP": {
     "DIALOG": {
-      "START": "Start",
-      "TITLE": "Velg prosess",
-      "LIST": "Prosessliste",
+      "START": "Fortsett",
+      "TITLE": "Velg et program",
+      "LIST": "Programliste",
       "ERROR": "Kan ikke koble til Process Services"
+    }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Logg på",
+      "CANCEL": "Avbryt",
+      "CHOOSE": "Velg"
     }
   }
 }

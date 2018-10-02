@@ -254,15 +254,16 @@
     }
   },
   "SHARE": {
-    "TITLE": "共享",
-    "PUBLIC-LINK": "公共链接",
-    "UNSHARED": "文件未共享",
-    "DESCRIPTION": "这是您的文件的链接",
-    "ALERT": "任何人都可访问此链接",
-    "ACTIONS": {
-      "SHARE": "共享",
-      "CLOSE": "关闭",
-      "COPY-LINK": "复制链接"
+    "DIALOG-TITLE": "共享",
+    "DESCRIPTION": "单击下面的链接以将其复制到剪贴板。",
+    "TITLE": "要共享的链接",
+    "EXPIRES": "到期日期",
+    "CLIPBOARD-MESSAGE": "已复制到剪贴板的链接",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "删除此共享链接",
+      "MESSAGE": "此链接将被删除，下次共享此文件时将会创建新链接",
+      "CANCEL": "取消",
+      "REMOVE": "删除"
     }
   },
   "PERMISSION_MANAGER": {

@@ -52,9 +52,6 @@
       "TITLE": "元数据"
     }
   },
-  "COMMENTS": {
-    "ADD_COMMENT": "添加"
-  },
   "APP_LAYOUT": {
     "APP_NAME": "ADF 演示应用程序",
     "HOME": "主页",
@@ -113,7 +110,7 @@
     "MULTISELECT_DESCRIPTION": "使用 Cmd (Mac) 或 Ctrl (Windows) 切换多个项目的选择",
     "RECENT": {
       "EMPTY_STATE": {
-        "TITLE": "\"最近的文件\"列表为空"
+        "TITLE": "“最近的文件”列表为空"
       },
       "TITLE": "最近的文件"
     },
@@ -130,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "卡查看模式",
+      "SHARE_EDIT": "编辑设置",
       "NEW_FOLDER": "新建文件夹",
       "EDIT_FOLDER": "编辑文件夹",
       "DOWNLOAD": "下载",
@@ -175,6 +173,7 @@
     "TASKS-TAB": "任务",
     "PROCESSES-TAB": "流程",
     "REPORTS-TAB": "报告",
+    "SETTINGS-TAB": "设置",
     "START-TASK": "启动任务",
     "START-PROCESS": "启动流程",
     "PROCESS-AUDIT-LOG": "流程审计日志",
@@ -218,8 +217,14 @@
     "INHERITED_PERMISSIONS_BUTTON": "已继承权限"
   },
   "TASK_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",
-    "APP_ID_TYPE_ERROR": "应用程序 ID 必须为数字"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",
+      "APP_ID_TYPE_ERROR": "应用程序 ID 必须为数字",
+      "NUMBER_TYPE_ERROR": "值必须是数字"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "开始页面"
+    }
   },
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",

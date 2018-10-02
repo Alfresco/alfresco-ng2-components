@@ -1,4 +1,7 @@
 {
+  "SAVE": "Lagre",
+  "START": "Fullfør",
+  "START PROCESS": "Start prosess",
   "FORM": {
     "START_FORM": {
       "TITLE": "Start skjema"
@@ -215,6 +218,10 @@
     "ACTION": {
       "HELP": "Trenger hjelp?",
       "REGISTER": "Registrer"
+    },
+    "DIALOG": {
+      "CANCEL": "Avbryt",
+      "CHOOSE": "Velg"
     }
   },
   "ADF-DATATABLE": {

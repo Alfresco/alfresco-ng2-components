@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "カード表示モード",
+      "SHARE_EDIT": "設定の編集",
       "NEW_FOLDER": "新しいフォルダ",
       "EDIT_FOLDER": "フォルダの編集",
       "DOWNLOAD": "ダウンロード",
@@ -172,6 +173,7 @@
     "TASKS-TAB": "タスク",
     "PROCESSES-TAB": "プロセス",
     "REPORTS-TAB": "レポート",
+    "SETTINGS-TAB": "設定",
     "START-TASK": "タスクの開始",
     "START-PROCESS": "プロセスの開始",
     "PROCESS-AUDIT-LOG": "プロセスの監査ログ",
@@ -215,8 +217,14 @@
     "INHERITED_PERMISSIONS_BUTTON": "継承された権限"
   },
   "TASK_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",
-    "APP_ID_TYPE_ERROR": "アプリケーション ID は番号でなければなりません"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",
+      "APP_ID_TYPE_ERROR": "アプリケーション ID は数字でなければなりません",
+      "NUMBER_TYPE_ERROR": "値は数字でなければなりません"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "開始ページ"
+    }
   },
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",

@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Kortvisningsmodus",
+      "SHARE_EDIT": "Rediger innstillinger",
       "NEW_FOLDER": "Ny mappe",
       "EDIT_FOLDER": "Rediger mappe",
       "DOWNLOAD": "Last ned",
@@ -172,6 +173,7 @@
     "TASKS-TAB": "Oppgaver",
     "PROCESSES-TAB": "Prosess",
     "REPORTS-TAB": "Rapporter",
+    "SETTINGS-TAB": "Innstillinger",
     "START-TASK": "Start oppgave",
     "START-PROCESS": "Start prosess",
     "PROCESS-AUDIT-LOG": "Prosessrevisjonslogg",
@@ -215,8 +217,14 @@
     "INHERITED_PERMISSIONS_BUTTON": "Tillatelse arvet"
   },
   "TASK_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
-    "APP_ID_TYPE_ERROR": "App-ID må være et tall"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
+      "APP_ID_TYPE_ERROR": "App-ID må være et tall",
+      "NUMBER_TYPE_ERROR": "Verdien må være et tall"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Starter side"
+    }
   },
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",

@@ -68,7 +68,7 @@
         "ADD_ASSIGNEE": "Adicionar novo destinatário"
       },
       "BUTTON": {
-        "COMPLETE": "Concluído",
+        "COMPLETE": "Completar",
         "CLAIM": "Reivindicar",
         "UNCLAIM": "Recolocar na fila",
         "DRAG-ATTACHMENT": "Solte os arquivos para carregar",
@@ -303,10 +303,17 @@
   },
   "APP": {
     "DIALOG": {
-      "START": "Iniciar",
-      "TITLE": "Selecionar Processo",
-      "LIST": "Lista de processo",
+      "START": "Continuar",
+      "TITLE": "Selecionar um aplicativo",
+      "LIST": "Lista de aplicações",
       "ERROR": "Houve um problema ao conectar com o Process Services"
+    }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Login",
+      "CANCEL": "Cancelar",
+      "CHOOSE": "Escolher"
     }
   }
 }
