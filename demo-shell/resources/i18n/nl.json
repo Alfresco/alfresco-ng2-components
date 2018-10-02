@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Kaartweergavemodus",
+      "SHARE_EDIT": "Instellingen bewerken",
       "NEW_FOLDER": "Nieuwe map",
       "EDIT_FOLDER": "Map bewerken",
       "DOWNLOAD": "Downloaden",
@@ -172,6 +173,7 @@
     "TASKS-TAB": "Taken",
     "PROCESSES-TAB": "Proces",
     "REPORTS-TAB": "Rapporten",
+    "SETTINGS-TAB": "Instellingen",
     "START-TASK": "Taak starten",
     "START-PROCESS": "Proces starten",
     "PROCESS-AUDIT-LOG": "Auditlog van proces",
@@ -215,8 +217,14 @@
     "INHERITED_PERMISSIONS_BUTTON": "Machtiging overgenomen"
   },
   "TASK_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "App-id invoegen",
-    "APP_ID_TYPE_ERROR": "App-id moet een getal zijn"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "App-id invoegen",
+      "APP_ID_TYPE_ERROR": "App-id moet een getal zijn",
+      "NUMBER_TYPE_ERROR": "Waarde moet een getal zijn"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Beginpagina"
+    }
   },
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "App-id invoegen",

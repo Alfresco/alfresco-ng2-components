@@ -303,10 +303,17 @@
   },
   "APP": {
     "DIALOG": {
-      "START": "开始",
-      "TITLE": "选择流程",
-      "LIST": "流程列表",
+      "START": "继续",
+      "TITLE": "选择一个流程App",
+      "LIST": "流程App列表",
       "ERROR": "连接到 Process Services 时出现问题"
+    }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "登录",
+      "CANCEL": "取消",
+      "CHOOSE": "选择"
     }
   }
 }

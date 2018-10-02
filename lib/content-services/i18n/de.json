@@ -254,15 +254,16 @@
     }
   },
   "SHARE": {
-    "TITLE": "Freigeben",
-    "PUBLIC-LINK": "Öffentlicher Link",
-    "UNSHARED": "Datei nicht freigegeben",
-    "DESCRIPTION": "Dies ist ein Link zu Ihrer Datei",
-    "ALERT": "Auf diesen Link hat jeder Zugriff",
-    "ACTIONS": {
-      "SHARE": "Freigeben",
-      "CLOSE": "Schließen",
-      "COPY-LINK": "Link kopieren"
+    "DIALOG-TITLE": "Freigeben",
+    "DESCRIPTION": "Auf Link klicken um in die Zwischenablage zu kopieren.",
+    "TITLE": "Link zum Teilen",
+    "EXPIRES": "Läuft ab am",
+    "CLIPBOARD-MESSAGE": "Link in die Zwischenablage kopiert",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Link in die Zwischenablage kopiert",
+      "MESSAGE": "Dieser Link wird gelöscht und ein neuer Link wird erstellt wenn diese Datei das nächste Mal geteilt wird.",
+      "CANCEL": "Abbrechen",
+      "REMOVE": "Entfernen"
     }
   },
   "PERMISSION_MANAGER": {

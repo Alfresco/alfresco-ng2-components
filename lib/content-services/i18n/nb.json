@@ -254,15 +254,16 @@
     }
   },
   "SHARE": {
-    "TITLE": "Del",
-    "PUBLIC-LINK": "Offentlig lenke",
-    "UNSHARED": "Filen er ikke delt",
-    "DESCRIPTION": "Dette er en lenke til filen din",
-    "ALERT": "Hvem som helst har tilgang til denne lenken",
-    "ACTIONS": {
-      "SHARE": "Del",
-      "CLOSE": "Lukk",
-      "COPY-LINK": "Kopier lenke"
+    "DIALOG-TITLE": "Del",
+    "DESCRIPTION": "Klikk på koblingen nedenfor for å kopiere den til utklippstavlen.",
+    "TITLE": "Kobling som skal deles",
+    "EXPIRES": "Utløper den",
+    "CLIPBOARD-MESSAGE": "Kobling kopiert til utklippstavlen",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Fjern denne delte koblingen",
+      "MESSAGE": "Denne koblingen vil bli slettet, og en ny kobling vil bli opprettet neste gang denne filen deles",
+      "CANCEL": "Avbryt",
+      "REMOVE": "Fjern"
     }
   },
   "PERMISSION_MANAGER": {

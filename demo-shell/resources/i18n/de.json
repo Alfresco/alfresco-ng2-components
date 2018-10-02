@@ -52,9 +52,6 @@
       "TITLE": "Metadaten"
     }
   },
-  "COMMENTS": {
-    "ADD_COMMENT": "Hinzufügen"
-  },
   "APP_LAYOUT": {
     "APP_NAME": "ADF-Demoanwendung",
     "HOME": "Startseite",
@@ -130,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Kartenansichtsmodus",
+      "SHARE_EDIT": "Einstellungen bearbeiten",
       "NEW_FOLDER": "Neuer Ordner",
       "EDIT_FOLDER": "Ordner bearbeiten",
       "DOWNLOAD": "Herunterladen",
@@ -175,6 +173,7 @@
     "TASKS-TAB": "Aufgaben",
     "PROCESSES-TAB": "Prozess",
     "REPORTS-TAB": "Berichte",
+    "SETTINGS-TAB": "Einstellungen",
     "START-TASK": "Aufgabe starten",
     "START-PROCESS": "Prozess starten",
     "PROCESS-AUDIT-LOG": "Prozess-Audit-Protokoll",
@@ -218,8 +217,14 @@
     "INHERITED_PERMISSIONS_BUTTON": "Berechtigungen geerbt"
   },
   "TASK_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
-    "APP_ID_TYPE_ERROR": "App-ID muss eine Zahl sein"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
+      "APP_ID_TYPE_ERROR": "App-ID muss eine Zahl sein",
+      "NUMBER_TYPE_ERROR": "Wert muss Zahl sein"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Startseite"
+    }
   },
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "App-ID einfügen",

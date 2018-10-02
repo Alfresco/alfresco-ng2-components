@@ -1,4 +1,7 @@
 {
+  "SAVE": "保存",
+  "START": "完了",
+  "START PROCESS": "プロセスの開始",
   "FORM": {
     "START_FORM": {
       "TITLE": "開始フォーム"
@@ -215,6 +218,10 @@
     "ACTION": {
       "HELP": "ヘルプが必要ですか?",
       "REGISTER": "登録"
+    },
+    "DIALOG": {
+      "CANCEL": "キャンセル",
+      "CHOOSE": "選択"
     }
   },
   "ADF-DATATABLE": {

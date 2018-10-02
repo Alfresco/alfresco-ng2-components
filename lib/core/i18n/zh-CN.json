@@ -1,4 +1,7 @@
 {
+  "SAVE": "保存",
+  "START": "完成",
+  "START PROCESS": "启动流程",
   "FORM": {
     "START_FORM": {
       "TITLE": "启动表单"
@@ -173,7 +176,7 @@
   },
   "COMMENTS": {
     "NONE": "无注释",
-    "ADD": "添加注释",
+    "ADD": "添加",
     "HEADER": "评论 ({{ count }})",
     "CREATED_BY_HEADER": "创建者",
     "MESSAGE_HEADER": "消息",
@@ -215,6 +218,10 @@
     "ACTION": {
       "HELP": "是否需要帮助？",
       "REGISTER": "注册"
+    },
+    "DIALOG": {
+      "CANCEL": "取消",
+      "CHOOSE": "选择"
     }
   },
   "ADF-DATATABLE": {

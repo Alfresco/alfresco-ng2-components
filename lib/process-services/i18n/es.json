@@ -68,7 +68,7 @@
         "ADD_ASSIGNEE": "Añadir nuevo asignado"
       },
       "BUTTON": {
-        "COMPLETE": "Completado",
+        "COMPLETE": "Completar",
         "CLAIM": "Pedir",
         "UNCLAIM": "Volver a poner en cola",
         "DRAG-ATTACHMENT": "Arrastrar ficheros a cargar",
@@ -303,10 +303,17 @@
   },
   "APP": {
     "DIALOG": {
-      "START": "Comenzar",
-      "TITLE": "Seleccionar proceso",
-      "LIST": "Lista de procesos",
+      "START": "Continuar",
+      "TITLE": "Seleccionar una aplicación",
+      "LIST": "Lista de aplicaciones",
       "ERROR": "Hay un problema con la conexión a Process Services"
+    }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Iniciar sesión",
+      "CANCEL": "Cancelar",
+      "CHOOSE": "Elegir"
     }
   }
 }

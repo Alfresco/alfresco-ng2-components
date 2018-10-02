@@ -303,10 +303,17 @@
   },
   "APP": {
     "DIALOG": {
-      "START": "Start",
-      "TITLE": "Prozess auswählen",
-      "LIST": "Prozessliste",
+      "START": "Weiter",
+      "TITLE": "App auswählen",
+      "LIST": "App-Übersicht",
       "ERROR": "Bei der Verbindung zu Process Services ist ein Fehler aufgetreten"
+    }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Anmelden",
+      "CANCEL": "Abbrechen",
+      "CHOOSE": "Auswählen"
     }
   }
 }

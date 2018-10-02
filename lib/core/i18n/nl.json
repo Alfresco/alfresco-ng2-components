@@ -1,4 +1,7 @@
 {
+  "SAVE": "Opslaan",
+  "START": "Voltooid",
+  "START PROCESS": "Proces starten",
   "FORM": {
     "START_FORM": {
       "TITLE": "Beginformulier"
@@ -215,6 +218,10 @@
     "ACTION": {
       "HELP": "Hulp nodig?",
       "REGISTER": "Registreren"
+    },
+    "DIALOG": {
+      "CANCEL": "Annuleren",
+      "CHOOSE": "Kiezen"
     }
   },
   "ADF-DATATABLE": {

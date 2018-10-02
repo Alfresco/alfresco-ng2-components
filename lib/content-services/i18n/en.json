@@ -256,7 +256,7 @@
   "SHARE": {
     "PUBLIC-LINK": "Public link",
     "DIALOG-TITLE": "Share",
-    "DESCRIPTION": "Clicking the link bellow, will copy it to the clipboard.",
+    "DESCRIPTION": "Click the link below to copy it to the clipboard.",
     "TITLE": "Link to share",
     "EXPIRES": "Expires on",
     "CLIPBOARD-MESSAGE": "Link copied to the clipboard",

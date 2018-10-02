@@ -1,4 +1,7 @@
 {
+  "SAVE": "Guardar",
+  "START": "Completar",
+  "START PROCESS": "Iniciar proceso",
   "FORM": {
     "START_FORM": {
       "TITLE": "Iniciar formulario"
@@ -173,7 +176,7 @@
   },
   "COMMENTS": {
     "NONE": "No hay comentarios",
-    "ADD": "Añadir",
+    "ADD": "Añadir comentario",
     "HEADER": "Comentarios ({{ count }})",
     "CREATED_BY_HEADER": "Creado por",
     "MESSAGE_HEADER": "Mensaje",
@@ -215,6 +218,10 @@
     "ACTION": {
       "HELP": "¿Necesita ayuda?",
       "REGISTER": "Registrarse"
+    },
+    "DIALOG": {
+      "CANCEL": "Cancelar",
+      "CHOOSE": "Elegir"
     }
   },
   "ADF-DATATABLE": {

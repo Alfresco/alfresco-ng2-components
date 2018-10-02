@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Modo de visualização de cartão",
+      "SHARE_EDIT": "Editar configurações",
       "NEW_FOLDER": "Nova Pasta",
       "EDIT_FOLDER": "Editar pasta",
       "DOWNLOAD": "Download",
@@ -172,6 +173,7 @@
     "TASKS-TAB": "Tarefas",
     "PROCESSES-TAB": "Processo",
     "REPORTS-TAB": "Relatórios",
+    "SETTINGS-TAB": "Configurações",
     "START-TASK": "Iniciar tarefa",
     "START-PROCESS": "Iniciar processo",
     "PROCESS-AUDIT-LOG": "Log de auditoria de processo",
@@ -215,8 +217,14 @@
     "INHERITED_PERMISSIONS_BUTTON": "Permissão herdada"
   },
   "TASK_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Inserir ID do Aplicativo",
-    "APP_ID_TYPE_ERROR": "O ID do aplicativo deve ser um número"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Inserir ID do aplicativo",
+      "APP_ID_TYPE_ERROR": "O ID do aplicativo deve ser um número",
+      "NUMBER_TYPE_ERROR": "O valor deve ser um número"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Iniciando a página"
+    }
   },
   "PROCESS_LIST_DEMO": {
     "APP_ID_REQUIRED_ERROR": "Inserir ID do Aplicativo",

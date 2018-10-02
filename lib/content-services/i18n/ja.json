@@ -254,15 +254,16 @@
     }
   },
   "SHARE": {
-    "TITLE": "共有",
-    "PUBLIC-LINK": "公開リンク",
-    "UNSHARED": "ファイルは共有されていません",
-    "DESCRIPTION": "これはあなたのファイルへのリンクです",
-    "ALERT": "誰でもこのリンクにアクセスできます",
-    "ACTIONS": {
-      "SHARE": "共有",
-      "CLOSE": "閉じる",
-      "COPY-LINK": "リンクをコピー"
+    "DIALOG-TITLE": "共有",
+    "DESCRIPTION": "下のリンクをクリックすると、リンクがクリップボードにコピーされます。",
+    "TITLE": "共有するリンク",
+    "EXPIRES": "有効期限",
+    "CLIPBOARD-MESSAGE": "リンクがクリップボードにコピーされました",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "共有リンクの削除",
+      "MESSAGE": "このリンクは削除され、次回このファイルを共有するときに新しいリンクが作成されます。",
+      "CANCEL": "キャンセル",
+      "REMOVE": "削除"
     }
   },
   "PERMISSION_MANAGER": {
