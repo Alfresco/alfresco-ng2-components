@@ -250,7 +250,7 @@ You can add [Data column component](data-column.component.md) instances to defin
 table as described in the usage examples and the [Customizing columns](#customizing-columns) section.
 
 You can also supply a `<no-content-template>` or an
-[Empty list component](empty-list-component.md) sub-component to show when the table is empty:
+[Empty list component](empty-list.component.md) sub-component to show when the table is empty:
 
 ```html
 <adf-datatable ...>
