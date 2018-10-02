@@ -31,7 +31,7 @@ import CONSTANTS = require('../../util/constants');
 
 import { browser, protractor } from 'protractor';
 
-describe('Document List - Pagination', function () {
+describe('Create folder directive', function () {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();

@@ -20,9 +20,9 @@ import Util = require('../../../util/util');
 
 export class ShareDialog {
 
-    dialogTitle = element(by.id('adf-share-dialog-title'));
+    dialogTitle = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
     shareToggle = element(by.id('adf-share-toggle'));
-    shareLink = element(by.id('adf-share-link'));
+    shareLink = element(by.css('[data-automation-id="adf-share-link"'));
     closeButton = element(by.css('button[class="mat-button mat-primary"]'));
 
     checkDialogIsDisplayed() {
