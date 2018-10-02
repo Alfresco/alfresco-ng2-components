@@ -120,8 +120,8 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
 
         expect(document.execCommand).toHaveBeenCalledWith('copy');
-        expect(document.body.querySelector('simple-snack-bar span').innerHTML)
-            .toBe('SHARE.CLIPBOARD-MESSAGE');
+        expect(document.body.querySelector('simple-snack-bar').innerHTML)
+            .toContain('SHARE.CLIPBOARD-MESSAGE');
     });
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
