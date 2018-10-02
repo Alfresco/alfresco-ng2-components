@@ -50,6 +50,7 @@ export class FileViewComponent implements OnInit {
     fileUrlSwitch = false;
     showLeftSidebar = null;
     showRightSidebar = false;
+    customToolbar = false;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -156,6 +157,10 @@ export class FileViewComponent implements OnInit {
         if (!this.isPreset) {
             this.customPreset = null;
         }
+    }
+
+    toggleToolbar() {
+        this.customToolbar = !this.customToolbar;
     }
 
     applyCustomPreset() {
