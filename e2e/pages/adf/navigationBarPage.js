@@ -134,6 +134,7 @@ var NavigationBarPage = function () {
 
     this.clickHeaderDataButton = function () {
         Util.waitUntilElementIsVisible(headerDataButton);
+        Util.waitUntilElementIsClickable(headerDataButton);
         return headerDataButton.click();
     };
 
