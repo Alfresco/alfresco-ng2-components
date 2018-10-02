@@ -187,6 +187,14 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.documentContainer.removeEventListener('pagesloaded', this.onPagesLoaded, true);
             this.documentContainer.removeEventListener('textlayerrendered', this.onPagerendered, true);
         }
+
+        if (this.loadingTask) {
+            try {
+                this.loadingTask.destroy();
+            } catch {}
+
+            this.loadingTask = null;
+        }
     }
 
     toggleThumbnails() {

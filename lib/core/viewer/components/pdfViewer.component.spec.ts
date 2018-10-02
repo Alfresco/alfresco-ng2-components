@@ -27,6 +27,7 @@ import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
 import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
+import { take } from 'rxjs/operators';
 
 declare const pdfjsLib: any;
 
@@ -201,6 +202,10 @@ describe('Test PdfViewer component', () => {
             });
         });
 
+        afterEach(() => {
+            fixtureUrlTestComponent.destroy();
+        });
+
         it('should Canvas be present', (done) => {
             fixtureUrlTestComponent.detectChanges();
             fixtureUrlTestComponent.whenStable().then(() => {
@@ -250,16 +255,22 @@ describe('Test PdfViewer component', () => {
         let componentBlobTestComponent: BlobTestComponent;
         let elementBlobTestComponent: HTMLElement;
 
-        beforeEach((done) => {
+        beforeEach(done => {
             fixtureBlobTestComponent = TestBed.createComponent(BlobTestComponent);
             componentBlobTestComponent = fixtureBlobTestComponent.componentInstance;
             elementBlobTestComponent = fixtureBlobTestComponent.nativeElement;
 
             fixtureBlobTestComponent.detectChanges();
 
-            componentBlobTestComponent.pdfViewerComponent.rendered.subscribe(() => {
-                done();
-            });
+            componentBlobTestComponent.pdfViewerComponent.rendered
+                .pipe(take(1))
+                .subscribe(() => {
+                    done();
+                });
+        });
+
+        afterEach(() => {
+            fixtureBlobTestComponent.destroy();
         });
 
         it('should Canvas be present', async(() => {
@@ -319,9 +330,15 @@ describe('Test PdfViewer component', () => {
 
             fixtureUrlTestComponent.detectChanges();
 
-            componentUrlTestComponent.pdfViewerComponent.rendered.subscribe(() => {
-                done();
-            });
+            componentUrlTestComponent.pdfViewerComponent.rendered
+                .pipe(take(1))
+                .subscribe(() => {
+                    done();
+                });
+        });
+
+        afterEach(() => {
+            fixtureUrlTestComponent.destroy();
         });
 
         it('should Total number of pages be loaded', (done) => {
