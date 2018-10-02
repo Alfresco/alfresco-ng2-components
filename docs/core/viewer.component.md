@@ -26,6 +26,7 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
     -   [Extending the Viewer](#extending-the-viewer)
     -   [Custom layout](#custom-layout)
+    -   [Printing](#printing)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -469,6 +470,21 @@ You can enable a custom "More actions" menu by providing at least one action ins
 ```
 
 ![More actions](../docassets/images/viewer-more-actions.png)
+
+### Printing
+
+You can configure the Viewer to let the user print the displayed content. The
+component will show a "Print" button if the `allowPrint` property is set to
+true.
+
+```html
+<adf-viewer [allowPrint]="true">
+    ...
+</adf-viewer>
+```
+
+You can also use the `print` event to get notification when the user prints some
+content.
 
 ## See also
 
