@@ -90,6 +90,7 @@ export class AppLayoutComponent implements OnInit {
         this.headerService.redirectUrl.subscribe(redirectUrl => this.redirectUrl = redirectUrl);
         this.headerService.tooltip.subscribe(tooltip => this.tooltip = tooltip);
         this.headerService.position.subscribe(position => this.position = position);
+        this.headerService.hideSidenav.subscribe(hideSidenav => this.hideSidenav = hideSidenav);
     }
 
     constructor(

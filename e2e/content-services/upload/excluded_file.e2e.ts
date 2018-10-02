@@ -20,7 +20,8 @@ import { element, by, browser } from 'protractor';
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
-import UploadToggles = require('../../pages/adf/dialog/uploadToggles');
+import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
+import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -31,6 +32,7 @@ import resources = require('../../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { DropActions } from '../../actions/drop.actions';
+import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 
 describe('Upload component - Excluded Files', () => {
 
@@ -39,6 +41,8 @@ describe('Upload component - Excluded Files', () => {
     let uploadToggles = new UploadToggles();
     let loginPage = new LoginPage();
     let acsUser = new AcsUserModel();
+    let navigationBarPage = new NavigationBarPage();
+    let configEditorPage = new ConfigEditorPage();
 
     let iniExcludedFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.INI.file_name,
@@ -48,6 +52,16 @@ describe('Upload component - Excluded Files', () => {
     let folderWithExcludedFile = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.FOLDER_EXCLUDED.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.FOLDER_EXCLUDED.folder_location
+    });
+
+    let txtFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+    });
+
+    let pngFile = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
@@ -72,7 +86,7 @@ describe('Upload component - Excluded Files', () => {
     it('[C279914] Should not allow upload default excluded files using D&D', () => {
         contentServicesPage.checkDandDIsDisplayed();
 
-        let dragAndDropArea = element(by.css('adf-upload-drag-area div'));
+        let dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
 
         let dragAndDrop = new DropActions();
 
@@ -97,5 +111,67 @@ describe('Upload component - Excluded Files', () => {
         contentServicesPage.uploadFolder(folderWithExcludedFile.location).checkContentIsDisplayed(folderWithExcludedFile.name);
 
         contentServicesPage.doubleClickRow(folderWithExcludedFile.name).checkContentIsNotDisplayed(iniExcludedFile.name).checkContentIsDisplayed('a_file.txt');
+    });
+
+    it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', () => {
+        navigationBarPage.clickConfigEditorButton();
+
+        browser.refresh();
+
+        configEditorPage.clickFileConfiguration('adf-file-conf');
+
+        configEditorPage.clickClearButton();
+
+        configEditorPage.enterConfiguration('{' +
+            '    "excluded": [' +
+            '        ".DS_Store",' +
+            '        "desktop.ini",' +
+            '        "*.txt"' +
+            '    ],' +
+            '    "match-options": {' +
+            '        "nocase": true' +
+            '    }' +
+            '}');
+
+        configEditorPage.clickSaveButton();
+
+        contentServicesPage.goToDocumentList();
+
+        contentServicesPage
+            .uploadFile(txtFileModel.location)
+            .checkContentIsNotDisplayed(txtFileModel.name);
+    });
+
+    it('[C274688] Should extension type added as excluded and accepted not be uploaded', () => {
+        navigationBarPage.clickConfigEditorButton();
+
+        browser.refresh();
+
+        configEditorPage.clickFileConfiguration('adf-file-conf');
+
+        configEditorPage.clickClearButton();
+
+        configEditorPage.enterConfiguration('{' +
+            '    "excluded": [' +
+            '        ".DS_Store",' +
+            '        "desktop.ini",' +
+            '        "*.png"' +
+            '    ],' +
+            '    "match-options": {' +
+            '        "nocase": true' +
+            '    }' +
+            '}');
+
+        configEditorPage.clickSaveButton();
+
+        contentServicesPage.goToDocumentList();
+
+        uploadToggles.enableExtensionFilter();
+        browser.driver.sleep(1000);
+        uploadToggles.addExtension('.png');
+
+        contentServicesPage.uploadFile(pngFile.location);
+        browser.driver.sleep(1000);
+        contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
     });
 });

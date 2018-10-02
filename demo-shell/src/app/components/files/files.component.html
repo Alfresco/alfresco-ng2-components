@@ -197,7 +197,7 @@
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
                 [contentActions]="true"
-                [allowDropFiles]="true"
+                [allowDropFiles]="allowDropFiles"
                 [selectionMode]="selectionMode"
                 [multiselect]="multiselect"
                 [display]="displayMode"
@@ -265,6 +265,11 @@
                         </ng-template>
                     </data-column>
                     -->
+                    <data-column
+                        class="full-width ellipsis-cell"
+                        title="{{'DOCUMENT_LIST.COLUMNS.NODE_ID' | translate}}"
+                        key="id">
+                    </data-column>
                     <data-column
                         class="desktop-only"
                         title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
@@ -468,43 +473,49 @@
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">{{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' |
-                translate}}
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">
+                {{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">
+            <mat-slide-toggle id="adf-multiple-upload-switch" [color]="'primary'" [(ngModel)]="multipleFileUpload">
                 {{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="folderUpload">{{'DOCUMENT_LIST.FOLDER_UPLOAD' |
-                translate}}
+            <mat-slide-toggle id="adf-folder-upload-switch" [color]="'primary'" [(ngModel)]="folderUpload">
+                {{'DOCUMENT_LIST.FOLDER_UPLOAD' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">{{'DOCUMENT_LIST.CUSTOM_FILTER' |
-                translate}}
+            <mat-slide-toggle id="adf-extension-filter-upload-switch" [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">
+                {{'DOCUMENT_LIST.CUSTOM_FILTER' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="maxSizeShow">{{'DOCUMENT_LIST.MAX_SIZE' |
-                translate}}
+            <mat-slide-toggle id="adf-max-size-filter-upload-switch" [color]="'primary'" [(ngModel)]="maxSizeShow">
+                {{'DOCUMENT_LIST.MAX_SIZE' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" (click)="toggleThumbnails()" id="enableThumbnails">{{'DOCUMENT_LIST.THUMBNAILS' |
-                translate}}
+            <mat-slide-toggle id="adf-thumbnails-upload-switch" [color]="'primary'" (click)="toggleThumbnails()">
+                {{'DOCUMENT_LIST.THUMBNAILS' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="versioning">
+            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" (click)="toggleAllowDropFiles()" >
+                {{'DOCUMENT_LIST.ALLOW_DROP_FILES' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle  id="adf-version-upload-switch"  [color]="'primary'" [(ngModel)]="versioning">
                 {{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}
             </mat-slide-toggle>
         </section>
@@ -565,7 +576,6 @@
                 #uploadButton
                 tooltip="Custom tooltip"
                 [disabled]="!enableUpload"
-                data-automation-id="multiple-file-upload"
                 [rootFolderId]="documentList.currentFolderId"
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
@@ -583,7 +593,6 @@
                 #uploadButton
                 tooltip="Custom tooltip"
                 [disabled]="!enableUpload"
-                data-automation-id="multiple-file-upload"
                 [rootFolderId]="documentList.currentFolderId"
                 [acceptedFilesType]="acceptedFilesType"
                 [multipleFiles]="multipleFileUpload"

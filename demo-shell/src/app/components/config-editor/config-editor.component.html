@@ -1,29 +1,41 @@
+<div>
+    <mat-nav-list class="adf-list-confgurations">
+        <mat-list-item  (click)="metadataConfClick()">
+            <a matLine id="adf-metadata-conf">Metadata App config editor</a>
+            <button mat-icon-button>
+                <mat-icon>info</mat-icon>
+            </button>
+        </mat-list-item>
 
-<h2>Metadata App config editor</h2>
+        <mat-list-item (click)="searchConfClick()">
+            <a matLine id="adf-search-conf" >Search App config editor</a>
+            <button mat-icon-button>
+                <mat-icon>info</mat-icon>
+            </button>
+        </mat-list-item>
 
-<ngx-monaco-editor id="adf-metadata-editor" class="adf-metadata-editor" [options]="editorOptions" [(ngModel)]="metadataConf" (onInit)="onInitMetadata($event)" ></ngx-monaco-editor>
+        <mat-list-item (click)="fileConfClick()">
+            <a matLine id="adf-file-conf" >Excluded config file</a>
+            <button mat-icon-button>
+                <mat-icon>info</mat-icon>
+            </button>
+        </mat-list-item>
+    </mat-nav-list>
 
-<button  mat-raised-button id="adf-metadata-save"  (click)="onSaveMetadata()" color="primary">Save metadata configuration</button>
-<button  mat-raised-button id="adf-metadata-clear" (click)="onClearMetadata()" color="primary">Clear metadata configuration</button>
-
-<br>
-<br>
-<br>
-
-<h2>Search App config editor</h2>
-
-<ngx-monaco-editor id="adf-search-editor" class="adf-search-editor" [options]="editorOptions" [(ngModel)]="searchConf" (onInit)="onInitSearch($event)" ></ngx-monaco-editor>
-
-<button  mat-raised-button id="adf-search-save"  (click)="onSaveSearch()" color="primary">Save Search configuration</button>
-<button  mat-raised-button id="adf-search-clear" (click)="onClearSearch()" color="primary">Clear Search configuration</button>
-
-<br>
-
-<h2>Excluded File config editor</h2>
-
-<ngx-monaco-editor id="adf-excluded-file" class="adf-excluded-file-editor" [options]="editorOptions" [(ngModel)]="excludedFileConf" (onInit)="onInitExcludedFile($event)" ></ngx-monaco-editor>
-
-<button  mat-raised-button id="adf-excluded-file-save"  (click)="onSaveExcludedFile()" color="primary">Save excluded file configuration</button>
-<button  mat-raised-button id="adf-excluded-file-clear" (click)="onClearExcludedFile()" color="primary">Clear excluded file configuration</button>
-
-<br>
+    <div>
+        <ngx-monaco-editor id="adf-code-configuration-editor"
+                           class="adf-file-editor"
+                           [options]="editorOptions"
+                           [(ngModel)]="code"
+                           (onInit)="onInit($event)">
+        </ngx-monaco-editor>
+        <div class="adf-list-confgurations-buttons">
+            <button mat-raised-button id="adf-configuration-save" (click)="onSave()" color="primary">
+                Save
+            </button>
+            <button mat-raised-button id="adf-configuration-clear" (click)="onClear()" color="primary">
+                Clear
+            </button>
+        </div>
+    </div>
+</div>

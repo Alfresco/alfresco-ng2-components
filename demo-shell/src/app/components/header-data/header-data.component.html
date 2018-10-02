@@ -53,6 +53,20 @@
                 <mat-radio-button value="end">End</mat-radio-button>
             </mat-radio-group>
         </div>
+        <br>
+        <br>
+        <section>
+            <mat-slide-toggle id="adf-hide-sidenav" [color]="'primary'" (click)="changeSidenavVisibility()">
+                Hide Sidebar
+            </mat-slide-toggle>
+        </section>
+
+        <div>
+            <mat-radio-group [(ngModel)]="position" (change)="changePosition()">
+                <mat-radio-button value="start">Start</mat-radio-button>
+                <mat-radio-button value="end">End</mat-radio-button>
+            </mat-radio-group>
+        </div>
 
     </mat-card>
 </div>
