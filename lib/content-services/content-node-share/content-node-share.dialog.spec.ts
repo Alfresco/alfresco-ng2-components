@@ -120,7 +120,7 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
 
         expect(document.execCommand).toHaveBeenCalledWith('copy');
-        expect(document.body.querySelector('snack-bar-container span').innerHTML)
+        expect(document.body.querySelector('simple-snack-bar span').innerHTML)
             .toBe('SHARE.CLIPBOARD-MESSAGE');
     });
 
