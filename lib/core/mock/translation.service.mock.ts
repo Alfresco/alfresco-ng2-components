@@ -34,17 +34,13 @@ export class TranslationMock implements TranslationService {
         onLangChange: new EventEmitter<LangChangeEvent>()
     };
 
-    addTranslationFolder() {
+    addTranslationFolder() {}
 
-    }
+    onTranslationChanged() {}
 
-    onTranslationChanged() {
+    use(): any {}
 
-    }
-
-    use(): any {
-
-    }
+    loadTranslation() {}
 
     get(key: string | Array<string>, interpolateParams?: Object): Observable<string | any> {
         return of(key);

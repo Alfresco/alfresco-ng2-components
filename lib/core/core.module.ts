@@ -100,8 +100,8 @@ import { ViewUtilService } from './viewer/services/view-util.service';
 import { LoginDialogService } from './services/login-dialog.service';
 import { ExternalAlfrescoApiService } from './services/external-alfresco-api.service';
 
-export function createTranslateLoader(http: HttpClient, logService: LogService) {
-    return new TranslateLoaderService(http, logService);
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateLoaderService(http);
 }
 
 export function providers() {

@@ -62,20 +62,27 @@ export class TranslationService {
     addTranslationFolder(name: string = '', path: string = '') {
         if (!this.customLoader.providerRegistered(name)) {
             this.customLoader.registerProvider(name, path);
+
             if (this.userLang) {
-                this.translate.getTranslation(this.userLang).subscribe(() => {
-                        this.translate.use(this.userLang);
-                        this.onTranslationChanged(this.userLang);
-                    }
-                );
+                this.loadTranslation(this.userLang, this.defaultLang);
             } else {
-                this.translate.getTranslation(this.defaultLang).subscribe(() => {
-                        this.translate.use(this.defaultLang);
-                        this.onTranslationChanged(this.defaultLang);
-                    }
-                );
+                this.loadTranslation(this.defaultLang);
             }
         }
+    }
+
+    loadTranslation(lang: string, fallback?: string) {
+        this.translate.getTranslation(lang).subscribe(
+            () => {
+                this.translate.use(lang);
+                this.onTranslationChanged(lang);
+            },
+            () => {
+                if (fallback && fallback !== lang) {
+                    this.loadTranslation(fallback);
+                }
+            }
+        );
     }
 
     /**
