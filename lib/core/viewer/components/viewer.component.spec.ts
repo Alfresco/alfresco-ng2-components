@@ -195,7 +195,7 @@ describe('ViewerComponent', () => {
             fixture.whenStable().then(() => {
                 expect(customElement.querySelector('.custom-toolbar-element')).toBeDefined();
                 done();
-            })
+            });
         });
 
         it('should use custom toolbar actions', (done) => {
