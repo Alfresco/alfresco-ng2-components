@@ -103,6 +103,7 @@ export class HeaderPage {
 
     addLogoHyperlink(hyperlink) {
         Util.waitUntilElementIsVisible(this.logoHyperlinkInput);
+        Util.waitUntilElementIsClickable(this.logoHyperlinkInput);
         return this.logoHyperlinkInput.click().sendKeys(hyperlink).sendKeys(protractor.Key.ENTER);
     }
 
