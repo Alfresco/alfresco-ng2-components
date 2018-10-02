@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Kortvisningsmodus",
+      "SHARE_EDIT": "Rediger innstillinger",
       "NEW_FOLDER": "Ny mappe",
       "EDIT_FOLDER": "Rediger mappe",
       "DOWNLOAD": "Last ned",

@@ -218,6 +218,10 @@
     "ACTION": {
       "HELP": "Справка?",
       "REGISTER": "Регистрация"
+    },
+    "DIALOG": {
+      "CANCEL": "Отмена",
+      "CHOOSE": "Выбрать"
     }
   },
   "ADF-DATATABLE": {

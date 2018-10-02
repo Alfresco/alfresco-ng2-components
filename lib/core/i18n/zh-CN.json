@@ -218,6 +218,10 @@
     "ACTION": {
       "HELP": "是否需要帮助？",
       "REGISTER": "注册"
+    },
+    "DIALOG": {
+      "CANCEL": "取消",
+      "CHOOSE": "选择"
     }
   },
   "ADF-DATATABLE": {

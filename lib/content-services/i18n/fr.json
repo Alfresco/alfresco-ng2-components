@@ -254,15 +254,16 @@
     }
   },
   "SHARE": {
-    "TITLE": "Partager",
-    "PUBLIC-LINK": "Lien public",
-    "UNSHARED": "Fichier non partagé",
-    "DESCRIPTION": "Lien vers votre fichier",
-    "ALERT": "Tout le monde peut accéder à ce lien",
-    "ACTIONS": {
-      "SHARE": "Partager",
-      "CLOSE": "Fermer",
-      "COPY-LINK": "Copier le lien"
+    "DIALOG-TITLE": "Partager",
+    "DESCRIPTION": "Cliquez sur le lien ci-dessous pour le copier dans le Presse-papiers.",
+    "TITLE": "Lien à partager",
+    "EXPIRES": "Expire le",
+    "CLIPBOARD-MESSAGE": "Lien copié dans le Presse-papiers",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Supprimer ce lien partagé",
+      "MESSAGE": "Ce lien sera supprimé et un nouveau lien sera créé lors du prochain partage de ce fichier",
+      "CANCEL": "Annuler",
+      "REMOVE": "Supprimer"
     }
   },
   "PERMISSION_MANAGER": {

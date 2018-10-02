@@ -308,5 +308,12 @@
       "LIST": "App-Übersicht",
       "ERROR": "Bei der Verbindung zu Process Services ist ein Fehler aufgetreten"
     }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Anmelden",
+      "CANCEL": "Abbrechen",
+      "CHOOSE": "Auswählen"
+    }
   }
 }

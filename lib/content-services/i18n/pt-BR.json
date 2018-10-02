@@ -254,15 +254,16 @@
     }
   },
   "SHARE": {
-    "TITLE": "Compartilhar",
-    "PUBLIC-LINK": "Link público",
-    "UNSHARED": "Arquivo não compartilhado",
-    "DESCRIPTION": "Este é um link para o seu arquivo",
-    "ALERT": "Qualquer pessoa pode acessar este link",
-    "ACTIONS": {
-      "SHARE": "Compartilhar",
-      "CLOSE": "Fechar",
-      "COPY-LINK": "Copiar link"
+    "DIALOG-TITLE": "Compartilhar",
+    "DESCRIPTION": "Clique no link abaixo para copiar na área de transferência.",
+    "TITLE": "Link para compartilhar",
+    "EXPIRES": "Expira",
+    "CLIPBOARD-MESSAGE": "Link copiado na área de transferência",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Remover este link compartilhado",
+      "MESSAGE": "Este link será excluído. Um novo link será criado na próxima vez que esse arquivo for compartilhado.",
+      "CANCEL": "Cancelar",
+      "REMOVE": "Remover"
     }
   },
   "PERMISSION_MANAGER": {

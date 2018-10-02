@@ -110,7 +110,7 @@
     "MULTISELECT_DESCRIPTION": "使用 Cmd (Mac) 或 Ctrl (Windows) 切换多个项目的选择",
     "RECENT": {
       "EMPTY_STATE": {
-        "TITLE": "\"最近的文件\"列表为空"
+        "TITLE": "“最近的文件”列表为空"
       },
       "TITLE": "最近的文件"
     },
@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "卡查看模式",
+      "SHARE_EDIT": "编辑设置",
       "NEW_FOLDER": "新建文件夹",
       "EDIT_FOLDER": "编辑文件夹",
       "DOWNLOAD": "下载",

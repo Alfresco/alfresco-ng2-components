@@ -308,5 +308,12 @@
       "LIST": "Programliste",
       "ERROR": "Kan ikke koble til Process Services"
     }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Logg på",
+      "CANCEL": "Avbryt",
+      "CHOOSE": "Velg"
+    }
   }
 }

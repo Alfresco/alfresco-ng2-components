@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Kaartweergavemodus",
+      "SHARE_EDIT": "Instellingen bewerken",
       "NEW_FOLDER": "Nieuwe map",
       "EDIT_FOLDER": "Map bewerken",
       "DOWNLOAD": "Downloaden",

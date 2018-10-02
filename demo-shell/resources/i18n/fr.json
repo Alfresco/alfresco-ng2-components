@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Mode d'affichage Carte",
+      "SHARE_EDIT": "Modifier les paramètres",
       "NEW_FOLDER": "Nouveau Dossier",
       "EDIT_FOLDER": "Modifier le dossier",
       "DOWNLOAD": "Télécharger",

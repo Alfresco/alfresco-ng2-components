@@ -308,5 +308,12 @@
       "LIST": "Lista de aplicaciones",
       "ERROR": "Hay un problema con la conexión a Process Services"
     }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Iniciar sesión",
+      "CANCEL": "Cancelar",
+      "CHOOSE": "Elegir"
+    }
   }
 }

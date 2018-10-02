@@ -308,5 +308,12 @@
       "LIST": "流程App列表",
       "ERROR": "连接到 Process Services 时出现问题"
     }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "登录",
+      "CANCEL": "取消",
+      "CHOOSE": "选择"
+    }
   }
 }

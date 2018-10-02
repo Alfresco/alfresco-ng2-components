@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Modo de vista de tarjeta",
+      "SHARE_EDIT": "Editar configuración",
       "NEW_FOLDER": "Nueva carpeta",
       "EDIT_FOLDER": "Editar carpeta",
       "DOWNLOAD": "Descargar",

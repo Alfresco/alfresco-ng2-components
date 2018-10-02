@@ -308,5 +308,12 @@
       "LIST": "Список приложений",
       "ERROR": "Возникла проблема при подключении к Process Services"
     }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Войти",
+      "CANCEL": "Отмена",
+      "CHOOSE": "Выбрать"
+    }
   }
 }

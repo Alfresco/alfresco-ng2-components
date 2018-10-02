@@ -127,6 +127,7 @@
     },
     "TOOLBAR": {
       "CARDVIEW": "Modalità di visualizzazione scheda",
+      "SHARE_EDIT": "Modifica impostazioni",
       "NEW_FOLDER": "Nuova cartella",
       "EDIT_FOLDER": "Modifica cartella",
       "DOWNLOAD": "Download",

@@ -218,6 +218,10 @@
     "ACTION": {
       "HELP": "Besoin d'aide ?",
       "REGISTER": "S'inscrire"
+    },
+    "DIALOG": {
+      "CANCEL": "Annuler",
+      "CHOOSE": "Choisir"
     }
   },
   "ADF-DATATABLE": {

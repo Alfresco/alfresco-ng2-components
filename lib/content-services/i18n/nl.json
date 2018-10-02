@@ -254,15 +254,16 @@
     }
   },
   "SHARE": {
-    "TITLE": "Delen",
-    "PUBLIC-LINK": "Openbare koppeling",
-    "UNSHARED": "Bestand niet gedeeld",
-    "DESCRIPTION": "Dit is een koppeling naar uw bestand",
-    "ALERT": "Iedereen heeft toegang tot deze koppeling",
-    "ACTIONS": {
-      "SHARE": "Delen",
-      "CLOSE": "Sluiten",
-      "COPY-LINK": "Koppeling kopiëren"
+    "DIALOG-TITLE": "Delen",
+    "DESCRIPTION": "Klik op de onderstaande koppeling om deze te kopiëren naar het klembord.",
+    "TITLE": "Koppeling om te delen",
+    "EXPIRES": "Verloopt op",
+    "CLIPBOARD-MESSAGE": "Koppeling gekopieerd naar het klembord",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Deze gedeelde koppeling verwijderen",
+      "MESSAGE": "Deze koppeling wordt verwijderd en er wordt een nieuwe koppeling gemaakt de volgende keer dat dit bestand wordt gedeeld",
+      "CANCEL": "Annuleren",
+      "REMOVE": "Verwijderen"
     }
   },
   "PERMISSION_MANAGER": {
