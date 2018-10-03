@@ -161,18 +161,19 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
             (processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
                 this.processDefinitions = processDefinitionRepresentations;
 
-                if (this.hasSingleProcessDefinition()) {
+                if (!this.isProcessDefinitionsEmpty()) {
                     this.selectedProcessDef = this.processDefinitions[0];
-                } else {
-                    this.selectedProcessDef = this.processDefinitions.find((currentProcessDefinition) => {
-                        return currentProcessDefinition.name === this.processDefinitionName;
-                    });
-                }
 
-                if (this.selectedProcessDef) {
-                    if (this.processDefinitionInput) {
-                        this.processDefinitionInput.setValue(this.selectedProcessDef.name);
+                    if (this.processDefinitionName) {
+                        let selectedProcess = this.processDefinitions.find((currentProcessDefinition) => {
+                            return currentProcessDefinition.name === this.processDefinitionName;
+                        });
+                        if (selectedProcess) {
+                            this.selectedProcessDef = selectedProcess;
+                        }
                     }
+
+                    this.processDefinitionInput.setValue(this.selectedProcessDef.name);
                 }
             },
             () => {
@@ -180,8 +181,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
             });
     }
 
-    hasSingleProcessDefinition(): boolean {
-        return this.processDefinitions.length === 1;
+    isProcessDefinitionsEmpty(): boolean {
+        return this.processDefinitions.length === 0;
     }
 
     getAlfrescoRepositoryName(): string {

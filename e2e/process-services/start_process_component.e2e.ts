@@ -150,6 +150,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('');
+            browser.actions().sendKeys('v\b\b').perform(); // clear doesnt' trigger the validator
             startProcessPage.checkStartProcessButtonIsDisabled();
             startProcessPage.clickCancelProcessButton();
             processFiltersPage.checkNoContentMessage();
