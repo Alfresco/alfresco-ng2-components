@@ -16,7 +16,7 @@
  */
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync, async } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { of } from 'rxjs';
 import {
@@ -33,7 +33,9 @@ import moment from 'moment-es6';
 describe('ShareDialogComponent', () => {
     let node;
     let matDialog: MatDialog;
-    let notificationService: NotificationService;
+    let notificationServiceMock = {
+        openSnackMessage: jasmine.createSpy('openSnackMessage')
+    };
     let sharedLinksApiService: SharedLinksApiService;
     let nodesApiService: NodesApiService;
     let fixture;
@@ -48,7 +50,7 @@ describe('ShareDialogComponent', () => {
         providers: [
             NodesApiService,
             SharedLinksApiService,
-            NotificationService,
+            { provide: NotificationService, useValue: notificationServiceMock },
             { provide: MatDialogRef, useValue: {} },
             { provide: MAT_DIALOG_DATA, useValue: {} }
         ]
@@ -57,7 +59,6 @@ describe('ShareDialogComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ShareDialogComponent);
         matDialog = TestBed.get(MatDialog);
-        notificationService = TestBed.get(NotificationService);
         sharedLinksApiService = TestBed.get(SharedLinksApiService);
         nodesApiService = TestBed.get(NodesApiService);
         component = fixture.componentInstance;
@@ -112,10 +113,9 @@ describe('ShareDialogComponent', () => {
         expect(fixture.nativeElement.querySelector('.mat-slide-toggle').classList).toContain('mat-checked');
     });
 
-    it(`should copy shared link and notify on button event`, fakeAsync(() => {
+    it(`should copy shared link and notify on button event`, async(() => {
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         spyOn(document, 'execCommand').and.callThrough();
-        spyOn(notificationService, 'openSnackMessage');
 
         component.data = {
             node,
@@ -124,16 +124,17 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        fixture.nativeElement.querySelector('.input-action')
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+
+            fixture.nativeElement.querySelector('.input-action')
             .dispatchEvent(new MouseEvent('click'));
 
-        fixture.detectChanges();
+            fixture.detectChanges();
 
-        expect(document.execCommand).toHaveBeenCalledWith('copy');
-
-        tick(500);
-
-        expect(notificationService.openSnackMessage).toHaveBeenCalledWith('SHARE.CLIPBOARD-MESSAGE');
+            expect(document.execCommand).toHaveBeenCalledWith('copy');
+            expect(notificationServiceMock.openSnackMessage).toHaveBeenCalledWith('SHARE.CLIPBOARD-MESSAGE');
+        });
     }));
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
