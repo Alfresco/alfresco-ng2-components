@@ -17,9 +17,15 @@
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { of } from 'rxjs';
-import { setupTestBed, CoreModule, SharedLinksApiService, NodesApiService } from '@alfresco/adf-core';
+import {
+    setupTestBed,
+    CoreModule,
+    SharedLinksApiService,
+    NodesApiService,
+    NotificationService
+} from '@alfresco/adf-core';
 import { ContentNodeShareModule } from './content-node-share.module';
 import { ShareDialogComponent  } from './content-node-share.dialog';
 import moment from 'moment-es6';
@@ -27,9 +33,7 @@ import moment from 'moment-es6';
 describe('ShareDialogComponent', () => {
     let node;
     let matDialog: MatDialog;
-    let matSnackBarMock = {
-        open: jasmine.createSpy('open')
-    };
+    let notificationService: NotificationService;
     let sharedLinksApiService: SharedLinksApiService;
     let nodesApiService: NodesApiService;
     let fixture;
@@ -44,7 +48,7 @@ describe('ShareDialogComponent', () => {
         providers: [
             NodesApiService,
             SharedLinksApiService,
-            { provide: MatSnackBar, useValue: matSnackBarMock},
+            NotificationService,
             { provide: MatDialogRef, useValue: {} },
             { provide: MAT_DIALOG_DATA, useValue: {} }
         ]
@@ -53,6 +57,7 @@ describe('ShareDialogComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ShareDialogComponent);
         matDialog = TestBed.get(MatDialog);
+        notificationService = TestBed.get(NotificationService);
         sharedLinksApiService = TestBed.get(SharedLinksApiService);
         nodesApiService = TestBed.get(NodesApiService);
         component = fixture.componentInstance;
@@ -110,6 +115,7 @@ describe('ShareDialogComponent', () => {
     it(`should copy shared link and notify on button event`, fakeAsync(() => {
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         spyOn(document, 'execCommand').and.callThrough();
+        spyOn(notificationService, 'openSnackMessage');
 
         component.data = {
             node,
@@ -125,7 +131,7 @@ describe('ShareDialogComponent', () => {
         tick(100);
 
         expect(document.execCommand).toHaveBeenCalledWith('copy');
-        expect(matSnackBarMock.open.calls.argsFor(0)[0]).toBe('SHARE.CLIPBOARD-MESSAGE');
+        expect(notificationService.openSnackMessage).toHaveBeenCalledWith('SHARE.CLIPBOARD-MESSAGE');
     }));
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
