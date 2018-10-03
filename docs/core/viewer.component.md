@@ -78,10 +78,11 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | allowDownload | `boolean` | true | Toggles downloading. |
 | allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
 | allowGoBack | `boolean` | true | Allows `back` navigation |
+| allowLeftSidebar | `boolean` | false | Toggles the sidebar. |
 | allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
 | allowPrint | `boolean` | false | Toggles printing. |
 | allowShare | `boolean` | false | (**Deprecated:** 2.5.0 - inject the share button directive as custom button) Toggles sharing. |
-| allowSidebar | `boolean` | false | Toggles the sidebar. |
+| allowSidebar | `boolean` | false | (**Deprecated:** 2.5.0 - will be renamed  allowRightSidebar in 3.0.0) Toggles the sidebar. |
 | allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
 | blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
 | canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |

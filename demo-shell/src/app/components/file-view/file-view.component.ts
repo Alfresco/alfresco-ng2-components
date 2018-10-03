@@ -45,6 +45,7 @@ export class FileViewComponent implements OnInit {
     allowPrint = true;
     allowShare = true;
     allowSidebar = true;
+    allowLeftSidebar = true;
     moreActions = true;
     customName = false;
     fileUrlSwitch = false;
@@ -134,6 +135,10 @@ export class FileViewComponent implements OnInit {
 
     toggleAllowSidebar() {
         this.allowSidebar = !this.allowSidebar;
+    }
+
+    toggleAllowLeftSidebar() {
+        this.allowLeftSidebar = !this.allowLeftSidebar;
     }
 
     toggleCustomName() {

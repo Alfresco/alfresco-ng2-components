@@ -10,7 +10,7 @@
 
                 <adf-toolbar-title>
 
-                    <ng-container *ngIf="allowSidebar">
+                    <ng-container *ngIf="allowLeftSidebar">
                         <button
                             mat-icon-button
                             title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
@@ -151,7 +151,7 @@
                 </div>
             </ng-container>
 
-            <ng-container *ngIf="allowSidebar && showLeftSidebar">
+            <ng-container *ngIf="allowLeftSidebar && showLeftSidebar">
                 <div class="adf-viewer__sidebar" [ngClass]="'adf-viewer__sidebar__left'" fxFlexOrder="1"  id="adf-left-sidebar" >
                     <ng-container *ngIf="sidebarLeftTemplate">
                         <ng-container *ngTemplateOutlet="sidebarLeftTemplate;context:sidebarLeftTemplateContext"></ng-container>

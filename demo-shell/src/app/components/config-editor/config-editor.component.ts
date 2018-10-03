@@ -87,6 +87,18 @@ export class ConfigEditorComponent {
         this.indentCode();
     }
 
+    taskHeaderConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['adf-task-header']);
+        this.field = 'adf-task-header';
+        this.indentCode();
+    }
+
+    processInstanceHeaderConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['adf-process-instance-header']);
+        this.field = 'adf-process-instance-header';
+        this.indentCode();
+    }
+
     indentCode() {
         setTimeout(() => {
             this.editor.getAction('editor.action.formatDocument').run();
