@@ -128,9 +128,11 @@ describe('ShareDialogComponent', () => {
             .dispatchEvent(new MouseEvent('click'));
 
         fixture.detectChanges();
-        tick(100);
 
         expect(document.execCommand).toHaveBeenCalledWith('copy');
+
+        tick(500);
+
         expect(notificationService.openSnackMessage).toHaveBeenCalledWith('SHARE.CLIPBOARD-MESSAGE');
     }));
 
