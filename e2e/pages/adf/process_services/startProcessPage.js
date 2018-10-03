@@ -58,8 +58,12 @@ var StartProcessPage = function () {
 
     this.enterProcessName = function (name) {
         Util.waitUntilElementIsVisible(processNameInput);
-        processNameInput.clear();
+        this.clearProcessName();
         processNameInput.sendKeys(name);
+    };
+
+    this.clearProcessName = function () {
+        processNameInput.clear();
     };
 
     this.selectFromProcessDropdown = function (name) {
@@ -97,6 +101,7 @@ var StartProcessPage = function () {
     this.typeProcessDefinition = function (name) {
         Util.waitUntilElementIsVisible(processDefinition);
         Util.waitUntilElementIsClickable(processDefinition);
+        processDefinition.clear();
         processDefinition.sendKeys(name);
         return this;
     };
