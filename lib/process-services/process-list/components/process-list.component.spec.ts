@@ -516,7 +516,7 @@ describe('CustomProcessListComponent', () => {
 class EmptyTemplateComponent {
 }
 
-describe('Custom EmptyTemplateComponent', () => {
+describe('Process List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;
 
     setupTestBed({
@@ -528,6 +528,10 @@ describe('Custom EmptyTemplateComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should render the custom template', async(() => {

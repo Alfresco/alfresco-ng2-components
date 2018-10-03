@@ -336,6 +336,10 @@ describe('Custom CustomEmptyTemplateComponent', () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should render the custom template', async(() => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();

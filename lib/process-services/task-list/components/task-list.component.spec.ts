@@ -74,6 +74,7 @@ describe('TaskListComponent', () => {
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
+        fixture.destroy();
     });
 
     it('should use the default schemaColumn as default', () => {
@@ -543,6 +544,10 @@ describe('CustomTaskListComponent', () => {
         component = fixture.componentInstance;
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should create instance of CustomTaskListComponent', () => {
         expect(component instanceof CustomTaskListComponent).toBe(true, 'should create CustomTaskListComponent');
     });
@@ -568,7 +573,7 @@ describe('CustomTaskListComponent', () => {
 class EmptyTemplateComponent {
 }
 
-describe('Custom EmptyTemplateComponent', () => {
+describe('Task List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;
 
     setupTestBed({
@@ -580,6 +585,10 @@ describe('Custom EmptyTemplateComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should render the custom template', async(() => {
