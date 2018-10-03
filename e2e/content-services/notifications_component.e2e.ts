@@ -49,6 +49,10 @@ describe('Notifications Component', () => {
         done();
     });
 
+    afterEach(() => {
+        browser.refresh();
+    });
+
     it('[C279977] Should show notification when the message is not empty and button is clicked', () => {
         notificationPage.enterMessageField('Notification test');
         notificationPage.clickDefaultNotificationButton();
