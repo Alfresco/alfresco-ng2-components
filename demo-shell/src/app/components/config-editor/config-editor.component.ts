@@ -99,6 +99,12 @@ export class ConfigEditorComponent {
         this.indentCode();
     }
 
+    startProcessConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['adf-start-process']);
+        this.field = 'adf-start-process';
+        this.indentCode();
+    }
+
     indentCode() {
         setTimeout(() => {
             this.editor.getAction('editor.action.formatDocument').run();
