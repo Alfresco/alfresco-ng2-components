@@ -49,10 +49,6 @@ describe('Notifications Component', () => {
         done();
     });
 
-    afterEach(() => {
-        browser.refresh();
-    });
-
     it('[C279977] Should show notification when the message is not empty and button is clicked', () => {
         notificationPage.enterMessageField('Notification test');
         notificationPage.clickDefaultNotificationButton();
@@ -68,7 +64,8 @@ describe('Notifications Component', () => {
     it('[C279978] Should show notification with action when the message is not empty and button is clicked', () => {
         notificationPage.enterMessageField('Notification test');
         notificationPage.clickActionToggle();
-        notificationPage.clickDefaultNotificationButton();
+        notificationPage.enterDurationField(6000);
+        notificationPage.clickCustomNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
         notificationPage.clickActionButton();
         notificationPage.checkActionEvent();

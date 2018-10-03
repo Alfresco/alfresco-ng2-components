@@ -95,11 +95,9 @@ describe('Search Filters', () => {
         searchFiltersPage.checkSizeShowMoreButtonIsDisplayed();
 
         searchFiltersPage.clickSizeShowMoreButtonUntilIsNotDisplayed();
-        searchFiltersPage.checkSizeShowMoreButtonIsNotDisplayed();
         searchFiltersPage.checkShowLessButtonIsDisplayed();
 
         searchFiltersPage.clickSizeShowLessButtonUntilIsNotDisplayed();
-        searchFiltersPage.checkShowLessButtonIsNotDisplayed();
     });
 
 });

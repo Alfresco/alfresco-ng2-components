@@ -78,7 +78,7 @@ describe('Unshare file', () => {
         done();
     });
 
-    it('[C280556] Unshared file should show 404 page', async() => {
+    xit('[C280556] Unshared file should show 404 page', async() => {
         contentListPage.clickRowToSelect(pngFileModel.name);
 
         contentServicesPage.clickShareButton();
