@@ -30,7 +30,7 @@
                           [showCompleteButton]="showFormCompleteButton"
                           [disableCompleteButton]="!isCompleteButtonEnabled()"
                           [showSaveButton]="isSaveButtonVisible()"
-                          [readOnly]="readOnlyForm"
+                          [readOnly]="internalReadOnlyForm"
                           [fieldValidators]="fieldValidators"
                           (formSaved)='onFormSaved($event)'
                           (formCompleted)='onFormCompleted($event)'
@@ -103,7 +103,7 @@
                     </adf-task-header>
                     <adf-people *ngIf="showInvolvePeople" #people
                                 [people]="taskPeople"
-                                [readOnly]="readOnlyForm"
+                                [readOnly]="internalReadOnlyForm"
                                 [taskId]="taskDetails.id">
                     </adf-people>
                 </adf-info-drawer-tab>

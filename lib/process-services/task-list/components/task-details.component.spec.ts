@@ -20,12 +20,27 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 
-import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormService, setupTestBed, BpmUserService } from '@alfresco/adf-core';
+import {
+    FormModel,
+    FormOutcomeEvent,
+    FormOutcomeModel,
+    FormService,
+    setupTestBed,
+    BpmUserService
+} from '@alfresco/adf-core';
 import { CommentProcessService, LogService, AuthenticationService } from '@alfresco/adf-core';
 
 import { UserProcessModel } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { noDataMock, taskDetailsMock, standaloneTaskWithForm, standaloneTaskWithoutForm, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
+import {
+    noDataMock,
+    taskDetailsMock,
+    standaloneTaskWithForm,
+    standaloneTaskWithoutForm,
+    taskFormMock,
+    tasksMock,
+    taskDetailsWithOutAssigneeMock
+} from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
@@ -82,12 +97,12 @@ describe('TaskDetailsComponent', () => {
         commentProcessService = TestBed.get(CommentProcessService);
 
         authService = TestBed.get(AuthenticationService);
-        spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email'}));
+        spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email' }));
 
         spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([
-            {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
-            {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
-            {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
+            { message: 'Test1', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } },
+            { message: 'Test2', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } },
+            { message: 'Test3', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } }
         ]));
 
         fixture = TestBed.createComponent(TaskDetailsComponent);
@@ -130,12 +145,25 @@ describe('TaskDetailsComponent', () => {
         expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
     });
 
-    it('shoud display a form when the task has an associated form', () => {
+    it('shoud display a form when the task has an associated form', (done) => {
         component.taskId = '123';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
+            done();
+        });
+    });
+
+    it('shoud display a form in readonly when the task has an associated form and readOnlyForm is true', (done) => {
+        component.readOnlyForm = true;
+        component.taskId = '123';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
+            expect(fixture.debugElement.query(By.css('.adf-readonly-form'))).not.toBeNull();
+            done();
         });
     });
 
@@ -222,7 +250,7 @@ describe('TaskDetailsComponent', () => {
         }));
 
         it('should fetch new task details when taskId changed', () => {
-            component.ngOnChanges({'taskId': change});
+            component.ngOnChanges({ 'taskId': change });
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('456');
         });
 
@@ -237,13 +265,13 @@ describe('TaskDetailsComponent', () => {
         it('should NOT fetch new task details when taskId changed to null', async(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                component.ngOnChanges({'taskId': nullChange});
+                component.ngOnChanges({ 'taskId': nullChange });
                 expect(getTaskDetailsSpy).not.toHaveBeenCalled();
             });
         }));
 
         it('should set a placeholder message when taskId changed to null', () => {
-            component.ngOnChanges({'taskId': nullChange});
+            component.ngOnChanges({ 'taskId': nullChange });
             fixture.detectChanges();
             expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
         });
@@ -361,7 +389,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments be readonly if the task is complete and no user are involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
@@ -373,7 +401,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments be readonly if the task is complete and user are NOT involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
@@ -385,7 +413,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments NOT be readonly if the task is NOT complete and user are NOT involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
             component.taskPeople = [fakeUser];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
             component.taskDetails.endDate = null;
@@ -397,7 +425,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments NOT be readonly if the task is complete and user are involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
             component.taskPeople = [fakeUser];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
@@ -409,7 +437,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments be present if showComments is true', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 
@@ -419,7 +447,7 @@ describe('TaskDetailsComponent', () => {
 
         it('should comments NOT be present if showComments is false', () => {
             component.showComments = false;
-            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 
@@ -437,16 +465,16 @@ describe('TaskDetailsComponent', () => {
 
         it('should return an observable with user search results', (done) => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([{
-                    id: 1,
-                    firstName: 'fake-test-1',
-                    lastName: 'fake-last-1',
-                    email: 'fake-test-1@test.com'
-                }, {
-                    id: 2,
-                    firstName: 'fake-test-2',
-                    lastName: 'fake-last-2',
-                    email: 'fake-test-2@test.com'
-                }]));
+                id: 1,
+                firstName: 'fake-test-1',
+                lastName: 'fake-last-1',
+                email: 'fake-test-1@test.com'
+            }, {
+                id: 2,
+                firstName: 'fake-test-2',
+                lastName: 'fake-last-2',
+                email: 'fake-test-2@test.com'
+            }]));
 
             component.peopleSearch.subscribe((users) => {
                 expect(users.length).toBe(2);
