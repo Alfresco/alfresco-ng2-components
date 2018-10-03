@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
@@ -24,6 +24,8 @@ import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { fakeGlobalTask, fakeCutomSchema } from '../../mock';
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 declare let jasmine: any;
 
@@ -575,6 +577,7 @@ class EmptyTemplateComponent {
 
 describe('Task List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;
+    let translateService: TranslateService;
 
     setupTestBed({
         imports: [ProcessTestingModule],
@@ -583,6 +586,11 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
     });
 
     beforeEach(() => {
+        translateService = TestBed.get(TranslateService);
+        spyOn(translateService, 'get').and.callFake((key) => {
+            return of(key);
+        });
+
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         fixture.detectChanges();
     });
@@ -591,11 +599,10 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
         fixture.destroy();
     });
 
-    it('should render the custom template', async(() => {
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('#custom-id'))).not.toBeNull();
-            expect(fixture.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
-        });
+    it('should render the custom template', fakeAsync(() => {
+        fixture.detectChanges();
+        tick(100);
+        expect(fixture.debugElement.query(By.css('#custom-id'))).not.toBeNull();
+        expect(fixture.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
     }));
 });

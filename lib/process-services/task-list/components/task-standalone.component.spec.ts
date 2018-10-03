@@ -31,12 +31,16 @@ describe('TaskStandaloneComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(TaskStandaloneComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         fixture.detectChanges();
-    }));
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
 
     it('should show Completed message if isCompleted is true', async(() => {
         component.isCompleted = true;
