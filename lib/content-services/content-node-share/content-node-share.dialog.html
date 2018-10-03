@@ -12,7 +12,7 @@
 
             <mat-slide-toggle
                 color="primary"
-                id="adf-share-toggle"
+                data-automation-id="adf-share-toggle"
                 [checked]="isFileShared"
                 [disabled]="!canUpdate || isDisabled"
                 (change)="onSlideShareChange($event)">
@@ -48,4 +48,12 @@
             </mat-form-field>
         </form>
     </mat-dialog-content>
+
+    <div mat-dialog-actions>
+        <button
+            data-automation-id="adf-share-dialog-close"
+            mat-button color="primary" mat-dialog-close>
+            {{ 'SHARE.CLOSE' | translate }}
+        </button>
+    </div>
 </div>

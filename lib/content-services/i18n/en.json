@@ -260,6 +260,7 @@
     "TITLE": "Link to share",
     "EXPIRES": "Expires on",
     "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
+    "CLOSE": "Close",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Remove this shared link",
       "MESSAGE": "This link will be deleted and a new link will be created next time this file is shared",
