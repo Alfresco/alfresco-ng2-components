@@ -96,7 +96,7 @@ describe('TaskFiltersComponent', () => {
 
     it('should attach specific icon for each filter if hasIcon is true', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
-        component.hasIcon = true;
+        component.showIcons = true;
         let change = new SimpleChange(undefined, 1, true);
         component.ngOnChanges({'appId': change});
         fixture.detectChanges();
@@ -115,7 +115,7 @@ describe('TaskFiltersComponent', () => {
     it('should not attach icons for each filter if hasIcon is false', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
-        component.hasIcon = false;
+        component.showIcons = false;
         let change = new SimpleChange(undefined, 1, true);
         component.ngOnChanges({'appId': change});
         fixture.detectChanges();
