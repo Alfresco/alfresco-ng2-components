@@ -17,6 +17,8 @@
 
 import { element, by } from 'protractor';
 
+import Util = require('../../util/util');
+
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
@@ -33,6 +35,7 @@ import resources = require('../../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { DropActions } from '../../actions/drop.actions';
+import CONSTANTS = require('../../util/constants');
 
 describe('Upload - User permission', () => {
 
@@ -44,6 +47,7 @@ describe('Upload - User permission', () => {
     let acsUserTwo;
     let navigationBarPage = new NavigationBarPage();
     let notificationPage = new NotificationPage();
+    let consumerSite, managerSite;
 
     let emptyFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -84,10 +88,30 @@ describe('Upload - User permission', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
+        this.consumerSite = await this.alfrescoJsApi.core.sitesApi.createSite({
+            title: Util.generateRandomString(),
+            visibility: 'PUBLIC'
+        });
+
+        this.managerSite = await this.alfrescoJsApi.core.sitesApi.createSite({
+            title: Util.generateRandomString(),
+            visibility: 'PUBLIC'
+        });
+
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(this.consumerSite.entry.id, {
+            id: acsUser.id,
+            role: CONSTANTS.CS_USER_ROLES.CONSUMER
+        });
+
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(this.managerSite.entry.id, {
+            id: acsUser.id,
+            role: CONSTANTS.CS_USER_ROLES.MANAGER
+        });
+
         done();
     });
 
-    describe('limited permissions', () => {
+    describe('Consumer permissions', () => {
 
         beforeEach(async (done) => {
             contentServicesPage.goToDocumentList();
@@ -95,7 +119,7 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C212861] Should not be allowed to Drag and drop a file/folder in a restricted user folder with limited permissions', () => {
+        it('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
             contentServicesPage.checkDandDIsDisplayed();
 
             let dragAndDrop = new DropActions();
@@ -107,9 +131,9 @@ describe('Upload - User permission', () => {
             contentServicesPage.checkContentIsDisplayed(emptyFile.name);
             contentServicesPage.checkContentIsDisplayed(folder.name);
 
-            contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+            navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
-            browser.sleep(5000);
+            browser.sleep(1000);
 
             dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
             dragAndDrop.dropFolder(dragAndDropArea, folder.location);
@@ -123,23 +147,23 @@ describe('Upload - User permission', () => {
             contentServicesPage.checkContentIsNotDisplayed(folder.name);
         });
 
-        it('[C279915] Should not be allowed to upload a file in a restricted user folder with limited permissions', () => {
+        it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', () => {
             contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
 
             uploadDialog.fileIsUploaded(emptyFile.name);
 
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
-            contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+            navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
-            browser.sleep(5000);
+            browser.sleep(1000);
 
             contentServicesPage.uploadFile(emptyFile.location);
 
             notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
-        it('[C279916] Should not be allowed to upload a folder in a restricted user folder with limited permissions', () => {
+        it('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
             uploadToggles.enableFolderUpload();
 
             contentServicesPage.uploadFolder(folder.location).checkContentIsDisplayed(folder.name);
@@ -150,9 +174,9 @@ describe('Upload - User permission', () => {
 
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
-            contentServicesPage.navigateToFolderViaBreadcrumbs('User Homes');
+            navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
-            browser.sleep(5000);
+            browser.sleep(1000);
 
             uploadToggles.enableFolderUpload();
 
@@ -165,12 +189,14 @@ describe('Upload - User permission', () => {
     describe('full permissions', () => {
 
         beforeEach(async (done) => {
+            navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
+
             contentServicesPage.goToDocumentList();
 
             done();
         });
 
-        it('[C260130] Should be allowed to Drag and drop a file/folder in a restricted user folder with full permissions', () => {
+        it('[C260130] Should be allowed to Drag and drop a file/folder in a folder with manager permissions', () => {
             contentServicesPage.checkDandDIsDisplayed();
 
             let dragAndDrop = new DropActions();
@@ -186,13 +212,13 @@ describe('Upload - User permission', () => {
             uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
         });
 
-        it('[C279917] Should be allowed to upload a file in a restricted user folder with full permissions', () => {
+        it('[C279917] Should be allowed to upload a file in a folder with manager permissions', () => {
             contentServicesPage.uploadFile(emptyFile.location);
 
             uploadDialog.fileIsUploaded(emptyFile.name);
         });
 
-        it('[C279918] Should be allowed to upload a folder in a restricted user folder with full permissions', () => {
+        it('[C279918] Should be allowed to upload a folder in a folder with manager permissions', () => {
             uploadToggles.enableFolderUpload();
 
             contentServicesPage.uploadFolder(folder.location);
