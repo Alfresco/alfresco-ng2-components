@@ -43,7 +43,7 @@ export class TaskListCloudService {
             );
         } else {
             this.logService.error('Appname is mandatory for querying task');
-            throwError('Appname not configured');
+            return throwError('Appname not configured');
         }
     }
 

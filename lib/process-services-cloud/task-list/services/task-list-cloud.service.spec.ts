@@ -24,7 +24,7 @@ import { TaskQueryCloudRequestModel } from '../models/filter-cloud.model';
 
 declare let jasmine: any;
 
-fdescribe('Activiti TaskList Cloud Service', () => {
+describe('Activiti TaskList Cloud Service', () => {
 
     let service: TaskListCloudService;
     let alfrescoApiMock: AlfrescoApiServiceMock;

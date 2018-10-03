@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild, AfterContentInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild, AfterContentInit, SimpleChange } from '@angular/core';
 import { AppConfigService, UserPreferencesService,
          DataTableSchema, UserPreferenceValues,
          PaginatedComponent, PaginationModel,
@@ -26,7 +26,6 @@ import { TaskQueryCloudRequestModel } from '../models/filter-cloud.model';
 import { BehaviorSubject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-// import moment from 'moment-es6';
 
 @Component({
     selector: 'adf-cloud-task-list',
@@ -103,7 +102,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     pagination: BehaviorSubject<PaginationModel>;
 
     requestNode: TaskQueryCloudRequestModel;
-    rows: any[];
+    rows: any[] = [];
     size: number = 25;
     skipCount: number = 0;
     currentInstanceId: any;
@@ -127,13 +126,22 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes)) {
+        if (this.isPropertyChanged(changes) &&
+            this.isEqualToCurrentId(changes['landingTaskId'])) {
             this.reload();
         }
     }
 
     ngAfterContentInit() {
         this.createDatatableSchema();
+    }
+
+    getCurrentId(): string {
+        return this.currentInstanceId;
+    }
+
+    isEqualToCurrentId(landingTaskChanged: SimpleChange): boolean {
+        return landingTaskChanged && this.currentInstanceId === landingTaskChanged.currentValue;
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {

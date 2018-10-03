@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { ObjectDataColumn } from '@alfresco/adf-core';
 
 export const fakeTaskCloudList = {
     list: {
@@ -83,4 +84,62 @@ export const fakeTaskCloudList = {
             totalItems: 2
         }
     }
-}
+};
+
+export let fakeGlobalTask = {
+    list: {
+        entries: [
+            {
+                entry: {
+                    serviceName: 'test-ciprian2-rb',
+                    serviceFullName: 'test-ciprian2-rb',
+                    serviceVersion: '',
+                    appName: 'test-ciprian2',
+                    appVersion: '',
+                    serviceType: null,
+                    id: '11fe013d-c263-11e8-b75b-0a5864600540',
+                    assignee: null,
+                    name: 'standalone-subtask',
+                    description: null,
+                    createdDate: 1538059139420,
+                    dueDate: null,
+                    claimedDate: null,
+                    priority: 0,
+                    category: null,
+                    processDefinitionId: null,
+                    processInstanceId: null,
+                    status: 'CREATED',
+                    owner: 'devopsuser',
+                    parentTaskId: '71fda20b-c25b-11e8-b75b-0a5864600540',
+                    lastModified: 1538059139420,
+                    lastModifiedTo: null,
+                    lastModifiedFrom: null,
+                    standAlone: true
+                }
+            }
+        ],
+        pagination: {
+            skipCount: 0,
+            maxItems: 100,
+            count: 1,
+            hasMoreItems: false,
+            totalItems: 1
+        }
+    }
+};
+
+export let fakeCutomSchema =
+    [
+        new ObjectDataColumn({
+            'key': 'fakeName',
+            'type': 'text',
+            'title': 'ADF_TASK_LIST.PROPERTIES.FAKE',
+            'sortable': true
+        }),
+        new ObjectDataColumn({
+            'key': 'fakeTaskName',
+            'type': 'text',
+            'title': 'ADF_TASK_LIST.PROPERTIES.TASK_FAKE',
+            'sortable': true
+        })
+    ];
