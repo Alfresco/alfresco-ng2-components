@@ -224,7 +224,17 @@
                         [color]="'primary'"
                         (change)="toggleAllowSidebar()"
                         [checked]="allowSidebar">
-                        Allow Sidebar
+                        Allow Right Sidebar
+                    </mat-slide-toggle>
+                </p>
+
+                <p class="toggle">
+                    <mat-slide-toggle
+                        id="adf-switch-allowLeftSidebar"
+                        [color]="'primary'"
+                        (change)="toggleAllowLeftSidebar()"
+                        [checked]="allowLeftSidebar">
+                        Allow Left Sidebar
                     </mat-slide-toggle>
                 </p>
 
@@ -268,6 +278,7 @@
         [allowPrint]="allowPrint"
         [allowDownload]="allowDownload"
         [allowSidebar]="allowSidebar"
+        [allowLeftSidebar]="allowLeftSidebar"
         [urlFile]="urlFile"
         [sidebarLeftTemplate]="sidebarLeftTemplate"
         [sidebarTemplate]="sidebarRightTemplate">
