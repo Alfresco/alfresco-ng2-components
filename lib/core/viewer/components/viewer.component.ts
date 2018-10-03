@@ -141,7 +141,13 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     canNavigateNext = true;
 
-    /** Toggles the sidebar. */
+    /** Allow the left the sidebar. */
+    @Input()
+    allowLeftSidebar = false;
+
+    /** Allow the right sidebar.
+     * @deprecated 2.5.0 - will be renamed  allowRightSidebar in 3.0.0
+     */
     @Input()
     allowSidebar = false;
 

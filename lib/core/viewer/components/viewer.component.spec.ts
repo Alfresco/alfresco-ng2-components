@@ -285,7 +285,7 @@ describe('ViewerComponent', () => {
 
             it('should NOT display left sidebar if is not allowed', (done) => {
                 component.showLeftSidebar = true;
-                component.allowSidebar = false;
+                component.allowLeftSidebar = false;
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -297,7 +297,7 @@ describe('ViewerComponent', () => {
             });
 
             it('should display sidebar on the left side', (done) => {
-                component.allowSidebar = true;
+                component.allowLeftSidebar = true;
                 component.showLeftSidebar = true;
                 fixture.detectChanges();
 
@@ -315,27 +315,36 @@ describe('ViewerComponent', () => {
                 expect(element.querySelector('[data-automation-id="adf-toolbar-fullscreen"]')).toBeDefined();
             });
 
-            it('should not render fullscreen button', () => {
+            it('should not render fullscreen button', (done) => {
                 component.allowFullScreen = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="adf-toolbar-fullscreen"]')).toBeNull();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-fullscreen"]')).toBeNull();
+                    done();
+                });
             });
 
-            it('should render default download button', () => {
+            it('should render default download button', (done) => {
                 component.allowDownload = true;
 
-                expect(element.querySelector('[data-automation-id="adf-toolbar-download"]')).toBeDefined();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-download"]')).toBeDefined();
+                    done();
+                });
             });
 
-            it('should not render default download button', () => {
+            it('should not render default download button', (done) => {
                 component.allowDownload = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="adf-toolbar-download"]')).toBeNull();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-download"]')).toBeNull();
+                    done();
+                });
             });
 
-            it('should invoke download action with the toolbar button', () => {
+            it('should invoke download action with the toolbar button', (done) => {
                 component.allowDownload = true;
                 spyOn(component, 'downloadContent').and.stub();
                 fixture.detectChanges();
@@ -343,7 +352,10 @@ describe('ViewerComponent', () => {
                 const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-download"]') as HTMLButtonElement;
                 button.click();
 
-                expect(component.downloadContent).toHaveBeenCalled();
+                fixture.whenStable().then(() => {
+                    expect(component.downloadContent).toHaveBeenCalled();
+                    done();
+                });
             });
 
             it('should raise download event with the toolbar button', async(() => {
@@ -358,21 +370,27 @@ describe('ViewerComponent', () => {
                 button.click();
             }));
 
-            it('should render default print button', () => {
+            it('should render default print button', (done) => {
                 component.allowPrint = true;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="adf-toolbar-print"]')).toBeDefined();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-print"]')).toBeDefined();
+                    done();
+                });
             });
 
-            it('should not render default print button', () => {
+            it('should not render default print button', (done) => {
                 component.allowPrint = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="adf-toolbar-print"]')).toBeNull();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-print"]')).toBeNull();
+                    done();
+                });
             });
 
-            it('should invoke print action with the toolbar button', () => {
+            it('should invoke print action with the toolbar button', (done) => {
                 component.allowPrint = true;
                 fixture.detectChanges();
 
@@ -381,7 +399,10 @@ describe('ViewerComponent', () => {
                 const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-print"]') as HTMLButtonElement;
                 button.click();
 
-                expect(component.printContent).toHaveBeenCalled();
+                fixture.whenStable().then(() => {
+                    expect(component.printContent).toHaveBeenCalled();
+                    done();
+                });
             });
 
             it('should raise the print event with the toolbar button', async(() => {
@@ -396,21 +417,27 @@ describe('ViewerComponent', () => {
                 button.click();
             }));
 
-            it('should render default share button', () => {
+            it('should render default share button', (done) => {
                 component.allowShare = true;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="adf-toolbar-share"]')).toBeDefined();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-share"]')).toBeDefined();
+                    done();
+                });
             });
 
-            it('should not render default share button', () => {
+            it('should not render default share button', (done) => {
                 component.allowShare = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('[data-automation-id="adf-toolbar-share"]')).toBeNull();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-share"]')).toBeNull();
+                    done();
+                });
             });
 
-            it('should invoke share action with the toolbar button', () => {
+            it('should invoke share action with the toolbar button', (done) => {
                 component.allowShare = true;
                 fixture.detectChanges();
 
@@ -419,7 +446,10 @@ describe('ViewerComponent', () => {
                 const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-share"]') as HTMLButtonElement;
                 button.click();
 
-                expect(component.shareContent).toHaveBeenCalled();
+                fixture.whenStable().then(() => {
+                    expect(component.shareContent).toHaveBeenCalled();
+                    done();
+                });
             });
 
             it('should raise share event with the toolbar button', async(() => {
@@ -467,17 +497,25 @@ describe('ViewerComponent', () => {
                     });
                 });
 
-                it('should Click on close button hide the viewer', () => {
+                it('should Click on close button hide the viewer', (done) => {
                     let closebutton: any = element.querySelector('.adf-viewer-close-button');
                     closebutton.click();
                     fixture.detectChanges();
-                    expect(element.querySelector('.adf-viewer-content')).toBeNull();
+
+                    fixture.whenStable().then(() => {
+                        expect(element.querySelector('.adf-viewer-content')).toBeNull();
+                        done();
+                    });
                 });
 
-                it('should Esc button hide the viewer', () => {
+                it('should Esc button hide the viewer', (done) => {
                     EventMock.keyUp(27);
                     fixture.detectChanges();
-                    expect(element.querySelector('.adf-viewer-content')).toBeNull();
+
+                    fixture.whenStable().then(() => {
+                        expect(element.querySelector('.adf-viewer-content')).toBeNull();
+                        done();
+                    });
                 });
             });
 
@@ -488,10 +526,14 @@ describe('ViewerComponent', () => {
                     fixture.detectChanges();
                 });
 
-                it('should Esc button not hide the viewer if is not overlay mode', () => {
+                it('should Esc button not hide the viewer if is not overlay mode', (done) => {
                     EventMock.keyDown(27);
                     fixture.detectChanges();
-                    expect(element.querySelector('.adf-viewer-content')).not.toBeNull();
+
+                    fixture.whenStable().then(() => {
+                        expect(element.querySelector('.adf-viewer-content')).not.toBeNull();
+                        done();
+                    });
                 });
             });
         });
@@ -541,7 +583,7 @@ describe('ViewerComponent', () => {
 
         describe('Extension Type Test', () => {
 
-            it('should  extension file pdf  be loaded', async(() => {
+            it('should  extension file pdf  be loaded', (done) => {
                 component.urlFile = 'fake-test-file.pdf';
                 component.ngOnChanges(null);
                 fixture.detectChanges();
@@ -549,10 +591,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            it('should  extension file png be loaded', async(() => {
+            it('should  extension file png be loaded', (done) => {
                 component.urlFile = 'fake-url-file.png';
                 component.ngOnChanges(null);
                 fixture.detectChanges();
@@ -560,10 +603,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#viewer-image')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            it('should extension file mp4 be loaded', async(() => {
+            it('should extension file mp4 be loaded', (done) => {
                 component.urlFile = 'fake-url-file.mp4';
                 component.ngOnChanges(null);
                 fixture.detectChanges();
@@ -571,10 +615,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-media-player')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            it('should extension file mp3 be loaded', async(() => {
+            it('should extension file mp3 be loaded', (done) => {
                 component.urlFile = 'fake-url-file.mp3';
                 component.ngOnChanges(null);
                 fixture.detectChanges();
@@ -582,10 +627,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-media-player')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            it('should extension file wav be loaded', async(() => {
+            it('should extension file wav be loaded', (done) => {
                 component.urlFile = 'fake-url-file.wav';
                 component.ngOnChanges(null);
                 fixture.detectChanges();
@@ -593,10 +639,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-media-player')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            it('should extension file txt be loaded', async(() => {
+            it('should extension file txt be loaded', (done) => {
                 component.urlFile = 'fake-test-file.txt';
                 component.ngOnChanges(null);
                 fixture.detectChanges();
@@ -604,10 +651,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-txt-viewer')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            it('should display [unknown format] for unsupported extensions', async(() => {
+            it('should display [unknown format] for unsupported extensions', (done) => {
                 component.urlFile = 'fake-url-file.unsupported';
                 component.mimeType = '';
                 component.ngOnChanges(null);
@@ -616,13 +664,14 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
+                    done();
                 });
-            }));
+            });
         });
 
         describe('error handling', () => {
 
-            it('should show unknown view when node file not found', async(() => {
+            it('should show unknown view when node file not found', (done) => {
                 spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo')
                     .and.returnValue(Promise.reject({}));
 
@@ -634,10 +683,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            it('should show unknown view when sharedLink file not found', async(() => {
+            it('should show unknown view when sharedLink file not found', (done) => {
                 spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
                     .and.returnValue(Promise.reject({}));
 
@@ -649,9 +699,10 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
+                    done();
                 });
 
-            }));
+            });
 
             it('should raise an event when the shared link is invalid', (done) => {
                 spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
@@ -672,7 +723,7 @@ describe('ViewerComponent', () => {
 
         describe('MimeType handling', () => {
 
-            it('should display a PDF file identified by mimetype when the filename has no extension', async(() => {
+            it('should display a PDF file identified by mimetype when the filename has no extension', (done) => {
                 component.urlFile = 'content';
                 component.mimeType = 'application/pdf';
                 fixture.detectChanges();
@@ -681,11 +732,12 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
+                    done();
                 });
 
-            }));
+            });
 
-            it('should display a PDF file identified by mimetype when the file extension is wrong', async(() => {
+            it('should display a PDF file identified by mimetype when the file extension is wrong', (done) => {
                 component.urlFile = 'content.bin';
                 component.mimeType = 'application/pdf';
                 component.ngOnChanges(null);
@@ -693,10 +745,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            it('should display an image file identified by mimetype when the filename has no extension', async(() => {
+            it('should display an image file identified by mimetype when the filename has no extension', (done) => {
                 component.urlFile = 'content';
                 component.mimeType = 'image/png';
                 fixture.detectChanges();
@@ -705,10 +758,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#viewer-image')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            it('should display a image file identified by mimetype when the file extension is wrong', async(() => {
+            it('should display a image file identified by mimetype when the file extension is wrong', (done) => {
                 component.urlFile = 'content.bin';
                 component.mimeType = 'image/png';
                 fixture.detectChanges();
@@ -717,10 +771,11 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#viewer-image')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
-            it('should display the media player if the file identified by mimetype is a media when the filename has wrong extension', async(() => {
+            it('should display the media player if the file identified by mimetype is a media when the filename has wrong extension', (done) => {
                 component.urlFile = 'content.bin';
                 component.mimeType = 'video/mp4';
                 fixture.detectChanges();
@@ -729,8 +784,9 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-media-player')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
             it('should display the txt viewer if the file identified by mimetype is a txt when the filename has wrong extension', (done) => {
                 component.urlFile = 'content.bin';
