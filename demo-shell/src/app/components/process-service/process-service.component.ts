@@ -270,6 +270,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         } else if (index === PROCESS_ROUTE) {
             this.showProcessTab = event.index === this.tabs.processes;
             this.relocateLocationToProcess();
+            if (this.processList) {
+                this.processList.reload();
+            }
         } else if (index === REPORT_ROUTE) {
             this.relocateLocationToReport();
         }
@@ -399,6 +402,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         }
         if (!this.taskList) {
             this.navigateToProcess();
+        } else {
+            this.taskList.hasCustomDataSource = false;
+            this.taskList.reload();
         }
     }
 
