@@ -61,7 +61,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /** Toggles display of the filter's icon. */
     @Input()
-    hasIcon: boolean;
+    showIcon: boolean;
 
     filter$: Observable<FilterRepresentationModel>;
 
