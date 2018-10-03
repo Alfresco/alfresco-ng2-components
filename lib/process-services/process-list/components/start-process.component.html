@@ -54,13 +54,13 @@
                 mat-button
                 (click)="cancelStartProcess()"
                 id="cancel_process">
-                {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}}
+                {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate | uppercase}}
             </button>
         </adf-start-form>
     </mat-card-content>
     <mat-card-content *ngIf="hasErrorMessage()">
         <mat-card-subtitle class="error-message" id="no-process-message">
-            {{'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS' | translate}}
+            {{'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS' | translate | uppercase}}
         </mat-card-subtitle>
     </mat-card-content>
     <mat-card-actions *ngIf="!hasStartForm()">
@@ -69,7 +69,7 @@
             *ngIf="!hasStartForm()"
             (click)="cancelStartProcess()"
             id="cancel_process">
-            {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}}
+            {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate | uppercase}}
         </button>
         <button
             color="primary"
@@ -80,7 +80,7 @@
             data-automation-id="btn-start"
             id="button-start"
             class="btn-start">
-            {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate}}
+            {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
         </button>
     </mat-card-actions>
 </mat-card>

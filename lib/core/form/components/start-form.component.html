@@ -26,7 +26,7 @@
                     [class.mdl-button--colored]="!outcome.isSystem"
                     [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
                     (click)="onOutcomeClicked(outcome)">
-                {{outcome.name| uppercase | translate}}
+                {{ outcome.name | translate | uppercase}}
             </button>
         </mat-card-content>
         <mat-card-actions *ngIf="showRefreshButton">
