@@ -143,6 +143,22 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.groupId).toBe('<id>');
     });
 
+    it('should display involved user in task form', async() => {
+        widget.field.value = new UserProcessModel({
+            id: 'people-id',
+            firstName: 'John',
+            lastName: 'Doe',
+            email: 'john@test.com'
+        });
+        widget.ngOnInit();
+
+        const involvedUser = fixture.debugElement.nativeElement.querySelector('input[data-automation-id="adf-people-search-input"]');
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(involvedUser.value).toBe('John Doe');
+        });
+    });
+
     describe('when template is ready', () => {
 
         let fakeUserResult = [
