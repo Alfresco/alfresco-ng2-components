@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-extensions",
   "description": "Provides extensibility support for ADF applications.",
-  "version": "2.6.0-beta7",
+  "version": "2.6.0",
   "license": "Apache-2.0",
   "author": "Alfresco Software, Ltd.",
   "main": "bundles/adf-extensions.js",
@@ -16,6 +16,6 @@
     "@angular/common": "^6.0.0",
     "@angular/core": "^6.0.0",
     "@angular/http": "^6.1.4",
-    "alfresco-js-api": "2.6.0-beta7"
+    "alfresco-js-api": "2.6.0"
   }
 }
