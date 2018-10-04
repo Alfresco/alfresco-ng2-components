@@ -66,7 +66,7 @@ describe('Checklist component', () => {
         await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
 
         for (let i = 0; i < tasks.length; i++) {
-            this.alfrescoJsApi.activiti.taskApi.createNewTask({name: tasks[i]});
+            this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[i] });
         }
 
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);

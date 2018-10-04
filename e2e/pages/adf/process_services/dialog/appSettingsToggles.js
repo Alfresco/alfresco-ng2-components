@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {FormControllersPage} from "../../material/formControllersPage";
+var FormControllersPage = require('../../material/formControllersPage');
 
 var AppSettingsToggles = function () {
 
