@@ -47,7 +47,7 @@ import moment from 'moment-es6';
 export class ShareDialogComponent implements OnInit, OnDestroy {
     private subscriptions: Subscription[] = [];
 
-    minDate = moment().toDate();
+    minDate = moment().add(1, 'd');
     sharedId: string;
     fileName: string;
     baseShareUrl: string;
@@ -159,7 +159,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                     this.isFileShared = true;
 
                     this.updateForm();
-
                 }
             },
             () => {
@@ -188,7 +187,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
         this.form.setValue({
             'sharedUrl': `${this.baseShareUrl}${this.sharedId}`,
-            'time': expiryDate ? moment(expiryDate) : null
+            'time': expiryDate ? expiryDate : null
         });
     }
 
@@ -197,7 +196,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             this.data.node.entry.id,
             {
                 properties: {
-                    'qshare:expiryDate': updates.time ? updates.time.format() : null
+                    'qshare:expiryDate': updates.time ? updates.time.utc().format() : null
                 }
             }
         );
@@ -207,7 +206,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         const { properties } = this.data.node.entry;
 
         properties['qshare:expiryDate'] = updates.time
-            ? updates.time.format()
+            ? updates.time.local()
             : null;
     }
 }
