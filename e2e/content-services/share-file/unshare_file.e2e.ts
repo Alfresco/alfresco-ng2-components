@@ -121,7 +121,7 @@ describe('Unshare file', () => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickShareToggle();
+            shareDialog.clickUnShareFile();
             shareDialog.confirmationDialogIsDisplayed();
         });
 
@@ -129,7 +129,7 @@ describe('Unshare file', () => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickShareToggle();
+            shareDialog.clickUnShareFile();
             shareDialog.confirmationDialogIsDisplayed();
             shareDialog.clickConfirmationDialogCancelButton();
             shareDialog.shareToggleButtonIsChecked();
@@ -139,7 +139,7 @@ describe('Unshare file', () => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickShareToggle();
+            shareDialog.clickUnShareFile();
             shareDialog.confirmationDialogIsDisplayed();
             shareDialog.clickConfirmationDialogRemoveButton();
             shareDialog.shareToggleButtonIsChecked();
@@ -150,7 +150,7 @@ describe('Unshare file', () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             let sharedLink = await shareDialog.getShareLink();
-            shareDialog.clickShareToggle();
+            shareDialog.clickUnShareFile();
             shareDialog.confirmationDialogIsDisplayed();
             shareDialog.clickConfirmationDialogRemoveButton();
             shareDialog.dialogIsClosed();
@@ -174,7 +174,7 @@ describe('Unshare file', () => {
             shareDialog.checkDialogIsDisplayed();
             shareDialog.shareToggleButtonIsChecked();
             shareDialog.shareToggleButtonIsDisabled();
-            shareDialog.clickShareToggle();
+            shareDialog.clickUnShareFile();
             shareDialog.confirmationDialogIsNotDisplayed();
         });
     });
