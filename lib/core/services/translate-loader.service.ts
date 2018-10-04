@@ -19,11 +19,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { TranslateLoader } from '@ngx-translate/core';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, throwError } from 'rxjs';
 import { ComponentTranslationModel } from '../models/component.model';
 import { ObjectUtils } from '../utils/object-utils';
-import { LogService } from './log.service';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class TranslateLoaderService implements TranslateLoader {
@@ -33,8 +32,7 @@ export class TranslateLoaderService implements TranslateLoader {
     private providers: ComponentTranslationModel[] = [];
     private queue: string [][] = [];
 
-    constructor(private http: HttpClient,
-                private logService: LogService) {
+    constructor(private http: HttpClient) {
     }
 
     registerProvider(name: string, path: string) {
@@ -59,21 +57,16 @@ export class TranslateLoaderService implements TranslateLoader {
             if (!this.isComponentInQueue(lang, component.name)) {
                 this.queue[lang].push(component.name);
 
-                const loader = Observable.create(observer => {
-                    const translationUrl = `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
+                const translationUrl = `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
 
-                    this.http.get(translationUrl).pipe(map((res: Response) => {
-                        component.json[lang] = res;
-                    })).subscribe((result) => {
-                        observer.next(result);
-                        observer.complete();
-                    }, () => {
-                        observer.next('');
-                        observer.complete();
-                    });
-                });
-
-                observableBatch.push(loader);
+                observableBatch.push(
+                    this.http.get(translationUrl).pipe(
+                        map((res: Response) => {
+                            component.json[lang] = res;
+                        }),
+                        catchError(() => throwError(`Error loading ${translationUrl}`))
+                    )
+                );
             }
         });
 
@@ -114,7 +107,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     getTranslation(lang: string): Observable<any> {
-        let observableBatch = this.getComponentToFetch(lang);
+        const observableBatch = this.getComponentToFetch(lang);
 
         return Observable.create(observer => {
             if (observableBatch.length > 0) {
@@ -126,13 +119,14 @@ export class TranslateLoaderService implements TranslateLoader {
                         }
                         observer.complete();
                     },
-                    (err: any) => {
-                        this.logService.error(err);
+                    (err) => {
+                        observer.error(err);
                     });
             } else {
                 let fullTranslation = this.getFullTranslationJSON(lang);
                 if (fullTranslation) {
                     observer.next(fullTranslation);
+                    observer.complete();
                 }
             }
         });
