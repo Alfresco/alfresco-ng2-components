@@ -55,10 +55,10 @@
     "process services"
   ],
   "dependencies": {
-    "@alfresco/adf-content-services": "2.6.0",
-    "@alfresco/adf-core": "2.6.0",
-    "@alfresco/adf-insights": "2.6.0",
-    "@alfresco/adf-process-services": "2.6.0",
+    "@alfresco/adf-content-services": "2.5.0",
+    "@alfresco/adf-core": "2.5.0",
+    "@alfresco/adf-insights": "2.5.0",
+    "@alfresco/adf-process-services": "2.5.0",
     "@angular-devkit/build-ng-packagr": "^0.7.1",
     "@angular/animations": "6.1.2",
     "@angular/cdk": "6.4.5",
