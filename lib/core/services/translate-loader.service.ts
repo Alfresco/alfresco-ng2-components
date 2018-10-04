@@ -22,7 +22,7 @@ import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, forkJoin, throwError } from 'rxjs';
 import { ComponentTranslationModel } from '../models/component.model';
 import { ObjectUtils } from '../utils/object-utils';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
 
 @Injectable()
 export class TranslateLoaderService implements TranslateLoader {
@@ -48,8 +48,8 @@ export class TranslateLoaderService implements TranslateLoader {
         return this.providers.find(x => x.name === name) ? true : false;
     }
 
-    getComponentToFetch(lang: string) {
-        let observableBatch = [];
+    getComponentToFetch(lang: string): Array<Observable<any>> {
+        const observableBatch = [];
         if (!this.queue[lang]) {
             this.queue[lang] = [];
         }
@@ -64,6 +64,7 @@ export class TranslateLoaderService implements TranslateLoader {
                         map((res: Response) => {
                             component.json[lang] = res;
                         }),
+                        retry(3),
                         catchError(() => throwError(`Error loading ${translationUrl}`))
                     )
                 );
