@@ -119,7 +119,7 @@
                         </mat-icon>
                     </button>
                     <button mat-icon-button
-                            [disabled]="!shareRef.isFile"
+                            [disabled]="documentList.selection.length && !shareRef.isFile"
                             [baseShareUrl]="baseShareUrl"
                             #shareRef="adfShare"
                             [adf-share]="documentList.selection[0]"
