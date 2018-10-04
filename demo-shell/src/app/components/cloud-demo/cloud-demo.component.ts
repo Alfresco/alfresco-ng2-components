@@ -15,27 +15,39 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { NotificationService } from '@alfresco/adf-core';
-import { MatSnackBarConfig } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
     templateUrl: './cloud-demo.component.html',
     styleUrls: [`./cloud-demo.component.scss`]
 })
 
-export class CloudDemoComponent {
+export class CloudDemoComponent implements OnInit {
 
-    appId = 0;
+    appName = 'my-app-1';
 
-    constructor(private notificationService: NotificationService) {
+    constructor(
+                private router: Router,
+                private route: ActivatedRoute) {
+    }
+
+    ngOnInit() {
+        if (this.route) {
+            this.route.params.forEach((params: Params) => {
+                if (params['appName']) {
+                    this.appName = params['appName'];
+                }
+            });
+        }
     }
 
     onFilterSelected(filter) {
-        this.sendNotification(filter.name, 1000);
-    }
-
-    sendNotification(message: string, config: number | MatSnackBarConfig) {
-        this.notificationService.openSnackMessage(message, config);
+        const queryParams = {
+            status: filter.filter.state,
+            filterName: filter.name,
+            sort: filter.filter.sort
+        };
+        this.router.navigate([`/activiti-cloud/${this.appName}/task-list/`], {queryParams: queryParams});
     }
 }

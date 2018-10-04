@@ -201,6 +201,11 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardBpm]
             },
             {
+                path: 'activiti-cloud/:appName',
+                component: CloudDemoComponent,
+                canActivate: [AuthGuardBpm]
+            },
+            {
                 path: 'activiti',
                 component: AppsViewComponent,
                 canActivate: [AuthGuardBpm]

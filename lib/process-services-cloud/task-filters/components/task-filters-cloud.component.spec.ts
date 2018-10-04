@@ -20,13 +20,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { from, Observable } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
-
 import { TaskFilterService } from '../services/task-filter.service';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { By } from '@angular/platform-browser';
 import { ProcessTestingModule } from '../../testing/process-cloud.testing.module';
 
-describe('TaskFiltersComponent', () => {
+fdescribe('TaskFiltersComponent', () => {
 
     let taskFilterService: TaskFilterService;
 
@@ -94,12 +93,12 @@ describe('TaskFiltersComponent', () => {
         taskFilterService = TestBed.get(TaskFilterService);
     });
 
-    it('should attach specific icon for each filter if hasIcon is true', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
-        component.showIcons = true;
-        let change = new SimpleChange(undefined, 1, true);
-        component.ngOnChanges({'appId': change});
+    it('should attach specific icon for each filter if hasIcon is true', async () => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        let change = new SimpleChange(undefined, 'my-app-1', true);
+        component.ngOnChanges({'appName': change});
         fixture.detectChanges();
+        component.showIcons = true;
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(component.filters.length).toBe(3);
@@ -108,7 +107,6 @@ describe('TaskFiltersComponent', () => {
             expect(filters[0].nativeElement.innerText).toContain('adjust');
             expect(filters[1].nativeElement.innerText).toContain('done');
             expect(filters[2].nativeElement.innerText).toContain('inbox');
-            done();
         });
     });
 
@@ -116,8 +114,8 @@ describe('TaskFiltersComponent', () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
         component.showIcons = false;
-        let change = new SimpleChange(undefined, 1, true);
-        component.ngOnChanges({'appId': change});
+        let change = new SimpleChange(undefined, 'my-app-1', true);
+        component.ngOnChanges({'appName': change});
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -128,12 +126,29 @@ describe('TaskFiltersComponent', () => {
         });
     });
 
+    it('should display the filters', async () => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        let change = new SimpleChange(undefined, 'my-app-1', true);
+        component.ngOnChanges({'appName': change});
+        fixture.detectChanges();
+        component.showIcons = true;
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let filters = fixture.debugElement.nativeElement.querySelector('mat-list-item[class="adf-filters__entry"]');
+            expect(component.filters.length).toBe(3);
+            expect(filters.length).toBe(3);
+            expect(filters[0].nativeElement.innerText).toContain('FakeInvolvedTasks');
+            expect(filters[1].nativeElement.innerText).toContain('FakeMyTasks1');
+            expect(filters[2].nativeElement.innerText).toContain('FakeMyTasks2');
+        });
+    });
+
     it('should emit an error with a bad response', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(mockErrorFilterPromise));
 
-        const appId = '1';
-        let change = new SimpleChange(null, appId, true);
-        component.ngOnChanges({'appId': change});
+        const appName = 'my-app-1';
+        let change = new SimpleChange(null, appName, true);
+        component.ngOnChanges({'appName': change});
 
         component.error.subscribe((err) => {
             expect(err).toBeDefined();
@@ -143,9 +158,9 @@ describe('TaskFiltersComponent', () => {
 
     it('should return the filter task list', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
-        const appId = '1';
-        let change = new SimpleChange(null, appId, true);
-        component.ngOnChanges({ 'appId': change });
+        const appName = 'my-app-1';
+        let change = new SimpleChange(null, appName, true);
+        component.ngOnChanges({ 'appName': change });
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -157,9 +172,9 @@ describe('TaskFiltersComponent', () => {
 
     it('should return the filter task list, filtered By Name', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
-        const appId = '1';
-        let change = new SimpleChange(null, appId, true);
-        component.ngOnChanges({ 'appId': change });
+        const appName = 'my-app-1';
+        let change = new SimpleChange(null, appName, true);
+        component.ngOnChanges({ 'appName': change });
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -174,11 +189,11 @@ describe('TaskFiltersComponent', () => {
     it('should select the first filter as default', async () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        const appId = '1';
-        let change = new SimpleChange(null, appId, true);
+        const appName = 'my-app-1';
+        let change = new SimpleChange(null, appName, true);
 
         fixture.detectChanges();
-        component.ngOnChanges({ 'appId': change });
+        component.ngOnChanges({ 'appName': change });
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -190,15 +205,15 @@ describe('TaskFiltersComponent', () => {
 
     it('should be able to fetch and select the default filters if the input filter is not valid', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalEmptyFilterPromise));
-        spyOn(component, 'createFiltersByAppId').and.callThrough();
+        spyOn(component, 'createFilters').and.callThrough();
 
-        const appId = '1';
-        let change = new SimpleChange(null, appId, true);
-        component.ngOnChanges({ 'appId': change });
+        const appName = 'my-app-1';
+        let change = new SimpleChange(null, appName, true);
+        component.ngOnChanges({ 'appName': change });
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
-            expect(component.createFiltersByAppId).not.toHaveBeenCalled();
+            expect(component.createFilters).not.toHaveBeenCalled();
             done();
         });
     });
@@ -207,11 +222,11 @@ describe('TaskFiltersComponent', () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
 
         component.filterParam = new FilterParamsModel({ name: 'FakeMyTasks1' });
-        const appId = '1';
-        let change = new SimpleChange(null, appId, true);
+        const appName = 'my-app-1';
+        let change = new SimpleChange(null, appName, true);
 
         fixture.detectChanges();
-        component.ngOnChanges({ 'appId': change });
+        component.ngOnChanges({ 'appName': change });
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -226,11 +241,11 @@ describe('TaskFiltersComponent', () => {
 
         component.filterParam = new FilterParamsModel({ name: 'UnexistableFilter' });
 
-        const appId = '1';
-        let change = new SimpleChange(null, appId, true);
+        const appName = 'my-app-1';
+        let change = new SimpleChange(null, appName, true);
 
         fixture.detectChanges();
-        component.ngOnChanges({ 'appId': change });
+        component.ngOnChanges({ 'appName': change });
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -245,11 +260,11 @@ describe('TaskFiltersComponent', () => {
 
         component.filterParam = new FilterParamsModel({ index: 2 });
 
-        const appId = '1';
-        let change = new SimpleChange(null, appId, true);
+        const appName = 'my-app-1';
+        let change = new SimpleChange(null, appName, true);
 
         fixture.detectChanges();
-        component.ngOnChanges({ 'appId': change });
+        component.ngOnChanges({ 'appName': change });
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -264,11 +279,11 @@ describe('TaskFiltersComponent', () => {
 
         component.filterParam = new FilterParamsModel({ id: 12 });
 
-        const appId = '1';
-        let change = new SimpleChange(null, appId, true);
+        const appName = 'my-app-1';
+        let change = new SimpleChange(null, appName, true);
 
         fixture.detectChanges();
-        component.ngOnChanges({ 'appId': change });
+        component.ngOnChanges({ 'appName': change });
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -283,9 +298,9 @@ describe('TaskFiltersComponent', () => {
 
         component.filterParam = new FilterParamsModel({ id: 12 });
 
-        const appId = '1';
-        let change = new SimpleChange(null, appId, true);
-        component.ngOnChanges({ 'appId': change });
+        const appName = 'my-app-1';
+        let change = new SimpleChange(null, appName, true);
+        component.ngOnChanges({ 'appName': change });
 
         fixture.detectChanges();
         spyOn(component, 'selectFilterAndEmit').and.stub();
@@ -294,24 +309,24 @@ describe('TaskFiltersComponent', () => {
         expect(component.selectFilterAndEmit).toHaveBeenCalledWith(fakeGlobalFilter[1]);
     });
 
-    it('should reload filters by appId on binding changes', () => {
-        spyOn(component, 'getFiltersByAppId').and.stub();
-        const appId = '1';
+    it('should reload filters by appName on binding changes', () => {
+        spyOn(component, 'getFilters').and.stub();
+        const appName = 'my-app-1';
 
-        let change = new SimpleChange(null, appId, true);
-        component.ngOnChanges({ 'appId': change });
+        let change = new SimpleChange(null, appName, true);
+        component.ngOnChanges({ 'appName': change });
 
-        expect(component.getFiltersByAppId).toHaveBeenCalledWith(appId);
+        expect(component.getFilters).toHaveBeenCalledWith(appName);
     });
 
-    it('should reload filters by appId null on binding changes', () => {
-        spyOn(component, 'getFiltersByAppId').and.stub();
-        const appId = null;
+    it('should not reload filters by appName null on binding changes', () => {
+        spyOn(component, 'getFilters').and.stub();
+        const appName = null;
 
-        let change = new SimpleChange(undefined, appId, true);
-        component.ngOnChanges({ 'appId': change });
+        let change = new SimpleChange(undefined, appName, true);
+        component.ngOnChanges({ 'appName': change });
 
-        expect(component.getFiltersByAppId).toHaveBeenCalledWith(appId);
+        expect(component.getFilters).not.toHaveBeenCalledWith(appName);
     });
 
     it('should change current filter when filterParam (id) changes',  () => {
@@ -338,13 +353,13 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should reload filters by app name on binding changes', () => {
-        spyOn(component, 'getFiltersByAppName').and.stub();
+        spyOn(component, 'getFilters').and.stub();
         const appName = 'fake-app-name';
 
         let change = new SimpleChange(null, appName, true);
         component.ngOnChanges({ 'appName': change });
 
-        expect(component.getFiltersByAppName).toHaveBeenCalledWith(appName);
+        expect(component.getFilters).toHaveBeenCalledWith(appName);
     });
 
     it('should return the current filter after one is selected', () => {
@@ -354,14 +369,5 @@ describe('TaskFiltersComponent', () => {
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(filter);
         expect(component.getCurrentFilter()).toBe(filter);
-    });
-
-    it('should load default list when appid is null', () => {
-        spyOn(component, 'getFiltersByAppId').and.stub();
-
-        let change = new SimpleChange(undefined, null, true);
-        component.ngOnChanges({ 'appId': change });
-
-        expect(component.getFiltersByAppId).toHaveBeenCalled();
     });
 });

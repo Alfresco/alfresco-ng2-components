@@ -29,20 +29,20 @@ export class TaskFilterService {
 
     /**
      * Creates and returns the default filters for a process app.
-     * @param appId ID of the target app
-     * @returns Array of default filters just created
+     * @param appName Name of the target app
+     * @returns Observable of default filters just created
      */
-    public createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
-        let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
+    public createDefaultFilters(appName: string): Observable<FilterRepresentationModel[]> {
+        let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appName);
         let involvedObservable = this.addFilter(involvedTasksFilter);
 
-        let myTasksFilter = this.getMyTasksFilterInstance(appId);
+        let myTasksFilter = this.getMyTasksFilterInstance(appName);
         let myTaskObservable = this.addFilter(myTasksFilter);
 
-        let queuedTasksFilter = this.getQueuedTasksFilterInstance(appId);
+        let queuedTasksFilter = this.getQueuedTasksFilterInstance(appName);
         let queuedObservable = this.addFilter(queuedTasksFilter);
 
-        let completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
+        let completedTasksFilter = this.getCompletedTasksFilterInstance(appName);
         let completeObservable = this.addFilter(completedTasksFilter);
 
         return Observable.create(observer => {
@@ -80,11 +80,11 @@ export class TaskFilterService {
 
     /**
      * Gets all task filters for a process app.
-     * @param appId Optional ID for a specific app
-     * @returns Array of task filter details
+     * @param appName Name of the target app
+     * @returns Observable of task filter details
      */
-    getTaskListFilters(appId?: number): Observable<FilterRepresentationModel[]> {
-        let key = 'task-filters-' + appId;
+    getTaskListFilters(appName?: string): Observable<FilterRepresentationModel[]> {
+        let key = 'task-filters-' + appName;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
         return Observable.create(function(observer) {
             observer.next(filters);
@@ -113,13 +113,13 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "Involved" task instances.
-     * @param appId ID of the target app
+     * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getInvolvedTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getInvolvedTasksFilterInstance(appName: string): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'Involved Tasks',
-            'appId': appId,
+            'appName': appName,
             'recent': false,
             'icon': 'view_headline',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved'}
@@ -128,13 +128,13 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "My Tasks" task instances.
-     * @param appId ID of the target app
+     * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getMyTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getMyTasksFilterInstance(appName: string): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'My Tasks',
-            'appId': appId,
+            'appName': appName,
             'recent': false,
             'icon': 'inbox',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee'}
@@ -143,13 +143,13 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "Queued Tasks" task instances.
-     * @param appId ID of the target app
+     * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getQueuedTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getQueuedTasksFilterInstance(appName: string): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'Queued Tasks',
-            'appId': appId,
+            'appName': appName,
             'recent': false,
             'icon': 'adjust',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate'}
@@ -158,13 +158,13 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "Completed" task instances.
-     * @param appId ID of the target app
+     * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getCompletedTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getCompletedTasksFilterInstance(appName: string): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'Completed Tasks',
-            'appId': appId,
+            'appName': appName,
             'recent': true,
             'icon': 'done',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved'}

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { AppsProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
@@ -49,10 +48,6 @@ export class TaskFiltersCloudComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Display filters available to the current user for the application with the specified ID. */
-    @Input()
-    appId: number;
-
     /** Display filters available to the current user for the application with the specified name. */
     @Input()
     appName: string;
@@ -67,18 +62,14 @@ export class TaskFiltersCloudComponent implements OnChanges {
 
     filters: FilterRepresentationModel [] = [];
 
-    constructor(private taskFilterService: TaskFilterService,
-                private appsProcessService: AppsProcessService) {
+    constructor(private taskFilterService: TaskFilterService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
-        const appId = changes['appId'];
         const filter = changes['filterParam'];
         if (appName && appName.currentValue) {
-            this.getFiltersByAppName(appName.currentValue);
-        } else if (appId && appId.currentValue !== appId.previousValue) {
-            this.getFiltersByAppId(appId.currentValue);
+            this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilter(filter.currentValue);
         }
@@ -89,21 +80,18 @@ export class TaskFiltersCloudComponent implements OnChanges {
      * @param appId
      * @param appName
      */
-    getFilters(appId?: number, appName?: string) {
-        appName ? this.getFiltersByAppName(appName) : this.getFiltersByAppId(appId);
-    }
 
     /**
-     * Return the filter list filtered by appId
-     * @param appId - optional
+     * Return the filter list filtered by appName
+     * @param appName
      */
-    getFiltersByAppId(appId?: number) {
-        this.filters$ = this.taskFilterService.getTaskListFilters(appId);
+    getFilters(appName: string) {
+        this.filters$ = this.taskFilterService.getTaskListFilters(appName);
 
         this.filters$.subscribe(
             (res: FilterRepresentationModel[]) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
-                    this.createFiltersByAppId(appId);
+                    this.createFilters(appName);
                 } else {
                     this.resetFilter();
                     this.filters = res;
@@ -118,25 +106,11 @@ export class TaskFiltersCloudComponent implements OnChanges {
     }
 
     /**
-     * Return the filter list filtered by appName
-     * @param appName
-     */
-    getFiltersByAppName(appName: string) {
-        this.appsProcessService.getDeployedApplicationsByName(appName).subscribe(
-            application => {
-                this.getFiltersByAppId(application.id);
-            },
-            (err) => {
-                this.error.emit(err);
-            });
-    }
-
-    /**
      * Create default filters by appId
      * @param appId
      */
-    createFiltersByAppId(appId?: number) {
-        this.filters$ =  this.taskFilterService.createDefaultFilters(appId);
+    createFilters(appName?: string) {
+        this.filters$ =  this.taskFilterService.createDefaultFilters(appName);
 
         this.filters$.subscribe(
             (resDefault: FilterRepresentationModel[]) => {
