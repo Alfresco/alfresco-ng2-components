@@ -25,7 +25,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 export class CloudDemoComponent implements OnInit {
 
-    appName = 'my-app-1';
+    appName: string;
 
     constructor(
                 private router: Router,
@@ -44,10 +44,15 @@ export class CloudDemoComponent implements OnInit {
 
     onFilterSelected(filter) {
         const queryParams = {
-            status: filter.filter.state,
+            status: filter.query.state,
             filterName: filter.name,
-            sort: filter.filter.sort
+            sort: filter.query.sort,
+            order: filter.query.order
         };
         this.router.navigate([`/activiti-cloud/${this.appName}/task-list/`], {queryParams: queryParams});
+    }
+
+    hasApp() {
+        return !!this.appName;
     }
 }

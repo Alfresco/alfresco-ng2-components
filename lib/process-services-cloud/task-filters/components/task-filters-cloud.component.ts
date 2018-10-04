@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from '../services/task-filter.service';
 
 /**
@@ -34,7 +34,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
      * the default filter (the first one the list) is selected.
      */
     @Input()
-    filterParam: FilterParamsModel;
+    filterParam: FilterRepresentationModel;
 
     /** Emitted when a filter in the list is clicked. */
     @Output()
@@ -90,7 +90,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
 
         this.filters$.subscribe(
             (res: FilterRepresentationModel[]) => {
-                if (res.length === 0 && this.isFilterListEmpty()) {
+                if (res.length === 0) {
                     this.createFilters(appName);
                 } else {
                     this.resetFilter();
@@ -129,12 +129,9 @@ export class TaskFiltersCloudComponent implements OnChanges {
      * Pass the selected filter as next
      * @param filter
      */
-    public selectFilter(newFilter: FilterParamsModel) {
+    public selectFilter(newFilter: FilterRepresentationModel) {
         if (newFilter) {
             this.currentFilter = this.filters.find((filter) =>
-                (newFilter.id &&
-                    (newFilter.id === filter.id)
-                ) ||
                 (newFilter.name &&
                     (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
                 ));
@@ -144,7 +141,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
         }
     }
 
-    public selectFilterAndEmit(newFilter: FilterParamsModel) {
+    public selectFilterAndEmit(newFilter: FilterRepresentationModel) {
         this.selectFilter(newFilter);
         this.filterClick.emit(this.currentFilter);
     }

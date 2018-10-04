@@ -18,7 +18,7 @@
 import { LogService, StorageService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
-import { FilterRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel, QueryModel } from '../models/filter.model';
 
 @Injectable()
 export class TaskFilterService {
@@ -52,23 +52,7 @@ export class TaskFilterService {
                 queuedObservable,
                 completeObservable
             ).subscribe(
-                (res) => {
-                    let filters: FilterRepresentationModel[] = [];
-                    res.forEach((filter) => {
-                        if (filter.name === involvedTasksFilter.name) {
-                            involvedTasksFilter.id = filter.id;
-                            filters.push(involvedTasksFilter);
-                        } else if (filter.name === myTasksFilter.name) {
-                            myTasksFilter.id = filter.id;
-                            filters.push(myTasksFilter);
-                        } else if (filter.name === queuedTasksFilter.name) {
-                            queuedTasksFilter.id = filter.id;
-                            filters.push(queuedTasksFilter);
-                        } else if (filter.name === completedTasksFilter.name) {
-                            completedTasksFilter.id = filter.id;
-                            filters.push(completedTasksFilter);
-                        }
-                    });
+                (filters) => {
                     observer.next(filters);
                     observer.complete();
                 },
@@ -98,7 +82,7 @@ export class TaskFilterService {
      * @returns Details of task filter just added
      */
     addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        const key = 'task-filters-' + filter.appId || '0';
+        const key = 'task-filters-' + filter.query.appName || '0';
         let filters = JSON.parse(this.storage.getItem(key) || '[]');
 
         filters.push(filter);
@@ -118,11 +102,17 @@ export class TaskFilterService {
      */
     getInvolvedTasksFilterInstance(appName: string): FilterRepresentationModel {
         return new FilterRepresentationModel({
-            'name': 'Involved Tasks',
-            'appName': appName,
-            'recent': false,
-            'icon': 'view_headline',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved'}
+            name: 'Involved Tasks',
+            icon: 'view_headline',
+            query: new QueryModel(
+                {
+                    appName: appName,
+                    sort: 'created',
+                    state: 'open',
+                    assignment: 'involved',
+                    order: 'desc'
+                }
+            )
         });
     }
 
@@ -133,11 +123,17 @@ export class TaskFilterService {
      */
     getMyTasksFilterInstance(appName: string): FilterRepresentationModel {
         return new FilterRepresentationModel({
-            'name': 'My Tasks',
-            'appName': appName,
-            'recent': false,
-            'icon': 'inbox',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee'}
+            name: 'My Tasks',
+            icon: 'inbox',
+            query: new QueryModel(
+                {
+                    appName: appName,
+                    sort: 'created',
+                    state: 'open',
+                    assignment: 'assignee',
+                    order: 'desc'
+                }
+            )
         });
     }
 
@@ -148,11 +144,17 @@ export class TaskFilterService {
      */
     getQueuedTasksFilterInstance(appName: string): FilterRepresentationModel {
         return new FilterRepresentationModel({
-            'name': 'Queued Tasks',
-            'appName': appName,
-            'recent': false,
-            'icon': 'adjust',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate'}
+            name: 'Queued Tasks',
+            icon: 'adjust',
+            query: new QueryModel(
+                {
+                    appName: appName,
+                    sort: 'created',
+                    state: 'open',
+                    assignment: 'candidate',
+                    order: 'desc'
+                }
+            )
         });
     }
 
@@ -163,11 +165,17 @@ export class TaskFilterService {
      */
     getCompletedTasksFilterInstance(appName: string): FilterRepresentationModel {
         return new FilterRepresentationModel({
-            'name': 'Completed Tasks',
-            'appName': appName,
-            'recent': true,
-            'icon': 'done',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved'}
+            name: 'Completed Tasks',
+            icon: 'done',
+            query: new QueryModel(
+                {
+                    appName: appName,
+                    sort: 'created',
+                    state: 'completed',
+                    assignment: 'involved',
+                    order: 'desc'
+                }
+            )
         });
     }
 }
