@@ -109,12 +109,20 @@ describe('Share file', () => {
             shareDialog.dialogIsClosed();
         });
 
+        it('[C286578] Expiration day calendar should have today day option disabled', () => {
+            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.clickDateTimePickerButton();
+            shareDialog.calendarTodayDayIsDisabled();
+        });
+
         it('[C286548] User can set when the shared file link expires', async() => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickDateTimePickerButton();
-            shareDialog.setDefaultMonth();
+            shareDialog.setDefaultDay();
             shareDialog.setDefaultHour();
             shareDialog.setDefaultMinutes();
             shareDialog.dateTimePickerDialogIsClosed();
