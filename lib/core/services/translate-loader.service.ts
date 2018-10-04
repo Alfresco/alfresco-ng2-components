@@ -19,7 +19,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { TranslateLoader } from '@ngx-translate/core';
-import { Observable, forkJoin, throwError } from 'rxjs';
+import { Observable, forkJoin, throwError, of } from 'rxjs';
 import { ComponentTranslationModel } from '../models/component.model';
 import { ObjectUtils } from '../utils/object-utils';
 import { map, catchError, retry } from 'rxjs/operators';
@@ -65,7 +65,7 @@ export class TranslateLoaderService implements TranslateLoader {
                             component.json[lang] = res;
                         }),
                         retry(3),
-                        catchError(() => throwError(`Error loading ${translationUrl}`))
+                        catchError(() => throwError(`Failed to load ${translationUrl}`))
                     )
                 );
             }
@@ -108,20 +108,36 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     getTranslation(lang: string): Observable<any> {
-        const observableBatch = this.getComponentToFetch(lang);
+        let hasFailures = false;
+        const batch = [
+            ...this.getComponentToFetch(lang).map(observable => {
+                return observable.pipe(
+                    catchError(error => {
+                        console.warn(error);
+                        hasFailures = true;
+                        return of(error);
+                    })
+                );
+            })
+        ];
 
         return Observable.create(observer => {
-            if (observableBatch.length > 0) {
-                forkJoin(observableBatch).subscribe(
+
+            if (batch.length > 0) {
+                forkJoin(batch).subscribe(
                     () => {
                         let fullTranslation = this.getFullTranslationJSON(lang);
                         if (fullTranslation) {
                             observer.next(fullTranslation);
                         }
-                        observer.complete();
+                        if (hasFailures) {
+                            observer.error('Failed to load some resources');
+                        } else {
+                            observer.complete();
+                        }
                     },
                     (err) => {
-                        observer.error(err);
+                        observer.error('Failed to load some resources');
                     });
             } else {
                 let fullTranslation = this.getFullTranslationJSON(lang);
