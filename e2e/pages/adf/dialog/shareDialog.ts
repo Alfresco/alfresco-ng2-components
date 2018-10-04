@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by } from 'protractor';
 import Util = require('../../../util/util');
+import { FormControllersPage } from '../material/formControllersPage';
 
 export class ShareDialog {
+    formControllersPage = new FormControllersPage();
+
     shareDialog = element(by.css('adf-share-dialog'));
     dialogTitle = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
     shareToggle = element(by.css('[data-automation-id="adf-share-toggle"] label'));
@@ -43,11 +46,8 @@ export class ShareDialog {
         return Util.waitUntilElementIsVisible(this.dialogTitle);
     }
 
-    clickShareToggle() {
-        Util.waitUntilElementIsVisible(this.shareToggle);
-        Util.waitUntilElementIsClickable(this.shareToggle);
-        return this.shareToggle.click();
-
+    clickUnShareFile() {
+        this.formControllersPage.enableToggle(this.shareToggle);
     }
 
     clickConfirmationDialogCancelButton() {
