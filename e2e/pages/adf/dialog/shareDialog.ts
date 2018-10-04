@@ -33,7 +33,7 @@ export class ShareDialog {
     snackBar = element(by.css('simple-snack-bar'));
     copySharedLinkButton = element(by.css('.input-action'));
     timeDatePickerButton = element(by.css('mat-datetimepicker-toggle button'));
-    monthPicker = element(by.css('mat-datetimepicker-month-view'));
+    dayPicker = element(by.css('mat-datetimepicker-month-view'));
     clockPicker = element(by.css('mat-datetimepicker-clock'));
     hoursPicker = element(by.css('.mat-datetimepicker-clock-hours'));
     minutePicker = element(by.css('.mat-datetimepicker-clock-minutes'));
@@ -110,9 +110,17 @@ export class ShareDialog {
         this.timeDatePickerButton.click();
     }
 
-    setDefaultMonth() {
-        Util.waitUntilElementIsVisible(this.monthPicker);
-        this.monthPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).click();
+    async calendarTodayDayIsDisabled() {
+        const today = await this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
+        Util.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
+    }
+
+    async setDefaultDay() {
+        const selector = '.mat-datetimepicker-calendar-body-active .mat-datetimepicker-calendar-body-cell-content';
+        Util.waitUntilElementIsVisible(this.dayPicker);
+        const today = await this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
+        const tomorrow = (parseInt(today, 10) + 1).toString();
+        this.dayPicker.element(by.cssContainingText(selector, tomorrow )).click();
     }
 
     setDefaultHour() {
