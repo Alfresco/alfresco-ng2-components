@@ -79,62 +79,82 @@ describe('Share file', () => {
         done();
     });
 
-    afterEach(async (done) => {
-        await browser.refresh();
-        done();
+    describe('Shared link dialog', () => {
+        afterEach(async (done) => {
+            await browser.refresh();
+            done();
+        });
+
+        it('[C286549] Share toggle button is checked automatically', () => {
+            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.shareToggleButtonIsChecked();
+        });
+
+        it('[C286544] Copy shared link button action shows notification', () => {
+            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.clickShareLinkButton();
+            shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
+        });
+
+        it('[C286328] User can close the Share dialog', () => {
+            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.checkShareLinkIsDisplayed();
+            shareDialog.clickCloseButton();
+            shareDialog.dialogIsClosed();
+        });
+
+        it('[C286548] User can set when the shared file link expires', async() => {
+            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.clickDateTimePickerButton();
+            shareDialog.setDefaultMonth();
+            shareDialog.setDefaultHour();
+            shareDialog.setDefaultMinutes();
+            shareDialog.dateTimePickerDialogIsClosed();
+            const value = await shareDialog.getExpirationDate();
+            shareDialog.clickCloseButton();
+            shareDialog.dialogIsClosed();
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.expirationDateInputHasValue(value);
+        });
     });
 
-    it('[C286549] File is shared automatically', () => {
-        contentListPage.clickRowToSelect(pngFileModel.name);
-        contentServicesPage.clickShareButton();
-        shareDialog.checkDialogIsDisplayed();
-        shareDialog.shareToggleButtonIsChecked();
-    });
+    describe('Shared link preview', () => {
+        afterEach(async (done) => {
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await contentServicesPage.navigateToDocumentList();
+            done();
+        });
 
-    it('[C286544] User can manually copy the share link', () => {
-        contentListPage.clickRowToSelect(pngFileModel.name);
-        contentServicesPage.clickShareButton();
-        shareDialog.checkDialogIsDisplayed();
-        shareDialog.waitForNotificationToClose();
-        shareDialog.clickShareLinkButton();
-        shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
-    });
+        it('[C286565] Logged user can open shared link', async() => {
+            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.clickShareLinkButton();
+            shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
+            const sharedLink = await shareDialog.getShareLink();
+            browser.get(sharedLink);
+            viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+        });
 
-    it('[C286328] User can close the Share dialog', () => {
-        contentListPage.clickRowToSelect(pngFileModel.name);
-        contentServicesPage.clickShareButton();
-        shareDialog.checkDialogIsDisplayed();
-        shareDialog.checkShareLinkIsDisplayed();
-        shareDialog.clickCloseButton();
-        shareDialog.dialogIsClosed();
-    });
-
-    it('[C286548] User can set when the shared file link expires', async() => {
-        contentListPage.clickRowToSelect(pngFileModel.name);
-        contentServicesPage.clickShareButton();
-        shareDialog.checkDialogIsDisplayed();
-        shareDialog.clickDateTimePickerButton();
-        shareDialog.setDefaultMonth();
-        shareDialog.setDefaultHour();
-        shareDialog.setDefaultMinutes();
-        shareDialog.dateTimePickerDialogIsClosed();
-        const value = await shareDialog.getExpirationDate();
-        shareDialog.clickCloseButton();
-        shareDialog.dialogIsClosed();
-        contentServicesPage.clickShareButton();
-        shareDialog.checkDialogIsDisplayed();
-        shareDialog.expirationDateInputHasValue(value);
-    });
-
-    it('[C286539] A non-logged user should see the shared file in the viewer', async () => {
-        contentListPage.clickRowToSelect(pngFileModel.name);
-        contentServicesPage.clickShareButton();
-        shareDialog.checkDialogIsDisplayed();
-        shareDialog.checkShareLinkIsDisplayed();
-        const sharedLink = await shareDialog.getShareLink();
-        shareDialog.clickCloseButton();
-        navigationBarPage.clickLogoutButton();
-        browser.get(sharedLink);
-        viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+        it('[C286539] A non-logged user should see the shared file in the viewer', async () => {
+            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.checkShareLinkIsDisplayed();
+            const sharedLink = await shareDialog.getShareLink();
+            shareDialog.clickCloseButton();
+            navigationBarPage.clickLogoutButton();
+            browser.get(sharedLink);
+            viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+        });
     });
 });
