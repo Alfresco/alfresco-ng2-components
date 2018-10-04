@@ -19,7 +19,7 @@ import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import ContentListPage = require('../../pages/adf/dialog/contentList');
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
-import ViewerPage = require('../../pages/adf/viewerPage');
+import { ViewerPage } from '../../pages/adf/viewerPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
