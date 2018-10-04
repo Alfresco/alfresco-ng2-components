@@ -53,7 +53,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     searchTerm = new FormControl();
     errorMsg = '';
-    searchTerms$: Observable<string> = this.searchTerm.valueChanges;
+    searchTerms$: Observable<any> = this.searchTerm.valueChanges;
 
     users$ = this.searchTerms$.pipe(
         tap(() => {
@@ -61,7 +61,8 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }),
         distinctUntilChanged(),
         switchMap((searchTerm) => {
-            return this.formService.getWorkflowUsers(searchTerm, this.groupId)
+            let value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
+            return this.formService.getWorkflowUsers(value, this.groupId)
                 .pipe(
                     catchError(err => {
                         this.errorMsg = err.message;
@@ -70,7 +71,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 );
         }),
         map((list: UserProcessModel[]) => {
-            let value = this.searchTerm.value;
+            let value = this.searchTerm.value.email ? this.getDisplayName(this.searchTerm.value) : this.searchTerm.value;
             this.checkUserAndValidateForm(list, value);
             return list;
         })
@@ -83,7 +84,9 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field) {
-            this.searchTerm.setValue(this.getDisplayName(this.field.value));
+            if (this.field.value) {
+                this.searchTerm.setValue(this.field.value);
+            }
             if (this.field.readOnly) {
                 this.searchTerm.disable();
             }
@@ -128,10 +131,9 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    onItemSelect(item) {
+    onItemSelect(item: UserProcessModel) {
         if (item) {
             this.field.value = item;
-            this.searchTerm.setValue(item);
         }
     }
 }
