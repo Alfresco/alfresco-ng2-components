@@ -18,7 +18,9 @@
 import LoginPage = require('../pages/adf/loginPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import { FormPage } from '../pages/adf/process_services/formPage';
-
+import { Date } from '../pages/adf/process_services/widgets/Date';
+import { Amount } from '../pages/adf/process_services/widgets/Amount';
+import { Number } from '../pages/adf/process_services/widgets/Number';
 import TestConfig = require('../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
@@ -29,6 +31,9 @@ describe('Form Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formPage = new FormPage();
+    const dateWidget =  new Date();
+    const amountWidget =  new Amount();
+    const numberWidget =  new Number();
 
     let tenantId, user;
 
@@ -74,26 +79,26 @@ describe('Form Component', () => {
     });
 
     it('[C286505] Should be able to display errors under the Error Log section', () => {
-        formPage.checkLabel4IsDisplayed();
-        formPage.addIntoNumberWidget(message.test);
+        numberWidget.checkLabel4IsDisplayed();
+        numberWidget.addIntoNumberWidget(message.test);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
         formPage.checkErrorLogMessage(message.errorLogNumber);
 
-        formPage.checkLabel7IsDisplayed();
-        formPage.addIntoDateWidget(message.test);
+        dateWidget.checkLabel7IsDisplayed();
+        dateWidget.addIntoDateWidget(message.test);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
         formPage.checkErrorLogMessage(message.errorLogDate);
 
-        formPage.checkLabe11IsDisplayed();
-        formPage.addIntoAmountWidget(message.test);
+        amountWidget.checkLabel11IsDisplayed();
+        amountWidget.addIntoAmountWidget(message.test);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
         formPage.checkErrorLogMessage(message.errorLogAmount);
 
-        formPage.removeFromAmountWidget();
+        amountWidget.removeFromAmountWidget();
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogAmount);
 
-        formPage.removeFromDateWidget();
-        formPage.removeFromNumberWidget();
+        dateWidget.removeFromDateWidget();
+        numberWidget.removeFromNumberWidget();
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
         formPage.checkErrorLogMessage(message.errorLabel);
     });
