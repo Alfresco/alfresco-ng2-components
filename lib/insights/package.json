@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-insights",
   "description": "Alfresco ADF insights",
-  "version": "2.6.0",
+  "version": "2.7.0-beta1",
   "author": "Alfresco Software, Ltd.",
   "main": "bundles/adf-insights.js",
   "repository": {
@@ -25,10 +25,10 @@
     "@angular/platform-browser": ">=5.1.1",
     "@angular/platform-browser-dynamic": ">=5.1.1",
     "@angular/router": ">=5.1.1",
-    "alfresco-js-api": "2.6.0",
+    "alfresco-js-api": "2.7.0-beta1",
     "rxjs": ">=6.2.2",
-    "@alfresco/adf-core": "2.6.0",
-    "@alfresco/adf-content-services": "2.6.0",
+    "@alfresco/adf-core": "2.7.0-beta1",
+    "@alfresco/adf-content-services": "2.7.0-beta1",
     "@ngx-translate/core": "^10.0.2",
     "chart.js": "2.5.0",
     "core-js": "2.4.1",
