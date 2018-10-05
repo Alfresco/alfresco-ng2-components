@@ -18,7 +18,6 @@
 import { element, by, protractor } from 'protractor';
 import Util = require('../../../../util/util');
 
-
 export class Amount {
 
     amountWidgetLabel11 = element(by.id('field-label11-container'));

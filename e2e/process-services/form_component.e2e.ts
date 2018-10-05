@@ -20,7 +20,7 @@ import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import { FormPage } from '../pages/adf/process_services/formPage';
 import { Date } from '../pages/adf/process_services/widgets/Date';
 import { Amount } from '../pages/adf/process_services/widgets/Amount';
-import { Number } from '../pages/adf/process_services/widgets/Number';
+import { NumberWidget } from '../pages/adf/process_services/widgets/Number';
 import TestConfig = require('../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
@@ -33,7 +33,7 @@ describe('Form Component', () => {
     const formPage = new FormPage();
     const dateWidget =  new Date();
     const amountWidget =  new Amount();
-    const numberWidget =  new Number();
+    const numberWidget =  new NumberWidget();
 
     let tenantId, user;
 

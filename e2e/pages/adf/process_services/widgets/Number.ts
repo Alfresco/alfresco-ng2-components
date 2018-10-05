@@ -18,7 +18,7 @@
 import { element, by, protractor } from 'protractor';
 import Util = require('../../../../util/util');
 
-export class Number {
+export class NumberWidget {
 
     numberWidgetLabel4 = element(by.id('field-label4-container'));
     numberWidgetInput = element(by.css('div[id="field-label4-container"] input[id="label4"]'));
