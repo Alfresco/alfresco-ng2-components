@@ -24,9 +24,9 @@ import ProcessServicesPage = require('../pages/adf/process_services/processServi
 import TasksPage = require('../pages/adf/process_services/tasksPage');
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import TaskFiltersPage = require('../pages/adf/process_services/taskFiltersPage');
-import TaskDetailsPage = require('../pages/adf/process_services/taskDetailsPage');
+import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
-import AppSettingsToggles = require('../pages/adf/process_services/dialog/appSettingsToggles');
+import { AppSettingsToggles } from '../pages/adf/process_services/dialog/appSettingsToggles';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';

@@ -89,6 +89,7 @@ export class ViewerPage {
     printButton = element(by.id('adf-viewer-print'));
 
     allowSidebarSwitch = element(by.id('adf-switch-allowsidebar'));
+    allowLeftSidebarSwitch = element(by.id('adf-switch-allowLeftSidebar'));
 
     shareSwitch = element(by.id('adf-switch-share'));
     shareButton = element(by.id('adf-viewer-share'));
@@ -626,6 +627,14 @@ export class ViewerPage {
 
     enableAllowSidebar() {
         this.formControllersPage.enableToggle(this.allowSidebarSwitch);
+    }
+
+    disableAllowLeftSidebar() {
+        this.formControllersPage.disableToggle(this.allowLeftSidebarSwitch);
+    }
+
+    enableAllowLeftSidebar() {
+        this.formControllersPage.enableToggle(this.allowLeftSidebarSwitch);
     }
 
     checkShareButtonDisplayed() {
