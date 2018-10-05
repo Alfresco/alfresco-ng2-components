@@ -21,7 +21,8 @@ import Util = require('../util/util');
 import LoginPage = require('../pages/adf/loginPage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
-import TaskDetailsPage = require('../pages/adf/process_services/taskDetailsPage');
+import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
+
 import FiltersPage = require('../pages/adf/process_services/filtersPage');
 
 import TaskModel = require('../models/APS/StandaloneTask');

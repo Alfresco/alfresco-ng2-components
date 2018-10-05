@@ -163,18 +163,22 @@ describe('Viewer - properties', () => {
     it('[C260089] Should Show/Hide info-drawer if allowSidebar true/false', () => {
         viewerPage.clickInfoButton();
 
-        viewerPage.checkLeftSideBarIsDisplayed();
         viewerPage.checkInfoSideBarIsDisplayed();
-
         viewerPage.checkInfoButtonIsDisplayed();
-        viewerPage.checkLeftSideBarButtonIsDisplayed();
 
         viewerPage.disableAllowSidebar();
 
         viewerPage.checkInfoButtonIsNotDisplayed();
-        viewerPage.checkLeftSideBarButtonIsNotDisplayed();
-
-        viewerPage.checkLeftSideBarIsNotDisplayed();
         viewerPage.checkInfoSideBarIsNotDisplayed();
+    });
+
+    it('[C286596] Should Show/Hide left info-drawer if allowLeftSidebar true/false', () => {
+        viewerPage.checkLeftSideBarIsDisplayed();
+        viewerPage.checkLeftSideBarButtonIsDisplayed();
+
+        viewerPage.disableAllowLeftSidebar();
+
+        viewerPage.checkLeftSideBarButtonIsNotDisplayed();
+        viewerPage.checkLeftSideBarIsNotDisplayed();
     });
 });
