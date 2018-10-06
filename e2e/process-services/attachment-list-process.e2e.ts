@@ -16,7 +16,7 @@
  */
 
 import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import { ProcessServicesPage } from '../pages/adf/process_services/ProcessServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import FileModel = require('../models/ACS/fileModel');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';

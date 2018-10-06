@@ -20,7 +20,7 @@ import FileModel = require('../models/ACS/fileModel');
 
 import LoginPage = require('../pages/adf/loginPage');
 import TagPage = require('../pages/adf/tagPage');
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

@@ -18,11 +18,11 @@
 import { browser } from 'protractor';
 
 import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import { ProcessServicesPage } from '../pages/adf/process_services/ProcessServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage.js');
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
-import AppSettingsToggles = require('../pages/adf/process_services/dialog/appSettingsToggles');
 import FiltersPage = require('../pages/adf/process_services/filtersPage.js');
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
+import { AppSettingsToggles } from '../pages/adf/process_services/dialog/appSettingsToggles';
 
 import TestConfig = require('../test.config');
 
@@ -50,7 +50,7 @@ describe('New Process Filters', () => {
         deleted: 'To delete'
     };
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
         let users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -69,7 +69,7 @@ describe('New Process Filters', () => {
         done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async (done) => {
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
@@ -94,7 +94,7 @@ describe('New Process Filters', () => {
                 'appId': null,
                 'name': processFilter.new_filter,
                 'icon': 'glyphicon-random',
-                'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
+                'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
             });
 
             filterId = customProcessFilter.id;
@@ -118,7 +118,7 @@ describe('New Process Filters', () => {
                 'appId': null,
                 'name': processFilter.new_icon,
                 'icon': 'glyphicon-cloud',
-                'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
+                'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
             });
 
             filterId = customProcessFilter.id;
@@ -145,7 +145,7 @@ describe('New Process Filters', () => {
                 'appId': null,
                 'name': processFilter.edited,
                 'icon': 'glyphicon-random',
-                'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
+                'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
             });
         });
 
@@ -165,7 +165,7 @@ describe('New Process Filters', () => {
                 'appId': null,
                 'name': processFilter.edit_icon,
                 'icon': 'glyphicon-random',
-                'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
+                'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
             });
 
             filterId = customProcessFilter.id;
@@ -183,7 +183,7 @@ describe('New Process Filters', () => {
                 'appId': null,
                 'name': processFilter.edit_icon,
                 'icon': 'glyphicon-cloud',
-                'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
+                'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
             });
         });
 
@@ -220,7 +220,7 @@ describe('New Process Filters', () => {
                 'appId': null,
                 'name': processFilter.deleted,
                 'icon': 'glyphicon-random',
-                'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
+                'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
             });
 
             filterId = customProcessFilter.id;

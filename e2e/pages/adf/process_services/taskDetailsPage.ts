@@ -188,7 +188,7 @@ export class TaskDetailsPage {
 
     selectActivityTab() {
         Util.waitUntilElementIsVisible(this.activityTab);
-        activityTab.getAttribute('aria-selected').then((check) => {
+        this.activityTab.getAttribute('aria-selected').then((check) => {
             if (check === 'false') {
                 this.activityTab.click();
                 expect(this.activityTab.getAttribute('aria-selected') === 'true');
@@ -275,7 +275,7 @@ export class TaskDetailsPage {
     }
 
     getInvolvedUserEmail(user) {
-        let email = this.getRowsUser(user).element(emailInvolvedUser);
+        let email = this.getRowsUser(user).element(this.emailInvolvedUser);
         Util.waitUntilElementIsVisible(email);
         return email.getText();
     }

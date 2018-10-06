@@ -16,9 +16,9 @@
  */
 
 import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import { ProcessServicesPage } from '../pages/adf/process_services/ProcessServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage.js');
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import DynamicTable = require('../pages/adf/process_services/widgets/DynamicTable');
 
 import TestConfig = require('../test.config');

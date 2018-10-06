@@ -16,9 +16,9 @@
  */
 
 import LoginPage = require('../pages/adf/loginPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
 import Widget = require('../pages/adf/process_services/widgets/widget');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import { ProcessServicesPage } from '../pages/adf/process_services/ProcessServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
 

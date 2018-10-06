@@ -18,8 +18,8 @@
 import { browser } from 'protractor';
 
 import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
+import { ProcessServicesPage } from '../pages/adf/process_services/ProcessServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { CommentsPage } from '../pages/adf/commentsPage';
 
 import CONSTANTS = require('../util/constants');

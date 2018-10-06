@@ -19,7 +19,7 @@ import TestConfig = require('../test.config');
 import Util = require('../util/util');
 
 import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import { ProcessServicesPage } from '../pages/adf/process_services/ProcessServicesPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 
