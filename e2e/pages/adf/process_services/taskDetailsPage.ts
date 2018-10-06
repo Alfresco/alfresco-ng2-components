@@ -20,7 +20,6 @@ import Util = require('../../../util/util');
 
 export class TaskDetailsPage {
 
-    appSettingsToggles = new AppSettingsToggles();
     formNameField = element(by.css('span[data-automation-id*="formName"] span'));
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
     statusField = element(by.css('span[data-automation-id*="status"] span'));
@@ -199,7 +198,7 @@ export class TaskDetailsPage {
 
     selectDetailsTab() {
         Util.waitUntilElementIsVisible(this.detailsTab);
-        detailsTab.getAttribute('aria-selected').then((check) => {
+        this.detailsTab.getAttribute('aria-selected').then((check) => {
             if (check === 'false') {
                 this.detailsTab.click();
                 expect(this.detailsTab.getAttribute('aria-selected') === 'true');
@@ -281,7 +280,7 @@ export class TaskDetailsPage {
     }
 
     getInvolvedUserEditAction(user) {
-        let edit = this.getRowsUser(user).element(editActionInvolvedUser);
+        let edit = this.getRowsUser(user).element(this.editActionInvolvedUser);
         Util.waitUntilElementIsVisible(edit);
         return edit.getText();
     }
@@ -292,7 +291,7 @@ export class TaskDetailsPage {
     }
 
     appSettingsToggles() {
-        return this.appSettingsToggles;
+        return new AppSettingsToggles();
     }
 
     taskInfoDrawerIsDisplayed() {
