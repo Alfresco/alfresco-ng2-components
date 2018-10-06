@@ -20,7 +20,7 @@ import resources = require('../util/resources');
 
 import LoginPage = require('../pages/adf/loginPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
-import { ProcessServicesPage } from '../pages/adf/process_services/ProcessServicesPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import TaskFiltersPage = require('../pages/adf/process_services/taskFiltersPage');

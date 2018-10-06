@@ -18,7 +18,7 @@
 import LoginPage = require('../pages/adf/loginPage');
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import AnalyticsPage = require('../pages/adf/process_services/analyticsPage');
-import { ProcessServicesPage } from '../pages/adf/process_services/ProcessServicesPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import TestConfig = require('../test.config');
 import Tenant = require('../models/APS/Tenant');

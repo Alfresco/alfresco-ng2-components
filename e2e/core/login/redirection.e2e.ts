@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 
 import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
-import { ProcessServicesPage } from '../../pages/adf/process_services/ProcessServicesPage';
+import { ProcessServicesPage } from '../../pages/adf/process_services/processServicesPage';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 
 import TestConfig = require('../../test.config');

@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 
 import LoginPage = require('../pages/adf/loginPage');
-import { ProcessServicesPage } from '../pages/adf/process_services/ProcessServicesPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage.js');
 import FiltersPage = require('../pages/adf/process_services/filtersPage.js');
 

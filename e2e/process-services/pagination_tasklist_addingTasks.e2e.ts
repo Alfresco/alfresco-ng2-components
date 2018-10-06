@@ -16,7 +16,7 @@
  */
 
 import LoginPage = require('../pages/adf/loginPage');
-import { ProcessServicesPage } from '../pages/adf/process_services/ProcessServicesPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import PaginationPage = require('../pages/adf/paginationPage');
 
