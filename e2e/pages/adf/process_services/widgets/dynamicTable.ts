@@ -58,7 +58,7 @@ export class DynamicTable {
     }
 
     addRandomStringOnDateTime(randomText) {
-        Util.waitUntilElementIsVisible(columnDateTime);
+        Util.waitUntilElementIsVisible(this.columnDateTime);
         this.columnDateTime.click();
         browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
         this.columnDateTime.sendKeys(randomText);
@@ -69,7 +69,7 @@ export class DynamicTable {
     addRandomStringOnDate(randomText) {
         Util.waitUntilElementIsVisible(this.columnDate);
         this.columnDate.click();
-        return columnDate.sendKeys(randomText);
+        return this.columnDate.sendKeys(randomText);
     }
 
     clickSaveButton() {

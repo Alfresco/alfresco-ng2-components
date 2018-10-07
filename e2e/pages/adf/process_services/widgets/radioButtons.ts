@@ -25,7 +25,8 @@ export class RadioButtons {
     formFields = new FormFields();
 
     getSpecificOptionLabel(fieldId, optionNumber) {
-        let optionLocator = by.css('label[for*="radiobuttons-option_"' + optionNumber + '"] div[class*="content"]');
+        let optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"] div[class*="content"]');
+
         let option = this.formFields.getWidget(fieldId).element(optionLocator);
         Util.waitUntilElementIsVisible(option);
         return option.getText();
