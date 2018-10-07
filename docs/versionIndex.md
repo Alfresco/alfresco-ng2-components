@@ -16,7 +16,7 @@ of components organized by ADF libraries.
 
 ## v2.6.0
 
-**Release:** Forthcoming<br/>
+**Released:** 2018-10-04 ([Release notes](release-notes/RelNote260.md))<br/>
 **APS compatible version:** v1.6.4+<br/>
 **ACS compatible version:** v5.2.3<br/>
 
