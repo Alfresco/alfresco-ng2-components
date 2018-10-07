@@ -25,7 +25,7 @@ export class Hyperlink {
     fieldLocator = by.css('div[class="adf-hyperlink-widget "] a');
 
     getFieldText(fieldId) {
-        return this.getFieldText(fieldId, this.fieldLocator);
+        return this.formFields.getFieldValue(fieldId, this.fieldLocator);
     }
 
 }
