@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import { RadioButtons } from './radioButtons';
 
-var DisplayText = function () {
+import FormFields = require('../formFields');
 
-    var formFields = new FormFields();
+export class MultilineText {
 
-    var labelLocator = by.css("div[class*='display-text-widget']");
+    formFields = new FormFields();
 
-    this.getFieldLabel = function (fieldId) {
-        return formFields.getFieldLabel(fieldId, labelLocator);
-    };
+    valueLocator = by.css('textarea');
 
-};
+    getFieldValue(fieldId) {
+        return this.formFields.getFieldValue(fieldId, this.valueLocator);
+    }
 
-module.exports = DisplayText;
-
+}

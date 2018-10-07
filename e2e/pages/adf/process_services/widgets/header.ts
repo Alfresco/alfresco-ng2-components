@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import { RadioButtons } from './radioButtons';
 
-var Hyperlink = function () {
+import FormFields = require('../formFields');
 
-    var formFields = new FormFields();
+export class Header {
 
-    var fieldLocator = by.css("div[class='adf-hyperlink-widget '] a");
+    formFields = new FormFields();
 
-    this.getFieldText = function (fieldId) {
-        return formFields.getFieldText(fieldId, fieldLocator);
-    };
+    labelLocator = by.css('span[id="container-header-label"]');
 
-};
+    getFieldLabel(fieldId) {
+        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
+    }
 
-module.exports = Hyperlink;
+}

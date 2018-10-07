@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import { Widget } from './widget';
 
-var MultilineText = function () {
+import FormFields = require('../formFields');
+import Util = require('../../../../util/util');
 
-    var formFields = new FormFields();
+export class RadioButtons {
 
-    var valueLocator = by.css("textarea");
+    formFields = new FormFields();
 
-    this.getFieldValue = function (fieldId) {
-        return formFields.getFieldValue(fieldId, valueLocator);
-    };
+    getSpecificOptionLabel(fieldId, optionNumber) {
+        let optionLocator = by.css('label[for*="radiobuttons-option_"' + optionNumber + '"] div[class*="content"]');
+        let option = this.formFields.getWidget(fieldId).element(optionLocator);
+        Util.waitUntilElementIsVisible(option);
+        return option.getText();
+    }
 
-};
-
-module.exports = MultilineText;
-
+}

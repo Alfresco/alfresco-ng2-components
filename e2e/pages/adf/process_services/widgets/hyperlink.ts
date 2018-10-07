@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import { MultilineText } from './multilineText';
+import FormFields = require('../formFields');
 
-var Dropdown = function () {
+export class Hyperlink {
 
-    var formFields = new FormFields();
+    formFields = new FormFields();
 
-    var selectedOptionLocator = by.css("mat-select[id='dropdown'] span span");
+    fieldLocator = by.css('div[class="adf-hyperlink-widget "] a');
 
-    this.getSelectedOptionText = function (fieldId) {
-        return formFields.getFieldText(fieldId, selectedOptionLocator);
-    };
+    getFieldText(fieldId) {
+        return this.getFieldText(fieldId, this.fieldLocator);
+    }
 
-};
-
-module.exports = Dropdown;
+}

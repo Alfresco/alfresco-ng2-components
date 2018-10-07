@@ -16,6 +16,7 @@
  */
 
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
+import { TabsPage } from '../material/tabsPage';
 import Util = require('../../../util/util');
 
 export class TaskDetailsPage {
@@ -32,8 +33,6 @@ export class TaskDetailsPage {
     activitiesTitle = element(by.css('div[class*="adf-info-drawer-layout-header-title"] div'));
     commentField = element(by.id('comment-input'));
     addCommentButton = element(by.css('[data-automation-id="comments-input-add"]'));
-    activityTab = element(by.cssContainingText('div[class*="mat-tab-label"]', 'Activity'));
-    detailsTab = element(by.cssContainingText('div[class*="mat-tab-label""]', 'Details'));
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
@@ -186,24 +185,14 @@ export class TaskDetailsPage {
     }
 
     selectActivityTab() {
-        Util.waitUntilElementIsVisible(this.activityTab);
-        this.activityTab.getAttribute('aria-selected').then((check) => {
-            if (check === 'false') {
-                this.activityTab.click();
-                expect(this.activityTab.getAttribute('aria-selected') === 'true');
-            }
-        });
+        let tabsPage = new TabsPage;
+        tabsPage.clickTabByTitle('Activity');
         return this;
     }
 
     selectDetailsTab() {
-        Util.waitUntilElementIsVisible(this.detailsTab);
-        this.detailsTab.getAttribute('aria-selected').then((check) => {
-            if (check === 'false') {
-                this.detailsTab.click();
-                expect(this.detailsTab.getAttribute('aria-selected') === 'true');
-            }
-        });
+        let tabsPage = new TabsPage;
+        tabsPage.clickTabByTitle('Details');
         return this;
     }
 

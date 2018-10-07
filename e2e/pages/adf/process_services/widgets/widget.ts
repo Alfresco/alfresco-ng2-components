@@ -15,55 +15,54 @@
  * limitations under the License.
  */
 
-var MultilineText = require('./MultilineText');
-var Header = require('./Header');
-var DisplayText = require('./DisplayText');
-var AttachFile = require('./AttachFile');
-var DisplayValue = require('./DisplayValue');
-var RadioButtons = require('./RadioButtons');
-var Hyperlink = require('./Hyperlink');
-var Dropdown = require('./Dropdown');
-var DynamicTable = require('./DynamicTable');
+import { AppNavigationBarPage } from '../appNavigationBarPage';
 
-var Widget = function () {
+import { MultilineText } from './multilineText';
+import { Header } from './header';
+import { DisplayText } from './displayText';
+import { AttachFile } from './attachFile';
+import { DisplayValue } from './displayValue';
+import { RadioButtons } from './radioButtons';
+import { Hyperlink } from './hyperlink';
+import { Dropdown } from './dropdown';
+import { DynamicTable } from './dynamicTable';
 
-    this.multilineTextWidget = function () {
+export class Widget {
+
+    multilineTextWidget() {
         return new MultilineText();
-    };
+    }
 
-    this.headerWidget = function () {
+    headerWidget() {
         return new Header();
-    };
+    }
 
-    this.displayTextWidget = function () {
+    displayTextWidget() {
         return new DisplayText();
-    };
+    }
 
-    this.attachFileWidget = function () {
+    attachFileWidget() {
         return new AttachFile();
-    };
+    }
 
-    this.displayValueWidget = function () {
+    displayValueWidget() {
         return new DisplayValue();
-    };
+    }
 
-    this.radioWidget = function () {
+    radioWidget() {
         return new RadioButtons();
-    };
+    }
 
-    this.hyperlink = function () {
+    hyperlink() {
         return new Hyperlink();
-    };
+    }
 
-    this.dropdown = function () {
+    dropdown() {
         return new Dropdown();
-    };
+    }
 
-    this.dynamicTable = function () {
+    dynamicTable() {
         return new DynamicTable();
-    };
+    }
 
-};
-
-module.exports = Widget;
-
+}

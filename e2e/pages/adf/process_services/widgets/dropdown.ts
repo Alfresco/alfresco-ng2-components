@@ -15,20 +15,18 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
-var Util = require('../../../../util/util');
+import { DynamicTable } from './dynamicTable';
 
-var RadioButtons = function () {
+import FormFields = require('../formFields');
 
-    var formFields = new FormFields();
+export class Dropdown {
 
-    this.getSpecificOptionLabel = function (fieldId, optionNumber) {
-        var optionLocator = by.css("label[for*='radiobuttons-option_" + optionNumber + "'] div[class*='content']");
-        var option = formFields.getWidget(fieldId).element(optionLocator);
-        Util.waitUntilElementIsVisible(option);
-        return option.getText();
-    };
+    formFields = new FormFields();
 
-};
+    selectedOptionLocator = by.css('mat-select[id="dropdown"] span span');
 
-module.exports = RadioButtons;
+    getSelectedOptionText(fieldId) {
+        return this.formFields.getFieldText(fieldId, this.selectedOptionLocator);
+    }
+
+}

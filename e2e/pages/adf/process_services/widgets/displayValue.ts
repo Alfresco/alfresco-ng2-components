@@ -15,20 +15,18 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import { Dropdown } from './dropdown';
 
-var DisplayValue = function () {
+import FormFields = require('../formFields');
 
-    var formFields = new FormFields();
+export class DisplayValue {
 
-    var labelLocator = by.css("span[class*='unknown-text']");
+    formFields = new FormFields();
 
-    this.getFieldLabel = function (fieldId) {
-        return formFields.getFieldLabel(fieldId, labelLocator);
-    };
+    labelLocator = by.css('span[class*="unknown-text"]');
 
-};
+    getFieldLabel(fieldId) {
+        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
+    }
 
-module.exports = DisplayValue;
-
-
+}

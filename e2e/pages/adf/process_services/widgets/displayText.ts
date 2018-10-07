@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import { DisplayValue } from './displayValue';
 
-var Header = function () {
+import FormFields = require('../formFields');
 
-    var formFields = new FormFields();
+export class DisplayText {
 
-    var labelLocator = by.css("span[id='container-header-label']");
+    formFields = new FormFields();
 
-    this.getFieldLabel = function (fieldId) {
-        return formFields.getFieldLabel(fieldId, labelLocator);
-    };
+    labelLocator = by.css('div[class*="display-text-widget"]');
 
-};
+    getFieldLabel(fieldId) {
+        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
+    }
 
-module.exports = Header;
+}
