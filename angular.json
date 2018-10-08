@@ -666,7 +666,7 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "lib/process-services-cloud/tsconfig.json",
+            "tsConfig": "lib/process-services-cloud/tsconfig.lib.json",
             "project": "lib/process-services-cloud/ng-package.json"
           },
           "configurations": {
@@ -678,8 +678,8 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "lib/process-services-cloud/test.ts",
-            "tsConfig": "lib/process-services-cloud/tsconfig.json",
+            "main": "lib/process-services-cloud/src/test.ts",
+            "tsConfig": "lib/process-services-cloud/tsconfig.spec.json",
             "karmaConfig": "lib/process-services-cloud/karma.conf.js"
           }
         },
@@ -687,8 +687,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "lib/process-services-cloud/tsconfig.json",
-              "lib/process-services-cloud/tsconfig.json"
+              "lib/process-services-cloud/tsconfig.lib.json",
+              "lib/process-services-cloud/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -777,14 +777,5 @@
       }
     }
   },
-  "defaultProject": "dist",
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "styleext": "scss"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  }
+  "defaultProject": "dist"
 }
