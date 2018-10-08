@@ -108,26 +108,26 @@ describe('Search component - Search Bar', () => {
     //     });
     // });
 
-    it('[C272798] Search bar is visible', () => {
+    it('[C272798] Search bar should be visible', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon().checkSearchBarIsNotVisible().checkSearchIconIsVisible();
     });
 
-    it('[C272799] Add input and close', () => {
+    it('[C272799] Should be possible to hide search bar after input', () => {
         searchDialog.checkSearchIconIsVisible().clickOnSearchIcon().enterText(firstFolderModel.shortName);
         searchDialog.clickOnSearchIcon().checkSearchBarIsNotVisible().checkSearchIconIsVisible();
         contentServicesPage.checkAcsContainer();
     });
 
-    it('[C260255] Search for content that does not exist', () => {
+    it('[C260255] Should display message when searching for an inexistent file', () => {
         searchDialog.checkSearchBarIsNotVisible().clickOnSearchIcon().checkNoResultMessageIsNotDisplayed()
             .enterText(search.inactive.name).checkNoResultMessageIsDisplayed();
         searchDialog.clearText();
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('[C260256] Existing folder and file are displayed in search suggestion when typing the first 4 letters', () => {
+    it('[C260256] Should display file/folder in search suggestion when typing first characters', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.shortName);
 
@@ -152,7 +152,7 @@ describe('Search component - Search Bar', () => {
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('[C272800] Existing folder and file are displayed in search suggestion', () => {
+    it('[C272800] Should display file/folder in search suggestion when typing name', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.name);
         searchDialog.resultTableContainsRow(firstFolderModel.name);
@@ -175,7 +175,7 @@ describe('Search component - Search Bar', () => {
         searchDialog.checkSearchBarIsNotVisible();
     });
 
-    it('[C260257] Folder content is displayed when clicking on existing folder', () => {
+    it('[C260257] Should display content when clicking on folder from search suggestions', () => {
         searchDialog.clickOnSearchIcon().enterText(firstFolderModel.shortName);
         searchDialog.resultTableContainsRow(firstFolderModel.name);
         searchDialog.clickOnSpecificRow(firstFolderModel.name);
@@ -193,21 +193,21 @@ describe('Search component - Search Bar', () => {
         filePreviewPage.closePreviewWithButton();
     });
 
-    it('[C272801] Non-existent folder is not displayed in search page', () => {
+    it('[C272801] Should display message when searching for non-existent folder', () => {
         searchDialog.checkSearchIconIsVisible().clickOnSearchIcon();
         searchDialog.enterTextAndPressEnter(search.inactive.name);
         searchResultPage.checkNoResultMessageIsDisplayed();
         contentServicesPage.goToDocumentList();
     });
 
-    it('[C272802] Existing folder is displayed in search page', () => {
+    it('[C272802] Should be able to find an existent folder in search results', () => {
         searchDialog.clickOnSearchIcon();
         browser.driver.sleep(1000);
         searchDialog.enterTextAndPressEnter(firstFolderModel.name);
         searchResultPage.checkContentIsDisplayed(firstFolderModel.name);
     });
 
-    it('[C260258] Existing file is displayed in search page', () => {
+    it('[C260258] Should be able to find an existent file in search results', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.clickOnSearchIcon();
         searchDialog.enterTextAndPressEnter(firstFileModel.name);
@@ -226,7 +226,7 @@ describe('Search component - Search Bar', () => {
         expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 
-    it('[C260254] The search bar gets closed when clicking on another browser tab', () => {
+    it('[C260254] Search bar should get closed when changing browser tab', () => {
         contentServicesPage.goToDocumentList();
 
         searchDialog

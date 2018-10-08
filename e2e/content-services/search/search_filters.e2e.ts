@@ -88,7 +88,7 @@ describe('Search Filters', () => {
         searchFiltersPage.checkCreatorChipIsNotDisplayed(acsUser.firstName, acsUser.lastName);
     });
 
-    it('[C277146] Show more/less buttons are hidden when inactive', () => {
+    it('[C277146] Should Show more/less buttons be hidden when inactive', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkShowLessButtonIsNotDisplayed();
