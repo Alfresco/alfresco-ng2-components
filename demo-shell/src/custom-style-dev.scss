@@ -31,7 +31,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include adf-process-services-cloud-theme($theme);
 @include adf-insights-theme($theme);
 @include adf-core-theme($theme);
-@include adf-process-services-cloud-theme($theme);
 
 body, html {
     margin: 0;
