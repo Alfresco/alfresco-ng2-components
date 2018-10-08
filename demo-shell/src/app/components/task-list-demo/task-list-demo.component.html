@@ -58,7 +58,7 @@
             <mat-hint>E.g. 12345</mat-hint>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field data-automation-id="items per page">
             <mat-label>Items per page</mat-label>
             <input
                 matInput
@@ -72,7 +72,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field data-automation-id="page">
             <mat-label>Page</mat-label>
             <input
                 matInput
@@ -123,11 +123,11 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field data-automation-id="state">
             <mat-label>State</mat-label>
             <mat-select
                 class="form-control"
-                [formControl]="taskState">
+                [formControl]="taskState" data-automation-id="selected state">
                 <mat-option *ngFor="let stateOption of stateOptions" [value]="stateOption.value">{{
                     stateOption.title }}
                 </mat-option>

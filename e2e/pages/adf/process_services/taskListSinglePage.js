@@ -22,13 +22,18 @@ var TaskListSinglePage = function () {
 
     var appId = element(by.css("input[data-automation-id='appId input']"));
     var itemsPerPage = element(by.css("input[data-automation-id='items per page']"));
+    var itemsPerPageForm = element(by.css("mat-form-field[data-automation-id='items per page']"));
     var page = element(by.css("input[data-automation-id='page']"));
+    var pageForm = element(by.css("mat-form-field[data-automation-id='page']"));
     var taskName = element(by.css("input[data-automation-id='task name']"));
     var noTasksFound = element(by.css("p[class='adf-empty-content__title']"));
     var resetButton = element(by.css("div[class='adf-reset-button'] button"));
     var emptyPagination = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
     var dueBefore = element(by.css("input[data-automation-id='due before']"));
     var dueAfter = element(by.css("input[data-automation-id='due after']"));
+    var taskId = element(by.css("input[data-automation-id='task id']"));
+    var stateDropDownArrow = element(by.css("mat-form-field[data-automation-id='state'] div[class*='arrow']"));
+    var stateSelector = element(by.css("div[class*='mat-select-content']"));
 
     this.typeAppId = function(input) {
         Util.waitUntilElementIsVisible(appId);
@@ -37,9 +42,27 @@ var TaskListSinglePage = function () {
         return this;
     };
 
+    this.clickAppId = function() {
+        Util.waitUntilElementIsVisible(appId);
+        appId.click();
+        return this;
+    };
+
     this.getAppId = function() {
         Util.waitUntilElementIsVisible(appId);
         return appId.getAttribute('value');
+    };
+
+    this.typeTaskId = function(input) {
+        Util.waitUntilElementIsVisible(taskId);
+        this.clearText(taskId);
+        taskId.sendKeys(input);
+        return this;
+    };
+
+    this.getTaskId = function() {
+        Util.waitUntilElementIsVisible(taskId);
+        return taskId.getAttribute('value');
     };
 
     this.typeTaskName = function(input) {
@@ -66,6 +89,13 @@ var TaskListSinglePage = function () {
         return itemsPerPage.getAttribute('value');
     };
 
+    this.getItemsPerPageFieldErrorMessage = function() {
+        Util.waitUntilElementIsVisible(itemsPerPageForm);
+        var errorMessage = itemsPerPageForm.element(by.css("mat-error"));
+        Util.waitUntilElementIsVisible(errorMessage);
+        return errorMessage.getText();
+    };
+
     this.typePage = function(input) {
         Util.waitUntilElementIsVisible(page);
         this.clearText(page);
@@ -76,6 +106,13 @@ var TaskListSinglePage = function () {
     this.getPage = function() {
         Util.waitUntilElementIsVisible(page);
         return page.getAttribute('value');
+    };
+
+    this.getPageFieldErrorMessage = function() {
+        Util.waitUntilElementIsVisible(pageForm);
+        var errorMessage = pageForm.element(by.css("mat-error"));
+        Util.waitUntilElementIsVisible(errorMessage);
+        return errorMessage.getText();
     };
 
     this.typeDueAfter = function(input) {
@@ -123,6 +160,22 @@ var TaskListSinglePage = function () {
 
     this.checkPaginationIsNotDisplayed = function () {
         Util.waitUntilElementIsVisible(emptyPagination);
+    };
+
+    this.clickOnStateDropDownArrow = function() {
+        Util.waitUntilElementIsVisible(stateDropDownArrow);
+        stateDropDownArrow.click();
+        Util.waitUntilElementIsVisible(stateSelector);
+    };
+
+    this.selectState = function (state) {
+        this.clickOnStateDropDownArrow();
+
+        var stateElement = element.all(by.cssContainingText("mat-option span", state)).first();
+        Util.waitUntilElementIsClickable(stateElement);
+        Util.waitUntilElementIsVisible(stateElement);
+        stateElement.click();
+        return this;
     };
 
 };

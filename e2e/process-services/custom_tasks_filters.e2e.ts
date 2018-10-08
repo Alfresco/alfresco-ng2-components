@@ -59,15 +59,18 @@ describe('Start Task - Custom App', () => {
     let appRuntime, secondAppRuntime;
     let secondApp = resources.Files.WIDGETS_SMOKE_TEST;
     let appModel, secondAppModel;
+    let completedTasks = [];
     let paginationTasksName = ["t01", "t02", "t03", "t04", "t05", "t06", "t07", "t08", "t09", "t10", "t11", "t12", "t13", "taskOne", "taskTwo", "taskOne"];
+    let completedTasksName = ["completed01", "completed02"];
     let allTasksName = ["t01", "taskOne", "taskTwo", "taskOne", "t13", "t12", "t11", "t10", "t09", "t08", "t07", "t06", "t05", "t04", "t03", "t02", "User Task", "User Task", "User Task", "User Task"];
-    let invalidAppId = "1234567890", invalidName = "invalidName";
+    let invalidAppId = "1234567890", invalidName = "invalidName", invalidTaskId = '0000';
     let noTasksFoundMessage = "No Tasks Found";
     let nrOfTasks = 20, currentPage = 1, totalNrOfPages = 'of 4';
     var currentDateStandardFormat=Util.getCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ');
     var currentDate=Util.getCrtDateInFormat('MM/DD/YYYY');
     var beforeDate=moment().add(-1, 'days').format('MM/DD/YYYY');
     var afterDate=moment().add(1, 'days').format('MM/DD/YYYY');
+    let taskWithDueDate;
 
     let itemsPerPage = {
         five: '5',
@@ -118,7 +121,13 @@ describe('Start Task - Custom App', () => {
             await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': paginationTasksName[i]});
         };
 
-        await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': paginationTasksName[0], 'dueDate': currentDateStandardFormat});
+        for (let i = 0; i < 2; i++) {
+            completedTasks[i] = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': completedTasksName[i]});
+            await this.alfrescoJsApi.activiti.taskActionsApi.completeTask(completedTasks[i].id);
+        };
+
+        taskWithDueDate = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': paginationTasksName[0], 'dueDate': currentDateStandardFormat});
+        console.log("Raspuns: ", taskWithDueDate.id);
 
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
@@ -263,8 +272,8 @@ describe('Start Task - Custom App', () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 
-        taskListSinglePage.typeItemsPerPage('0');
-        taskListSinglePage.checkPaginationIsNotDisplayed();
+        taskListSinglePage.typeItemsPerPage('0').clickAppId();
+        expect(taskListSinglePage.getItemsPerPageFieldErrorMessage()).toEqual('No ideea');
     });
 
     it('[C286404] Navigate using page field', function () {
@@ -321,8 +330,8 @@ describe('Start Task - Custom App', () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 
-        taskListSinglePage.typePage('0');
-        taskListSinglePage.checkPaginationIsNotDisplayed();
+        taskListSinglePage.typePage('0').clickAppId();
+        expect(taskListSinglePage.getPageFieldErrorMessage()).toEqual('No ideea');
 
         taskListSinglePage.clickResetButton();
         taskListSinglePage.typePage('2');
@@ -419,7 +428,7 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.usingDataTable().checkRowIsNotDisplayedByName(paginationTasksName[13]);
     });
 
-    it('[C280569]  Should be able to see No tasks found when typing an invalid appId', () => {
+    it('[C280569] Should be able to see No tasks found when typing an invalid appId', () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 
@@ -448,6 +457,66 @@ describe('Start Task - Custom App', () => {
         expect(taskListSinglePage.getTaskName()).toEqual(invalidName);
 
         expect(taskListSinglePage.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
+
+    it('[C280629] Should be able to see only the task with specific taskId when typing it in the task Id field', () => {
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.typeTaskId(taskWithDueDate.id);
+        expect(taskListSinglePage.getTaskId()).toEqual(taskWithDueDate.id);
+
+        taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(taskWithDueDate.name);
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(1);
+    });
+
+    it('[C280630] Should be able to see No tasks found when typing an invalid taskId', () => {
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.typeTaskId(invalidTaskId);
+        expect(taskListSinglePage.getTaskId()).toEqual(invalidTaskId);
+
+        expect(taskListSinglePage.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
+
+    it('[C286589] Should be able to see only completed tasks when choosing Completed from state drop down', () => {
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.selectState('Completed');
+
+        taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(completedTasks[0].name);
+        taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(completedTasks[1].name);
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(2);
+    });
+
+    it('[C280630] Should be able to see only active tasks when choosing Active from state drop down', () => {
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.selectState('Active');
+
+        taskListSinglePage.usingDataTable().checkRowIsNotDisplayedByName(completedTasks[0].name);
+        taskListSinglePage.usingDataTable().checkRowIsNotDisplayedByName(completedTasks[1].name);
+        taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
+            expect(Util.arrayContainsArray(list, allTasksName)).toEqual(true);
+        });
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(20);
+    });
+
+    it('[C280630] Should be able to see all tasks when choosing All from state drop down', () => {
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.selectState('All');
+
+        taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(completedTasks[0].name);
+        taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(completedTasks[1].name);
+        taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
+            expect(Util.arrayContainsArray(list, allTasksName)).toEqual(true);
+        });
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(22);
     });
 
 });
