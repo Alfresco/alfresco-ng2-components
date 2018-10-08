@@ -1,29 +1,12 @@
 {
-  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
-  "workingDirectory": "./ng_work",
-  "src": "../process-services-cloud/",
-  "dest": "../dist/process-services-cloud/",
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist/process-services-cloud",
   "lib": {
-    "languageLevel": [ "dom", "es2016" ],
-    "comments" : "none",
-    "entryFile": "./public-api.ts",
+    "languageLevel": ["dom", "es2017"],
+    "entryFile": "src/public_api.ts",
     "flatModuleFile": "adf-process-services-cloud",
     "umdModuleIds": {
-      "alfresco-js-api": "alfresco-js-api",
-      "minimatch": "minimatch",
-      "@angular/platform-browser/animations": "@angular/platform-browser/animations",
-      "@angular/material": "@angular/material",
-      "@mat-datetimepicker": "@mat-datetimepicker",
-      "@angular/flex-layout": "@angular/flex-layout",
-      "@alfresco/adf-core": "@alfresco/adf-core",
-      "@angular/material-moment-adapter": "@angular/material-moment-adapter",
-      "@angular/animations": "@angular/animations",
-      "@angular/cdk/platform": "@angular/cdk/platform",
-      "@angular/material/core": "@angular/material/core",
-      "moment": "moment",
-      "moment-es6": "moment-es6",
-      "moment/src/moment": "moment/src/moment",
-      "@ngx-translate/core": "@ngx-translate/core"
+      "alfresco-js-api": "alfresco-js-api"
     }
   }
 }
