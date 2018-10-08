@@ -19,7 +19,7 @@ import LoginPage = require('../pages/adf/loginPage');
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import TestConfig = require('../test.config');
 import AlfrescoApi = require('alfresco-js-api-node');
-import NotificationPage = require('../pages/adf/notificationPage');
+import { NotificationPage } from '../pages/adf/notificationPage';
 import { browser } from 'protractor';
 
 describe('Notifications Component', () => {
@@ -51,13 +51,13 @@ describe('Notifications Component', () => {
 
     it('[C279977] Should show notification when the message is not empty and button is clicked', () => {
         notificationPage.enterMessageField('Notification test');
-        notificationPage.clickDefaultNotificationButton();
+        notificationPage.clickNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', () => {
         notificationPage.clearMessage();
-        notificationPage.clickDefaultNotificationButton();
+        notificationPage.clickNotificationButton();
         notificationPage.checkNotificationSnackBarIsNotDisplayed();
     });
 
@@ -65,7 +65,7 @@ describe('Notifications Component', () => {
         notificationPage.enterMessageField('Notification test');
         notificationPage.clickActionToggle();
         notificationPage.enterDurationField(6000);
-        notificationPage.clickCustomNotificationButton();
+        notificationPage.clickNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
         notificationPage.clickActionButton();
         notificationPage.checkActionEvent();
@@ -74,14 +74,14 @@ describe('Notifications Component', () => {
 
     it('[C279981] Should show notification with action when the message is not empty and custom configuration button is clicked', () => {
         notificationPage.enterMessageField('Notification test');
-        notificationPage.clickCustomNotificationButton();
+        notificationPage.clickNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayed();
     });
 
     it('[C279987] Should show custom notification during a limited time when a duration is added', () => {
         notificationPage.enterMessageField('Notification test');
         notificationPage.enterDurationField(1000);
-        notificationPage.clickCustomNotificationButton();
+        notificationPage.clickNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayed();
         browser.sleep(1500);
         notificationPage.checkNotificationSnackBarIsNotDisplayed();
@@ -90,7 +90,7 @@ describe('Notifications Component', () => {
     it('[C280000] Should show notification with action when the message is not empty and custom button is clicked', () => {
         notificationPage.enterMessageField('Notification test');
         notificationPage.clickActionToggle();
-        notificationPage.clickCustomNotificationButton();
+        notificationPage.clickNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
         notificationPage.clickActionButton();
         notificationPage.checkActionEvent();
@@ -103,7 +103,7 @@ describe('Notifications Component', () => {
         notificationPage.selectHorizontalPosition('Right');
         notificationPage.selectVerticalPosition('Top');
         notificationPage.selectDirection('Left to right');
-        notificationPage.clickCustomNotificationButton();
+        notificationPage.clickNotificationButton();
         expect(notificationPage.getConfigObject()).toBe('{"direction": "ltr", "duration": "1000", "horizontalPosition": "right", "verticalPosition": "top"}');
     });
 });

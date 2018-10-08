@@ -96,20 +96,6 @@ export class NotificationsComponent implements OnInit {
         }
     }
 
-    send() {
-        this.actionOutput = '';
-
-        if (this.message) {
-            if (this.withAction) {
-                this.notificationService.openSnackMessageAction(this.message, 'Some action', this.snackBarConfig.duration)
-                    .onAction()
-                    .subscribe(() => this.actionOutput = 'Action clicked');
-            } else {
-                this.notificationService.openSnackMessage(this.message, this.snackBarConfig.duration);
-            }
-        }
-    }
-
     sendCustomConfig() {
         this.actionOutput = '';
         this.snackBarConfigObject = `{"direction": "${this.snackBarConfig.direction}",
