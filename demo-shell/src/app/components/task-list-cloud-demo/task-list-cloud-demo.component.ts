@@ -16,7 +16,7 @@
  */
 
 import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
-import { TaskListCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { TaskListCloudComponent, TaskListCloudSortingModel, SortingDirection } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { Observable, from } from 'rxjs';
 
@@ -35,6 +35,9 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
     status: string = '';
     clickedRow: string = '';
     selectTask: string = '';
+    sortField: string = '';
+    sortDirection: string = 'ASC';
+    sortArray: TaskListCloudSortingModel[] = [];
 
     constructor(private alfrescoApi: AlfrescoApiService,
                 private appConfigService: AppConfigService,
@@ -64,6 +67,14 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
 
     onRowClick($event) {
         this.clickedRow = $event;
+    }
+
+    onFilterButtonClick($event) {
+        let newSortParam: TaskListCloudSortingModel = {
+            orderBy: this.sortField,
+            direction: this.sortDirection };
+        this.sortArray.push(newSortParam);
+        this.taskCloud.reload();
     }
 
 }

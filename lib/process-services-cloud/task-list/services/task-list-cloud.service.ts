@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud.model';
 import { Observable, from, throwError } from 'rxjs';
+import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 
 @Injectable()
 export class TaskListCloudService {
@@ -35,6 +36,10 @@ export class TaskListCloudService {
         if (requestNode.appName) {
             let queryUrl = this.buildQueryUrl(requestNode);
             let queryParams = this.buildQueryParams(requestNode);
+            let sortingParams = this.buildSortingParam(requestNode.sorting);
+            if (sortingParams) {
+                queryParams['sort'] = sortingParams;
+            }
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, queryParams, null,
@@ -54,11 +59,34 @@ export class TaskListCloudService {
     private buildQueryParams(requestNode: TaskQueryCloudRequestModel) {
         let queryParam = {};
         for (let property in requestNode) {
-            if (requestNode.hasOwnProperty(property) && property !== 'appName' &&
-                (requestNode[property] !== null || requestNode[property] !== undefined) ) {
+            if (requestNode.hasOwnProperty(property) &&
+                !this.isExcludedField(property) &&
+                this.isPropertyValueValid(requestNode, property)) {
                 queryParam[property] = requestNode[property];
             }
         }
         return queryParam;
+    }
+
+    private isExcludedField(property) {
+        return property === 'appName' || property === 'sorting';
+    }
+
+    private isPropertyValueValid(requestNode, property) {
+        return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
+    }
+
+    private buildSortingParam(sortings: TaskListCloudSortingModel[]): string {
+        let finalSorting: string = '';
+        if (sortings) {
+            for (let sort of sortings) {
+                if (!finalSorting) {
+                    finalSorting = `${sort.orderBy},${sort.direction}`;
+                } else {
+                    finalSorting = `${finalSorting}&${sort.orderBy},${sort.direction}`;
+                }
+            }
+        }
+        return encodeURI(finalSorting);
     }
 }

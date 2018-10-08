@@ -1,3 +1,4 @@
+
 /*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
@@ -15,12 +16,14 @@
  * limitations under the License.
  */
 
-export * from './components/task-list-cloud.component';
+export class TaskListCloudSortingModel {
+    orderBy: string;
+    direction: string;
 
-export * from './services/task-list-cloud.service';
-
-export * from './models/filter-cloud.model';
-export * from './models/task-preset-cloud.model';
-export * from './models/task-list-sorting.model';
-
-export * from './task-list-cloud.module';
+    constructor(obj: any) {
+        if (obj) {
+            this.orderBy = obj.orderBy;
+            this.direction = obj.direction;
+        }
+    }
+}

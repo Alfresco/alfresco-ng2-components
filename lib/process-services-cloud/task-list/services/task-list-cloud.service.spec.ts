@@ -22,8 +22,6 @@ import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, C
 import { TaskListCloudService } from './task-list-cloud.service';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud.model';
 
-declare let jasmine: any;
-
 describe('Activiti TaskList Cloud Service', () => {
 
     let service: TaskListCloudService;
@@ -70,12 +68,7 @@ describe('Activiti TaskList Cloud Service', () => {
         service = new TaskListCloudService(alfrescoApiMock,
                                            new AppConfigService(null),
                                            new LogService(new AppConfigService(null)));
-        jasmine.Ajax.install();
     }));
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
 
     it('should return the tasks', (done) => {
         let taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName' };
@@ -114,8 +107,20 @@ describe('Activiti TaskList Cloud Service', () => {
         });
     });
 
+    it('should concat the sorting to append as parameters', (done) => {
+        let taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
+            sorting: [{ orderBy: 'NAME', direction: 'DESC'}, { orderBy: 'TITLE', direction: 'ASC'}] };
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallQueryParameters);
+        service.getTaskByRequest(taskRequest).subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.sort).toBe('NAME,DESC&TITLE,ASC');
+            done();
+        });
+    });
+
     it('should return an error when app name is not specified', (done) => {
-        let taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel>{ appName: null };
+        let taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: null };
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallUrl);
         service.getTaskByRequest(taskRequest).subscribe(
             () => { },

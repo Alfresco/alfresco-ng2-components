@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { TaskListCloudSortingModel } from './task-list-sorting.model';
+
 export class TaskQueryCloudRequestModel {
     appName: string;
     appVersion?: string;
@@ -37,6 +39,7 @@ export class TaskQueryCloudRequestModel {
     status?: string;
     maxItems: number;
     skipCount: number;
+    sorting?: TaskListCloudSortingModel[];
 
     constructor(obj?: any) {
         if (obj) {
@@ -61,6 +64,7 @@ export class TaskQueryCloudRequestModel {
             this.status = obj.status;
             this.maxItems = obj.maxItems;
             this.skipCount = obj.skipCount;
+            this.sorting = obj.sorting;
         }
     }
 }

@@ -1,63 +1,103 @@
 <h2>TASK LIST CLOUD DEMO</h2>
-<div class="app-task-list-cloud-demo-selection">
-    <div class="task-cloud-demo-select">
-        <mat-form-field>
-            <mat-select placeholder="Application Name" [(ngModel)]="appChosen">
-                <mat-option>No App</mat-option>
-                <mat-option *ngFor="let app of appDefinitionList | async" [value]="app.name">
-                    {{app.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div class="task-cloud-demo-select">
-        <mat-form-field>
-            <mat-select placeholder="Status" [(ngModel)]="status">
-                <mat-option value="">
-                    ALL
-                </mat-option>
-                <mat-option value="CREATED">
-                    CREATED
-                </mat-option>
-                <mat-option value="CANCELLED">
-                    CANCELLED
-                </mat-option>
-                <mat-option value="ASSIGNED">
-                    ASSIGNED
-                </mat-option>
-                <mat-option value="SUSPENDED">
-                    SUSPENDED
-                </mat-option>
-                <mat-option value="COMPLETED">
-                    COMPLETED
-                </mat-option>
-                <mat-option value="DELETED">
-                    DELETED
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div class="task-cloud-demo-select">
-        <mat-form-field>
-            <input matInput placeholder="Task to select" [(ngModel)]="selectTask">
-        </mat-form-field>
-    </div>
-    <!-- <div class="task-cloud-demo-select">
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="Created Date" [(ngModel)]="createdDate">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-    </div> -->
-    <div class="task-cloud-demo-select task-row-clicked">
-        <span *ngIf="clickedRow">clicked task {{clickedRow}}</span>
-    </div>
-</div>
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Filter Examples
+            </mat-panel-title>
+            <mat-panel-description>
+                Choose which application you want to see and filter tasks related to it
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="task-cloud-demo-select">
+            <mat-form-field>
+                <mat-select placeholder="Application Name" [(ngModel)]="appChosen">
+                    <mat-option>No App</mat-option>
+                    <mat-option *ngFor="let app of appDefinitionList | async" [value]="app.name">
+                        {{app.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="task-cloud-demo-select">
+            <mat-form-field>
+                <mat-select placeholder="Status" [(ngModel)]="status">
+                    <mat-option value="">
+                        ALL
+                    </mat-option>
+                    <mat-option value="CREATED">
+                        CREATED
+                    </mat-option>
+                    <mat-option value="CANCELLED">
+                        CANCELLED
+                    </mat-option>
+                    <mat-option value="ASSIGNED">
+                        ASSIGNED
+                    </mat-option>
+                    <mat-option value="SUSPENDED">
+                        SUSPENDED
+                    </mat-option>
+                    <mat-option value="COMPLETED">
+                        COMPLETED
+                    </mat-option>
+                    <mat-option value="DELETED">
+                        DELETED
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="task-cloud-demo-select">
+            <mat-form-field>
+                <input matInput placeholder="Task to select" [(ngModel)]="selectTask">
+            </mat-form-field>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Sorting Panel
+            </mat-panel-title>
+            <mat-panel-description>
+                Choose how to sort your tasks
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="task-cloud-demo-select">
+            <mat-form-field>
+                <mat-select placeholder="Sort Field" [(ngModel)]="sortField">
+                    <mat-option value="id">
+                        ID
+                    </mat-option>
+                    <mat-option value="name">
+                        NAME
+                    </mat-option>
+                    <mat-option value="status">
+                        STATUS
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="task-cloud-demo-select">
+            <mat-form-field>
+                <mat-select placeholder="Direction" [(ngModel)]="sortDirection">
+                    <mat-option value="ASC">
+                        ASC
+                    </mat-option>
+                    <mat-option value="DESC">
+                        DESC
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button mat-button (click)="onFilterButtonClick($event)">Apply Filter</button>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
 <div>
     <adf-cloud-task-list #taskCloud
                          [applicationName]="appChosen"
                          [status]="status"
                          [landingTaskId]="selectTask"
+                         [sorting]="sortArray"
                          (rowClick)="onRowClick($event)">
         <data-columns>
             <data-column key="entry.id" title="Id"></data-column>

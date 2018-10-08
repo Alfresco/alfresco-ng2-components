@@ -1,4 +1,3 @@
-
 /*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
@@ -26,6 +25,7 @@ import { TaskQueryCloudRequestModel } from '../models/filter-cloud.model';
 import { BehaviorSubject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { MinimalNodeEntity } from 'alfresco-js-api';
+import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 
 @Component({
     selector: 'adf-cloud-task-list',
@@ -35,7 +35,7 @@ import { MinimalNodeEntity } from 'alfresco-js-api';
 })
 export class TaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
 
-    static PRESET_KEY = 'adf-task-list.presets';
+    static PRESET_KEY = 'adf-cloud-task-list.presets';
 
     @ContentChild(EmptyCustomContentDirective)
     emptyCustomContent: EmptyCustomContentDirective;
@@ -83,6 +83,9 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     multiselect: boolean = false;
 
+    @Input()
+    sorting: TaskListCloudSortingModel[];
+
     /** Emitted when a task in the list is clicked */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -127,7 +130,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes) &&
-            this.isEqualToCurrentId(changes['landingTaskId'])) {
+            !this.isEqualToCurrentId(changes['landingTaskId'])) {
             this.reload();
         }
     }
@@ -160,6 +163,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         this.requestNode = this.createRequestNode();
         if (this.requestNode.appName) {
             this.load(this.requestNode);
+        } else {
+            this.rows = [];
         }
     }
 
@@ -237,8 +242,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         let requestNode = {
             appName: this.applicationName,
             assignee: this.assignee,
-            // createdDate: this.createdDate ? moment(this.createdDate).valueOf() : null,
-            // dueDate: this.dueDate ? moment(this.dueDate).valueOf() : null,
             id: this.id,
             name: this.name,
             parentTaskId: this.parentTaskId,
@@ -246,7 +249,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             processInstanceId: this.processInstanceId,
             status: this.status,
             maxItems: this.size,
-            skipCount: this.skipCount
+            skipCount: this.skipCount,
+            sorting: this.sorting
         };
         return new TaskQueryCloudRequestModel(requestNode);
     }

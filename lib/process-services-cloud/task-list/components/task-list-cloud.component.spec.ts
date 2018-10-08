@@ -23,12 +23,43 @@ import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { ProcessTestingModule } from '../../testing/process-cloud.testing.module';
-import { fakeGlobalTask, fakeCutomSchema } from '../mock/fakeTaskResponseMock';
+import { fakeGlobalTask, fakeCutomSchema, fakeTaskCloudList } from '../mock/fakeTaskResponseMock';
 import { of } from 'rxjs';
 
-declare let jasmine: any;
-/*tslint:disable:ban*/
-fdescribe('TaskListCloudComponent', () => {
+@Component({
+    template: `
+    <adf-cloud-task-list #taskListCloud>
+        <data-columns>
+            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
+            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
+            <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
+                <ng-template let-entry="$implicit">
+                    <div>{{getFullName(entry.row.obj.startedBy)}}</div>
+                </ng-template>
+            </data-column>
+        </data-columns>
+    </adf-cloud-task-list>`
+})
+
+class CustomTaskListComponent {
+
+    @ViewChild(TaskListCloudComponent)
+    taskList: TaskListCloudComponent;
+}
+
+@Component({
+    template: `
+    <adf-tasklist>
+        <adf-empty-content-holder>
+            <p id="custom-id"></p>
+        </adf-empty-content-holder>
+    </adf-tasklist>
+       `
+})
+class EmptyTemplateComponent {
+}
+
+describe('TaskListCloudComponent', () => {
     let component: TaskListCloudComponent;
     let fixture: ComponentFixture<TaskListCloudComponent>;
     let appConfig: AppConfigService;
@@ -69,6 +100,10 @@ fdescribe('TaskListCloudComponent', () => {
             }
         });
 
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should use the default schemaColumn as default', () => {
@@ -167,9 +202,11 @@ fdescribe('TaskListCloudComponent', () => {
     });
 
     it('should emit row click event', (done) => {
-        let row = new ObjectDataRow({entry : {
-            id: '999'
-        }});
+        let row = new ObjectDataRow({
+            entry: {
+                id: '999'
+            }
+        });
         let rowEvent = new DataRowEvent(row, null);
 
         component.rowClick.subscribe(taskId => {
@@ -195,7 +232,7 @@ fdescribe('TaskListCloudComponent', () => {
             component.rows = [{ entry: { id: '999', name: 'Fake-name' } }];
             const landingTaskId = '999';
             let change = new SimpleChange('999', landingTaskId, true);
-            component.ngOnChanges({'landingTaskId': change});
+            component.ngOnChanges({ 'landingTaskId': change });
             expect(component.reload).not.toHaveBeenCalled();
             expect(component.rows.length).toEqual(1);
         });
@@ -205,6 +242,8 @@ fdescribe('TaskListCloudComponent', () => {
             component.rows = [{ id: '999', name: 'Fake-name' }];
             const landingTaskId = '888';
             let change = new SimpleChange(null, landingTaskId, true);
+            component.applicationName = 'fake';
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeTaskCloudList));
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -213,13 +252,7 @@ fdescribe('TaskListCloudComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({'landingTaskId': change});
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
+            component.ngOnChanges({ 'landingTaskId': change });
         });
 
         it('should NOT reload the task list when no parameters changed', () => {
@@ -228,221 +261,65 @@ fdescribe('TaskListCloudComponent', () => {
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeTruthy();
         });
+    });
 
-        it('should reload the list when the appId parameter changes', (done) => {
-            const appId = '1';
-            let change = new SimpleChange(null, appId, true);
+    describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {
+        let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
+        let componentCustom: CustomTaskListComponent;
 
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.rows.length).toEqual(2);
-                expect(component.rows[1]['name']).toEqual('No name');
-                done();
-            });
-            component.ngOnChanges({ 'appId': change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
+        setupTestBed({
+            imports: [CoreModule.forRoot()],
+            declarations: [TaskListCloudComponent, CustomTaskListComponent],
+            providers: [TaskListCloudService]
         });
 
-        it('should reload the list when the processDefinitionKey parameter changes', (done) => {
-            const processDefinitionKey = 'fakeprocess';
-            let change = new SimpleChange(null, processDefinitionKey, true);
-
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.rows.length).toEqual(2);
-                expect(component.rows[1]['name']).toEqual('No name');
-                done();
-            });
-
-            component.ngOnChanges({ 'processDefinitionKey': change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
+        beforeEach(() => {
+            fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
+            fixtureCustom.detectChanges();
+            componentCustom = fixtureCustom.componentInstance;
         });
 
-        it('should reload the list when the state parameter changes', (done) => {
-            const state = 'open';
-            let change = new SimpleChange(null, state, true);
-
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.rows.length).toEqual(2);
-                expect(component.rows[1]['name']).toEqual('No name');
-                done();
-            });
-
-            component.ngOnChanges({ 'state': change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
+        afterEach(() => {
+            fixtureCustom.destroy();
         });
 
-        it('should reload the list when the sort parameter changes', (done) => {
-            const sort = 'desc';
-            let change = new SimpleChange(null, sort, true);
-
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.rows.length).toEqual(2);
-                expect(component.rows[1]['name']).toEqual('No name');
-                done();
-            });
-
-            component.ngOnChanges({ 'sort': change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
+        it('should create instance of CustomTaskListComponent', () => {
+            expect(componentCustom instanceof CustomTaskListComponent).toBe(true, 'should create CustomTaskListComponent');
         });
 
-        it('should reload the process list when the name parameter changes', (done) => {
-            const name = 'FakeTaskName';
-            let change = new SimpleChange(null, name, true);
-
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.rows.length).toEqual(2);
-                expect(component.rows[1]['name']).toEqual('No name');
-                done();
-            });
-
-            component.ngOnChanges({ 'name': change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
-        });
-
-        it('should reload the list when the assignment parameter changes', (done) => {
-            const assignment = 'assignee';
-            let change = new SimpleChange(null, assignment, true);
-
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.rows.length).toEqual(2);
-                expect(component.rows[1]['name']).toEqual('No name');
-                done();
-            });
-
-            component.ngOnChanges({ 'assignment': change });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
-        });
-    });
-});
-
-@Component({
-    template: `
-    <adf-tasklist #taskList>
-        <data-columns>
-            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
-            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
-            <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
-                <ng-template let-entry="$implicit">
-                    <div>{{getFullName(entry.row.obj.startedBy)}}</div>
-                </ng-template>
-            </data-column>
-        </data-columns>
-    </adf-tasklist>`
-})
-
-class CustomTaskListComponent {
-
-    @ViewChild(TaskListCloudComponent)
-    taskList: TaskListCloudComponent;
-}
-
-describe('CustomTaskListComponent', () => {
-    let fixture: ComponentFixture<CustomTaskListComponent>;
-    let component: CustomTaskListComponent;
-
-    setupTestBed({
-        imports: [CoreModule.forRoot()],
-        declarations: [TaskListCloudComponent, CustomTaskListComponent],
-        providers: [TaskListCloudService]
-    });
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(CustomTaskListComponent);
-        fixture.detectChanges();
-        component = fixture.componentInstance;
-    });
-
-    it('should create instance of CustomTaskListComponent', () => {
-        expect(component instanceof CustomTaskListComponent).toBe(true, 'should create CustomTaskListComponent');
-    });
-
-    it('should fetch custom schemaColumn from html', () => {
-        fixture.detectChanges();
-        expect(component.taskList.columnList).toBeDefined();
-        expect(component.taskList.columns[0]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.NAME');
-        expect(component.taskList.columns[1]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.CREATED');
-        expect(component.taskList.columns.length).toEqual(3);
-    });
-});
-
-@Component({
-    template: `
-    <adf-tasklist>
-        <adf-empty-content-holder>
-            <p id="custom-id"></p>
-        </adf-empty-content-holder>
-    </adf-tasklist>
-       `
-})
-class EmptyTemplateComponent {
-}
-
-describe('Custom EmptyTemplateComponent', () => {
-    let fixture: ComponentFixture<EmptyTemplateComponent>;
-
-    setupTestBed({
-        imports: [ProcessTestingModule],
-        declarations: [EmptyTemplateComponent],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-    });
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(EmptyTemplateComponent);
-        fixture.detectChanges();
-    });
-
-    it('should render the custom template', async(() => {
-        fixture.whenStable().then(() => {
+        it('should fetch custom schemaColumn from html', () => {
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('#custom-id'))).not.toBeNull();
-            expect(fixture.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
+            expect(componentCustom.taskList.columnList).toBeDefined();
+            expect(componentCustom.taskList.columns[0]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.NAME');
+            expect(componentCustom.taskList.columns[1]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.CREATED');
+            expect(componentCustom.taskList.columns.length).toEqual(3);
         });
-    }));
+    });
+
+    describe('Creating an empty custom template - EmptyTemplateComponent', () => {
+        let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
+
+        setupTestBed({
+            imports: [ProcessTestingModule],
+            declarations: [EmptyTemplateComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
+
+        beforeEach(() => {
+            fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
+            fixtureEmpty.detectChanges();
+        });
+
+        afterEach(() => {
+            fixtureEmpty.destroy();
+        });
+
+        it('should render the custom template', async(() => {
+            fixtureEmpty.whenStable().then(() => {
+                fixtureEmpty.detectChanges();
+                expect(fixtureEmpty.debugElement.query(By.css('#custom-id'))).not.toBeNull();
+                expect(fixtureEmpty.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
+            });
+        }));
+    });
 });
