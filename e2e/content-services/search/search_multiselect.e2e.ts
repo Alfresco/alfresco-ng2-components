@@ -107,7 +107,7 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280054] Multiple items can be selected from a search facet filter', () => {
+        it('[C280054] Should be able to select multiple items from a search facet filter', () => {
             searchFiltersPage.filterByFileType('Plain Text');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
@@ -186,7 +186,7 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280056] Multiple items can be selected from multiple search facets', () => {
+        it('[C280056] Should be able to select multiple items from multiple search facet filters', () => {
             searchFiltersPage.checkSearchFiltersIsDisplayed();
 
             searchFiltersPage.filterByCreator(userUploadingTxt.firstName, userUploadingTxt.lastName);
@@ -245,7 +245,7 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280058] The filter facets items number is updated when another filter facet item is selected', () => {
+        it('[C280058] Should update filter facets items number when another filter facet item is selected', () => {
             searchFiltersPage.filterByFileType('Plain Text');
 
             searchFiltersPage.filterByCreator(acsUser.firstName, acsUser.lastName);
