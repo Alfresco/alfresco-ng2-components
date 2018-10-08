@@ -127,7 +127,7 @@ describe('Create folder directive', function () {
         expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('this is the description');
     });
 
-    it('[C260159] Should not be possible create a folder with banned carachter', () => {
+    it('[C260159] Should not be possible create a folder with banned character', () => {
         let bannedChar = ['* ', '<', '>', '\\', '/', '?', ':', '|'];
 
         contentServicesPage.clickOnCreateNewFolder();

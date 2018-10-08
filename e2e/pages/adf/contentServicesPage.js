@@ -145,7 +145,7 @@ var ContentServicesPage = function () {
     };
 
     this.getTooltip = function (content) {
-        return contentList.getRowByRowName(content).element(tooltip).getAttribute('title');
+        return contentList.getRowByRowName(content).all(tooltip).first().getAttribute('title');
     };
 
     this.getBreadcrumbTooltip = function (content) {

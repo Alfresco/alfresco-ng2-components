@@ -118,8 +118,7 @@ describe('Upload component - Excluded Files', () => {
         browser.refresh();
 
         navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickFileConfiguration('adf-file-conf');
+        configEditorPage.clickFileConfiguration();
 
         configEditorPage.clickClearButton();
 
@@ -149,7 +148,7 @@ describe('Upload component - Excluded Files', () => {
 
         navigationBarPage.clickConfigEditorButton();
 
-        configEditorPage.clickFileConfiguration('adf-file-conf');
+        configEditorPage.clickFileConfiguration();
 
         configEditorPage.clickClearButton();
 
