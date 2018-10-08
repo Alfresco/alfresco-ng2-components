@@ -1,0 +1,52 @@
+@mixin adf-login-component-theme($theme) {
+    .setting-button.mat-fab.mat-accent {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 1;
+
+    }
+
+    .settings {
+        border-radius: 8px;
+        position: absolute;
+        background-color: papayawhip;
+        color: cadetblue;
+        left: 10px;
+        top: 10px;
+        z-index: 1;
+    }
+
+    .toggle {
+        width: auto;
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .mobile-settings, .mobile-setting-button {
+        display: none;
+    }
+
+    @media screen and ($mat-small) {
+        .settings, .setting-button.mat-fab.mat-accent  {
+            display: none;
+        }
+
+        .mobile-settings, .mobile-setting-button {
+            display: block;
+        }
+
+        .mobile-setting-button {
+            width: 100%;
+        }
+
+        .mobile-settings {
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    .settings ::ng-deep .mat-slide-toggle-thumb-container {
+        cursor: pointer;
+    }
+}
