@@ -19,6 +19,7 @@ import Util = require('../../util/util');
 
 import { TabsPage } from './material/tabsPage';
 import { FormControllersPage } from './material/formControllersPage';
+import { element, by, browser, protractor } from 'protractor';
 
 export class ViewerPage {
 

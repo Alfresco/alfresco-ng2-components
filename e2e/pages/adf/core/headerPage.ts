@@ -28,8 +28,8 @@ export class HeaderPage {
     hexColorInput = element(by.css('input[placeholder="hex color code"]'));
     logoHyperlinkInput = element(by.css('input[placeholder="Redirect URL"]'));
     logoTooltipInput = element(by.css('input[placeholder="Tooltip text"]'));
-    positionStart = element(by.css('mat-radio-button[value="start"]'));
-    positionEnd = element(by.css('mat-radio-button[value="end"]'));
+    positionStart = element.all(by.css('mat-radio-button[value="start"]')).first();
+    positionEnd = element.all(by.css('mat-radio-button[value="end"]')).first();
     sideBarPositionRight = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
     sideBarPositionLeft = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
 
@@ -98,18 +98,24 @@ export class HeaderPage {
 
     addHexCodeColor(hexCode) {
         Util.waitUntilElementIsVisible(this.hexColorInput);
-        return this.hexColorInput.click().sendKeys(hexCode).sendKeys(protractor.Key.ENTER);
+        this.hexColorInput.click();
+        this.hexColorInput.sendKeys(hexCode);
+        return this.hexColorInput.sendKeys(protractor.Key.ENTER);
     }
 
     addLogoHyperlink(hyperlink) {
         Util.waitUntilElementIsVisible(this.logoHyperlinkInput);
         Util.waitUntilElementIsClickable(this.logoHyperlinkInput);
-        return this.logoHyperlinkInput.click().sendKeys(hyperlink).sendKeys(protractor.Key.ENTER);
+        this.logoHyperlinkInput.click();
+        this.logoHyperlinkInput.sendKeys(hyperlink);
+        return this.logoHyperlinkInput.sendKeys(protractor.Key.ENTER);
     }
 
     addLogoTooltip(tooltip) {
         Util.waitUntilElementIsVisible(this.logoTooltipInput);
-        return this.logoTooltipInput.click().sendKeys(tooltip).sendKeys(protractor.Key.ENTER);
+        this.logoTooltipInput.click();
+        this.logoTooltipInput.sendKeys(tooltip);
+        return this.logoTooltipInput.sendKeys(protractor.Key.ENTER);
     }
 
     sideBarPositionStart() {
