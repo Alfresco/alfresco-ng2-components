@@ -61,7 +61,7 @@ describe('Start Task - Custom App', () => {
     let appModel, secondAppModel;
     let completedTasks = [];
     let paginationTasksName = ["t01", "t02", "t03", "t04", "t05", "t06", "t07", "t08", "t09", "t10", "t11", "t12", "t13", "taskOne", "taskTwo", "taskOne"];
-    let completedTasksName = ["completed01", "completed02"];
+    let completedTasksName = ["completed01", "completed02", "completed03"];
     let allTasksName = ["t01", "taskOne", "taskTwo", "taskOne", "t13", "t12", "t11", "t10", "t09", "t08", "t07", "t06", "t05", "t04", "t03", "t02", "User Task", "User Task", "User Task", "User Task"];
     let invalidAppId = "1234567890", invalidName = "invalidName", invalidTaskId = '0000';
     let noTasksFoundMessage = "No Tasks Found";
@@ -121,8 +121,8 @@ describe('Start Task - Custom App', () => {
             await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': paginationTasksName[i]});
         };
 
-        for (let i = 0; i < 2; i++) {
-            completedTasks[i] = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': completedTasksName[i]});
+        for (let i = 0; i < 3; i++) {
+            completedTasks[i] = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': completedTasksName[i], 'dueDate': Util.getSpecificDateAfterCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ', i+2)});
             await this.alfrescoJsApi.activiti.taskActionsApi.completeTask(completedTasks[i].id);
         };
 
@@ -488,10 +488,11 @@ describe('Start Task - Custom App', () => {
 
         taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(completedTasks[0].name);
         taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(completedTasks[1].name);
-        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(2);
+        taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(completedTasks[2].name);
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(3);
     });
 
-    it('[C280630] Should be able to see only active tasks when choosing Active from state drop down', () => {
+    it('[C286597] Should be able to see only running tasks when choosing Active from state drop down', () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 
@@ -499,13 +500,14 @@ describe('Start Task - Custom App', () => {
 
         taskListSinglePage.usingDataTable().checkRowIsNotDisplayedByName(completedTasks[0].name);
         taskListSinglePage.usingDataTable().checkRowIsNotDisplayedByName(completedTasks[1].name);
+        taskListSinglePage.usingDataTable().checkRowIsNotDisplayedByName(completedTasks[2].name);
         taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName)).toEqual(true);
         });
         expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(20);
     });
 
-    it('[C280630] Should be able to see all tasks when choosing All from state drop down', () => {
+    it('[C286598] Should be able to see all tasks when choosing All from state drop down', () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 
@@ -513,10 +515,53 @@ describe('Start Task - Custom App', () => {
 
         taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(completedTasks[0].name);
         taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(completedTasks[1].name);
+        taskListSinglePage.usingDataTable().checkRowIsDisplayedByName(completedTasks[2].name);
         taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName)).toEqual(true);
         });
-        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(22);
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(23);
+    });
+
+    fit('[C286599] Should be able to sort tasks ascending by due date when choosing due(asc) from sort drop down', () => {
+        let sortAscByDueDate = [taskWithDueDate.name, completedTasks[0].name, completedTasks[1].name, completedTasks[2].name];
+
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.typeDueAfter(beforeDate);
+        taskListSinglePage.selectState('All');
+        taskListSinglePage.selectSort('Due (asc)');
+
+        taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
+            expect(Util.arrayContainsArray(list, sortAscByDueDate)).toEqual(true);
+        });
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(4);
+
+        taskListSinglePage.clickResetButton();
+        taskListSinglePage.selectState('All');
+        taskListSinglePage.selectSort('Due (asc)');
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(23);// check the exact tests after you find out the correct order
+    });
+
+    it('[C286600] Should be able to sort tasks descending by due date when choosing due(desc) from sort drop down', () => {
+        let sortAscByDueDate = [completedTasks[2].name, completedTasks[1].name, completedTasks[0].name, taskWithDueDate.name];
+
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.typeDueAfter(beforeDate);
+        taskListSinglePage.selectState('All');
+        taskListSinglePage.selectSort('Due (asc)');
+
+        taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
+            expect(Util.arrayContainsArray(list, sortAscByDueDate)).toEqual(true);
+        });
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(4);
+
+        taskListSinglePage.clickResetButton();
+        taskListSinglePage.selectState('All');
+        taskListSinglePage.selectSort('Due (asc)');
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(23);// check the exact tests after you find out the correct order
     });
 
 });

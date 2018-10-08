@@ -34,6 +34,8 @@ var TaskListSinglePage = function () {
     var taskId = element(by.css("input[data-automation-id='task id']"));
     var stateDropDownArrow = element(by.css("mat-form-field[data-automation-id='state'] div[class*='arrow']"));
     var stateSelector = element(by.css("div[class*='mat-select-content']"));
+    var sortDropDownArrow = element(by.css("mat-form-field[data-automation-id='sort'] div[class*='arrow']"));
+    var sortSelector = element(by.css("div[class*='mat-select-content']"));
 
     this.typeAppId = function(input) {
         Util.waitUntilElementIsVisible(appId);
@@ -175,6 +177,22 @@ var TaskListSinglePage = function () {
         Util.waitUntilElementIsClickable(stateElement);
         Util.waitUntilElementIsVisible(stateElement);
         stateElement.click();
+        return this;
+    };
+
+    this.clickOnSortDropDownArrow = function() {
+        Util.waitUntilElementIsVisible(sortDropDownArrow);
+        sortDropDownArrow.click();
+        Util.waitUntilElementIsVisible(sortSelector);
+    };
+
+    this.selectSort = function (sort) {
+        this.clickOnSortDropDownArrow();
+
+        var sortElement = element.all(by.cssContainingText("mat-option span", sort)).first();
+        Util.waitUntilElementIsClickable(sortElement);
+        Util.waitUntilElementIsVisible(sortElement);
+        sortElement.click();
         return this;
     };
 

@@ -134,11 +134,11 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field data-automation-id="sort">
             <mat-label>Sort</mat-label>
             <mat-select
                 class="form-control"
-                [formControl]="taskSort">
+                [formControl]="taskSort" data-automation-id="selected sort">
                 <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title
                     }}
                 </mat-option>
