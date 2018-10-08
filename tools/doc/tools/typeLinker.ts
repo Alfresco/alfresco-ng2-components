@@ -35,7 +35,7 @@ const includedNodeTypes = [
 ];
 
 const docFolder = path.resolve("docs");
-const adfLibNames = ["core", "content-services", "insights", "process-services"];
+const adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud"];
 
 let externalNameLinks;
 
@@ -109,7 +109,7 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
         if (!includedNodeTypes.includes(node.type)) {
             return;
         }
-    
+
         /*if (node.type === "inlineCode") {
             console.log(`Link text: ${node.value}`);
             let link = resolveTypeLink(aggData, node.value);
@@ -117,7 +117,7 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
             if (link) {
                 convertNodeToTypeLink(node, node.value, link);
             }
-            
+
         } else */
         if (node.type === "link") {
             if (node.children && (
@@ -267,7 +267,7 @@ class WordScanner {
         this.nextSeparator = 0;
         this.next();
     }
-    
+
     finished() {
         return this.index >= this.text.length;
     }
@@ -353,7 +353,7 @@ function handleLinksInBodyText(aggData, text: string, wrapInlineCode: boolean = 
             matcher.reset();
         }
     }
-    
+
     let remainingText = text.substring(currTextStart, text.length);
 
     if (remainingText) {

@@ -25,7 +25,7 @@ var includedNodeTypes = [
     "link", "text"
 ];
 var docFolder = path.resolve("docs");
-var adfLibNames = ["core", "content-services", "insights", "process-services"];
+var adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud"];
 var externalNameLinks;
 function processDocs(mdCache, aggData, errorMessages) {
     initPhase(aggData);
@@ -88,7 +88,7 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
             if (link) {
                 convertNodeToTypeLink(node, node.value, link);
             }
-            
+
         } else */
         if (node.type === "link") {
             if (node.children && ((node.children[0].type === "inlineCode") ||

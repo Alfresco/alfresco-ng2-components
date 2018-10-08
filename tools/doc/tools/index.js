@@ -27,7 +27,7 @@ var guideSummaryFileName = path.resolve(docsFolderPath, guideFolderName, "summar
 
 var maxBriefDescLength = 180;
 
-var adfLibNames = ["core", "content-services", "insights", "process-services"];
+var adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud"];
 
 var statusIcons;
 
@@ -41,7 +41,7 @@ function processDocs(mdCache, aggData, _errorMessages) {
 
 function initPhase(aggData) {
     statusIcons = aggData.config["statusIcons"] || {};
-    aggData.stoplist = makeStoplist(aggData.config);    
+    aggData.stoplist = makeStoplist(aggData.config);
     aggData.srcData = {};
     aggData.mdFileDesc = [];
     aggData.mdFileStatus = [];
@@ -298,7 +298,7 @@ function makeMDDocumentedTableRow(docItem, forSubFolder) {
 
     var pathPrefix = "";
 
-    
+
     if (forSubFolder) {
         pathPrefix = "../";
     }
