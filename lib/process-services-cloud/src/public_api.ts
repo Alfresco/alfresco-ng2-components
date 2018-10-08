@@ -16,4 +16,4 @@
  */
 
 export * from './lib/process-services-cloud.module';
-export * from './lib/app-list-cloud/app-list-cloud.module';
+export * from './lib/hello/hello.module';
