@@ -230,8 +230,11 @@
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Insert App ID",
-    "APP_ID_TYPE_ERROR": "App ID must be a number"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insert App ID",
+      "APP_ID_TYPE_ERROR": "App ID must be a number",
+      "NUMBER_GREATER_THAN": "Value must be greater than or equal to {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION ONE",
   "GROUP-TITLE2-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION TWO"

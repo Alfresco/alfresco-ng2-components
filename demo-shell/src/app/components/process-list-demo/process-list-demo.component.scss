@@ -1,12 +1,15 @@
 .process-list-inputs {
-    margin-top: 100px;
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: space-evenly;
+    margin: 20px auto 0;
+    max-width: 1200px;
+
+    & mat-form-field {
+        margin: 20px 5px;
+        width: calc(100% * (1/4) - 10px);
+    }
 }
 
 .adf-reset-button {
-    margin-top: 50px;
+    margin-bottom: 50px;
     display: flex;
     justify-content: center;
 }

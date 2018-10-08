@@ -8,10 +8,13 @@
                 class="form-control"
                 [formControl]="processAppId">
             <mat-error *ngIf="processAppId.hasError('required')">
-                {{ 'PROCESS_LIST_DEMO.APP_ID_REQUIRED_ERROR' | translate }}
+                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.APP_ID_REQUIRED_ERROR' | translate }}
             </mat-error>
             <mat-error *ngIf="processAppId.hasError('pattern')">
-                {{ 'PROCESS_LIST_DEMO.APP_ID_TYPE_ERROR' | translate }}
+                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.APP_ID_TYPE_ERROR' | translate }}
+            </mat-error>
+            <mat-error *ngIf="processAppId.hasError('min')">
+                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
             </mat-error>
         </mat-form-field>
 
@@ -25,15 +28,7 @@
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>ProcessInstanceId</mat-label>
-            <input
-                matInput
-                class="form-control"
-                [formControl]="processInstanceId">
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Status</mat-label>
+            <mat-label>State</mat-label>
             <mat-select
                 class="form-control"
                 [formControl]="processState">
@@ -50,6 +45,35 @@
             </mat-select>
         </mat-form-field>
 
+
+        <mat-form-field>
+            <mat-label>Items per page</mat-label>
+            <input
+                matInput
+                class="form-control"
+                [formControl]="processSize">
+            <mat-error *ngIf="processSize.hasError('min')">
+                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
+            </mat-error>
+            <mat-error *ngIf="processSize.hasError('pattern')">
+                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_TYPE_ERROR' | translate }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Page</mat-label>
+            <input
+                matInput
+                class="form-control"
+                [formControl]="processPage">
+            <mat-error *ngIf="processPage.hasError('min')">
+                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
+            </mat-error>
+            <mat-error *ngIf="processPage.hasError('pattern')">
+                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_TYPE_ERROR' | translate }}
+            </mat-error>
+        </mat-form-field>
+
         <div class="adf-reset-button">
             <button mat-raised-button (click)="resetProcessForm()">Reset</button>
         </div>
@@ -61,9 +85,10 @@
         #processList
         [appId]="appId"
         [processDefinitionId]="processDefId"
-        [processInstanceId]="instanceId"
         [state]="state"
         [sort]="sort"
+        [page]="page"
+        [size]="size"
         [presetColumn]="presetColumn">
         <data-columns>
             <data-column key="ended" title="ADF_PROCESS_LIST.PROPERTIES.STATUS">
@@ -71,6 +96,8 @@
                     <div title="{{getStatus(entry.row.obj.ended)}}">{{getStatus(entry.row.obj.ended)}}</div>
                 </ng-template>
             </data-column>
+            <data-column key="started" title="Started"></data-column>
+            <data-column key="processDefinitionId" title="Process Definition Id"></data-column>
         </data-columns>
     </adf-process-instance-list>
 

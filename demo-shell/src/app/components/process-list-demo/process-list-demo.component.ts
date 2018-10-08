@@ -27,21 +27,18 @@ import { debounceTime } from 'rxjs/operators';
 
 export class ProcessListDemoComponent implements OnInit {
 
+    DEFAULT_SIZE = 20;
+
+    minValue = 1;
+
     processListForm: FormGroup;
 
-    defaultAppId: number;
-
     appId: number;
-
-    name: string;
-
     processDefId: string;
-
-    instanceId: number|string;
-
     state: string;
-
     sort: string;
+    size: number = this.DEFAULT_SIZE;
+    page: number = 0;
 
     presetColumn = 'default';
 
@@ -61,22 +58,27 @@ export class ProcessListDemoComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.resetQueryParameters();
+
         if (this.route) {
             this.route.params.forEach((params: Params) => {
-                this.defaultAppId = params['id'] ? +params['id'] : 0;
+                if (params['id']) {
+                    this.appId = params['id'];
+                }
             });
         }
-        this.appId = this.defaultAppId;
+
         this.buildForm();
     }
 
     buildForm() {
         this.processListForm = this.formBuilder.group({
-            processAppId: new FormControl(this.defaultAppId, [Validators.required, Validators.pattern('^[0-9]*$')]),
+            processAppId: new FormControl(this.appId, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
             processDefinitionId: new FormControl(''),
-            processInstanceId: new FormControl(''),
             processState: new FormControl(''),
-            processSort: new FormControl('')
+            processSort: new FormControl(''),
+            processSize: new FormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
+            processPage: new FormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)])
         });
 
         this.processListForm.valueChanges
@@ -93,11 +95,21 @@ export class ProcessListDemoComponent implements OnInit {
 
     filterProcesses(processFilter: any) {
         this.appId = processFilter.processAppId;
-        this.name = processFilter.processName;
         this.processDefId = processFilter.processDefinitionId;
-        this.instanceId = processFilter.processInstanceId;
         this.state = processFilter.processState;
+        if (!processFilter.processState) {
+            this.state = this.stateOptions[0].value;
+        }
         this.sort = processFilter.processSort;
+        if (processFilter.processSize) {
+            this.size = parseInt(processFilter.processSize, 10);
+        }
+        if (processFilter.processPage) {
+            let pageValue = parseInt(processFilter.processPage, 10);
+            this.page = pageValue > 0 ? pageValue - 1 : pageValue;
+        } else {
+            this.page = 0;
+        }
     }
 
     isFormValid() {
@@ -106,6 +118,16 @@ export class ProcessListDemoComponent implements OnInit {
 
     resetProcessForm() {
         this.processListForm.reset();
+        this.resetQueryParameters();
+    }
+
+    resetQueryParameters() {
+        this.appId = null;
+        this.processDefId = null;
+        this.state = this.stateOptions[0].value;
+        this.sort = null;
+        this.size = this.DEFAULT_SIZE;
+        this.page = null;
     }
 
     getStatus(ended: Date) {
@@ -120,15 +142,19 @@ export class ProcessListDemoComponent implements OnInit {
         return this.processListForm.get('processDefinitionId');
     }
 
-    get processInstanceId(): AbstractControl {
-        return this.processListForm.get('processInstanceId');
-    }
-
     get processState(): AbstractControl {
         return this.processListForm.get('processState');
     }
 
     get processSort(): AbstractControl {
         return this.processListForm.get('processSort');
+    }
+
+    get processSize(): AbstractControl {
+        return this.processListForm.get('processSize');
+    }
+
+    get processPage(): AbstractControl {
+        return this.processListForm.get('processPage');
     }
 }
