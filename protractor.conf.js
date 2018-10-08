@@ -204,7 +204,8 @@ exports.config = {
                             null,
                             {
                                 'name': file.name,
-                                'nodeType': 'cm:content'
+                                'nodeType': 'cm:content',
+                                'autoRename' : true
                             }
                         );
                 }
@@ -257,7 +258,8 @@ exports.config = {
                     null,
                     {
                         'name': reportFile.name,
-                        'nodeType': 'cm:content'
+                        'nodeType': 'cm:content',
+                        'autoRename' : true
                     }
                 );
 
