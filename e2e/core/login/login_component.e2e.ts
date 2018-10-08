@@ -21,7 +21,7 @@ import LoginPage = require('../../pages/adf/loginPage');
 import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import { ProcessServicesPage } from '../../pages/adf/process_services/processServicesPage';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
-import UserInfoDialog = require('../../pages/adf/dialog/userInfoDialog');
+import { UserInfoDialog } from '../../pages/adf/dialog/userInfoDialog';
 
 import TestConfig = require('../../test.config');
 import AcsUserModel = require('../../models/ACS/acsUserModel');

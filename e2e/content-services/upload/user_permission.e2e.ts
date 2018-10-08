@@ -24,7 +24,7 @@ import ContentServicesPage = require('../../pages/adf/contentServicesPage');
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
-import NotificationPage = require('../../pages/adf/notificationPage');
+import { NotificationPage } from '../../pages/adf/notificationPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');

@@ -18,6 +18,7 @@
 var Util = require('../../../util/util');
 
 var ContentList = function () {
+
     var deleteContent = element(by.css("button[data-automation-id*='DELETE']"));
     var metadataAction = element(by.css("button[data-automation-id*='METADATA']"));
     var versionManagerAction = element(by.css("button[data-automation-id*='VERSIONS']"));

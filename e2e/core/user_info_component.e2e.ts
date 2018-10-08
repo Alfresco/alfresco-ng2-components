@@ -17,7 +17,7 @@
 
 import AdfSettingsPage = require('../pages/adf/settingsPage');
 import LoginPage = require('../pages/adf/loginPage');
-import UserInfoDialog = require('../pages/adf/dialog/userInfoDialog');
+import { UserInfoDialog } from '../pages/adf/dialog/userInfoDialog';
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 
 import AcsUserModel = require('../models/ACS/acsUserModel');
