@@ -60,7 +60,6 @@ import { CloudComponent } from './components/cloud/cloud.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'cloud', component: CloudComponent },
     { path: 'logout', component: LogoutComponent },
     { path: 'settings', component: SettingsComponent },
     {
@@ -146,6 +145,10 @@ export const appRoutes: Routes = [
             {
                 path: 'home',
                 component: HomeComponent
+            },
+            {
+                path: 'cloud',
+                component: CloudComponent
             },
             {
                 path: 'node-selector',
