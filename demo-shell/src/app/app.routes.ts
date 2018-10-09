@@ -33,7 +33,6 @@ import { SearchResultComponent } from './components/search/search-result.compone
 import { SearchExtendedComponent } from './components/search/search-extended.component';
 import { TrashcanComponent } from './components/trashcan/trashcan.component';
 
-import { DataTableComponent } from './components/datatable/datatable.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
 import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
@@ -179,7 +178,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'datatable',
-                component: DataTableComponent
+                loadChildren: 'app/components/datatable/datatable.module#AppDataTableModule'
             },
             {
                 path: 'search',

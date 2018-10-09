@@ -16,16 +16,16 @@
  */
 
 import { NgModule } from '@angular/core';
-import { BreadcrumbDemoComponent } from './breadcrumb-demo.component';
-import { CoreModule } from '@alfresco/adf-core';
+import { DataTableComponent } from './datatable.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { CoreModule } from '@alfresco/adf-core';
 import { ContentModule } from '@alfresco/adf-content-services';
 
 const routes: Routes = [
     {
       path: '',
-      component: BreadcrumbDemoComponent
+      component: DataTableComponent
     }
 ];
 
@@ -36,7 +36,6 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         ContentModule.forChild()
     ],
-    declarations: [BreadcrumbDemoComponent],
-    exports: [BreadcrumbDemoComponent]
+    declarations: [DataTableComponent]
 })
-export class AppBreadcrumbModule {}
+export class AppDataTableModule {}
