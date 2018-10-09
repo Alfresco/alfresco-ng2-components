@@ -45,7 +45,6 @@ import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
-import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { AppComponent } from './app.component';
 
@@ -139,7 +138,8 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'node-selector',
-                component: ContentNodeSelectorComponent
+                // component: ContentNodeSelectorComponent
+                loadChildren: 'app/components/content-node-selector/content-node-selector.module#AppContentNodeSelectorModule'
             },
             {
                 path: 'settings-layout',

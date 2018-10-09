@@ -64,7 +64,6 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
 import { PreviewService } from './services/preview.service';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
-import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ContentModule } from '@alfresco/adf-content-services';
@@ -122,7 +121,6 @@ import { AuthBearerInterceptor } from './services';
         FormLoadingComponent,
         DemoPermissionComponent,
         FormLoadingComponent,
-        ContentNodeSelectorComponent,
         ReportIssueComponent,
         TaskListDemoComponent,
         ProcessListDemoComponent
