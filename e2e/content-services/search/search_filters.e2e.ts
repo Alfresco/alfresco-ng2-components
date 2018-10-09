@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/LoginPage';
+import { LoginPage } from '../../pages/adf/loginPage';
 import SearchDialog = require('../../pages/adf/dialog/searchDialog');
 import SearchFiltersPage = require('../../pages/adf/searchFiltersPage');
 

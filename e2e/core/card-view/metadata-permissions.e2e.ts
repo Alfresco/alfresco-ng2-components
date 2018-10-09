@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/LoginPage';
+import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import CardViewPage = require('../../pages/adf/metadataViewPage');
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');

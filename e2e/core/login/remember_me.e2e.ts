@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/LoginPage';
+import { LoginPage } from '../../pages/adf/loginPage';
 import { SettingsPage } from '../../pages/adf/settingsPage';
 
 describe('Login component - Remember Me', () => {

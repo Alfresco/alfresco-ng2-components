@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/LoginPage';
+import { LoginPage } from '../pages/adf/loginPage';
 import { Widget } from '../pages/adf/process_services/widgets/widget';
 
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';

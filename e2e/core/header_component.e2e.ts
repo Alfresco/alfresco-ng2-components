@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LoginPage } from '../pages/adf/LoginPage';
+import { LoginPage } from '../pages/adf/loginPage';
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import { HeaderPage } from '../pages/adf/core/headerPage';
 import { SettingsPage } from '../pages/adf/settingsPage';

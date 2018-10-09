@@ -16,7 +16,7 @@
  */
 
 import { SettingsPage } from '../../pages/adf/settingsPage';
-import { LoginPage } from '../pages/adf/LoginPage';
+import { LoginPage } from '../pages/adf/loginPage';
 import { UserInfoDialog } from '../pages/adf/dialog/userInfoDialog';
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 

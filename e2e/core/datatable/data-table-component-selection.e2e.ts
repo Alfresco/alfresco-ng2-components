@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/LoginPage';
+import { LoginPage } from '../../pages/adf/loginPage';
 import DataTablePage = require('../../pages/adf/dataTablePage');
 import TestConfig = require('../../test.config');
 
