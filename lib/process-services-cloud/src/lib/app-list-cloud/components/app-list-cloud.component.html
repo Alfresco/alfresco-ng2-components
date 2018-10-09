@@ -1,0 +1,38 @@
+<div class="menu-container" *ngIf="apps$ | async as appsList; else loading">
+    <ng-container *ngIf="appsList.length > 0; else noApps">
+        <div *ngIf="isGrid(); else appList" fxLayout="row wrap">
+            <adf-cloud-app-details fxFlex="33.33333%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%" *ngFor="let app of appsList"
+                [applicationInstance]="app" (selectedApp)="onSelectApp($event)">
+            </adf-cloud-app-details>
+        </div>
+
+        <ng-template #appList>
+            <mat-list class="adf-app-list">
+                <mat-list-item class="adf-app-list-item" (click)="onSelectApp(app)" (keyup.enter)="onSelectApp(app)"
+                    *ngFor="let app of appsList" tabindex="0" role="button" title="{{app.name}}">
+                    <mat-icon matListIcon>touch_app</mat-icon>
+                    <span matLine>{{app.name}}</span>
+                </mat-list-item>
+            </mat-list>
+        </ng-template>
+    </ng-container>
+</div>
+<ng-template #noApps>
+    <div class="adf-app-list-empty">
+        <ng-content select="adf-empty-custom-content" *ngIf="hasEmptyCustomContentTemplate; else defaultEmptyTemplate"
+            class="adf-custom-empty-template">
+        </ng-content>
+
+        <ng-template #defaultEmptyTemplate>
+            <adf-empty-content icon="apps" [title]="'ADF_TASK_LIST.APPS.TITLE' | translate" [subtitle]="'ADF_TASK_LIST.APPS.SUBTITLE' | translate">
+            </adf-empty-content>
+        </ng-template>
+    </div>
+</ng-template>
+<ng-template #loading>
+    <ng-container>
+        <div class="adf-app-list-spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+    </ng-container>
+</ng-template>

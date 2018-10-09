@@ -1,0 +1,22 @@
+<div class="adf-app-listgrid">
+    <div class="adf-app-listgrid-item">
+        <mat-card tabindex="0"
+            fxLayout="column"
+            role="button"
+            class="adf-app-listgrid-item-card"
+            title="{{applicationInstance.name}}"
+            [ngClass]="[applicationInstance.theme]"
+            (click)="onSelectApp(applicationInstance)"
+            (keyup.enter)="onSelectApp(applicationInstance)">
+            <div class="adf-app-listgrid-item-card-logo">
+                <mat-icon class="adf-app-listgrid-item-card-logo-icon">{{applicationInstance.icon}}</mat-icon>
+            </div>
+            <div mat-card-title class="adf-app-listgrid-item-card-title">
+                <h1>{{applicationInstance.name}}</h1>
+            </div>
+            <mat-card-subtitle class="adf-app-listgrid-item-card-subtitle" fxFlex="1 0 auto">
+                <div class="line-clamp">{{applicationInstance.description}}</div>
+            </mat-card-subtitle>
+        </mat-card>
+    </div>
+  </div>
