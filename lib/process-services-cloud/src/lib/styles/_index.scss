@@ -1,2 +1,7 @@
+@import './../app-list-cloud/components/app-details-cloud.component';
+@import './../app-list-cloud/components/app-list-cloud.component';
+
 @mixin adf-process-services-cloud-theme($theme) {
+    @include adf-cloud-app-list-theme($theme);
+    @include adf-cloud-app-details-theme($theme);
 }
