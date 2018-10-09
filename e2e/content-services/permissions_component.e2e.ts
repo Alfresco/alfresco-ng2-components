@@ -17,7 +17,7 @@
 
 import { PermissionsPage } from '../pages/adf/permissionsPage';
 import LoginPage = require('../pages/adf/loginPage');
-import ContentServicesPage = require('../pages/adf/contentServicesPage');
+import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

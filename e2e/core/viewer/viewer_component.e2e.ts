@@ -20,7 +20,7 @@ import TestConfig = require('../../test.config');
 import LoginPage = require('../../pages/adf/loginPage');
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 
 import resources = require('../../util/resources');
 import Util = require('../../util/util');

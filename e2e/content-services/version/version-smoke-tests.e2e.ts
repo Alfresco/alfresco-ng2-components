@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 
 import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import ContentListPage = require('../../pages/adf/dialog/contentList');
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 

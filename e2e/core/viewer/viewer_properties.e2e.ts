@@ -20,7 +20,7 @@ import { browser } from 'protractor';
 import TestConfig = require('../../test.config');
 
 import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 
 import resources = require('../../util/resources');
