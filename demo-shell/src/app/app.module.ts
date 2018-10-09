@@ -57,7 +57,6 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { PreviewService } from './services/preview.service';
-import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ContentModule } from '@alfresco/adf-content-services';
@@ -110,8 +109,7 @@ import { AuthBearerInterceptor } from './services';
         FormLoadingComponent,
         DemoPermissionComponent,
         FormLoadingComponent,
-        ReportIssueComponent,
-        ProcessListDemoComponent
+        ReportIssueComponent
     ],
     providers: [
         {

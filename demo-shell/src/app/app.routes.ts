@@ -38,7 +38,6 @@ import { OverlayViewerComponent } from './components/overlay-viewer/overlay-view
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
-import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { AppComponent } from './app.component';
 
@@ -286,13 +285,8 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'process-list',
-                component: ProcessListDemoComponent,
-                canActivate: [AuthGuardBpm]
-            },
-            {
-                path: 'process-list/:id',
-                component: ProcessListDemoComponent,
-                canActivate: [AuthGuardBpm]
+                canActivate: [AuthGuardBpm],
+                loadChildren: 'app/components/process-list-demo/process-list.module#AppProcessListModule'
             },
             {
                 path: 'error/:id',
