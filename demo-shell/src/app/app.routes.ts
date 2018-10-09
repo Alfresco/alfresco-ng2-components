@@ -46,7 +46,6 @@ import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
 import { CardViewComponent } from './components/card-view/card-view.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
@@ -95,7 +94,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: NotificationsComponent
+                loadChildren: 'app/components/notifications/notifications.module#AppNotificationsModule'
             }
         ]
     },

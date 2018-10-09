@@ -66,7 +66,6 @@ import { PreviewService } from './services/preview.service';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { CardViewComponent } from './components/card-view/card-view.component';
 import { HeaderDataComponent } from './components/header-data/header-data.component';
@@ -129,7 +128,6 @@ import { AuthBearerInterceptor } from './services';
         FormLoadingComponent,
         DemoPermissionComponent,
         FormLoadingComponent,
-        NotificationsComponent,
         CardViewComponent,
         ContentNodeSelectorComponent,
         ReportIssueComponent,
