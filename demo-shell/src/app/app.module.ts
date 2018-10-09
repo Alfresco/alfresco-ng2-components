@@ -46,7 +46,6 @@ import { FormViewerComponent } from './components/process-service/form-viewer.co
 import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { FilesComponent } from './components/files/files.component';
-import { SocialComponent } from './components/social/social.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
 
@@ -105,7 +104,6 @@ import { AuthBearerInterceptor } from './services';
         FilesComponent,
         FormComponent,
         FormListComponent,
-        SocialComponent,
         VersionManagerDialogAdapterComponent,
         MetadataDialogAdapterComponent,
         TaskAttachmentsComponent,

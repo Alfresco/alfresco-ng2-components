@@ -31,7 +31,6 @@ import { AppsViewComponent } from './components/process-service/apps-view.compon
 import { SearchResultComponent } from './components/search/search-result.component';
 import { SearchExtendedComponent } from './components/search/search-extended.component';
 
-import { SocialComponent } from './components/social/social.component';
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 
@@ -252,8 +251,8 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'social',
-                component: SocialComponent,
-                canActivate: [AuthGuardEcm]
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/social/social.module#AppSocialModule'
             },
             {
                 path: 'permissions/:id',
