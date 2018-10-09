@@ -68,7 +68,6 @@ import { ProcessListDemoComponent } from './components/process-list-demo/process
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { HeaderDataComponent } from './components/header-data/header-data.component';
-import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
 import { HeaderDataService } from './components/header-data/header-data.service';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ContentModule } from '@alfresco/adf-content-services';
@@ -131,8 +130,7 @@ import { AuthBearerInterceptor } from './services';
         ReportIssueComponent,
         TaskListDemoComponent,
         ProcessListDemoComponent,
-        HeaderDataComponent,
-        ConfigEditorComponent
+        HeaderDataComponent
     ],
     providers: [
         {

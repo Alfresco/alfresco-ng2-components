@@ -49,7 +49,6 @@ import { ProcessListDemoComponent } from './components/process-list-demo/process
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { HeaderDataComponent } from './components/header-data/header-data.component';
-import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
 import { AppComponent } from './app.component';
 
 export const appRoutes: Routes = [
@@ -103,7 +102,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: ConfigEditorComponent
+                loadChildren: 'app/components/config-editor/config-editor.module#AppConfigEditorModule'
             }
         ]
     },
