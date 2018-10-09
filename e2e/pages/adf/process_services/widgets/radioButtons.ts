@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { Widget } from './widget';
-
 import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
 

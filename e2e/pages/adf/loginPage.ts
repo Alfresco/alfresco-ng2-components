@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { ContentServicesPage } from './contentServicesPage';
 import { FormControllersPage } from './material/formControllersPage';
 
 import Util = require('../../util/util');

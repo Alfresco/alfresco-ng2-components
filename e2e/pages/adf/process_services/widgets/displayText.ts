@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { DisplayValue } from './displayValue';
-
 import FormFields = require('../formFields');
 
 export class DisplayText {

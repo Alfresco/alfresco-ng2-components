@@ -16,7 +16,6 @@
  */
 
 import Util = require('../../util/util');
-import CardViewPage = require('./cardViewPageComponent');
 
 import { TabsPage } from './material/tabsPage';
 import { FormControllersPage } from './material/formControllersPage';

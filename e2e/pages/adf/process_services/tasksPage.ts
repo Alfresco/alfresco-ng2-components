@@ -46,12 +46,6 @@ export class TasksPage {
         return new StartTaskDialog();
     }
 
-    clickOnNewTaskButton() {
-        Util.waitUntilElementIsClickable(this.newTaskButton);
-        this.newTaskButton.click();
-        return this;
-    }
-
     createButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.createButton);
         return this;

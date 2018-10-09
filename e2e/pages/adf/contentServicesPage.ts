@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { TrashcanPage } from './trashcanPage';
-
 import Util = require('../../util/util');
 import ContentList = require('./dialog/contentList');
 import CreateFolderDialog = require('./dialog/createFolderDialog');

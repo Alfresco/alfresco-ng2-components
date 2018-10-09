@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { RadioButtons } from './radioButtons';
-
 import FormFields = require('../formFields');
 
 export class Header {

@@ -334,12 +334,6 @@ export class TaskDetailsPage {
         return this.peopleTitle.getText();
     }
 
-    getInvolvedPeopleInitialImage(user) {
-        let pic = this.getRowsUser(user).element(this.involvedUserPic);
-        Util.waitUntilElementIsVisible(pic);
-        return pic.getText();
-    }
-
     checkTaskDetails() {
         Util.waitUntilElementIsVisible(this.taskDetailsSection);
         return this.taskDetailsSection.getText();

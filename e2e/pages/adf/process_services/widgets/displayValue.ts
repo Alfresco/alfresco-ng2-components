@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { Dropdown } from './dropdown';
-
 import FormFields = require('../formFields');
 
 export class DisplayValue {

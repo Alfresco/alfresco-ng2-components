@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { MultilineText } from './multilineText';
 import FormFields = require('../formFields');
 
 export class Hyperlink {

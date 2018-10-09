@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { Header } from './header';
-
 import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
 

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { UploadToggles } from './uploadToggles';
-
 import Util = require('../../../util/util');
 
 export class UserInfoDialog {

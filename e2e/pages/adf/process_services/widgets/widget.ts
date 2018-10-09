@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { AppNavigationBarPage } from '../appNavigationBarPage';
-
 import { MultilineText } from './multilineText';
 import { Header } from './header';
 import { DisplayText } from './displayText';

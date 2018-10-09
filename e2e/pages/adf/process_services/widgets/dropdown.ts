@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { DynamicTable } from './dynamicTable';
-
 import FormFields = require('../formFields');
 
 export class Dropdown {
