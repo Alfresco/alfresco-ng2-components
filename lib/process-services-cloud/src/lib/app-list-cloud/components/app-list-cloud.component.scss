@@ -1,0 +1,21 @@
+@mixin  adf-cloud-app-list-theme($theme) {
+
+    :host {
+        width: 100%;
+    }
+
+    .adf-app-list-item {
+        cursor: pointer;
+    }
+
+    .adf-app-list-spinner, .adf-app-list-empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 85vh;
+        .mat-spinner {
+            margin: 0 auto;
+        }
+    }
+}
