@@ -34,7 +34,6 @@ import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { SearchExtendedComponent } from './components/search/search-extended.component';
-import { AboutComponent } from './components/about/about.component';
 import { LogComponent } from './components/log/log.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
@@ -107,7 +106,6 @@ import { AuthBearerInterceptor } from './services';
         SearchBarComponent,
         SearchResultComponent,
         SearchExtendedComponent,
-        AboutComponent,
         LogComponent,
         ProcessServiceComponent,
         ShowDiagramComponent,

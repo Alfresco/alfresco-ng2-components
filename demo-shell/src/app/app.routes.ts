@@ -23,7 +23,6 @@ import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
-import { AboutComponent } from './components/about/about.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
 import { FormViewerComponent } from './components/process-service/form-viewer.component';
@@ -268,7 +267,10 @@ export const appRoutes: Routes = [
                 component: DemoPermissionComponent,
                 canActivate: [AuthGuardEcm]
             },
-            { path: 'about', component: AboutComponent },
+            {
+                path: 'about',
+                loadChildren: 'app/components/about/about.module#AppAboutModule'
+            },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
             { path: 'form-loading', component: FormLoadingComponent },
