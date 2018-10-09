@@ -18,7 +18,7 @@
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { AppListCloudModule } from '../apps-list-cloud.module';
+import { AppListCloudModule } from '../app-list-cloud.module';
 import {
     AlfrescoApiService,
     AlfrescoApiServiceMock,
