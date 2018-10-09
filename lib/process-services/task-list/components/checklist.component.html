@@ -14,8 +14,8 @@
     <mat-chip-list class="mat-chip-list-stacked">
         <mat-chip id="check-{{check.id}}" class="adf-checklist-chip" *ngFor="let check of checklist">
             <span>{{check.name}}</span>
-            <button  *ngIf="!readOnly && !check.endDate" mat-icon-button type="button" class="adf-checklist-cancel-button" (click)="delete(check.id)">
-                <mat-icon id="remove-{{check.id}}" matChipRemove>cancel</mat-icon>
+            <button  *ngIf="!readOnly && !check.endDate" id="remove-{{check.id}}" mat-icon-button type="button" class="adf-checklist-cancel-button" (click)="delete(check.id)">
+                <mat-icon matChipRemove>cancel</mat-icon>
             </button>
         </mat-chip>
     </mat-chip-list>
