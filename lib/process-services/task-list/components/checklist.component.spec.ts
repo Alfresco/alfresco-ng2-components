@@ -205,25 +205,26 @@ describe('ChecklistComponent', () => {
             });
         }));
 
-        it('should send an event when the checklist is deleted', (done) => {
+        it('should send an event when the checklist is deleted', async(() => {
             spyOn(service, 'deleteTask').and.returnValue(of(''));
-            let disposableDelete = checklistComponent.checklistTaskDeleted.subscribe(() => {
-                expect(element.querySelector('#fake-check-id')).toBeNull();
-                disposableDelete.unsubscribe();
-                done();
-            });
-
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(new TaskDetailsModel({
                 id: 'fake-check-id',
                 name: 'fake-check-name'
             }));
+
             fixture.detectChanges();
-            let checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
-            expect(checklistElementRemove).toBeDefined();
-            expect(checklistElementRemove).not.toBeNull();
-            checklistElementRemove.click();
-        });
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(checklistComponent.checklist.length).toBe(1);
+                let checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
+                expect(checklistElementRemove).toBeDefined();
+                expect(checklistElementRemove).not.toBeNull();
+                checklistElementRemove.click();
+
+                expect(checklistComponent.checklist.length).toBe(0);
+            });
+        }));
 
         it('should show load task checklist on change', async(() => {
 
