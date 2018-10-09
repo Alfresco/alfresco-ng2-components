@@ -38,8 +38,8 @@ describe('AppsProcessCloudService', () => {
     });
 
     it('should get the deployed applications ', (done) => {
-        spyOn(service, 'getDeployedApplications').and.returnValue(of(fakeApplicationInstance));
-        service.getDeployedApplications().subscribe(
+        spyOn(service, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
+        service.getDeployedApplicationsByStatus('fake').subscribe(
             (res: ApplicationInstanceModel[]) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
@@ -59,8 +59,8 @@ describe('AppsProcessCloudService', () => {
             status: 404, statusText: 'Not Found'
         });
 
-        spyOn(service, 'getDeployedApplications').and.returnValue(throwError(errorResponse));
-        service.getDeployedApplications()
+        spyOn(service, 'getDeployedApplicationsByStatus').and.returnValue(throwError(errorResponse));
+        service.getDeployedApplicationsByStatus('fake')
             .subscribe(
                 users => fail('expected an error, not applications'),
                 error => {
