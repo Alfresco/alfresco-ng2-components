@@ -37,7 +37,6 @@ import { SocialComponent } from './components/social/social.component';
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 
-import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
@@ -167,8 +166,9 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'dl-custom-sources',
-                component: CustomSourcesComponent,
-                canActivate: [AuthGuardEcm]
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/files/custom-sources.module#AppCustomSourcesModule'
+
             },
             {
                 path: 'datatable',
