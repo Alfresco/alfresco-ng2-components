@@ -364,7 +364,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C268119] "ygj" letters should be rendered properly', async (done) => {
+    it('[C268119] - ygj letters rendering in document list', async (done) => {
         acsUser = new AcsUserModel();
         /* cspell:disable-next-line */
         let folderName = 'ggggggjjjjjjjjjjjjyyyyyy';
