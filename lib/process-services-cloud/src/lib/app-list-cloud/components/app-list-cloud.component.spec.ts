@@ -43,7 +43,7 @@ describe('AppListCloudComponent', () => {
         component = fixture.componentInstance;
 
         service = TestBed.get(AppsProcessCloudService);
-        getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(of(fakeApplicationInstance));
+        getAppsSpy = spyOn(service, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
     });
 
     it('should create AppListCloudComponent ', async(() => {
