@@ -46,7 +46,6 @@ import { ShowDiagramComponent } from './components/process-service/show-diagram.
 import { FormViewerComponent } from './components/process-service/form-viewer.component';
 import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
-import { TrashcanComponent } from './components/trashcan/trashcan.component';
 import { FilesComponent } from './components/files/files.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
 import { TagComponent } from './components/tag/tag.component';
@@ -110,7 +109,6 @@ import { AuthBearerInterceptor } from './services';
         FormNodeViewerComponent,
         AppsViewComponent,
         FilesComponent,
-        TrashcanComponent,
         FormComponent,
         FormListComponent,
         WebscriptComponent,

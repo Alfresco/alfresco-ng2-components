@@ -30,7 +30,6 @@ import { FormNodeViewerComponent } from './components/process-service/form-node-
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { SearchExtendedComponent } from './components/search/search-extended.component';
-import { TrashcanComponent } from './components/trashcan/trashcan.component';
 
 import { WebscriptComponent } from './components/webscript/webscript.component';
 import { TagComponent } from './components/tag/tag.component';
@@ -149,8 +148,8 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'trashcan',
-                component: TrashcanComponent,
-                canActivate: [AuthGuardEcm]
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/trashcan/trashcan.module#AppTrashcanModule'
             },
             {
                 path: 'files',
