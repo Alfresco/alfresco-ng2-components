@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import LoginPage = require('../../pages/adf/loginPage');
+import { LoginPage } from '../../pages/adf/LoginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ProcessServicesPage } from '../../pages/adf/process_services/processServicesPage';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
@@ -26,14 +26,14 @@ import { UserInfoDialog } from '../../pages/adf/dialog/userInfoDialog';
 import TestConfig = require('../../test.config');
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 
-import AdfSettingsPage = require('../../pages/adf/settingsPage');
+import { SettingsPage } from '../../pages/adf/settingsPage';
 import AlfrescoApi = require('alfresco-js-api-node');
 
 import Util = require('../../util/util');
 
 describe('Login component', () => {
 
-    let adfSettingsPage = new AdfSettingsPage();
+    let settingsPage = new SettingsPage();
     let processServicesPage = new ProcessServicesPage();
     let navigationBarPage = new NavigationBarPage();
     let userInfoDialog = new UserInfoDialog();
@@ -152,7 +152,7 @@ describe('Login component', () => {
     it('[C260049] Login to Process Services with Content Services disabled', () => {
         loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
-        adfSettingsPage.setProviderBpm();
+        settingsPage.setProviderBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
@@ -163,7 +163,7 @@ describe('Login component', () => {
     it('[C260050] Login to Content Services with Process Services disabled', () => {
         loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
-        adfSettingsPage.setProviderEcm();
+        settingsPage.setProviderEcm();
         loginPage.login(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
@@ -172,9 +172,9 @@ describe('Login component', () => {
     });
 
     it('[C260051] Able to login to both Content Services and Process Services', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.checkSignInButtonIsDisabled();
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
@@ -185,7 +185,7 @@ describe('Login component', () => {
     });
 
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         browser.executeScript('window.localStorage.removeItem("ticket-ECM");').then(() => {
             browser.get(TestConfig.adf.url + '/files');
@@ -195,7 +195,7 @@ describe('Login component', () => {
     });
 
     it('[C279932] Should successRoute property change the landing page when the user Login', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.enableSuccessRouteSwitch();
         loginPage.enterSuccessRoute('activiti');
         loginPage.login(adminUserModel.id, adminUserModel.password);
@@ -203,7 +203,7 @@ describe('Login component', () => {
     });
 
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         browser.executeScript('window.localStorage.removeItem("ticket-BPM");').then(() => {
             browser.get(TestConfig.adf.url + '/activiti');
@@ -212,7 +212,7 @@ describe('Login component', () => {
     });
 
     it('[C279930] Should a user still be logged-in when open a new tab', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
         Util.openNewTabInBrowser();
@@ -242,7 +242,7 @@ describe('Login component', () => {
     });
 
     it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.enableLogoSwitch();
         loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
         loginPage.checkLoginImgURL('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');

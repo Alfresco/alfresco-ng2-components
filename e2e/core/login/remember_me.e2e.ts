@@ -15,17 +15,16 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../../pages/adf/loginPage');
-
-import AdfSettingsPage = require('../../pages/adf/settingsPage');
+import { LoginPage } from '../../pages/adf/LoginPage';
+import { SettingsPage } from '../../pages/adf/settingsPage';
 
 describe('Login component - Remember Me', () => {
 
-    let adfSettingsPage = new AdfSettingsPage();
+    let settingsPage = new SettingsPage();
     let loginPage = new LoginPage();
 
     beforeAll((done) => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         done();
     });
 

@@ -17,7 +17,7 @@
 
 import TestConfig = require('../../test.config');
 
-import LoginPage = require('../../pages/adf/loginPage');
+import { LoginPage } from '../../pages/adf/LoginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';

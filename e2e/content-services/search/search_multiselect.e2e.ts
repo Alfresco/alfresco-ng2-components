@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
-import LoginPage = require('../../pages/adf/loginPage');
+import { LoginPage } from '../../pages/adf/LoginPage';
 import SearchDialog = require('../../pages/adf/dialog/searchDialog');
 import SearchResultPage = require('../../pages/adf/searchResultsPage');
 import SearchFiltersPage = require('../../pages/adf/searchFiltersPage');

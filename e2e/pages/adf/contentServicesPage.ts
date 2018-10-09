@@ -73,12 +73,12 @@ export class ContentServicesPage {
         this.checkRecentFileToBeShowed();
         this.checkRecentFileToBeClosed();
         this.recentFilesClosed.click();
-        this.checkRecentFileToBeOpened()
+        this.checkRecentFileToBeOpened();
     }
 
     closeRecentFiles() {
         this.checkRecentFileToBeShowed();
-        this.checkRecentFileToBeOpened()
+        this.checkRecentFileToBeOpened();
         this.recentFilesExpanded.click();
         this.checkRecentFileToBeClosed();
     }
@@ -90,7 +90,6 @@ export class ContentServicesPage {
     checkRecentFileToBeOpened() {
         Util.waitUntilElementIsVisible(this.recentFilesExpanded);
     }
-
 
     async getRecentFileIcon() {
         await Util.waitUntilElementIsVisible(this.recentFileIcon);
@@ -118,7 +117,7 @@ export class ContentServicesPage {
     }
 
     navigateToDocumentList() {
-        var navigationBarPage = new NavigationBarPage();
+        let navigationBarPage = new NavigationBarPage();
         navigationBarPage.clickContentServicesButton();
         this.checkAcsContainer();
     }
@@ -128,7 +127,7 @@ export class ContentServicesPage {
     }
 
     currentFolderName() {
-        var deferred = protractor.promise.defer();
+        let deferred = protractor.promise.defer();
         Util.waitUntilElementIsVisible(this.currentFolder);
         this.currentFolder.getText().then(function (result) {
             deferred.fulfill(result);
@@ -162,7 +161,7 @@ export class ContentServicesPage {
 
     sortAndCheckListIsOrderedByName(sortOrder) {
         this.sortByName(sortOrder);
-        var deferred = protractor.promise.defer();
+        let deferred = protractor.promise.defer();
         this.contentList.checkListIsOrderedByNameColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
@@ -187,7 +186,7 @@ export class ContentServicesPage {
 
     sortAndCheckListIsOrderedByAuthor(sortOrder) {
         this.sortByAuthor(sortOrder);
-        var deferred = protractor.promise.defer();
+        let deferred = protractor.promise.defer();
         this.contentList.checkListIsOrderedByAuthorColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
@@ -196,7 +195,7 @@ export class ContentServicesPage {
 
     sortAndCheckListIsOrderedByCreated(sortOrder) {
         this.sortByCreated(sortOrder);
-        var deferred = protractor.promise.defer();
+        let deferred = protractor.promise.defer();
         this.contentList.checkListIsOrderedByCreatedColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
@@ -237,7 +236,7 @@ export class ContentServicesPage {
     }
 
     checkContentsAreDisplayed(content) {
-        for (var i = 0; i < content.length; i++) {
+        for (let i = 0; i < content.length; i++) {
             this.checkContentIsDisplayed(content[i]);
         }
         return this;
@@ -249,7 +248,7 @@ export class ContentServicesPage {
     }
 
     checkContentsAreNotDisplayed(content) {
-        for (var i = 0; i < content.length; i++) {
+        for (let i = 0; i < content.length; i++) {
             this.checkContentIsNotDisplayed(content[i]);
         }
         return this;
@@ -267,7 +266,7 @@ export class ContentServicesPage {
 
     navigateToFolderViaBreadcrumbs(folder) {
         this.contentList.tableIsLoaded();
-        var breadcrumb = element(by.css('a[data-automation-id="breadcrumb_' + folder + '"]'));
+        let breadcrumb = element(by.css('a[data-automation-id="breadcrumb_' + folder + '"]'));
         Util.waitUntilElementIsVisible(breadcrumb);
         breadcrumb.click();
         return this;
@@ -275,7 +274,7 @@ export class ContentServicesPage {
 
     getActiveBreadcrumb() {
         Util.waitUntilElementIsVisible(this.activeBreadcrumb);
-        return this.activeBreadcrumb.getAttribute("title");
+        return this.activeBreadcrumb.getAttribute('title');
     }
 
     getCurrentFolderID() {
@@ -298,9 +297,9 @@ export class ContentServicesPage {
 
     uploadMultipleFile(files) {
         Util.waitUntilElementIsVisible(this.uploadMultipleFileButton);
-        var allFiles = path.resolve(path.join(TestConfig.main.rootPath, files[0]));
-        for (var i = 1; i < files.length; i++) {
-            allFiles = allFiles + "\n" + path.resolve(path.join(TestConfig.main.rootPath, files[i]));
+        let allFiles = path.resolve(path.join(TestConfig.main.rootPath, files[0]));
+        for (let i = 1; i < files.length; i++) {
+            allFiles = allFiles + '\n' + path.resolve(path.join(TestConfig.main.rootPath, files[i]));
         }
         this.uploadMultipleFileButton.sendKeys(allFiles);
         Util.waitUntilElementIsVisible(this.uploadMultipleFileButton);
@@ -316,17 +315,17 @@ export class ContentServicesPage {
 
     getSingleFileButtonTooltip() {
         Util.waitUntilElementIsVisible(this.uploadFileButton);
-        return this.uploadFileButton.getAttribute("title");
+        return this.uploadFileButton.getAttribute('title');
     }
 
     getMultipleFileButtonTooltip() {
         Util.waitUntilElementIsVisible(this.uploadMultipleFileButton);
-        return this.uploadMultipleFileButton.getAttribute("title");
+        return this.uploadMultipleFileButton.getAttribute('title');
     }
 
     getFolderButtonTooltip() {
         Util.waitUntilElementIsVisible(this.uploadFolderButton);
-        return this.uploadFolderButton.getAttribute("title");
+        return this.uploadFolderButton.getAttribute('title');
     }
 
     checkUploadButton() {
@@ -345,7 +344,7 @@ export class ContentServicesPage {
     }
 
     deleteContents(content) {
-        for (var i = 0; i < content.length; i++) {
+        for (let i = 0; i < content.length; i++) {
             this.deleteContent(content[i]);
             this.checkContentIsNotDisplayed(content[i]);
             browser.driver.sleep(1000);
@@ -355,7 +354,7 @@ export class ContentServicesPage {
 
     getErrorMessage() {
         Util.waitUntilElementIsVisible(this.errorSnackBar);
-        var deferred = protractor.promise.defer();
+        let deferred = protractor.promise.defer();
         this.errorSnackBar.getText().then(function (text) {
             deferred.fulfill(text);
         });
@@ -367,28 +366,28 @@ export class ContentServicesPage {
     }
 
     enableInfiniteScrolling() {
-        var infiniteScrollButton = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable Infinite Scrolling'));
+        let infiniteScrollButton = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable Infinite Scrolling'));
         Util.waitUntilElementIsVisible(infiniteScrollButton);
         infiniteScrollButton.click();
         return this;
     }
 
     enableCustomPermissionMessage() {
-        var customPermissionMessage = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
+        let customPermissionMessage = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
         Util.waitUntilElementIsVisible(customPermissionMessage);
         customPermissionMessage.click();
         return this;
     }
 
     enableMediumTimeFormat() {
-        var mediumTimeFormat = element(by.css('#enableMediumTimeFormat'));
+        let mediumTimeFormat = element(by.css('#enableMediumTimeFormat'));
         Util.waitUntilElementIsVisible(mediumTimeFormat);
         mediumTimeFormat.click();
         return this;
     }
 
     enableThumbnails() {
-        var thumbnailSlide = element(by.css('#adf-thumbnails-upload-switch'));
+        let thumbnailSlide = element(by.css('#adf-thumbnails-upload-switch'));
         Util.waitUntilElementIsVisible(thumbnailSlide);
         thumbnailSlide.click();
         return this;

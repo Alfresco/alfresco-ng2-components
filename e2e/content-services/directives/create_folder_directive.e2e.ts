@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../../pages/adf/loginPage');
+import { LoginPage } from '../../pages/adf/LoginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import CreateFolderDialog = require('../../pages/adf/dialog/createFolderDialog');
 import { NotificationPage } from '../../pages/adf/notificationPage';

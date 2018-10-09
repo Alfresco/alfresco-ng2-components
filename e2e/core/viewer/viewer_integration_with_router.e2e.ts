@@ -17,7 +17,7 @@
 
 import TestConfig = require('../../test.config');
 
-import LoginPage = require('../../pages/adf/loginPage');
+import { LoginPage } from '../../pages/adf/LoginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 
@@ -28,7 +28,7 @@ import AcsUserModel = require('../../models/ACS/acsUserModel');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import SettingsPage = require('../../pages/adf/settingsPage');
+import { SettingsPage } from '../../pages/adf/settingsPage';
 
 describe('Viewer Integration with Router', () => {
 

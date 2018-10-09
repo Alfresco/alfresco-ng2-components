@@ -18,7 +18,7 @@
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FileModel = require('../models/ACS/fileModel');
 
-import LoginPage = require('../pages/adf/loginPage');
+import { LoginPage } from '../pages/adf/LoginPage';
 import TagPage = require('../pages/adf/tagPage');
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 

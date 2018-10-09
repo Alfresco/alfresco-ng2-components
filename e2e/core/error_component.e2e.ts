@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
+import { LoginPage } from '../pages/adf/LoginPage';
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import TestConfig = require('../test.config');
 import AlfrescoApi = require('alfresco-js-api-node');
