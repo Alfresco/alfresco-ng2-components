@@ -16,7 +16,7 @@
  */
 
 import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
-import { TaskListCloudComponent, TaskListCloudSortingModel, SortingDirection } from '@alfresco/adf-process-services-cloud';
+import { TaskListCloudComponent, TaskListCloudSortingModel } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { Observable, from } from 'rxjs';
 
