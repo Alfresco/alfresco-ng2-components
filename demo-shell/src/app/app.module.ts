@@ -67,7 +67,6 @@ import { TaskListDemoComponent } from './components/task-list-demo/task-list-dem
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
-import { CardViewComponent } from './components/card-view/card-view.component';
 import { HeaderDataComponent } from './components/header-data/header-data.component';
 import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
 import { HeaderDataService } from './components/header-data/header-data.service';
@@ -128,7 +127,6 @@ import { AuthBearerInterceptor } from './services';
         FormLoadingComponent,
         DemoPermissionComponent,
         FormLoadingComponent,
-        CardViewComponent,
         ContentNodeSelectorComponent,
         ReportIssueComponent,
         TaskListDemoComponent,
