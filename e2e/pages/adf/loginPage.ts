@@ -38,8 +38,8 @@ export class LoginPage {
     usernameHighlighted = element(by.css('input[id="username"][aria-invalid="true"]'));
     passwordHighlighted = element(by.css('input[id="password"][aria-invalid="true"]'));
     signInButton = element(by.id('login-button'));
-    showPassword = element(by.css('mat-icon[data-automation-id="show_password"]'));
-    hidePassword = element(by.css('mat-icon[data-automation-id="hide_password"]'));
+    showPasswordElement = element(by.css('mat-icon[data-automation-id="show_password"]'));
+    hidePasswordElement = element(by.css('mat-icon[data-automation-id="hide_password"]'));
     rememberMe = element(by.css('mat-checkbox[id="adf-login-remember"]'));
     needHelp = element(by.css('div[id="adf-login-action-left"]'));
     register = element(by.css('div[id="adf-login-action-right"]'));
@@ -89,7 +89,7 @@ export class LoginPage {
 
     clearPassword() {
         Util.waitUntilElementIsVisible(this.txtPassword);
-        this.txtPassword.getAttribute('value').then(function (value) {
+        this.txtPassword.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
                 this.txtPassword.sendKeys(protractor.Key.BACK_SPACE);
             }
@@ -203,15 +203,15 @@ export class LoginPage {
     }
 
     showPassword() {
-        Util.waitUntilElementIsVisible(this.showPassword);
-        this.showPassword.click();
+        Util.waitUntilElementIsVisible(this.showPasswordElement);
+        this.showPasswordElement.click();
     }
 
     getShowPasswordIconColor() {
         let deferred = protractor.promise.defer();
 
-        Util.waitUntilElementIsVisible(this.showPassword);
-        this.showPassword.getCssValue('color').then(function (value) {
+        Util.waitUntilElementIsVisible(this.showPasswordElement);
+        this.showPasswordElement.getCssValue('color').then((value) => {
             deferred.fulfill(value);
         });
 
@@ -222,7 +222,7 @@ export class LoginPage {
         let deferred = protractor.promise.defer();
 
         Util.waitUntilElementIsVisible(this.signInButton);
-        this.signInButton.getCssValue('color').then(function (value) {
+        this.signInButton.getCssValue('color').then((value) => {
             deferred.fulfill(value);
         });
 
@@ -233,7 +233,7 @@ export class LoginPage {
         let deferred = protractor.promise.defer();
 
         Util.waitUntilElementIsVisible(this.cardBackground);
-        this.cardBackground.getCssValue('color').then(function (value) {
+        this.cardBackground.getCssValue('color').then((value) => {
             deferred.fulfill(value);
         });
 
@@ -241,12 +241,12 @@ export class LoginPage {
     }
 
     hidePassword() {
-        Util.waitUntilElementIsVisible(this.hidePassword);
-        this.hidePassword.click();
+        Util.waitUntilElementIsVisible(this.hidePasswordElement);
+        this.hidePasswordElement.click();
     }
 
     checkPasswordIsShown(password) {
-        this.txtPassword.getAttribute('value').then(function (text) {
+        this.txtPassword.getAttribute('value').then((text) => {
             expect(text).toEqual(password);
         });
     }
