@@ -31,7 +31,6 @@ import { AppsViewComponent } from './components/process-service/apps-view.compon
 import { SearchResultComponent } from './components/search/search-result.component';
 import { SearchExtendedComponent } from './components/search/search-extended.component';
 
-import { WebscriptComponent } from './components/webscript/webscript.component';
 import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
 import { FilesComponent } from './components/files/files.component';
@@ -244,8 +243,8 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'webscript',
-                component: WebscriptComponent,
-                canActivate: [AuthGuardEcm]
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/webscript/webscript.module#AppWebScriptModule'
             },
             {
                 path: 'tag',
