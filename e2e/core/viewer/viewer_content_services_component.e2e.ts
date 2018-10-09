@@ -291,7 +291,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C260054] Should display "Preview could not be loaded" and viewer toolbar when opening an unsupported file', () => {
+    it('[C260054] Should display Preview could not be loaded and viewer toolbar when opening an unsupported file', () => {
         viewerPage.viewFile(unsupportedFile.name);
 
         browser.driver.sleep(3000); // wait open file
