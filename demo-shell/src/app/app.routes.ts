@@ -47,7 +47,6 @@ import { TaskListDemoComponent } from './components/task-list-demo/task-list-dem
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
-import { HeaderDataComponent } from './components/header-data/header-data.component';
 import { AppComponent } from './app.component';
 
 export const appRoutes: Routes = [
@@ -121,7 +120,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: HeaderDataComponent
+                loadChildren: 'app/components/header-data/header-data.module#AppHeaderDataModule'
             }
         ]
     },

@@ -66,8 +66,6 @@ import { TaskListDemoComponent } from './components/task-list-demo/task-list-dem
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
 import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
-import { HeaderDataComponent } from './components/header-data/header-data.component';
-import { HeaderDataService } from './components/header-data/header-data.service';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
@@ -127,8 +125,7 @@ import { AuthBearerInterceptor } from './services';
         ContentNodeSelectorComponent,
         ReportIssueComponent,
         TaskListDemoComponent,
-        ProcessListDemoComponent,
-        HeaderDataComponent
+        ProcessListDemoComponent
     ],
     providers: [
         {
@@ -152,8 +149,7 @@ import { AuthBearerInterceptor } from './services';
                 source: 'resources/lazy-loading'
             }
         },
-        PreviewService,
-        HeaderDataService
+        PreviewService
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
