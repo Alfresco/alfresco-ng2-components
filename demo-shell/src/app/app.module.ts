@@ -28,7 +28,6 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
@@ -89,7 +88,6 @@ import { AuthBearerInterceptor } from './services';
         AppComponent,
         LoginComponent,
         LogoutComponent,
-        SettingsComponent,
         AppLayoutComponent,
         HomeComponent,
         SearchBarComponent,

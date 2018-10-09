@@ -20,7 +20,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
@@ -47,7 +46,10 @@ import { AppComponent } from './app.component';
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
-    { path: 'settings', component: SettingsComponent },
+    {
+        path: 'settings',
+        loadChildren: 'app/components/settings/settings.module#AppSettingsModule'
+    },
     {
         path: 'files/:nodeId/view',
         component: AppComponent,
@@ -134,12 +136,11 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'node-selector',
-                // component: ContentNodeSelectorComponent
                 loadChildren: 'app/components/content-node-selector/content-node-selector.module#AppContentNodeSelectorModule'
             },
             {
                 path: 'settings-layout',
-                component: SettingsComponent
+                loadChildren: 'app/components/settings/settings.module#AppSettingsModule'
             },
             {
                 path: 'trashcan',
