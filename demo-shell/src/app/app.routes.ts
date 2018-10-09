@@ -46,7 +46,6 @@ import { OverlayViewerComponent } from './components/overlay-viewer/overlay-view
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
-import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
@@ -89,8 +88,8 @@ export const appRoutes: Routes = [
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
         path: 'breadcrumb',
-        component: BreadcrumbDemoComponent,
-        canActivate: [AuthGuardEcm]
+        canActivate: [AuthGuardEcm],
+        loadChildren: 'app/components/breadcrumb-demo/breadcrumb-demo.module#AppBreadcrumbModule'
     },
     {
         path: 'notifications',
