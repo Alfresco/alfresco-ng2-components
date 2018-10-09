@@ -22,7 +22,7 @@ var FormFields = function () {
     var formContent = element(by.css("adf-form"));
     var refreshButton = element(by.css("div[class*='form-reload-button'] mat-icon"));
     var saveButton = element(by.cssContainingText("mat-card-actions[class*='adf-form'] span", "SAVE"));
-    var valueLocator = by.css("input");
+    var valueLocator = by.cxss("input");
     var labelLocator = by.css("label");
     var noFormMessage = element(by.css("span[id*='no-form-message']"));
     var completedTaskNoFormMessage = element(by.css("div[id*='completed-form-message'] p"));
@@ -129,6 +129,13 @@ var FormFields = function () {
         Util.waitUntilElementIsVisible(completeButton);
         return completeButton.click();
     };
+
+    this.typeInInputById = function(id, text) {
+        let input = element(by.id(id));
+        Util.waitUntilElementIsVisible(input);
+        input.sendKeys(text);
+        return this;
+    }
 };
 
 module.exports = FormFields;

@@ -119,6 +119,17 @@ exports.Files = {
         process_se_name: "DynamicTableProcess"
     },
 
+    FORM_ADF: {
+        file_location: "/resources/apps/Test-ADF.zip",
+        title: "Test App",
+        formName: "test-1",
+        form_fields: {
+            text_id: "label",
+            displaytext_id: "field-label1-container",
+            displayvalue_id: "labeldisplayusingvariable"
+        }
+    },
+
     ADF_DOCUMENTS: {
         PDF: {
             file_location: "/resources/adf/allFileTypes/a_file_supported.pdf",
