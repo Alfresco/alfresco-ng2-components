@@ -32,7 +32,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import Util = require('../../util/util');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
-describe('Login component', () => {
+describe('Login component - Redirect', () => {
 
     let settingsPage = new SettingsPage();
     let processServicesPage = new ProcessServicesPage();

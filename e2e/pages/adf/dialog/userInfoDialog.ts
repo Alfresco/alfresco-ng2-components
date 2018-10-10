@@ -16,12 +16,11 @@
  */
 
 import Util = require('../../../util/util');
+import { TabsPage } from '../material/tabsPage';
 
 export class UserInfoDialog {
 
     dialog = element(by.css('mat-card[class*="adf-userinfo-card"]'));
-    contentServicesTab = element(by.css('div[id*="mat-tab-label-0-0"]'));
-    processServicesTab = element(by.css('div[id*="mat-tab-label-0-1"]'));
     userImage = element(by.css('div[id="user-initial-image"]'));
     userInfoEcmHeaderTitle = element(by.css('div[id="ecm-username"]'));
     userInfoEcmTitle = element(by.css('mat-card-content span[id="ecm-full-name"]'));
@@ -45,35 +44,15 @@ export class UserInfoDialog {
         return this;
     }
 
-    contentServicesTabIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.contentServicesTab);
-        return this;
-    }
-
-    contentServicesTabIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.contentServicesTab);
-        return this;
-    }
-
     clickOnContentServicesTab() {
-        this.contentServicesTabIsDisplayed();
-        this.contentServicesTab.click();
-        return this;
-    }
-
-    processServicesTabIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.processServicesTab);
-        return this;
-    }
-
-    processServicesTabIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.processServicesTab);
+        let tabsPage = new TabsPage;
+        tabsPage.clickTabByTitle('Content Services');
         return this;
     }
 
     clickOnProcessServicesTab() {
-        this.processServicesTabIsDisplayed();
-        this.processServicesTab.click();
+        let tabsPage = new TabsPage;
+        tabsPage.clickTabByTitle('Process Services');
         return this;
     }
 

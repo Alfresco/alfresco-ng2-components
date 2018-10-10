@@ -48,10 +48,6 @@ export class NotificationPage {
         return this.notificationConfig.getText();
     }
 
-    getSnackBarText() {
-        return this.notificationSnackBar.getText();
-    }
-
     checkNotificationSnackBarIsDisplayed() {
         Util.waitUntilElementIsVisible(this.notificationSnackBar);
         return this;

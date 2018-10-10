@@ -132,12 +132,13 @@ describe('Viewer', () => {
         });
 
         it('[C260517] Should be possible to open any Archive file', () => {
+            contentServicesPage.navigateToFolder('archive');
+
             uploadedArchives.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    navigationBarPage.openViewer(currentFile.entry.id);
+                    contentServicesPage.doubleClickRow(currentFile.entry.name);
                     viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
-                    contentServicesPage.checkAcsContainer();
                 }
             });
         });
@@ -166,12 +167,13 @@ describe('Viewer', () => {
         });
 
         it('[C280008] Should be possible to open any Excel file', () => {
+            contentServicesPage.navigateToFolder('excel');
+
             uploadedExcels.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    navigationBarPage.openViewer(currentFile.entry.id);
+                    contentServicesPage.doubleClickRow(currentFile.entry.name);
                     viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
-                    contentServicesPage.checkAcsContainer();
                 }
             });
         });
@@ -200,12 +202,13 @@ describe('Viewer', () => {
         });
 
         it('[C280009] Should be possible to open any PowerPoint file', () => {
+            contentServicesPage.navigateToFolder('ppt');
+
             uploadedPpts.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    navigationBarPage.openViewer(currentFile.entry.id);
+                    contentServicesPage.doubleClickRow(currentFile.entry.name);
                     viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
-                    contentServicesPage.checkAcsContainer();
                 }
             });
         });
@@ -234,12 +237,13 @@ describe('Viewer', () => {
         });
 
         it('[C280010] Should be possible to open any Text file', () => {
+            contentServicesPage.navigateToFolder('text');
+
             uploadedTexts.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    navigationBarPage.openViewer(currentFile.entry.id);
+                    contentServicesPage.doubleClickRow(currentFile.entry.name);
                     viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
-                    contentServicesPage.checkAcsContainer();
                 }
             });
         });
@@ -268,12 +272,13 @@ describe('Viewer', () => {
         });
 
         it('[C280011] Should be possible to open any Word file', () => {
+            contentServicesPage.navigateToFolder('word');
+
             uploadedWords.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    navigationBarPage.openViewer(currentFile.entry.id);
+                    contentServicesPage.doubleClickRow(currentFile.entry.name);
                     viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
-                    contentServicesPage.checkAcsContainer();
                 }
             });
         });
@@ -302,12 +307,13 @@ describe('Viewer', () => {
         });
 
         it('[C280012] Should be possible to open any other Document supported extension', () => {
+            contentServicesPage.navigateToFolder('other');
+
             uploadedOthers.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    navigationBarPage.openViewer(currentFile.entry.id);
+                    contentServicesPage.doubleClickRow(currentFile.entry.name);
                     viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
-                    contentServicesPage.checkAcsContainer();
                 }
             });
         });
@@ -336,12 +342,13 @@ describe('Viewer', () => {
         });
 
         it('[C279966] Should be possible to open any Image supported extension', () => {
+            contentServicesPage.navigateToFolder('images');
+
             uploadedImages.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    navigationBarPage.openViewer(currentFile.entry.id);
+                    contentServicesPage.doubleClickRow(currentFile.entry.name);
                     viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
-                    contentServicesPage.checkAcsContainer();
                 }
             });
         });

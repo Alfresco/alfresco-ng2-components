@@ -27,7 +27,7 @@ import CONSTANTS = require('../util/constants');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import Util = require('../util/util.js');
+import Util = require('../util/util');
 
 import path = require('path');
 import fs = require('fs');

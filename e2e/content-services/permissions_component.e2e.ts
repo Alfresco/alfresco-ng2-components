@@ -25,7 +25,7 @@ import ContentListPage = require('../pages/adf/dialog/contentList');
 import AlfrescoApi = require('alfresco-js-api-node');
 import FileModel = require('../models/ACS/fileModel');
 import { UploadActions } from '../actions/ACS/upload.actions';
-import Util = require('../util/util.js');
+import Util = require('../util/util');
 import { browser } from 'protractor';
 
 describe('Permissions Component', function () {

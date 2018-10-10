@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../../pages/adf/loginPage.js');
-import DataTablePage = require('../../pages/adf/dataTablePage.js');
-import AcsUserModel = require('../../models/ACS/acsUserModel.js');
-import TestConfig = require('../../test.config.js');
+import { LoginPage } from '../../pages/adf/loginPage';
+import DataTablePage = require('../../pages/adf/dataTablePage');
+import AcsUserModel = require('../../models/ACS/acsUserModel');
+import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 

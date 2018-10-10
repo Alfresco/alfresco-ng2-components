@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SettingsPage } from '../../pages/adf/settingsPage';
+import { SettingsPage } from '../pages/adf/settingsPage';
 import { LoginPage } from '../pages/adf/loginPage';
 import { UserInfoDialog } from '../pages/adf/dialog/userInfoDialog';
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
@@ -78,26 +78,31 @@ describe('User Info component', () => {
         settingsPage.setProviderEcmBpm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
-        userInfoDialog.dialogIsDisplayed().contentServicesTabIsDisplayed().processServicesTabIsDisplayed();
+
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentEmail()).toEqual(contentUserModel.email);
         expect(userInfoDialog.getContentJobTitle()).toEqual(contentUserModel.jobTitle);
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
         userInfoDialog.clickOnContentServicesTab();
+
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentEmail()).toEqual(contentUserModel.email);
         expect(userInfoDialog.getContentJobTitle()).toEqual(contentUserModel.jobTitle);
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
-        userInfoDialog.clickOnProcessServicesTab().processServicesTabIsDisplayed();
+        userInfoDialog.clickOnProcessServicesTab();
+
         expect(userInfoDialog.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
         expect(userInfoDialog.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
         expect(userInfoDialog.getProcessEmail()).toEqual(processUserModel.email);
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
@@ -110,11 +115,13 @@ describe('User Info component', () => {
         loginPage.login(contentUserModel.id, contentUserModel.password);
 
         navigationBarPage.clickUserProfile();
-        userInfoDialog.dialogIsDisplayed().contentServicesTabIsNotDisplayed().processServicesTabIsNotDisplayed();
+        userInfoDialog.dialogIsDisplayed();
+
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentEmail()).toEqual(contentUserModel.email);
         expect(userInfoDialog.getContentJobTitle()).toEqual(contentUserModel.jobTitle);
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
@@ -128,7 +135,7 @@ describe('User Info component', () => {
 
         navigationBarPage.clickUserProfile();
 
-        userInfoDialog.dialogIsDisplayed().contentServicesTabIsNotDisplayed().processServicesTabIsNotDisplayed();
+        userInfoDialog.dialogIsDisplayed();
 
         expect(userInfoDialog.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
         expect(userInfoDialog.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
@@ -150,9 +157,11 @@ describe('User Info component', () => {
         settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
+
         userInfoDialog.checkACSProfileImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.closeUserProfile();
+
         done();
     });
 
@@ -165,6 +174,7 @@ describe('User Info component', () => {
         settingsPage.setProviderBpm();
         loginPage.login(processUserModel.email, processUserModel.password);
         navigationBarPage.clickUserProfile();
+
         userInfoDialog.checkAPSProfileImage();
         userInfoDialog.ACSProfileImageNotDisplayed();
         userInfoDialog.initialImageNotDisplayed();
@@ -173,10 +183,13 @@ describe('User Info component', () => {
 
     it('[C260120] Delete the profile picture from ACS', () => {
         PeopleAPI.deleteAvatarViaAPI(contentUserModel, '-me-');
+
         loginPage.goToLoginPage();
+
         settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();

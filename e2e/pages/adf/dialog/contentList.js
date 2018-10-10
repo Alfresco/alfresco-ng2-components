@@ -335,7 +335,6 @@ var ContentList = function () {
 
     this.checkIconColumn = function (file, extension) {
         var row = this.getRowByRowName(file);
-        Util.waitUntilElementIsVisible(row);
         Util.waitUntilElementIsVisible(row.element(by.css("div[class*='--image'] img[alt*='" + extension + "']")));
     };
 

@@ -38,7 +38,6 @@ export class TaskDetailsPage {
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
     emailInvolvedUser = by.xpath('following-sibling::div[@class="people-email ng-star-inserted"]');
     editActionInvolvedUser = by.xpath('following-sibling::div[@class="people-edit-label ng-star-inserted"]');
-    involvedUserPic = by.xpath('ancestor::div/ancestor::div/preceding-sibling::div//div[@class="adf-people-search-people-pic ng-star-inserted"]');
     tadkDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="adf-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));

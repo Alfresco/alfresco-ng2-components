@@ -17,14 +17,14 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
-import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage.js');
-import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage.js');
+import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
+import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import { ViewerPage } from '../pages/adf/viewerPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import Util = require('../util/util.js');
+import Util = require('../util/util');
 
 import path = require('path');
 
