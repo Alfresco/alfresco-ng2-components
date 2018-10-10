@@ -115,13 +115,15 @@ exports.Files = {
     WIDGET_CHECK_APP: {
 
         TEXT: {
-            file_location: "/resources/apps/TextWidgetAutomationApp.zip",
-            formName: "TextWidget - Form",
-            title: "TextWidget - Form",
+            file_location: "/resources/apps/WidgetApps.zip",
+            formName: "TextWidgetForm",
+            title: "TextWidgetForm",
             processName: "TextWidgetProcess",
             FIELD: {
                 simpleText: "textsimple",
-                textMinMax: "textminmax"
+                textMinMax: "textminmax",
+                textMask: "textmask",
+                textMaskReversed: "textmaskreversed"
             }
         }
     },

@@ -35,6 +35,10 @@ var TextWidget = function () {
         return formFields.setFieldValue(by.id, fieldId, value)
     }
 
+    this.getFieldValue = function (fieldId) {
+        return formFields.getFieldValue(fieldId);
+    }
+
     this.getErrorMessage = function(fieldId) {
         return formFields.getFieldErrorMessage(fieldId);
     }

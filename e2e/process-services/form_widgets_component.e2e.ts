@@ -316,7 +316,7 @@ describe('Form widgets', () => {
 
         it('[C268157] - General Properties', async() => {
             let label = widget.textWidget().getFieldLabel(app.FIELD.simpleText);
-            expect(label).toBe('TextSimple*');
+            expect(label).toBe('textSimple*');
             expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
             let placeHolder = widget.textWidget().getFieldPlaceHolder(app.FIELD.simpleText);
             expect(placeHolder).toBe('Type something...');
@@ -332,5 +332,17 @@ describe('Form widgets', () => {
             expect(widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toBe('Enter no more than 10 characters');
             expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         });
+
+        it('[C268171] - Input mask reversed checkbox properties', async() =>{
+            widget.textWidget().setValue(app.FIELD.textMask, '18951523');
+            expect(widget.textWidget().getFieldValue(app.FIELD.textMask)).toBe('1895-1523');
+        });
+
+        it('[C268171] -Input mask reversed checkbox properties', async() =>{
+            widget.textWidget().setValue(app.FIELD.textMaskReversed, '1234567899');
+            expect(widget.textWidget().getFieldValue(app.FIELD.textMaskReversed)).toBe('3456-7899');
+        });
+
+
     });
 });
