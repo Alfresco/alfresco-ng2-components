@@ -112,6 +112,20 @@ exports.Files = {
         }
     },
 
+    WIDGET_CHECK_APP: {
+
+        TEXT: {
+            file_location: "/resources/apps/TextWidgetAutomationApp.zip",
+            formName: "TextWidget - Form",
+            title: "TextWidget - Form",
+            processName: "TextWidgetProcess",
+            FIELD: {
+                simpleText: "textsimple",
+                textMinMax: "textminmax"
+            }
+        }
+    },
+
     DYNAMIC_TABLE_APP: {
         file_location: "/resources/apps/Dynamic Table App.zip",
         title: "Dynamic Table App",

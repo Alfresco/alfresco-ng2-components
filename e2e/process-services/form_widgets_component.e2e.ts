@@ -278,9 +278,59 @@ describe('Form widgets', () => {
                         .toContain('value 1');
                     expect(taskPage.formFields().getFieldValue(appFields.displayvalue_id))
                         .toEqual('value 1');
-                    
+
                 });
 
+        });
+    });
+
+    fdescribe('Text Widget', () => {
+        let app = resources.Files.WIDGET_CHECK_APP.TEXT;
+        let appModel, deployedApp;
+        let appsActions = new AppsActions();
+
+        beforeAll(async (done) => {
+            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+            appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
+            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            deployedApp = appDefinitions.data.find((currentApp) => {
+                return currentApp.modelId === appModel.id;
+            });
+            await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            done();
+        });
+
+        beforeEach(() => {
+            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            browser.get(urlToNavigateTo);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            taskPage.formFields().checkFormIsDisplayed();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            done();
+        });
+
+        it('[C268157] - General Properties', async() => {
+            let label = widget.textWidget().getFieldLabel(app.FIELD.simpleText);
+            expect(label).toBe('TextSimple*');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            let placeHolder = widget.textWidget().getFieldPlaceHolder(app.FIELD.simpleText);
+            expect(placeHolder).toBe('Type something...');
+            widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        });
+
+        it('[C268170] - Min-max length properties', async() =>{
+            widget.textWidget().setValue(app.FIELD.textMinMax, 'A');
+            expect(widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toBe('Enter at least 4 characters');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            widget.textWidget().setValue(app.FIELD.textMinMax, 'AAAAAAAAAAA');
+            expect(widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toBe('Enter no more than 10 characters');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         });
     });
 });

@@ -22,7 +22,7 @@ var FormFields = function () {
     var formContent = element(by.css("adf-form"));
     var refreshButton = element(by.css("div[class*='form-reload-button'] mat-icon"));
     var saveButton = element(by.cssContainingText("mat-card-actions[class*='adf-form'] span", "SAVE"));
-    var valueLocator = by.cxss("input");
+    var valueLocator = by.css("input");
     var labelLocator = by.css("label");
     var noFormMessage = element(by.css("span[id*='no-form-message']"));
     var completedTaskNoFormMessage = element(by.css("div[id*='completed-form-message'] p"));
@@ -30,6 +30,7 @@ var FormFields = function () {
     var selectFormDropDownArrow = element.all(by.css("adf-attach-form div[class*='mat-select-arrow']")).first();
     var selectFormContent = element(by.css("div[class*='mat-select-content']"));
     var completeButton = element(by.id('adf-form-complete'));
+    var errorMessage = by.css('.adf-error-text-container .adf-error-text');
 
     this.setFieldValue = function (By, field, value) {
         var fieldElement =  element(By(field));
@@ -54,10 +55,21 @@ var FormFields = function () {
         return this.getFieldText(fieldId, labelLocatorParam);
     };
 
+    this.getFieldErrorMessage = function (fieldId) {
+        var error = this.getWidget(fieldId).element(errorMessage);
+        return error.getText();
+    }
+
     this.getFieldText = function (fieldId, labelLocatorParam) {
         var label = this.getWidget(fieldId).all(labelLocatorParam || labelLocator).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
+    };
+
+    this.getFieldPlaceHolder = function (fieldId) {
+        let placeHolderLocator = element(by.css(`input#${fieldId}`)).getAttribute('placeholder');
+        Util.waitUntilElementIsVisible(placeHolderLocator);
+        return placeHolderLocator;
     };
 
     this.checkFieldValue = function (By, field, val) {
@@ -135,6 +147,11 @@ var FormFields = function () {
         Util.waitUntilElementIsVisible(input);
         input.sendKeys(text);
         return this;
+    }
+
+    this.isCompleteFormButtonDisabled = function() {
+        Util.waitUntilElementIsVisible(completeButton);
+        return completeButton.getAttribute('disabled');
     }
 };
 
