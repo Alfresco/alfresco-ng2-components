@@ -1,0 +1,114 @@
+@mixin  adf-cloud-app-details-theme($theme) {
+
+    $tile-themes: (
+        theme-1: (bg: #269abc, color: #168aac),
+        theme-2: (bg: #7da9b0, color: #6d99a0),
+        theme-3: (bg: #7689ab, color: #66799b),
+        theme-4: (bg: #c74e3e, color: #b73e2e),
+        theme-5: (bg: #fab96c, color: #eaa95c),
+        theme-6: (bg: #759d4c, color: #658d3c),
+        theme-7: (bg: #b1b489, color: #a1a479),
+        theme-8: (bg: #a17299, color: #916289),
+        theme-9: (bg: #696c67, color: #595c57),
+        theme-10: (bg: #cabb33, color: #baab23)
+    );
+
+    .adf-app-listgrid {
+        padding: 8px;
+
+        &-item {
+            outline: none;
+            padding: 8px;
+            box-sizing: border-box;
+
+            &-card {
+
+                @for $i from 1 through 10 {
+                    &.theme-#{$i} {
+                        $tile-theme: map-get($tile-themes, theme-#{$i});
+                        background-color: map-get($tile-theme, bg);
+                    }
+                }
+
+                outline: none;
+                transition: transform 280ms cubic-bezier(.4,0,.2,1), box-shadow 280ms cubic-bezier(.4,0,.2,1);
+                min-height: 200px;
+                padding: 0 !important;
+
+                &:hover {
+                    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .2);
+                    cursor: pointer;
+                    transform: scale(1.015);
+                }
+
+                &-logo {
+                    position: absolute;
+                    right: 20px;
+                    top: 20px;
+                    padding: 16px;
+                    z-index: 9;
+
+                    &-icon {
+                        font-size: 70px;
+                        width: 1em !important;
+                        height: 1em !important;
+
+                        @for $i from 1 through 10 {
+                            .theme-#{$i} & {
+                                $tile-theme: map-get($tile-themes, theme-#{$i});
+                                color: map-get($tile-theme, color);
+                            }
+                        }
+                    }
+                }
+
+                &-title {
+                    padding: 16px;
+                    margin-bottom: 0 !important;
+                    z-index: 9999;
+
+                    h1 {
+                        color: white;
+                        width: 80%;
+                        font-size: 24px;
+                        margin: 0;
+                        line-height: normal;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+                }
+
+                &-subtitle {
+                    color: white;
+                    z-index: 9999;
+                    padding: 16px;
+
+                    .line-clamp {
+                        @include line-clamp(1.25, 3);
+                    }
+                }
+
+                &-actions {
+                    padding: 0 16px 16px 16px !important;
+                    border-top: 1px solid rgba(0,0,0,.1);
+                    min-height: 48px;
+                    box-sizing: border-box;
+
+                    &-icon {
+                        color: #e9f1f3;
+                    }
+
+                    &.mat-card-actions {
+                        margin-left: 0px;
+                        margin-right: 0px;
+
+                        &:last-child {
+                            margin-bottom: 0 !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
