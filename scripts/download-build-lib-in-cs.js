@@ -106,6 +106,9 @@ async function main() {
 
     let insightUrl = await getUrl(program.folder, 'insights');
     downloadZip(insightUrl, program.output, 'insights');
+
+    let processCloudUrl = await getUrl(program.folder, 'process-services-cloud');
+    downloadZip(processCloudUrl, program.output, 'process-services-cloud');
 }
 
 main();
