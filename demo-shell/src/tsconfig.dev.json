@@ -30,7 +30,7 @@
         "../../lib/insights"
       ],
       "@alfresco/adf-process-services-cloud": [
-        "../../lib/process-services-cloud/src/public_api.ts"
+        "../../lib/process-services-cloud"
       ]
     }
   },
