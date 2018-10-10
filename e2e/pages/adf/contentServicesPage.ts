@@ -60,7 +60,7 @@ export class ContentServicesPage {
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
 
     getContentList() {
-        return contentList;
+        return this.contentList;
     }
 
     checkRecentFileToBeShowed() {
