@@ -32,7 +32,6 @@ import AcsUserModel = require('../../models/ACS/acsUserModel');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { browser } from 'protractor';
 
 describe('Viewer', () => {
 
@@ -113,7 +112,6 @@ describe('Viewer', () => {
     });
 
     describe('Archive Folder Uploaded', () => {
-
         let uploadedArchives;
         let archiveFolderUploaded;
 
@@ -137,7 +135,7 @@ describe('Viewer', () => {
             uploadedArchives.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(15000);
+                    viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -171,7 +169,7 @@ describe('Viewer', () => {
             uploadedExcels.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(15000);
+                    viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -205,7 +203,7 @@ describe('Viewer', () => {
             uploadedPpts.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(15000);
+                    viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -239,7 +237,7 @@ describe('Viewer', () => {
             uploadedTexts.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(15000);
+                    viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -273,7 +271,7 @@ describe('Viewer', () => {
             uploadedWords.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(15000);
+                    viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -307,7 +305,7 @@ describe('Viewer', () => {
             uploadedOthers.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(15000);
+                    viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }
@@ -341,7 +339,7 @@ describe('Viewer', () => {
             uploadedImages.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     navigationBarPage.openViewer(currentFile.entry.id);
-                    viewerPage.checkZoomInButtonIsDisplayed(15000);
+                    viewerPage.checkFileIsLoaded();
                     viewerPage.clickCloseButton();
                     contentServicesPage.checkAcsContainer();
                 }

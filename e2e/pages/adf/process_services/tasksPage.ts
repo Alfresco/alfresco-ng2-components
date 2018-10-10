@@ -153,14 +153,14 @@ export class TasksPage {
 
     removeChecklists(checklist) {
         let row = this.getRowsName(checklist).element(this.rowByRowName);
-        Util.waitUntilElementIsVisible(row.element(by.css('button')));
-        row.element(by.css('button')).click();
+        Util.waitUntilElementIsVisible(row.element(by.css('mat-icon')));
+        row.element(by.css('mat-icon')).click();
         return this;
     }
 
     checkChecklistsRemoveButtonIsNotDisplayed(checklist) {
         let row = this.getRowsName(checklist).element(this.rowByRowName);
-        Util.waitUntilElementIsNotOnPage(row.element(by.css('button')));
+        Util.waitUntilElementIsNotOnPage(row.element(by.css('mat-icon')));
         return this;
     }
 
