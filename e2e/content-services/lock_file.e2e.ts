@@ -38,7 +38,7 @@ describe('Lock File', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const contentList = new ContentList();
-    const lockFilePage =  new LockFilePage();
+    const lockFilePage = new LockFilePage();
 
     let adminUser = new AcsUserModel();
     let managerUser = new AcsUserModel();
@@ -177,14 +177,18 @@ describe('Lock File', () => {
 
             nodeId = pngUploadedFile.entry.id;
 
-            await this.alfrescoJsApi.core.nodesApi.lockNode(nodeId, {timeToExpire:0,type:'FULL',lifetime:'PERSISTENT'});
+            await this.alfrescoJsApi.core.nodesApi.lockNode(nodeId, {
+                timeToExpire: 0,
+                type: 'FULL',
+                lifetime: 'PERSISTENT'
+            });
 
             await this.alfrescoJsApi.login(managerUser.id, managerUser.password);
 
             done();
         });
 
-        afterAll(async(done) => {
+        afterAll(async (done) => {
             await this.alfrescoJsApi.login(adminUser.id, adminUser.password);
 
             await this.alfrescoJsApi.core.nodesApi.unlockNode(nodeId);
@@ -198,7 +202,7 @@ describe('Lock File', () => {
             try {
                 await this.alfrescoJsApi.core.nodesApi.deleteNode(nodeId);
 
-            } catch(error) {
+            } catch (error) {
                 expect(error.status).toEqual(409);
             }
 
@@ -206,7 +210,7 @@ describe('Lock File', () => {
 
         it('[C286611] Should not be able to rename a locked file', async () => {
             try {
-                await this.alfrescoJsApi.core.nodesApi.updateNode(nodeId, {name: 'My new name'});
+                await this.alfrescoJsApi.core.nodesApi.updateNode(nodeId, { name: 'My new name' });
 
             } catch (error) {
                 expect(error.status).toEqual(409);
@@ -216,7 +220,7 @@ describe('Lock File', () => {
 
         it('[C286612] Should not be able to move a locked file', async () => {
             try {
-                await this.alfrescoJsApi.core.nodesApi.moveNode(nodeId, {targetParentId: '-my-'});
+                await this.alfrescoJsApi.core.nodesApi.moveNode(nodeId, { targetParentId: '-my-' });
 
             } catch (error) {
                 expect(error.status).toEqual(409);
@@ -244,13 +248,21 @@ describe('Lock File', () => {
 
             await this.alfrescoJsApi.login(managerUser.id, managerUser.password);
 
-            await this.alfrescoJsApi.core.nodesApi.lockNode(nodeId, {timeToExpire:0,type:'ALLOW_OWNER_CHANGES',lifetime:'PERSISTENT'});
-            await this.alfrescoJsApi.core.nodesApi.lockNode(secondNodeId, {timeToExpire:0,type:'ALLOW_OWNER_CHANGES',lifetime:'PERSISTENT'});
+            await this.alfrescoJsApi.core.nodesApi.lockNode(nodeId, {
+                timeToExpire: 0,
+                type: 'ALLOW_OWNER_CHANGES',
+                lifetime: 'PERSISTENT'
+            });
+            await this.alfrescoJsApi.core.nodesApi.lockNode(secondNodeId, {
+                timeToExpire: 0,
+                type: 'ALLOW_OWNER_CHANGES',
+                lifetime: 'PERSISTENT'
+            });
 
             done();
         });
 
-        afterAll(async(done) => {
+        afterAll(async (done) => {
             await this.alfrescoJsApi.login(adminUser.id, adminUser.password);
 
             await this.alfrescoJsApi.core.nodesApi.unlockNode(nodeId);
@@ -262,7 +274,7 @@ describe('Lock File', () => {
 
         it('[C286614] Owner of the locked file should be able to rename if "Allow owner to modify" is checked', async () => {
 
-            let response = await this.alfrescoJsApi.core.nodesApi.updateNode(nodeId, {name: 'My new name'});
+            let response = await this.alfrescoJsApi.core.nodesApi.updateNode(nodeId, { name: 'My new name' });
 
             expect(response.entry.name).toEqual('My new name');
         });
@@ -274,7 +286,7 @@ describe('Lock File', () => {
         });
 
         it('[C286616] Owner of the locked file should be able to move if "Allow owner to modify" is checked', async () => {
-            await this.alfrescoJsApi.core.nodesApi.moveNode(nodeId, {targetParentId: '-my-'});
+            await this.alfrescoJsApi.core.nodesApi.moveNode(nodeId, { targetParentId: '-my-' });
 
             let movedFile = await this.alfrescoJsApi.core.nodesApi.getNode(nodeId);
 
@@ -288,7 +300,7 @@ describe('Lock File', () => {
             try {
                 await this.alfrescoJsApi.core.nodesApi.getNode(secondNodeId);
 
-            } catch(error) {
+            } catch (error) {
                 expect(error.status).toEqual(404);
             }
         });
