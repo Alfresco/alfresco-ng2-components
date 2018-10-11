@@ -16,6 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'app-cloud',
@@ -24,9 +25,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CloudComponent implements OnInit {
 
-    constructor() {
+    appName: string;
+
+    constructor(
+                private router: Router,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit() {
+        if (this.route) {
+            this.route.params.forEach((params: Params) => {
+                if (params['appName']) {
+                    this.appName = params['appName'];
+                }
+            });
+        }
+    }
+
+    onFilterSelected(filter) {
+        const queryParams = {
+            status: filter.query.state,
+            filterName: filter.name,
+            sort: filter.query.sort,
+            order: filter.query.order
+        };
+        this.router.navigate([`/activiti-cloud/${this.appName}/task-list/`], {queryParams: queryParams});
+    }
+
+    hasApp() {
+        return !!this.appName;
     }
 }

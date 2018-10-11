@@ -61,6 +61,7 @@
     "NOTIFICATIONS": "Notifications",
     "TASK_LIST": "Task List",
     "PROCESS_LIST": "Process List",
+    "CLOUD_COMPONENTS": "APS Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",

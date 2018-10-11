@@ -138,6 +138,10 @@ export const appRoutes: Routes = [
                 component: CloudComponent
             },
             {
+                path: 'cloud/:appName',
+                component: CloudComponent
+            },
+            {
                 path: 'node-selector',
                 loadChildren: 'app/components/content-node-selector/content-node-selector.module#AppContentNodeSelectorModule'
             },
