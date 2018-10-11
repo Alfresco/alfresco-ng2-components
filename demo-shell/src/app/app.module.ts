@@ -28,18 +28,15 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { SearchExtendedComponent } from './components/search/search-extended.component';
-import { AboutComponent } from './components/about/about.component';
 import { LogComponent } from './components/log/log.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
-import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
@@ -47,12 +44,7 @@ import { ShowDiagramComponent } from './components/process-service/show-diagram.
 import { FormViewerComponent } from './components/process-service/form-viewer.component';
 import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
-import { DataTableComponent } from './components/datatable/datatable.component';
-import { TrashcanComponent } from './components/trashcan/trashcan.component';
 import { FilesComponent } from './components/files/files.component';
-import { WebscriptComponent } from './components/webscript/webscript.component';
-import { TagComponent } from './components/tag/tag.component';
-import { SocialComponent } from './components/social/social.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
 
@@ -65,16 +57,7 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { PreviewService } from './services/preview.service';
-import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
-import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
-import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
-import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
-import { CardViewComponent } from './components/card-view/card-view.component';
-import { HeaderDataComponent } from './components/header-data/header-data.component';
-import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
-import { HeaderDataService } from './components/header-data/header-data.service';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
@@ -103,28 +86,20 @@ import { AuthBearerInterceptor } from './services';
         AppComponent,
         LoginComponent,
         LogoutComponent,
-        SettingsComponent,
         AppLayoutComponent,
         HomeComponent,
         SearchBarComponent,
         SearchResultComponent,
         SearchExtendedComponent,
-        AboutComponent,
         LogComponent,
         ProcessServiceComponent,
         ShowDiagramComponent,
         FormViewerComponent,
         FormNodeViewerComponent,
         AppsViewComponent,
-        DataTableComponent,
         FilesComponent,
-        TrashcanComponent,
         FormComponent,
         FormListComponent,
-        WebscriptComponent,
-        TagComponent,
-        SocialComponent,
-        CustomSourcesComponent,
         VersionManagerDialogAdapterComponent,
         MetadataDialogAdapterComponent,
         TaskAttachmentsComponent,
@@ -134,15 +109,7 @@ import { AuthBearerInterceptor } from './services';
         FormLoadingComponent,
         DemoPermissionComponent,
         FormLoadingComponent,
-        BreadcrumbDemoComponent,
-        NotificationsComponent,
-        CardViewComponent,
-        ContentNodeSelectorComponent,
-        ReportIssueComponent,
-        TaskListDemoComponent,
-        ProcessListDemoComponent,
-        HeaderDataComponent,
-        ConfigEditorComponent
+        ReportIssueComponent
     ],
     providers: [
         {
@@ -166,8 +133,7 @@ import { AuthBearerInterceptor } from './services';
                 source: 'resources/lazy-loading'
             }
         },
-        PreviewService,
-        HeaderDataService
+        PreviewService
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,

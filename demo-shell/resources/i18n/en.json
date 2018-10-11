@@ -21,7 +21,6 @@
       "SHOW_COMMENTS": "Show comments on versions",
       "ALLOW_DOWNLOAD": "Enable version download",
       "READ_ONLY": "Read-only",
-      "ALLOW_DOWNLOAD": "Allow Download",
       "COMMENTS": "Show comments"
     },
     "PERSONAL-FILES": "Personal Files",
@@ -81,7 +80,6 @@
     "OVERLAY_VIEWER": "Overlay Viewer",
     "ABOUT": "About",
     "SEARCH": "Extended Search",
-    "NOTIFICATIONS": "Notifications",
     "EXTENDED_SEARCH_QUERY_BODY": "Extended Search with Query Body",
     "WORD_TO_SEARCH": "Search Word",
     "SEARCH_CREATED_BY": "Created By",
@@ -102,6 +100,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (with checkboxes)",
     "THUMBNAILS": "Enable Thumbnails",
+    "ALLOW_DROP_FILES": "Enable Drop Files in a folder",
     "MULTIPLE_FILE_UPLOAD": "Multiple File Upload",
     "FOLDER_UPLOAD": "Folder upload",
     "CUSTOM_FILTER": "Custom extensions filter",
