@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { FormPage } from '../pages/adf/process_services/formPage';
 import { Date } from '../pages/adf/process_services/widgets/Date';
 import { Amount } from '../pages/adf/process_services/widgets/Amount';
@@ -31,9 +31,9 @@ describe('Form Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formPage = new FormPage();
-    const dateWidget =  new Date();
-    const amountWidget =  new Amount();
-    const numberWidget =  new NumberWidget();
+    const dateWidget = new Date();
+    const amountWidget = new Amount();
+    const numberWidget = new NumberWidget();
 
     let tenantId, user;
 
@@ -47,7 +47,7 @@ describe('Form Component', () => {
         errorLabel: 'Error Label4'
     };
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: TestConfig.adf.url
@@ -70,7 +70,7 @@ describe('Form Component', () => {
         done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async (done) => {
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
