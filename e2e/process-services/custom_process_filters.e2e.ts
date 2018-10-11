@@ -20,7 +20,6 @@ import { browser } from 'protractor';
 import { LoginPage } from '../pages/adf/loginPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
-import FiltersPage = require('../pages/adf/process_services/filtersPage');
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import { AppSettingsToggles } from '../pages/adf/process_services/dialog/appSettingsToggles';
 
