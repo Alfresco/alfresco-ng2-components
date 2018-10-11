@@ -18,8 +18,8 @@
 import CONSTANTS = require('../../util/constants');
 import Util = require('../../util/util');
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import ContentListPage = require('../../pages/adf/dialog/contentList');
 import ErrorPage = require('../../pages/adf/errorPage');
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';

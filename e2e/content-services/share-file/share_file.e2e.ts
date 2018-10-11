@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import ContentListPage = require('../../pages/adf/dialog/contentList');
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -51,7 +51,7 @@ describe('Share file', () => {
 
     let nodeId;
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
@@ -74,7 +74,8 @@ describe('Share file', () => {
         done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async (done) => {
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
         done();
     });
@@ -117,7 +118,7 @@ describe('Share file', () => {
             shareDialog.calendarTodayDayIsDisabled();
         });
 
-        it('[C286548] User can set when the shared file link expires', async() => {
+        it('[C286548] User can set when the shared file link expires', async () => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
@@ -142,7 +143,7 @@ describe('Share file', () => {
             done();
         });
 
-        it('[C286565] Logged user can open shared link', async() => {
+        it('[C286565] Logged user can open shared link', async () => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
