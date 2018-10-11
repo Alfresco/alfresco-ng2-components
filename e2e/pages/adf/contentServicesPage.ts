@@ -26,7 +26,7 @@ export class ContentServicesPage {
 
     contentList = new ContentList();
     createFolderDialog = new CreateFolderDialog();
-    uploadBorder = element(by.css('div[id="document-list-container"]'));
+    uploadBorder = element(by.id('document-list-container'));
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     contentServices = element(by.css('a[data-automation-id="Content Services"]'));
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item active"] div'));
