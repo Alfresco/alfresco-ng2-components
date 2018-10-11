@@ -20,10 +20,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
-import { AboutComponent } from './components/about/about.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
 import { FormViewerComponent } from './components/process-service/form-viewer.component';
@@ -31,36 +29,25 @@ import { FormNodeViewerComponent } from './components/process-service/form-node-
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { SearchExtendedComponent } from './components/search/search-extended.component';
-import { TrashcanComponent } from './components/trashcan/trashcan.component';
 
-import { DataTableComponent } from './components/datatable/datatable.component';
-import { WebscriptComponent } from './components/webscript/webscript.component';
-import { TagComponent } from './components/tag/tag.component';
-import { SocialComponent } from './components/social/social.component';
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 
-import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
-import { BreadcrumbDemoComponent } from './components/breadcrumb-demo/breadcrumb-demo.component';
-import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
-import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
-import { CardViewComponent } from './components/card-view/card-view.component';
-import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
-import { HeaderDataComponent } from './components/header-data/header-data.component';
-import { ConfigEditorComponent } from './components/config-editor/config-editor.component';
 import { AppComponent } from './app.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
-    { path: 'settings', component: SettingsComponent },
+    {
+        path: 'settings',
+        loadChildren: 'app/components/settings/settings.module#AppSettingsModule'
+    },
     {
         path: 'files/:nodeId/view',
         component: AppComponent,
@@ -89,8 +76,8 @@ export const appRoutes: Routes = [
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
         path: 'breadcrumb',
-        component: BreadcrumbDemoComponent,
-        canActivate: [AuthGuardEcm]
+        canActivate: [AuthGuardEcm],
+        loadChildren: 'app/components/breadcrumb-demo/breadcrumb-demo.module#AppBreadcrumbModule'
     },
     {
         path: 'notifications',
@@ -98,7 +85,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: NotificationsComponent
+                loadChildren: 'app/components/notifications/notifications.module#AppNotificationsModule'
             }
         ]
     },
@@ -108,7 +95,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: ConfigEditorComponent
+                loadChildren: 'app/components/config-editor/config-editor.module#AppConfigEditorModule'
             }
         ]
     },
@@ -118,7 +105,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: CardViewComponent
+                loadChildren: 'app/components/card-view/card-view.module#AppCardViewModule'
             }
         ]
     },
@@ -128,7 +115,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: HeaderDataComponent
+                loadChildren: 'app/components/header-data/header-data.module#AppHeaderDataModule'
             }
         ]
     },
@@ -147,16 +134,16 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'node-selector',
-                component: ContentNodeSelectorComponent
+                loadChildren: 'app/components/content-node-selector/content-node-selector.module#AppContentNodeSelectorModule'
             },
             {
                 path: 'settings-layout',
-                component: SettingsComponent
+                loadChildren: 'app/components/settings/settings.module#AppSettingsModule'
             },
             {
                 path: 'trashcan',
-                component: TrashcanComponent,
-                canActivate: [AuthGuardEcm]
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/trashcan/trashcan.module#AppTrashcanModule'
             },
             {
                 path: 'files',
@@ -175,12 +162,13 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'dl-custom-sources',
-                component: CustomSourcesComponent,
-                canActivate: [AuthGuardEcm]
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/files/custom-sources.module#AppCustomSourcesModule'
+
             },
             {
                 path: 'datatable',
-                component: DataTableComponent
+                loadChildren: 'app/components/datatable/datatable.module#AppDataTableModule'
             },
             {
                 path: 'search',
@@ -252,25 +240,28 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'webscript',
-                component: WebscriptComponent,
-                canActivate: [AuthGuardEcm]
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/webscript/webscript.module#AppWebScriptModule'
             },
             {
                 path: 'tag',
-                component: TagComponent,
-                canActivate: [AuthGuardEcm]
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/tag/tag.module#AppTagModule'
             },
             {
                 path: 'social',
-                component: SocialComponent,
-                canActivate: [AuthGuardEcm]
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/social/social.module#AppSocialModule'
             },
             {
                 path: 'permissions/:id',
                 component: DemoPermissionComponent,
                 canActivate: [AuthGuardEcm]
             },
-            { path: 'about', component: AboutComponent },
+            {
+                path: 'about',
+                loadChildren: 'app/components/about/about.module#AppAboutModule'
+            },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
             { path: 'form-loading', component: FormLoadingComponent },
@@ -289,23 +280,13 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'task-list',
-                component: TaskListDemoComponent,
-                canActivate: [AuthGuardBpm]
-            },
-            {
-                path: 'task-list/:id',
-                component: TaskListDemoComponent,
-                canActivate: [AuthGuardBpm]
+                canActivate: [AuthGuardBpm],
+                loadChildren: 'app/components/task-list-demo/task-list.module#AppTaskListModule'
             },
             {
                 path: 'process-list',
-                component: ProcessListDemoComponent,
-                canActivate: [AuthGuardBpm]
-            },
-            {
-                path: 'process-list/:id',
-                component: ProcessListDemoComponent,
-                canActivate: [AuthGuardBpm]
+                canActivate: [AuthGuardBpm],
+                loadChildren: 'app/components/process-list-demo/process-list.module#AppProcessListModule'
             },
             {
                 path: 'error/:id',
