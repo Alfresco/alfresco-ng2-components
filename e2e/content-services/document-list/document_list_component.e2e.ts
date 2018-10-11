@@ -16,8 +16,8 @@
  */
 
 import { browser } from 'protractor';
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import TestConfig = require('../../test.config');

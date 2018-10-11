@@ -16,11 +16,11 @@
  */
 
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
+import { TabsPage } from '../material/tabsPage';
 import Util = require('../../../util/util');
 
 export class TaskDetailsPage {
 
-    appSettingsToggles = new AppSettingsToggles();
     formNameField = element(by.css('span[data-automation-id*="formName"] span'));
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
     statusField = element(by.css('span[data-automation-id*="status"] span'));
@@ -33,14 +33,11 @@ export class TaskDetailsPage {
     activitiesTitle = element(by.css('div[class*="adf-info-drawer-layout-header-title"] div'));
     commentField = element(by.id('comment-input'));
     addCommentButton = element(by.css('[data-automation-id="comments-input-add"]'));
-    activityTab = element(by.cssContainingText('div[class*="mat-tab-label"]', 'Activity'));
-    detailsTab = element(by.cssContainingText('div[class*="mat-tab-label""]', 'Details'));
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
     emailInvolvedUser = by.xpath('following-sibling::div[@class="people-email ng-star-inserted"]');
     editActionInvolvedUser = by.xpath('following-sibling::div[@class="people-edit-label ng-star-inserted"]');
-    involvedUserPic = by.xpath('ancestor::div/ancestor::div/preceding-sibling::div//div[@class="adf-people-search-people-pic ng-star-inserted"]');
     tadkDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="adf-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
@@ -187,24 +184,14 @@ export class TaskDetailsPage {
     }
 
     selectActivityTab() {
-        Util.waitUntilElementIsVisible(this.activityTab);
-        activityTab.getAttribute('aria-selected').then((check) => {
-            if (check === 'false') {
-                this.activityTab.click();
-                expect(this.activityTab.getAttribute('aria-selected') === 'true');
-            }
-        });
+        let tabsPage = new TabsPage;
+        tabsPage.clickTabByTitle('Activity');
         return this;
     }
 
     selectDetailsTab() {
-        Util.waitUntilElementIsVisible(this.detailsTab);
-        detailsTab.getAttribute('aria-selected').then((check) => {
-            if (check === 'false') {
-                this.detailsTab.click();
-                expect(this.detailsTab.getAttribute('aria-selected') === 'true');
-            }
-        });
+        let tabsPage = new TabsPage;
+        tabsPage.clickTabByTitle('Details');
         return this;
     }
 
@@ -275,13 +262,13 @@ export class TaskDetailsPage {
     }
 
     getInvolvedUserEmail(user) {
-        let email = this.getRowsUser(user).element(emailInvolvedUser);
+        let email = this.getRowsUser(user).element(this.emailInvolvedUser);
         Util.waitUntilElementIsVisible(email);
         return email.getText();
     }
 
     getInvolvedUserEditAction(user) {
-        let edit = this.getRowsUser(user).element(editActionInvolvedUser);
+        let edit = this.getRowsUser(user).element(this.editActionInvolvedUser);
         Util.waitUntilElementIsVisible(edit);
         return edit.getText();
     }
@@ -292,7 +279,7 @@ export class TaskDetailsPage {
     }
 
     appSettingsToggles() {
-        return this.appSettingsToggles;
+        return new AppSettingsToggles();
     }
 
     taskInfoDrawerIsDisplayed() {
@@ -344,12 +331,6 @@ export class TaskDetailsPage {
     getInvolvedPeopleTitle() {
         Util.waitUntilElementIsVisible(this.peopleTitle);
         return this.peopleTitle.getText();
-    }
-
-    getInvolvedPeopleInitialImage(user) {
-        let pic = this.getRowsUser(user).element(this.involvedUserPic);
-        Util.waitUntilElementIsVisible(pic);
-        return pic.getText();
     }
 
     checkTaskDetails() {

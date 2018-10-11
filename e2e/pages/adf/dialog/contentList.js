@@ -18,6 +18,7 @@
 var Util = require('../../../util/util');
 
 var ContentList = function () {
+
     var deleteContent = element(by.css("button[data-automation-id*='DELETE']"));
     var metadataAction = element(by.css("button[data-automation-id*='METADATA']"));
     var versionManagerAction = element(by.css("button[data-automation-id*='VERSIONS']"));
@@ -334,7 +335,6 @@ var ContentList = function () {
 
     this.checkIconColumn = function (file, extension) {
         var row = this.getRowByRowName(file);
-        Util.waitUntilElementIsVisible(row);
         Util.waitUntilElementIsVisible(row.element(by.css("div[class*='--image'] img[alt*='" + extension + "']")));
     };
 

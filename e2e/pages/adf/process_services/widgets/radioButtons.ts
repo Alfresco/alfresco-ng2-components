@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import FormFields = require('../formFields');
+import Util = require('../../../../util/util');
 
-var Header = function () {
+export class RadioButtons {
 
-    var formFields = new FormFields();
+    formFields = new FormFields();
 
-    var labelLocator = by.css("span[id='container-header-label']");
+    getSpecificOptionLabel(fieldId, optionNumber) {
+        let optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"] div[class*="content"]');
 
-    this.getFieldLabel = function (fieldId) {
-        return formFields.getFieldLabel(fieldId, labelLocator);
-    };
+        let option = this.formFields.getWidget(fieldId).element(optionLocator);
+        Util.waitUntilElementIsVisible(option);
+        return option.getText();
+    }
 
-};
-
-module.exports = Header;
+}

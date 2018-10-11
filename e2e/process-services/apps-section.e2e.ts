@@ -16,8 +16,8 @@
  */
 
 import { browser } from 'protractor';
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 
 import CONSTANTS = require('../util/constants');

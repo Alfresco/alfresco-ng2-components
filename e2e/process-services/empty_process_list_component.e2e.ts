@@ -17,9 +17,9 @@
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import LoginPage = require('../pages/adf/loginPage');
+import { LoginPage } from '../pages/adf/loginPage';
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
 import ProcessListPage = require('../pages/adf/process_services/processListPage');

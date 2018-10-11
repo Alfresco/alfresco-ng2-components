@@ -16,7 +16,6 @@
  */
 
 import Util = require('../../util/util');
-import CardViewPage = require('./cardViewPageComponent');
 
 import { TabsPage } from './material/tabsPage';
 import { FormControllersPage } from './material/formControllersPage';
@@ -65,7 +64,6 @@ export class ViewerPage {
     imgViewer = element(by.css('adf-img-viewer'));
     activeTab = element(by.css('div[class*="mat-tab-label-active"]'));
     uploadNewVersionButton = element(by.css('input[data-automation-id="upload-single-file"]'));
-    rightChevron = element(by.css('div[class*="header-pagination-after"]'));
     toolbarSwitch = element(by.id('adf-switch-toolbar'));
     toolbar = element(by.id('adf-viewer-toolbar'));
     datatableHeader = element(by.css('div.adf-datatable-header'));
@@ -80,7 +78,7 @@ export class ViewerPage {
     showLeftSidebarSwitch = element(by.id('adf-switch-showleftsidebar'));
 
     moreActionsSwitch = element(by.id('adf-switch-moreactions'));
-    moreActions = element(by.id('adf-viewer-moreactions'));
+    pdfPageLoaded = element(by.css('[data-page-number="1"][data-loaded="true"], adf-img-viewer, adf-txt-viewer'));
 
     downloadSwitch = element(by.id('adf-switch-download'));
     downloadButton = element(by.id('adf-viewer-download'));
@@ -148,20 +146,8 @@ export class ViewerPage {
         Util.waitUntilElementIsVisible(this.datatableHeader);
     }
 
-    checkPageCanvasIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.pageCanvas);
-    }
-
-    checkToolbarIsDisplayed(timeout) {
-        Util.waitUntilElementIsVisible(this.toolbar, timeout);
-    }
-
-    checkViewerIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.viewer);
-    }
-
-    checkPdfViewerIsDisplayed() {
-        Util.waitUntilElementIsOnPage(this.pdfViewer);
+    checkFileIsLoaded() {
+        Util.waitUntilElementIsOnPage(this.pdfPageLoaded, 15000);
     }
 
     checkImgViewerIsDisplayed() {
@@ -477,29 +463,6 @@ export class ViewerPage {
     getActiveTab() {
         Util.waitUntilElementIsVisible(this.activeTab);
         return this.activeTab.getText();
-    }
-
-    checkUnsupportedFileContainerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.unsupportedFileContainer);
-    }
-
-    clickRightChevronToGetToTab = (tabName) => {
-        element.all(by.css('.mat-tab-label'))
-            .map((element) => element.getAttribute('innerText'))
-            .then((texts) => {
-                for (let text of texts) {
-                    if (text === tabName) {
-                        break;
-                    }
-                    clickRightChevron();
-                }
-            });
-    }
-
-    clickRightChevron() {
-        Util.waitUntilElementIsVisible(this.rightChevron);
-        this.rightChevron.click();
-        return this;
     }
 
     clickOnVersionsTab() {

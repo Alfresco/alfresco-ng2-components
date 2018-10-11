@@ -17,8 +17,8 @@
 
 import { element, by, browser } from 'protractor';
 
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');

@@ -17,11 +17,11 @@
 
 import { by } from 'protractor';
 
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 
 import Task = require('../models/APS/Task');
 import Tenant = require('../models/APS/Tenant');
@@ -91,24 +91,54 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263942] Modifying task', () => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[0])
+        processServicesPage
+            .goToProcessServices()
+            .goToApp(appModel.name)
+            .clickTasksButton();
+
+        taskPage
+            .filtersPage()
+            .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+
+        taskPage
+            .createNewTask()
+            .addName(tasks[0])
             .addForm(app.formName).clickStartButton()
             .then(() => {
-                taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]);
-                taskPage.taskDetails().clickInvolvePeopleButton()
+                taskPage
+                    .tasksListPage()
+                    .checkTaskIsDisplayedInTasksList(tasks[0]);
+
+                taskPage
+                    .taskDetails()
+                    .clickInvolvePeopleButton()
                     .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
                     .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
                     .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-                taskPage.taskDetails().clickAddInvolvedUserButton();
-                expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
-                    .toEqual(assigneeUserModel.email);
-                taskPage.taskDetails().selectActivityTab().addComment(firstComment)
+
+                taskPage
+                    .taskDetails()
+                    .clickAddInvolvedUserButton();
+
+                expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)).toEqual(assigneeUserModel.email);
+
+                taskPage
+                    .taskDetails()
+                    .selectActivityTab()
+                    .addComment(firstComment)
                     .checkCommentIsDisplayed(firstComment);
-                taskPage.clickOnAddChecklistButton().addName(firstChecklist).clickCreateChecklistButton();
-                taskPage.checkChecklistIsDisplayed(firstChecklist);
-                taskPage.taskDetails().selectDetailsTab();
+
+                taskPage
+                    .clickOnAddChecklistButton()
+                    .addName(firstChecklist)
+                    .clickCreateChecklistButton();
+
+                taskPage
+                    .checkChecklistIsDisplayed(firstChecklist);
+
+                taskPage
+                    .taskDetails()
+                    .selectDetailsTab();
             });
     });
 

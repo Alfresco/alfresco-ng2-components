@@ -18,9 +18,9 @@
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FileModel = require('../models/ACS/fileModel');
 
-import LoginPage = require('../pages/adf/loginPage');
-import TagPage = require('../pages/adf/tagPage');
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { TagPage } from '../pages/adf/tagPage';
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -199,7 +199,7 @@ describe('Tag component', () => {
         tagPage.checkDeleteTagFromTagListByNodeIdIsNotDisplayed(tagList[3]);
     });
 
-    it('[C286472] Should be able to click Show more/less button on "List Tags Content Services"', () => {
+    it('[C286472] Should be able to click Show more/less button on List Tags Content Services', () => {
         tagPage.insertNodeId(pdfFileModel.id);
 
         tagPage.checkShowMoreButtonIsDisplayed();

@@ -26,7 +26,6 @@ export class AttachmentListPage {
 
     attachFileButton = element(by.css("input[type='file']"));
     buttonMenu = element(by.css("button[data-automation-id='action_menu_0']"));
-    menuPanel = element(by.css("div[class*='mat-menu-panel'] div[class*='mat-menu-content']"));
     viewButton = element(by.css("button[data-automation-id*='MENU_ACTIONS.VIEW_CONTENT']"));
     removeButton = element(by.css("button[data-automation-id*='MENU_ACTIONS.REMOVE_CONTENT']"));
     downloadButton = element(by.css("button[data-automation-id*='MENU_ACTIONS.DOWNLOAD_CONTENT']"));

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import PaginationPage = require('../pages/adf/paginationPage');
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');

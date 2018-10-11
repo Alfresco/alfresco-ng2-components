@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
+import { LoginPage } from '../pages/adf/loginPage';
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import AnalyticsPage = require('../pages/adf/process_services/analyticsPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import TestConfig = require('../test.config');
 import Tenant = require('../models/APS/Tenant');
 import User = require('../models/APS/User');

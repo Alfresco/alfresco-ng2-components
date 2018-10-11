@@ -15,18 +15,16 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import FormFields = require('../formFields');
 
-var Hyperlink = function () {
+export class DisplayValue {
 
-    var formFields = new FormFields();
+    formFields = new FormFields();
 
-    var fieldLocator = by.css("div[class='adf-hyperlink-widget '] a");
+    labelLocator = by.css('span[class*="unknown-text"]');
 
-    this.getFieldText = function (fieldId) {
-        return formFields.getFieldText(fieldId, fieldLocator);
-    };
+    getFieldLabel(fieldId) {
+        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
+    }
 
-};
-
-module.exports = Hyperlink;
+}

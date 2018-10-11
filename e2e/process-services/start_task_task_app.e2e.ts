@@ -17,11 +17,11 @@
 
 import { by } from 'protractor';
 
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 

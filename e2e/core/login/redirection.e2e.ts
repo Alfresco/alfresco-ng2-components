@@ -17,23 +17,24 @@
 
 import { browser } from 'protractor';
 
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
-import ProcessServicesPage = require('../../pages/adf/process_services/processServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { ProcessServicesPage } from '../../pages/adf/process_services/processServicesPage';
 import NavigationBarPage = require('../../pages/adf/navigationBarPage');
 
 import TestConfig = require('../../test.config');
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 
-import AdfSettingsPage = require('../../pages/adf/settingsPage');
+import { SettingsPage } from '../../pages/adf/settingsPage';
+
 import AlfrescoApi = require('alfresco-js-api-node');
 
 import Util = require('../../util/util');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
-describe('Login component', () => {
+describe('Login component - Redirect', () => {
 
-    let adfSettingsPage = new AdfSettingsPage();
+    let settingsPage = new SettingsPage();
     let processServicesPage = new ProcessServicesPage();
     let navigationBarPage = new NavigationBarPage();
     let contentServicesPage = new ContentServicesPage();
@@ -56,7 +57,7 @@ describe('Login component', () => {
     });
 
     it('[C213838] Should after login in CS be redirect to Login page when try to access to PS', () => {
-        adfSettingsPage.setProviderEcm();
+        settingsPage.setProviderEcm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
         navigationBarPage.clickContentServicesButton();
@@ -68,7 +69,7 @@ describe('Login component', () => {
     });
 
     it('[C260085] Should after login in PS be redirect to Login page when try to access to CS', () => {
-        adfSettingsPage.setProviderBpm();
+        settingsPage.setProviderBpm();
 
         loginPage.enableSuccessRouteSwitch();
         loginPage.enterSuccessRoute('activiti');
@@ -84,7 +85,7 @@ describe('Login component', () => {
     });
 
     it('[C260081] Should after login in BOTH not be redirect to Login page when try to access to CS or PS', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
 
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
@@ -101,7 +102,7 @@ describe('Login component', () => {
         let uploadedFolder;
         let folderName = Util.generateRandomString();
 
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
         browser.controlFlow().execute(async () => {

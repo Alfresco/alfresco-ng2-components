@@ -15,18 +15,16 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import FormFields = require('../formFields');
 
-var Dropdown = function () {
+export class DisplayText {
 
-    var formFields = new FormFields();
+    formFields = new FormFields();
 
-    var selectedOptionLocator = by.css("mat-select[id='dropdown'] span span");
+    labelLocator = by.css('div[class*="display-text-widget"]');
 
-    this.getSelectedOptionText = function (fieldId) {
-        return formFields.getFieldText(fieldId, selectedOptionLocator);
-    };
+    getFieldLabel(fieldId) {
+        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
+    }
 
-};
-
-module.exports = Dropdown;
+}
