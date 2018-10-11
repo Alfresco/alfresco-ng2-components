@@ -23,6 +23,8 @@ var TaskListSinglePage = function () {
     var appId = element(by.css("input[data-automation-id='appId input']"));
     var itemsPerPage = element(by.css("input[data-automation-id='items per page']"));
     var itemsPerPageForm = element(by.css("mat-form-field[data-automation-id='items per page']"));
+    var processDefinitionId = element(by.css("input[data-automation-id='process definition id']"));
+    var processInstanceId = element(by.css("input[data-automation-id='process instance id']"));
     var page = element(by.css("input[data-automation-id='page']"));
     var pageForm = element(by.css("mat-form-field[data-automation-id='page']"));
     var taskName = element(by.css("input[data-automation-id='task name']"));
@@ -36,6 +38,8 @@ var TaskListSinglePage = function () {
     var stateSelector = element(by.css("div[class*='mat-select-content']"));
     var sortDropDownArrow = element(by.css("mat-form-field[data-automation-id='sort'] div[class*='arrow']"));
     var sortSelector = element(by.css("div[class*='mat-select-content']"));
+    var processDefinitionIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Process Definition Id'] span");
+    var processInstanceIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Process Instance Id'] span");
 
     this.typeAppId = function(input) {
         Util.waitUntilElementIsVisible(appId);
@@ -89,6 +93,30 @@ var TaskListSinglePage = function () {
     this.getItemsPerPage = function() {
         Util.waitUntilElementIsVisible(itemsPerPage);
         return itemsPerPage.getAttribute('value');
+    };
+
+    this.typeProcessDefinitionId = function(input) {
+        Util.waitUntilElementIsVisible(processDefinitionId);
+        this.clearText(processDefinitionId);
+        processDefinitionId.sendKeys(input);
+        return this;
+    };
+
+    this.getProcessDefinitionId = function() {
+        Util.waitUntilElementIsVisible(processInstanceId);
+        return processInstanceId.getAttribute('value');
+    };
+
+    this.typeProcessInstanceId = function(input) {
+        Util.waitUntilElementIsVisible(processInstanceId);
+        this.clearText(processInstanceId);
+        processInstanceId.sendKeys(input);
+        return this;
+    };
+
+    this.getProcessInstanceId = function() {
+        Util.waitUntilElementIsVisible(processInstanceId);
+        return processInstanceId.getAttribute('value');
     };
 
     this.getItemsPerPageFieldErrorMessage = function() {
@@ -194,6 +222,14 @@ var TaskListSinglePage = function () {
         Util.waitUntilElementIsVisible(sortElement);
         sortElement.click();
         return this;
+    };
+
+    this.getAllProcessDefinitionIds = function () {
+        return new DataTable().getAllRowsColumnValues(processDefinitionIdColumn);
+    };
+
+    this.getAllProcessInstanceIds = function () {
+        return new DataTable().getAllRowsColumnValues(processInstanceIdColumn);
     };
 
 };

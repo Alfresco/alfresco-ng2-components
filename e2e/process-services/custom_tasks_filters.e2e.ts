@@ -28,6 +28,7 @@ import CONSTANTS = require('../util/constants');
 var moment = require('moment');
 
 import Task = require('../models/APS/Task');
+import ProcessModel = require('../models/APS/UpdateProcessModel');
 import Tenant = require('../models/APS/Tenant');
 
 import TaskModel = require('../models/APS/TaskModel');
@@ -54,7 +55,7 @@ describe('Start Task - Custom App', () => {
     let navigationBarPage = new NavigationBarPage();
     let taskListSinglePage = new TaskListSinglePage();
     let paginationPage = new PaginationPage();
-    let processUserModel, assigneeUserModel;
+    let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let appRuntime, secondAppRuntime;
     let secondApp = resources.Files.WIDGETS_SMOKE_TEST;
@@ -71,6 +72,7 @@ describe('Start Task - Custom App', () => {
     var beforeDate=moment().add(-1, 'days').format('MM/DD/YYYY');
     var afterDate=moment().add(1, 'days').format('MM/DD/YYYY');
     let taskWithDueDate;
+    let processDefinitionId;
 
     let itemsPerPage = {
         five: '5',
@@ -100,8 +102,6 @@ describe('Start Task - Custom App', () => {
 
         processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
-        console.log("Email si password ", processUserModel.email, processUserModel.password);
-
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
@@ -112,7 +112,7 @@ describe('Start Task - Custom App', () => {
 
         secondAppRuntime = await appsRuntime.getRuntimeAppByName(this.alfrescoJsApi, secondApp.title);
 
-        await apps.startProcess(this.alfrescoJsApi, appModel);
+        processDefinitionId = await apps.startProcess(this.alfrescoJsApi, appModel);
         await apps.startProcess(this.alfrescoJsApi, appModel);
         await apps.startProcess(this.alfrescoJsApi, secondAppModel);
         await apps.startProcess(this.alfrescoJsApi, secondAppModel);
@@ -127,7 +127,6 @@ describe('Start Task - Custom App', () => {
         };
 
         taskWithDueDate = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': paginationTasksName[0], 'dueDate': currentDateStandardFormat});
-        console.log("Raspuns: ", taskWithDueDate.id);
 
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
@@ -522,7 +521,7 @@ describe('Start Task - Custom App', () => {
         expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(23);
     });
 
-    fit('[C286599] Should be able to sort tasks ascending by due date when choosing due(asc) from sort drop down', () => {
+    it('[C286599] Should be able to sort tasks ascending by due date when choosing due(asc) from sort drop down', () => {
         let sortAscByDueDate = [taskWithDueDate.name, completedTasks[0].name, completedTasks[1].name, completedTasks[2].name];
 
         navigationBarPage.clickTaskListButton();
@@ -540,28 +539,84 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.clickResetButton();
         taskListSinglePage.selectState('All');
         taskListSinglePage.selectSort('Due (asc)');
-        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(23);// check the exact tests after you find out the correct order
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(23);
+        taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
+            expect(Util.arrayContainsArray(list.slice(0, 4), sortAscByDueDate)).toEqual(true);
+            expect(Util.arrayContainsArray(list.slice(4, list.length), allTasksName)).toEqual(true);
+        });
     });
 
     it('[C286600] Should be able to sort tasks descending by due date when choosing due(desc) from sort drop down', () => {
-        let sortAscByDueDate = [completedTasks[2].name, completedTasks[1].name, completedTasks[0].name, taskWithDueDate.name];
+        let sortDescByDueDate = [completedTasks[2].name, completedTasks[1].name, completedTasks[0].name, taskWithDueDate.name];
 
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 
         taskListSinglePage.typeDueAfter(beforeDate);
         taskListSinglePage.selectState('All');
-        taskListSinglePage.selectSort('Due (asc)');
+        taskListSinglePage.selectSort('Due (desc)');
 
         taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
-            expect(Util.arrayContainsArray(list, sortAscByDueDate)).toEqual(true);
+            expect(Util.arrayContainsArray(list, sortDescByDueDate)).toEqual(true);
         });
         expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(4);
 
         taskListSinglePage.clickResetButton();
         taskListSinglePage.selectState('All');
         taskListSinglePage.selectSort('Due (asc)');
-        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(23);// check the exact tests after you find out the correct order
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(23);
+        taskListSinglePage.usingDataTable().getAllRowsNameColumn().then(function (list) {
+            expect(Util.arrayContainsArray(list.slice(0, 4), sortDescByDueDate)).toEqual(true);
+            expect(Util.arrayContainsArray(list.slice(4, list.length), allTasksName)).toEqual(true);
+        });
+    });
+
+    it('[C286622] Should be able to see only tasks that are part of a specific process when processDefinitionId is set', () => {
+        let processDefinitionIds = [processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId];
+
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.typeProcessDefinitionId(processDefinitionId.processDefinitionId);
+
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(4);
+        taskListSinglePage.getAllProcessDefinitionIds().then(function (list) {
+            expect(Util.arrayContainsArray(list, processDefinitionIds)).toEqual(true);
+        });
+    });
+
+    it('[C286623] Should be able to see No tasks found when typing an invalid processDefinitionId', () => {
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.typeProcessDefinitionId(invalidTaskId);
+
+        expect(taskListSinglePage.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
+
+    it('[C286622] Should be able to see only tasks that are part of a specific process when processInstanceId is set', () => {
+        let processInstanceIds = [processDefinitionId.id];
+
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.typeProcessInstanceId(processDefinitionId.id);
+        expect(taskListSinglePage.getProcessInstanceId()).toEqual(processDefinitionId.id);
+
+        expect(taskListSinglePage.usingDataTable().getAllDisplayedRows()).toBe(1);
+        taskListSinglePage.getAllProcessInstanceIds().then(function (list) {
+            expect(Util.arrayContainsArray(list, processInstanceIds)).toEqual(true);
+        });
+    });
+
+    it('[C286623] Should be able to see No tasks found when typing an invalid processInstanceId', () => {
+        navigationBarPage.clickTaskListButton();
+        taskListSinglePage.clickResetButton();
+
+        taskListSinglePage.typeProcessInstanceId(invalidTaskId);
+        expect(taskListSinglePage.getProcessInstanceId()).toEqual(invalidTaskId);
+
+        expect(taskListSinglePage.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
     });
 
 });

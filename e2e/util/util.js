@@ -85,7 +85,7 @@ exports.getCrtDateInFormat = function (dateFormat) {
  * @method getCrtDateInFormat
  */
 exports.getSpecificDateAfterCrtDateInFormat = function (dateFormat, days) {
-    return moment().day(days).format(dateFormat);
+    return moment(new Date()).add(days, 'days').format(dateFormat);
 };
 
 /**

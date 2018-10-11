@@ -38,6 +38,17 @@ export class AppsActions {
         return appCreated;
     }
 
+    async importApp(alfrescoJsApi, appFileLocation) {
+        browser.setFileDetector(new remote.FileDetector());
+
+        let pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
+        let file = fs.createReadStream(pathFile);
+
+        let appCreated = await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+
+        return appCreated;
+    }
+
     async publishDeployApp(alfrescoJsApi, appId) {
         browser.setFileDetector(new remote.FileDetector());
 
