@@ -55,6 +55,7 @@ describe('Search component - Search Bar', () => {
     let firstFolderName = Util.generateRandomString(16);
     let secondFolderName = Util.generateRandomString(16);
     let thirdFolderName = Util.generateRandomString(16);
+    let filesToDelete = [];
 
     let firstFileModel = new FileModel({
         'name': filename, 'shortName': filename.substring(0, 8)
@@ -69,6 +70,7 @@ describe('Search component - Search Bar', () => {
     let thirdFolder = new FolderModel({
         'name': thirdFolderName, 'shortName': thirdFolderName.substring(0, 8)
     });
+
 
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();
@@ -87,11 +89,11 @@ describe('Search component - Search Bar', () => {
         let firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
-        await uploadActions.uploadFolder(this.alfrescoJsApi, firstFolderModel.name, '-my-');
-        await uploadActions.uploadFolder(this.alfrescoJsApi, secondFolder.name, '-my-');
-        await uploadActions.uploadFolder(this.alfrescoJsApi, thirdFolder.name, '-my-');
+        filesToDelete.push(await uploadActions.uploadFolder(this.alfrescoJsApi, firstFolderModel.name, '-my-'));
+        filesToDelete.push(await uploadActions.uploadFolder(this.alfrescoJsApi, secondFolder.name, '-my-'));
+        filesToDelete.push(await uploadActions.uploadFolder(this.alfrescoJsApi, thirdFolder.name, '-my-'));
 
-        await browser.driver.sleep(5000); // wait search index previous file/folder uploaded
+        await browser.driver.sleep(15000); // wait search index previous file/folder uploaded
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -100,13 +102,16 @@ describe('Search component - Search Bar', () => {
         done();
     });
 
-    // afterAll((done) => {
-    //     NodesAPI.deleteContent(acsUser, firstFileModel.id, () => {
-    //         NodesAPI.deleteContent(acsUser, firstFolderModel.id, () => {
-    //             done();
-    //         });
-    //     });
-    // });
+    afterAll(async (done) => {
+        let uploadActions = new UploadActions();
+
+        filesToDelete.forEach(async (currentNode) => {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode.entry.id);
+
+        });
+
+        done();
+    });
 
     it('[C272798] Search bar is visible', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
