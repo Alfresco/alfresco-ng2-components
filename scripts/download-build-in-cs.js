@@ -44,8 +44,12 @@ unzipRetry = (tentativeNumber, outputFolder, url) => {
                             let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
                             let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
 
+                            if (!fs.existsSync(path.join(__dirname, `../demo-shell/dist`))) {
+                                fs.mkdirSync(path.join(__dirname, `../demo-shell/dist`));
+                            }
+
                             fs.rename(oldFolder, newFolder, (err) => {
-                                console.log('renamed complete');
+                                console.log('renamed complete ');
                             });
 
                             if (program.baseHref) {
@@ -92,7 +96,7 @@ async function main() {
 
     console.log('Download zip');
 
-    let outputFolder = program.baseHref ? program.baseHref : 'dist';
+    let outputFolder = program.baseHref ? path.join('dist', program.baseHref) : 'dist';
 
     unzipRetry(0, outputFolder, url);
 }

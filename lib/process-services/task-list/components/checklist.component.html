@@ -5,18 +5,19 @@
     </mat-chip-list>
 
 
-    <button mat-icon-button *ngIf="!readOnly" matTooltip="Add a checklist" [matTooltipPosition]="'before'" id="add-checklist" class="adf-add-to-checklist-button" (click)="showDialog()">
+    <button mat-icon-button *ngIf="!readOnly" matTooltip="Add a checklist" [matTooltipPosition]="'before'"
+            id="add-checklist" class="adf-add-to-checklist-button" (click)="showDialog()">
         <mat-icon>add</mat-icon>
     </button>
 </div>
 
 <div class="adf-checklist-menu-container" *ngIf="checklist?.length > 0">
     <mat-chip-list class="mat-chip-list-stacked">
-        <mat-chip id="check-{{check.id}}" class="adf-checklist-chip" *ngFor="let check of checklist">
+        <mat-chip id="check-{{check.id}}" class="adf-checklist-chip" *ngFor="let check of checklist"
+                  (removed)="delete(check.id)">
             <span>{{check.name}}</span>
-            <button  *ngIf="!readOnly && !check.endDate" id="remove-{{check.id}}" mat-icon-button type="button" class="adf-checklist-cancel-button" (click)="delete(check.id)">
-                <mat-icon matChipRemove>cancel</mat-icon>
-            </button>
+            <mat-icon *ngIf="!readOnly && !check.endDate" id="remove-{{check.id}}" matChipRemove>cancel
+            </mat-icon>
         </mat-chip>
     </mat-chip-list>
 
@@ -30,7 +31,8 @@
         <h4 matDialogTitle id="add-checklist-title">New Check</h4>
         <mat-dialog-content>
             <mat-form-field>
-                <input matInput placeholder="Name" [(ngModel)]="taskName" id="checklist-name"  data-automation-id="checklist-name">
+                <input matInput placeholder="Name" [(ngModel)]="taskName" id="checklist-name"
+                       data-automation-id="checklist-name">
             </mat-form-field>
         </mat-dialog-content>
         <mat-dialog-actions class="adf-checklist-dialog-actions">

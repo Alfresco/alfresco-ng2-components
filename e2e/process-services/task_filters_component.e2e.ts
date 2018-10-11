@@ -18,14 +18,14 @@
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-import LoginPage = require('../pages/adf/loginPage');
+import { LoginPage } from '../pages/adf/loginPage';
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import TaskFiltersPage = require('../pages/adf/process_services/taskFiltersPage');
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import { AppSettingsToggles } from '../pages/adf/process_services/dialog/appSettingsToggles';
 
 import AlfrescoApi = require('alfresco-js-api-node');

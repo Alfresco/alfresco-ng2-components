@@ -15,19 +15,16 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import FormFields = require('../formFields');
 
-var DisplayText = function () {
+export class MultilineText {
 
-    var formFields = new FormFields();
+    formFields = new FormFields();
 
-    var labelLocator = by.css("div[class*='display-text-widget']");
+    valueLocator = by.css('textarea');
 
-    this.getFieldLabel = function (fieldId) {
-        return formFields.getFieldLabel(fieldId, labelLocator);
-    };
+    getFieldValue(fieldId) {
+        return this.formFields.getFieldValue(fieldId, this.valueLocator);
+    }
 
-};
-
-module.exports = DisplayText;
-
+}

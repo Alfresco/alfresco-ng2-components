@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
-import Widget = require('../pages/adf/process_services/widgets/widget');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
+import { Widget } from '../pages/adf/process_services/widgets/widget';
 
 import CONSTANTS = require('../util/constants');
 
@@ -28,11 +28,11 @@ import Task = require('../models/APS/Task');
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-let formInstance = new FormDefinitionModel();
-
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
+
+let formInstance = new FormDefinitionModel();
 
 describe('Form widgets', () => {
 

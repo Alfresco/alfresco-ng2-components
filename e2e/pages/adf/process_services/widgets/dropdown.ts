@@ -15,19 +15,16 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+import FormFields = require('../formFields');
 
-var MultilineText = function () {
+export class Dropdown {
 
-    var formFields = new FormFields();
+    formFields = new FormFields();
 
-    var valueLocator = by.css("textarea");
+    selectedOptionLocator = by.css('mat-select[id="dropdown"] span span');
 
-    this.getFieldValue = function (fieldId) {
-        return formFields.getFieldValue(fieldId, valueLocator);
-    };
+    getSelectedOptionText(fieldId) {
+        return this.formFields.getFieldText(fieldId, this.selectedOptionLocator);
+    }
 
-};
-
-module.exports = MultilineText;
-
+}

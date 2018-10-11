@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import LoginPage = require('../pages/adf/loginPage');
+import { LoginPage } from '../pages/adf/loginPage';
 import NavigationBarPage = require('../pages/adf/navigationBarPage');
 import { HeaderPage } from '../pages/adf/core/headerPage';
-import SettingsPage = require('../pages/adf/settingsPage');
-
+import { SettingsPage } from '../pages/adf/settingsPage';
 import TestConfig = require('../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');

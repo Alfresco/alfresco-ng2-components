@@ -27,7 +27,6 @@ var SearchDialog = function () {
     var completeName = by.css("h4[class*='adf-search-fixed-text']");
     var highlightName = by.css("div[id*='results-content'] span[class='highlight']");
     var searchDialog = element(by.css("mat-list[id*='autocomplete-search-result-list']"));
-    var allRows = element.all(by.css("h4[class*='adf-search-fixed-text']"));
 
     this.pressDownArrowAndEnter = function () {
         element(by.css("adf-search-control div input")).sendKeys(protractor.Key.ARROW_DOWN);

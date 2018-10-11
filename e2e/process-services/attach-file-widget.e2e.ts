@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
-import Widget = require('../pages/adf/process_services/widgets/widget');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { Widget } from '../pages/adf/process_services/widgets/widget';
+
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
 
