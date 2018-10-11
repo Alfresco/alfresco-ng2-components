@@ -46,15 +46,16 @@ describe('Notifications Component', () => {
 
         notificationPage.goToNotificationsPage();
 
+        notificationPage.enterDurationField(6000);
+
         done();
     });
 
     afterEach(async (done) => {
-
         notificationPage.enterDurationField(1);
         notificationPage.clickNotificationButton();
+        browser.sleep(100);
         notificationPage.enterDurationField(6000);
-
         done();
     });
 

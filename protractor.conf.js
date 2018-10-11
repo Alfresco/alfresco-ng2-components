@@ -21,7 +21,6 @@ var BROWSER_RUN = process.env.BROWSER_RUN;
 var FOLDER = process.env.FOLDER || '';
 var SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 var DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
-var NAME_TEST = process.env.NAME_TEST ? true : false
 
 var specsToRun = './**/' + FOLDER + '**/*.e2e.ts';
 
@@ -237,7 +236,7 @@ exports.config = {
                     'overwrite': true
                 });
         } catch (error) {
-            console.log('Folder report already present' + error);
+           //  console.log('Folder report already present' + error);
 
             reportFolder = await
                 alfrescoJsApi.nodes.getNode('-my-', {

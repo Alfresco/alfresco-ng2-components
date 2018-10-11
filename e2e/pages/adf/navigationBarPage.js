@@ -35,37 +35,21 @@ var NavigationBarPage = function () {
     var headerDataButton = element(by.css("a[data-automation-id='Header Data']"));
     var menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
 
-    /**
-     * Click Content Services Button
-     * @method clickContentServicesButton
-     */
     this.clickContentServicesButton = function () {
         Util.waitUntilElementIsVisible(contentServicesButton);
         contentServicesButton.click();
     };
 
-    /**
-     * Click on Config Editor Button
-     * @method clickContentServicesButton
-     */
     this.clickConfigEditorButton = function () {
         Util.waitUntilElementIsVisible(configEditoButton);
         configEditoButton.click();
     };
 
-    /**
-     * Click Process Services Button
-     * @method clickProcessServicesButton
-     */
     this.clickProcessServicesButton = function () {
         Util.waitUntilElementIsVisible(processServicesButton);
         processServicesButton.click();
     };
 
-    /**
-     * Click Login Button
-     * @method clickLoginButton
-     */
     this.clickLoginButton = function () {
         Util.waitUntilElementIsVisible(loginButton);
         loginButton.click();
@@ -161,11 +145,6 @@ var NavigationBarPage = function () {
         Util.waitUntilElementIsVisible(appTitle);
         appTitle.click();
     };
-
-    this.checkLogoTooltip = function (logoTooltip) {
-        var logoTooltip = element(by.css('a[title="'+ logoTooltip +'"]'));
-        Util.waitUntilElementIsVisible(logoTooltip);
-    }
 
     this.openViewer = function (nodeId) {
         browser.get(TestConfig.adf.url + `/files(overlay:files/${nodeId}/view`);

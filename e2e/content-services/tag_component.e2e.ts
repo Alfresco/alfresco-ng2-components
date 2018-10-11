@@ -199,7 +199,7 @@ describe('Tag component', () => {
         tagPage.checkDeleteTagFromTagListByNodeIdIsNotDisplayed(tagList[3]);
     });
 
-    it('[C286472] Should be able to click Show more/less button on "List Tags Content Services"', () => {
+    it('[C286472] Should be able to click Show more/less button on List Tags Content Services', () => {
         tagPage.insertNodeId(pdfFileModel.id);
 
         tagPage.checkShowMoreButtonIsDisplayed();
