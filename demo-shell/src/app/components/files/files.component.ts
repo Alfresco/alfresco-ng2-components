@@ -70,9 +70,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     toolbarColor = 'default';
 
     selectionModes = [
-        {value: 'none', viewValue: 'None'},
-        {value: 'single', viewValue: 'Single'},
-        {value: 'multiple', viewValue: 'Multiple'}
+        { value: 'none', viewValue: 'None' },
+        { value: 'single', viewValue: 'Single' },
+        { value: 'multiple', viewValue: 'Multiple' }
     ];
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
@@ -293,7 +293,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     getCurrentDocumentListNode(): MinimalNodeEntity[] {
         if (this.documentList.folderNode) {
-            return [{entry: this.documentList.folderNode}];
+            return [{ entry: this.documentList.folderNode }];
         } else {
             return [];
         }
@@ -401,7 +401,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.contentService.hasPermission(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: {contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload},
+                data: { contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload },
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
@@ -443,8 +443,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     hasOneFileSelected(): boolean {
         const selection: Array<MinimalNodeEntity> = this.documentList.selection;
-        const hasOneFileSelected = selection && selection.length === 1 && selection[0].entry.isFile;
-        return hasOneFileSelected;
+        return selection && selection.length === 1 && selection[0].entry.isFile;
     }
 
     userHasPermissionToManageVersions(): boolean {
@@ -532,12 +531,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.documentList.reload();
     }
 
-    canDownloadNode = (node: MinimalNodeEntity): boolean => {
-        if (node && node.entry && node.entry.name === 'custom') {
-            return true;
-        }
-        return false;
-    };
+    canDownloadNode(node: MinimalNodeEntity): boolean {
+        return node && node.entry && node.entry.name === 'custom';
+
+    }
 
     onBeginUpload(event: UploadFilesEvent) {
         if (this.warnOnMultipleUploads && event) {
@@ -562,12 +559,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    isCustomActionDisabled = (node: MinimalNodeEntity): boolean => {
+    isCustomActionDisabled(node: MinimalNodeEntity): boolean {
         if (node && node.entry && node.entry.name === 'custom') {
             return false;
         }
         return true;
-    };
+    }
 
     runCustomAction(event) {
         this.logService.log(event);
