@@ -94,7 +94,7 @@ describe('Start Task - Task App', () => {
         done();
     });
 
-    it('[C260383] Modifying task', () => {
+    it('[C260383] Should be possible to modify a task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[0])
@@ -116,7 +116,7 @@ describe('Start Task - Task App', () => {
             });
     });
 
-    it('[C260506] Information box', () => {
+    it('[C260506] Should display information box for started task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
@@ -161,7 +161,7 @@ describe('Start Task - Task App', () => {
             });
     });
 
-    it('[C260422] Start task buttons', () => {
+    it('[C260422] Should be possible to cancel a task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().checkStartButtonIsDisabled().addName(tasks[3])
@@ -172,7 +172,7 @@ describe('Start Task - Task App', () => {
             });
     });
 
-    it('[C260423] Refreshing the form', () => {
+    it('[C260423] Should be possible to save filled form', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask()
@@ -189,7 +189,7 @@ describe('Start Task - Task App', () => {
             });
     });
 
-    it('[C260425] Assign User', () => {
+    it('[C260425] Should be possible to assign a user', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[5])

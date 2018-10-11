@@ -35,12 +35,10 @@ export class ViewerPage {
     zoomInButton = element(by.id('viewer-zoom-in-button'));
     zoomOutButton = element(by.id('viewer-zoom-out-button'));
     scalePageButton = element(by.id('viewer-scale-page-button'));
-    pdfContainer = element(by.id('viewer-pdf-container'));
     fullScreenButton = element(by.css('button[data-automation-id="adf-toolbar-fullscreen"]'));
     rotateLeft = element(by.css('button[id="viewer-rotate-left-button"]'));
     rotateRight = element(by.css('button[id="viewer-rotate-right-button"]'));
     scaleImg = element(by.css('button[id="viewer-reset-button"]'));
-    customBtn = element(by.css('data-automation-id="adf-toolbar-custom-btn"'));
     fileThumbnail = element(by.css('img[data-automation-id="adf-file-thumbnail"]'));
     pageSelectorInput = element(by.css('input[data-automation-id="adf-page-selector"]'));
     imgContainer = element(by.css('div[data-automation-id="adf-image-container"]'));
@@ -58,7 +56,6 @@ export class ViewerPage {
     passwordError = element(by.css('mat-error[data-automation-id="adf-password-dialog-error"]'));
     infoSideBar = element(by.id('adf-right-sidebar'));
     leftSideBar = element(by.id('adf-left-sidebar'));
-    unsupportedFileContainer = element(by.cssContainingText('.label', 'Document preview could not be loaded'));
     pageCanvas = element.all(by.css('div[class="canvasWrapper"]')).first();
     viewer = element(by.css('adf-viewer'));
     pdfViewer = element(by.css('adf-pdf-viewer'));
@@ -268,10 +265,6 @@ export class ViewerPage {
         Util.waitUntilElementIsVisible(this.imgContainer);
     }
 
-    checkPdfContainerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.pdfContainer);
-    }
-
     checkMediaPlayerContainerIsDisplayed() {
         Util.waitUntilElementIsVisible(this.mediaContainer);
     }
@@ -316,10 +309,6 @@ export class ViewerPage {
         Util.waitUntilElementIsVisible(this.rotateRight);
     }
 
-    checkScaled(zoom) {
-        expect(this.percentage.getText()).toEqual(zoom);
-    }
-
     checkScaleImgButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.scaleImg);
     }
@@ -329,24 +318,12 @@ export class ViewerPage {
         expect(rotation).toEqual(text);
     }
 
-    checkCustomBtnDisplayed() {
-        Util.waitUntilElementIsVisible(this.customBtn);
-    }
-
-    checkUnsupportedFileContainerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.unsupportedFileContainer);
-    }
-
     checkInfoSideBarIsNotDisplayed() {
         Util.waitUntilElementIsNotVisible(this.infoSideBar);
     }
 
     checkInfoSideBarIsDisplayed() {
         Util.waitUntilElementIsVisible(this.infoSideBar);
-    }
-
-    checkInfoSideBarIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.infoSideBar);
     }
 
     checkLeftSideBarButtonIsNotDisplayed() {
@@ -406,11 +383,6 @@ export class ViewerPage {
         return this.scaleImg.click();
     }
 
-    clickScalePdfButton() {
-        Util.waitUntilElementIsClickable(this.scalePageButton);
-        return this.scalePageButton.click();
-    }
-
     clickDownloadButton() {
         Util.waitUntilElementIsVisible(this.downloadButton);
         return this.downloadButton.click();
@@ -439,11 +411,6 @@ export class ViewerPage {
     clickZoomOutButton() {
         Util.waitUntilElementIsVisible(this.zoomOutButton);
         return this.zoomOutButton.click();
-    }
-
-    clickScalePageButton() {
-        Util.waitUntilElementIsVisible(this.scalePageButton);
-        this.scalePageButton.click();
     }
 
     clickFullScreenButton() {
@@ -655,7 +622,8 @@ export class ViewerPage {
         const textField = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
-        textField.clear().sendKeys(text);
+        textField.clear();
+        textField.sendKeys(text);
         return this;
     }
 }

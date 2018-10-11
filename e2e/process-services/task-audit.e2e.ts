@@ -33,7 +33,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import path = require('path');
 import Util = require('../util/util');
 
-describe('Start Task - Task App', () => {
+describe('Task Audit', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();

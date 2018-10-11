@@ -29,6 +29,7 @@ import resources = require('../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
+import { by } from 'protractor';
 
 describe('Attach Form Component', () => {
 

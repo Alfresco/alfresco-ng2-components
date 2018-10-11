@@ -33,7 +33,6 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
-import Util = require('..ro/util/util');
 
 describe('Start Task - Task App', () => {
 
