@@ -34,6 +34,7 @@ export class NavigationBarPage {
     appTitle = element(by.css('.adf-app-title'));
     headerDataButton = element(by.css('a[data-automation-id="Header Data"]'));
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
+    formButton = element(by.css('a[data-automation-id="Form"]'));
 
     clickContentServicesButton() {
         Util.waitUntilElementIsVisible(this.contentServicesButton);
@@ -133,6 +134,11 @@ export class NavigationBarPage {
         Util.waitUntilElementIsVisible(this.appTitle);
         this.appTitle.click();
     }
+
+    clickFormButton = function () {
+        Util.waitUntilElementIsVisible(this.formButton);
+        return this.formButton.click();
+    };
 
     checkLogoTooltip(logoTooltip) {
         let logoTooltip = element(by.css('a[title="' + logoTooltip + '"]'));
