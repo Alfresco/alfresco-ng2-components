@@ -71,7 +71,6 @@ describe('Search component - Search Bar', () => {
         'name': thirdFolderName, 'shortName': thirdFolderName.substring(0, 8)
     });
 
-
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();
 
