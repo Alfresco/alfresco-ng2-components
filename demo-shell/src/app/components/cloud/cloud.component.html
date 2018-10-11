@@ -1,2 +1,9 @@
 
 <adf-cloud-app-list></adf-cloud-app-list>
+
+<adf-cloud-task-filters
+    *ngIf="hasApp()"
+    [appName]="appName"
+    [showIcons]="true"
+    (filterClick)="onFilterSelected($event)">
+</adf-cloud-task-filters>

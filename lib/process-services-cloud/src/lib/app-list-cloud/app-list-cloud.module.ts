@@ -23,7 +23,7 @@ import { AppDetailsCloudComponent } from './components/app-details-cloud.compone
 import { AppListCloudComponent } from './components/app-list-cloud.component';
 import { AppsProcessCloudService } from './services/apps-process-cloud.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TemplateModule, TranslateLoaderService } from '@alfresco/adf-core';
+import { TemplateModule, TranslateLoaderService, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
@@ -43,6 +43,7 @@ import { TemplateModule, TranslateLoaderService } from '@alfresco/adf-core';
         AppDetailsCloudComponent
     ],
      providers: [
+        { provide: AppConfigService, useClass: AppConfigServiceMock },
         AppsProcessCloudService
      ],
     exports: [
