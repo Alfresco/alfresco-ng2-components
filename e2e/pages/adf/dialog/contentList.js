@@ -342,25 +342,45 @@ var ContentList = function () {
         let row = this.getRowByRowName(rowName);
         browser.actions().click(row, protractor.Button.RIGHT).perform();
         Util.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
-    }
+    };
 
     this.checkContextActionIsVisible = function (actionName) {
         let actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
         Util.waitUntilElementIsVisible(actionButton);
         Util.waitUntilElementIsClickable(actionButton);
         return actionButton;
-    }
+    };
 
     this.pressContextMenuActionNamed = function (actionName) {
         let actionButton = this.checkContextActionIsVisible(actionName);
         actionButton.click();
-    }
+    };
 
     this.clickRowToSelect = function (rowName) {
         let row = this.getRowByRowName(rowName);
         browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
         this.checkRowIsSelected(rowName);
-    }
+        return this;
+    };
+
+    this.clickContentLockIcon = function (content) {
+        var lockIcon = element(by.css('div[filename="'+ content +'"] button'));
+        Util.waitUntilElementIsClickable(lockIcon);
+        lockIcon.click();
+        return this;
+    };
+
+    this.checkLockedIcon = function (content) {
+        var lockIcon = element(by.cssContainingText('div[filename="'+ content +'"] mat-icon', 'lock'));
+        Util.waitUntilElementIsVisible(lockIcon);
+        return this;
+    };
+
+    this.checkUnlockedIcon = function (content) {
+        var lockIcon = element(by.cssContainingText('div[filename="'+ content +'"] mat-icon', 'lock_open'));
+        Util.waitUntilElementIsVisible(lockIcon);
+        return this;
+    };
 
 };
 module.exports = ContentList;
