@@ -24,7 +24,7 @@ var StartProcessPage = function () {
     var selectProcessDropdownArrow = element(by.css("button[id='adf-select-process-dropdown']"));
     var cancelProcessButton = element(by.id('cancel_process'));
     var formStartProcessButton = element(by.css('button[data-automation-id="adf-form-start process"]'));
-    var startProcessButton = element(by.css("button[data-automation-id='btn-start']"));
+    var startProcessButton = element(by.css("button[data-automation-id='adf-form-start process']"));
     var noProcess = element(by.id('no-process-message'));
     var processDefinition = element(by.css("input[id='processDefinitionName']"));
     var processDefinitionOptionsPanel = element(by.css("div[class*='processDefinitionOptions']"));
