@@ -23,7 +23,7 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { NotificationPage } from '../../pages/adf/notificationPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');

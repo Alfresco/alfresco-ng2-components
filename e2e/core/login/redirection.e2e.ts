@@ -20,7 +20,7 @@ import { browser } from 'protractor';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ProcessServicesPage } from '../../pages/adf/process_services/processServicesPage';
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import TestConfig = require('../../test.config');
 import AcsUserModel = require('../../models/ACS/acsUserModel');

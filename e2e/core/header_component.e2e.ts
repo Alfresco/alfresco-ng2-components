@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 import { LoginPage } from '../pages/adf/loginPage';
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+
 import { HeaderPage } from '../pages/adf/core/headerPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import TestConfig = require('../test.config');

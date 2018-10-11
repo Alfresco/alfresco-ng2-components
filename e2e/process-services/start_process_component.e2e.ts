@@ -20,7 +20,7 @@ import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import { LoginPage } from '../pages/adf/loginPage';
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import StartProcessPage = require('../pages/adf/process_services/startProcessPage');
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
@@ -30,14 +30,12 @@ import { AttachmentListPage } from '../pages/adf/process_services/attachmentList
 import { AppsActions } from '../actions/APS/apps.actions';
 
 import User = require('../models/APS/User');
-import AppPublish = require('../models/APS/AppPublish');
 import Tenant = require('../models/APS/Tenant');
 
 import FileModel = require('../models/ACS/fileModel');
 import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import fs = require('fs');
 import path = require('path');
 
 describe('Start Process Component', () => {
