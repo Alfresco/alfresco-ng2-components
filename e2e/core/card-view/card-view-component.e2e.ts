@@ -18,7 +18,8 @@
 import { element, by } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+
 import CardViewPage = require('../../pages/adf/metadataViewPage');
 
 import TestConfig = require('../../test.config');

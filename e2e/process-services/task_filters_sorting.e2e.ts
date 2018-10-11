@@ -18,7 +18,7 @@
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import { LoginPage } from '../pages/adf/loginPage';
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');

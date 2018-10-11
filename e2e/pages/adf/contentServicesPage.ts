@@ -19,7 +19,8 @@ import Util = require('../../util/util');
 import ContentList = require('./dialog/contentList');
 import CreateFolderDialog = require('./dialog/createFolderDialog');
 import TestConfig = require('../../test.config');
-import NavigationBarPage = require('./navigationBarPage');
+import { NavigationBarPage } from './navigationBarPage';
+
 import path = require('path');
 
 export class ContentServicesPage {

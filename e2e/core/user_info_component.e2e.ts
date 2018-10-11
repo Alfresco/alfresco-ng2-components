@@ -18,7 +18,7 @@
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { LoginPage } from '../pages/adf/loginPage';
 import { UserInfoDialog } from '../pages/adf/dialog/userInfoDialog';
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FileModel = require('../models/ACS/fileModel');
