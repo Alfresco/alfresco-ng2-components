@@ -48,7 +48,7 @@ describe('Process List - Pagination when adding processes', () => {
     let page, totalPages;
     let i;
     let apps = new AppsActions();
-    let resultApp
+    let resultApp;
 
     beforeAll(async (done) => {
         let users = new UsersActions();
