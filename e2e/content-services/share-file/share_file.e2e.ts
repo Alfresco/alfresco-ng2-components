@@ -18,7 +18,7 @@
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import ContentListPage = require('../../pages/adf/dialog/contentList');
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 
