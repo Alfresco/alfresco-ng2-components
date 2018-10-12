@@ -27,6 +27,8 @@
     "PROPERTIES": {
       "TASK_NAME": "Task",
       "THUMBNAIL": "Thumbnail",
+      "DURATION": "Duration",
+      "PARENT_TASK_ID": "Parent task id",
       "NAME": "Name",
       "ASSIGNEE": "Assignee",
       "ASSIGNEE_DEFAULT": "No assignee",
