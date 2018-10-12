@@ -131,6 +131,13 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     key: 'created'
                 }
             ),
+            new CardViewDateItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.END_DATE',
+                    value: this.taskDetails.endDate,
+                    key: 'endDate'
+                }
+            ),
             new CardViewTextItemModel(
                 {
                     label: 'ADF_TASK_LIST.PROPERTIES.ID',
