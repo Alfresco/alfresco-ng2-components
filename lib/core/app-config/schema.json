@@ -1,711 +1,1113 @@
 {
-    "$schema": "http://json-schema.org/schema",
-    "id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/core/app-config/schema.json",
-    "title": "ADF Application config",
-    "description": "Configuration object for ADF components used by your application",
-
-    "definitions": {
-        "language": {
-            "description": "Language definition",
-            "type": "object",
-            "properties": {
-                "key": { "type": "string" },
-                "label": { "type": "string" }
-            }
+  "$schema": "http://json-schema.org/schema",
+  "id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/core/app-config/schema.json",
+  "title": "ADF Application config",
+  "description": "Configuration object for ADF components used by your application",
+  "definitions": {
+    "language": {
+      "description": "Language definition",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
         },
-        "document-list-thumbnail": {
-            "description": "Document list's thumbnail image column definition",
-            "type": "object",
-            "required": [ "key", "type", "srTitle", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^\\$thumbnail$" },
-                "type": { "type": "string", "pattern": "^image$" },
-                "srTitle": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "label": {
+          "type": "string"
+        }
+      }
+    },
+    "document-list-thumbnail": {
+      "description": "Document list's thumbnail image column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "srTitle",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^\\$thumbnail$"
         },
-        "document-list-name": {
-            "description": "Document list's name column definition",
-            "type": "object",
-            "required": [ "key", "type", "title", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^name$" },
-                "type": { "type": "string", "pattern": "^text$" },
-                "title": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "type": {
+          "type": "string",
+          "pattern": "^image$"
         },
-        "document-list-title": {
-            "description": "Document list's title column definition",
-            "type": "object",
-            "required": [ "key", "type", "title", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^title$" },
-                "type": { "type": "string", "pattern": "^text$" },
-                "title": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "srTitle": {
+          "type": "string"
         },
-        "document-list-visibility": {
-            "description": "Document list's visibility column definition",
-            "type": "object",
-            "required": [ "key", "type", "title", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^visibility$" },
-                "type": { "type": "string", "pattern": "^text$" },
-                "title": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "document-list-name": {
+      "description": "Document list's name column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "title",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^name$"
         },
-        "document-list-path": {
-            "description": "Document list's path column definition",
-            "type": "object",
-            "required": [ "key", "type", "title", "format", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^path$" },
-                "type": { "type": "string", "pattern": "^location$" },
-                "title": { "type": "string" },
-                "format": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "type": {
+          "type": "string",
+          "pattern": "^text$"
         },
-        "document-list-modifiedAt": {
-            "description": "Document list's modifiedAt column definition",
-            "type": "object",
-            "required": [ "key", "type", "title", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^modifiedAt$" },
-                "type": { "type": "string", "pattern": "^date$" },
-                "title": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "title": {
+          "type": "string"
         },
-        "document-list-modifiedByUser": {
-            "description": "Document list's modifiedByUser column definition",
-            "type": "object",
-            "required": [ "key", "type", "title", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^modifiedByUser\\.displayName$" },
-                "type": { "type": "string", "pattern": "^text$" },
-                "title": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "document-list-title": {
+      "description": "Document list's title column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "title",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^title$"
         },
-        "document-list-sharedByUser": {
-            "description": "Document list's sharedByUser column definition",
-            "type": "object",
-            "required": [ "key", "type", "title", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^sharedByUser\\.displayName$" },
-                "type": { "type": "string", "pattern": "^text$" },
-                "title": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "type": {
+          "type": "string",
+          "pattern": "^text$"
         },
-        "document-list-filesize": {
-            "description": "Document list's path column definition",
-            "type": "object",
-            "required": [ "key", "type", "title", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^content\\.sizeInBytes$" },
-                "type": { "type": "string", "pattern": "^fileSize$" },
-                "title": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "title": {
+          "type": "string"
         },
-        "document-list-archivedAt": {
-            "description": "Document list's archivedAt column definition",
-            "type": "object",
-            "required": [ "key", "type", "title", "format", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^archivedAt$" },
-                "type": { "type": "string", "pattern": "^date$" },
-                "title": { "type": "string" },
-                "format": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "document-list-visibility": {
+      "description": "Document list's visibility column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "title",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^visibility$"
         },
-        "document-list-archivedBy": {
-            "description": "Document list's archivedBy column definition",
-            "type": "object",
-            "required": [ "key", "type", "title", "sortable" ],
-            "properties": {
-                "key": { "type": "string", "pattern": "^archivedByUser.displayName$" },
-                "type": { "type": "string", "pattern": "^text$" },
-                "title": { "type": "string" },
-                "sortable": { "type": "boolean" }
-            }
+        "type": {
+          "type": "string",
+          "pattern": "^text$"
         },
-        "content-metadata-aspect": {
-            "description": "Content metadata's aspect definition",
-            "type": "object",
-            "patternProperties": {
-                ".*": {
-                    "oneOf": [
-                        {
-                            "description": "Wildcard for every property",
-                            "type": "string",
-                            "pattern": "^\\*$"
-                        },
-                        {
-                            "description": "Properties array",
-                            "type": "array",
-                            "items": {
-                                "description": "Property name",
-                                "type": "string"
-                                }
-                            }
-                    ]
-                }
-            }
+        "title": {
+          "type": "string"
         },
-        "content-metadata-layout-group": {
-            "description": "Content metadata's layout groups definition",
-            "type": "array",
-            "items": [
-                {
-                    "description": "Content metadata's one layout group definition",
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "document-list-path": {
+      "description": "Document list's path column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "title",
+        "format",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^path$"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^location$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "format": {
+          "type": "string"
+        },
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "document-list-modifiedAt": {
+      "description": "Document list's modifiedAt column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "title",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^modifiedAt$"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^date$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "document-list-modifiedByUser": {
+      "description": "Document list's modifiedByUser column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "title",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^modifiedByUser\\.displayName$"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^text$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "document-list-sharedByUser": {
+      "description": "Document list's sharedByUser column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "title",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^sharedByUser\\.displayName$"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^text$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "document-list-filesize": {
+      "description": "Document list's path column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "title",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^content\\.sizeInBytes$"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^fileSize$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "document-list-archivedAt": {
+      "description": "Document list's archivedAt column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "title",
+        "format",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^archivedAt$"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^date$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "format": {
+          "type": "string"
+        },
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "document-list-archivedBy": {
+      "description": "Document list's archivedBy column definition",
+      "type": "object",
+      "required": [
+        "key",
+        "type",
+        "title",
+        "sortable"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^archivedByUser.displayName$"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^text$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "content-metadata-aspect": {
+      "description": "Content metadata's aspect definition",
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "oneOf": [
+            {
+              "description": "Wildcard for every property",
+              "type": "string",
+              "pattern": "^\\*$"
+            },
+            {
+              "description": "Properties array",
+              "type": "array",
+              "items": {
+                "description": "Property name",
+                "type": "string"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "content-metadata-layout-group": {
+      "description": "Content metadata's layout groups definition",
+      "type": "array",
+      "items": [
+        {
+          "description": "Content metadata's one layout group definition",
+          "type": "object",
+          "required": [
+            "title",
+            "items"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Content metadata's one layout group definition's title"
+            },
+            "items": {
+              "type": "array",
+              "description": "Content metadata's one layout group definition's items",
+              "items": {
+                "oneOf": [
+                  {
                     "type": "object",
                     "required": [
-                        "title",
-                        "items"
+                      "aspect",
+                      "properties"
                     ],
                     "properties": {
-                        "title": {
-                            "type": "string",
-                            "description": "Content metadata's one layout group definition's title"
-                        },
-                        "items": {
-                            "type": "array",
-                            "description": "Content metadata's one layout group definition's items",
-                            "items": {
-                                "oneOf": [
-                                    {
-                                        "type": "object",
-                                        "required": [
-                                            "aspect",
-                                            "properties"
-                                        ],
-                                        "properties": {
-                                            "aspect": {
-                                                "description": "Aspect group",
-                                                "type": "string"
-                                            },
-                                            "properties": {
-                                                "description": "Wildcard character",
-                                                "type": "string",
-                                                "pattern": "^\\*$"
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "type": "object",
-                                        "required": [
-                                            "aspect",
-                                            "properties"
-                                        ],
-                                        "properties": {
-                                            "aspect": {
-                                                "description": "Aspect group",
-                                                "type": "string"
-                                            },
-                                            "properties": {
-                                                "description": "list of aspect properties",
-                                                "type": "array"
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "type": "object",
-                                        "required": [
-                                            "type",
-                                            "properties"
-                                        ],
-                                        "properties": {
-                                            "type": {
-                                                "description": "Type group",
-                                                "type": "string"
-                                            },
-                                            "properties": {
-                                                "description": "Wildcard character",
-                                                "type": "string",
-                                                "pattern": "^\\*$"
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "type": "object",
-                                        "required": [
-                                            "type",
-                                            "properties"
-                                        ],
-                                        "properties": {
-                                            "type": {
-                                                "description": "Type group",
-                                                "type": "string"
-                                            },
-                                            "properties": {
-                                                "description": "list of type properties",
-                                                "type": "array"
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            ]
-        }
-    },
-
-    "type": "object",
-    "properties": {
-        "ecmHost": {
-            "description": "ECM host",
-            "type": "string"
-        },
-        "contextRootEcm": {
-          "description": "The context root of the ECM host",
-          "type": "string"
-      },
-        "bpmHost": {
-            "description": "BPM host",
-            "type": "string"
-        },
-        "providers": {
-            "description": "This parameter can accept as value ECM BPM or ALL you can set it accordingly where you want log-in",
-            "type": "string",
-            "enum": [ "ECM", "BPM", "ALL"]
-        },
-        "contextRootBpm": {
-            "description": "The context root of the BPM host",
-            "type": "string"
-        },
-        "disableCSRF": {
-            "description": "The context root of the BPM host",
-            "type": "boolean"
-        },
-        "application": {
-            "description": "Application's global configuration",
-            "type": "object",
-            "properties": {
-                "name": { "type": "string", "description": "Name of the application" }
-            }
-        },
-        "languages": {
-            "description": "Supported languages",
-            "type": "array",
-            "items": { "$ref": "#/definitions/language" }
-        },
-        "pagination": {
-            "description": "Pagination configuration",
-            "type": "object",
-            "properties": {
-                "size": { "type": "number", "description": "Pagination's default page size" },
-                "supportedPageSizes": {
-                    "description": "Pagination's supported page sizes",
-                    "type": "array",
-                    "items": { "type": "number" }
-                }
-            }
-        },
-        "files": {
-            "description": "Configuration of rules applied to file upload",
-            "type": "object",
-            "properties": {
-                "excluded": {
-                    "description": "File exclusions",
-                    "type": "array",
-                    "items": { "type": "string" }
-                },
-                "match-options": {
-                  "description": "Minimatch plugin option that will be applied for the check. By default all the options are false",
-                  "type": "object",
-                  "properties": {
-                    "debug": {
-                      "description": "Dump a ton of stuff to stderr",
-                      "type": ["boolean", "null"]
-                    },
-                    "nobrace": {
-                      "description": "Do not expand {a,b} and {1..3} brace sets.",
-                      "type": ["boolean", "null"]
-                    },
-                    "noglobstar": {
-                      "description": "Disable ** matching against multiple folder names.",
-                      "type": ["boolean", "null"]
-                    },
-                    "dot": {
-                      "description": "Allow patterns to match filenames starting with a period, even if the pattern does not explicitly have a period in that spot.",
-                      "type": ["boolean", "null"]
-                    },
-                    "noext": {
-                      "description": "Disable 'extglob' style patterns like +(a|b).",
-                      "type": ["boolean", "null"]
-                    },
-                    "nocase": {
-                      "description": "Perform a case-insensitive match.",
-                      "type": ["boolean", "null"]
-                    },
-                    "nonull": {
-                      "description": "When a match is not found by minimatch.match, return a list containing the pattern itself if this option is set. When not set, an empty list is returned if there are no matches.",
-                      "type": ["boolean", "null"]
-                    },
-                    "matchBase": {
-                      "description": "If set, then patterns without slashes will be matched against the basename of the path if it contains slashes.",
-                      "type": ["boolean", "null"]
-                    },
-                    "nocomment": {
-                      "description": "Suppress the behavior of treating # at the start of a pattern as a comment.",
-                      "type": ["boolean", "null"]
-                    },
-                    "nonegate": {
-                      "description": "Suppress the behavior of treating a leading ! character as negation.",
-                      "type": ["boolean", "null"]
-                    },
-                    "flipNegate": {
-                      "description": "Returns from negate expressions the same as if they were not negated.",
-                      "type": ["boolean", "null"]
-                    }
-                  }
-                }
-            }
-        },
-        "logLevel": {
-            "description": "Application's logging level",
-            "type": "string",
-            "enum": [ "trace", "debug", "info", "warn", "error", "silent" ]
-        },
-        "activiti": {
-            "type": "object"
-        },
-        "document-list": {
-            "description": "Document list configuration",
-            "type": "object",
-            "properties": {
-                "presets": {
-                    "description": "Presets for document list component",
-                    "type": "object",
-                    "propertyNames": {
-                        "enum": [ "-trashcan-", "-sites-", "-mysites-", "-favorites-", "-recent-", "-sharedlinks-", "default" ]
-                    },
-                    "patternProperties": {
-                        ".*": {
-                            "description": "Document list's columns",
-                            "type": "array",
-                            "items": {
-                                "oneOf": [
-                                    { "$ref": "#/definitions/document-list-thumbnail" },
-                                    { "$ref": "#/definitions/document-list-name" },
-                                    { "$ref": "#/definitions/document-list-title" },
-                                    { "$ref": "#/definitions/document-list-visibility" },
-                                    { "$ref": "#/definitions/document-list-path" },
-                                    { "$ref": "#/definitions/document-list-modifiedAt" },
-                                    { "$ref": "#/definitions/document-list-modifiedByUser" },
-                                    { "$ref": "#/definitions/document-list-sharedByUser" },
-                                    { "$ref": "#/definitions/document-list-filesize" },
-                                    { "$ref": "#/definitions/document-list-archivedAt" },
-                                    { "$ref": "#/definitions/document-list-archivedBy" }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "adf-task-header": {
-            "description": "Task header component configuration",
-            "type": "object",
-            "properties": {
-                "presets": {
-                    "description": "Presets for task header component",
-                    "type": "object",
-                    "properties": {
-                        "properties": {
-                              "type": "array",
-                              "items": {
-                                "enum": [ "assignee", "status", "priority", "dueDate", "category", "parentName", "created", "id", "description", "formName" ]
-                              }
-                        }
-                    }
-                }
-            }
-        },
-        "adf-task-list": {
-            "description": "Task list component configuration",
-            "type": "object",
-            "properties": {
-                "presets": {
-                    "description": "Presets for task list component",
-                    "type": "object",
-                    "patternProperties": {
-                        ".*": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "key": { "type": "string" },
-                                    "type": { "type": "string" },
-                                    "title": { "type": "string" },
-                                    "sortable": { "type": "boolean" }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "adf-process-instance-header": {
-            "description": "Process instance header component configuration",
-            "type": "object",
-            "properties": {
-                "presets": {
-                    "description": "Presets for process instance header component",
-                    "type": "object",
-                    "properties": {
-                        "properties": {
-                              "type": "array",
-                              "items": {
-                                "enum": [ "status", "ended", "category", "businessKey", "assignee", "created", "id", "description" ]
-                              }
-                        }
-                    }
-                }
-            }
-        },
-        "adf-process-list": {
-            "description": "Process list component configuration",
-            "type": "object",
-            "properties": {
-                "presets": {
-                    "description": "Presets for process list component",
-                    "type": "object",
-                    "patternProperties": {
-                        ".*": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "key": { "type": "string" },
-                                    "type": { "type": "string" },
-                                    "title": { "type": "string" },
-                                    "sortable": { "type": "boolean" }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "content-metadata": {
-            "description": "Content metadata component's configuration",
-            "type": "object",
-            "required": [ "presets" ],
-            "properties": {
-                "presets": {
-                    "description": "Presets for content metadata component",
-                    "type": "object",
-                    "patternProperties": {
-                        ".*": {
-                            "oneOf": [
-                                { "type": "string", "pattern": "^\\*$", "description": "Wildcard for every aspect"},
-                                { "$ref": "#/definitions/content-metadata-aspect" },
-                                { "$ref": "#/definitions/content-metadata-layout-group" }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
-        "authType": {
-          "description": "Kind of authentication BASIC or OAUTH, default value BASIC",
-          "type": "string",
-          "enum": [ "BASIC", "OAUTH" ]
-        },
-       "oauth2": {
-          "description": "AUTH configuration parameters",
-          "type": "object",
-          "required": [ "host", "clientId", "secret", "scope" ],
-          "properties": {
-              "host": { "type": "string" },
-              "silentLogin": { "type": "boolean" },
-              "authPath": { "type": "string" },
-              "clientId": { "type": "string" },
-              "secret": { "type": "string" },
-              "redirectUri": { "type": "string" },
-              "redirectUriLogout": { "type": "string" },
-              "scope": { "type": "string" }
-          }
-        },
-        "search": {
-          "description": "Search configuration parameters",
-          "type": "object",
-          "required": [ "categories" ],
-          "properties": {
-            "include": {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "type": "string"
-              }
-            },
-            "fields": {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "type": "string"
-              }
-            },
-            "filterQueries": {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "type": "object",
-                "required": [ "query" ],
-                "properties": {
-                  "query": { "type": "string" }
-                }
-              }
-            },
-            "facetFields": {
-              "type": "object",
-              "required": ["fields"],
-              "properties": {
-                "expanded": {
-                  "description": "Toggles expanded state of the facet field",
-                  "type": "boolean"
-                },
-                "fields": {
-                  "description": "List of custom facet fields",
-                  "type": "array",
-                  "minItems": 1,
-                  "items": {
-                    "type": "object",
-                    "required": [ "field", "mincount", "label" ],
-                    "properties": {
-                      "field": {
-                        "type": "string",
-                        "description": "This specifies the facet field."
-                      },
-                      "mincount": {
-                        "type": "number",
-                        "description": "This specifies the minimum count required for a facet field to be included in the response. The default value is 1."
-                      },
-                      "label": {
-                        "type": "string",
-                        "description": "This specifies the label to include in place of the facet field."
-                      },
-                      "prefix": {
-                        "type": "string",
-                        "description": "This restricts the possible constraints to only indexed values with a specified prefix."
-                      },
-                      "limit": {
-                        "type": "number",
-                        "description": "Maximum number of results"
-                      },
-                      "pageSize": {
-                        "type": "number",
-                        "description": "Display page size"
-                      },
-                      "offset": { "type": "integer" }
-                    }
-                  }
-                }
-              }
-            },
-            "facetQueries": {
-              "type": "object",
-              "required": ["label", "queries"],
-              "properties": {
-                "label": {
-                  "description": "Category label text",
-                  "type": "string"
-                },
-                "pageSize": {
-                  "description": "Default page size of the category",
-                  "type": "number"
-                },
-                "expanded": {
-                  "description": "Toggles expanded state of the category",
-                  "type": "boolean"
-                },
-                "queries": {
-                  "description": "List of custom facet queries",
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [ "query", "label" ],
-                    "properties": {
-                      "query": { "type": "string" },
-                      "label": { "type": "string" }
-                    }
-                  }
-                }
-              }
-            },
-            "categories": {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "type": "object",
-                "required": [ "id", "name" ],
-                "properties": {
-                  "id": { "type": "string" },
-                  "name": { "type": "string" },
-                  "enabled": { "type": "boolean" },
-                  "expanded": { "type": "boolean" },
-                  "component": {
-                    "type": "object",
-                    "required": [ "selector", "settings" ],
-                    "properties": {
-                      "selector": {
-                        "description": "Unique component runtime identifier",
+                      "aspect": {
+                        "description": "Aspect group",
                         "type": "string"
                       },
-                      "settings": {
-                        "description": "Component-specific settings",
-                        "type": "object"
+                      "properties": {
+                        "description": "Wildcard character",
+                        "type": "string",
+                        "pattern": "^\\*$"
                       }
                     }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "aspect",
+                      "properties"
+                    ],
+                    "properties": {
+                      "aspect": {
+                        "description": "Aspect group",
+                        "type": "string"
+                      },
+                      "properties": {
+                        "description": "list of aspect properties",
+                        "type": "array"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "properties"
+                    ],
+                    "properties": {
+                      "type": {
+                        "description": "Type group",
+                        "type": "string"
+                      },
+                      "properties": {
+                        "description": "Wildcard character",
+                        "type": "string",
+                        "pattern": "^\\*$"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "properties"
+                    ],
+                    "properties": {
+                      "type": {
+                        "description": "Type group",
+                        "type": "string"
+                      },
+                      "properties": {
+                        "description": "list of type properties",
+                        "type": "array"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "ecmHost": {
+      "description": "ECM host",
+      "type": "string"
+    },
+    "contextRootEcm": {
+      "description": "The context root of the ECM host",
+      "type": "string"
+    },
+    "bpmHost": {
+      "description": "BPM host",
+      "type": "string"
+    },
+    "providers": {
+      "description": "This parameter can accept as value ECM BPM or ALL you can set it accordingly where you want log-in",
+      "type": "string",
+      "enum": [
+        "ECM",
+        "BPM",
+        "ALL"
+      ]
+    },
+    "contextRootBpm": {
+      "description": "The context root of the BPM host",
+      "type": "string"
+    },
+    "disableCSRF": {
+      "description": "The context root of the BPM host",
+      "type": "boolean"
+    },
+    "application": {
+      "description": "Application's global configuration",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the application"
+        }
+      }
+    },
+    "languages": {
+      "description": "Supported languages",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/language"
+      }
+    },
+    "pagination": {
+      "description": "Pagination configuration",
+      "type": "object",
+      "properties": {
+        "size": {
+          "type": "number",
+          "description": "Pagination's default page size"
+        },
+        "supportedPageSizes": {
+          "description": "Pagination's supported page sizes",
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "files": {
+      "description": "Configuration of rules applied to file upload",
+      "type": "object",
+      "properties": {
+        "excluded": {
+          "description": "File exclusions",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "match-options": {
+          "description": "Minimatch plugin option that will be applied for the check. By default all the options are false",
+          "type": "object",
+          "properties": {
+            "debug": {
+              "description": "Dump a ton of stuff to stderr",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "nobrace": {
+              "description": "Do not expand {a,b} and {1..3} brace sets.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "noglobstar": {
+              "description": "Disable ** matching against multiple folder names.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "dot": {
+              "description": "Allow patterns to match filenames starting with a period, even if the pattern does not explicitly have a period in that spot.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "noext": {
+              "description": "Disable 'extglob' style patterns like +(a|b).",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "nocase": {
+              "description": "Perform a case-insensitive match.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "nonull": {
+              "description": "When a match is not found by minimatch.match, return a list containing the pattern itself if this option is set. When not set, an empty list is returned if there are no matches.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "matchBase": {
+              "description": "If set, then patterns without slashes will be matched against the basename of the path if it contains slashes.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "nocomment": {
+              "description": "Suppress the behavior of treating # at the start of a pattern as a comment.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "nonegate": {
+              "description": "Suppress the behavior of treating a leading ! character as negation.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "flipNegate": {
+              "description": "Returns from negate expressions the same as if they were not negated.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "logLevel": {
+      "description": "Application's logging level",
+      "type": "string",
+      "enum": [
+        "trace",
+        "debug",
+        "info",
+        "warn",
+        "error",
+        "silent"
+      ]
+    },
+    "activiti": {
+      "type": "object"
+    },
+    "document-list": {
+      "description": "Document list configuration",
+      "type": "object",
+      "properties": {
+        "presets": {
+          "description": "Presets for document list component",
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "-trashcan-",
+              "-sites-",
+              "-mysites-",
+              "-favorites-",
+              "-recent-",
+              "-sharedlinks-",
+              "default"
+            ]
+          },
+          "patternProperties": {
+            ".*": {
+              "description": "Document list's columns",
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/document-list-thumbnail"
+                  },
+                  {
+                    "$ref": "#/definitions/document-list-name"
+                  },
+                  {
+                    "$ref": "#/definitions/document-list-title"
+                  },
+                  {
+                    "$ref": "#/definitions/document-list-visibility"
+                  },
+                  {
+                    "$ref": "#/definitions/document-list-path"
+                  },
+                  {
+                    "$ref": "#/definitions/document-list-modifiedAt"
+                  },
+                  {
+                    "$ref": "#/definitions/document-list-modifiedByUser"
+                  },
+                  {
+                    "$ref": "#/definitions/document-list-sharedByUser"
+                  },
+                  {
+                    "$ref": "#/definitions/document-list-filesize"
+                  },
+                  {
+                    "$ref": "#/definitions/document-list-archivedAt"
+                  },
+                  {
+                    "$ref": "#/definitions/document-list-archivedBy"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "adf-task-header": {
+      "description": "Task header component configuration",
+      "type": "object",
+      "properties": {
+        "presets": {
+          "description": "Presets for task header component",
+          "type": "object",
+          "properties": {
+            "properties": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "assignee",
+                  "status",
+                  "priority",
+                  "dueDate",
+                  "endDate",
+                  "category",
+                  "parentName",
+                  "duration",
+                  "parentTaskId",
+                  "created",
+                  "id",
+                  "description",
+                  "formName"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "adf-task-list": {
+      "description": "Task list component configuration",
+      "type": "object",
+      "properties": {
+        "presets": {
+          "description": "Presets for task list component",
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "sortable": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "adf-process-instance-header": {
+      "description": "Process instance header component configuration",
+      "type": "object",
+      "properties": {
+        "presets": {
+          "description": "Presets for process instance header component",
+          "type": "object",
+          "properties": {
+            "properties": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "status",
+                  "ended",
+                  "category",
+                  "businessKey",
+                  "assignee",
+                  "created",
+                  "id",
+                  "description"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "adf-process-list": {
+      "description": "Process list component configuration",
+      "type": "object",
+      "properties": {
+        "presets": {
+          "description": "Presets for process list component",
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "sortable": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "content-metadata": {
+      "description": "Content metadata component's configuration",
+      "type": "object",
+      "required": [
+        "presets"
+      ],
+      "properties": {
+        "presets": {
+          "description": "Presets for content metadata component",
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "pattern": "^\\*$",
+                  "description": "Wildcard for every aspect"
+                },
+                {
+                  "$ref": "#/definitions/content-metadata-aspect"
+                },
+                {
+                  "$ref": "#/definitions/content-metadata-layout-group"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "authType": {
+      "description": "Kind of authentication BASIC or OAUTH, default value BASIC",
+      "type": "string",
+      "enum": [
+        "BASIC",
+        "OAUTH"
+      ]
+    },
+    "oauth2": {
+      "description": "AUTH configuration parameters",
+      "type": "object",
+      "required": [
+        "host",
+        "clientId",
+        "secret",
+        "scope"
+      ],
+      "properties": {
+        "host": {
+          "type": "string"
+        },
+        "silentLogin": {
+          "type": "boolean"
+        },
+        "authPath": {
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string"
+        },
+        "secret": {
+          "type": "string"
+        },
+        "redirectUri": {
+          "type": "string"
+        },
+        "redirectUriLogout": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        }
+      }
+    },
+    "search": {
+      "description": "Search configuration parameters",
+      "type": "object",
+      "required": [
+        "categories"
+      ],
+      "properties": {
+        "include": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "filterQueries": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "query"
+            ],
+            "properties": {
+              "query": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "facetFields": {
+          "type": "object",
+          "required": [
+            "fields"
+          ],
+          "properties": {
+            "expanded": {
+              "description": "Toggles expanded state of the facet field",
+              "type": "boolean"
+            },
+            "fields": {
+              "description": "List of custom facet fields",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "field",
+                  "mincount",
+                  "label"
+                ],
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "This specifies the facet field."
+                  },
+                  "mincount": {
+                    "type": "number",
+                    "description": "This specifies the minimum count required for a facet field to be included in the response. The default value is 1."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "This specifies the label to include in place of the facet field."
+                  },
+                  "prefix": {
+                    "type": "string",
+                    "description": "This restricts the possible constraints to only indexed values with a specified prefix."
+                  },
+                  "limit": {
+                    "type": "number",
+                    "description": "Maximum number of results"
+                  },
+                  "pageSize": {
+                    "type": "number",
+                    "description": "Display page size"
+                  },
+                  "offset": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "facetQueries": {
+          "type": "object",
+          "required": [
+            "label",
+            "queries"
+          ],
+          "properties": {
+            "label": {
+              "description": "Category label text",
+              "type": "string"
+            },
+            "pageSize": {
+              "description": "Default page size of the category",
+              "type": "number"
+            },
+            "expanded": {
+              "description": "Toggles expanded state of the category",
+              "type": "boolean"
+            },
+            "queries": {
+              "description": "List of custom facet queries",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "query",
+                  "label"
+                ],
+                "properties": {
+                  "query": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "expanded": {
+                "type": "boolean"
+              },
+              "component": {
+                "type": "object",
+                "required": [
+                  "selector",
+                  "settings"
+                ],
+                "properties": {
+                  "selector": {
+                    "description": "Unique component runtime identifier",
+                    "type": "string"
+                  },
+                  "settings": {
+                    "description": "Component-specific settings",
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "sorting": {
+          "description": "Sorting options and defaults",
+          "required": [
+            "options"
+          ],
+          "properties": {
+            "options": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "description": "Sorting options available for users to choose from",
+                "type": "object",
+                "required": [
+                  "key",
+                  "label",
+                  "type",
+                  "field",
+                  "ascending"
+                ],
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "field": {
+                    "type": "string"
+                  },
+                  "ascending": {
+                    "type": "boolean"
                   }
                 }
               }
             },
-            "sorting": {
-              "description": "Sorting options and defaults",
-              "required": ["options"],
-              "properties": {
-                "options": {
-                  "type": "array",
-                  "minItems": 1,
-                  "items": {
-                      "description": "Sorting options available for users to choose from",
-                      "type": "object",
-                      "required": ["key", "label", "type", "field", "ascending"],
-                      "properties": {
-                        "key": { "type": "string" },
-                        "label": { "type": "string" },
-                        "type": { "type": "string" },
-                        "field": { "type": "string" },
-                        "ascending": { "type": "boolean" }
-                      }
-                    }
-                },
-                "defaults": {
-                  "description": "Predefined sorting to execute by default",
-                  "options": {
-                    "type": "array",
-                    "minItems": 1,
-                    "items": {
-                      "type": "object",
-                      "required": ["key", "label", "type", "field", "ascending"],
-                      "properties": {
-                        "key": { "type": "string" },
-                        "label": { "type": "string" },
-                        "type": { "type": "string" },
-                        "field": { "type": "string" },
-                        "ascending": { "type": "boolean" }
-                      }
+            "defaults": {
+              "description": "Predefined sorting to execute by default",
+              "options": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "key",
+                    "label",
+                    "type",
+                    "field",
+                    "ascending"
+                  ],
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    },
+                    "ascending": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -713,5 +1115,7 @@
             }
           }
         }
+      }
     }
+  }
 }
