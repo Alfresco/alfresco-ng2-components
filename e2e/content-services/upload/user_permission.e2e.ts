@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, browser } from 'protractor';
 
 import Util = require('../../util/util');
 
@@ -47,7 +47,6 @@ describe('Upload - User permission', () => {
     let acsUserTwo;
     let navigationBarPage = new NavigationBarPage();
     let notificationPage = new NotificationPage();
-    let consumerSite, managerSite;
 
     let emptyFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,

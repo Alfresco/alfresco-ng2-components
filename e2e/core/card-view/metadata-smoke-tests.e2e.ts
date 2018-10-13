@@ -94,7 +94,7 @@ describe('Metadata component', () => {
         contentServicesPage.navigateToDocumentList();
     });
 
-    it('[C245652] Properties', () => {
+    it('[C245652] Should be possible to display a file\'s properties', () => {
         viewerPage.viewFile(pngFileModel.name);
 
         viewerPage.clickInfoButton();
@@ -120,7 +120,7 @@ describe('Metadata component', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C272769] Information button', () => {
+    it('[C272769] Should be possible to display more details when clicking on More Information button', () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -133,7 +133,7 @@ describe('Metadata component', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C270952] Info icon', () => {
+    it('[C270952] Should be possible to open/close properties using info icon', () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();

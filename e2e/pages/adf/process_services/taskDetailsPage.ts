@@ -17,6 +17,7 @@
 
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
 import { TabsPage } from '../material/tabsPage';
+import { element, by, browser, protractor } from 'protractor';
 import Util = require('../../../util/util');
 
 export class TaskDetailsPage {

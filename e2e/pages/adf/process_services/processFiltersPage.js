@@ -81,7 +81,7 @@ var ProcessFiltersPage = function () {
     };
 
     this.selectFromProcessList = function (title) {
-        var processName = element(by.css('div[data-automation-id="text_' + title + '"]'));
+        var processName = element.all(by.css('div[data-automation-id="text_' + title + '"]')).first();
         Util.waitUntilElementIsVisible(processName);
         processName.click();
     };

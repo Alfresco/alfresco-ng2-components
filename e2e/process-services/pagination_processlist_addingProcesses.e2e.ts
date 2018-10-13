@@ -27,6 +27,7 @@ import resources = require('../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
+import { browser } from 'protractor';
 
 describe('Process List - Pagination when adding processes', () => {
 
@@ -45,9 +46,11 @@ describe('Process List - Pagination when adding processes', () => {
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let nrOfProcesses = 25;
     let page, totalPages;
+    let i;
+    let apps = new AppsActions();
+    let resultApp;
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
         let users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -61,33 +64,42 @@ describe('Process List - Pagination when adding processes', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        let resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        for (let i = 0; i < nrOfProcesses; i++) {
+        for (i = 0; i < (nrOfProcesses - 5); i++) {
             await apps.startProcess(this.alfrescoJsApi, resultApp);
         }
 
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
-    });
-
-    it('[C261046] Items per page set to 15 and adding of processes', () => {
-        totalPages = 2;
-        page = 1;
         processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
         processDetailsPage.checkProcessTitleIsDisplayed();
         processFiltersPage.waitForTableBody();
+
+        done();
+    });
+
+    it('[C261046] Should keep Items per page after adding processes', () => {
+        totalPages = 2;
+        page = 1;
+
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         processDetailsPage.checkProcessTitleIsDisplayed();
         processFiltersPage.waitForTableBody();
+
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + nrOfProcesses);
+        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + (nrOfProcesses - 5));
         expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
         paginationPage.checkNextPageButtonIsEnabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
+
+        browser.controlFlow().execute(async () => {
+            for (i; i < nrOfProcesses; i++) {
+                await apps.startProcess(this.alfrescoJsApi, resultApp);
+            }
+        });
 
         page++;
         paginationPage.clickOnNextPage();

@@ -40,12 +40,9 @@ describe('Task Filters Sorting', () => {
     let taskFiltersPage = new TaskFiltersPage();
     let taskDetailsPage = new TaskDetailsPage();
 
-    let tenantId;
     let user;
     let appId;
     let importedApp;
-
-    let taskFilterId;
 
     let app = resources.Files.APP_WITH_PROCESSES;
 
@@ -69,7 +66,6 @@ describe('Task Filters Sorting', () => {
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         user = await users.createTenantAndUser(this.alfrescoJsApi);
-        tenantId = user.tenantId;
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
@@ -118,7 +114,6 @@ describe('Task Filters Sorting', () => {
 
             let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
-            taskFilterId = result.id;
             return result;
         });
 
@@ -142,7 +137,6 @@ describe('Task Filters Sorting', () => {
 
             let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
-            taskFilterId = result.id;
             return result;
         });
 
@@ -165,7 +159,6 @@ describe('Task Filters Sorting', () => {
 
             let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
-            taskFilterId = result.id;
             return result;
         });
 
@@ -188,7 +181,6 @@ describe('Task Filters Sorting', () => {
 
             let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
-            taskFilterId = result.id;
             return result;
         });
 
@@ -211,7 +203,6 @@ describe('Task Filters Sorting', () => {
 
             let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
-            taskFilterId = result.id;
             return result;
         });
 
@@ -234,7 +225,6 @@ describe('Task Filters Sorting', () => {
 
             let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
-            taskFilterId = result.id;
             return result;
         });
 
@@ -257,7 +247,6 @@ describe('Task Filters Sorting', () => {
 
             let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
-            taskFilterId = result.id;
             return result;
         });
 
@@ -280,7 +269,6 @@ describe('Task Filters Sorting', () => {
 
             let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
-            taskFilterId = result.id;
             return result;
         });
 

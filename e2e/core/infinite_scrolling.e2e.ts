@@ -70,7 +70,7 @@ describe('Enable infinite scrolling', () => {
         done();
     });
 
-    it('Enable infinite scrolling', () => {
+    it('[C260484] Should be possible to enable infinite scrolling', () => {
         contentServicesPage.navigateToFolder(folderModel.name);
         contentServicesPage.enableInfiniteScrolling();
         contentServicesPage.clickLoadMoreButton();

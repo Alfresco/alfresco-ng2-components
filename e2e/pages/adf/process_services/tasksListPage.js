@@ -36,10 +36,10 @@ var TasksListPage = function () {
         Util.waitUntilElementIsVisible(taskList.element(row));
         return this;
     };
-    
+
     this.checkTaskIsDisplayedInTasksList = function(taskName) {
         var row = by.cssContainingText("span", taskName);
-        Util.waitUntilElementIsVisible(taskList.element(row));
+        Util.waitUntilElementIsVisible(taskList.all(row).first());
         return this;
     };
 
