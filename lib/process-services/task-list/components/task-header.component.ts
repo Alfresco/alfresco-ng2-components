@@ -16,15 +16,17 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { BpmUserService,
-         CardViewDateItemModel,
-         CardViewItem,
-         CardViewMapItemModel,
-         CardViewTextItemModel,
-         CardViewBaseItemModel,
-         LogService,
-         TranslationService,
-         AppConfigService } from '@alfresco/adf-core';
+import {
+    BpmUserService,
+    CardViewDateItemModel,
+    CardViewItem,
+    CardViewMapItemModel,
+    CardViewTextItemModel,
+    CardViewBaseItemModel,
+    LogService,
+    TranslationService,
+    AppConfigService
+} from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -75,12 +77,12 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         return [
             new CardViewTextItemModel(
                 {
-                 label: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
-                 value: this.taskDetails.getFullName(),
-                 key: 'assignee',
-                 default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
-                 clickable: !this.isCompleted(),
-                 icon: 'create'
+                    label: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
+                    value: this.taskDetails.getFullName(),
+                    key: 'assignee',
+                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
+                    clickable: !this.isCompleted(),
+                    icon: 'create'
                 }
             ),
             new CardViewTextItemModel(
@@ -129,6 +131,41 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     label: 'ADF_TASK_LIST.PROPERTIES.CREATED',
                     value: this.taskDetails.created,
                     key: 'created'
+                }
+            ),
+            new CardViewDateItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.END_DATE',
+                    value: this.taskDetails.endDate,
+                    key: 'endDate'
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME',
+                    value: this.taskDetails.parentName,
+                    key: 'parentName'
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.DURATION',
+                    value: `${this.taskDetails.duration} ms`,
+                    key: 'duration'
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.PARENT_TASK_ID',
+                    value: this.taskDetails.parentTaskId,
+                    key: 'parentTaskId'
+                }
+            ),
+            new CardViewDateItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.END_DATE',
+                    value: this.taskDetails.endDate,
+                    key: 'endDate'
                 }
             ),
             new CardViewTextItemModel(

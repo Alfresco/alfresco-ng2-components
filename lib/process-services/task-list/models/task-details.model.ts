@@ -31,6 +31,7 @@ export class TaskDetailsModel implements TaskRepresentation {
     category: string;
     created: Date;
     description: string;
+    parentName: string;
     dueDate: Date;
     duration: number;
     endDate: Date;
