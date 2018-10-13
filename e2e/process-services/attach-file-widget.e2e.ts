@@ -81,7 +81,7 @@ describe('Start Task - Task App', () => {
         done();
     });
 
-    it('[C274690] Task List attachment - View file', () => {
+    it('[C274690] Should be able to open a file attached to a start form', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);

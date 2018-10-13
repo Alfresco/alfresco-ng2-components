@@ -79,7 +79,7 @@ describe('Task List Pagination', () => {
         done();
     });
 
-    it('[C260301] Pagination at first 20 started tasks', () => {
+    it('[C260301] Should display default pagination', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
@@ -91,7 +91,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
     });
 
-    it('[C260304] Items per page set to 5', () => {
+    it('[C260304] Should be possible to set Items per page to 5', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.five);
@@ -119,7 +119,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
     });
 
-    it('[C260303] Items per page set to 10', () => {
+    it('[C260303] Should be possible to set Items per page to 10', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
@@ -136,7 +136,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
     });
 
-    it('[C260302] Items per page set to 15', () => {
+    it('[C260302] Should be possible to set Items per page to 15', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
@@ -153,7 +153,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    it('[C261006] Page number dropdown', () => {
+    it('[C261006] Should be possible to navigate to a page with page number dropdown', () => {
         currentPage = 1;
         totalPages = 2;
         processServicesPage.goToProcessServices().goToTaskApp();

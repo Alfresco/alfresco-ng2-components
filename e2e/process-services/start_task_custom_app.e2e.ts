@@ -90,7 +90,7 @@ describe('Start Task - Custom App', () => {
         done();
     });
 
-    it('[C263942] Modifying task', () => {
+    it('[C263942] Should be possible to modify a task', () => {
         processServicesPage
             .goToProcessServices()
             .goToApp(appModel.name)
@@ -142,7 +142,7 @@ describe('Start Task - Custom App', () => {
             });
     });
 
-    it('[C263946] Information box', () => {
+    it('[C263946] Should display information box for started task', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
@@ -178,7 +178,7 @@ describe('Start Task - Custom App', () => {
             });
     });
 
-    it('[C263947] Start task with no form', () => {
+    it('[C263947] Should be able to start a task without form', () => {
         processServicesPage
             .goToProcessServices()
             .goToApp(appModel.name)
@@ -204,7 +204,7 @@ describe('Start Task - Custom App', () => {
         expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASKDETAILS.NO_FORM);
     });
 
-    it('[C263948] Start task buttons', () => {
+    it('[C263948] Should be possible to cancel a task', () => {
         processServicesPage.goToProcessServices()
             .goToApp(appModel.name)
             .clickTasksButton();
@@ -226,7 +226,7 @@ describe('Start Task - Custom App', () => {
         expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASKFILTERS.MY_TASKS);
     });
 
-    it('[C263949] Refreshing the form', () => {
+    it('[C263949] Should be possible to save filled form', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage()
             .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
@@ -264,7 +264,7 @@ describe('Start Task - Custom App', () => {
             .checkFieldValue(by.id, formTextField, formFieldValue);
     });
 
-    it('[C263951] Assign User', () => {
+    it('[C263951] Should be possible to assign a user', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage
             .filtersPage()

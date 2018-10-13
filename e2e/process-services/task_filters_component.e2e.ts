@@ -223,14 +223,10 @@ describe('Task', () => {
         let loginPage = new LoginPage();
         let navigationBarPage = new NavigationBarPage();
         let processServicesPage = new ProcessServicesPage();
-        let tasksPage = new TasksPage();
-        let tasksListPage = new TasksListPage();
         let taskFiltersPage = new TaskFiltersPage();
-        let taskDetailsPage = new TaskDetailsPage();
         let appNavigationBarPage = new AppNavigationBarPage();
         let appSettingsToggles = new AppSettingsToggles();
 
-        let tenantId;
         let user;
         let appId;
         let importedApp;
@@ -251,7 +247,6 @@ describe('Task', () => {
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             user = await users.createTenantAndUser(this.alfrescoJsApi);
-            tenantId = user.tenantId;
 
             await this.alfrescoJsApi.login(user.email, user.password);
 
@@ -269,10 +264,6 @@ describe('Task', () => {
 
         });
 
-        // afterAll(async(done) => {
-        //     await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-        //     done();
-        // });
         beforeEach(async () => {
             navigationBarPage.clickProcessServicesButton();
             processServicesPage.checkApsContainer();

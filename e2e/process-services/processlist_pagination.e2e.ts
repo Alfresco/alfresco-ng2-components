@@ -79,7 +79,7 @@ describe('Process List - Pagination', function () {
 
     describe('Empty processes', function () {
 
-        it('[C261042] Should show empty content message an no pagination when no process are present', function () {
+        it('[C280015] Should show empty content message an no pagination when no process are present', function () {
             processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
             processFiltersPage.checkNoContentMessage();
             paginationPage.checkPaginationIsNotDisplayed();
@@ -105,7 +105,7 @@ describe('Process List - Pagination', function () {
             done();
         });
 
-        it('[C261042] Default pagination', function () {
+        it('[C261042] Should display default pagination', function () {
             processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
 
             page = 1;
@@ -125,7 +125,7 @@ describe('Process List - Pagination', function () {
             paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C261043] Items per page set to 15', function () {
+        it('[C261043] Should be possible to Items per page to 15', function () {
             page = 1;
             totalPages = 2;
             processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
@@ -167,7 +167,7 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         });
 
-        it('[C261044] Items per page set to 10', function () {
+        it('[C261044] Should be possible to Items per page to 10', function () {
             page = 1;
             totalPages = 2;
             processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
@@ -209,7 +209,7 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         });
 
-        it('[C261047] Items per page set to 20', function () {
+        it('[C261047] Should be possible to Items per page to 20', function () {
             page = 1;
             totalPages = 1;
             processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
@@ -238,7 +238,7 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         });
 
-        it('[C261045] 5 Items per page', function () {
+        it('[C261045] Should be possible to Items per page to 5', function () {
             let showing;
             page = 1;
             totalPages = 4;
@@ -313,7 +313,7 @@ describe('Process List - Pagination', function () {
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         });
 
-        it('[C261049] Page number dropdown', function () {
+        it('[C261049] Should be possible to open page number dropdown', function () {
             let showing;
             page = 1;
             totalPages = 2;
@@ -367,7 +367,7 @@ describe('Process List - Pagination', function () {
             paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C261048] Sorting by Name', function () {
+        it('[C261048] Should be possible to sort processes by name', function () {
             processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
@@ -387,7 +387,7 @@ describe('Process List - Pagination', function () {
             processFiltersPage.checkProcessesSortedByNameDesc();
         });
 
-        it('[C286260] Sorting chosen should remain when changing \'Items per page\'', function () {
+        it('[C286260] Should keep sorting when changing \'Items per page\'', function () {
             processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);

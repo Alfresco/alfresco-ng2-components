@@ -61,7 +61,7 @@ describe('Analytics Smoke Test', () => {
         done();
     });
 
-    it('Change name from Process Definition Heat Map', () => {
+    it('[C260346] Should be able to change title of a report', () => {
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp('Task App');

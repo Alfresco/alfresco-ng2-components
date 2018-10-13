@@ -27,7 +27,7 @@ var FormFields = function () {
     var noFormMessage = element(by.css("span[id*='no-form-message']"));
     var completedTaskNoFormMessage = element(by.css("div[id*='completed-form-message'] p"));
     var attachFormButton = element(by.id("adf-no-form-attach-form-button"));
-    var selectFormDropDownArrow = element(by.css("adf-attach-form div[class*='mat-select-arrow']"));
+    var selectFormDropDownArrow = element.all(by.css("adf-attach-form div[class*='mat-select-arrow']")).first();
     var selectFormContent = element(by.css("div[class*='mat-select-content']"));
     var completeButton = element(by.id('adf-form-complete'));
 
@@ -55,7 +55,7 @@ var FormFields = function () {
     };
 
     this.getFieldText = function (fieldId, labelLocatorParam) {
-        var label = this.getWidget(fieldId).element(labelLocatorParam || labelLocator);
+        var label = this.getWidget(fieldId).all(labelLocatorParam || labelLocator).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     };

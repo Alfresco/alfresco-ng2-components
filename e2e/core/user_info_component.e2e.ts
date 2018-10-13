@@ -30,6 +30,7 @@ import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
+import { browser } from 'protractor';
 
 describe('User Info component', () => {
 
@@ -73,7 +74,7 @@ describe('User Info component', () => {
         done();
     });
 
-    it('[C260111] Enable Process Services and Content Services ', () => {
+    it('[C260111] Should display UserInfo when Process Services and Content Services are enabled', () => {
         loginPage.goToLoginPage();
         settingsPage.setProviderEcmBpm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
@@ -109,7 +110,7 @@ describe('User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('[C260113] Enable Content Services and disable Process Services ', () => {
+    it('[C260113] Should display UserInfo when Content Services is enabled and Process Services is disabled', () => {
         loginPage.goToLoginPage();
         settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
@@ -128,7 +129,7 @@ describe('User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('[C260115] Enable Process Services and disable Content Services ', () => {
+    it('[C260115] Should display UserInfo when Process Services is enabled and Content Services is disabled', () => {
         loginPage.goToLoginPage();
         settingsPage.setProviderBpm();
         loginPage.login(processUserModel.email, processUserModel.password);
@@ -147,7 +148,7 @@ describe('User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('[C260117] Enable Process Services and Content Services ', async(done) => {
+    it('[C260117] Should display UserInfo with profile image uploaded in ACS', async(done) => {
         browser.controlFlow().execute(async() => {
             await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
             await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function (result) {});
@@ -165,7 +166,7 @@ describe('User Info component', () => {
         done();
     });
 
-    it('[C260118] The profile picture is changed from APS', async () => {
+    it('[C260118] Should display UserInfo with profile image uploaded in APS', async () => {
         let users = new UsersActions();
         await this.alfrescoJsApi.login(contentUserModel.email, contentUserModel.password);
         await users.changeProfilePictureAps(this.alfrescoJsApi, apsAvatarFileModel.getLocation());
@@ -181,7 +182,7 @@ describe('User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('[C260120] Delete the profile picture from ACS', () => {
+    it('[C260120] Should not display profile image in UserInfo when deleted in ACS', () => {
         PeopleAPI.deleteAvatarViaAPI(contentUserModel, '-me-');
 
         loginPage.goToLoginPage();

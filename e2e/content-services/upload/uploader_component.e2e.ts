@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
 import { element, by, browser } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
@@ -125,7 +124,7 @@ describe('Upload component', () => {
         done();
     });
 
-    it('[C272788] Upload Button is visible on the page', () => {
+    it('[C272788] Should display upload button', () => {
         expect(contentServicesPage.getSingleFileButtonTooltip()).toEqual('Custom tooltip');
 
         contentServicesPage
@@ -133,7 +132,7 @@ describe('Upload component', () => {
             .checkContentIsDisplayed(firstPdfFileModel.name);
     });
 
-    it('[C260173] Enable folder upload', () => {
+    it('[C260173] Should be able to upload folder when enabled', () => {
         uploadToggles.enableFolderUpload();
         contentServicesPage.uploadFolder(folderOne.location);
 
@@ -146,7 +145,7 @@ describe('Upload component', () => {
         uploadToggles.disableFolderUpload();
     });
 
-    it('[C272789] Upload a pdf file', () => {
+    it('[C272789] Should be able to upload PDF file', () => {
         contentServicesPage
             .uploadFile(pdfFileModel.location)
             .checkContentIsDisplayed(pdfFileModel.name);
@@ -156,7 +155,7 @@ describe('Upload component', () => {
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
     });
 
-    it('[C272790] Upload a text file', () => {
+    it('[C272790] Should be able to upload text file', () => {
         contentServicesPage
             .uploadFile(docxFileModel.location)
             .checkContentIsDisplayed(docxFileModel.name);
@@ -165,7 +164,7 @@ describe('Upload component', () => {
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
     });
 
-    it('[C260141] Upload a png file', () => {
+    it('[C260141] Should be possible to upload PNG file', () => {
         contentServicesPage
             .uploadFile(pngFileModel.location)
             .checkContentIsDisplayed(pngFileModel.name);
@@ -174,7 +173,7 @@ describe('Upload component', () => {
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
     });
 
-    it('[C260143] Minimize and maximize the upload dialog box', () => {
+    it('[C260143] Should be possible to maximize/minimize the upload dialog', () => {
         contentServicesPage
             .uploadFile(docxFileModel.location)
             .checkContentIsDisplayed(docxFileModel.name);
@@ -194,7 +193,7 @@ describe('Upload component', () => {
         uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
     });
 
-    it('[C260168] Cancel the uploaded file through the upload dialog icon', () => {
+    it('[C260168] Should be possible to cancel upload using dialog icon', () => {
         contentServicesPage.uploadFile(pdfFileModel.location)
             .checkContentIsDisplayed(pdfFileModel.name);
         uploadDialog.removeUploadedFile(pdfFileModel.name).fileIsCancelled(pdfFileModel.name);
@@ -203,7 +202,7 @@ describe('Upload component', () => {
         contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
     });
 
-    xit('[C272792] Cancel a big file through the upload dialog icon before the upload to be done', () => {
+    xit('[C272792] Should be possible to cancel upload of a big file using dialog icon', () => {
         browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
             'document.querySelector("#adf-upload-dialog-cancel").click();  }, 3000)');
 
@@ -214,7 +213,7 @@ describe('Upload component', () => {
         contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
     });
 
-    xit('[C260169] Cancel a big file through the cancel uploads button', () => {
+    xit('[C260169] Should be possible to cancel upload of a big file through the cancel uploads button', () => {
         contentServicesPage.uploadFile(largeFile.location);
         expect(uploadDialog.getTitleText()).toEqual('Uploading 0 / 1');
         expect(uploadDialog.getConfirmationDialogTitleText()).toEqual('Cancel Upload');
@@ -225,7 +224,7 @@ describe('Upload component', () => {
         contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
     });
 
-    xit('[C272793] Cancel uploading multiple files', () => {
+    xit('[C272793] Should be able to cancel multiple files upload', () => {
         uploadToggles.enableMultipleFileUpload();
         contentServicesPage.uploadMultipleFile([pngFileModel.location, largeFile.location]);
         uploadDialog.cancelUploads();
@@ -238,7 +237,7 @@ describe('Upload component', () => {
         uploadToggles.disableMultipleFileUpload();
     });
 
-    it('[C272794] Tooltip of uploading multiple files button', () => {
+    it('[C272794] Should display tooltip for uploading files', () => {
         uploadToggles.enableMultipleFileUpload();
         browser.driver.sleep(1000);
         expect(contentServicesPage.getMultipleFileButtonTooltip()).toEqual('Custom tooltip');
@@ -277,7 +276,7 @@ describe('Upload component', () => {
         uploadToggles.disableExtensionFilter();
     });
 
-    it('[C279920] Upload same file twice', () => {
+    it('[C279920] Should rename a file uploaded twice', () => {
         contentServicesPage
             .uploadFile(pdfFileModel.location)
             .checkContentIsDisplayed(pdfFileModel.name);
@@ -295,7 +294,7 @@ describe('Upload component', () => {
         pdfFileModel.setVersion('');
     });
 
-    it('[C260172] Enable versioning', () => {
+    it('[C260172] Should be possible to enable versioning', () => {
         uploadToggles.enableVersioning();
 
         contentServicesPage
@@ -322,7 +321,7 @@ describe('Upload component', () => {
         uploadToggles.disableVersioning();
     });
 
-    it('[C260176] The files uploaded before closing the upload dialog box are not displayed anymore in the upload box', () => {
+    it('[C260176] Should remove files from upload dialog box when closed', () => {
         contentServicesPage.uploadFile(pngFileModelTwo.location).checkContentIsDisplayed(pngFileModelTwo.name);
 
         uploadDialog.fileIsUploaded(pngFileModelTwo.name);
@@ -338,7 +337,7 @@ describe('Upload component', () => {
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
     });
 
-    it('[C260170] Upload files on the same time', () => {
+    it('[C260170] Should be possible to upload multiple files', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
 
@@ -355,7 +354,7 @@ describe('Upload component', () => {
         uploadToggles.disableMultipleFileUpload();
     });
 
-    it('[C260174] Enable max size and set it to 400', () => {
+    it('[C260174] Should be possible to set a max size', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         uploadToggles.enableMaxSize();
@@ -376,12 +375,12 @@ describe('Upload component', () => {
         uploadToggles.disableMaxSize();
     });
 
-    it('[C272796] Enable max size and set it to 0', () => {
+    it('[C272796] Should be possible to set max size to 0', () => {
         contentServicesPage.goToDocumentList();
         uploadToggles.enableMaxSize();
         uploadToggles.addMaxSize('0');
         contentServicesPage.uploadFile(fileWithSpecificSize.location);
-        //expect(contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
+        // expect(contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
 
         uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
         contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
@@ -390,7 +389,7 @@ describe('Upload component', () => {
         uploadToggles.disableMaxSize();
     });
 
-    it('[C272797] Set max size to 1 and disable it', () => {
+    it('[C272797] Should be possible to set max size to 1', () => {
         uploadToggles.enableMaxSize();
         browser.driver.sleep(1000);
         uploadToggles.addMaxSize('1');
