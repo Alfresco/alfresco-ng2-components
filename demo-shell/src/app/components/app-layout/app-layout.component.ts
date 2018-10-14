@@ -67,7 +67,7 @@ export class AppLayoutComponent implements OnInit {
     hideSidenav = false;
     showMenu = true;
 
-    enabelRedirect = true;
+    enableRedirect = true;
     color = 'primary';
     title = 'APP_LAYOUT.APP_NAME';
     logo: string;
@@ -100,7 +100,7 @@ export class AppLayoutComponent implements OnInit {
         private alfrescoApiService: AlfrescoApiService,
         private headerService: HeaderDataService) {
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
-            this.enabelRedirect = false;
+            this.enableRedirect = false;
         }
     }
 

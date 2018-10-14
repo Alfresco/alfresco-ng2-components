@@ -26,7 +26,7 @@
     templateUrl: './checkbox.widget.html',
     encapsulation: ViewEncapsulation.None
 })
-export class CheckboxWidgetAanalyticsComponent extends WidgetComponent {
+export class CheckboxWidgetAnalyticsComponent extends WidgetComponent {
 
     @Input()
     field: any;

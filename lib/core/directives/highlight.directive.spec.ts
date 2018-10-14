@@ -60,7 +60,7 @@ describe('HighlightDirective', () => {
         fixture.detectChanges();
     });
 
-    it('should replace the searched text with the default hightlight class in the proper element (adf-highlight-selector)', () => {
+    it('should replace the searched text with the default highlight class in the proper element (adf-highlight-selector)', () => {
         component.highlightDirectives.last.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 
@@ -69,7 +69,7 @@ describe('HighlightDirective', () => {
         expect(containerElement.nativeElement.innerHTML).toBe('Lorem ipsum <span class="adf-highlight">salana-eyong-aysis</span> dolor sit amet');
     });
 
-    it('should replace the searched text with the default hightlight class in every proper element (highlight-for-free-willy)', () => {
+    it('should replace the searched text with the default highlight class in every proper element (highlight-for-free-willy)', () => {
         component.highlightDirectives.first.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 

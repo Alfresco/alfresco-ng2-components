@@ -397,12 +397,12 @@ var MetadataViewPage = function () {
         })
     };
 
-    this.checkPopertyIsVisible = function (propertyName, type) {
+    this.checkPropertyIsVisible = function (propertyName, type) {
         var property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(property);
     };
 
-    this.checkPopertyIsNotVisible = function (propertyName, type) {
+    this.checkPropertyIsNotVisible = function (propertyName, type) {
         var property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsNotVisible(property);
     };

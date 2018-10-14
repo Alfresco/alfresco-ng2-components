@@ -27,8 +27,8 @@ import { LogService } from '@alfresco/adf-core';
 })
 export class LoginComponent implements OnInit {
 
-    @ViewChild('alfrescologin')
-    alfrescologin: any;
+    @ViewChild('alfrescoLogin')
+    alfrescoLogin: any;
 
     customValidation: any;
     customSuccessRouteURI = '';
@@ -50,9 +50,9 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.alfrescologin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
-        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', { minLength: this.customMinLength });
-        this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
+        this.alfrescoLogin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
+        this.alfrescoLogin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', { minLength: this.customMinLength });
+        this.alfrescoLogin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
     }
 
     onLogin($event) {

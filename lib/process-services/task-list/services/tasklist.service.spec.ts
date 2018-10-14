@@ -466,7 +466,7 @@ describe('Activiti TaskList Service', () => {
             let taskId = '1';
             let filterFake = new FilterRepresentationModel({
                 name: 'FakeNameFilter',
-                assignment: 'fake-assignement',
+                assignment: 'fake-assignment',
                 filter: {
                     processDefinitionKey: '1',
                     assignment: 'fake',

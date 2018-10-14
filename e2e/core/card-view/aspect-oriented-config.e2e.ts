@@ -110,13 +110,13 @@ describe('Aspect oriented config', () => {
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.clickMetadatGroup('IMAGE');
-        metadataViewPage.checkPopertyIsVisible('properties.exif:pixelXDimension', 'textitem');
-        metadataViewPage.checkPopertyIsVisible('properties.exif:pixelYDimension', 'textitem');
-        metadataViewPage.checkPopertyIsNotVisible('properties.exif:isoSpeedRatings', 'textitem');
+        metadataViewPage.checkPropertyIsVisible('properties.exif:pixelXDimension', 'textitem');
+        metadataViewPage.checkPropertyIsVisible('properties.exif:pixelYDimension', 'textitem');
+        metadataViewPage.checkPropertyIsNotVisible('properties.exif:isoSpeedRatings', 'textitem');
 
         metadataViewPage.editIconClick();
 
-        metadataViewPage.checkPopertyIsVisible('properties.exif:isoSpeedRatings', 'textitem');
+        metadataViewPage.checkPropertyIsVisible('properties.exif:isoSpeedRatings', 'textitem');
     });
 
     it('[C260185] Should ignore not existing aspect when present in the configuration', () => {

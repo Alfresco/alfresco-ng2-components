@@ -34,7 +34,7 @@ var CardViewComponentPage = function () {
     const resetButton = element(by.css("#adf-reset-card-log"));
     const selectedValue = element(by.css('.mat-select-value-text span'));
     const listContent = element(by.className('mat-select-content'));
-    const editableSwitch = element(by.id('adf-toogle-editable'));
+    const editableSwitch = element(by.id('adf-toggle-editable'));
 
     this.clickOnAddButton = function () {
         Util.waitUntilElementIsVisible(addButton);

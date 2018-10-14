@@ -394,8 +394,8 @@ describe('Document List Component', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkContentIsDisplayed(folderNameA);
         contentServicesPage.checkContentIsDisplayed(folderNameB);
-        contentServicesPage.checkLockIsDislpayedForElement(folderNameA);
-        contentServicesPage.checkLockIsDislpayedForElement(folderNameB);
+        contentServicesPage.checkLockIsDisplayedForElement(folderNameA);
+        contentServicesPage.checkLockIsDisplayedForElement(folderNameB);
         done();
     });
 
@@ -418,8 +418,8 @@ describe('Document List Component', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkContentIsDisplayed(testFileA.name);
         contentServicesPage.checkContentIsDisplayed(testFileB.name);
-        contentServicesPage.checkLockIsDislpayedForElement(testFileA.name);
-        contentServicesPage.checkLockIsDislpayedForElement(testFileB.name);
+        contentServicesPage.checkLockIsDisplayedForElement(testFileA.name);
+        contentServicesPage.checkLockIsDisplayedForElement(testFileB.name);
         done();
     });
 

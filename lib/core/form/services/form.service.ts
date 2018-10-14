@@ -232,7 +232,7 @@ export class FormService {
      * @param processInstanceId ID of the target process
      * @returns List of instance variable information
      */
-    getProcessVarablesById(processInstanceId: string): Observable<any[]> {
+    getProcessVariablesById(processInstanceId: string): Observable<any[]> {
         return from(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId))
             .pipe(
                 map(this.toJson),

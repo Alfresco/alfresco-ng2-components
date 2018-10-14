@@ -128,11 +128,11 @@ describe('LogoutDirective', () => {
 
     });
 
-    describe('enabelRedirect', () => {
+    describe('enableRedirect', () => {
 
         @Component({
             selector: 'adf-test-component',
-            template: '<button adf-logout [enabelRedirect]="false"></button>'
+            template: '<button adf-logout [enableRedirect]="false"></button>'
         })
         class TestComponent {
             @ContentChildren(LogoutDirective)
@@ -160,7 +160,7 @@ describe('LogoutDirective', () => {
             fixture.detectChanges();
         });
 
-        it('should not redirect if enabelRedirect is false', () => {
+        it('should not redirect if enableRedirect is false', () => {
             spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(of(true));
             const button = fixture.nativeElement.querySelector('button');

@@ -106,7 +106,18 @@
     "listgrid",
     "filesize",
     "Theming",
-    "quicktime"
+    "quicktime",
+    "Promise",
+    "Examinate"
   ],
-  "dictionaries": ["html", "en-gb", "en_US"]
+  "dictionaries": [
+    "html",
+    "en-gb",
+    "en_US",
+    "softwareTerms"
+  ],
+  "ignorePaths": [
+    "lib/{content-services,core,extensions,insights,process-services}/**/*.spec.ts",
+    "lib/{content-services,core,extensions,insights,process-services}/**/*.mock.ts"
+  ]
 }

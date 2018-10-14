@@ -25,7 +25,7 @@
                                 [showIcon]="showTaskFilterIcon"
                                 (filterClick)="onTaskFilterClick($event)"
                                 (success)="onSuccessTaskFilterList($event)"
-                                #activitifilter>
+                                #activitiFilter>
                             </adf-task-filters>
                         </adf-accordion-group>
                     </adf-accordion>
@@ -130,7 +130,7 @@
                         <adf-accordion-group [heading]="'Processes'" [isSelected]="true" [isOpen]="true"
                                              [headingIcon]="'assessment'">
                             <adf-process-instance-filters
-                                #activitiprocessfilter
+                                #activitiProcessFilter
                                 [appId]="appId"
                                 [filterParam]="filterSelected"
                                 [showIcon]="showProcessFilterIcon"

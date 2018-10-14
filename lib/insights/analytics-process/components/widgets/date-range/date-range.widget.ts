@@ -62,7 +62,7 @@ export class DateRangeWidgetComponent implements OnInit {
             this.dateAdapter.setLocale(locale);
         });
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
-        momentDateAdapter.overrideDisplyaFormat = this.SHOW_FORMAT;
+        momentDateAdapter.overrideDisplayFormat = this.SHOW_FORMAT;
 
         if (this.field) {
             if (this.field.value && this.field.value.startDate) {

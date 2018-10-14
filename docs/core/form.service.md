@@ -78,7 +78,7 @@ class MyComponent {
 -   `getProcessDefinitions():`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Get Process Definitions  
 
--   `getProcessVarablesById(processInstanceId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any[]>`  
+-   `getProcessVariablesById(processInstanceId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any[]>`  
     Get instance variables for a process.  
     -   `processInstanceId` - ID of the target process
 -   `getTasks():`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  

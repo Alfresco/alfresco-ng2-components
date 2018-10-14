@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
-import { HighlightTransformService, HightlightTransformResult } from '../services/highlight-transform.service';
+import { HighlightTransformService, HighlightTransformResult } from '../services/highlight-transform.service';
 
 @Directive({
     selector: '[adf-highlight]'
@@ -47,7 +47,7 @@ export class HighlightDirective {
             const elements = this.el.nativeElement.querySelectorAll(selector);
 
             elements.forEach((element) => {
-                const result: HightlightTransformResult = this.highlightTransformService.highlight(element.innerHTML, search, classToApply);
+                const result: HighlightTransformResult = this.highlightTransformService.highlight(element.innerHTML, search, classToApply);
                 if (result.changed) {
                     this.renderer.setProperty(element, 'innerHTML', result.text);
                 }

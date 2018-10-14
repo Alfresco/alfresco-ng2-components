@@ -36,7 +36,7 @@ describe('SearchDateRangeComponent', () => {
 
         const buildAdapter = (): MomentDateAdapter => {
             const dateAdapter = new MomentDateAdapter();
-            dateAdapter.overrideDisplyaFormat = null;
+            dateAdapter.overrideDisplayFormat = null;
             return dateAdapter;
         };
 
@@ -66,7 +66,7 @@ describe('SearchDateRangeComponent', () => {
         it('should setup the format of the date from configuration', () => {
             component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
             component.ngOnInit();
-            expect(theDateAdapter.overrideDisplyaFormat).toBe(dateFormatFixture);
+            expect(theDateAdapter.overrideDisplayFormat).toBe(dateFormatFixture);
         });
 
         it('should setup form control with formatted valid date on change', () => {

@@ -27,7 +27,7 @@ import { WidgetComponent } from './../widget.component';
     styleUrls: ['./number.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class NumberWidgetAanlyticsComponent extends WidgetComponent implements OnInit {
+export class NumberWidgetAnalyticsComponent extends WidgetComponent implements OnInit {
 
     @Input()
     field: any;

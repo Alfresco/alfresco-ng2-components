@@ -63,7 +63,7 @@ export class DateEditorComponent implements OnInit {
             this.dateAdapter.setLocale(locale);
         });
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
-        momentDateAdapter.overrideDisplyaFormat = this.DATE_FORMAT;
+        momentDateAdapter.overrideDisplayFormat = this.DATE_FORMAT;
 
         this.value = moment(this.table.getCellValue(this.row, this.column), 'YYYY-MM-DD');
     }

@@ -512,7 +512,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.turnedPreviousPage.emit(event);
     }
 
-    toogleGalleryView(): void {
+    toggleGalleryView(): void {
         this.displayMode = this.displayMode === DisplayMode.List ? DisplayMode.Gallery : DisplayMode.List;
         const url = this
             .router

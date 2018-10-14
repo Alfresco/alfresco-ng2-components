@@ -101,13 +101,13 @@ describe('CardView Component - properties', () => {
 
         metadataViewPage.clickMetadatGroup('EXIF');
 
-        metadataViewPage.checkPopertyIsVisible('properties.exif:flash', 'boolean');
-        metadataViewPage.checkPopertyIsNotVisible('properties.exif:model', 'textitem');
+        metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
+        metadataViewPage.checkPropertyIsNotVisible('properties.exif:model', 'textitem');
 
         metadataViewPage.enableDisplayEmpty();
 
-        metadataViewPage.checkPopertyIsVisible('properties.exif:flash', 'boolean');
-        metadataViewPage.checkPopertyIsVisible('properties.exif:model', 'textitem');
+        metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
+        metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
     });
 
     it('[C260179] Should not be possible edit the basic property when readOnly is true', () => {

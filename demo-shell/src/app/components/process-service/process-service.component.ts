@@ -79,8 +79,8 @@ const REPORT_ROUTE = 2;
 })
 export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    @ViewChild('activitifilter')
-    activitifilter: TaskFiltersComponent;
+    @ViewChild('activitiFilter')
+    activitiFilter: TaskFiltersComponent;
 
     @ViewChild('processListPagination')
     processListPagination: PaginationComponent;
@@ -91,8 +91,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @ViewChild('taskList')
     taskList: TaskListComponent;
 
-    @ViewChild('activitiprocessfilter')
-    activitiprocessfilter: ProcessFiltersComponent;
+    @ViewChild('activitiProcessFilter')
+    activitiProcessFilter: ProcessFiltersComponent;
 
     @ViewChild('processList')
     processList: ProcessInstanceListComponent;
@@ -288,7 +288,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onSuccessTaskFilterList(event: any): void {
-        this.applyTaskFilter(this.activitifilter.getCurrentFilter());
+        this.applyTaskFilter(this.activitiFilter.getCurrentFilter());
     }
 
     applyTaskFilter(filter: FilterRepresentationModel) {
@@ -301,7 +301,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onStartTaskSuccess(event: any): void {
-        this.activitifilter.selectFilterWithTask(event.id);
+        this.activitiFilter.selectFilterWithTask(event.id);
         this.currentTaskId = event.id;
     }
 
@@ -325,7 +325,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onSuccessProcessFilterList(event: ProcessInstanceFilterRepresentation[]): void {
-        this.processFilter = this.activitiprocessfilter.getCurrentFilter();
+        this.processFilter = this.activitiProcessFilter.getCurrentFilter();
     }
 
     onSuccessProcessList(event: any): void {
@@ -374,7 +374,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onStartProcessInstance(instance: ProcessInstance): void {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
-        this.activitiprocessfilter.selectRunningFilter();
+        this.activitiProcessFilter.selectRunningFilter();
     }
 
     onCancelProcessInstance() {
@@ -482,7 +482,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             name: event.value.name || 'No name',
             created: event.value.created
         };
-        this.activitifilter.selectFilter(null);
+        this.activitiFilter.selectFilter(null);
         if (this.taskList) {
             this.taskList.setCustomDataSource([processTaskDataRow]);
             this.taskList.selectTask(taskId);
@@ -491,11 +491,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     private reloadProcessFilters(): void {
-        this.activitiprocessfilter.selectFilter(this.activitiprocessfilter.getCurrentFilter());
+        this.activitiProcessFilter.selectFilter(this.activitiProcessFilter.getCurrentFilter());
     }
 
     private reloadTaskFilters(): void {
-        this.activitifilter.selectFilter(this.activitifilter.getCurrentFilter());
+        this.activitiFilter.selectFilter(this.activitiFilter.getCurrentFilter());
     }
 
     onRowClick(event): void {
