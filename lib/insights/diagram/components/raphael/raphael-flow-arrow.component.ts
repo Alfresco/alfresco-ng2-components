@@ -34,7 +34,7 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     error = new EventEmitter();
 
     ARROW_WIDTH = 4;
-    SEQUENCEFLOW_STROKE = 1.5;
+    SEQUENCE_FLOW_STROKE = 1.5;
 
     constructor(public elementRef: ElementRef,
                 raphaelService: RaphaelService) {
@@ -52,9 +52,9 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     }
 
     public drawLine(flow: any) {
-        let polyline = new Polyline(flow.id, flow.waypoints, this.SEQUENCEFLOW_STROKE, this.paper);
+        let polyline = new Polyline(flow.id, flow.waypoints, this.SEQUENCE_FLOW_STROKE, this.paper);
         polyline.element = this.paper.path(polyline.path);
-        polyline.element.attr({'stroke-width': this.SEQUENCEFLOW_STROKE});
+        polyline.element.attr({'stroke-width': this.SEQUENCE_FLOW_STROKE});
         polyline.element.attr({'stroke': '#585858'});
 
         polyline.element.node.id = this.flow.id;
@@ -75,7 +75,7 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
 
         arrowHead.attr('fill', '#585858');
 
-        arrowHead.attr('stroke-width', this.SEQUENCEFLOW_STROKE);
+        arrowHead.attr('stroke-width', this.SEQUENCE_FLOW_STROKE);
         arrowHead.attr('stroke', '#585858');
 
     }

@@ -18,7 +18,7 @@
 import { MyAppPage } from './app.po';
 
 describe('MyApp App', () => {
-    let page: MyappPage;
+    let page: MyAppPage;
 
     beforeEach(() => {
         page = new MyAppPage();

@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
         this.showFooter = !this.showFooter;
     }
 
-    toggleRemamberme() {
+    toggleRememberMe() {
         this.showRememberMe = !this.showRememberMe;
     }
 

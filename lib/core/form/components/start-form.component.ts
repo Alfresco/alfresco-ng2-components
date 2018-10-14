@@ -115,7 +115,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     }
 
     loadStartForm(processId: string) {
-        this.formService.getProcessIntance(processId)
+        this.formService.getProcessInstance(processId)
             .subscribe((instance: any) => {
                 this.formService
                     .getStartFormInstance(processId)

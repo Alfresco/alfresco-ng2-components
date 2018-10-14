@@ -108,7 +108,10 @@
     "Theming",
     "quicktime",
     "Promise",
-    "Examinate"
+    "Examinate",
+    "mymeType",
+    "highlightable",
+    "Droppable"
   ],
   "dictionaries": [
     "html",

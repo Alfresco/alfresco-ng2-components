@@ -216,7 +216,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     }
 
     /**
-     * Update the result list depending on the criterias
+     * Update the result list depending on the criteria
      */
     private updateResults(): void {
         if (this.searchTerm.length === 0) {

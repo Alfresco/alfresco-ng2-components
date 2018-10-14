@@ -69,7 +69,7 @@
                 </div>
                 <div class="adf-grid-item adf-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto"
                      data-automation-id="adf-tasks-details">
-                    <adf-task-details #activitidetails
+                    <adf-task-details #activitiDetails
                                       [debugMode]="true"
                                       [taskId]="currentTaskId"
                                       [fieldValidators]="fieldValidators"
@@ -175,7 +175,7 @@
                 </div>
                 <div class="adf-grid-item adf-processes-details" *ngIf="!isStartProcessMode()" fxFlex.gt-md="1 1 auto">
                     <adf-process-instance-details
-                        #activitiprocessdetails
+                        #activitiProcessDetails
                         [processInstanceId]="currentProcessInstanceId"
                         (processCancelled)="processCancelled()"
                         (showProcessDiagram)="onShowProcessDiagram($event)"
@@ -226,7 +226,7 @@
                     [appId]="appId"
                     [selectFirst]="selectFirstReport"
                     (reportClick)="onReportClick($event)"
-                    #analyticsreportlist>
+                    #analyticsReportList>
                 </analytics-report-list>
             </div>
             <div class="adf-grid-item adf-reports-details" fxFlex.gt-md="1 1 auto">

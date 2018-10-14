@@ -97,7 +97,7 @@ describe('PermissionDisplayComponent', () => {
         it('should show locally set label for locally set permissions',  () => {
             component.nodeId = 'fake-node-id';
             spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
-            spyOn(nodePermissionService, 'getGroupMemeberByGroupName').and.returnValue(of(fakeSiteRoles));
+            spyOn(nodePermissionService, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
             spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
             fixture.detectChanges();
             expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
@@ -108,7 +108,7 @@ describe('PermissionDisplayComponent', () => {
         it('should show a dropdown with the possible roles',  async(() => {
             component.nodeId = 'fake-node-id';
             spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
-            spyOn(nodePermissionService, 'getGroupMemeberByGroupName').and.returnValue(of(fakeSiteRoles));
+            spyOn(nodePermissionService, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
             spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
             fixture.detectChanges();
             fixture.whenStable().then(() => {

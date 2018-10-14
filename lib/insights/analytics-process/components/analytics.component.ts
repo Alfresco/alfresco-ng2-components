@@ -45,21 +45,21 @@ export class AnalyticsComponent implements OnChanges {
     @Output()
     reportDeleted = new EventEmitter();
 
-    @ViewChild('analyticsgenerator')
-    analyticsgenerator: AnalyticsGeneratorComponent;
+    @ViewChild('analyticsGenerator')
+    analyticsGenerator: AnalyticsGeneratorComponent;
 
     reportParamQuery: ReportQuery;
 
     ngOnChanges(changes: SimpleChanges) {
-        this.analyticsgenerator.reset();
+        this.analyticsGenerator.reset();
     }
 
     public showReport($event) {
-        this.analyticsgenerator.generateReport(this.reportId, $event);
+        this.analyticsGenerator.generateReport(this.reportId, $event);
     }
 
     public reset() {
-        this.analyticsgenerator.reset();
+        this.analyticsGenerator.reset();
     }
 
     public onEditReport(name: string) {

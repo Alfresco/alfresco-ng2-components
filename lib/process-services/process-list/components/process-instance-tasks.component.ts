@@ -61,8 +61,8 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     @ViewChild('startDialog')
     startDialog: any;
 
-    @ViewChild('taskdetails')
-    taskdetails: any;
+    @ViewChild('taskDetails')
+    taskDetails: any;
 
     /** Emitted when a task is clicked. */
     @Output()

@@ -363,7 +363,7 @@ export class FormService {
      * @param processId ID of the process to get
      * @returns Process instance
      */
-    getProcessIntance(processId: string): Observable<any> {
+    getProcessInstance(processId: string): Observable<any> {
         return from(this.processApi.getProcessInstance(processId))
             .pipe(
                 map(this.toJson),

@@ -97,17 +97,17 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @ViewChild('processList')
     processList: ProcessInstanceListComponent;
 
-    @ViewChild('activitiprocessdetails')
-    activitiprocessdetails: ProcessInstanceDetailsComponent;
+    @ViewChild('activitiProcessDetails')
+    activitiProcessDetails: ProcessInstanceDetailsComponent;
 
-    @ViewChild('activitidetails')
-    activitidetails: TaskDetailsComponent;
+    @ViewChild('activitiDetails')
+    activitiDetails: TaskDetailsComponent;
 
     @ViewChild('activitiStartProcess')
     activitiStartProcess: StartProcessInstanceComponent;
 
-    @ViewChild('analyticsreportlist')
-    analyticsreportlist: AnalyticsReportListComponent;
+    @ViewChild('analyticsReportList')
+    analyticsReportList: AnalyticsReportListComponent;
 
     @Input()
     appId: number = null;
@@ -351,16 +351,16 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onEditReport(name: string): void {
-        this.analyticsreportlist.reload();
+        this.analyticsReportList.reload();
     }
 
     onReportSaved(reportId): void {
-        this.analyticsreportlist.reload(reportId);
+        this.analyticsReportList.reload(reportId);
     }
 
     onReportDeleted(): void {
-        this.analyticsreportlist.reload();
-        this.analyticsreportlist.selectReport(null);
+        this.analyticsReportList.reload();
+        this.analyticsReportList.selectReport(null);
     }
 
     navigateStartProcess(): void {

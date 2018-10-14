@@ -108,7 +108,7 @@ class MyComponent {
 -   `getStartFormInstance(processId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Get start form instance for a given processId  
     -   `processId` - Process definition ID
--   `getProcessIntance(processId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
+-   `getProcessInstance(processId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Gets a process instance.  
     -   `processId` - ID of the process to get
 -   `getStartFormDefinition(processId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  

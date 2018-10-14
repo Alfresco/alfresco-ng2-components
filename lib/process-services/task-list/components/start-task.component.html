@@ -11,7 +11,7 @@
                     <input matInput
                         class="adf-grid-full-width"
                         placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME'|translate}}"
-                        [(ngModel)]="startTaskmodel.name"
+                        [(ngModel)]="startTaskModel.name"
                         required
                         id="name_id">
                 </mat-form-field>
@@ -23,7 +23,7 @@
                         matInput
                         class="adf-grid-full-width"
                         placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION'|translate}}"
-                        [(ngModel)]="startTaskmodel.description"
+                        [(ngModel)]="startTaskModel.description"
                         rows="1"
                         id="description_id">
                     </textarea>
@@ -40,7 +40,7 @@
                                 (keyup)="onDateChanged($event.srcElement.value)"
                                 (dateInput)="onDateChanged($event.value)"
                                 placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
-                                [(ngModel)]="startTaskmodel.dueDate"
+                                [(ngModel)]="startTaskModel.dueDate"
                                 id="date_id">
                             <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
                             <mat-datepicker #taskDatePicker
@@ -79,7 +79,7 @@
                     <button mat-button (click)="onCancel()" id="button-cancel">
                         {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL'|translate}}
                     </button>
-                    <button color="primary" mat-button [disabled]="!startTaskmodel.name || dateError" (click)="start()" id="button-start">
+                    <button color="primary" mat-button [disabled]="!startTaskModel.name || dateError" (click)="start()" id="button-start">
                         {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
                     </button>
                 </div>

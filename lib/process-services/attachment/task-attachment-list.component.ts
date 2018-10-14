@@ -82,7 +82,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         this.attachments = [];
     }
 
-    hasCutomEmptyTemplate() {
+    hasCustomEmptyTemplate() {
         return !!this.emptyTemplate;
     }
 
