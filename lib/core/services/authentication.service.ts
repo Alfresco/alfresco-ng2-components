@@ -284,7 +284,7 @@ export class AuthenticationService {
     }
 
     addTokenToHeader(headersArg?: HttpHeaders): Observable<HttpHeaders> {
-        return Observable.create(async (observer: Observer<any>) => {
+        return new Observable(async (observer: Observer<any>) => {
             let headers = headersArg;
             if (!headers) {
                 headers = new HttpHeaders();

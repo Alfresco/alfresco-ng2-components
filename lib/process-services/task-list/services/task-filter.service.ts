@@ -46,7 +46,7 @@ export class TaskFilterService {
         let completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
         let completeObservable = this.addFilter(completedTasksFilter);
 
-        return Observable.create(observer => {
+        return new Observable(observer => {
             forkJoin(
                 involvedObservable,
                 myTaskObservable,

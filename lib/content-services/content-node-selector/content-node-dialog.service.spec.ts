@@ -112,7 +112,7 @@ describe('ContentNodeDialogService', () => {
 
     it('should be able to open the dialog using a folder id', fakeAsync(() => {
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNode));
-        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe();
+        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe(()=>{});
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
