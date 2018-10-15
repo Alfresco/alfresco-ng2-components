@@ -49,12 +49,12 @@ describe('Lock File', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let pngSecondFileModel = new FileModel({
+    let pngFileToLock = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
-    let nodeId, site, documentLibrary, secondNodeId;
+    let nodeId, site, documentLibrary, lockedFileNodeId;
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -90,9 +90,9 @@ describe('Lock File', () => {
     describe('Lock file interaction with the UI', () => {
 
         beforeAll(async (done) => {
-            let pngSecondUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngSecondFileModel.location, pngSecondFileModel.name, documentLibrary);
+            let pngLockedUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileToLock.location, pngFileToLock.name, documentLibrary);
 
-            secondNodeId = pngSecondUploadedFile.entry.id;
+            lockedFileNodeId = pngLockedUploadedFile.entry.id;
 
             done();
         });
@@ -119,8 +119,8 @@ describe('Lock File', () => {
         afterAll(async (done) => {
             await this.alfrescoJsApi.login(adminUser.id, adminUser.password);
 
-            await this.alfrescoJsApi.core.nodesApi.unlockNode(secondNodeId);
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, secondNodeId);
+            await this.alfrescoJsApi.core.nodesApi.unlockNode(lockedFileNodeId);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, lockedFileNodeId);
 
             done();
         });
@@ -143,13 +143,13 @@ describe('Lock File', () => {
         });
 
         it('[C286603] Should be able to click on Lock file checkbox and lock a file', () => {
-            contentList.clickContentLockIcon(pngSecondFileModel.name);
+            contentList.clickContentLockIcon(pngFileToLock.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
             lockFilePage.clickLockFileCheckbox();
             lockFilePage.clickSaveButton();
 
-            contentList.checkLockedIcon(pngSecondFileModel.name);
+            contentList.checkLockedIcon(pngFileToLock.name);
         });
 
         it('[C286618] Should be able to uncheck Lock file checkbox and unlock a file', () => {
@@ -241,10 +241,10 @@ describe('Lock File', () => {
     describe('Locked file with owner permissions', () => {
         beforeAll(async (done) => {
             let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
-            let pngSecondUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngSecondFileModel.location, pngSecondFileModel.name, documentLibrary);
+            let pngFileToBeLocked = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileToLock.location, pngFileToLock.name, documentLibrary);
 
             nodeId = pngUploadedFile.entry.id;
-            secondNodeId = pngSecondUploadedFile.entry.id;
+            lockedFileNodeId = pngFileToBeLocked.entry.id;
 
             await this.alfrescoJsApi.login(managerUser.id, managerUser.password);
 
@@ -253,7 +253,7 @@ describe('Lock File', () => {
                 type: 'ALLOW_OWNER_CHANGES',
                 lifetime: 'PERSISTENT'
             });
-            await this.alfrescoJsApi.core.nodesApi.lockNode(secondNodeId, {
+            await this.alfrescoJsApi.core.nodesApi.lockNode(lockedFileNodeId, {
                 timeToExpire: 0,
                 type: 'ALLOW_OWNER_CHANGES',
                 lifetime: 'PERSISTENT'
@@ -295,10 +295,10 @@ describe('Lock File', () => {
         });
 
         it('[C286617] Owner of the locked file should be able to delete if "Allow owner to modify" is checked', async () => {
-            await this.alfrescoJsApi.core.nodesApi.deleteNode(secondNodeId);
+            await this.alfrescoJsApi.core.nodesApi.deleteNode(lockedFileNodeId);
 
             try {
-                await this.alfrescoJsApi.core.nodesApi.getNode(secondNodeId);
+                await this.alfrescoJsApi.core.nodesApi.getNode(lockedFileNodeId);
 
             } catch (error) {
                 expect(error.status).toEqual(404);
