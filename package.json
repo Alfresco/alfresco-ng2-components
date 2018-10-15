@@ -157,6 +157,7 @@
     "remark-frontmatter": "^1.2.0",
     "rimraf": "^2.6.2",
     "run-sequence": "1.2.2",
+    "rxjs-tslint-rules": "^4.10.0",
     "sass-loader": "6.0.5",
     "scss-bundle": "2.3.2",
     "systemjs-builder": "0.15.34",
