@@ -144,4 +144,23 @@ describe('Modify applications', () => {
         expect(processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
     });
 
+    it('[C260207] Should the app be updated when is edited in APS', async () => {
+        var newDescription = "new description";
+
+        navigationBarPage.clickProcessServicesButton();
+        processServicesPage.checkApsContainer();
+
+        expect(processServicesPage.getAppIconType(appTobeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
+        expect(processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
+        expect(processServicesPage.getDescription(appTobeDeleted.title)).toEqual(appTobeDeleted.description);
+
+        console.log("App id: ", appVersionToBeDeleted.id);
+
+        //edit
+        await this.alfrescoJsApi.activiti.appsApi.updateAppDefinition(appVersionToBeDeleted.id, {"appDefinition":{"id":appVersionToBeDeleted.id,"name":appTobeDeleted.title,"description":newDescription,"definition":{"icon":"glyphicon-user"}}});
+
+        expect(processServicesPage.getDescription(appTobeDeleted.title)).toEqual(newDescription);
+    });
+
+
 });

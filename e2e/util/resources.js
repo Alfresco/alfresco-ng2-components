@@ -62,6 +62,7 @@ exports.Files = {
     SIMPLE_APP_WITH_USER_FORM: {
         file_location: "/resources/apps/Simple App with User Form.zip",
         title: "Simple App with User Form",
+        description: "Simple app with a process having a User task with a form attached.",
         processName: "Simple Process",
         processDiagramFileLocation: '/resources/apps/SimpleAppWithUserForm.png',
         processThumbnail: '/resources/processes/Simple Process Thumbnail.png',

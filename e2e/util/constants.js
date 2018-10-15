@@ -105,7 +105,8 @@ exports.APP_COLOR = {
 
 exports.APP_ICON = {
     FAVORITE: "favorite_border",
-    UNIT: "ac_unit"
+    UNIT: "ac_unit",
+    USER: "person"
 };
 
 exports.PROCESS_END_DATE = "No date";
