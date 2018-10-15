@@ -225,7 +225,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                         ...bucket,
                         checked: !!selectedBucket,
                         display: this.translationService.instant(bucket.display),
-                        label: this.translationService.instant(bucket.label)
+                        label: bucket.label
                     };
                 });
                 const bucketList = new SearchFilterList<FacetFieldBucket>(buckets, field.pageSize);
@@ -239,7 +239,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 };
                 return {
                     ...field,
-                    label: this.translationService.instant(field.label),
+                    label: field.label,
                     pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
                     currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
                     buckets: bucketList
