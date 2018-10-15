@@ -99,6 +99,7 @@ describe('Form Component', () => {
 
         dateWidget.removeFromDateWidget();
         numberWidget.removeFromNumberWidget();
+        formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
         formPage.checkErrorLogMessage(message.errorLabel);
     });
